@@ -11,6 +11,7 @@ import LogMeal from '@/pages/LogMeal';
 import Upload from '@/pages/Upload';
 import Insights from '@/pages/Insights';
 import Profile from '@/pages/Profile';
+import NutritionHistory from '@/pages/NutritionHistory';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/not-found';
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/signup" component={Signup} />
       <Route path="/" component={Dashboard} />
       <Route path="/log-meal" component={LogMeal} />
+      <Route path="/nutrition" component={NutritionHistory} />
       <Route path="/upload" component={Upload} />
       <Route path="/insights" component={Insights} />
       <Route path="/profile">

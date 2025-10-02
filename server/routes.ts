@@ -283,6 +283,123 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/nutrition/targets/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const user = await storage.getUser(userId);
+      
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const age = user.age || 30;
+      const sex = user.sex || 'male';
+      const heightCm = user.heightCm || 175;
+      const weightKg = user.weightKg || 75;
+      const activityLevel = user.activityLevel || 'moderate';
+
+      const heightM = heightCm / 100;
+      const bmr = sex === 'male' 
+        ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
+        : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+
+      const activityMultipliers: Record<string, number> = {
+        sedentary: 1.2,
+        light: 1.375,
+        moderate: 1.55,
+        active: 1.725,
+        very_active: 1.9,
+      };
+
+      const tdee = bmr * (activityMultipliers[activityLevel] || 1.55);
+
+      const targets = {
+        calories: Math.round(tdee),
+        protein: Math.round(weightKg * 1.6),
+        carbs: Math.round((tdee * 0.45) / 4),
+        fat: Math.round((tdee * 0.30) / 9),
+        fiber: 30,
+        sodium: 2300,
+        potassium: 3500,
+        cholesterol: 300,
+        sugar: 50,
+      };
+
+      res.json(targets);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/nutrition/daily/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { date } = req.query;
+      
+      const targetDate = date ? new Date(date as string) : new Date();
+      const startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
+      const endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
+
+      const meals = await storage.getMeals(userId);
+      const dailyMeals = meals.filter(meal => {
+        const mealDate = new Date(meal.loggedAt);
+        return mealDate >= startOfDay && mealDate <= endOfDay;
+      });
+
+      const totals = dailyMeals.reduce((acc, meal) => {
+        acc.calories += meal.totalCalories || 0;
+        acc.protein += meal.totalProtein || 0;
+        acc.carbs += meal.totalCarbs || 0;
+        acc.fat += meal.totalFat || 0;
+        
+        if (meal.nutritionalData && Array.isArray(meal.nutritionalData)) {
+          for (const item of meal.nutritionalData as any[]) {
+            acc.fiber += item.fiber_g || 0;
+            acc.sugar += item.sugar_g || 0;
+            acc.sodium += item.sodium_mg || 0;
+            acc.potassium += item.potassium_mg || 0;
+            acc.cholesterol += item.cholesterol_mg || 0;
+          }
+        }
+        
+        return acc;
+      }, {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
+        sugar: 0,
+        sodium: 0,
+        potassium: 0,
+        cholesterol: 0,
+      });
+
+      res.json({ meals: dailyMeals, totals });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.patch("/api/user/:userId/profile", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { sex, age, heightCm, weightKg, activityLevel } = req.body;
+      
+      await storage.updateUserProfile(userId, {
+        sex,
+        age,
+        heightCm,
+        weightKg,
+        activityLevel,
+      });
+      
+      res.json({ success: true });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

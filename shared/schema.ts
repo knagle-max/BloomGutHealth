@@ -7,6 +7,11 @@ export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  sex: text("sex"),
+  age: integer("age"),
+  heightCm: real("height_cm"),
+  weightKg: real("weight_kg"),
+  activityLevel: text("activity_level").default('moderate'),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -14,7 +19,16 @@ export const insertUserSchema = createInsertSchema(users).pick({
   password: true,
 });
 
+export const updateUserProfileSchema = createInsertSchema(users).pick({
+  sex: true,
+  age: true,
+  heightCm: true,
+  weightKg: true,
+  activityLevel: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
+export type UpdateUserProfile = z.infer<typeof updateUserProfileSchema>;
 export type User = typeof users.$inferSelect;
 
 export const microbiomeSamples = pgTable("microbiome_samples", {
