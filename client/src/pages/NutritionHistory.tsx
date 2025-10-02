@@ -297,14 +297,35 @@ export default function NutritionHistory() {
       const response = await apiRequest('POST', '/api/meals', data);
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: async (newMeal: any) => {
       queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
       queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
+      queryClient.invalidateQueries({ queryKey: [`/api/health/adherence/${userId}?days=7`] });
       
-      toast({
-        title: 'Meal logged successfully!',
-        description: 'Your food has been analyzed with nutritional breakdown.',
-      });
+      try {
+        const adherenceResponse = await fetch(`/api/meals/${newMeal.id}/check-adherence`, {
+          method: 'POST',
+        });
+        const adherenceData = await adherenceResponse.json();
+        
+        if (adherenceData.matches && adherenceData.matches.length > 0) {
+          const matchedFoods = adherenceData.matches.map((m: any) => m.food).join(', ');
+          toast({
+            title: '🎯 Great choice!',
+            description: `This meal matches your recommendations: ${matchedFoods.substring(0, 80)}${matchedFoods.length > 80 ? '...' : ''}`,
+          });
+        } else {
+          toast({
+            title: 'Meal logged successfully!',
+            description: 'Your food has been analyzed with nutritional breakdown.',
+          });
+        }
+      } catch (error) {
+        toast({
+          title: 'Meal logged successfully!',
+          description: 'Your food has been analyzed with nutritional breakdown.',
+        });
+      }
       
       setFoodDescription('');
       setShowLogForm(false);

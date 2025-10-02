@@ -845,6 +845,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/health/adherence/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { days = 7 } = req.query;
+      const { generateFoodRecommendations, identifyBacterialGaps, calculateMoleculeProduction, calculateHealthScores, calculateAdherence, matchMealToRecommendations } = await import('../shared/health-calculations');
+      
+      const allMeals = await storage.getMeals(userId);
+      
+      if (allMeals.length < 3) {
+        return res.json({
+          message: 'Log at least 3 meals to track adherence',
+          adherenceStats: null,
+          details: [],
+        });
+      }
+
+      const daysToAnalyze = parseInt(days as string) || 7;
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - daysToAnalyze);
+      
+      const recentMeals = allMeals.filter(meal => new Date(meal.loggedAt) >= cutoffDate);
+      
+      const mealsForAnalysis = recentMeals.length >= 3 ? recentMeals : allMeals.slice(0, 30);
+
+      const totals = mealsForAnalysis.reduce((acc, meal) => {
+        acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+        acc.protein += meal.totalProtein || 0;
+        acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+        return acc;
+      }, { fiber: 0, protein: 0, sugar: 0 });
+
+      const avgTotals = {
+        fiber: totals.fiber / mealsForAnalysis.length,
+        protein: totals.protein / mealsForAnalysis.length,
+        sugar: totals.sugar / mealsForAnalysis.length,
+      };
+
+      const molecules = calculateMoleculeProduction(totals.fiber, totals.protein);
+      const healthScores = calculateHealthScores(molecules, totals.sugar);
+      const gaps = identifyBacterialGaps(avgTotals.fiber, avgTotals.protein, avgTotals.sugar);
+      const recommendations = generateFoodRecommendations(gaps, healthScores);
+      
+      const mealData = recentMeals
+        .filter(meal => meal.description && meal.description.trim().length > 0)
+        .map(meal => ({
+          description: meal.description,
+          loggedAt: meal.loggedAt,
+        }));
+
+      const { adherenceStats, details } = calculateAdherence(mealData, recommendations);
+
+      res.json({
+        adherenceStats,
+        details,
+        recommendations,
+        mealsAnalyzed: recentMeals.length,
+        periodDays: daysToAnalyze,
+      });
+    } catch (error: any) {
+      console.error('Adherence tracking error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/meals/:mealId/check-adherence", async (req, res) => {
+    try {
+      const { mealId } = req.params;
+      const { matchMealToRecommendations } = await import('../shared/health-calculations');
+      
+      const meal = await storage.getMeal(mealId);
+      if (!meal) {
+        return res.status(404).json({ error: 'Meal not found' });
+      }
+
+      const adherenceData = await fetch(`http://localhost:5000/api/health/adherence/${meal.userId}?days=7`);
+      const adherence = await adherenceData.json();
+      
+      const matches = matchMealToRecommendations(meal.description, adherence.recommendations);
+
+      res.json({
+        meal,
+        matches,
+        message: matches.length > 0 
+          ? `Great choice! This meal includes ${matches.map(m => m.matchedKeywords.join(', ')).join(' and ')}`
+          : 'This meal doesn\'t match current recommendations. Consider adding fiber-rich or fermented foods.',
+      });
+    } catch (error: any) {
+      console.error('Meal adherence check error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

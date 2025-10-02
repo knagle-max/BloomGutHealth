@@ -265,3 +265,154 @@ export function generateFoodRecommendations(gaps: BacterialGap[], healthScores: 
     return priorityOrder[a.priority] - priorityOrder[b.priority];
   });
 }
+
+// Food Matching & Adherence Tracking System
+
+export interface FoodMatch {
+  recommendationIndex: number;
+  food: string;
+  matchedKeywords: string[];
+  confidence: 'high' | 'medium' | 'low';
+}
+
+export interface RecommendationAdherence {
+  recommendation: FoodRecommendation;
+  followed: boolean;
+  timesFollowed: number;
+  lastFollowed: string | null;
+  matchedMeals: string[];
+}
+
+export interface AdherenceStats {
+  totalRecommendations: number;
+  recommendationsFollowed: number;
+  adherencePercentage: number;
+  highPriorityFollowed: number;
+  highPriorityTotal: number;
+  streak: number;
+}
+
+const FOOD_KEYWORDS: { [key: string]: string[] } = {
+  'Resistant Starch (green bananas, cooled potatoes/rice, oats)': [
+    'banana', 'green banana', 'plantain',
+    'potato', 'potatoes', 'sweet potato',
+    'rice', 'brown rice', 'white rice',
+    'oats', 'oatmeal', 'overnight oats'
+  ],
+  'Inulin-rich foods (chicory root, Jerusalem artichoke, onions, garlic)': [
+    'garlic', 'onion', 'onions', 'leek', 'leeks',
+    'chicory', 'artichoke', 'asparagus'
+  ],
+  'Fermented dairy (plain yogurt, kefir) or fermented vegetables': [
+    'yogurt', 'yoghurt', 'greek yogurt', 'kefir',
+    'sauerkraut', 'kimchi', 'pickles', 'fermented',
+    'kombucha', 'miso', 'tempeh'
+  ],
+  'Legumes (beans, lentils, chickpeas)': [
+    'beans', 'black beans', 'kidney beans', 'pinto beans',
+    'lentils', 'chickpeas', 'garbanzo',
+    'peas', 'edamame', 'hummus'
+  ],
+  'Polyphenol-rich foods (berries, green tea, dark chocolate)': [
+    'berries', 'blueberries', 'strawberries', 'raspberries', 'blackberries',
+    'green tea', 'tea', 'dark chocolate', 'chocolate',
+    'apple', 'grapes', 'pomegranate'
+  ],
+  'Fatty fish (salmon, mackerel, sardines)': [
+    'salmon', 'mackerel', 'sardines', 'tuna',
+    'herring', 'trout', 'fish'
+  ],
+  'Whole grains (quinoa, brown rice, whole wheat)': [
+    'quinoa', 'brown rice', 'whole wheat', 'whole grain',
+    'barley', 'bulgur', 'farro', 'millet',
+    'whole wheat bread', 'whole grain bread'
+  ],
+  'Cruciferous vegetables (broccoli, Brussels sprouts, cabbage)': [
+    'broccoli', 'brussels sprouts', 'cabbage', 'cauliflower',
+    'kale', 'bok choy', 'arugula', 'watercress'
+  ]
+};
+
+export function matchMealToRecommendations(
+  mealDescription: string,
+  recommendations: FoodRecommendation[]
+): FoodMatch[] {
+  const matches: FoodMatch[] = [];
+  
+  if (!mealDescription) {
+    return matches;
+  }
+  
+  const lowerMeal = mealDescription.toLowerCase();
+
+  recommendations.forEach((rec, index) => {
+    const keywords = FOOD_KEYWORDS[rec.food] || [];
+    const matchedKeywords = keywords.filter(keyword => 
+      lowerMeal.includes(keyword.toLowerCase())
+    );
+
+    if (matchedKeywords.length > 0) {
+      matches.push({
+        recommendationIndex: index,
+        food: rec.food,
+        matchedKeywords,
+        confidence: matchedKeywords.length >= 2 ? 'high' : 
+                   matchedKeywords.length === 1 ? 'medium' : 'low'
+      });
+    }
+  });
+
+  return matches;
+}
+
+export function calculateAdherence(
+  meals: Array<{ description: string; loggedAt: string }>,
+  recommendations: FoodRecommendation[]
+): { adherenceStats: AdherenceStats; details: RecommendationAdherence[] } {
+  const details: RecommendationAdherence[] = recommendations.map(rec => ({
+    recommendation: rec,
+    followed: false,
+    timesFollowed: 0,
+    lastFollowed: null,
+    matchedMeals: []
+  }));
+
+  meals.forEach(meal => {
+    const matches = matchMealToRecommendations(meal.description, recommendations);
+    matches.forEach(match => {
+      details[match.recommendationIndex].followed = true;
+      details[match.recommendationIndex].timesFollowed++;
+      details[match.recommendationIndex].lastFollowed = meal.loggedAt;
+      details[match.recommendationIndex].matchedMeals.push(meal.description);
+    });
+  });
+
+  const recommendationsFollowed = details.filter(d => d.followed).length;
+  const highPriorityRecs = details.filter(d => d.recommendation.priority === 'high');
+  const highPriorityFollowed = highPriorityRecs.filter(d => d.followed).length;
+
+  const sortedMeals = [...meals].sort((a, b) => 
+    new Date(b.loggedAt).getTime() - new Date(a.loggedAt).getTime()
+  );
+  
+  let streak = 0;
+  for (const meal of sortedMeals) {
+    const matches = matchMealToRecommendations(meal.description, recommendations);
+    if (matches.length > 0) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  const adherenceStats: AdherenceStats = {
+    totalRecommendations: recommendations.length,
+    recommendationsFollowed,
+    adherencePercentage: Math.round((recommendationsFollowed / recommendations.length) * 100),
+    highPriorityFollowed,
+    highPriorityTotal: highPriorityRecs.length,
+    streak
+  };
+
+  return { adherenceStats, details };
+}

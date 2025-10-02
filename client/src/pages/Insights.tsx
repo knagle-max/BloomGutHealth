@@ -32,6 +32,11 @@ export default function Insights() {
     enabled: !!userId,
   });
 
+  const { data: adherence } = useQuery<any>({
+    queryKey: [`/api/health/adherence/${userId}?days=7`],
+    enabled: !!userId,
+  });
+
   if (analysisLoading || recLoading) {
     return (
       <div className="pb-20 pt-4 px-4 max-w-md mx-auto flex items-center justify-center min-h-[50vh]">
@@ -70,11 +75,12 @@ export default function Insights() {
       </div>
 
       <Tabs defaultValue="health" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="health" data-testid="tab-health">Health</TabsTrigger>
-          <TabsTrigger value="molecules" data-testid="tab-molecules">Molecules</TabsTrigger>
+          <TabsTrigger value="molecules" data-testid="tab-molecules">SCFAs</TabsTrigger>
           <TabsTrigger value="recommendations" data-testid="tab-recommendations">Tips</TabsTrigger>
-          <TabsTrigger value="progress" data-testid="tab-progress">Progress</TabsTrigger>
+          <TabsTrigger value="adherence" data-testid="tab-adherence">Track</TabsTrigger>
+          <TabsTrigger value="progress" data-testid="tab-progress">Trends</TabsTrigger>
         </TabsList>
 
         <TabsContent value="health" className="space-y-4 mt-6">
@@ -299,6 +305,152 @@ export default function Insights() {
           </Card>
         </TabsContent>
 
+        <TabsContent value="adherence" className="space-y-4 mt-6">
+          <Card data-testid="card-adherence">
+            <CardHeader>
+              <CardTitle className="text-base flex items-center gap-2">
+                <Target className="h-5 w-5" />
+                Following Your Plan
+              </CardTitle>
+              <p className="text-xs text-muted-foreground">
+                Track which recommendations you're following this week
+              </p>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {adherence && adherence.adherenceStats ? (
+                <>
+                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="text-xs text-muted-foreground">Overall Adherence</p>
+                        <p className="text-3xl font-bold text-primary">{adherence.adherenceStats.adherencePercentage}%</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs text-muted-foreground">Following</p>
+                        <p className="text-2xl font-semibold">
+                          {adherence.adherenceStats.recommendationsFollowed}/{adherence.adherenceStats.totalRecommendations}
+                        </p>
+                      </div>
+                    </div>
+                    <Progress value={adherence.adherenceStats.adherencePercentage} className="h-3" />
+                    <div className="mt-3 pt-3 border-t border-primary/20">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground">High Priority Tips</span>
+                        <span className="font-semibold">
+                          {adherence.adherenceStats.highPriorityFollowed}/{adherence.adherenceStats.highPriorityTotal}
+                        </span>
+                      </div>
+                      {adherence.adherenceStats.streak > 0 && (
+                        <div className="flex items-center gap-2 mt-2">
+                          <CheckCircle2 className="h-4 w-4 text-green-600" />
+                          <span className="text-xs text-green-600 dark:text-green-400 font-medium">
+                            {adherence.adherenceStats.streak} meal streak following recommendations!
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h4 className="text-sm font-semibold">Recommendation Tracker</h4>
+                    {adherence.details && adherence.details.length > 0 ? (
+                      adherence.details.map((detail: any, idx: number) => (
+                        <div 
+                          key={idx} 
+                          className={`rounded-lg p-3 border ${
+                            detail.followed 
+                              ? 'bg-green-600/10 border-green-600/30' 
+                              : 'bg-muted/30 border-muted'
+                          }`}
+                          data-testid={`adherence-item-${idx}`}
+                        >
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex-1">
+                              <p className="text-sm font-medium">{detail.recommendation.food}</p>
+                              {detail.recommendation.priority === 'high' && (
+                                <Badge variant="outline" className="mt-1 text-xs border-primary text-primary">
+                                  High Priority
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-2">
+                              {detail.followed ? (
+                                <CheckCircle2 className="h-5 w-5 text-green-600" />
+                              ) : (
+                                <AlertCircle className="h-5 w-5 text-muted-foreground" />
+                              )}
+                            </div>
+                          </div>
+                          {detail.followed ? (
+                            <div className="space-y-1">
+                              <p className="text-xs text-green-600 dark:text-green-400 font-medium">
+                                Followed {detail.timesFollowed} time{detail.timesFollowed > 1 ? 's' : ''} this week
+                              </p>
+                              {detail.matchedMeals && detail.matchedMeals.length > 0 && (
+                                <div className="mt-2 space-y-1">
+                                  <p className="text-xs text-muted-foreground font-medium">Recent meals:</p>
+                                  {detail.matchedMeals.slice(0, 2).map((meal: string, mIdx: number) => (
+                                    <p key={mIdx} className="text-xs text-muted-foreground pl-2">• {meal}</p>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <p className="text-xs text-muted-foreground">
+                              Not logged yet - {detail.recommendation.servingGuidance}
+                            </p>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <p className="text-sm text-muted-foreground">No adherence data available</p>
+                    )}
+                  </div>
+
+                  {adherence.adherenceStats.adherencePercentage >= 70 && (
+                    <div className="bg-gradient-to-r from-green-600/10 to-green-600/5 border border-green-600/30 rounded-lg p-4">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-semibold text-green-600 dark:text-green-400">
+                            Excellent Progress!
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            You're following most of your recommendations. Keep this up to see improvements in your health scores and molecule production.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {adherence.adherenceStats.adherencePercentage < 50 && adherence.adherenceStats.highPriorityFollowed === 0 && (
+                    <div className="bg-yellow-600/10 border border-yellow-600/30 rounded-lg p-4">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
+                        <div>
+                          <p className="text-sm font-semibold text-yellow-600 dark:text-yellow-400">
+                            Focus on High Priority Tips
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Try adding at least one high-priority food to your next meal. Small changes can make a big difference!
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <div className="text-center py-8">
+                  <Target className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-sm text-muted-foreground">
+                    Log meals to start tracking adherence to your recommendations
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         <TabsContent value="progress" className="space-y-4 mt-6">
           <Card data-testid="card-progress">
             <CardHeader>
@@ -373,6 +525,53 @@ export default function Insights() {
                       </div>
                     </div>
                   ))}
+
+                  {adherence && adherence.adherenceStats && progress && progress.weeklyData && progress.weeklyData.length >= 1 && (
+                    <div className="bg-primary/5 border border-primary/30 rounded-lg p-4 space-y-3">
+                      <h4 className="text-sm font-semibold flex items-center gap-2">
+                        <Target className="h-4 w-4" />
+                        Impact of Following Recommendations
+                      </h4>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="bg-background rounded p-3">
+                          <p className="text-xs text-muted-foreground mb-1">Current Adherence</p>
+                          <p className="text-2xl font-bold text-primary">{adherence.adherenceStats.adherencePercentage}%</p>
+                        </div>
+                        <div className="bg-background rounded p-3">
+                          <p className="text-xs text-muted-foreground mb-1">Health Trend</p>
+                          <p className={`text-2xl font-bold ${
+                            progress.weeklyData.length >= 2 ? (() => {
+                              const latest = progress.weeklyData[progress.weeklyData.length - 1];
+                              const previous = progress.weeklyData[progress.weeklyData.length - 2];
+                              const avgLatest = (latest.averageScores.inflammation + latest.averageScores.gutBarrier + latest.averageScores.metabolic + latest.averageScores.immune) / 4;
+                              const avgPrev = (previous.averageScores.inflammation + previous.averageScores.gutBarrier + previous.averageScores.metabolic + previous.averageScores.immune) / 4;
+                              return avgLatest > avgPrev ? 'text-green-600' : avgLatest < avgPrev ? 'text-red-600' : 'text-yellow-600';
+                            })() : 'text-primary'
+                          }`}>
+                            {progress.weeklyData.length >= 2 ? (() => {
+                              const latest = progress.weeklyData[progress.weeklyData.length - 1];
+                              const previous = progress.weeklyData[progress.weeklyData.length - 2];
+                              const avgLatest = (latest.averageScores.inflammation + latest.averageScores.gutBarrier + latest.averageScores.metabolic + latest.averageScores.immune) / 4;
+                              const avgPrev = (previous.averageScores.inflammation + previous.averageScores.gutBarrier + previous.averageScores.metabolic + previous.averageScores.immune) / 4;
+                              const change = avgLatest - avgPrev;
+                              return change > 0 ? `+${Math.round(change)}` : Math.round(change);
+                            })() : (() => {
+                              const latest = progress.weeklyData[0];
+                              const avg = Math.round((latest.averageScores.inflammation + latest.averageScores.gutBarrier + latest.averageScores.metabolic + latest.averageScores.immune) / 4);
+                              return avg;
+                            })()}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {adherence.adherenceStats.adherencePercentage >= 70 
+                          ? 'High adherence is driving your health improvements. Keep following your personalized tips!'
+                          : adherence.adherenceStats.adherencePercentage >= 40
+                          ? 'Moderate adherence. Try following more recommendations to accelerate improvements.'
+                          : 'Low adherence detected. Following your recommendations more consistently can lead to better health outcomes.'}
+                      </p>
+                    </div>
+                  )}
 
                   {progress.weeklyData.length >= 2 && (
                     <div className="bg-gradient-to-r from-green-600/10 to-green-600/5 border border-green-600/30 rounded-lg p-4">

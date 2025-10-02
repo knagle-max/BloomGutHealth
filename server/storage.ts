@@ -60,6 +60,7 @@ export interface IStorage {
   getRecommendations(sampleId: string): Promise<Recommendation[]>;
   insertRecommendation(recommendation: InsertRecommendation): Promise<void>;
   
+  getMeal(id: string): Promise<Meal | undefined>;
   getMeals(userId: string): Promise<Meal[]>;
   insertMeal(meal: InsertMeal): Promise<Meal>;
   updateMeal(id: string, updates: Partial<Meal>): Promise<Meal>;
@@ -321,6 +322,11 @@ export class DatabaseStorage implements IStorage {
 
   async insertRecommendation(recommendation: InsertRecommendation): Promise<void> {
     await db.insert(recommendations).values(recommendation);
+  }
+
+  async getMeal(id: string): Promise<Meal | undefined> {
+    const [meal] = await db.select().from(meals).where(eq(meals.id, id));
+    return meal;
   }
 
   async getMeals(userId: string): Promise<Meal[]> {
