@@ -4,6 +4,8 @@ import { storage } from "./storage";
 import multer from "multer";
 import FormData from "form-data";
 import fetch from "node-fetch";
+import bcrypt from "bcrypt";
+import { insertUserSchema } from "@shared/schema";
 
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
 const upload = multer({ dest: "/tmp/uploads/" });
@@ -937,6 +939,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error('Meal adherence check error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const result = insertUserSchema.safeParse(req.body);
+      
+      if (!result.success) {
+        return res.status(400).json({ error: "Invalid input" });
+      }
+
+      const { username, password } = result.data;
+
+      if (password.length < 8) {
+        return res.status(400).json({ error: "Password must be at least 8 characters" });
+      }
+
+      const existingUser = await storage.getUserByUsername(username);
+      if (existingUser) {
+        return res.status(400).json({ error: "Username already exists" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = await storage.createUser({ username, password: hashedPassword });
+
+      req.session.userId = user.id;
+      req.session.username = user.username;
+
+      res.json({ success: true, user: { id: user.id, username: user.username } });
+    } catch (error: any) {
+      console.error("Signup error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { username, password } = req.body;
+
+      if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+      }
+
+      const user = await storage.getUserByUsername(username);
+      if (!user) {
+        return res.status(401).json({ error: "Invalid username or password" });
+      }
+
+      const isValid = await bcrypt.compare(password, user.password);
+      if (!isValid) {
+        return res.status(401).json({ error: "Invalid username or password" });
+      }
+
+      req.session.userId = user.id;
+      req.session.username = user.username;
+
+      res.json({ success: true, user: { id: user.id, username: user.username } });
+    } catch (error: any) {
+      console.error("Login error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      req.session.destroy((err) => {
+        if (err) {
+          return res.status(500).json({ error: "Failed to logout" });
+        }
+        res.json({ success: true });
+      });
+    } catch (error: any) {
+      console.error("Logout error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/auth/me", async (req, res) => {
+    try {
+      if (!req.session.userId) {
+        return res.json({ user: null });
+      }
+
+      const user = await storage.getUser(req.session.userId);
+      if (!user) {
+        return res.json({ user: null });
+      }
+
+      res.json({ user: { id: user.id, username: user.username } });
+    } catch (error: any) {
+      console.error("Get me error:", error);
       res.status(500).json({ error: error.message });
     }
   });

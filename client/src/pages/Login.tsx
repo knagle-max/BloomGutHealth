@@ -3,18 +3,41 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLocation } from 'wouter';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
 import heroImage from '@assets/generated_images/Microbiome_hero_background_image_ffdb574d.png';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    //todo: remove mock functionality - integrate with Firebase auth
-    console.log('Login attempt:', { email, password });
-    setLocation('/');
+    setIsLoading(true);
+
+    try {
+      const response = await apiRequest('POST', '/api/auth/login', { username, password });
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Welcome back!",
+          description: `Logged in as ${username}`,
+        });
+        setLocation('/');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Login failed",
+        description: error.message || "Invalid username or password",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -39,15 +62,15 @@ export default function Login() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="username">Username</Label>
             <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="username"
+              type="text"
+              placeholder="your_username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              data-testid="input-email"
+              data-testid="input-username"
             />
           </div>
 
@@ -64,8 +87,8 @@ export default function Login() {
             />
           </div>
 
-          <Button type="submit" className="w-full h-12" data-testid="button-login">
-            Sign In
+          <Button type="submit" className="w-full h-12" data-testid="button-login" disabled={isLoading}>
+            {isLoading ? "Signing in..." : "Sign In"}
           </Button>
         </form>
 

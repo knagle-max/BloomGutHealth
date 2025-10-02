@@ -2,40 +2,42 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useLocation } from 'wouter';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest } from '@/lib/queryClient';
 import heroImage from '@assets/generated_images/Microbiome_hero_background_image_ffdb574d.png';
 
-const healthConditions = ['IBS', 'IBD', 'GERD', 'Food Sensitivities', 'Other'];
-const dietaryPreferences = ['Vegetarian', 'Vegan', 'Keto', 'Paleo', 'Gluten-Free'];
-
 export default function Signup() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [ageRange, setAgeRange] = useState('');
-  const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
-  const [selectedDiets, setSelectedDiets] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    //todo: remove mock functionality - integrate with Firebase auth
-    console.log('Signup:', { name, email, password, ageRange, selectedConditions, selectedDiets });
-    setLocation('/');
-  };
+    setIsLoading(true);
 
-  const toggleCondition = (condition: string) => {
-    setSelectedConditions(prev =>
-      prev.includes(condition) ? prev.filter(c => c !== condition) : [...prev, condition]
-    );
-  };
+    try {
+      const response = await apiRequest('POST', '/api/auth/signup', { username, password });
+      const data = await response.json();
 
-  const toggleDiet = (diet: string) => {
-    setSelectedDiets(prev =>
-      prev.includes(diet) ? prev.filter(d => d !== diet) : [...prev, diet]
-    );
+      if (data.success) {
+        toast({
+          title: "Account created!",
+          description: `Welcome to Bloom, ${username}!`,
+        });
+        setLocation('/');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Signup failed",
+        description: error.message || "Unable to create account",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -52,30 +54,23 @@ export default function Signup() {
         </div>
       </div>
 
-      <div className="flex-1 px-4 py-6 max-w-md mx-auto w-full pb-8">
+      <div className="flex-1 px-4 py-8 max-w-md mx-auto w-full">
+        <div className="mb-8">
+          <h2 className="font-display text-2xl font-semibold mb-2">Create Account</h2>
+          <p className="text-sm text-muted-foreground">Start your journey to better gut health</p>
+        </div>
+
         <form onSubmit={handleSignup} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="username">Username</Label>
             <Input
-              id="name"
-              placeholder="Sarah Johnson"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="username"
+              type="text"
+              placeholder="Choose a username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
-              data-testid="input-name"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="you@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              data-testid="input-email"
+              data-testid="input-username"
             />
           </div>
 
@@ -93,68 +88,8 @@ export default function Signup() {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="age">Age Range</Label>
-            <Select value={ageRange} onValueChange={setAgeRange} required>
-              <SelectTrigger id="age" data-testid="select-age">
-                <SelectValue placeholder="Select age range" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="18-25">18-25</SelectItem>
-                <SelectItem value="26-35">26-35</SelectItem>
-                <SelectItem value="36-45">36-45</SelectItem>
-                <SelectItem value="46-55">46-55</SelectItem>
-                <SelectItem value="55+">55+</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Health Conditions (Select all that apply)</Label>
-            <div className="space-y-2">
-              {healthConditions.map((condition) => (
-                <div key={condition} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={condition}
-                    checked={selectedConditions.includes(condition)}
-                    onCheckedChange={() => toggleCondition(condition)}
-                    data-testid={`checkbox-${condition.toLowerCase().replace(/\s+/g, '-')}`}
-                  />
-                  <label
-                    htmlFor={condition}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {condition}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Dietary Preferences (Optional)</Label>
-            <div className="space-y-2">
-              {dietaryPreferences.map((diet) => (
-                <div key={diet} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={diet}
-                    checked={selectedDiets.includes(diet)}
-                    onCheckedChange={() => toggleDiet(diet)}
-                    data-testid={`checkbox-${diet.toLowerCase().replace(/\s+/g, '-')}`}
-                  />
-                  <label
-                    htmlFor={diet}
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    {diet}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <Button type="submit" className="w-full h-12" data-testid="button-signup">
-            Create Account
+          <Button type="submit" className="w-full h-12" data-testid="button-signup" disabled={isLoading}>
+            {isLoading ? "Creating account..." : "Create Account"}
           </Button>
         </form>
 

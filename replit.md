@@ -67,7 +67,9 @@ User Upload → Node Backend → Python ML Service
 #### Backend
 - **Node.js/Express** - API gateway and data persistence
 - **Python FastAPI** - ML microservice (port 8000)
-- **In-memory storage** - Development data layer
+- **PostgreSQL** - Primary database with Drizzle ORM
+- **Session Management** - Persistent sessions with connect-pg-simple
+- **Authentication** - Bcrypt password hashing, session-based auth
 
 #### ML Libraries
 - NumPy, Pandas - Data processing
@@ -87,6 +89,17 @@ User Upload → Node Backend → Python ML Service
 - `GET /api/microbiome/cohorts` - List available cohort groups
 - `GET /api/ml/health` - ML service health check
 
+#### Authentication
+- `POST /api/auth/signup` - Create new user account (username, password)
+  - Validates unique username, password >= 8 chars
+  - Uses bcrypt hashing with 10 salt rounds
+  - Creates session automatically
+- `POST /api/auth/login` - Authenticate user
+  - Uses bcrypt.compare() for password verification
+  - Creates persistent session
+- `POST /api/auth/logout` - Destroy session
+- `GET /api/auth/me` - Get current authenticated user
+
 #### Nutrition Tracking (API Ninjas Integration)
 - `POST /api/meals` - Analyze meal with natural language input (e.g., "2 eggs and oatmeal")
   - Returns: Comprehensive macro/micronutrient breakdown
@@ -101,6 +114,8 @@ User Upload → Node Backend → Python ML Service
 ### Database Schema
 
 **Core Tables:**
+- `users` - User accounts with bcrypt-hashed passwords
+- `session` - Persistent session storage (connect-pg-simple)
 - `microbiome_samples` - Test uploads and processing status
 - `bacterial_composition` - Species data with genome info
 - `metabolites` - Predicted molecules with production genes

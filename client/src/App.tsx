@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Switch, Route, useLocation } from 'wouter';
+import { Switch, Route, useLocation, Redirect } from 'wouter';
 import { queryClient } from './lib/queryClient';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { AuthProvider, useAuth } from '@/lib/auth';
 import AppHeader from '@/components/AppHeader';
 import BottomNav from '@/components/BottomNav';
 import Dashboard from '@/pages/Dashboard';
@@ -16,22 +17,25 @@ import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/not-found';
 
-function Router() {
-  return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
-      <Route path="/" component={Dashboard} />
-      <Route path="/nutrition" component={NutritionHistory} />
-      <Route path="/microbiome" component={Microbiome} />
-      <Route path="/upload" component={Upload} />
-      <Route path="/insights" component={Insights} />
-      <Route path="/profile">
-        {(params) => <ProfileWrapper />}
-      </Route>
-      <Route component={NotFound} />
-    </Switch>
-  );
+function ProtectedRoute({ component: Component, ...rest }: any) {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Redirect to="/login" />;
+  }
+
+  return <Component {...rest} />;
 }
 
 function ProfileWrapper() {
@@ -51,8 +55,9 @@ function ProfileWrapper() {
   return <Profile isDarkMode={isDarkMode} onToggleDarkMode={toggleDarkMode} />;
 }
 
-function App() {
+function AppContent() {
   const [location] = useLocation();
+  const { user } = useAuth();
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('theme');
@@ -76,24 +81,54 @@ function App() {
   };
 
   const isAuthPage = location === '/login' || location === '/signup';
-  const showNav = !isAuthPage;
+  const showNav = !isAuthPage && user;
 
   return (
+    <div className="min-h-screen bg-background">
+      {showNav && (
+        <AppHeader 
+          userName={user?.username || "Guest"} 
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={toggleDarkMode}
+        />
+      )}
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/">
+          {() => <ProtectedRoute component={Dashboard} />}
+        </Route>
+        <Route path="/nutrition">
+          {() => <ProtectedRoute component={NutritionHistory} />}
+        </Route>
+        <Route path="/microbiome">
+          {() => <ProtectedRoute component={Microbiome} />}
+        </Route>
+        <Route path="/upload">
+          {() => <ProtectedRoute component={Upload} />}
+        </Route>
+        <Route path="/insights">
+          {() => <ProtectedRoute component={Insights} />}
+        </Route>
+        <Route path="/profile">
+          {() => <ProtectedRoute component={ProfileWrapper} />}
+        </Route>
+        <Route component={NotFound} />
+      </Switch>
+      {showNav && <BottomNav />}
+    </div>
+  );
+}
+
+function App() {
+  return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="min-h-screen bg-background">
-          {showNav && (
-            <AppHeader 
-              userName="Sarah Johnson" 
-              isDarkMode={isDarkMode}
-              onToggleDarkMode={toggleDarkMode}
-            />
-          )}
-          <Router />
-          {showNav && <BottomNav />}
-        </div>
-        <Toaster />
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <AppContent />
+          <Toaster />
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
