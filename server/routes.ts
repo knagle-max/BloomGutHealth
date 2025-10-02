@@ -692,6 +692,159 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/health/analysis/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { calculateMoleculeProduction, calculateHealthScores, identifyBacterialGaps, generateFoodRecommendations } = await import('../shared/health-calculations');
+      
+      const meals = await storage.getMeals(userId);
+      const recentMeals = meals.slice(0, 30);
+      
+      if (recentMeals.length < 3) {
+        return res.json({
+          mealsAnalyzed: recentMeals.length,
+          molecules: null,
+          healthScores: [],
+          message: 'Log at least 3 meals for health analysis',
+        });
+      }
+
+      const totals = recentMeals.reduce((acc, meal) => {
+        acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+        acc.protein += meal.totalProtein || 0;
+        acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+        return acc;
+      }, { fiber: 0, protein: 0, sugar: 0 });
+
+      const avgTotals = {
+        fiber: totals.fiber / recentMeals.length,
+        protein: totals.protein / recentMeals.length,
+        sugar: totals.sugar / recentMeals.length,
+      };
+
+      const molecules = calculateMoleculeProduction(totals.fiber, totals.protein);
+      const healthScores = calculateHealthScores(molecules, totals.sugar);
+      const gaps = identifyBacterialGaps(avgTotals.fiber, avgTotals.protein, avgTotals.sugar);
+
+      res.json({
+        mealsAnalyzed: recentMeals.length,
+        molecules,
+        healthScores,
+        bacterialGaps: gaps,
+        averages: avgTotals,
+      });
+    } catch (error: any) {
+      console.error('Health analysis error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/health/recommendations/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { identifyBacterialGaps, generateFoodRecommendations, calculateMoleculeProduction, calculateHealthScores } = await import('../shared/health-calculations');
+      
+      const meals = await storage.getMeals(userId);
+      const recentMeals = meals.slice(0, 30);
+      
+      if (recentMeals.length < 3) {
+        return res.json({
+          recommendations: [],
+          message: 'Log more meals for personalized recommendations',
+        });
+      }
+
+      const totals = recentMeals.reduce((acc, meal) => {
+        acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+        acc.protein += meal.totalProtein || 0;
+        acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+        return acc;
+      }, { fiber: 0, protein: 0, sugar: 0 });
+
+      const avgTotals = {
+        fiber: totals.fiber / recentMeals.length,
+        protein: totals.protein / recentMeals.length,
+        sugar: totals.sugar / recentMeals.length,
+      };
+
+      const molecules = calculateMoleculeProduction(totals.fiber, totals.protein);
+      const healthScores = calculateHealthScores(molecules, totals.sugar);
+      const gaps = identifyBacterialGaps(avgTotals.fiber, avgTotals.protein, avgTotals.sugar);
+      const recommendations = generateFoodRecommendations(gaps, healthScores);
+
+      res.json({
+        recommendations,
+        gaps,
+        healthScores,
+        mealsAnalyzed: recentMeals.length,
+      });
+    } catch (error: any) {
+      console.error('Recommendations error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/health/progress/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { weeks = 4 } = req.query;
+      const { calculateMoleculeProduction, calculateHealthScores } = await import('../shared/health-calculations');
+      
+      const meals = await storage.getMeals(userId);
+      const now = new Date();
+      const weeksToAnalyze = parseInt(weeks as string) || 4;
+      
+      const weeklyData = [];
+      
+      for (let i = weeksToAnalyze - 1; i >= 0; i--) {
+        const weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - (i * 7 + 7));
+        const weekEnd = new Date(now);
+        weekEnd.setDate(now.getDate() - (i * 7));
+        
+        const weekMeals = meals.filter(meal => {
+          const mealDate = new Date(meal.loggedAt);
+          return mealDate >= weekStart && mealDate < weekEnd;
+        });
+        
+        if (weekMeals.length > 0) {
+          const totals = weekMeals.reduce((acc, meal) => {
+            acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+            acc.protein += meal.totalProtein || 0;
+            acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+            return acc;
+          }, { fiber: 0, protein: 0, sugar: 0 });
+
+          const molecules = calculateMoleculeProduction(totals.fiber, totals.protein);
+          const healthScores = calculateHealthScores(molecules, totals.sugar);
+          
+          weeklyData.push({
+            week: `Week ${weeksToAnalyze - i}`,
+            weekStart: weekStart.toISOString().split('T')[0],
+            weekEnd: weekEnd.toISOString().split('T')[0],
+            mealsLogged: weekMeals.length,
+            molecules,
+            healthScores,
+            averageScores: {
+              inflammation: healthScores.find(s => s.category === 'Inflammation')?.score || 0,
+              gutBarrier: healthScores.find(s => s.category === 'Gut Barrier')?.score || 0,
+              metabolic: healthScores.find(s => s.category === 'Metabolic Health')?.score || 0,
+              immune: healthScores.find(s => s.category === 'Immune Function')?.score || 0,
+            }
+          });
+        }
+      }
+
+      res.json({
+        weeklyData,
+        totalWeeks: weeksToAnalyze,
+      });
+    } catch (error: any) {
+      console.error('Progress tracking error:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
