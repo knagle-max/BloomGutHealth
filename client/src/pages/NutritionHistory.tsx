@@ -129,9 +129,9 @@ function HistoricalTrends({ userId, targets }: { userId: string; targets: any })
 
   const getStatusColor = (current: number, target: number) => {
     const percentage = (current / target) * 100;
-    if (percentage >= 90 && percentage <= 110) return 'text-excellent';
-    if (percentage >= 70 && percentage <= 130) return 'text-good';
-    return 'text-needs-attention';
+    if (percentage >= 90 && percentage <= 110) return 'text-green-600 dark:text-green-400';
+    if (percentage >= 70 && percentage <= 130) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
   };
 
   return (
@@ -452,9 +452,9 @@ export default function NutritionHistory() {
   };
 
   const getStatusColor = (percentage: number) => {
-    if (percentage >= 90 && percentage <= 110) return 'text-excellent';
-    if (percentage >= 70 && percentage <= 130) return 'text-good';
-    return 'text-needs-attention';
+    if (percentage >= 90 && percentage <= 110) return 'text-green-600 dark:text-green-400';
+    if (percentage >= 70 && percentage <= 130) return 'text-yellow-600 dark:text-yellow-400';
+    return 'text-red-600 dark:text-red-400';
   };
 
   return (
@@ -469,15 +469,6 @@ export default function NutritionHistory() {
             <p className="text-sm text-muted-foreground">Track your daily intake</p>
           </div>
         </div>
-        {!showLogForm && (
-          <Button 
-            onClick={() => setShowLogForm(true)} 
-            size="icon"
-            data-testid="button-show-log-meal"
-          >
-            <Plus className="h-5 w-5" />
-          </Button>
-        )}
       </div>
 
       {showLogForm && (
@@ -531,6 +522,8 @@ export default function NutritionHistory() {
           </CardContent>
         </Card>
       )}
+
+      <HistoricalTrends userId={userId} targets={nutrientTargets} />
 
       <Card className="mb-6" data-testid="card-daily-summary">
         <CardHeader>
@@ -625,10 +618,22 @@ export default function NutritionHistory() {
       </Card>
 
       <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
-          <TrendingUp className="h-5 w-5" />
-          Recent Meals
-        </h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-semibold flex items-center gap-2">
+            <TrendingUp className="h-5 w-5" />
+            Recent Meals
+          </h2>
+          {!showLogForm && (
+            <Button 
+              onClick={() => setShowLogForm(true)} 
+              size="sm"
+              data-testid="button-show-log-meal"
+            >
+              <Plus className="h-4 w-4 mr-1" />
+              Add Meal
+            </Button>
+          )}
+        </div>
         
         {meals.length === 0 ? (
           <Card>
@@ -839,8 +844,6 @@ export default function NutritionHistory() {
           </CardContent>
         </Card>
       )}
-
-      <HistoricalTrends userId={userId} targets={nutrientTargets} />
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
