@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'wouter';
 
 interface AppHeaderProps {
   userName?: string;
@@ -31,11 +32,13 @@ export default function AppHeader({ userName = 'User', isDarkMode = false, onTog
               {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </Button>
           )}
-          <Avatar className="w-9 h-9" data-testid="avatar-user">
-            <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+          <Link href="/profile">
+            <Avatar className="w-9 h-9 cursor-pointer hover-elevate" data-testid="avatar-user">
+              <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
         </div>
       </div>
     </header>
