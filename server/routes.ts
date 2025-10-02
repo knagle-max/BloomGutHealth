@@ -241,20 +241,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const nutritionData = await nutritionResponse.json() as any;
 
-      // Calculate totals
+      if (!Array.isArray(nutritionData) || nutritionData.length === 0) {
+        return res.status(400).json({ 
+          error: "Unable to analyze this meal. Please try a different description.",
+          nutritionalData: []
+        });
+      }
+
+      const hasValidData = nutritionData.every((item: any) => 
+        typeof item === 'object' && item !== null && 'calories' in item
+      );
+
+      if (!hasValidData) {
+        return res.status(400).json({ 
+          error: "Nutrition data unavailable for this meal",
+          nutritionalData: []
+        });
+      }
+
       let totalCalories = 0;
       let totalProtein = 0;
       let totalCarbs = 0;
       let totalFat = 0;
 
       for (const item of nutritionData) {
-        totalCalories += item.calories || 0;
-        totalProtein += item.protein_g || 0;
-        totalCarbs += item.carbohydrates_total_g || 0;
-        totalFat += item.fat_total_g || 0;
+        totalCalories += parseFloat(item.calories) || 0;
+        totalProtein += parseFloat(item.protein_g) || 0;
+        totalCarbs += parseFloat(item.carbohydrates_total_g) || 0;
+        totalFat += parseFloat(item.fat_total_g) || 0;
       }
 
-      // Save meal with nutrition data
       const meal = await storage.insertMeal({
         userId,
         mealText,

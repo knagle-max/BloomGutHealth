@@ -33,7 +33,14 @@ export default function LogMeal() {
       return await response.json();
     },
     onSuccess: (data) => {
-      setNutritionData(data.nutritionalData);
+      if (data.nutritionalData) {
+        setNutritionData(data.nutritionalData);
+      }
+      
+      const userId = demoUser?.id || 'demo-user-123';
+      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
+      
       toast({
         title: 'Meal logged successfully!',
         description: 'Your food has been analyzed with nutritional breakdown.',
