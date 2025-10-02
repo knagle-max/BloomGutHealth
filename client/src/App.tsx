@@ -7,7 +7,6 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import AppHeader from '@/components/AppHeader';
 import BottomNav from '@/components/BottomNav';
 import Dashboard from '@/pages/Dashboard';
-import LogMeal from '@/pages/LogMeal';
 import Upload from '@/pages/Upload';
 import Insights from '@/pages/Insights';
 import Profile from '@/pages/Profile';
@@ -22,7 +21,6 @@ function Router() {
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/" component={Dashboard} />
-      <Route path="/log-meal" component={LogMeal} />
       <Route path="/nutrition" component={NutritionHistory} />
       <Route path="/upload" component={Upload} />
       <Route path="/insights" component={Insights} />
