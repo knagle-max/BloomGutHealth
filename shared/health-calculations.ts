@@ -339,7 +339,7 @@ export function matchMealToRecommendations(
 ): FoodMatch[] {
   const matches: FoodMatch[] = [];
   
-  if (!mealDescription) {
+  if (!mealDescription || !recommendations || recommendations.length === 0) {
     return matches;
   }
   

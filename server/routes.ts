@@ -95,6 +95,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Upload error:", error);
+      if (error.code === 'ECONNREFUSED' || error.code === 'ENOTFOUND' || error.message?.includes('ECONNREFUSED')) {
+        return res.status(503).json({ 
+          error: "ML analysis service is currently unavailable. Please try again later." 
+        });
+      }
       res.status(500).json({ error: error.message });
     }
   });
@@ -352,15 +357,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/meals/:userId", requireAuth, async (req, res) => {
+  app.get("/api/meals", requireAuth, async (req, res) => {
     try {
       const userId = req.session.userId!;
-      const requestedUserId = req.params.userId;
-
-      if (userId !== requestedUserId) {
-        return res.status(403).json({ error: "Access denied" });
-      }
-
       const meals = await storage.getMeals(userId);
       res.json(meals);
     } catch (error: any) {
@@ -1073,7 +1072,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const adherenceData = await fetch(`http://localhost:5000/api/health/adherence/${userId}?days=7`);
       const adherence = await adherenceData.json() as any;
       
-      const matches = matchMealToRecommendations(meal.mealText, adherence.recommendations);
+      const recommendations = adherence?.recommendations || [];
+      const matches = matchMealToRecommendations(meal.mealText, recommendations);
 
       res.json({
         meal,

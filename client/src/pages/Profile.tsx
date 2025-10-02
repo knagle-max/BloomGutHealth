@@ -2,6 +2,8 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { User, Mail, Calendar, Heart, LogOut, Moon, Sun } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { useLocation } from 'wouter';
 
 //todo: remove mock functionality - replace with real user data
 const mockUser = {
@@ -19,7 +21,14 @@ interface ProfileProps {
 }
 
 export default function Profile({ isDarkMode = false, onToggleDarkMode }: ProfileProps) {
+  const { logout } = useAuth();
+  const [, setLocation] = useLocation();
   const initials = mockUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+
+  const handleLogout = async () => {
+    await logout();
+    setLocation('/login');
+  };
 
   return (
     <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
@@ -100,6 +109,7 @@ export default function Profile({ isDarkMode = false, onToggleDarkMode }: Profil
         <Button
           variant="outline"
           className="w-full justify-start gap-3 h-12"
+          onClick={handleLogout}
           data-testid="button-logout"
         >
           <LogOut className="w-5 h-5" />

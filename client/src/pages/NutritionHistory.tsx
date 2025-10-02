@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import MealTypeSelector, { MealType } from '@/components/MealTypeSelector';
+import { useAuth } from '@/lib/auth';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -273,23 +274,23 @@ export default function NutritionHistory() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [mealToDelete, setMealToDelete] = useState<string | null>(null);
   const { toast } = useToast();
+  const { user } = useAuth();
 
-  const { data: demoUser } = useQuery<{ id: string; username: string }>({
-    queryKey: ['/api/demo/user'],
-  });
+  const userId = user?.id || '';
 
-  const userId = demoUser?.id || 'demo-user-123';
-
-  const { data: dailyData, isLoading: dailyLoading } = useQuery<any>({
+  const { data: dailyData, isLoading: dailyLoading} = useQuery<any>({
     queryKey: ['/api/nutrition/daily', userId],
+    enabled: !!userId,
   });
 
   const { data: targets, isLoading: targetsLoading } = useQuery<any>({
     queryKey: ['/api/nutrition/targets', userId],
+    enabled: !!userId,
   });
 
   const { data: allMeals, isLoading: mealsLoading } = useQuery<any[]>({
     queryKey: ['/api/meals', userId],
+    enabled: !!userId,
   });
 
   const logMealMutation = useMutation({
