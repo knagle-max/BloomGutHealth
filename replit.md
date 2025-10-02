@@ -76,12 +76,22 @@ User Upload → Node Backend → Python ML Service
 
 ### API Endpoints
 
+#### Demo Data (Explore Without Upload)
+- `GET /api/demo/user` - Get demo user profile
+- `GET /api/demo/samples` - Get demo microbiome samples
+
 #### Microbiome Analysis
 - `POST /api/microbiome/upload` - Upload test file (FASTQ/FASTA/CSV)
 - `POST /api/microbiome/analyze/:sampleId` - Trigger ML analysis
 - `GET /api/microbiome/results/:sampleId` - Get analysis results
 - `GET /api/microbiome/cohorts` - List available cohort groups
 - `GET /api/ml/health` - ML service health check
+
+#### Nutrition Tracking (API Ninjas Integration)
+- `POST /api/meals` - Analyze meal with natural language input (e.g., "2 eggs and oatmeal")
+  - Returns: Comprehensive macro/micronutrient breakdown
+  - Macros: calories, protein, carbs, fat
+  - Micros: fiber, sugar, sodium, potassium, cholesterol
 
 #### ML Service (Python - port 8000)
 - `POST /api/ml/upload` - Process uploaded files
@@ -114,15 +124,42 @@ User Upload → Node Backend → Python ML Service
 2. Start ML service: `./start_ml_service.sh` (manual)
 
 ### Key Features
-- Mobile-first responsive design
+- **Demo Mode**: Fully functional without microbiome data upload
+  - Pre-loaded sample analysis with bacterial composition
+  - Metabolite predictions and health impacts
+  - Cohort comparisons against elite athletes, centenarians, Mediterranean diet followers
+  - Personalized recommendations
+- **Natural Language Meal Tracking**: "2 eggs and oatmeal" → Complete nutritional breakdown
+  - Macronutrients: Calories, protein, carbs, fat
+  - Micronutrients: Fiber, sugar, sodium, potassium, cholesterol
+  - Powered by API Ninjas (API_NINJAS_KEY required)
+- Mobile-first responsive design (448px container)
 - Animated gut health score visualization
-- Meal and symptom tracking
+- Symptom correlation tracking
 - Microbiome test upload with multiple format support
-- AI-powered insights with explainability
+- Custom ML pipeline with explainability
 - Cohort benchmarking
 - Personalized dietary recommendations
 
-## Recent Changes (October 2025)
+## Recent Changes (October 2, 2025)
+
+### Demo Data System
+- Implemented comprehensive demo microbiome analysis in MemStorage
+- Demo user with pre-analyzed sample showing:
+  - 4 bacterial species with abundance data (F. prausnitzii, A. muciniphila, etc.)
+  - 3 metabolites with predicted concentrations (Butyrate, Propionate, Acetate)
+  - Cohort percentiles: Elite Athletes (72%), Centenarians (76%), Mediterranean (80%)
+  - 3 personalized recommendations with scientific rationale
+- Users can explore full app functionality immediately without data upload
+
+### Nutrition Tracking Integration
+- Added API Ninjas integration for natural language food parsing
+- Real-time nutritional analysis with comprehensive breakdown
+- Displays macros and micronutrients like Cronometer
+- Symptom correlation tracking (bloating, energy, comfort, mood)
+- Frontend successfully fetches and displays all demo and nutrition data
+
+### Earlier Changes (October 2025)
 - Replaced OpenAI/ChatGPT with custom ML pipeline
 - Implemented gene → metabolite → health impact inference
 - Added cohort comparison against elite athletes and centenarians
