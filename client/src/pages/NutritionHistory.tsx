@@ -1,11 +1,23 @@
-import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Utensils, TrendingUp, Calendar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Utensils, TrendingUp, Calendar, Loader2, Plus } from 'lucide-react';
 import { format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
+import { apiRequest, queryClient } from '@/lib/queryClient';
+import MealTypeSelector, { MealType } from '@/components/MealTypeSelector';
 
 export default function NutritionHistory() {
+  const [showLogForm, setShowLogForm] = useState(false);
+  const [mealType, setMealType] = useState<MealType>('breakfast');
+  const [foodDescription, setFoodDescription] = useState('');
+  const { toast } = useToast();
+
   const { data: demoUser } = useQuery<{ id: string; username: string }>({
     queryKey: ['/api/demo/user'],
   });
@@ -23,6 +35,40 @@ export default function NutritionHistory() {
   const { data: allMeals, isLoading: mealsLoading } = useQuery<any[]>({
     queryKey: ['/api/meals', userId],
   });
+
+  const logMealMutation = useMutation({
+    mutationFn: async (data: any) => {
+      const response = await apiRequest('POST', '/api/meals', data);
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
+      
+      toast({
+        title: 'Meal logged successfully!',
+        description: 'Your food has been analyzed with nutritional breakdown.',
+      });
+      
+      setFoodDescription('');
+      setShowLogForm(false);
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error logging meal',
+        description: error.message || 'Please try again',
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const handleSubmit = () => {
+    logMealMutation.mutate({
+      userId,
+      mealText: foodDescription,
+      mealType,
+    });
+  };
 
   if (dailyLoading || targetsLoading || mealsLoading) {
     return (
@@ -67,15 +113,77 @@ export default function NutritionHistory() {
 
   return (
     <div className="max-w-[448px] mx-auto pb-24 px-4 pt-4">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-          <Utensils className="h-6 w-6 text-primary" />
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <Utensils className="h-6 w-6 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">Nutrition History</h1>
+            <p className="text-sm text-muted-foreground">Track your daily intake</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-2xl font-bold">Nutrition History</h1>
-          <p className="text-sm text-muted-foreground">Track your daily intake</p>
-        </div>
+        {!showLogForm && (
+          <Button 
+            onClick={() => setShowLogForm(true)} 
+            size="icon"
+            data-testid="button-show-log-meal"
+          >
+            <Plus className="h-5 w-5" />
+          </Button>
+        )}
       </div>
+
+      {showLogForm && (
+        <Card className="mb-6" data-testid="card-log-meal-form">
+          <CardHeader>
+            <CardTitle>Log Your Meal</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <MealTypeSelector selected={mealType} onChange={setMealType} />
+
+            <div className="space-y-2">
+              <Label htmlFor="food-input">What did you eat?</Label>
+              <Textarea
+                id="food-input"
+                placeholder="E.g., Grilled salmon with quinoa and steamed broccoli..."
+                value={foodDescription}
+                onChange={(e) => setFoodDescription(e.target.value)}
+                className="min-h-24 resize-none"
+                data-testid="input-food-description"
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <Button 
+                onClick={handleSubmit} 
+                className="flex-1" 
+                disabled={!foodDescription.trim() || logMealMutation.isPending}
+                data-testid="button-save-meal"
+              >
+                {logMealMutation.isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Analyzing...
+                  </>
+                ) : (
+                  'Save Meal'
+                )}
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  setShowLogForm(false);
+                  setFoodDescription('');
+                }}
+                data-testid="button-cancel-log-meal"
+              >
+                Cancel
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="mb-6" data-testid="card-daily-summary">
         <CardHeader>
