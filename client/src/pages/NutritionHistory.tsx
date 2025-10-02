@@ -540,7 +540,7 @@ export default function NutritionHistory() {
                 <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}>
                   {Math.round(totals.calories || 0)} / {nutrientTargets.calories || 2000}
                 </span>
-                <Badge variant="outline" data-testid="badge-calories-percentage">
+                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))} data-testid="badge-calories-percentage">
                   {Math.round(calculatePercentage(totals.calories, nutrientTargets.calories))}%
                 </Badge>
               </div>
@@ -555,7 +555,7 @@ export default function NutritionHistory() {
                 <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}>
                   {Math.round(totals.protein || 0)}g / {nutrientTargets.protein || 120}g
                 </span>
-                <Badge variant="outline">
+                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}>
                   {Math.round(calculatePercentage(totals.protein, nutrientTargets.protein))}%
                 </Badge>
               </div>
@@ -570,7 +570,7 @@ export default function NutritionHistory() {
                 <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}>
                   {Math.round(totals.carbs || 0)}g / {nutrientTargets.carbs || 225}g
                 </span>
-                <Badge variant="outline">
+                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}>
                   {Math.round(calculatePercentage(totals.carbs, nutrientTargets.carbs))}%
                 </Badge>
               </div>
@@ -585,7 +585,7 @@ export default function NutritionHistory() {
                 <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}>
                   {Math.round(totals.fat || 0)}g / {nutrientTargets.fat || 67}g
                 </span>
-                <Badge variant="outline">
+                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}>
                   {Math.round(calculatePercentage(totals.fat, nutrientTargets.fat))}%
                 </Badge>
               </div>
