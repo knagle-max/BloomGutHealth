@@ -710,9 +710,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const totals = recentMeals.reduce((acc, meal) => {
-        acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+        const nutritionalData = Array.isArray(meal.nutritionalData) ? meal.nutritionalData : [];
+        acc.fiber += nutritionalData.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0);
         acc.protein += meal.totalProtein || 0;
-        acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+        acc.sugar += nutritionalData.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0);
         return acc;
       }, { fiber: 0, protein: 0, sugar: 0 });
 
@@ -755,9 +756,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const totals = recentMeals.reduce((acc, meal) => {
-        acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+        const nutritionalData = Array.isArray(meal.nutritionalData) ? meal.nutritionalData : [];
+        acc.fiber += nutritionalData.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0);
         acc.protein += meal.totalProtein || 0;
-        acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+        acc.sugar += nutritionalData.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0);
         return acc;
       }, { fiber: 0, protein: 0, sugar: 0 });
 
@@ -809,9 +811,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         
         if (weekMeals.length > 0) {
           const totals = weekMeals.reduce((acc, meal) => {
-            acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+            const nutritionalData = meal.nutritionalData as any[] || [];
+            acc.fiber += nutritionalData.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0);
             acc.protein += meal.totalProtein || 0;
-            acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+            acc.sugar += nutritionalData.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0);
             return acc;
           }, { fiber: 0, protein: 0, sugar: 0 });
 
@@ -870,9 +873,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const mealsForAnalysis = recentMeals.length >= 3 ? recentMeals : allMeals.slice(0, 30);
 
       const totals = mealsForAnalysis.reduce((acc, meal) => {
-        acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+        const nutritionalData = meal.nutritionalData as any[] || [];
+        acc.fiber += nutritionalData.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0);
         acc.protein += meal.totalProtein || 0;
-        acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+        acc.sugar += nutritionalData.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0);
         return acc;
       }, { fiber: 0, protein: 0, sugar: 0 });
 
@@ -888,10 +892,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const recommendations = generateFoodRecommendations(gaps, healthScores);
       
       const mealData = recentMeals
-        .filter(meal => meal.description && meal.description.trim().length > 0)
+        .filter(meal => meal.mealText && meal.mealText.trim().length > 0)
         .map(meal => ({
-          description: meal.description,
-          loggedAt: meal.loggedAt,
+          description: meal.mealText,
+          loggedAt: meal.loggedAt.toISOString(),
         }));
 
       const { adherenceStats, details } = calculateAdherence(mealData, recommendations);
@@ -920,9 +924,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const adherenceData = await fetch(`http://localhost:5000/api/health/adherence/${meal.userId}?days=7`);
-      const adherence = await adherenceData.json();
+      const adherence = await adherenceData.json() as any;
       
-      const matches = matchMealToRecommendations(meal.description, adherence.recommendations);
+      const matches = matchMealToRecommendations(meal.mealText, adherence.recommendations);
 
       res.json({
         meal,
