@@ -156,6 +156,17 @@ User Upload → Node Backend → Python ML Service
 - Cohort benchmarking
 - Personalized dietary recommendations
 
+## Documentation
+
+### ML Architecture Documentation
+**ML_ARCHITECTURE.md** - Comprehensive technical documentation of the Python ML microservice:
+- All 6 service modules (DataProcessor, TaxonomicProfiler, MetabolitePredictor, HealthImpactAnalyzer, CohortComparator, RecommendationEngine)
+- Complete API endpoint specifications with request/response examples
+- Integration patterns between Node backend and ML service
+- Data sources and external APIs (KEGG, MetaCyc, NCBI, HMDB)
+- Current limitations and future enhancements
+- Running instructions and dependency requirements
+
 ## Recent Changes (October 2, 2025)
 
 ### Demo Data System
