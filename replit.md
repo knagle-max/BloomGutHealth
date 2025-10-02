@@ -190,14 +190,28 @@ User Upload → Node Backend → Python ML Service
 - **Smart Error Handling**: Validates API responses to prevent invalid data storage
 - **Real-time Updates**: Cache invalidation ensures nutrition data stays fresh
 
-### Authentication & Authorization (October 2, 2025)
-- **Endpoint Protection**: All data endpoints now require authentication via `requireAuth` middleware
-- **Ownership Verification**: Endpoints verify user owns requested resources (403 if unauthorized)
-- **Session-based Security**: Uses `req.session.userId` instead of trusting request parameters
-- **Test Coverage**: Comprehensive tests verify 401 for unauthenticated, 200 for own data, 403 for others' data
-- **Protected Resources**: Microbiome data, meals, nutrition targets, health analysis, adherence tracking
-- **Public Endpoints**: Demo data and cohort references remain accessible without authentication
-- **Frontend Integration**: Login/Signup use auth context for consistent state management
+### Production-Ready Security Implementation (October 2, 2025)
+- **CSRF Protection**: Session cookies use `sameSite: 'strict'` to block all cross-site request forgery attacks
+  - Trade-off: Users following external links need to re-authenticate (security > convenience)
+  - Acceptable for health app with sensitive data
+- **Session Security**: 
+  - PostgreSQL-backed sessions (connect-pg-simple) with 7-day expiration
+  - `httpOnly: true` prevents XSS access to cookies
+  - `secure: true` in production (HTTPS only)
+  - Bcrypt password hashing (10 salt rounds)
+- **Authentication & Authorization**:
+  - `requireAuth` middleware on all data endpoints
+  - Uses `req.session.userId` exclusively (no userId in URLs)
+  - Ownership verification on all resources (403 if unauthorized)
+  - Cross-user access completely prevented
+- **File Upload Security**:
+  - Multer validation: 100MB size limit
+  - Allowed types: .fastq, .fasta, .fa, .fq, .csv, .txt, .gz
+  - Invalid types → 400, ML service down → 503
+  - Authentication required for uploads
+- **Data Isolation**: All queries filtered by session userId, no cross-contamination
+- **Error Handling**: User-friendly messages, no stack traces exposed
+- **Frontend Integration**: Real authenticated user (not demo data), proper logout, cache invalidation
 
 ### Earlier Changes (October 2025)
 - Replaced OpenAI/ChatGPT with custom ML pipeline
