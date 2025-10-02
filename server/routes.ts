@@ -28,7 +28,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         body: formData,
       });
 
-      const mlResult = await mlResponse.json();
+      const mlResult = await mlResponse.json() as any;
 
       // Save to database
       const sample = await storage.insertMicrobiomeSample({
@@ -79,14 +79,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }),
       });
 
-      const mlResult = await mlResponse.json();
+      const mlResult = await mlResponse.json() as any;
 
       // Save ML analysis results
       const analysisId = await storage.insertMlAnalysis({
         sampleId,
         analysisType: "comprehensive",
         modelVersion: mlResult.model_version,
-        results: mlResult,
+        results: mlResult as any,
         confidence: mlResult.confidence,
         comparedCohorts: cohortsToCompare,
       });

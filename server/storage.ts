@@ -100,11 +100,15 @@ export class MemStorage implements IStorage {
   async insertMicrobiomeSample(sample: InsertMicrobiomeSample): Promise<MicrobiomeSample> {
     const id = randomUUID();
     const newSample: MicrobiomeSample = {
-      ...sample,
       id,
-      uploadedAt: new Date(),
+      userId: sample.userId,
+      testDate: sample.testDate,
+      testingCompany: sample.testingCompany ?? null,
+      testId: sample.testId ?? null,
+      rawDataPath: sample.rawDataPath ?? null,
       processingStatus: sample.processingStatus || "pending",
-      diversityIndex: sample.diversityIndex || null,
+      diversityIndex: sample.diversityIndex ?? null,
+      uploadedAt: new Date(),
     };
     this.microbiomeSamples.set(id, newSample);
     return newSample;
@@ -129,7 +133,14 @@ export class MemStorage implements IStorage {
 
   async insertBacterialComposition(composition: InsertBacterialComposition): Promise<void> {
     const id = randomUUID();
-    const newComposition: BacterialComposition = { ...composition, id };
+    const newComposition: BacterialComposition = {
+      id,
+      sampleId: composition.sampleId,
+      bacterialName: composition.bacterialName,
+      taxonomyLevel: composition.taxonomyLevel,
+      abundance: composition.abundance,
+      genomeData: composition.genomeData ?? null,
+    };
     const existing = this.bacterialComposition.get(composition.sampleId) || [];
     this.bacterialComposition.set(composition.sampleId, [...existing, newComposition]);
   }
@@ -140,7 +151,16 @@ export class MemStorage implements IStorage {
 
   async insertMetabolite(metabolite: InsertMetabolite): Promise<void> {
     const id = randomUUID();
-    const newMetabolite: Metabolite = { ...metabolite, id };
+    const newMetabolite: Metabolite = {
+      id,
+      sampleId: metabolite.sampleId,
+      bacterialId: metabolite.bacterialId ?? null,
+      metaboliteName: metabolite.metaboliteName,
+      pathwayId: metabolite.pathwayId ?? null,
+      predictedConcentration: metabolite.predictedConcentration ?? null,
+      confidence: metabolite.confidence ?? null,
+      productionGenes: metabolite.productionGenes ?? null,
+    };
     const existing = this.metabolites.get(metabolite.sampleId) || [];
     this.metabolites.set(metabolite.sampleId, [...existing, newMetabolite]);
   }
@@ -151,7 +171,16 @@ export class MemStorage implements IStorage {
 
   async insertHealthImpact(impact: InsertHealthImpact): Promise<void> {
     const id = randomUUID();
-    const newImpact: HealthImpact = { ...impact, id };
+    const newImpact: HealthImpact = {
+      id,
+      metaboliteId: impact.metaboliteId,
+      impactCategory: impact.impactCategory,
+      impactDescription: impact.impactDescription,
+      impactScore: impact.impactScore ?? null,
+      evidenceLevel: impact.evidenceLevel ?? null,
+      affectedSystems: impact.affectedSystems ?? null,
+      mechanismOfAction: impact.mechanismOfAction ?? null,
+    };
     const existing = this.healthImpacts.get(impact.metaboliteId) || [];
     this.healthImpacts.set(impact.metaboliteId, [...existing, newImpact]);
   }
@@ -162,7 +191,16 @@ export class MemStorage implements IStorage {
 
   async insertCohortReference(cohort: InsertCohortReference): Promise<void> {
     const id = randomUUID();
-    const newCohort: CohortReference = { ...cohort, id };
+    const newCohort: CohortReference = {
+      id,
+      cohortName: cohort.cohortName,
+      cohortType: cohort.cohortType,
+      bacterialProfile: cohort.bacterialProfile,
+      metaboliteProfile: cohort.metaboliteProfile ?? null,
+      healthMarkers: cohort.healthMarkers ?? null,
+      sampleSize: cohort.sampleSize ?? null,
+      studyReference: cohort.studyReference ?? null,
+    };
     this.cohortReferences.set(id, newCohort);
   }
 
@@ -173,8 +211,14 @@ export class MemStorage implements IStorage {
   async insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string> {
     const id = randomUUID();
     const newAnalysis: MlAnalysis = {
-      ...analysis,
       id,
+      sampleId: analysis.sampleId,
+      analysisType: analysis.analysisType,
+      modelVersion: analysis.modelVersion,
+      results: analysis.results,
+      confidence: analysis.confidence ?? null,
+      explainability: analysis.explainability ?? null,
+      comparedCohorts: analysis.comparedCohorts ?? null,
       analyzedAt: new Date(),
     };
     const existing = this.mlAnalyses.get(analysis.sampleId) || [];
@@ -189,10 +233,20 @@ export class MemStorage implements IStorage {
   async insertRecommendation(recommendation: InsertRecommendation): Promise<void> {
     const id = randomUUID();
     const newRecommendation: Recommendation = {
-      ...recommendation,
       id,
-      createdAt: new Date(),
+      sampleId: recommendation.sampleId,
+      analysisId: recommendation.analysisId ?? null,
+      recommendationType: recommendation.recommendationType,
+      category: recommendation.category,
+      itemName: recommendation.itemName,
+      reasoning: recommendation.reasoning,
+      details: recommendation.details ?? null,
+      priority: recommendation.priority ?? null,
+      expectedImpact: recommendation.expectedImpact ?? null,
+      targetBacteria: recommendation.targetBacteria ?? null,
+      targetMetabolites: recommendation.targetMetabolites ?? null,
       isActive: recommendation.isActive ?? true,
+      createdAt: new Date(),
     };
     const existing = this.recommendations.get(recommendation.sampleId) || [];
     this.recommendations.set(recommendation.sampleId, [...existing, newRecommendation]);
