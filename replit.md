@@ -159,6 +159,22 @@ User Upload → Node Backend → Python ML Service
 - Symptom correlation tracking (bloating, energy, comfort, mood)
 - Frontend successfully fetches and displays all demo and nutrition data
 
+### Meal History & Progress Tracking (October 2, 2025)
+- **PostgreSQL Database Migration**: User profiles with demographics (sex, age, height, weight, activity level)
+- **Personalized Nutrient Targets**: BMR/TDEE calculations using Mifflin-St Jeor equations
+  - Calculates daily calorie needs based on activity level
+  - Protein targets (1.6g/kg bodyweight)
+  - Macro distribution (45% carbs, 30% fat)
+  - Micronutrient RDAs (fiber, sodium, potassium, etc.)
+- **Nutrition History Page** (`/nutrition`):
+  - Daily summary with progress bars for all macronutrients
+  - Visual comparison of actual intake vs personalized targets
+  - Color-coded progress indicators (excellent: 90-110%, good: 70-130%)
+  - Recent meals list with nutritional badges
+  - Micronutrient tracking (fiber, sugar, sodium, potassium, cholesterol)
+- **Smart Error Handling**: Validates API responses to prevent invalid data storage
+- **Real-time Updates**: Cache invalidation ensures nutrition data stays fresh
+
 ### Earlier Changes (October 2025)
 - Replaced OpenAI/ChatGPT with custom ML pipeline
 - Implemented gene → metabolite → health impact inference
