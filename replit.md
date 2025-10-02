@@ -190,6 +190,15 @@ User Upload → Node Backend → Python ML Service
 - **Smart Error Handling**: Validates API responses to prevent invalid data storage
 - **Real-time Updates**: Cache invalidation ensures nutrition data stays fresh
 
+### Authentication & Authorization (October 2, 2025)
+- **Endpoint Protection**: All data endpoints now require authentication via `requireAuth` middleware
+- **Ownership Verification**: Endpoints verify user owns requested resources (403 if unauthorized)
+- **Session-based Security**: Uses `req.session.userId` instead of trusting request parameters
+- **Test Coverage**: Comprehensive tests verify 401 for unauthenticated, 200 for own data, 403 for others' data
+- **Protected Resources**: Microbiome data, meals, nutrition targets, health analysis, adherence tracking
+- **Public Endpoints**: Demo data and cohort references remain accessible without authentication
+- **Frontend Integration**: Login/Signup use auth context for consistent state management
+
 ### Earlier Changes (October 2025)
 - Replaced OpenAI/ChatGPT with custom ML pipeline
 - Implemented gene → metabolite → health impact inference

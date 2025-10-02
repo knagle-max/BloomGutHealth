@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useLocation } from 'wouter';
 import { useToast } from '@/hooks/use-toast';
-import { apiRequest } from '@/lib/queryClient';
+import { useAuth } from '@/lib/auth';
 import heroImage from '@assets/generated_images/Microbiome_hero_background_image_ffdb574d.png';
 
 export default function Login() {
@@ -13,22 +13,19 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [, setLocation] = useLocation();
   const { toast } = useToast();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const response = await apiRequest('POST', '/api/auth/login', { username, password });
-      const data = await response.json();
-
-      if (data.success) {
-        toast({
-          title: "Welcome back!",
-          description: `Logged in as ${username}`,
-        });
-        setLocation('/');
-      }
+      await login(username, password);
+      toast({
+        title: "Welcome back!",
+        description: `Logged in as ${username}`,
+      });
+      setLocation('/');
     } catch (error: any) {
       toast({
         title: "Login failed",

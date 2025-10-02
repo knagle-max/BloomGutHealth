@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import multer from "multer";
@@ -10,12 +10,20 @@ import { insertUserSchema } from "@shared/schema";
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
 const upload = multer({ dest: "/tmp/uploads/" });
 
+function requireAuth(req: Request, res: Response, next: NextFunction) {
+  if (!req.session.userId) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
+  next();
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Microbiome sample upload endpoint
-  app.post("/api/microbiome/upload", upload.single("file"), async (req, res) => {
+  app.post("/api/microbiome/upload", requireAuth, upload.single("file"), async (req, res) => {
     try {
       const file = req.file;
-      const { userId, testDate, testingCompany, testId, notes } = req.body;
+      const { testDate, testingCompany, testId, notes } = req.body;
+      const userId = req.session.userId!;
 
       if (!file) {
         return res.status(400).json({ error: "No file uploaded" });
@@ -54,14 +62,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Trigger ML analysis
-  app.post("/api/microbiome/analyze/:sampleId", async (req, res) => {
+  app.post("/api/microbiome/analyze/:sampleId", requireAuth, async (req, res) => {
     try {
       const { sampleId } = req.params;
       const { cohortsToCompare = ["general_population"] } = req.body;
+      const userId = req.session.userId!;
 
       const sample = await storage.getMicrobiomeSample(sampleId);
       if (!sample) {
         return res.status(404).json({ error: "Sample not found" });
+      }
+
+      if (sample.userId !== userId) {
+        return res.status(403).json({ error: "Access denied" });
       }
 
       // Update status to processing
@@ -151,11 +164,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get analysis results
-  app.get("/api/microbiome/results/:sampleId", async (req, res) => {
+  app.get("/api/microbiome/results/:sampleId", requireAuth, async (req, res) => {
     try {
       const { sampleId } = req.params;
+      const userId = req.session.userId!;
 
       const sample = await storage.getMicrobiomeSample(sampleId);
+      if (!sample) {
+        return res.status(404).json({ error: "Sample not found" });
+      }
+
+      if (sample.userId !== userId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
       const bacterial = await storage.getBacterialComposition(sampleId);
       const metabolites = await storage.getMetabolites(sampleId);
       const recommendations = await storage.getRecommendations(sampleId);
@@ -220,9 +242,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Meal tracking endpoints
-  app.post("/api/meals", async (req, res) => {
+  app.post("/api/meals", requireAuth, async (req, res) => {
     try {
-      const { userId, mealText, mealType } = req.body;
+      const { mealText, mealType } = req.body;
+      const userId = req.session.userId!;
 
       if (!mealText) {
         return res.status(400).json({ error: "Meal text is required" });
@@ -291,9 +314,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/meals/:userId", async (req, res) => {
+  app.get("/api/meals/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
       const meals = await storage.getMeals(userId);
       res.json(meals);
     } catch (error: any) {
@@ -301,10 +330,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/meals/:mealId", async (req, res) => {
+  app.put("/api/meals/:mealId", requireAuth, async (req, res) => {
     try {
       const { mealId } = req.params;
       const { mealText, mealType } = req.body;
+      const userId = req.session.userId!;
+
+      const existingMeal = await storage.getMeal(mealId);
+      if (!existingMeal) {
+        return res.status(404).json({ error: "Meal not found" });
+      }
+
+      if (existingMeal.userId !== userId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
 
       if (!mealText) {
         return res.status(400).json({ error: "Meal text is required" });
@@ -357,9 +396,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.delete("/api/meals/:mealId", async (req, res) => {
+  app.delete("/api/meals/:mealId", requireAuth, async (req, res) => {
     try {
       const { mealId } = req.params;
+      const userId = req.session.userId!;
+
+      const existingMeal = await storage.getMeal(mealId);
+      if (!existingMeal) {
+        return res.status(404).json({ error: "Meal not found" });
+      }
+
+      if (existingMeal.userId !== userId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
       await storage.deleteMeal(mealId);
       res.json({ success: true });
     } catch (error: any) {
@@ -368,9 +418,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/nutrition/targets/:userId", async (req, res) => {
+  app.get("/api/nutrition/targets/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
       const user = await storage.getUser(userId);
       
       if (!user) {
@@ -416,9 +472,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/nutrition/daily/:userId", async (req, res) => {
+  app.get("/api/nutrition/daily/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { date } = req.query;
       
       const targetDate = date ? new Date(date as string) : new Date();
@@ -466,9 +527,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/nutrition/monthly/:userId", async (req, res) => {
+  app.get("/api/nutrition/monthly/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { year, month } = req.query;
       
       const targetYear = year ? parseInt(year as string) : new Date().getFullYear();
@@ -538,9 +604,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/nutrition/yearly/:userId", async (req, res) => {
+  app.get("/api/nutrition/yearly/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { year } = req.query;
       
       const targetYear = year ? parseInt(year as string) : new Date().getFullYear();
@@ -653,9 +724,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/microbiome/samples/:userId", async (req, res) => {
+  app.get("/api/microbiome/samples/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const samples = await storage.getUserSamples(userId);
       res.json(samples);
     } catch (error: any) {
@@ -663,9 +739,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/microbiome/diet-prediction/:userId", async (req, res) => {
+  app.get("/api/microbiome/diet-prediction/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       
       const meals = await storage.getMeals(userId);
       const recentMeals = meals.slice(0, 30);
@@ -694,9 +775,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/health/analysis/:userId", async (req, res) => {
+  app.get("/api/health/analysis/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { calculateMoleculeProduction, calculateHealthScores, identifyBacterialGaps, generateFoodRecommendations } = await import('../shared/health-calculations');
       
       const meals = await storage.getMeals(userId);
@@ -742,9 +828,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/health/recommendations/:userId", async (req, res) => {
+  app.get("/api/health/recommendations/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { identifyBacterialGaps, generateFoodRecommendations, calculateMoleculeProduction, calculateHealthScores } = await import('../shared/health-calculations');
       
       const meals = await storage.getMeals(userId);
@@ -788,9 +879,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/health/progress/:userId", async (req, res) => {
+  app.get("/api/health/progress/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { weeks = 4 } = req.query;
       const { calculateMoleculeProduction, calculateHealthScores } = await import('../shared/health-calculations');
       
@@ -850,9 +946,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/health/adherence/:userId", async (req, res) => {
+  app.get("/api/health/adherence/:userId", requireAuth, async (req, res) => {
     try {
-      const { userId } = req.params;
+      const userId = req.session.userId!;
+      const requestedUserId = req.params.userId;
+
+      if (userId !== requestedUserId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const { days = 7 } = req.query;
       const { generateFoodRecommendations, identifyBacterialGaps, calculateMoleculeProduction, calculateHealthScores, calculateAdherence, matchMealToRecommendations } = await import('../shared/health-calculations');
       
@@ -915,17 +1016,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/meals/:mealId/check-adherence", async (req, res) => {
+  app.post("/api/meals/:mealId/check-adherence", requireAuth, async (req, res) => {
     try {
       const { mealId } = req.params;
-      const { matchMealToRecommendations } = await import('../shared/health-calculations');
-      
+      const userId = req.session.userId!;
+
       const meal = await storage.getMeal(mealId);
       if (!meal) {
-        return res.status(404).json({ error: 'Meal not found' });
+        return res.status(404).json({ error: "Meal not found" });
       }
 
-      const adherenceData = await fetch(`http://localhost:5000/api/health/adherence/${meal.userId}?days=7`);
+      if (meal.userId !== userId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
+
+      const { matchMealToRecommendations } = await import('../shared/health-calculations');
+
+      const adherenceData = await fetch(`http://localhost:5000/api/health/adherence/${userId}?days=7`);
       const adherence = await adherenceData.json() as any;
       
       const matches = matchMealToRecommendations(meal.mealText, adherence.recommendations);
