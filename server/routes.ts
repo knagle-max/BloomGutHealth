@@ -464,6 +464,174 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/nutrition/monthly/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { year, month } = req.query;
+      
+      const targetYear = year ? parseInt(year as string) : new Date().getFullYear();
+      const targetMonth = month !== undefined ? parseInt(month as string) : new Date().getMonth();
+      
+      const startOfMonth = new Date(targetYear, targetMonth, 1);
+      const endOfMonth = new Date(targetYear, targetMonth + 1, 0, 23, 59, 59, 999);
+
+      const meals = await storage.getMeals(userId);
+      const monthlyMeals = meals.filter(meal => {
+        const mealDate = new Date(meal.loggedAt);
+        return mealDate >= startOfMonth && mealDate <= endOfMonth;
+      });
+
+      const totalDays = Math.ceil((endOfMonth.getTime() - startOfMonth.getTime()) / (1000 * 60 * 60 * 24));
+      const daysWithMeals = new Set(monthlyMeals.map(m => new Date(m.loggedAt).toDateString())).size;
+
+      const totals = monthlyMeals.reduce((acc, meal) => {
+        acc.calories += meal.totalCalories || 0;
+        acc.protein += meal.totalProtein || 0;
+        acc.carbs += meal.totalCarbs || 0;
+        acc.fat += meal.totalFat || 0;
+        
+        if (meal.nutritionalData && Array.isArray(meal.nutritionalData)) {
+          for (const item of meal.nutritionalData as any[]) {
+            acc.fiber += item.fiber_g || 0;
+            acc.sugar += item.sugar_g || 0;
+            acc.sodium += item.sodium_mg || 0;
+            acc.potassium += item.potassium_mg || 0;
+          }
+        }
+        
+        return acc;
+      }, {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
+        sugar: 0,
+        sodium: 0,
+        potassium: 0,
+      });
+
+      const dailyAverages = daysWithMeals > 0 ? {
+        calories: Math.round(totals.calories / daysWithMeals),
+        protein: Math.round(totals.protein / daysWithMeals),
+        carbs: Math.round(totals.carbs / daysWithMeals),
+        fat: Math.round(totals.fat / daysWithMeals),
+        fiber: Math.round(totals.fiber / daysWithMeals),
+        sugar: Math.round(totals.sugar / daysWithMeals),
+        sodium: Math.round(totals.sodium / daysWithMeals),
+        potassium: Math.round(totals.potassium / daysWithMeals),
+      } : null;
+
+      res.json({
+        month: targetMonth,
+        year: targetYear,
+        totalMeals: monthlyMeals.length,
+        daysWithMeals,
+        totalDays,
+        totals,
+        dailyAverages,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/nutrition/yearly/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { year } = req.query;
+      
+      const targetYear = year ? parseInt(year as string) : new Date().getFullYear();
+      const startOfYear = new Date(targetYear, 0, 1);
+      const endOfYear = new Date(targetYear, 11, 31, 23, 59, 59, 999);
+
+      const meals = await storage.getMeals(userId);
+      const yearlyMeals = meals.filter(meal => {
+        const mealDate = new Date(meal.loggedAt);
+        return mealDate >= startOfYear && mealDate <= endOfYear;
+      });
+
+      const daysWithMeals = new Set(yearlyMeals.map(m => new Date(m.loggedAt).toDateString())).size;
+
+      const totals = yearlyMeals.reduce((acc, meal) => {
+        acc.calories += meal.totalCalories || 0;
+        acc.protein += meal.totalProtein || 0;
+        acc.carbs += meal.totalCarbs || 0;
+        acc.fat += meal.totalFat || 0;
+        
+        if (meal.nutritionalData && Array.isArray(meal.nutritionalData)) {
+          for (const item of meal.nutritionalData as any[]) {
+            acc.fiber += item.fiber_g || 0;
+            acc.sugar += item.sugar_g || 0;
+            acc.sodium += item.sodium_mg || 0;
+            acc.potassium += item.potassium_mg || 0;
+          }
+        }
+        
+        return acc;
+      }, {
+        calories: 0,
+        protein: 0,
+        carbs: 0,
+        fat: 0,
+        fiber: 0,
+        sugar: 0,
+        sodium: 0,
+        potassium: 0,
+      });
+
+      const dailyAverages = daysWithMeals > 0 ? {
+        calories: Math.round(totals.calories / daysWithMeals),
+        protein: Math.round(totals.protein / daysWithMeals),
+        carbs: Math.round(totals.carbs / daysWithMeals),
+        fat: Math.round(totals.fat / daysWithMeals),
+        fiber: Math.round(totals.fiber / daysWithMeals),
+        sugar: Math.round(totals.sugar / daysWithMeals),
+        sodium: Math.round(totals.sodium / daysWithMeals),
+        potassium: Math.round(totals.potassium / daysWithMeals),
+      } : null;
+
+      const monthlyBreakdown = [];
+      for (let month = 0; month < 12; month++) {
+        const monthStart = new Date(targetYear, month, 1);
+        const monthEnd = new Date(targetYear, month + 1, 0, 23, 59, 59, 999);
+        const monthMeals = yearlyMeals.filter(meal => {
+          const mealDate = new Date(meal.loggedAt);
+          return mealDate >= monthStart && mealDate <= monthEnd;
+        });
+        
+        if (monthMeals.length > 0) {
+          const monthDays = new Set(monthMeals.map(m => new Date(m.loggedAt).toDateString())).size;
+          const monthTotals = monthMeals.reduce((acc, meal) => {
+            acc.calories += meal.totalCalories || 0;
+            acc.protein += meal.totalProtein || 0;
+            return acc;
+          }, { calories: 0, protein: 0 });
+
+          monthlyBreakdown.push({
+            month,
+            monthName: new Date(targetYear, month).toLocaleDateString('en-US', { month: 'long' }),
+            mealsLogged: monthMeals.length,
+            daysWithMeals: monthDays,
+            avgCalories: Math.round(monthTotals.calories / monthDays),
+            avgProtein: Math.round(monthTotals.protein / monthDays),
+          });
+        }
+      }
+
+      res.json({
+        year: targetYear,
+        totalMeals: yearlyMeals.length,
+        daysWithMeals,
+        totals,
+        dailyAverages,
+        monthlyBreakdown,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   app.patch("/api/user/:userId/profile", async (req, res) => {
     try {
       const { userId } = req.params;

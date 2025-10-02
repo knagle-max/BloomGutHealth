@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Utensils, TrendingUp, Calendar, Loader2, Plus, ChevronDown, ChevronUp, Pencil, Trash2 } from 'lucide-react';
+import { Utensils, TrendingUp, Calendar, Loader2, Plus, ChevronDown, ChevronUp, Pencil, Trash2, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
@@ -21,6 +21,248 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+
+interface BacteriaImpact {
+  bacteria: string;
+  impact: string;
+  reason: string;
+}
+
+function analyzeFoodItemBacteria(item: any): BacteriaImpact[] {
+  const impacts: BacteriaImpact[] = [];
+  const fiber = item.fiber_g || 0;
+  const protein = item.protein_g || 0;
+  const sugar = item.sugar_g || 0;
+  const calories = item.calories || 0;
+
+  if (fiber >= 3) {
+    impacts.push({
+      bacteria: 'Faecalibacterium prausnitzii',
+      impact: 'Produces butyrate → Reduces inflammation → Improves gut barrier',
+      reason: `High fiber (${fiber}g) feeds beneficial bacteria`
+    });
+  } else if (fiber >= 1.5) {
+    impacts.push({
+      bacteria: 'Bifidobacterium',
+      impact: 'Produces lactate & acetate → Lowers pH → Protects against pathogens',
+      reason: `Moderate fiber (${fiber}g) supports good bacteria`
+    });
+  }
+
+  if (protein >= 10) {
+    impacts.push({
+      bacteria: 'Akkermansia muciniphila',
+      impact: 'Strengthens mucus layer → Improves metabolic health → Reduces obesity risk',
+      reason: `High protein (${protein}g) supports mucus-degrading bacteria`
+    });
+  }
+
+  if (sugar >= 5) {
+    impacts.push({
+      bacteria: 'E. coli (opportunistic)',
+      impact: 'May increase endotoxins → Inflammation → Metabolic stress',
+      reason: `High sugar (${sugar}g) feeds opportunistic bacteria`
+    });
+  }
+
+  if (fiber < 1 && calories > 100) {
+    impacts.push({
+      bacteria: 'Bacteroides',
+      impact: 'Protein fermentation → Mixed metabolites → Neutral to negative',
+      reason: 'Low fiber content shifts bacterial balance'
+    });
+  }
+
+  return impacts.length > 0 ? impacts : [{
+    bacteria: 'General microbiome',
+    impact: 'Standard nutrient absorption → Energy production',
+    reason: 'Balanced nutritional profile'
+  }];
+}
+
+function analyzeMealImpact(nutritionalItems: any[]): { summary: string; keyBacteria: string[] } {
+  const totalFiber = nutritionalItems.reduce((sum, item) => sum + (item.fiber_g || 0), 0);
+  const totalProtein = nutritionalItems.reduce((sum, item) => sum + (item.protein_g || 0), 0);
+  const totalSugar = nutritionalItems.reduce((sum, item) => sum + (item.sugar_g || 0), 0);
+  
+  let summary = '';
+  const keyBacteria: string[] = [];
+
+  if (totalFiber >= 8) {
+    summary = 'Excellent fiber content promotes beneficial bacteria producing anti-inflammatory compounds and strengthening gut barrier.';
+    keyBacteria.push('Faecalibacterium', 'Bifidobacterium');
+  } else if (totalFiber >= 4) {
+    summary = 'Good fiber levels support healthy bacterial diversity and short-chain fatty acid production.';
+    keyBacteria.push('Bifidobacterium');
+  } else if (totalSugar > 15) {
+    summary = 'High sugar content may promote opportunistic bacteria. Consider balancing with more fiber-rich foods.';
+    keyBacteria.push('E. coli');
+  } else if (totalProtein >= 25) {
+    summary = 'High protein supports mucus-layer bacteria and metabolic health. Consider adding fiber for optimal balance.';
+    keyBacteria.push('Akkermansia');
+  } else {
+    summary = 'Balanced meal with moderate bacterial impact. Consider adding more fiber-rich foods for enhanced gut health.';
+    keyBacteria.push('General microbiome');
+  }
+
+  return { summary, keyBacteria };
+}
+
+function HistoricalTrends({ userId, targets }: { userId: string; targets: any }) {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth();
+  const currentYear = currentDate.getFullYear();
+
+  const { data: monthlyData } = useQuery<any>({
+    queryKey: [`/api/nutrition/monthly/${userId}?year=${currentYear}&month=${currentMonth}`],
+    enabled: !!userId,
+  });
+
+  const { data: yearlyData } = useQuery<any>({
+    queryKey: [`/api/nutrition/yearly/${userId}?year=${currentYear}`],
+    enabled: !!userId,
+  });
+
+  if (!monthlyData && !yearlyData) {
+    return null;
+  }
+
+  const getStatusColor = (current: number, target: number) => {
+    const percentage = (current / target) * 100;
+    if (percentage >= 90 && percentage <= 110) return 'text-excellent';
+    if (percentage >= 70 && percentage <= 130) return 'text-good';
+    return 'text-needs-attention';
+  };
+
+  return (
+    <div className="mb-6 space-y-4">
+      <h2 className="text-lg font-semibold flex items-center gap-2">
+        <Calendar className="h-5 w-5" />
+        Historical Trends
+      </h2>
+
+      {monthlyData?.dailyAverages && (
+        <Card data-testid="card-monthly-averages">
+          <CardHeader>
+            <CardTitle className="text-base">
+              {new Date(currentYear, currentMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} - Daily Averages
+            </CardTitle>
+            <p className="text-xs text-muted-foreground">
+              Based on {monthlyData.daysWithMeals} days of logged meals
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs text-muted-foreground">Avg Calories/Day</span>
+                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.calories, targets.calories)}`}>
+                    {monthlyData.dailyAverages.calories}
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Target: {targets.calories}</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs text-muted-foreground">Avg Protein/Day</span>
+                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.protein, targets.protein)}`}>
+                    {monthlyData.dailyAverages.protein}g
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Target: {targets.protein}g</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs text-muted-foreground">Avg Carbs/Day</span>
+                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.carbs, targets.carbs)}`}>
+                    {monthlyData.dailyAverages.carbs}g
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Target: {targets.carbs}g</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs text-muted-foreground">Avg Fat/Day</span>
+                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.fat, targets.fat)}`}>
+                    {monthlyData.dailyAverages.fat}g
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Target: {targets.fat}g</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs text-muted-foreground">Avg Fiber/Day</span>
+                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.fiber, targets.fiber)}`}>
+                    {monthlyData.dailyAverages.fiber}g
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Target: {targets.fiber}g</p>
+              </div>
+              <div>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs text-muted-foreground">Avg Sugar/Day</span>
+                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.sugar, targets.sugar)}`}>
+                    {monthlyData.dailyAverages.sugar}g
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground">Target: {targets.sugar}g</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {yearlyData?.dailyAverages && yearlyData.monthlyBreakdown?.length > 0 && (
+        <Card data-testid="card-yearly-overview">
+          <CardHeader>
+            <CardTitle className="text-base">{currentYear} - Annual Overview</CardTitle>
+            <p className="text-xs text-muted-foreground">
+              {yearlyData.daysWithMeals} days tracked • {yearlyData.totalMeals} meals logged
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-3 pb-3 border-b">
+              <div>
+                <p className="text-xs text-muted-foreground">Yearly Avg Calories</p>
+                <p className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.calories, targets.calories)}`}>
+                  {yearlyData.dailyAverages.calories}/day
+                </p>
+                <p className="text-xs text-muted-foreground">Target: {targets.calories}</p>
+              </div>
+              <div>
+                <p className="text-xs text-muted-foreground">Yearly Avg Protein</p>
+                <p className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.protein, targets.protein)}`}>
+                  {yearlyData.dailyAverages.protein}g/day
+                </p>
+                <p className="text-xs text-muted-foreground">Target: {targets.protein}g</p>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-sm font-semibold mb-2">Monthly Breakdown</h4>
+              <div className="space-y-2">
+                {yearlyData.monthlyBreakdown.map((month: any) => (
+                  <div key={month.month} className="flex items-center justify-between text-sm">
+                    <span className="font-medium">{month.monthName}</span>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span>{month.mealsLogged} meals</span>
+                      <span className={getStatusColor(month.avgCalories, targets.calories)}>
+                        {month.avgCalories} cal/day
+                      </span>
+                      <span className={getStatusColor(month.avgProtein, targets.protein)}>
+                        {month.avgProtein}g protein/day
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}
 
 export default function NutritionHistory() {
   const [showLogForm, setShowLogForm] = useState(false);
@@ -473,69 +715,111 @@ export default function NutritionHistory() {
 
                     {isExpanded && hasItems && (
                       <div className="mt-4 pt-4 border-t space-y-3" data-testid={`meal-items-${index}`}>
-                        <h4 className="text-sm font-semibold text-muted-foreground">Individual Items</h4>
-                        {nutritionalItems.map((item: any, itemIdx: number) => (
-                          <div key={itemIdx} className="bg-muted/50 rounded-lg p-3 space-y-2">
-                            <p className="font-medium text-sm capitalize">{item.name}</p>
-                            
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">Calories</span>
-                                <Badge variant="outline" className="h-5">{item.calories}</Badge>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">Protein</span>
-                                <Badge variant="outline" className="h-5">{item.protein_g}g</Badge>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">Carbs</span>
-                                <Badge variant="outline" className="h-5">{item.carbohydrates_total_g}g</Badge>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">Fat</span>
-                                <Badge variant="outline" className="h-5">{item.fat_total_g}g</Badge>
-                              </div>
-                            </div>
-
-                            {(item.fiber_g > 0 || item.sugar_g > 0 || item.sodium_mg > 0 || item.potassium_mg > 0) && (
-                              <div className="pt-2 border-t border-border/50">
-                                <p className="text-xs text-muted-foreground mb-2">Micronutrients</p>
-                                <div className="grid grid-cols-2 gap-2 text-xs">
-                                  {item.fiber_g > 0 && (
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">Fiber</span>
-                                      <span>{item.fiber_g}g</span>
-                                    </div>
-                                  )}
-                                  {item.sugar_g > 0 && (
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">Sugar</span>
-                                      <span>{item.sugar_g}g</span>
-                                    </div>
-                                  )}
-                                  {item.sodium_mg > 0 && (
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">Sodium</span>
-                                      <span>{item.sodium_mg}mg</span>
-                                    </div>
-                                  )}
-                                  {item.potassium_mg > 0 && (
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">Potassium</span>
-                                      <span>{item.potassium_mg}mg</span>
-                                    </div>
-                                  )}
-                                  {item.cholesterol_mg > 0 && (
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">Cholesterol</span>
-                                      <span>{item.cholesterol_mg}mg</span>
+                        {(() => {
+                          const mealImpact = analyzeMealImpact(nutritionalItems);
+                          return (
+                            <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 mb-4">
+                              <div className="flex items-start gap-2">
+                                <Sparkles className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                                <div>
+                                  <p className="text-xs font-semibold text-primary mb-1">Microbiome Impact</p>
+                                  <p className="text-xs text-foreground">{mealImpact.summary}</p>
+                                  {mealImpact.keyBacteria.length > 0 && (
+                                    <div className="flex flex-wrap gap-1 mt-2">
+                                      {mealImpact.keyBacteria.map((bacteria, idx) => (
+                                        <Badge key={idx} variant="secondary" className="text-xs">
+                                          {bacteria}
+                                        </Badge>
+                                      ))}
                                     </div>
                                   )}
                                 </div>
                               </div>
-                            )}
-                          </div>
-                        ))}
+                            </div>
+                          );
+                        })()}
+                        
+                        <h4 className="text-sm font-semibold text-muted-foreground">Individual Items</h4>
+                        {nutritionalItems.map((item: any, itemIdx: number) => {
+                          const bacteriaImpacts = analyzeFoodItemBacteria(item);
+                          return (
+                            <div key={itemIdx} className="bg-muted/50 rounded-lg p-3 space-y-2">
+                              <p className="font-medium text-sm capitalize">{item.name}</p>
+                              
+                              <div className="grid grid-cols-2 gap-2 text-xs">
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">Calories</span>
+                                  <Badge variant="outline" className="h-5">{item.calories}</Badge>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">Protein</span>
+                                  <Badge variant="outline" className="h-5">{item.protein_g}g</Badge>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">Carbs</span>
+                                  <Badge variant="outline" className="h-5">{item.carbohydrates_total_g}g</Badge>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">Fat</span>
+                                  <Badge variant="outline" className="h-5">{item.fat_total_g}g</Badge>
+                                </div>
+                              </div>
+
+                              {(item.fiber_g > 0 || item.sugar_g > 0 || item.sodium_mg > 0 || item.potassium_mg > 0) && (
+                                <div className="pt-2 border-t border-border/50">
+                                  <p className="text-xs text-muted-foreground mb-2">Micronutrients</p>
+                                  <div className="grid grid-cols-2 gap-2 text-xs">
+                                    {item.fiber_g > 0 && (
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">Fiber</span>
+                                        <span>{item.fiber_g}g</span>
+                                      </div>
+                                    )}
+                                    {item.sugar_g > 0 && (
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">Sugar</span>
+                                        <span>{item.sugar_g}g</span>
+                                      </div>
+                                    )}
+                                    {item.sodium_mg > 0 && (
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">Sodium</span>
+                                        <span>{item.sodium_mg}mg</span>
+                                      </div>
+                                    )}
+                                    {item.potassium_mg > 0 && (
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">Potassium</span>
+                                        <span>{item.potassium_mg}mg</span>
+                                      </div>
+                                    )}
+                                    {item.cholesterol_mg > 0 && (
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">Cholesterol</span>
+                                        <span>{item.cholesterol_mg}mg</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              )}
+
+                              {bacteriaImpacts.length > 0 && (
+                                <div className="pt-2 border-t border-border/50 space-y-2">
+                                  <p className="text-xs font-medium text-muted-foreground">🔬 Bacterial Impact</p>
+                                  {bacteriaImpacts.map((impact, impactIdx) => (
+                                    <div key={impactIdx} className="bg-background/80 rounded p-2 space-y-1">
+                                      <div className="flex items-center justify-between gap-2">
+                                        <p className="text-xs font-medium">{impact.bacteria}</p>
+                                      </div>
+                                      <p className="text-xs text-muted-foreground italic">{impact.reason}</p>
+                                      <p className="text-xs font-medium text-foreground">{impact.impact}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </CardContent>
@@ -555,6 +839,8 @@ export default function NutritionHistory() {
           </CardContent>
         </Card>
       )}
+
+      <HistoricalTrends userId={userId} targets={nutrientTargets} />
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>

@@ -138,16 +138,98 @@ export default function Microbiome() {
             </TabsContent>
 
             <TabsContent value="bacteria" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Bacterial Composition</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    Bacterial composition data will be displayed here
-                  </p>
-                </CardContent>
-              </Card>
+              {dietPrediction?.predictedBacteria && dietPrediction.predictedBacteria.length > 0 ? (
+                <>
+                  <Card className="border-primary/20 bg-primary/5">
+                    <CardContent className="py-4">
+                      <p className="text-sm">
+                        <span className="font-semibold">Diet-Based Composition</span> — Based on {dietPrediction.mealsAnalyzed || 0} meals analyzed. 
+                        This shows the likely bacterial species influenced by your current dietary patterns.
+                      </p>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Predicted Bacterial Abundance</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {dietPrediction.predictedBacteria.map((bacteria: any, idx: number) => {
+                        const likelihoodMap: Record<string, number> = {
+                          'Very High': 90,
+                          'High': 75,
+                          'Moderate': 50,
+                          'Low': 25,
+                        };
+                        const abundance = likelihoodMap[bacteria.likelihood] || 50;
+                        
+                        return (
+                          <div key={idx} className="space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex-1">
+                                <p className="font-medium text-sm">{bacteria.name}</p>
+                                <p className="text-xs text-muted-foreground">{bacteria.description}</p>
+                              </div>
+                              <Badge variant="outline" className="ml-2">{bacteria.likelihood}</Badge>
+                            </div>
+                            
+                            <div className="space-y-1">
+                              <div className="h-2 bg-muted rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-primary rounded-full transition-all duration-500"
+                                  style={{ width: `${abundance}%` }}
+                                />
+                              </div>
+                              <div className="flex justify-between text-xs text-muted-foreground">
+                                <span>Relative abundance</span>
+                                <span>{abundance}%</span>
+                              </div>
+                            </div>
+
+                            {bacteria.dietaryDriver && (
+                              <div className="mt-2 p-2 rounded bg-muted/30 text-xs">
+                                <span className="font-medium">Driver: </span>
+                                {bacteria.dietaryDriver}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </CardContent>
+                  </Card>
+
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-base">How to Read This Data</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-2 text-sm text-muted-foreground">
+                      <p>
+                        <strong className="text-foreground">Relative abundance</strong> shows the predicted prevalence of each bacterial species based on your dietary patterns.
+                      </p>
+                      <p>
+                        <strong className="text-foreground">Very High/High</strong> likelihood indicates strong dietary signals promoting these bacteria.
+                      </p>
+                      <p>
+                        Upload a microbiome test for precise abundance measurements and additional insights.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </>
+              ) : (
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Bacterial Composition</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Log at least 3 meals to see predicted bacterial composition based on your diet, or upload a microbiome test for precise measurements.
+                    </p>
+                    <Button onClick={() => navigate('/nutrition')}>
+                      Log Meals
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
             </TabsContent>
 
             <TabsContent value="insights" className="space-y-4">
