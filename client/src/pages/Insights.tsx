@@ -6,71 +6,45 @@ import EmptyState from '@/components/EmptyState';
 import { Beaker } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-//todo: remove mock functionality - replace with real AI insights
-const mockInsights = {
-  hasData: true,
-  gutScore: 72,
-  keyFindings: [
-    {
-      title: 'Bacterial Diversity Improving',
-      summary: 'Your Shannon diversity index increased to 2.8, indicating a healthier gut ecosystem.',
-      details: 'This improvement suggests better nutrient absorption and immune function. Continue with your current dietary approach focusing on fiber-rich foods.',
-      variant: 'success' as const,
-    },
-    {
-      title: 'Low Butyrate Production',
-      summary: 'Butyrate-producing bacteria are below optimal levels at 8%.',
-      details: 'Butyrate is crucial for colon health and reducing inflammation. Increase resistant starch intake through cooled potatoes and green bananas.',
-      variant: 'warning' as const,
-    },
-  ],
-  bacteria: [
-    { name: 'Akkermansia', currentLevel: 2.5, optimalRange: '1-4%', isDeficient: false },
-    { name: 'Bifidobacterium', currentLevel: 8.7, optimalRange: '2-25%', isDeficient: false },
-    { name: 'Faecalibacterium', currentLevel: 1.2, optimalRange: '3-15%', isDeficient: true },
-    { name: 'Bacteroides', currentLevel: 25.3, optimalRange: '15-45%', isDeficient: false },
-  ],
-  recommendations: {
-    emphasize: [
-      {
-        item: 'Fermented Foods (Kimchi, Sauerkraut)',
-        reason: 'Boosts Lactobacillus and improves gut diversity',
-        details: 'Start with 2-3 tablespoons daily with meals',
-      },
-      {
-        item: 'Resistant Starch (Green Bananas, Cooled Potatoes)',
-        reason: 'Feeds butyrate-producing bacteria',
-        details: 'Include 1-2 servings daily for optimal SCFA production',
-      },
-    ],
-    limit: [
-      {
-        item: 'Processed Dairy Products',
-        reason: 'Strong correlation with bloating symptoms (78% correlation)',
-        details: 'Try lactose-free or plant-based alternatives',
-      },
-    ],
-    supplements: [
-      {
-        item: 'Probiotic: Lactobacillus rhamnosus GG',
-        reason: 'Address detected Lactobacillus deficiency',
-        details: '10 billion CFU daily, take with breakfast for 8 weeks',
-      },
-    ],
-  },
-};
+import { useQuery } from '@tanstack/react-query';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function Insights() {
   const [, setLocation] = useLocation();
 
-  if (!mockInsights.hasData) {
+  const { data: demoSamples } = useQuery({
+    queryKey: ['/api/demo/samples'],
+  });
+
+  const { data: analysisResults, isLoading } = useQuery({
+    queryKey: ['/api/microbiome/results', demoSamples?.[0]?.id],
+    enabled: !!demoSamples?.[0]?.id,
+  });
+
+  const latestAnalysis = analysisResults?.analyses?.[0];
+  const bacteria = analysisResults?.bacterial_composition || [];
+  const metabolites = analysisResults?.metabolites || [];
+  const recommendations = analysisResults?.recommendations || [];
+
+  const gutScore = latestAnalysis?.results?.overall_score || 0;
+  const cohortComparisons = latestAnalysis?.results?.cohort_comparisons || {};
+
+  if (isLoading) {
+    return (
+      <div className="pb-20 pt-4 px-4 max-w-md mx-auto flex items-center justify-center min-h-[50vh]">
+        <p className="text-muted-foreground">Loading analysis...</p>
+      </div>
+    );
+  }
+
+  if (!analysisResults || bacteria.length === 0) {
     return (
       <div className="pb-20 pt-4 px-4 max-w-md mx-auto">
         <EmptyState
           icon={Beaker}
           title="No Insights Yet"
-          description="Upload your microbiome test results to get personalized AI-powered insights and recommendations."
+          description="Upload your microbiome test results to get personalized ML-powered insights and recommendations."
           actionLabel="Upload Test Results"
           onAction={() => setLocation('/upload')}
           useIllustration
@@ -83,40 +57,70 @@ export default function Insights() {
     <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
       <div>
         <h1 className="font-display text-2xl font-semibold mb-2">Your Insights</h1>
-        <p className="text-sm text-muted-foreground">AI-powered personalized recommendations</p>
+        <p className="text-sm text-muted-foreground">ML-powered microbiome analysis</p>
       </div>
 
-      <GutHealthScore score={mockInsights.gutScore} />
+      <GutHealthScore score={gutScore} />
 
       <Tabs defaultValue="findings" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="findings">Key Findings</TabsTrigger>
-          <TabsTrigger value="bacteria">Bacteria</TabsTrigger>
-          <TabsTrigger value="recommendations">Diet</TabsTrigger>
+          <TabsTrigger value="findings" data-testid="tab-findings">Cohorts</TabsTrigger>
+          <TabsTrigger value="bacteria" data-testid="tab-bacteria">Bacteria</TabsTrigger>
+          <TabsTrigger value="recommendations" data-testid="tab-recommendations">Recommendations</TabsTrigger>
         </TabsList>
 
         <TabsContent value="findings" className="space-y-4 mt-6">
-          {mockInsights.keyFindings.map((finding, idx) => (
-            <InsightCard
-              key={idx}
-              title={finding.title}
-              summary={finding.summary}
-              details={finding.details}
-              variant={finding.variant}
-            />
-          ))}
+          <Card className="p-4" data-testid="card-cohort-comparison">
+            <h3 className="font-display font-semibold mb-4">Cohort Comparison</h3>
+            <div className="space-y-3">
+              {Object.entries(cohortComparisons).map(([cohort, data]: [string, any]) => (
+                <div key={cohort} className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <p className="font-medium capitalize text-sm">{cohort.replace(/_/g, ' ')}</p>
+                    <p className="text-xs text-muted-foreground">Similarity: {(data.similarity * 100).toFixed(0)}%</p>
+                  </div>
+                  <Badge variant="outline" data-testid={`badge-percentile-${cohort}`}>
+                    {data.percentile}th percentile
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <InsightCard
+            title="Diversity Status"
+            summary={`Shannon diversity index: ${analysisResults.sample?.diversityIndex?.toFixed(2) || 'N/A'}`}
+            details="Higher diversity (>3.5) is associated with better metabolic health and immune function."
+            variant={analysisResults.sample?.diversityIndex > 3.5 ? 'success' : 'warning'}
+          />
+
+          {metabolites.length > 0 && (
+            <Card className="p-4" data-testid="card-metabolites">
+              <h3 className="font-display font-semibold mb-3">Key Metabolites</h3>
+              <div className="space-y-2">
+                {metabolites.slice(0, 3).map((met: any, idx: number) => (
+                  <div key={idx} className="flex items-center justify-between text-sm">
+                    <span>{met.metaboliteName}</span>
+                    <Badge variant="outline" data-testid={`badge-metabolite-${idx}`}>
+                      {met.predictedConcentration?.toFixed(1)} µM
+                    </Badge>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
         </TabsContent>
 
         <TabsContent value="bacteria" className="space-y-4 mt-6">
-          <div className="rounded-xl bg-card border border-card-border p-4 space-y-4">
+          <div className="rounded-xl bg-card border border-card-border p-4 space-y-4" data-testid="card-bacteria-composition">
             <h3 className="font-display font-semibold">Bacterial Composition</h3>
-            {mockInsights.bacteria.map((bacteria, idx) => (
+            {bacteria.map((bac: any, idx: number) => (
               <BacterialBar
                 key={idx}
-                name={bacteria.name}
-                currentLevel={bacteria.currentLevel}
-                optimalRange={bacteria.optimalRange}
-                isDeficient={bacteria.isDeficient}
+                name={bac.bacterialName}
+                currentLevel={bac.abundance}
+                optimalRange="Varies"
+                isDeficient={bac.abundance < 5}
               />
             ))}
           </div>
@@ -124,40 +128,14 @@ export default function Insights() {
 
         <TabsContent value="recommendations" className="space-y-6 mt-6">
           <div className="space-y-3">
-            <h3 className="font-display font-semibold text-lg">Foods to Emphasize</h3>
-            {mockInsights.recommendations.emphasize.map((rec, idx) => (
+            <h3 className="font-display font-semibold text-lg">Personalized Recommendations</h3>
+            {recommendations.map((rec: any, idx: number) => (
               <FoodRecommendationCard
                 key={idx}
-                type="emphasize"
-                item={rec.item}
-                reason={rec.reason}
-                details={rec.details}
-              />
-            ))}
-          </div>
-
-          <div className="space-y-3">
-            <h3 className="font-display font-semibold text-lg">Foods to Limit</h3>
-            {mockInsights.recommendations.limit.map((rec, idx) => (
-              <FoodRecommendationCard
-                key={idx}
-                type="limit"
-                item={rec.item}
-                reason={rec.reason}
-                details={rec.details}
-              />
-            ))}
-          </div>
-
-          <div className="space-y-3">
-            <h3 className="font-display font-semibold text-lg">Recommended Supplements</h3>
-            {mockInsights.recommendations.supplements.map((rec, idx) => (
-              <FoodRecommendationCard
-                key={idx}
-                type="supplement"
-                item={rec.item}
-                reason={rec.reason}
-                details={rec.details}
+                type={rec.category === 'prebiotics' || rec.category === 'probiotics' ? 'emphasize' : rec.recommendationType === 'lifestyle' ? 'supplement' : 'emphasize'}
+                item={rec.itemName}
+                reason={rec.reasoning}
+                details={rec.details || `Priority: ${rec.priority || 'Medium'}`}
               />
             ))}
           </div>
