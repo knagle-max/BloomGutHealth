@@ -195,6 +195,94 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Demo data endpoints
+  app.get("/api/demo/user", async (req, res) => {
+    try {
+      const demoUser = await storage.getDemoUser();
+      if (!demoUser) {
+        return res.status(404).json({ error: "Demo user not found" });
+      }
+      res.json({ id: demoUser.id, username: demoUser.username });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/demo/samples", async (req, res) => {
+    try {
+      const samples = await storage.getDemoSamples();
+      res.json(samples);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Meal tracking endpoints
+  app.post("/api/meals", async (req, res) => {
+    try {
+      const { userId, mealText, mealType } = req.body;
+
+      if (!mealText) {
+        return res.status(400).json({ error: "Meal text is required" });
+      }
+
+      // Analyze nutrition using API Ninjas
+      const apiKey = process.env.API_NINJAS_KEY;
+      if (!apiKey) {
+        return res.status(500).json({ error: "Nutrition API key not configured" });
+      }
+
+      const nutritionResponse = await fetch(
+        `https://api.api-ninjas.com/v1/nutrition?query=${encodeURIComponent(mealText)}`,
+        {
+          headers: { "X-Api-Key": apiKey },
+        }
+      );
+
+      const nutritionData = await nutritionResponse.json() as any;
+
+      // Calculate totals
+      let totalCalories = 0;
+      let totalProtein = 0;
+      let totalCarbs = 0;
+      let totalFat = 0;
+
+      for (const item of nutritionData) {
+        totalCalories += item.calories || 0;
+        totalProtein += item.protein_g || 0;
+        totalCarbs += item.carbohydrates_total_g || 0;
+        totalFat += item.fat_total_g || 0;
+      }
+
+      // Save meal with nutrition data
+      const meal = await storage.insertMeal({
+        userId,
+        mealText,
+        mealType,
+        nutritionalData: nutritionData,
+        totalCalories,
+        totalProtein,
+        totalCarbs,
+        totalFat,
+      });
+
+      res.json(meal);
+    } catch (error: any) {
+      console.error("Meal logging error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/meals/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const meals = await storage.getMeals(userId);
+      res.json(meals);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

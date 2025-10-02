@@ -170,3 +170,24 @@ export const insertRecommendationSchema = createInsertSchema(recommendations).om
 
 export type InsertRecommendation = z.infer<typeof insertRecommendationSchema>;
 export type Recommendation = typeof recommendations.$inferSelect;
+
+export const meals = pgTable("meals", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id),
+  mealText: text("meal_text").notNull(),
+  mealType: text("meal_type"),
+  loggedAt: timestamp("logged_at").notNull().defaultNow(),
+  nutritionalData: jsonb("nutritional_data"),
+  totalCalories: real("total_calories"),
+  totalProtein: real("total_protein"),
+  totalCarbs: real("total_carbs"),
+  totalFat: real("total_fat"),
+});
+
+export const insertMealSchema = createInsertSchema(meals).omit({
+  id: true,
+  loggedAt: true,
+});
+
+export type InsertMeal = z.infer<typeof insertMealSchema>;
+export type Meal = typeof meals.$inferSelect;

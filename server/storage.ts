@@ -15,6 +15,8 @@ import {
   type InsertMlAnalysis,
   type Recommendation,
   type InsertRecommendation,
+  type Meal,
+  type InsertMeal,
 } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -53,6 +55,14 @@ export interface IStorage {
   // Recommendation methods
   getRecommendations(sampleId: string): Promise<Recommendation[]>;
   insertRecommendation(recommendation: InsertRecommendation): Promise<void>;
+  
+  // Meal methods
+  getMeals(userId: string): Promise<Meal[]>;
+  insertMeal(meal: InsertMeal): Promise<Meal>;
+  
+  // Demo data
+  getDemoUser(): Promise<User | undefined>;
+  getDemoSamples(): Promise<MicrobiomeSample[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -64,6 +74,8 @@ export class MemStorage implements IStorage {
   private cohortReferences: Map<string, CohortReference>;
   private mlAnalyses: Map<string, MlAnalysis[]>;
   private recommendations: Map<string, Recommendation[]>;
+  private meals: Map<string, Meal[]>;
+  private demoUserId: string | null = null;
 
   constructor() {
     this.users = new Map();
@@ -74,6 +86,176 @@ export class MemStorage implements IStorage {
     this.cohortReferences = new Map();
     this.mlAnalyses = new Map();
     this.recommendations = new Map();
+    this.meals = new Map();
+    
+    this.seedDemoData();
+  }
+  
+  private async seedDemoData() {
+    const demoUser: User = {
+      id: "demo-user-123",
+      username: "demo_explorer",
+      password: "demo",
+    };
+    this.demoUserId = demoUser.id;
+    this.users.set(demoUser.id, demoUser);
+    
+    const demoSample: MicrobiomeSample = {
+      id: "demo-sample-123",
+      userId: demoUser.id,
+      testDate: new Date("2025-09-15"),
+      testingCompany: "BiomeFX",
+      testId: "BMX-2025-0915",
+      rawDataPath: "/demo/sample.fastq",
+      processingStatus: "completed",
+      diversityIndex: 4.2,
+      uploadedAt: new Date("2025-09-16"),
+    };
+    this.microbiomeSamples.set(demoSample.id, demoSample);
+    
+    const demoBacteria: BacterialComposition[] = [
+      {
+        id: "demo-bac-1",
+        sampleId: demoSample.id,
+        bacterialName: "Akkermansia muciniphila",
+        taxonomyLevel: "species",
+        abundance: 8.5,
+        genomeData: { genes: ["amuc_0010", "amuc_1435"] },
+      },
+      {
+        id: "demo-bac-2",
+        sampleId: demoSample.id,
+        bacterialName: "Faecalibacterium prausnitzii",
+        taxonomyLevel: "species",
+        abundance: 12.3,
+        genomeData: { genes: ["fpra_0234", "fpra_1890"] },
+      },
+      {
+        id: "demo-bac-3",
+        sampleId: demoSample.id,
+        bacterialName: "Bifidobacterium longum",
+        taxonomyLevel: "species",
+        abundance: 6.7,
+        genomeData: { genes: ["blon_0045", "blon_1267"] },
+      },
+      {
+        id: "demo-bac-4",
+        sampleId: demoSample.id,
+        bacterialName: "Lactobacillus plantarum",
+        taxonomyLevel: "species",
+        abundance: 4.2,
+        genomeData: { genes: ["lpla_0156", "lpla_0892"] },
+      },
+    ];
+    this.bacterialComposition.set(demoSample.id, demoBacteria);
+    
+    const demoMetabolites: Metabolite[] = [
+      {
+        id: "demo-met-1",
+        sampleId: demoSample.id,
+        bacterialId: "demo-bac-2",
+        metaboliteName: "Butyrate",
+        pathwayId: "KEGG:ko00650",
+        predictedConcentration: 15.8,
+        confidence: 0.92,
+        productionGenes: ["butyryl-CoA dehydrogenase", "butyrate kinase"],
+      },
+      {
+        id: "demo-met-2",
+        sampleId: demoSample.id,
+        bacterialId: "demo-bac-1",
+        metaboliteName: "Propionate",
+        pathwayId: "KEGG:ko00640",
+        predictedConcentration: 12.4,
+        confidence: 0.88,
+        productionGenes: ["methylmalonyl-CoA mutase", "propionyl-CoA carboxylase"],
+      },
+      {
+        id: "demo-met-3",
+        sampleId: demoSample.id,
+        bacterialId: "demo-bac-3",
+        metaboliteName: "Acetate",
+        pathwayId: "KEGG:ko00620",
+        predictedConcentration: 22.1,
+        confidence: 0.95,
+        productionGenes: ["acetate kinase", "phosphotransacetylase"],
+      },
+    ];
+    this.metabolites.set(demoSample.id, demoMetabolites);
+    
+    const demoRecommendations: Recommendation[] = [
+      {
+        id: "demo-rec-1",
+        sampleId: demoSample.id,
+        analysisId: null,
+        recommendationType: "dietary",
+        category: "prebiotics",
+        itemName: "Resistant Starch",
+        reasoning: "Your Faecalibacterium levels are good but could be optimized. Resistant starch feeds butyrate-producing bacteria.",
+        details: "Add 1-2 tablespoons of raw potato starch or cooked & cooled rice/potatoes daily",
+        priority: 1,
+        expectedImpact: 0.85,
+        targetBacteria: ["Faecalibacterium prausnitzii", "Roseburia spp."],
+        targetMetabolites: ["Butyrate"],
+        isActive: true,
+        createdAt: new Date(),
+      },
+      {
+        id: "demo-rec-2",
+        sampleId: demoSample.id,
+        analysisId: null,
+        recommendationType: "dietary",
+        category: "probiotics",
+        itemName: "Fermented Foods",
+        reasoning: "To maintain your beneficial Lactobacillus and Bifidobacterium populations",
+        details: "Include kimchi, sauerkraut, or kefir 3-4 times per week",
+        priority: 2,
+        expectedImpact: 0.72,
+        targetBacteria: ["Lactobacillus plantarum", "Bifidobacterium longum"],
+        targetMetabolites: ["Acetate", "Lactate"],
+        isActive: true,
+        createdAt: new Date(),
+      },
+      {
+        id: "demo-rec-3",
+        sampleId: demoSample.id,
+        analysisId: null,
+        recommendationType: "lifestyle",
+        category: "exercise",
+        itemName: "Moderate Cardio",
+        reasoning: "Exercise increases microbial diversity and promotes Akkermansia growth",
+        details: "30-45 minutes of moderate cardio 4-5 times per week",
+        priority: 3,
+        expectedImpact: 0.68,
+        targetBacteria: ["Akkermansia muciniphila"],
+        targetMetabolites: ["Propionate"],
+        isActive: true,
+        createdAt: new Date(),
+      },
+    ];
+    this.recommendations.set(demoSample.id, demoRecommendations);
+    
+    const demoAnalysis: MlAnalysis = {
+      id: "demo-analysis-1",
+      sampleId: demoSample.id,
+      analysisType: "comprehensive",
+      modelVersion: "v2.3.1",
+      results: {
+        overall_score: 82,
+        diversity_index: 4.2,
+        health_status: "good",
+        cohort_comparisons: {
+          elite_athletes: { similarity: 0.78, percentile: 72 },
+          centenarians: { similarity: 0.81, percentile: 76 },
+          mediterranean_diet: { similarity: 0.85, percentile: 80 },
+        },
+      },
+      confidence: 0.89,
+      explainability: null,
+      comparedCohorts: ["elite_athletes", "centenarians", "mediterranean_diet"],
+      analyzedAt: new Date("2025-09-16"),
+    };
+    this.mlAnalyses.set(demoSample.id, [demoAnalysis]);
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -250,6 +432,40 @@ export class MemStorage implements IStorage {
     };
     const existing = this.recommendations.get(recommendation.sampleId) || [];
     this.recommendations.set(recommendation.sampleId, [...existing, newRecommendation]);
+  }
+  
+  async getMeals(userId: string): Promise<Meal[]> {
+    return this.meals.get(userId) || [];
+  }
+  
+  async insertMeal(meal: InsertMeal): Promise<Meal> {
+    const id = randomUUID();
+    const newMeal: Meal = {
+      id,
+      userId: meal.userId,
+      mealText: meal.mealText,
+      mealType: meal.mealType ?? null,
+      nutritionalData: meal.nutritionalData ?? null,
+      totalCalories: meal.totalCalories ?? null,
+      totalProtein: meal.totalProtein ?? null,
+      totalCarbs: meal.totalCarbs ?? null,
+      totalFat: meal.totalFat ?? null,
+      loggedAt: new Date(),
+    };
+    const existing = this.meals.get(meal.userId) || [];
+    this.meals.set(meal.userId, [...existing, newMeal]);
+    return newMeal;
+  }
+  
+  async getDemoUser(): Promise<User | undefined> {
+    return this.demoUserId ? this.users.get(this.demoUserId) : undefined;
+  }
+  
+  async getDemoSamples(): Promise<MicrobiomeSample[]> {
+    if (!this.demoUserId) return [];
+    return Array.from(this.microbiomeSamples.values()).filter(
+      sample => sample.userId === this.demoUserId
+    );
   }
 }
 
