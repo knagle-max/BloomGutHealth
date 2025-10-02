@@ -483,7 +483,165 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/microbiome/samples/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const samples = await storage.getUserSamples(userId);
+      res.json(samples);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/microbiome/diet-prediction/:userId", async (req, res) => {
+    try {
+      const { userId } = req.params;
+      
+      const meals = await storage.getMeals(userId);
+      const recentMeals = meals.slice(0, 30);
+      
+      if (recentMeals.length < 3) {
+        return res.json({
+          mealsAnalyzed: recentMeals.length,
+          predictedBacteria: [],
+          insights: [],
+          message: 'Log more meals for accurate predictions',
+        });
+      }
+
+      const dietaryPatterns = analyzeDietaryPatterns(recentMeals);
+      const predictedBacteria = predictBacteriaFromDiet(dietaryPatterns);
+      const insights = generateDietInsights(dietaryPatterns, predictedBacteria);
+
+      res.json({
+        mealsAnalyzed: recentMeals.length,
+        dietaryPatterns,
+        predictedBacteria,
+        insights,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
+}
+
+function analyzeDietaryPatterns(meals: any[]) {
+  const totals = meals.reduce((acc, meal) => {
+    acc.fiber += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.fiber_g || 0), 0) || 0;
+    acc.protein += meal.totalProtein || 0;
+    acc.carbs += meal.totalCarbs || 0;
+    acc.fat += meal.totalFat || 0;
+    acc.sugar += meal.nutritionalData?.reduce((sum: number, item: any) => sum + (item.sugar_g || 0), 0) || 0;
+    return acc;
+  }, { fiber: 0, protein: 0, carbs: 0, fat: 0, sugar: 0 });
+
+  const avgPerMeal = {
+    fiber: totals.fiber / meals.length,
+    protein: totals.protein / meals.length,
+    carbs: totals.carbs / meals.length,
+    fat: totals.fat / meals.length,
+    sugar: totals.sugar / meals.length,
+  };
+
+  return {
+    fiberIntake: avgPerMeal.fiber > 8 ? 'high' : avgPerMeal.fiber > 4 ? 'moderate' : 'low',
+    proteinIntake: avgPerMeal.protein > 25 ? 'high' : avgPerMeal.protein > 15 ? 'moderate' : 'low',
+    carbIntake: avgPerMeal.carbs > 50 ? 'high' : avgPerMeal.carbs > 30 ? 'moderate' : 'low',
+    sugarIntake: avgPerMeal.sugar > 15 ? 'high' : avgPerMeal.sugar > 8 ? 'moderate' : 'low',
+    avgFiber: avgPerMeal.fiber,
+    avgProtein: avgPerMeal.protein,
+    avgCarbs: avgPerMeal.carbs,
+    avgSugar: avgPerMeal.sugar,
+  };
+}
+
+function predictBacteriaFromDiet(patterns: any) {
+  const bacteria = [];
+
+  if (patterns.fiberIntake === 'high') {
+    bacteria.push({
+      name: 'Faecalibacterium prausnitzii',
+      likelihood: 'High',
+      description: 'Fiber-fermenting bacteria producing anti-inflammatory butyrate',
+      dietaryDriver: `High fiber intake (~${Math.round(patterns.avgFiber)}g/meal) from whole grains, vegetables, legumes`,
+      impact: 'Produces butyrate → Reduces inflammation → Improved gut barrier',
+    });
+    bacteria.push({
+      name: 'Bifidobacterium longum',
+      likelihood: 'High',
+      description: 'Beneficial bacteria thriving on dietary fiber',
+      dietaryDriver: `High fiber intake (~${Math.round(patterns.avgFiber)}g/meal) from whole grains, vegetables, legumes`,
+      impact: 'Ferments fiber → Produces SCFAs → Enhances immune function',
+    });
+  } else if (patterns.fiberIntake === 'low') {
+    bacteria.push({
+      name: 'Bacteroides fragilis',
+      likelihood: 'Moderate',
+      description: 'Common bacteria, less beneficial without fiber',
+      dietaryDriver: `Low fiber intake (~${Math.round(patterns.avgFiber)}g/meal) limits beneficial bacteria`,
+      impact: 'Limited SCFA production → Reduced gut barrier integrity',
+    });
+  }
+
+  if (patterns.proteinIntake === 'high') {
+    bacteria.push({
+      name: 'Akkermansia muciniphila',
+      likelihood: 'Moderate',
+      description: 'Mucin-degrading bacteria, supports metabolic health',
+      dietaryDriver: `High protein intake (~${Math.round(patterns.avgProtein)}g/meal) from lean meats, fish, legumes`,
+      impact: 'Strengthens gut lining → Improves glucose metabolism',
+    });
+  }
+
+  if (patterns.sugarIntake === 'high') {
+    bacteria.push({
+      name: 'Escherichia coli',
+      likelihood: 'Elevated',
+      description: 'Opportunistic bacteria that thrive on simple sugars',
+      dietaryDriver: `High sugar intake (~${Math.round(patterns.avgSugar)}g/meal) from added sugars, sweets`,
+      impact: 'Consumes sugars → May produce inflammatory compounds',
+    });
+  }
+
+  return bacteria;
+}
+
+function generateDietInsights(patterns: any, bacteria: any[]) {
+  const insights = [];
+
+  if (patterns.fiberIntake === 'high') {
+    insights.push({
+      title: 'Strong Fiber Foundation',
+      description: 'Your high fiber intake (~' + Math.round(patterns.avgFiber) + 'g/meal) promotes beneficial bacteria like Faecalibacterium, which produce anti-inflammatory compounds.',
+      impact: 'positive',
+    });
+  } else if (patterns.fiberIntake === 'low') {
+    insights.push({
+      title: 'Increase Fiber for Better Microbiome',
+      description: 'Low fiber intake (~' + Math.round(patterns.avgFiber) + 'g/meal) limits beneficial bacteria growth. Aim for 8-10g per meal.',
+      impact: 'improvement',
+    });
+  }
+
+  if (patterns.sugarIntake === 'high') {
+    insights.push({
+      title: 'Reduce Sugar to Balance Microbiome',
+      description: 'High sugar intake (~' + Math.round(patterns.avgSugar) + 'g/meal) may promote inflammatory bacteria. Consider reducing to <10g per meal.',
+      impact: 'warning',
+    });
+  }
+
+  if (patterns.proteinIntake === 'high' && patterns.fiberIntake === 'high') {
+    insights.push({
+      title: 'Balanced Diet Supporting Diversity',
+      description: 'Your combination of high protein and fiber supports diverse bacterial populations and metabolic health.',
+      impact: 'positive',
+    });
+  }
+
+  return insights;
 }

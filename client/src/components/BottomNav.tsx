@@ -1,9 +1,10 @@
-import { Home, Lightbulb, UtensilsCrossed } from 'lucide-react';
+import { Home, Lightbulb, UtensilsCrossed, Activity } from 'lucide-react';
 import { Link, useLocation } from 'wouter';
 
 const navItems = [
   { id: 'dashboard', path: '/', icon: Home, label: 'Dashboard' },
   { id: 'nutrition', path: '/nutrition', icon: UtensilsCrossed, label: 'Nutrition' },
+  { id: 'microbiome', path: '/microbiome', icon: Activity, label: 'Microbiome' },
   { id: 'insights', path: '/insights', icon: Lightbulb, label: 'Insights' },
 ];
 

@@ -11,6 +11,7 @@ import Upload from '@/pages/Upload';
 import Insights from '@/pages/Insights';
 import Profile from '@/pages/Profile';
 import NutritionHistory from '@/pages/NutritionHistory';
+import Microbiome from '@/pages/Microbiome';
 import Login from '@/pages/Login';
 import Signup from '@/pages/Signup';
 import NotFound from '@/pages/not-found';
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/signup" component={Signup} />
       <Route path="/" component={Dashboard} />
       <Route path="/nutrition" component={NutritionHistory} />
+      <Route path="/microbiome" component={Microbiome} />
       <Route path="/upload" component={Upload} />
       <Route path="/insights" component={Insights} />
       <Route path="/profile">

@@ -13,6 +13,12 @@ import { Badge } from '@/components/ui/badge';
 export default function Insights() {
   const [, setLocation] = useLocation();
 
+  const { data: demoUser } = useQuery<{ id: string; username: string }>({
+    queryKey: ['/api/demo/user'],
+  });
+
+  const userId = demoUser?.id || 'demo-user-123';
+
   const { data: demoSamples } = useQuery({
     queryKey: ['/api/demo/samples'],
   });
@@ -20,6 +26,11 @@ export default function Insights() {
   const { data: analysisResults, isLoading } = useQuery({
     queryKey: ['/api/microbiome/results', demoSamples?.[0]?.id],
     enabled: !!demoSamples?.[0]?.id,
+  });
+
+  const { data: dietPrediction } = useQuery<any>({
+    queryKey: ['/api/microbiome/diet-prediction', userId],
+    enabled: !demoSamples || demoSamples.length === 0,
   });
 
   const latestAnalysis = analysisResults?.analyses?.[0];
@@ -30,6 +41,9 @@ export default function Insights() {
   const gutScore = latestAnalysis?.results?.overall_score || 0;
   const cohortComparisons = latestAnalysis?.results?.cohort_comparisons || {};
 
+  const hasSamples = demoSamples && demoSamples.length > 0;
+  const hasDietData = dietPrediction && dietPrediction.mealsAnalyzed >= 3;
+
   if (isLoading) {
     return (
       <div className="pb-20 pt-4 px-4 max-w-md mx-auto flex items-center justify-center min-h-[50vh]">
@@ -38,17 +52,79 @@ export default function Insights() {
     );
   }
 
-  if (!analysisResults || bacteria.length === 0) {
+  if (!hasSamples && !hasDietData) {
     return (
       <div className="pb-20 pt-4 px-4 max-w-md mx-auto">
         <EmptyState
           icon={Beaker}
           title="No Insights Yet"
-          description="Upload your microbiome test results to get personalized ML-powered insights and recommendations."
-          actionLabel="Upload Test Results"
-          onAction={() => setLocation('/upload')}
+          description="Log meals to get diet-based insights or upload microbiome test results for comprehensive ML analysis."
+          actionLabel="Log a Meal"
+          onAction={() => setLocation('/nutrition')}
           useIllustration
         />
+      </div>
+    );
+  }
+
+  if (!hasSamples && hasDietData) {
+    return (
+      <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
+        <div>
+          <h1 className="font-display text-2xl font-semibold mb-2">Your Insights</h1>
+          <p className="text-sm text-muted-foreground">Diet-based microbiome optimization</p>
+        </div>
+
+        <Card className="p-4 bg-primary/5 border-primary/20">
+          <h3 className="font-semibold mb-2">🌟 Diet-Based Analysis</h3>
+          <p className="text-sm text-muted-foreground">
+            Based on {dietPrediction.mealsAnalyzed} meals analyzed. For comprehensive insights, upload a microbiome test.
+          </p>
+        </Card>
+
+        <div className="space-y-4">
+          <h3 className="font-semibold">Key Insights</h3>
+          {dietPrediction.insights?.map((insight: any, idx: number) => (
+            <InsightCard
+              key={idx}
+              title={insight.title}
+              summary={insight.description}
+              details=""
+              variant={insight.impact === 'positive' ? 'success' : insight.impact === 'warning' ? 'warning' : 'neutral'}
+            />
+          ))}
+        </div>
+
+        {dietPrediction.predictedBacteria && dietPrediction.predictedBacteria.length > 0 && (
+          <div className="space-y-4">
+            <h3 className="font-semibold">Predicted Bacterial Influences</h3>
+            {dietPrediction.predictedBacteria.map((bacteria: any, idx: number) => (
+              <Card key={idx} className="p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <p className="font-medium">{bacteria.name}</p>
+                  <Badge variant="outline">{bacteria.likelihood}</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">{bacteria.dietaryDriver}</p>
+                <div className="p-2 rounded bg-primary/5 mt-2">
+                  <p className="text-xs font-medium text-muted-foreground mb-1">Impact Chain</p>
+                  <p className="text-sm">{bacteria.impact}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+
+        <Card className="p-4 border-primary/20">
+          <p className="text-sm text-muted-foreground text-center">
+            For comprehensive analysis with cohort comparisons and precise metabolite predictions, upload a microbiome test.
+          </p>
+          <button
+            onClick={() => setLocation('/upload')}
+            className="mt-3 w-full py-2 px-4 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Upload Test Results
+          </button>
+        </Card>
       </div>
     );
   }
