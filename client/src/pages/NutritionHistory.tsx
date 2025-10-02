@@ -6,7 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Utensils, TrendingUp, Calendar, Loader2, Plus } from 'lucide-react';
+import { Utensils, TrendingUp, Calendar, Loader2, Plus, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
@@ -16,6 +16,7 @@ export default function NutritionHistory() {
   const [showLogForm, setShowLogForm] = useState(false);
   const [mealType, setMealType] = useState<MealType>('breakfast');
   const [foodDescription, setFoodDescription] = useState('');
+  const [expandedMeals, setExpandedMeals] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   const { data: demoUser } = useQuery<{ id: string; username: string }>({
@@ -67,6 +68,18 @@ export default function NutritionHistory() {
       userId,
       mealText: foodDescription,
       mealType,
+    });
+  };
+
+  const toggleMealExpansion = (mealId: string) => {
+    setExpandedMeals(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(mealId)) {
+        newSet.delete(mealId);
+      } else {
+        newSet.add(mealId);
+      }
+      return newSet;
     });
   };
 
@@ -292,35 +305,124 @@ export default function NutritionHistory() {
           </Card>
         ) : (
           <div className="space-y-3">
-            {meals.map((meal: any, index: number) => (
-              <Card key={meal.id} data-testid={`card-meal-${index}`}>
-                <CardContent className="pt-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex-1">
-                      <p className="font-medium" data-testid={`text-meal-description-${index}`}>{meal.mealText}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {format(new Date(meal.loggedAt), 'h:mm a')}
-                        {meal.mealType && ` • ${meal.mealType}`}
-                      </p>
+            {meals.map((meal: any, index: number) => {
+              const isExpanded = expandedMeals.has(meal.id);
+              const nutritionalItems = meal.nutritionalData || [];
+              const hasItems = nutritionalItems.length > 0;
+
+              return (
+                <Card key={meal.id} data-testid={`card-meal-${index}`}>
+                  <CardContent className="pt-4">
+                    <div 
+                      className={`cursor-pointer ${hasItems ? 'hover-elevate' : ''}`}
+                      onClick={() => hasItems && toggleMealExpansion(meal.id)}
+                      data-testid={`button-expand-meal-${index}`}
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex-1">
+                          <p className="font-medium" data-testid={`text-meal-description-${index}`}>{meal.mealText}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {format(new Date(meal.loggedAt), 'h:mm a')}
+                            {meal.mealType && ` • ${meal.mealType}`}
+                          </p>
+                        </div>
+                        {hasItems && (
+                          <div className="ml-2">
+                            {isExpanded ? (
+                              <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                            ) : (
+                              <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex gap-2 mt-3">
+                        <Badge variant="secondary" data-testid={`badge-meal-calories-${index}`}>
+                          {Math.round(meal.totalCalories || 0)} cal
+                        </Badge>
+                        <Badge variant="secondary">
+                          P: {Math.round(meal.totalProtein || 0)}g
+                        </Badge>
+                        <Badge variant="secondary">
+                          C: {Math.round(meal.totalCarbs || 0)}g
+                        </Badge>
+                        <Badge variant="secondary">
+                          F: {Math.round(meal.totalFat || 0)}g
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex gap-2 mt-3">
-                    <Badge variant="secondary" data-testid={`badge-meal-calories-${index}`}>
-                      {Math.round(meal.totalCalories || 0)} cal
-                    </Badge>
-                    <Badge variant="secondary">
-                      P: {Math.round(meal.totalProtein || 0)}g
-                    </Badge>
-                    <Badge variant="secondary">
-                      C: {Math.round(meal.totalCarbs || 0)}g
-                    </Badge>
-                    <Badge variant="secondary">
-                      F: {Math.round(meal.totalFat || 0)}g
-                    </Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+
+                    {isExpanded && hasItems && (
+                      <div className="mt-4 pt-4 border-t space-y-3" data-testid={`meal-items-${index}`}>
+                        <h4 className="text-sm font-semibold text-muted-foreground">Individual Items</h4>
+                        {nutritionalItems.map((item: any, itemIdx: number) => (
+                          <div key={itemIdx} className="bg-muted/50 rounded-lg p-3 space-y-2">
+                            <p className="font-medium text-sm capitalize">{item.name}</p>
+                            
+                            <div className="grid grid-cols-2 gap-2 text-xs">
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Calories</span>
+                                <Badge variant="outline" className="h-5">{item.calories}</Badge>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Protein</span>
+                                <Badge variant="outline" className="h-5">{item.protein_g}g</Badge>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Carbs</span>
+                                <Badge variant="outline" className="h-5">{item.carbohydrates_total_g}g</Badge>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">Fat</span>
+                                <Badge variant="outline" className="h-5">{item.fat_total_g}g</Badge>
+                              </div>
+                            </div>
+
+                            {(item.fiber_g > 0 || item.sugar_g > 0 || item.sodium_mg > 0 || item.potassium_mg > 0) && (
+                              <div className="pt-2 border-t border-border/50">
+                                <p className="text-xs text-muted-foreground mb-2">Micronutrients</p>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                  {item.fiber_g > 0 && (
+                                    <div className="flex justify-between">
+                                      <span className="text-muted-foreground">Fiber</span>
+                                      <span>{item.fiber_g}g</span>
+                                    </div>
+                                  )}
+                                  {item.sugar_g > 0 && (
+                                    <div className="flex justify-between">
+                                      <span className="text-muted-foreground">Sugar</span>
+                                      <span>{item.sugar_g}g</span>
+                                    </div>
+                                  )}
+                                  {item.sodium_mg > 0 && (
+                                    <div className="flex justify-between">
+                                      <span className="text-muted-foreground">Sodium</span>
+                                      <span>{item.sodium_mg}mg</span>
+                                    </div>
+                                  )}
+                                  {item.potassium_mg > 0 && (
+                                    <div className="flex justify-between">
+                                      <span className="text-muted-foreground">Potassium</span>
+                                      <span>{item.potassium_mg}mg</span>
+                                    </div>
+                                  )}
+                                  {item.cholesterol_mg > 0 && (
+                                    <div className="flex justify-between">
+                                      <span className="text-muted-foreground">Cholesterol</span>
+                                      <span>{item.cholesterol_mg}mg</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         )}
       </div>
