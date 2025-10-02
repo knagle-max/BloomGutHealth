@@ -1,0 +1,1017 @@
+# Complete AI Development Prompt for Bloom - Gut Health App
+
+## Context & Overview
+
+You are tasked with building “Bloom” - a comprehensive gut health and microbiome analysis application. This is a mobile-first web application that combines microbiome data analysis, food/symptom tracking, and AI-powered insights to help users optimize their gut health, identify food triggers, and receive personalized dietary recommendations.
+
+## Core Business Requirements
+
+### Primary User Problem
+
+Users with IBS, digestive issues, and gut health concerns need to:
+
+1. Understand their unique microbiome composition
+1. Identify foods that trigger symptoms
+1. Receive personalized recommendations to improve gut health
+1. Track progress over time with data-driven insights
+
+### Solution Approach
+
+An AI-powered application that:
+
+- Analyzes microbiome test data against optimal reference populations
+- Tracks daily food intake and correlates with symptom patterns
+- Uses advanced AI to identify trigger foods and recommend interventions
+- Provides actionable, science-based recommendations for gut health improvement
+
+## Technical Architecture Requirements
+
+### Platform: No-Code Development
+
+**Primary Tool**: Bubble.io (visual web application builder)
+**Backend**: Firebase (Authentication + Firestore database)
+**AI Engine**: OpenAI API (GPT-4 or GPT-4o-mini)
+**Design**: Mobile-first, responsive design (375px base width, max 400px)
+
+### Technology Stack Specifications
+
+```
+Frontend: Bubble.io visual builder
+Database: Firebase Firestore
+Authentication: Firebase Authentication (email/password)
+AI: OpenAI API with custom prompts
+Analytics: Google Analytics 4
+Hosting: Bubble.io managed hosting
+```
+
+## Complete Feature Specifications
+
+### 1. USER AUTHENTICATION & ONBOARDING
+
+#### Login/Signup Flow
+
+**Pages Required:**
+
+- Login page with email/password inputs
+- Signup page with user profile collection
+- Password reset functionality
+
+**Data Collection on Signup:**
+
+- Full name (text)
+- Email (text, validated)
+- Password (minimum 8 characters)
+- Age range (dropdown: 18-25, 26-35, 36-45, 46-55, 55+)
+- Health conditions (multi-select: IBS, IBD, GERD, Food Sensitivities, Other)
+- Dietary preferences (optional: vegetarian, vegan, keto, etc.)
+
+**Workflows:**
+
+- Create Firebase user account
+- Save user profile to Firestore users collection
+- Send welcome email
+- Navigate to dashboard
+
+### 2. DASHBOARD (HOME PAGE)
+
+#### Visual Components
+
+**Header Section:**
+
+- App logo “Bloom” with gradient styling
+- User profile icon (circular, shows first initial)
+
+**Gut Health Score Card:**
+
+- Large circular display showing score 0-100
+- Color-coded status indicator:
+  - 0-50: Red “Needs Attention”
+  - 51-75: Yellow “Good Progress”
+  - 76-100: Green “Excellent”
+- Last updated date
+- Trend indicator (↑↓ from previous score)
+
+**Quick Stats Grid (2x2):**
+
+- Current day streak for logging
+- Number of trigger foods identified
+- Symptom improvement percentage
+- Days tracked this month
+
+**Action Buttons:**
+
+- “Log Today’s Meals” → Food Logging Page
+- “Upload Microbiome Test” → Upload Page
+- “View My Insights” → Insights Page
+- “Track Symptoms” → Symptom Tracking
+
+**Recent Activity Feed:**
+
+- Latest AI-generated insight (preview)
+- Recent symptom trends
+- Upcoming reminders
+
+#### Data Sources & Calculations
+
+```
+Gut Score Calculation:
+- Diversity Score (25 points): Based on bacterial diversity
+- Beneficial Bacteria (25 points): Akkermansia + Bifidobacterium percentages
+- SCFA Producers (25 points): Butyrate-producing bacteria
+- Symptom Impact (25 points): Inverse of average symptom severity
+
+Day Streak: Count consecutive days with food entries
+Trigger Foods: Count of foods with >70% symptom correlation
+```
+
+### 3. FOOD & SYMPTOM LOGGING
+
+#### Meal Logging Interface
+
+**Meal Type Selection:**
+
+- Tabs: Breakfast, Lunch, Dinner, Snack
+- Active tab highlighted with color change
+
+**Food Entry Form:**
+
+- Text area: “What did you eat?” (multi-line, expandable)
+- Time picker: When eaten (default: current time)
+- Portion size dropdown: Small, Medium, Large
+- Optional: Add photo of meal
+- Optional: Detailed ingredients list
+
+**Symptom Tracking Section:**
+
+- Header: “How are you feeling? (Rate 2-4 hours after eating)”
+- Slider inputs (range 1-10) for:
+  - Bloating level
+  - Energy level
+  - Digestive comfort
+  - Mood/mental clarity
+- Visual feedback: Color changes based on values
+  - 1-3: Green (good)
+  - 4-7: Yellow (moderate)
+  - 8-10: Red (severe)
+
+**Additional Tracking:**
+
+- Supplements taken (multi-select)
+- Water intake (number input)
+- Exercise today (yes/no, type if yes)
+- Sleep quality (1-10 scale)
+- Stress level (1-10 scale)
+- Additional notes (text area)
+
+**Workflows:**
+
+```
+On Save Entry:
+1. Validate all required fields
+2. Create document in daily_logs collection
+3. Store timestamp, user_id, all form data
+4. Check if enough data exists for pattern analysis
+5. If yes, trigger AI analysis workflow
+6. Show success message
+7. Navigate back to dashboard
+8. Update streak counter
+```
+
+### 4. MICROBIOME UPLOAD & ANALYSIS
+
+#### Upload Interface
+
+**File Upload Area:**
+
+- Drag-and-drop zone for files
+- Click to browse file system
+- Accepted formats: PDF, CSV, TXT, JSON
+- Max file size: 10MB
+- Visual upload progress indicator
+
+**Test Information Form:**
+
+- Date picker: Test date
+- Dropdown: Testing company
+  - Options: Viome, Thryve, uBiome, Biomesight, Custom Lab, Other
+- Text input: Test ID (optional)
+- Notes field: Any relevant context
+
+**Manual Entry Option:**
+
+- Large text area for copy-paste data
+- Format instructions and examples
+- Validation helper text
+
+#### Microbiome Data Structure
+
+```javascript
+Expected Data Format:
+{
+  "bacteria_percentages": {
+    "Akkermansia": 2.5,
+    "Bacteroides": 25.3,
+    "Bifidobacterium": 8.7,
+    "Lactobacillus": 1.2,
+    "Faecalibacterium": 12.4,
+    "Roseburia": 6.8,
+    "Eubacterium rectale": 4.2,
+    "Prevotella": 15.6,
+    // ... more bacteria
+  },
+  "diversity_metrics": {
+    "shannon_diversity": 2.8,
+    "species_richness": 180,
+    "evenness": 0.72
+  },
+  "test_date": "2024-01-15",
+  "testing_company": "Viome"
+}
+```
+
+#### AI Analysis Workflow
+
+```
+On Upload Complete:
+1. Parse uploaded file (PDF/CSV to structured data)
+2. Validate data format and completeness
+3. Save to microbiome_tests collection
+4. Trigger OpenAI API call with analysis prompt
+5. Parse AI response (JSON format)
+6. Calculate gut health score
+7. Identify deficiencies and strengths
+8. Generate recommendations
+9. Save insights to ai_insights collection
+10. Show processing complete message
+11. Navigate to insights page with results
+```
+
+### 5. AI-POWERED INSIGHTS
+
+#### Microbiome Analysis AI Prompt
+
+```
+System Role:
+You are Dr. MicrobiomeGPT, an expert microbiome analyst specializing in clinical interpretation, metabolomics, and personalized nutrition. You have deep knowledge of:
+- Bacterial functions and metabolite production
+- SCFA (short-chain fatty acid) production pathways
+- Gut-brain axis interactions
+- Inflammatory markers and immune function
+- Dietary interventions for microbiome optimization
+
+Reference Optimal Ranges:
+- Akkermansia muciniphila: 1-4% (mucin degradation, metabolic health)
+- Faecalibacterium prausnitzii: 3-15% (butyrate production, anti-inflammatory)
+- Bifidobacterium: 2-25% (varies by age, immune support)
+- Bacteroides: 15-45% (fiber fermentation, vitamin synthesis)
+- Lactobacillus: 0.01-1.8% (pathogen resistance)
+- Roseburia: 0.5-15% (butyrate production)
+- Eubacterium rectale: 2-15% (butyrate production)
+
+SCFA Production Guidelines:
+- Total butyrate producers: >10% optimal
+- Propionate producers: >5% optimal
+- Acetate producers: >20% optimal
+
+Diversity Guidelines:
+- Shannon Diversity: >2.5 optimal, <2.0 concerning
+- Species richness: >150 species optimal
+
+User Prompt Template:
+Analyze this microbiome profile and provide comprehensive insights:
+
+USER PROFILE:
+- Age: {age_range}
+- Health Conditions: {health_conditions}
+- Primary Symptoms: {symptom_data}
+- Current Diet: {dietary_preferences}
+- Goals: {health_goals}
+
+MICROBIOME DATA:
+{microbiome_bacteria_percentages}
+
+DIVERSITY METRICS:
+- Shannon Diversity: {shannon_diversity}
+- Species Count: {species_count}
+
+RECENT SYMPTOM PATTERNS:
+{last_30_days_symptom_averages}
+
+Provide analysis in this exact JSON format:
+{
+  "gut_score": number (0-100),
+  "overall_assessment": "Brief summary of gut health status",
+  "key_findings": [
+    {
+      "finding": "Specific observation",
+      "significance": "high|medium|low",
+      "explanation": "Why this matters",
+      "impact_on_symptoms": "Connection to user's symptoms"
+    }
+  ],
+  "bacterial_deficiencies": [
+    {
+      "bacteria_name": "Specific species",
+      "current_level": number,
+      "optimal_range": "X-Y%",
+      "functions": ["What this bacteria does"],
+      "health_impact": "Consequences of deficiency",
+      "restoration_timeline": "Expected time to improve"
+    }
+  ],
+  "bacterial_strengths": [
+    {
+      "bacteria_name": "Species name",
+      "current_level": number,
+      "benefits": ["Positive impacts"]
+    }
+  ],
+  "scfa_analysis": {
+    "butyrate_potential": "high|medium|low",
+    "propionate_potential": "high|medium|low",
+    "acetate_potential": "high|medium|low",
+    "overall_assessment": "Summary of SCFA production capacity",
+    "metabolic_implications": "What this means for health"
+  },
+  "dietary_recommendations": {
+    "immediate_actions": [
+      {
+        "action": "Specific dietary change",
+        "rationale": "Why this helps",
+        "expected_benefit": "Predicted outcome",
+        "implementation": "How to do it"
+      }
+    ],
+    "foods_to_emphasize": [
+      {
+        "food": "Specific food",
+        "reason": "How it helps microbiome",
+        "target_bacteria": "Bacteria it promotes",
+        "serving_suggestion": "How much and when"
+      }
+    ],
+    "foods_to_limit": [
+      {
+        "food": "Food to reduce",
+        "reason": "Why it may be problematic",
+        "alternatives": ["Healthier substitutes"]
+      }
+    ]
+  },
+  "supplement_recommendations": [
+    {
+      "supplement": "Name (probiotic/prebiotic/other)",
+      "specific_strains": ["If probiotic, which strains"],
+      "rationale": "Why recommended",
+      "dosage_guidance": "Suggested amount",
+      "duration": "How long to take",
+      "timing": "When to take",
+      "considerations": "Any cautions"
+    }
+  ],
+  "lifestyle_recommendations": [
+    {
+      "category": "sleep|stress|exercise|eating_habits",
+      "recommendation": "Specific change",
+      "microbiome_benefit": "How it helps"
+    }
+  ],
+  "monitoring_plan": {
+    "symptoms_to_track": ["Specific symptoms"],
+    "timeline_for_improvement": "Expected timeframe",
+    "retest_recommendation": "When to test again",
+    "success_indicators": ["Signs of improvement"]
+  },
+  "comparison_to_optimal": {
+    "longevity_populations": "Comparison to centenarian microbiomes",
+    "athletic_populations": "Comparison to elite athlete microbiomes",
+    "key_differences": ["Main gaps to address"]
+  }
+}
+```
+
+#### Food Trigger Analysis AI Prompt
+
+```
+System Role:
+You are a clinical nutritionist and food sensitivity expert specializing in:
+- IBS and FODMAP sensitivity patterns
+- Histamine intolerance recognition
+- Food additive reactions
+- Delayed food sensitivities
+- Statistical correlation analysis
+- Elimination diet protocols
+
+Correlation Thresholds:
+- >0.7: Strong trigger (high confidence)
+- 0.5-0.7: Moderate trigger (medium confidence)
+- 0.3-0.5: Weak correlation (low confidence)
+- <0.3: No significant correlation
+
+Timing Patterns:
+- FODMAP reactions: 2-6 hours post-meal
+- Histamine reactions: 15 minutes to 4 hours
+- Food additives: Variable, often 1-3 hours
+- Large meals: 1-3 hours
+- Delayed reactions: Up to 72 hours
+
+User Prompt Template:
+Analyze food and symptom data to identify trigger foods:
+
+USER PROFILE:
+- Known Conditions: {health_conditions}
+- Suspected Triggers: {user_suspected_triggers}
+- Dietary Restrictions: {dietary_restrictions}
+
+FOOD & SYMPTOM DATA (Last 30 Days):
+{structured_food_symptom_logs}
+
+DATA QUALITY:
+- Total entries: {entry_count}
+- Average entries per day: {average_per_day}
+- Symptom tracking completeness: {completion_percentage}
+
+Provide analysis in this JSON format:
+{
+  "analysis_summary": {
+    "total_entries_analyzed": number,
+    "analysis_period": "X days",
+    "data_quality_score": "high|medium|low",
+    "overall_confidence": "high|medium|low",
+    "confidence_explanation": "Why this confidence level"
+  },
+  "trigger_foods": [
+    {
+      "food": "Specific food name",
+      "correlation_score": number (0-1),
+      "confidence_level": "high|medium|low",
+      "primary_symptoms_triggered": ["bloating", "energy_drop", etc.],
+      "typical_onset_time": "X hours after eating",
+      "frequency_of_issues": "X% of times eaten",
+      "severity_impact": "mild|moderate|severe",
+      "mechanism": "FODMAP|histamine|additive|portion_size|other",
+      "mechanism_explanation": "Why this likely causes issues",
+      "similar_foods_to_avoid": ["Related foods"]
+    }
+  ],
+  "protective_foods": [
+    {
+      "food": "Food name",
+      "positive_correlation": number,
+      "benefits_observed": ["Lower bloating", "Better energy", etc.],
+      "consistency": "How reliably beneficial",
+      "recommendation": "How to incorporate more"
+    }
+  ],
+  "pattern_insights": [
+    {
+      "pattern_type": "timing|combination|quantity|preparation",
+      "observation": "What pattern was found",
+      "significance": "Why it matters",
+      "recommendation": "What to do about it"
+    }
+  ],
+  "elimination_protocol": {
+    "phase_1_elimination": {
+      "foods_to_eliminate": ["List of foods"],
+      "duration": "X weeks",
+      "monitoring_focus": ["Symptoms to track carefully"],
+      "expected_timeline": "When to expect improvement",
+      "support_strategies": ["Tips for success"]
+    },
+    "phase_2_reintroduction": {
+      "reintroduction_order": ["Foods in order to test"],
+      "testing_protocol": "How to test each food",
+      "evaluation_criteria": "What indicates tolerance",
+      "timeline": "Schedule for reintroduction"
+    }
+  },
+  "meal_timing_recommendations": {
+    "optimal_meal_times": ["Suggested eating times"],
+    "spacing_between_meals": "Recommended gap",
+    "rationale": "Why this timing helps"
+  },
+  "confidence_boosting_recommendations": {
+    "data_needed": "What would improve analysis confidence",
+    "tracking_suggestions": "How to track more effectively",
+    "timeline": "How long to track before re-analysis"
+  }
+}
+```
+
+#### Weekly Pattern Analysis AI Prompt
+
+```
+System Role:
+You are a health data analyst specializing in longitudinal health tracking and pattern recognition.
+
+User Prompt Template:
+Analyze this week's data for overall trends and insights:
+
+WEEKLY DATA:
+- Total meals logged: {count}
+- Average symptom scores: {averages}
+- Best day this week: {best_day_data}
+- Worst day this week: {worst_day_data}
+- Week-over-week changes: {comparison_to_last_week}
+
+Provide concise weekly summary in JSON:
+{
+  "weekly_summary": "1-2 sentence overview",
+  "biggest_win": "Most positive development",
+  "area_for_focus": "What to work on next week",
+  "actionable_tip": "One specific thing to try",
+  "motivation": "Encouraging message based on progress"
+}
+```
+
+### 6. INSIGHTS DISPLAY PAGE
+
+#### Insight Card Components
+
+**Card Structure:**
+
+- Header with insight type badge
+- Confidence level indicator
+- Title (clear, actionable)
+- Detailed explanation (2-3 paragraphs)
+- Recommendations list (actionable items)
+- Supporting data visualization
+- User feedback buttons (helpful/not helpful)
+- Date generated
+- “Learn More” expansion option
+
+**Insight Types:**
+
+1. **Food Trigger** (Red badge)
+- Identified trigger foods
+- Correlation data
+- Suggested eliminations
+1. **Microbiome Analysis** (Purple badge)
+- Bacterial insights
+- Deficiencies and strengths
+- Dietary interventions
+1. **Progress** (Green badge)
+- Improvements over time
+- Streak milestones
+- Health score changes
+1. **Recommendation** (Blue badge)
+- Personalized suggestions
+- Supplement recommendations
+- Lifestyle changes
+
+**Filtering & Sorting:**
+
+- Filter by type (All, Food Triggers, Microbiome, Progress, Recommendations)
+- Sort by: Date (newest first), Confidence (highest first), Type
+- Search functionality for specific insights
+
+### 7. DATABASE SCHEMA
+
+#### Firestore Collections Structure
+
+**users/** (Collection)
+
+```javascript
+{
+  userId: "auto-generated-id",
+  profile: {
+    name: "string",
+    email: "string",
+    age_range: "string",
+    health_conditions: ["array"],
+    dietary_preferences: ["array"],
+    signup_date: "timestamp",
+    onboarding_completed: "boolean"
+  },
+  settings: {
+    notifications_enabled: "boolean",
+    email_frequency: "daily|weekly|never",
+    data_sharing_consent: "boolean",
+    measurement_system: "metric|imperial",
+    timezone: "string"
+  },
+  subscription: {
+    tier: "free|premium|pro",
+    status: "active|inactive|cancelled",
+    start_date: "timestamp",
+    end_date: "timestamp",
+    payment_method: "stripe_customer_id"
+  },
+  stats: {
+    current_streak: "number",
+    longest_streak: "number",
+    total_logs: "number",
+    trigger_foods_found: "number",
+    current_gut_score: "number",
+    last_microbiome_test: "timestamp"
+  }
+}
+```
+
+**daily_logs/** (Collection)
+
+```javascript
+{
+  logId: "auto-generated-id",
+  user_id: "reference to users",
+  date: "YYYY-MM-DD",
+  timestamp: "ISO 8601 timestamp",
+  meals: [
+    {
+      meal_id: "unique-id",
+      meal_type: "breakfast|lunch|dinner|snack",
+      time_eaten: "HH:MM",
+      food_name: "string",
+      food_description: "detailed string",
+      portion_size: "small|medium|large",
+      ingredients: ["array"],
+      photo_url: "string (optional)"
+    }
+  ],
+  symptoms: {
+    bloating: "number 1-10",
+    energy: "number 1-10",
+    digestive_comfort: "number 1-10",
+    mood: "number 1-10",
+    recorded_time: "timestamp",
+    notes: "string"
+  },
+  lifestyle: {
+    supplements: ["array of strings"],
+    water_intake_oz: "number",
+    exercise: {
+      did_exercise: "boolean",
+      type: "string",
+      duration_minutes: "number"
+    },
+    sleep_quality: "number 1-10",
+    stress_level: "number 1-10"
+  },
+  created_at: "timestamp",
+  updated_at: "timestamp"
+}
+```
+
+**microbiome_tests/** (Collection)
+
+```javascript
+{
+  testId: "auto-generated-id",
+  user_id: "reference to users",
+  test_date: "YYYY-MM-DD",
+  testing_company: "string",
+  test_id_number: "string (optional)",
+  raw_data: {
+    bacteria_percentages: {
+      "Akkermansia": "number",
+      "Bacteroides": "number",
+      // ... all bacteria
+    },
+    diversity_metrics: {
+      shannon_diversity: "number",
+      species_richness: "number",
+      evenness: "number"
+    },
+    additional_data: "object (varies by test)"
+  },
+  processed_insights: {
+    gut_score: "number 0-100",
+    score_breakdown: {
+      diversity_score: "number",
+      beneficial_bacteria_score: "number",
+      scfa_producer_score: "number",
+      symptom_impact_score: "number"
+    },
+    key_findings: ["array of objects"],
+    deficiencies: ["array of objects"],
+    strengths: ["array of objects"],
+    recommendations: ["array of objects"]
+  },
+  ai_analysis: {
+    full_analysis: "complete AI response JSON",
+    model_used: "gpt-4|gpt-4o-mini",
+    analysis_date: "timestamp",
+    tokens_used: "number"
+  },
+  created_at: "timestamp"
+}
+```
+
+**ai_insights/** (Collection)
+
+```javascript
+{
+  insightId: "auto-generated-id",
+  user_id: "reference to users",
+  insight_type: "food_trigger|microbiome_analysis|progress|recommendation",
+  title: "string",
+  summary: "brief string",
+  detailed_analysis: "long string",
+  confidence_level: "high|medium|low",
+  confidence_score: "number 0-1",
+  data_source: {
+    type: "microbiome|food_logs|combined",
+    data_ids: ["array of referenced data IDs"],
+    date_range: "string"
+  },
+  actionable_items: [
+    {
+      action: "string",
+      priority: "high|medium|low",
+      category: "diet|lifestyle|supplement",
+      completed: "boolean"
+    }
+  ],
+  supporting_data: {
+    correlations: ["array"],
+    statistics: "object",
+    visualizations: "object"
+  },
+  user_feedback: {
+    helpful: "boolean|null",
+    feedback_text: "string",
+    feedback_date: "timestamp"
+  },
+  created_at: "timestamp",
+  expires_at: "timestamp (insights become stale)"
+}
+```
+
+**reference_microbiomes/** (Collection)
+
+```javascript
+{
+  referenceId: "auto-generated-id",
+  population_type: "longevity|athlete|optimal",
+  name: "string (e.g., 'Blue Zone Centenarians')",
+  description: "string",
+  bacteria_averages: {
+    "Akkermansia": "number",
+    // ... all bacteria
+  },
+  diversity_averages: {
+    shannon_diversity: "number",
+    species_richness: "number"
+  },
+  source: "research paper citation",
+  sample_size: "number",
+  geographic_region: "string"
+}
+```
+
+### 8. USER WORKFLOWS
+
+#### Complete User Journey Map
+
+**First-Time User:**
+
+1. Land on login page
+1. Click “Create Account”
+1. Complete signup form
+1. Verify email (optional)
+1. Onboarding tutorial (3-4 screens explaining features)
+1. Arrive at dashboard (empty state with prompts)
+1. Prompted to either:
+   a. Upload microbiome test, OR
+   b. Start logging food
+
+**Daily Active User:**
+
+1. Open app (goes to dashboard)
+1. See gut health score and recent insights
+1. Tap “Log Today’s Meals”
+1. Enter breakfast/lunch/dinner
+1. Record symptoms 2-4 hours later
+1. Return to dashboard
+1. Check for new insights
+1. Review weekly report (Sunday)
+
+**New Test Upload User:**
+
+1. Navigate to Upload page
+1. Upload microbiome test file
+1. Fill in test details
+1. Click “Analyze”
+1. See processing screen (2-3 minutes)
+1. Receive notification when complete
+1. View detailed insights
+1. Get personalized recommendations
+1. Save/export report
+
+### 9. PREMIUM FEATURES & MONETIZATION
+
+#### Subscription Tiers
+
+**Free Tier: “Bloom Basic”**
+
+- Basic food & symptom tracking
+- 3 AI insights per month
+- Basic gut score calculation
+- Community access
+- Educational content
+
+**Premium Tier: “Bloom Plus” ($12.99/month)**
+
+- Unlimited food & symptom tracking
+- Unlimited AI insights and analysis
+- Advanced pattern recognition
+- Weekly personalized reports
+- Microbiome test integration (1 test/month)
+- Export data and reports
+- Priority email support
+- Ad-free experience
+
+**Pro Tier: “Bloom Pro” ($24.99/month)**
+
+- Everything in Premium
+- Multiple microbiome test comparisons
+- 1-on-1 nutritionist consultations (1/month)
+- Custom meal planning
+- Supplement recommendations
+- Healthcare provider portal access
+- Advanced data visualizations
+- API access for other apps
+
+#### Subscription Logic Implementation
+
+```javascript
+// Check subscription status before AI analysis
+if (user.subscription.tier === "free") {
+  // Count AI insights this month
+  insights_this_month = count_insights_since(start_of_month);
+  if (insights_this_month >= 3) {
+    show_upgrade_prompt();
+    return;
+  }
+}
+
+// Feature gate examples
+can_upload_test = (tier === "premium" || tier === "pro");
+can_export_data = (tier === "premium" || tier === "pro");
+can_book_consultation = (tier === "pro");
+```
+
+### 10. DESIGN SYSTEM SPECIFICATIONS
+
+#### Color Palette
+
+```css
+/* Primary Colors */
+--primary-purple: #667eea;
+--secondary-purple: #764ba2;
+--gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+/* Accent Colors */
+--success-green: #28a745;
+--warning-yellow: #ffc107;
+--danger-red: #dc3545;
+--info-blue: #17a2b8;
+
+/* Neutral Colors */
+--white: #ffffff;
+--light-gray: #f8f9fa;
+--medium-gray: #6c757d;
+--dark-gray: #343a40;
+--border-gray: #e1e5e9;
+
+/* Semantic Colors */
+--text-primary: #333333;
+--text-secondary: #666666;
+--text-muted: #999999;
+--background: #ffffff;
+--card-background: #ffffff;
+```
+
+#### Typography Scale
+
+```css
+/* Font Family */
+--font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+/* Font Sizes */
+--font-size-xs: 12px;
+--font-size-sm: 14px;
+--font-size-base: 16px;
+--font-size-lg: 18px;
+--font-size-xl: 24px;
+--font-size-2xl: 32px;
+--font-size-3xl: 48px;
+
+/* Font Weights */
+--font-weight-regular: 400;
+--font-weight-medium: 500;
+--font-weight-semibold: 600;
+--font-weight-bold: 700;
+--font-weight-extrabold: 800;
+
+/* Line Heights */
+--line-height-tight: 1.2;
+--line-height-normal: 1.5;
+--line-height-relaxed: 1.75;
+```
+
+#### Spacing System
+
+```css
+--space-xs: 4px;
+--space-sm: 8px;
+--space-md: 16px;
+--space-lg: 24px;
+--space-xl: 32px;
+--space-2xl: 48px;
+--space-3xl: 64px;
+```
+
+#### Border Radius
+
+```css
+--radius-sm: 8px;
+--radius-md: 12px;
+--radius-lg: 16px;
+--radius-xl: 20px;
+--radius-full: 9999px;
+```
+
+#### Shadows
+
+```css
+--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+--shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+--shadow-lg: 0 8px 25px rgba(0, 0, 0, 0.15);
+```
+
+### 11. RESPONSIVE DESIGN RULES
+
+#### Breakpoints
+
+- Mobile: 320px - 480px (primary target)
+- Tablet: 481px - 768px
+- Desktop: 769px+ (centered container, max-width 400px)
+
+#### Container Specifications
+
+- Base width: 375px (iPhone standard)
+- Max width: 400px
+- Padding: 20px on sides
+- Safe areas: Account for notches and home indicators
+
+#### Component Responsiveness
+
+- All touch targets: Minimum 44px × 44px
+- Input fields: Minimum height 50px
+- Buttons: Minimum height 50px
+- Cards: Full width minus padding
+- Images: Responsive, maintain aspect ratio
+
+### 12. PERFORMANCE & OPTIMIZATION
+
+#### Loading States
+
+- Show skeleton screens during data loading
+- Implement progressive image loading
+- Use loading spinners for AI analysis (with estimated time)
+- Cache frequently accessed data locally
+
+#### API Cost Optimization
+
+```javascript
+// Strategies to minimize OpenAI API costs
+1. Cache common analyses for 24 hours
+2. Use GPT-4o-mini for simple tasks ($0.15/1M tokens)
+3. Use GPT-4 only for complex microbiome analysis
+4. Batch similar queries together
+5. Implement rate limiting per user
+6. Pre-process data to minimize token usage
+7. Use structured outputs (JSON mode) to reduce tokens
+```
+
+#### Database Optimization
+
+- Index commonly queried fields (user_id, date)
+- Implement pagination for large lists
+- Use Firestore queries efficiently
+- Cache user profile data locally
+- Implement offline capabilities for logging
+
+### 13. SECURITY & PRIVACY
+
+#### Data Protection
+
+```javascript
+Security Rules for Firestore:
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can only access their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    match /daily_logs/{logId} {
+      allow read, write: if request.auth != null && 
+        resource.data.user_id == request.auth.uid;
+    }
+    
+    match /microbiome_tests/{testId} {
+```
