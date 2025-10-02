@@ -6,17 +6,30 @@ import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Utensils, TrendingUp, Calendar, Loader2, Plus, ChevronDown, ChevronUp } from 'lucide-react';
+import { Utensils, TrendingUp, Calendar, Loader2, Plus, ChevronDown, ChevronUp, Pencil, Trash2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest, queryClient } from '@/lib/queryClient';
 import MealTypeSelector, { MealType } from '@/components/MealTypeSelector';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function NutritionHistory() {
   const [showLogForm, setShowLogForm] = useState(false);
+  const [editingMealId, setEditingMealId] = useState<string | null>(null);
   const [mealType, setMealType] = useState<MealType>('breakfast');
   const [foodDescription, setFoodDescription] = useState('');
   const [expandedMeals, setExpandedMeals] = useState<Set<string>>(new Set());
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [mealToDelete, setMealToDelete] = useState<string | null>(null);
   const { toast } = useToast();
 
   const { data: demoUser } = useQuery<{ id: string; username: string }>({
@@ -63,12 +76,90 @@ export default function NutritionHistory() {
     },
   });
 
+  const updateMealMutation = useMutation({
+    mutationFn: async ({ mealId, data }: { mealId: string; data: any }) => {
+      const response = await apiRequest('PUT', `/api/meals/${mealId}`, data);
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
+      
+      toast({
+        title: 'Meal updated successfully!',
+      });
+      
+      setFoodDescription('');
+      setShowLogForm(false);
+      setEditingMealId(null);
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error updating meal',
+        description: error.message || 'Please try again',
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const deleteMealMutation = useMutation({
+    mutationFn: async (mealId: string) => {
+      const response = await apiRequest('DELETE', `/api/meals/${mealId}`, {});
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
+      
+      toast({
+        title: 'Meal deleted successfully!',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error deleting meal',
+        description: error.message || 'Please try again',
+        variant: 'destructive',
+      });
+    },
+  });
+
   const handleSubmit = () => {
-    logMealMutation.mutate({
-      userId,
-      mealText: foodDescription,
-      mealType,
-    });
+    if (editingMealId) {
+      updateMealMutation.mutate({
+        mealId: editingMealId,
+        data: {
+          mealText: foodDescription,
+          mealType,
+        },
+      });
+    } else {
+      logMealMutation.mutate({
+        userId,
+        mealText: foodDescription,
+        mealType,
+      });
+    }
+  };
+
+  const handleEditMeal = (meal: any) => {
+    setEditingMealId(meal.id);
+    setFoodDescription(meal.mealText);
+    setMealType(meal.mealType || 'breakfast');
+    setShowLogForm(true);
+  };
+
+  const handleDeleteMeal = (mealId: string) => {
+    setMealToDelete(mealId);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (mealToDelete) {
+      deleteMealMutation.mutate(mealToDelete);
+      setDeleteDialogOpen(false);
+      setMealToDelete(null);
+    }
   };
 
   const toggleMealExpansion = (mealId: string) => {
@@ -150,7 +241,7 @@ export default function NutritionHistory() {
       {showLogForm && (
         <Card className="mb-6" data-testid="card-log-meal-form">
           <CardHeader>
-            <CardTitle>Log Your Meal</CardTitle>
+            <CardTitle>{editingMealId ? 'Edit Meal' : 'Log Your Meal'}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <MealTypeSelector selected={mealType} onChange={setMealType} />
@@ -171,16 +262,16 @@ export default function NutritionHistory() {
               <Button 
                 onClick={handleSubmit} 
                 className="flex-1" 
-                disabled={!foodDescription.trim() || logMealMutation.isPending}
+                disabled={!foodDescription.trim() || logMealMutation.isPending || updateMealMutation.isPending}
                 data-testid="button-save-meal"
               >
-                {logMealMutation.isPending ? (
+                {(logMealMutation.isPending || updateMealMutation.isPending) ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Analyzing...
                   </>
                 ) : (
-                  'Save Meal'
+                  editingMealId ? 'Update Meal' : 'Save Meal'
                 )}
               </Button>
               <Button 
@@ -188,6 +279,7 @@ export default function NutritionHistory() {
                 onClick={() => {
                   setShowLogForm(false);
                   setFoodDescription('');
+                  setEditingMealId(null);
                 }}
                 data-testid="button-cancel-log-meal"
               >
@@ -313,21 +405,43 @@ export default function NutritionHistory() {
               return (
                 <Card key={meal.id} data-testid={`card-meal-${index}`}>
                   <CardContent className="pt-4">
-                    <div 
-                      className={`cursor-pointer ${hasItems ? 'hover-elevate' : ''}`}
-                      onClick={() => hasItems && toggleMealExpansion(meal.id)}
-                      data-testid={`button-expand-meal-${index}`}
-                    >
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="flex-1">
-                          <p className="font-medium" data-testid={`text-meal-description-${index}`}>{meal.mealText}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {format(new Date(meal.loggedAt), 'h:mm a')}
-                            {meal.mealType && ` • ${meal.mealType}`}
-                          </p>
-                        </div>
+                    <div className="flex items-start justify-between mb-2">
+                      <div 
+                        className={`flex-1 cursor-pointer ${hasItems ? 'hover-elevate' : ''}`}
+                        onClick={() => hasItems && toggleMealExpansion(meal.id)}
+                        data-testid={`button-expand-meal-${index}`}
+                      >
+                        <p className="font-medium" data-testid={`text-meal-description-${index}`}>{meal.mealText}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {format(new Date(meal.loggedAt), 'h:mm a')}
+                          {meal.mealType && ` • ${meal.mealType}`}
+                        </p>
+                      </div>
+                      <div className="flex gap-1 ml-2">
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleEditMeal(meal);
+                          }}
+                          data-testid={`button-edit-meal-${index}`}
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteMeal(meal.id);
+                          }}
+                          data-testid={`button-delete-meal-${index}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                         {hasItems && (
-                          <div className="ml-2">
+                          <div className="ml-1 flex items-center">
                             {isExpanded ? (
                               <ChevronUp className="w-5 h-5 text-muted-foreground" />
                             ) : (
@@ -336,6 +450,11 @@ export default function NutritionHistory() {
                           </div>
                         )}
                       </div>
+                    </div>
+                    <div 
+                      className="cursor-pointer"
+                      onClick={() => hasItems && toggleMealExpansion(meal.id)}
+                    >
                       <div className="flex gap-2 mt-3">
                         <Badge variant="secondary" data-testid={`badge-meal-calories-${index}`}>
                           {Math.round(meal.totalCalories || 0)} cal
@@ -436,6 +555,21 @@ export default function NutritionHistory() {
           </CardContent>
         </Card>
       )}
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Meal</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this meal? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

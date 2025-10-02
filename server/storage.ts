@@ -62,6 +62,8 @@ export interface IStorage {
   
   getMeals(userId: string): Promise<Meal[]>;
   insertMeal(meal: InsertMeal): Promise<Meal>;
+  updateMeal(id: string, updates: Partial<Meal>): Promise<Meal>;
+  deleteMeal(id: string): Promise<void>;
   
   getDemoUser(): Promise<User | undefined>;
   getDemoSamples(): Promise<MicrobiomeSample[]>;
@@ -328,6 +330,15 @@ export class DatabaseStorage implements IStorage {
   async insertMeal(meal: InsertMeal): Promise<Meal> {
     const [newMeal] = await db.insert(meals).values(meal).returning();
     return newMeal;
+  }
+
+  async updateMeal(id: string, updates: Partial<Meal>): Promise<Meal> {
+    const [updatedMeal] = await db.update(meals).set(updates).where(eq(meals.id, id)).returning();
+    return updatedMeal;
+  }
+
+  async deleteMeal(id: string): Promise<void> {
+    await db.delete(meals).where(eq(meals.id, id));
   }
 
   async getDemoUser(): Promise<User | undefined> {

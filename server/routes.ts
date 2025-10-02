@@ -299,6 +299,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.put("/api/meals/:mealId", async (req, res) => {
+    try {
+      const { mealId } = req.params;
+      const { mealText, mealType } = req.body;
+
+      if (!mealText) {
+        return res.status(400).json({ error: "Meal text is required" });
+      }
+
+      const apiKey = process.env.API_NINJAS_KEY;
+      if (!apiKey) {
+        return res.status(500).json({ error: "Nutrition API key not configured" });
+      }
+
+      const nutritionResponse = await fetch(
+        `https://api.api-ninjas.com/v1/nutrition?query=${encodeURIComponent(mealText)}`,
+        {
+          headers: { "X-Api-Key": apiKey },
+        }
+      );
+
+      const nutritionData = await nutritionResponse.json() as any;
+
+      if (!Array.isArray(nutritionData) || nutritionData.length === 0) {
+        return res.status(400).json({ error: "Could not analyze nutrition for this meal" });
+      }
+
+      let totalCalories = 0;
+      let totalProtein = 0;
+      let totalCarbs = 0;
+      let totalFat = 0;
+
+      for (const item of nutritionData) {
+        totalCalories += parseFloat(item.calories) || 0;
+        totalProtein += parseFloat(item.protein_g) || 0;
+        totalCarbs += parseFloat(item.carbohydrates_total_g) || 0;
+        totalFat += parseFloat(item.fat_total_g) || 0;
+      }
+
+      const updatedMeal = await storage.updateMeal(mealId, {
+        mealText,
+        mealType,
+        nutritionalData: nutritionData,
+        totalCalories,
+        totalProtein,
+        totalCarbs,
+        totalFat,
+      });
+
+      res.json(updatedMeal);
+    } catch (error: any) {
+      console.error("Meal update error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.delete("/api/meals/:mealId", async (req, res) => {
+    try {
+      const { mealId } = req.params;
+      await storage.deleteMeal(mealId);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Meal delete error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   app.get("/api/nutrition/targets/:userId", async (req, res) => {
     try {
       const { userId } = req.params;
