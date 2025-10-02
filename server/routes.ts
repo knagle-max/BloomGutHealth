@@ -6,9 +6,35 @@ import FormData from "form-data";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 import { insertUserSchema } from "@shared/schema";
+import { createReadStream } from "fs";
 
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
-const upload = multer({ dest: "/tmp/uploads/" });
+
+const ALLOWED_FILE_TYPES = [
+  'text/plain',
+  'text/csv',
+  'application/octet-stream',
+  'application/x-gzip',
+  'application/gzip',
+];
+
+const ALLOWED_EXTENSIONS = ['.fastq', '.fasta', '.fa', '.fq', '.csv', '.txt', '.gz'];
+
+const upload = multer({
+  dest: "/tmp/uploads/",
+  limits: {
+    fileSize: 100 * 1024 * 1024, // 100MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    const ext = file.originalname.toLowerCase().substring(file.originalname.lastIndexOf('.'));
+    
+    if (ALLOWED_EXTENSIONS.includes(ext)) {
+      cb(null, true);
+    } else {
+      cb(new Error(`Invalid file type. Allowed types: ${ALLOWED_EXTENSIONS.join(', ')}`));
+    }
+  },
+});
 
 function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.session.userId) {
@@ -19,7 +45,19 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Microbiome sample upload endpoint
-  app.post("/api/microbiome/upload", requireAuth, upload.single("file"), async (req, res) => {
+  app.post("/api/microbiome/upload", requireAuth, (req, res, next) => {
+    upload.single("file")(req, res, (err) => {
+      if (err instanceof multer.MulterError) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).json({ error: "File too large. Maximum size is 100MB." });
+        }
+        return res.status(400).json({ error: `Upload error: ${err.message}` });
+      } else if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+      next();
+    });
+  }, async (req, res) => {
     try {
       const file = req.file;
       const { testDate, testingCompany, testId, notes } = req.body;
@@ -31,7 +69,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Forward to Python ML service for processing
       const formData = new FormData();
-      formData.append("file", require("fs").createReadStream(file.path));
+      formData.append("file", createReadStream(file.path));
 
       const mlResponse = await fetch(`${ML_SERVICE_URL}/api/ml/upload`, {
         method: "POST",

@@ -11,6 +11,7 @@ import { CalendarIcon, ChevronDown, ChevronUp } from 'lucide-react';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { useLocation } from 'wouter';
+import { useAuth } from '@/lib/auth';
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
@@ -20,28 +21,60 @@ export default function Upload() {
   const [notes, setNotes] = useState('');
   const [showManualEntry, setShowManualEntry] = useState(false);
   const [manualData, setManualData] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
+  const { user } = useAuth();
 
-  const handleSubmit = () => {
-    //todo: remove mock functionality - integrate with backend and AI analysis
-    console.log('Test uploaded:', {
-      file: file?.name,
-      testDate,
-      testingCompany,
-      testId,
-      notes,
-      manualData: showManualEntry ? manualData : null,
-    });
+  const handleSubmit = async () => {
+    if (!file) {
+      toast({
+        title: 'No file selected',
+        description: 'Please select a microbiome test file to upload.',
+        variant: 'destructive',
+      });
+      return;
+    }
 
-    toast({
-      title: 'Microbiome test uploaded!',
-      description: 'AI analysis in progress. Results will appear in Insights.',
-    });
+    setIsUploading(true);
 
-    setTimeout(() => {
-      setLocation('/insights');
-    }, 1500);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      if (testDate) formData.append('testDate', testDate.toISOString());
+      if (testingCompany) formData.append('testingCompany', testingCompany);
+      if (testId) formData.append('testId', testId);
+      if (notes) formData.append('notes', notes);
+
+      const response = await fetch('/api/microbiome/upload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Upload failed');
+      }
+
+      toast({
+        title: 'Microbiome test uploaded!',
+        description: 'AI analysis in progress. Results will appear in Insights.',
+      });
+
+      setTimeout(() => {
+        setLocation('/insights');
+      }, 1500);
+    } catch (error: any) {
+      toast({
+        title: 'Upload failed',
+        description: error.message || 'Failed to upload file. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -150,10 +183,10 @@ export default function Upload() {
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={!file && !manualData}
+        disabled={!file && !manualData || isUploading}
         data-testid="button-submit-upload"
       >
-        Analyze Microbiome
+        {isUploading ? 'Uploading...' : 'Analyze Microbiome'}
       </Button>
     </div>
   );
