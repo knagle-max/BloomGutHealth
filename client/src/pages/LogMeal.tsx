@@ -1,219 +1,136 @@
-import { useState } from 'react';
-import MealTypeSelector, { MealType } from '@/components/MealTypeSelector';
-import SymptomSlider from '@/components/SymptomSlider';
-import { Activity, Zap, Heart, Brain, Clock, Loader2 } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { apiRequest, queryClient } from '@/lib/queryClient';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { useState } from "react";
+import { Link } from "wouter";
+import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import MealTypeSelector, { type MealType } from "@/components/MealTypeSelector";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
-  const [mealType, setMealType] = useState<MealType>('breakfast');
-  const [foodDescription, setFoodDescription] = useState('');
-  const [portionSize, setPortionSize] = useState('medium');
-  const [bloating, setBloating] = useState(5);
-  const [energy, setEnergy] = useState(5);
-  const [comfort, setComfort] = useState(5);
-  const [mood, setMood] = useState(5);
-  const [nutritionData, setNutritionData] = useState<any>(null);
+  const [mealType, setMealType] = useState<MealType>("breakfast");
+  const [description, setDescription] = useState("");
+  const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
-
-  const { data: demoUser } = useQuery({
-    queryKey: ['/api/demo/user'],
-  });
-
-  const logMealMutation = useMutation({
-    mutationFn: async (data: any) => {
-      const response = await apiRequest('POST', '/api/meals', data);
-      return await response.json();
-    },
-    onSuccess: (data) => {
-      if (data.nutritionalData) {
-        setNutritionData(data.nutritionalData);
-      }
-      
-      const userId = demoUser?.id || 'demo-user-123';
-      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
-      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
-      
-      toast({
-        title: 'Meal logged successfully!',
-        description: 'Your food has been analyzed with nutritional breakdown.',
+  const save = useMutation({
+    mutationFn: async () =>
+      (await (
+        await apiRequest("POST", "/api/meals", {
+          mealText: description.trim(),
+          mealType,
+        })
+      ).json()) as Meal,
+    onSuccess: (meal) => {
+      setSavedMeal(meal);
+      setDescription("");
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          [
+            "/api/meals",
+            "/api/nutrition/",
+            "/api/health/",
+            "/api/microbiome/diet-prediction",
+          ].some((prefix) => String(query.queryKey[0]).startsWith(prefix)),
       });
-      
-      setFoodDescription('');
-      setBloating(5);
-      setEnergy(5);
-      setComfort(5);
-      setMood(5);
-    },
-    onError: (error: any) => {
       toast({
-        title: 'Error logging meal',
-        description: error.message || 'Please try again',
-        variant: 'destructive',
+        title: "Added to your journal",
+        description: "Your nutrition overview is up to date.",
       });
     },
   });
-
-  const handleSubmit = () => {
-    logMealMutation.mutate({
-      userId: demoUser?.id || 'demo-user-123',
-      mealText: foodDescription,
-      mealType,
-    });
-  };
-
   return (
-    <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
-      <div>
-        <h1 className="font-display text-2xl font-semibold mb-2">Log Your Meal</h1>
-        <p className="text-sm text-muted-foreground">Track what you eat and how you feel</p>
+    <main className="meal-page">
+      <Link href="/" className="text-link">
+        <ArrowLeft size={16} /> Back to overview
+      </Link>
+      <div className="meal-page-heading">
+        <span className="panel-icon">
+          <Utensils size={24} />
+        </span>
+        <p className="eyebrow">NOURISH & NOTICE</p>
+        <h1>What's on your plate?</h1>
+        <p className="muted">
+          A quick entry today. A clearer picture over time.
+        </p>
       </div>
-
-      <MealTypeSelector selected={mealType} onChange={setMealType} />
-
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="food-input">What did you eat?</Label>
-          <Textarea
-            id="food-input"
-            placeholder="E.g., Grilled salmon with quinoa and steamed broccoli..."
-            value={foodDescription}
-            onChange={(e) => setFoodDescription(e.target.value)}
-            className="min-h-24 resize-none"
-            data-testid="input-food-description"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Time</Label>
-            <div className="flex items-center gap-2 h-10 px-3 rounded-lg border border-input bg-background">
-              <Clock className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="portion">Portion Size</Label>
-            <Select value={portionSize} onValueChange={setPortionSize}>
-              <SelectTrigger id="portion" data-testid="select-portion">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="small">Small</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="large">Large</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div>
-          <h2 className="font-display text-lg font-semibold mb-1">How are you feeling?</h2>
-          <p className="text-xs text-muted-foreground">Rate 2-4 hours after eating</p>
-        </div>
-
-        <SymptomSlider icon={Activity} label="Bloating Level" value={bloating} onChange={setBloating} />
-        <SymptomSlider icon={Zap} label="Energy Level" value={energy} onChange={setEnergy} />
-        <SymptomSlider icon={Heart} label="Digestive Comfort" value={comfort} onChange={setComfort} />
-        <SymptomSlider icon={Brain} label="Mental Clarity" value={mood} onChange={setMood} />
-      </div>
-
-      <Button 
-        onClick={handleSubmit} 
-        className="w-full h-12" 
-        disabled={!foodDescription.trim() || logMealMutation.isPending}
-        data-testid="button-save-meal"
+      <form
+        className="bloom-panel space-y-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (description.trim() && !save.isPending) save.mutate();
+        }}
       >
-        {logMealMutation.isPending ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Analyzing Nutrition...
-          </>
-        ) : (
-          'Save Meal Entry'
-        )}
-      </Button>
-
-      {nutritionData && nutritionData.length > 0 && (
-        <Card className="p-4" data-testid="card-nutrition-breakdown">
-          <h3 className="font-display font-semibold mb-4">Nutritional Breakdown</h3>
-          
-          <div className="space-y-4">
-            {nutritionData.map((item: any, idx: number) => (
-              <div key={idx} className="space-y-3">
-                <h4 className="font-medium text-sm capitalize">{item.name}</h4>
-                
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Calories</span>
-                    <Badge variant="outline" data-testid={`badge-calories-${idx}`}>{item.calories}</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Protein</span>
-                    <Badge variant="outline" data-testid={`badge-protein-${idx}`}>{item.protein_g}g</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Carbs</span>
-                    <Badge variant="outline" data-testid={`badge-carbs-${idx}`}>{item.carbohydrates_total_g}g</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Fat</span>
-                    <Badge variant="outline" data-testid={`badge-fat-${idx}`}>{item.fat_total_g}g</Badge>
-                  </div>
-                </div>
-
-                {item.fiber_g > 0 && (
-                  <div className="pt-2 border-t">
-                    <p className="text-xs text-muted-foreground mb-2">Micronutrients & Fiber</p>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      {item.fiber_g > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Fiber</span>
-                          <span>{item.fiber_g}g</span>
-                        </div>
-                      )}
-                      {item.sugar_g > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Sugar</span>
-                          <span>{item.sugar_g}g</span>
-                        </div>
-                      )}
-                      {item.sodium_mg > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Sodium</span>
-                          <span>{item.sodium_mg}mg</span>
-                        </div>
-                      )}
-                      {item.potassium_mg > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Potassium</span>
-                          <span>{item.potassium_mg}mg</span>
-                        </div>
-                      )}
-                      {item.cholesterol_mg > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Cholesterol</span>
-                          <span>{item.cholesterol_mg}mg</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+        <fieldset disabled={save.isPending} className="space-y-6">
+          <legend className="sr-only">Meal details</legend>
+          <MealTypeSelector selected={mealType} onChange={setMealType} />
+          <div className="space-y-2">
+            <Label htmlFor="food-input">Describe your meal</Label>
+            <Textarea
+              id="food-input"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="For example: 150g grilled chicken, 1 cup brown rice, and broccoli"
+              className="min-h-32 text-base"
+              maxLength={2000}
+              required
+              data-testid="input-food-description"
+            />
+            <p className="text-xs text-muted-foreground">
+              Include quantities for a more useful nutrition estimate. You can
+              review the breakdown after saving.
+            </p>
           </div>
-        </Card>
+          {save.isError && (
+            <p role="alert" className="text-sm text-destructive">
+              {save.error.message}
+            </p>
+          )}
+          <Button
+            className="w-full h-12"
+            disabled={!description.trim() || save.isPending}
+            data-testid="button-save-meal"
+          >
+            {save.isPending ? (
+              <>
+                <Loader2 size={17} className="animate-spin mr-2" /> Saving your
+                meal…
+              </>
+            ) : (
+              "Save to my journal"
+            )}
+          </Button>
+        </fieldset>
+      </form>
+      {savedMeal && (
+        <section className="bloom-panel saved-meal" role="status">
+          <h2 className="flex items-center gap-2">
+            <CheckCircle2 size={20} /> Your meal is saved.
+          </h2>
+          <p className="my-3">{savedMeal.mealText}</p>
+          <div className="saved-nutrients">
+            <span>
+              <strong>{Math.round(savedMeal.totalCalories || 0)}</strong> kcal
+            </span>
+            <span>
+              <strong>{Math.round(savedMeal.totalProtein || 0)}g</strong>{" "}
+              protein
+            </span>
+            <span>
+              <strong>{Math.round(savedMeal.totalCarbs || 0)}g</strong> carbs
+            </span>
+          </div>
+          <Link href="/nutrition" className="text-link mt-5">
+            View your food journal{" "}
+            <ArrowLeft size={16} className="rotate-180" />
+          </Link>
+        </section>
       )}
-    </div>
+      <p className="panel-note text-center">
+        Nutrition values are estimates from the nutrition provider.
+      </p>
+    </main>
   );
 }

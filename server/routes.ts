@@ -7,6 +7,7 @@ import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 import { insertUserSchema } from "@shared/schema";
 import { createReadStream } from "fs";
+import { registerScienceRoutes } from './science-coach';
 
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
 
@@ -44,6 +45,7 @@ function requireAuth(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  registerScienceRoutes(app, { requireAuth, getMeals: userId => storage.getMeals(userId) });
   // Microbiome sample upload endpoint
   app.post("/api/microbiome/upload", requireAuth, (req, res, next) => {
     upload.single("file")(req, res, (err) => {
@@ -69,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Forward to Python ML service for processing
       const formData = new FormData();
-      formData.append("file", createReadStream(file.path));
+      formData.append("file", createReadStream(file.path), { filename: file.originalname });
 
       const mlResponse = await fetch(`${ML_SERVICE_URL}/api/ml/upload`, {
         method: "POST",
@@ -79,6 +81,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const mlResult = await mlResponse.json() as any;
 
       // Save to database
+      if (!mlResponse.ok) {
+        return res.status(mlResponse.status).json({ error: mlResult.detail || "Unable to process this test file" });
+      }
       const sample = await storage.insertMicrobiomeSample({
         userId,
         testDate: new Date(testDate),
@@ -140,6 +145,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const mlResult = await mlResponse.json() as any;
 
       // Save ML analysis results
+      if (!mlResponse.ok) {
+        await storage.updateMicrobiomeSample(sampleId, { processingStatus: "failed" });
+        return res.status(mlResponse.status).json({ error: mlResult.detail || "Microbiome analysis failed" });
+      }
       const analysisId = await storage.insertMlAnalysis({
         sampleId,
         analysisType: "comprehensive",
@@ -202,6 +211,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error: any) {
       console.error("Analysis error:", error);
+      await storage.updateMicrobiomeSample(req.params.sampleId, { processingStatus: "failed" }).catch(() => {});
       res.status(500).json({ error: error.message });
     }
   });
@@ -357,9 +367,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/meals", requireAuth, async (req, res) => {
+  app.get(["/api/meals", "/api/meals/:userId"], requireAuth, async (req, res) => {
     try {
       const userId = req.session.userId!;
+      if (req.params.userId && req.params.userId !== userId) {
+        return res.status(403).json({ error: "Access denied" });
+      }
       const meals = await storage.getMeals(userId);
       res.json(meals);
     } catch (error: any) {

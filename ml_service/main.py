@@ -58,6 +58,13 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
     4. Cohort comparison
     5. Recommendation generation
     """
+    # The upload pipeline does not yet turn sequence files into abundance data.
+    # Never substitute randomized demonstration profiles for a user's test.
+    if not request.raw_data or not request.raw_data.get("bacteria_percentages"):
+        raise HTTPException(
+            status_code=422,
+            detail="Analysis requires structured bacterial abundance data. Uploaded sequence analysis is not implemented yet."
+        )
     try:
         from .services.taxonomic_profiler import TaxonomicProfiler
         from .services.metabolite_predictor import MetabolitePredictor

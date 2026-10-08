@@ -7,15 +7,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import EmptyState from '@/components/EmptyState';
 import { Beaker, Activity, Heart, Shield, Zap, TrendingUp, Apple, AlertCircle, CheckCircle2, Target } from 'lucide-react';
 import { useLocation } from 'wouter';
+import { useAuth } from '@/lib/auth';
 
 export default function Insights() {
   const [, setLocation] = useLocation();
 
-  const { data: demoUser } = useQuery<{ id: string; username: string }>({
-    queryKey: ['/api/demo/user'],
-  });
-
-  const userId = demoUser?.id || 'demo-user-123';
+  const { user } = useAuth();
+  const userId = user?.id || '';
 
   const { data: healthAnalysis, isLoading: analysisLoading } = useQuery<any>({
     queryKey: [`/api/health/analysis/${userId}`],
@@ -53,7 +51,7 @@ export default function Insights() {
         <EmptyState
           icon={Beaker}
           title="No Health Data Yet"
-          description="Log at least 3 meals to unlock personalized health insights, molecule production tracking, and smart recommendations."
+          description="Log at least 3 meals to explore experimental diet estimates. These estimates do not measure your microbiome or health."
           actionLabel="Log a Meal"
           onAction={() => setLocation('/nutrition')}
           useIllustration
@@ -67,6 +65,9 @@ export default function Insights() {
 
   return (
     <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
+      <div className="rounded-xl border p-4 text-sm text-muted-foreground">
+        Experimental diet estimates. Molecule levels, bacterial gaps, and health scores below are calculated with prototype rules, not measured from your body or clinically validated.
+      </div>
       <div>
         <h1 className="font-display text-2xl font-semibold mb-2">Health Insights</h1>
         <p className="text-sm text-muted-foreground">

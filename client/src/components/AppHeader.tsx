@@ -1,43 +1,69 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Moon, Sun } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Moon, Sun, Sprout, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "wouter";
 
 interface AppHeaderProps {
   userName?: string;
   isDarkMode?: boolean;
   onToggleDarkMode?: () => void;
 }
+export const navItems = [
+  { path: "/", label: "Overview" },
+  { path: "/nutrition", label: "Food journal" },
+  { path: "/microbiome", label: "Microbiome" },
+  { path: "/insights", label: "Diet coach" },
+];
 
-export default function AppHeader({ userName = 'User', isDarkMode = false, onToggleDarkMode }: AppHeaderProps) {
-  const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
-
+export default function AppHeader({
+  userName = "User",
+  isDarkMode = false,
+  onToggleDarkMode,
+}: AppHeaderProps) {
+  const [location] = useLocation();
   return (
-    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border">
-      <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="font-display text-2xl font-semibold bg-gradient-to-r from-primary to-[hsl(var(--info))] bg-clip-text text-transparent">
-            Bloom
-          </h1>
-        </div>
-        <div className="flex items-center gap-3">
+    <header className="bloom-header">
+      <div className="bloom-header-inner">
+        <Link href="/" className="bloom-brand" aria-label="Bloom home">
+          <span className="brand-mark">
+            <Sprout size={25} />
+          </span>
+          <span>
+            bloom<span className="brand-period">.</span>
+          </span>
+        </Link>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              aria-current={location === item.path ? "page" : undefined}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+        <div className="header-actions">
+          <Link href="/log-meal" className="header-log">
+            <Plus size={16} /> Log meal
+          </Link>
           {onToggleDarkMode && (
             <Button
               size="icon"
               variant="ghost"
               onClick={onToggleDarkMode}
-              className="rounded-full"
+              aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
               data-testid="button-theme-toggle"
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </Button>
           )}
-          <Link href="/profile">
-            <Avatar className="w-9 h-9 cursor-pointer hover-elevate" data-testid="avatar-user">
-              <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
+          <Link
+            href="/profile"
+            className="profile-link"
+            aria-label={`Profile for ${userName}`}
+            data-testid="avatar-user"
+          >
+            {userName.slice(0, 2).toUpperCase()}
           </Link>
         </div>
       </div>
