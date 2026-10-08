@@ -18,6 +18,8 @@ export function dailyMealSummary(meals: LoggedMeal[], now = new Date()) {
     .sort((a, b) => +new Date(b.loggedAt) - +new Date(a.loggedAt));
   return {
     meals: today,
+    nutritionUnavailable: today.filter((meal) => meal.totalCalories === null)
+      .length,
     calories: today.reduce((sum, meal) => sum + (meal.totalCalories || 0), 0),
     protein: today.reduce((sum, meal) => sum + (meal.totalProtein || 0), 0),
     fiber: today.reduce(

@@ -47,13 +47,21 @@ A future cohort comparison needs:
 1. Expand the catalogue with human intervention evidence for specific fibers, food patterns, strains, and clinical goals. Record the exact study population, exposure, dose, preparation, duration, outcomes, negative findings, and practical translation for each edge.
 2. Add an expert review workflow with extraction status, review dates, conflict handling, evidence upgrades/downgrades, and source-version history. Retrieval may propose new edges; it must not publish an unchecked claim.
 3. Add validated importers for laboratory abundance reports, metagenomic pathways, and metabolite results. Preserve provenance and report uncertainty. The current upload guard rejects unsupported analysis instead of using demonstration data.
-4. Add persisted goal plans and follow-up check-ins for symptoms, serving amounts, adherence, and outcomes. The current meal schema does not store symptoms. A 2–4-week check-in is a practical review window, not a proven response timeline.
+4. Add persisted goal plans and follow-up check-ins for symptoms, serving amounts, adherence, and outcomes. The revised meal schema stores optional symptoms and portion/time context; longer-term plans and outcome validation remain future work. A 2–4-week check-in is a practical review window, not a proven response timeline.
 5. Evaluate recommendations prospectively: eligibility errors, contradictory advice, unsupported claims, adherence, tolerance, and independently measured outcomes. Clinical effectiveness needs more than a working interface.
 
-## Legacy calculations
+## Preserved experimental experiences
 
-The old `shared/health-calculations.ts` and legacy handler bodies remain as migration reference, but `/api/health/*`, dietary species prediction, and legacy recommendation-adherence endpoints now return HTTP 410. They are not used by the new coach and are not scientifically validated. The old Insights screen is no longer routed. The food journal no longer claims to infer bacteria from individual foods, and Microbiome no longer displays the old dietary species predictions. Removing the historical handler bodies and implementing reliable lab interpretation are future migration work.
+The original health, molecule, dietary bacterial exploration, recommendation, adherence and trend endpoints are restored. `/health-insights` routes the original feature areas alongside `/insights`. Explicit banners identify rule-based estimates as experimental, not measured biology. `/microbiome` restores composition, molecular model details, diet exploration and illustrative cohort comparison. The revised journal uses sourced ingredient-pathway explanations rather than silently dropping food-effect exploration.
+
+`/meal-planner` adds complete recipes and saved account preferences. Supported goals and restrictions filter meals before optional AI ordering. The recipe model is extensible but remains a curated catalogue, not unrestricted AI recipe invention. New whole-diet SCFA and walnut/urolithin sources expand the meal explanation graph. `FUNCTIONALITY.md` lists complete scope and remaining gaps.
 
 ## Validation
 
 Automated tests cover source/pathway integrity, food filtering, cohort-only plans, consent, invalid AI output, fallback behavior, malformed requests, authenticated user scope, the recent-journal window, and rate limiting. Browser smoke tests exercise goal selection, exclusions, sensitivity filtering, evidence expansion, plan regeneration, responsive layouts, and AI-mode labels using fixture responses. A live model call and production database integration require configured credentials and were not exercised here.
+
+## Nutrition interpretation and AI consent
+
+Optional ingredient parsing sends the entered meal description to the configured OpenAI provider after explicit consent. Ingredient gram masses must correspond to mass values in the user description; absent quantities stay unknown. USDA automatic record matches are shown with FDC identifiers and nutrient coverage. API Ninjas remains a compatible fallback. The application never asks the model to create nutrient values. Missing values are null; partial values are not complete meal totals.
+
+Optional recipe prioritization sends filtered recipe records, goals, saved preferences and evidence to the provider. An exact ID permutation is required; invalid, duplicated, omitted or invented recipes fall back. Neither model output can introduce new citations or clinical conclusions. Broad recipe generation, measured personalization and expert review remain development work.

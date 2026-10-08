@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const EVIDENCE_VERSION = "2026-10-08.1";
+export const EVIDENCE_VERSION = "2026-10-08.2";
 export const goalIds = [
   "butyrate",
   "diversity",
@@ -43,6 +43,34 @@ export interface EvidenceSource {
   limitation: string;
 }
 export const evidenceSources: EvidenceSource[] = [
+  {
+    id: "wholefood-2023",
+    title:
+      "Host-diet-gut microbiome interactions influence human energy balance: a randomized clinical trial",
+    authors: "Corbin et al.",
+    year: 2023,
+    doi: "10.1038/s41467-023-38778-x",
+    url: "https://www.nature.com/articles/s41467-023-38778-x",
+    design: "Controlled whole-diet crossover study; 17 participants",
+    finding:
+      "A diet providing more colonic substrates changed microbial composition and increased fecal and circulating SCFAs.",
+    limitation:
+      "Whole-diet intervention in a small cohort; does not establish effects or doses for any individual recipe ingredient.",
+  },
+  {
+    id: "walnut-2024",
+    title:
+      "Correlation between intestinal microbiota and urolithin metabolism in a human walnut dietary intervention",
+    authors: "Liu et al.",
+    year: 2024,
+    doi: "10.1186/s12866-024-03626-5",
+    url: "https://pubmed.ncbi.nlm.nih.gov/39548408/",
+    design: "Three-week human walnut dietary intervention",
+    finding:
+      "Microbial composition and urinary urolithins were studied following walnut consumption.",
+    limitation:
+      "Metabolite production depends on metabotype; microbiome associations do not establish a longevity benefit or a universal response.",
+  },
   {
     id: "fiber-2024",
     title:
@@ -126,6 +154,36 @@ export interface BiologicalPathway {
   evidence: string;
 }
 export const pathways: BiologicalPathway[] = [
+  {
+    id: "wholefood-scfa",
+    molecules: ["Acetate", "Propionate", "Butyrate"],
+    microbialFunction:
+      "Mixed plant substrates reaching the colon → community fermentation → SCFAs",
+    organisms: [
+      "Community-specific fiber degraders and SCFA producers; no single required taxon",
+    ],
+    substrate: "Mixed whole-food fiber and resistant-starch pattern",
+    relationship:
+      "A controlled whole-diet intervention increased fecal and circulating SCFAs. Individual foods and these recipe portions were not isolated causal interventions.",
+    sourceIds: ["wholefood-2023"],
+    evidence:
+      "Small controlled human crossover diet trial; whole-pattern evidence",
+  },
+  {
+    id: "ellagitannin-urolithin",
+    molecules: ["Urolithins (metabotype-dependent)"],
+    microbialFunction:
+      "Microbial transformation of ellagitannin-derived ellagic acid",
+    organisms: [
+      "Community-specific urolithin-transforming organisms; taxon presence alone does not establish metabotype",
+    ],
+    substrate: "Ellagitannin-containing foods such as walnuts",
+    relationship:
+      "A human walnut intervention linked microbial composition with urinary urolithin metabolism. Production varies by metabotype; this does not establish a lifespan effect.",
+    sourceIds: ["walnut-2024"],
+    evidence:
+      "Human dietary intervention with microbiome and urinary-metabolite observations",
+  },
   {
     id: "starch-butyrate",
     molecules: ["Butyrate", "Acetate (cross-feeding co-substrate)"],

@@ -66,6 +66,11 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
             detail="Analysis requires structured bacterial abundance data. Uploaded sequence analysis is not implemented yet."
         )
     try:
+        from .services.data_processor import DataProcessor
+        DataProcessor()._validate_percentages(request.raw_data["bacteria_percentages"])
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error))
+    try:
         from .services.taxonomic_profiler import TaxonomicProfiler
         from .services.metabolite_predictor import MetabolitePredictor
         from .services.health_impact_analyzer import HealthImpactAnalyzer
@@ -110,8 +115,8 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
             health_impacts=health_impacts,
             cohort_comparisons=cohort_comparisons,
             recommendations=recommendations,
-            confidence=0.85,
-            model_version="1.0.0"
+            confidence=0.0,
+            model_version="experimental-abundance-v2"
         )
         
     except Exception as e:
@@ -132,6 +137,7 @@ async def upload_microbiome_file(file: UploadFile = File(...)):
             "status": "success",
             "file_path": result["file_path"],
             "format": result["format"],
+            "raw_data": result.get("raw_data"),
             "preview": result["preview"]
         }
         

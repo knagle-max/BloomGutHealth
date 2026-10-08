@@ -160,7 +160,7 @@ test("plan endpoint enforces auth, user scope, recent window, validation and req
     getMeals: async (id) => {
       requestedUser = id;
       return [
-        { mealText: "yogurt", loggedAt: new Date() },
+        { mealText: "yogurt", loggedAt: new Date(Date.now() - 1000) },
         { mealText: "garlic", loggedAt: new Date(Date.now() - 30 * 86400000) },
         { mealText: "onions", loggedAt: new Date(Date.now() + 86400000) },
       ];
@@ -185,7 +185,7 @@ test("plan endpoint enforces auth, user scope, recent window, validation and req
       `http://127.0.0.1:${address.port}/api/health/analysis/current`,
       { headers: { "x-test-user": "current" } },
     );
-    assert.equal(retired.status, 410);
+    assert.equal(retired.status, 404); // Science routes no longer intercept existing health endpoints.
     assert.equal(
       (await post({ goals: ["butyrate"], userId: "other" }, "current")).status,
       400,

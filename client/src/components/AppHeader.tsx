@@ -12,6 +12,7 @@ export const navItems = [
   { path: "/nutrition", label: "Food journal" },
   { path: "/microbiome", label: "Microbiome" },
   { path: "/insights", label: "Diet coach" },
+  { path: "/meal-planner", label: "Meal planner" },
 ];
 
 export default function AppHeader({

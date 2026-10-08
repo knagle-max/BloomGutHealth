@@ -7,6 +7,7 @@ and prepares them for ML analysis.
 
 from fastapi import UploadFile
 import json
+import uuid
 from typing import Dict, Any
 from pathlib import Path
 
@@ -33,7 +34,7 @@ class DataProcessor:
             raise ValueError("No filename provided")
         
         file_extension = file.filename.split('.')[-1].lower()
-        file_path = self.upload_dir / file.filename
+        file_path = self.upload_dir / (str(uuid.uuid4()) + "." + file_extension)
         
         # Save file
         content = await file.read()
@@ -53,7 +54,8 @@ class DataProcessor:
         return {
             "file_path": str(file_path),
             "format": file_extension,
-            "preview": result
+            "preview": result,
+            "raw_data": result.get("raw_data")
         }
     
     def _process_sequence_file(self, file_path: Path, format: str) -> Dict[str, Any]:
@@ -96,21 +98,28 @@ class DataProcessor:
         """
         import csv
         
-        bacteria_data = []
+        percentages = {}
         with open(file_path, 'r') as f:
             reader = csv.DictReader(f)
-            for i, row in enumerate(reader):
-                if i >= 5:
-                    break
-                bacteria_data.append(row)
-        
-        return {
-            "type": "abundance_data",
-            "format": "csv",
-            "preview_rows": bacteria_data,
-            "note": "Bacterial abundance data ready for analysis"
-        }
-    
+            if reader.fieldnames != ['bacteria', 'abundance']:
+                raise ValueError('CSV requires bacteria,abundance columns in percent units')
+            for row in reader:
+                name = row['bacteria'].strip()
+                if not name or name in percentages:
+                    raise ValueError('Taxa must be nonempty and distinct')
+                percentages[name] = float(row['abundance'])
+        self._validate_percentages(percentages)
+        return {"type": "abundance_data", "format": "csv", "preview_rows": list(percentages.items())[:5], "raw_data": {"bacteria_percentages": percentages}}
+
+    def _validate_percentages(self, percentages):
+        import math
+        if not isinstance(percentages, dict) or not percentages or len(percentages) > 1000:
+            raise ValueError('Require 1 to 1000 distinct taxa')
+        if any(not isinstance(name, str) or not name.strip() or isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or not 0 <= value <= 100 for name, value in percentages.items()):
+            raise ValueError('Taxa require finite percentage values from 0 to 100')
+        if sum(percentages.values()) > 100.01:
+            raise ValueError('Percentages must sum to at most 100; do not mix taxonomic levels')
+
     def _process_json_file(self, file_path: Path) -> Dict[str, Any]:
         """
         Process JSON file with structured microbiome data.
@@ -118,7 +127,9 @@ class DataProcessor:
         with open(file_path, 'r') as f:
             data = json.load(f)
         
+        self._validate_percentages(data.get("bacteria_percentages") if isinstance(data, dict) else None)
         return {
+            "raw_data": data,
             "type": "structured_data",
             "format": "json",
             "preview": data if isinstance(data, dict) else data[:5] if isinstance(data, list) else str(data)[:200],

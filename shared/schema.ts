@@ -1,17 +1,29 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, integer, real, jsonb, boolean } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  text,
+  varchar,
+  timestamp,
+  integer,
+  real,
+  jsonb,
+  boolean,
+} from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
   sex: text("sex"),
   age: integer("age"),
   heightCm: real("height_cm"),
   weightKg: real("weight_kg"),
-  activityLevel: text("activity_level").default('moderate'),
+  activityLevel: text("activity_level").default("moderate"),
+  dietaryPreferences: jsonb("dietary_preferences"),
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -19,58 +31,94 @@ export const insertUserSchema = createInsertSchema(users).pick({
   password: true,
 });
 
-export const updateUserProfileSchema = createInsertSchema(users).pick({
-  sex: true,
-  age: true,
-  heightCm: true,
-  weightKg: true,
-  activityLevel: true,
-});
+export const updateUserProfileSchema = createInsertSchema(users)
+  .pick({
+    sex: true,
+    age: true,
+    heightCm: true,
+    weightKg: true,
+    activityLevel: true,
+    dietaryPreferences: true,
+  })
+  .extend({
+    sex: z.enum(["male", "female"]).nullable().optional(),
+    age: z.number().int().min(1).max(120).nullable().optional(),
+    heightCm: z.number().positive().max(250).nullable().optional(),
+    weightKg: z.number().positive().max(500).nullable().optional(),
+    activityLevel: z
+      .enum(["sedentary", "light", "moderate", "active", "very_active"])
+      .optional(),
+  })
+  .strict();
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type UpdateUserProfile = z.infer<typeof updateUserProfileSchema>;
 export type User = typeof users.$inferSelect;
 
 export const microbiomeSamples = pgTable("microbiome_samples", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: varchar("user_id")
+    .notNull()
+    .references(() => users.id),
   testDate: timestamp("test_date").notNull(),
   testingCompany: text("testing_company"),
   testId: text("test_id"),
   rawDataPath: text("raw_data_path"),
-  processingStatus: text("processing_status").notNull().default('pending'),
+  structuredData: jsonb("structured_data"),
+  notes: text("notes"),
+  processingStatus: text("processing_status").notNull().default("pending"),
   diversityIndex: real("diversity_index"),
   uploadedAt: timestamp("uploaded_at").notNull().defaultNow(),
 });
 
-export const insertMicrobiomeSampleSchema = createInsertSchema(microbiomeSamples).omit({
+export const insertMicrobiomeSampleSchema = createInsertSchema(
+  microbiomeSamples,
+).omit({
   id: true,
   uploadedAt: true,
 });
 
-export type InsertMicrobiomeSample = z.infer<typeof insertMicrobiomeSampleSchema>;
+export type InsertMicrobiomeSample = z.infer<
+  typeof insertMicrobiomeSampleSchema
+>;
 export type MicrobiomeSample = typeof microbiomeSamples.$inferSelect;
 
 export const bacterialComposition = pgTable("bacterial_composition", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  sampleId: varchar("sample_id").notNull().references(() => microbiomeSamples.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  sampleId: varchar("sample_id")
+    .notNull()
+    .references(() => microbiomeSamples.id),
   bacterialName: text("bacterial_name").notNull(),
   taxonomyLevel: text("taxonomy_level").notNull(),
   abundance: real("abundance").notNull(),
   genomeData: jsonb("genome_data"),
 });
 
-export const insertBacterialCompositionSchema = createInsertSchema(bacterialComposition).omit({
+export const insertBacterialCompositionSchema = createInsertSchema(
+  bacterialComposition,
+).omit({
   id: true,
 });
 
-export type InsertBacterialComposition = z.infer<typeof insertBacterialCompositionSchema>;
+export type InsertBacterialComposition = z.infer<
+  typeof insertBacterialCompositionSchema
+>;
 export type BacterialComposition = typeof bacterialComposition.$inferSelect;
 
 export const metabolites = pgTable("metabolites", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  sampleId: varchar("sample_id").notNull().references(() => microbiomeSamples.id),
-  bacterialId: varchar("bacterial_id").references(() => bacterialComposition.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  sampleId: varchar("sample_id")
+    .notNull()
+    .references(() => microbiomeSamples.id),
+  bacterialId: varchar("bacterial_id").references(
+    () => bacterialComposition.id,
+  ),
   metaboliteName: text("metabolite_name").notNull(),
   pathwayId: text("pathway_id"),
   predictedConcentration: real("predicted_concentration"),
@@ -86,8 +134,12 @@ export type InsertMetabolite = z.infer<typeof insertMetaboliteSchema>;
 export type Metabolite = typeof metabolites.$inferSelect;
 
 export const healthImpacts = pgTable("health_impacts", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  metaboliteId: varchar("metabolite_id").notNull().references(() => metabolites.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  metaboliteId: varchar("metabolite_id")
+    .notNull()
+    .references(() => metabolites.id),
   impactCategory: text("impact_category").notNull(),
   impactDescription: text("impact_description").notNull(),
   impactScore: real("impact_score"),
@@ -104,7 +156,9 @@ export type InsertHealthImpact = z.infer<typeof insertHealthImpactSchema>;
 export type HealthImpact = typeof healthImpacts.$inferSelect;
 
 export const cohortReferences = pgTable("cohort_references", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   cohortName: text("cohort_name").notNull(),
   cohortType: text("cohort_type").notNull(),
   bacterialProfile: jsonb("bacterial_profile").notNull(),
@@ -114,7 +168,9 @@ export const cohortReferences = pgTable("cohort_references", {
   studyReference: text("study_reference"),
 });
 
-export const insertCohortReferenceSchema = createInsertSchema(cohortReferences).omit({
+export const insertCohortReferenceSchema = createInsertSchema(
+  cohortReferences,
+).omit({
   id: true,
 });
 
@@ -122,8 +178,12 @@ export type InsertCohortReference = z.infer<typeof insertCohortReferenceSchema>;
 export type CohortReference = typeof cohortReferences.$inferSelect;
 
 export const mlAnalyses = pgTable("ml_analyses", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  sampleId: varchar("sample_id").notNull().references(() => microbiomeSamples.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  sampleId: varchar("sample_id")
+    .notNull()
+    .references(() => microbiomeSamples.id),
   analysisType: text("analysis_type").notNull(),
   modelVersion: text("model_version").notNull(),
   results: jsonb("results").notNull(),
@@ -141,28 +201,42 @@ export const insertMlAnalysisSchema = createInsertSchema(mlAnalyses).omit({
 export type InsertMlAnalysis = z.infer<typeof insertMlAnalysisSchema>;
 export type MlAnalysis = typeof mlAnalyses.$inferSelect;
 
-export const metaboliteImpactKnowledge = pgTable("metabolite_impact_knowledge", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  metaboliteName: text("metabolite_name").notNull().unique(),
-  impactCategory: text("impact_category").notNull(),
-  impactDescription: text("impact_description").notNull(),
-  impactScore: real("impact_score"),
-  evidenceLevel: text("evidence_level"),
-  affectedSystems: text("affected_systems").array(),
-  mechanismOfAction: text("mechanism_of_action"),
-  studyReferences: text("study_references").array(),
-});
+export const metaboliteImpactKnowledge = pgTable(
+  "metabolite_impact_knowledge",
+  {
+    id: varchar("id")
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    metaboliteName: text("metabolite_name").notNull().unique(),
+    impactCategory: text("impact_category").notNull(),
+    impactDescription: text("impact_description").notNull(),
+    impactScore: real("impact_score"),
+    evidenceLevel: text("evidence_level"),
+    affectedSystems: text("affected_systems").array(),
+    mechanismOfAction: text("mechanism_of_action"),
+    studyReferences: text("study_references").array(),
+  },
+);
 
-export const insertMetaboliteImpactKnowledgeSchema = createInsertSchema(metaboliteImpactKnowledge).omit({
+export const insertMetaboliteImpactKnowledgeSchema = createInsertSchema(
+  metaboliteImpactKnowledge,
+).omit({
   id: true,
 });
 
-export type InsertMetaboliteImpactKnowledge = z.infer<typeof insertMetaboliteImpactKnowledgeSchema>;
-export type MetaboliteImpactKnowledge = typeof metaboliteImpactKnowledge.$inferSelect;
+export type InsertMetaboliteImpactKnowledge = z.infer<
+  typeof insertMetaboliteImpactKnowledgeSchema
+>;
+export type MetaboliteImpactKnowledge =
+  typeof metaboliteImpactKnowledge.$inferSelect;
 
 export const recommendations = pgTable("recommendations", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  sampleId: varchar("sample_id").notNull().references(() => microbiomeSamples.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  sampleId: varchar("sample_id")
+    .notNull()
+    .references(() => microbiomeSamples.id),
   analysisId: varchar("analysis_id").references(() => mlAnalyses.id),
   recommendationType: text("recommendation_type").notNull(),
   category: text("category").notNull(),
@@ -177,7 +251,9 @@ export const recommendations = pgTable("recommendations", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 
-export const insertRecommendationSchema = createInsertSchema(recommendations).omit({
+export const insertRecommendationSchema = createInsertSchema(
+  recommendations,
+).omit({
   id: true,
   createdAt: true,
 });
@@ -186,12 +262,18 @@ export type InsertRecommendation = z.infer<typeof insertRecommendationSchema>;
 export type Recommendation = typeof recommendations.$inferSelect;
 
 export const meals = pgTable("meals", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").notNull().references(() => users.id),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: varchar("user_id")
+    .notNull()
+    .references(() => users.id),
   mealText: text("meal_text").notNull(),
   mealType: text("meal_type"),
   loggedAt: timestamp("logged_at").notNull().defaultNow(),
   nutritionalData: jsonb("nutritional_data"),
+  mealContext: jsonb("meal_context"),
+  intelligence: jsonb("intelligence"),
   totalCalories: real("total_calories"),
   totalProtein: real("total_protein"),
   totalCarbs: real("total_carbs"),

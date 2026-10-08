@@ -1,3 +1,6 @@
+import MealAnalysis from "@/components/MealAnalysis";
+import { explainFoods } from "@shared/meal-intelligence";
+import { type MealIntelligence } from "@shared/meal-intelligence";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -269,6 +272,7 @@ function HistoricalTrends({
 }
 
 export default function NutritionHistory() {
+  const [historyLimit, setHistoryLimit] = useState(20);
   const [showLogForm, setShowLogForm] = useState(false);
   const [editingMealId, setEditingMealId] = useState<string | null>(null);
   const [mealType, setMealType] = useState<MealType>("breakfast");
@@ -390,7 +394,6 @@ export default function NutritionHistory() {
       });
     } else {
       logMealMutation.mutate({
-        userId,
         mealText: foodDescription,
         mealType,
       });
@@ -437,7 +440,10 @@ export default function NutritionHistory() {
     );
   }
 
-  const meals = dailyData?.meals || [];
+  const journalMeals = [...(allMeals || dailyData?.meals || [])].sort(
+    (a, b) => +new Date(b.loggedAt) - +new Date(a.loggedAt),
+  );
+  const meals = journalMeals.slice(0, historyLimit);
   const totals = dailyData?.totals || {
     calories: 0,
     protein: 0,
@@ -481,6 +487,11 @@ export default function NutritionHistory() {
           </div>
           <div>
             <h1 className="text-2xl font-bold">Nutrition History</h1>
+            <p className="text-sm text-muted-foreground">
+              Totals sum available estimates. Meals without nutrition are not
+              zero-intake meals; missing micronutrients remain unavailable in
+              the detailed analysis.
+            </p>
             <p className="text-sm text-muted-foreground">
               Track your daily intake
             </p>
@@ -823,16 +834,31 @@ export default function NutritionHistory() {
                           variant="secondary"
                           data-testid={`badge-meal-calories-${index}`}
                         >
-                          {Math.round(meal.totalCalories || 0)} cal
+                          {meal.totalCalories === null
+                            ? "Unavailable"
+                            : Math.round(meal.totalCalories)}{" "}
+                          cal
                         </Badge>
                         <Badge variant="secondary">
-                          P: {Math.round(meal.totalProtein || 0)}g
+                          P:{" "}
+                          {meal.totalProtein === null
+                            ? "—"
+                            : Math.round(meal.totalProtein)}
+                          g
                         </Badge>
                         <Badge variant="secondary">
-                          C: {Math.round(meal.totalCarbs || 0)}g
+                          C:{" "}
+                          {meal.totalCarbs === null
+                            ? "—"
+                            : Math.round(meal.totalCarbs)}
+                          g
                         </Badge>
                         <Badge variant="secondary">
-                          F: {Math.round(meal.totalFat || 0)}g
+                          F:{" "}
+                          {meal.totalFat === null
+                            ? "—"
+                            : Math.round(meal.totalFat)}
+                          g
                         </Badge>
                       </div>
                     </div>
@@ -843,8 +869,9 @@ export default function NutritionHistory() {
                         data-testid={`meal-items-${index}`}
                       >
                         <p className="text-xs text-muted-foreground">
-                          Food nutrition does not measure bacterial abundance.
-                          Explore cited dietary pathways in the Diet coach.
+                          Gut pathways are hypotheses, not measured bacterial
+                          abundance. Explore cited dietary pathways in the Diet
+                          coach.
                         </p>
 
                         <h4 className="text-sm font-semibold text-muted-foreground">
@@ -860,6 +887,44 @@ export default function NutritionHistory() {
                                 {item.name}
                               </p>
 
+                              <details className="text-sm my-2">
+                                <summary>Potential gut pathways</summary>
+                                {explainFoods(item.name || "").pathways
+                                  .length ? (
+                                  explainFoods(item.name || "").pathways.map(
+                                    (p) => (
+                                      <div key={p.id}>
+                                        <p>
+                                          {p.substrate} →{" "}
+                                          {p.molecules.join(", ")}
+                                        </p>
+                                        <p>{p.organisms.join("; ")}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                          {p.relationship}
+                                        </p>
+                                      </div>
+                                    ),
+                                  )
+                                ) : (
+                                  <p>
+                                    No supported ingredient-specific pathway in
+                                    this catalogue.
+                                  </p>
+                                )}
+                                {explainFoods(item.name || "").sources.map(
+                                  (source) => (
+                                    <a
+                                      className="underline block"
+                                      key={source.id}
+                                      href={source.url}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                    >
+                                      {source.authors}, {source.year}
+                                    </a>
+                                  ),
+                                )}
+                              </details>
                               <div className="grid grid-cols-2 gap-2 text-xs">
                                 <div className="flex justify-between">
                                   <span className="text-muted-foreground">
@@ -952,6 +1017,31 @@ export default function NutritionHistory() {
                         })}
                       </div>
                     )}
+                    {meal.mealContext && (
+                      <details className="mt-3 text-sm">
+                        <summary>Meal context & symptoms</summary>
+                        <p>
+                          Portion:{" "}
+                          {(meal.mealContext as any).portion || "Not recorded"}
+                        </p>
+                        {Object.entries(
+                          (meal.mealContext as any).symptoms || {},
+                        ).map(([key, value]) => (
+                          <p key={key}>
+                            {key}:{" "}
+                            {value === null ? "Not recorded" : `${value}/10`}
+                          </p>
+                        ))}
+                      </details>
+                    )}
+                    {meal.intelligence && (
+                      <details className="mt-3">
+                        <summary>Nutrition & gut pathway explanation</summary>
+                        <MealAnalysis
+                          analysis={meal.intelligence as MealIntelligence}
+                        />
+                      </details>
+                    )}
                   </CardContent>
                 </Card>
               );
@@ -960,15 +1050,14 @@ export default function NutritionHistory() {
         )}
       </div>
 
-      {allMeals && allMeals.length > meals.length && (
-        <Card>
-          <CardContent className="py-4">
-            <p className="text-sm text-center text-muted-foreground">
-              {allMeals.length - meals.length} more meal
-              {allMeals.length - meals.length !== 1 ? "s" : ""} in history
-            </p>
-          </CardContent>
-        </Card>
+      {journalMeals.length > historyLimit && (
+        <Button
+          variant="outline"
+          onClick={() => setHistoryLimit(historyLimit + 20)}
+        >
+          Show more journal entries ({journalMeals.length - historyLimit}{" "}
+          remaining)
+        </Button>
       )}
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

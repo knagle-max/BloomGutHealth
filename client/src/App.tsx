@@ -8,11 +8,14 @@ import { AuthProvider, useAuth } from "@/lib/auth";
 import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import Dashboard from "@/pages/Dashboard";
-import LogMeal from "@/pages/LogMeal";
-import Upload from "@/pages/Upload";
-import Profile from "@/pages/Profile";
-import NutritionHistory from "@/pages/NutritionHistory";
-import Microbiome from "@/pages/Microbiome";
+const LogMeal = lazy(() => import("@/pages/LogMeal"));
+const Upload = lazy(() => import("@/pages/Upload"));
+const Profile = lazy(() => import("@/pages/Profile"));
+const NutritionHistory = lazy(() => import("@/pages/NutritionHistory"));
+const Microbiome = lazy(() => import("@/pages/Microbiome"));
+const Insights = lazy(() => import("@/pages/Insights"));
+const MealPlanner = lazy(() => import("@/pages/MealPlanner"));
+const Demo = lazy(() => import("@/pages/Demo"));
 import Login from "@/pages/Login";
 import Signup from "@/pages/Signup";
 import NotFound from "@/pages/not-found";
@@ -91,46 +94,65 @@ function AppContent() {
           onToggleDarkMode={toggleDarkMode}
         />
       )}
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/">{() => <ProtectedRoute component={Dashboard} />}</Route>
-        <Route path="/nutrition">
-          {() => <ProtectedRoute component={NutritionHistory} />}
-        </Route>
-        <Route path="/log-meal">
-          {() => <ProtectedRoute component={LogMeal} />}
-        </Route>
-        <Route path="/microbiome">
-          {() => <ProtectedRoute component={Microbiome} />}
-        </Route>
-        <Route path="/upload">
-          {() => <ProtectedRoute component={Upload} />}
-        </Route>
-        <Route path="/insights">
-          {() => (
-            <Suspense
-              fallback={
-                <div role="status" className="science-page">
-                  Loading the Diet coach…
-                </div>
-              }
-            >
-              <ProtectedRoute component={ScienceCoach} />
-            </Suspense>
-          )}
-        </Route>
-        <Route path="/profile">
-          {() => (
-            <ProtectedRoute
-              component={ProfileWrapper}
-              isDarkMode={isDarkMode}
-              onToggleDarkMode={toggleDarkMode}
-            />
-          )}
-        </Route>
-        <Route component={NotFound} />
-      </Switch>
+      <Suspense
+        fallback={
+          <div className="science-page" role="status">
+            Loading your page…
+          </div>
+        }
+      >
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/">
+            {() => <ProtectedRoute component={Dashboard} />}
+          </Route>
+          <Route path="/nutrition">
+            {() => <ProtectedRoute component={NutritionHistory} />}
+          </Route>
+          <Route path="/log-meal">
+            {() => <ProtectedRoute component={LogMeal} />}
+          </Route>
+          <Route path="/microbiome">
+            {() => <ProtectedRoute component={Microbiome} />}
+          </Route>
+          <Route path="/upload">
+            {() => <ProtectedRoute component={Upload} />}
+          </Route>
+          <Route path="/demo">
+            {() => <ProtectedRoute component={Demo} />}
+          </Route>
+          <Route path="/health-insights">
+            {() => <ProtectedRoute component={Insights} />}
+          </Route>
+          <Route path="/meal-planner">
+            {() => <ProtectedRoute component={MealPlanner} />}
+          </Route>
+          <Route path="/insights">
+            {() => (
+              <Suspense
+                fallback={
+                  <div role="status" className="science-page">
+                    Loading the Diet coach…
+                  </div>
+                }
+              >
+                <ProtectedRoute component={ScienceCoach} />
+              </Suspense>
+            )}
+          </Route>
+          <Route path="/profile">
+            {() => (
+              <ProtectedRoute
+                component={ProfileWrapper}
+                isDarkMode={isDarkMode}
+                onToggleDarkMode={toggleDarkMode}
+              />
+            )}
+          </Route>
+          <Route component={NotFound} />
+        </Switch>
+      </Suspense>
       {showNav && <BottomNav />}
     </div>
   );

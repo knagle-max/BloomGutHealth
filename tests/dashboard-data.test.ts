@@ -47,6 +47,7 @@ test("history includes zero-entry days and preserves local calendar dates", () =
 test("empty journal has no invented nutrition", () => {
   assert.deepEqual(dailyMealSummary([], now), {
     meals: [],
+    nutritionUnavailable: 0,
     calories: 0,
     protein: 0,
     fiber: 0,

@@ -1562,3 +1562,9 @@ button:focus-visible {
     font-size: 16px;
   }
 }
+
+.bloom-input { display:block; padding:0.65rem; margin-top:0.35rem; border:1px solid hsl(var(--border)); border-radius:0.5rem; background:hsl(var(--background)); color:hsl(var(--foreground)); font-size:1rem; max-width:100%; }
+.desktop-nav { flex-wrap:wrap; }
+.meal-page fieldset, .science-page fieldset { min-inline-size:0; }
+.bloom-input { min-width:0; }
+.meal-page label, .science-page label { overflow-wrap:anywhere; }

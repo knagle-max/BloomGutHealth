@@ -1,3 +1,4 @@
+import ResearchSummary from "@/components/ResearchSummary";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -331,6 +332,13 @@ export default function Dashboard() {
           </div>
         )}
       </section>
+      {summary.nutritionUnavailable > 0 && (
+        <p className="panel-note">
+          {summary.nutritionUnavailable} meal(s) need nutrition estimates.
+          Totals include only available data.
+        </p>
+      )}
+      <ResearchSummary />
       <footer className="dashboard-footer">
         <Leaf size={15} /> Bloom with intention. Your pace, your progress.
       </footer>

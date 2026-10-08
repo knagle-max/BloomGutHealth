@@ -1,76 +1,115 @@
-import { useState } from 'react';
-import FileUploadZone from '@/components/FileUploadZone';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, ChevronDown, ChevronUp } from 'lucide-react';
-import { format } from 'date-fns';
-import { useToast } from '@/hooks/use-toast';
-import { useLocation } from 'wouter';
-import { useAuth } from '@/lib/auth';
+import { useState } from "react";
+import { parseReportText } from "@shared/report-import";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import FileUploadZone from "@/components/FileUploadZone";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
+import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
+import { useLocation } from "wouter";
+import { useAuth } from "@/lib/auth";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
   const [testDate, setTestDate] = useState<Date>();
-  const [testingCompany, setTestingCompany] = useState('');
-  const [testId, setTestId] = useState('');
-  const [notes, setNotes] = useState('');
+  const [testingCompany, setTestingCompany] = useState("");
+  const [testId, setTestId] = useState("");
+  const [notes, setNotes] = useState("");
   const [showManualEntry, setShowManualEntry] = useState(false);
-  const [manualData, setManualData] = useState('');
+  const [manualData, setManualData] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const { user } = useAuth();
 
   const handleSubmit = async () => {
-    if (!file) {
-      toast({
-        title: 'No file selected',
-        description: 'Please select a microbiome test file to upload.',
-        variant: 'destructive',
-      });
+    if (!file && !manualData.trim()) {
+      toast({ title: "Choose a file or enter data", variant: "destructive" });
       return;
     }
-
     setIsUploading(true);
 
     try {
+      if (
+        manualData.trim() ||
+        file?.name.toLowerCase().endsWith(".json") ||
+        file?.name.toLowerCase().endsWith(".csv")
+      ) {
+        const text = manualData.trim() || (await file!.text());
+        const percentages = parseReportText(
+          text,
+          manualData.trim() || file!.name.toLowerCase().endsWith(".json")
+            ? "json"
+            : "csv",
+        );
+        await apiRequest("POST", "/api/microbiome/import", {
+          bacteria_percentages: percentages,
+          testDate: testDate?.toISOString(),
+          testingCompany,
+          testId,
+          notes,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ["/api/microbiome/samples"],
+        });
+        toast({
+          title: "Reported abundances imported",
+          description:
+            "Composition saved. No genes or metabolite concentrations were invented.",
+        });
+        setLocation("/microbiome");
+        return;
+      }
       const formData = new FormData();
-      formData.append('file', file);
-      if (testDate) formData.append('testDate', testDate.toISOString());
-      if (testingCompany) formData.append('testingCompany', testingCompany);
-      if (testId) formData.append('testId', testId);
-      if (notes) formData.append('notes', notes);
+      formData.append("file", file!);
+      if (testDate) formData.append("testDate", testDate.toISOString());
+      if (testingCompany) formData.append("testingCompany", testingCompany);
+      if (testId) formData.append("testId", testId);
+      if (notes) formData.append("notes", notes);
 
-      const response = await fetch('/api/microbiome/upload', {
-        method: 'POST',
+      const response = await fetch("/api/microbiome/upload", {
+        method: "POST",
         body: formData,
-        credentials: 'include',
+        credentials: "include",
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
+        throw new Error(data.error || "Upload failed");
       }
 
       toast({
-        title: 'Microbiome test uploaded!',
-        description: 'AI analysis in progress. Results will appear in Insights.',
+        title: "Microbiome file uploaded",
+        description:
+          "File recorded. Raw-sequence taxonomic analysis requires a separate validated pipeline.",
       });
 
       setTimeout(() => {
-        setLocation('/insights');
+        setLocation("/microbiome");
       }, 1500);
     } catch (error: any) {
       toast({
-        title: 'Upload failed',
-        description: error.message || 'Failed to upload file. Please try again.',
-        variant: 'destructive',
+        title: "Upload failed",
+        description:
+          error.message || "Failed to upload file. Please try again.",
+        variant: "destructive",
       });
     } finally {
       setIsUploading(false);
@@ -80,11 +119,24 @@ export default function Upload() {
   return (
     <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold mb-2">Upload Microbiome Test</h1>
-        <p className="text-sm text-muted-foreground">Get personalized insights from your results</p>
+        <h1 className="font-display text-2xl font-semibold mb-2">
+          Upload Microbiome Test
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Get personalized insights from your results
+        </p>
       </div>
 
-      <FileUploadZone onFileSelect={setFile} />
+      <FileUploadZone
+        onFileSelect={setFile}
+        acceptedFormats={["JSON", "CSV", "FASTQ", "FASTA", "FA", "FQ"]}
+        maxSizeMB={100}
+      />
+      <p className="text-sm text-muted-foreground">
+        JSON: bacteria_percentages object. CSV: bacteria,abundance columns in
+        percent units, with distinct taxa at one taxonomic level. FASTQ/FASTA
+        can be recorded; sequencing classification is not implemented.
+      </p>
 
       <div className="space-y-4">
         <div className="space-y-2">
@@ -97,7 +149,7 @@ export default function Upload() {
                 data-testid="button-date-picker"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {testDate ? format(testDate, 'PPP') : <span>Pick a date</span>}
+                {testDate ? format(testDate, "PPP") : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
@@ -159,7 +211,11 @@ export default function Upload() {
           data-testid="button-toggle-manual"
         >
           <span>Manual Data Entry</span>
-          {showManualEntry ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          {showManualEntry ? (
+            <ChevronUp className="w-4 h-4" />
+          ) : (
+            <ChevronDown className="w-4 h-4" />
+          )}
         </button>
 
         {showManualEntry && (
@@ -183,10 +239,10 @@ export default function Upload() {
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={!file && !manualData || isUploading}
+        disabled={(!file && !manualData.trim()) || isUploading}
         data-testid="button-submit-upload"
       >
-        {isUploading ? 'Uploading...' : 'Analyze Microbiome'}
+        {isUploading ? "Uploading..." : "Save report"}
       </Button>
     </div>
   );

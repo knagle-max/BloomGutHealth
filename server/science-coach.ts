@@ -1,4 +1,10 @@
 import OpenAI from "openai";
+import {
+  preferenceSchema,
+  defaultPreferences,
+  filterLegacyFoods,
+  type DietaryPreferences,
+} from "../shared/meal-intelligence";
 import { zodTextFormat } from "openai/helpers/zod";
 import { z } from "zod";
 import {
@@ -17,8 +23,18 @@ export async function prepareSciencePlan(
   request: CoachRequest,
   mealDescriptions: string[],
   ranker?: EvidenceRanker,
+  savedPreferences?: DietaryPreferences,
 ): Promise<SciencePlan> {
   const plan = buildSciencePlan(request, mealDescriptions);
+  if (savedPreferences) {
+    const actions = plan.actions.filter(
+      (a) =>
+        filterLegacyFoods([{ food: a.keywords.join(" ") }], savedPreferences)
+          .length > 0,
+    );
+    plan.withheldActions += plan.actions.length - actions.length;
+    plan.actions = actions;
+  }
   if (!request.aiConsent) return plan;
   if (!ranker)
     return {
@@ -93,28 +109,13 @@ export function registerScienceRoutes(
   app: Express,
   dependencies: {
     requireAuth: RequestHandler;
+    getPreferences?: (userId: string) => Promise<unknown>;
     getMeals: (
       userId: string,
     ) => Promise<Array<{ mealText: string; loggedAt: Date | string }>>;
   },
 ) {
   const windows = new Map<string, { start: number; requests: number }>();
-  app.all(
-    [
-      "/api/health/*",
-      "/api/microbiome/diet-prediction/*",
-      "/api/meals/:mealId/check-adherence",
-    ],
-    dependencies.requireAuth,
-    (_req, res) =>
-      res
-        .status(410)
-        .json({
-          error:
-            "The unvalidated diet-to-bacteria and health-score prototype is retired. Use the evidence-based Diet coach at /insights.",
-          replacement: "/api/science/plan",
-        }),
-  );
   app.get("/api/science/status", dependencies.requireAuth, (_req, res) => {
     res.json({
       aiAvailable: !!(
@@ -152,6 +153,11 @@ export function registerScienceRoutes(
         parsed.data,
         recentDescriptions,
         configuredRanker(),
+        dependencies.getPreferences
+          ? preferenceSchema.parse(
+              (await dependencies.getPreferences(userId)) || defaultPreferences,
+            )
+          : undefined,
       );
       res.json(plan);
     } catch {

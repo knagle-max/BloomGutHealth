@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
@@ -447,5 +448,20 @@ function SourceLinks({ ids, plan }: { ids: string[]; plan: SciencePlan }) {
 }
 export default function ScienceCoach() {
   const { user } = useAuth();
-  return user ? <GoalForm key={user.id} userId={user.id} /> : null;
+  return user ? (
+    <>
+      <div className="science-page pb-0 flex flex-wrap gap-4">
+        <Link className="text-link" href="/meal-planner">
+          Goal-based meal planner
+        </Link>
+        <Link className="text-link" href="/health-insights">
+          Health Insights, adherence & trends
+        </Link>
+        <Link className="text-link" href="/profile">
+          Saved dietary preferences
+        </Link>
+      </div>
+      <GoalForm key={user.id} userId={user.id} />
+    </>
+  ) : null;
 }

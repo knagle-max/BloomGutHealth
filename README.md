@@ -1,29 +1,53 @@
 # Bloom Gut Health
 
-Bloom is a mobile-friendly food journal and microbiome research prototype built with React, TypeScript, Express, PostgreSQL, and a separate Python analysis service.
+Bloom combines a food and symptom journal, nutrition estimates, microbiome reports, experimental research views, and an evidence-linked meal planner. React/TypeScript, Express, PostgreSQL and a separate Python prototype service.
 
 ## Run locally
 
 ```sh
 npm ci
-```
-
-Set environment variables in your shell or deployment platform:
-
-- `DATABASE_URL`: PostgreSQL connection string (the current database adapter uses Neon's WebSocket driver).
-- `SESSION_SECRET`: a unique, private session secret. Required operationally for any deployed instance; do not use the built-in development fallback.
-- `API_NINJAS_KEY`: nutrition-service key, required to save/analyze meals.
-- `ML_SERVICE_URL`: Python service URL; defaults to `http://localhost:8000`.
-- `PORT`: Express port; defaults to `5000`.
-
-Create the database schema, then run the app:
-
-```sh
 npm run db:push
 npm run dev
 ```
 
-For the separate Python prototype, install the dependencies from `pyproject.toml` using `uv sync` and run `uv run uvicorn ml_service.main:app --host 127.0.0.1 --port 8000`.
+Configure `DATABASE_URL` (Neon-compatible PostgreSQL), `SESSION_SECRET`, and optional provider settings:
+
+- `USDA_FDC_API_KEY`: USDA FoodData Central lookup for ingredient-level macros, vitamins and minerals. Records are scaled from per-100g data using explicitly supplied ingredient weights. Automatic food matches are displayed for review; missing nutrient values are not zero-filled.
+- `API_NINJAS_KEY`: existing natural-language nutrition provider, retained as fallback. Without either provider, meals and symptoms still save with nutrition unavailable.
+- `OPENAI_API_KEY` and `OPENAI_SCIENCE_MODEL`: optional structured ingredient parsing and evidence-constrained recipe/action prioritization. The user must opt in; the app works with curated rules otherwise.
+- `ML_SERVICE_URL`: Python prototype service, defaults to `http://localhost:8000`.
+- `PORT`: Express port, defaults to 5000.
+
+Before running the revised server against an existing database, apply the **additive** SQL in `migrations/0001_preserve_functionality.sql`, or use `npm run db:push` after reviewing the proposed schema changes. New JSON columns store preferences, meal context, nutrition provenance and structured report data; existing records are preserved. No production migration is applied by this PR.
+
+For Python, install `pyproject.toml` dependencies with `uv sync`, then `uv run uvicorn ml_service.main:app --host 127.0.0.1 --port 8000`.
+
+## Feature map
+
+- `/`: responsive personal overview, daily nutrition, meal history and restored report/research summary.
+- `/log-meal`: description, meal type, date/time, portion context, optional saved symptoms (bloating, energy, digestive comfort, mental clarity), optional AI ingredient parsing, nutrient/molecule/pathway explanations.
+- `/nutrition`: journal editing/deletion, individual nutrition items and pathway hypotheses, saved context, daily targets, monthly and yearly summaries.
+- `/profile`: actual account nutrition profile and database-persisted dietary preferences, dislikes, exclusions, dietary pattern, cooking-time limit, cuisine context and goals; theme/logout.
+- `/meal-planner`: 15 complete recipes with amounts, steps, goal rationale and pathway citations. Preferences filter eligibility before optional AI ordering. Recipe nutrition uses configured databases; recipe-to-journal handoff does not log food until the user saves it. Four-week saved symptom and journal progress plus approximate recipe adherence.
+- `/demo`: isolated sample-data exploration; no provider requests or writes to the account.
+- `/insights`: sourced goal/function/substrate Diet coach, retained alongside all legacy feature areas.
+- `/health-insights`: restored Health, SCFAs, Tips, Track and Trends screens. Legacy calculations are explicitly experimental and are not clinical measurements.
+- `/microbiome`: reported composition, report history and selection, comparison between compatible reports, molecule model details, diet-based experimental exploration, research evidence for athletes/long-lived populations and the original illustrative cohort comparison.
+- `/upload`: working manual JSON entry and supported JSON/CSV abundance import, notes and report metadata. Sequence uploads can be recorded; taxonomic classification of raw sequences is not implemented.
+
+Existing health, diet-model and adherence APIs remain callable; they no longer return HTTP 410. Meal CRUD paths and response fields remain compatible. Profile editing now checks authentication and account ownership. Individual meal adherence no longer calls a localhost URL without authentication.
+
+## Scientific and implementation boundaries
+
+Nutrition is a database/provider estimate, not lab analysis of a meal. Ambiguous quantities require gram weights; AI cannot invent micronutrient numbers. Food matches need review for preparation/product fit. Partial nutrient coverage is displayed explicitly. Portion labels do not multiply nutrients automatically.
+
+Foods identify supported pathway hypotheses, not measured species abundance, metabolite concentrations or causal health improvement. Recipe servings are practical translations, not study-equivalent treatment doses. The catalogue is versioned and extensible, but does not yet cover arbitrary foods/goals comprehensively.
+
+The original diet-to-bacteria, molecule and health-score models are retained with visible experimental labels. Their numerical indices are unvalidated; historical analyses may include demonstration data. Newly run Python abundance models are deterministic and no longer invent gene counts or random molecule values, but their relative indices and cohort profiles remain illustrative.
+
+Athlete and centenarian study findings are available with primary sources. Real population percentiles require harmonized reference datasets, compatible assays and validation. The app does not claim that resembling a group improves performance or lifespan. The prototype cohort similarity is identified separately.
+
+AI recipe prioritization uses the eligible catalogue only; it does not yet generate unrestricted novel recipes or automatically retrieve and validate new studies. Cuisine context influences optional AI ordering, not deterministic filtering. Full expert-curated knowledge coverage and prospectively validated personalization remain product development work. See `FUNCTIONALITY.md` and `SCIENCE_COACH.md`.
 
 ## Validation
 
@@ -31,32 +55,7 @@ For the separate Python prototype, install the dependencies from `pyproject.toml
 npm run check
 npm test
 npm run build
+python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-With the Python service dependencies installed, run `python -m unittest discover -s tests -p 'test_*.py'` to check the unsupported-upload guard.
-
-## Enhanced experience
-
-- Responsive overview with warm botanical styling, desktop navigation, and iPhone safe-area support.
-- User-specific nutrition totals, today's food journal, and switchable 7/14-day logging history.
-- A dedicated `/log-meal` route with server-confirmed save feedback and actionable errors.
-- Shared theme state for header and profile, accessible navigation labels, zoom support, and reduced-motion support.
-- Explicit loading, empty, disconnected, and retry states for the overview.
-- Compatibility fix for the journal's `/api/meals/:userId` requests, preserving user authorization checks.
-- Insights use the signed-in user's identity rather than the demo account.
-
-## Analysis limitations
-
-This is a research prototype, not a validated diagnostic product. Dietary bacterial predictions, molecule production, and health scores use hand-written rules. Cohort and metabolite logic still include illustrative assumptions. Food intake does not directly measure a person's bacteria or metabolite concentrations.
-
-The upload-to-analysis pipeline does **not** currently extract bacterial abundance from sequencing files. Its analysis request sends a file path, but the Python endpoint requires structured `raw_data.bacteria_percentages`. Unsupported requests now return an error rather than creating randomized bacterial results. Direct structured abundance requests remain experimental. Existing stored results may have been created by earlier randomized logic and should not be treated as real measurements.
-
-Symptom and portion controls were removed from the dedicated meal form because the database does not persist those fields. Adding them properly needs schema changes and a separate check-in workflow.
-
-Before deployment, configure database, nutrition access, a secure session secret, and reverse-proxy/session settings for your hosting platform. This enhancement does not provision infrastructure or validate scientific models.
-
-## Goal-based Diet coach
-
-Open **Diet coach** (`/insights`) to explore butyrate, diversity, athlete-associated functions, or healthy-ageing research. The new planner shows the biology, food translations, and study links without inferring species or metabolite levels from meals. Athlete/centenarian views expose research and evidence gaps rather than prescribing an unproven microbiome match.
-
-Optional AI prioritization requires `OPENAI_API_KEY` and `OPENAI_SCIENCE_MODEL` (a model supporting structured Responses API outputs). It is off unless the user opts in. Without those settings the cited evidence planner works and is clearly labelled. See [SCIENCE_COACH.md](SCIENCE_COACH.md) for the evidence model, privacy boundaries, remaining scientific work, and validation limits.
+Automated tests cover preference eligibility, nutrient missingness/scaling, provider failure, ownership, meal context persistence, report parsing, scientific source integrity, AI output validation and unsupported sequence guards. Browser tests use fixture responses; live provider requests and production database migration require credentials and are not verified here. Deployments also need secure sessions, proxy configuration and a shared rate limiter when using multiple instances.

@@ -8,11 +8,35 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import MealAnalysis from "@/components/MealAnalysis";
+import { recipes, type MealIntelligence } from "@shared/meal-intelligence";
 import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
   const [mealType, setMealType] = useState<MealType>("breakfast");
-  const [description, setDescription] = useState("");
+  const recipe = recipes.find(
+    (r) => r.id === new URLSearchParams(window.location.search).get("recipe"),
+  );
+  const [description, setDescription] = useState(
+    recipe
+      ? recipe.ingredients
+          .map((i) => `${i.grams} g ${i.name.replaceAll(",", " ")}`)
+          .join(", ")
+      : "",
+  );
+  const [eatenAt, setEatenAt] = useState(() => {
+    const date = new Date();
+    return new Date(+date - date.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
+  });
+  const [portion, setPortion] = useState<
+    "small" | "medium" | "large" | "specified"
+  >("specified");
+  const [aiConsent, setAIConsent] = useState(false);
+  const [symptoms, setSymptoms] = useState<
+    Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
+  >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
   const save = useMutation({
@@ -21,6 +45,12 @@ export default function LogMeal() {
         await apiRequest("POST", "/api/meals", {
           mealText: description.trim(),
           mealType,
+          aiConsent,
+          mealContext: {
+            eatenAt: new Date(eatenAt).toISOString(),
+            portion,
+            symptoms,
+          },
         })
       ).json()) as Meal,
     onSuccess: (meal) => {
@@ -37,7 +67,10 @@ export default function LogMeal() {
       });
       toast({
         title: "Added to your journal",
-        description: "Your nutrition overview is up to date.",
+        description:
+          meal.totalCalories === null
+            ? "Your meal is saved; nutrition needs more information or a provider."
+            : "Your nutrition overview is up to date.",
       });
     },
   });
@@ -83,6 +116,90 @@ export default function LogMeal() {
               review the breakdown after saving.
             </p>
           </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label>
+              Meal date & time
+              <input
+                className="bloom-input w-full"
+                type="datetime-local"
+                value={eatenAt}
+                onChange={(e) => setEatenAt(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Portion context
+              <select
+                className="bloom-input w-full"
+                value={portion}
+                onChange={(e) => setPortion(e.target.value as any)}
+              >
+                <option value="specified">Amounts in description</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
+            </label>
+          </div>
+          <p className="panel-note">
+            Portion labels are saved as context; they do not automatically
+            multiply nutrients. Include food weights for calculations.
+          </p>
+          <fieldset className="space-y-3">
+            <legend>Optional symptom check-in</legend>
+            {(["bloating", "energy", "comfort", "clarity"] as const).map(
+              (key) => (
+                <div key={key}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={symptoms[key] !== null}
+                      onChange={(e) =>
+                        setSymptoms({
+                          ...symptoms,
+                          [key]: e.target.checked ? 5 : null,
+                        })
+                      }
+                    />{" "}
+                    Record{" "}
+                    {key === "comfort"
+                      ? "digestive comfort"
+                      : key === "clarity"
+                        ? "mental clarity"
+                        : key}
+                  </label>
+                  {symptoms[key] !== null && (
+                    <label className="flex gap-3 items-center">
+                      <input
+                        aria-label={`${key} level`}
+                        type="range"
+                        min="0"
+                        max="10"
+                        value={symptoms[key]!}
+                        onChange={(e) =>
+                          setSymptoms({
+                            ...symptoms,
+                            [key]: Number(e.target.value),
+                          })
+                        }
+                      />
+                      <span>{symptoms[key]}/10</span>
+                    </label>
+                  )}
+                </div>
+              ),
+            )}
+          </fieldset>
+          <label className="block text-sm">
+            <input
+              type="checkbox"
+              checked={aiConsent}
+              onChange={(e) => setAIConsent(e.target.checked)}
+            />{" "}
+            Use optional AI ingredient parsing. Sends this meal description to
+            the configured AI provider; nutrient numbers come from food
+            databases.
+          </label>
           {save.isError && (
             <p role="alert" className="text-sm text-destructive">
               {save.error.message}
@@ -110,23 +227,33 @@ export default function LogMeal() {
             <CheckCircle2 size={20} /> Your meal is saved.
           </h2>
           <p className="my-3">{savedMeal.mealText}</p>
-          <div className="saved-nutrients">
-            <span>
-              <strong>{Math.round(savedMeal.totalCalories || 0)}</strong> kcal
-            </span>
-            <span>
-              <strong>{Math.round(savedMeal.totalProtein || 0)}g</strong>{" "}
-              protein
-            </span>
-            <span>
-              <strong>{Math.round(savedMeal.totalCarbs || 0)}g</strong> carbs
-            </span>
-          </div>
+          {savedMeal.totalCalories !== null ? (
+            <div className="saved-nutrients">
+              <span>
+                <strong>{Math.round(savedMeal.totalCalories || 0)}</strong> kcal
+              </span>
+              <span>
+                <strong>{Math.round(savedMeal.totalProtein || 0)}g</strong>{" "}
+                protein
+              </span>
+              <span>
+                <strong>{Math.round(savedMeal.totalCarbs || 0)}g</strong> carbs
+              </span>
+            </div>
+          ) : (
+            <p>
+              Complete nutrition totals unavailable; the description and
+              check-in are saved.
+            </p>
+          )}
           <Link href="/nutrition" className="text-link mt-5">
             View your food journal{" "}
             <ArrowLeft size={16} className="rotate-180" />
           </Link>
         </section>
+      )}
+      {Boolean(savedMeal?.intelligence) && (
+        <MealAnalysis analysis={savedMeal!.intelligence as MealIntelligence} />
       )}
       <p className="panel-note text-center">
         Nutrition values are estimates from the nutrition provider.
