@@ -68,7 +68,8 @@ class TaxonomicProfiler:
                 "is_excess": abundance > ref_data["optimal_range"][1],
                 "health_score": ref_data["health_score"],
                 "genome_data": {
-                    "gene_count": int(np.random.uniform(2000, 5000)),
+                    "gene_count": None,
+                    "provenance": "taxon-based pathway hypotheses, not measured genes",
                     "metabolic_pathways": self._identify_pathways(bacteria)
                 }
             })
@@ -98,7 +99,8 @@ class TaxonomicProfiler:
                 "is_excess": abundance > ref_data["optimal_range"][1],
                 "health_score": ref_data["health_score"],
                 "genome_data": {
-                    "gene_count": int(np.random.uniform(2000, 5000)),
+                    "gene_count": None,
+                    "provenance": "taxon-based pathway hypotheses, not measured genes",
                     "metabolic_pathways": self._identify_pathways(bacteria)
                 }
             })

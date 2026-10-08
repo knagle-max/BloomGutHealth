@@ -1,21 +1,30 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import EmptyState from '@/components/EmptyState';
-import { Beaker, Activity, Heart, Shield, Zap, TrendingUp, Apple, AlertCircle, CheckCircle2, Target } from 'lucide-react';
-import { useLocation } from 'wouter';
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EmptyState from "@/components/EmptyState";
+import {
+  Beaker,
+  Activity,
+  Heart,
+  Shield,
+  Zap,
+  TrendingUp,
+  Apple,
+  AlertCircle,
+  CheckCircle2,
+  Target,
+} from "lucide-react";
+import { useLocation } from "wouter";
+import { useAuth } from "@/lib/auth";
 
 export default function Insights() {
   const [, setLocation] = useLocation();
 
-  const { data: demoUser } = useQuery<{ id: string; username: string }>({
-    queryKey: ['/api/demo/user'],
-  });
-
-  const userId = demoUser?.id || 'demo-user-123';
+  const { user } = useAuth();
+  const userId = user?.id || "";
 
   const { data: healthAnalysis, isLoading: analysisLoading } = useQuery<any>({
     queryKey: [`/api/health/analysis/${userId}`],
@@ -53,9 +62,9 @@ export default function Insights() {
         <EmptyState
           icon={Beaker}
           title="No Health Data Yet"
-          description="Log at least 3 meals to unlock personalized health insights, molecule production tracking, and smart recommendations."
+          description="Log at least 3 meals to explore experimental diet estimates. These estimates do not measure your microbiome or health."
           actionLabel="Log a Meal"
-          onAction={() => setLocation('/nutrition')}
+          onAction={() => setLocation("/nutrition")}
           useIllustration
         />
       </div>
@@ -67,26 +76,62 @@ export default function Insights() {
 
   return (
     <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
+      <div className="rounded-xl border p-4 text-sm text-muted-foreground">
+        Experimental diet estimates. Molecule levels, bacterial gaps, and health
+        scores below are calculated with prototype rules, not measured from your
+        body or clinically validated.
+      </div>
       <div>
-        <h1 className="font-display text-2xl font-semibold mb-2">Health Insights</h1>
+        <h1 className="font-display text-2xl font-semibold mb-2">
+          Health Insights
+        </h1>
         <p className="text-sm text-muted-foreground">
           Based on {healthAnalysis.mealsAnalyzed} meals analyzed
         </p>
       </div>
 
+      <div role="note" className="p-4 rounded-lg bg-muted text-sm">
+        Experimental diet model: the scores and molecule values below are
+        rule-based illustrations, not measured inflammation, immune function or
+        metabolite concentrations. Adherence tracks food matches, not proven
+        health improvement.{" "}
+        <a className="underline" href="/insights">
+          Open the sourced Diet coach
+        </a>{" "}
+        or{" "}
+        <a className="underline" href="/meal-planner">
+          plan meals
+        </a>
+        .
+      </div>
       <Tabs defaultValue="health" className="w-full">
         <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="health" data-testid="tab-health">Health</TabsTrigger>
-          <TabsTrigger value="molecules" data-testid="tab-molecules">SCFAs</TabsTrigger>
-          <TabsTrigger value="recommendations" data-testid="tab-recommendations">Tips</TabsTrigger>
-          <TabsTrigger value="adherence" data-testid="tab-adherence">Track</TabsTrigger>
-          <TabsTrigger value="progress" data-testid="tab-progress">Trends</TabsTrigger>
+          <TabsTrigger value="health" data-testid="tab-health">
+            Health
+          </TabsTrigger>
+          <TabsTrigger value="molecules" data-testid="tab-molecules">
+            SCFAs
+          </TabsTrigger>
+          <TabsTrigger
+            value="recommendations"
+            data-testid="tab-recommendations"
+          >
+            Tips
+          </TabsTrigger>
+          <TabsTrigger value="adherence" data-testid="tab-adherence">
+            Track
+          </TabsTrigger>
+          <TabsTrigger value="progress" data-testid="tab-progress">
+            Trends
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="health" className="space-y-4 mt-6">
           <Card data-testid="card-health-overview">
             <CardHeader>
-              <CardTitle className="text-base">Health Score Overview</CardTitle>
+              <CardTitle className="text-base">
+                Experimental diet indicators
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {healthScores && healthScores.length > 0 ? (
@@ -94,45 +139,75 @@ export default function Insights() {
                   <div key={idx} className="space-y-2">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        {score.category === 'Inflammation' && <Activity className="h-4 w-4 text-primary" />}
-                        {score.category === 'Gut Barrier' && <Shield className="h-4 w-4 text-primary" />}
-                        {score.category === 'Metabolic Health' && <Zap className="h-4 w-4 text-primary" />}
-                        {score.category === 'Immune Function' && <Heart className="h-4 w-4 text-primary" />}
-                        <span className="text-sm font-medium">{score.category}</span>
+                        {score.category === "Inflammation" && (
+                          <Activity className="h-4 w-4 text-primary" />
+                        )}
+                        {score.category === "Gut Barrier" && (
+                          <Shield className="h-4 w-4 text-primary" />
+                        )}
+                        {score.category === "Metabolic Health" && (
+                          <Zap className="h-4 w-4 text-primary" />
+                        )}
+                        {score.category === "Immune Function" && (
+                          <Heart className="h-4 w-4 text-primary" />
+                        )}
+                        <span className="text-sm font-medium">
+                          {score.category}
+                        </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <span className={`text-sm font-semibold ${
-                          score.status === 'excellent' ? 'text-green-600 dark:text-green-400' :
-                          score.status === 'good' ? 'text-yellow-600 dark:text-yellow-400' :
-                          'text-red-600 dark:text-red-400'
-                        }`}>
+                        <span
+                          className={`text-sm font-semibold ${
+                            score.status === "excellent"
+                              ? "text-green-600 dark:text-green-400"
+                              : score.status === "good"
+                                ? "text-yellow-600 dark:text-yellow-400"
+                                : "text-red-600 dark:text-red-400"
+                          }`}
+                        >
                           {score.score}/100
                         </span>
-                        <Badge variant={
-                          score.status === 'excellent' ? 'default' :
-                          score.status === 'good' ? 'secondary' :
-                          'outline'
-                        } className={
-                          score.status === 'excellent' ? 'bg-green-600 dark:bg-green-700' :
-                          score.status === 'good' ? 'bg-yellow-600 dark:bg-yellow-700' :
-                          'bg-red-600 dark:bg-red-700 text-white'
-                        }>
-                          {score.status === 'excellent' ? 'Excellent' :
-                           score.status === 'good' ? 'Good' :
-                           'Needs Attention'}
+                        <Badge
+                          variant={
+                            score.status === "excellent"
+                              ? "default"
+                              : score.status === "good"
+                                ? "secondary"
+                                : "outline"
+                          }
+                          className={
+                            score.status === "excellent"
+                              ? "bg-green-600 dark:bg-green-700"
+                              : score.status === "good"
+                                ? "bg-yellow-600 dark:bg-yellow-700"
+                                : "bg-red-600 dark:bg-red-700 text-white"
+                          }
+                        >
+                          {score.status === "excellent"
+                            ? "Excellent"
+                            : score.status === "good"
+                              ? "Good"
+                              : "Needs Attention"}
                         </Badge>
                       </div>
                     </div>
                     <Progress value={score.score} className="h-2" />
                     <div className="bg-muted/50 rounded p-2 space-y-1">
                       {score.impacts.map((impact: string, impIdx: number) => (
-                        <p key={impIdx} className="text-xs text-muted-foreground">{impact}</p>
+                        <p
+                          key={impIdx}
+                          className="text-xs text-muted-foreground"
+                        >
+                          {impact}
+                        </p>
                       ))}
                     </div>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">No health score data available</p>
+                <p className="text-sm text-muted-foreground">
+                  No health score data available
+                </p>
               )}
             </CardContent>
           </Card>
@@ -140,7 +215,9 @@ export default function Insights() {
           {bacterialGaps && bacterialGaps.length > 0 && (
             <Card data-testid="card-bacterial-gaps">
               <CardHeader>
-                <CardTitle className="text-base">Bacterial Optimization Opportunities</CardTitle>
+                <CardTitle className="text-base">
+                  Modeled bacterial opportunities Opportunities
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 {bacterialGaps.map((gap: any, idx: number) => (
@@ -149,19 +226,26 @@ export default function Insights() {
                       <div>
                         <p className="text-sm font-medium">{gap.bacteria}</p>
                         <p className="text-xs text-muted-foreground">
-                          Current: {gap.currentLevel} | Target: {gap.optimalLevel}
+                          Current: {gap.currentLevel} | Target:{" "}
+                          {gap.optimalLevel}
                         </p>
                       </div>
-                      <Badge variant="outline" className={
-                        gap.importance === 'critical' ? 'border-red-600 text-red-600' :
-                        gap.importance === 'high' ? 'border-yellow-600 text-yellow-600' :
-                        'border-blue-600 text-blue-600'
-                      }>
+                      <Badge
+                        variant="outline"
+                        className={
+                          gap.importance === "critical"
+                            ? "border-red-600 text-red-600"
+                            : gap.importance === "high"
+                              ? "border-yellow-600 text-yellow-600"
+                              : "border-blue-600 text-blue-600"
+                        }
+                      >
                         {gap.importance}
                       </Badge>
                     </div>
                     <p className="text-xs">
-                      <span className="font-medium">Primary Molecule:</span> {gap.primaryMolecule}
+                      <span className="font-medium">Primary Molecule:</span>{" "}
+                      {gap.primaryMolecule}
                     </p>
                   </div>
                 ))}
@@ -183,57 +267,94 @@ export default function Insights() {
                 <>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                      <p className="text-xs text-muted-foreground mb-1">Butyrate</p>
-                      <p className="text-2xl font-bold text-primary">{molecules.butyrate}</p>
-                      <p className="text-xs text-muted-foreground">mmol/day (est.)</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Butyrate
+                      </p>
+                      <p className="text-2xl font-bold text-primary">
+                        {molecules.butyrate}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        mmol/day (est.)
+                      </p>
                     </div>
                     <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                      <p className="text-xs text-muted-foreground mb-1">Acetate</p>
-                      <p className="text-2xl font-bold text-primary">{molecules.acetate}</p>
-                      <p className="text-xs text-muted-foreground">mmol/day (est.)</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Acetate
+                      </p>
+                      <p className="text-2xl font-bold text-primary">
+                        {molecules.acetate}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        mmol/day (est.)
+                      </p>
                     </div>
                     <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                      <p className="text-xs text-muted-foreground mb-1">Propionate</p>
-                      <p className="text-2xl font-bold text-primary">{molecules.propionate}</p>
-                      <p className="text-xs text-muted-foreground">mmol/day (est.)</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Propionate
+                      </p>
+                      <p className="text-2xl font-bold text-primary">
+                        {molecules.propionate}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        mmol/day (est.)
+                      </p>
                     </div>
                     <div className="bg-primary/5 border border-primary/20 rounded-lg p-3">
-                      <p className="text-xs text-muted-foreground mb-1">Lactate</p>
-                      <p className="text-2xl font-bold text-primary">{molecules.lactate}</p>
-                      <p className="text-xs text-muted-foreground">mmol/day (est.)</p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        Lactate
+                      </p>
+                      <p className="text-2xl font-bold text-primary">
+                        {molecules.lactate}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        mmol/day (est.)
+                      </p>
                     </div>
                   </div>
 
                   <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg p-4">
-                    <p className="text-xs text-muted-foreground mb-1">Total SCFAs</p>
-                    <p className="text-3xl font-bold text-primary">{molecules.totalSCFAs}</p>
-                    <p className="text-xs text-muted-foreground">mmol/day (estimated)</p>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      Total SCFAs
+                    </p>
+                    <p className="text-3xl font-bold text-primary">
+                      {molecules.totalSCFAs}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      mmol/day (estimated)
+                    </p>
                     <p className="text-xs text-foreground mt-2">
-                      {molecules.totalSCFAs > 50 ? 'Excellent SCFA production supporting overall health' :
-                       molecules.totalSCFAs > 30 ? 'Good SCFA levels, room for improvement' :
-                       'Low SCFA production - increase fiber intake'}
+                      {molecules.totalSCFAs > 50
+                        ? "Excellent SCFA production supporting overall health"
+                        : molecules.totalSCFAs > 30
+                          ? "Good SCFA levels, room for improvement"
+                          : "Low SCFA production - increase fiber intake"}
                     </p>
                   </div>
 
                   <div className="space-y-2 pt-2 border-t">
-                    <h4 className="text-sm font-semibold">What These Molecules Do</h4>
+                    <h4 className="text-sm font-semibold">
+                      What These Molecules Do
+                    </h4>
                     <div className="space-y-2">
                       <div className="bg-muted/30 rounded p-2">
                         <p className="text-xs font-medium">Butyrate</p>
                         <p className="text-xs text-muted-foreground">
-                          Fuels gut lining cells, reduces inflammation, strengthens gut barrier
+                          Fuels gut lining cells, reduces inflammation,
+                          strengthens gut barrier
                         </p>
                       </div>
                       <div className="bg-muted/30 rounded p-2">
                         <p className="text-xs font-medium">Acetate</p>
                         <p className="text-xs text-muted-foreground">
-                          Supports immune function, helps regulate appetite and metabolism
+                          Supports immune function, helps regulate appetite and
+                          metabolism
                         </p>
                       </div>
                       <div className="bg-muted/30 rounded p-2">
                         <p className="text-xs font-medium">Propionate</p>
                         <p className="text-xs text-muted-foreground">
-                          Regulates glucose and cholesterol metabolism, enhances satiety
+                          Regulates glucose and cholesterol metabolism, enhances
+                          satiety
                         </p>
                       </div>
                       <div className="bg-muted/30 rounded p-2">
@@ -246,7 +367,9 @@ export default function Insights() {
                   </div>
                 </>
               ) : (
-                <p className="text-sm text-muted-foreground">No molecule data available</p>
+                <p className="text-sm text-muted-foreground">
+                  No molecule data available
+                </p>
               )}
             </CardContent>
           </Card>
@@ -260,46 +383,66 @@ export default function Insights() {
                 Smart Food Recommendations
               </CardTitle>
               <p className="text-xs text-muted-foreground">
-                Personalized suggestions based on your bacterial gaps and health scores
+                Personalized suggestions based on your bacterial gaps and health
+                scores
               </p>
             </CardHeader>
             <CardContent className="space-y-3">
               {recs.length > 0 ? (
                 recs.map((rec: any, idx: number) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className={`rounded-lg p-4 ${
-                      rec.priority === 'high' ? 'bg-primary/10 border border-primary/30' :
-                      rec.priority === 'medium' ? 'bg-muted/50 border border-muted' :
-                      'bg-muted/30'
+                      rec.priority === "high"
+                        ? "bg-primary/10 border border-primary/30"
+                        : rec.priority === "medium"
+                          ? "bg-muted/50 border border-muted"
+                          : "bg-muted/30"
                     }`}
                     data-testid={`recommendation-${idx}`}
                   >
                     <div className="flex items-start justify-between mb-2">
                       <p className="text-sm font-semibold flex-1">{rec.food}</p>
-                      {rec.priority === 'high' && (
-                        <Badge variant="default" className="bg-primary">High Priority</Badge>
+                      {rec.priority === "high" && (
+                        <Badge variant="default" className="bg-primary">
+                          High Priority
+                        </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground mb-2">{rec.reason}</p>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      {rec.reason}
+                    </p>
                     <div className="flex flex-wrap gap-1 mb-2">
-                      {rec.targetBacteria.map((bacteria: string, bIdx: number) => (
-                        <Badge key={bIdx} variant="outline" className="text-xs">
-                          {bacteria}
-                        </Badge>
-                      ))}
+                      {rec.targetBacteria.map(
+                        (bacteria: string, bIdx: number) => (
+                          <Badge
+                            key={bIdx}
+                            variant="outline"
+                            className="text-xs"
+                          >
+                            {bacteria}
+                          </Badge>
+                        ),
+                      )}
                     </div>
                     <div className="bg-background/50 rounded p-2 mt-2">
-                      <p className="text-xs font-medium mb-1">Serving Guidance:</p>
-                      <p className="text-xs text-muted-foreground">{rec.servingGuidance}</p>
+                      <p className="text-xs font-medium mb-1">
+                        Serving Guidance:
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {rec.servingGuidance}
+                      </p>
                     </div>
                     <p className="text-xs text-muted-foreground mt-2">
-                      <span className="font-medium">Boosts:</span> {rec.targetMolecules.join(', ')}
+                      <span className="font-medium">Boosts:</span>{" "}
+                      {rec.targetMolecules.join(", ")}
                     </p>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">No recommendations available</p>
+                <p className="text-sm text-muted-foreground">
+                  No recommendations available
+                </p>
               )}
             </CardContent>
           </Card>
@@ -322,29 +465,43 @@ export default function Insights() {
                   <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/30 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <div>
-                        <p className="text-xs text-muted-foreground">Overall Adherence</p>
-                        <p className="text-3xl font-bold text-primary">{adherence.adherenceStats.adherencePercentage}%</p>
+                        <p className="text-xs text-muted-foreground">
+                          Overall Adherence
+                        </p>
+                        <p className="text-3xl font-bold text-primary">
+                          {adherence.adherenceStats.adherencePercentage}%
+                        </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-xs text-muted-foreground">Following</p>
+                        <p className="text-xs text-muted-foreground">
+                          Following
+                        </p>
                         <p className="text-2xl font-semibold">
-                          {adherence.adherenceStats.recommendationsFollowed}/{adherence.adherenceStats.totalRecommendations}
+                          {adherence.adherenceStats.recommendationsFollowed}/
+                          {adherence.adherenceStats.totalRecommendations}
                         </p>
                       </div>
                     </div>
-                    <Progress value={adherence.adherenceStats.adherencePercentage} className="h-3" />
+                    <Progress
+                      value={adherence.adherenceStats.adherencePercentage}
+                      className="h-3"
+                    />
                     <div className="mt-3 pt-3 border-t border-primary/20">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">High Priority Tips</span>
+                        <span className="text-muted-foreground">
+                          High Priority Tips
+                        </span>
                         <span className="font-semibold">
-                          {adherence.adherenceStats.highPriorityFollowed}/{adherence.adherenceStats.highPriorityTotal}
+                          {adherence.adherenceStats.highPriorityFollowed}/
+                          {adherence.adherenceStats.highPriorityTotal}
                         </span>
                       </div>
                       {adherence.adherenceStats.streak > 0 && (
                         <div className="flex items-center gap-2 mt-2">
                           <CheckCircle2 className="h-4 w-4 text-green-600" />
                           <span className="text-xs text-green-600 dark:text-green-400 font-medium">
-                            {adherence.adherenceStats.streak} meal streak following recommendations!
+                            {adherence.adherenceStats.streak} meal streak
+                            following recommendations!
                           </span>
                         </div>
                       )}
@@ -352,23 +509,30 @@ export default function Insights() {
                   </div>
 
                   <div className="space-y-3">
-                    <h4 className="text-sm font-semibold">Recommendation Tracker</h4>
+                    <h4 className="text-sm font-semibold">
+                      Recommendation Tracker
+                    </h4>
                     {adherence.details && adherence.details.length > 0 ? (
                       adherence.details.map((detail: any, idx: number) => (
-                        <div 
-                          key={idx} 
+                        <div
+                          key={idx}
                           className={`rounded-lg p-3 border ${
-                            detail.followed 
-                              ? 'bg-green-600/10 border-green-600/30' 
-                              : 'bg-muted/30 border-muted'
+                            detail.followed
+                              ? "bg-green-600/10 border-green-600/30"
+                              : "bg-muted/30 border-muted"
                           }`}
                           data-testid={`adherence-item-${idx}`}
                         >
                           <div className="flex items-start justify-between mb-2">
                             <div className="flex-1">
-                              <p className="text-sm font-medium">{detail.recommendation.food}</p>
-                              {detail.recommendation.priority === 'high' && (
-                                <Badge variant="outline" className="mt-1 text-xs border-primary text-primary">
+                              <p className="text-sm font-medium">
+                                {detail.recommendation.food}
+                              </p>
+                              {detail.recommendation.priority === "high" && (
+                                <Badge
+                                  variant="outline"
+                                  className="mt-1 text-xs border-primary text-primary"
+                                >
                                   High Priority
                                 </Badge>
                               )}
@@ -384,26 +548,40 @@ export default function Insights() {
                           {detail.followed ? (
                             <div className="space-y-1">
                               <p className="text-xs text-green-600 dark:text-green-400 font-medium">
-                                Followed {detail.timesFollowed} time{detail.timesFollowed > 1 ? 's' : ''} this week
+                                Followed {detail.timesFollowed} time
+                                {detail.timesFollowed > 1 ? "s" : ""} this week
                               </p>
-                              {detail.matchedMeals && detail.matchedMeals.length > 0 && (
-                                <div className="mt-2 space-y-1">
-                                  <p className="text-xs text-muted-foreground font-medium">Recent meals:</p>
-                                  {detail.matchedMeals.slice(0, 2).map((meal: string, mIdx: number) => (
-                                    <p key={mIdx} className="text-xs text-muted-foreground pl-2">• {meal}</p>
-                                  ))}
-                                </div>
-                              )}
+                              {detail.matchedMeals &&
+                                detail.matchedMeals.length > 0 && (
+                                  <div className="mt-2 space-y-1">
+                                    <p className="text-xs text-muted-foreground font-medium">
+                                      Recent meals:
+                                    </p>
+                                    {detail.matchedMeals
+                                      .slice(0, 2)
+                                      .map((meal: string, mIdx: number) => (
+                                        <p
+                                          key={mIdx}
+                                          className="text-xs text-muted-foreground pl-2"
+                                        >
+                                          • {meal}
+                                        </p>
+                                      ))}
+                                  </div>
+                                )}
                             </div>
                           ) : (
                             <p className="text-xs text-muted-foreground">
-                              Not logged yet - {detail.recommendation.servingGuidance}
+                              Not logged yet -{" "}
+                              {detail.recommendation.servingGuidance}
                             </p>
                           )}
                         </div>
                       ))
                     ) : (
-                      <p className="text-sm text-muted-foreground">No adherence data available</p>
+                      <p className="text-sm text-muted-foreground">
+                        No adherence data available
+                      </p>
                     )}
                   </div>
 
@@ -416,34 +594,40 @@ export default function Insights() {
                             Excellent Progress!
                           </p>
                           <p className="text-xs text-muted-foreground mt-1">
-                            You're following most of your recommendations. Keep this up to see improvements in your health scores and molecule production.
+                            You're following most of your recommendations. Keep
+                            this up to see improvements in your health scores
+                            and molecule production.
                           </p>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {adherence.adherenceStats.adherencePercentage < 50 && adherence.adherenceStats.highPriorityFollowed === 0 && (
-                    <div className="bg-yellow-600/10 border border-yellow-600/30 rounded-lg p-4">
-                      <div className="flex items-start gap-2">
-                        <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
-                        <div>
-                          <p className="text-sm font-semibold text-yellow-600 dark:text-yellow-400">
-                            Focus on High Priority Tips
-                          </p>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Try adding at least one high-priority food to your next meal. Small changes can make a big difference!
-                          </p>
+                  {adherence.adherenceStats.adherencePercentage < 50 &&
+                    adherence.adherenceStats.highPriorityFollowed === 0 && (
+                      <div className="bg-yellow-600/10 border border-yellow-600/30 rounded-lg p-4">
+                        <div className="flex items-start gap-2">
+                          <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
+                          <div>
+                            <p className="text-sm font-semibold text-yellow-600 dark:text-yellow-400">
+                              Focus on High Priority Tips
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Try adding at least one high-priority food to your
+                              next meal. Small changes can make a big
+                              difference!
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </>
               ) : (
                 <div className="text-center py-8">
                   <Target className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
                   <p className="text-sm text-muted-foreground">
-                    Log meals to start tracking adherence to your recommendations
+                    Log meals to start tracking adherence to your
+                    recommendations
                   </p>
                 </div>
               )}
@@ -459,119 +643,215 @@ export default function Insights() {
                 4-Week Progress
               </CardTitle>
               <p className="text-xs text-muted-foreground">
-                Track your health improvements over time
+                Track changes in experimental dietary estimates over time
               </p>
             </CardHeader>
             <CardContent className="space-y-4">
-              {progress && progress.weeklyData && progress.weeklyData.length > 0 ? (
+              {progress &&
+              progress.weeklyData &&
+              progress.weeklyData.length > 0 ? (
                 <>
                   {progress.weeklyData.map((week: any, idx: number) => (
                     <div key={idx} className="border rounded-lg p-3 space-y-3">
                       <div className="flex items-center justify-between">
                         <p className="text-sm font-semibold">{week.week}</p>
-                        <Badge variant="outline">{week.mealsLogged} meals</Badge>
+                        <Badge variant="outline">
+                          {week.mealsLogged} meals
+                        </Badge>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div className="bg-muted/30 rounded p-2">
-                          <p className="text-xs text-muted-foreground">Inflammation</p>
-                          <p className={`text-lg font-bold ${
-                            week.averageScores.inflammation >= 70 ? 'text-green-600' :
-                            week.averageScores.inflammation >= 50 ? 'text-yellow-600' :
-                            'text-red-600'
-                          }`}>
+                          <p className="text-xs text-muted-foreground">
+                            Inflammation
+                          </p>
+                          <p
+                            className={`text-lg font-bold ${
+                              week.averageScores.inflammation >= 70
+                                ? "text-green-600"
+                                : week.averageScores.inflammation >= 50
+                                  ? "text-yellow-600"
+                                  : "text-red-600"
+                            }`}
+                          >
                             {week.averageScores.inflammation}
                           </p>
                         </div>
                         <div className="bg-muted/30 rounded p-2">
-                          <p className="text-xs text-muted-foreground">Gut Barrier</p>
-                          <p className={`text-lg font-bold ${
-                            week.averageScores.gutBarrier >= 75 ? 'text-green-600' :
-                            week.averageScores.gutBarrier >= 55 ? 'text-yellow-600' :
-                            'text-red-600'
-                          }`}>
+                          <p className="text-xs text-muted-foreground">
+                            Gut Barrier
+                          </p>
+                          <p
+                            className={`text-lg font-bold ${
+                              week.averageScores.gutBarrier >= 75
+                                ? "text-green-600"
+                                : week.averageScores.gutBarrier >= 55
+                                  ? "text-yellow-600"
+                                  : "text-red-600"
+                            }`}
+                          >
                             {week.averageScores.gutBarrier}
                           </p>
                         </div>
                         <div className="bg-muted/30 rounded p-2">
-                          <p className="text-xs text-muted-foreground">Metabolic</p>
-                          <p className={`text-lg font-bold ${
-                            week.averageScores.metabolic >= 70 ? 'text-green-600' :
-                            week.averageScores.metabolic >= 50 ? 'text-yellow-600' :
-                            'text-red-600'
-                          }`}>
+                          <p className="text-xs text-muted-foreground">
+                            Metabolic
+                          </p>
+                          <p
+                            className={`text-lg font-bold ${
+                              week.averageScores.metabolic >= 70
+                                ? "text-green-600"
+                                : week.averageScores.metabolic >= 50
+                                  ? "text-yellow-600"
+                                  : "text-red-600"
+                            }`}
+                          >
                             {week.averageScores.metabolic}
                           </p>
                         </div>
                         <div className="bg-muted/30 rounded p-2">
-                          <p className="text-xs text-muted-foreground">Immune</p>
-                          <p className={`text-lg font-bold ${
-                            week.averageScores.immune >= 70 ? 'text-green-600' :
-                            week.averageScores.immune >= 50 ? 'text-yellow-600' :
-                            'text-red-600'
-                          }`}>
+                          <p className="text-xs text-muted-foreground">
+                            Immune
+                          </p>
+                          <p
+                            className={`text-lg font-bold ${
+                              week.averageScores.immune >= 70
+                                ? "text-green-600"
+                                : week.averageScores.immune >= 50
+                                  ? "text-yellow-600"
+                                  : "text-red-600"
+                            }`}
+                          >
                             {week.averageScores.immune}
                           </p>
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-2 pt-2 border-t">
                         <div>
-                          <p className="text-xs text-muted-foreground">Butyrate</p>
-                          <p className="text-sm font-semibold text-primary">{week.molecules.butyrate}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Butyrate
+                          </p>
+                          <p className="text-sm font-semibold text-primary">
+                            {week.molecules.butyrate}
+                          </p>
                         </div>
                         <div>
-                          <p className="text-xs text-muted-foreground">Total SCFAs</p>
-                          <p className="text-sm font-semibold text-primary">{week.molecules.totalSCFAs}</p>
+                          <p className="text-xs text-muted-foreground">
+                            Total SCFAs
+                          </p>
+                          <p className="text-sm font-semibold text-primary">
+                            {week.molecules.totalSCFAs}
+                          </p>
                         </div>
                       </div>
                     </div>
                   ))}
 
-                  {adherence && adherence.adherenceStats && progress && progress.weeklyData && progress.weeklyData.length >= 1 && (
-                    <div className="bg-primary/5 border border-primary/30 rounded-lg p-4 space-y-3">
-                      <h4 className="text-sm font-semibold flex items-center gap-2">
-                        <Target className="h-4 w-4" />
-                        Impact of Following Recommendations
-                      </h4>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="bg-background rounded p-3">
-                          <p className="text-xs text-muted-foreground mb-1">Current Adherence</p>
-                          <p className="text-2xl font-bold text-primary">{adherence.adherenceStats.adherencePercentage}%</p>
+                  {adherence &&
+                    adherence.adherenceStats &&
+                    progress &&
+                    progress.weeklyData &&
+                    progress.weeklyData.length >= 1 && (
+                      <div className="bg-primary/5 border border-primary/30 rounded-lg p-4 space-y-3">
+                        <h4 className="text-sm font-semibold flex items-center gap-2">
+                          <Target className="h-4 w-4" />
+                          Impact of Following Recommendations
+                        </h4>
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="bg-background rounded p-3">
+                            <p className="text-xs text-muted-foreground mb-1">
+                              Current Adherence
+                            </p>
+                            <p className="text-2xl font-bold text-primary">
+                              {adherence.adherenceStats.adherencePercentage}%
+                            </p>
+                          </div>
+                          <div className="bg-background rounded p-3">
+                            <p className="text-xs text-muted-foreground mb-1">
+                              Model Trend
+                            </p>
+                            <p
+                              className={`text-2xl font-bold ${
+                                progress.weeklyData.length >= 2
+                                  ? (() => {
+                                      const latest =
+                                        progress.weeklyData[
+                                          progress.weeklyData.length - 1
+                                        ];
+                                      const previous =
+                                        progress.weeklyData[
+                                          progress.weeklyData.length - 2
+                                        ];
+                                      const avgLatest =
+                                        (latest.averageScores.inflammation +
+                                          latest.averageScores.gutBarrier +
+                                          latest.averageScores.metabolic +
+                                          latest.averageScores.immune) /
+                                        4;
+                                      const avgPrev =
+                                        (previous.averageScores.inflammation +
+                                          previous.averageScores.gutBarrier +
+                                          previous.averageScores.metabolic +
+                                          previous.averageScores.immune) /
+                                        4;
+                                      return avgLatest > avgPrev
+                                        ? "text-green-600"
+                                        : avgLatest < avgPrev
+                                          ? "text-red-600"
+                                          : "text-yellow-600";
+                                    })()
+                                  : "text-primary"
+                              }`}
+                            >
+                              {progress.weeklyData.length >= 2
+                                ? (() => {
+                                    const latest =
+                                      progress.weeklyData[
+                                        progress.weeklyData.length - 1
+                                      ];
+                                    const previous =
+                                      progress.weeklyData[
+                                        progress.weeklyData.length - 2
+                                      ];
+                                    const avgLatest =
+                                      (latest.averageScores.inflammation +
+                                        latest.averageScores.gutBarrier +
+                                        latest.averageScores.metabolic +
+                                        latest.averageScores.immune) /
+                                      4;
+                                    const avgPrev =
+                                      (previous.averageScores.inflammation +
+                                        previous.averageScores.gutBarrier +
+                                        previous.averageScores.metabolic +
+                                        previous.averageScores.immune) /
+                                      4;
+                                    const change = avgLatest - avgPrev;
+                                    return change > 0
+                                      ? `+${Math.round(change)}`
+                                      : Math.round(change);
+                                  })()
+                                : (() => {
+                                    const latest = progress.weeklyData[0];
+                                    const avg = Math.round(
+                                      (latest.averageScores.inflammation +
+                                        latest.averageScores.gutBarrier +
+                                        latest.averageScores.metabolic +
+                                        latest.averageScores.immune) /
+                                        4,
+                                    );
+                                    return avg;
+                                  })()}
+                            </p>
+                          </div>
                         </div>
-                        <div className="bg-background rounded p-3">
-                          <p className="text-xs text-muted-foreground mb-1">Health Trend</p>
-                          <p className={`text-2xl font-bold ${
-                            progress.weeklyData.length >= 2 ? (() => {
-                              const latest = progress.weeklyData[progress.weeklyData.length - 1];
-                              const previous = progress.weeklyData[progress.weeklyData.length - 2];
-                              const avgLatest = (latest.averageScores.inflammation + latest.averageScores.gutBarrier + latest.averageScores.metabolic + latest.averageScores.immune) / 4;
-                              const avgPrev = (previous.averageScores.inflammation + previous.averageScores.gutBarrier + previous.averageScores.metabolic + previous.averageScores.immune) / 4;
-                              return avgLatest > avgPrev ? 'text-green-600' : avgLatest < avgPrev ? 'text-red-600' : 'text-yellow-600';
-                            })() : 'text-primary'
-                          }`}>
-                            {progress.weeklyData.length >= 2 ? (() => {
-                              const latest = progress.weeklyData[progress.weeklyData.length - 1];
-                              const previous = progress.weeklyData[progress.weeklyData.length - 2];
-                              const avgLatest = (latest.averageScores.inflammation + latest.averageScores.gutBarrier + latest.averageScores.metabolic + latest.averageScores.immune) / 4;
-                              const avgPrev = (previous.averageScores.inflammation + previous.averageScores.gutBarrier + previous.averageScores.metabolic + previous.averageScores.immune) / 4;
-                              const change = avgLatest - avgPrev;
-                              return change > 0 ? `+${Math.round(change)}` : Math.round(change);
-                            })() : (() => {
-                              const latest = progress.weeklyData[0];
-                              const avg = Math.round((latest.averageScores.inflammation + latest.averageScores.gutBarrier + latest.averageScores.metabolic + latest.averageScores.immune) / 4);
-                              return avg;
-                            })()}
-                          </p>
-                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {adherence.adherenceStats.adherencePercentage >= 70
+                            ? "High food-match adherence. This does not establish biological improvement."
+                            : adherence.adherenceStats.adherencePercentage >= 40
+                              ? "Moderate adherence. Try following more recommendations to accelerate improvements."
+                              : "Low adherence detected. Following your recommendations more consistently can lead to better health outcomes."}
+                        </p>
                       </div>
-                      <p className="text-xs text-muted-foreground">
-                        {adherence.adherenceStats.adherencePercentage >= 70 
-                          ? 'High adherence is driving your health improvements. Keep following your personalized tips!'
-                          : adherence.adherenceStats.adherencePercentage >= 40
-                          ? 'Moderate adherence. Try following more recommendations to accelerate improvements.'
-                          : 'Low adherence detected. Following your recommendations more consistently can lead to better health outcomes.'}
-                      </p>
-                    </div>
-                  )}
+                    )}
 
                   {progress.weeklyData.length >= 2 && (
                     <div className="bg-gradient-to-r from-green-600/10 to-green-600/5 border border-green-600/30 rounded-lg p-4">
@@ -583,24 +863,39 @@ export default function Insights() {
                           </p>
                           <p className="text-xs text-muted-foreground mt-1">
                             {(() => {
-                              const latest = progress.weeklyData[progress.weeklyData.length - 1];
-                              const previous = progress.weeklyData[progress.weeklyData.length - 2];
+                              const latest =
+                                progress.weeklyData[
+                                  progress.weeklyData.length - 1
+                                ];
+                              const previous =
+                                progress.weeklyData[
+                                  progress.weeklyData.length - 2
+                                ];
                               const improvements = [];
-                              
-                              if (latest.averageScores.inflammation > previous.averageScores.inflammation) {
-                                improvements.push('inflammation control');
+
+                              if (
+                                latest.averageScores.inflammation >
+                                previous.averageScores.inflammation
+                              ) {
+                                improvements.push("inflammation control");
                               }
-                              if (latest.averageScores.gutBarrier > previous.averageScores.gutBarrier) {
-                                improvements.push('gut barrier strength');
+                              if (
+                                latest.averageScores.gutBarrier >
+                                previous.averageScores.gutBarrier
+                              ) {
+                                improvements.push("gut barrier strength");
                               }
-                              if (latest.molecules.totalSCFAs > previous.molecules.totalSCFAs) {
-                                improvements.push('SCFA production');
+                              if (
+                                latest.molecules.totalSCFAs >
+                                previous.molecules.totalSCFAs
+                              ) {
+                                improvements.push("SCFA production");
                               }
-                              
+
                               if (improvements.length > 0) {
-                                return `You're improving in: ${improvements.join(', ')}. Keep up the excellent work!`;
+                                return `You're improving in: ${improvements.join(", ")}. Keep up the excellent work!`;
                               }
-                              return 'Keep logging meals consistently to track your progress.';
+                              return "Keep logging meals consistently to track your progress.";
                             })()}
                           </p>
                         </div>
