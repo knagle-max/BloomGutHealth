@@ -1,7 +1,8 @@
-import { Home, Lightbulb, UtensilsCrossed, Activity } from "lucide-react";
+import { Home, Dna, Lightbulb, UtensilsCrossed, Activity } from "lucide-react";
 import { Link, useLocation } from "wouter";
 const navItems = [
   { id: "dashboard", path: "/", icon: Home, label: "Overview" },
+  { id: "precision", path: "/precision", icon: Dna, label: "Precision" },
   {
     id: "nutrition",
     path: "/nutrition",

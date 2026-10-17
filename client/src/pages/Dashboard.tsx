@@ -13,6 +13,7 @@ import {
   CalendarDays,
   ChevronRight,
   RefreshCw,
+  Dna,
 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,23 @@ export default function Dashboard() {
           <div className="plant-seed" />
           <span className="botanical-caption">NOURISH · NOTICE · GROW</span>
         </div>
+      </section>
+
+      <section className="bloom-panel my-6" aria-labelledby="precision-title">
+        <div className="panel-heading">
+          <div>
+            <p className="eyebrow">PRECISION NUTRITION</p>
+            <h2 id="precision-title">Connect your genetics and bloodwork</h2>
+          </div>
+          <Dna size={24} aria-hidden="true" />
+        </div>
+        <p className="muted my-4">
+          Import supported 23andMe variants, add lab results and connect your
+          microbiome reports to food recommendations, saved plans and progress.
+        </p>
+        <Link href="/precision" className="text-link" data-testid="dashboard-precision">
+          Open precision nutrition <ArrowRight size={17} />
+        </Link>
       </section>
 
       <div className="section-heading">
