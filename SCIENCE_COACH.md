@@ -47,7 +47,7 @@ A future cohort comparison needs:
 1. Expand the catalogue with human intervention evidence for specific fibers, food patterns, strains, and clinical goals. Record the exact study population, exposure, dose, preparation, duration, outcomes, negative findings, and practical translation for each edge.
 2. Add an expert review workflow with extraction status, review dates, conflict handling, evidence upgrades/downgrades, and source-version history. Retrieval may propose new edges; it must not publish an unchecked claim.
 3. Add validated importers for laboratory abundance reports, metagenomic pathways, and metabolite results. Preserve provenance and report uncertainty. The current upload guard rejects unsupported analysis instead of using demonstration data.
-4. Add persisted goal plans and follow-up check-ins for symptoms, serving amounts, adherence, and outcomes. The revised meal schema stores optional symptoms and portion/time context; longer-term plans and outcome validation remain future work. A 2–4-week check-in is a practical review window, not a proven response timeline.
+4. The `/precision` workspace now saves evidence-linked plans and follow-up check-ins for symptoms, adherence and body measurements, alongside dated bloodwork. Continue developing validated outcome evaluation; observational changes are not causal proof. A review window is not a proven response timeline.
 5. Evaluate recommendations prospectively: eligibility errors, contradictory advice, unsupported claims, adherence, tolerance, and independently measured outcomes. Clinical effectiveness needs more than a working interface.
 
 ## Preserved experimental experiences
@@ -65,3 +65,7 @@ Automated tests cover source/pathway integrity, food filtering, cohort-only plan
 Optional ingredient parsing sends the entered meal description to the configured OpenAI provider after explicit consent. Ingredient gram masses must correspond to mass values in the user description; absent quantities stay unknown. USDA automatic record matches are shown with FDC identifiers and nutrient coverage. API Ninjas remains a compatible fallback. The application never asks the model to create nutrient values. Missing values are null; partial values are not complete meal totals.
 
 Optional recipe prioritization sends filtered recipe records, goals, saved preferences and evidence to the provider. An exact ID permutation is required; invalid, duplicated, omitted or invented recipes fall back. Neither model output can introduce new citations or clinical conclusions. Broad recipe generation, measured personalization and expert review remain development work.
+
+## Five-layer precision workspace
+
+`/precision` adds account-scoped genetic import, dated laboratory markers, separate entered metabolite measurements, evidence-linked food and meal priorities, conditional supplement assessments and longitudinal check-ins. The first genetic catalogue contains four reviewed loci; it does not interpret all variants or prescribe supplements by genotype. Open-ended goals remain configurable. Inputs and plans are encrypted and are not sent to an AI provider. See `PRECISION_NUTRITION.md` for exact behavior, source limitations, safety review, deployment and tests.

@@ -307,6 +307,7 @@ export default function NutritionHistory() {
     },
     onSuccess: async (newMeal: any) => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
+      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });
@@ -338,6 +339,7 @@ export default function NutritionHistory() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
+      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });
@@ -366,6 +368,7 @@ export default function NutritionHistory() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
+      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });

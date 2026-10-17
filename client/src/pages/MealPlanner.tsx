@@ -37,6 +37,7 @@ export function DietaryPreferenceEditor() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/preferences"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
       queryClient.invalidateQueries({ queryKey: ["/api/meal-planner"] });
     },
   });

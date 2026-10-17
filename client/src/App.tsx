@@ -14,6 +14,7 @@ const Profile = lazy(() => import("@/pages/Profile"));
 const NutritionHistory = lazy(() => import("@/pages/NutritionHistory"));
 const Microbiome = lazy(() => import("@/pages/Microbiome"));
 const Insights = lazy(() => import("@/pages/Insights"));
+const PrecisionNutrition = lazy(() => import("@/pages/PrecisionNutrition"));
 const MealPlanner = lazy(() => import("@/pages/MealPlanner"));
 const Demo = lazy(() => import("@/pages/Demo"));
 import Login from "@/pages/Login";
@@ -124,6 +125,9 @@ function AppContent() {
           </Route>
           <Route path="/health-insights">
             {() => <ProtectedRoute component={Insights} />}
+          </Route>
+          <Route path="/precision">
+            {() => <ProtectedRoute component={PrecisionNutrition} />}
           </Route>
           <Route path="/meal-planner">
             {() => <ProtectedRoute component={MealPlanner} />}

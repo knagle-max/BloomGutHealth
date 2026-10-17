@@ -9,6 +9,7 @@ interface AppHeaderProps {
 }
 export const navItems = [
   { path: "/", label: "Overview" },
+  { path: "/precision", label: "Precision nutrition" },
   { path: "/nutrition", label: "Food journal" },
   { path: "/microbiome", label: "Microbiome" },
   { path: "/insights", label: "Diet coach" },

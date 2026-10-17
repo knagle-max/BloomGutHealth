@@ -76,6 +76,7 @@ export default function ResearchSummary() {
         <p>No report yet. Explore pathways and plan meals before testing.</p>
       )}
       <div className="flex flex-wrap gap-4 mt-4">
+        <Link className="text-link" href="/precision">Genetics, bloodwork & precision nutrition</Link>
         <Link className="text-link" href="/health-insights">
           Health, SCFAs, adherence & trends
         </Link>

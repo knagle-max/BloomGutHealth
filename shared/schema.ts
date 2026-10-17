@@ -8,6 +8,8 @@ import {
   real,
   jsonb,
   boolean,
+  index,
+  check,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -287,3 +289,36 @@ export const insertMealSchema = createInsertSchema(meals).omit({
 
 export type InsertMeal = z.infer<typeof insertMealSchema>;
 export type Meal = typeof meals.$inferSelect;
+
+// Precision data is encrypted by the application before reaching these JSON columns.
+export const precisionProfiles = pgTable("precision_profiles", {
+  userId: varchar("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  encryptedContext: jsonb("encrypted_context").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+export const precisionRecords = pgTable(
+  "precision_records",
+  {
+    id: varchar("id")
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    userId: varchar("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(),
+    encryptedPayload: jsonb("encrypted_payload").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [
+    index("precision_records_user_created_idx").on(
+      table.userId,
+      table.createdAt.desc(),
+    ),
+    check(
+      "precision_records_kind_check",
+      sql`${table.kind} IN ('genetics','lab','metabolite','checkin','plan')`,
+    ),
+  ],
+);

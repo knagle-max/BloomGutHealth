@@ -1,6 +1,6 @@
 # Bloom Gut Health
 
-Bloom combines a food and symptom journal, nutrition estimates, microbiome reports, experimental research views, and an evidence-linked meal planner. React/TypeScript, Express, PostgreSQL and a separate Python prototype service.
+Bloom combines a five-layer precision nutrition workspace with a food and symptom journal, nutrition estimates, microbiome reports, experimental research views, and an evidence-linked meal planner. React/TypeScript, Express, PostgreSQL and a separate Python prototype service.
 
 ## Run locally
 
@@ -16,14 +16,16 @@ Configure `DATABASE_URL` (Neon-compatible PostgreSQL), `SESSION_SECRET`, and opt
 - `API_NINJAS_KEY`: existing natural-language nutrition provider, retained as fallback. Without either provider, meals and symptoms still save with nutrition unavailable.
 - `OPENAI_API_KEY` and `OPENAI_SCIENCE_MODEL`: optional structured ingredient parsing and evidence-constrained recipe/action prioritization. The user must opt in; the app works with curated rules otherwise.
 - `ML_SERVICE_URL`: Python prototype service, defaults to `http://localhost:8000`.
+- `PRECISION_DATA_KEY`: base64-encoded 32-byte secret for account-bound AES-256-GCM encryption of precision inputs, health context and plan snapshots. Required before storing or reading encrypted precision data; never commit it. See `PRECISION_NUTRITION.md` for key retention and deployment requirements.
 - `PORT`: Express port, defaults to 5000.
 
-Before running the revised server against an existing database, apply the **additive** SQL in `migrations/0001_preserve_functionality.sql`, or use `npm run db:push` after reviewing the proposed schema changes. New JSON columns store preferences, meal context, nutrition provenance and structured report data; existing records are preserved. No production migration is applied by this PR.
+Before running the revised server against an existing database, apply the **additive** SQL in `migrations/0001_preserve_functionality.sql` and `migrations/0002_precision_nutrition.sql`, or use `npm run db:push` after reviewing the proposed schema changes. New JSON columns store preferences, meal context, nutrition provenance and structured report data; existing records are preserved. No production migration is applied by this PR.
 
 For Python, install `pyproject.toml` dependencies with `uv sync`, then `uv run uvicorn ml_service.main:app --host 127.0.0.1 --port 8000`.
 
 ## Feature map
 
+- `/precision`: 23andMe import with an initial reviewed four-marker catalogue, dated bloodwork and measured metabolites, separated microbiome hypotheses, ranked foods/meals, conditional supplement assessments, evidence snapshots and response tracking. Inputs are encrypted and account-scoped. See `PRECISION_NUTRITION.md` for exact scope and scientific limits.
 - `/`: responsive personal overview, daily nutrition, meal history and restored report/research summary.
 - `/log-meal`: description, meal type, date/time, portion context, optional saved symptoms (bloating, energy, digestive comfort, mental clarity), optional AI ingredient parsing, nutrient/molecule/pathway explanations.
 - `/nutrition`: journal editing/deletion, individual nutrition items and pathway hypotheses, saved context, daily targets, monthly and yearly summaries.
@@ -58,4 +60,4 @@ npm run build
 python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-Automated tests cover preference eligibility, nutrient missingness/scaling, provider failure, ownership, meal context persistence, report parsing, scientific source integrity, AI output validation and unsupported sequence guards. Browser tests use fixture responses; live provider requests and production database migration require credentials and are not verified here. Deployments also need secure sessions, proxy configuration and a shared rate limiter when using multiple instances.
+Automated tests additionally cover the precision workflow, genetic import integrity, lab units and trends, supplement safety, source separation, input ownership and authenticated encryption. They also cover preference eligibility, nutrient missingness/scaling, provider failure, ownership, meal context persistence, report parsing, scientific source integrity, AI output validation and unsupported sequence guards. Browser tests use fixture responses; live provider requests and production database migration require credentials and are not verified here. Deployments also need secure sessions, proxy configuration and a shared rate limiter when using multiple instances.

@@ -20,14 +20,18 @@ Meal interpretation connects supported ingredients to resistant-starch, fructan,
 
 A separate `/demo` experience allows sample meal/pathway exploration, recipe browsing, reported sample composition, research groups and sample progress without writing to the account or calling providers.
 
+## Five-layer precision nutrition
+
+The `/precision` workspace now implements genetic import/interpretation, dated bloodwork, separated microbiome and measured metabolite evidence, food/meal priority rules and supplement assessments, plus saved plans and longitudinal observations. Inputs and plans are encrypted in additive database tables. The initial catalogue is deliberately bounded: four reviewed variants, fourteen blood markers, seven food entries and the fifteen existing recipes. See `PRECISION_NUTRITION.md` for implemented behavior, source boundaries, deployment and verification. Existing functionality remains available.
+
 ## Remaining work toward the robust product vision
 
 - Larger expert-reviewed food/substrate/microbe/molecule knowledge graph with exact study populations, doses, durations, conflicting findings and evidence versions.
 - Better food matching, brand/recipe decomposition, portion conversion and an interactive database-match correction workflow. Current matching is automatic and requires review.
 - Arbitrary goal expansion and unrestricted novel recipe creation with ingredient-level evidence checks. Current complete meals use an extensible curated catalogue; AI ranks that catalogue.
-- Validated taxonomy/function pipelines for raw sequencing; laboratory-specific report adapters, gene/pathway and measured metabolite imports.
+- Validated taxonomy/function pipelines for raw sequencing; laboratory-specific automated report adapters and gene/pathway imports. Manual measured-metabolite entry is implemented.
 - Real harmonized cohort distributions and statistically defensible comparisons. Current numeric cohort profiles remain prototype examples.
 - Prospective evaluation of tolerance, recommendations and independent biological outcomes. Food matching and symptom trends do not demonstrate causation.
 - Database/provider integration testing in a provisioned environment, migrations, deployment configuration and distributed rate limiting.
 
-These are explicit development gaps, not claims that the entire robust engine is finished. No merge or deployment is performed by updating this draft PR.
+These are explicit development gaps, not claims that the entire robust engine is finished. No merge or deployment is performed by updating this PR.

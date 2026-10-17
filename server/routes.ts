@@ -9,6 +9,7 @@ import { insertUserSchema } from "@shared/schema";
 import { createReadStream } from "fs";
 import { registerScienceRoutes } from "./science-coach";
 import { registerPlannerRoutes } from "./planner-routes";
+import { registerPrecisionRoutes } from "./precision-routes";
 import { updateUserProfileSchema } from "@shared/schema";
 import {
   preferenceSchema,
@@ -75,6 +76,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       (await storage.getUser(userId))?.dietaryPreferences,
   });
   registerPlannerRoutes(app, requireAuth, storage);
+  registerPrecisionRoutes(app, requireAuth, storage);
   app.post("/api/microbiome/import", requireAuth, async (req, res) => {
     const parsed = abundanceSchema.safeParse(req.body?.bacteria_percentages);
     if (!parsed.success)

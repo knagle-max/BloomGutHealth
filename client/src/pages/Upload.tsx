@@ -65,6 +65,7 @@ export default function Upload() {
           testId,
           notes,
         });
+        queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
         queryClient.invalidateQueries({
           queryKey: ["/api/microbiome/samples"],
         });

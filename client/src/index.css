@@ -1568,3 +1568,24 @@ button:focus-visible {
 .meal-page fieldset, .science-page fieldset { min-inline-size:0; }
 .bloom-input { min-width:0; }
 .meal-page label, .science-page label { overflow-wrap:anywhere; }
+
+/* Precision nutrition adds a workspace; existing journal, coach and reports remain. */
+.precision-page { max-width:1100px; }
+.precision-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:24px 0; }
+.precision-tabs button { white-space:normal; height:auto; min-height:42px; }
+.precision-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.precision-grid > * { min-width:0; }
+.precision-page .bloom-panel { margin:18px 0; overflow-wrap:anywhere; }
+.precision-page .bloom-input { min-width:0; max-width:100%; margin-top:6px; }
+.precision-page input[type=datetime-local] { display:block; min-inline-size:0; }
+.precision-page input[type=checkbox] { flex-shrink:0; margin-top:5px; }
+.precision-page label { min-width:0; }
+.precision-page ul, .precision-page ol { padding-left:22px; }
+.precision-page ul { list-style:disc; }
+.precision-page ol { list-style:decimal; }
+.precision-page summary { cursor:pointer; padding:10px 0; }
+.precision-observation { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:12px; padding:18px 0; border-bottom:1px solid hsl(var(--border)); }
+.precision-observation.block, details.precision-observation { display:block; }
+.precision-page h2 { margin-bottom:12px; }
+.precision-page h3 { font-weight:600; }
+@media(max-width:600px) { .precision-grid { grid-template-columns:minmax(0,1fr); } .precision-tabs button { flex:1 1 140px; } }

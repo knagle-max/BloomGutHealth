@@ -29,6 +29,8 @@ import {
   meals,
 } from "@shared/schema";
 import { db } from "./db";
+import { PrecisionStorage } from "./precision-storage";
+import type { PrecisionContext, PrecisionRecord } from "../shared/precision-nutrition";
 import { eq, and, sql, desc } from "drizzle-orm";
 
 export interface IStorage {
@@ -66,6 +68,12 @@ export interface IStorage {
   updateMeal(id: string, updates: Partial<Meal>): Promise<Meal>;
   deleteMeal(id: string): Promise<void>;
   
+  getPrecisionContext(userId: string): Promise<unknown>;
+  putPrecisionContext(userId: string, context: PrecisionContext): Promise<void>;
+  getPrecisionRecords(userId: string): Promise<PrecisionRecord[]>;
+  insertPrecisionRecord(userId: string, kind: string, payload: unknown): Promise<PrecisionRecord>;
+  deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
+  clearPrecisionData(userId: string): Promise<void>;
   getDemoUser(): Promise<User | undefined>;
   getDemoSamples(): Promise<MicrobiomeSample[]>;
 }
@@ -346,6 +354,14 @@ export class DatabaseStorage implements IStorage {
   async deleteMeal(id: string): Promise<void> {
     await db.delete(meals).where(eq(meals.id, id));
   }
+
+  private readonly precision = new PrecisionStorage(db);
+  getPrecisionContext(userId:string) { return this.precision.getPrecisionContext(userId); }
+  putPrecisionContext(userId:string,context:PrecisionContext) { return this.precision.putPrecisionContext(userId,context); }
+  getPrecisionRecords(userId:string) { return this.precision.getPrecisionRecords(userId); }
+  insertPrecisionRecord(userId:string,kind:string,payload:unknown) { return this.precision.insertPrecisionRecord(userId,kind,payload); }
+  deletePrecisionRecord(userId:string,id:string) { return this.precision.deletePrecisionRecord(userId,id); }
+  clearPrecisionData(userId:string) { return this.precision.clearPrecisionData(userId); }
 
   async getDemoUser(): Promise<User | undefined> {
     return this.getUser(this.demoUserId);

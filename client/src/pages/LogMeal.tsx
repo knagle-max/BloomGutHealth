@@ -60,6 +60,7 @@ export default function LogMeal() {
         predicate: (query) =>
           [
             "/api/meals",
+            "/api/precision",
             "/api/nutrition/",
             "/api/health/",
             "/api/microbiome/diet-prediction",
