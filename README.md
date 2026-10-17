@@ -10,6 +10,8 @@ npm run db:push
 npm run dev
 ```
 
+Use Node.js 22 or newer. The server and Drizzle configuration load `.env.local` and `.env` without replacing values supplied by the hosting environment. Neon pulls pooled `DATABASE_URL` and direct `DATABASE_URL_UNPOOLED`; application traffic uses the pooled URL, while schema tools prefer the direct one.
+
 Configure `DATABASE_URL` (Neon-compatible PostgreSQL), `SESSION_SECRET`, and optional provider settings:
 
 - `USDA_FDC_API_KEY`: USDA FoodData Central lookup for ingredient-level macros, vitamins and minerals. Records are scaled from per-100g data using explicitly supplied ingredient weights. Automatic food matches are displayed for review; missing nutrient values are not zero-filled.
@@ -61,3 +63,24 @@ python -m unittest discover -s tests -p 'test_*.py'
 ```
 
 Automated tests additionally cover the precision workflow, genetic import integrity, lab units and trends, supplement safety, source separation, input ownership and authenticated encryption. They also cover preference eligibility, nutrient missingness/scaling, provider failure, ownership, meal context persistence, report parsing, scientific source integrity, AI output validation and unsupported sequence guards. Browser tests use fixture responses; live provider requests and production database migration require credentials and are not verified here. Deployments also need secure sessions, proxy configuration and a shared rate limiter when using multiple instances.
+
+## Neon CLI setup
+
+`neon.ts` declares PostgreSQL-only infrastructure and retains the app's existing authentication. The generated `.neon` project/branch link and all credential files are gitignored. The `production` branch policy does not add an automatic expiry.
+
+```sh
+npx neon@latest --no-analytics login
+npx neon@latest --no-analytics deploy
+```
+
+Complete browser sign-in in the environment running the CLI; signing in on a different computer does not automatically authenticate this workspace. After a successful deployment, the CLI pulls the database environment variables. Review the live schema before applying the Drizzle schema or additive migrations. Neon provisions the database here; this PostgreSQL-only configuration does not host the React/Express app or the separate Python service.
+
+Then configure independent `SESSION_SECRET` and `PRECISION_DATA_KEY` secrets, build and run the app. Do not rotate the precision key after saving data without a re-encryption plan. A passing build alone does not prove the live database integration; verify account creation, session persistence, journal CRUD and encrypted precision record read/write against the provisioned database.
+
+### GitHub-connected Neon setup
+
+When the Neon GitHub integration has created `NEON_API_KEY` (Actions secret) and `NEON_PROJECT_ID` (Actions variable), `.github/workflows/neon_workflow.yml` can provision and test without a local CLI session. For same-repository pull requests it creates `preview/pr-<number>` as a schema-only branch of `production`, applies `neon.ts`, pulls the environment, applies the app schema to that preview, checks types/tests/build, and starts the built app for live PostgreSQL-backed API checks. The preview expires after fourteen days and the workflow requests deletion when the PR closes. Once merged, this workflow remains available to handle later PR lifecycle events. Forks do not receive the secret or run privileged jobs.
+
+`npm run test:neon` is deliberately mutating and requires `BLOOM_SMOKE_ISOLATED=true` plus both database URLs. It is intended for an isolated CI database only, creates synthetic accounts/data, verifies API persistence and encryption, and removes its synthetic records afterward. It never prints connection strings, cookies, passwords or encryption keys. CI uses temporary session/encryption secrets; never reuse these for a persistent deployment. Production data and keys are not modified by the PR workflow.
+
+This integration verifies a database-backed build; it does not publish a public app URL. Configure the persistent database and retained application secrets in the app host (such as Render) for actual use. Render's HTTPS proxy is explicitly trusted for secure session cookies; other hosts need their own proxy configuration.

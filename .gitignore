@@ -9,3 +9,9 @@ __pycache__/
 bloom-desktop.png
 bloom-mobile.png
 bloom-coach-*.png
+
+# Local service credentials
+.env
+.env.*
+!.env.example
+.neon

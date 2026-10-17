@@ -1,3 +1,4 @@
+import "./env";
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
@@ -13,6 +14,8 @@ declare module "express-session" {
 }
 
 const app = express();
+// Render terminates HTTPS before forwarding to this private service.
+if (process.env.RENDER === "true") app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
