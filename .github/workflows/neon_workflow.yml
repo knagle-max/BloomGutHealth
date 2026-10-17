@@ -42,7 +42,6 @@ jobs:
           parent_branch: production
           branch_type: schema-only
           expires_at: ${{ env.EXPIRES_AT }}
-          suspend_timeout: 300
       - name: Apply Neon service configuration and pull environment
         env:
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
