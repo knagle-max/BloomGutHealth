@@ -27,6 +27,28 @@ export function registerPlannerRoutes(
   analyzer = analyzeMeal,
 ) {
   const limited = new Map<string, { at: number; count: number }>();
+  app.get("/api/analysis/status", requireAuth, (_req, res) => {
+    res.setHeader("Cache-Control", "no-store");
+    res.json({
+      ai: {
+        configured: !!(
+          process.env.OPENAI_API_KEY && process.env.OPENAI_SCIENCE_MODEL
+        ),
+        model: process.env.OPENAI_SCIENCE_MODEL || null,
+        tested: false,
+      },
+      nutrition: {
+        liveLookupConfigured: !!process.env.USDA_FDC_API_KEY,
+        alternateProviderConfigured: !!process.env.API_NINJAS_KEY,
+        offlinePlanningCatalogue: true,
+      },
+      microbiome: {
+        serviceConfigured: !!process.env.ML_SERVICE_URL,
+        validatedFluxModel: false,
+      },
+      note: "Configured does not mean a provider call has succeeded. Offline planning uses a sourced food snapshot; biological pathways are evidence-linked hypotheses, not simulated metabolite quantities.",
+    });
+  });
   const limit: RequestHandler = (req, res, next) => {
     const now = Date.now();
     for (const [id, v] of Array.from(limited))

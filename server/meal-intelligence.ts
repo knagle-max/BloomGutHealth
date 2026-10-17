@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import { z } from "zod";
+import { lookupSnapshotNutrition } from "../shared/food-snapshot";
 import {
   ingredientSchema,
   parseExplicitIngredients,
@@ -164,7 +165,13 @@ export async function analyzeMeal(
 ): Promise<{ intelligence: MealIntelligence; nutritionalData: any[] }> {
   const parsed = await parseMeal(text, aiConsent);
   const explanation = explainFoods(text);
-  const database = await lookupDatabaseNutrition(parsed.ingredients);
+  const snapshot = lookupSnapshotNutrition(parsed.ingredients);
+  const useSnapshot =
+    snapshot.foodMatches.length === parsed.ingredients.length ||
+    !process.env.USDA_FDC_API_KEY;
+  const database = useSnapshot
+    ? snapshot
+    : await lookupDatabaseNutrition(parsed.ingredients);
   const intelligence: MealIntelligence = {
     ...parsed,
     ...database,
@@ -172,7 +179,9 @@ export async function analyzeMeal(
     sources: explanation.sources,
     status: database.foodMatches.length ? "database-estimate" : "unavailable",
     provider: database.foodMatches.length
-      ? "USDA FoodData Central (automatic matches; review required)"
+      ? useSnapshot
+        ? "USDA FoodData Central SR Legacy snapshot (exact preparation matches)"
+        : "USDA FoodData Central (automatic matches; review required)"
       : "Not configured or unavailable",
     warnings: [...explanation.warnings, ...database.warnings],
     analyzedAt: new Date().toISOString(),

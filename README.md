@@ -27,7 +27,7 @@ For Python, install `pyproject.toml` dependencies with `uv sync`, then `uv run u
 
 ## Feature map
 
-- `/precision`: 23andMe import with an initial reviewed four-marker catalogue, dated bloodwork and measured metabolites, separated microbiome hypotheses, ranked foods/meals, conditional supplement assessments, evidence snapshots and response tracking. Inputs are encrypted and account-scoped. See `PRECISION_NUTRITION.md` for exact scope and scientific limits.
+- `/precision`: 23andMe import with an reviewed seven-marker catalogue, dated bloodwork and measured metabolites, separated microbiome hypotheses, ranked foods/meals, conditional supplement assessments, evidence snapshots and response tracking. Inputs are encrypted and account-scoped. See `PRECISION_NUTRITION.md` for exact scope and scientific limits.
 - `/`: responsive personal overview, daily nutrition, meal history and restored report/research summary.
 - `/log-meal`: description, meal type, date/time, portion context, optional saved symptoms (bloating, energy, digestive comfort, mental clarity), optional AI ingredient parsing, nutrient/molecule/pathway explanations.
 - `/nutrition`: journal editing/deletion, individual nutrition items and pathway hypotheses, saved context, daily targets, monthly and yearly summaries.
@@ -84,3 +84,7 @@ When the Neon GitHub integration has created `NEON_API_KEY` (Actions secret) and
 `npm run test:neon` is deliberately mutating and requires `BLOOM_SMOKE_ISOLATED=true` plus both database URLs. It is intended for an isolated CI database only, creates synthetic accounts/data, verifies API persistence and encryption, and removes its synthetic records afterward. It never prints connection strings, cookies, passwords or encryption keys. CI uses temporary session/encryption secrets; never reuse these for a persistent deployment. Production data and keys are not modified by the PR workflow.
 
 This integration verifies a database-backed build; it does not publish a public app URL. Configure the persistent database and retained application secrets in the app host (such as Render) for actual use. Render's HTTPS proxy is explicitly trusted for secure session cookies; other hosts need their own proxy configuration.
+
+## Weekly meal planning and evidence network
+
+`/meal-planner` now includes nutrient-constrained weekly planning, portion/meal swaps, prepared-quantity shopping lists, optional validated AI recipe proposals, and encrypted saved plans. See [WEEKLY_PLANNING.md](WEEKLY_PLANNING.md) for the actual scope, data provenance and remaining scientific work. Existing features remain available.

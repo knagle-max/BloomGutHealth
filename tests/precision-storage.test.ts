@@ -6,6 +6,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { PrecisionStorage } from "../server/precision-storage";
 import { contextSchema } from "../shared/precision-nutrition";
+import { defaultPreferences } from "../shared/meal-intelligence";
 
 test("PostgreSQL migration and encrypted precision persistence enforce ownership and transactional deletion", async () => {
   const client = new PGlite();
@@ -13,7 +14,7 @@ test("PostgreSQL migration and encrypted precision persistence enforce ownership
   process.env.PRECISION_DATA_KEY = randomBytes(32).toString("base64");
   try {
     await client.exec(
-      "CREATE TABLE users (id varchar PRIMARY KEY); INSERT INTO users VALUES ('a'),('b');",
+      "CREATE TABLE users (id varchar PRIMARY KEY, dietary_preferences jsonb); INSERT INTO users(id) VALUES ('a'),('b');",
     );
     const migration = readFileSync(
       new URL("../migrations/0002_precision_nutrition.sql", import.meta.url),
@@ -42,6 +43,24 @@ test("PostgreSQL migration and encrypted precision persistence enforce ownership
     });
     await store.insertPrecisionRecord("b", "lab", { marker: "ldl", value: 2 });
     assert.equal((await store.getPrecisionRecords("a")).length, 3);
+    const weekly = {
+      type: "weekly-plan",
+      inputGuard: {
+        context: { ...context, goals: ["ApoB"] },
+        preferences: defaultPreferences,
+        sourceRecordIds: [lab.id],
+      },
+    };
+    const savedWeekly = await store.insertPrecisionRecord("a", "plan", weekly);
+    await store.putPrecisionContext("a", {
+      ...context,
+      goals: ["Changed while calculating"],
+    });
+    await assert.rejects(
+      () => store.insertPrecisionRecord("a", "plan", weekly),
+      /PRECISION_INPUTS_CHANGED/,
+    );
+    await store.deletePrecisionRecord("a", savedWeekly.id);
     assert.equal(await store.deletePrecisionRecord("b", lab.id), false);
     const rows = await client.query(
       "SELECT encrypted_payload FROM precision_records",
@@ -55,6 +74,10 @@ test("PostgreSQL migration and encrypted precision persistence enforce ownership
     assert.equal((await store.getPrecisionRecords("a")).length, 0);
     await store.insertPrecisionRecord("a", "checkin", { weightKg: 90 });
     await store.clearPrecisionData("a");
+    await assert.rejects(
+      () => store.insertPrecisionRecord("a", "plan", weekly),
+      /PRECISION_INPUTS_CHANGED/,
+    );
     assert.equal(await store.getPrecisionContext("a"), undefined);
     assert.equal((await store.getPrecisionRecords("b")).length, 1);
     await assert.rejects(() =>

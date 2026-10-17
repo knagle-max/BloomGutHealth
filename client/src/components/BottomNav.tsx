@@ -1,4 +1,10 @@
-import { Home, Dna, Lightbulb, UtensilsCrossed, Activity } from "lucide-react";
+import {
+  Home,
+  Dna,
+  CalendarDays,
+  UtensilsCrossed,
+  Activity,
+} from "lucide-react";
 import { Link, useLocation } from "wouter";
 const navItems = [
   { id: "dashboard", path: "/", icon: Home, label: "Overview" },
@@ -15,7 +21,12 @@ const navItems = [
     icon: Activity,
     label: "Microbiome",
   },
-  { id: "insights", path: "/insights", icon: Lightbulb, label: "Coach" },
+  {
+    id: "planner",
+    path: "/meal-planner",
+    icon: CalendarDays,
+    label: "Meal plans",
+  },
 ];
 export default function BottomNav() {
   const [location] = useLocation();

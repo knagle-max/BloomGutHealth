@@ -12,22 +12,38 @@ import {
   type MealIntelligence,
 } from "@shared/meal-intelligence";
 import MealAnalysis from "@/components/MealAnalysis";
+import WeeklyPlanner from "@/components/WeeklyPlanner";
 export function DietaryPreferenceEditor() {
   const saved = useQuery<DietaryPreferences>({
     queryKey: ["/api/preferences"],
   });
   const [preferences, setPreferences] = useState(defaultPreferences);
   const [dislikes, setDislikes] = useState("");
+  const [extraGoals, setExtraGoals] = useState("");
   useEffect(() => {
     if (saved.data) {
       setPreferences(saved.data);
       setDislikes(saved.data.dislikes.join(", "));
+      setExtraGoals(
+        saved.data.goals
+          .filter((g) => !goals.some((known) => known.id === g))
+          .join(", "),
+      );
     }
   }, [saved.data]);
   const save = useMutation({
     mutationFn: async () => {
       const body = {
         ...preferences,
+        goals: [
+          ...preferences.goals.filter((g) =>
+            goals.some((known) => known.id === g),
+          ),
+          ...extraGoals
+            .split(",")
+            .map((g) => g.trim())
+            .filter(Boolean),
+        ],
         dislikes: dislikes
           .split(",")
           .map((s) => s.trim())
@@ -39,6 +55,9 @@ export function DietaryPreferenceEditor() {
       queryClient.invalidateQueries({ queryKey: ["/api/preferences"] });
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
       queryClient.invalidateQueries({ queryKey: ["/api/meal-planner"] });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/precision/planning-recipes"],
+      });
     },
   });
   if (saved.isLoading) return <p role="status">Loading saved preferences…</p>;
@@ -126,6 +145,20 @@ export function DietaryPreferenceEditor() {
           ingredients and cross-contact.
         </p>
       </fieldset>
+      <label className="block">
+        Additional goals (comma separated)
+        <input
+          className="bloom-input w-full"
+          maxLength={1000}
+          value={extraGoals}
+          onChange={(e) => setExtraGoals(e.target.value)}
+          placeholder="Improve meal variety, support glucose control"
+        />
+      </label>
+      <p className="panel-note">
+        Custom goals are saved. A goal without a reviewed evidence mapping does
+        not create a new biological prediction or treatment rule.
+      </p>
       <fieldset>
         <legend>Goals</legend>
         <div className="flex flex-wrap gap-3">
@@ -186,10 +219,14 @@ export function DietaryPreferenceEditor() {
         />
       </label>
       <p className="panel-note">
-        Cuisine context is saved for future recipe expansion; current catalogue
-        filtering uses ingredients, pattern, time and goals.
+        Cuisine context is used for optional AI recipe ideas. Ingredient,
+        pattern and time restrictions are checked independently of the AI.
       </p>
-      <Button disabled={save.isPending || !preferences.goals.length}>
+      <Button
+        disabled={
+          save.isPending || (!preferences.goals.length && !extraGoals.trim())
+        }
+      >
         {save.isPending ? "Saving…" : "Save preferences"}
       </Button>
       {save.isSuccess && (
@@ -263,6 +300,7 @@ export default function MealPlanner() {
         {editingPreferences ? "Close preferences" : "Edit saved preferences"}
       </Button>
       {editingPreferences && <DietaryPreferenceEditor />}
+      <WeeklyPlanner />
       {plan.isLoading && <p role="status">Loading your meal plan…</p>}
       {plan.isError && (
         <p role="alert">

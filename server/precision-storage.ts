@@ -1,5 +1,10 @@
-import { eq, and, desc } from "drizzle-orm";
-import { precisionProfiles, precisionRecords } from "../shared/schema";
+import { eq, and, desc, sql } from "drizzle-orm";
+import { precisionProfiles, precisionRecords, users } from "../shared/schema";
+import { contextSchema } from "../shared/precision-nutrition";
+import {
+  preferenceSchema,
+  defaultPreferences,
+} from "../shared/meal-intelligence";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type {
   PrecisionContext,
@@ -25,13 +30,18 @@ export class PrecisionStorage {
     context: PrecisionContext,
   ): Promise<void> {
     const encryptedContext = encryptPrecision(context, userId);
-    await this.db
-      .insert(precisionProfiles)
-      .values({ userId, encryptedContext })
-      .onConflictDoUpdate({
-        target: precisionProfiles.userId,
-        set: { encryptedContext, updatedAt: new Date() },
-      });
+    await this.db.transaction(async (tx) => {
+      await tx.execute(
+        sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
+      );
+      await tx
+        .insert(precisionProfiles)
+        .values({ userId, encryptedContext })
+        .onConflictDoUpdate({
+          target: precisionProfiles.userId,
+          set: { encryptedContext, updatedAt: new Date() },
+        });
+    });
   }
   async getPrecisionRecords(userId: string): Promise<PrecisionRecord[]> {
     const rows = await this.db
@@ -52,14 +62,71 @@ export class PrecisionStorage {
     payload: unknown,
   ): Promise<PrecisionRecord> {
     const encryptedPayload = encryptPrecision(payload, userId);
-    const [row] = await this.db
-      .insert(precisionRecords)
-      .values({ userId, kind, encryptedPayload })
-      .returning();
-    return { id: row.id, kind: row.kind, payload, createdAt: row.createdAt };
+    return this.db.transaction(async (tx) => {
+      await tx.execute(
+        sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
+      );
+      const plan = payload as any;
+      if (kind === "plan" && plan?.type === "weekly-plan") {
+        const [profile] = await tx
+          .select()
+          .from(precisionProfiles)
+          .where(eq(precisionProfiles.userId, userId));
+        const [user] = await tx
+          .select({ dietaryPreferences: users.dietaryPreferences })
+          .from(users)
+          .where(eq(users.id, userId))
+          .for("share");
+        const currentPrefs = preferenceSchema.safeParse(
+          user?.dietaryPreferences,
+        );
+        if (
+          !profile ||
+          JSON.stringify(
+            contextSchema.parse(
+              decryptPrecision(profile.encryptedContext, userId),
+            ),
+          ) !== JSON.stringify(plan.inputGuard?.context) ||
+          JSON.stringify(
+            currentPrefs.success ? currentPrefs.data : defaultPreferences,
+          ) !== JSON.stringify(plan.inputGuard?.preferences)
+        )
+          throw Error("PRECISION_INPUTS_CHANGED");
+        const records = await tx
+          .select({ id: precisionRecords.id, kind: precisionRecords.kind })
+          .from(precisionRecords)
+          .where(eq(precisionRecords.userId, userId))
+          .orderBy(desc(precisionRecords.createdAt));
+        const latestGenetics = records.find((r) => r.kind === "genetics");
+        const sourceIds = records
+          .filter(
+            (r) =>
+              r.kind === "lab" ||
+              r.kind === "metabolite" ||
+              r.id === latestGenetics?.id,
+          )
+          .map((r) => r.id);
+        if (
+          !Array.isArray(plan.inputGuard?.sourceRecordIds) ||
+          plan.inputGuard.sourceRecordIds.length !== sourceIds.length ||
+          !plan.inputGuard.sourceRecordIds.every((id: string) =>
+            sourceIds.includes(id),
+          )
+        )
+          throw Error("PRECISION_INPUTS_CHANGED");
+      }
+      const [row] = await tx
+        .insert(precisionRecords)
+        .values({ userId, kind, encryptedPayload })
+        .returning();
+      return { id: row.id, kind: row.kind, payload, createdAt: row.createdAt };
+    });
   }
   async deletePrecisionRecord(userId: string, id: string): Promise<boolean> {
     return this.db.transaction(async (tx) => {
+      await tx.execute(
+        sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
+      );
       const removed = await tx
         .delete(precisionRecords)
         .where(
@@ -82,6 +149,9 @@ export class PrecisionStorage {
   }
   async clearPrecisionData(userId: string): Promise<void> {
     await this.db.transaction(async (tx) => {
+      await tx.execute(
+        sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
+      );
       await tx
         .delete(precisionRecords)
         .where(eq(precisionRecords.userId, userId));

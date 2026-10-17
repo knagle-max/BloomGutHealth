@@ -24,9 +24,9 @@ export const preferenceSchema = z
     cookingMinutes: z.number().int().min(5).max(180).default(30),
     cuisines: z.string().trim().max(300).default(""),
     goals: z
-      .array(z.enum(["butyrate", "diversity", "athletic", "longevity"]))
+      .array(z.string().trim().min(1).max(100))
       .min(1)
-      .max(4)
+      .max(20)
       .default(["butyrate"]),
   })
   .strict();

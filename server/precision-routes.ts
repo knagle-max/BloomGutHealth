@@ -12,6 +12,13 @@ import {
   defaultPreferences,
 } from "../shared/meal-intelligence";
 import { abundanceSchema } from "../shared/report-import";
+import {
+  weeklyRequestSchema,
+  eligiblePlanningRecipes,
+} from "../shared/weekly-planner";
+import { evidenceNetwork } from "../shared/evidence-network";
+import { runWeeklyPlanning } from "./weekly-runner";
+import { generateRecipes } from "./recipe-generation";
 
 type Store = Pick<
   IStorage,
@@ -151,6 +158,150 @@ export function registerPrecisionRoutes(
         "Precision data could not load or save. Please retry or contact support.",
     });
   };
+  app.get("/api/precision/evidence-network", (_req, res) =>
+    res.json(evidenceNetwork()),
+  );
+  app.get("/api/precision/weekly-plans", async (req, res) => {
+    try {
+      const records = await store.getPrecisionRecords(req.session.userId!);
+      res.json(
+        records.filter(
+          (r) =>
+            r.kind === "plan" && (r.payload as any)?.type === "weekly-plan",
+        ),
+      );
+    } catch (e) {
+      unavailable(res, e);
+    }
+  });
+  app.get("/api/precision/planning-recipes", async (req, res) => {
+    try {
+      const report = await reportFor(req.session.userId!);
+      const user = await store.getUser(req.session.userId!);
+      const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+      res.json(
+        eligiblePlanningRecipes(
+          saved.success ? saved.data : defaultPreferences,
+          report.context.allergies,
+        ),
+      );
+    } catch (e) {
+      unavailable(res, e);
+    }
+  });
+  const planningRequests = new Map<string, { at: number; count: number }>();
+  app.post("/api/precision/recipe-ideas", async (req, res) => {
+    const parsed = z
+      .object({
+        aiConsent: z.literal(true),
+        instruction: z.string().trim().max(500).default(""),
+      })
+      .strict()
+      .safeParse(req.body);
+    if (!parsed.success)
+      return res.status(400).json({
+        error:
+          "Explicit consent is required to send food preferences and allergy exclusions to the AI provider.",
+      });
+    const id = req.session.userId!,
+      now = Date.now();
+    const prior = planningRequests.get(id);
+    if (prior && now - prior.at < 60000 && prior.count >= 8)
+      return res
+        .status(429)
+        .json({ error: "Please wait a minute before another request." });
+    planningRequests.set(id, {
+      at: now,
+      count: prior && now - prior.at < 60000 ? prior.count + 1 : 1,
+    });
+    try {
+      const report = await reportFor(id);
+      if (
+        report.context.ageGroup !== "adult" ||
+        report.context.pregnancy !== "no" ||
+        !report.context.safetyReviewed
+      )
+        return res.status(422).json({
+          error: "Complete your reviewed adult health context first.",
+        });
+      const user = await store.getUser(id),
+        saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+      res.json({
+        recipes: await generateRecipes(
+          saved.success ? saved.data : defaultPreferences,
+          report.context.allergies,
+          parsed.data.instruction,
+        ),
+        note: "AI proposed ingredient combinations from sourced foods. The server validates restrictions and calculates nutrition; the weekly optimizer must still verify the complete plan.",
+      });
+    } catch {
+      res.status(503).json({
+        error:
+          "Recipe generation is not configured or did not return safe, valid combinations. Structured recipes remain available.",
+      });
+    }
+  });
+  for (const action of ["preview", "save"] as const)
+    app.post(`/api/precision/weekly-plans/${action}`, async (req, res) => {
+      const parsed = weeklyRequestSchema.safeParse(req.body);
+      if (!parsed.success)
+        return res.status(400).json({
+          error: "Check planning targets, duration and selected meals.",
+        });
+      const userId = req.session.userId!;
+      const now = Date.now();
+      for (const [id, entry] of Array.from(planningRequests))
+        if (now - entry.at > 60000) planningRequests.delete(id);
+      const entry = planningRequests.get(userId) || { at: now, count: 0 };
+      if (entry.count >= 8)
+        return res.status(429).json({
+          error: "Please wait a minute before rebuilding another plan.",
+        });
+      entry.count++;
+      planningRequests.set(userId, entry);
+      try {
+        const report = await reportFor(userId);
+        const user = await store.getUser(userId);
+        const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+        const plan = await runWeeklyPlanning(
+          parsed.data,
+          saved.success ? saved.data : defaultPreferences,
+          report,
+        );
+        if (action === "save") {
+          if (!plan.checksPassed)
+            return res.status(422).json({
+              error:
+                "The plan cannot be saved until every day meets your targets. Review unmet targets or restrictions in the preview.",
+            });
+          return res
+            .status(201)
+            .json(await store.insertPrecisionRecord(userId, "plan", plan));
+        }
+        res.json(plan);
+      } catch (e) {
+        if (e instanceof Error && e.message.startsWith("A locked meal"))
+          return res.status(400).json({ error: e.message });
+        if (e instanceof Error && e.message === "PRECISION_INPUTS_CHANGED")
+          return res
+            .status(409)
+            .json({
+              error:
+                "Your biology or preferences changed while planning. Generate a fresh plan before saving.",
+            });
+        if (
+          e instanceof Error &&
+          ["PLANNING_BUSY", "PLANNING_TIMEOUT"].includes(e.message)
+        )
+          return res
+            .status(503)
+            .json({
+              error:
+                "The planner is busy or took too long. Retry shortly or choose fewer days.",
+            });
+        unavailable(res, e);
+      }
+    });
   app.get("/api/precision", async (req, res) => {
     if (
       req.query.sampleId !== undefined &&

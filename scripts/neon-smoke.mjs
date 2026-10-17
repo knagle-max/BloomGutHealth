@@ -285,6 +285,47 @@ try {
   console.log(
     "PASS: plan/check-in persistence, account isolation, transactional source deletion and logout/login",
   );
+  await request("/api/preferences", "PUT", {
+    ...preferences,
+    dietaryPattern: "omnivore",
+  });
+  const weeklyInput = {
+    name: "Synthetic weekly deployment check",
+    days: 1,
+    householdServings: 2,
+    targets: {
+      calories: 2200,
+      protein: 100,
+      fiber: 30,
+      fiberMaximum: 45,
+      sodium: 2300,
+      saturatedFat: 20,
+    },
+  };
+  const weekly = await request(
+    "/api/precision/weekly-plans/preview",
+    "POST",
+    weeklyInput,
+  );
+  assert.equal(weekly.status, "feasible");
+  assert.equal(weekly.days.length, 1);
+  assert.ok(weekly.days.every((d) => d.checks.every((c) => c.passed)));
+  assert.ok(weekly.shoppingList.length > 0);
+  const weeklySaved = await request(
+    "/api/precision/weekly-plans/save",
+    "POST",
+    weeklyInput,
+    201,
+  );
+  assert.equal(
+    (await request("/api/precision/weekly-plans"))[0].id,
+    weeklySaved.id,
+  );
+  const status = await request("/api/analysis/status");
+  assert.equal(status.nutrition.offlinePlanningCatalogue, true);
+  console.log(
+    "PASS: production planning worker, nutrient constraints, encrypted weekly-plan persistence and shopping list",
+  );
 } catch (error) {
   // Keep captured application output private: it can contain signed cookies or URLs.
   console.error("FAIL:", error.message);

@@ -7,8 +7,42 @@ import {
 } from "./meal-intelligence";
 import { pathways, evidenceSources } from "./science-coach";
 
-export const PRECISION_VERSION = "precision-2026-10-17.1";
+export const PRECISION_VERSION = "precision-2026-10-17.2";
 export const precisionSources = [
+  {
+    id: "pnpla3-study",
+    title: "Romeo et al. 2008 — PNPLA3 and hepatic fat",
+    url: "https://www.nature.com/articles/ng.257",
+    type: "Human genetic association",
+    limitation:
+      "Association with liver fat does not diagnose disease or validate a genotype-specific diet or supplement.",
+  },
+  {
+    id: "tm6sf2-study",
+    title: "Kozlitina et al. 2014 — TM6SF2 and liver fat",
+    url: "https://www.nature.com/articles/ng.2901",
+    type: "Human genetic association with functional experiments",
+    limitation:
+      "Liver and circulating lipid effects can differ. No genotype-specific food prescription is established here.",
+  },
+  {
+    id: "gckr-study",
+    title:
+      "Orho-Melander et al. 2008 — GCKR, triglycerides and fasting glucose",
+    url: "https://pubmed.ncbi.nlm.nih.gov/18678614/",
+    type: "Human genetic association",
+    limitation:
+      "Associations can differ by metabolic outcome and population; a common variant does not set carbohydrate limits.",
+  },
+  ...["rs738409", "rs58542926", "rs1260326"].map((rsid) => ({
+    id: `placement-${rsid}`,
+    title: `Ensembl GRCh37 — ${rsid} placement and forward alleles`,
+    url: `https://grch37.rest.ensembl.org/variation/human/${rsid}?content-type=application/json`,
+    type: "Genome reference",
+    limitation:
+      "Placement and alleles are technical checks, not clinical interpretation. Only the reviewed allele pair is supported.",
+  })),
+
   {
     id: "mthfr-trial",
     title:
@@ -125,6 +159,46 @@ export const precisionSources = [
 // Deliberately bounded, reviewed catalogue. Add variants only with placement, strand,
 // population applicability, source and actionability review; never interpret every SNP.
 export const variantCatalog = [
+  {
+    rsid: "rs738409",
+    gene: "PNPLA3",
+    chromosome: "22",
+    position: 44324727,
+    alleles: "CG",
+    pathway: "Hepatic lipid handling",
+    sources: ["pnpla3-study", "placement-rs738409"],
+    interpretation:
+      "This common C/G marker is associated with hepatic fat and inflammation in studied populations. A raw genotype is a susceptibility finding, not a diagnosis or a measured liver-fat result.",
+    limitation:
+      "Use liver measurements and clinical context. No direct genotype-to-microbe interaction, supplement, or individual dietary response is established in this catalogue.",
+  },
+  {
+    rsid: "rs58542926",
+    gene: "TM6SF2",
+    chromosome: "19",
+    position: 19379549,
+    alleles: "CT",
+    pathway: "Hepatic lipid export / circulating lipids",
+    sources: ["tm6sf2-study", "placement-rs58542926"],
+    interpretation:
+      "This common C/T marker is associated with hepatic fat and lipid traits. Liver-fat susceptibility and circulating lipid levels need separate interpretation.",
+    limitation:
+      "Do not infer liver health from cholesterol alone. Actual laboratory results and clinical liver assessment take priority; no genetic supplement or food prescription is made.",
+  },
+  {
+    rsid: "rs1260326",
+    gene: "GCKR",
+    chromosome: "2",
+    position: 27730940,
+    alleles: "CT",
+    pathway: "Hepatic glucose / triglyceride regulation",
+    sources: ["gckr-study", "placement-rs1260326"],
+    interpretation:
+      "This common C/T marker is associated with triglyceride and fasting-glucose traits, which can move in different directions. It does not diagnose insulin resistance or a need to restrict a food group.",
+    limitation:
+      "Review measured triglycerides, glucose and HbA1c together. No genotype-specific carbohydrate dose or microbial effect is inferred.",
+  },
+
   {
     rsid: "rs1801133",
     gene: "MTHFR",
@@ -594,6 +668,12 @@ export function buildPrecisionReport(
           ? "no call"
           : "reported raw call",
       actionability: {
+        rs738409:
+          "Review measured liver status; no genotype-specific diet or supplement",
+        rs58542926:
+          "Consider liver and circulating lipid measurements separately",
+        rs1260326:
+          "Use paired glucose and triglyceride measurements, not a genetic carbohydrate limit",
         rs1801133:
           "Check diet and measured folate/B12 context; no automatic supplement",
         rs4988235: "Use symptom-led tolerance; no genetic dairy exclusion",
