@@ -1,5 +1,7 @@
+import { recipeDisplayName } from "@/lib/recipe-display";
 import { recipePreparation } from "@shared/recipe-preparation";
 import TodayPlanner from "@/components/TodayPlanner";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -275,7 +277,7 @@ export default function MealPlanner() {
         })
       ).json()) as { intelligence: MealIntelligence },
   });
-  const [editingPreferences, setEditing] = useState(false);
+  const [editingPreferences, setEditing] = useState(new URLSearchParams(window.location.search).get("preferences") === "1");
   const prioritize = useMutation({
     mutationFn: async () =>
       (
@@ -291,10 +293,9 @@ export default function MealPlanner() {
     <main className="science-page space-y-5">
       <div className="science-heading">
         <p className="eyebrow">PERSONALIZED MEAL PLANNING</p>
-        <h1>Meals with a purpose.</h1>
+        <h1>Meal plans</h1>
         <p>
-          Choose complete meals through supported food → microbe → molecule
-          pathways.
+          Find your next meal, plan your week, or explore recipes that fit your preferences.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link className="text-link" href="/insights">
@@ -312,8 +313,11 @@ export default function MealPlanner() {
         {editingPreferences ? "Close preferences" : "Edit saved preferences"}
       </Button>
       {editingPreferences && <DietaryPreferenceEditor />}
-      <TodayPlanner />
-      <WeeklyPlanner />
+      <Tabs defaultValue="today" className="workspace-tabs">
+        <TabsList aria-label="Meal planning views"><TabsTrigger value="today">Rest of today</TabsTrigger><TabsTrigger value="week">Weekly plan</TabsTrigger><TabsTrigger value="recipes">Recipe library</TabsTrigger></TabsList>
+        <TabsContent value="today" forceMount><TodayPlanner onEditPreferences={() => setEditing(true)} /></TabsContent>
+        <TabsContent value="week" forceMount><WeeklyPlanner /></TabsContent>
+        <TabsContent value="recipes" forceMount>
       {plan.isLoading && <p role="status">Loading your meal plan…</p>}
       {plan.isError && (
         <p role="alert">
@@ -368,7 +372,7 @@ export default function MealPlanner() {
           )}
           {plan.data.suggestions.map((r) => (
             <article key={r.id} className="bloom-panel space-y-3">
-              <h2>{r.name}</h2>
+              <h2>{recipeDisplayName(r.name)}</h2>
               <p className="panel-note">
                 {recipePreparation(r).minutes} minutes ·{" "}
                 {r.matchedGoals.join(", ")} ·{" "}
@@ -484,8 +488,10 @@ export default function MealPlanner() {
           )}
         </>
       )}
-      <section className="bloom-panel">
-        <h2>Your four-week journal progress</h2>
+        </TabsContent>
+      </Tabs>
+      <details className="bloom-panel workspace-disclosure">
+        <summary>Your four-week journal progress</summary>
         {progress.isLoading ? (
           <p>Loading progress…</p>
         ) : progress.isError ? (
@@ -526,7 +532,7 @@ export default function MealPlanner() {
             </>
           )
         )}
-      </section>
+      </details>
     </main>
   );
 }

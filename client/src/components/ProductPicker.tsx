@@ -324,6 +324,7 @@ export default function ProductPicker({
         {saved.data?.map((p) => (
           <div className="flex flex-wrap gap-2 py-2" key={p.id}>
             <Button
+              className="whitespace-normal h-auto max-w-full text-left"
               type="button"
               variant="outline"
               onClick={() => {
@@ -337,6 +338,7 @@ export default function ProductPicker({
             <Button
               type="button"
               variant="ghost"
+              className="whitespace-normal h-auto max-w-full"
               disabled={remove.isPending}
               onClick={() => remove.mutate(p.id)}
             >

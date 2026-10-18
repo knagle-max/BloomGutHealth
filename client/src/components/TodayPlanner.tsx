@@ -1,3 +1,4 @@
+import { recipeDisplayName } from "@/lib/recipe-display";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -9,7 +10,7 @@ import { nutrientDefinitions } from "@shared/meal-intelligence";
 import { recipePreparation } from "@shared/recipe-preparation";
 const round = (v: number | null) =>
   v === null ? "Unknown" : Number(v.toFixed(1));
-export default function TodayPlanner() {
+export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?: () => void } = {}) {
   const [edited, setEdited] = useState<WeeklyRequest | null>(null),
     [result, setResult] = useState<
       (TodayPlan & { targetSource: string }) | null
@@ -55,10 +56,8 @@ export default function TodayPlanner() {
       )}
       {r && request && (
         <>
-          <p>
-            {r.eatenMeals} meal entries logged · Slots still available:{" "}
-            {r.slots.join(", ") || "none"} · {r.targetSource}
-          </p>
+          <div className="planner-status"><span>{r.eatenMeals} meals logged today</span><span>Still to plan: {r.slots.join(", ") || "no remaining meals"}</span></div>
+          <p className="panel-note">Targets: {r.targetSource}.</p>
           <details>
             <summary>Review daily targets</summary>
             <p className="panel-note">
@@ -186,9 +185,7 @@ export default function TodayPlanner() {
               you consent. The local planner does not interpret arbitrary
               cuisine text.
             </p>
-            <Link className="text-link" href="/meal-planner">
-              Edit food preferences
-            </Link>
+            {onEditPreferences ? <button type="button" className="text-link" onClick={onEditPreferences}>Edit food preferences</button> : <Link className="text-link" href="/meal-planner?preferences=1">Edit food preferences</Link>}
           </details>
           {r.warnings.map((w, i) => (
             <p className="panel-note" key={i}>
@@ -198,18 +195,14 @@ export default function TodayPlanner() {
           {r.meals.map((m) => {
             const prep = recipePreparation(m.recipe);
             return (
-              <article className="precision-observation block" key={m.slot}>
+              <article className="precision-observation block meal-suggestion" key={m.slot}>
                 <h3 className="capitalize">
-                  {m.slot}: {m.recipe.name}
+                  {m.slot}: {recipeDisplayName(m.recipe.name)}
                 </h3>
-                <p>
-                  {m.portion} × recipe · about {prep.minutes} minutes ·{" "}
-                  {round(m.nutrients.calories)} kcal ·{" "}
-                  {round(m.nutrients.protein_g)} g protein ·{" "}
-                  {round(m.nutrients.carbohydrates_total_g)} g carbs ·{" "}
-                  {round(m.nutrients.fat_total_g)} g fat ·{" "}
-                  {round(m.nutrients.fiber_g)} g fiber
-                </p>
+                <p className="panel-note">About {prep.minutes} minutes · {m.portion} × recipe</p>
+                <div className="meal-nutrition-strip">
+                  {[[m.nutrients.calories, "kcal"], [m.nutrients.protein_g, "g protein"], [m.nutrients.carbohydrates_total_g, "g carbs"], [m.nutrients.fat_total_g, "g fat"], [m.nutrients.fiber_g, "g fiber"]].map(([value, unit]) => <span key={String(unit)}>{value == null ? "Unknown" : Math.round(Number(value))} {unit}</span>)}
+                </div>
                 <details>
                   <summary>Ingredients, recipe & evidence</summary>
                   <h4>Shopping & ingredients</h4>

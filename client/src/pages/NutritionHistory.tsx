@@ -486,35 +486,15 @@ export default function NutritionHistory() {
     return Math.min((current / target) * 100, 100);
   };
 
-  const getStatusColor = (percentage: number) => {
-    if (percentage >= 90 && percentage <= 110)
-      return "text-green-600 dark:text-green-400";
-    if (percentage >= 70 && percentage <= 130)
-      return "text-yellow-600 dark:text-yellow-400";
-    return "text-red-600 dark:text-red-400";
-  };
+  const getStatusColor = (_percentage: number) => "text-foreground";
 
   return (
-    <div className="max-w-[448px] mx-auto pb-24 px-4 pt-4">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Utensils className="h-6 w-6 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold">Nutrition History</h1>
-            <p className="text-sm text-muted-foreground">
-              Totals sum available estimates. Meals without nutrition are not
-              zero-intake meals; missing micronutrients remain unavailable in
-              the detailed analysis.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Track your daily intake
-            </p>
-          </div>
-        </div>
+    <main className="science-page journal-page">
+      <div className="science-heading">
+        <p className="eyebrow">YOUR DAILY RECORD</p>
+        <h1>Food journal</h1>
+        <p>Your meals and nutrient totals, together in one place.</p>
       </div>
-
       {showLogForm && (
         <Card className="mb-6" data-testid="card-log-meal-form">
           <CardHeader>
@@ -581,7 +561,7 @@ export default function NutritionHistory() {
           nutrients are missing; unavailable values are not counted as zero.
         </p>
       )}
-      <HistoricalTrends userId={userId} targets={nutrientTargets} />
+      <div className="journal-workspace">
 
       <Card className="mb-6" data-testid="card-daily-summary">
         <CardHeader>
@@ -728,7 +708,7 @@ export default function NutritionHistory() {
           </div>
 
           <div className="pt-4 border-t">
-            <h3 className="text-sm font-semibold mb-3">Micronutrients</h3>
+            <h3 className="text-sm font-semibold mb-3">Fiber, sugars & minerals</h3>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <p className="text-xs text-muted-foreground">Fiber</p>
@@ -853,33 +833,33 @@ export default function NutritionHistory() {
                       className="cursor-pointer"
                       onClick={() => hasItems && toggleMealExpansion(meal.id)}
                     >
-                      <div className="flex gap-2 mt-3">
+                      <div className="flex flex-wrap gap-2 mt-3">
                         <Badge
                           variant="secondary"
                           data-testid={`badge-meal-calories-${index}`}
                         >
-                          {meal.totalCalories === null
+                          {meal.totalCalories == null
                             ? "Unavailable"
                             : Math.round(meal.totalCalories)}{" "}
                           cal
                         </Badge>
                         <Badge variant="secondary">
                           P:{" "}
-                          {meal.totalProtein === null
+                          {meal.totalProtein == null
                             ? "—"
                             : Math.round(meal.totalProtein)}
                           g
                         </Badge>
                         <Badge variant="secondary">
                           C:{" "}
-                          {meal.totalCarbs === null
+                          {meal.totalCarbs == null
                             ? "—"
                             : Math.round(meal.totalCarbs)}
                           g
                         </Badge>
                         <Badge variant="secondary">
                           F:{" "}
-                          {meal.totalFat === null
+                          {meal.totalFat == null
                             ? "—"
                             : Math.round(meal.totalFat)}
                           g
@@ -1053,7 +1033,7 @@ export default function NutritionHistory() {
                         ).map(([key, value]) => (
                           <p key={key}>
                             {key}:{" "}
-                            {value === null ? "Not recorded" : `${value}/10`}
+                            {value == null ? "Not recorded" : `${value}/10`}
                           </p>
                         ))}
                       </details>
@@ -1108,6 +1088,11 @@ export default function NutritionHistory() {
         )}
       </div>
 
+      </div>
+      <details className="bloom-panel workspace-disclosure mb-6">
+        <summary>Nutrition history & trends</summary>
+        <HistoricalTrends userId={userId} targets={nutrientTargets} />
+      </details>
       {journalMeals.length > historyLimit && (
         <Button
           variant="outline"
@@ -1135,6 +1120,6 @@ export default function NutritionHistory() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </main>
   );
 }

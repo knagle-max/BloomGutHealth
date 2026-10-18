@@ -1,4 +1,7 @@
-import { Moon, Sun, Sprout, Plus } from "lucide-react";
+import { Moon, Sun, Sprout, Plus, Menu } from "lucide-react";
+import { useState } from "react";
+import { NavigationLinks, navigationGroups } from "./AppNavigation";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 
@@ -7,14 +10,7 @@ interface AppHeaderProps {
   isDarkMode?: boolean;
   onToggleDarkMode?: () => void;
 }
-export const navItems = [
-  { path: "/", label: "Overview" },
-  { path: "/precision", label: "Precision nutrition" },
-  { path: "/nutrition", label: "Food journal" },
-  { path: "/microbiome", label: "Microbiome" },
-  { path: "/insights", label: "Diet coach" },
-  { path: "/meal-planner", label: "Meal planner" },
-];
+
 
 export default function AppHeader({
   userName = "User",
@@ -22,6 +18,8 @@ export default function AppHeader({
   onToggleDarkMode,
 }: AppHeaderProps) {
   const [location] = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || "Log a meal";
   return (
     <header className="bloom-header">
       <div className="bloom-header-inner">
@@ -33,18 +31,15 @@ export default function AppHeader({
             bloom<span className="brand-period">.</span>
           </span>
         </Link>
-        <nav className="desktop-nav" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
-              aria-current={location === item.path ? "page" : undefined}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="header-context"><span>YOUR WORKSPACE</span><strong>{current}</strong></div>
         <div className="header-actions">
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild><Button className="mobile-menu-trigger" variant="ghost" size="icon" aria-label="Open navigation"><Menu size={20} /></Button></SheetTrigger>
+            <SheetContent side="left" className="mobile-navigation-sheet">
+              <SheetHeader><SheetTitle>Explore Bloom</SheetTitle><SheetDescription>Your daily tools and health information.</SheetDescription></SheetHeader>
+              <NavigationLinks onNavigate={() => setMenuOpen(false)} />
+            </SheetContent>
+          </Sheet>
           <Link href="/log-meal" className="header-log">
             <Plus size={16} /> Log meal
           </Link>

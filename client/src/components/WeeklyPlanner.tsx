@@ -1,3 +1,4 @@
+import { recipeDisplayName } from "@/lib/recipe-display";
 import { recipePreparation } from "@shared/recipe-preparation";
 import MetaboliteResearch from "./MetaboliteResearch";
 import { useState } from "react";
@@ -474,7 +475,7 @@ export default function WeeklyPlanner() {
                   key={m.slot}
                 >
                   <p className="eyebrow">{m.slot}</p>
-                  <h3>{m.recipe.name}</h3>
+                  <h3>{recipeDisplayName(m.recipe.name)}</h3>
                   <p>
                     {rounded(m.nutrients.calories)} kcal ·{" "}
                     {rounded(m.nutrients.protein_g)} g protein · {m.portion} ×

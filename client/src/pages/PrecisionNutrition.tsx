@@ -315,7 +315,7 @@ export default function PrecisionNutrition() {
       <div className="flex flex-wrap gap-3 justify-between items-start">
         <div className="science-heading">
           <p className="eyebrow">Your evidence, connected</p>
-          <h1>Precision nutrition</h1>
+          <h1>My biology</h1>
           <p className="science-intro">
             Genetics, laboratory results, microbiome reports and everyday
             meals—brought together with evidence you can inspect.
@@ -333,9 +333,9 @@ export default function PrecisionNutrition() {
         {[
           ["overview", "Overview", ShieldCheck],
           ["genetics", "Genetics", Dna],
-          ["labs", "Labs & microbiome", FlaskConical],
+          ["labs", "Lab results", FlaskConical],
           ["recommendations", "Food & supplements", Leaf],
-          ["progress", "Validate response", ChartNoAxesCombined],
+          ["progress", "Progress", ChartNoAxesCombined],
         ].map(([id, label, Icon]) => (
           <Button
             key={String(id)}
@@ -376,7 +376,7 @@ export default function PrecisionNutrition() {
             {tab === "overview" && (
               <>
                 <section className="bloom-panel">
-                  <h2>Your five-layer workspace</h2>
+                  <h2>Your health information</h2>
                   <div className="precision-grid">
                     {[
                       [
@@ -404,10 +404,10 @@ export default function PrecisionNutrition() {
                         `${r.checkins.length} check-ins · ${r.plans.length} saved plans`,
                       ],
                     ].map(([name, value]) => (
-                      <div key={name}>
+                      <button type="button" className="biology-summary-tile" key={name} onClick={() => setTab(name === "Genetics" ? "genetics" : name === "Response tracking" ? "progress" : "labs")}>
                         <h3>{name}</h3>
-                        <p>{value}</p>
-                      </div>
+                        <p>{value}</p><span>View details →</span>
+                      </button>
                     ))}
                   </div>
                   <p className="panel-note">
@@ -417,12 +417,15 @@ export default function PrecisionNutrition() {
                     fabricated result.
                   </p>
                 </section>
+                <details className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
+                <summary>Your goals & health context</summary>
                 <ContextEditor
                   key={JSON.stringify(r.context)}
                   context={context}
                   pending={mutation.isPending}
                   onSave={(data) => send("/api/precision/context", data, "PUT")}
                 />
+                </details>
                 <section className="bloom-panel">
                   <h2>Goal coverage</h2>
                   {r.goals.length ? (

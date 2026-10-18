@@ -39,7 +39,9 @@ export default function Upload() {
   const { user } = useAuth();
 
   const handleSubmit = async () => {
-    if (!file && !manualData.trim()) {
+    const pasted = showManualEntry ? manualData.trim() : "";
+    const selectedFile = showManualEntry ? null : file;
+    if (!selectedFile && !pasted) {
       toast({ title: "Choose a file or enter data", variant: "destructive" });
       return;
     }
@@ -47,21 +49,21 @@ export default function Upload() {
 
     try {
       if (
-        manualData.trim() ||
-        file?.name.toLowerCase().endsWith(".json") ||
-        file?.name.toLowerCase().endsWith(".csv")
+        pasted ||
+        selectedFile?.name.toLowerCase().endsWith(".json") ||
+        selectedFile?.name.toLowerCase().endsWith(".csv")
       ) {
-        const text = manualData.trim() || (await file!.text());
-        if (file && !manualData.trim() && file.size > STRUCTURED_REPORT_MAX_BYTES) throw Error("JSON/CSV reports must be 2 MB or smaller.");
+        const text = pasted || (await selectedFile!.text());
+        if (selectedFile && !pasted && selectedFile.size > STRUCTURED_REPORT_MAX_BYTES) throw Error("JSON/CSV reports must be 2 MB or smaller.");
         const parsed = parseReportDocument(
           text,
-          manualData.trim() || file!.name.toLowerCase().endsWith(".json")
+          pasted || selectedFile!.name.toLowerCase().endsWith(".json")
             ? "json"
             : "csv",
         );
         await apiRequest("POST", "/api/microbiome/import", {
           report: parsed.source,
-          originalFilename: manualData.trim() ? undefined : file?.name,
+          originalFilename: pasted ? undefined : selectedFile?.name,
           testDate: testDate?.toISOString(),
           testingCompany,
           testId,
@@ -80,7 +82,7 @@ export default function Upload() {
         return;
       }
       const formData = new FormData();
-      formData.append("file", file!);
+      formData.append("file", selectedFile!);
       if (testDate) formData.append("testDate", testDate.toISOString());
       if (testingCompany) formData.append("testingCompany", testingCompany);
       if (testId) formData.append("testId", testId);
@@ -120,24 +122,48 @@ export default function Upload() {
   };
 
   return (
-    <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
+    <main className="science-page upload-page space-y-6">
       <div>
         <h1 className="font-display text-2xl font-semibold mb-2">
-          Upload Microbiome Test
+          Add a gut report
         </h1>
         <p className="text-sm text-muted-foreground">
-          Get personalized insights from your results
+          Choose a file or paste your report data. We’ll keep the original source and explain what’s available.
         </p>
       </div>
 
-      <FileUploadZone
+      <div className="method-switch" role="group" aria-label="Report entry method">
+        <Button variant={!showManualEntry ? "default" : "outline"} aria-pressed={!showManualEntry} onClick={() => setShowManualEntry(false)}>Upload a file</Button>
+        <Button variant={showManualEntry ? "default" : "outline"} aria-pressed={showManualEntry} onClick={() => setShowManualEntry(true)} data-testid="button-toggle-manual">Paste JSON data</Button>
+      </div>
+      {!showManualEntry && <FileUploadZone
         onFileSelect={setFile}
         acceptedFormats={["JSON", "CSV", "FASTQ", "FASTA", "FA", "FQ"]}
         maxSizeMB={100}
-      />
-      <p className="text-sm text-muted-foreground">
-        JSON (up to 2 MB): Viome-style scores/organisms, reconstructed reports, or a bacteria_percentages object. CSV: bacteria,abundance percentage columns. Scores and detected organisms are saved separately from measured abundance. Raw sequencing classification is not implemented.
-      </p>
+      />}
+      <div className="report-paste-section">
+        {showManualEntry && (
+          <div className="mt-4 space-y-2">
+            <Label htmlFor="manual-data">Paste Your Data</Label>
+            <Textarea
+              id="manual-data"
+              placeholder='{"bacteria_percentages": {"Akkermansia": 2.5, ...}}'
+              value={manualData}
+              onChange={(e) => setManualData(e.target.value)}
+              className="min-h-32 font-mono text-xs resize-none"
+              data-testid="input-manual-data"
+            />
+            <p className="text-xs text-muted-foreground">
+              Paste the full JSON object, including scores/organisms or bacteria_percentages. Numeric scores are not treated as bacterial percentages.
+            </p>
+          </div>
+        )}
+      </div>
+
+
+      {file && !showManualEntry && !/\.(json|csv)$/i.test(file.name) && <p className="report-context" role="status">This file can be stored. Automatic bacterial analysis of raw sequencing files is not available.</p>}
+      <details className="bloom-panel workspace-disclosure">
+      <summary>Report details (optional)</summary>
 
       <div className="space-y-4">
         <div className="space-y-2">
@@ -206,47 +232,17 @@ export default function Upload() {
         </div>
       </div>
 
-      <div className="border-t pt-6">
-        <button
-          onClick={() => setShowManualEntry(!showManualEntry)}
-          className="flex items-center gap-2 text-sm font-medium text-primary hover-elevate px-3 py-2 rounded-lg"
-          data-testid="button-toggle-manual"
-        >
-          <span>Manual Data Entry</span>
-          {showManualEntry ? (
-            <ChevronUp className="w-4 h-4" />
-          ) : (
-            <ChevronDown className="w-4 h-4" />
-          )}
-        </button>
 
-        {showManualEntry && (
-          <div className="mt-4 space-y-2">
-            <Label htmlFor="manual-data">Paste Your Data</Label>
-            <Textarea
-              id="manual-data"
-              placeholder='{"bacteria_percentages": {"Akkermansia": 2.5, ...}}'
-              value={manualData}
-              onChange={(e) => setManualData(e.target.value)}
-              className="min-h-32 font-mono text-xs resize-none"
-              data-testid="input-manual-data"
-            />
-            <p className="text-xs text-muted-foreground">
-              Paste the full JSON object, including scores/organisms or bacteria_percentages. Numeric scores are not treated as bacterial percentages.
-            </p>
-          </div>
-        )}
-      </div>
-
-      {file && manualData.trim() && <p className="text-sm">Pasted JSON will be saved instead of the selected file. Clear the paste box to use the file.</p>}
+      </details>
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={(!file && !manualData.trim()) || isUploading}
+        disabled={(showManualEntry ? !manualData.trim() : !file) || isUploading}
         data-testid="button-submit-upload"
       >
-        {isUploading ? "Uploading..." : "Save report"}
+        {isUploading ? "Saving your report…" : "Save report"}
       </Button>
-    </div>
+      <details className="workspace-disclosure"><summary>Supported report formats</summary><p className="panel-note">JSON and CSV reports support up to 2 MB. JSON can contain Viome-style scores and organisms, a reconstructed report, or bacteria_percentages. CSV uses bacteria and abundance percentage columns. Scores and organism listings stay separate from measured abundance. Raw sequence classification is not implemented.</p></details>
+    </main>
   );
 }

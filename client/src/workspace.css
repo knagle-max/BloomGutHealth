@@ -1,0 +1,117 @@
+/* Shared workspace: calm surfaces, clear hierarchy, and task-based navigation. */
+:root {
+  --background: 150 15% 97%;
+  --foreground: 155 18% 17%;
+  --primary: 158 43% 29%;
+  --primary-foreground: 0 0% 100%;
+  --muted: 150 12% 94%;
+  --muted-foreground: 150 7% 40%;
+  --border: 150 11% 87%;
+  --card-border: 150 11% 87%;
+  --ring: 158 43% 35%;
+}
+.dark {
+  --background: 155 15% 10%;
+  --foreground: 145 13% 91%;
+  --card: 155 12% 14%;
+  --muted: 155 12% 18%;
+  --muted-foreground: 145 7% 66%;
+  --border: 155 10% 25%;
+  --card-border: 155 10% 25%;
+  --primary: 150 34% 62%;
+  --primary-foreground: 155 24% 12%;
+}
+html { scroll-padding-top: 96px; }
+body { -webkit-font-smoothing: antialiased; }
+.skip-link { position:fixed; top:8px; left:240px; z-index:100; padding:12px 18px; border-radius:8px; background:hsl(var(--foreground)); color:hsl(var(--background)); transform:translateY(-160%); }
+.skip-link:focus { transform:translateY(0); }
+.bloom-header { background:hsl(var(--card)/.96); }
+.bloom-header-inner { max-width:none; height:76px; padding:0 28px; gap:24px; }
+.bloom-brand { width:172px; flex-shrink:0; font-size:30px; letter-spacing:-1.5px; }
+.header-context { margin-right:auto; display:flex; flex-direction:column; gap:3px; }
+.header-context > span { font-size:9px; letter-spacing:1.6px; color:hsl(var(--muted-foreground)); }
+.header-context strong { font-size:14px; font-weight:600; }
+.header-log { display:flex; min-height:40px; padding:0 15px; border-radius:9px; color:hsl(var(--primary-foreground)); background:hsl(var(--primary)); }
+.header-actions { gap:12px; }
+.mobile-menu-trigger { display:none; }
+.workspace-sidebar { width:224px; position:fixed; top:76px; bottom:0; left:0; z-index:30; display:flex; flex-direction:column; background:hsl(var(--card)); border-right:1px solid hsl(var(--border)); padding:22px 14px; overflow-y:auto; }
+.workspace-links { display:flex; flex-direction:column; gap:22px; }
+.navigation-group > p { padding:0 14px; margin-bottom:8px; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:1.3px; color:hsl(var(--muted-foreground)); }
+.navigation-group a { min-height:44px; display:flex; align-items:center; gap:12px; padding:10px 14px; margin:3px 0; border-radius:9px; font-size:13px; color:hsl(var(--muted-foreground)); }
+.navigation-group a:hover { background:hsl(var(--muted)); color:hsl(var(--foreground)); }
+.navigation-group a[aria-current=page] { color:hsl(var(--primary)); background:hsl(var(--primary)/.09); font-weight:600; }
+.active-nav-dot { width:5px; height:5px; border-radius:50%; background:currentColor; margin-left:auto; }
+.sidebar-note { margin-top:auto; padding:24px 14px 4px; font-size:12px; line-height:1.7; color:hsl(var(--muted-foreground)); }
+.sidebar-note p { margin:6px 0 12px; }.sidebar-note a { display:flex; align-items:center; gap:5px; font-size:11px; color:hsl(var(--primary)); }
+.workspace-content { margin-left:224px; min-width:0; }
+.app-shell main,.app-shell .science-page { width:100%; max-width:1160px; padding:36px 40px 64px; margin:0 auto; min-width:0; }
+.app-shell main.meal-page,.app-shell main.upload-page { max-width:800px; }
+.app-shell .journal-page { max-width:1040px; }
+.app-shell h1 { font-family:var(--font-sans); font-weight:650; font-size:32px; line-height:1.25; letter-spacing:-1.1px; color:hsl(var(--foreground)); }
+.app-shell h2 { font-family:var(--font-sans); font-weight:600; letter-spacing:-.35px; }
+.app-shell main p { line-height:1.7; }
+.app-shell .science-heading { margin-bottom:26px; }
+.app-shell .science-heading > p:not(.eyebrow),.app-shell .science-intro { max-width:700px; font-size:14px; color:hsl(var(--muted-foreground)); margin-top:10px; }
+.app-shell .eyebrow { font-size:10px; letter-spacing:1.5px; }
+.app-shell .bloom-panel { background:hsl(var(--card)); border:1px solid hsl(var(--border)); border-radius:14px; box-shadow:0 2px 6px hsl(var(--foreground)/.025); padding:26px; }
+.app-shell .bloom-panel h2 { font-size:19px; line-height:1.4; }
+.app-shell .bloom-panel > p:not(.eyebrow):not(.diet-known-total) { font-size:14px; }
+.app-shell .panel-note { font-size:12px; line-height:1.65; color:hsl(var(--muted-foreground)); }
+.app-shell .section-heading { margin-top:28px; margin-bottom:18px; }
+.app-shell .section-heading h2 { font-size:21px; }
+.app-shell .text-link { font-size:13px; font-weight:550; }
+.app-shell .bloom-input { min-height:44px; padding:11px 13px; border-radius:9px; margin-top:7px; border-color:hsl(var(--border)); background:hsl(var(--card)); }
+.app-shell .bloom-input:focus { outline:2px solid hsl(var(--ring)/.25); outline-offset:1px; border-color:hsl(var(--primary)); }
+.app-shell main label { font-size:14px; line-height:1.5; }
+.app-shell main input[type=checkbox] { width:16px; height:16px; accent-color:hsl(var(--primary)); vertical-align:middle; margin-right:4px; }
+.app-shell main button,.app-shell main a { scroll-margin-top:96px; }
+.app-shell main button:not([role=checkbox]) { border-radius:9px; }
+.app-shell main details > summary { min-height:44px; cursor:pointer; font-size:14px; font-weight:550; line-height:1.5; padding:11px 0; }
+.app-shell main details[open] > summary { margin-bottom:12px; }
+.workspace-disclosure > summary { display:flex; align-items:center; justify-content:space-between; gap:12px; list-style:none; }
+.workspace-disclosure > summary::-webkit-details-marker { display:none; }
+.workspace-disclosure > summary::after { content:'+'; font-weight:400; font-size:21px; color:hsl(var(--muted-foreground)); }
+.workspace-disclosure[open] > summary::after { content:'−'; }
+.workspace-disclosure .bloom-panel { box-shadow:none; }
+.app-shell .biology-context { border:1px solid hsl(var(--border)); background:hsl(var(--card)); border-radius:14px; padding:8px 24px; margin:18px 0; }
+.biology-context > .bloom-panel { border:0; padding:14px 0; margin:0; }
+.biology-summary-tile { text-align:left; border:1px solid hsl(var(--border)); padding:17px; background:hsl(var(--background)); display:flex; flex-direction:column; gap:5px; transition:background .15s; }
+.biology-summary-tile:hover { background:hsl(var(--primary)/.06); }.biology-summary-tile p { font-size:13px; color:hsl(var(--muted-foreground)); }.biology-summary-tile span { color:hsl(var(--primary)); font-size:12px; margin-top:6px; }
+.precision-tabs { background:hsl(var(--muted)); padding:5px; border-radius:11px; gap:4px; }
+.precision-tabs button { box-shadow:none; border-color:transparent; background:transparent; color:hsl(var(--muted-foreground)); min-height:42px; padding:9px 14px; }
+.precision-tabs button[aria-pressed=true] { background:hsl(var(--card)); color:hsl(var(--primary)); box-shadow:0 1px 4px hsl(var(--foreground)/.07); }
+.workspace-tabs > [role=tablist] { display:flex; width:100%; min-height:54px; height:auto; padding:5px; background:hsl(var(--muted)); border:1px solid hsl(var(--border)); border-radius:12px; gap:4px; }
+.workspace-tabs > [role=tablist] > button { flex:1; min-height:42px; font-size:14px; white-space:normal; padding:8px 12px; }
+.workspace-tabs > [role=tablist] > button[data-state=active] { background:hsl(var(--card)); color:hsl(var(--primary)); box-shadow:0 1px 4px hsl(var(--foreground)/.07); }
+.workspace-tabs > [role=tabpanel] { margin-top:22px; }
+.workspace-tabs > [role=tabpanel] > * + * { margin-top:18px; }
+.daily-welcome { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:25px 28px; background:hsl(var(--primary)/.07); border:1px solid hsl(var(--primary)/.15); border-radius:16px; margin-bottom:20px; }
+.daily-welcome > div { display:flex; gap:17px; align-items:center; min-width:0; }.daily-welcome h2 { font-size:21px; margin-bottom:5px; }.daily-welcome p { font-size:13px; color:hsl(var(--muted-foreground)); max-width:460px; }
+.welcome-icon { width:48px; height:48px; flex-shrink:0; display:grid; place-items:center; background:hsl(var(--card)); border-radius:12px; color:hsl(var(--primary)); }
+.app-shell .hero-button { border-radius:9px; font-size:13px; padding:12px 18px; white-space:nowrap; background:hsl(var(--primary)); color:hsl(var(--primary-foreground)); }
+.workspace-shortcuts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-bottom:32px; }
+.workspace-shortcut { display:flex; align-items:center; gap:12px; padding:18px 16px; background:hsl(var(--card)); border:1px solid hsl(var(--border)); border-radius:12px; min-width:0; }.workspace-shortcut > svg:first-child { color:hsl(var(--primary)); flex-shrink:0; }.workspace-shortcut > svg:last-child { margin-left:auto; color:hsl(var(--muted-foreground)); flex-shrink:0; }.workspace-shortcut > div { min-width:0; }.workspace-shortcut strong { display:block; font-size:13px; font-weight:600; }.workspace-shortcut span { display:block; font-size:11px; color:hsl(var(--muted-foreground)); margin-top:5px; line-height:1.5; }
+.app-shell .daily-grid { gap:14px; }.app-shell .daily-card { border:1px solid hsl(var(--border)); border-radius:13px; background:hsl(var(--card)); padding:20px; }.app-shell .stat-heading { font-size:12px; }.app-shell .stat-heading svg { color:hsl(var(--primary)); }.app-shell .stat-value { font-size:30px; letter-spacing:-1px; margin:15px 0 9px; }.app-shell .stat-value span { font-size:13px; }.app-shell .stat-note { font-size:11px; line-height:1.5; }.app-shell .microbiome-panel { background:hsl(var(--card)); }.app-shell .microbiome-panel h2 { font-family:var(--font-sans); font-size:22px; }
+.app-shell .meal-page-heading { padding:10px 0 24px; }.app-shell .meal-page-heading .panel-icon { display:none; }.app-shell .meal-page > form { margin-top:18px; }.app-shell .meal-page > button { margin-bottom:8px; }.app-shell .meal-page form details { border-top:1px solid hsl(var(--border)); padding-top:8px; }
+.app-shell .journal-page > div:first-child { align-items:flex-start; }.journal-page h1 { margin-bottom:8px; }.journal-page .panel-note { max-width:650px; }.journal-page [data-testid^=badge-meal] { white-space:normal; }
+.method-switch { display:flex; gap:8px; }.method-switch button { flex:1; min-height:46px; }.upload-page > div.border-t:empty { display:none; }
+.app-shell .report-card { background:hsl(var(--card)); border-radius:12px; }.app-shell .report-value { font-variant-numeric:tabular-nums; }.app-shell .report-badge { font-weight:550; }.app-shell table th { font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:hsl(var(--muted-foreground)); }.app-shell table td { font-size:13px; }
+.app-shell footer.dashboard-footer { margin-top:32px; font-size:11px; }
+.mobile-navigation-sheet { max-width:320px; width:88%; overflow-y:auto; padding:28px 18px 90px; }.mobile-navigation-sheet .workspace-links { margin-top:28px; gap:18px; }.mobile-navigation-sheet .navigation-group a { font-size:14px; min-height:48px; }
+@media(min-width:992px) and (max-width:1200px) { .app-shell main,.app-shell .science-page { padding-left:28px; padding-right:28px; }.workspace-shortcuts { grid-template-columns:1fr; gap:8px; }.workspace-shortcut { padding:14px 16px; }.workspace-shortcut span { margin-top:2px; }.app-shell .daily-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:991px) {
+  .workspace-sidebar,.header-context { display:none; }.workspace-content { margin-left:0; }.mobile-menu-trigger { display:inline-flex; }.bloom-header-inner { height:68px; padding:0 20px; gap:14px; }.bloom-brand { width:auto; margin-right:auto; }.app-shell main,.app-shell .science-page { padding:28px 24px 110px; }.app-shell h1 { font-size:29px; }.bloom-bottom-nav { display:flex; position:fixed; bottom:0; left:0; right:0; z-index:40; background:hsl(var(--card)/.98); border-top:1px solid hsl(var(--border)); justify-content:space-around; padding:8px 6px calc(8px + env(safe-area-inset-bottom)); backdrop-filter:blur(16px); }.bloom-bottom-nav a { display:flex; flex:1; min-height:48px; flex-direction:column; justify-content:center; align-items:center; gap:5px; font-size:10px; color:hsl(var(--muted-foreground)); }.bloom-bottom-nav a[aria-current=page] { color:hsl(var(--primary)); font-weight:650; }.skip-link { left:16px; }.app-shell .dashboard-heading { display:flex; }.dashboard-columns { grid-template-columns:1fr; }.workspace-shortcuts { gap:10px; }.workspace-shortcut { flex-wrap:wrap; }.workspace-shortcut > svg:last-child { display:none; }.workspace-shortcut strong { font-size:12px; }.workspace-shortcut span { font-size:11px; }
+}
+@media(max-width:600px) {
+  .app-shell main,.app-shell .science-page { padding:24px 18px 110px; }.app-shell .bloom-panel { padding:20px; }.app-shell h1 { font-size:27px; }.app-shell .dashboard-heading { margin-bottom:22px; }.app-shell .dashboard-heading .muted { font-size:13px; }.daily-welcome { align-items:stretch; flex-direction:column; padding:22px; gap:18px; }.daily-welcome h2 { font-size:19px; }.daily-welcome .hero-button { justify-content:center; display:flex; align-items:center; gap:10px; }.welcome-icon { display:none; }.workspace-shortcuts { grid-template-columns:1fr; gap:8px; margin-bottom:26px; }.workspace-shortcut { flex-wrap:nowrap; padding:14px 16px; }.workspace-shortcut > svg:last-child { display:block; }.workspace-shortcut strong { font-size:13px; }.workspace-shortcut span { margin-top:3px; }.app-shell .daily-grid { gap:10px; }.app-shell .daily-card { padding:16px; }.app-shell .stat-value { font-size:26px; }.app-shell .stat-value span { font-size:11px; }.app-shell .stat-note { font-size:11px; }.app-shell .section-heading { align-items:center; gap:10px; }.app-shell .section-heading h2 { font-size:19px; }.app-shell .section-heading .text-link { font-size:11px; }.app-shell .precision-tabs button { flex:1 1 auto; padding:9px 10px; font-size:12px; }.workspace-tabs > [role=tablist] > button { font-size:12px; padding:8px 5px; }.app-shell .biology-context { padding:8px 18px; }.app-shell .saved-nutrients { flex-wrap:wrap; gap:14px; }.app-shell .meal-row { gap:10px; }.app-shell .meal-row h3 { font-size:13px; }.app-shell .date-pill { display:none; }
+}
+@media(max-width:480px) { .bloom-header-inner { padding:0 16px; }.header-actions { gap:4px; }.header-log { display:none; }.bloom-brand { font-size:28px; }.bloom-brand .brand-mark { margin-right:-4px; }.app-shell .science-heading h1 { font-size:27px; }.app-shell .stat-value { font-size:24px; overflow-wrap:anywhere; } }
+.app-shell .journal-workspace { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:24px; align-items:start; }
+.journal-workspace > * { min-width:0; }.journal-workspace [data-testid=card-daily-summary] h3 { font-size:19px; }.journal-workspace [data-testid=card-daily-summary] { position:sticky; top:100px; }.journal-workspace [data-testid^=card-meal] { overflow-wrap:anywhere; }.journal-workspace .flex-1 { min-width:0; }
+@media(max-width:1100px) { .app-shell .journal-workspace { grid-template-columns:minmax(0,1fr); }.journal-workspace [data-testid=card-daily-summary] { position:static; } }
+.planner-status,.meal-nutrition-strip { display:flex; flex-wrap:wrap; gap:8px; }.planner-status span { background:hsl(var(--muted)); border-radius:6px; padding:6px 10px; font-size:12px; }.meal-nutrition-strip { margin:12px 0; }.meal-nutrition-strip span { font-size:12px; padding:5px 9px; border-radius:6px; background:hsl(var(--background)); border:1px solid hsl(var(--border)); }.app-shell .meal-suggestion h3 { font-size:19px; font-weight:600; line-height:1.5; }.app-shell .meal-suggestion { padding:24px 0; }.report-paste-section:empty { display:none; }.report-paste-section textarea { min-height:220px; }
+.app-shell button.hero-button { white-space:normal; max-width:100%; height:auto; }
+.journal-workspace [data-testid^=card-meal] .bloom-panel { padding:16px 0; border:0; box-shadow:none; }
+.app-shell .overflow-x-auto { max-width:100%; }.app-shell .overflow-x-auto table { min-width:400px; }
+.header-actions button { min-width:44px; min-height:44px; }.app-shell .profile-link { width:40px; height:40px; }.mobile-navigation-sheet > button:last-child { min-width:40px; min-height:40px; display:grid; place-items:center; }
+.workspace-tabs > [role=tabpanel][data-state=inactive] { display:none; }

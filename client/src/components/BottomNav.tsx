@@ -7,8 +7,8 @@ import {
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 const navItems = [
-  { id: "dashboard", path: "/", icon: Home, label: "Overview" },
-  { id: "precision", path: "/precision", icon: Dna, label: "Precision" },
+  { id: "dashboard", path: "/", icon: Home, label: "Today" },
+  { id: "precision", path: "/precision", icon: Dna, label: "Biology" },
   {
     id: "nutrition",
     path: "/nutrition",
@@ -19,7 +19,7 @@ const navItems = [
     id: "microbiome",
     path: "/microbiome",
     icon: Activity,
-    label: "Microbiome",
+    label: "Gut reports",
   },
   {
     id: "planner",
@@ -32,7 +32,7 @@ export default function BottomNav() {
   const [location] = useLocation();
   return (
     <nav className="bloom-bottom-nav" aria-label="Main navigation">
-      {navItems.map((item) => (
+      {[navItems[0], navItems[2], navItems[4], navItems[1], navItems[3]].map((item) => (
         <Link
           key={item.id}
           href={item.path}

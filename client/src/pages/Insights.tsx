@@ -58,7 +58,7 @@ export default function Insights() {
 
   if (!hasData) {
     return (
-      <div className="pb-20 pt-4 px-4 max-w-md mx-auto">
+      <div className="science-page">
         <EmptyState
           icon={Beaker}
           title="No Health Data Yet"
@@ -75,7 +75,7 @@ export default function Insights() {
   const recs = recommendations?.recommendations || [];
 
   return (
-    <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
+    <div className="science-page space-y-6">
       <div className="rounded-xl border p-4 text-sm text-muted-foreground">
         Experimental diet estimates. Molecule levels, bacterial gaps, and health
         scores below are calculated with prototype rules, not measured from your

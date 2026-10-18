@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/lib/auth";
 import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
+import AppNavigation from "@/components/AppNavigation";
 import Dashboard from "@/pages/Dashboard";
 const LogMeal = lazy(() => import("@/pages/LogMeal"));
 const Upload = lazy(() => import("@/pages/Upload"));
@@ -83,11 +84,17 @@ function AppContent() {
     localStorage.setItem("theme", !isDarkMode ? "dark" : "light");
   };
 
+  useEffect(() => {
+    const labels: Record<string, string> = { "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
+    document.title = `${labels[location] || "Welcome"} · Bloom`;
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [location]);
   const isAuthPage = location === "/login" || location === "/signup";
   const showNav = !isAuthPage && user;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className={showNav ? "app-shell min-h-screen bg-background" : "min-h-screen bg-background"}>
+      {showNav && <a href="#workspace-content" className="skip-link">Skip to content</a>}
       {showNav && (
         <AppHeader
           userName={user?.username || "Guest"}
@@ -95,6 +102,8 @@ function AppContent() {
           onToggleDarkMode={toggleDarkMode}
         />
       )}
+      {showNav && <AppNavigation />}
+      <div id="workspace-content" tabIndex={-1} className={showNav ? "workspace-content" : undefined}>
       <Suspense
         fallback={
           <div className="science-page" role="status">
@@ -157,6 +166,7 @@ function AppContent() {
           <Route component={NotFound} />
         </Switch>
       </Suspense>
+      </div>
       {showNav && <BottomNav />}
     </div>
   );

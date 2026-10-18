@@ -57,10 +57,9 @@ export default function Microbiome() {
     <main className="science-page space-y-5">
       <div className="science-heading">
         <p className="eyebrow">REPORTS & RESEARCH</p>
-        <h1>Your microbiome, in context.</h1>
+        <h1>Gut reports</h1>
         <p>
-          Explore reports, bacterial composition, molecule hypotheses, diet
-          insights and research cohorts.
+          Understand what your report contains and what it means for everyday food choices.
         </p>
         <div className="flex flex-wrap gap-3">
           <Link className="text-link" href="/upload">
@@ -116,7 +115,7 @@ export default function Microbiome() {
           )}
         </section>
       )}
-      <nav aria-label="Microbiome sections" className="flex flex-wrap gap-2">
+      <nav aria-label="Microbiome sections" className="precision-tabs">
         {[
           ["results", "Latest results"],
           ["bacteria", "Bacteria"],

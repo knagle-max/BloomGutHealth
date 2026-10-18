@@ -53,7 +53,7 @@ export default function Profile({
   return (
     <main className="science-page space-y-5">
       <div className="science-heading">
-        <h1>Your profile.</h1>
+        <h1>Profile & settings</h1>
         <p>Signed in as {user?.username}</p>
       </div>
       <div className="flex flex-wrap gap-3">

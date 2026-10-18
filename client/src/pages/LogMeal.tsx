@@ -125,9 +125,9 @@ export default function LogMeal() {
           <Utensils size={24} />
         </span>
         <p className="eyebrow">NOURISH & NOTICE</p>
-        <h1>What's on your plate?</h1>
+        <h1>Log a meal</h1>
         <p className="muted">
-          A quick entry today. A clearer picture over time.
+          Describe what you ate, or select a food or supplement label.
         </p>
       </div>
       <Button
@@ -219,7 +219,11 @@ export default function LogMeal() {
                 required
               />
             </label>
-            <label>
+          </div>
+          <details className="workspace-disclosure">
+            <summary>Optional details & symptom check-in</summary>
+            <div className="space-y-5 pt-4">
+            <label className="block">
               Portion context
               <select
                 className="bloom-input w-full"
@@ -232,7 +236,6 @@ export default function LogMeal() {
                 <option value="large">Large</option>
               </select>
             </label>
-          </div>
           <p className="panel-note">
             Portion labels are saved as context; they do not automatically
             multiply nutrients. Common portions can be estimated; review and
@@ -293,6 +296,8 @@ export default function LogMeal() {
             the configured AI provider; nutrient numbers come from food
             databases.
           </label>
+            </div>
+          </details>
           {save.isError && (
             <p role="alert" className="text-sm text-destructive">
               {save.error.message}

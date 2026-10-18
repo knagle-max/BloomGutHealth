@@ -55,10 +55,10 @@ export default function Dashboard() {
         <div>
           <p className="eyebrow">YOUR DAILY OVERVIEW</p>
           <h1>
-            A little care. <span>A healthier you.</span>
+            Today
           </h1>
           <p className="muted">
-            Welcome back, {user?.username}. Let's make room for good habits.
+            Welcome back, {user?.username}. Here’s where things stand today.
           </p>
         </div>
         <span className="date-pill">
@@ -67,64 +67,15 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <section className="bloom-hero" aria-labelledby="hero-heading">
-        <div className="hero-copy">
-          <span className="hero-tag">
-            <Sprout size={15} /> SMALL STEPS, EVERY DAY
-          </span>
-          <h2 id="hero-heading">
-            Good things
-            <br />
-            grow from within.
-          </h2>
-          <p>
-            Your meals tell a story. Build a picture of your nutrition, one
-            entry at a time.
-          </p>
-          <Link href="/log-meal" className="hero-button">
-            Log a meal <Plus size={18} />
-          </Link>
-          <span className="hero-footnote">
-            Your next step takes less than a minute.
-          </span>
-        </div>
-        <div className="botanical" aria-hidden="true">
-          <div className="botanical-orbit orbit-one" />
-          <div className="botanical-orbit orbit-two" />
-          <div className="plant-stem" />
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className={`plant-leaf leaf-${i}`} />
-          ))}
-          <div className="plant-seed" />
-          <span className="botanical-caption">NOURISH · NOTICE · GROW</span>
-        </div>
-      </section>
-
-      <section className="bloom-panel my-6" aria-labelledby="precision-title">
-        <div className="panel-heading">
-          <div>
-            <p className="eyebrow">PRECISION NUTRITION</p>
-            <h2 id="precision-title">Connect your genetics and bloodwork</h2>
-          </div>
-          <Dna size={24} aria-hidden="true" />
-        </div>
-        <p className="muted my-4">
-          Import supported 23andMe variants, add lab results and connect your
-          microbiome reports to food recommendations, saved plans and progress.
-        </p>
-        <Link
-          href="/precision"
-          className="text-link"
-          data-testid="dashboard-precision"
-        >
-          Open precision nutrition <ArrowRight size={17} />
-        </Link>
+      <section className="daily-welcome" aria-label="Your next step">
+        <div><span className="welcome-icon"><Utensils size={23} /></span><div><h2>What’s on your plate today?</h2><p>Log a meal to keep your nutrition and meal suggestions up to date.</p></div></div>
+        <Link href="/log-meal" className="hero-button">Log a meal <Plus size={18} /></Link>
       </section>
 
       <div className="section-heading">
         <div>
-          <p className="eyebrow">ONE DAY AT A TIME</p>
-          <h2>Today, at a glance</h2>
+          <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
+          <h2>Your nutrition today</h2>
         </div>
         <Link href="/nutrition" className="text-link">
           Nutrition journal <ArrowUpRight size={16} />
@@ -151,7 +102,7 @@ export default function Dashboard() {
             },
             {
               label: "Dietary fiber",
-              value: summary.fiber?.toFixed(1) ?? "Unavailable",
+              value: summary.fiber?.toFixed(1) ?? "—",
               unit: "g",
               icon: Leaf,
               note: summary.coverage.fiber.partial
@@ -161,7 +112,7 @@ export default function Dashboard() {
             },
             {
               label: "Protein",
-              value: summary.protein?.toFixed(0) ?? "Unavailable",
+              value: summary.protein?.toFixed(0) ?? "—",
               unit: "g",
               icon: Sprout,
               note: summary.coverage.protein.partial
@@ -171,7 +122,7 @@ export default function Dashboard() {
             },
             {
               label: "Energy",
-              value: summary.calories?.toFixed(0) ?? "Unavailable",
+              value: summary.calories?.toFixed(0) ?? "—",
               unit: "kcal",
               icon: FlaskConical,
               note: summary.coverage.calories.partial
@@ -197,6 +148,74 @@ export default function Dashboard() {
           ))}
         </div>
       )}
+
+      <section className="bloom-panel" aria-labelledby="meals-title">
+        <div className="panel-heading">
+          <div>
+            <p className="eyebrow">YOUR FOOD JOURNAL</p>
+            <h2 id="meals-title">On the menu today</h2>
+          </div>
+          <Link href="/log-meal" className="text-link">
+            <Plus size={16} /> Add meal
+          </Link>
+        </div>
+        {mealError ? (
+          <p className="panel-note">
+            Meals are unavailable while the journal is disconnected.
+          </p>
+        ) : meals.isLoading ? (
+          <Skeleton className="h-24 w-full mt-4" />
+        ) : summary.meals.length ? (
+          <div className="meal-list">
+            {summary.meals.map((meal) => (
+              <Link key={meal.id} href="/nutrition" className="meal-row">
+                <span className="meal-icon">
+                  <Utensils size={19} />
+                </span>
+                <div>
+                  <p className="meal-type">
+                    {meal.mealType || "Meal"} ·{" "}
+                    {new Date(meal.loggedAt).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                  <h3>{meal.mealText}</h3>
+                </div>
+                <span className="meal-calories">
+                  {meal.totalCalories == null
+                    ? "Unavailable"
+                    : `${Math.round(meal.totalCalories)} kcal`}
+                </span>
+                <ChevronRight size={17} />
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="journal-empty">
+            <span className="meal-icon">
+              <Utensils size={24} />
+            </span>
+            <div>
+              <h3>A fresh page for today.</h3>
+              <p>
+                Add breakfast, lunch, dinner, or a snack. Your entries will
+                appear here.
+              </p>
+            </div>
+            <Link href="/log-meal" className="text-link">
+              Start your journal <ArrowRight size={16} />
+            </Link>
+          </div>
+        )}
+      </section>
+      <div className="workspace-shortcuts">
+        {[
+          { path: "/meal-planner", title: "Plan what’s next", description: "Meals that fit the rest of your day", Icon: CalendarDays },
+          { path: "/precision", title: "Connect your biology", description: "Genetics, lab results and your goals", Icon: Dna },
+          { path: "/microbiome", title: "Understand your gut", description: "Your reports, explained simply", Icon: FlaskConical },
+        ].map(({path, title, description, Icon}) => <Link href={path} className="workspace-shortcut" key={path}><Icon size={20} /><div><strong>{title}</strong><span>{description}</span></div><ChevronRight size={16} /></Link>)}
+      </div>
 
       <div className="dashboard-columns">
         <section className="bloom-panel" aria-labelledby="consistency-title">
@@ -302,73 +321,13 @@ export default function Dashboard() {
         </section>
       </div>
 
-      <section className="bloom-panel" aria-labelledby="meals-title">
-        <div className="panel-heading">
-          <div>
-            <p className="eyebrow">YOUR FOOD JOURNAL</p>
-            <h2 id="meals-title">On the menu today</h2>
-          </div>
-          <Link href="/log-meal" className="text-link">
-            <Plus size={16} /> Add meal
-          </Link>
-        </div>
-        {mealError ? (
-          <p className="panel-note">
-            Meals are unavailable while the journal is disconnected.
-          </p>
-        ) : meals.isLoading ? (
-          <Skeleton className="h-24 w-full mt-4" />
-        ) : summary.meals.length ? (
-          <div className="meal-list">
-            {summary.meals.map((meal) => (
-              <Link key={meal.id} href="/nutrition" className="meal-row">
-                <span className="meal-icon">
-                  <Utensils size={19} />
-                </span>
-                <div>
-                  <p className="meal-type">
-                    {meal.mealType || "Meal"} ·{" "}
-                    {new Date(meal.loggedAt).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                  <h3>{meal.mealText}</h3>
-                </div>
-                <span className="meal-calories">
-                  {meal.totalCalories == null
-                    ? "Unavailable"
-                    : `${Math.round(meal.totalCalories)} kcal`}
-                </span>
-                <ChevronRight size={17} />
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className="journal-empty">
-            <span className="meal-icon">
-              <Utensils size={24} />
-            </span>
-            <div>
-              <h3>A fresh page for today.</h3>
-              <p>
-                Add breakfast, lunch, dinner, or a snack. Your entries will
-                appear here.
-              </p>
-            </div>
-            <Link href="/log-meal" className="text-link">
-              Start your journal <ArrowRight size={16} />
-            </Link>
-          </div>
-        )}
-      </section>
       {summary.nutritionUnavailable > 0 && (
         <p className="panel-note">
           {summary.nutritionUnavailable} meal(s) need nutrition estimates.
           Totals include only available data.
         </p>
       )}
-      <ResearchSummary />
+      <details className="bloom-panel workspace-disclosure"><summary>Explore the science behind Bloom</summary><ResearchSummary /></details>
       <footer className="dashboard-footer">
         <Leaf size={15} /> Bloom with intention. Your pace, your progress.
       </footer>
