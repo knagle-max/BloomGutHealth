@@ -1,3 +1,4 @@
+import ImportedReportDetails from "@/components/ImportedReportDetails";
 import { useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -172,6 +173,7 @@ export default function Microbiome() {
           ))}
         </section>
       )}
+      {tab === "results" && results.data?.sample?.structuredData?.schemaVersion === "bloom-report-v2" && <ImportedReportDetails report={results.data.sample.structuredData} />}
       {tab === "bacteria" && (
         <section className="bloom-panel">
           <h2>Bacterial composition & change</h2>
@@ -371,7 +373,7 @@ export default function Microbiome() {
               ))}
             </fieldset>
             <Button
-              disabled={!currentId || !cohorts.length || analyze.isPending}
+              disabled={!currentId || !cohorts.length || analyze.isPending || !results.data?.sample?.structuredData?.bacteria_percentages}
               onClick={() => analyze.mutate()}
             >
               {analyze.isPending

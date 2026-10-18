@@ -127,11 +127,30 @@ class DataProcessor:
         with open(file_path, 'r') as f:
             data = json.load(f)
         
-        self._validate_percentages(data.get("bacteria_percentages") if isinstance(data, dict) else None)
+        if not isinstance(data, dict):
+            raise ValueError("JSON must contain a report object, not a list or scalar")
+        payload = data.get("report") if isinstance(data.get("report"), dict) else data
+        if isinstance(payload.get("data"), dict) and any(key in payload["data"] for key in ["scores", "organisms", "bacteria_percentages"]):
+            payload = payload["data"]
+        percentages = payload.get("bacteria_percentages")
+        if "bacteria_percentages" in payload:
+            self._validate_percentages(percentages)
+        scores = payload.get("scores", payload.get("healthScores", payload.get("functionalScores", [])))
+        organisms = payload.get("organisms", payload.get("microorganisms", []))
+        if scores is None:
+            scores = []
+        if organisms is None:
+            organisms = []
+        if not isinstance(scores, (list, dict)) or len(scores) > 500:
+            raise ValueError("scores must contain at most 500 score records")
+        if not isinstance(organisms, list) or len(organisms) > 1000:
+            raise ValueError("organisms must contain at most 1000 organism records")
+        if not percentages and not scores and not organisms:
+            raise ValueError("JSON needs bacteria_percentages or reported scores/organisms; scores cannot be used as abundance")
         return {
             "raw_data": data,
-            "type": "structured_data",
+            "type": "functional_report" if scores or organisms else "abundance_data",
             "format": "json",
-            "preview": data if isinstance(data, dict) else data[:5] if isinstance(data, list) else str(data)[:200],
-            "note": "Structured data ready for analysis"
+            "preview": {"scores": len(scores), "organisms": len(organisms), "quantified_taxa": len(percentages or {})},
+            "note": "Reported scores and organism detection are not measured abundance, genes or metabolite concentrations."
         }

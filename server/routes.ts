@@ -1,3 +1,4 @@
+import { registerReportRoutes } from "./report-routes";
 import {
   mealNutritionSummary,
   localDayBounds,
@@ -5,12 +6,9 @@ import {
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import multer from "multer";
-import FormData from "form-data";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 import { insertUserSchema } from "@shared/schema";
-import { createReadStream } from "fs";
 import { registerScienceRoutes } from "./science-coach";
 import { registerPlannerRoutes } from "./planner-routes";
 import { registerPrecisionRoutes } from "./precision-routes";
@@ -23,47 +21,6 @@ import {
 import { abundanceSchema } from "@shared/report-import";
 
 const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
-
-const ALLOWED_FILE_TYPES = [
-  "text/plain",
-  "text/csv",
-  "application/octet-stream",
-  "application/x-gzip",
-  "application/gzip",
-];
-
-const ALLOWED_EXTENSIONS = [
-  ".fastq",
-  ".fasta",
-  ".fa",
-  ".fq",
-  ".csv",
-  ".txt",
-  ".json",
-  ".gz",
-];
-
-const upload = multer({
-  dest: "/tmp/uploads/",
-  limits: {
-    fileSize: 100 * 1024 * 1024, // 100MB limit
-  },
-  fileFilter: (req, file, cb) => {
-    const ext = file.originalname
-      .toLowerCase()
-      .substring(file.originalname.lastIndexOf("."));
-
-    if (ALLOWED_EXTENSIONS.includes(ext)) {
-      cb(null, true);
-    } else {
-      cb(
-        new Error(
-          `Invalid file type. Allowed types: ${ALLOWED_EXTENSIONS.join(", ")}`,
-        ),
-      );
-    }
-  },
-});
 
 function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.session.userId) {
@@ -81,148 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   registerPlannerRoutes(app, requireAuth, storage);
   registerPrecisionRoutes(app, requireAuth, storage);
-  app.post("/api/microbiome/import", requireAuth, async (req, res) => {
-    const parsed = abundanceSchema.safeParse(req.body?.bacteria_percentages);
-    if (!parsed.success)
-      return res.status(400).json({
-        error:
-          "Provide distinct taxa with finite percentages from 0 to 100, summing to at most 100.",
-      });
-    const date = new Date(req.body.testDate || Date.now());
-    if (!Number.isFinite(+date))
-      return res.status(400).json({ error: "Invalid test date" });
-    let sampleId: string | undefined;
-    try {
-      const sample = await storage.insertMicrobiomeSample({
-        userId: req.session.userId!,
-        testDate: date,
-        testingCompany: String(
-          req.body.testingCompany || "Manual report",
-        ).slice(0, 100),
-        testId: String(req.body.testId || "").slice(0, 100),
-        notes: String(req.body.notes || "").slice(0, 2000),
-        structuredData: { bacteria_percentages: parsed.data },
-        processingStatus: "processing",
-        diversityIndex: null,
-      });
-      sampleId = sample.id;
-      for (const [name, abundance] of Object.entries(parsed.data))
-        await storage.insertBacterialComposition({
-          sampleId: sample.id,
-          bacterialName: name,
-          abundance,
-          taxonomyLevel: "reported",
-          genomeData: null,
-        });
-      await storage.insertMlAnalysis({
-        sampleId: sample.id,
-        analysisType: "reported-abundances",
-        modelVersion: "report-import-v1",
-        confidence: null,
-        results: {
-          provenance:
-            "user-provided abundance data; not independently verified",
-          measuredGenes: false,
-          measuredMetabolites: false,
-        },
-      });
-      await storage.updateMicrobiomeSample(sample.id, {
-        processingStatus: "completed",
-      });
-      res.json({ success: true, sampleId: sample.id });
-    } catch {
-      if (sampleId)
-        await storage
-          .updateMicrobiomeSample(sampleId, { processingStatus: "failed" })
-          .catch(() => {});
-      res.status(503).json({
-        error: "Report could not import; retry after checking the service.",
-      });
-    }
-  });
-  // Microbiome sample upload endpoint
-  app.post(
-    "/api/microbiome/upload",
-    requireAuth,
-    (req, res, next) => {
-      upload.single("file")(req, res, (err) => {
-        if (err instanceof multer.MulterError) {
-          if (err.code === "LIMIT_FILE_SIZE") {
-            return res
-              .status(400)
-              .json({ error: "File too large. Maximum size is 100MB." });
-          }
-          return res
-            .status(400)
-            .json({ error: `Upload error: ${err.message}` });
-        } else if (err) {
-          return res.status(400).json({ error: err.message });
-        }
-        next();
-      });
-    },
-    async (req, res) => {
-      try {
-        const file = req.file;
-        const { testDate, testingCompany, testId, notes } = req.body;
-        const userId = req.session.userId!;
-
-        if (!file) {
-          return res.status(400).json({ error: "No file uploaded" });
-        }
-
-        // Forward to Python ML service for processing
-        const formData = new FormData();
-        formData.append("file", createReadStream(file.path), {
-          filename: file.originalname,
-        });
-
-        const mlResponse = await fetch(`${ML_SERVICE_URL}/api/ml/upload`, {
-          method: "POST",
-          body: formData,
-        });
-
-        const mlResult = (await mlResponse.json()) as any;
-
-        // Save to database
-        if (!mlResponse.ok) {
-          return res.status(mlResponse.status).json({
-            error: mlResult.detail || "Unable to process this test file",
-          });
-        }
-        const sample = await storage.insertMicrobiomeSample({
-          userId,
-          testDate: new Date(testDate || Date.now()),
-          testingCompany,
-          testId,
-          rawDataPath: mlResult.file_path,
-          structuredData: mlResult.raw_data || null,
-          notes: typeof notes === "string" ? notes.slice(0, 2000) : null,
-          processingStatus: "uploaded",
-        });
-
-        res.json({
-          success: true,
-          sampleId: sample.id,
-          preview: mlResult.preview,
-        });
-      } catch (error: any) {
-        console.error("Upload error:", error);
-        if (
-          error.code === "ECONNREFUSED" ||
-          error.code === "ENOTFOUND" ||
-          error.message?.includes("ECONNREFUSED")
-        ) {
-          return res.status(503).json({
-            error:
-              "ML analysis service is currently unavailable. Please try again later.",
-          });
-        }
-        res.status(500).json({ error: error.message });
-      }
-    },
-  );
-
+  registerReportRoutes(app, requireAuth, storage);
   // Trigger ML analysis
   app.post(
     "/api/microbiome/analyze/:sampleId",
@@ -242,6 +58,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(403).json({ error: "Access denied" });
         }
 
+        if (!abundanceSchema.safeParse((sample.structuredData as any)?.bacteria_percentages).success) {
+          return res.status(422).json({error:"This report has no supported quantitative bacterial percentages. Functional scores and organism detection are viewable report data, not inputs for abundance-based modelling. No analysis was run."});
+        }
         // Update status to processing
         await storage.updateMicrobiomeSample(sampleId, {
           processingStatus: "processing",

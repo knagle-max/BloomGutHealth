@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { parseReportText } from "@shared/report-import";
+import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import FileUploadZone from "@/components/FileUploadZone";
 import { Label } from "@/components/ui/label";
@@ -52,14 +52,16 @@ export default function Upload() {
         file?.name.toLowerCase().endsWith(".csv")
       ) {
         const text = manualData.trim() || (await file!.text());
-        const percentages = parseReportText(
+        if (file && !manualData.trim() && file.size > STRUCTURED_REPORT_MAX_BYTES) throw Error("JSON/CSV reports must be 2 MB or smaller.");
+        const parsed = parseReportDocument(
           text,
           manualData.trim() || file!.name.toLowerCase().endsWith(".json")
             ? "json"
             : "csv",
         );
         await apiRequest("POST", "/api/microbiome/import", {
-          bacteria_percentages: percentages,
+          report: parsed.source,
+          originalFilename: manualData.trim() ? undefined : file?.name,
           testDate: testDate?.toISOString(),
           testingCompany,
           testId,
@@ -70,9 +72,9 @@ export default function Upload() {
           queryKey: ["/api/microbiome/samples"],
         });
         toast({
-          title: "Reported abundances imported",
+          title: "Report saved",
           description:
-            "Composition saved. No genes or metabolite concentrations were invented.",
+            `${parsed.parsed.scores.length} scores, ${parsed.parsed.organisms.length} reported organisms and ${Object.keys(parsed.parsed.bacteria_percentages || {}).length} quantified taxa saved. Missing measurements remain unavailable.`,
         });
         setLocation("/microbiome");
         return;
@@ -134,14 +136,12 @@ export default function Upload() {
         maxSizeMB={100}
       />
       <p className="text-sm text-muted-foreground">
-        JSON: bacteria_percentages object. CSV: bacteria,abundance columns in
-        percent units, with distinct taxa at one taxonomic level. FASTQ/FASTA
-        can be recorded; sequencing classification is not implemented.
+        JSON (up to 2 MB): Viome-style scores/organisms, reconstructed reports, or a bacteria_percentages object. CSV: bacteria,abundance percentage columns. Scores and detected organisms are saved separately from measured abundance. Raw sequencing classification is not implemented.
       </p>
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label>Test Date</Label>
+          <Label>Test Date (Optional)</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -164,6 +164,7 @@ export default function Upload() {
           </Popover>
         </div>
 
+        <p className="text-xs text-muted-foreground">If no date is chosen, an exact date in the report is used when available. Otherwise the report is labelled with its import date; a reported month/year is kept separately.</p>
         <div className="space-y-2">
           <Label htmlFor="company">Testing Company</Label>
           <Select value={testingCompany} onValueChange={setTestingCompany}>
@@ -231,12 +232,13 @@ export default function Upload() {
               data-testid="input-manual-data"
             />
             <p className="text-xs text-muted-foreground">
-              Paste your microbiome data in JSON format
+              Paste the full JSON object, including scores/organisms or bacteria_percentages. Numeric scores are not treated as bacterial percentages.
             </p>
           </div>
         )}
       </div>
 
+      {file && manualData.trim() && <p className="text-sm">Pasted JSON will be saved instead of the selected file. Clear the paste box to use the file.</p>}
       <Button
         onClick={handleSubmit}
         className="w-full h-12"

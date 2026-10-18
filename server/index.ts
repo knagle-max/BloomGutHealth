@@ -16,7 +16,7 @@ declare module "express-session" {
 const app = express();
 // Render terminates HTTPS before forwarding to this private service.
 if (process.env.RENDER === "true") app.set("trust proxy", 1);
-app.use(express.json());
+app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: false }));
 
 const PgSession = connectPgSimple(session);
@@ -58,7 +58,7 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse && !path.startsWith("/api/precision")) {
+      if (capturedJsonResponse && !path.startsWith("/api/precision") && !path.startsWith("/api/microbiome")) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
 
@@ -78,10 +78,10 @@ app.use((req, res, next) => {
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    const message = status === 413 ? "JSON request too large. Structured reports must be 2 MB or smaller." : err.type === "entity.parse.failed" ? "Invalid JSON request. Check the JSON syntax." : status >= 500 ? "The request could not be completed. Please retry." : err.message || "Invalid request";
 
     res.status(status).json({ message });
-    throw err;
+    // Request validation failures must not terminate the production process.
   });
 
   // importantly only setup vite in development and after

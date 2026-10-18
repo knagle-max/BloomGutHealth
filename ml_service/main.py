@@ -63,7 +63,7 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
     if not request.raw_data or not request.raw_data.get("bacteria_percentages"):
         raise HTTPException(
             status_code=422,
-            detail="Analysis requires structured bacterial abundance data. Uploaded sequence analysis is not implemented yet."
+            detail="Analysis requires structured bacterial abundance percentages. Functional/pathway scores and organism detection are not abundance or measured metabolite concentrations. Uploaded sequence analysis is not implemented yet."
         )
     try:
         from .services.data_processor import DataProcessor
@@ -141,8 +141,10 @@ async def upload_microbiome_file(file: UploadFile = File(...)):
             "preview": result["preview"]
         }
         
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+    except (ValueError, json.JSONDecodeError) as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=500, detail="Upload processing failed. Please check the file format or retry.")
 
 @app.get("/api/ml/cohorts")
 async def list_cohorts():

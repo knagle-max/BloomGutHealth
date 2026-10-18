@@ -43,14 +43,13 @@ class TaxonomicProfiler:
         """
         
         if not raw_data:
-            # Generate realistic sample data for demonstration
-            return self._generate_sample_profile()
+            raise ValueError("Quantitative bacterial percentages are required; demonstration profiles cannot replace missing user data.")
         
         # Process provided data
         if "bacteria_percentages" in raw_data:
             return self._process_percentage_data(raw_data["bacteria_percentages"])
         
-        return self._generate_sample_profile()
+        raise ValueError("Functional scores and organism detection cannot be used as abundance percentages.")
     
     def _process_percentage_data(self, percentages: Dict[str, float]) -> List[Dict[str, Any]]:
         """Process pre-calculated bacterial percentages."""
