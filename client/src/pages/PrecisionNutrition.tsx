@@ -1,3 +1,4 @@
+import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -374,7 +375,7 @@ export default function PrecisionNutrition() {
                       [
                         "Genetics",
                         r.genetics.import
-                          ? `${r.genetics.findings.filter((f) => f.status === "reported raw call").length} supported raw calls`
+                          ? `${r.genetics.findings.filter((f) => f.status === "reported raw call" || f.status === "self-reported call").length} supported raw calls`
                           : "No genetic import",
                       ],
                       [
@@ -467,6 +468,15 @@ export default function PrecisionNutrition() {
             )}
             {tab === "genetics" && (
               <>
+                <ManualGenetics
+                  key={r.genetics.import?.id || "none"}
+                  genetics={r.genetics}
+                  onSaved={() =>
+                    setStatus(
+                      "Selected SNPs saved as your active genetic dataset. Unreviewed or unconfirmed entries remain recorded without interpretation.",
+                    )
+                  }
+                />
                 <section className="bloom-panel space-y-4">
                   <h2>Import 23andMe raw data</h2>
                   <p>

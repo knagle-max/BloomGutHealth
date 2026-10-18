@@ -7,7 +7,7 @@ import {
 } from "./meal-intelligence";
 import { pathways, evidenceSources } from "./science-coach";
 
-export const PRECISION_VERSION = "precision-2026-10-17.2";
+export const PRECISION_VERSION = "precision-2026-10-17.3";
 export const precisionSources = [
   {
     id: "pnpla3-study",
@@ -307,6 +307,77 @@ export const geneticImportSchema = z
         message: "Duplicate or inconsistent variant counts",
       });
   });
+export const manualGeneticEntrySchema = z
+  .object({
+    rsid: z
+      .string()
+      .trim()
+      .regex(/^rs[0-9]{1,12}$/),
+    gene: z.string().trim().max(60).default(""),
+    genotype: z
+      .string()
+      .trim()
+      .transform((v) =>
+        v
+          .toUpperCase()
+          .replace(/[\s/|]/g, "")
+          .split("")
+          .sort()
+          .join(""),
+      )
+      .pipe(
+        z
+          .string()
+          .regex(
+            /^(?:[ACGT]{2}|--)$/,
+            "Enter two DNA letters, or -- for no call",
+          ),
+      ),
+  })
+  .strict();
+export const manualGeneticImportSchema = z
+  .object({
+    consent: z.literal(true),
+    provider: z.literal("manual"),
+    source: z.string().trim().min(1).max(200),
+    strand: z.enum(["forward", "unknown"]),
+    collectedAt: isoDate,
+    entries: z.array(manualGeneticEntrySchema).min(1).max(200),
+  })
+  .strict()
+  .refine(
+    (g) => new Set(g.entries.map((e) => e.rsid)).size === g.entries.length,
+    "Duplicate SNPs: keep one result per rsID; resolve conflicts with the source report",
+  );
+export type ManualGeneticImport = z.infer<typeof manualGeneticImportSchema>;
+export function classifyManualGenetics(data: ManualGeneticImport) {
+  return data.entries.map((entry) => {
+    const variant = variantCatalog.find((v) => v.rsid === entry.rsid);
+    const reason = !variant
+      ? "Recorded only: this SNP is outside Bloom’s reviewed interpretation catalogue."
+      : data.strand !== "forward"
+        ? "Recorded only: forward-strand orientation has not been confirmed."
+        : entry.genotype !== "--" &&
+            !entry.genotype.split("").every((a) => variant.alleles.includes(a))
+          ? "Recorded only: these alleles do not match the reviewed forward-strand marker. Check the rsID and source; Bloom does not guess or flip the call."
+          : null;
+    return {
+      ...entry,
+      reviewed: !reason,
+      reason,
+      canonicalGene: variant?.gene || null,
+      note:
+        entry.rsid === "rs429358" || entry.rsid === "rs7412"
+          ? "No APOE type or disease-risk interpretation is inferred from these entries."
+          : null,
+    };
+  });
+}
+const geneticsPayloadSchema = z.union([
+  geneticImportSchema,
+  manualGeneticImportSchema,
+]);
+
 export function parse23andMe(text: string, collectedAt: string) {
   if (text.length > 50 * 1024 * 1024)
     throw new Error("Use an uncompressed 23andMe text file under 50 MB.");
@@ -512,7 +583,7 @@ export const checkinSchema = z
   );
 export const precisionEntrySchema = z.discriminatedUnion("kind", [
   z
-    .object({ kind: z.literal("genetics"), payload: geneticImportSchema })
+    .object({ kind: z.literal("genetics"), payload: geneticsPayloadSchema })
     .strict(),
   z.object({ kind: z.literal("lab"), payload: labSchema }).strict(),
   z
@@ -657,8 +728,12 @@ export function buildPrecisionReport(
     genetics?.parsed.success && genetics.parsed.data.kind === "genetics"
       ? genetics.parsed.data.payload
       : null;
+  const reviewedCalls =
+    geneticData?.provider === "manual"
+      ? classifyManualGenetics(geneticData).filter((e) => e.reviewed)
+      : geneticData?.calls || [];
   const findings = variantCatalog.map((v) => {
-    const call = geneticData?.calls.find((c) => c.rsid === v.rsid);
+    const call = reviewedCalls.find((c) => c.rsid === v.rsid);
     return {
       ...v,
       genotype: call?.genotype ?? null,
@@ -666,7 +741,9 @@ export function buildPrecisionReport(
         ? "not available"
         : call.genotype === "--"
           ? "no call"
-          : "reported raw call",
+          : geneticData?.provider === "manual"
+            ? "self-reported call"
+            : "reported raw call",
       actionability: {
         rs738409:
           "Review measured liver status; no genotype-specific diet or supplement",
@@ -1010,10 +1087,25 @@ export function buildPrecisionReport(
         ? {
             id: genetics!.record.id,
             collectedAt: geneticData.collectedAt,
-            scannedVariants: geneticData.scannedVariants,
-            build: geneticData.build,
+            scannedVariants:
+              geneticData.provider === "manual"
+                ? geneticData.entries.length
+                : geneticData.scannedVariants,
+            build:
+              geneticData.provider === "manual"
+                ? "Not supplied (manual entry)"
+                : geneticData.build,
+            provider: geneticData.provider,
           }
         : null,
+      manual:
+        geneticData?.provider === "manual"
+          ? {
+              source: geneticData.source,
+              strand: geneticData.strand,
+              entries: classifyManualGenetics(geneticData),
+            }
+          : null,
       findings,
     },
     labs: latest,
@@ -1021,7 +1113,11 @@ export function buildPrecisionReport(
     microbiome: {
       report,
       geneticPathwayLinks: findings
-        .filter((f) => f.status === "reported raw call")
+        .filter(
+          (f) =>
+            f.status === "reported raw call" ||
+            f.status === "self-reported call",
+        )
         .map((f) => ({
           rsid: f.rsid,
           pathway: f.pathway,

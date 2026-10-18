@@ -92,3 +92,7 @@ This integration verifies a database-backed build; it does not publish a public 
 ### Metabolite research foundation
 
 Meal plans now include an experimental SCFA scenario/readiness panel and a strict external simulation adapter. No numerical model is bundled or connected. See [RESEARCH_MODEL.md](RESEARCH_MODEL.md) for the service contract, scientific prerequisites and AI activation steps.
+
+### Selected SNP entry
+
+Precision → Genetics supports manual individual genotypes and pasted gene/rsID/genotype tables without a full DNA upload. Users preview and consent before saving. Unreviewed, incompatible or unknown-strand entries remain recorded without interpretation. See [SELECTED_GENETICS.md](SELECTED_GENETICS.md).
