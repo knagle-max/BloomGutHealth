@@ -27,7 +27,7 @@ test("today excludes earlier entries and sums only recorded nutrition", () => {
     now,
   );
   assert.equal(result.meals.length, 2);
-  assert.equal(result.fiber, null);
+  assert.equal(result.fiber, 4);
   assert.equal(result.protein, 24);
   assert.equal(result.calories, 500);
 });
@@ -45,7 +45,9 @@ test("history includes zero-entry days and preserves local calendar dates", () =
   assert.equal(loggingHistory([], 14, now).length, 14);
 });
 test("empty journal has no invented nutrition", () => {
-  assert.deepEqual(dailyMealSummary([], now), {
+  const { coverage, ...result } = dailyMealSummary([], now);
+  assert.equal(coverage.calories.partial, false);
+  assert.deepEqual(result, {
     meals: [],
     nutritionUnavailable: 0,
     calories: 0,
@@ -65,4 +67,22 @@ test("a logged meal with unknown nutrition cannot appear as zero intake", () => 
   assert.equal(result.protein, null);
   assert.equal(result.fiber, null);
   assert.equal(result.nutritionUnavailable, 1);
+});
+
+test("a missing meal never erases other meals' known contributions", () => {
+  const unknown = {
+    ...meal("unknown", 8, null),
+    totalCalories: null,
+    totalProtein: null,
+  };
+  const result = dailyMealSummary([meal("known", 8), unknown], now);
+  assert.equal(result.calories, 250);
+  assert.equal(result.protein, 12);
+  assert.equal(result.fiber, 4);
+  assert.deepEqual(result.coverage.calories, {
+    knownMeals: 1,
+    completeMeals: 1,
+    totalMeals: 2,
+    partial: true,
+  });
 });

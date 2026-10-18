@@ -43,6 +43,8 @@ export function registerPlannerRoutes(
         liveLookupConfigured: !!process.env.USDA_FDC_API_KEY,
         alternateProviderConfigured: !!process.env.API_NINJAS_KEY,
         offlinePlanningCatalogue: true,
+        offlineJournalCatalogue: true,
+        offlineJournalFoodCount: 5431,
       },
       microbiome: {
         serviceConfigured: !!process.env.ML_SERVICE_URL,

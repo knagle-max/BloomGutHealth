@@ -119,21 +119,60 @@ try {
     mealType: "breakfast",
     aiConsent: false,
     mealContext: {
+      eatenAt: "2026-10-17T15:00:00Z",
       symptoms: { bloating: 0, energy: null, comfort: null, clarity: null },
     },
   });
-  assert.equal(meal.totalCalories, null);
+  assert.ok(meal.totalCalories > 0);
   assert.equal(
     (await request(`/api/meals/${first.id}`)).some((m) => m.id === meal.id),
     true,
   );
-  await request(`/api/meals/${meal.id}`, "PUT", {
+  const updatedMeal = await request(`/api/meals/${meal.id}`, "PUT", {
     mealText: "50 g oats and 80 g blueberries",
     mealType: "breakfast",
     aiConsent: false,
   });
+  const burger = await request("/api/meals", "POST", {
+    mealText:
+      "Two frozen hamburger patties that were bbqd, no buns. With American cheese, ketchup and relish",
+    mealType: "dinner",
+    aiConsent: false,
+    mealContext: { eatenAt: "2026-10-18T02:59:00Z" },
+  });
+  assert.ok(burger.totalCalories > 0);
+  assert.equal(burger.intelligence.ingredients.length, 4);
+  const unknown = await request("/api/meals", "POST", {
+    mealText: "mystery xyz sauce",
+    mealContext: { eatenAt: "2026-10-18T03:00:00Z" },
+  });
+  assert.equal(unknown.totalCalories, null);
+  const daily = await request(
+    `/api/nutrition/daily/${first.id}?date=2026-10-17&timezoneOffset=360`,
+  );
+  assert.equal(daily.meals.length, 3);
+  assert.ok(
+    Math.abs(
+      daily.totals.calories -
+        (updatedMeal.totalCalories + burger.totalCalories),
+    ) < 0.02,
+  );
+  assert.deepEqual(daily.nutritionCoverage.calories, {
+    knownMeals: 2,
+    completeMeals: 2,
+    totalMeals: 3,
+    partial: true,
+  });
+  await request(
+    `/api/nutrition/daily/${first.id}?date=2026-02-30&timezoneOffset=360`,
+    "GET",
+    undefined,
+    400,
+  );
+  await request(`/api/meals/${burger.id}`, "DELETE", {});
+  await request(`/api/meals/${unknown.id}`, "DELETE", {});
   console.log(
-    "PASS: saved preferences, meal create/read/update and unavailable nutrition",
+    "PASS: broad sourced meal parsing, exclusions, preserved known daily totals and local calendar boundaries",
   );
   const imported = await request("/api/microbiome/import", "POST", {
     bacteria_percentages: { "Ruminococcus bromii": 2, Bifidobacterium: 5 },

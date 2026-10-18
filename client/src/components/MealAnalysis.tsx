@@ -21,6 +21,11 @@ export default function MealAnalysis({
           ? "AI ingredient interpretation"
           : "Description-based interpretation"}
       </p>
+      {analysis.parserNotice && (
+        <p className="bloom-panel text-sm" role="status">
+          {analysis.parserNotice}
+        </p>
+      )}
       <details open>
         <summary>Review foods & estimated portions</summary>
         <p className="panel-note">

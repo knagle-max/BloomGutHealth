@@ -1,4 +1,7 @@
-import { summarizeMealNutrition } from "../shared/nutrition-summary";
+import {
+  mealNutritionSummary,
+  localDayBounds,
+} from "../shared/nutrition-summary";
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
@@ -544,11 +547,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (userId !== requestedUserId) {
         return res.status(403).json({ error: "Access denied" });
       }
-      const { date } = req.query;
-
-      const targetDate = date ? new Date(date as string) : new Date();
-      const startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
-      const endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
+      const { date, timezoneOffset } = req.query;
+      let startOfDay: Date, endOfDay: Date;
+      if (timezoneOffset !== undefined) {
+        try {
+          ({ startOfDay, endOfDay } = localDayBounds(
+            String(date || ""),
+            Number(timezoneOffset),
+          ));
+        } catch {
+          return res
+            .status(400)
+            .json({ error: "Invalid local date or timezone offset." });
+        }
+      } else {
+        const targetDate = date ? new Date(String(date)) : new Date();
+        if (!Number.isFinite(+targetDate))
+          return res.status(400).json({ error: "Invalid date." });
+        startOfDay = new Date(targetDate.setHours(0, 0, 0, 0));
+        endOfDay = new Date(targetDate.setHours(23, 59, 59, 999));
+      }
 
       const meals = await storage.getMeals(userId);
       const dailyMeals = meals.filter((meal) => {
@@ -556,9 +574,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return mealDate >= startOfDay && mealDate <= endOfDay;
       });
 
-      const totals = summarizeMealNutrition(dailyMeals);
+      const summary = mealNutritionSummary(dailyMeals);
 
-      res.json({ meals: dailyMeals, totals });
+      res.json({
+        meals: dailyMeals,
+        totals: summary.totals,
+        nutritionCoverage: summary.coverage,
+        isPartial: summary.isPartial,
+      });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

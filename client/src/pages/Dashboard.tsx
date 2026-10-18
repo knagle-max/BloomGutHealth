@@ -154,7 +154,9 @@ export default function Dashboard() {
               value: summary.fiber?.toFixed(1) ?? "Unavailable",
               unit: "g",
               icon: Leaf,
-              note: "From logged meals",
+              note: summary.coverage.fiber.partial
+                ? `Partial: ${summary.coverage.fiber.completeMeals} of ${summary.coverage.fiber.totalMeals} meals complete`
+                : "From logged meals",
               color: "ochre",
             },
             {
@@ -162,7 +164,9 @@ export default function Dashboard() {
               value: summary.protein?.toFixed(0) ?? "Unavailable",
               unit: "g",
               icon: Sprout,
-              note: "From logged meals",
+              note: summary.coverage.protein.partial
+                ? `Partial: ${summary.coverage.protein.completeMeals} of ${summary.coverage.protein.totalMeals} meals complete`
+                : "From logged meals",
               color: "pink",
             },
             {
@@ -170,7 +174,9 @@ export default function Dashboard() {
               value: summary.calories?.toFixed(0) ?? "Unavailable",
               unit: "kcal",
               icon: FlaskConical,
-              note: "Estimated from your entries",
+              note: summary.coverage.calories.partial
+                ? `Partial: ${summary.coverage.calories.completeMeals} of ${summary.coverage.calories.totalMeals} meals complete`
+                : "Estimated from your entries",
               color: "blue",
             },
           ].map((stat) => (

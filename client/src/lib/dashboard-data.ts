@@ -1,4 +1,4 @@
-import { summarizeMealNutrition } from "@shared/nutrition-summary";
+import { mealNutritionSummary } from "@shared/nutrition-summary";
 export interface LoggedMeal {
   id: string;
   mealText: string;
@@ -17,9 +17,10 @@ export function dailyMealSummary(meals: LoggedMeal[], now = new Date()) {
   const today = meals
     .filter((meal) => dateKey(new Date(meal.loggedAt)) === dateKey(now))
     .sort((a, b) => +new Date(b.loggedAt) - +new Date(a.loggedAt));
-  const totals = summarizeMealNutrition(today);
+  const { totals, coverage } = mealNutritionSummary(today);
   return {
     meals: today,
+    coverage,
     nutritionUnavailable: today.filter((meal) => meal.totalCalories === null)
       .length,
     calories: totals.calories,

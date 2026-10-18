@@ -13,3 +13,11 @@ After saving, review and edit each food name/gram amount or remove an assumed co
 Daily nutrition totals and dashboard values remain unavailable when a logged meal lacks that nutrient. A real sourced zero remains zero; an empty day remains zero logged intake. Historical monthly/yearly aggregates retain the earlier available-estimates behavior and are not complete intake measurements.
 
 Sources: https://fdc.nal.usda.gov/api-guide/ and per-record URLs in the JSON catalogue.
+
+## Broader journal matching and partial totals (2026-10-18)
+
+The journal now searches 5,431 USDA FNDDS 2021–2023 records, with sourced household gram weights, alongside the smaller exact prepared-food snapshots. Word-count quantities, tablespoons, slices and common food wording are handled independently of recipes. Explicit exclusions such as “no buns” are omitted. The burger/patties/cheese/condiment example is decomposed and matched to individual records; no whole-meal nutrition fixture is stored. Matches and default portions remain reviewable and editable. AI parsing is optional; provider failures now produce a visible sanitized explanation and local fallback instead of silently implying AI succeeded.
+
+This supersedes the earlier daily-total policy above: daily totals sum known contributions per nutrient, including available components of partly analysed meals. A missing meal never erases other meals. Responses include known/complete meal counts and partial flags per nutrient; the dashboard and journal label partial totals. If no value is known for a nutrient in a nonempty day it remains unavailable; a sourced zero remains zero. The journal sends the browser's calendar date and UTC offset so its daily window agrees with the user's local day, including Regina evenings after UTC midnight.
+
+The full catalogue and search engine are server-only. This substantially expands coverage but does not promise to understand any arbitrary description or reconstruct proprietary brands/recipes. Unsupported food words/units remain unresolved; broad automatic match quality still needs independent evaluation. The weekly planner and biology research model retain their existing catalogues and limits.

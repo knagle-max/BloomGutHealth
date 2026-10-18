@@ -285,8 +285,18 @@ export default function NutritionHistory() {
 
   const userId = user?.id || "";
 
+  const today = new Date();
+  const localDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const timezoneOffset = today.getTimezoneOffset();
   const { data: dailyData, isLoading: dailyLoading } = useQuery<any>({
-    queryKey: ["/api/nutrition/daily", userId],
+    queryKey: ["/api/nutrition/daily", userId, localDate, timezoneOffset],
+    queryFn: async () =>
+      (
+        await apiRequest(
+          "GET",
+          `/api/nutrition/daily/${userId}?date=${localDate}&timezoneOffset=${timezoneOffset}`,
+        )
+      ).json(),
     enabled: !!userId,
   });
 
@@ -564,6 +574,12 @@ export default function NutritionHistory() {
         </Card>
       )}
 
+      {dailyData?.isPartial && (
+        <p className="bloom-panel text-sm" role="status">
+          Partial daily totals: known nutrition is included. Some meals or
+          nutrients are missing; unavailable values are not counted as zero.
+        </p>
+      )}
       <HistoricalTrends userId={userId} targets={nutrientTargets} />
 
       <Card className="mb-6" data-testid="card-daily-summary">
@@ -581,8 +597,11 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
                 >
-                  {showAmount(totals.calories)} /{" "}
-                  {nutrientTargets.calories || 2000}
+                  {showAmount(totals.calories)}
+                  {dailyData?.nutritionCoverage?.calories?.partial
+                    ? " (partial)"
+                    : ""}{" "}
+                  / {nutrientTargets.calories || 2000}
                 </span>
                 <Badge
                   variant="outline"
@@ -1048,7 +1067,7 @@ export default function NutritionHistory() {
                           data: {
                             mealText: meal.mealText,
                             ...(meal.intelligence?.portionModelVersion ===
-                            "2026-10-18"
+                            "2026-10-18.2"
                               ? { ingredients: meal.intelligence.ingredients }
                               : {}),
                           },

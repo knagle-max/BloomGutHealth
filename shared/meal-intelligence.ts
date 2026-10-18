@@ -69,7 +69,8 @@ export interface FoodMatch {
   needsConfirmation: boolean;
 }
 export interface MealIntelligence {
-  portionModelVersion?: "2026-10-18";
+  portionModelVersion?: "2026-10-18" | "2026-10-18.2";
+  parserNotice?: string;
   status: "database-estimate" | "provider-estimate" | "unavailable";
   parser: "ai" | "rules";
   ingredients: Ingredient[];

@@ -1,4 +1,9 @@
 import {
+  splitMealDescription,
+  estimateCatalogueIngredient,
+  lookupCatalogueNutrition,
+} from "./food-catalog";
+import {
   estimateMealIngredients,
   estimateIngredient,
 } from "../shared/meal-portions";
@@ -16,6 +21,71 @@ import {
   type MealIntelligence,
 } from "../shared/meal-intelligence";
 
+export function resolveLoggedIngredient(input: Ingredient): Ingredient {
+  if (lookupSnapshotNutrition([input]).foodMatches.length) return input;
+  const broad = estimateCatalogueIngredient(input);
+  if (lookupCatalogueNutrition([broad]).foodMatches.length) return broad;
+  const bounded = estimateIngredient(input);
+  return lookupSnapshotNutrition([bounded]).foodMatches.length
+    ? bounded
+    : broad;
+}
+export function estimateLoggedIngredients(text: string): Ingredient[] {
+  const ingredients = splitMealDescription(text).map((i) =>
+    resolveLoggedIngredient(parseExplicitIngredients(i.name)[0] || i),
+  );
+  for (const addition of estimateMealIngredients(text).filter((i) =>
+    i.assumption.startsWith("Estimated recipe addition"),
+  )) {
+    if (!ingredients.some((i) => i.name === addition.name))
+      ingredients.push(addition);
+  }
+  return ingredients.slice(0, 20);
+}
+function mergeNutrition(
+  a: ReturnType<typeof lookupSnapshotNutrition>,
+  aCount: number,
+  b: ReturnType<typeof lookupSnapshotNutrition>,
+  bCount: number,
+  totalCount: number,
+) {
+  return {
+    foodMatches: [...a.foodMatches, ...b.foodMatches],
+    warnings: [
+      ...a.warnings.filter((w) => !w.startsWith("Some ingredients")),
+      ...b.warnings,
+    ],
+    nutrients: a.nutrients.map((n, index) => ({
+      ...n,
+      amount:
+        n.amount === null && b.nutrients[index].amount === null
+          ? null
+          : Math.round(
+              ((n.amount ?? 0) + (b.nutrients[index].amount ?? 0)) * 100,
+            ) / 100,
+      coverage: totalCount
+        ? (n.coverage * aCount + b.nutrients[index].coverage * bCount) /
+          totalCount
+        : 0,
+    })),
+  };
+}
+export function lookupLocalNutrition(ingredients: Ingredient[]) {
+  const small = lookupSnapshotNutrition(ingredients);
+  const unmatched = ingredients.filter(
+    (i) =>
+      !small.foodMatches.some(
+        (m) => m.ingredient === i.name && m.grams === i.grams,
+      ),
+  );
+  return mergeNutrition(
+    small,
+    ingredients.length,
+    lookupCatalogueNutrition(unmatched),
+    unmatched.length,
+    ingredients.length,
+  );
+}
 const parseSchema = z.object({
   ingredients: z.array(ingredientSchema).min(1).max(20),
   clarificationQuestions: z.array(z.string().max(300)).max(8),
@@ -27,10 +97,12 @@ export async function parseMeal(
   ingredients: Ingredient[];
   clarificationQuestions: string[];
   parser: "ai" | "rules";
+  parserNotice?: string;
 }> {
-  const fallback = estimateMealIngredients(text);
+  const fallback = estimateLoggedIngredients(text);
+  let parserNotice: string | undefined;
   const known =
-    lookupSnapshotNutrition(fallback).foodMatches.length === fallback.length;
+    lookupLocalNutrition(fallback).foodMatches.length === fallback.length;
   if (
     !known &&
     aiConsent &&
@@ -59,7 +131,7 @@ export async function parseMeal(
       if (result.output_parsed) {
         const validated = parseSchema.parse(result.output_parsed);
         validated.ingredients = validated.ingredients.map((i) =>
-          estimateIngredient({
+          resolveLoggedIngredient({
             ...i,
             assumption:
               `Estimated AI interpretation; review portions and food match. ${i.assumption}`.slice(
@@ -70,13 +142,23 @@ export async function parseMeal(
         );
         return { ...validated, parser: "ai" };
       }
-    } catch {
-      /* A provider failure must not lose a meal. */
+    } catch (error) {
+      const e = error as { status?: number; code?: string; type?: string };
+      const reason =
+        e.code === "insufficient_quota" || e.type === "insufficient_quota"
+          ? "the provider reports insufficient API quota"
+          : e.status === 401
+            ? "the provider rejected the API key"
+            : e.status === 429
+              ? "the provider rate-limited the request"
+              : "the provider request failed";
+      parserNotice = `AI parsing was unavailable because ${reason}. Local USDA food matching was used; review the foods and portions.`;
     }
   }
   const ingredients = fallback;
   return {
     ingredients,
+    ...(parserNotice ? { parserNotice } : {}),
     clarificationQuestions: ingredients
       .filter((i) => i.grams === null)
       .map((i) => `What is the amount in grams for ${i.name}?`),
@@ -169,7 +251,7 @@ export async function analyzeMeal(
   const parsed = reviewedIngredients
     ? {
         ingredients: reviewedIngredients.map((i) =>
-          i.grams === null ? i : estimateIngredient(i),
+          i.grams === null ? i : resolveLoggedIngredient(i),
         ),
         clarificationQuestions: [] as string[],
         parser: "rules" as const,
@@ -180,7 +262,7 @@ export async function analyzeMeal(
       parsed.clarificationQuestions.push(`Review ${i.name}: ${i.assumption}`);
   }
   const explanation = explainFoods(text);
-  const snapshot = lookupSnapshotNutrition(parsed.ingredients);
+  const snapshot = lookupLocalNutrition(parsed.ingredients);
   const useSnapshot =
     snapshot.foodMatches.length === parsed.ingredients.length ||
     !process.env.USDA_FDC_API_KEY;
@@ -193,29 +275,17 @@ export async function analyzeMeal(
         ),
     );
     const live = await lookupDatabaseNutrition(unmatched);
-    database = {
-      foodMatches: [...snapshot.foodMatches, ...live.foodMatches],
-      warnings: [
-        ...snapshot.warnings.filter((w) => !w.startsWith("Some ingredients")),
-        ...live.warnings,
-      ],
-      nutrients: snapshot.nutrients.map((n, index) => ({
-        ...n,
-        amount:
-          n.amount === null && live.nutrients[index].amount === null
-            ? null
-            : Math.round(
-                ((n.amount ?? 0) + (live.nutrients[index].amount ?? 0)) * 100,
-              ) / 100,
-        coverage:
-          (n.coverage * parsed.ingredients.length +
-            live.nutrients[index].coverage * unmatched.length) /
-          parsed.ingredients.length,
-      })),
-    };
+    database = mergeNutrition(
+      snapshot,
+      parsed.ingredients.length,
+      live,
+      unmatched.length,
+      parsed.ingredients.length,
+    );
   }
+
   const intelligence: MealIntelligence = {
-    portionModelVersion: "2026-10-18",
+    portionModelVersion: "2026-10-18.2",
     ...parsed,
     ...database,
     pathways: explanation.pathways,
@@ -223,7 +293,7 @@ export async function analyzeMeal(
     status: database.foodMatches.length ? "database-estimate" : "unavailable",
     provider: database.foodMatches.length
       ? useSnapshot
-        ? "USDA FoodData Central SR Legacy snapshot (review portions and food substitutions)"
+        ? "USDA FoodData Central: FNDDS 2021–2023 and SR Legacy (review estimated foods and portions)"
         : "USDA FoodData Central (automatic matches; review required)"
       : "Not configured or unavailable",
     warnings: [...explanation.warnings, ...database.warnings],
