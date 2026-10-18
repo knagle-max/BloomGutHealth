@@ -36,6 +36,7 @@ export default function ManualGenetics({
   const [rows, setRows] = useState<Row[]>(() => {
     const combined = templates.map((t) => ({
       ...t,
+      gene: existing.find((e) => e.rsid === t.rsid)?.gene || t.gene,
       genotype: existing.find((e) => e.rsid === t.rsid)?.genotype || "",
     }));
     return [
@@ -48,8 +49,10 @@ export default function ManualGenetics({
   const [source, setSource] = useState(genetics.manual?.source || ""),
     [forward, setForward] = useState(false),
     [consent, setConsent] = useState(false);
-  const [collectedAt, setDate] = useState(() =>
-    new Date().toISOString().slice(0, 10),
+  const [collectedAt, setDate] = useState(
+    () =>
+      genetics.import?.collectedAt.slice(0, 10) ||
+      new Date().toISOString().slice(0, 10),
   );
   const [extraOpen, setExtraOpen] = useState(false);
   const [paste, setPaste] = useState(""),
