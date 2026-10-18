@@ -77,7 +77,7 @@ export function registerPrecisionRoutes(
       const percentages = abundanceSchema.parse(
         (sample.structuredData as any).bacteria_percentages,
       );
-      const predictions = await store.getMetabolites(sample.id);
+      // Legacy prototype outputs are not validated personal predictions.
       report = {
         id: sample.id,
         date: sample.testDate.toISOString(),
@@ -85,10 +85,7 @@ export function registerPrecisionRoutes(
           name,
           abundance,
         })),
-        predictions: predictions.map((m) => ({
-          name: m.metaboliteName,
-          value: m.predictedConcentration,
-        })),
+        predictions: [],
       };
     }
     const result = buildPrecisionReport(

@@ -5,6 +5,7 @@ import connectPgSimple from "connect-pg-simple";
 import { Pool } from "pg";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { sessionSecret, securityHeaders, sameOriginWrites, safeRequestLog } from "./security";
 
 declare module "express-session" {
   interface SessionData {
@@ -14,8 +15,11 @@ declare module "express-session" {
 }
 
 const app = express();
+app.disable("x-powered-by");
+app.use(securityHeaders);
 // Render terminates HTTPS before forwarding to this private service.
 if (process.env.RENDER === "true") app.set("trust proxy", 1);
+app.use(sameOriginWrites);
 app.use(express.json({ limit: "2mb" }));
 app.use(express.urlencoded({ extended: false }));
 
@@ -31,9 +35,7 @@ app.use(
       tableName: "session",
       createTableIfMissing: true,
     }),
-    secret:
-      process.env.SESSION_SECRET ||
-      "bloom-health-secret-key-change-in-production",
+    secret: sessionSecret(),
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -47,38 +49,9 @@ app.use(
 
 app.use((req, res, next) => {
   const start = Date.now();
-  const path = req.path;
-  let capturedJsonResponse: Record<string, any> | undefined = undefined;
-
-  const originalResJson = res.json;
-  res.json = function (bodyJson, ...args) {
-    capturedJsonResponse = bodyJson;
-    return originalResJson.apply(res, [bodyJson, ...args]);
-  };
-
   res.on("finish", () => {
-    const duration = Date.now() - start;
-    if (path.startsWith("/api")) {
-      let logLine = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (
-        capturedJsonResponse &&
-        !path.startsWith("/api/precision") &&
-        !path.startsWith("/api/microbiome") &&
-        !path.startsWith("/api/products") &&
-        !path.startsWith("/api/experience") &&
-        !path.startsWith("/api/biology")
-      ) {
-        logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
-      }
-
-      if (logLine.length > 80) {
-        logLine = logLine.slice(0, 79) + "…";
-      }
-
-      log(logLine);
-    }
+    if (req.path.startsWith("/api/")) log(safeRequestLog(req, res.statusCode, Date.now() - start));
   });
-
   next();
 });
 

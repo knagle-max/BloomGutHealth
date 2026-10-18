@@ -5,7 +5,7 @@ import { nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import MealTypeSelector, { type MealType } from "@/components/MealTypeSelector";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,9 @@ import type { Meal } from "@shared/schema";
 export default function LogMeal() {
   const params = new URLSearchParams(window.location.search);
   const requestedType = params.get("type");
+  const catalogueId=params.get("fdcId"),catalogueGrams=Number(params.get("grams"));
+  const [catalogueEnabled,setCatalogueEnabled]=useState(!!catalogueId);
+  const catalogueSelection=useQuery<{fdcId:number;description:string;grams:number}>({queryKey:["/api/biology/catalogue",catalogueId,catalogueGrams],enabled:catalogueEnabled&&/^\d+$/.test(catalogueId||"")&&catalogueGrams>0&&catalogueGrams<=3000,queryFn:async()=>(await apiRequest("GET",`/api/biology/catalogue/${catalogueId}?grams=${catalogueGrams}`)).json()});
   const [mealType, setMealType] = useState<MealType>(
     ["breakfast", "lunch", "dinner", "snack"].includes(requestedType || "")
       ? (requestedType as MealType)
@@ -65,8 +68,9 @@ export default function LogMeal() {
     mutationFn: async () =>
       (await (
         await apiRequest("POST", "/api/meals", {
-          mealText: description.trim(),
+          mealText: catalogueEnabled&&catalogueSelection.data?`${catalogueSelection.data.grams} g ${catalogueSelection.data.description}`:description.trim(),
           products,
+          ...(catalogueEnabled&&catalogueSelection.data?{ingredients:[{name:catalogueSelection.data.description.slice(0,120),grams:catalogueSelection.data.grams,preparation:catalogueSelection.data.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:catalogueSelection.data.fdcId}}]}:{}),
           mealType,
           aiConsent,
           mealContext: {
@@ -80,6 +84,7 @@ export default function LogMeal() {
       setSavedMeal(meal);
       setDescription("");
       setProducts([]);
+      setCatalogueEnabled(false);
       queryClient.invalidateQueries({
         predicate: (query) =>
           [
@@ -185,13 +190,14 @@ export default function LogMeal() {
           </Button>
         </section>
       )}
+      {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{catalogueSelection.data.grams} g {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
       <FoodCapture onDescription={setDescription} onProduct={i=>setProducts(v=>[...v,i].slice(0,10))}/>
       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
       <form
         className="bloom-panel space-y-6"
         onSubmit={(e) => {
           e.preventDefault();
-          if ((description.trim() || products.length) && !save.isPending)
+          if ((description.trim() || products.length || catalogueEnabled&&catalogueSelection.data) && !save.isPending && (!catalogueEnabled||!!catalogueSelection.data))
             save.mutate();
         }}
       >
@@ -199,7 +205,7 @@ export default function LogMeal() {
           <legend className="sr-only">Meal details</legend>
           <MealTypeSelector selected={mealType} onChange={setMealType} />
           <div className="space-y-2">
-            <Label htmlFor="food-input">Describe your meal</Label>
+            {!catalogueEnabled&&<><Label htmlFor="food-input">Describe your meal</Label>
             <Textarea
               id="food-input"
               value={description}
@@ -207,13 +213,13 @@ export default function LogMeal() {
               placeholder="For example: 150g grilled chicken, 1 cup brown rice, and broccoli"
               className="min-h-32 text-base"
               maxLength={2000}
-              required={!products.length}
+              required={!products.length&&!catalogueEnabled}
               data-testid="input-food-description"
             />
             <p className="text-xs text-muted-foreground">
               Include quantities for a more useful nutrition estimate. You can
               review the breakdown after saving.
-            </p>
+            </p></>}
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <label>
@@ -313,7 +319,7 @@ export default function LogMeal() {
           <Button
             className="w-full h-12"
             disabled={
-              (!description.trim() && !products.length) || save.isPending
+              (!description.trim() && !products.length && !(catalogueEnabled&&catalogueSelection.data)) || (catalogueEnabled&&!catalogueSelection.data) || save.isPending
             }
             data-testid="button-save-meal"
           >

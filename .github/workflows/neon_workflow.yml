@@ -30,6 +30,13 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Check production dependency advisories
+        run: npm audit --omit=dev --audit-level=high
+      - name: Python service authentication and evidence contracts
+        run: |
+          python3 -m venv /tmp/bloom-service-tests
+          /tmp/bloom-service-tests/bin/pip install -r requirements-test.txt
+          /tmp/bloom-service-tests/bin/python -m unittest discover -s tests -p 'test_*.py'
       - name: Set preview branch expiry
         run: echo "EXPIRES_AT=$(date -u --date '+14 days' +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV"
       - name: Create isolated schema-only Neon branch

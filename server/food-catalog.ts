@@ -256,6 +256,7 @@ export function lookupCatalogueNutrition(ingredients: Ingredient[]) {
     if (ingredient.grams === null) continue;
     const food = catalogueFoods.find(
       (f) =>
+        ingredient.catalogue ? f.fdcId===ingredient.catalogue.fdcId :
         f.description === ingredient.name ||
         f.description.slice(0, 120) === ingredient.name,
     );

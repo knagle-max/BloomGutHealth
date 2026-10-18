@@ -254,33 +254,16 @@ export default function Microbiome() {
         <section className="bloom-panel">
           <h2>Molecule & pathway hypotheses</h2>
           <p className="panel-note">
-            Stored prototype values are unvalidated relative indices, not
-            measured concentrations. Associated genes are hypothetical unless
-            the report explicitly measured them.
+            Historical prototype molecule values and guessed gene functions are withheld.
+            Organism percentages cannot establish your metabolite production or health effects.
           </p>
-          {results.data?.metabolites?.length ? (
-            results.data.metabolites.map((m: any) => (
-              <article key={m.id} className="border-t py-3">
-                <h3>{m.metaboliteName}</h3>
-                <p>
-                  Experimental relative index:{" "}
-                  {m.predictedConcentration ?? "Unavailable"}
-                </p>
-                <p className="text-sm">
-                  Hypothesized pathway: {m.pathwayId} · Genes:{" "}
-                  {m.productionGenes?.join(", ") || "Not provided"}
-                </p>
-              </article>
-            ))
-          ) : (
             <p>
-              No molecule model stored for this report. Explore{" "}
+              Personal metabolite output has not been established. Explore{" "}
               <Link className="underline" href="/insights">
                 sourced microbial pathways
               </Link>
               .
             </p>
-          )}
         </section>
       )}
       {tab === "diet" && (

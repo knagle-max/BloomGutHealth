@@ -282,7 +282,7 @@ export class DatabaseStorage implements IStorage {
         ],
       });
     } catch (error) {
-      console.error("Demo data seeding error (likely already exists):", error);
+      console.error("Demo reference data could not be initialized.");
     }
   }
 

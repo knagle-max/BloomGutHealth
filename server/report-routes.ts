@@ -1,7 +1,7 @@
 import type { Express, RequestHandler } from "express";
 import multer from "multer";
 import FormData from "form-data";
-import fetch from "node-fetch";
+import { mlServiceFetch, mlServiceTarget } from "./ml-service";
 import { createReadStream } from "node:fs";
 import { readFile, unlink } from "node:fs/promises";
 import { basename, extname } from "node:path";
@@ -263,6 +263,8 @@ export function registerReportRoutes(
               error:
                 "Sequence-file processing is not configured. JSON/CSV and pasted reports can be imported without this service.",
             });
+        try { mlServiceTarget("/api/ml/upload", { ...process.env, ML_SERVICE_URL: mlServiceUrl }); }
+        catch { return res.status(503).json({ error: "Sequence processing is not securely configured. Structured reports can still be imported." }); }
         const form = new FormData();
         form.append("file", createReadStream(file.path), {
           filename: basename(file.originalname),
@@ -270,11 +272,10 @@ export function registerReportRoutes(
         });
         let result: any, response;
         try {
-          response = await fetch(`${mlServiceUrl}/api/ml/upload`, {
+          response = await mlServiceFetch("/api/ml/upload", {
             method: "POST",
             body: form,
-            signal: AbortSignal.timeout(30000),
-          });
+          }, { ...process.env, ML_SERVICE_URL: mlServiceUrl });
           result = await response.json();
         } catch {
           return res

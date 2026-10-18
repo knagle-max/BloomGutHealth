@@ -55,6 +55,7 @@ export const ingredientSchema = z.object({
   preparation: z.string().max(120),
   assumption: z.string().max(300),
   product: productRefSchema.optional(),
+  catalogue: z.object({source:z.literal("usda-fndds"),fdcId:z.number().int().positive().max(Number.MAX_SAFE_INTEGER)}).strict().optional(),
 });
 export type Ingredient = z.infer<typeof ingredientSchema>;
 export interface Nutrient {

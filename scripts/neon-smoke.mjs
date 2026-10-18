@@ -53,6 +53,7 @@ async function request(path, method = "GET", body, expected = 200) {
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     signal: AbortSignal.timeout(30000),
   });
+  assert.equal(response.headers.get("cache-control"),"no-store","API responses must not be cached");
   const setCookie = response.headers.get("set-cookie");
   if (setCookie) {
     assert.match(
@@ -465,6 +466,20 @@ try {
     403,
   );
   await request(`/api/precision/records/${lab.id}`, "DELETE", undefined, 404);
+  const catalogue = await request("/api/biology/catalogue?q=salmon");
+  const selectedFood = catalogue.foods[0];
+  const composition = await request(`/api/biology/catalogue/${selectedFood.fdcId}?grams=150`);
+  const pinnedMeal = await request("/api/meals", "POST", {mealText:"Selected catalogue food",mealType:"lunch",ingredients:[{name:"Client description is not authoritative",grams:150,preparation:"",assumption:"Reviewed choice",catalogue:{source:"usda-fndds",fdcId:selectedFood.fdcId}}]});
+  assert.equal(pinnedMeal.intelligence.foodMatches[0].fdcId, selectedFood.fdcId);
+  assert.equal(pinnedMeal.intelligence.foodMatches[0].grams, 150);
+  const persistedPinned = (await request(`/api/meals/${second.id}`)).find(m=>m.id===pinnedMeal.id);
+  assert.equal(persistedPinned.intelligence.ingredients[0].catalogue.fdcId,selectedFood.fdcId);
+  assert.equal(persistedPinned.intelligence.nutrients.find(n=>n.key==="protein_g").amount,Math.round(composition.contributions.find(n=>n.key==="protein_g").amount*100)/100);
+  const retired = await request(`/api/health/analysis/${second.id}`,"GET",undefined,410);
+  assert.equal(retired.code,"UNVALIDATED_MODEL_RETIRED");
+  assert.equal(retired.molecules,undefined);
+  await request(`/api/health/analysis/${first.id}`,"GET",undefined,403);
+  console.log("PASS: exact catalogue source/portion persists on Neon and retired models preserve authorization");
   cookie = first.cookie;
   await request(
     `/api/products/${personalProduct.id}`,

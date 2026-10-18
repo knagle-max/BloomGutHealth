@@ -1,3 +1,5 @@
+import { reportedAbundanceAnalysis, historicalAnalysisMetadata } from "./analysis-boundary";
+import { registerRetiredHealthRoutes } from "./retired-health-routes";
 import { registerBiologyRoutes } from "./biology-routes";
 import { registerExperienceRoutes } from "./experience-routes";
 import { describeRecordedDiet } from "../shared/diet-observations";
@@ -9,9 +11,8 @@ import {
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import fetch from "node-fetch";
-import bcrypt from "bcrypt";
-import { insertUserSchema } from "@shared/schema";
+import { mlServiceFetch } from "./ml-service";
+import { registerAuthRoutes } from "./auth-routes";
 import { registerScienceRoutes } from "./science-coach";
 import { registerPlannerRoutes } from "./planner-routes";
 import { registerPrecisionRoutes } from "./precision-routes";
@@ -23,7 +24,6 @@ import {
 } from "@shared/meal-intelligence";
 import { abundanceSchema } from "@shared/report-import";
 
-const ML_SERVICE_URL = process.env.ML_SERVICE_URL || "http://localhost:8000";
 
 function requireAuth(req: Request, res: Response, next: NextFunction) {
   if (!req.session.userId) {
@@ -72,7 +72,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
 
         // Trigger ML analysis
-        const mlResponse = await fetch(`${ML_SERVICE_URL}/api/ml/analyze`, {
+        const mlResponse = await mlServiceFetch("/api/ml/analyze", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -84,7 +84,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }),
         });
 
-        const mlResult = (await mlResponse.json()) as any;
+        await mlResponse.json();
+        const mlResult = reportedAbundanceAnalysis(sampleId,(sample.structuredData as any).bacteria_percentages);
 
         // Save ML analysis results
         if (!mlResponse.ok) {
@@ -93,7 +94,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
           return res
             .status(mlResponse.status)
-            .json({ error: mlResult.detail || "Microbiome analysis failed" });
+            .json({ error: "Microbiome analysis could not be completed. Review the report or retry later." });
         }
         const analysisId = await storage.insertMlAnalysis({
           sampleId,
@@ -175,13 +176,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           results: mlResult,
         });
       } catch (error: any) {
-        console.error("Analysis error:", error);
+        console.error("Analysis request could not be completed.");
         await storage
           .updateMicrobiomeSample(req.params.sampleId, {
             processingStatus: "failed",
           })
           .catch(() => {});
-        res.status(500).json({ error: error.message });
+        res.status(503).json({ error: "Analysis could not be completed. Please retry later." });
       }
     },
   );
@@ -204,45 +205,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(403).json({ error: "Access denied" });
         }
 
-        const bacterial = await storage.getBacterialComposition(sampleId);
-        const metabolites = await storage.getMetabolites(sampleId);
-        const recommendations = await storage.getRecommendations(sampleId);
+        const reported=abundanceSchema.safeParse((sample.structuredData as any)?.bacteria_percentages);
+        const composition=reported.success?reportedAbundanceAnalysis(sampleId,reported.data):null;
+        const bacterial=composition?.bacterial_composition.map((b,index)=>({id:`reported-${index}`,sampleId,bacterialName:b.bacterial_name,abundance:b.abundance,taxonomyLevel:b.taxonomy_level,genomeData:null}))||[];
         const analyses = await storage.getMlAnalyses(sampleId);
 
         res.json({
-          sample,
+          sample:{...sample,diversityIndex:composition?.diversity_index??null},
           bacterial_composition: bacterial,
-          metabolites,
-          recommendations,
-          analyses,
+          metabolites: [],
+          recommendations: [],
+          analyses: historicalAnalysisMetadata(analyses),
+          interpretationStatus: "unvalidated_model_outputs_withheld",
+          interpretationNote: "Historical prototype molecule values, health effects and supplement doses are withheld. Use reviewed pathways and actual laboratory measurements.",
         });
       } catch (error: any) {
-        console.error("Results error:", error);
-        res.status(500).json({ error: error.message });
+        console.error("Results request could not be completed.");
+        res.status(503).json({ error: "Results could not load. Please retry." });
       }
     },
   );
 
   // Get available cohorts
-  app.get("/api/microbiome/cohorts", async (req, res) => {
+  app.get("/api/microbiome/cohorts", requireAuth, async (req, res) => {
     try {
-      const mlResponse = await fetch(`${ML_SERVICE_URL}/api/ml/cohorts`);
+      const mlResponse = await mlServiceFetch("/api/ml/cohorts");
+      if (!mlResponse.ok) throw Error("Cohort service unavailable.");
       const cohorts = await mlResponse.json();
       res.json(cohorts);
     } catch (error: any) {
-      console.error("Cohorts error:", error);
-      res.status(500).json({ error: error.message });
+      console.error("Cohort service could not be reached.");
+      res.status(503).json({ error: "Cohort information is unavailable." });
     }
   });
 
   // Health check for ML service
   app.get("/api/ml/health", async (req, res) => {
     try {
-      const mlResponse = await fetch(`${ML_SERVICE_URL}/health`);
-      const health = await mlResponse.json();
-      res.json({ ml_service: health });
+      const mlResponse = await mlServiceFetch("/health");
+      if (!mlResponse.ok) throw Error("Processing service unavailable.");
+      res.json({ ml_service: { status: "healthy" } });
     } catch (error: any) {
-      res.status(503).json({ ml_service: "unavailable", error: error.message });
+      res.status(503).json({ ml_service: "unavailable" });
     }
   });
 
@@ -255,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json({ id: demoUser.id, username: demoUser.username });
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -264,7 +268,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const samples = await storage.getDemoSamples();
       res.json(samples);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -281,7 +285,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const meals = await storage.getMeals(userId);
         res.json(meals);
       } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(503).json({ error: "This request could not be completed. Please retry." });
       }
     },
   );
@@ -303,8 +307,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.deleteMeal(mealId);
       res.json({ success: true });
     } catch (error: any) {
-      console.error("Meal delete error:", error);
-      res.status(500).json({ error: error.message });
+      console.error("Meal deletion could not be completed.");
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -359,7 +363,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json(targets);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -407,7 +411,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isPartial: summary.isPartial,
       });
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -505,7 +509,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         dailyAverages,
       });
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -623,7 +627,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         monthlyBreakdown,
       });
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -662,7 +666,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const samples = await storage.getUserSamples(userId);
       res.json(samples);
     } catch (error: any) {
-      res.status(500).json({ error: error.message });
+      res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
   });
 
@@ -681,564 +685,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const meals = await storage.getMeals(userId);
         res.json(describeRecordedDiet(meals));
       } catch (error: any) {
-        res.status(500).json({ error: error.message });
+        res.status(503).json({ error: "This request could not be completed. Please retry." });
       }
     },
   );
 
-  app.get("/api/health/analysis/:userId", requireAuth, async (req, res) => {
-    try {
-      const userId = req.session.userId!;
-      const requestedUserId = req.params.userId;
+  registerRetiredHealthRoutes(app, requireAuth, storage);
 
-      if (userId !== requestedUserId) {
-        return res.status(403).json({ error: "Access denied" });
-      }
-      const {
-        calculateMoleculeProduction,
-        calculateHealthScores,
-        identifyBacterialGaps,
-        generateFoodRecommendations,
-      } = await import("../shared/health-calculations");
-
-      const meals = await storage.getMeals(userId);
-      const recentMeals = meals.slice(0, 30);
-
-      if (recentMeals.length < 3) {
-        return res.json({
-          mealsAnalyzed: recentMeals.length,
-          molecules: null,
-          healthScores: [],
-          message: "Log at least 3 meals for health analysis",
-        });
-      }
-
-      const totals = recentMeals.reduce(
-        (acc, meal) => {
-          const nutritionalData = Array.isArray(meal.nutritionalData)
-            ? meal.nutritionalData
-            : [];
-          acc.fiber += nutritionalData.reduce(
-            (sum: number, item: any) => sum + (item.fiber_g || 0),
-            0,
-          );
-          acc.protein += meal.totalProtein || 0;
-          acc.sugar += nutritionalData.reduce(
-            (sum: number, item: any) => sum + (item.sugar_g || 0),
-            0,
-          );
-          return acc;
-        },
-        { fiber: 0, protein: 0, sugar: 0 },
-      );
-
-      const avgTotals = {
-        fiber: totals.fiber / recentMeals.length,
-        protein: totals.protein / recentMeals.length,
-        sugar: totals.sugar / recentMeals.length,
-      };
-
-      const molecules = calculateMoleculeProduction(
-        totals.fiber,
-        totals.protein,
-      );
-      const healthScores = calculateHealthScores(molecules, totals.sugar);
-      const gaps = identifyBacterialGaps(
-        avgTotals.fiber,
-        avgTotals.protein,
-        avgTotals.sugar,
-      );
-
-      res.json({
-        mealsAnalyzed: recentMeals.length,
-        evidenceStatus: "experimental-rule-model; not a biological measurement",
-        molecules,
-        healthScores,
-        bacterialGaps: gaps,
-        averages: avgTotals,
-      });
-    } catch (error: any) {
-      console.error("Health analysis error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.get(
-    "/api/health/recommendations/:userId",
-    requireAuth,
-    async (req, res) => {
-      try {
-        const userId = req.session.userId!;
-        const requestedUserId = req.params.userId;
-
-        if (userId !== requestedUserId) {
-          return res.status(403).json({ error: "Access denied" });
-        }
-        const {
-          identifyBacterialGaps,
-          generateFoodRecommendations,
-          calculateMoleculeProduction,
-          calculateHealthScores,
-        } = await import("../shared/health-calculations");
-
-        const meals = await storage.getMeals(userId);
-        const recentMeals = meals.slice(0, 30);
-
-        if (recentMeals.length < 3) {
-          return res.json({
-            recommendations: [],
-            message: "Log more meals for personalized recommendations",
-          });
-        }
-
-        const totals = recentMeals.reduce(
-          (acc, meal) => {
-            const nutritionalData = Array.isArray(meal.nutritionalData)
-              ? meal.nutritionalData
-              : [];
-            acc.fiber += nutritionalData.reduce(
-              (sum: number, item: any) => sum + (item.fiber_g || 0),
-              0,
-            );
-            acc.protein += meal.totalProtein || 0;
-            acc.sugar += nutritionalData.reduce(
-              (sum: number, item: any) => sum + (item.sugar_g || 0),
-              0,
-            );
-            return acc;
-          },
-          { fiber: 0, protein: 0, sugar: 0 },
-        );
-
-        const avgTotals = {
-          fiber: totals.fiber / recentMeals.length,
-          protein: totals.protein / recentMeals.length,
-          sugar: totals.sugar / recentMeals.length,
-        };
-
-        const molecules = calculateMoleculeProduction(
-          totals.fiber,
-          totals.protein,
-        );
-        const healthScores = calculateHealthScores(molecules, totals.sugar);
-        const gaps = identifyBacterialGaps(
-          avgTotals.fiber,
-          avgTotals.protein,
-          avgTotals.sugar,
-        );
-        const preferenceResult = preferenceSchema.safeParse(
-          (await storage.getUser(userId))?.dietaryPreferences,
-        );
-        const recommendations = filterLegacyFoods(
-          generateFoodRecommendations(gaps, healthScores),
-          preferenceResult.success ? preferenceResult.data : defaultPreferences,
-        );
-
-        res.json({
-          recommendations,
-          gaps,
-          healthScores,
-          mealsAnalyzed: recentMeals.length,
-        });
-      } catch (error: any) {
-        console.error("Recommendations error:", error);
-        res.status(500).json({ error: error.message });
-      }
-    },
-  );
-
-  app.get("/api/health/progress/:userId", requireAuth, async (req, res) => {
-    try {
-      const userId = req.session.userId!;
-      const requestedUserId = req.params.userId;
-
-      if (userId !== requestedUserId) {
-        return res.status(403).json({ error: "Access denied" });
-      }
-      const { weeks = 4 } = req.query;
-      const { calculateMoleculeProduction, calculateHealthScores } =
-        await import("../shared/health-calculations");
-
-      const meals = await storage.getMeals(userId);
-      const now = new Date();
-      const weeksToAnalyze = parseInt(weeks as string) || 4;
-
-      const weeklyData = [];
-
-      for (let i = weeksToAnalyze - 1; i >= 0; i--) {
-        const weekStart = new Date(now);
-        weekStart.setDate(now.getDate() - (i * 7 + 7));
-        const weekEnd = new Date(now);
-        weekEnd.setDate(now.getDate() - i * 7);
-
-        const weekMeals = meals.filter((meal) => {
-          const mealDate = new Date(meal.loggedAt);
-          return mealDate >= weekStart && mealDate < weekEnd;
-        });
-
-        if (weekMeals.length > 0) {
-          const totals = weekMeals.reduce(
-            (acc, meal) => {
-              const nutritionalData = (meal.nutritionalData as any[]) || [];
-              acc.fiber += nutritionalData.reduce(
-                (sum: number, item: any) => sum + (item.fiber_g || 0),
-                0,
-              );
-              acc.protein += meal.totalProtein || 0;
-              acc.sugar += nutritionalData.reduce(
-                (sum: number, item: any) => sum + (item.sugar_g || 0),
-                0,
-              );
-              return acc;
-            },
-            { fiber: 0, protein: 0, sugar: 0 },
-          );
-
-          const molecules = calculateMoleculeProduction(
-            totals.fiber,
-            totals.protein,
-          );
-          const healthScores = calculateHealthScores(molecules, totals.sugar);
-
-          weeklyData.push({
-            week: `Week ${weeksToAnalyze - i}`,
-            weekStart: weekStart.toISOString().split("T")[0],
-            weekEnd: weekEnd.toISOString().split("T")[0],
-            mealsLogged: weekMeals.length,
-            molecules,
-            healthScores,
-            averageScores: {
-              inflammation:
-                healthScores.find((s) => s.category === "Inflammation")
-                  ?.score || 0,
-              gutBarrier:
-                healthScores.find((s) => s.category === "Gut Barrier")?.score ||
-                0,
-              metabolic:
-                healthScores.find((s) => s.category === "Metabolic Health")
-                  ?.score || 0,
-              immune:
-                healthScores.find((s) => s.category === "Immune Function")
-                  ?.score || 0,
-            },
-          });
-        }
-      }
-
-      res.json({
-        evidenceStatus: "experimental-rule-model; not a biological measurement",
-        weeklyData,
-        totalWeeks: weeksToAnalyze,
-      });
-    } catch (error: any) {
-      console.error("Progress tracking error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.get("/api/health/adherence/:userId", requireAuth, async (req, res) => {
-    try {
-      const userId = req.session.userId!;
-      const requestedUserId = req.params.userId;
-
-      if (userId !== requestedUserId) {
-        return res.status(403).json({ error: "Access denied" });
-      }
-      const { days = 7 } = req.query;
-      const {
-        generateFoodRecommendations,
-        identifyBacterialGaps,
-        calculateMoleculeProduction,
-        calculateHealthScores,
-        calculateAdherence,
-        matchMealToRecommendations,
-      } = await import("../shared/health-calculations");
-
-      const allMeals = await storage.getMeals(userId);
-
-      if (allMeals.length < 3) {
-        return res.json({
-          message: "Log at least 3 meals to track adherence",
-          adherenceStats: null,
-          details: [],
-        });
-      }
-
-      const daysToAnalyze = parseInt(days as string) || 7;
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - daysToAnalyze);
-
-      const recentMeals = allMeals.filter(
-        (meal) => new Date(meal.loggedAt) >= cutoffDate,
-      );
-
-      const mealsForAnalysis =
-        recentMeals.length >= 3 ? recentMeals : allMeals.slice(0, 30);
-
-      const totals = mealsForAnalysis.reduce(
-        (acc, meal) => {
-          const nutritionalData = (meal.nutritionalData as any[]) || [];
-          acc.fiber += nutritionalData.reduce(
-            (sum: number, item: any) => sum + (item.fiber_g || 0),
-            0,
-          );
-          acc.protein += meal.totalProtein || 0;
-          acc.sugar += nutritionalData.reduce(
-            (sum: number, item: any) => sum + (item.sugar_g || 0),
-            0,
-          );
-          return acc;
-        },
-        { fiber: 0, protein: 0, sugar: 0 },
-      );
-
-      const avgTotals = {
-        fiber: totals.fiber / mealsForAnalysis.length,
-        protein: totals.protein / mealsForAnalysis.length,
-        sugar: totals.sugar / mealsForAnalysis.length,
-      };
-
-      const molecules = calculateMoleculeProduction(
-        totals.fiber,
-        totals.protein,
-      );
-      const healthScores = calculateHealthScores(molecules, totals.sugar);
-      const gaps = identifyBacterialGaps(
-        avgTotals.fiber,
-        avgTotals.protein,
-        avgTotals.sugar,
-      );
-      const preferenceResult = preferenceSchema.safeParse(
-        (await storage.getUser(userId))?.dietaryPreferences,
-      );
-      const recommendations = filterLegacyFoods(
-        generateFoodRecommendations(gaps, healthScores),
-        preferenceResult.success ? preferenceResult.data : defaultPreferences,
-      );
-
-      const mealData = recentMeals
-        .filter((meal) => meal.mealText && meal.mealText.trim().length > 0)
-        .map((meal) => ({
-          description: meal.mealText,
-          loggedAt: meal.loggedAt.toISOString(),
-        }));
-
-      const { adherenceStats, details } = calculateAdherence(
-        mealData,
-        recommendations,
-      );
-
-      res.json({
-        evidenceStatus: "experimental-rule-model; not a biological measurement",
-        adherenceStats,
-        details,
-        recommendations,
-        mealsAnalyzed: recentMeals.length,
-        periodDays: daysToAnalyze,
-      });
-    } catch (error: any) {
-      console.error("Adherence tracking error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.post(
-    "/api/meals/:mealId/check-adherence",
-    requireAuth,
-    async (req, res) => {
-      try {
-        const { mealId } = req.params;
-        const userId = req.session.userId!;
-
-        const meal = await storage.getMeal(mealId);
-        if (!meal) {
-          return res.status(404).json({ error: "Meal not found" });
-        }
-
-        if (meal.userId !== userId) {
-          return res.status(403).json({ error: "Access denied" });
-        }
-
-        const { matchMealToRecommendations } = await import(
-          "../shared/health-calculations"
-        );
-
-        const {
-          identifyBacterialGaps,
-          generateFoodRecommendations,
-          calculateMoleculeProduction,
-          calculateHealthScores,
-        } = await import("../shared/health-calculations");
-        const recent = (await storage.getMeals(userId)).slice(0, 30);
-        const fiber = recent.reduce(
-          (n, m) =>
-            n +
-            (Array.isArray(m.nutritionalData)
-              ? m.nutritionalData.reduce(
-                  (a: number, i: any) => a + (i.fiber_g || 0),
-                  0,
-                )
-              : 0),
-          0,
-        );
-        const protein = recent.reduce((n, m) => n + (m.totalProtein || 0), 0);
-        const sugar = recent.reduce(
-          (n, m) =>
-            n +
-            (Array.isArray(m.nutritionalData)
-              ? m.nutritionalData.reduce(
-                  (a: number, i: any) => a + (i.sugar_g || 0),
-                  0,
-                )
-              : 0),
-          0,
-        );
-        const preferenceResult = preferenceSchema.safeParse(
-          (await storage.getUser(userId))?.dietaryPreferences,
-        );
-        const recommendations =
-          recent.length >= 3
-            ? filterLegacyFoods(
-                generateFoodRecommendations(
-                  identifyBacterialGaps(
-                    fiber / recent.length,
-                    protein / recent.length,
-                    sugar / recent.length,
-                  ),
-                  calculateHealthScores(
-                    calculateMoleculeProduction(fiber, protein),
-                    sugar,
-                  ),
-                ),
-                preferenceResult.success
-                  ? preferenceResult.data
-                  : defaultPreferences,
-              )
-            : [];
-        const matches = matchMealToRecommendations(
-          meal.mealText,
-          recommendations,
-        );
-
-        res.json({
-          meal,
-          matches,
-          message:
-            matches.length > 0
-              ? `Great choice! This meal includes ${matches.map((m) => m.matchedKeywords.join(", ")).join(" and ")}`
-              : "This meal doesn't match current recommendations. Consider adding fiber-rich or fermented foods.",
-        });
-      } catch (error: any) {
-        console.error("Meal adherence check error:", error);
-        res.status(500).json({ error: error.message });
-      }
-    },
-  );
-
-  app.post("/api/auth/signup", async (req, res) => {
-    try {
-      const result = insertUserSchema.safeParse(req.body);
-
-      if (!result.success) {
-        return res.status(400).json({ error: "Invalid input" });
-      }
-
-      const { username, password } = result.data;
-
-      if (password.length < 8) {
-        return res
-          .status(400)
-          .json({ error: "Password must be at least 8 characters" });
-      }
-
-      const existingUser = await storage.getUserByUsername(username);
-      if (existingUser) {
-        return res.status(400).json({ error: "Username already exists" });
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await storage.createUser({
-        username,
-        password: hashedPassword,
-      });
-
-      req.session.userId = user.id;
-      req.session.username = user.username;
-
-      res.json({
-        success: true,
-        user: { id: user.id, username: user.username },
-      });
-    } catch (error: any) {
-      console.error("Signup error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.post("/api/auth/login", async (req, res) => {
-    try {
-      const { username, password } = req.body;
-
-      if (!username || !password) {
-        return res
-          .status(400)
-          .json({ error: "Username and password are required" });
-      }
-
-      const user = await storage.getUserByUsername(username);
-      if (!user) {
-        return res.status(401).json({ error: "Invalid username or password" });
-      }
-
-      const isValid = await bcrypt.compare(password, user.password);
-      if (!isValid) {
-        return res.status(401).json({ error: "Invalid username or password" });
-      }
-
-      req.session.userId = user.id;
-      req.session.username = user.username;
-
-      res.json({
-        success: true,
-        user: { id: user.id, username: user.username },
-      });
-    } catch (error: any) {
-      console.error("Login error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.post("/api/auth/logout", async (req, res) => {
-    try {
-      req.session.destroy((err) => {
-        if (err) {
-          return res.status(500).json({ error: "Failed to logout" });
-        }
-        res.json({ success: true });
-      });
-    } catch (error: any) {
-      console.error("Logout error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
-
-  app.get("/api/auth/me", async (req, res) => {
-    try {
-      if (!req.session.userId) {
-        return res.json({ user: null });
-      }
-
-      const user = await storage.getUser(req.session.userId);
-      if (!user) {
-        return res.json({ user: null });
-      }
-
-      res.json({ user: { id: user.id, username: user.username } });
-    } catch (error: any) {
-      console.error("Get me error:", error);
-      res.status(500).json({ error: error.message });
-    }
-  });
+  registerAuthRoutes(app, storage);
 
   const httpServer = createServer(app);
 

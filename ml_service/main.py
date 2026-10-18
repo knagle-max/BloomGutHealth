@@ -1,20 +1,30 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+import hashlib
+import hmac
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
 import json
 import os
 from datetime import datetime
 
-app = FastAPI(title="Bloom Microbiome ML Service", version="1.0.0")
+# This service is called only by Bloom's server, never directly by browsers.
+# No permissive browser CORS or interactive schema/docs are exposed.
+app = FastAPI(title="Bloom Microbiome ML Service", version="1.0.0", docs_url=None, redoc_url=None, openapi_url=None)
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+@app.middleware("http")
+async def authenticate_service(request, call_next):
+    if request.url.path == "/api/ml" or request.url.path.startswith("/api/ml/"):
+        expected = os.environ.get("ML_SERVICE_TOKEN", "")
+        if len(expected.encode("utf-8")) < 32 or len(expected) > 512 or any(c.isspace() for c in expected):
+            return JSONResponse(status_code=503, content={"detail": "Service authentication is not configured."}, headers={"Cache-Control": "no-store"})
+        authorization = request.headers.get("authorization", "")
+        supplied = authorization[7:] if authorization.startswith("Bearer ") else ""
+        if not hmac.compare_digest(hashlib.sha256(supplied.encode("utf-8")).digest(), hashlib.sha256(expected.encode("utf-8")).digest()):
+            return JSONResponse(status_code=401, content={"detail": "Service authentication required."}, headers={"Cache-Control": "no-store"})
+    response = await call_next(request)
+    response.headers["Cache-Control"] = "no-store"
+    return response
 
 class MicrobiomeAnalysisRequest(BaseModel):
     sample_id: str
@@ -32,31 +42,24 @@ class MicrobiomeAnalysisResponse(BaseModel):
     health_impacts: List[Dict[str, Any]] = []
     cohort_comparisons: Dict[str, Any] = {}
     recommendations: List[Dict[str, Any]] = []
-    confidence: float
+    confidence: Optional[float] = None
     model_version: str
+    interpretation_status: str = "reported_composition_only"
+    limitations: List[str] = []
 
 @app.get("/")
-async def root():
-    return {
-        "service": "Bloom Microbiome ML Service",
-        "version": "1.0.0",
-        "status": "running"
-    }
-
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+    return {"status": "healthy"}
 
 @app.post("/api/ml/analyze", response_model=MicrobiomeAnalysisResponse)
 async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
-    """
-    Main endpoint for microbiome analysis pipeline.
-    Processes bacterial DNA data through the full ML pipeline:
-    1. Taxonomic profiling
-    2. Metabolite prediction
-    3. Health impact inference
-    4. Cohort comparison
-    5. Recommendation generation
+    """Summarize supplied abundance data without inventing measured biology.
+
+    Relative taxon percentages do not establish gene content/expression, metabolite
+    concentrations, personal health effects, optimal ranges or supplement doses.
+    Reviewed qualitative biology remains in Bloom's versioned evidence registry;
+    the legacy Python prototypes are not a source of personal recommendations.
     """
     # The upload pipeline does not yet turn sequence files into abundance data.
     # Never substitute randomized demonstration profiles for a user's test.
@@ -72,55 +75,49 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
         raise HTTPException(status_code=422, detail=str(error))
     try:
         from .services.taxonomic_profiler import TaxonomicProfiler
-        from .services.metabolite_predictor import MetabolitePredictor
-        from .services.health_impact_analyzer import HealthImpactAnalyzer
-        from .services.cohort_comparator import CohortComparator
-        from .services.recommendation_engine import RecommendationEngine
-        
-        # Step 1: Taxonomic profiling
-        profiler = TaxonomicProfiler()
-        bacterial_composition = profiler.analyze(request.raw_data or {})
-        diversity_index = profiler.calculate_diversity(bacterial_composition)
-        
-        # Step 2: Metabolite prediction from bacterial genes
-        metabolite_predictor = MetabolitePredictor()
-        metabolites = metabolite_predictor.predict_metabolites(bacterial_composition)
-        
-        # Step 3: Health impact inference
-        impact_analyzer = HealthImpactAnalyzer()
-        health_impacts = impact_analyzer.analyze_impacts(metabolites)
-        
-        # Step 4: Cohort comparison
-        comparator = CohortComparator()
-        cohort_comparisons = comparator.compare(
-            bacterial_composition, 
-            request.cohorts_to_compare
-        )
-        
-        # Step 5: Generate personalized recommendations
-        rec_engine = RecommendationEngine()
-        recommendations = rec_engine.generate_recommendations(
-            bacterial_composition,
-            metabolites,
-            health_impacts,
-            cohort_comparisons
-        )
-        
+
+        # Preserve exactly the supplied percentages and names. Do not add the
+        # prototype profiler's invented optimal ranges, health scores or genes.
+        bacterial_composition = [
+            {
+                "bacterial_name": name,
+                "taxonomy_level": "reported_taxon_rank_unverified",
+                "abundance": abundance,
+                "provenance": "User-supplied relative percentage; not independently verified",
+                "genome_data": {
+                    "gene_count": None,
+                    "metabolic_pathways": [],
+                    "provenance": "No genes or pathway activity measured from these percentages",
+                },
+            }
+            for name, abundance in request.raw_data["bacteria_percentages"].items()
+        ]
+        # This is a descriptive statistic over the supplied entries, not a
+        # validated health score, reference interval or complete-sample profile.
+        diversity_index = (TaxonomicProfiler().calculate_diversity(bacterial_composition)
+                           if sum(item["abundance"] for item in bacterial_composition) > 0 else None)
         return MicrobiomeAnalysisResponse(
             sample_id=request.sample_id,
             status="completed",
             diversity_index=diversity_index,
             bacterial_composition=bacterial_composition,
-            metabolites=metabolites,
-            health_impacts=health_impacts,
-            cohort_comparisons=cohort_comparisons,
-            recommendations=recommendations,
-            confidence=0.0,
-            model_version="experimental-abundance-v2"
+            metabolites=[],
+            health_impacts=[],
+            cohort_comparisons={},
+            recommendations=[],
+            confidence=None,
+            model_version="reported-abundance-v3",
+            limitations=[
+                "Only supplied taxon names and relative percentages are summarized; taxonomy, sequencing method and data completeness are not independently verified.",
+                "Shannon diversity describes the supplied entries after normalizing their sum. A partial report is not a complete microbiome profile, and a higher value does not establish better health.",
+                "Metabolite concentrations, gene content, pathway activity and personal health effects cannot be determined from these percentages; unavailable outputs are withheld rather than replaced with zero.",
+                "No validated cohort reference dataset or calibrated prediction confidence is installed. Cohort comparisons, optimal bacterial ranges and confidence estimates are unavailable.",
+                "No supplement dose or treatment is selected from bacterial abundance. Use Bloom's reviewed evidence coach and personal health context for food planning and discuss clinical needs with a qualified professional.",
+            ],
         )
         
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {str(e)}")
+        raise HTTPException(status_code=500, detail="Analysis could not be completed.")
 
 @app.post("/api/ml/upload")
 async def upload_microbiome_file(file: UploadFile = File(...)):
@@ -148,16 +145,11 @@ async def upload_microbiome_file(file: UploadFile = File(...)):
 
 @app.get("/api/ml/cohorts")
 async def list_cohorts():
-    """
-    List available cohort reference groups for comparison.
-    """
+    """No cohort dataset with documented provenance is installed."""
     return {
-        "cohorts": [
-            {"id": "elite_athletes", "name": "Elite Athletes", "sample_size": 250},
-            {"id": "centenarians", "name": "Long-Living Individuals (90+)", "sample_size": 180},
-            {"id": "general_population", "name": "General Healthy Population", "sample_size": 1000},
-            {"id": "mediterranean_diet", "name": "Mediterranean Diet Followers", "sample_size": 320},
-        ]
+        "cohorts": [],
+        "status": "unavailable",
+        "message": "Validated reference cohorts are not installed. No sample sizes, reference profiles or personal comparisons are available.",
     }
 
 if __name__ == "__main__":

@@ -1,5 +1,6 @@
 import { lookupProductNutrition, type ProductStore } from "./products";
 import {
+  catalogueFoods,
   splitMealDescription,
   estimateCatalogueIngredient,
   lookupCatalogueNutrition,
@@ -23,6 +24,12 @@ import {
 } from "../shared/meal-intelligence";
 
 export function resolveLoggedIngredient(input: Ingredient): Ingredient {
+  if(input.catalogue){
+    if(input.product)throw Error("Choose either a catalogue food or a product label.");
+    const food=catalogueFoods.find(f=>f.fdcId===input.catalogue!.fdcId);
+    if(!food||input.grams===null||input.grams<=0||input.grams>3000)throw Error("Review the selected catalogue food and portion.");
+    return {...input,name:food.description.slice(0,120),preparation:food.description.slice(0,120),assumption:"User-selected USDA FNDDS record and gram portion; generic composition estimate."};
+  }
   if (input.product) return input;
   if (lookupSnapshotNutrition([input]).foodMatches.length) return input;
   const broad = estimateCatalogueIngredient(input);
@@ -74,7 +81,8 @@ function mergeNutrition(
 }
 export function lookupLocalNutrition(ingredients: Ingredient[]) {
   const local = ingredients.filter((i) => !i.product);
-  const small = lookupSnapshotNutrition(local);
+  const plain = local.filter(i=>!i.catalogue);
+  const small = lookupSnapshotNutrition(plain);
   const unmatched = local.filter(
     (i) =>
       !small.foodMatches.some(
@@ -83,7 +91,7 @@ export function lookupLocalNutrition(ingredients: Ingredient[]) {
   );
   return mergeNutrition(
     small,
-    local.length,
+    plain.length,
     lookupCatalogueNutrition(unmatched),
     unmatched.length,
     ingredients.length,
@@ -91,7 +99,7 @@ export function lookupLocalNutrition(ingredients: Ingredient[]) {
 }
 const parseSchema = z.object({
   ingredients: z
-    .array(ingredientSchema.omit({ product: true }))
+    .array(ingredientSchema.omit({ product: true, catalogue: true }))
     .min(1)
     .max(20),
   clarificationQuestions: z.array(z.string().max(300)).max(8),
@@ -262,7 +270,7 @@ export async function analyzeMeal(
   const parsed = reviewedIngredients
     ? {
         ingredients: reviewedIngredients.map((i) =>
-          i.grams === null ? i : resolveLoggedIngredient(i),
+          i.grams === null && !i.catalogue ? i : resolveLoggedIngredient(i),
         ),
         clarificationQuestions: [] as string[],
         parser: "rules" as const,
@@ -280,7 +288,7 @@ export async function analyzeMeal(
     if (/Estimated|substitute/i.test(i.assumption))
       parsed.clarificationQuestions.push(`Review ${i.name}: ${i.assumption}`);
   }
-  const explanation = explainFoods(text);
+  const explanation = explainFoods(parsed.ingredients.map(i=>i.name).join(", "));
   let productDetails: MealIntelligence["productDetails"];
   let snapshot = lookupLocalNutrition(parsed.ingredients);
   if (parsed.ingredients.some((i) => i.product) && productContext) {

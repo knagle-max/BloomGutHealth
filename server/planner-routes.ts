@@ -1,3 +1,4 @@
+import { mlServiceTarget } from "./ml-service";
 import { memoryKey } from "../shared/experience";
 import { registerProductRoutes } from "./products";
 import type { Express, RequestHandler } from "express";
@@ -46,6 +47,8 @@ export function registerPlannerRoutes(
   const limited = new Map<string, { at: number; count: number }>();
   app.get("/api/analysis/status", requireAuth, (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
+    let serviceConfigured=false;
+    try{mlServiceTarget("/api/ml/analyze");serviceConfigured=true;}catch{}
     res.json({
       ai: {
         configured: !!(
@@ -62,7 +65,7 @@ export function registerPlannerRoutes(
         offlineJournalFoodCount: 5431,
       },
       microbiome: {
-        serviceConfigured: !!process.env.ML_SERVICE_URL,
+        serviceConfigured,
         validatedFluxModel: false,
       },
       note: "Configured does not mean a provider call has succeeded. Offline planning uses a sourced food snapshot; biological pathways are evidence-linked hypotheses, not simulated metabolite quantities.",

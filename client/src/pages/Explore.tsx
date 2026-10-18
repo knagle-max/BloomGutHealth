@@ -1,3 +1,4 @@
+import { FoodCompositionExplorer } from "@/components/FoodCompositionExplorer";
 import { useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -189,6 +190,7 @@ export default function Explore() {
           </Link>
         ))}
       </div>
+      <FoodCompositionExplorer onSelect={()=>{setFoodId("");setSelected("");window.history.replaceState(null,"","/explore");}} />
       {registry.isLoading && (
         <p role="status">Loading the reviewed relationship model…</p>
       )}
@@ -428,7 +430,7 @@ export default function Explore() {
                 </>
               ) : (
                 <section className="bloom-panel">
-                  <h2>Connection unavailable</h2>
+                  <h2>{selected ? "Connection unavailable" : "Explore the research"}</h2>
                   <p>Choose a reviewed item from the list.</p>
                 </section>
               )}

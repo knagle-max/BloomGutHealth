@@ -10,7 +10,7 @@ import {
 } from "./meal-intelligence";
 import { pathways, evidenceSources } from "./science-coach";
 
-export const PRECISION_VERSION = "precision-2026-10-18.1";
+export const PRECISION_VERSION = "precision-2026-10-18.2";
 export const precisionSources = [
   {
     id: "pnpla3-study",
@@ -773,7 +773,6 @@ export function buildPrecisionReport(
       }[v.rsid],
     };
   });
-  const geneFolate = findings.find((v) => v.rsid === "rs1801133");
   const geneLactase = findings.find((v) => v.rsid === "rs4988235");
   const safetyBlocks: string[] = [];
   if (!context.safetyReviewed)
@@ -838,18 +837,7 @@ export function buildPrecisionReport(
           lowFolate.map((l) => l.id),
           ["mthfr-guidance"],
         );
-      if (
-        geneFolate?.genotype &&
-        geneFolate.genotype !== "--" &&
-        geneFolate.genotype.includes("A") &&
-        /lentil|chickpea|broccoli/i.test(text)
-      )
-        add(
-          2,
-          "MTHFR provides secondary folate-pathway context, not a measured deficiency.",
-          genetics ? [genetics.record.id] : [],
-          ["mthfr-trial", "mthfr-guidance"],
-        );
+      // Genotype education is separate from recommendation priority.
       if (recipe.goals.some((g) => prefs.goals.includes(g)))
         add(10, "Matches your saved microbiome food goals.", [], []);
       for (const fit of goalMealFit([...context.goals, ...prefs.goals], text))
@@ -938,12 +926,7 @@ export function buildPrecisionReport(
         matchedRecordIds.push(...lowFolate.map((l) => l.id));
         sourceIds.push("mthfr-guidance");
       }
-      if (food.folate && geneFolate?.genotype?.includes("A")) {
-        priority += 2;
-        reasons.push("Secondary MTHFR context; not a measured deficiency.");
-        sourceIds.push("mthfr-trial", "mthfr-guidance");
-        if (genetics) matchedRecordIds.push(genetics.record.id);
-      }
+      // Common MTHFR calls remain educational context; no genotype-only food ranking.
       if (
         explanation.pathways.some(
           (p) =>

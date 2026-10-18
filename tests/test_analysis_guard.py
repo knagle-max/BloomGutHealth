@@ -30,8 +30,8 @@ class AnalysisGuardTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(first.metabolites, second.metabolites)
         self.assertEqual(first.bacterial_composition[0]['abundance'], 3.2)
         self.assertIsNone(first.bacterial_composition[0]['genome_data']['gene_count'])
-        self.assertEqual(first.model_version, 'experimental-abundance-v2')
-        self.assertEqual(first.confidence, 0)
+        self.assertEqual(first.model_version, 'reported-abundance-v3')
+        self.assertIsNone(first.confidence)
 
     async def test_csv_import_reads_all_rows_and_preserves_values(self):
         import tempfile

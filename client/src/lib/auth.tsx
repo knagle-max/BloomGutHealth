@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { apiRequest } from './queryClient';
+import { apiRequest, queryClient } from './queryClient';
 
 interface User {
   id: string;
@@ -43,6 +43,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await response.json();
     
     if (data.success) {
+      await queryClient.cancelQueries();
+      queryClient.clear();
       setUser(data.user);
     }
   };
@@ -52,12 +54,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await response.json();
     
     if (data.success) {
+      await queryClient.cancelQueries();
+      queryClient.clear();
       setUser(data.user);
     }
   };
 
   const logout = async () => {
     await apiRequest('POST', '/api/auth/logout', {});
+    await queryClient.cancelQueries();
+    queryClient.clear();
     setUser(null);
     window.location.href = '/login';
   };
