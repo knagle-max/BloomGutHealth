@@ -1,3 +1,4 @@
+import { ExperienceProvider, useExperience } from "@/lib/experience";
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Switch, Route, useLocation, Redirect } from "wouter";
 import { queryClient } from "./lib/queryClient";
@@ -9,6 +10,10 @@ import AppHeader from "@/components/AppHeader";
 import BottomNav from "@/components/BottomNav";
 import AppNavigation from "@/components/AppNavigation";
 import Dashboard from "@/pages/Dashboard";
+const AthleteWorkspace = lazy(() => import("@/pages/AthleteWorkspace"));
+const PlanDay = lazy(() => import("@/pages/PlanDay"));
+const WeeklyReview = lazy(() => import("@/components/WeeklyReview"));
+const SavedMeals = lazy(() => import("@/components/SavedMeals"));
 const LogMeal = lazy(() => import("@/pages/LogMeal"));
 const Upload = lazy(() => import("@/pages/Upload"));
 const Profile = lazy(() => import("@/pages/Profile"));
@@ -57,9 +62,13 @@ function ProfileWrapper({
   );
 }
 
+function HomeExperience() { const {mode,loading}=useExperience(); if(loading)return <main className="science-page" role="status">Loading your workspace…</main>;return mode==="athlete"?<Redirect to="/athlete"/>:<Dashboard/>; }
+function PlannerExperience(){const {mode}=useExperience();return mode==="athlete"?<Redirect to="/athlete/fueling"/>:<MealPlanner/>;}
 function AppContent() {
   const [location] = useLocation();
+  const {mode}=useExperience();
   const { user } = useAuth();
+  useEffect(()=>{document.documentElement.dataset.experience=mode;},[mode]);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
@@ -85,7 +94,7 @@ function AppContent() {
   };
 
   useEffect(() => {
-    const labels: Record<string, string> = { "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
+    const labels: Record<string, string> = { "/athlete":"Training day", "/athlete/fueling":"Athlete fueling", "/athlete/recovery":"Athlete recovery", "/athlete/competition":"Competition", "/plan-day":"Plan my day", "/weekly-review":"Weekly review", "/saved-meals":"Saved meals", "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
     document.title = `${labels[location] || "Welcome"} · Bloom`;
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [location]);
@@ -93,7 +102,7 @@ function AppContent() {
   const showNav = !isAuthPage && user;
 
   return (
-    <div className={showNav ? "app-shell min-h-screen bg-background" : "min-h-screen bg-background"}>
+    <div className={showNav ? `app-shell ${mode === "athlete" ? "athlete-mode" : "everyday-mode"} min-h-screen bg-background` : "min-h-screen bg-background"}>
       {showNav && <a href="#workspace-content" className="skip-link">Skip to content</a>}
       {showNav && (
         <AppHeader
@@ -115,8 +124,13 @@ function AppContent() {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/">
-            {() => <ProtectedRoute component={Dashboard} />}
+            {() => <ProtectedRoute component={HomeExperience} />}
           </Route>
+          <Route path="/athlete/:section"><ProtectedRoute component={AthleteWorkspace}/></Route>
+          <Route path="/athlete"><ProtectedRoute component={AthleteWorkspace}/></Route>
+          <Route path="/plan-day"><ProtectedRoute component={PlanDay}/></Route>
+          <Route path="/weekly-review"><ProtectedRoute component={WeeklyReview}/></Route>
+          <Route path="/saved-meals"><ProtectedRoute component={SavedMeals}/></Route>
           <Route path="/nutrition">
             {() => <ProtectedRoute component={NutritionHistory} />}
           </Route>
@@ -139,7 +153,7 @@ function AppContent() {
             {() => <ProtectedRoute component={PrecisionNutrition} />}
           </Route>
           <Route path="/meal-planner">
-            {() => <ProtectedRoute component={MealPlanner} />}
+            {() => <ProtectedRoute component={PlannerExperience} />}
           </Route>
           <Route path="/insights">
             {() => (
@@ -176,10 +190,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+        <ExperienceProvider>
         <TooltipProvider>
           <AppContent />
           <Toaster />
         </TooltipProvider>
+        </ExperienceProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

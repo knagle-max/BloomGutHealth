@@ -1,3 +1,4 @@
+import { SaveMealButton } from "@/components/SavedMeals";
 import MealAnalysis from "@/components/MealAnalysis";
 import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { explainFoods } from "@shared/meal-intelligence";
@@ -1057,6 +1058,7 @@ export default function NutritionHistory() {
                     >
                       Recalculate nutrition
                     </Button>
+                    <SaveMealButton meal={meal}/>
                     {meal.intelligence && (
                       <details className="mt-3"
                         open={reviewingMealId === meal.id}

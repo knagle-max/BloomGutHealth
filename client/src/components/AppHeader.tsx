@@ -1,3 +1,5 @@
+import { ExperienceModeToggle, useExperience } from "@/lib/experience";
+import { Zap } from "lucide-react";
 import { Moon, Sun, Sprout, Plus, Menu } from "lucide-react";
 import { useState } from "react";
 import { NavigationLinks, navigationGroups } from "./AppNavigation";
@@ -18,21 +20,23 @@ export default function AppHeader({
   onToggleDarkMode,
 }: AppHeaderProps) {
   const [location] = useLocation();
+  const {mode}=useExperience();
   const [menuOpen, setMenuOpen] = useState(false);
-  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || "Log a meal";
+  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || (location.startsWith("/athlete") ? "Athlete performance" : "Log a meal");
   return (
     <header className="bloom-header">
       <div className="bloom-header-inner">
         <Link href="/" className="bloom-brand" aria-label="Bloom home">
           <span className="brand-mark">
-            <Sprout size={25} />
+            {mode === "athlete" ? <span className="athlete-brand-mark"><Sprout size={25}/><Zap size={13}/></span> : <Sprout size={25} />}
           </span>
           <span>
-            bloom<span className="brand-period">.</span>
+            bloom<span className="brand-period">.</span>{mode === "athlete" && <small className="athlete-wordmark">ATHLETE</small>}
           </span>
         </Link>
         <div className="header-context"><span>YOUR WORKSPACE</span><strong>{current}</strong></div>
         <div className="header-actions">
+          <ExperienceModeToggle/>
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild><Button className="mobile-menu-trigger" variant="ghost" size="icon" aria-label="Open navigation"><Menu size={20} /></Button></SheetTrigger>
             <SheetContent side="left" className="mobile-navigation-sheet">

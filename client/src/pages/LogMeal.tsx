@@ -1,3 +1,5 @@
+import FoodCapture from "@/components/FoodCapture";
+import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
 import { nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { useState } from "react";
@@ -180,6 +182,8 @@ export default function LogMeal() {
           </Button>
         </section>
       )}
+      <FoodCapture onDescription={setDescription} onProduct={i=>setProducts(v=>[...v,i].slice(0,10))}/>
+      <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
       <form
         className="bloom-panel space-y-6"
         onSubmit={(e) => {
@@ -363,6 +367,7 @@ export default function LogMeal() {
           </Link>
         </section>
       )}
+      {savedMeal && <SaveMealButton meal={savedMeal}/>}
       {Boolean(savedMeal?.intelligence) && (
         <MealAnalysis
           key={(savedMeal!.intelligence as MealIntelligence).analyzedAt}

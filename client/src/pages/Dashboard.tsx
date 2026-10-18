@@ -211,7 +211,7 @@ export default function Dashboard() {
       </section>
       <div className="workspace-shortcuts">
         {[
-          { path: "/meal-planner", title: "Plan what’s next", description: "Meals that fit the rest of your day", Icon: CalendarDays },
+          { path: "/plan-day", title: "Plan what’s next", description: "Meals that fit the rest of your day", Icon: CalendarDays },
           { path: "/precision", title: "Connect your biology", description: "Genetics, lab results and your goals", Icon: Dna },
           { path: "/microbiome", title: "Understand your gut", description: "Your reports, explained simply", Icon: FlaskConical },
         ].map(({path, title, description, Icon}) => <Link href={path} className="workspace-shortcut" key={path}><Icon size={20} /><div><strong>{title}</strong><span>{description}</span></div><ChevronRight size={16} /></Link>)}

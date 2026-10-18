@@ -64,7 +64,8 @@ app.use((req, res, next) => {
         capturedJsonResponse &&
         !path.startsWith("/api/precision") &&
         !path.startsWith("/api/microbiome") &&
-        !path.startsWith("/api/products")
+        !path.startsWith("/api/products") &&
+        !path.startsWith("/api/experience")
       ) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }

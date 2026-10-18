@@ -1,3 +1,4 @@
+import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
 import { nutritionProducts } from "../shared/schema";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { LabelInput, Product } from "../shared/products";
@@ -39,7 +40,7 @@ import type {
 } from "../shared/precision-nutrition";
 import { eq, and, sql, desc } from "drizzle-orm";
 
-export interface IStorage {
+export interface IStorage extends ExperienceStore {
   getNutritionProducts(userId: string): Promise<Product[]>;
   insertNutritionProduct(userId: string, label: LabelInput): Promise<Product>;
   deleteNutritionProduct(userId: string, id: string): Promise<boolean>;
@@ -441,6 +442,14 @@ export class DatabaseStorage implements IStorage {
     await db.delete(meals).where(eq(meals.id, id));
   }
 
+  private readonly experience = new ExperienceStorage(db);
+  getExperienceSettings: ExperienceStore["getExperienceSettings"] = (id) => this.experience.getExperienceSettings(id);
+  putExperienceSettings: ExperienceStore["putExperienceSettings"] = (id,p) => this.experience.putExperienceSettings(id,p);
+  getExperienceRecords: ExperienceStore["getExperienceRecords"] = (id,kind) => this.experience.getExperienceRecords(id,kind);
+  insertExperienceRecord: ExperienceStore["insertExperienceRecord"] = (id,p) => this.experience.insertExperienceRecord(id,p);
+  updateExperienceRecord: ExperienceStore["updateExperienceRecord"] = (id,r,p) => this.experience.updateExperienceRecord(id,r,p);
+  deleteExperienceRecord: ExperienceStore["deleteExperienceRecord"] = (id,r) => this.experience.deleteExperienceRecord(id,r);
+  clearExperienceData: ExperienceStore["clearExperienceData"] = (id) => this.experience.clearExperienceData(id);
   private readonly precision = new PrecisionStorage(db);
   getPrecisionContext(userId: string) {
     return this.precision.getPrecisionContext(userId);

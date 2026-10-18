@@ -423,7 +423,22 @@ try {
     today.meals.every((m) => m.slot === "dinner" || m.slot === "snack"),
   );
   assert.equal(today.targetSource, "Targets confirmed in this form");
+  assert.equal((await request("/api/experience/settings")).mode,"everyday");
+  await request("/api/experience/settings","PATCH",{mode:"athlete",athlete:{weightKg:70,adult:true,pregnancyNo:true,healthReviewed:true,targetsConfirmed:true}});
+  const training=await request("/api/experience/records","POST",{kind:"session",payload:{title:"Synthetic deployment ride",startsAt:"2026-10-18T18:00:00Z",minutes:180,intensity:"hard",discipline:"endurance"}},201);
+  const athleteDay=await request("/api/experience/athlete-day","POST",{date:"2026-10-18",timezoneOffset:360,hour:18});
+  assert.equal(athleteDay.minutes,180);assert.equal(athleteDay.blocked,false);assert.deepEqual(athleteDay.fueling[0].carbsGHour,[30,60]);
+  const savedMeal=await request("/api/experience/templates/from-meal","POST",{mealId:meal.id,name:"Synthetic saved breakfast"},201);
+  assert.equal((await request("/api/experience/export")).records.length,2);
+  const encryptedExperience=await pool.query("SELECT encrypted_payload::text AS payload FROM experience_records WHERE user_id=$1",[first.id]);
+  assert.equal(encryptedExperience.rows.length,2);assert.ok(encryptedExperience.rows.every(r=>!r.payload.includes("Synthetic")));
+  console.log("PASS: encrypted athlete settings, session fueling and saved-meal persistence on live Neon");
   const second = await addUser();
+  assert.equal((await request("/api/experience/settings")).mode,"everyday");
+  assert.equal((await request("/api/experience/export")).records.length,0);
+  await request(`/api/experience/records/${training.id}`,"DELETE",undefined,404);
+  await request(`/api/experience/templates/${savedMeal.id}/log`,"POST",{servings:1,mealType:"breakfast",eatenAt:"2026-10-18T18:00:00Z"},404);
+
   assert.equal((await request("/api/precision")).labs.length, 0);
   assert.equal((await request("/api/products/saved")).length, 0);
   await request(

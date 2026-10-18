@@ -175,6 +175,7 @@ export default function MealAnalysis({
             <p className="panel-note">{item.assumption}</p>
           </div>
         ))}
+        {onRecalculate && <p className="panel-note">Reviewed corrections are remembered privately for this exact meal description. Manage or forget them in Saved meals.</p>}
         {onRecalculate && (
           <button
             type="button"

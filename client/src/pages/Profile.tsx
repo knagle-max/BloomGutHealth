@@ -1,3 +1,4 @@
+import ExperienceDataControls from "@/components/ExperienceDataControls";
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
@@ -154,6 +155,7 @@ export default function Profile({
         {save.isError && <p role="alert">{save.error.message}</p>}
       </form>
       <DietaryPreferenceEditor />
+      <ExperienceDataControls/>
     </main>
   );
 }

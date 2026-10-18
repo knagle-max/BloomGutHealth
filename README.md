@@ -25,6 +25,10 @@ Before running the revised server against an existing database, apply the **addi
 
 For Python, install `pyproject.toml` dependencies with `uv sync`, then `uv run uvicorn ml_service.main:app --host 127.0.0.1 --port 8000`.
 
+## Everyday and athlete modes
+
+Use the header Experience mode selector for a separate blue Bloom Athlete workspace, training/fueling/recovery/competition tools, and preserved everyday settings. Shared logging, practical next-meal choices and weekly reviews are documented in [ATHLETE_EXPERIENCE.md](ATHLETE_EXPERIENCE.md). The additive `migrations/0004_experience.sql` creates encrypted experience settings/records.
+
 ## Feature map
 
 - `/precision`: 23andMe import with an reviewed seven-marker catalogue, dated bloodwork and measured metabolites, separated microbiome hypotheses, ranked foods/meals, conditional supplement assessments, evidence snapshots and response tracking. Inputs are encrypted and account-scoped. See `PRECISION_NUTRITION.md` for exact scope and scientific limits.

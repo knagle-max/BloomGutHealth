@@ -1,3 +1,4 @@
+import { memoryKey } from "../shared/experience";
 import { registerProductRoutes } from "./products";
 import type { Express, RequestHandler } from "express";
 import { z } from "zod";
@@ -197,10 +198,12 @@ export function registerPlannerRoutes(
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
+      const remembered = !p.data.ingredients && !p.data.products?.length && storage.getExperienceRecords
+        ? (await storage.getExperienceRecords(req.session.userId!, "food-memory")).find(r => r.kind === "food-memory" && r.payload.key === memoryKey(p.data.mealText)) : undefined;
       const result = await analyzer(
         p.data.mealText,
         p.data.aiConsent,
-        p.data.ingredients,
+        p.data.ingredients || (remembered?.kind === "food-memory" ? remembered.payload.ingredients : undefined),
         {
           userId: req.session.userId!,
           store: storage,
@@ -252,8 +255,7 @@ export function registerPlannerRoutes(
           products: p.data.products,
         },
       );
-      res.json(
-        await storage.updateMeal(meal.id, {
+      const updatedMeal = await storage.updateMeal(meal.id, {
           mealText: [
             p.data.mealText,
             ...(p.data.products || []).map(
@@ -270,8 +272,12 @@ export function registerPlannerRoutes(
           intelligence: result.intelligence,
           nutritionalData: result.nutritionalData,
           ...nutritionTotals(result.nutritionalData),
-        }),
-      );
+        });
+      if (p.data.ingredients?.length && storage.insertExperienceRecord) {
+        try { await storage.insertExperienceRecord(req.session.userId!, {kind:"food-memory",payload:{key:memoryKey(p.data.mealText),ingredients:result.intelligence.ingredients}}); }
+        catch { /* A remembered shortcut must never prevent an otherwise saved correction. */ }
+      }
+      res.json(updatedMeal);
     } catch {
       res.status(503).json({ error: "Meal could not update." });
     }

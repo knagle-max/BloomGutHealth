@@ -1,3 +1,4 @@
+import { registerExperienceRoutes } from "./experience-routes";
 import { describeRecordedDiet } from "../shared/diet-observations";
 import { registerReportRoutes } from "./report-routes";
 import {
@@ -38,7 +39,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       (await storage.getUser(userId))?.dietaryPreferences,
   });
   registerPlannerRoutes(app, requireAuth, storage);
-  registerPrecisionRoutes(app, requireAuth, storage);
+  const precisionService = registerPrecisionRoutes(app, requireAuth, storage);
+  registerExperienceRoutes(app, requireAuth, storage, precisionService);
   registerReportRoutes(app, requireAuth, storage);
   // Trigger ML analysis
   app.post(

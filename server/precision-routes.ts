@@ -193,30 +193,9 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
-  app.post("/api/precision/today-plan", async (req, res) => {
-    const parsed = z
-      .object({
-        date: z.string(),
-        timezoneOffset: z.number().int(),
-        hour: z.number().int().min(0).max(23),
-        plan: weeklyRequestSchema.optional(),
-      })
-      .strict()
-      .safeParse(req.body);
-    if (!parsed.success)
-      return res
-        .status(400)
-        .json({
-          error: "Choose a valid local day, time and nutrient targets.",
-        });
-    let bounds;
-    try {
-      bounds = localDayBounds(parsed.data.date, parsed.data.timezoneOffset);
-    } catch {
-      return res.status(400).json({ error: "Invalid local date or timezone." });
-    }
-    try {
-      const id = req.session.userId!,
+  async function todayPlanFor(userId: string, input: { date: string; timezoneOffset: number; hour: number; plan?: import("../shared/weekly-planner").WeeklyRequest }) {
+    const bounds = localDayBounds(input.date, input.timezoneOffset);
+      const id = userId,
         [user, records, meals, report] = await Promise.all([
           store.getUser(id),
           store.getPrecisionRecords(id),
@@ -279,8 +258,8 @@ export function registerPrecisionRoutes(
           },
         },
       });
-      const request = parsed.data.plan || (saved.success ? saved.data : base),
-        targetSource = parsed.data.plan
+      const request = input.plan || (saved.success ? saved.data : base),
+        targetSource = input.plan
           ? "Targets confirmed in this form"
           : saved.success
             ? "Latest saved weekly-plan targets"
@@ -295,19 +274,44 @@ export function registerPrecisionRoutes(
       );
       const result = buildTodayPlan(
         today,
-        parsed.data.hour,
+        input.hour,
         prefs.success ? prefs.data : defaultPreferences,
         report,
         request,
       );
-      if (!parsed.data.plan && !saved.success && !profileComplete) {
+      if (!input.plan && !saved.success && !profileComplete) {
         result.meals = [];
         result.status = "needs-context";
         result.warnings.unshift(
           "Set and confirm your daily targets below. Example targets are not a prescription.",
         );
       }
-      res.json({ ...result, targetSource });
+      return { ...result, targetSource };
+  }
+  app.post("/api/precision/today-plan", async (req, res) => {
+    const parsed = z
+      .object({
+        date: z.string(),
+        timezoneOffset: z.number().int(),
+        hour: z.number().int().min(0).max(23),
+        plan: weeklyRequestSchema.optional(),
+      })
+      .strict()
+      .safeParse(req.body);
+    if (!parsed.success)
+      return res
+        .status(400)
+        .json({
+          error: "Choose a valid local day, time and nutrient targets.",
+        });
+    let bounds;
+    try {
+      bounds = localDayBounds(parsed.data.date, parsed.data.timezoneOffset);
+    } catch {
+      return res.status(400).json({ error: "Invalid local date or timezone." });
+    }
+    try {
+      res.json(await todayPlanFor(req.session.userId!, parsed.data));
     } catch (e) {
       unavailable(res, e);
     }
@@ -591,4 +595,5 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
+  return { reportFor, todayPlanFor };
 }

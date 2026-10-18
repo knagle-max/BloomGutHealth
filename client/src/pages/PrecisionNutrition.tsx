@@ -1,3 +1,4 @@
+import { useExperience } from "@/lib/experience";
 import TodayPlanner from "@/components/TodayPlanner";
 import QuickLabEntry from "@/components/QuickLabEntry";
 import { recipePreparation } from "@shared/recipe-preparation";
@@ -175,6 +176,7 @@ function ContextEditor({
   );
 }
 export default function PrecisionNutrition() {
+  const {mode}=useExperience();
   const [tab, setTab] = useState("overview"),
     [sampleId, setSampleId] = useState("");
   const [status, setStatus] = useState(""),
@@ -1097,7 +1099,7 @@ export default function PrecisionNutrition() {
                     </p>
                   )}
                 </section>
-                <TodayPlanner />
+                {mode === "athlete" ? <Link className="hero-button" href="/athlete/fueling">Open athlete fueling & targets</Link> : <TodayPlanner />}
                 <section className="bloom-panel">
                   <h2>Complete meals for your priorities</h2>
                   <p className="panel-note">

@@ -1,0 +1,8 @@
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { apiRequest } from "@/lib/queryClient";
+import { refreshExperience } from "@/lib/experience";
+import { WorkspaceExport } from "./WeeklyReview";
+export default function ExperienceDataControls(){const[confirm,setConfirm]=useState(""),[,navigate]=useLocation();const remove=useMutation({mutationFn:async()=>{const r=await fetch("/api/experience",{method:"DELETE",credentials:"include",headers:{"x-bloom-confirm":"delete-experience-data"}});if(!r.ok)throw Error("Experience data could not be deleted.");},onSuccess:()=>{refreshExperience();navigate("/");}});return <details className="bloom-panel workspace-disclosure"><summary>Training, saved meals & experience privacy</summary><WorkspaceExport/><p className="panel-note">The private export includes athlete settings, training, check-ins, saved meals, remembered corrections and supplement-review records. Images are not retained. You decide whether to share the export.</p><details><summary>Delete experience records</summary><p>This deletes athlete settings, practical planning preferences, sessions, check-ins, saved meals and remembered corrections. Journal meals and precision biology records have separate controls.</p><label className="block">Type DELETE EXPERIENCE to confirm<input className="bloom-input w-full" value={confirm} onChange={e=>setConfirm(e.target.value)}/></label><Button variant="destructive" disabled={confirm!=="DELETE EXPERIENCE"||remove.isPending} onClick={()=>remove.mutate()}>Delete experience records</Button>{remove.error&&<p role="alert">{remove.error.message}</p>}</details></details>;}

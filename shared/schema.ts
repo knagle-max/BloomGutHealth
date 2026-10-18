@@ -338,3 +338,16 @@ export const nutritionProducts = pgTable(
   },
   (table) => [index("nutrition_products_user_idx").on(table.userId)],
 );
+
+// Everyday preferences and athlete records are separate from precision interpretation.
+export const experienceSettings = pgTable("experience_settings", {
+  userId: varchar("user_id").primaryKey().references(() => users.id, {onDelete:"cascade"}),
+  encryptedPayload: jsonb("encrypted_payload").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+export const experienceRecords = pgTable("experience_records", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => users.id, {onDelete:"cascade"}),
+  kind: text("kind").notNull(), encryptedPayload: jsonb("encrypted_payload").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(), updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, table => [index("experience_records_user_kind_idx").on(table.userId, table.kind)]);
