@@ -1,4 +1,5 @@
 import data from "./data/planning-foods.json";
+import loggingData from "./data/logging-foods.json";
 import {
   type Ingredient,
   type MealIntelligence,
@@ -17,6 +18,7 @@ export type SnapshotFood = {
   per100g: Record<string, number | undefined>;
 };
 export const snapshotFoods: SnapshotFood[] = data;
+export const loggingFoods: SnapshotFood[] = loggingData;
 const normalized = (s: string) =>
   s
     .toLowerCase()
@@ -31,7 +33,7 @@ export function lookupSnapshotNutrition(ingredients: Ingredient[]) {
   }> = [];
   for (const ingredient of ingredients) {
     if (ingredient.grams === null) continue;
-    const food = snapshotFoods.find(
+    const food = [...snapshotFoods, ...loggingFoods].find(
       (f) =>
         normalized(f.name) === normalized(ingredient.name) ||
         normalized(f.description) === normalized(ingredient.name),
@@ -49,14 +51,14 @@ export function lookupSnapshotNutrition(ingredients: Ingredient[]) {
       fdcId: food.fdcId,
       description: food.description,
       url: food.url,
-      needsConfirmation: false,
+      needsConfirmation: /Estimated|substitute/i.test(ingredient.assumption),
     });
   }
   return {
     nutrients: scaleDatabaseNutrients(scaled, ingredients.length),
     foodMatches: matches,
     warnings: [
-      "Sourced USDA SR Legacy snapshot (2026-10-17); only exact named preparation matches are used. Products and added ingredients can differ.",
+      "Sourced USDA SR Legacy records, retrieved 2026-10-17/18. Portions and generic food substitutions may be estimated; review assumptions. Products, marinades and added salt can differ.",
       ...(matches.length < ingredients.length
         ? [
             "Some ingredients have no exact snapshot match. A live nutrition key or a supported prepared-food name is needed; missing nutrients are not zero.",

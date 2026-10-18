@@ -1,3 +1,4 @@
+import { summarizeMealNutrition } from "@shared/nutrition-summary";
 export interface LoggedMeal {
   id: string;
   mealText: string;
@@ -16,23 +17,14 @@ export function dailyMealSummary(meals: LoggedMeal[], now = new Date()) {
   const today = meals
     .filter((meal) => dateKey(new Date(meal.loggedAt)) === dateKey(now))
     .sort((a, b) => +new Date(b.loggedAt) - +new Date(a.loggedAt));
+  const totals = summarizeMealNutrition(today);
   return {
     meals: today,
     nutritionUnavailable: today.filter((meal) => meal.totalCalories === null)
       .length,
-    calories: today.reduce((sum, meal) => sum + (meal.totalCalories || 0), 0),
-    protein: today.reduce((sum, meal) => sum + (meal.totalProtein || 0), 0),
-    fiber: today.reduce(
-      (sum, meal) =>
-        sum +
-        (Array.isArray(meal.nutritionalData)
-          ? meal.nutritionalData.reduce(
-              (total: number, item) => total + (Number(item?.fiber_g) || 0),
-              0,
-            )
-          : 0),
-      0,
-    ),
+    calories: totals.calories,
+    protein: totals.protein,
+    fiber: totals.fiber,
   };
 }
 

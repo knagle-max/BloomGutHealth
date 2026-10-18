@@ -6,6 +6,7 @@ import {
   recommendMeals,
   cohortResearch,
   mealContextSchema,
+  ingredientSchema,
   recipes,
 } from "../shared/meal-intelligence";
 import { pathways, evidenceSources } from "../shared/science-coach";
@@ -18,6 +19,7 @@ const requestSchema = z
     mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]).optional(),
     mealContext: mealContextSchema.optional(),
     aiConsent: z.boolean().default(false),
+    ingredients: z.array(ingredientSchema.strict()).min(1).max(20).optional(),
   })
   .strict();
 export function registerPlannerRoutes(
@@ -158,7 +160,9 @@ export function registerPlannerRoutes(
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
-      res.json(await analyzer(p.data.mealText, p.data.aiConsent));
+      res.json(
+        await analyzer(p.data.mealText, p.data.aiConsent, p.data.ingredients),
+      );
     } catch {
       res
         .status(503)
@@ -173,7 +177,11 @@ export function registerPlannerRoutes(
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
-      const result = await analyzer(p.data.mealText, p.data.aiConsent);
+      const result = await analyzer(
+        p.data.mealText,
+        p.data.aiConsent,
+        p.data.ingredients,
+      );
       const meal = await storage.insertMeal({
         userId: req.session.userId!,
         mealText: p.data.mealText,
@@ -202,7 +210,11 @@ export function registerPlannerRoutes(
       if (!meal) return res.status(404).json({ error: "Meal not found" });
       if (meal.userId !== req.session.userId)
         return res.status(403).json({ error: "Access denied" });
-      const result = await analyzer(p.data.mealText, p.data.aiConsent);
+      const result = await analyzer(
+        p.data.mealText,
+        p.data.aiConsent,
+        p.data.ingredients,
+      );
       res.json(
         await storage.updateMeal(meal.id, {
           mealText: p.data.mealText,

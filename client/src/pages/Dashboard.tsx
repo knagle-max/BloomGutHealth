@@ -112,7 +112,11 @@ export default function Dashboard() {
           Import supported 23andMe variants, add lab results and connect your
           microbiome reports to food recommendations, saved plans and progress.
         </p>
-        <Link href="/precision" className="text-link" data-testid="dashboard-precision">
+        <Link
+          href="/precision"
+          className="text-link"
+          data-testid="dashboard-precision"
+        >
           Open precision nutrition <ArrowRight size={17} />
         </Link>
       </section>
@@ -147,7 +151,7 @@ export default function Dashboard() {
             },
             {
               label: "Dietary fiber",
-              value: summary.fiber.toFixed(1),
+              value: summary.fiber?.toFixed(1) ?? "Unavailable",
               unit: "g",
               icon: Leaf,
               note: "From logged meals",
@@ -155,7 +159,7 @@ export default function Dashboard() {
             },
             {
               label: "Protein",
-              value: summary.protein.toFixed(0),
+              value: summary.protein?.toFixed(0) ?? "Unavailable",
               unit: "g",
               icon: Sprout,
               note: "From logged meals",
@@ -163,7 +167,7 @@ export default function Dashboard() {
             },
             {
               label: "Energy",
-              value: summary.calories.toFixed(0),
+              value: summary.calories?.toFixed(0) ?? "Unavailable",
               unit: "kcal",
               icon: FlaskConical,
               note: "Estimated from your entries",
@@ -326,7 +330,9 @@ export default function Dashboard() {
                   <h3>{meal.mealText}</h3>
                 </div>
                 <span className="meal-calories">
-                  {Math.round(meal.totalCalories || 0)} kcal
+                  {meal.totalCalories == null
+                    ? "Unavailable"
+                    : `${Math.round(meal.totalCalories)} kcal`}
                 </span>
                 <ChevronRight size={17} />
               </Link>

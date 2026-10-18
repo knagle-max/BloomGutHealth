@@ -9,7 +9,11 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import MealAnalysis from "@/components/MealAnalysis";
-import { recipes, type MealIntelligence } from "@shared/meal-intelligence";
+import {
+  recipes,
+  type Ingredient,
+  type MealIntelligence,
+} from "@shared/meal-intelligence";
 import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
@@ -74,6 +78,26 @@ export default function LogMeal() {
             : "Your nutrition overview is up to date.",
       });
     },
+  });
+  const recalculate = useMutation({
+    mutationFn: async (ingredients: Ingredient[]) =>
+      (await (
+        await apiRequest("PUT", `/api/meals/${savedMeal!.id}`, {
+          mealText: savedMeal!.mealText,
+          ingredients,
+        })
+      ).json()) as Meal,
+    onSuccess: (meal) => {
+      setSavedMeal(meal);
+      queryClient.invalidateQueries();
+      toast({ title: "Nutrition recalculated" });
+    },
+    onError: (error) =>
+      toast({
+        title: "Could not recalculate",
+        description: error.message,
+        variant: "destructive",
+      }),
   });
   return (
     <main className="meal-page">
@@ -144,7 +168,8 @@ export default function LogMeal() {
           </div>
           <p className="panel-note">
             Portion labels are saved as context; they do not automatically
-            multiply nutrients. Include food weights for calculations.
+            multiply nutrients. Common portions can be estimated; review and
+            correct the calculated gram amounts after saving.
           </p>
           <fieldset className="space-y-3">
             <legend>Optional symptom check-in</legend>
@@ -231,14 +256,25 @@ export default function LogMeal() {
           {savedMeal.totalCalories !== null ? (
             <div className="saved-nutrients">
               <span>
-                <strong>{Math.round(savedMeal.totalCalories || 0)}</strong> kcal
+                <strong>{Math.round(savedMeal.totalCalories!)}</strong> kcal
               </span>
               <span>
-                <strong>{Math.round(savedMeal.totalProtein || 0)}g</strong>{" "}
+                <strong>
+                  {savedMeal.totalProtein == null
+                    ? "—"
+                    : Math.round(savedMeal.totalProtein)}
+                  g
+                </strong>{" "}
                 protein
               </span>
               <span>
-                <strong>{Math.round(savedMeal.totalCarbs || 0)}g</strong> carbs
+                <strong>
+                  {savedMeal.totalCarbs == null
+                    ? "—"
+                    : Math.round(savedMeal.totalCarbs)}
+                  g
+                </strong>{" "}
+                carbs
               </span>
             </div>
           ) : (
@@ -254,7 +290,12 @@ export default function LogMeal() {
         </section>
       )}
       {Boolean(savedMeal?.intelligence) && (
-        <MealAnalysis analysis={savedMeal!.intelligence as MealIntelligence} />
+        <MealAnalysis
+          key={(savedMeal!.intelligence as MealIntelligence).analyzedAt}
+          analysis={savedMeal!.intelligence as MealIntelligence}
+          onRecalculate={(ingredients) => recalculate.mutate(ingredients)}
+          pending={recalculate.isPending}
+        />
       )}
       <p className="panel-note text-center">
         Nutrition values are estimates from the nutrition provider.

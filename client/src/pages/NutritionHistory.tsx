@@ -345,7 +345,7 @@ export default function NutritionHistory() {
       });
 
       toast({
-        title: "Meal updated successfully!",
+        title: "Meal nutrition updated",
       });
 
       setFoodDescription("");
@@ -468,8 +468,10 @@ export default function NutritionHistory() {
     potassium: 3500,
   };
 
-  const calculatePercentage = (current: number, target: number) => {
-    if (!target) return 0;
+  const showAmount = (value: number | null | undefined) =>
+    value == null ? "Unavailable" : Math.round(value);
+  const calculatePercentage = (current: number | null, target: number) => {
+    if (!target || current == null) return 0;
     return Math.min((current / target) * 100, 100);
   };
 
@@ -579,7 +581,7 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
                 >
-                  {Math.round(totals.calories || 0)} /{" "}
+                  {showAmount(totals.calories)} /{" "}
                   {nutrientTargets.calories || 2000}
                 </span>
                 <Badge
@@ -618,7 +620,7 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
                 >
-                  {Math.round(totals.protein || 0)}g /{" "}
+                  {showAmount(totals.protein)}g /{" "}
                   {nutrientTargets.protein || 120}g
                 </span>
                 <Badge
@@ -656,8 +658,7 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
                 >
-                  {Math.round(totals.carbs || 0)}g /{" "}
-                  {nutrientTargets.carbs || 225}g
+                  {showAmount(totals.carbs)}g / {nutrientTargets.carbs || 225}g
                 </span>
                 <Badge
                   variant="outline"
@@ -685,7 +686,7 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
                 >
-                  {Math.round(totals.fat || 0)}g / {nutrientTargets.fat || 67}g
+                  {showAmount(totals.fat)}g / {nutrientTargets.fat || 67}g
                 </span>
                 <Badge
                   variant="outline"
@@ -712,27 +713,27 @@ export default function NutritionHistory() {
               <div>
                 <p className="text-xs text-muted-foreground">Fiber</p>
                 <p className="text-sm font-medium">
-                  {Math.round(totals.fiber || 0)}g / {nutrientTargets.fiber}g
+                  {showAmount(totals.fiber)}g / {nutrientTargets.fiber}g
                 </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Sugar</p>
                 <p className="text-sm font-medium">
-                  {Math.round(totals.sugar || 0)}g / {nutrientTargets.sugar}g
+                  {showAmount(totals.sugar)}g / {nutrientTargets.sugar}g
                 </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Sodium</p>
                 <p className="text-sm font-medium">
-                  {Math.round(totals.sodium || 0)}mg / {nutrientTargets.sodium}
+                  {showAmount(totals.sodium)}mg / {nutrientTargets.sodium}
                   mg
                 </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Potassium</p>
                 <p className="text-sm font-medium">
-                  {Math.round(totals.potassium || 0)}mg /{" "}
-                  {nutrientTargets.potassium}mg
+                  {showAmount(totals.potassium)}mg / {nutrientTargets.potassium}
+                  mg
                 </p>
               </div>
             </div>
@@ -1037,11 +1038,40 @@ export default function NutritionHistory() {
                         ))}
                       </details>
                     )}
+                    <Button
+                      className="mt-3"
+                      variant="outline"
+                      disabled={updateMealMutation.isPending}
+                      onClick={() =>
+                        updateMealMutation.mutate({
+                          mealId: meal.id,
+                          data: {
+                            mealText: meal.mealText,
+                            ...(meal.intelligence?.portionModelVersion ===
+                            "2026-10-18"
+                              ? { ingredients: meal.intelligence.ingredients }
+                              : {}),
+                          },
+                        })
+                      }
+                    >
+                      Recalculate nutrition
+                    </Button>
                     {meal.intelligence && (
                       <details className="mt-3">
                         <summary>Nutrition & gut pathway explanation</summary>
                         <MealAnalysis
+                          key={
+                            (meal.intelligence as MealIntelligence).analyzedAt
+                          }
                           analysis={meal.intelligence as MealIntelligence}
+                          pending={updateMealMutation.isPending}
+                          onRecalculate={(ingredients) =>
+                            updateMealMutation.mutate({
+                              mealId: meal.id,
+                              data: { mealText: meal.mealText, ingredients },
+                            })
+                          }
                         />
                       </details>
                     )}

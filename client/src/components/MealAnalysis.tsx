@@ -1,9 +1,17 @@
+import { useState } from "react";
+import type { Ingredient } from "@shared/meal-intelligence";
 import type { MealIntelligence } from "@shared/meal-intelligence";
 export default function MealAnalysis({
   analysis,
+  onRecalculate,
+  pending = false,
 }: {
   analysis: MealIntelligence;
+  onRecalculate?: (ingredients: Ingredient[]) => void;
+  pending?: boolean;
 }) {
+  const [edits, setEdits] = useState<Ingredient[] | null>(null);
+  const ingredients = edits ?? analysis.ingredients;
   return (
     <section className="bloom-panel space-y-4">
       <h2>Nutrition & gut pathways</h2>
@@ -13,6 +21,109 @@ export default function MealAnalysis({
           ? "AI ingredient interpretation"
           : "Description-based interpretation"}
       </p>
+      <details open>
+        <summary>Review foods & estimated portions</summary>
+        <p className="panel-note">
+          Working estimates, not measured intake. Check the amount you ate, meat
+          cut, dressing and cooking fat. Unknown brand, salt and marinade can
+          change nutrients substantially.
+        </p>
+        {ingredients.map((item, index) => (
+          <div className="border-t py-3 space-y-2" key={index}>
+            {onRecalculate ? (
+              <>
+                <label className="block">
+                  Food
+                  <input
+                    className="bloom-input w-full"
+                    aria-label={`Food ${index + 1}`}
+                    maxLength={120}
+                    value={item.name}
+                    onChange={(e) =>
+                      setEdits(
+                        ingredients.map((v, i) =>
+                          i === index
+                            ? {
+                                ...v,
+                                name: e.target.value,
+                                assumption:
+                                  "User-edited food; review database match",
+                              }
+                            : v,
+                        ),
+                      )
+                    }
+                  />
+                </label>
+                <label className="block">
+                  Amount eaten (g)
+                  <input
+                    className="bloom-input w-full"
+                    type="number"
+                    min="0.1"
+                    max="3000"
+                    step="any"
+                    aria-label={`Grams ${index + 1}`}
+                    value={item.grams ?? ""}
+                    onChange={(e) =>
+                      setEdits(
+                        ingredients.map((v, i) =>
+                          i === index
+                            ? {
+                                ...v,
+                                grams: e.target.value
+                                  ? Number(e.target.value)
+                                  : null,
+                                assumption:
+                                  "User-edited portion; generic composition record may differ from product",
+                              }
+                            : v,
+                        ),
+                      )
+                    }
+                  />
+                </label>
+                <button
+                  type="button"
+                  className="text-link"
+                  disabled={pending}
+                  onClick={() =>
+                    setEdits(ingredients.filter((_, i) => i !== index))
+                  }
+                >
+                  Remove {item.name}
+                </button>
+              </>
+            ) : (
+              <p>
+                {item.name}:{" "}
+                {item.grams === null ? "Amount unknown" : `${item.grams} g`}
+              </p>
+            )}
+            <p className="panel-note">{item.assumption}</p>
+          </div>
+        ))}
+        {onRecalculate && (
+          <button
+            type="button"
+            className="hero-button"
+            disabled={
+              pending ||
+              !ingredients.length ||
+              ingredients.some(
+                (i) =>
+                  !i.name.trim() ||
+                  (i.grams !== null && (!(i.grams > 0) || i.grams > 3000)),
+              )
+            }
+            onClick={() => onRecalculate(ingredients)}
+          >
+            {pending
+              ? "Recalculating…"
+              : "Save corrected portions & recalculate"}
+          </button>
+        )}
+      </details>
       {analysis.clarificationQuestions.length > 0 && (
         <div>
           <h3>Improve this estimate</h3>
@@ -22,8 +133,8 @@ export default function MealAnalysis({
             ))}
           </ul>
           <p className="panel-note">
-            Edit the meal description with ingredient weights and preparation,
-            then save again.
+            Review the foods and amounts above, or edit the original meal
+            description and save again.
           </p>
         </div>
       )}

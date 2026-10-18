@@ -1,3 +1,4 @@
+import { summarizeMealNutrition } from "../shared/nutrition-summary";
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
@@ -80,12 +81,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/microbiome/import", requireAuth, async (req, res) => {
     const parsed = abundanceSchema.safeParse(req.body?.bacteria_percentages);
     if (!parsed.success)
-      return res
-        .status(400)
-        .json({
-          error:
-            "Provide distinct taxa with finite percentages from 0 to 100, summing to at most 100.",
-        });
+      return res.status(400).json({
+        error:
+          "Provide distinct taxa with finite percentages from 0 to 100, summing to at most 100.",
+      });
     const date = new Date(req.body.testDate || Date.now());
     if (!Number.isFinite(+date))
       return res.status(400).json({ error: "Invalid test date" });
@@ -133,11 +132,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await storage
           .updateMicrobiomeSample(sampleId, { processingStatus: "failed" })
           .catch(() => {});
-      res
-        .status(503)
-        .json({
-          error: "Report could not import; retry after checking the service.",
-        });
+      res.status(503).json({
+        error: "Report could not import; retry after checking the service.",
+      });
     }
   });
   // Microbiome sample upload endpoint
@@ -186,11 +183,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Save to database
         if (!mlResponse.ok) {
-          return res
-            .status(mlResponse.status)
-            .json({
-              error: mlResult.detail || "Unable to process this test file",
-            });
+          return res.status(mlResponse.status).json({
+            error: mlResult.detail || "Unable to process this test file",
+          });
         }
         const sample = await storage.insertMicrobiomeSample({
           userId,
@@ -561,37 +556,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return mealDate >= startOfDay && mealDate <= endOfDay;
       });
 
-      const totals = dailyMeals.reduce(
-        (acc, meal) => {
-          acc.calories += meal.totalCalories || 0;
-          acc.protein += meal.totalProtein || 0;
-          acc.carbs += meal.totalCarbs || 0;
-          acc.fat += meal.totalFat || 0;
-
-          if (meal.nutritionalData && Array.isArray(meal.nutritionalData)) {
-            for (const item of meal.nutritionalData as any[]) {
-              acc.fiber += item.fiber_g || 0;
-              acc.sugar += item.sugar_g || 0;
-              acc.sodium += item.sodium_mg || 0;
-              acc.potassium += item.potassium_mg || 0;
-              acc.cholesterol += item.cholesterol_mg || 0;
-            }
-          }
-
-          return acc;
-        },
-        {
-          calories: 0,
-          protein: 0,
-          carbs: 0,
-          fat: 0,
-          fiber: 0,
-          sugar: 0,
-          sodium: 0,
-          potassium: 0,
-          cholesterol: 0,
-        },
-      );
+      const totals = summarizeMealNutrition(dailyMeals);
 
       res.json({ meals: dailyMeals, totals });
     } catch (error: any) {
@@ -1272,8 +1237,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(403).json({ error: "Access denied" });
         }
 
-        const { matchMealToRecommendations } =
-          await import("../shared/health-calculations");
+        const { matchMealToRecommendations } = await import(
+          "../shared/health-calculations"
+        );
 
         const {
           identifyBacterialGaps,
