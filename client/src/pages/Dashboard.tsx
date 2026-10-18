@@ -68,12 +68,7 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <TodayFocus/>
-      <section className="daily-welcome" aria-label="Your next step">
-        <div><span className="welcome-icon"><Utensils size={23} /></span><div><h2>What’s on your plate today?</h2><p>Log a meal to keep your nutrition and meal suggestions up to date.</p></div></div>
-        <Link href="/log-meal" className="hero-button">Log a meal <Plus size={18} /></Link>
-      </section>
-
+      <TodayFocus mealCount={summary.meals.length} loading={meals.isLoading} />
       <div className="section-heading">
         <div>
           <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
@@ -219,6 +214,7 @@ export default function Dashboard() {
         ].map(({path, title, description, Icon}) => <Link href={path} className="workspace-shortcut" key={path}><Icon size={20} /><div><strong>{title}</strong><span>{description}</span></div><ChevronRight size={16} /></Link>)}
       </div>
 
+      <details className="bloom-panel workspace-disclosure"><summary>Logging history & gut reports</summary>
       <div className="dashboard-columns">
         <section className="bloom-panel" aria-labelledby="consistency-title">
           <div className="panel-heading">
@@ -323,6 +319,7 @@ export default function Dashboard() {
         </section>
       </div>
 
+      </details>
       {summary.nutritionUnavailable > 0 && (
         <p className="panel-note">
           {summary.nutritionUnavailable} meal(s) need nutrition estimates.

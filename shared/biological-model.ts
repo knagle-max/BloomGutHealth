@@ -430,6 +430,12 @@ export function assessFood(
   });
   return {
     version: registry.version,
+    interpretation: {
+      claimKind: "inferred-association",
+      observationProvenance: "User-entered records; not independently verified",
+      scientificReviewStatus: "pending-independent-review",
+      personalEffectsPredicted: false,
+    },
     food: entity,
     decision: conflicts.length
       ? "Does not fit your saved restrictions"

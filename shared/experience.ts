@@ -66,7 +66,26 @@ export const experimentSchema = z.object({
   startsOn: dateKey, endsOn: dateKey, action: z.string().trim().min(1).max(1000),
   outcome: z.string().trim().min(1).max(300), rationale: optionalText,
   status: z.enum(["planned", "active", "completed"]).default("planned"), reflection: optionalText,
-}).strict().refine(v => v.endsOn >= v.startsOn && (Date.parse(v.endsOn)-Date.parse(v.startsOn))/86400000 <= 90, "Choose an experiment of 0–90 days");
+  design: z.object({
+    baselineStartsOn: dateKey, baselineEndsOn: dateKey,
+    metricUnit: z.string().trim().min(1).max(50), measurementMethod: z.string().trim().min(1).max(300),
+    expectedDirection: z.enum(["increase", "decrease", "observe"]),
+    confoundersToTrack: z.string().trim().min(1).max(1000),
+  }).strict().nullable().default(null),
+  observations: z.array(z.object({
+    date: dateKey, value: z.number().finite().min(-1e9).max(1e9),
+    adherence: z.number().int().min(0).max(100).nullable(),
+    confounders: z.string().trim().max(1000),
+  }).strict()).max(180).default([]),
+}).strict().refine(v => v.endsOn >= v.startsOn && (Date.parse(v.endsOn)-Date.parse(v.startsOn))/86400000 <= 90, "Choose an experiment of 0–90 days").superRefine((v,ctx)=>{
+  if (!v.design && v.observations.length) ctx.addIssue({code:"custom",message:"Define a measurement method and baseline before entering observations"});
+  if(v.design) {
+    if(v.design.baselineStartsOn > v.design.baselineEndsOn || v.design.baselineEndsOn >= v.startsOn || Date.parse(v.design.baselineEndsOn)-Date.parse(v.design.baselineStartsOn)>90*86400000)
+      ctx.addIssue({code:"custom",message:"Choose a baseline of at most 90 days ending before the intervention"});
+    if(new Set(v.observations.map(o=>o.date)).size !== v.observations.length || v.observations.some(o=>!(o.date>=v.design!.baselineStartsOn&&o.date<=v.design!.baselineEndsOn)&&!(o.date>=v.startsOn&&o.date<=v.endsOn)))
+      ctx.addIssue({code:"custom",message:"Use one observation per day within the baseline or intervention period"});
+  }
+});
 export const competitionSchema = z.object({
   name: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
   minutes: z.number().int().min(1).max(600), travel: optionalText, access: optionalText,

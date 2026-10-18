@@ -138,8 +138,8 @@ export default function Upload() {
       </div>
       {!showManualEntry && <FileUploadZone
         onFileSelect={setFile}
-        acceptedFormats={["JSON", "CSV", "FASTQ", "FASTA", "FA", "FQ"]}
-        maxSizeMB={100}
+        acceptedFormats={["JSON", "CSV"]}
+        maxSizeMB={2}
       />}
       <div className="report-paste-section">
         {showManualEntry && (

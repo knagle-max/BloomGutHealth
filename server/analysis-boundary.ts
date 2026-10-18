@@ -11,3 +11,9 @@ export function reportedAbundanceAnalysis(sampleId:string,reported:unknown){
 }
 /** Retain historical metadata without returning unsupported numerical effect payloads. */
 export function historicalAnalysisMetadata(analyses:any[]){return analyses.map(a=>({id:a.id,sampleId:a.sampleId,analysisType:a.analysisType,modelVersion:a.modelVersion,createdAt:a.createdAt,confidence:null,results:null,interpretationStatus:"historical_model_outputs_withheld",limitation}));}
+
+/** Historical original file paths are server metadata, never browser API fields. */
+export function publicSample<T extends { rawDataPath?: unknown }>(sample:T) {
+  const {rawDataPath: _privatePath, ...visible}=sample;
+  return visible;
+}

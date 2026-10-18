@@ -15,11 +15,10 @@ export const navigationGroups = [
     { path: "/precision", label: "My biology", icon: Dna },
     { path: "/microbiome", label: "Gut reports", icon: Activity },
     { path: "/insights", label: "Diet coach", icon: BookOpen },
-    { path: "/health-insights", label: "More progress & insights", icon: TrendingUp },
   ] },
   { label: "Manage", items: [
     { path: "/upload", label: "Add a gut report", icon: Upload },
-    { path: "/profile", label: "Profile & settings", icon: UserRound },
+    { path: "/profile", label: "Profile, privacy & export", icon: UserRound },
   ] },
 ];
 export function NavigationLinks({ onNavigate }: { onNavigate?: () => void }) {

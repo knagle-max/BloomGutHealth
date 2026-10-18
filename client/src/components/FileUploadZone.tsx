@@ -12,6 +12,7 @@ export default function FileUploadZone({
   acceptedFormats = ['PDF', 'CSV', 'TXT', 'JSON'],
   maxSizeMB = 10 
 }: FileUploadZoneProps) {
+  const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
@@ -44,6 +45,10 @@ export default function FileUploadZone({
   };
 
   const handleFile = (file: File) => {
+    setError("");
+    const extension = file.name.split(".").pop()?.toUpperCase();
+    if (!extension || !acceptedFormats.includes(extension)) { setError(`Choose ${acceptedFormats.join(" or ")} format.`); return; }
+    if (file.size > maxSizeMB * 1024 * 1024) { setError(`Choose a file no larger than ${maxSizeMB} MB.`); return; }
     setUploadedFile(file);
     onFileSelect(file);
   };
@@ -66,14 +71,14 @@ export default function FileUploadZone({
       <input
         type="file"
         onChange={handleFileInput}
-        className="hidden"
+        className="sr-only peer"
         id="file-upload"
         accept={acceptedFormats.map(f => `.${f.toLowerCase()}`).join(',')}
         data-testid="input-file"
       />
       <label 
         htmlFor="file-upload" 
-        className="flex flex-col items-center gap-3 cursor-pointer"
+        className="flex flex-col items-center gap-3 cursor-pointer peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-primary"
       >
         {uploadedFile ? (
           <>
@@ -102,6 +107,7 @@ export default function FileUploadZone({
           </>
         )}
       </label>
+      {error && <p role="alert" className="mt-3">{error}</p>}
     </div>
   );
 }

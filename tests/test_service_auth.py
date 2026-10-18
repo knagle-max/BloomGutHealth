@@ -33,6 +33,16 @@ class ServiceAuthenticationTest(unittest.TestCase):
             self.assertNotIn("access-control-allow-origin", response.headers)
             self.assertEqual(self.client.post("/api/ml/analyze", json={}, headers=headers).status_code, 422)
 
+    def test_raw_upload_and_arbitrary_paths_are_rejected(self):
+        with patch.dict("os.environ", {"ML_SERVICE_TOKEN": TOKEN}):
+            headers = {"Authorization": "Bearer " + TOKEN}
+            response = self.client.post("/api/ml/upload", files={"file": ("input.fasta", b">seq\nACGT")}, headers=headers)
+            self.assertEqual(response.status_code, 503)
+            for path in ["/etc/passwd", "../../other-account.json", "private.fasta"]:
+                response = self.client.post("/api/ml/analyze", json={"sample_id": "synthetic", "user_id": "synthetic", "file_path": path, "raw_data": {"bacteria_percentages": {"Example": 3}}}, headers=headers)
+                self.assertEqual(response.status_code, 422)
+                self.assertNotIn(path, response.text)
+
     def test_health_is_content_free_and_docs_are_disabled(self):
         self.assertEqual(self.client.get("/health").json(), {"status": "healthy"})
         for path in ["/docs", "/redoc", "/openapi.json"]:

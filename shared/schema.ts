@@ -360,3 +360,10 @@ export const biologyEntities=pgTable("biology_entities",{version:text("version")
 export const biologySources=pgTable("biology_sources",{version:text("version").notNull().references(()=>biologyVersions.version),id:text("id").notNull(),title:text("title").notNull(),url:text("url").notNull(),design:text("design").notNull(),population:text("population").notNull(),limitation:text("limitation").notNull()},t=>[primaryKey({columns:[t.version,t.id]})]);
 export const biologyRelationships=pgTable("biology_relationships",{version:text("version").notNull().references(()=>biologyVersions.version),id:text("id").notNull(),from:text("from_id").notNull(),to:text("to_id").notNull(),evidence:text("evidence").notNull(),confidence:text("confidence").notNull(),rule:text("rule").notNull(),details:jsonb("details").notNull()},t=>[primaryKey({columns:[t.version,t.id]}),foreignKey({columns:[t.version,t.from],foreignColumns:[biologyEntities.version,biologyEntities.id]}),foreignKey({columns:[t.version,t.to],foreignColumns:[biologyEntities.version,biologyEntities.id]}),index("biology_relationships_from_idx").on(t.version,t.from),index("biology_relationships_to_idx").on(t.version,t.to)]);
 export const biologyRelationshipSources=pgTable("biology_relationship_sources",{version:text("version").notNull(),relationshipId:text("relationship_id").notNull(),sourceId:text("source_id").notNull()},t=>[primaryKey({columns:[t.version,t.relationshipId,t.sourceId]}),foreignKey({columns:[t.version,t.relationshipId],foreignColumns:[biologyRelationships.version,biologyRelationships.id]}),foreignKey({columns:[t.version,t.sourceId],foreignColumns:[biologySources.version,biologySources.id]})]);
+
+// No raw account names or addresses are stored in request abuse budgets.
+export const requestBudgets = pgTable("request_budgets", {
+  identity: text("identity").primaryKey(),
+  attempts: integer("attempts").notNull(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+}, table => [index("request_budgets_expiry").on(table.expiresAt)]);

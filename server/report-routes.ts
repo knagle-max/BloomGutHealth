@@ -1,9 +1,5 @@
 import type { Express, RequestHandler } from "express";
 import multer from "multer";
-import FormData from "form-data";
-import { mlServiceFetch, mlServiceTarget } from "./ml-service";
-import { createReadStream } from "node:fs";
-import { readFile, unlink } from "node:fs/promises";
 import { basename, extname } from "node:path";
 import { z } from "zod";
 import type { IStorage } from "./storage";
@@ -119,7 +115,7 @@ export function registerReportRoutes(
   app: Express,
   auth: RequestHandler,
   store: Store,
-  mlServiceUrl = process.env.ML_SERVICE_URL,
+  _legacyMlServiceUrl?: string,
 ) {
   const noCache: RequestHandler = (_req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
@@ -164,11 +160,11 @@ export function registerReportRoutes(
     }
   });
   const upload = multer({
-    dest: "/tmp/uploads/",
-    limits: { fileSize: 100 * 1024 * 1024, files: 1 },
+    storage: multer.memoryStorage(),
+    limits: { fileSize: STRUCTURED_REPORT_MAX_BYTES, files: 1, fields: 4, fieldSize: 8000, parts: 5 },
     fileFilter: (_req, file, cb) => {
       if (
-        [".json", ".csv", ".txt", ".fastq", ".fasta", ".fa", ".fq"].includes(
+        [".json", ".csv"].includes(
           extname(file.originalname).toLowerCase(),
         )
       )
@@ -176,7 +172,7 @@ export function registerReportRoutes(
       else
         cb(
           Error(
-            "Unsupported file type. Use JSON/CSV reports or uncompressed FASTQ/FASTA/TXT sequence files.",
+            "Use JSON or CSV reports. Raw sequence processing is not available.",
           ),
         );
     },
@@ -194,7 +190,7 @@ export function registerReportRoutes(
               error:
                 error instanceof multer.MulterError &&
                 error.code === "LIMIT_FILE_SIZE"
-                  ? "File too large. The raw-file limit is 100 MB; JSON/CSV reports are limited to 2 MB."
+                  ? "Structured JSON/CSV reports must be 2 MB or smaller."
                   : "Invalid upload. Use one supported file of an allowed size.",
             });
         next();
@@ -205,7 +201,7 @@ export function registerReportRoutes(
       if (!file)
         return res
           .status(400)
-          .json({ error: "Choose a report or sequence file." });
+          .json({ error: "Choose a JSON or CSV report." });
       try {
         const fields = fieldsSchema.strict().safeParse(req.body);
         if (!fields.success)
@@ -223,7 +219,7 @@ export function registerReportRoutes(
           let parsed: StructuredReport;
           try {
             parsed = parseReportDocument(
-              await readFile(file.path, "utf8"),
+              new TextDecoder("utf-8", { fatal: true }).decode(file.buffer),
               extension === ".json" ? "json" : "csv",
             ).parsed;
             resolveReportDate(fields.data.testDate, parsed);
@@ -246,81 +242,11 @@ export function registerReportRoutes(
               .json({ error: "Report could not be saved. Please retry." });
           }
         }
-        // Raw processing remains separate. Validate the date before forwarding or creating a record.
-        const placeholder = parseStructuredReport({
-          organisms: ["Sequence file recorded; classification unavailable"],
-        });
-        let date;
-        try {
-          date = resolveReportDate(fields.data.testDate, placeholder);
-        } catch (error) {
-          return res.status(400).json({ error: (error as Error).message });
-        }
-        if (!mlServiceUrl)
-          return res
-            .status(503)
-            .json({
-              error:
-                "Sequence-file processing is not configured. JSON/CSV and pasted reports can be imported without this service.",
-            });
-        try { mlServiceTarget("/api/ml/upload", { ...process.env, ML_SERVICE_URL: mlServiceUrl }); }
-        catch { return res.status(503).json({ error: "Sequence processing is not securely configured. Structured reports can still be imported." }); }
-        const form = new FormData();
-        form.append("file", createReadStream(file.path), {
-          filename: basename(file.originalname),
-          contentType: file.mimetype,
-        });
-        let result: any, response;
-        try {
-          response = await mlServiceFetch("/api/ml/upload", {
-            method: "POST",
-            body: form,
-          }, { ...process.env, ML_SERVICE_URL: mlServiceUrl });
-          result = await response.json();
-        } catch {
-          return res
-            .status(503)
-            .json({
-              error:
-                "Sequence processing is unavailable. Please retry later or import a structured report.",
-            });
-        }
-        if (!response.ok)
-          return res
-            .status(response.status >= 400 && response.status < 500 ? 422 : 503)
-            .json({
-              error:
-                "The sequence file could not be processed. Confirm its format or use a supported structured report.",
-            });
-        if (typeof result.file_path !== "string")
-          return res
-            .status(502)
-            .json({
-              error:
-                "The processing service returned an incomplete upload result.",
-            });
-        const sample = await store.insertMicrobiomeSample({
-          userId: req.session.userId!,
-          testDate: date.date,
-          testingCompany: fields.data.testingCompany || null,
-          testId: fields.data.testId || null,
-          notes: fields.data.notes || null,
-          rawDataPath: result.file_path,
-          structuredData: result.raw_data || null,
-          processingStatus: "uploaded",
-          diversityIndex: null,
-        });
-        return res.json({
-          success: true,
-          sampleId: sample.id,
-          preview: result.preview,
-        });
+        return res.status(415).json({ error: "Use a structured JSON or CSV report. Raw sequence processing is not available." });
       } catch {
         return res
           .status(503)
           .json({ error: "Upload could not be saved. Please retry." });
-      } finally {
-        await unlink(file.path).catch(() => {});
       }
     },
   );

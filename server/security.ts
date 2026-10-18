@@ -37,11 +37,16 @@ export const securityHeaders: RequestHandler = (req, res, next) => {
   if (req.path === "/api" || req.path.startsWith("/api/")) res.setHeader("Cache-Control", "no-store");
   next();
 };
-/** SameSite cookies remain enabled; additionally reject same-site sibling-origin writes. */
+/** Cookie-authenticated APIs accept exact-origin requests or browser same-origin metadata.
+ * Requests with neither are rejected, including login CSRF. Host forwarding is never
+ * trusted here; APP_ORIGIN pins the externally visible origin when configured.
+ */
 export const sameOriginWrites: RequestHandler = (req, res, next) => {
   if (!req.path.startsWith("/api/") || ["GET", "HEAD", "OPTIONS"].includes(req.method)) return next();
-  const origin = req.get("origin"), expected = `${req.protocol}://${req.get("host")}`;
-  if (req.get("sec-fetch-site") === "cross-site" || (origin && origin !== expected))
+  const origin = req.get("origin"), site = req.get("sec-fetch-site");
+  const expected = process.env.APP_ORIGIN || `${req.protocol}://${req.get("host")}`;
+  const permitted = origin ? origin === expected : site === "same-origin";
+  if (!permitted || (site && site !== "same-origin" && site !== "none"))
     return void res.status(403).json({ error: "This request must come from Bloom. Reload the app and retry." });
   next();
 };

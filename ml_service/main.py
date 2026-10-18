@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import hashlib
 import hmac
@@ -22,6 +22,9 @@ async def authenticate_service(request, call_next):
         supplied = authorization[7:] if authorization.startswith("Bearer ") else ""
         if not hmac.compare_digest(hashlib.sha256(supplied.encode("utf-8")).digest(), hashlib.sha256(expected.encode("utf-8")).digest()):
             return JSONResponse(status_code=401, content={"detail": "Service authentication required."}, headers={"Cache-Control": "no-store"})
+        if request.url.path == "/api/ml/upload":
+            # Reject before FastAPI's multipart parser can spool an upload.
+            return JSONResponse(status_code=503, content={"detail": "Raw-file processing is disabled. Import a structured report in Bloom."}, headers={"Cache-Control": "no-store"})
     response = await call_next(request)
     response.headers["Cache-Control"] = "no-store"
     return response
@@ -30,6 +33,7 @@ class MicrobiomeAnalysisRequest(BaseModel):
     sample_id: str
     user_id: str
     raw_data: Optional[Dict[str, Any]] = None
+    # Legacy server paths are never accepted as analysis input.
     file_path: Optional[str] = None
     cohorts_to_compare: List[str] = ["general_population"]
 
@@ -61,6 +65,8 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
     Reviewed qualitative biology remains in Bloom's versioned evidence registry;
     the legacy Python prototypes are not a source of personal recommendations.
     """
+    if request.file_path is not None:
+        raise HTTPException(status_code=422, detail="Raw-sequence analysis is not implemented; server file paths are not supported. Supply structured reported abundances.")
     # The upload pipeline does not yet turn sequence files into abundance data.
     # Never substitute randomized demonstration profiles for a user's test.
     if not request.raw_data or not request.raw_data.get("bacteria_percentages"):
@@ -120,28 +126,10 @@ async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
         raise HTTPException(status_code=500, detail="Analysis could not be completed.")
 
 @app.post("/api/ml/upload")
-async def upload_microbiome_file(file: UploadFile = File(...)):
-    """
-    Upload and preprocess microbiome test file (FASTQ/FASTA/CSV).
-    """
-    try:
-        from .services.data_processor import DataProcessor
-        
-        processor = DataProcessor()
-        result = await processor.process_upload(file)
-        
-        return {
-            "status": "success",
-            "file_path": result["file_path"],
-            "format": result["format"],
-            "raw_data": result.get("raw_data"),
-            "preview": result["preview"]
-        }
-        
-    except (ValueError, json.JSONDecodeError) as e:
-        raise HTTPException(status_code=422, detail=str(e))
-    except Exception:
-        raise HTTPException(status_code=500, detail="Upload processing failed. Please check the file format or retry.")
+async def upload_microbiome_file():
+    # No validated sequencing pipeline or resource-isolated quarantine exists.
+    # Do not stage or parse raw files merely because a service token is valid.
+    raise HTTPException(status_code=503, detail="Raw-file processing is disabled pending isolated processing and validation. Import a structured report in Bloom.")
 
 @app.get("/api/ml/cohorts")
 async def list_cohorts():

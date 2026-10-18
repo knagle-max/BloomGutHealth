@@ -43,7 +43,26 @@ export type StructuredReport = {
   };
   sourceReport: Dict;
 };
+/** Bound structure before serializing or traversing uploaded input. */
+export function validateReportComplexity(input: unknown) {
+  const stack: { value: unknown; depth: number }[] = [{ value: input, depth: 0 }];
+  const seen = new Set<object>();
+  let nodes = 0;
+  while (stack.length) {
+    const { value, depth } = stack.pop()!;
+    if (++nodes > 20_000 || depth > 32) throw Error("Report structure is too complex. Use a smaller, flatter report.");
+    if (value && typeof value === "object") {
+      if (seen.has(value)) throw Error("Report must not contain circular or repeated object references.");
+      seen.add(value);
+      for (const key in value) if (Object.hasOwn(value, key)) {
+        if (nodes + stack.length >= 20_000) throw Error("Report structure is too complex. Use a smaller, flatter report.");
+        stack.push({ value: (value as Record<string, unknown>)[key], depth: depth + 1 });
+      }
+    }
+  }
+}
 export function parseStructuredReport(input: unknown): StructuredReport {
+  validateReportComplexity(input);
   if (!object(input))
     throw Error(
       "The JSON must be an object containing bacteria_percentages, scores or organisms. No report was saved.",
@@ -248,6 +267,8 @@ export function parseReportDocument(textInput: string, format: "json" | "csv") {
       );
     }
   } else {
+    if (textInput.split(/\r?\n/).length > 1002)
+      throw Error("CSV reports support at most 1,000 taxon rows.");
     // Keep the existing explicit CSV contract; never reinterpret scores as abundance.
     const rows = textInput
       .trim()

@@ -1,4 +1,4 @@
-import { reportedAbundanceAnalysis, historicalAnalysisMetadata } from "./analysis-boundary";
+import { reportedAbundanceAnalysis, historicalAnalysisMetadata, publicSample } from "./analysis-boundary";
 import { registerRetiredHealthRoutes } from "./retired-health-routes";
 import { registerBiologyRoutes } from "./biology-routes";
 import { registerExperienceRoutes } from "./experience-routes";
@@ -49,6 +49,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     "/api/microbiome/analyze/:sampleId",
     requireAuth,
     async (req, res) => {
+      let authorizedSampleId: string | undefined;
       try {
         const { sampleId } = req.params;
         const { cohortsToCompare = ["general_population"] } = req.body;
@@ -66,6 +67,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (!abundanceSchema.safeParse((sample.structuredData as any)?.bacteria_percentages).success) {
           return res.status(422).json({error:"This report has no supported quantitative bacterial percentages. Functional scores and organism detection are viewable report data, not inputs for abundance-based modelling. No analysis was run."});
         }
+        authorizedSampleId = sampleId;
         // Update status to processing
         await storage.updateMicrobiomeSample(sampleId, {
           processingStatus: "processing",
@@ -76,11 +78,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sample_id: sampleId,
-            user_id: sample.userId,
-            file_path: sample.rawDataPath,
-            raw_data: sample.structuredData,
-            cohorts_to_compare: cohortsToCompare,
+            sample_id: "structured-processing-request",
+            user_id: "server-authorized",
+            raw_data: { bacteria_percentages: (sample.structuredData as any).bacteria_percentages },
+            cohorts_to_compare: [],
           }),
         });
 
@@ -177,8 +178,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       } catch (error: any) {
         console.error("Analysis request could not be completed.");
-        await storage
-          .updateMicrobiomeSample(req.params.sampleId, {
+        if (authorizedSampleId) await storage
+          .updateMicrobiomeSample(authorizedSampleId, {
             processingStatus: "failed",
           })
           .catch(() => {});
@@ -211,7 +212,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const analyses = await storage.getMlAnalyses(sampleId);
 
         res.json({
-          sample:{...sample,diversityIndex:composition?.diversity_index??null},
+          sample:{...publicSample(sample),diversityIndex:composition?.diversity_index??null},
           bacterial_composition: bacterial,
           metabolites: [],
           recommendations: [],
@@ -266,7 +267,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/demo/samples", async (req, res) => {
     try {
       const samples = await storage.getDemoSamples();
-      res.json(samples);
+      res.json(samples.map(publicSample));
     } catch (error: any) {
       res.status(503).json({ error: "This request could not be completed. Please retry." });
     }
@@ -664,7 +665,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Access denied" });
       }
       const samples = await storage.getUserSamples(userId);
-      res.json(samples);
+      res.json(samples.map(publicSample));
     } catch (error: any) {
       res.status(503).json({ error: "This request could not be completed. Please retry." });
     }

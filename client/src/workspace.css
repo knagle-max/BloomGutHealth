@@ -141,3 +141,32 @@ body { -webkit-font-smoothing: antialiased; }
 @media(max-width:600px){.relationship-map{display:none;}}
 
 .relationship-details>summary{padding:15px 0;font-weight:600;cursor:pointer;}.relationship-details>.relationship-card{margin-top:12px;}
+
+/* Specialist handoff: shared accessible component tokens; modes change identity,
+   never evidence confidence. These rules supersede legacy microtext guidance. */
+:root { --space-unit:4px; --control-size:44px; --surface-radius:14px; --body-size:16px; --note-size:14px; }
+.app-shell :is(a,button,input,select,textarea,summary):focus-visible { outline:3px solid hsl(var(--ring)); outline-offset:3px; }
+.app-shell main :is(button:not([role=checkbox]),.text-link,.hero-button,select,input:not([type=checkbox]):not([type=radio])) { min-height:var(--control-size); }
+.app-shell .text-link { display:inline-flex; align-items:center; gap:6px; }
+.app-shell .hero-button { display:inline-flex; align-items:center; justify-content:center; white-space:normal; }
+.app-shell .panel-note,.app-shell .stat-note { font-size:var(--note-size); }
+.app-shell .eyebrow { font-size:12px; }
+.today-next-action { display:grid; gap:12px; align-items:center; }
+.today-next-action .hero-button { justify-self:start; }
+.evidence-context { display:grid; gap:12px; border-left:3px solid hsl(var(--primary)); padding:12px 16px; background:hsl(var(--muted)); }
+.app-shell .relationship-badges span { color:hsl(var(--foreground)); background:hsl(var(--muted)); font-size:13px; }
+@media(max-width:600px) {
+  .app-shell main,.app-shell .science-page { font-size:var(--body-size); }
+  .app-shell .bloom-panel > p:not(.eyebrow):not(.panel-note):not(.diet-known-total),
+  .app-shell main label,.app-shell .science-heading > p:not(.eyebrow),.app-shell .bloom-input { font-size:var(--body-size); }
+  .app-shell .text-link,.app-shell .hero-button { font-size:15px; }
+  .app-shell .today-focus { padding:20px; }
+  .app-shell .today-focus h2 { font-size:22px; }
+  .app-shell .today-focus > .panel-note { display:none; }
+  .today-next-action .hero-button { width:100%; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+}
+
+.progress-workspace .bloom-panel > .text-link { margin-right:16px; }

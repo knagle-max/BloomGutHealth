@@ -1,3 +1,4 @@
+import { evidenceAudit, simulationReadiness } from "../shared/scientific-contracts";
 import type { Express, RequestHandler } from "express";
 import type { IStorage } from "./storage";
 import type { registerPrecisionRoutes } from "./precision-routes";
@@ -30,6 +31,11 @@ export function registerBiologyRoutes(
     const nutrients=Object.fromEntries(nutrientDefinitions.map(([key,_name,_unit,id])=>[key,typeof food.per100g[String(id)]==="number"?food.per100g[String(id)]*input.data.grams/100:null]));
     res.json({version:FOOD_INTELLIGENCE_VERSION,fdcId:food.fdcId,description:food.description,grams:input.data.grams,portions:food.portions,contributions:explainNutrientContribution(nutrients),source:{title:"USDA FNDDS 2021–2023",url:"https://fdc.nal.usda.gov/food-details/"+food.fdcId+"/nutrients"},limits:["Generic food estimates vary with preparation and brand. Review your actual portion and package label.","This composition record does not verify ingredients, allergens or suitability for your health context.","Nutrition composition does not predict your microbial activity, metabolite output or genetic response. Reviewed biological relationships remain available separately below."]});
   });
+  app.get("/api/biology/evidence-audit", async (_req, res) => {
+    try { res.json(evidenceAudit(await store.getBiologicalRegistry())); }
+    catch { res.status(503).json({error:"The evidence audit could not load. Retry later."}); }
+  });
+  app.get("/api/biology/model-readiness", (_req,res)=>res.json(simulationReadiness(null)));
   app.get("/api/biology/registry", async (_req, res) => {
     try {
       res.json(await store.getBiologicalRegistry());

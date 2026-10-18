@@ -47,7 +47,7 @@ test("real auth handlers rotate/save sessions, preserve ownership, reject unsafe
   const server = app.listen(0, "127.0.0.1");
   await new Promise<void>(resolve => server.once("listening", resolve));
   const address = server.address() as { port: number }, base = `http://127.0.0.1:${address.port}`;
-  const post = (path: string, body: unknown, headers: Record<string, string> = {}) => fetch(base + path, { method: "POST", headers: { "Content-Type": "application/json", ...headers }, body: JSON.stringify(body) });
+  const post = (path: string, body: unknown, headers: Record<string, string> = {}) => fetch(base + path, { method: "POST", headers: { "Content-Type": "application/json", Origin: base, ...headers }, body: JSON.stringify(body) });
   const cookie = (r: Response) => r.headers.get("set-cookie")!.split(";")[0];
   try {
     const original = cookie(await fetch(base + "/seed"));

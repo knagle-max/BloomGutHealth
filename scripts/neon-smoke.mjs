@@ -48,6 +48,7 @@ async function request(path, method = "GET", body, expected = 200) {
     headers: {
       "content-type": "application/json",
       "x-forwarded-proto": "https",
+      "origin": base.replace("http:", "https:"),
       ...(cookie ? { cookie } : {}),
     },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),

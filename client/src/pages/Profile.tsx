@@ -155,6 +155,12 @@ export default function Profile({
         {save.isError && <p role="alert">{save.error.message}</p>}
       </form>
       <DietaryPreferenceEditor />
+      <section className="bloom-panel space-y-3" id="privacy">
+        <h2>Privacy & data controls</h2>
+        <p>Training and saved-meal exports and deletion are below. Genetic and laboratory records have separate controls in My biology.</p>
+        <a href="/precision" className="text-link">Manage biology records & exports</a>
+        <p className="panel-note">These controls do not yet provide a complete account export or erasure. Journal entries, gut reports and backup retention require additional coverage. Contact the app operator before uploading information you need fully erased.</p>
+      </section>
       <ExperienceDataControls/>
     </main>
   );

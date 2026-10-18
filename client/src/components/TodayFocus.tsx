@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { PrecisionReport } from "@shared/precision-nutrition";
-export default function TodayFocus() {
+export default function TodayFocus({ mealCount = 0, loading = false }: { mealCount?: number; loading?: boolean }) {
   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
     goal = report.data?.goals.find((g) => g.id !== "unmapped");
   return (
@@ -23,9 +23,16 @@ export default function TodayFocus() {
           remains available; retry My biology to review your saved goals.
         </p>
       )}
+      <div className="today-next-action">
+        <Link className="hero-button" href={mealCount ? "/plan-day" : "/log-meal"}>
+          {mealCount ? "Choose my next meal" : "Log my first meal"}
+        </Link>
+        <p className="panel-note">{loading ? "Your journal is loading. You can still add a meal." : mealCount ? "Suggestions use the meals you have logged today. Review portions and missing values." : "Start with what you ate. You can scan a package, choose a saved meal or type a description."}</p>
+      </div>
+      <details><summary>Your focus & next steps</summary>
       <div className="flex flex-wrap gap-4">
-        <Link className="text-link" href="/plan-day">
-          Choose my next meal
+        <Link className="text-link" href={mealCount ? "/log-meal" : "/plan-day"}>
+          {mealCount ? "Log another meal" : "Plan meals"}
         </Link>
         <Link className="text-link" href="/explore">
           Explore why foods matter
@@ -33,7 +40,7 @@ export default function TodayFocus() {
         <Link className="text-link" href="/progress">
           Review my progress
         </Link>
-      </div>
+      </div></details>
     </section>
   );
 }

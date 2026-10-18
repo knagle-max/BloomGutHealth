@@ -101,6 +101,7 @@ export default function Explore() {
             {r!.entities.find((n) => n.id === e.to)?.label}
           </button>
         </div>
+        <p className="eyebrow">GENERAL RESEARCH</p>
         <p>{e.claim}</p>
         <div className="relationship-badges">
           <span>{evidenceName[e.evidence]}</span>
@@ -199,7 +200,7 @@ export default function Explore() {
         <>
           {foodId && (
             <section className="bloom-panel space-y-4">
-              <p className="eyebrow">YOUR CONTEXT, SEPARATELY</p>
+              <p className="eyebrow">YOUR FOOD PRIORITY</p>
               <h2>Why this food matters to you</h2>
               {assessment.isLoading && (
                 <p role="status">Checking your saved context…</p>
@@ -230,6 +231,14 @@ export default function Explore() {
                     {assessment.data.qualitativeNutrients.join(" · ")}.
                     Quantities depend on the serving.
                   </p>
+                  <p className="panel-note">Independent scientific review is pending. These are food-priority suggestions, not validated personal biological effects.</p>
+                  <div className="evidence-context" aria-label="How to read this food insight">
+                    <p><strong>Personal relevance:</strong> {assessment.data.relationshipEffects.some((e: any) => e.affectsRecommendation) ? "A saved-context rule contributes to this food priority. This does not predict your response." : "No reviewed relationship is changing this food priority."}</p>
+                    <p><strong>General evidence:</strong> The research connections below describe studies and mechanisms, not measurements of your biology.</p>
+                    <p><strong>Unknown:</strong> Personal enzyme activity, microbial output and treatment effects are not determined.</p>
+                  </div>
+                  <details><summary>Saved observations used for context</summary>
+                  {!assessment.data.observations.labs.length && !assessment.data.observations.genetics.length && <p>No relevant laboratory or genetic observation is recorded for this food.</p>}
                   {assessment.data.observations.labs.map((l: any) => (
                     <p className="report-context" key={l.marker}>
                       {l.marker.toUpperCase()}: {l.value} {l.unit} · {l.flag} ·{" "}
@@ -241,6 +250,7 @@ export default function Explore() {
                       {g.gene} {g.rsid} {g.genotype} · {g.status}. {g.note}
                     </p>
                   ))}
+                  </details>
                   <details>
                     <summary>What to track & what remains uncertain</summary>
                     {assessment.data.tracking.map((v: string, i: number) => (

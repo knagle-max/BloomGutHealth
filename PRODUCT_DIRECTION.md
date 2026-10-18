@@ -13,3 +13,7 @@ Development sequence remains: reliability → biological relationships/food expl
 NIH's Nutrition for Precision Health is a research direction, not validation or endorsement of Bloom: https://commonfund.nih.gov/nutritionforprecisionhealth. The international microbiome-testing consensus supports being explicit about limited clinical utility: https://pubmed.ncbi.nlm.nih.gov/39647502/.
 
 Free-core monetization remains undecided. Any future affiliate relationship should be clearly disclosed and separated from evidence grading and recommendation priority. No ads, affiliate links, health-data sales or paid recommendation ranking are introduced here.
+
+## Coordination update — 18 October 2026
+
+Chief Architect & Integration Lead now reviews and consolidates specialist requirements before Developer implementation. The already-started specialist hardening/UX/scientific-contract pass is authorized to finish. Future specialist proposals require the architect's integrated handoff. See PROJECT_COORDINATION.md and SPECIALIST_IMPLEMENTATION_STATUS.md.
