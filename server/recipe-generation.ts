@@ -84,7 +84,7 @@ export async function generateRecipes(
 // Never expose provider error bodies: they may contain request data or credentials.
 export function recipeFailure(error: unknown) {
   const e = error instanceof OpenAI.APIError ? error : undefined;
-  if (e?.code === "insufficient_quota")
+  if (e && (e.type === "insufficient_quota" || ["insufficient_quota", "credit_balance_exhausted", "organization_spend_limit_exceeded", "project_spend_limit_exceeded", "organization_usage_limit_exceeded"].includes(e.code || "")))
     return { code: "AI_QUOTA", error: "The AI provider reports insufficient API quota. Check API billing, available credits and project spending limits." };
   if (e?.status === 401)
     return { code: "AI_AUTH", error: "The AI provider rejected the API key. Check the server's key and API project permissions." };
