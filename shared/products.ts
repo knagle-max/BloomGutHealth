@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { normalizeBarcode } from "./barcodes";
 export const productRefSchema = z
   .object({
     source: z.enum(["usda-local", "off", "dsld", "manual"]),
@@ -10,6 +11,7 @@ export type ProductRef = z.infer<typeof productRefSchema>;
 export const labelInputSchema = z
   .object({
     name: z.string().trim().min(1).max(120),
+    barcode: z.string().refine(v=>normalizeBarcode(v)!==null,"Use a valid package barcode").transform(v=>normalizeBarcode(v)!).optional(),
     brand: z.string().trim().max(100).default(""),
     servingDescription: z.string().trim().min(1).max(120),
     servingGrams: z.number().finite().positive().max(3000).nullable(),
@@ -40,6 +42,7 @@ export type Product = {
   id: string;
   name: string;
   brand: string;
+  barcode?: string;
   servingDescription: string;
   servingGrams: number | null;
   perServing: Record<string, number>;

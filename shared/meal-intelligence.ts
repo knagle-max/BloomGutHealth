@@ -120,7 +120,7 @@ export const nutrientDefinitions = [
 const foodPathways = [
   {
     pattern:
-      /\b(oats?|beans?|lentils?|chickpeas?|whole grains?|vegetables?|brown rice)\b/i,
+      /\b(oats?|beans?|lentils?|chickpeas?|whole grains?|barley|vegetables?|brown rice)\b/i,
     id: "wholefood-scfa",
   },
   { pattern: /\b(walnuts?)\b/i, id: "ellagitannin-urolithin" },

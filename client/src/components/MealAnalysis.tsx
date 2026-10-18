@@ -1,3 +1,4 @@
+import FoodRelationshipLinks from "./FoodRelationshipLinks";
 import ProductPicker from "./ProductPicker";
 import { unmatchedFoods } from "@shared/nutrition-review";
 import { useState } from "react";
@@ -19,6 +20,7 @@ export default function MealAnalysis({
   return (
     <section className="bloom-panel space-y-4">
       <h2>Nutrition & gut pathways</h2>
+      <FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/>
       <p className="panel-note">
         {analysis.provider} ·{" "}
         {analysis.parser === "ai"

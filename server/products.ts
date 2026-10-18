@@ -1,3 +1,4 @@
+import { canonicalBarcode } from "../shared/barcodes";
 import {
   nutrientDefinitions,
   type Ingredient,
@@ -318,6 +319,11 @@ export class ProductService {
       results: Product[] = [],
       warnings: string[] = [];
     const own = await store.getNutritionProducts(userId);
+    const code=canonicalBarcode(q);
+    if(code){
+      const matches=own.filter(p=>p.barcode&&canonicalBarcode(p.barcode)===code);
+      if(matches.length)return {products:matches,warnings:[],attribution:"Your privately saved package label. Confirm the current formula and serving."};
+    }
     results.push(
       ...own.filter((p) =>
         `${p.name} ${p.brand}`.toLowerCase().includes(q.toLowerCase()),

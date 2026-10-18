@@ -57,6 +57,8 @@ export default function LogMeal() {
   >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [products, setProducts] = useState<Ingredient[]>([]);
   const [showProducts, setShowProducts] = useState(false);
+  const [scanRequested, setScanRequested] = useState(false);
+  const [scannerKey,setScannerKey] = useState(0);
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
   const save = useMutation({
@@ -132,18 +134,19 @@ export default function LogMeal() {
           Describe what you ate, or select a food or supplement label.
         </p>
       </div>
+      <Button type="button" className="mr-2 mb-3" onClick={()=>{setScannerKey(v=>v+1);setScanRequested(true);setShowProducts(true);}}>Scan package barcode</Button>
       <Button
         className="whitespace-normal h-auto max-w-full"
         type="button"
         variant="outline"
-        onClick={() => setShowProducts(!showProducts)}
+        onClick={() => {setScanRequested(false);setShowProducts(!showProducts);}}
       >
         {showProducts
           ? "Close product search"
           : "Search a food, brand or supplement"}
       </Button>
       {showProducts && (
-        <ProductPicker
+        <ProductPicker key={scannerKey} startScanner={scanRequested}
           onPick={(i) => {
             setProducts((v) => [...v, i].slice(0, 10));
             setShowProducts(false);

@@ -7,28 +7,24 @@ import {
   type Ingredient,
 } from "@shared/meal-intelligence";
 import { productIngredient, type Product } from "@shared/products";
-const clean = (q: string) =>
-  q
-    .replace(
-      /\b\d+(?:\.\d+)?\b|\b(heaping|rounded|level|tablespoons?|teaspoons?|tbsp|tsp|grams?|of|one|two)\b/gi,
-      " ",
-    )
-    .replace(/\s+/g, " ")
-    .trim();
+import BarcodeScanner from "./BarcodeScanner";
+import { productSearchText, normalizeBarcode } from "@shared/barcodes";
 export default function ProductPicker({
   onPick,
   initialQuery = "",
   autoSearch = false,
   confirmLabel = "Use selected product & amount",
   pending = false,
+  startScanner = false,
 }: {
   onPick: (i: Ingredient) => void;
   initialQuery?: string;
   autoSearch?: boolean;
   confirmLabel?: string;
   pending?: boolean;
+  startScanner?: boolean;
 }) {
-  const [query, setQuery] = useState(clean(initialQuery)),
+  const [query, setQuery] = useState(productSearchText(initialQuery)),
     [kind, setKind] = useState<"all" | "food" | "supplement">("all"),
     [variants, setVariants] = useState<Product[]>([]),
     [choice, setChoice] = useState<Product | null>(null),
@@ -37,18 +33,19 @@ export default function ProductPicker({
     [error, setError] = useState("");
   const started = useRef(false);
   const search = useMutation({
-    mutationFn: async () =>
+    mutationFn: async (override?: string) =>
       (
         await apiRequest(
           "GET",
-          "/api/products/search?" + new URLSearchParams({ q: query, kind }),
+          "/api/products/search?" + new URLSearchParams({ q: override || query, kind }),
         )
       ).json() as Promise<{
         products: Product[];
         warnings: string[];
         attribution: string;
       }>,
-    onSuccess: () => {
+    onSuccess: (result, code) => {
+      if (normalizeBarcode(code || query) && result.products.length === 1) resolve.mutate(result.products[0]);
       setVariants([]);
       setChoice(null);
       setError("");
@@ -77,7 +74,7 @@ export default function ProductPicker({
   useEffect(() => {
     if (autoSearch && !started.current && query.length >= 2) {
       started.current = true;
-      search.mutate();
+      search.mutate(undefined);
     }
   }, []);
   const create = useMutation({
@@ -93,6 +90,7 @@ export default function ProductPicker({
       return (
         await apiRequest("POST", "/api/products", {
           name: String(d.get("name") || ""),
+          ...(d.get("barcode") ? {barcode:String(d.get("barcode"))} : {}),
           brand: String(d.get("brand") || ""),
           servingDescription: String(d.get("servingDescription") || ""),
           servingGrams: d.get("servingGrams")
@@ -130,6 +128,7 @@ export default function ProductPicker({
   return (
     <div className="space-y-3 border rounded-xl p-3 min-w-0 break-words">
       <h3>Find a food or supplement</h3>
+      <BarcodeScanner startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>
       <p className="panel-note">
         Search by product name or barcode, then confirm the exact variant and
         serving. The search sends only this query to public product databases.
@@ -161,7 +160,7 @@ export default function ProductPicker({
       <Button
         type="button"
         disabled={query.trim().length < 2 || search.isPending}
-        onClick={() => search.mutate()}
+        onClick={() => search.mutate(undefined)}
       >
         {search.isPending ? "Searching…" : "Search products"}
       </Button>
@@ -377,10 +376,11 @@ export default function ProductPicker({
                 className="bloom-input w-full"
                 name="name"
                 maxLength={120}
-                defaultValue={query}
+                defaultValue={normalizeBarcode(query) ? "" : query}
                 required
               />
             </label>
+            <label>Package barcode (optional)<input className="bloom-input w-full" name="barcode" inputMode="numeric" maxLength={14} defaultValue={normalizeBarcode(query)||""}/></label>
             <label>
               Brand (optional)
               <input

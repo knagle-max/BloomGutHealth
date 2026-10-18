@@ -10,7 +10,7 @@ import {
 } from "./meal-intelligence";
 import { pathways, evidenceSources } from "./science-coach";
 
-export const PRECISION_VERSION = "precision-2026-10-17.4";
+export const PRECISION_VERSION = "precision-2026-10-18.1";
 export const precisionSources = [
   {
     id: "pnpla3-study",
@@ -611,6 +611,7 @@ export type TaxonReport = {
 };
 
 export const precisionFoods = [
+  { id:"barley",name:"Barley",tags:["gluten"],cardio:true,folate:false,nutrients:["Fiber, including beta-glucan","Whole-grain carbohydrate"],food:"barley" },
   {
     id: "oats",
     name: "Rolled oats",

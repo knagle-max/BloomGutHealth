@@ -1,3 +1,5 @@
+import { BiologyStorage } from "./biology-storage";
+import type { BiologicalRegistry } from "../shared/biological-model";
 import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
 import { nutritionProducts } from "../shared/schema";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
@@ -41,6 +43,7 @@ import type {
 import { eq, and, sql, desc } from "drizzle-orm";
 
 export interface IStorage extends ExperienceStore {
+  getBiologicalRegistry(): Promise<BiologicalRegistry>;
   getNutritionProducts(userId: string): Promise<Product[]>;
   insertNutritionProduct(userId: string, label: LabelInput): Promise<Product>;
   deleteNutritionProduct(userId: string, id: string): Promise<boolean>;
@@ -100,6 +103,8 @@ export interface IStorage extends ExperienceStore {
 }
 
 export class DatabaseStorage implements IStorage {
+  private biology = new BiologyStorage(db);
+  getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}
   private demoUserId: string = "demo-user-123";
 
   constructor() {

@@ -337,11 +337,7 @@ function category(term: string) {
     ([key, words]) => words.some((w) => t.includes(w)) || t === key,
   )?.[0];
 }
-export function eligiblePlanningRecipes(
-  prefs: DietaryPreferences,
-  allergies: string[],
-  custom: RecipeProposal[] = [],
-) {
+export function checkedFoodPreferences(prefs: DietaryPreferences, allergies:string[]) {
   const unknownAllergies = allergies.filter(
     (a) =>
       !category(a) &&
@@ -359,6 +355,10 @@ export function eligiblePlanningRecipes(
     ) as DietaryPreferences["exclusions"],
     dislikes: [...prefs.dislikes, ...allergies],
   };
+  return {preferences:checked,unknownAllergies};
+}
+export function eligiblePlanningRecipes(prefs:DietaryPreferences, allergies:string[], custom:RecipeProposal[]=[]) {
+  const {preferences:checked,unknownAllergies}=checkedFoodPreferences(prefs,allergies);
   return {
     recipes: planningRecipes(custom).filter(
       (r) => !preferenceConflicts(r, checked).length,

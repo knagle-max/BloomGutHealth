@@ -5,6 +5,8 @@ import {
   CalendarDays,
   UtensilsCrossed,
   Activity,
+  Network,
+  TrendingUp,
 } from "lucide-react";
 import { Link, useLocation } from "wouter";
 const navItems = [
@@ -32,7 +34,7 @@ const navItems = [
 export default function BottomNav() {
   const [location] = useLocation();
   const {mode}=useExperience();
-  const items=mode === "athlete" ? [{id:"athlete",path:"/athlete",icon:Activity,label:"Training"},{id:"fueling",path:"/athlete/fueling",icon:CalendarDays,label:"Fueling"},{id:"nutrition",path:"/nutrition",icon:UtensilsCrossed,label:"Journal"},{id:"recovery",path:"/athlete/recovery",icon:Home,label:"Recovery"},{id:"competition",path:"/athlete/competition",icon:Dna,label:"Compete"}] : [navItems[0],navItems[2],navItems[4],navItems[1],navItems[3]];
+  const items=mode === "athlete" ? [{id:"athlete",path:"/athlete",icon:Activity,label:"Training"},{id:"fueling",path:"/athlete/fueling",icon:CalendarDays,label:"Fueling"},{id:"nutrition",path:"/nutrition",icon:UtensilsCrossed,label:"Journal"},{id:"recovery",path:"/athlete/recovery",icon:Home,label:"Recovery"},{id:"competition",path:"/athlete/competition",icon:Dna,label:"Compete"}] : [navItems[0],{id:"explore",path:"/explore",icon:Network,label:"Explore"},{id:"progress",path:"/progress",icon:TrendingUp,label:"Progress"}];
   return (
     <nav className="bloom-bottom-nav" aria-label="Main navigation">
       {items.map((item) => (

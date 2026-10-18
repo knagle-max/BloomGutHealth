@@ -1,3 +1,4 @@
+import TodayFocus from "@/components/TodayFocus";
 import ResearchSummary from "@/components/ResearchSummary";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -67,6 +68,7 @@ export default function Dashboard() {
         </span>
       </div>
 
+      <TodayFocus/>
       <section className="daily-welcome" aria-label="Your next step">
         <div><span className="welcome-icon"><Utensils size={23} /></span><div><h2>What’s on your plate today?</h2><p>Log a meal to keep your nutrition and meal suggestions up to date.</p></div></div>
         <Link href="/log-meal" className="hero-button">Log a meal <Plus size={18} /></Link>

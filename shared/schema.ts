@@ -1,6 +1,8 @@
 import { sql } from "drizzle-orm";
 import {
   pgTable,
+  primaryKey,
+  foreignKey,
   text,
   varchar,
   timestamp,
@@ -351,3 +353,10 @@ export const experienceRecords = pgTable("experience_records", {
   kind: text("kind").notNull(), encryptedPayload: jsonb("encrypted_payload").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(), updatedAt: timestamp("updated_at").notNull().defaultNow(),
 }, table => [index("experience_records_user_kind_idx").on(table.userId, table.kind)]);
+
+// Public reference knowledge. Personal observations are never stored in these tables.
+export const biologyVersions = pgTable("biology_versions", {version:text("version").primaryKey(),fingerprint:text("fingerprint").notNull(),summary:text("summary").notNull(),createdAt:timestamp("created_at").defaultNow().notNull()});
+export const biologyEntities=pgTable("biology_entities",{version:text("version").notNull().references(()=>biologyVersions.version),id:text("id").notNull(),kind:text("kind").notNull(),label:text("label").notNull(),summary:text("summary").notNull(),metadata:jsonb("metadata").notNull()},t=>[primaryKey({columns:[t.version,t.id]})]);
+export const biologySources=pgTable("biology_sources",{version:text("version").notNull().references(()=>biologyVersions.version),id:text("id").notNull(),title:text("title").notNull(),url:text("url").notNull(),design:text("design").notNull(),population:text("population").notNull(),limitation:text("limitation").notNull()},t=>[primaryKey({columns:[t.version,t.id]})]);
+export const biologyRelationships=pgTable("biology_relationships",{version:text("version").notNull().references(()=>biologyVersions.version),id:text("id").notNull(),from:text("from_id").notNull(),to:text("to_id").notNull(),evidence:text("evidence").notNull(),confidence:text("confidence").notNull(),rule:text("rule").notNull(),details:jsonb("details").notNull()},t=>[primaryKey({columns:[t.version,t.id]}),foreignKey({columns:[t.version,t.from],foreignColumns:[biologyEntities.version,biologyEntities.id]}),foreignKey({columns:[t.version,t.to],foreignColumns:[biologyEntities.version,biologyEntities.id]}),index("biology_relationships_from_idx").on(t.version,t.from),index("biology_relationships_to_idx").on(t.version,t.to)]);
+export const biologyRelationshipSources=pgTable("biology_relationship_sources",{version:text("version").notNull(),relationshipId:text("relationship_id").notNull(),sourceId:text("source_id").notNull()},t=>[primaryKey({columns:[t.version,t.relationshipId,t.sourceId]}),foreignKey({columns:[t.version,t.relationshipId],foreignColumns:[biologyRelationships.version,biologyRelationships.id]}),foreignKey({columns:[t.version,t.sourceId],foreignColumns:[biologySources.version,biologySources.id]})]);

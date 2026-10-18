@@ -1,3 +1,4 @@
+import { registerBiologyRoutes } from "./biology-routes";
 import { registerExperienceRoutes } from "./experience-routes";
 import { describeRecordedDiet } from "../shared/diet-observations";
 import { registerReportRoutes } from "./report-routes";
@@ -42,6 +43,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const precisionService = registerPrecisionRoutes(app, requireAuth, storage);
   registerExperienceRoutes(app, requireAuth, storage, precisionService);
   registerReportRoutes(app, requireAuth, storage);
+  registerBiologyRoutes(app, requireAuth, storage, precisionService);
   // Trigger ML analysis
   app.post(
     "/api/microbiome/analyze/:sampleId",

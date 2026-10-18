@@ -182,6 +182,7 @@ try {
       brand: "CI fixture",
       servingDescription: "1 scoop (12 g)",
       servingGrams: 12,
+      barcode: "012345678905",
       perServing: {
         calories: 40,
         carbohydrates_total_g: 12,
@@ -192,6 +193,8 @@ try {
     },
     201,
   );
+  const barcodeMatch=await request("/api/products/search?q=0012345678905&kind=all");
+  assert.ok(barcodeMatch.products.some(p=>p.id===personalProduct.id));
   const productMeal = await request("/api/meals", "POST", {
     mealText: "",
     mealType: "snack",
@@ -433,6 +436,13 @@ try {
   const encryptedExperience=await pool.query("SELECT encrypted_payload::text AS payload FROM experience_records WHERE user_id=$1",[first.id]);
   assert.equal(encryptedExperience.rows.length,2);assert.ok(encryptedExperience.rows.every(r=>!r.payload.includes("Synthetic")));
   console.log("PASS: encrypted athlete settings, session fueling and saved-meal persistence on live Neon");
+  const biologicalRegistry=await request("/api/biology/registry");
+  assert.equal(biologicalRegistry.version,"biology-2026-10-18.1");
+  assert.ok(biologicalRegistry.relationships.some(r=>r.id==="viscosity:ldl"));
+  const foodExplanation=await request("/api/biology/foods/food:oats");
+  assert.equal(foodExplanation.version,biologicalRegistry.version);
+  assert.ok(foodExplanation.relationshipEffects.every(r=>r.id!=="viscosity:ldl"||r.affectsRecommendation===false));
+  console.log("PASS: normalized reference registry, reviewed food explanations and private barcode-label lookup on live Neon");
   const second = await addUser();
   assert.equal((await request("/api/experience/settings")).mode,"everyday");
   assert.equal((await request("/api/experience/export")).records.length,0);
@@ -440,6 +450,7 @@ try {
   await request(`/api/experience/templates/${savedMeal.id}/log`,"POST",{servings:1,mealType:"breakfast",eatenAt:"2026-10-18T18:00:00Z"},404);
 
   assert.equal((await request("/api/precision")).labs.length, 0);
+  assert.equal((await request("/api/biology/foods/food:oats")).observations.labs.length,0);
   assert.equal((await request("/api/products/saved")).length, 0);
   await request(
     `/api/products/manual/${personalProduct.id}`,

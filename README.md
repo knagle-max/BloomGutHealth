@@ -21,9 +21,17 @@ Configure `DATABASE_URL` (Neon-compatible PostgreSQL), `SESSION_SECRET`, and opt
 - `PRECISION_DATA_KEY`: base64-encoded 32-byte secret for account-bound AES-256-GCM encryption of precision inputs, health context and plan snapshots. Required before storing or reading encrypted precision data; never commit it. See `PRECISION_NUTRITION.md` for key retention and deployment requirements.
 - `PORT`: Express port, defaults to 5000.
 
-Before running the revised server against an existing database, apply the **additive** SQL in `migrations/0001_preserve_functionality.sql` and `migrations/0002_precision_nutrition.sql`, or use `npm run db:push` after reviewing the proposed schema changes. New JSON columns store preferences, meal context, nutrition provenance and structured report data; existing records are preserved. No production migration is applied by this PR.
+Before running the revised server against an existing database, apply the **additive** SQL in `migrations/0001_preserve_functionality.sql` and `migrations/0002_precision_nutrition.sql`, or use `npm run db:push` after reviewing the proposed schema changes. New JSON columns store preferences, meal context, nutrition provenance and structured report data; existing records are preserved. Apply the reviewed additive migrations required by the deployed version before starting it against an existing database.
 
 For Python, install `pyproject.toml` dependencies with `uv sync`, then `uv run uvicorn ml_service.main:app --host 127.0.0.1 --port 8000`.
+
+## Biological intelligence and barcode entry
+
+The free-core product direction is Today, Explore and Progress, with Athlete planned as a future subscription addition. No billing or paywall is currently implemented. See [PRODUCT_DIRECTION.md](PRODUCT_DIRECTION.md).
+
+`/explore` reads the versioned, normalized PostgreSQL biological registry and separates general research from personal observations and actual food-priority rules. `/progress` brings compatible laboratory trends and routine check-ins together. Run the reviewed additive `migrations/0005_biological_registry.sql` on existing databases, or apply the Drizzle schema and then `npm run db:seed:knowledge`. Do not edit a published registry version in place; source/fingerprint checks detect drift. The seed contains only public reference data.
+
+Food and supplement pickers support live UPC/EAN camera scanning and local barcode-photo decoding through a lazy-loaded decoder. Scan from the meal-entry button, confirm the product/formula and servings, then save. Camera frames/photos stay on-device; only the barcode number goes to product lookup. Unknown products can be saved privately with a valid barcode and reused on later scans, including when external sources are unavailable. Actual mobile-camera hardware still requires device testing.
 
 ## Everyday and athlete modes
 

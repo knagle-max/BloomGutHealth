@@ -10,7 +10,9 @@
     "check": "tsc",
     "test": "node --import tsx --test tests/*.test.ts",
     "db:push": "drizzle-kit push",
-    "test:neon": "node scripts/neon-smoke.mjs"
+    "test:neon": "node scripts/neon-smoke.mjs",
+    "db:seed:knowledge": "node scripts/seed-knowledge.mjs",
+    "knowledge:generate": "node --import tsx scripts/knowledge-migration.ts --write"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -49,6 +51,8 @@
     "@types/bcrypt": "^6.0.0",
     "@types/multer": "^2.0.0",
     "@types/pg": "^8.15.5",
+    "@zxing/browser": "0.1.5",
+    "@zxing/library": "0.21.3",
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
