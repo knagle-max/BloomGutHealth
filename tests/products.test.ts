@@ -355,3 +355,41 @@ test("authenticated product API supports any valid label, reuses it in meals, va
     await new Promise<void>((r) => server.close(() => r()));
   }
 });
+
+test("recalculation flags unresolved products until a confirmed account label supplies nutrition", async () => {
+  const { unmatchedFoods, nutritionUpdateFeedback } = await import("../shared/nutrition-review");
+  const store = mockStore();
+  const first = await analyzeMeal("1 heaping tablespoon of synthetic brand fiber powder");
+  const repeated = await analyzeMeal("1 heaping tablespoon of synthetic brand fiber powder", false, first.intelligence.ingredients);
+  assert.ok(unmatchedFoods(repeated.intelligence).length);
+  assert.equal(nutritionUpdateFeedback(repeated.intelligence).title, "Nutrition still needs a match");
+  assert.equal(nutritionTotals(repeated.nutritionalData).totalCalories, null);
+  const p = await store.insertNutritionProduct("a", {
+    name: "Synthetic sweetened fiber powder", brand: "Example", servingDescription: "1 rounded tablespoon (12 g)",
+    servingGrams: 12, perServing: { calories: 45, carbohydrates_total_g: 12, fiber_g: 3, sugar_g: 8, sodium_mg: 0 },
+  });
+  const corrected = await analyzeMeal("1 heaping tablespoon of synthetic brand fiber powder", false, [productIngredient(p, 1.5)], { store, userId: "a" });
+  assert.equal(unmatchedFoods(corrected.intelligence).length, 0);
+  assert.equal(nutritionUpdateFeedback(corrected.intelligence).title, "Meal nutrition updated");
+  assert.equal(nutritionTotals(corrected.nutritionalData).totalCalories, 67.5);
+  const daily = mealNutritionSummary([{intelligence: corrected.intelligence, nutritionalData: corrected.nutritionalData}, {totalCalories: 200, totalProtein: 20}]);
+  assert.equal(daily.totals.calories, 267.5);
+  assert.equal(daily.totals.fiber, 4.5);
+  assert.equal(daily.totals.sodium, 0);
+  const later = await analyzeMeal("unchanged description", false, corrected.intelligence.ingredients, {store, userId:"a"});
+  assert.equal(nutritionTotals(later.nutritionalData).totalCalories, 67.5);
+});
+
+test("supplement search preserves formula phrases, searches beyond twelve candidates and excludes opposite sugar-free labels", async () => {
+  const urls: string[] = [];
+  const service = new ProductService(async (url) => {
+    urls.push(url);
+    return {hits: Array.from({length: 20}, (_, i) => ({_id: String(100+i), _source: {fullName: i === 0 ? "Synthetic sugar-free powder" : "Synthetic original fiber powder", brandName: "Example"}}))};
+  });
+  const result = await service.search("real sugar Example", "supplement", mockStore(), "a");
+  const request = new URL(urls[0]);
+  assert.equal(request.searchParams.get("q"), '"real sugar" Example');
+  assert.equal(request.searchParams.get("size"), "40");
+  assert.equal(result.products.length, 19);
+  assert.equal(result.products.some((p) => /sugar-free/.test(p.name)), false);
+});

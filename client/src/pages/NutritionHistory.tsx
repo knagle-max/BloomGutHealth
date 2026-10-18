@@ -1,4 +1,5 @@
 import MealAnalysis from "@/components/MealAnalysis";
+import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { explainFoods } from "@shared/meal-intelligence";
 import { type MealIntelligence } from "@shared/meal-intelligence";
 import { useState } from "react";
@@ -273,6 +274,7 @@ function HistoricalTrends({
 
 export default function NutritionHistory() {
   const [historyLimit, setHistoryLimit] = useState(20);
+  const [reviewingMealId, setReviewingMealId] = useState<string | null>(null);
   const [showLogForm, setShowLogForm] = useState(false);
   const [editingMealId, setEditingMealId] = useState<string | null>(null);
   const [mealType, setMealType] = useState<MealType>("breakfast");
@@ -347,16 +349,15 @@ export default function NutritionHistory() {
       const response = await apiRequest("PUT", `/api/meals/${mealId}`, data);
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: (meal) => {
+      if (unmatchedFoods(meal.intelligence).length || meal.intelligence?.status === "unavailable") setReviewingMealId(meal.id);
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });
 
-      toast({
-        title: "Meal nutrition updated",
-      });
+      toast(nutritionUpdateFeedback(meal.intelligence));
 
       setFoodDescription("");
       setShowLogForm(false);
@@ -1077,9 +1078,14 @@ export default function NutritionHistory() {
                       Recalculate nutrition
                     </Button>
                     {meal.intelligence && (
-                      <details className="mt-3">
+                      <details className="mt-3"
+                        open={reviewingMealId === meal.id}
+                        onToggle={(event) => {
+                          const open = event.currentTarget.open;
+                          setReviewingMealId((current) => open ? meal.id : current === meal.id ? null : current);
+                        }}>
                         <summary>Nutrition & gut pathway explanation</summary>
-                        <MealAnalysis
+                        {reviewingMealId === meal.id && <MealAnalysis
                           key={
                             (meal.intelligence as MealIntelligence).analyzedAt
                           }
@@ -1091,7 +1097,7 @@ export default function NutritionHistory() {
                               data: { mealText: meal.mealText, ingredients },
                             })
                           }
-                        />
+                        />}
                       </details>
                     )}
                   </CardContent>

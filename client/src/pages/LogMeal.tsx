@@ -1,4 +1,5 @@
 import ProductPicker from "@/components/ProductPicker";
+import { nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
@@ -105,7 +106,7 @@ export default function LogMeal() {
     onSuccess: (meal) => {
       setSavedMeal(meal);
       queryClient.invalidateQueries();
-      toast({ title: "Nutrition recalculated" });
+      toast(nutritionUpdateFeedback(meal.intelligence as MealIntelligence));
     },
     onError: (error) =>
       toast({

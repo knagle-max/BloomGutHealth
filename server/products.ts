@@ -36,6 +36,10 @@ const download: ProductFetch = async (url, init) => {
 const num = (v: unknown): v is number =>
   typeof v === "number" && Number.isFinite(v) && v >= 0;
 const now = () => new Date().toISOString();
+export function supplementSearchQuery(query: string) {
+  return query.replace(/[^a-zA-Z0-9 .-]/g, " ")
+    .replace(/\b(real sugar|sugar[ -]free|gluten[ -]free|dairy[ -]free)\b/gi, (phrase) => `"${phrase.replace(/-/g, " ")}"`);
+}
 const unit = (s: string) =>
   s
     .toLowerCase()
@@ -328,13 +332,14 @@ export class ProductService {
       jobs.push(
         this.cached("dsld-search:" + q.toLowerCase(), () =>
           this.fetchJson(
-            `https://api.ods.od.nih.gov/dsld/v9/search-filter?${new URLSearchParams({ q: q.replace(/[^a-zA-Z0-9 .-]/g, " "), size: "12", status: "1", sort_by: "_score" })}`,
+            `https://api.ods.od.nih.gov/dsld/v9/search-filter?${new URLSearchParams({ q: supplementSearchQuery(q), size: "40", status: "1", sort_by: "_score" })}`,
           ),
         )
           .then((data) => {
-            for (const h of (data.hits || []).slice(0, 12)) {
+            for (const h of (data.hits || []).slice(0, 40)) {
               const d = h._source;
-              if (d && /^\d+$/.test(String(h._id)))
+              if (d && /^\d+$/.test(String(h._id)) &&
+                !(/\b(real sugar|with sugar|sugared)\b/i.test(q) && /\bsugar[ -]free\b/i.test(d.fullName || "")))
                 results.push({
                   source: "dsld",
                   id: String(h._id),

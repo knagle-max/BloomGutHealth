@@ -1,4 +1,5 @@
 import ProductPicker from "./ProductPicker";
+import { unmatchedFoods } from "@shared/nutrition-review";
 import { useState } from "react";
 import type { Ingredient } from "@shared/meal-intelligence";
 import type { MealIntelligence } from "@shared/meal-intelligence";
@@ -13,6 +14,8 @@ export default function MealAnalysis({
 }) {
   const [edits, setEdits] = useState<Ingredient[] | null>(null);
   const ingredients = edits ?? analysis.ingredients;
+  const missing = unmatchedFoods(analysis);
+  const firstMissingIndex = ingredients.findIndex((i) => missing.some((m) => m.name === i.name && m.grams === i.grams));
   return (
     <section className="bloom-panel space-y-4">
       <h2>Nutrition & gut pathways</h2>
@@ -26,6 +29,13 @@ export default function MealAnalysis({
         <p className="bloom-panel text-sm" role="status">
           {analysis.parserNotice}
         </p>
+      )}
+      {missing.length > 0 && (
+        <div className="border rounded-xl p-3 space-y-2" role="status">
+          <h3>Choose a product to complete the nutrition</h3>
+          <p>Recalculation could not match {missing.map((i) => i.name).join("; ")}. Review the search results below, choose the exact formula and confirm the amount you ate. Confirming a product saves its nutrition immediately.</p>
+          <p className="panel-note">Powders, gummies, capsules and sugared or sugar-free versions can have different labels. A heaping spoon is an estimate; check your package serving.</p>
+        </div>
       )}
       <details open>
         <summary>Review foods & estimated portions</summary>
@@ -134,16 +144,15 @@ export default function MealAnalysis({
                   <ProductPicker
                     initialQuery={item.name}
                     autoSearch={
-                      index === 0 &&
-                      !analysis.foodMatches.some(
-                        (m) => m.ingredient === item.name,
-                      )
+                      index === firstMissingIndex
                     }
-                    onPick={(product) =>
-                      setEdits(
-                        ingredients.map((v, i) => (i === index ? product : v)),
-                      )
-                    }
+                    confirmLabel="Use product & update meal"
+                    pending={pending}
+                    onPick={(product) => {
+                      const updated = ingredients.map((v, i) => (i === index ? product : v));
+                      setEdits(updated);
+                      onRecalculate(updated);
+                    }}
                   />
                 </details>
                 <button

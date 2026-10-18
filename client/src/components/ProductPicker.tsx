@@ -19,10 +19,14 @@ export default function ProductPicker({
   onPick,
   initialQuery = "",
   autoSearch = false,
+  confirmLabel = "Use selected product & amount",
+  pending = false,
 }: {
   onPick: (i: Ingredient) => void;
   initialQuery?: string;
   autoSearch?: boolean;
+  confirmLabel?: string;
+  pending?: boolean;
 }) {
   const [query, setQuery] = useState(clean(initialQuery)),
     [kind, setKind] = useState<"all" | "food" | "supplement">("all"),
@@ -303,7 +307,7 @@ export default function ProductPicker({
             className="whitespace-normal h-auto max-w-full"
             type="button"
             disabled={
-              !Number.isFinite(servings) || servings <= 0 || servings > 100
+              pending || !Number.isFinite(servings) || servings <= 0 || servings > 100
             }
             onClick={() => {
               onPick(productIngredient(choice, servings));
@@ -311,7 +315,7 @@ export default function ProductPicker({
               setVariants([]);
             }}
           >
-            Use selected product & amount
+            {pending ? "Updating meal…" : confirmLabel}
           </Button>
         </div>
       )}
