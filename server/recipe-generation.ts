@@ -80,3 +80,23 @@ export async function generateRecipes(
   if (!result.output_parsed) throw Error("AI returned no valid recipes.");
   return validateProposals(result.output_parsed.recipes, prefs, allergies);
 }
+
+// Never expose provider error bodies: they may contain request data or credentials.
+export function recipeFailure(error: unknown) {
+  const e = error instanceof OpenAI.APIError ? error : undefined;
+  if (e?.code === "insufficient_quota")
+    return { code: "AI_QUOTA", error: "The AI provider reports insufficient API quota. Check API billing, available credits and project spending limits." };
+  if (e?.status === 401)
+    return { code: "AI_AUTH", error: "The AI provider rejected the API key. Check the server's key and API project permissions." };
+  if (e?.status === 403 || e?.code === "model_not_found")
+    return { code: "AI_ACCESS", error: "The API project cannot access the configured model or endpoint. Check model access and key permissions." };
+  if (e?.status === 429)
+    return { code: "AI_RATE_LIMIT", error: "The AI provider is rate limiting requests. Wait before trying again." };
+  if (error instanceof OpenAI.APIConnectionTimeoutError)
+    return { code: "AI_TIMEOUT", error: "The AI provider took too long. Try again or use the structured recipes." };
+  if (e?.status === 400)
+    return { code: "AI_REQUEST", error: "The AI provider rejected the recipe request format or model settings. The app configuration needs review." };
+  if (error instanceof z.ZodError || (error instanceof Error && /Generated recipes violated|AI returned no valid/.test(error.message)))
+    return { code: "AI_OUTPUT", error: "The AI response did not pass recipe validation. Try another request; structured recipes remain available." };
+  return { code: "AI_UNAVAILABLE", error: "AI recipe generation is unavailable. Check provider configuration or try again later; structured recipes remain available." };
+}

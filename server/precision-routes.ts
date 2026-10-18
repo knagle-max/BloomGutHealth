@@ -18,7 +18,7 @@ import {
 } from "../shared/weekly-planner";
 import { evidenceNetwork } from "../shared/evidence-network";
 import { runWeeklyPlanning } from "./weekly-runner";
-import { generateRecipes } from "./recipe-generation";
+import { generateRecipes, recipeFailure } from "./recipe-generation";
 import { prepareResearch, simulateResearch } from "./metabolite-research";
 import type { WeeklyPlan } from "../shared/weekly-planner";
 
@@ -296,11 +296,8 @@ export function registerPrecisionRoutes(
         ),
         note: "AI proposed ingredient combinations from sourced foods. The server validates restrictions and calculates nutrition; the weekly optimizer must still verify the complete plan.",
       });
-    } catch {
-      res.status(503).json({
-        error:
-          "Recipe generation is not configured or did not return safe, valid combinations. Structured recipes remain available.",
-      });
+    } catch (error) {
+      res.status(503).json(recipeFailure(error));
     }
   });
   for (const action of ["preview", "save"] as const)
