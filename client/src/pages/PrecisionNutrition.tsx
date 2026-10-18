@@ -375,7 +375,7 @@ export default function PrecisionNutrition() {
                       [
                         "Genetics",
                         r.genetics.import
-                          ? `${r.genetics.findings.filter((f) => f.status === "reported raw call" || f.status === "self-reported call").length} supported raw calls`
+                          ? `${r.genetics.findings.filter((f) => f.status === "reported raw call" || f.status === "self-reported call").length} reviewed calls`
                           : "No genetic import",
                       ],
                       [
