@@ -1,6 +1,6 @@
 {
-  "version": "genotype-education-2026-10-17.1",
-  "reviewedAt": "2026-10-17",
+  "version": "genotype-education-2026-10-18.2",
+  "reviewedAt": "2026-10-18",
   "strand": "genomic-forward",
   "scope": "Educational comparisons only; diet-ranking catalogue remains unchanged.",
   "variants": [
@@ -8,15 +8,15 @@
       "rsid": "rs1801133",
       "gene": "MTHFR",
       "alleles": "AG",
-      "geneRole": "Helps produce a folate form used to recycle homocysteine to methionine.",
+      "geneRole": "Helps turn folate, a vitamin in foods, into a form your cells use. This supports normal cell repair and recycling of a blood chemical called homocysteine.",
       "variantMeaning": "The common 677C>T protein change is written G>A on the genomic forward strand. A corresponds to 677T.",
       "evidence": "Functional and biomarker evidence; nutritional outcome depends on folate status.",
       "comparisons": {
-        "GG": "No A (677T) copies at this marker. Does not guarantee normal folate or homocysteine.",
-        "AG": "One A (677T) copy; average enzyme/biomarker effects are generally less pronounced than AA.",
-        "AA": "Two A (677T) copies; lower average enzyme activity and greater susceptibility to higher homocysteine, especially with low folate."
+        "GG": "GG: this particular change is not present. Folate processing is usually more efficient than with AA, but this result does not prove your folate level is adequate.",
+        "AG": "AG: one copy of the change. This processing step may work less efficiently than GG, usually with a smaller effect than AA. Adequate folate intake still matters.",
+        "AA": "AA: two copies of the change. This processing step is generally less efficient. Low folate intake can make raised homocysteine more likely; you can still use food folate and folic acid."
       },
-      "dietMeaning": "Review actual folate, B12 and homocysteine measurements when clinically indicated; this marker does not choose a supplement form or dose.",
+      "dietMeaning": "Try lentils, beans, spinach or asparagus regularly. Fortified cereals or grain products can also supply folic acid; check the label.",
       "limitations": "Common variation is not severe MTHFR deficiency. Food folate and folic acid can still be used; no fixed personal enzyme-activity percentage is inferred.",
       "sources": [
         {
@@ -30,22 +30,52 @@
         {
           "title": "CDC MTHFR and folic acid",
           "url": "https://www.cdc.gov/folic-acid/data-research/mthfr/index.html"
+        },
+        {
+          "title": "NIH: food folate and supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Folate/Consumer/"
         }
-      ]
+      ],
+      "topic": "Folate processing (vitamin B9)",
+      "resultAdvice": {
+        "GG": {
+          "headline": "No reduced-activity copy here",
+          "action": "Meet normal folate needs; this result alone does not call for extra supplements.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "Folate processing may be less efficient",
+          "action": "Make folate-rich foods a regular habit. Extra attention to intake is useful; a special supplement is not automatically needed.",
+          "priority": "general-habits"
+        },
+        "AA": {
+          "headline": "Folate processing is usually less efficient",
+          "action": "Pay particular attention to meeting folate needs. If intake is poor or relevant blood tests are abnormal, discuss how to correct the gap.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Try lentils, beans, spinach or asparagus regularly.",
+          "Fortified cereals or grain products can also supply folic acid; check the label."
+        ],
+        "supplements": "Folic acid still works with this variant. A methylfolate product or high dose is not automatically better. A supplement may help cover an intake gap; pregnancy guidance applies independently of this result.",
+        "followUp": "If there is a clinical reason, ask about folate, B12 and homocysteine tests. Homocysteine is a blood chemical influenced by several nutrients and other health factors."
+      }
     },
     {
       "rsid": "rs1801131",
       "gene": "MTHFR",
       "alleles": "GT",
-      "geneRole": "Supports folate-dependent homocysteine recycling.",
+      "geneRole": "Works in the same folate-processing system as the other MTHFR marker. This is a different DNA position, so its result must be read separately.",
       "variantMeaning": "A1298C changes a protein residue in the regulatory region. Forward G corresponds to gene-oriented 1298C; T corresponds to 1298A.",
       "evidence": "Functional evidence; isolated biomarker effects are less consistent than for rs1801133.",
       "comparisons": {
-        "TT": "No G (1298C) copies. This does not describe the separate 677 marker.",
-        "GT": "One G (1298C) copy. This alone does not establish high homocysteine or folate deficiency.",
-        "GG": "Two G (1298C) copies; reduced activity has been observed experimentally, but a personal nutrient requirement cannot be calculated."
+        "TT": "TT: this particular reduced-activity change is not present. It does not tell you your result at the other MTHFR marker.",
+        "GT": "GT: one copy of the change. Some laboratory studies find an effect on the enzyme, but this result alone cannot tell us how well you use folate.",
+        "GG": "GG: two copies of the change. Lower enzyme activity has been seen in studies, but a low folate level or a need for extra supplements does not automatically follow."
       },
-      "dietMeaning": "Review actual folate, B12 and homocysteine measurements when clinically indicated; this marker does not choose a supplement form or dose.",
+      "dietMeaning": "Include beans, leafy vegetables and folate-fortified foods as part of a varied diet.",
       "limitations": "The combined effect with rs1801133 requires careful interpretation; Bloom does not infer phase or a combined activity score.",
       "sources": [
         {
@@ -59,22 +89,51 @@
         {
           "title": "Original A1298C study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/9719624/"
+        },
+        {
+          "title": "NIH: food folate and supplements",
+          "url": "https://ods.od.nih.gov/factsheets/Folate/Consumer/"
         }
-      ]
+      ],
+      "topic": "A second folate-processing marker",
+      "resultAdvice": {
+        "TT": {
+          "headline": "No reduced-activity copy here",
+          "action": "Meet normal folate needs. No extra action is established for this result alone.",
+          "priority": "no-specific-change"
+        },
+        "GT": {
+          "headline": "Practical effect is uncertain",
+          "action": "Keep folate intake adequate; do not assume this makes you folate deficient.",
+          "priority": "no-specific-change"
+        },
+        "GG": {
+          "headline": "Lower activity is possible; diet effect is uncertain",
+          "action": "Keep folate intake adequate. Use actual health findings, rather than this result alone, to decide on supplements.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Include beans, leafy vegetables and folate-fortified foods as part of a varied diet."
+        ],
+        "supplements": "No special form or dose is established for this marker. Folic acid can still be used.",
+        "followUp": "Review B12, folate or homocysteine with a clinician if symptoms, diet or medical history give a reason. Bloom does not combine the two MTHFR markers into an activity score."
+      }
     },
     {
       "rsid": "rs1801394",
       "gene": "MTRR",
       "alleles": "AG",
-      "geneRole": "Helps reactivate the B12-dependent methionine synthase enzyme.",
+      "geneRole": "Helps keep a vitamin B12-dependent recycling process working. This process uses folate and helps prevent homocysteine, a normal blood chemical, from building up.",
       "variantMeaning": "The common A66G variant changes Ile22 to Met. It has been studied in one-carbon metabolism.",
       "evidence": "Candidate-variant/biomarker evidence; no established genotype-specific nutrient target.",
       "comparisons": {
-        "AA": "Ile/Ile at the commonly described protein change.",
-        "AG": "Ile/Met: one copy of each allele. This does not demonstrate impaired B12 recycling.",
-        "GG": "Met/Met. Published biomarker associations do not justify automatically classifying this as deficient or impaired."
+        "AA": "AA: a common comparison result. It does not prove that your B12 or folate intake is adequate.",
+        "AG": "AG: one copy of each version. Research does not reliably show that you use B12 less efficiently or need more of it.",
+        "GG": "GG: two copies of this version. Evidence is not strong enough to call your B12 use better or worse or to set a different intake."
       },
-      "dietMeaning": "Review actual folate, B12 and homocysteine measurements when clinically indicated; this marker does not choose a supplement form or dose.",
+      "dietMeaning": "B12 options include eggs, dairy, meat or fish; plant-based options include B12-fortified foods.",
       "limitations": "Enzyme-pathway involvement is different from evidence that extra B12 or methylated supplements improve outcomes for this genotype.",
       "sources": [
         {
@@ -88,22 +147,51 @@
         {
           "title": "NCBI MTRR gene",
           "url": "https://www.ncbi.nlm.nih.gov/gene/4552"
+        },
+        {
+          "title": "NIH: vitamin B12 food and supplement guidance",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/"
         }
-      ]
+      ],
+      "topic": "Vitamin B12 and folate use",
+      "resultAdvice": {
+        "AA": {
+          "headline": "No proven change to B12 needs",
+          "action": "Choose B12 sources that fit your diet; no additional supplement need is established from this result.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "No proven change to B12 needs",
+          "action": "Choose B12 sources that fit your diet; no additional supplement need is established from this result.",
+          "priority": "no-specific-change"
+        },
+        "GG": {
+          "headline": "No proven change to B12 needs",
+          "action": "Choose B12 sources that fit your diet; no additional supplement need is established from this result.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "B12 options include eggs, dairy, meat or fish; plant-based options include B12-fortified foods."
+        ],
+        "supplements": "If you avoid animal foods, a reliable fortified-food or supplement source of B12 is important regardless of genotype. This SNP does not select a methylated product or dose.",
+        "followUp": "A clinician can assess B12 status if intake is low, symptoms occur or absorption problems are suspected."
+      }
     },
     {
       "rsid": "rs1805087",
       "gene": "MTR",
       "alleles": "AG",
-      "geneRole": "Encodes the B12-dependent enzyme that converts homocysteine to methionine.",
+      "geneRole": "Uses vitamin B12 and folate in a recycling step important for normal cell chemistry. This helps process a blood chemical called homocysteine.",
       "variantMeaning": "A2756G changes Asp919 to Gly. The marker is studied in folate/B12-related metabolism.",
       "evidence": "Candidate-variant associations; personal functional direction remains uncertain.",
       "comparisons": {
-        "AA": "Asp/Asp at this marker. Does not rule out B12 or folate problems.",
-        "AG": "Asp/Gly. No reliable intermediate nutrient requirement has been established.",
-        "GG": "Gly/Gly. Biomarker effects are not sufficiently consistent to infer a deficiency or prescribe a supplement."
+        "AA": "AA: a common comparison result. It does not prove that your B12 or folate intake is adequate.",
+        "AG": "AG: one copy of each version. Research does not reliably show that you use B12 less efficiently or need more of it.",
+        "GG": "GG: two copies of this version. Evidence is not strong enough to call your B12 use better or worse or to set a different intake."
       },
-      "dietMeaning": "Review actual folate, B12 and homocysteine measurements when clinically indicated; this marker does not choose a supplement form or dose.",
+      "dietMeaning": "B12 options include eggs, dairy, meat or fish; plant-based options include B12-fortified foods.",
       "limitations": "Do not interpret a common MTR call as a diagnosis of rare methionine-synthase deficiency.",
       "sources": [
         {
@@ -117,22 +205,51 @@
         {
           "title": "NCBI MTR gene",
           "url": "https://www.ncbi.nlm.nih.gov/gene/4548"
+        },
+        {
+          "title": "NIH: vitamin B12 food and supplement guidance",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/"
         }
-      ]
+      ],
+      "topic": "Vitamin B12 and folate use",
+      "resultAdvice": {
+        "AA": {
+          "headline": "No proven change to B12 needs",
+          "action": "Choose B12 sources that fit your diet; no additional supplement need is established from this result.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "No proven change to B12 needs",
+          "action": "Choose B12 sources that fit your diet; no additional supplement need is established from this result.",
+          "priority": "no-specific-change"
+        },
+        "GG": {
+          "headline": "No proven change to B12 needs",
+          "action": "Choose B12 sources that fit your diet; no additional supplement need is established from this result.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "B12 options include eggs, dairy, meat or fish; plant-based options include B12-fortified foods."
+        ],
+        "supplements": "If you avoid animal foods, a reliable fortified-food or supplement source of B12 is important regardless of genotype. This SNP does not select a methylated product or dose.",
+        "followUp": "A clinician can assess B12 status if intake is low, symptoms occur or absorption problems are suspected."
+      }
     },
     {
       "rsid": "rs234706",
       "gene": "CBS",
       "alleles": "AG",
-      "geneRole": "Helps move homocysteine into the transsulfuration pathway toward cysteine; the enzyme uses vitamin B6.",
+      "geneRole": "Helps process a blood chemical called homocysteine into other building blocks the body uses. The process uses vitamin B6.",
       "variantMeaning": "C699T is a synonymous marker: it does not change the encoded amino acid. Forward A corresponds to the gene-oriented T allele.",
       "evidence": "Inconsistent candidate-gene findings; insufficient evidence for a useful dietary activity ranking.",
       "comparisons": {
-        "GG": "No A copies at this synonymous marker; not a measurement of CBS activity.",
-        "AG": "One A copy; not evidence of an overactive CBS enzyme or excess sulfur/ammonia.",
-        "AA": "Two A copies; does not establish an overactive pathway or a need to restrict sulfur foods."
+        "GG": "GG: this marker does not measure how fast this process runs.",
+        "AG": "AG: one A copy is not evidence of an overactive enzyme or excess sulfur or ammonia.",
+        "AA": "AA: two A copies do not show an overactive enzyme or a need to avoid sulfur-containing foods."
       },
-      "dietMeaning": "This SNP does not justify restricting protein, sulfur-containing vegetables or B6 on its own.",
+      "dietMeaning": "You do not need to cut out eggs, beans, broccoli or other protein/sulfur foods because of this SNP.",
       "limitations": "Studies of homocysteine have not consistently supported the claimed functional effect; rare disease-causing CBS variants are a separate issue.",
       "sources": [
         {
@@ -146,22 +263,51 @@
         {
           "title": "CBS locus study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/10363126/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Protein and sulfur metabolism",
+      "resultAdvice": {
+        "GG": {
+          "headline": "No proven reason to restrict foods",
+          "action": "Keep a varied diet; no low-sulfur or low-protein diet is justified by this marker.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "No proven reason to restrict foods",
+          "action": "Keep a varied diet; no low-sulfur or low-protein diet is justified by this marker.",
+          "priority": "no-specific-change"
+        },
+        "AA": {
+          "headline": "No proven reason to restrict foods",
+          "action": "Keep a varied diet; no low-sulfur or low-protein diet is justified by this marker.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "You do not need to cut out eggs, beans, broccoli or other protein/sulfur foods because of this SNP."
+        ],
+        "supplements": "No B6 or “detox” supplement is established for this result.",
+        "followUp": "Investigate persistent symptoms on their own merits; this result is not an ammonia or sulfur test."
+      }
     },
     {
       "rsid": "rs601338",
       "gene": "FUT2",
       "alleles": "AG",
-      "geneRole": "Controls whether certain blood-group-related sugars are displayed in secretions and on gut surfaces, influencing the microbial habitat.",
+      "geneRole": "Helps put certain sugars on the gut lining. These sugars affect the environment microbes live in. This is called secretor status; it is not your blood type or a count of good bacteria.",
       "variantMeaning": "The A stop allele can disable FUT2 secretor function. This marker explains a common non-secretor form in some populations.",
       "evidence": "Established secretor biology; B12 associations do not directly measure usable B12.",
       "comparisons": {
-        "GG": "Two G copies: compatible with secretor status at this marker.",
-        "AG": "One G copy generally preserves secretor function; this is not a halfway non-secretor state.",
-        "AA": "Two A copies: compatible with non-secretor status from this common stop variant."
+        "GG": "GG: compatible with secretor status at this marker. It does not prove a healthy microbiome.",
+        "AG": "AG: one working G copy generally preserves secretor function. This is not halfway between secretor and non-secretor.",
+        "AA": "AA: compatible with non-secretor status from this common variant. This changes gut surface sugars, but is not automatically good or bad and does not prove poor B12 absorption."
       },
-      "dietMeaning": "Use actual B12 status and symptoms. Do not select a probiotic, infer a bacterial deficiency or assume poor B12 absorption from this marker.",
+      "dietMeaning": "Meet B12 needs using foods that suit you, including fortified options if you avoid animal foods.",
       "limitations": "Other FUT2 variants and ancestry matter. Higher total B12 can reflect binding-protein differences rather than better cellular B12 supply.",
       "sources": [
         {
@@ -175,22 +321,51 @@
         {
           "title": "Original FUT2 B12 association",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18776911/"
+        },
+        {
+          "title": "NIH: vitamin B12 food and supplement guidance",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminB12-Consumer/"
         }
-      ]
+      ],
+      "topic": "Gut surface sugars and B12 context",
+      "resultAdvice": {
+        "GG": {
+          "headline": "Likely secretor at this marker",
+          "action": "Keep a varied diet; no special probiotic or B12 plan follows from this result.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "Likely secretor at this marker",
+          "action": "Keep a varied diet; no special probiotic or B12 plan follows from this result.",
+          "priority": "no-specific-change"
+        },
+        "AA": {
+          "headline": "Likely non-secretor at this marker",
+          "action": "Keep a varied diet; no special probiotic or B12 plan follows from this result.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Meet B12 needs using foods that suit you, including fortified options if you avoid animal foods."
+        ],
+        "supplements": "Neither secretor status calls for an automatic probiotic or extra B12 supplement.",
+        "followUp": "If B12 is a concern, use clinical assessment and blood results. Other variants can affect secretor status in different populations."
+      }
     },
     {
       "rsid": "rs174547",
       "gene": "FADS1",
       "alleles": "CT",
-      "geneRole": "Participates in desaturation steps that help form longer-chain polyunsaturated fats.",
+      "geneRole": "Helps convert shorter plant fats into longer-chain fats used by cells, including parts of the omega-3 and omega-6 pathways. Direct food sources supply some of these fats without relying on the full conversion pathway.",
       "variantMeaning": "A common FADS-cluster marker associated with fatty-acid composition and inferred desaturase activity. It is distinct from rs174550.",
       "evidence": "Replicated fatty-acid associations; causal variants and dietary response vary by population.",
       "comparisons": {
-        "TT": "No C copies at this marker; the comparison group in several desaturase studies.",
-        "CT": "One C copy; population-average fatty-acid profiles can differ from TT and CC.",
-        "CC": "Two C copies; associated with lower inferred desaturase activity in some studied groups, not a measured personal conversion rate."
+        "TT": "TT: associated with relatively higher activity of a fat-processing step than CC in the cited research. This is not an overall healthier-fat score.",
+        "CT": "CT: one of each version. Fatty-acid levels can differ on average, but your exact conversion efficiency cannot be read from this result.",
+        "CC": "CC: associated with lower estimated activity of this fat-processing step in some studies. This does not mean that you cannot use dietary fats."
       },
-      "dietMeaning": "Consider the overall fat pattern and relevant measurements; this is not a calculated fish-oil requirement or a mandate to eat seafood.",
+      "dietMeaning": "Fish supplies EPA/DHA directly. If you avoid seafood, algae-derived DHA/EPA is an alternative to discuss. Walnuts, chia and flax supply ALA, a plant omega-3; they are useful foods but not equivalent to the same amount of EPA/DHA.",
       "limitations": "Lipid ratios are proxies for activity. Do not extrapolate an exact ALA-to-EPA/DHA conversion percentage.",
       "sources": [
         {
@@ -200,22 +375,52 @@
         {
           "title": "FADS variation and desaturase activity",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5486258/"
+        },
+        {
+          "title": "NIH: omega-3 food and algae alternatives",
+          "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-Consumer/"
         }
-      ]
+      ],
+      "topic": "Making longer-chain fats",
+      "resultAdvice": {
+        "TT": {
+          "headline": "Relatively higher estimated activity",
+          "action": "Include a variety of unsaturated fats; this result is not a reason to increase or avoid a whole fat group.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "Your conversion rate is uncertain",
+          "action": "Include suitable omega-3 sources; a special dose is not established for this mixed result.",
+          "priority": "general-habits"
+        },
+        "CC": {
+          "headline": "Relatively lower estimated activity",
+          "action": "Consider whether your diet includes direct EPA/DHA omega-3 sources, without assuming that this result proves a deficiency.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Fish supplies EPA/DHA directly. If you avoid seafood, algae-derived DHA/EPA is an alternative to discuss.",
+          "Walnuts, chia and flax supply ALA, a plant omega-3; they are useful foods but not equivalent to the same amount of EPA/DHA."
+        ],
+        "supplements": "Algal or fish oil can be considered when appropriate for your intake and health context. The SNP does not calculate a dose or prove a supplement benefit.",
+        "followUp": "A dietitian can review fat intake alongside blood lipids if needed. Marker effects vary across populations; no personal conversion percentage is calculated."
+      }
     },
     {
       "rsid": "rs174550",
       "gene": "FADS1 region",
       "alleles": "CT",
-      "geneRole": "Participates in desaturation steps that help form longer-chain polyunsaturated fats.",
+      "geneRole": "Helps convert shorter plant fats into longer-chain fats used by cells, including parts of the omega-3 and omega-6 pathways. Direct food sources supply some of these fats without relying on the full conversion pathway.",
       "variantMeaning": "An intronic FADS1 marker investigated in diet trials comparing TT and CC groups.",
       "evidence": "Human dietary intervention and mechanistic evidence; CT is not directly characterized by every trial.",
       "comparisons": {
-        "TT": "Associated with higher inferred desaturase activity than CC in the cited research.",
-        "CT": "One C and one T copy. A precisely intermediate response is not established by trials enrolling only TT and CC.",
-        "CC": "Associated with lower inferred activity than TT in the cited research; actual lipid responses depend on dietary inputs."
+        "TT": "TT: associated with higher estimated fat-processing activity than CC in the cited studies. More activity is not automatically better for every fat.",
+        "CT": "CT: research comparing only TT and CC does not establish that your response is halfway between them.",
+        "CC": "CC: associated with lower estimated fat-processing activity than TT in the cited studies. Your actual fatty-acid levels still depend on diet and other factors."
       },
-      "dietMeaning": "Consider the overall fat pattern and relevant measurements; this is not a calculated fish-oil requirement or a mandate to eat seafood.",
+      "dietMeaning": "Fish supplies EPA/DHA directly. If you avoid seafood, algae-derived DHA/EPA is an alternative to discuss. Walnuts, chia and flax supply ALA, a plant omega-3; they are useful foods but not equivalent to the same amount of EPA/DHA.",
       "limitations": "The cited trial contrasted homozygotes. No per-genotype oil dose or assured health benefit follows from those findings.",
       "sources": [
         {
@@ -225,22 +430,52 @@
         {
           "title": "FADSDIET2 randomized dietary intervention",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10077898/"
+        },
+        {
+          "title": "NIH: omega-3 food and algae alternatives",
+          "url": "https://ods.od.nih.gov/factsheets/Omega3FattyAcids-Consumer/"
         }
-      ]
+      ],
+      "topic": "Making longer-chain fats",
+      "resultAdvice": {
+        "TT": {
+          "headline": "Relatively higher estimated activity",
+          "action": "Include a variety of unsaturated fats; this result is not a reason to increase or avoid a whole fat group.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "Your conversion rate is uncertain",
+          "action": "Include suitable omega-3 sources; a special dose is not established for this mixed result.",
+          "priority": "general-habits"
+        },
+        "CC": {
+          "headline": "Relatively lower estimated activity",
+          "action": "Consider whether your diet includes direct EPA/DHA omega-3 sources, without assuming that this result proves a deficiency.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Fish supplies EPA/DHA directly. If you avoid seafood, algae-derived DHA/EPA is an alternative to discuss.",
+          "Walnuts, chia and flax supply ALA, a plant omega-3; they are useful foods but not equivalent to the same amount of EPA/DHA."
+        ],
+        "supplements": "Algal or fish oil can be considered when appropriate for your intake and health context. The SNP does not calculate a dose or prove a supplement benefit.",
+        "followUp": "A dietitian can review fat intake alongside blood lipids if needed. Marker effects vary across populations; no personal conversion percentage is calculated."
+      }
     },
     {
       "rsid": "rs12934922",
       "gene": "BCO1 / BCMO1",
       "alleles": "AT",
-      "geneRole": "Converts beta-carotene from plant foods into a vitamin A precursor.",
+      "geneRole": "Helps turn beta-carotene, the orange pigment in carrots and similar foods, into vitamin A. Vitamin A supports vision and immune function. Vitamin A already present in foods uses a different route.",
       "variantMeaning": "The R267S protein variant has been studied alongside other BCO1 variants in beta-carotene conversion.",
       "evidence": "Small human functional studies; combined variants and food context matter.",
       "comparisons": {
-        "AA": "No T copies at this marker. This alone does not guarantee efficient vitamin A conversion.",
-        "AT": "One T copy; a precise reduction in personal conversion is not established from this SNP alone.",
-        "TT": "Two T copies; research implicates the variant in conversion variability, especially in combinations with other BCO1 variants."
+        "AA": "AA: no T copies at this marker. This is not proof of efficient conversion because other genes and your diet also matter.",
+        "AT": "AT: one T copy. Conversion may vary, but studies do not establish an exact reduction from this marker alone.",
+        "TT": "TT: two T copies. Research suggests conversion can be less efficient in some genetic combinations; this single result cannot quantify the effect."
       },
-      "dietMeaning": "Assess vitamin A intake from both carotenoid and preformed sources. Do not calculate a retinol dose from this SNP.",
+      "dietMeaning": "Carrots, sweet potatoes and leafy greens provide vitamin A precursors. Eggs, dairy and foods fortified with preformed vitamin A supply a form that does not require beta-carotene conversion; check labels.",
       "limitations": "Large conversion percentages reported for combined variants must not be assigned to rs12934922 alone; this call does not diagnose vitamin A deficiency.",
       "sources": [
         {
@@ -254,22 +489,52 @@
         {
           "title": "BCO1 conversion study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/22113863/"
+        },
+        {
+          "title": "NIH: vitamin A food forms and excess intake",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminA-Consumer/"
         }
-      ]
+      ],
+      "topic": "Turning plant colour into vitamin A",
+      "resultAdvice": {
+        "AA": {
+          "headline": "No reduced-conversion copy here",
+          "action": "Meet normal vitamin A needs from a varied diet; extra retinol is not indicated by this result.",
+          "priority": "no-specific-change"
+        },
+        "AT": {
+          "headline": "Conversion effect is uncertain",
+          "action": "Review vitamin A sources if your diet is very restricted; this result alone does not establish a supplement need.",
+          "priority": "no-specific-change"
+        },
+        "TT": {
+          "headline": "Possibly less efficient plant conversion",
+          "action": "If nearly all your vitamin A comes from plant pigments, review intake rather than assuming carrots alone cover your needs.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Carrots, sweet potatoes and leafy greens provide vitamin A precursors.",
+          "Eggs, dairy and foods fortified with preformed vitamin A supply a form that does not require beta-carotene conversion; check labels."
+        ],
+        "supplements": "Do not start high-dose retinol from this SNP. Too much preformed vitamin A can be harmful, especially during pregnancy; a restricted vegan diet may warrant dietitian advice.",
+        "followUp": "Review intake and symptoms with a clinician or dietitian if deficiency is a concern. No fixed conversion loss is assigned."
+      }
     },
     {
       "rsid": "rs10741657",
       "gene": "CYP2R1",
       "alleles": "AG",
-      "geneRole": "Helps convert vitamin D into circulating 25-hydroxyvitamin D.",
+      "geneRole": "Helps the liver turn vitamin D from food, supplements and sunlight into the main form measured in blood. Vitamin D helps the body use calcium for bones and muscles.",
       "variantMeaning": "A common regulatory-region marker associated with the blood vitamin D biomarker.",
       "evidence": "Large human GWAS; individual supplement response is not determined by the marker.",
       "comparisons": {
-        "AA": "No G copies; associated with relatively higher average 25-hydroxyvitamin D than G-carrying groups in cited studies.",
-        "AG": "One G copy; a modest population-level tendency toward lower biomarker levels.",
-        "GG": "Two G copies; associated with lower average levels, without establishing a personal deficiency."
+        "AA": "AA: associated with higher average blood vitamin D than G-carrying groups. This is relatively favourable for that blood marker, but does not guarantee enough vitamin D.",
+        "AG": "AG: associated with a modest tendency toward lower blood vitamin D than AA. This does not prove poor absorption or a vitamin D deficiency.",
+        "GG": "GG: associated with lower average blood vitamin D than AA. It is a reason to pay attention to intake and context, not proof that dietary vitamin D cannot be used."
       },
-      "dietMeaning": "Measured 25-hydroxyvitamin D, intake and clinical context guide any supplementation.",
+      "dietMeaning": "Use vitamin D-fortified milk or plant drinks, eggs or fatty fish as suitable for your diet.",
       "limitations": "Season, sun exposure, body composition and other genes can outweigh the contribution of this marker.",
       "sources": [
         {
@@ -279,22 +544,51 @@
         {
           "title": "Vitamin D GWAS",
           "url": "https://pubmed.ncbi.nlm.nih.gov/20541252/"
+        },
+        {
+          "title": "NIH: vitamin D, food, supplements and sunlight",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
         }
-      ]
+      ],
+      "topic": "Vitamin D processing",
+      "resultAdvice": {
+        "AA": {
+          "headline": "Relatively higher vitamin D levels on average",
+          "action": "Meet normal vitamin D needs; do not skip vitamin D sources just because this result is favourable.",
+          "priority": "general-habits"
+        },
+        "AG": {
+          "headline": "Slight tendency toward lower vitamin D levels",
+          "action": "Check whether your usual diet supplies vitamin D. Consider supplement needs based on intake and clinical context.",
+          "priority": "general-habits"
+        },
+        "GG": {
+          "headline": "Tendency toward lower vitamin D levels",
+          "action": "Pay attention to vitamin D intake, especially if you have other reasons for low levels. Discuss testing when clinically appropriate; no higher dose follows automatically.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Use vitamin D-fortified milk or plant drinks, eggs or fatty fish as suitable for your diet."
+        ],
+        "supplements": "A vitamin D supplement can cover an intake gap or treat a confirmed low level with appropriate advice. This marker does not choose a dose. More unprotected sun is not a recommended fix; sunlight-derived vitamin D also needs processing.",
+        "followUp": "If testing is appropriate, the usual status test is 25-hydroxyvitamin D. Routine testing is not needed for every healthy person; intake, bone health and medical history matter."
+      }
     },
     {
       "rsid": "rs10877012",
       "gene": "CYP27B1",
       "alleles": "GT",
-      "geneRole": "Converts 25-hydroxyvitamin D to the active hormone calcitriol.",
+      "geneRole": "Helps turn stored/circulating vitamin D into an active hormone, mainly in the kidneys. This is a different step from absorbing vitamin D from food.",
       "variantMeaning": "A promoter-region marker, often written -1260C>A in gene-oriented notation; forward alleles are G/T.",
       "evidence": "Candidate-variant and functional-context evidence; dietary actionability is limited.",
       "comparisons": {
-        "GG": "Two G copies at this promoter marker. Bloom does not assign a vitamin D activation rate.",
-        "GT": "One G and one T copy. No validated intermediate activation or dose requirement is available.",
-        "TT": "Two T copies. No reliable personal active-vitamin-D prediction is calculated."
+        "GG": "GG: this result does not tell us whether you activate vitamin D more or less efficiently.",
+        "GT": "GT: no reliable halfway activation rate has been established for this result.",
+        "TT": "TT: this result does not reliably predict active vitamin D levels or a different supplement need."
       },
-      "dietMeaning": "Interpret vitamin D measurements in clinical context rather than treating the genotype as a reason to take active vitamin D.",
+      "dietMeaning": "Vitamin D-fortified foods can help cover intake; this result does not make them unusable.",
       "limitations": "Candidate studies do not establish a general-population genotype-specific dose or a simple universal best genotype.",
       "sources": [
         {
@@ -308,22 +602,51 @@
         {
           "title": "NCBI CYP27B1 gene",
           "url": "https://www.ncbi.nlm.nih.gov/gene/1594"
+        },
+        {
+          "title": "NIH: vitamin D, food, supplements and sunlight",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminD-HealthProfessional/"
         }
-      ]
+      ],
+      "topic": "Switching vitamin D into its active form",
+      "resultAdvice": {
+        "GG": {
+          "headline": "Activation efficiency is not known from this SNP",
+          "action": "Meet normal vitamin D needs. Do not treat this as a blocked activation pathway.",
+          "priority": "no-specific-change"
+        },
+        "GT": {
+          "headline": "Activation efficiency is not known from this SNP",
+          "action": "Meet normal vitamin D needs. Do not treat this as a blocked activation pathway.",
+          "priority": "no-specific-change"
+        },
+        "TT": {
+          "headline": "Activation efficiency is not known from this SNP",
+          "action": "Meet normal vitamin D needs. Do not treat this as a blocked activation pathway.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Vitamin D-fortified foods can help cover intake; this result does not make them unusable."
+        ],
+        "supplements": "Do not start prescription active vitamin D (calcitriol) or high doses from this SNP.",
+        "followUp": "Kidney problems or abnormal calcium/vitamin D results need clinical interpretation. This SNP alone is not a reason for routine extra tests."
+      }
     },
     {
       "rsid": "rs1800562",
       "gene": "HFE",
       "alleles": "AG",
-      "geneRole": "Helps regulate iron absorption through iron-sensing and hepcidin signalling.",
+      "geneRole": "Helps the body control how much iron enters from food. Iron is essential, but excessive buildup can damage organs.",
       "variantMeaning": "The A allele encodes C282Y, an important hereditary-haemochromatosis variant.",
       "evidence": "Established clinical relevance; penetrance is incomplete and context dependent.",
       "comparisons": {
-        "GG": "No C282Y A copies. Other causes of iron overload or deficiency remain possible.",
-        "AG": "One C282Y copy. This usually differs substantially from having two copies; other HFE variants and iron studies matter.",
-        "AA": "Two C282Y copies. This warrants clinical confirmation and assessment of iron status; it is not proof of iron-overload disease."
+        "GG": "GG: no C282Y change at this marker. It does not rule out iron overload or iron deficiency.",
+        "AG": "AG: one C282Y copy. Most people with just one copy do not develop iron overload from this alone. Other variants and blood tests matter.",
+        "AA": "AA: two C282Y copies can weaken the brake on iron absorption. This needs clinical confirmation and assessment, but not everyone develops iron-overload disease."
       },
-      "dietMeaning": "Ferritin, transferrin saturation and clinical assessment guide decisions. A consumer call does not authorize iron treatment or a restrictive diet.",
+      "dietMeaning": "Do not automatically eliminate meat, beans or leafy greens. Confirmed iron overload calls for an individual plan.",
       "limitations": "Sex, age, ancestry, other variants and environmental factors affect expression. No diagnosis or penetrance percentage is assigned to the individual.",
       "sources": [
         {
@@ -337,22 +660,51 @@
         {
           "title": "HFE genotype penetrance study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/12482402/"
+        },
+        {
+          "title": "NIDDK: diet when iron overload is diagnosed",
+          "url": "https://www.niddk.nih.gov/health-information/liver-disease/hemochromatosis/eating-diet-nutrition"
         }
-      ]
+      ],
+      "topic": "Controlling iron absorption",
+      "resultAdvice": {
+        "GG": {
+          "headline": "No C282Y copy here",
+          "action": "Eat normally and base iron treatment on measured need.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "One C282Y copy; overload is not established",
+          "action": "A restrictive low-iron diet is not automatically needed. Ask about iron testing if family history or other findings raise concern.",
+          "priority": "no-specific-change"
+        },
+        "AA": {
+          "headline": "Higher iron-overload susceptibility",
+          "action": "Discuss this with a clinician for clinical confirmation and blood iron assessment before changing diet or supplements.",
+          "priority": "clinical-review"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Do not automatically eliminate meat, beans or leafy greens. Confirmed iron overload calls for an individual plan."
+        ],
+        "supplements": "Do not start iron just because you feel tired. If iron overload is confirmed, avoid non-prescribed iron and vitamin C supplements; discuss existing prescriptions before changing them.",
+        "followUp": "Ferritin checks stored iron; transferrin saturation helps show how much circulating iron is carried. A clinician interprets them together, because ferritin can rise for other reasons."
+      }
     },
     {
       "rsid": "rs1799945",
       "gene": "HFE",
       "alleles": "CG",
-      "geneRole": "Participates in regulation of iron absorption.",
+      "geneRole": "Helps the body control how much iron enters from food. Iron is essential, but excessive buildup can damage organs.",
       "variantMeaning": "The G allele encodes H63D. Its clinical significance differs from the separate C282Y variant.",
       "evidence": "Established variant identity; standalone clinical effects are smaller and context dependent.",
       "comparisons": {
-        "CC": "No H63D G copies at this marker.",
-        "CG": "One H63D copy; by itself this does not establish iron overload.",
-        "GG": "Two H63D copies; clinical expression is generally less penetrant than C282Y homozygosity and needs actual iron studies."
+        "CC": "CC: no H63D change at this marker. It does not prove your iron level is normal.",
+        "CG": "CG: one H63D copy usually does not cause iron overload on its own.",
+        "GG": "GG: two H63D copies may influence iron measures, but usually have a much smaller clinical effect than two C282Y copies. Do not assume you have excess iron."
       },
-      "dietMeaning": "Use ferritin and transferrin saturation; interpret alongside C282Y and medical history.",
+      "dietMeaning": "Do not automatically eliminate meat, beans or leafy greens. Confirmed iron overload calls for an individual plan.",
       "limitations": "One H63D and one C282Y result does not establish which chromosome each is on. No compound-haplotype diagnosis is inferred.",
       "sources": [
         {
@@ -366,22 +718,51 @@
         {
           "title": "Iron parameter replication study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/23794717/"
+        },
+        {
+          "title": "NIDDK: diet when iron overload is diagnosed",
+          "url": "https://www.niddk.nih.gov/health-information/liver-disease/hemochromatosis/eating-diet-nutrition"
         }
-      ]
+      ],
+      "topic": "Controlling iron absorption",
+      "resultAdvice": {
+        "CC": {
+          "headline": "No H63D copy here",
+          "action": "No special iron restriction follows from this marker.",
+          "priority": "no-specific-change"
+        },
+        "CG": {
+          "headline": "Usually little effect on its own",
+          "action": "Do not cut out iron-rich foods from this result alone.",
+          "priority": "no-specific-change"
+        },
+        "GG": {
+          "headline": "Iron status matters more than this call",
+          "action": "Review any other HFE results and measured iron status before changing intake.",
+          "priority": "clinical-review"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Do not automatically eliminate meat, beans or leafy greens. Confirmed iron overload calls for an individual plan."
+        ],
+        "supplements": "Do not start iron just because you feel tired. If iron overload is confirmed, avoid non-prescribed iron and vitamin C supplements; discuss existing prescriptions before changing them.",
+        "followUp": "Ferritin checks stored iron; transferrin saturation helps show how much circulating iron is carried. A clinician interprets them together, because ferritin can rise for other reasons."
+      }
     },
     {
       "rsid": "rs855791",
       "gene": "TMPRSS6",
       "alleles": "AG",
-      "geneRole": "Encodes matriptase-2, which regulates hepcidin and therefore iron availability.",
+      "geneRole": "Helps control hepcidin, a hormone that acts as a brake on iron absorption and release. This affects iron available for red blood cells.",
       "variantMeaning": "A common protein-changing marker associated with iron and haemoglobin traits.",
       "evidence": "Replicated biomarker associations and a human iron-absorption study.",
       "comparisons": {
-        "GG": "No A copies; relatively higher iron-related biomarkers in the cited population comparison.",
-        "AG": "One A copy; associated with modestly lower average iron-related biomarkers than GG.",
-        "AA": "Two A copies; associated with a larger average reduction than AG in some studies, without diagnosing deficiency."
+        "GG": "GG: relatively higher average iron measures than A-carrying groups. This does not guarantee normal iron status.",
+        "AG": "AG: a modest tendency toward lower iron-related blood measures than GG. This is not an iron-deficiency diagnosis.",
+        "AA": "AA: a stronger tendency toward lower iron-related measures in some studies. Actual need for treatment depends on blood tests."
       },
-      "dietMeaning": "Check measured haemoglobin and iron studies when indicated; do not automatically start iron supplements.",
+      "dietMeaning": "Iron sources include beans, lentils, fortified cereals and meat if eaten. Combine plant iron with vitamin C foods, such as peppers or citrus, to help absorption.",
       "limitations": "Effects vary by ancestry and physiological context. This common variant is different from rare causes of iron-refractory anaemia.",
       "sources": [
         {
@@ -395,22 +776,52 @@
         {
           "title": "Stable-isotope iron absorption study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/33054130/"
+        },
+        {
+          "title": "NIH: iron intake and absorption",
+          "url": "https://ods.od.nih.gov/factsheets/Iron-HealthProfessional/"
         }
-      ]
+      ],
+      "topic": "Keeping iron available",
+      "resultAdvice": {
+        "GG": {
+          "headline": "No lower-iron A copy here",
+          "action": "Meet normal iron needs; no extra supplement is indicated by the genotype.",
+          "priority": "general-habits"
+        },
+        "AG": {
+          "headline": "Slight tendency toward lower iron measures",
+          "action": "Include regular iron sources and investigate low iron if there are symptoms or other reasons for concern.",
+          "priority": "general-habits"
+        },
+        "AA": {
+          "headline": "Tendency toward lower iron measures",
+          "action": "Review iron intake and possible blood testing if you have fatigue, heavy bleeding or another deficiency risk.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Iron sources include beans, lentils, fortified cereals and meat if eaten.",
+          "Combine plant iron with vitamin C foods, such as peppers or citrus, to help absorption."
+        ],
+        "supplements": "Use iron supplements for measured or clinician-assessed need, not this SNP alone. Excess iron can be harmful.",
+        "followUp": "Haemoglobin measures oxygen-carrying blood cells; ferritin helps assess iron stores. Other results may be needed to explain an abnormal value."
+      }
     },
     {
       "rsid": "rs7903146",
       "gene": "TCF7L2",
       "alleles": "CT",
-      "geneRole": "Influences pathways involved in pancreatic insulin secretion and glucose regulation.",
+      "geneRole": "Helps control how the pancreas releases insulin, the hormone that moves sugar from the blood into cells.",
       "variantMeaning": "A common regulatory marker associated with type 2 diabetes susceptibility.",
       "evidence": "Strong human genetic association; genotype-specific food prescriptions are unproven.",
       "comparisons": {
-        "CC": "No T copies at the commonly studied C/T marker. This does not rule out diabetes.",
-        "CT": "One T copy; associated with greater susceptibility than CC on average.",
-        "TT": "Two T copies; generally a stronger population association than CT, not a diagnosis or a personal probability."
+        "CC": "CC: lower average diabetes susceptibility than T-carrying groups at this marker. Healthy habits and blood sugar checks still matter.",
+        "CT": "CT: one T copy is associated with greater type 2 diabetes susceptibility than CC. It does not mean you have diabetes or cannot eat carbohydrates.",
+        "TT": "TT: two T copies generally have a stronger association with type 2 diabetes susceptibility. Your actual blood sugar cannot be predicted from this alone."
       },
-      "dietMeaning": "Prioritize measured glucose, HbA1c and the overall eating pattern rather than a genotype-derived carbohydrate limit.",
+      "dietMeaning": "Choose high-fibre carbohydrate foods; replace sugary drinks with unsweetened options.",
       "limitations": "The table covers the studied C/T pair. Other reported alleles are held for review rather than silently translated.",
       "sources": [
         {
@@ -420,22 +831,51 @@
         {
           "title": "TCF7L2 original association",
           "url": "https://www.nature.com/articles/ng1732"
+        },
+        {
+          "title": "NIDDK: eating and activity for blood sugar",
+          "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/healthy-living-with-diabetes"
         }
-      ]
+      ],
+      "topic": "Blood sugar and insulin release",
+      "resultAdvice": {
+        "CC": {
+          "headline": "Lower susceptibility at this marker",
+          "action": "Use normal blood-sugar-friendly habits; no special carbohydrate restriction is established for this call.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "Higher blood-sugar susceptibility",
+          "action": "Give blood-sugar-friendly habits attention and use actual measurements to decide whether anything more is needed.",
+          "priority": "check-status"
+        },
+        "TT": {
+          "headline": "Higher blood-sugar susceptibility",
+          "action": "Give blood-sugar-friendly habits attention and discuss screening based on your overall risk, not a genetic calorie or carbohydrate formula.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Choose high-fibre carbohydrate foods; replace sugary drinks with unsweetened options."
+        ],
+        "supplements": "No supplement is proven necessary from this marker.",
+        "followUp": "HbA1c reflects average blood sugar over roughly three months. A clinician can decide whether HbA1c or fasting glucose testing is appropriate."
+      }
     },
     {
       "rsid": "rs10830963",
       "gene": "MTNR1B",
       "alleles": "CG",
-      "geneRole": "Encodes a melatonin receptor involved in circadian signalling and pancreatic insulin release.",
+      "geneRole": "Helps cells respond to melatonin, the hormone that signals night-time. It also affects insulin release, linking the body clock with blood sugar.",
       "variantMeaning": "The G allele at this intronic marker is associated with higher fasting glucose and a weaker early insulin response.",
       "evidence": "Replicated human GWAS and insulin-secretion studies.",
       "comparisons": {
-        "CC": "No G copies; comparison group with lower average fasting glucose in cited cohorts.",
-        "CG": "One G copy; associated with a modest shift toward higher fasting glucose.",
-        "GG": "Two G copies; a stronger average association, not a diagnosis or an assured meal response."
+        "CC": "CC: lower average fasting blood sugar than G-carrying groups in the cited research. This is not protection against diabetes.",
+        "CG": "CG: one G copy is linked to slightly higher fasting blood sugar and a weaker early insulin response on average.",
+        "GG": "GG: two G copies are linked to a larger average shift in these blood sugar measures. The result does not predict your reaction to an individual meal."
       },
-      "dietMeaning": "Use actual glucose measures and sleep/meal context. Do not set a rigid eating cutoff or start/stop melatonin solely from this SNP.",
+      "dietMeaning": "Use balanced meals with fibre-rich foods and limit sugary drinks as generally appropriate.",
       "limitations": "A population-average association does not determine an individual response to a particular meal or melatonin dose.",
       "sources": [
         {
@@ -445,22 +885,51 @@
         {
           "title": "MTNR1B glucose and insulin study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/19324940/"
+        },
+        {
+          "title": "NIDDK: eating and activity for blood sugar",
+          "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/healthy-living-with-diabetes"
         }
-      ]
+      ],
+      "topic": "Body clock and blood sugar",
+      "resultAdvice": {
+        "CC": {
+          "headline": "No glucose-raising G copy here",
+          "action": "Keep consistent sleep and eating habits; no genotype-specific eating cutoff is established.",
+          "priority": "general-habits"
+        },
+        "CG": {
+          "headline": "Slight tendency toward higher fasting glucose",
+          "action": "Keep consistent sleep and eating habits; no genotype-specific eating cutoff is established.",
+          "priority": "general-habits"
+        },
+        "GG": {
+          "headline": "Tendency toward higher fasting glucose",
+          "action": "Keep consistent sleep and eating habits; no genotype-specific eating cutoff is established.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Use balanced meals with fibre-rich foods and limit sugary drinks as generally appropriate."
+        ],
+        "supplements": "Do not start or stop melatonin from this SNP alone. Discuss sleep supplements if blood sugar or medication use is a concern.",
+        "followUp": "Use actual fasting glucose or HbA1c (a measure of average blood sugar over roughly three months) when testing is indicated. A rigid rule such as “never eat after 6 pm” cannot be calculated from this result."
+      }
     },
     {
       "rsid": "rs33972313",
       "gene": "SLC23A1",
       "alleles": "CT",
-      "geneRole": "Encodes a transporter involved in intestinal vitamin C uptake and kidney reabsorption.",
+      "geneRole": "Helps absorb vitamin C in the gut and keep it from being lost through the kidneys. Vitamin C supports normal tissues and helps absorb plant iron.",
       "variantMeaning": "A protein-changing marker associated with circulating vitamin C; the studied forward T allele is the vitamin-C-lowering allele.",
       "evidence": "Replicated human biomarker association; clinical supplement benefit is not established.",
       "comparisons": {
-        "CC": "No T copies at this marker. Vitamin C status still depends on intake and other factors.",
-        "CT": "One T copy; associated with lower average circulating vitamin C than CC.",
-        "TT": "Two T copies; a rare group for which individual precision is limited. No personal deficiency is inferred."
+        "CC": "CC: no vitamin-C-lowering T copy here. A low-fruit-and-vegetable diet can still leave intake too low.",
+        "CT": "CT: linked to lower average blood vitamin C than CC. It does not show how much you personally absorb or prove a deficiency.",
+        "TT": "TT: an uncommon result with limited precision in studies. It may affect vitamin C levels, but a personal supplement requirement is not established."
       },
-      "dietMeaning": "Review fruit/vegetable intake and clinical context rather than assigning high-dose vitamin C from a genotype.",
+      "dietMeaning": "Try peppers, citrus, kiwifruit, berries or broccoli across your meals.",
       "limitations": "A biomarker association does not establish that increasing a supplement dose improves health outcomes.",
       "sources": [
         {
@@ -474,22 +943,51 @@
         {
           "title": "Vitamin C outcome analysis",
           "url": "https://pubmed.ncbi.nlm.nih.gov/25527764/"
+        },
+        {
+          "title": "NIH: vitamin C food and supplement guidance",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminC-Consumer/"
         }
-      ]
+      ],
+      "topic": "Moving vitamin C into and around the body",
+      "resultAdvice": {
+        "CC": {
+          "headline": "No lower-vitamin-C T copy here",
+          "action": "Include vitamin C foods routinely; no extra supplement is indicated by this result.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "Tendency toward lower vitamin C levels",
+          "action": "Make regular vitamin C foods a priority before assuming a high-dose supplement is needed.",
+          "priority": "general-habits"
+        },
+        "TT": {
+          "headline": "Possible lower vitamin C; evidence is limited",
+          "action": "Review vitamin C intake and seek advice if deficiency is suspected, rather than choosing a high dose from the genotype.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Try peppers, citrus, kiwifruit, berries or broccoli across your meals."
+        ],
+        "supplements": "A supplement may help an intake gap, but this SNP does not establish a benefit from high doses.",
+        "followUp": "A very restricted diet or concerning symptoms warrants clinical review. Blood testing is guided by that context, not this marker alone."
+      }
     },
     {
       "rsid": "rs9939609",
       "gene": "FTO region",
       "alleles": "AT",
-      "geneRole": "Marks a region involved in the biology of appetite and body-weight regulation.",
+      "geneRole": "Marks a DNA region involved in appetite and weight regulation. It does not measure how many calories you burn.",
       "variantMeaning": "An intronic association marker. It tags a larger regulatory region rather than providing a direct calorie-burn measurement.",
       "evidence": "Replicated obesity association; appetite findings and effect size depend on context.",
       "comparisons": {
-        "TT": "No A copies at this marker. This does not protect against weight gain.",
-        "AT": "One A copy; associated with higher average adiposity susceptibility than TT.",
-        "AA": "Two A copies; generally a stronger association than AT, without determining body weight or metabolism."
+        "TT": "TT: lower average weight-gain susceptibility than A-carrying groups at this marker. It does not protect against weight gain.",
+        "AT": "AT: linked to a modest average tendency toward higher body weight. It does not prove a slow metabolism or that you cannot lose weight.",
+        "AA": "AA: usually a stronger average weight association than one A copy. Your hunger, habits and weight trajectory matter much more for practical planning."
       },
-      "dietMeaning": "Practical satiety and eating habits may be relevant for everyone; do not derive a calorie target or claim a slow metabolism from this SNP.",
+      "dietMeaning": "Build meals around a protein source and fibre-rich foods; plan portions that fit your observed hunger.",
       "limitations": "The marker does not explain all appetite differences and is not a test of willpower. Associations are not destiny.",
       "sources": [
         {
@@ -503,22 +1001,51 @@
         {
           "title": "FTO satiety study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18583465/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Appetite and weight tendency",
+      "resultAdvice": {
+        "TT": {
+          "headline": "No associated copy here",
+          "action": "Base meals on the hunger and food patterns you actually notice; the genotype does not set your calorie needs.",
+          "priority": "general-habits"
+        },
+        "AT": {
+          "headline": "May influence appetite",
+          "action": "Base meals on the hunger and food patterns you actually notice; the genotype does not set your calorie needs.",
+          "priority": "general-habits"
+        },
+        "AA": {
+          "headline": "May influence appetite",
+          "action": "Base meals on the hunger and food patterns you actually notice; the genotype does not set your calorie needs.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Build meals around a protein source and fibre-rich foods; plan portions that fit your observed hunger."
+        ],
+        "supplements": "No appetite, metabolism or “gene-targeted” supplement is established for this result.",
+        "followUp": "Review hunger and weight trends over time with a dietitian if useful; avoid interpreting this as an inevitable outcome."
+      }
     },
     {
       "rsid": "rs17782313",
       "gene": "MC4R region",
       "alleles": "CT",
-      "geneRole": "Lies near a gene central to brain pathways regulating appetite and energy balance.",
+      "geneRole": "Sits near a gene that helps the brain regulate hunger and fullness. This common marker is different from a rare disorder that causes severe early-onset obesity.",
       "variantMeaning": "A common noncoding marker near MC4R, not a diagnosis of a rare MC4R loss-of-function disorder.",
       "evidence": "Replicated human body-weight association.",
       "comparisons": {
-        "TT": "No C copies; lower average susceptibility than C-carrying groups in the cited association.",
-        "CT": "One C copy; a modest population-level association with adiposity.",
-        "CC": "Two C copies; generally a larger average association than CT, not a prediction of personal weight."
+        "TT": "TT: lower average weight-gain susceptibility than C-carrying groups at this marker. It does not protect against weight gain.",
+        "CT": "CT: linked to a modest average tendency toward higher body weight. It does not prove a slow metabolism or that you cannot lose weight.",
+        "CC": "CC: usually a stronger average weight association than one C copy. Your hunger, habits and weight trajectory matter much more for practical planning."
       },
-      "dietMeaning": "Use observed hunger, satiety and weight trends rather than a genotype-specific calorie formula.",
+      "dietMeaning": "Build meals around a protein source and fibre-rich foods; plan portions that fit your observed hunger.",
       "limitations": "Common-region associations must not be equated with rare monogenic obesity.",
       "sources": [
         {
@@ -528,22 +1055,51 @@
         {
           "title": "MC4R association discovery",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18454148/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Appetite signals",
+      "resultAdvice": {
+        "TT": {
+          "headline": "No associated copy here",
+          "action": "Base meals on the hunger and food patterns you actually notice; the genotype does not set your calorie needs.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "May influence appetite",
+          "action": "Base meals on the hunger and food patterns you actually notice; the genotype does not set your calorie needs.",
+          "priority": "general-habits"
+        },
+        "CC": {
+          "headline": "May influence appetite",
+          "action": "Base meals on the hunger and food patterns you actually notice; the genotype does not set your calorie needs.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Build meals around a protein source and fibre-rich foods; plan portions that fit your observed hunger."
+        ],
+        "supplements": "No appetite, metabolism or “gene-targeted” supplement is established for this result.",
+        "followUp": "Review hunger and weight trends over time with a dietitian if useful; avoid interpreting this as an inevitable outcome."
+      }
     },
     {
       "rsid": "rs838133",
       "gene": "FGF21 region",
       "alleles": "AG",
-      "geneRole": "FGF21 is a liver-derived hormone involved in nutrient signalling and food preference.",
+      "geneRole": "Is involved in a liver hormone that helps signal nutrient needs and food preferences. This marker has been linked to differences in sweet-food intake.",
       "variantMeaning": "A common synonymous marker associated with the proportion of carbohydrate/sweet foods consumed in human studies.",
       "evidence": "Human dietary-preference associations; causal mechanism and intervention utility remain uncertain.",
       "comparisons": {
-        "GG": "No A copies at this marker; comparison group in several intake studies.",
-        "AG": "One A copy; associated with a tendency toward higher carbohydrate/sweet intake at population level.",
-        "AA": "Two A copies; does not prove cravings, high sugar intake or an FGF21 deficiency."
+        "GG": "GG: the comparison group in the cited food-intake research. It does not mean you have no sweet preferences.",
+        "AG": "AG: linked to higher reported sugar or carbohydrate intake in some studies. This is a tendency, not proof of cravings or a need for sugar.",
+        "AA": "AA: does not establish stronger cravings than AG or show that extra sugar is needed. The evidence cannot set a personal sugar limit."
       },
-      "dietMeaning": "Use the person’s actual preferences and intake; do not infer that more sugar is needed or prescribe an FGF21-related treatment.",
+      "dietMeaning": "If sweet drinks or snacks dominate your diet, try unsweetened drinks and planned alternatives such as whole fruit.",
       "limitations": "A synonymous marker can tag a regulatory effect elsewhere. It is not a direct hormone-level test.",
       "sources": [
         {
@@ -557,22 +1113,51 @@
         {
           "title": "FGF21 intake and body composition",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5912948/"
+        },
+        {
+          "title": "NIDDK: eating and activity for blood sugar",
+          "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/healthy-living-with-diabetes"
         }
-      ]
+      ],
+      "topic": "Sweet-food preferences",
+      "resultAdvice": {
+        "GG": {
+          "headline": "No associated copy here",
+          "action": "Use your actual preferences and intake to plan satisfying foods; no special diet follows from this marker.",
+          "priority": "general-habits"
+        },
+        "AG": {
+          "headline": "Possible sweet-food tendency",
+          "action": "Use your actual preferences and intake to plan satisfying foods; no special diet follows from this marker.",
+          "priority": "general-habits"
+        },
+        "AA": {
+          "headline": "Possible sweet-food tendency",
+          "action": "Use your actual preferences and intake to plan satisfying foods; no special diet follows from this marker.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "If sweet drinks or snacks dominate your diet, try unsweetened drinks and planned alternatives such as whole fruit."
+        ],
+        "supplements": "No appetite, metabolism or “gene-targeted” supplement is established for this result.",
+        "followUp": "If blood sugar is a concern, use appropriate measurements; a food-preference marker does not diagnose a sugar intolerance."
+      }
     },
     {
       "rsid": "rs4880",
       "gene": "SOD2",
       "alleles": "AG",
-      "geneRole": "Encodes a mitochondrial enzyme that converts superoxide into hydrogen peroxide for further processing.",
+      "geneRole": "Makes part of a cell-protection system that handles reactive oxygen chemicals inside cells. Its first step produces another chemical that other enzymes must then clear.",
       "variantMeaning": "A protein change in the mitochondrial targeting sequence; forward A corresponds to Val and G to Ala at the commonly described position 16.",
       "evidence": "Functional cell/protein evidence; clinical diet translation is uncertain.",
       "comparisons": {
-        "AA": "Val/Val at this targeting-sequence marker. Not a direct oxidative-stress measurement.",
-        "AG": "Val/Ala. No reliable halfway antioxidant requirement is established.",
-        "GG": "Ala/Ala. Differences in mitochondrial import do not establish that this genotype is universally healthier."
+        "AA": "AA: one laboratory-studied version of the protein. This is not a direct measure of oxidative stress or overall antioxidant protection.",
+        "AG": "AG: a mix of the two protein versions. A halfway antioxidant requirement has not been established.",
+        "GG": "GG: this version can behave differently in laboratory studies, but that does not make it universally better or prove that you need more antioxidants."
       },
-      "dietMeaning": "Do not prescribe antioxidant megadoses from this call. Assess the overall diet and actual clinical context.",
+      "dietMeaning": "Eat a variety of vegetables and fruit rather than trying to match an antioxidant product to this SNP.",
       "limitations": "Both reactive-oxygen production and clearance are complex; no personal oxidative-stress score or longevity estimate is inferred.",
       "sources": [
         {
@@ -586,22 +1171,51 @@
         {
           "title": "SOD2 genotype study",
           "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2968705/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Cell protection from reactive chemicals",
+      "resultAdvice": {
+        "AA": {
+          "headline": "No reliable good/bad ranking",
+          "action": "A varied diet is appropriate; this result does not justify antioxidant treatment.",
+          "priority": "no-specific-change"
+        },
+        "AG": {
+          "headline": "No reliable good/bad ranking",
+          "action": "A varied diet is appropriate; this result does not justify antioxidant treatment.",
+          "priority": "no-specific-change"
+        },
+        "GG": {
+          "headline": "No reliable good/bad ranking",
+          "action": "A varied diet is appropriate; this result does not justify antioxidant treatment.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Eat a variety of vegetables and fruit rather than trying to match an antioxidant product to this SNP."
+        ],
+        "supplements": "No antioxidant megadose or “detox” supplement is established for this result.",
+        "followUp": "This genotype is not an oxidative-stress test. Persistent health concerns need their own assessment."
+      }
     },
     {
       "rsid": "rs429358",
       "gene": "APOE",
       "alleles": "CT",
-      "geneRole": "Helps transport and clear cholesterol-rich lipoprotein particles.",
+      "geneRole": "Helps carry cholesterol and other fats through the body. Two DNA markers contribute to the common APOE types, so one result does not tell the whole story.",
       "variantMeaning": "One of two markers contributing to the common apoE protein isoforms; T corresponds to Cys and C to Arg at the traditionally numbered position 112.",
       "evidence": "Established protein/isoform biology; sensitive multi-marker interpretation is withheld.",
       "comparisons": {
-        "TT": "Cys/Cys at this position. This alone cannot distinguish the complete common APOE types.",
-        "CT": "Cys/Arg at this position. A complete APOE type is not assigned from this single call.",
-        "CC": "Arg/Arg at this position. Bloom does not infer an APOE type or disease risk here."
+        "TT": "TT: one part of the APOE protein pattern. This single result cannot identify your full APOE type or label your cholesterol handling good or bad.",
+        "CT": "CT: one part of the APOE protein pattern. This single result cannot identify your full APOE type or label your cholesterol handling good or bad.",
+        "CC": "CC: one part of the APOE protein pattern. This single result cannot identify your full APOE type or label your cholesterol handling good or bad."
       },
-      "dietMeaning": "Use measured lipids and cardiovascular context. Bloom does not select a diet or supplement from these individual APOE entries.",
+      "dietMeaning": "For cholesterol management, favour unsaturated fats and fibre-rich foods as appropriate for your measured needs.",
       "limitations": "No APOE haplotype, Alzheimer disease risk, combined type or diagnosis is inferred, even when both markers are present.",
       "sources": [
         {
@@ -615,22 +1229,51 @@
         {
           "title": "NCBI APOE isoform reference",
           "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV000019447.31/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Transporting cholesterol",
+      "resultAdvice": {
+        "TT": {
+          "headline": "One marker is not a complete APOE result",
+          "action": "Use measured cholesterol and your overall health context to choose changes; Bloom does not assign a complete APOE type here.",
+          "priority": "no-specific-change"
+        },
+        "CT": {
+          "headline": "One marker is not a complete APOE result",
+          "action": "Use measured cholesterol and your overall health context to choose changes; Bloom does not assign a complete APOE type here.",
+          "priority": "no-specific-change"
+        },
+        "CC": {
+          "headline": "One marker is not a complete APOE result",
+          "action": "Use measured cholesterol and your overall health context to choose changes; Bloom does not assign a complete APOE type here.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "For cholesterol management, favour unsaturated fats and fibre-rich foods as appropriate for your measured needs."
+        ],
+        "supplements": "No supplement or restrictive diet is selected from this single marker.",
+        "followUp": "A lipid panel measures cholesterol and triglycerides. Discuss abnormal results with a clinician; Bloom does not predict dementia risk from these entries."
+      }
     },
     {
       "rsid": "rs7412",
       "gene": "APOE",
       "alleles": "CT",
-      "geneRole": "Helps transport and clear cholesterol-rich lipoprotein particles.",
+      "geneRole": "Helps carry cholesterol and other fats through the body. Two DNA markers contribute to the common APOE types, so one result does not tell the whole story.",
       "variantMeaning": "The second common isoform marker; C corresponds to Arg and T to Cys at the traditionally numbered position 158.",
       "evidence": "Established protein/isoform biology; sensitive multi-marker interpretation is withheld.",
       "comparisons": {
-        "CC": "Arg/Arg at this position. The other APOE marker and haplotype context are still relevant.",
-        "CT": "Arg/Cys at this position. Bloom does not assign a complete APOE type.",
-        "TT": "Cys/Cys at this position. This is not a diagnosis of a lipid disorder."
+        "CC": "CC: one part of the APOE protein pattern. This single result cannot identify your full APOE type or label your cholesterol handling good or bad.",
+        "CT": "CT: one part of the APOE protein pattern. This single result cannot identify your full APOE type or label your cholesterol handling good or bad.",
+        "TT": "TT: one part of the APOE protein pattern. This single result cannot identify your full APOE type or label your cholesterol handling good or bad."
       },
-      "dietMeaning": "Use measured lipids and cardiovascular context. Bloom does not select a diet or supplement from these individual APOE entries.",
+      "dietMeaning": "For cholesterol management, favour unsaturated fats and fibre-rich foods as appropriate for your measured needs.",
       "limitations": "No APOE haplotype, Alzheimer disease risk, combined type or diagnosis is inferred, even when both markers are present.",
       "sources": [
         {
@@ -644,22 +1287,51 @@
         {
           "title": "NCBI APOE isoform reference",
           "url": "https://www.ncbi.nlm.nih.gov/clinvar/RCV000019447.31/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Transporting cholesterol",
+      "resultAdvice": {
+        "CC": {
+          "headline": "One marker is not a complete APOE result",
+          "action": "Use measured cholesterol and your overall health context to choose changes; Bloom does not assign a complete APOE type here.",
+          "priority": "no-specific-change"
+        },
+        "CT": {
+          "headline": "One marker is not a complete APOE result",
+          "action": "Use measured cholesterol and your overall health context to choose changes; Bloom does not assign a complete APOE type here.",
+          "priority": "no-specific-change"
+        },
+        "TT": {
+          "headline": "One marker is not a complete APOE result",
+          "action": "Use measured cholesterol and your overall health context to choose changes; Bloom does not assign a complete APOE type here.",
+          "priority": "no-specific-change"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "For cholesterol management, favour unsaturated fats and fibre-rich foods as appropriate for your measured needs."
+        ],
+        "supplements": "No supplement or restrictive diet is selected from this single marker.",
+        "followUp": "A lipid panel measures cholesterol and triglycerides. Discuss abnormal results with a clinician; Bloom does not predict dementia risk from these entries."
+      }
     },
     {
       "rsid": "rs5400",
       "gene": "SLC2A2 / GLUT2",
       "alleles": "AG",
-      "geneRole": "Encodes GLUT2, a transporter involved in glucose movement and sensing.",
+      "geneRole": "Helps move and sense sugar in the body. Researchers have studied this marker alongside reported sugar intake.",
       "variantMeaning": "The Thr110Ile protein variant has been associated with reported sugar intake; forward A corresponds to the Ile-associated allele.",
       "evidence": "Small human dietary-association studies; no validated dietary prescription.",
       "comparisons": {
-        "GG": "No A copies; Thr/Thr at the described protein change.",
-        "AG": "One A copy; carriers of the Ile allele reported higher sugar intake in the cited study.",
-        "AA": "Two A copies; the study’s grouped carrier results do not establish a precisely greater effect than AG."
+        "GG": "GG: the comparison group in the cited food-intake research. It does not mean you have no sweet preferences.",
+        "AG": "AG: linked to higher reported sugar or carbohydrate intake in some studies. This is a tendency, not proof of cravings or a need for sugar.",
+        "AA": "AA: does not establish stronger cravings than AG or show that extra sugar is needed. The evidence cannot set a personal sugar limit."
       },
-      "dietMeaning": "Actual sugar intake and glucose measurements matter; this marker does not establish intolerance, a craving diagnosis or a personal sugar limit.",
+      "dietMeaning": "If sweet drinks or snacks dominate your diet, try unsweetened drinks and planned alternatives such as whole fruit.",
       "limitations": "Association with self-reported intake is different from a proven causal effect or a validated genotype-specific intervention.",
       "sources": [
         {
@@ -669,22 +1341,51 @@
         {
           "title": "GLUT2 sugar-intake association",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18349384/"
+        },
+        {
+          "title": "NIDDK: eating and activity for blood sugar",
+          "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/healthy-living-with-diabetes"
         }
-      ]
+      ],
+      "topic": "Sugar sensing and food preferences",
+      "resultAdvice": {
+        "GG": {
+          "headline": "No associated copy here",
+          "action": "Use your actual preferences and intake to plan satisfying foods; no special diet follows from this marker.",
+          "priority": "general-habits"
+        },
+        "AG": {
+          "headline": "Possible sweet-food tendency",
+          "action": "Use your actual preferences and intake to plan satisfying foods; no special diet follows from this marker.",
+          "priority": "general-habits"
+        },
+        "AA": {
+          "headline": "Possible sweet-food tendency",
+          "action": "Use your actual preferences and intake to plan satisfying foods; no special diet follows from this marker.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "If sweet drinks or snacks dominate your diet, try unsweetened drinks and planned alternatives such as whole fruit."
+        ],
+        "supplements": "No appetite, metabolism or “gene-targeted” supplement is established for this result.",
+        "followUp": "If blood sugar is a concern, use appropriate measurements; a food-preference marker does not diagnose a sugar intolerance."
+      }
     },
     {
       "rsid": "rs5082",
       "gene": "APOA2",
       "alleles": "AG",
-      "geneRole": "Encodes apolipoprotein A-II, a component of HDL involved in lipid metabolism.",
+      "geneRole": "Helps make a protein that travels with blood fats. A common change near this gene has been studied for its relationship with saturated-fat intake and body weight.",
       "variantMeaning": "A promoter variant studied for interactions with saturated fat. Forward G corresponds to the gene-oriented -265C allele; forward A corresponds to -265T.",
       "evidence": "Replicated observational gene–diet interaction; no individually validated threshold.",
       "comparisons": {
-        "AA": "Gene-oriented TT: the non-CC comparison group in the cited studies.",
-        "AG": "Gene-oriented TC: generally grouped with TT in the cited recessive-model comparison, not assumed halfway to GG.",
-        "GG": "Gene-oriented CC: associated with higher BMI particularly at higher saturated-fat intakes in several cohorts."
+        "AA": "AA: grouped in the lower-susceptibility comparison group in the cited diet studies. A high-saturated-fat diet can still be unhealthy.",
+        "AG": "AG: grouped with AA in the key study comparison, not assumed halfway to GG. No extra sensitivity to saturated fat is established from this result.",
+        "GG": "GG: associated with higher body weight particularly when saturated-fat intake was high in several studies. This is a possible susceptibility, not proof of a personal response."
       },
-      "dietMeaning": "Consider the overall fat pattern and measured lipids; do not turn a study intake cutoff into a personal prescription.",
+      "dietMeaning": "Use olive or canola oil instead of butter; consider leaner proteins or beans instead of fatty meats.",
       "limitations": "The comparison is conditional on diet and study design, not a universal ranking of good and bad genotypes.",
       "sources": [
         {
@@ -698,22 +1399,51 @@
         {
           "title": "APOA2 diet interaction follow-up",
           "url": "https://pubmed.ncbi.nlm.nih.gov/29901700/"
+        },
+        {
+          "title": "NHLBI: everyday heart-healthy food choices",
+          "url": "https://www.nhlbi.nih.gov/health/heart-healthy-living/healthy-foods"
         }
-      ]
+      ],
+      "topic": "Saturated fat and weight context",
+      "resultAdvice": {
+        "AA": {
+          "headline": "No extra sensitivity established here",
+          "action": "Follow general heart-healthy fat guidance; this result does not make high saturated-fat intake harmless.",
+          "priority": "general-habits"
+        },
+        "AG": {
+          "headline": "No extra sensitivity established here",
+          "action": "Follow general heart-healthy fat guidance; no stricter genotype-specific target is established.",
+          "priority": "general-habits"
+        },
+        "GG": {
+          "headline": "Possible greater sensitivity to high saturated fat",
+          "action": "Give saturated-fat sources attention, while recognising that a special personal cutoff is not validated.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Use olive or canola oil instead of butter; consider leaner proteins or beans instead of fatty meats."
+        ],
+        "supplements": "No supplement is established to offset this result.",
+        "followUp": "Use blood lipids, actual food intake and weight trends to assess whether changes are helping."
+      }
     },
     {
       "rsid": "rs738409",
       "gene": "PNPLA3",
       "alleles": "CG",
-      "geneRole": "Participates in lipid handling in liver cells.",
+      "geneRole": "Helps handle fats inside liver cells. The studied change can make fat more likely to build up in the liver.",
       "variantMeaning": "The G allele encodes the I148M change associated with increased liver-fat susceptibility.",
       "evidence": "Strong human association and functional evidence; expression depends on other factors.",
       "comparisons": {
-        "CC": "No G copies; comparison group for this marker, not proof of a healthy liver.",
-        "CG": "One G copy; increased average susceptibility compared with CC.",
-        "GG": "Two G copies; generally a stronger liver-fat association than CG, not a diagnosis or severity stage."
+        "CC": "CC: lower average liver-fat susceptibility than G-carrying groups at this marker. Fatty liver can still occur.",
+        "CG": "CG: one G copy is associated with increased liver-fat susceptibility. It does not diagnose fatty liver or predict its severity.",
+        "GG": "GG: two G copies generally show a stronger liver-fat association. This deserves attention to liver health, but is not a diagnosis or a measure of liver scarring."
       },
-      "dietMeaning": "Use liver assessments and metabolic context; this SNP does not choose a supplement or prescribe an exact diet.",
+      "dietMeaning": "Limit sugary drinks. If fatty liver is present, discuss alcohol use and sustainable weight management when appropriate.",
       "limitations": "Actual liver fat, inflammation and fibrosis cannot be determined from the genotype.",
       "sources": [
         {
@@ -723,22 +1453,51 @@
         {
           "title": "PNPLA3 discovery",
           "url": "https://www.nature.com/articles/ng.257"
+        },
+        {
+          "title": "NIDDK: eating with fatty liver disease",
+          "url": "https://www.niddk.nih.gov/health-information/liver-disease/nafld-nash/eating-diet-nutrition"
         }
-      ]
+      ],
+      "topic": "Storing fat in the liver",
+      "resultAdvice": {
+        "CC": {
+          "headline": "Lower susceptibility at this marker",
+          "action": "Use general liver-healthy habits; test or treat based on overall health findings.",
+          "priority": "general-habits"
+        },
+        "CG": {
+          "headline": "Higher liver-fat susceptibility",
+          "action": "Pay attention to liver health, particularly if other metabolic or liver findings are present.",
+          "priority": "check-status"
+        },
+        "GG": {
+          "headline": "Higher liver-fat susceptibility",
+          "action": "Discuss liver assessment when appropriate to your medical context. No supplement can be chosen from this result alone.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Limit sugary drinks. If fatty liver is present, discuss alcohol use and sustainable weight management when appropriate."
+        ],
+        "supplements": "No “liver detox” supplement is established for this SNP.",
+        "followUp": "Liver blood tests and, when indicated, imaging assess actual liver health. Normal enzymes alone do not exclude liver fat."
+      }
     },
     {
       "rsid": "rs58542926",
       "gene": "TM6SF2",
       "alleles": "CT",
-      "geneRole": "Contributes to export of triglyceride-rich lipoproteins from the liver.",
+      "geneRole": "Helps liver cells package and send fat into the blood. Less efficient export can leave more fat in the liver even when blood cholesterol is lower.",
       "variantMeaning": "The T allele encodes E167K and is associated with liver-fat and circulating-lipid differences.",
       "evidence": "Replicated human association with functional support.",
       "comparisons": {
-        "CC": "No T copies; comparison group at this marker.",
-        "CT": "One T copy; associated with more liver fat but often lower circulating lipid levels.",
-        "TT": "Two T copies; uncommon, so precision is more limited. Do not infer a personal effect size from copy count."
+        "CC": "CC: the comparison result at this marker. It does not rule out fatty liver or high cholesterol.",
+        "CT": "CT: one T copy is linked to less efficient fat export, more liver fat and often lower blood lipids on average. The trade-off is not simply good or bad.",
+        "TT": "TT: two T copies are uncommon. Liver-fat susceptibility can be increased, but the exact personal effect cannot be calculated from this result."
       },
-      "dietMeaning": "Interpret liver health and blood lipids separately; lower cholesterol does not establish less liver fat.",
+      "dietMeaning": "Use general liver-healthy food habits, including fewer sugary drinks. Avoid trying to “flush out” liver fat with supplements.",
       "limitations": "No individual dietary response or diagnosis follows from this marker alone.",
       "sources": [
         {
@@ -748,22 +1507,51 @@
         {
           "title": "TM6SF2 functional association",
           "url": "https://www.nature.com/articles/ng.2901"
+        },
+        {
+          "title": "NIDDK: eating with fatty liver disease",
+          "url": "https://www.niddk.nih.gov/health-information/liver-disease/nafld-nash/eating-diet-nutrition"
         }
-      ]
+      ],
+      "topic": "Moving fat out of the liver",
+      "resultAdvice": {
+        "CC": {
+          "headline": "No T copy at this marker",
+          "action": "Use actual liver and cholesterol results to guide decisions.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "A liver/blood-fat trade-off",
+          "action": "Do not take a low cholesterol result as proof that your liver is free of fat.",
+          "priority": "check-status"
+        },
+        "TT": {
+          "headline": "A liver/blood-fat trade-off",
+          "action": "Review liver health when clinically appropriate; lower blood lipids do not rule out liver fat.",
+          "priority": "check-status"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Use general liver-healthy food habits, including fewer sugary drinks. Avoid trying to “flush out” liver fat with supplements."
+        ],
+        "supplements": "No supplement is established to correct this SNP.",
+        "followUp": "A clinician can interpret liver tests and blood lipids separately; seek assessment based on your whole health picture."
+      }
     },
     {
       "rsid": "rs1260326",
       "gene": "GCKR",
       "alleles": "CT",
-      "geneRole": "Regulates glucokinase activity and the handling of glucose in the liver.",
+      "geneRole": "Helps control how the liver handles glucose, a form of sugar. A change in this control system can push blood sugar and triglycerides in different directions.",
       "variantMeaning": "The T allele encodes P446L and is associated with higher triglycerides but lower fasting glucose on average.",
       "evidence": "Replicated human metabolic-trait association.",
       "comparisons": {
-        "CC": "No T copies; comparison group in the cited analysis.",
-        "CT": "One T copy; population averages can shift toward higher triglycerides and lower fasting glucose.",
-        "TT": "Two T copies; generally a larger average trait shift, not an individually predicted concentration."
+        "CC": "CC: the comparison group at this marker. It does not prove healthy glucose or triglyceride levels.",
+        "CT": "CT: linked to slightly lower fasting glucose but higher triglycerides on average. A lower sugar reading does not necessarily mean the whole metabolic picture is better.",
+        "TT": "TT: generally a larger average shift toward lower fasting glucose and higher triglycerides. Your actual levels still require measurement."
       },
-      "dietMeaning": "Review glucose and triglycerides together; a low glucose result alone does not describe all metabolic risk.",
+      "dietMeaning": "Reduce sugary drinks and excess added sugar if these are common in your diet.",
       "limitations": "This is not a genetic carbohydrate limit, insulin-resistance diagnosis or reason for a particular supplement.",
       "sources": [
         {
@@ -773,22 +1561,51 @@
         {
           "title": "GCKR metabolic-trait study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/18678614/"
+        },
+        {
+          "title": "NIDDK: eating and activity for blood sugar",
+          "url": "https://www.niddk.nih.gov/health-information/diabetes/overview/healthy-living-with-diabetes"
         }
-      ]
+      ],
+      "topic": "Blood sugar and blood fats",
+      "resultAdvice": {
+        "CC": {
+          "headline": "No T copy at this marker",
+          "action": "Use usual healthy eating habits and appropriate blood tests.",
+          "priority": "general-habits"
+        },
+        "CT": {
+          "headline": "A blood-sugar/blood-fat trade-off",
+          "action": "Review blood fats as well as blood sugar; do not add sugar because fasting glucose is lower.",
+          "priority": "general-habits"
+        },
+        "TT": {
+          "headline": "A blood-sugar/blood-fat trade-off",
+          "action": "Pay attention to triglycerides and the overall diet; there is no validated genotype-specific carbohydrate limit.",
+          "priority": "general-habits"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "Reduce sugary drinks and excess added sugar if these are common in your diet."
+        ],
+        "supplements": "This marker does not establish a need for fish oil or a blood-sugar supplement.",
+        "followUp": "Triglycerides are one type of blood fat. Read them alongside glucose or HbA1c (average blood sugar over roughly three months) and your clinical context."
+      }
     },
     {
       "rsid": "rs4988235",
       "gene": "MCM6 / LCT",
       "alleles": "AG",
-      "geneRole": "Regulates whether lactase expression persists after childhood, affecting lactose digestion.",
+      "geneRole": "Helps control whether the gut keeps making lactase in adulthood. Lactase is the enzyme that breaks down lactose, the sugar in milk.",
       "variantMeaning": "A marker in an MCM6 regulatory region influences the neighbouring LCT gene. Forward A corresponds to the commonly described persistence-associated -13910T allele.",
       "evidence": "Established functional association in relevant ancestry groups; symptoms depend on more than this SNP.",
       "comparisons": {
-        "GG": "Compatible with lactase non-persistence at this marker; does not diagnose lactose intolerance.",
-        "AG": "One persistence-associated A copy is generally sufficient for persistence; this is not necessarily halfway between GG and AA.",
-        "AA": "Two persistence-associated A copies; compatible with lactase persistence, not a guarantee that dairy causes no symptoms."
+        "GG": "GG: compatible with making less lactase as an adult. Milk sugar may be harder to digest, but symptoms depend on the amount eaten and other factors.",
+        "AG": "AG: one persistence-associated A copy is generally sufficient to keep making lactase in adulthood. It is not necessarily a halfway ability to digest milk.",
+        "AA": "AA: compatible with continuing lactase production in adulthood. Milk sugar is usually easier to digest, but this does not rule out other reasons for dairy symptoms."
       },
-      "dietMeaning": "Use the amount of lactose actually tolerated; this marker alone does not require avoiding all dairy.",
+      "dietMeaning": "If needed, try lactose-free milk, yogurt or hard cheese in amounts you tolerate. If avoiding dairy, choose alternatives that supply calcium and vitamin D, such as suitably fortified plant drinks.",
       "limitations": "Other lactase-persistence variants occur in different populations. Milk allergy, lactose intolerance and other digestive problems are different conditions.",
       "sources": [
         {
@@ -798,8 +1615,38 @@
         {
           "title": "Lactase genotype and expression",
           "url": "https://pubmed.ncbi.nlm.nih.gov/29618745/"
+        },
+        {
+          "title": "NIDDK: practical lactose alternatives",
+          "url": "https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/eating-diet-nutrition"
         }
-      ]
+      ],
+      "topic": "Digesting milk sugar",
+      "resultAdvice": {
+        "GG": {
+          "headline": "Milk sugar may be harder to digest",
+          "action": "If dairy causes symptoms, try a smaller portion or lower-lactose options; there is no need to ban all dairy automatically.",
+          "priority": "food-choice"
+        },
+        "AG": {
+          "headline": "Usually keeps lactase in adulthood",
+          "action": "No lactose restriction is needed from the genotype alone. Use your actual tolerance.",
+          "priority": "food-choice"
+        },
+        "AA": {
+          "headline": "Usually keeps lactase in adulthood",
+          "action": "No lactose restriction is needed from the genotype alone. Investigate persistent symptoms rather than assuming the DNA rules them out.",
+          "priority": "food-choice"
+        }
+      },
+      "practicalGuidance": {
+        "foodSteps": [
+          "If needed, try lactose-free milk, yogurt or hard cheese in amounts you tolerate.",
+          "If avoiding dairy, choose alternatives that supply calcium and vitamin D, such as suitably fortified plant drinks."
+        ],
+        "supplements": "Lactase enzyme products can help some people with lactose-related symptoms; they are different from vitamin supplements. This is not treatment for a milk allergy.",
+        "followUp": "Persistent symptoms deserve assessment. Other lactase-persistence variants occur in different populations, so this marker is not universal."
+      }
     }
   ]
 }

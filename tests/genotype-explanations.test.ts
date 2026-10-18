@@ -81,9 +81,9 @@ test("comparisons preserve strand mappings, dominance and uncertainty rather tha
   assert.match(one("rs1801133", "AA").variantMeaning!, /A corresponds to 677T/);
   assert.match(one("rs4988235", "AG").personalMeaning, /generally sufficient/);
   assert.match(one("rs601338", "AG").personalMeaning, /preserves secretor/);
-  assert.match(one("rs5082", "AG").personalMeaning, /grouped with TT/);
-  assert.match(one("rs5082", "GG").personalMeaning, /Gene-oriented CC/);
-  assert.match(one("rs174550", "CT").personalMeaning, /not established/);
+  assert.match(one("rs5082", "AG").personalMeaning, /grouped with AA/);
+  assert.match(one("rs5082", "GG").variantMeaning!, /forward G/i);
+  assert.match(one("rs174550", "CT").personalMeaning, /does not establish/);
   assert.match(
     one("rs234706", "AG").personalMeaning,
     /not evidence of an overactive/,
@@ -178,5 +178,57 @@ test("raw import retains only explanation-catalogue markers and cannot promote r
       "# 23andMe\n# build 37\nrs601338 19 49206675 AG",
       "2026-10-01T00:00:00Z",
     ),
+  );
+});
+
+test("practical advice is matched only to verified, supported results", () => {
+  for (const a of genotypeAnnotations) {
+    assert.deepEqual(
+      Object.keys(a.resultAdvice).sort(),
+      Object.keys(a.comparisons).sort(),
+    );
+    for (const call of Object.keys(a.comparisons)) {
+      const result = one(a.rsid, call);
+      assert.ok(result.resultAdvice?.headline);
+      assert.ok(result.resultAdvice?.action);
+      assert.ok(result.practicalGuidance?.foodSteps.length);
+      assert.ok(result.practicalGuidance?.supplements);
+      assert.equal(one(a.rsid, call, false).resultAdvice, null);
+    }
+  }
+  assert.equal(one("rs7903146", "GT").resultAdvice, null);
+  assert.equal(one("rs1801133", "--").resultAdvice, null);
+  assert.equal(one("rs999999", "AA").practicalGuidance, null);
+});
+test("plain-language actions distinguish a real functional effect from uncertain nutrient and supplement claims", () => {
+  assert.match(one("rs1801133", "AA").resultAdvice!.headline, /less efficient/);
+  assert.equal(
+    one("rs1801394", "GG").resultAdvice!.priority,
+    "no-specific-change",
+  );
+  assert.equal(
+    one("rs10877012", "TT").resultAdvice!.priority,
+    "no-specific-change",
+  );
+  assert.equal(
+    one("rs1800562", "AA").resultAdvice!.priority,
+    "clinical-review",
+  );
+  assert.match(
+    one("rs10741657", "GG").practicalGuidance!.supplements,
+    /unprotected sun is not a recommended fix/,
+  );
+  assert.match(one("rs10741657", "GG").personalMeaning, /not proof/);
+  assert.match(
+    one("rs4988235", "GG").practicalGuidance!.foodSteps.join(" "),
+    /lactose-free/i,
+  );
+  assert.match(
+    one("rs174550", "CC").practicalGuidance!.foodSteps.join(" "),
+    /algae/i,
+  );
+  assert.match(
+    one("rs429358", "CT").resultAdvice!.action,
+    /does not assign a complete APOE type/,
   );
 });

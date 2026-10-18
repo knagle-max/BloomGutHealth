@@ -4,6 +4,30 @@ const annotationSchema = z
   .object({
     rsid: z.string().regex(/^rs\d+$/),
     gene: z.string(),
+    topic: z.string().min(1),
+    resultAdvice: z.record(
+      z.string().regex(/^[ACGT]{2}$/),
+      z
+        .object({
+          headline: z.string().min(1),
+          action: z.string().min(1),
+          priority: z.enum([
+            "general-habits",
+            "no-specific-change",
+            "check-status",
+            "clinical-review",
+            "food-choice",
+          ]),
+        })
+        .strict(),
+    ),
+    practicalGuidance: z
+      .object({
+        foodSteps: z.array(z.string().min(1)).min(1).max(4),
+        supplements: z.string().min(1),
+        followUp: z.string().min(1),
+      })
+      .strict(),
     alleles: z.string().regex(/^[ACGT]{2}$/),
     geneRole: z.string().min(1),
     variantMeaning: z.string().min(1),
@@ -40,11 +64,11 @@ export function explainGenotypes(
       status === "matched"
         ? annotation!.comparisons[genotype]
         : status === "no-call"
-          ? "Your source reports no call. No genotype-specific conclusion can be drawn."
+          ? "Your source did not give a readable result here. No personal conclusion or diet change can be drawn."
           : status === "orientation-unconfirmed"
-            ? "Your strand orientation is unconfirmed. The reference comparisons below are educational; none is matched to your result."
+            ? "We need to check how your source writes the DNA letters before interpreting your result. The information below is general and is not matched to you."
             : status === "outside-studied-pair"
-              ? "Your entry does not match the allele pair covered by this explanation. This may be a source/strand issue or an allele outside the studied pair; Bloom does not flip or replace it."
+              ? "Your letters do not match the versions covered by this explanation. This could be a different reporting method or a less-studied version. Check the original report; no personal diet advice is assigned."
               : "No source-checked explanation is available for this SNP yet. Its gene identity, dietary effect and genotype comparisons are not inferred.";
     return {
       rsid: entry.rsid,
@@ -53,6 +77,10 @@ export function explainGenotypes(
       genotype,
       status,
       personalMeaning,
+      topic: annotation?.topic || null,
+      resultAdvice:
+        status === "matched" ? annotation!.resultAdvice[genotype] : null,
+      practicalGuidance: annotation?.practicalGuidance || null,
       version: GENOTYPE_EXPLANATION_VERSION,
       geneRole: annotation?.geneRole || null,
       variantMeaning: annotation?.variantMeaning || null,
