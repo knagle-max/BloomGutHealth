@@ -1,3 +1,5 @@
+import genotypeReference from "./data/genotype-reference.json";
+import { explainGenotypes, genotypeAnnotations } from "./genotype-explanations";
 import { z } from "zod";
 import {
   recipes,
@@ -7,7 +9,7 @@ import {
 } from "./meal-intelligence";
 import { pathways, evidenceSources } from "./science-coach";
 
-export const PRECISION_VERSION = "precision-2026-10-17.3";
+export const PRECISION_VERSION = "precision-2026-10-17.4";
 export const precisionSources = [
   {
     id: "pnpla3-study",
@@ -260,9 +262,9 @@ const isoDate = z
     "Future measurements are not allowed",
   );
 const shortText = z.string().trim().min(1).max(200);
-const variantIds = variantCatalog.map((v) => v.rsid) as [
-  (typeof variantCatalog)[number]["rsid"],
-  ...(typeof variantCatalog)[number]["rsid"][],
+const variantIds = genotypeAnnotations.map((v) => v.rsid) as [
+  string,
+  ...string[],
 ];
 const callSchema = z
   .object({
@@ -273,12 +275,13 @@ const callSchema = z
   })
   .strict()
   .superRefine((call, ctx) => {
-    const v = variantCatalog.find((v) => v.rsid === call.rsid)!;
+    const v = genotypeReference.variants.find((v) => v.rsid === call.rsid)!
+      .mappings[0];
     if (
       v.chromosome !== call.chromosome ||
       v.position !== call.position ||
       (call.genotype !== "--" &&
-        !call.genotype.split("").every((a) => v.alleles.includes(a)))
+        !call.genotype.split("").every((a) => v.alleles.split("/").includes(a)))
     )
       ctx.addIssue({
         code: "custom",
@@ -293,7 +296,7 @@ export const geneticImportSchema = z
     build: z.literal("GRCh37"),
     strand: z.literal("+"),
     collectedAt: isoDate,
-    calls: z.array(callSchema).min(1).max(variantCatalog.length),
+    calls: z.array(callSchema).min(1).max(genotypeAnnotations.length),
     scannedVariants: z.number().int().min(1).max(2000000),
   })
   .strict()
@@ -354,7 +357,7 @@ export function classifyManualGenetics(data: ManualGeneticImport) {
   return data.entries.map((entry) => {
     const variant = variantCatalog.find((v) => v.rsid === entry.rsid);
     const reason = !variant
-      ? "Recorded only: this SNP is outside Bloom’s reviewed interpretation catalogue."
+      ? "Recorded only: this SNP is outside Bloom’s diet-ranking catalogue. Educational explanations, where available, are separate."
       : data.strand !== "forward"
         ? "Recorded only: forward-strand orientation has not been confirmed."
         : entry.genotype !== "--" &&
@@ -404,7 +407,7 @@ export function parse23andMe(text: string, collectedAt: string) {
     if (!/^(?:rs\d+|i\d+)$/.test(rsid || ""))
       throw new Error("Malformed raw-data row.");
     scannedVariants++;
-    if (variantCatalog.some((v) => v.rsid === rsid))
+    if (genotypeAnnotations.some((v) => v.rsid === rsid))
       calls.push({
         rsid: rsid as any,
         chromosome,
@@ -731,7 +734,14 @@ export function buildPrecisionReport(
   const reviewedCalls =
     geneticData?.provider === "manual"
       ? classifyManualGenetics(geneticData).filter((e) => e.reviewed)
-      : geneticData?.calls || [];
+      : (geneticData?.calls || []).filter((c) => {
+          const v = variantCatalog.find((v) => v.rsid === c.rsid);
+          return (
+            v &&
+            (c.genotype === "--" ||
+              c.genotype.split("").every((a) => v.alleles.includes(a)))
+          );
+        });
   const findings = variantCatalog.map((v) => {
     const call = reviewedCalls.find((c) => c.rsid === v.rsid);
     return {
@@ -1082,7 +1092,7 @@ export function buildPrecisionReport(
     generatedAt: new Date(now).toISOString(),
     context,
     genetics: {
-      coverage: `${variantCatalog.length} reviewed nutrition-related markers; not whole-genome interpretation`,
+      coverage: `${variantCatalog.length} diet-ranking markers and ${genotypeAnnotations.length} markers with educational explanations; not whole-genome interpretation`,
       import: geneticData
         ? {
             id: genetics!.record.id,
@@ -1106,6 +1116,13 @@ export function buildPrecisionReport(
               entries: classifyManualGenetics(geneticData),
             }
           : null,
+      explanations: explainGenotypes(
+        geneticData?.provider === "manual"
+          ? geneticData.entries
+          : geneticData?.calls || [],
+        geneticData?.provider === "23andMe" ||
+          geneticData?.strand === "forward",
+      ),
       findings,
     },
     labs: latest,

@@ -1,3 +1,4 @@
+import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "wouter";
@@ -483,7 +484,9 @@ export default function PrecisionNutrition() {
                     {r.genetics.coverage}. Supported format: uncompressed
                     GRCh37, forward-strand text export. Unknown builds, wrong
                     coordinates, conflicting calls and unsupported strand
-                    notation are rejected.
+                    notation are rejected. Only the 29 explanation-catalogue
+                    SNPs are retained after preview and consent; dietary ranking
+                    remains limited to the seven reviewed markers.
                   </p>
                   <label className="block">
                     DNA sample date
@@ -590,23 +593,27 @@ export default function PrecisionNutrition() {
                     </p>
                   </section>
                 )}
-                {r.genetics.findings.map((f) => (
-                  <article className="bloom-panel" key={f.rsid}>
-                    <p className="eyebrow">{f.status}</p>
-                    <h2>
-                      {f.gene} · {f.rsid}
-                    </h2>
-                    <p>
-                      Forward-strand call:{" "}
-                      <strong>{f.genotype || "Not available"}</strong> ·{" "}
-                      {f.pathway}
-                    </p>
-                    <p>{f.interpretation}</p>
-                    <p>{f.actionability}</p>
-                    <p className="panel-note">{f.limitation}</p>
-                    {sources(f.sources)}
-                  </article>
-                ))}
+                <GenotypeExplanations entries={r.genetics.explanations || []} />
+                <details>
+                  <summary>Reviewed marker pathway context</summary>
+                  {r.genetics.findings.map((f) => (
+                    <article className="bloom-panel" key={f.rsid}>
+                      <p className="eyebrow">{f.status}</p>
+                      <h2>
+                        {f.gene} · {f.rsid}
+                      </h2>
+                      <p>
+                        Forward-strand call:{" "}
+                        <strong>{f.genotype || "Not available"}</strong> ·{" "}
+                        {f.pathway}
+                      </p>
+                      <p>{f.interpretation}</p>
+                      <p>{f.actionability}</p>
+                      <p className="panel-note">{f.limitation}</p>
+                      {sources(f.sources)}
+                    </article>
+                  ))}
+                </details>
                 <p className="panel-note">
                   Consumer calls need appropriate confirmation before clinical
                   decisions. Unreported variants are not assumed to be absent.

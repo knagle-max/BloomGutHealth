@@ -1,0 +1,354 @@
+{
+  "retrievedAt": "2026-10-17",
+  "assembly": "GRCh37",
+  "variants": [
+    {
+      "rsid": "rs738409",
+      "mappings": [
+        {
+          "chromosome": "22",
+          "position": 44324727,
+          "alleles": "C/A/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs738409?content-type=application/json"
+    },
+    {
+      "rsid": "rs58542926",
+      "mappings": [
+        {
+          "chromosome": "19",
+          "position": 19379549,
+          "alleles": "C/A/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs58542926?content-type=application/json"
+    },
+    {
+      "rsid": "rs1260326",
+      "mappings": [
+        {
+          "chromosome": "2",
+          "position": 27730940,
+          "alleles": "T/C/G",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1260326?content-type=application/json"
+    },
+    {
+      "rsid": "rs1801133",
+      "mappings": [
+        {
+          "chromosome": "1",
+          "position": 11856378,
+          "alleles": "G/A/C",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1801133?content-type=application/json"
+    },
+    {
+      "rsid": "rs4988235",
+      "mappings": [
+        {
+          "chromosome": "2",
+          "position": 136608646,
+          "alleles": "G/A/C/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs4988235?content-type=application/json"
+    },
+    {
+      "rsid": "rs174547",
+      "mappings": [
+        {
+          "chromosome": "11",
+          "position": 61570783,
+          "alleles": "T/C",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs174547?content-type=application/json"
+    },
+    {
+      "rsid": "rs7903146",
+      "mappings": [
+        {
+          "chromosome": "10",
+          "position": 114758349,
+          "alleles": "C/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs7903146?content-type=application/json"
+    },
+    {
+      "rsid": "rs1801131",
+      "mappings": [
+        {
+          "chromosome": "1",
+          "position": 11854476,
+          "alleles": "T/G",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1801131?content-type=application/json"
+    },
+    {
+      "rsid": "rs1801394",
+      "mappings": [
+        {
+          "chromosome": "5",
+          "position": 7870973,
+          "alleles": "A/G",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1801394?content-type=application/json"
+    },
+    {
+      "rsid": "rs1805087",
+      "mappings": [
+        {
+          "chromosome": "1",
+          "position": 237048500,
+          "alleles": "A/G",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1805087?content-type=application/json"
+    },
+    {
+      "rsid": "rs234706",
+      "mappings": [
+        {
+          "chromosome": "21",
+          "position": 44485350,
+          "alleles": "G/A",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs234706?content-type=application/json"
+    },
+    {
+      "rsid": "rs601338",
+      "mappings": [
+        {
+          "chromosome": "19",
+          "position": 49206674,
+          "alleles": "G/A",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs601338?content-type=application/json"
+    },
+    {
+      "rsid": "rs174550",
+      "mappings": [
+        {
+          "chromosome": "11",
+          "position": 61571478,
+          "alleles": "T/C",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs174550?content-type=application/json"
+    },
+    {
+      "rsid": "rs12934922",
+      "mappings": [
+        {
+          "chromosome": "16",
+          "position": 81301694,
+          "alleles": "A/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs12934922?content-type=application/json"
+    },
+    {
+      "rsid": "rs10741657",
+      "mappings": [
+        {
+          "chromosome": "11",
+          "position": 14914878,
+          "alleles": "A/C/G",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs10741657?content-type=application/json"
+    },
+    {
+      "rsid": "rs10877012",
+      "mappings": [
+        {
+          "chromosome": "12",
+          "position": 58162085,
+          "alleles": "G/C/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs10877012?content-type=application/json"
+    },
+    {
+      "rsid": "rs1800562",
+      "mappings": [
+        {
+          "chromosome": "6",
+          "position": 26093141,
+          "alleles": "G/A",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1800562?content-type=application/json"
+    },
+    {
+      "rsid": "rs1799945",
+      "mappings": [
+        {
+          "chromosome": "6",
+          "position": 26091179,
+          "alleles": "C/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs1799945?content-type=application/json"
+    },
+    {
+      "rsid": "rs855791",
+      "mappings": [
+        {
+          "chromosome": "22",
+          "position": 37462936,
+          "alleles": "A/C/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs855791?content-type=application/json"
+    },
+    {
+      "rsid": "rs10830963",
+      "mappings": [
+        {
+          "chromosome": "11",
+          "position": 92708710,
+          "alleles": "C/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs10830963?content-type=application/json"
+    },
+    {
+      "rsid": "rs33972313",
+      "mappings": [
+        {
+          "chromosome": "5",
+          "position": 138715502,
+          "alleles": "C/A/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs33972313?content-type=application/json"
+    },
+    {
+      "rsid": "rs9939609",
+      "mappings": [
+        {
+          "chromosome": "16",
+          "position": 53820527,
+          "alleles": "T/A",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs9939609?content-type=application/json"
+    },
+    {
+      "rsid": "rs17782313",
+      "mappings": [
+        {
+          "chromosome": "18",
+          "position": 57851097,
+          "alleles": "T/A/C",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs17782313?content-type=application/json"
+    },
+    {
+      "rsid": "rs838133",
+      "mappings": [
+        {
+          "chromosome": "19",
+          "position": 49259529,
+          "alleles": "A/C/G/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs838133?content-type=application/json"
+    },
+    {
+      "rsid": "rs4880",
+      "mappings": [
+        {
+          "chromosome": "6",
+          "position": 160113872,
+          "alleles": "A/G",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs4880?content-type=application/json"
+    },
+    {
+      "rsid": "rs429358",
+      "mappings": [
+        {
+          "chromosome": "19",
+          "position": 45411941,
+          "alleles": "T/C",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs429358?content-type=application/json"
+    },
+    {
+      "rsid": "rs7412",
+      "mappings": [
+        {
+          "chromosome": "19",
+          "position": 45412079,
+          "alleles": "C/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs7412?content-type=application/json"
+    },
+    {
+      "rsid": "rs5400",
+      "mappings": [
+        {
+          "chromosome": "3",
+          "position": 170732300,
+          "alleles": "G/A",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs5400?content-type=application/json"
+    },
+    {
+      "rsid": "rs5082",
+      "mappings": [
+        {
+          "chromosome": "1",
+          "position": 161193683,
+          "alleles": "G/A/C/T",
+          "strand": 1
+        }
+      ],
+      "sourceUrl": "https://grch37.rest.ensembl.org/variation/human/rs5082?content-type=application/json"
+    }
+  ]
+}

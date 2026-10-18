@@ -40,3 +40,5 @@ The complete five-layer workflow is now implemented as a bounded first version. 
 The subsequent weekly-planning release adds a source-linked network, seven-marker coverage and a separate nutrient-constrained recipe engine. See `WEEKLY_PLANNING.md`; the original fifteen curated recipes remain available alongside procedural planning recipes.
 
 Selected SNP entry is also available without a full report. Manual and pasted calls retain self-reported provenance and a separate strand confirmation; only compatible reviewed markers enter interpretation. Unsupported variants remain explicitly recorded without interpretation. See `SELECTED_GENETICS.md` for snapshot behavior and validation boundaries.
+
+Saved genetic entries now have searchable gene/SNP/genotype explanations and source-linked comparison tables for 29 curated educational markers, separate from seven diet-ranking markers. Raw-file preview/consent covers only these 29 retained SNPs. See [GENOTYPE_EXPLANATIONS.md](GENOTYPE_EXPLANATIONS.md) for strand matching, uncertainty and actionability limits.

@@ -30,9 +30,15 @@ export default function ManualGenetics({
 }) {
   const existing =
     genetics.manual?.entries ||
-    genetics.findings
-      .filter((f) => f.genotype)
-      .map((f) => ({ gene: f.gene, rsid: f.rsid, genotype: f.genotype! }));
+    (genetics.explanations?.length
+      ? genetics.explanations.map((e) => ({
+          gene: e.gene,
+          rsid: e.rsid,
+          genotype: e.genotype,
+        }))
+      : genetics.findings
+          .filter((f) => f.genotype)
+          .map((f) => ({ gene: f.gene, rsid: f.rsid, genotype: f.genotype! })));
   const [rows, setRows] = useState<Row[]>(() => {
     const combined = templates.map((t) => ({
       ...t,
@@ -93,7 +99,7 @@ export default function ManualGenetics({
               <small className="block panel-note">
                 {variantCatalog.some((v) => v.rsid === r.rsid)
                   ? "Reviewed marker; forward-strand match required"
-                  : "Recorded only; no reviewed interpretation"}
+                  : "Outside the diet-ranking catalogue"}
               </small>
             </span>
             <input
@@ -164,6 +170,11 @@ export default function ManualGenetics({
           saved.
         </p>
       </details>
+      {genetics.explanations?.length > 0 && (
+        <a href="#genotype-explanations" className="text-link">
+          Read explanations for saved SNPs ↓
+        </a>
+      )}
       <h3>Reviewed nutrition-related markers</h3>
       {renderRows(rows.slice(0, variantCatalog.length), 0)}
       <details

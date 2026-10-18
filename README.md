@@ -96,3 +96,5 @@ Meal plans now include an experimental SCFA scenario/readiness panel and a stric
 ### Selected SNP entry
 
 Precision → Genetics supports manual individual genotypes and pasted gene/rsID/genotype tables without a full DNA upload. Users preview and consent before saving. Unreviewed, incompatible or unknown-strand entries remain recorded without interpretation. See [SELECTED_GENETICS.md](SELECTED_GENETICS.md).
+
+Saved genetic entries now have searchable gene/SNP/genotype explanations and source-linked comparison tables for 29 curated educational markers, separate from seven diet-ranking markers. Raw-file preview/consent covers only these 29 retained SNPs. See [GENOTYPE_EXPLANATIONS.md](GENOTYPE_EXPLANATIONS.md) for strand matching, uncertainty and actionability limits.

@@ -13,31 +13,32 @@ import {
 import { defaultPreferences } from "../shared/meal-intelligence";
 import { registerPrecisionRoutes } from "../server/precision-routes";
 const date = "2026-10-01T00:00:00Z";
+// Deliberately synthetic genotypes; not a personal genetic profile.
 const table = `Gene SNP Your genotype
-MTHFR rs1801133 AA
-MTHFR rs1801131 TT
-MTRR rs1801394 AG
-MTR rs1805087 AA
-CBS rs234706 AG
-FUT2 rs601338 AG
-FADS1 region rs174550 CT
-BCMO1 rs12934922 AA
-CYP2R1 rs10741657 AA
-CYP27B1 rs10877012 GT
-HFE rs1800562 GG
-HFE rs1799945 CC
-TMPRSS6 rs855791 AG
+MTHFR rs1801133 AG
+MTHFR rs1801131 GG
+MTRR rs1801394 GG
+MTR rs1805087 AG
+CBS rs234706 GG
+FUT2 rs601338 GG
+FADS1 region rs174550 TT
+BCMO1 rs12934922 AT
+CYP2R1 rs10741657 AG
+CYP27B1 rs10877012 TT
+HFE rs1800562 AA
+HFE rs1799945 CG
+TMPRSS6 rs855791 GG
 TCF7L2 rs7903146 GT
-MTNR1B rs10830963 CC
-SLC23A1 rs33972313 CC
-LCT/MCM6 rs4988235 AA
-FTO rs9939609 AT
-MC4R region rs17782313 TT
-FGF21 region rs838133 AG
-SOD2 rs4880 AG
-APOE rs429358 TT
-GLUT2/SLC2A2 rs5400 GG
-APOA2 rs5082 AG`;
+MTNR1B rs10830963 CG
+SLC23A1 rs33972313 CT
+LCT/MCM6 rs4988235 AG
+FTO rs9939609 TT
+MC4R region rs17782313 CC
+FGF21 region rs838133 GG
+SOD2 rs4880 GG
+APOE rs429358 CC
+GLUT2/SLC2A2 rs5400 AA
+APOA2 rs5082 GG`;
 const payload = (strand: "forward" | "unknown" = "forward") =>
   manualGeneticImportSchema.parse({
     consent: true,

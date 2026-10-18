@@ -16,4 +16,6 @@ The form starts with the active saved calls. Pasting updates matching rows and p
 
 Manual source provenance and all selected entries are returned in the authenticated no-store precision report. Unknown/unreviewed entries do not contribute to food ranking, evidence links or metabolite predictions. The existing plan guard binds plans to the active genetics record, so a new manual snapshot changes the planning source. Manual genotype data is never sent to the AI recipe generator or the microbial research service.
 
-Tests cover the provided 24-row example, normalization, header/delimiter support, duplicates, malformed input, unknown orientation, incompatible alleles, source/consent/date requirements, raw-import compatibility, account isolation and the live route handler. Browser verification covers manual and paste preview/save/reload, unknown-strand abstention, and mobile layout.
+Tests cover the 24-row format with synthetic genotypes, normalization, header/delimiter support, duplicates, malformed input, unknown orientation, incompatible alleles, source/consent/date requirements, raw-import compatibility, account isolation and the live route handler. Browser verification covers manual and paste preview/save/reload, unknown-strand abstention, and mobile layout.
+
+The educational-explanation release adds source-linked context for the 29 shortcut SNPs without expanding the seven-marker diet-ranking catalogue. Raw imports can now retain these 29 SNPs after preview/consent, and the manual editor preserves them. See `GENOTYPE_EXPLANATIONS.md`.
