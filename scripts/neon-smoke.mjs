@@ -174,6 +174,103 @@ try {
   console.log(
     "PASS: broad sourced meal parsing, exclusions, preserved known daily totals and local calendar boundaries",
   );
+  const personalProduct = await request(
+    "/api/products",
+    "POST",
+    {
+      name: "Synthetic reusable label",
+      brand: "CI fixture",
+      servingDescription: "1 scoop (12 g)",
+      servingGrams: 12,
+      perServing: {
+        calories: 40,
+        carbohydrates_total_g: 12,
+        fiber_g: 3,
+        protein_g: 0,
+        fat_total_g: 0,
+      },
+    },
+    201,
+  );
+  const productMeal = await request("/api/meals", "POST", {
+    mealText: "",
+    mealType: "snack",
+    products: [
+      {
+        name: personalProduct.name,
+        grams: 24,
+        preparation: "Selected label",
+        assumption: "Synthetic fixture",
+        product: { source: "manual", id: personalProduct.id, servings: 2 },
+      },
+    ],
+  });
+  assert.equal(productMeal.totalCalories, 80);
+  assert.equal(productMeal.totalCarbs, 24);
+  assert.equal(
+    productMeal.intelligence.nutrients.find((n) => n.key === "fiber_g").amount,
+    6,
+  );
+  const encryptedLabel = (
+    await pool.query(
+      "SELECT encrypted_payload FROM nutrition_products WHERE id=$1",
+      [personalProduct.id],
+    )
+  ).rows[0].encrypted_payload;
+  assert.equal(encryptedLabel.version, 1);
+  assert.equal(Object.hasOwn(encryptedLabel, "name"), false);
+  await request(`/api/meals/${productMeal.id}`, "DELETE", {});
+  const functional = await request("/api/microbiome/import", "POST", {
+    report: {
+      data_origin: "Synthetic reconstruction; not an official export",
+      test_period: "Example period, exact date unknown",
+      scores: [
+        {
+          category: "functional_pathway",
+          name: "Synthetic pathway",
+          score: 42,
+          scale: "0-100 reported score",
+          viome_category: "",
+          notes: "Not a measured concentration",
+        },
+      ],
+      organisms: [
+        {
+          organism: "Example organism",
+          reported_status: "listed",
+          quantitative_abundance: "",
+          notes: "Unverified synthetic reconstruction",
+        },
+      ],
+      food_recommendations: null,
+      raw_sequence_data: null,
+    },
+  });
+  const functionalResults = await request(
+    `/api/microbiome/results/${functional.sampleId}`,
+  );
+  assert.equal(functionalResults.sample.processingStatus, "completed");
+  assert.equal(functionalResults.sample.structuredData.scores.length, 1);
+  assert.equal(
+    functionalResults.sample.structuredData.importInfo.dateSource,
+    "import-date",
+  );
+  assert.equal(functionalResults.bacterial_composition.length, 0);
+  assert.equal(functionalResults.metabolites.length, 0);
+  await request(
+    `/api/microbiome/analyze/${functional.sampleId}`,
+    "POST",
+    {},
+    422,
+  );
+  assert.equal(
+    (await request(`/api/microbiome/results/${functional.sampleId}`)).sample
+      .processingStatus,
+    "completed",
+  );
+  console.log(
+    "PASS: reusable encrypted product label, per-serving meal nutrition and pasted functional-report persistence",
+  );
   const imported = await request("/api/microbiome/import", "POST", {
     bacteria_percentages: { "Ruminococcus bromii": 2, Bifidobacterium: 5 },
     testingCompany: "Synthetic CI lab",
@@ -305,10 +402,50 @@ try {
     201,
   );
   assert.equal((await request("/api/precision")).checkins[0].bloating, 0);
+  const today = await request("/api/precision/today-plan", "POST", {
+    date: new Date().toISOString().slice(0, 10),
+    timezoneOffset: 0,
+    hour: 18,
+    plan: {
+      days: 1,
+      targets: {
+        calories: 2200,
+        protein: 100,
+        fiber: 30,
+        fiberMaximum: 45,
+        sodium: 2300,
+        saturatedFat: 20,
+      },
+    },
+  });
+  assert.ok(today.slots.every((s) => s === "dinner" || s === "snack"));
+  assert.ok(
+    today.meals.every((m) => m.slot === "dinner" || m.slot === "snack"),
+  );
+  assert.equal(today.targetSource, "Targets confirmed in this form");
   const second = await addUser();
   assert.equal((await request("/api/precision")).labs.length, 0);
+  assert.equal((await request("/api/products/saved")).length, 0);
+  await request(
+    `/api/products/manual/${personalProduct.id}`,
+    "GET",
+    undefined,
+    404,
+  );
+  await request(
+    `/api/microbiome/results/${functional.sampleId}`,
+    "GET",
+    undefined,
+    403,
+  );
   await request(`/api/precision/records/${lab.id}`, "DELETE", undefined, 404);
   cookie = first.cookie;
+  await request(
+    `/api/products/${personalProduct.id}`,
+    "DELETE",
+    undefined,
+    204,
+  );
   await request(`/api/precision/records/${lab.id}`, "DELETE", undefined, 204);
   assert.equal((await request("/api/precision")).plans.length, 0);
   await request(`/api/meals/${meal.id}`, "DELETE", {});

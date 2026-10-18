@@ -1,3 +1,4 @@
+import { describeRecordedDiet } from "../shared/diet-observations";
 import { registerReportRoutes } from "./report-routes";
 import {
   mealNutritionSummary,
@@ -674,32 +675,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         const meals = await storage.getMeals(userId);
-        const recentMeals = meals.slice(0, 30);
-
-        if (recentMeals.length < 3) {
-          return res.json({
-            mealsAnalyzed: recentMeals.length,
-            predictedBacteria: [],
-            insights: [],
-            message: "Log more meals for accurate predictions",
-          });
-        }
-
-        const dietaryPatterns = analyzeDietaryPatterns(recentMeals);
-        const predictedBacteria = predictBacteriaFromDiet(dietaryPatterns);
-        const insights = generateDietInsights(
-          dietaryPatterns,
-          predictedBacteria,
-        );
-
-        res.json({
-          evidenceStatus:
-            "experimental-rule-model; not a biological measurement",
-          mealsAnalyzed: recentMeals.length,
-          dietaryPatterns,
-          predictedBacteria,
-          insights,
-        });
+        res.json(describeRecordedDiet(meals));
       } catch (error: any) {
         res.status(500).json({ error: error.message });
       }

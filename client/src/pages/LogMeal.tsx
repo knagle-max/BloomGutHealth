@@ -1,3 +1,4 @@
+import ProductPicker from "@/components/ProductPicker";
 import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
@@ -17,7 +18,17 @@ import {
 import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
-  const [mealType, setMealType] = useState<MealType>("breakfast");
+  const params = new URLSearchParams(window.location.search);
+  const requestedType = params.get("type");
+  const [mealType, setMealType] = useState<MealType>(
+    ["breakfast", "lunch", "dinner", "snack"].includes(requestedType || "")
+      ? (requestedType as MealType)
+      : new Date().getHours() < 11
+        ? "breakfast"
+        : new Date().getHours() < 16
+          ? "lunch"
+          : "dinner",
+  );
   const recipe = recipes.find(
     (r) => r.id === new URLSearchParams(window.location.search).get("recipe"),
   );
@@ -26,7 +37,7 @@ export default function LogMeal() {
       ? recipe.ingredients
           .map((i) => `${i.grams} g ${i.name.replaceAll(",", " ")}`)
           .join(", ")
-      : "",
+      : (params.get("description") || "").slice(0, 2000),
   );
   const [eatenAt, setEatenAt] = useState(() => {
     const date = new Date();
@@ -41,6 +52,8 @@ export default function LogMeal() {
   const [symptoms, setSymptoms] = useState<
     Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
   >({ bloating: null, energy: null, comfort: null, clarity: null });
+  const [products, setProducts] = useState<Ingredient[]>([]);
+  const [showProducts, setShowProducts] = useState(false);
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
   const save = useMutation({
@@ -48,6 +61,7 @@ export default function LogMeal() {
       (await (
         await apiRequest("POST", "/api/meals", {
           mealText: description.trim(),
+          products,
           mealType,
           aiConsent,
           mealContext: {
@@ -60,6 +74,7 @@ export default function LogMeal() {
     onSuccess: (meal) => {
       setSavedMeal(meal);
       setDescription("");
+      setProducts([]);
       queryClient.invalidateQueries({
         predicate: (query) =>
           [
@@ -114,11 +129,62 @@ export default function LogMeal() {
           A quick entry today. A clearer picture over time.
         </p>
       </div>
+      <Button
+        className="whitespace-normal h-auto max-w-full"
+        type="button"
+        variant="outline"
+        onClick={() => setShowProducts(!showProducts)}
+      >
+        {showProducts
+          ? "Close product search"
+          : "Search a food, brand or supplement"}
+      </Button>
+      {showProducts && (
+        <ProductPicker
+          onPick={(i) => {
+            setProducts((v) => [...v, i].slice(0, 10));
+            setShowProducts(false);
+          }}
+          initialQuery={description.slice(0, 120)}
+        />
+      )}
+      {products.length > 0 && (
+        <section className="bloom-panel">
+          <h2>Selected products</h2>
+          <p>
+            These products are counted separately. In the meal description,
+            include only other foods to avoid counting the same product twice.
+          </p>
+          {products.map((i, index) => (
+            <p key={index}>
+              {i.name} · {i.product!.servings} labelled serving(s){" "}
+              <button
+                type="button"
+                className="text-link"
+                onClick={() =>
+                  setProducts((v) => v.filter((_, n) => n !== index))
+                }
+              >
+                Remove
+              </button>
+            </p>
+          ))}
+          <Button
+            className="whitespace-normal h-auto max-w-full"
+            type="button"
+            variant="outline"
+            onClick={() => setDescription("")}
+          >
+            Use selected products as the whole entry
+          </Button>
+        </section>
+      )}
       <form
         className="bloom-panel space-y-6"
         onSubmit={(e) => {
           e.preventDefault();
-          if (description.trim() && !save.isPending) save.mutate();
+          if ((description.trim() || products.length) && !save.isPending)
+            save.mutate();
         }}
       >
         <fieldset disabled={save.isPending} className="space-y-6">
@@ -133,7 +199,7 @@ export default function LogMeal() {
               placeholder="For example: 150g grilled chicken, 1 cup brown rice, and broccoli"
               className="min-h-32 text-base"
               maxLength={2000}
-              required
+              required={!products.length}
               data-testid="input-food-description"
             />
             <p className="text-xs text-muted-foreground">
@@ -233,7 +299,9 @@ export default function LogMeal() {
           )}
           <Button
             className="w-full h-12"
-            disabled={!description.trim() || save.isPending}
+            disabled={
+              (!description.trim() && !products.length) || save.isPending
+            }
             data-testid="button-save-meal"
           >
             {save.isPending ? (

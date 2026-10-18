@@ -1,4 +1,5 @@
-const fields = {
+import { nutrientDefinitions } from "./meal-intelligence";
+const fields: Record<string, string> = {
   calories: "calories",
   protein: "protein_g",
   carbs: "carbohydrates_total_g",
@@ -9,6 +10,9 @@ const fields = {
   potassium: "potassium_mg",
   cholesterol: "cholesterol_mg",
 };
+for (const [key] of nutrientDefinitions) {
+  if (!Object.values(fields).includes(key)) fields[key] = key;
+}
 const macros: Record<string, string> = {
   calories: "totalCalories",
   protein: "totalProtein",

@@ -157,7 +157,7 @@ test("measured flags outweigh genetics; stale labs and no-calls cannot create fa
   );
   assert.equal(
     active.goals.find((g) => g.goal === "My own research goal")?.mapping,
-    "recorded goal; no dedicated validated rule yet",
+    "Needs a more specific food or health target",
   );
 });
 test("food, meal and supplement outputs honor preferences, avoid genetic dairy bans and enforce safety context", () => {

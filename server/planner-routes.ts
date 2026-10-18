@@ -1,3 +1,4 @@
+import { registerProductRoutes } from "./products";
 import type { Express, RequestHandler } from "express";
 import { z } from "zod";
 import {
@@ -15,19 +16,32 @@ import { prioritizeRecipes } from "./recipe-ranking";
 import type { IStorage } from "./storage";
 const requestSchema = z
   .object({
-    mealText: z.string().trim().min(1).max(2000),
+    mealText: z.string().trim().max(2000),
+    products: z
+      .array(
+        ingredientSchema
+          .strict()
+          .refine((i) => !!i.product, "Select a product"),
+      )
+      .max(10)
+      .optional(),
     mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]).optional(),
     mealContext: mealContextSchema.optional(),
     aiConsent: z.boolean().default(false),
     ingredients: z.array(ingredientSchema.strict()).min(1).max(20).optional(),
   })
-  .strict();
+  .strict()
+  .refine(
+    (v) => !!v.mealText || !!v.products?.length,
+    "Describe a food or select a product",
+  );
 export function registerPlannerRoutes(
   app: Express,
   requireAuth: RequestHandler,
   storage: IStorage,
   analyzer = analyzeMeal,
 ) {
+  registerProductRoutes(app, requireAuth, storage);
   const limited = new Map<string, { at: number; count: number }>();
   app.get("/api/analysis/status", requireAuth, (_req, res) => {
     res.setHeader("Cache-Control", "no-store");
@@ -163,7 +177,11 @@ export function registerPlannerRoutes(
         .json({ error: "Invalid meal description or context." });
     try {
       res.json(
-        await analyzer(p.data.mealText, p.data.aiConsent, p.data.ingredients),
+        await analyzer(p.data.mealText, p.data.aiConsent, p.data.ingredients, {
+          userId: req.session.userId!,
+          store: storage,
+          products: p.data.products,
+        }),
       );
     } catch {
       res
@@ -183,10 +201,22 @@ export function registerPlannerRoutes(
         p.data.mealText,
         p.data.aiConsent,
         p.data.ingredients,
+        {
+          userId: req.session.userId!,
+          store: storage,
+          products: p.data.products,
+        },
       );
       const meal = await storage.insertMeal({
         userId: req.session.userId!,
-        mealText: p.data.mealText,
+        mealText: [
+          p.data.mealText,
+          ...(p.data.products || []).map(
+            (i) => `${i.product!.servings} serving(s) ${i.name}`,
+          ),
+        ]
+          .filter(Boolean)
+          .join("; "),
         mealType: p.data.mealType,
         mealContext: p.data.mealContext,
         intelligence: result.intelligence,
@@ -216,10 +246,22 @@ export function registerPlannerRoutes(
         p.data.mealText,
         p.data.aiConsent,
         p.data.ingredients,
+        {
+          userId: req.session.userId!,
+          store: storage,
+          products: p.data.products,
+        },
       );
       res.json(
         await storage.updateMeal(meal.id, {
-          mealText: p.data.mealText,
+          mealText: [
+            p.data.mealText,
+            ...(p.data.products || []).map(
+              (i) => `${i.product!.servings} serving(s) ${i.name}`,
+            ),
+          ]
+            .filter(Boolean)
+            .join("; "),
           mealType: p.data.mealType ?? meal.mealType,
           mealContext: p.data.mealContext ?? meal.mealContext,
           ...(p.data.mealContext?.eatenAt

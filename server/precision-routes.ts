@@ -1,3 +1,5 @@
+import { buildTodayPlan } from "../shared/today-planner";
+import { localDayBounds } from "../shared/nutrition-summary";
 import type { Express, RequestHandler } from "express";
 import { z } from "zod";
 import type { IStorage } from "./storage";
@@ -191,6 +193,125 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
+  app.post("/api/precision/today-plan", async (req, res) => {
+    const parsed = z
+      .object({
+        date: z.string(),
+        timezoneOffset: z.number().int(),
+        hour: z.number().int().min(0).max(23),
+        plan: weeklyRequestSchema.optional(),
+      })
+      .strict()
+      .safeParse(req.body);
+    if (!parsed.success)
+      return res
+        .status(400)
+        .json({
+          error: "Choose a valid local day, time and nutrient targets.",
+        });
+    let bounds;
+    try {
+      bounds = localDayBounds(parsed.data.date, parsed.data.timezoneOffset);
+    } catch {
+      return res.status(400).json({ error: "Invalid local date or timezone." });
+    }
+    try {
+      const id = req.session.userId!,
+        [user, records, meals, report] = await Promise.all([
+          store.getUser(id),
+          store.getPrecisionRecords(id),
+          store.getMeals(id),
+          reportFor(id),
+        ]);
+      const prefs = preferenceSchema.safeParse(user?.dietaryPreferences);
+      const recentPlan = records
+        .filter(
+          (r) =>
+            r.kind === "plan" && (r.payload as any)?.type === "weekly-plan",
+        )
+        .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt))[0];
+      const saved = weeklyRequestSchema.safeParse(
+        (recentPlan?.payload as any)?.request,
+      );
+      const profileComplete = !!(
+        user?.age &&
+        user?.sex &&
+        user?.heightCm &&
+        user?.weightKg &&
+        user?.activityLevel
+      );
+      const multiplier: Record<string, number> = {
+        sedentary: 1.2,
+        light: 1.375,
+        moderate: 1.55,
+        active: 1.725,
+        very_active: 1.9,
+      };
+      const energy = profileComplete
+        ? Math.round(
+            (10 * user!.weightKg! +
+              6.25 * user!.heightCm! -
+              5 * user!.age! +
+              (user!.sex === "male" ? 5 : -161)) *
+              (multiplier[user!.activityLevel!] || 1.55),
+          )
+        : 2200;
+      const base = weeklyRequestSchema.parse({
+        days: 1,
+        targets: {
+          calories: Math.min(4500, Math.max(1200, energy)),
+          protein: profileComplete
+            ? Math.min(250, Math.max(40, Math.round(user!.weightKg! * 1.6)))
+            : 100,
+          fiber: 30,
+          fiberMaximum: 45,
+          sodium: 2300,
+          saturatedFat: 20,
+        },
+        nutrientTargets: {
+          carbohydrates_total_g: {
+            min: Math.round((energy * 0.45) / 4),
+            max: Math.round((energy * 0.55) / 4),
+          },
+          fat_total_g: {
+            min: Math.round((energy * 0.2) / 9),
+            max: Math.round((energy * 0.35) / 9),
+          },
+        },
+      });
+      const request = parsed.data.plan || (saved.success ? saved.data : base),
+        targetSource = parsed.data.plan
+          ? "Targets confirmed in this form"
+          : saved.success
+            ? "Latest saved weekly-plan targets"
+            : profileComplete
+              ? "Estimated from your profile; review before relying on them"
+              : "Example targets — review and confirm to personalize";
+      const today = meals.filter(
+        (m) =>
+          +new Date(m.loggedAt) >= +bounds.startOfDay &&
+          +new Date(m.loggedAt) <= +bounds.endOfDay &&
+          +new Date(m.loggedAt) <= Date.now(),
+      );
+      const result = buildTodayPlan(
+        today,
+        parsed.data.hour,
+        prefs.success ? prefs.data : defaultPreferences,
+        report,
+        request,
+      );
+      if (!parsed.data.plan && !saved.success && !profileComplete) {
+        result.meals = [];
+        result.status = "needs-context";
+        result.warnings.unshift(
+          "Set and confirm your daily targets below. Example targets are not a prescription.",
+        );
+      }
+      res.json({ ...result, targetSource });
+    } catch (e) {
+      unavailable(res, e);
+    }
+  });
   const planningRequests = new Map<string, { at: number; count: number }>();
   const researchRequests = new Map<string, number>();
   app.post("/api/precision/metabolite-research", async (req, res) => {
@@ -205,12 +326,10 @@ export function registerPrecisionRoutes(
     if (!parsed.success)
       return res.status(400).json({ error: "Select a saved weekly plan." });
     if (parsed.data.run && !parsed.data.researchConsent)
-      return res
-        .status(400)
-        .json({
-          error:
-            "Consent is required to send microbial abundances and planned food quantities to the research service.",
-        });
+      return res.status(400).json({
+        error:
+          "Consent is required to send microbial abundances and planned food quantities to the research service.",
+      });
     const userId = req.session.userId!;
     if (parsed.data.run) {
       const now = Date.now();
@@ -243,12 +362,10 @@ export function registerPrecisionRoutes(
           : { ...prepared, result: null },
       );
     } catch {
-      res
-        .status(503)
-        .json({
-          error:
-            "Research inputs or model output could not be verified. No prediction is available. Your meal plan is unchanged.",
-        });
+      res.status(503).json({
+        error:
+          "Research inputs or model output could not be verified. No prediction is available. Your meal plan is unchanged.",
+      });
     }
   });
 

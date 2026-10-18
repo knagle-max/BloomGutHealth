@@ -1,3 +1,6 @@
+import TodayPlanner from "@/components/TodayPlanner";
+import QuickLabEntry from "@/components/QuickLabEntry";
+import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, type FormEvent } from "react";
@@ -210,6 +213,9 @@ export default function PrecisionNutrition() {
       );
       setLocalError("");
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/precision/today-plan"],
+      });
     },
   });
   const send = (url: string, body: unknown, method = "POST") => {
@@ -291,8 +297,8 @@ export default function PrecisionNutrition() {
           value: number(d, "value"),
           unit,
           measuredAt: date(d, "measuredAt"),
-          laboratory: d.get("laboratory"),
-          method: d.get("method"),
+          laboratory: String(d.get("laboratory") || "Not supplied"),
+          method: String(d.get("method") || "Not supplied"),
           fasting: d.get("fasting"),
           referenceLow: number(d, "referenceLow"),
           referenceHigh: number(d, "referenceHigh"),
@@ -421,9 +427,21 @@ export default function PrecisionNutrition() {
                   <h2>Goal coverage</h2>
                   {r.goals.length ? (
                     r.goals.map((g) => (
-                      <p key={g.goal}>
-                        <strong>{g.goal}</strong> · {g.mapping}
-                      </p>
+                      <article
+                        className="precision-observation block"
+                        key={g.goal}
+                      >
+                        <h3>
+                          {g.goal} · {g.mapping}
+                        </h3>
+                        <ul>
+                          {g.actions.map((action, i) => (
+                            <li key={i}>{action}</li>
+                          ))}
+                        </ul>
+                        <p className="panel-note">{g.tracking}</p>
+                        {sources(g.sourceIds)}
+                      </article>
                     ))
                   ) : (
                     <p>
@@ -624,130 +642,135 @@ export default function PrecisionNutrition() {
             )}
             {tab === "labs" && (
               <>
-                <form className="bloom-panel space-y-4" onSubmit={submitLab}>
-                  <h2>Add a dated laboratory result</h2>
-                  <p className="panel-note">
-                    Use your report's units and reference interval. A reference
-                    interval is not an individualized treatment target.
-                  </p>
-                  <div className="precision-grid">
-                    <label>
-                      Marker
-                      <select
-                        className="bloom-input w-full"
-                        value={marker}
-                        onChange={(e) => {
-                          setMarker(e.target.value);
-                          setUnit(
-                            markerDefinitions.find(
-                              (m) => m.id === e.target.value,
-                            )!.units[0],
-                          );
-                        }}
-                      >
-                        {markerDefinitions.map((m) => (
-                          <option key={m.id} value={m.id}>
-                            {m.name}
-                          </option>
-                        ))}
-                      </select>
-                    </label>
-                    <label>
-                      Value
-                      <input
-                        name="value"
-                        className="bloom-input w-full"
-                        type="number"
-                        step="any"
-                        min="0"
-                        required
-                      />
-                    </label>
-                    <label>
-                      Unit
-                      <select
-                        className="bloom-input w-full"
-                        value={unit}
-                        onChange={(e) => setUnit(e.target.value)}
-                      >
-                        {markerDefinitions
-                          .find((m) => m.id === marker)!
-                          .units.map((u) => (
-                            <option key={u}>{u}</option>
+                <QuickLabEntry />
+                <details className="bloom-panel">
+                  <summary>
+                    Add one result with reference range & details
+                  </summary>
+                  <form className="space-y-4" onSubmit={submitLab}>
+                    <h2>Add a dated laboratory result</h2>
+                    <p className="panel-note">
+                      Use your report's units and reference interval. A
+                      reference interval is not an individualized treatment
+                      target.
+                    </p>
+                    <div className="precision-grid">
+                      <label>
+                        Marker
+                        <select
+                          className="bloom-input w-full"
+                          value={marker}
+                          onChange={(e) => {
+                            setMarker(e.target.value);
+                            setUnit(
+                              markerDefinitions.find(
+                                (m) => m.id === e.target.value,
+                              )!.units[0],
+                            );
+                          }}
+                        >
+                          {markerDefinitions.map((m) => (
+                            <option key={m.id} value={m.id}>
+                              {m.name}
+                            </option>
                           ))}
-                      </select>
-                    </label>
-                    <label>
-                      Measured at
-                      <input
-                        name="measuredAt"
-                        className="bloom-input w-full"
-                        type="datetime-local"
-                        defaultValue={localNow()}
-                        required
-                      />
-                    </label>
-                    <label>
-                      Report reference low (optional)
-                      <input
-                        name="referenceLow"
-                        className="bloom-input w-full"
-                        type="number"
-                        min="0"
-                        step="any"
-                      />
-                    </label>
-                    <label>
-                      Report reference high (optional)
-                      <input
-                        name="referenceHigh"
-                        className="bloom-input w-full"
-                        type="number"
-                        min="0"
-                        step="any"
-                      />
-                    </label>
-                    <label>
-                      Laboratory
-                      <input
-                        name="laboratory"
-                        className="bloom-input w-full"
-                        maxLength={200}
-                        required
-                      />
-                    </label>
-                    <label>
-                      Method / assay (enter “unknown” if absent)
-                      <input
-                        name="method"
-                        className="bloom-input w-full"
-                        maxLength={200}
-                        required
-                      />
-                    </label>
-                    <label>
-                      Fasting
-                      <select name="fasting" className="bloom-input w-full">
-                        <option value="unknown">
-                          Unknown / not applicable
-                        </option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                      </select>
-                    </label>
-                    <label>
-                      Notes
-                      <input
-                        name="notes"
-                        className="bloom-input w-full"
-                        maxLength={1000}
-                      />
-                    </label>
-                  </div>
-                  <Button disabled={mutation.isPending}>
-                    Save laboratory result
-                  </Button>
-                </form>
+                        </select>
+                      </label>
+                      <label>
+                        Value
+                        <input
+                          name="value"
+                          className="bloom-input w-full"
+                          type="number"
+                          step="any"
+                          min="0"
+                          required
+                        />
+                      </label>
+                      <label>
+                        Unit
+                        <select
+                          className="bloom-input w-full"
+                          value={unit}
+                          onChange={(e) => setUnit(e.target.value)}
+                        >
+                          {markerDefinitions
+                            .find((m) => m.id === marker)!
+                            .units.map((u) => (
+                              <option key={u}>{u}</option>
+                            ))}
+                        </select>
+                      </label>
+                      <label>
+                        Measured at
+                        <input
+                          name="measuredAt"
+                          className="bloom-input w-full"
+                          type="datetime-local"
+                          defaultValue={localNow()}
+                          required
+                        />
+                      </label>
+                      <label>
+                        Report reference low (optional)
+                        <input
+                          name="referenceLow"
+                          className="bloom-input w-full"
+                          type="number"
+                          min="0"
+                          step="any"
+                        />
+                      </label>
+                      <label>
+                        Report reference high (optional)
+                        <input
+                          name="referenceHigh"
+                          className="bloom-input w-full"
+                          type="number"
+                          min="0"
+                          step="any"
+                        />
+                      </label>
+                      <label>
+                        Laboratory
+                        <input
+                          name="laboratory"
+                          className="bloom-input w-full"
+                          maxLength={200}
+                        />
+                      </label>
+                      <label>
+                        Method / assay (optional)
+                        <input
+                          name="method"
+                          className="bloom-input w-full"
+                          maxLength={200}
+                        />
+                      </label>
+                      <label>
+                        Fasting
+                        <select name="fasting" className="bloom-input w-full">
+                          <option value="unknown">
+                            Unknown / not applicable
+                          </option>
+                          <option value="yes">Yes</option>
+                          <option value="no">No</option>
+                        </select>
+                      </label>
+                      <label>
+                        Notes
+                        <input
+                          name="notes"
+                          className="bloom-input w-full"
+                          maxLength={1000}
+                        />
+                      </label>
+                    </div>
+                    <Button disabled={mutation.isPending}>
+                      Save laboratory result
+                    </Button>
+                  </form>
+                </details>
                 <section className="bloom-panel">
                   <h2>Latest results</h2>
                   {r.labs.length ? (
@@ -887,8 +910,10 @@ export default function PrecisionNutrition() {
                           unit: d.get("unit"),
                           specimen: d.get("specimen"),
                           measuredAt: date(d, "measuredAt"),
-                          laboratory: d.get("laboratory"),
-                          method: d.get("method"),
+                          laboratory: String(
+                            d.get("laboratory") || "Not supplied",
+                          ),
+                          method: String(d.get("method") || "Not supplied"),
                         },
                       });
                     } catch (err) {
@@ -1042,7 +1067,7 @@ export default function PrecisionNutrition() {
                     r.foods.map((f, i) => (
                       <details className="precision-observation" key={f.id}>
                         <summary>
-                          {i + 1}. {f.name} · rule priority {f.priority}
+                          {i + 1}. {f.name} · ranked for your saved priorities
                         </summary>
                         <p>{f.nutrients.join(" · ")}</p>
                         <ul>
@@ -1069,64 +1094,106 @@ export default function PrecisionNutrition() {
                     </p>
                   )}
                 </section>
+                <TodayPlanner />
                 <section className="bloom-panel">
                   <h2>Complete meals for your priorities</h2>
-                  {r.recommendations.map((meal, i) => (
-                    <details
-                      className="precision-observation block"
-                      key={meal.id}
-                    >
-                      <summary>
-                        {i + 1}. {meal.name} · {meal.minutes} min
-                      </summary>
-                      <p>
-                        {meal.minutes} minutes · rule priority {meal.priority}
-                      </p>
-                      <ul>
-                        {meal.reasons.map((reason, i) => (
-                          <li key={i}>{reason}</li>
-                        ))}
-                      </ul>
-                      <p>{meal.nutrientContributions.join(" · ")}</p>
-                      {meal.tolerance && <p>{meal.tolerance}</p>}
-                      <p className="panel-note">
-                        {meal.expectedBenefit} Nutrient quantities require a
-                        food-database match; these are qualitative
-                        contributions.
-                      </p>
-                      <details>
-                        <summary>Ingredients, preparation & evidence</summary>
-                        <ul>
-                          {meal.ingredients.map((i) => (
-                            <li key={i.name}>
-                              {i.grams} g {i.name}
-                            </li>
-                          ))}
-                        </ul>
-                        <ol>
-                          {meal.steps.map((s, i) => (
-                            <li key={i}>{s}</li>
-                          ))}
-                        </ol>
-                        <p>{meal.rationale}</p>
-                        {meal.reportedTaxa.length > 0 && (
-                          <p>
-                            Reported taxa overlapping this research pathway:{" "}
-                            {meal.reportedTaxa.map((t) => t.name).join(", ")}.
-                            Presence does not establish function or change the
-                            ranking.
-                          </p>
-                        )}
-                        {sources(meal.sourceIds)}
-                      </details>
-                      <Link
-                        className="text-link"
-                        href={"/log-meal?recipe=" + meal.id}
+                  <p className="panel-note">
+                    Meals are ordered by matching evidence and your saved
+                    priorities. Recent lab findings carry more weight than
+                    general goals or common genetic variants. Ranking is not a
+                    benefit percentage.
+                  </p>
+                  {r.recommendations.map((meal, i) => {
+                    const prep = recipePreparation(meal);
+                    return (
+                      <article
+                        className="precision-observation block"
+                        key={meal.id}
                       >
-                        Use this meal in my journal
-                      </Link>
-                    </details>
-                  ))}
+                        <h3>
+                          {i + 1}. {meal.name}
+                        </h3>
+                        <p>
+                          About {prep.minutes} minutes; additional chilling time
+                          where listed.
+                        </p>
+                        <details>
+                          <summary>Ingredients, recipe & evidence</summary>
+                          <h4>Shopping & ingredients</h4>
+                          <ul>
+                            {prep.shopping.map((i) => (
+                              <li key={i.name}>
+                                {i.estimated ? "Approximately " : ""}
+                                {i.grams} g {i.name}
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="panel-note">
+                            Prepared portions for nutrition:{" "}
+                            {prep.shopping
+                              .map((i) => i.nutritionBasis)
+                              .join("; ")}
+                            .
+                          </p>
+                          <ol>
+                            {prep.instructions.map((s, i) => (
+                              <li key={i}>{s}</li>
+                            ))}
+                            {meal.steps
+                              .filter(
+                                (s) =>
+                                  !/^Use safely|^Use the named|^Serve cooked|^Combine with cooked/i.test(
+                                    s,
+                                  ),
+                              )
+                              .map((s, i) => (
+                                <li key={"assembly" + i}>{s}</li>
+                              ))}
+                          </ol>
+                          <p className="panel-note">{prep.note}</p>
+                          <a
+                            className="text-link"
+                            href={prep.source}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Cooking safety guidance
+                          </a>
+                          <p>{meal.rationale}</p>
+                          {sources(meal.sourceIds)}
+                        </details>
+                        <details>
+                          <summary>Why this meal suits you</summary>
+                          <ul>
+                            {meal.reasons.map((reason, i) => (
+                              <li key={i}>{reason}</li>
+                            ))}
+                          </ul>
+                          <p>{meal.nutrientContributions.join(" · ")}</p>
+                          {meal.tolerance && <p>{meal.tolerance}</p>}
+                          <p className="panel-note">
+                            {meal.expectedBenefit} These nutrient contributions
+                            are qualitative; use the rest-of-day planner for
+                            estimated quantities.
+                          </p>
+                          {meal.reportedTaxa.length > 0 && (
+                            <p>
+                              Reported taxa overlapping this research pathway:{" "}
+                              {meal.reportedTaxa.map((t) => t.name).join(", ")}.
+                              Presence alone does not establish function or
+                              improve ranking.
+                            </p>
+                          )}
+                        </details>
+                        <Link
+                          className="text-link"
+                          href={"/log-meal?recipe=" + meal.id}
+                        >
+                          Use this meal in my journal
+                        </Link>
+                      </article>
+                    );
+                  })}
                 </section>
                 <section className="bloom-panel">
                   <h2>Supplement assessments</h2>

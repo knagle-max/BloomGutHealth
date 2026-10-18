@@ -1,3 +1,5 @@
+import { recipePreparation } from "@shared/recipe-preparation";
+import TodayPlanner from "@/components/TodayPlanner";
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -54,6 +56,9 @@ export function DietaryPreferenceEditor() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/preferences"] });
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+      queryClient.invalidateQueries({
+        queryKey: ["/api/precision/today-plan"],
+      });
       queryClient.invalidateQueries({ queryKey: ["/api/meal-planner"] });
       queryClient.invalidateQueries({
         queryKey: ["/api/precision/planning-recipes"],
@@ -156,8 +161,9 @@ export function DietaryPreferenceEditor() {
         />
       </label>
       <p className="panel-note">
-        Custom goals are saved. A goal without a reviewed evidence mapping does
-        not create a new biological prediction or treatment rule.
+        Liver health, muscle-building and healthy-aging goals now inform
+        food-pattern matching. Unknown goals stay saved without a treatment
+        claim.
       </p>
       <fieldset>
         <legend>Goals</legend>
@@ -232,6 +238,12 @@ export function DietaryPreferenceEditor() {
       {save.isSuccess && (
         <p role="status">Preferences saved to your account.</p>
       )}
+      <p className="panel-note">
+        Diet, exclusions, dislikes, cooking time and sensitive-gut choices
+        filter recipes. Microbiome and supported health goals influence ranking.
+        Cuisine notes guide optional AI recipe suggestions after consent; local
+        matching does not interpret arbitrary cuisine text.
+      </p>
       {save.isError && <p role="alert">{save.error.message}</p>}
     </form>
   );
@@ -300,6 +312,7 @@ export default function MealPlanner() {
         {editingPreferences ? "Close preferences" : "Edit saved preferences"}
       </Button>
       {editingPreferences && <DietaryPreferenceEditor />}
+      <TodayPlanner />
       <WeeklyPlanner />
       {plan.isLoading && <p role="status">Loading your meal plan…</p>}
       {plan.isError && (
@@ -347,8 +360,9 @@ export default function MealPlanner() {
               <h2>No supported recipes fit these choices yet.</h2>
               <p>
                 Adjust your preferences or select a supported food-intervention
-                goal. Athlete and longevity research alone do not have validated
-                meal prescriptions in this catalogue.
+                goal. Liver health, muscle and healthy-aging goals have
+                dietary-pattern mappings; specialized medical diets may require
+                review.
               </p>
             </section>
           )}
@@ -356,24 +370,40 @@ export default function MealPlanner() {
             <article key={r.id} className="bloom-panel space-y-3">
               <h2>{r.name}</h2>
               <p className="panel-note">
-                {r.minutes} minutes · {r.matchedGoals.join(", ")} ·{" "}
+                {recipePreparation(r).minutes} minutes ·{" "}
+                {r.matchedGoals.join(", ")} ·{" "}
                 {r.alreadyMentioned
                   ? "Familiar ingredients in journal"
                   : "An option to explore"}
               </p>
               <p>{r.rationale}</p>
-              <ul className="list-disc pl-5">
-                {r.ingredients.map((i) => (
-                  <li key={i.name}>
-                    {i.grams} g {i.name}
-                  </li>
-                ))}
-              </ul>
-              <ol className="list-decimal pl-5">
-                {r.steps.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
-              </ol>
+              <details>
+                <summary>Ingredients, recipe & evidence</summary>
+                <ul className="list-disc pl-5">
+                  {recipePreparation(r).shopping.map((i) => (
+                    <li key={i.name}>
+                      {i.estimated ? "Approximately " : ""}
+                      {i.grams} g {i.name}
+                    </li>
+                  ))}
+                </ul>
+                <ol className="list-decimal pl-5">
+                  {[...recipePreparation(r).instructions, ...r.steps].map(
+                    (s, i) => (
+                      <li key={i}>{s}</li>
+                    ),
+                  )}
+                </ol>
+                <p className="panel-note">{recipePreparation(r).note}</p>
+                <a
+                  className="text-link"
+                  href={recipePreparation(r).source}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Cooking safety
+                </a>
+              </details>
               {plan
                 .data!.pathways.filter((p) => r.pathwayIds.includes(p.id))
                 .map((p) => (

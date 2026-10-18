@@ -1,140 +1,224 @@
+import { useState } from "react";
 import type { StructuredReport } from "@shared/structured-report";
+import {
+  explainOrganism,
+  explainScore,
+  reportedStatusMeaning,
+  type ReportExplanation,
+} from "@shared/report-explanations";
+function LearnMore({ help }: { help: ReportExplanation }) {
+  return (
+    <details className="report-learn">
+      <summary>Why it matters & what to do</summary>
+      <p>{help.why}</p>
+      <h4>Your practical takeaway</h4>
+      <p>{help.takeaway}</p>
+      <div className="flex flex-wrap gap-3">
+        {help.sources.map((s) => (
+          <a
+            className="text-link"
+            href={s.url}
+            key={s.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {s.title}
+          </a>
+        ))}
+      </div>
+    </details>
+  );
+}
 export default function ImportedReportDetails({
   report,
 }: {
   report: StructuredReport & { importInfo?: { dateSource?: string } };
 }) {
+  const [query, setQuery] = useState("");
+  const match = (name: string) =>
+    name.toLowerCase().includes(query.toLowerCase());
   return (
     <section
-      className="bloom-panel space-y-4"
+      className="bloom-panel space-y-5 report-explainer"
       aria-label="Imported report details"
     >
-      <h2>Reported scores & organisms</h2>
-      <p>
-        {report.dataOrigin ||
-          "User-supplied report; not independently verified."}
-      </p>
-      {report.testPeriod && <p>Period stated in report: {report.testPeriod}</p>}
-      {report.importInfo?.dateSource === "import-date" && (
-        <p className="panel-note">
-          No exact test date was supplied. The date shown is the import date,
-          not a claimed sample-collection date.
+      <div>
+        <p className="eyebrow">UNDERSTAND YOUR REPORT</p>
+        <h2>Reported scores & organisms</h2>
+        <p>
+          {report.dataOrigin ||
+            "User-supplied report; not independently verified."}
         </p>
-      )}
-      <p className="panel-note">
-        These are reported functional/pathway scores and organism records. A
-        score is not a metabolite concentration, a gene measurement or a
-        bacterial percentage. A larger score is not automatically better. Bloom
-        preserves the reported scale and category without inventing a health
-        ranking.
-      </p>
-      {report.scoreInterpretationWarning && (
-        <p className="panel-note">
-          Source note: {report.scoreInterpretationWarning}
+        {report.testPeriod && (
+          <p className="panel-note">
+            Period stated in report: {report.testPeriod}
+          </p>
+        )}
+      </div>
+      <div className="report-context">
+        <h3>General biology, separate from your result</h3>
+        <p>
+          The explanations below describe what an organism or process can do.
+          They do not verify the report, diagnose a condition, or measure
+          activity in your body. Species and strains can behave differently.
         </p>
-      )}
+        <p>
+          Pathway scores are provider-defined numbers, not concentrations or
+          percentages. Higher is not automatically better; the provider’s
+          scoring direction and version matter.
+        </p>
+        {report.importInfo?.dateSource === "import-date" && (
+          <p>
+            No exact test date was supplied. The report date is the import date,
+            not a verified sample-collection date.
+          </p>
+        )}
+      </div>
+      <label className="block">
+        Find an organism or score
+        <input
+          className="bloom-input w-full"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="For example: butyrate or Akkermansia"
+        />
+      </label>
       {report.scores.length > 0 && (
-        <details open>
-          <summary>Functional/pathway scores ({report.scores.length})</summary>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr>
-                  <th className="text-left p-2">Score</th>
-                  <th className="text-left p-2">Reported value</th>
-                  <th className="text-left p-2">Reported scale</th>
-                  <th className="text-left p-2">Source category</th>
-                </tr>
-              </thead>
-              <tbody>
-                {report.scores.map((s, i) => (
-                  <tr key={i}>
-                    <td className="p-2">
-                      {s.name}
-                      {s.category && (
-                        <span className="block text-xs">{s.category}</span>
-                      )}
-                      {s.notes && (
-                        <details>
-                          <summary>Source note</summary>
-                          {s.notes}
-                        </details>
-                      )}
-                    </td>
-                    <td className="p-2">
-                      {s.score ?? s.reportedValue ?? "Unavailable"}
-                    </td>
-                    <td className="p-2">{s.scale || "Not supplied"}</td>
-                    <td className="p-2">
-                      {s.reportedCategory || "Not supplied"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <section>
+          <div className="report-section-heading">
+            <h3>Functional & pathway scores</h3>
+            <span>
+              {report.scores.filter((s) => match(s.name)).length} shown of{" "}
+              {report.scores.length}
+            </span>
           </div>
-        </details>
+          <div className="report-card-grid">
+            {report.scores
+              .filter((s) => match(s.name))
+              .map((score, i) => {
+                const help = explainScore(score.name);
+                return (
+                  <article className="report-card" key={i}>
+                    <div className="report-card-top">
+                      <h4>{score.name}</h4>
+                      <span className="report-value">
+                        {score.score ?? score.reportedValue ?? "Unavailable"}
+                        <small>reported value</small>
+                      </span>
+                    </div>
+                    <p className="report-topic">{help.label}</p>
+                    <p>{help.meaning}</p>
+                    <p className="report-meta">
+                      Scale: {score.scale || "not supplied"} · Provider
+                      category: {score.reportedCategory || "not supplied"}
+                    </p>
+                    <LearnMore help={help} />
+                    <details className="report-source">
+                      <summary>Original report details</summary>
+                      <p>{score.category || "No source category supplied"}</p>
+                      <p>
+                        {score.notes || "No additional source note supplied."}
+                      </p>
+                      <p className="panel-note">
+                        Bloom does not convert this value into a good/bad grade
+                        or a measured metabolite amount.
+                      </p>
+                    </details>
+                  </article>
+                );
+              })}
+          </div>
+        </section>
       )}
       {report.organisms.length > 0 && (
-        <details open>
-          <summary>Reported organisms ({report.organisms.length})</summary>
-          <p className="panel-note">
-            Reported status does not quantify abundance. Amounts below are shown
-            exactly as reported and are not converted into bacterial
-            percentages.
-          </p>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr>
-                  <th className="text-left p-2">Organism</th>
-                  <th className="text-left p-2">Reported status</th>
-                  <th className="text-left p-2">Reported amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {report.organisms.map((o, i) => (
-                  <tr key={i}>
-                    <td className="p-2">
-                      {o.name}
-                      {o.notes && (
-                        <details>
-                          <summary>Source note</summary>
-                          {o.notes}
-                        </details>
-                      )}
-                    </td>
-                    <td className="p-2">
-                      {o.reportedStatus || "Not supplied"}
-                    </td>
-                    <td className="p-2">
-                      {o.reportedAbundance || "Unavailable"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <section>
+          <div className="report-section-heading">
+            <h3>Reported organisms</h3>
+            <span>
+              {report.organisms.filter((o) => match(o.name)).length} shown of{" "}
+              {report.organisms.length}
+            </span>
           </div>
-        </details>
+          <p className="panel-note">
+            “Often helpful” describes general research context. It does not mean
+            more is always better or that a missing organism needs
+            supplementation. Strain identifiers are preserved, but the
+            explanations apply at species/group level.
+          </p>
+          <div className="report-card-grid">
+            {report.organisms
+              .filter((o) => match(o.name))
+              .map((o, i) => {
+                const help = explainOrganism(o.name);
+                const cautious = /Can cause illness|Unconfirmed/.test(
+                  help.label,
+                );
+                return (
+                  <article className="report-card" key={i}>
+                    <h4>{o.name}</h4>
+                    <span
+                      className={
+                        "report-badge" +
+                        (cautious ? " report-badge-caution" : "")
+                      }
+                    >
+                      {help.label}
+                    </span>
+                    <p>{help.meaning}</p>
+                    <div className="report-source-facts">
+                      <p>
+                        <strong>Source status:</strong>{" "}
+                        {o.reportedStatus || "not supplied"}
+                      </p>
+                      <p>
+                        <strong>Reported amount:</strong>{" "}
+                        {o.reportedAbundance || "unavailable"}
+                      </p>
+                    </div>
+                    <LearnMore help={help} />
+                    <details className="report-source">
+                      <summary>What this record establishes</summary>
+                      <p>
+                        {reportedStatusMeaning(
+                          o.reportedStatus,
+                          !!o.reportedAbundance,
+                        )}
+                      </p>
+                      <p>{o.notes || "No additional source note supplied."}</p>
+                    </details>
+                  </article>
+                );
+              })}
+          </div>
+        </section>
       )}
-      <div>
+      {query &&
+        !report.scores.some((s) => match(s.name)) &&
+        !report.organisms.some((o) => match(o.name)) && (
+          <p>No matching organism or score in this report.</p>
+        )}
+      <details className="report-context">
+        <summary>Source warnings & missing measurements</summary>
+        {report.scoreInterpretationWarning && (
+          <p>{report.scoreInterpretationWarning}</p>
+        )}
         <h3>Measurements missing for Bloom analysis</h3>
         <ul className="list-disc pl-5">
-          {report.missingData.map((item, i) => (
-            <li key={i}>{item}</li>
+          {report.missingData.map((s, i) => (
+            <li key={i}>{s}</li>
           ))}
         </ul>
-      </div>
-      {report.sourceMissingData.length > 0 && (
-        <details>
-          <summary>Missing data listed by the source</summary>
-          <ul className="list-disc pl-5">
-            {report.sourceMissingData.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </details>
-      )}
+        {report.sourceMissingData.length > 0 && (
+          <>
+            <h4>Missing data listed by the source</h4>
+            <ul className="list-disc pl-5">
+              {report.sourceMissingData.map((s, i) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ul>
+          </>
+        )}
+      </details>
     </section>
   );
 }

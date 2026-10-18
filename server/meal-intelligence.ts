@@ -1,3 +1,4 @@
+import { lookupProductNutrition, type ProductStore } from "./products";
 import {
   splitMealDescription,
   estimateCatalogueIngredient,
@@ -22,6 +23,7 @@ import {
 } from "../shared/meal-intelligence";
 
 export function resolveLoggedIngredient(input: Ingredient): Ingredient {
+  if (input.product) return input;
   if (lookupSnapshotNutrition([input]).foodMatches.length) return input;
   const broad = estimateCatalogueIngredient(input);
   if (lookupCatalogueNutrition([broad]).foodMatches.length) return broad;
@@ -71,8 +73,9 @@ function mergeNutrition(
   };
 }
 export function lookupLocalNutrition(ingredients: Ingredient[]) {
-  const small = lookupSnapshotNutrition(ingredients);
-  const unmatched = ingredients.filter(
+  const local = ingredients.filter((i) => !i.product);
+  const small = lookupSnapshotNutrition(local);
+  const unmatched = local.filter(
     (i) =>
       !small.foodMatches.some(
         (m) => m.ingredient === i.name && m.grams === i.grams,
@@ -80,14 +83,17 @@ export function lookupLocalNutrition(ingredients: Ingredient[]) {
   );
   return mergeNutrition(
     small,
-    ingredients.length,
+    local.length,
     lookupCatalogueNutrition(unmatched),
     unmatched.length,
     ingredients.length,
   );
 }
 const parseSchema = z.object({
-  ingredients: z.array(ingredientSchema).min(1).max(20),
+  ingredients: z
+    .array(ingredientSchema.omit({ product: true }))
+    .min(1)
+    .max(20),
   clarificationQuestions: z.array(z.string().max(300)).max(8),
 });
 export async function parseMeal(
@@ -247,6 +253,11 @@ export async function analyzeMeal(
   text: string,
   aiConsent = false,
   reviewedIngredients?: Ingredient[],
+  productContext?: {
+    userId: string;
+    store: ProductStore;
+    products?: Ingredient[];
+  },
 ): Promise<{ intelligence: MealIntelligence; nutritionalData: any[] }> {
   const parsed = reviewedIngredients
     ? {
@@ -256,13 +267,37 @@ export async function analyzeMeal(
         clarificationQuestions: [] as string[],
         parser: "rules" as const,
       }
-    : await parseMeal(text, aiConsent);
+    : text.trim()
+      ? await parseMeal(text, aiConsent)
+      : {
+          ingredients: [] as Ingredient[],
+          clarificationQuestions: [] as string[],
+          parser: "rules" as const,
+        };
+  if (productContext?.products?.length)
+    parsed.ingredients.push(...productContext.products);
   for (const i of parsed.ingredients) {
     if (/Estimated|substitute/i.test(i.assumption))
       parsed.clarificationQuestions.push(`Review ${i.name}: ${i.assumption}`);
   }
   const explanation = explainFoods(text);
-  const snapshot = lookupLocalNutrition(parsed.ingredients);
+  let productDetails: MealIntelligence["productDetails"];
+  let snapshot = lookupLocalNutrition(parsed.ingredients);
+  if (parsed.ingredients.some((i) => i.product) && productContext) {
+    const products = await lookupProductNutrition(
+      parsed.ingredients,
+      productContext.store,
+      productContext.userId,
+    );
+    productDetails = products.productDetails;
+    snapshot = mergeNutrition(
+      snapshot,
+      parsed.ingredients.length,
+      products,
+      parsed.ingredients.length,
+      parsed.ingredients.length,
+    );
+  }
   const useSnapshot =
     snapshot.foodMatches.length === parsed.ingredients.length ||
     !process.env.USDA_FDC_API_KEY;
@@ -270,6 +305,7 @@ export async function analyzeMeal(
   if (!useSnapshot) {
     const unmatched = parsed.ingredients.filter(
       (i) =>
+        !i.product &&
         !snapshot.foodMatches.some(
           (m) => m.ingredient === i.name && m.grams === i.grams,
         ),
@@ -286,6 +322,7 @@ export async function analyzeMeal(
 
   const intelligence: MealIntelligence = {
     portionModelVersion: "2026-10-18.2",
+    productDetails,
     ...parsed,
     ...database,
     pathways: explanation.pathways,
@@ -293,7 +330,7 @@ export async function analyzeMeal(
     status: database.foodMatches.length ? "database-estimate" : "unavailable",
     provider: database.foodMatches.length
       ? useSnapshot
-        ? "USDA FoodData Central: FNDDS 2021–2023 and SR Legacy (review estimated foods and portions)"
+        ? "Sourced food composition: USDA and selected food/supplement labels (review matches and portions)"
         : "USDA FoodData Central (automatic matches; review required)"
       : "Not configured or unavailable",
     warnings: [...explanation.warnings, ...database.warnings],
@@ -302,26 +339,23 @@ export async function analyzeMeal(
   // Existing journal API stays compatible. USDA incomplete totals are not emitted as complete values.
   if (
     database.foodMatches.length === parsed.ingredients.length &&
-    database.nutrients
-      .filter((n) =>
-        [
-          "calories",
-          "protein_g",
-          "carbohydrates_total_g",
-          "fat_total_g",
-        ].includes(n.key),
-      )
-      .every((n) => n.coverage === 1)
+    database.nutrients.some((n) => n.coverage === 1 && n.amount !== null)
   ) {
     const row: any = {
       name: text,
-      serving_size_g: database.foodMatches.reduce((a, i) => a + i.grams, 0),
+      serving_size_g: database.foodMatches.reduce(
+        (a, i) => a + (i.grams ?? 0),
+        0,
+      ),
     };
     for (const n of database.nutrients)
       if (n.amount !== null && n.coverage === 1) row[n.key] = n.amount;
     return { intelligence, nutritionalData: [row] };
   }
-  if (process.env.API_NINJAS_KEY) {
+  if (
+    process.env.API_NINJAS_KEY &&
+    !parsed.ingredients.some((i) => i.product)
+  ) {
     try {
       const data = await requestJson(
         `https://api.api-ninjas.com/v1/nutrition?query=${encodeURIComponent(text)}`,

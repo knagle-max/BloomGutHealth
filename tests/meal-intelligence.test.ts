@@ -45,12 +45,17 @@ test("saved food restrictions, dislikes, vegan pattern and time apply before rec
     [{ food: "Beans" }],
   );
 });
-test("cohort research cannot masquerade as a proven meal intervention", () => {
+test("athlete mechanisms stay unmapped while longevity uses a general healthy-aging pattern", () => {
   assert.equal(
-    recommendMeals(preferenceSchema.parse({ goals: ["athletic", "longevity"] }))
-      .length,
+    recommendMeals(preferenceSchema.parse({ goals: ["athletic"] })).length,
     0,
   );
+  const meals = recommendMeals(
+    preferenceSchema.parse({ goals: ["longevity"] }),
+  );
+  assert.ok(meals.length);
+  assert.ok(meals.every((m) => m.matchedGoals.includes("longevity")));
+  assert.ok(meals.every((m) => !/extend.*life|reverse.*ag/i.test(m.rationale)));
 });
 test("each complete recipe resolves its biological pathways", () => {
   assert.equal(recipes.length, 15);

@@ -98,7 +98,10 @@ test("vegan, fish allergy, free text category dislike and gluten exclusion apply
   );
 });
 test("infeasible vitamin targets do not become a feasible or supplemented vegan plan", () => {
-  const vegan = preferenceSchema.parse({ dietaryPattern: "vegan" });
+  const vegan = preferenceSchema.parse({
+    dietaryPattern: "vegan",
+    cookingMinutes: 60,
+  });
   const p = buildWeeklyPlan(
     input({ nutrientTargets: { vitamin_b12_ug: { min: 2.4, max: null } } }),
     vegan,
@@ -195,7 +198,10 @@ test("evidence graph resolves all nodes and sources without joining genotype to 
   assert.equal(variantCatalog.length, 7);
 });
 test("AI recipe proposals cannot smuggle excluded ingredients, new food IDs, duplicates or incomplete mains", () => {
-  const vegan = preferenceSchema.parse({ dietaryPattern: "vegan" });
+  const vegan = preferenceSchema.parse({
+    dietaryPattern: "vegan",
+    cookingMinutes: 60,
+  });
   const safe = {
     id: "example",
     mealType: "main" as const,

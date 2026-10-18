@@ -1,3 +1,4 @@
+import ProductPicker from "./ProductPicker";
 import { useState } from "react";
 import type { Ingredient } from "@shared/meal-intelligence";
 import type { MealIntelligence } from "@shared/meal-intelligence";
@@ -42,6 +43,7 @@ export default function MealAnalysis({
                   <input
                     className="bloom-input w-full"
                     aria-label={`Food ${index + 1}`}
+                    disabled={!!item.product}
                     maxLength={120}
                     value={item.name}
                     onChange={(e) =>
@@ -60,34 +62,90 @@ export default function MealAnalysis({
                     }
                   />
                 </label>
-                <label className="block">
-                  Amount eaten (g)
-                  <input
-                    className="bloom-input w-full"
-                    type="number"
-                    min="0.1"
-                    max="3000"
-                    step="any"
-                    aria-label={`Grams ${index + 1}`}
-                    value={item.grams ?? ""}
-                    onChange={(e) =>
+                {item.product ? (
+                  <label className="block">
+                    Label servings eaten
+                    <input
+                      className="bloom-input w-full"
+                      type="number"
+                      min="0.01"
+                      max="100"
+                      step="any"
+                      value={item.product.servings}
+                      onChange={(e) =>
+                        setEdits(
+                          ingredients.map((v, i) =>
+                            i === index
+                              ? {
+                                  ...v,
+                                  product: {
+                                    ...v.product!,
+                                    servings: Number(e.target.value),
+                                  },
+                                }
+                              : v,
+                          ),
+                        )
+                      }
+                    />
+                  </label>
+                ) : (
+                  <label className="block">
+                    Amount eaten (g)
+                    <input
+                      className="bloom-input w-full"
+                      type="number"
+                      min="0.1"
+                      max="3000"
+                      step="any"
+                      aria-label={`Grams ${index + 1}`}
+                      value={item.grams ?? ""}
+                      onChange={(e) =>
+                        setEdits(
+                          ingredients.map((v, i) =>
+                            i === index
+                              ? {
+                                  ...v,
+                                  grams: e.target.value
+                                    ? Number(e.target.value)
+                                    : null,
+                                  assumption:
+                                    "User-edited portion; generic composition record may differ from product",
+                                }
+                              : v,
+                          ),
+                        )
+                      }
+                    />
+                  </label>
+                )}
+                <details
+                  open={
+                    !analysis.foodMatches.some(
+                      (m) => m.ingredient === item.name,
+                    )
+                  }
+                >
+                  <summary>
+                    {item.product
+                      ? "Change selected product"
+                      : "Find the exact product or enter its label"}
+                  </summary>
+                  <ProductPicker
+                    initialQuery={item.name}
+                    autoSearch={
+                      index === 0 &&
+                      !analysis.foodMatches.some(
+                        (m) => m.ingredient === item.name,
+                      )
+                    }
+                    onPick={(product) =>
                       setEdits(
-                        ingredients.map((v, i) =>
-                          i === index
-                            ? {
-                                ...v,
-                                grams: e.target.value
-                                  ? Number(e.target.value)
-                                  : null,
-                                assumption:
-                                  "User-edited portion; generic composition record may differ from product",
-                              }
-                            : v,
-                        ),
+                        ingredients.map((v, i) => (i === index ? product : v)),
                       )
                     }
                   />
-                </label>
+                </details>
                 <button
                   type="button"
                   className="text-link"
@@ -176,20 +234,48 @@ export default function MealAnalysis({
           </table>
         </div>
       </details>
+      {analysis.productDetails?.some((p) => p.otherNutrients.length > 0) && (
+        <details>
+          <summary>Other supplement-label ingredients</summary>
+          {analysis.productDetails.map((p, i) => (
+            <div key={i}>
+              <h3>
+                {p.name} · {p.serving}
+              </h3>
+              {p.otherNutrients.map((n, j) => (
+                <p key={j}>
+                  {n.name}: {Number(n.amount.toFixed(3))} {n.unit}
+                </p>
+              ))}
+            </div>
+          ))}
+          <p className="panel-note">
+            Label ingredients are recorded separately. They are not added again
+            to macro totals or treated as a recommended dose.
+          </p>
+        </details>
+      )}
       {analysis.foodMatches.length > 0 && (
         <details>
           <summary>Review automatic database matches</summary>
           {analysis.foodMatches.map((m, i) => (
             <p key={i}>
-              {m.ingredient} ({m.grams} g) →{" "}
-              <a
-                className="underline"
-                href={m.url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {m.description}
-              </a>
+              {m.ingredient} (
+              {m.serving ||
+                (m.grams === null ? "mass not supplied" : `${m.grams} g`)}
+              ) →{" "}
+              {m.url ? (
+                <a
+                  className="underline"
+                  href={m.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {m.description}
+                </a>
+              ) : (
+                <span>{m.description}</span>
+              )}
               . Automatic match; check preparation and product.
             </p>
           ))}

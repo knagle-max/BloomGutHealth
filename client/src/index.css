@@ -1589,3 +1589,25 @@ button:focus-visible {
 .precision-page h2 { margin-bottom:12px; }
 .precision-page h3 { font-weight:600; }
 @media(max-width:600px) { .precision-grid { grid-template-columns:minmax(0,1fr); } .precision-tabs button { flex:1 1 140px; } }
+
+/* Report education and food-journal exploration */
+.report-explainer,.diet-exploration{overflow-wrap:anywhere;min-width:0;}
+.report-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:14px;}
+.report-card{min-width:0;border:1px solid hsl(var(--border));border-radius:16px;padding:20px;background:hsl(var(--background));display:flex;flex-direction:column;gap:12px;}
+.report-card h4,.report-card h3{font-weight:600;line-height:1.35;}
+.report-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.report-card-top h4{min-width:0;}
+.report-value{font-size:1.65rem;line-height:1.1;font-weight:600;text-align:right;flex-shrink:0;color:hsl(var(--primary));}
+.report-value small{display:block;font-size:.65rem;line-height:1.5;font-weight:400;color:hsl(var(--muted-foreground));max-width:70px;}
+.report-topic,.report-meta{font-size:.8rem;color:hsl(var(--muted-foreground));}
+.report-section-heading{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;justify-content:space-between;margin-top:20px;}
+.report-section-heading h3{font-size:1.2rem;font-weight:600;}.report-section-heading span{font-size:.8rem;color:hsl(var(--muted-foreground));}
+.report-badge{align-self:flex-start;border-radius:999px;padding:5px 10px;font-size:.75rem;background:hsl(var(--muted));color:hsl(var(--foreground));}
+.report-badge-caution{background:#fff2d9;color:#71501b;}.dark .report-badge-caution{background:#49391e;color:#f5d496;}
+.report-context{border:1px solid hsl(var(--border));border-radius:14px;padding:16px;background:hsl(var(--muted)/.4);display:block;}
+.report-context p+p{margin-top:10px;}.report-source-facts{padding:12px;border-radius:10px;background:hsl(var(--muted)/.5);font-size:.85rem;}
+.report-learn,.report-source{font-size:.9rem;}.report-learn summary,.report-source summary{cursor:pointer;font-weight:500;line-height:1.5;padding:6px 0;}.report-learn p,.report-source p{margin:10px 0;}
+.diet-known-total{font-size:2rem;font-weight:600;line-height:1.2;color:hsl(var(--primary));}.diet-known-total span{font-size:1rem;font-weight:400;}
+@media(max-width:650px){.report-card-grid{grid-template-columns:minmax(0,1fr);}.report-card{padding:16px;}.report-card-top{gap:10px;}}
+
+.report-value{max-width:96px;overflow-wrap:anywhere;}

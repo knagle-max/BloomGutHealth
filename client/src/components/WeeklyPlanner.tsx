@@ -1,3 +1,4 @@
+import { recipePreparation } from "@shared/recipe-preparation";
 import MetaboliteResearch from "./MetaboliteResearch";
 import { useState } from "react";
 import { Link } from "wouter";
@@ -479,20 +480,40 @@ export default function WeeklyPlanner() {
                     {rounded(m.nutrients.protein_g)} g protein · {m.portion} ×
                     base portion
                   </p>
-                  <ul className="list-disc pl-5">
-                    {m.recipe.ingredients.map((i) => (
-                      <li key={i.name}>
-                        {Math.round(i.grams * m.portion)} g {i.name}
-                      </li>
-                    ))}
-                  </ul>
-                  <ol className="list-decimal pl-5">
-                    {m.recipe.steps.map((s) => (
-                      <li key={s}>{s}</li>
-                    ))}
-                  </ol>
                   <details>
-                    <summary>Selection rationale & nutrient details</summary>
+                    <summary>Ingredients, recipe & evidence</summary>
+                    <ul className="list-disc pl-5">
+                      {recipePreparation(m.recipe).shopping.map((i) => (
+                        <li key={i.name}>
+                          {i.estimated ? "Approximately " : ""}
+                          {Math.round(i.grams * m.portion)} g {i.name}
+                        </li>
+                      ))}
+                    </ul>
+                    <ol className="list-decimal pl-5">
+                      {[
+                        ...recipePreparation(m.recipe).instructions,
+                        ...m.recipe.steps,
+                      ].map((s, i) => (
+                        <li key={i}>{s}</li>
+                      ))}
+                    </ol>
+                    <p className="panel-note">
+                      {recipePreparation(m.recipe).note}
+                    </p>
+                    <a
+                      className="text-link"
+                      href={recipePreparation(m.recipe).source}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Cooking safety
+                    </a>
+                  </details>
+                  <details>
+                    <summary>
+                      Why this meal suits you & nutrient details
+                    </summary>
                     {m.reasons.map((r) => (
                       <p key={r}>{r}</p>
                     ))}

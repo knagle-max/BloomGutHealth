@@ -1,3 +1,6 @@
+import { productRefSchema } from "./products";
+import { goalMealFit } from "./goal-guidance";
+import { recipePreparation } from "./recipe-preparation";
 import { z } from "zod";
 import { pathways, evidenceSources, type GoalId } from "./science-coach";
 
@@ -51,6 +54,7 @@ export const ingredientSchema = z.object({
   grams: z.number().positive().max(3000).nullable(),
   preparation: z.string().max(120),
   assumption: z.string().max(300),
+  product: productRefSchema.optional(),
 });
 export type Ingredient = z.infer<typeof ingredientSchema>;
 export interface Nutrient {
@@ -62,8 +66,9 @@ export interface Nutrient {
 }
 export interface FoodMatch {
   ingredient: string;
-  grams: number;
-  fdcId: number;
+  grams: number | null;
+  serving?: string;
+  fdcId: number | null;
   description: string;
   url: string;
   needsConfirmation: boolean;
@@ -80,6 +85,12 @@ export interface MealIntelligence {
   foodMatches: FoodMatch[];
   pathways: typeof pathways;
   sources: typeof evidenceSources;
+  productDetails?: Array<{
+    name: string;
+    serving: string;
+    source: string;
+    otherNutrients: { name: string; amount: number; unit: string }[];
+  }>;
   provider: string;
   analyzedAt: string;
 }
@@ -535,7 +546,8 @@ export function preferenceConflicts(
       if (words.every((w) => name.includes(w))) conflicts.add(dislike);
     }
   }
-  if (recipe.minutes > prefs.cookingMinutes) conflicts.add("cooking time");
+  if (recipePreparation(recipe).minutes > prefs.cookingMinutes)
+    conflicts.add("cooking time");
   return Array.from(conflicts);
 }
 export function recommendMeals(
@@ -545,12 +557,21 @@ export function recommendMeals(
   const eligible = recipes.filter(
     (r) =>
       !preferenceConflicts(r, prefs).length &&
-      r.goals.some((g) => prefs.goals.includes(g)),
+      (r.goals.some((g) => prefs.goals.includes(g)) ||
+        goalMealFit(prefs.goals, r.ingredients.map((i) => i.name).join(" "))
+          .length > 0),
   );
   return eligible
     .map((recipe) => ({
       ...recipe,
-      matchedGoals: recipe.goals.filter((g) => prefs.goals.includes(g)),
+      matchedGoals: [
+        ...recipe.goals.filter((g) => prefs.goals.includes(g)),
+        ...prefs.goals.filter(
+          (g) =>
+            goalMealFit([g], recipe.ingredients.map((i) => i.name).join(" "))
+              .length > 0,
+        ),
+      ],
       alreadyMentioned: recentMeals.some((m) =>
         recipe.ingredients
           .filter((i) => /potato|yogurt|kefir|onion/i.test(i.name))

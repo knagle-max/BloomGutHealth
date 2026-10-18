@@ -1,3 +1,4 @@
+import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
 import { explainGenotypes, genotypeAnnotations } from "./genotype-explanations";
 import { z } from "zod";
@@ -850,18 +851,8 @@ export function buildPrecisionReport(
         );
       if (recipe.goals.some((g) => prefs.goals.includes(g)))
         add(10, "Matches your saved microbiome food goals.", [], []);
-      if (
-        context.goals.some((g) =>
-          /cholesterol|apob|lipid|heart|glucose|glyc|metabolic/i.test(g),
-        ) &&
-        /oat|lentil|chickpea|broccoli|walnut/i.test(text)
-      )
-        add(
-          8,
-          "Matches a supported cardiometabolic goal.",
-          [],
-          ["heart-guidance"],
-        );
+      for (const fit of goalMealFit([...context.goals, ...prefs.goals], text))
+        add(8, fit.reason, [], fit.sourceIds);
       const microbiomePaths = pathways.filter((p) =>
         recipe.pathwayIds.includes(p.id),
       );
@@ -967,15 +958,13 @@ export function buildPrecisionReport(
           "Substrate matches a saved microbiome goal; personal metabolite output is unknown.",
         );
       }
-      if (
-        food.cardio &&
-        context.goals.some((g) =>
-          /cholesterol|apob|lipid|heart|glucose|glyc|metabolic/i.test(g),
-        )
-      ) {
+      for (const fit of goalMealFit(
+        [...context.goals, ...prefs.goals],
+        food.name,
+      )) {
         priority += 8;
-        reasons.push("Matches a cardiometabolic goal.");
-        sourceIds.push("heart-guidance");
+        reasons.push(fit.reason.replace("meal", "food choice"));
+        sourceIds.push(...fit.sourceIds);
       }
       sourceIds.push(...explanation.sources.map((s) => s.id));
       return {
@@ -1181,17 +1170,20 @@ export function buildPrecisionReport(
             `${l.marker}: ${l.flag}; a laboratory reference interval is not a personal treatment target.`,
         ),
     ],
-    goals: context.goals.map((goal) => ({
-      goal,
-      mapping: /cholesterol|apob|lipid|heart|glucose|glyc|metabolic/i.test(goal)
-        ? "cardiometabolic dietary-pattern rules"
-        : "recorded goal; no dedicated validated rule yet",
-    })),
+    goals: Array.from(
+      new Set([
+        ...context.goals,
+        ...prefs.goals.filter(
+          (g) => !["butyrate", "diversity", "athletic"].includes(g),
+        ),
+      ]),
+    ).map(goalGuidance),
     trends,
     checkins,
     plans: records.filter((r) => r.kind === "plan"),
     sources: [
       ...precisionSources,
+      ...goalSources,
       ...evidenceSources.map((s) => ({
         id: s.id,
         title: s.title,

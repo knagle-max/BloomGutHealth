@@ -322,3 +322,19 @@ export const precisionRecords = pgTable(
     ),
   ],
 );
+
+// Personal product labels are private and encrypted, separate from public reference data.
+export const nutritionProducts = pgTable(
+  "nutrition_products",
+  {
+    id: varchar("id")
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    userId: varchar("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    encryptedPayload: jsonb("encrypted_payload").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [index("nutrition_products_user_idx").on(table.userId)],
+);

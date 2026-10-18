@@ -173,7 +173,11 @@ export default function Microbiome() {
           ))}
         </section>
       )}
-      {tab === "results" && results.data?.sample?.structuredData?.schemaVersion === "bloom-report-v2" && <ImportedReportDetails report={results.data.sample.structuredData} />}
+      {tab === "results" &&
+        results.data?.sample?.structuredData?.schemaVersion ===
+          "bloom-report-v2" && (
+          <ImportedReportDetails report={results.data.sample.structuredData} />
+        )}
       {tab === "bacteria" && (
         <section className="bloom-panel">
           <h2>Bacterial composition & change</h2>
@@ -281,42 +285,96 @@ export default function Microbiome() {
         </section>
       )}
       {tab === "diet" && (
-        <section className="bloom-panel">
-          <h2>Diet-based exploration</h2>
-          <p className="panel-note">
-            The original diet model is retained as an experimental view. Its
-            inferred percentages are not measured abundance or validated
-            predictions. Use the evidence coach and meal planner for sourced
-            actions.
-          </p>
-          {prediction.isLoading ? (
-            <p>Loading dietary model…</p>
-          ) : prediction.isError ? (
-            <p role="alert">
-              Diet model unavailable.{" "}
-              <Button onClick={() => prediction.refetch()}>Retry</Button>
+        <section className="bloom-panel space-y-5 diet-exploration">
+          <div>
+            <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
+            <h2>Food patterns & next steps</h2>
+            <p>
+              Explore what your logged meals contribute and choose a practical
+              next step. Food records do not identify which bacteria live in
+              your gut.
             </p>
+          </div>
+          {prediction.isLoading ? (
+            <p role="status">Checking your recorded meals…</p>
+          ) : prediction.isError ? (
+            <div role="alert">
+              <p>Food patterns could not load.</p>
+              <Button onClick={() => prediction.refetch()}>Retry</Button>
+            </div>
           ) : (
             <>
-              {prediction.data?.message && <p>{prediction.data.message}</p>}
-              {prediction.data?.predictedBacteria?.map((b: any, i: number) => (
-                <p key={i}>
-                  {b.name || b.bacteria || b.bacterialName}:{" "}
-                  {b.likelihood ?? "No calibrated likelihood"} (experimental
-                  rule label) — {b.dietaryDriver}. {b.description}
-                </p>
-              ))}
-              {prediction.data?.insights?.map((i: any, index: number) => (
-                <article key={index}>
-                  <h3>{i.title}</h3>
-                  <p>{i.description}</p>
-                </article>
-              ))}
+              <div className="report-context">
+                <h3>
+                  {prediction.data?.mealsAnalyzed || 0} meals logged in the last{" "}
+                  {prediction.data?.days || 28} days
+                </h3>
+                <p>{prediction.data?.message}</p>
+              </div>
+              <div className="report-card-grid">
+                {prediction.data?.observations?.map((o: any) => (
+                  <article className="report-card" key={o.key}>
+                    <p className="eyebrow">{o.name}</p>
+                    <p className="diet-known-total">
+                      {o.knownTotal === null
+                        ? "Unknown"
+                        : Number(o.knownTotal.toFixed(1)).toLocaleString()}{" "}
+                      <span>{o.knownTotal === null ? "" : o.unit}</span>
+                    </p>
+                    <p>Known contribution across these recorded meals</p>
+                    <p className="report-meta">
+                      {o.knownMeals}/{o.totalMeals} meals have an estimate ·{" "}
+                      {o.completeMeals}/{o.totalMeals} have a complete{" "}
+                      {o.name.toLowerCase()} estimate.
+                    </p>
+                    {o.partial && (
+                      <p className="panel-note">
+                        Partial total: missing portions or nutrients are not
+                        counted as zero.
+                      </p>
+                    )}
+                  </article>
+                ))}
+              </div>
             </>
           )}
-          <Link className="text-link" href="/meal-planner">
-            Build meals for your goals
-          </Link>
+          <div className="report-card-grid">
+            <article className="report-card">
+              <h3>Make the next meal useful</h3>
+              <p>
+                Choose a meal that fits what is left of today’s nutrient
+                targets, your food preferences and your saved goals.
+              </p>
+              <Link className="text-link" href="/meal-planner">
+                Plan the rest of today →
+              </Link>
+            </article>
+            <article className="report-card">
+              <h3>Support fermentation through food</h3>
+              <p>
+                Oats, beans, lentils and vegetables provide different substrates
+                for gut microbes. Increase fiber gradually as tolerated; no
+                single food guarantees a specific organism or metabolite
+                response.
+              </p>
+              <Link className="text-link" href="/insights">
+                Explore food → microbe → molecule evidence →
+              </Link>
+            </article>
+          </div>
+          <details className="report-context">
+            <summary>What we can—and cannot—learn here</summary>
+            <p>
+              {prediction.data?.note ||
+                "Food logs do not measure bacterial abundance or metabolite production."}
+            </p>
+            <p>
+              The previous illustrative diet rules could label organisms from
+              protein or fiber averages. Those labels are no longer shown as
+              personal microbiome findings. Use an actual report for reported
+              organisms, and the meal planner for nutrient-based suggestions.
+            </p>
+          </details>
         </section>
       )}
       {tab === "cohorts" && (
@@ -373,7 +431,12 @@ export default function Microbiome() {
               ))}
             </fieldset>
             <Button
-              disabled={!currentId || !cohorts.length || analyze.isPending || !results.data?.sample?.structuredData?.bacteria_percentages}
+              disabled={
+                !currentId ||
+                !cohorts.length ||
+                analyze.isPending ||
+                !results.data?.sample?.structuredData?.bacteria_percentages
+              }
               onClick={() => analyze.mutate()}
             >
               {analyze.isPending
