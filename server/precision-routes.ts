@@ -19,6 +19,8 @@ import {
 import { evidenceNetwork } from "../shared/evidence-network";
 import { runWeeklyPlanning } from "./weekly-runner";
 import { generateRecipes } from "./recipe-generation";
+import { prepareResearch, simulateResearch } from "./metabolite-research";
+import type { WeeklyPlan } from "../shared/weekly-planner";
 
 type Store = Pick<
   IStorage,
@@ -190,6 +192,66 @@ export function registerPrecisionRoutes(
     }
   });
   const planningRequests = new Map<string, { at: number; count: number }>();
+  const researchRequests = new Map<string, number>();
+  app.post("/api/precision/metabolite-research", async (req, res) => {
+    const parsed = z
+      .object({
+        planId: z.string().min(1).max(100),
+        run: z.boolean().default(false),
+        researchConsent: z.boolean().default(false),
+      })
+      .strict()
+      .safeParse(req.body);
+    if (!parsed.success)
+      return res.status(400).json({ error: "Select a saved weekly plan." });
+    if (parsed.data.run && !parsed.data.researchConsent)
+      return res
+        .status(400)
+        .json({
+          error:
+            "Consent is required to send microbial abundances and planned food quantities to the research service.",
+        });
+    const userId = req.session.userId!;
+    if (parsed.data.run) {
+      const now = Date.now();
+      for (const [id, at] of Array.from(researchRequests))
+        if (now - at >= 60000) researchRequests.delete(id);
+      if (researchRequests.has(userId))
+        return res
+          .status(429)
+          .json({ error: "Wait a minute before another simulation." });
+      researchRequests.set(userId, now);
+    }
+    try {
+      const records = await store.getPrecisionRecords(userId);
+      const record = records.find(
+        (r) =>
+          r.id === parsed.data.planId &&
+          r.kind === "plan" &&
+          (r.payload as any)?.type === "weekly-plan",
+      );
+      if (!record)
+        return res.status(404).json({ error: "Saved weekly plan not found." });
+      const report = await reportFor(userId);
+      const prepared = prepareResearch(
+        record.payload as WeeklyPlan,
+        report.microbiome.report,
+      );
+      res.json(
+        parsed.data.run
+          ? await simulateResearch(prepared)
+          : { ...prepared, result: null },
+      );
+    } catch {
+      res
+        .status(503)
+        .json({
+          error:
+            "Research inputs or model output could not be verified. No prediction is available. Your meal plan is unchanged.",
+        });
+    }
+  });
+
   app.post("/api/precision/recipe-ideas", async (req, res) => {
     const parsed = z
       .object({
@@ -283,22 +345,18 @@ export function registerPrecisionRoutes(
         if (e instanceof Error && e.message.startsWith("A locked meal"))
           return res.status(400).json({ error: e.message });
         if (e instanceof Error && e.message === "PRECISION_INPUTS_CHANGED")
-          return res
-            .status(409)
-            .json({
-              error:
-                "Your biology or preferences changed while planning. Generate a fresh plan before saving.",
-            });
+          return res.status(409).json({
+            error:
+              "Your biology or preferences changed while planning. Generate a fresh plan before saving.",
+          });
         if (
           e instanceof Error &&
           ["PLANNING_BUSY", "PLANNING_TIMEOUT"].includes(e.message)
         )
-          return res
-            .status(503)
-            .json({
-              error:
-                "The planner is busy or took too long. Retry shortly or choose fewer days.",
-            });
+          return res.status(503).json({
+            error:
+              "The planner is busy or took too long. Retry shortly or choose fewer days.",
+          });
         unavailable(res, e);
       }
     });

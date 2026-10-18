@@ -88,3 +88,7 @@ This integration verifies a database-backed build; it does not publish a public 
 ## Weekly meal planning and evidence network
 
 `/meal-planner` now includes nutrient-constrained weekly planning, portion/meal swaps, prepared-quantity shopping lists, optional validated AI recipe proposals, and encrypted saved plans. See [WEEKLY_PLANNING.md](WEEKLY_PLANNING.md) for the actual scope, data provenance and remaining scientific work. Existing features remain available.
+
+### Metabolite research foundation
+
+Meal plans now include an experimental SCFA scenario/readiness panel and a strict external simulation adapter. No numerical model is bundled or connected. See [RESEARCH_MODEL.md](RESEARCH_MODEL.md) for the service contract, scientific prerequisites and AI activation steps.
