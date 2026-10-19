@@ -1,3 +1,4 @@
+import { displayToKg, kgToDisplay, quantityFromCanonical, quantityToCanonical } from "@shared/display-units";
 import LabUnitReview from "@/components/LabUnitReview";
 import { useExperience } from "@/lib/experience";
 import TodayPlanner from "@/components/TodayPlanner";
@@ -177,7 +178,7 @@ function ContextEditor({
   );
 }
 export default function PrecisionNutrition() {
-  const {mode}=useExperience();
+  const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
   const [tab, setTab] = useState("overview"),
     [sampleId, setSampleId] = useState("");
   const [status, setStatus] = useState(""),
@@ -1267,6 +1268,30 @@ export default function PrecisionNutrition() {
             )}
             {tab === "progress" && (
               <>
+                <section className="bloom-panel space-y-3">
+                  <h2>Body measurement units</h2>
+                  <p className="panel-note">These preferences are shared with Profile, Athlete and the separate Progress dashboard. Existing readings retain their original stored units.</p>
+                  <div className="precision-grid">
+                    <label>Body weight unit
+                      <select aria-label="Biology progress weight unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.bodyWeight} onChange={e=>patch({displayUnits:{...settings.displayUnits,bodyWeight:e.target.value as "kg"|"lb"}})}>
+                        <option value="kg">kg</option><option value="lb">lb</option>
+                      </select>
+                    </label>
+                    <label>Waist/circumference unit
+                      <select aria-label="Biology progress waist unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.circumference} onChange={e=>patch({displayUnits:{...settings.displayUnits,circumference:e.target.value as "cm"|"in"}})}>
+                        <option value="cm">cm</option><option value="in">inches</option>
+                      </select>
+                    </label>
+                    <label>Height unit
+                      <select aria-label="Biology progress height unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.height} onChange={e=>patch({displayUnits:{...settings.displayUnits,height:e.target.value as "cm"|"m"|"ft-in"}})}>
+                        <option value="cm">cm</option><option value="m">m</option><option value="ft-in">feet + inches</option>
+                      </select>
+                    </label>
+                  </div>
+                  {unitsSaving&&<p role="status">Saving unit preferences…</p>}
+                  {unitsError&&<p role="alert">{unitsError}</p>}
+                  <Link href="/profile" className="text-link">Review height and current profile weight</Link>
+                </section>
                 <form
                   className="bloom-panel space-y-4"
                   onSubmit={(e) => {
@@ -1277,9 +1302,9 @@ export default function PrecisionNutrition() {
                         kind: "checkin",
                         payload: {
                           measuredAt: date(d, "measuredAt"),
-                          weightKg: number(d, "weightKg"),
+                          weightKg: number(d, "weightKg")===null?null:displayToKg(Number(d.get("weightKg")),settings.displayUnits.bodyWeight),
                           bodyFatPercent: number(d, "bodyFatPercent"),
-                          waistCm: number(d, "waistCm"),
+                          waistCm: number(d, "waistCm")===null?null:quantityToCanonical("circumference",Number(d.get("waistCm")),settings.displayUnits.circumference),
                           bloating: number(d, "bloating"),
                           energy: number(d, "energy"),
                           adherencePercent: number(d, "adherencePercent"),
@@ -1316,9 +1341,9 @@ export default function PrecisionNutrition() {
                       />
                     </label>
                     {[
-                      ["weightKg", "Weight (kg)", 500],
+                      ["weightKg", `Weight (${settings.displayUnits.bodyWeight})`, settings.displayUnits.bodyWeight==="lb"?1102:500],
                       ["bodyFatPercent", "Body fat (%)", 75],
-                      ["waistCm", "Waist (cm)", 300],
+                      ["waistCm", `Waist (${settings.displayUnits.circumference})`, settings.displayUnits.circumference==="in"?118.11:300],
                       ["bloating", "Bloating (0–10)", 10],
                       ["energy", "Energy (0–10)", 10],
                       ["adherencePercent", "Self-reported adherence (%)", 100],
@@ -1422,9 +1447,9 @@ export default function PrecisionNutrition() {
                         <h3>{new Date(c.measuredAt).toLocaleDateString()}</h3>
                         <p>
                           {[
-                            ["Weight", c.weightKg, "kg"],
+                            ["Weight", c.weightKg===null?null:Number(kgToDisplay(c.weightKg,settings.displayUnits.bodyWeight).toFixed(2)), settings.displayUnits.bodyWeight],
                             ["Body fat", c.bodyFatPercent, "%"],
-                            ["Waist", c.waistCm, "cm"],
+                            ["Waist", c.waistCm===null?null:Number(quantityFromCanonical("circumference",c.waistCm,settings.displayUnits.circumference).toFixed(2)), settings.displayUnits.circumference],
                             ["Bloating", c.bloating, "/10"],
                             ["Energy", c.energy, "/10"],
                             ["Adherence", c.adherencePercent, "%"],
