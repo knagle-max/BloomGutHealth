@@ -63,6 +63,7 @@ export default function Profile({
   const weightValue = form.weightKg ? Number(form.weightKg) : null;
   const displayedHeight = heightValue === null ? null : cmToHeight(heightValue, selectedUnits.height);
   const changeDisplayUnit = (key: keyof DisplayUnits, value: string) => {
+    if (key === "height") setFeetInches("");
     setUnitDraft({ ...selectedUnits, [key]: value } as DisplayUnits);
   };
   return (
