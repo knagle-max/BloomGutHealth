@@ -56,16 +56,23 @@ export default function Demo() {
           </label>
           <Button
             disabled={!text.trim()}
-            onClick={() => setEntries([...entries, text])}
+            onClick={() => {
+              const description = text.trim();
+              if (description) setEntries((current) => [...current, description]);
+            }}
           >
             Add to demo journal
           </Button>
-          <p role="status">{entries.length} demo entries</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <p role="status" aria-live="polite">{entries.length} demo {entries.length === 1 ? "entry" : "entries"} (this page only)</p>
+            {entries.length > 0 && <Button variant="outline" onClick={() => setEntries([])}>Clear demo journal</Button>}
+          </div>
           <aside className="demo-fixed-example" aria-label="Separate fixed nutrition illustration">
             <h3>Fixed illustration · not an analysis</h3>
             <p>Example meal card: 350 kcal · 10 g protein · 8 g fiber.</p>
             <p className="panel-note">These illustrative numbers belong only to this fixed example. They never change with the text above. Your demo journal records descriptions only; it does not calculate nutrients.</p>
           </aside>
+          {explanation.pathways.length > 0 && <p className="panel-note">These are general research associations matched to the description, not calculated nutrient values, measured microbial activity, or predictions about your body.</p>}
           {explanation.pathways.map((p) => (
             <details key={p.id}>
               <summary>{p.substrate}</summary>
@@ -74,8 +81,12 @@ export default function Demo() {
               <p>{p.relationship}</p>
             </details>
           ))}
+          {entries.length > 0 && <h3>Temporary demo descriptions</h3>}
           {entries.map((entry, i) => (
-            <p key={i}>{entry}</p>
+            <div key={`${i}-${entry}`} className="flex items-start justify-between gap-3 rounded-md border p-3">
+              <p className="min-w-0 break-words">{entry}</p>
+              <Button variant="outline" size="sm" aria-label={`Remove demo entry ${i + 1}`} onClick={() => setEntries((current) => current.filter((_, index) => index !== i))}>Remove</Button>
+            </div>
           ))}
         </section>
       )}
