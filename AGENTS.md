@@ -3,7 +3,7 @@
 See [PROJECT_COORDINATION.md](PROJECT_COORDINATION.md) for the product-owner directive and [docs/architect-r6/IMPLEMENTATION_STATUS.md](docs/architect-r6/IMPLEMENTATION_STATUS.md) for historical implementation evidence.
 
 ## Authorized objective
-Deliver the complete architect-approved Bloom v0.5 release (Revision 6, amended review, Amendments B and C, original brand assets, and approved specialist handoffs). Do not mistake historical partial returns, per-increment deferrals, CI success or documentation commits for a release finish line.
+Deliver the complete architect-approved Bloom v0.5 release (Revision 6, Amendments B, C, D and E, original brand assets, and approved specialist handoffs). Do not mistake historical partial returns, per-increment deferrals, CI success or documentation commits for a release finish line.
 
 ## Implementation conduct
 - Developer owns integration, code, database/migrations, tests, PR and deployment. Keep `main` unchanged, use `enhance/bloom-experience` and its existing review PR.
@@ -17,3 +17,6 @@ Deliver the complete architect-approved Bloom v0.5 release (Revision 6, amended 
 
 ## Session boundary
 Agents do not work asynchronously after a response ends. Use available sessions to implement as much of the approved backlog as possible; explicitly distinguish open items without treating them as permission to abandon the release.
+
+## Amendment E precedence (2026-10-18)
+Amendment E is the latest architect execution directive and supersedes conflicting stop-and-wait approval/phase instructions. Execute approved work continuously within the available active session; parallelize specialist review, keep externally gated risky features disabled, and never claim public release approval from a safe preview. Amendment D adds independent, account-scoped display units (including mixed systems) with canonical values and provenance preserved. This directive does not waive tests, consent, safety or truthful blocker disclosure.
