@@ -2,6 +2,9 @@ import { reportedAbundanceAnalysis, historicalAnalysisMetadata, publicSample } f
 import { registerRetiredHealthRoutes } from "./retired-health-routes";
 import { registerBiologyRoutes } from "./biology-routes";
 import { registerExperienceRoutes } from "./experience-routes";
+import { registerHealthSourceRoutes } from "./health-source-routes";
+import { HealthSourceStorage } from "./health-source-storage";
+import { db } from "./db";
 import { describeRecordedDiet } from "../shared/diet-observations";
 import { registerReportRoutes } from "./report-routes";
 import {
@@ -42,6 +45,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerPlannerRoutes(app, requireAuth, storage);
   const precisionService = registerPrecisionRoutes(app, requireAuth, storage);
   registerExperienceRoutes(app, requireAuth, storage, precisionService);
+  registerHealthSourceRoutes(app, requireAuth, new HealthSourceStorage(db));
   registerReportRoutes(app, requireAuth, storage);
   registerBiologyRoutes(app, requireAuth, storage, precisionService);
   // Trigger ML analysis
