@@ -9,7 +9,7 @@ test("independent mixed-unit settings remain valid",()=>{
  assert.equal(settings.displayUnits.bodyWeight,"lb");
  assert.equal(settings.displayUnits.hydration,"US-fl-oz");
  assert.equal(settings.displayUnits.temperature,"C");
- assert.equal(settingsPatchSchema.safeParse({displayUnits:{height:"ft-in",bodyWeight:"kg"}}).success,true);
+ assert.equal(settingsPatchSchema.safeParse({displayUnits:{...settings.displayUnits,height:"ft-in",bodyWeight:"kg"}}).success,true);
 });
 test("round-trip height and weight across independent unit systems",()=>{
  for(const cm of [43.18,175,182.88,249]){
