@@ -44,7 +44,9 @@ export class HealthSourceStorage {
       const existing=o.map(row=>healthObservationSchema.parse(decryptPrecision(row.encryptedPayload,userId)));
       const consents=c.map(row=>healthImportConsentSchema.parse(decryptPrecision(row.encryptedPayload,userId)));
       const result=reconcileHealthBatch(existing,candidates,consents,now);
-      if(o.length+result.accepted.length>50000) throw Error("HEALTH_STORAGE_LIMIT");
+      const existingKeys=new Set(o.map(row=>row.sourceKey));
+      const genuinelyNew=result.accepted.filter(item=>!existingKeys.has(healthObservationKey(item))).length;
+      if(o.length+genuinelyNew>50000) throw Error("HEALTH_STORAGE_LIMIT");
       for(const observation of result.accepted) {
         const sourceKey=healthObservationKey(observation);
         await tx.insert(healthObservations).values({
