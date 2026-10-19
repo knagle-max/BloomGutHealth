@@ -7,7 +7,7 @@ test("health source routes enforce authentication, export account scope and expl
  const calls:string[]=[];
  const store:any={
    getConsents:async(user:string)=>[{provider:"apple_health",allowedKinds:["steps"],grantedAt:"2026-10-18T00:00:00Z",revokedAt:null,userMarker:user}],
-   getObservations:async(user:string)=>[{marker:user}],
+   getObservations:async(user:string)=>[{marker:user,kind:"steps",endAt:"2026-10-18T12:00:00Z",source:{provider:"apple_health",recordId:"r-1"}}],
    clearProvider:async(user:string,provider:string)=>{calls.push(user+":"+provider);},
    clearAccount:async(user:string)=>{calls.push(user+":all");},
  };
@@ -19,6 +19,15 @@ test("health source routes enforce authentication, export account scope and expl
  const send=(path:string,method="GET",user="a",confirm?:string)=>fetch(base+"/api/health-sources"+path,{method,headers:{"x-test-user":user,...(confirm?{"x-bloom-confirm":confirm}:{})}});
  try {
    assert.equal((await send("/export","GET","")).status,401);
+   const observations=await (await send("/observations")).json();
+   assert.equal(observations.returned,1);
+   assert.equal(observations.observations[0].marker,"a");
+   assert.equal((await send("/observations?kind=steps")).status,200);
+   assert.equal((await send("/observations?limit=0")).status,400);
+   assert.equal((await send("/observations?limit=201")).status,400);
+   assert.equal((await send("/observations?kind=unknown")).status,400);
+   assert.equal((await send("/observations?provider=manual")).status,400);
+   assert.equal((await send("/observations","GET","")).status,401);
    const a=await send("/export");assert.equal(a.status,200);
    assert.equal(a.headers.get("cache-control"),"no-store");
    assert.match(a.headers.get("content-disposition")||"",/attachment/);
