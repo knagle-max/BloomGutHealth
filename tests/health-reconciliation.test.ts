@@ -51,3 +51,13 @@ test("future consent and duplicate provider permissions cannot authorize import"
  assert.equal(reconcileHealthBatch([], [row],future,now).rejected,1);
  assert.throws(()=>reconcileHealthBatch([], [row],[consent[0],consent[0]],now),/HEALTH_DUPLICATE_CONSENT/);
 });
+
+
+test("consent granted after a device receipt does not authorize historical import",()=>{
+ const laterGrant=[{...consent[0],grantedAt:"2026-10-18T17:00:00Z"}];
+ const result=reconcileHealthBatch([], [row],laterGrant,now);
+ assert.equal(result.rejected,1);
+ assert.equal(result.accepted.length,0);
+ const laterReceipt={...row,source:{...row.source,recordId:"r-later"},startAt:"2026-10-18T17:01:00Z",endAt:"2026-10-18T17:03:00Z",receivedAt:"2026-10-18T17:04:00Z"};
+ assert.equal(reconcileHealthBatch([], [laterReceipt],laterGrant,now).accepted.length,1);
+});
