@@ -60,10 +60,14 @@ export default function Profile({
       });
     },
   });
+  // Unit dropdowns convert in-progress drafts in changeDisplayUnit.
+  // Do not reconstruct them from saved Profile values after a preference PATCH:
+  // doing so silently discards unsaved measurements.
   useEffect(()=>{
+    if (loadingUnits || profile.isLoading) return;
     setHeightEntry(formatHeightEntry(profile.data?.heightCm ?? null,units.height));
     setMassEntry(formatMassEntry(profile.data?.weightKg ?? null,units.bodyWeight));
-  },[profile.data?.heightCm,profile.data?.weightKg,units.height,units.bodyWeight,user?.id]);
+  },[profile.data?.heightCm,profile.data?.weightKg,user?.id,loadingUnits,profile.isLoading]);
   const heightParsed=parseHeightEntry(heightEntry);
   const massParsed=parseMassEntry(massEntry);
   const incomplete=heightParsed.kind==="invalid"||heightParsed.kind==="incomplete"||
