@@ -18,7 +18,7 @@ export default function Profile({
   onToggleDarkMode,
 }: ProfileProps) {
   const { user, logout } = useAuth();
-  const { patch, settings } = useExperience();
+  const { patch, settings, saving: savingUnits, loading: loadingUnits, error: unitsError } = useExperience();
   const units = settings.displayUnits;
   const [heightEntry,setHeightEntry] = useState<HeightEntry>({unit:"cm",primary:"",inches:""});
   const [massEntry,setMassEntry] = useState<MassEntry>({unit:"kg",value:""});
@@ -41,8 +41,7 @@ export default function Profile({
         activityLevel: profile.data.activityLevel || "moderate",
       });
   }, [profile.data]);
-  const [unitDraft, setUnitDraft] = useState<DisplayUnits | null>(null);
-  const selectedUnits = unitDraft || units;
+  const selectedUnits = units;
   const save = useMutation({
     mutationFn: async () => {
       const data = {
@@ -81,7 +80,7 @@ export default function Profile({
       setMassEntry(changed);
     }
     setEntryError("");
-    setUnitDraft({...selectedUnits,[key]:value} as DisplayUnits);
+    patch({displayUnits:{...selectedUnits,[key]:value} as DisplayUnits});
   };
   return (
     <main className="science-page space-y-5">
@@ -152,14 +151,16 @@ export default function Profile({
                   ["energy","Energy",["kcal","kJ"]],
                   ["foodWeight","Food weight",["g","oz"]],
                 ] as const).map(([key,label,options])=><label className="block" key={key}>{label}
-                  <select className="bloom-input w-full" value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
+                  <select className="bloom-input w-full" aria-label={`${label} unit`} disabled={savingUnits||loadingUnits} value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
                     {options.map(option=><option key={option} value={option}>{option}</option>)}
                   </select>
                 </label>)}
               </div>
-              <Button type="button" variant="outline" disabled={!unitDraft} onClick={()=>{if(unitDraft){patch({displayUnits:unitDraft});setUnitDraft(null);}}}>Save display units</Button>
+              <p className="panel-note">Unit preferences save automatically when changed. Switch the unit beside a measurement below, or change any other unit here.</p>
+              {savingUnits&&<p role="status">Saving measurement units…</p>}
+              {unitsError&&<p role="alert">Could not save measurement units: {unitsError}</p>}
             </fieldset>
-            <label className="block">Height ({selectedUnits.height==="ft-in"?"feet and inches":selectedUnits.height})
+            <div className="space-y-2"><div className="flex items-center justify-between gap-3"><span className="font-medium">Height</span><label>Height unit <select className="bloom-input" aria-label="Height unit beside measurement" disabled={savingUnits||loadingUnits} value={selectedUnits.height} onChange={e=>changeDisplayUnit("height",e.target.value)}><option value="cm">cm</option><option value="m">m</option><option value="ft-in">feet + inches</option></select></label></div>
               <div className="flex gap-2">
                 <input aria-label={selectedUnits.height==="ft-in"?"Height feet":"Height"} className="bloom-input w-full"
                   inputMode="decimal" value={heightEntry.primary}
@@ -168,11 +169,11 @@ export default function Profile({
                   inputMode="decimal" value={heightEntry.inches}
                   onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,inches:e.target.value});}}/>}
               </div>
-            </label>
-            <label className="block">Body weight ({selectedUnits.bodyWeight})
+            </div>
+            <div className="space-y-2"><div className="flex items-center justify-between gap-3"><span className="font-medium">Body weight</span><label>Weight unit <select className="bloom-input" aria-label="Weight unit beside measurement" disabled={savingUnits||loadingUnits} value={selectedUnits.bodyWeight} onChange={e=>changeDisplayUnit("bodyWeight",e.target.value)}><option value="kg">kg</option><option value="lb">lb</option></select></label></div>
               <input aria-label="Body weight" className="bloom-input w-full" inputMode="decimal"
                 value={massEntry.value} onChange={e=>{setEntryError("");setMassEntry({...massEntry,value:e.target.value});}}/>
-            </label>
+            </div>
             {(incomplete||entryError)&&<p role="alert">{entryError || "Finish the height and weight entries, or clear them before saving."}</p>}
             <label className="block">
               Activity level
