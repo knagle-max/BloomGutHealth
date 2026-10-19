@@ -38,3 +38,16 @@ test("time-travel receipts and bad consent are rejected",()=>{
  assert.equal(reconcileHealthBatch([], [{...row,receivedAt:"2026-10-19T12:00:00Z"}],consent,now).rejected,1);
  assert.throws(()=>reconcileHealthBatch([], [row],[{...consent[0],allowedKinds:["steps","steps"]}],now));
 });
+
+test("older correction receipts cannot roll back an imported health record",()=>{
+ const newer={...row,source:{...row.source,sourceRevision:"2"},receivedAt:"2026-10-18T17:00:00Z",value:1800};
+ const stale={...row,source:{...row.source,sourceRevision:"1"},receivedAt:"2026-10-18T16:01:00Z"};
+ const result=reconcileHealthBatch([newer],[stale],consent,now);
+ assert.equal(result.conflicts,1);assert.equal(result.accepted.length,0);
+});
+
+test("future consent and duplicate provider permissions cannot authorize import",()=>{
+ const future=[{...consent[0],grantedAt:"2026-10-19T00:00:00Z"}];
+ assert.equal(reconcileHealthBatch([], [row],future,now).rejected,1);
+ assert.throws(()=>reconcileHealthBatch([], [row],[consent[0],consent[0]],now),/HEALTH_DUPLICATE_CONSENT/);
+});
