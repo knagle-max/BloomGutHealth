@@ -1,4 +1,6 @@
 import { useExperience } from "@/lib/experience";
+import { cmToHeight, displayToKg, heightToCm, kgToDisplay } from "@shared/display-units";
+import type { DisplayUnits } from "@shared/experience";
 import ExperienceDataControls from "@/components/ExperienceDataControls";
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -16,7 +18,9 @@ export default function Profile({
   onToggleDarkMode,
 }: ProfileProps) {
   const { user, logout } = useAuth();
-  const { patch } = useExperience();
+  const { patch, settings } = useExperience();
+  const units = settings.displayUnits;
+  const [feetInches, setFeetInches] = useState("");
   const profile = useQuery<any>({ queryKey: ["/api/profile"] });
   const [form, setForm] = useState({
     sex: "",
@@ -35,6 +39,8 @@ export default function Profile({
         activityLevel: profile.data.activityLevel || "moderate",
       });
   }, [profile.data]);
+  const [unitDraft, setUnitDraft] = useState<DisplayUnits | null>(null);
+  const selectedUnits = unitDraft || units;
   const save = useMutation({
     mutationFn: async () => {
       const data = {
@@ -53,6 +59,12 @@ export default function Profile({
       });
     },
   });
+  const heightValue = form.heightCm ? Number(form.heightCm) : null;
+  const weightValue = form.weightKg ? Number(form.weightKg) : null;
+  const displayedHeight = heightValue === null ? null : cmToHeight(heightValue, selectedUnits.height);
+  const changeDisplayUnit = (key: keyof DisplayUnits, value: string) => {
+    setUnitDraft({ ...selectedUnits, [key]: value } as DisplayUnits);
+  };
   return (
     <main className="science-page space-y-5">
       <div className="science-heading">
@@ -106,24 +118,44 @@ export default function Profile({
                 <option value="female">Female</option>
               </select>
             </label>
-            {(["age", "heightCm", "weightKg"] as const).map((key) => (
-              <label className="block" key={key}>
-                {key === "age"
-                  ? "Age"
-                  : key === "heightCm"
-                    ? "Height (cm)"
-                    : "Weight (kg)"}
-                <input
-                  className="bloom-input w-full"
-                  type="number"
-                  min="1"
-                  max={key === "age" ? 120 : key === "heightCm" ? 250 : 500}
-                  step={key === "age" ? 1 : 0.1}
-                  value={form[key]}
-                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
-                />
-              </label>
-            ))}
+            <label className="block">Age
+              <input className="bloom-input w-full" type="number" min="1" max="120" value={form.age} onChange={e=>setForm({...form,age:e.target.value})}/>
+            </label>
+            <fieldset className="space-y-3">
+              <legend className="font-medium">Measurement units</legend>
+              <p className="panel-note">Choose units independently. Saved profile measurements remain in canonical centimetres and kilograms; laboratory source units are not changed.</p>
+              <div className="grid grid-cols-2 gap-3">
+                {([
+                  ["height","Height",["cm","m","ft-in"]],
+                  ["bodyWeight","Body weight",["kg","lb"]],
+                  ["circumference","Circumference",["cm","in"]],
+                  ["hydration","Hydration",["mL","L","US-fl-oz"]],
+                  ["temperature","Temperature",["C","F"]],
+                  ["energy","Energy",["kcal","kJ"]],
+                  ["foodWeight","Food weight",["g","oz"]],
+                ] as const).map(([key,label,options])=><label className="block" key={key}>{label}
+                  <select className="bloom-input w-full" value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
+                    {options.map(option=><option key={option} value={option}>{option}</option>)}
+                  </select>
+                </label>)}
+              </div>
+              <Button type="button" variant="outline" disabled={!unitDraft} onClick={()=>{if(unitDraft){patch({displayUnits:unitDraft});setUnitDraft(null);}}}>Save display units</Button>
+            </fieldset>
+            <label className="block">Height ({selectedUnits.height === "ft-in" ? "feet and inches" : selectedUnits.height})
+              <div className="flex gap-2">
+                <input aria-label={selectedUnits.height==="ft-in"?"Height feet":"Height"} className="bloom-input w-full" type="number" min="0" step="any"
+                  value={displayedHeight === null ? "" : Number(displayedHeight.primary.toFixed(selectedUnits.height==="m"?3:selectedUnits.height==="ft-in"?0:2))}
+                  onChange={e=>{const value=e.target.value;setForm({...form,heightCm:value?String(heightToCm(Number(value),selectedUnits.height,Number(feetInches||displayedHeight?.inches||0))):""});}}/>
+                {selectedUnits.height==="ft-in"&&<input aria-label="Height inches" className="bloom-input w-full" type="number" min="0" max="11.999" step="any"
+                  value={feetInches || (displayedHeight===null?"":String(Number(displayedHeight.inches.toFixed(2))))}
+                  onChange={e=>{setFeetInches(e.target.value);if(displayedHeight)setForm({...form,heightCm:String(heightToCm(displayedHeight.primary,"ft-in",Number(e.target.value)||0))});}}/>}
+              </div>
+            </label>
+            <label className="block">Body weight ({selectedUnits.bodyWeight})
+              <input aria-label="Body weight" className="bloom-input w-full" type="number" min="0" step="any"
+                value={weightValue===null?"":Number(kgToDisplay(weightValue,selectedUnits.bodyWeight).toFixed(2))}
+                onChange={e=>setForm({...form,weightKg:e.target.value?String(displayToKg(Number(e.target.value),selectedUnits.bodyWeight)):""})}/>
+            </label>
             <label className="block">
               Activity level
               <select
