@@ -28,7 +28,7 @@ test("revoked, forbidden and manual sources cannot pass the connector ingestion 
 });
 
 test("different providers stay distinct; batches reject invalid records without partial acceptance",()=>{
- const updated={...row,source:{...row.source,sourceRevision:"2"},value:1700};
+ const updated={...row,source:{...row.source,sourceRevision:"2"},receivedAt:"2026-10-18T17:00:00Z",value:1700};
  assert.equal(reconcileHealthBatch([row],[updated],consent,now).accepted[0].value,1700);
  assert.throws(()=>reconcileHealthBatch([], [row,{...row,value:-20}],consent,now));
  assert.throws(()=>reconcileHealthBatch([],Array(1001).fill(row),consent,now),/HEALTH_BATCH_LIMIT/);
