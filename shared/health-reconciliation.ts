@@ -8,7 +8,7 @@ import { healthObservationKey, healthObservationSchema, type HealthObservation }
  */
 export const healthImportConsentSchema = z.object({
   provider: z.enum(["apple_health", "health_connect"]),
-  allowedKinds: z.array(z.enum(["steps", "heart_rate", "body_mass", "sleep"])).max(4),
+  allowedKinds: z.array(z.enum(["steps", "heart_rate", "body_mass", "sleep", "distance", "hydration"])).max(6),
   grantedAt: z.string().datetime({ offset: true }),
   revokedAt: z.string().datetime({ offset: true }).nullable(),
 }).strict().superRefine((value, ctx) => {
