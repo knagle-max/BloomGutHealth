@@ -23,8 +23,11 @@ test("health source routes enforce authentication, export account scope and expl
    assert.equal(observations.returned,1);
    assert.equal(observations.observations[0].marker,"a");
    assert.equal((await send("/observations?kind=steps")).status,200);
+   assert.equal((await send("/observations?limit=1")).status,200);
+   assert.equal((await send("/observations?limit=50")).status,200);
    assert.equal((await send("/observations?limit=0")).status,400);
    assert.equal((await send("/observations?limit=201")).status,400);
+   assert.equal((await send("/observations?limit=12oops")).status,400);
    assert.equal((await send("/observations?kind=unknown")).status,400);
    assert.equal((await send("/observations?provider=manual")).status,400);
    assert.equal((await send("/observations","GET","")).status,401);

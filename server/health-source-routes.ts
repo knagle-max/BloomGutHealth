@@ -30,7 +30,7 @@ export function registerHealthSourceRoutes(app:Express, auth:RequestHandler, sto
     const allowedProviders=new Set(["apple_health","health_connect"]);
     if ((kind!==undefined&&(typeof kind!=="string"||!allowedKinds.has(kind))) ||
         (provider!==undefined&&(typeof provider!=="string"||!allowedProviders.has(provider))) ||
-        (limitRaw!==undefined&&(typeof limitRaw!=="string"||!/^[1-9]\\d{0,2}$/.test(limitRaw)||Number(limitRaw)>200)))
+        (limitRaw!==undefined&&(typeof limitRaw!=="string"||!/^[1-9]\d{0,2}$/.test(limitRaw)||Number(limitRaw)>200)))
       return res.status(400).json({error:"Invalid observation filter."});
     const limit=limitRaw===undefined?50:Number(limitRaw);
     try {
