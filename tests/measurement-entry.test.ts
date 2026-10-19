@@ -22,3 +22,22 @@ test("round trips respect original measurement",()=>{
   if(result.kind==="valid")assert.ok(Math.abs(result.canonical-kg)<.0001);
  }
 });
+
+test("unit switching converts entered quantities without treating the same number as a new unit",()=>{
+ const weight=switchMassUnit({unit:"lb",value:"200"},"kg");
+ assert.ok("unit" in weight && weight.unit==="kg");
+ if("unit" in weight){
+  const parsed=parseMassEntry(weight);
+  assert.equal(parsed.kind,"valid");
+  if(parsed.kind==="valid") assert.ok(Math.abs(parsed.canonical-200/2.2046226218487757)<0.00001);
+ }
+ const height=switchHeightUnit({unit:"ft-in",primary:"5",inches:"11"},"cm");
+ assert.ok("unit" in height && height.unit==="cm");
+ if("unit" in height){
+  const parsed=parseHeightEntry(height);
+  assert.equal(parsed.kind,"valid");
+  if(parsed.kind==="valid") assert.ok(Math.abs(parsed.canonical-180.34)<0.0001);
+ }
+ assert.deepEqual(switchMassUnit({unit:"lb",value:""},"kg"),{unit:"kg",value:""});
+ assert.deepEqual(switchHeightUnit({unit:"cm",primary:"",inches:""},"ft-in"),{unit:"ft-in",primary:"",inches:""});
+});
