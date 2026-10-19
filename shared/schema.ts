@@ -367,3 +367,19 @@ export const requestBudgets = pgTable("request_budgets", {
   attempts: integer("attempts").notNull(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
 }, table => [index("request_budgets_expiry").on(table.expiresAt)]);
+
+
+/** Dormant, encrypted and owner-scoped external health import records. */
+export const healthSourceConsents = pgTable("health_source_consents", {
+  userId: varchar("user_id").notNull().references(() => users.id, {onDelete:"cascade"}),
+  provider: text("provider").notNull(),
+  encryptedPayload: jsonb("encrypted_payload").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, t => [primaryKey({columns:[t.userId,t.provider]})]);
+
+export const healthObservations = pgTable("health_observations", {
+  userId: varchar("user_id").notNull().references(() => users.id, {onDelete:"cascade"}),
+  sourceKey: text("source_key").notNull(),
+  encryptedPayload: jsonb("encrypted_payload").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+}, t => [primaryKey({columns:[t.userId,t.sourceKey]}),index("health_observations_user_updated_idx").on(t.userId,t.updatedAt.desc())]);
