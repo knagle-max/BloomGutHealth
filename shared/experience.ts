@@ -25,14 +25,29 @@ export const practicalPreferencesSchema = z.object({
   equipment: z.array(z.enum(["stove", "oven", "microwave", "none"])).max(4).default(["stove", "oven"]),
 }).strict();
 export const onboardingSchema = z.object({status:z.enum(["not-started","skipped","complete"]).default("not-started")}).strict();
+// Display preferences are independent and account-scoped in encrypted settings.
+// They never change canonical clinical values or source laboratory units.
+export const displayUnitsSchema = z.object({
+  height: z.enum(["cm","m","ft-in"]).default("cm"),
+  bodyWeight: z.enum(["kg","lb"]).default("kg"),
+  circumference: z.enum(["cm","in"]).default("cm"),
+  hydration: z.enum(["mL","L","US-fl-oz"]).default("mL"),
+  temperature: z.enum(["C","F"]).default("C"),
+  energy: z.enum(["kcal","kJ"]).default("kcal"),
+  foodWeight: z.enum(["g","oz"]).default("g"),
+}).strict();
+export type DisplayUnits = z.infer<typeof displayUnitsSchema>;
+
 export const experienceSettingsSchema = z.object({
   mode: z.enum(["everyday", "athlete"]).default("everyday"),
   onboarding: onboardingSchema.default({}),
+  displayUnits: displayUnitsSchema.default({}),
   athlete: athleteProfileSchema.default({}), practical: practicalPreferencesSchema.default({}),
 }).strict();
 export type ExperienceSettings = z.infer<typeof experienceSettingsSchema>;
 export const settingsPatchSchema = z.object({
   onboarding: onboardingSchema.optional(),
+  displayUnits: displayUnitsSchema.optional(),
   mode: z.enum(["everyday", "athlete"]).optional(), athlete: athleteProfileSchema.optional(), practical: practicalPreferencesSchema.optional(),
 }).strict().refine(v => Object.keys(v).length > 0);
 export const trainingSessionSchema = z.object({
