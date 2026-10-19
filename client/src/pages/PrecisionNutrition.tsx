@@ -1,6 +1,7 @@
 import { displayToKg, kgToDisplay, quantityFromCanonical, quantityToCanonical } from "@shared/display-units";
 import LabUnitReview from "@/components/LabUnitReview";
 import { useExperience } from "@/lib/experience";
+import { useAuth } from "@/lib/auth";
 import TodayPlanner from "@/components/TodayPlanner";
 import QuickLabEntry from "@/components/QuickLabEntry";
 import { recipePreparation } from "@shared/recipe-preparation";
@@ -179,6 +180,8 @@ function ContextEditor({
 }
 export default function PrecisionNutrition() {
   const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
+  const {user}=useAuth();
+  const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null}>({queryKey:["/api/profile"],enabled:!!user});
   const [weightDraft,setWeightDraft]=useState("");
   const [waistDraft,setWaistDraft]=useState("");
   const entryUnits=useRef({bodyWeight:settings.displayUnits.bodyWeight,circumference:settings.displayUnits.circumference});
@@ -1337,6 +1340,20 @@ export default function PrecisionNutrition() {
                   }}
                 >
                   <h2>Record your response</h2>
+                  <div className="space-y-2">
+                    <p className="panel-note">You can optionally reuse the current weight from your saved Profile. Check that it matches your actual measurement for this date before saving; Bloom does not assume a Profile value was measured today.</p>
+                    <Button type="button" variant="outline"
+                      disabled={savedProfile.isPending||savedProfile.isError||savedProfile.data?.weightKg==null}
+                      onClick={()=>{
+                        const kg=savedProfile.data?.weightKg;
+                        if(kg!=null&&Number.isFinite(kg)&&kg>0){
+                          setWeightDraft(String(Number(kgToDisplay(kg,settings.displayUnits.bodyWeight).toFixed(2))));
+                          setStatus("Profile weight filled in. Confirm today's actual measurement before saving.");
+                        }
+                      }}>Use saved Profile weight</Button>
+                    {savedProfile.isError&&<p role="alert">Profile weight unavailable. Enter this check-in manually.</p>}
+                    {savedProfile.data?.weightKg==null&&!savedProfile.isPending&&!savedProfile.isError&&<p className="panel-note">No weight saved in Profile yet.</p>}
+                  </div>
                   <label className="block">
                     Related plan
                     <select className="bloom-input w-full" name="planId">
