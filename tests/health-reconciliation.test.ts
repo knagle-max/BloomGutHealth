@@ -61,3 +61,14 @@ test("consent granted after a device receipt does not authorize historical impor
  const laterReceipt={...row,source:{...row.source,recordId:"r-later"},startAt:"2026-10-18T17:01:00Z",endAt:"2026-10-18T17:03:00Z",receivedAt:"2026-10-18T17:04:00Z"};
  assert.equal(reconcileHealthBatch([], [laterReceipt],laterGrant,now).accepted.length,1);
 });
+
+
+test("distance and hydration require independent metric-level consent",()=>{
+ const metrics=[{...consent[0],allowedKinds:["distance","hydration"] as ("distance"|"hydration")[]}];
+ const distance={...row,kind:"distance" as const,value:1200,unit:"m" as const,source:{...row.source,recordId:"distance-1"}};
+ const hydration={...row,kind:"hydration" as const,value:400,unit:"mL" as const,source:{...row.source,recordId:"hydration-1"}};
+ const result=reconcileHealthBatch([], [distance,hydration],metrics,now);
+ assert.equal(result.accepted.length,2);
+ assert.equal(reconcileHealthBatch([], [distance,hydration],consent,now).rejected,2);
+ assert.throws(()=>reconcileHealthBatch([], [{...hydration,value:0}],metrics,now));
+});
