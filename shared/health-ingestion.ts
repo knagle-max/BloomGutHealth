@@ -38,6 +38,20 @@ const bodyMass = base.extend({
   unit: z.literal("kg"),
 });
 
+// Device-sourced measurements are canonicalized to explicit SI units.
+// Distance is an interval measurement, not a guaranteed unique daily total.
+// Hydration is recorded intake and must never be inferred from activity.
+const distance = base.extend({
+  kind: z.literal("distance"),
+  value: z.number().finite().nonnegative().max(1000000),
+  unit: z.literal("m"),
+});
+const hydration = base.extend({
+  kind: z.literal("hydration"),
+  value: z.number().finite().positive().max(20000),
+  unit: z.literal("mL"),
+});
+
 const sleep = base.extend({
   kind: z.literal("sleep"),
   value: z.number().finite().nonnegative().max(1440),
@@ -46,7 +60,7 @@ const sleep = base.extend({
 });
 
 export const healthObservationSchema = z.discriminatedUnion("kind", [
-  steps, heartRate, bodyMass, sleep,
+  steps, heartRate, bodyMass, sleep, distance, hydration,
 ]).superRefine((observation, ctx) => {
   const start = Date.parse(observation.startAt);
   const end = Date.parse(observation.endAt);
