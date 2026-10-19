@@ -20,6 +20,31 @@ export function registerHealthSourceRoutes(app:Express, auth:RequestHandler, sto
       });
     } catch {res.status(503).json({error:"Health source status is temporarily unavailable."});}
   });
+  // Account-scoped, bounded observation view for Progress and source inspection.
+  // This is not a native connector or permission-grant endpoint.
+  app.get("/api/health-sources/observations",async(req,res)=>{
+    const kind=req.query.kind;
+    const provider=req.query.provider;
+    const limitRaw=req.query.limit;
+    const allowedKinds=new Set(["steps","heart_rate","body_mass","sleep","distance","hydration"]);
+    const allowedProviders=new Set(["apple_health","health_connect"]);
+    if ((kind!==undefined&&(typeof kind!=="string"||!allowedKinds.has(kind))) ||
+        (provider!==undefined&&(typeof provider!=="string"||!allowedProviders.has(provider))) ||
+        (limitRaw!==undefined&&(typeof limitRaw!=="string"||!/^[1-9]\\d{0,2}$/.test(limitRaw)||Number(limitRaw)>200)))
+      return res.status(400).json({error:"Invalid observation filter."});
+    const limit=limitRaw===undefined?50:Number(limitRaw);
+    try {
+      const observations=await storage.getObservations(req.session.userId!);
+      const filtered=observations.filter(item=>
+        (kind===undefined||item.kind===kind)&&
+        (provider===undefined||item.source.provider===provider));
+      filtered.sort((a,b)=>Date.parse(b.endAt)-Date.parse(a.endAt)||
+        a.source.recordId.localeCompare(b.source.recordId));
+      res.json({observations:filtered.slice(0,limit),returned:Math.min(filtered.length,limit),
+        hasMore:filtered.length>limit,
+        interpretation:"Source observations only. Overlapping sources must not be summed without reconciliation."});
+    } catch {res.status(503).json({error:"Health observations could not be loaded."});}
+  });
   // Explicit, authenticated portability endpoint. No provider credentials or keys are exported.
   app.get("/api/health-sources/export",async(req,res)=>{
     try {
