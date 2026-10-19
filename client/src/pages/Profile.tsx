@@ -1,5 +1,5 @@
 import { useExperience } from "@/lib/experience";
-import { cmToHeight, displayToKg, heightToCm, kgToDisplay } from "@shared/display-units";
+import { formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
 import type { DisplayUnits } from "@shared/experience";
 import ExperienceDataControls from "@/components/ExperienceDataControls";
 import { useEffect, useState } from "react";
@@ -20,7 +20,9 @@ export default function Profile({
   const { user, logout } = useAuth();
   const { patch, settings } = useExperience();
   const units = settings.displayUnits;
-  const [feetInches, setFeetInches] = useState("");
+  const [heightEntry,setHeightEntry] = useState<HeightEntry>({unit:"cm",primary:"",inches:""});
+  const [massEntry,setMassEntry] = useState<MassEntry>({unit:"kg",value:""});
+  const [entryError,setEntryError] = useState("");
   const profile = useQuery<any>({ queryKey: ["/api/profile"] });
   const [form, setForm] = useState({
     sex: "",
@@ -46,8 +48,8 @@ export default function Profile({
       const data = {
         sex: form.sex || null,
         age: form.age ? Number(form.age) : null,
-        heightCm: form.heightCm ? Number(form.heightCm) : null,
-        weightKg: form.weightKg ? Number(form.weightKg) : null,
+        heightCm: heightParsed.kind==="valid" ? heightParsed.canonical : null,
+        weightKg: massParsed.kind==="valid" ? massParsed.canonical : null,
         activityLevel: form.activityLevel,
       };
       await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data);
@@ -59,12 +61,27 @@ export default function Profile({
       });
     },
   });
-  const heightValue = form.heightCm ? Number(form.heightCm) : null;
-  const weightValue = form.weightKg ? Number(form.weightKg) : null;
-  const displayedHeight = heightValue === null ? null : cmToHeight(heightValue, selectedUnits.height);
+  useEffect(()=>{
+    setHeightEntry(formatHeightEntry(profile.data?.heightCm ?? null,units.height));
+    setMassEntry(formatMassEntry(profile.data?.weightKg ?? null,units.bodyWeight));
+  },[profile.data?.heightCm,profile.data?.weightKg,units.height,units.bodyWeight,user?.id]);
+  const heightParsed=parseHeightEntry(heightEntry);
+  const massParsed=parseMassEntry(massEntry);
+  const incomplete=heightParsed.kind==="invalid"||heightParsed.kind==="incomplete"||
+    massParsed.kind==="invalid"||massParsed.kind==="incomplete";
   const changeDisplayUnit = (key: keyof DisplayUnits, value: string) => {
-    if (key === "height") setFeetInches("");
-    setUnitDraft({ ...selectedUnits, [key]: value } as DisplayUnits);
+    if(key==="height"){
+      const changed=switchHeightUnit(heightEntry,value as DisplayUnits["height"]);
+      if(!("unit" in changed)){setEntryError("Finish or clear the height before switching units.");return;}
+      setHeightEntry(changed);
+    }
+    if(key==="bodyWeight"){
+      const changed=switchMassUnit(massEntry,value as DisplayUnits["bodyWeight"]);
+      if(!("unit" in changed)){setEntryError("Finish or clear the weight before switching units.");return;}
+      setMassEntry(changed);
+    }
+    setEntryError("");
+    setUnitDraft({...selectedUnits,[key]:value} as DisplayUnits);
   };
   return (
     <main className="science-page space-y-5">
@@ -142,21 +159,21 @@ export default function Profile({
               </div>
               <Button type="button" variant="outline" disabled={!unitDraft} onClick={()=>{if(unitDraft){patch({displayUnits:unitDraft});setUnitDraft(null);}}}>Save display units</Button>
             </fieldset>
-            <label className="block">Height ({selectedUnits.height === "ft-in" ? "feet and inches" : selectedUnits.height})
+            <label className="block">Height ({selectedUnits.height==="ft-in"?"feet and inches":selectedUnits.height})
               <div className="flex gap-2">
-                <input aria-label={selectedUnits.height==="ft-in"?"Height feet":"Height"} className="bloom-input w-full" type="number" min="0" step="any"
-                  value={displayedHeight === null ? "" : Number(displayedHeight.primary.toFixed(selectedUnits.height==="m"?3:selectedUnits.height==="ft-in"?0:2))}
-                  onChange={e=>{const value=e.target.value;setForm({...form,heightCm:value?String(heightToCm(Number(value),selectedUnits.height,Number(feetInches||displayedHeight?.inches||0))):""});}}/>
-                {selectedUnits.height==="ft-in"&&<input aria-label="Height inches" className="bloom-input w-full" type="number" min="0" max="11.999" step="any"
-                  value={feetInches || (displayedHeight===null?"":String(Number(displayedHeight.inches.toFixed(2))))}
-                  onChange={e=>{setFeetInches(e.target.value);if(displayedHeight)setForm({...form,heightCm:String(heightToCm(displayedHeight.primary,"ft-in",Number(e.target.value)||0))});}}/>}
+                <input aria-label={selectedUnits.height==="ft-in"?"Height feet":"Height"} className="bloom-input w-full"
+                  inputMode="decimal" value={heightEntry.primary}
+                  onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,primary:e.target.value});}}/>
+                {selectedUnits.height==="ft-in"&&<input aria-label="Height inches" className="bloom-input w-full"
+                  inputMode="decimal" value={heightEntry.inches}
+                  onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,inches:e.target.value});}}/>}
               </div>
             </label>
             <label className="block">Body weight ({selectedUnits.bodyWeight})
-              <input aria-label="Body weight" className="bloom-input w-full" type="number" min="0" step="any"
-                value={weightValue===null?"":Number(kgToDisplay(weightValue,selectedUnits.bodyWeight).toFixed(2))}
-                onChange={e=>setForm({...form,weightKg:e.target.value?String(displayToKg(Number(e.target.value),selectedUnits.bodyWeight)):""})}/>
+              <input aria-label="Body weight" className="bloom-input w-full" inputMode="decimal"
+                value={massEntry.value} onChange={e=>{setEntryError("");setMassEntry({...massEntry,value:e.target.value});}}/>
             </label>
+            {(incomplete||entryError)&&<p role="alert">{entryError || "Finish the height and weight entries, or clear them before saving."}</p>}
             <label className="block">
               Activity level
               <select
@@ -183,7 +200,7 @@ export default function Profile({
               Targets are formula-based estimates. Missing profile values
               currently use defaults.
             </p>
-            <Button disabled={save.isPending}>Save nutrition profile</Button>
+            <Button disabled={save.isPending||incomplete}>Save nutrition profile</Button>
           </>
         )}
         {save.isSuccess && <p role="status">Profile saved.</p>}
