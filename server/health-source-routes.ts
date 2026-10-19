@@ -20,6 +20,23 @@ export function registerHealthSourceRoutes(app:Express, auth:RequestHandler, sto
       });
     } catch {res.status(503).json({error:"Health source status is temporarily unavailable."});}
   });
+  // Explicit, authenticated portability endpoint. No provider credentials or keys are exported.
+  app.get("/api/health-sources/export",async(req,res)=>{
+    try {
+      const [observations,consents]=await Promise.all([
+        storage.getObservations(req.session.userId!),
+        storage.getConsents(req.session.userId!),
+      ]);
+      res.setHeader("Content-Disposition",'attachment; filename="bloom-health-observations.json"');
+      res.json({
+        format:"bloom-health-observations-v1",
+        exportedAt:new Date().toISOString(),
+        observations,
+        consents,
+        warning:"Sensitive health data. Store privately. This export does not represent an active Apple Health or Health Connect connection.",
+      });
+    } catch {res.status(503).json({error:"Health observations could not be exported."});}
+  });
   app.delete("/api/health-sources/:provider",async(req,res)=>{
     if(req.params.provider!=="apple_health"&&req.params.provider!=="health_connect")
       return res.status(404).json({error:"Unsupported health source."});
