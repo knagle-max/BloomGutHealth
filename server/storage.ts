@@ -1,4 +1,5 @@
 import { BiologyStorage } from "./biology-storage";
+import { insertMealWithReceipt, type MealSaveReceipt } from "./meal-save";
 import type { BiologicalRegistry } from "../shared/biological-model";
 import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
 import { nutritionProducts } from "../shared/schema";
@@ -84,7 +85,7 @@ export interface IStorage extends ExperienceStore {
 
   getMeal(id: string): Promise<Meal | undefined>;
   getMeals(userId: string): Promise<Meal[]>;
-  insertMeal(meal: InsertMeal): Promise<Meal>;
+  insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal>;
   updateMeal(id: string, updates: Partial<Meal>): Promise<Meal>;
   deleteMeal(id: string): Promise<void>;
 
@@ -429,9 +430,8 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(meals.loggedAt));
   }
 
-  async insertMeal(meal: InsertMeal): Promise<Meal> {
-    const [newMeal] = await db.insert(meals).values(meal).returning();
-    return newMeal;
+  async insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal> {
+    return insertMealWithReceipt(db, meal, receipt);
   }
 
   async updateMeal(id: string, updates: Partial<Meal>): Promise<Meal> {

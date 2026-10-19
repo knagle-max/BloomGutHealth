@@ -1,4 +1,5 @@
 import { mlServiceTarget } from "./ml-service";
+import { mealSaveReceipt, checkMealReceipt } from "./meal-save";
 import { memoryKey } from "../shared/experience";
 import { registerProductRoutes } from "./products";
 import type { Express, RequestHandler } from "express";
@@ -194,13 +195,29 @@ export function registerPlannerRoutes(
     }
   });
   // Register before the legacy /api/meals handlers. Existing clients remain compatible.
-  app.post("/api/meals", requireAuth, limit, async (req, res) => {
+  app.post("/api/meals", requireAuth, async (req, res) => {
+    const key = req.get("Idempotency-Key");
+    if (key && !z.string().uuid().safeParse(key).success)
+      return res.status(400).json({ error: "Invalid meal save reference." });
     const p = requestSchema.safeParse(req.body);
     if (!p.success)
       return res
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
+      const receipt = key ? mealSaveReceipt(req.session.userId!, key, p.data) : undefined;
+      if (receipt) {
+        const previous = await storage.getMeal(receipt.id);
+        if (previous) {
+          if (previous.userId !== req.session.userId!) throw new Error("MEAL_SAVE_CONFLICT");
+          return res.json(checkMealReceipt(previous, receipt));
+        }
+      }
+      // A completed-save replay needs no analysis and must remain recoverable
+      // even when the account's analysis budget has been consumed.
+      let withinLimit = false;
+      limit(req, res, () => { withinLimit = true; });
+      if (!withinLimit) return;
       const remembered = !p.data.ingredients && !p.data.products?.length && storage.getExperienceRecords
         ? (await storage.getExperienceRecords(req.session.userId!, "food-memory")).find(r => r.kind === "food-memory" && r.payload.key === memoryKey(p.data.mealText)) : undefined;
       const result = await analyzer(
@@ -231,9 +248,11 @@ export function registerPlannerRoutes(
         ...(p.data.mealContext?.eatenAt
           ? { loggedAt: new Date(p.data.mealContext.eatenAt) }
           : {}),
-      } as any);
+      } as any, receipt);
       res.json(meal);
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && error.message === "MEAL_SAVE_CONFLICT")
+        return res.status(409).json({ error: "This save reference was already used for different meal details. Check your journal before saving again." });
       res.status(503).json({ error: "Meal could not save. Please retry." });
     }
   });
@@ -268,7 +287,7 @@ export function registerPlannerRoutes(
             .filter(Boolean)
             .join("; "),
           mealType: p.data.mealType ?? meal.mealType,
-          mealContext: p.data.mealContext ?? meal.mealContext,
+          mealContext: p.data.mealContext ? { ...p.data.mealContext, ...((meal.mealContext as any)?._saveReceipt ? { _saveReceipt: (meal.mealContext as any)._saveReceipt } : {}) } : meal.mealContext,
           ...(p.data.mealContext?.eatenAt
             ? { loggedAt: new Date(p.data.mealContext.eatenAt) }
             : {}),

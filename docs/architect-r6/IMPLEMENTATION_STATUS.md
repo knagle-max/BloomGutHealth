@@ -2,6 +2,8 @@
 
 Owner: Developer Agent. Intake: 18 October 2026 (America/Regina). Implementation branch: `review/architect-v05-r6`. Baseline and PR #1 head rechecked: `01638ec1ebf1d397602dcf330865956286b64c4c`. The commit containing this file is the candidate code revision; the paired comparison manifest records its full SHA separately.
 
+Follow-up: the initial candidate's exact source tree was published as `5da5b13` and verified live on the existing enhancement-branch Render review service, with GitHub CI passing. Subsequent meal-save retry work and its validation are described in `MEAL_SAVE_RECOVERY.md`. Statements below about not being deployed describe the initial pre-publication return, not the current review service. Specialist acceptance is still pending.
+
 Authority: revision 6, amended review, Amendment B and Amendment C. The latest full source is preserved in the private review package as `ARCHITECT_REVISION6_AMENDMENT_C.md`; the original asset/spec package is used alongside it. This supersedes earlier v0.2 intake and the old ledger's eight-row MKT shorthand for this increment. Current MKT meanings are the original ten package IDs plus MKT-011–020; older implementation evidence is retained without claiming those IDs have identical definitions.
 
 **Platform:** extend the existing browser application. No native wrapper, HealthKit/Health Connect, OAuth provider, wearable, real-device sync, billing or new clinical interpretation is represented as delivered. Native-platform choice remains with Product Owner/Architect. No live production schema, keys or environment has been changed in this increment.

@@ -2,7 +2,7 @@ import FoodCapture from "@/components/FoodCapture";
 import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
 import { nutritionUpdateFeedback } from "@shared/nutrition-review";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -64,10 +64,10 @@ export default function LogMeal() {
   const [scannerKey,setScannerKey] = useState(0);
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
+  const saveAttempt = useRef<{ payload: string; key: string } | null>(null);
   const save = useMutation({
-    mutationFn: async () =>
-      (await (
-        await apiRequest("POST", "/api/meals", {
+    mutationFn: async () => {
+      const payload = {
           mealText: catalogueEnabled&&catalogueSelection.data?`${catalogueSelection.data.grams} g ${catalogueSelection.data.description}`:description.trim(),
           products,
           ...(catalogueEnabled&&catalogueSelection.data?{ingredients:[{name:catalogueSelection.data.description.slice(0,120),grams:catalogueSelection.data.grams,preparation:catalogueSelection.data.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:catalogueSelection.data.fdcId}}]}:{}),
@@ -78,9 +78,14 @@ export default function LogMeal() {
             portion,
             symptoms,
           },
-        })
-      ).json()) as Meal,
+        };
+      const serialized = JSON.stringify(payload);
+      if (saveAttempt.current?.payload !== serialized)
+        saveAttempt.current = { payload: serialized, key: crypto.randomUUID() };
+      return (await apiRequest("POST", "/api/meals", payload, { "Idempotency-Key": saveAttempt.current.key })).json() as Promise<Meal>;
+    },
     onSuccess: (meal) => {
+      saveAttempt.current = null;
       setSavedMeal(meal);
       setDescription("");
       setProducts([]);
@@ -139,6 +144,8 @@ export default function LogMeal() {
           Describe what you ate, or select a food or supplement label.
         </p>
       </div>
+      <fieldset disabled={save.isPending} className="space-y-3">
+      <legend className="sr-only">Choose foods to log</legend>
       <Button type="button" className="mr-2 mb-3" onClick={()=>{setScannerKey(v=>v+1);setScanRequested(true);setShowProducts(true);}}>Scan package barcode</Button>
       <Button
         className="whitespace-normal h-auto max-w-full"
@@ -193,6 +200,7 @@ export default function LogMeal() {
       {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{catalogueSelection.data.grams} g {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
       <FoodCapture onDescription={setDescription} onProduct={i=>setProducts(v=>[...v,i].slice(0,10))}/>
       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
+      </fieldset>
       <form
         className="bloom-panel space-y-6"
         onSubmit={(e) => {
@@ -312,9 +320,12 @@ export default function LogMeal() {
             </div>
           </details>
           {save.isError && (
-            <p role="alert" className="text-sm text-destructive">
-              {save.error.message}
-            </p>
+            <div role="alert" className="space-y-2">
+              <p className="font-semibold">We couldn’t confirm your meal was saved.</p>
+              <p>{save.error.message}</p>
+              <p>Your details are still here while this page stays open. Retry the same details to recover this save without adding a duplicate. Before changing the entry, check your journal in case the first save arrived.</p>
+              <Link href="/nutrition" className="text-link" target="_blank" rel="noopener">Check journal in a new tab</Link>
+            </div>
           )}
           <Button
             className="w-full h-12"
@@ -329,7 +340,7 @@ export default function LogMeal() {
                 meal…
               </>
             ) : (
-              "Save to my journal"
+              save.isError ? "Retry saving my meal" : "Save to my journal"
             )}
           </Button>
         </fieldset>
