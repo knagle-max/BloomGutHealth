@@ -1,3 +1,4 @@
+import DeviceObservations from "@/components/DeviceObservations";
 import LabUnitReview from "@/components/LabUnitReview";
 import LabTrend from "@/components/LabTrend";
 import { useQuery } from "@tanstack/react-query";
@@ -59,6 +60,7 @@ export default function Progress() {
           Review food & symptom history
         </Link>
       </section>
+      <DeviceObservations />
       <WeeklyReviewPanel mode={mode} />
     </main>
   );
