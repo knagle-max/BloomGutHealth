@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { cmToHeight, heightToCm, kgToDisplay, displayToKg } from "../shared/display-units";
+import { cmToHeight, heightToCm, kgToDisplay, displayToKg, quantityFromCanonical, quantityToCanonical } from "../shared/display-units";
 import { experienceSettingsSchema, settingsPatchSchema } from "../shared/experience";
 
 test("independent mixed-unit settings remain valid",()=>{
@@ -22,4 +22,15 @@ test("round-trip height and weight across independent unit systems",()=>{
   for(const unit of ["kg","lb"] as const)
    assert.ok(Math.abs(displayToKg(kgToDisplay(kg,unit),unit)-kg)<1e-8);
  }
+});
+
+test("canonical display conversions for all remaining Amendment D quantities",()=>{
+ const cases=[
+  ["circumference","in",100],["hydration","L",1800],
+  ["hydration","US-fl-oz",1800],["temperature","F",37],
+  ["energy","kJ",2250],["foodWeight","oz",275]
+ ] as const;
+ for(const [kind,unit,value] of cases)
+  assert.ok(Math.abs(quantityToCanonical(kind,quantityFromCanonical(kind,value,unit),unit)-value)<1e-8);
+ assert.throws(()=>quantityFromCanonical("hydration",100,"in"));
 });
