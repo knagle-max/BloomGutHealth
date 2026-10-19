@@ -130,7 +130,7 @@ const mockService = () =>
     if (url.includes("/label/")) return label;
     if (url.includes("/product/")) return { product: packaged };
     return { products: [packaged] };
-  });
+  }, () => true);
 test("supplement adapter handles arbitrary brands and serving types without inferring missing macros or ambiguous vitamin units", () => {
   const variants = normalizeDSLD(label);
   assert.equal(variants.length, 2);
@@ -392,4 +392,15 @@ test("supplement search preserves formula phrases, searches beyond twelve candid
   assert.equal(request.searchParams.get("size"), "40");
   assert.equal(result.products.length, 19);
   assert.equal(result.products.some((p) => /sugar-free/.test(p.name)), false);
+});
+
+
+test("Open Food Facts is gated before requests and cache reads unless licensing is explicitly enabled",async()=>{
+ const calls:string[]=[];let approved=false;
+ const service=new ProductService(async(url)=>{calls.push(url);return {products:[]};},()=>approved);
+ const result=await service.search("synthetic package","food",mockStore(),"a");
+ assert.equal(calls.length,0);assert.ok(result.warnings.some(v=>/licensing/.test(v)));
+ await assert.rejects(()=>service.resolve({source:"off",id:"0012345678905"},mockStore(),"a"),/licensing/);
+ approved=true;await service.search("synthetic package","food",mockStore(),"a");assert.equal(calls.length,1);
+ approved=false;await service.search("synthetic package","food",mockStore(),"a");assert.equal(calls.length,1);
 });

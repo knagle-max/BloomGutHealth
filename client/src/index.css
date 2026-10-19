@@ -14,18 +14,6 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.08);
 
-  --background: 0 0% 98%;
-
-  --foreground: 220 15% 20%;
-
-  --border: 220 8% 88%;
-
-  --card: 0 0% 100%;
-
-  --card-foreground: 220 15% 20%;
-
-  --card-border: 220 8% 94%;
-
   --sidebar: 220 6% 96%;
 
   --sidebar-foreground: 220 15% 20%;
@@ -42,46 +30,23 @@
 
   --sidebar-ring: 165 70% 50%;
 
-  --popover: 0 0% 100%;
-
-  --popover-foreground: 220 15% 20%;
-
   --popover-border: 220 8% 94%;
-
-  --primary: 165 70% 40%;
-
-  --primary-foreground: 0 0% 100%;
-
-  --secondary: 220 10% 92%;
-
-  --secondary-foreground: 220 15% 25%;
-
-  --muted: 220 10% 94%;
-
-  --muted-foreground: 220 10% 45%;
-
-  --accent: 220 15% 90%;
-
-  --accent-foreground: 220 15% 25%;
 
   --destructive: 0 70% 50%;
 
   --destructive-foreground: 0 0% 100%;
 
-  --input: 220 12% 75%;
-  --ring: 165 70% 50%;
   --chart-1: 165 70% 45%;
   --chart-2: 210 85% 55%;
   --chart-3: 142 70% 45%;
   --chart-4: 45 95% 50%;
   --chart-5: 280 65% 55%;
 
-  --font-sans:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
   --font-serif: Georgia, serif;
   --font-mono: "Menlo", "Monaco", "Courier New", monospace;
-  --font-display: "Poppins", -apple-system, BlinkMacSystemFont, sans-serif;
-  --radius: 0.75rem;
+
+
   --shadow-2xs: 0px 1px 2px 0px hsl(220 15% 20% / 0.05);
   --shadow-xs: 0px 1px 3px 0px hsl(220 15% 20% / 0.08);
   --shadow-sm:
@@ -187,18 +152,6 @@
   --elevate-1: rgba(255, 255, 255, 0.04);
   --elevate-2: rgba(255, 255, 255, 0.09);
 
-  --background: 220 15% 10%;
-
-  --foreground: 0 0% 95%;
-
-  --border: 220 12% 18%;
-
-  --card: 220 12% 14%;
-
-  --card-foreground: 0 0% 95%;
-
-  --card-border: 220 12% 18%;
-
   --sidebar: 220 12% 12%;
 
   --sidebar-foreground: 0 0% 95%;
@@ -215,34 +168,12 @@
 
   --sidebar-ring: 165 65% 55%;
 
-  --popover: 220 12% 16%;
-
-  --popover-foreground: 0 0% 95%;
-
   --popover-border: 220 12% 20%;
-
-  --primary: 165 65% 45%;
-
-  --primary-foreground: 0 0% 100%;
-
-  --secondary: 220 10% 20%;
-
-  --secondary-foreground: 0 0% 90%;
-
-  --muted: 220 10% 18%;
-
-  --muted-foreground: 220 5% 65%;
-
-  --accent: 220 12% 20%;
-
-  --accent-foreground: 0 0% 90%;
 
   --destructive: 0 65% 50%;
 
   --destructive-foreground: 0 0% 100%;
 
-  --input: 220 12% 35%;
-  --ring: 165 65% 55%;
   --chart-1: 165 65% 55%;
   --chart-2: 210 80% 65%;
   --chart-3: 142 65% 55%;
@@ -457,16 +388,7 @@
   }
 }
 /* Bloom: warm, calm surfaces with room for both mobile and desktop. */
-:root {
-  --background: 45 30% 97%;
-  --foreground: 155 20% 18%;
-  --primary: 154 34% 29%;
-  --ring: 154 34% 35%;
-  --muted: 45 20% 92%;
-  --muted-foreground: 145 7% 42%;
-  --border: 45 16% 86%;
-  --card-border: 45 18% 89%;
-}
+
 .bloom-header {
   position: sticky;
   top: 0;

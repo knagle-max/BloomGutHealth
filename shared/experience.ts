@@ -24,12 +24,15 @@ export const practicalPreferencesSchema = z.object({
   pantry: z.array(z.string().trim().min(1).max(100)).max(100).default([]),
   equipment: z.array(z.enum(["stove", "oven", "microwave", "none"])).max(4).default(["stove", "oven"]),
 }).strict();
+export const onboardingSchema = z.object({status:z.enum(["not-started","skipped","complete"]).default("not-started")}).strict();
 export const experienceSettingsSchema = z.object({
   mode: z.enum(["everyday", "athlete"]).default("everyday"),
+  onboarding: onboardingSchema.default({}),
   athlete: athleteProfileSchema.default({}), practical: practicalPreferencesSchema.default({}),
 }).strict();
 export type ExperienceSettings = z.infer<typeof experienceSettingsSchema>;
 export const settingsPatchSchema = z.object({
+  onboarding: onboardingSchema.optional(),
   mode: z.enum(["everyday", "athlete"]).optional(), athlete: athleteProfileSchema.optional(), practical: practicalPreferencesSchema.optional(),
 }).strict().refine(v => Object.keys(v).length > 0);
 export const trainingSessionSchema = z.object({

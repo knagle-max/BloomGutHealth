@@ -1,3 +1,5 @@
+import EverydayStart from "@/components/EverydayStart";
+import { useExperience } from "@/lib/experience";
 import TodayFocus from "@/components/TodayFocus";
 import ResearchSummary from "@/components/ResearchSummary";
 import { useState } from "react";
@@ -28,6 +30,7 @@ import type { MicrobiomeSample } from "@shared/schema";
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const { settings, loading:settingsLoading } = useExperience();
   const [days, setDays] = useState(7);
   const meals = useQuery<LoggedMeal[]>({
     queryKey: ["/api/meals", user?.id],
@@ -68,7 +71,8 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <TodayFocus mealCount={summary.meals.length} loading={meals.isLoading} />
+      {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started"
+        ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} loading={meals.isLoading} />}
       <div className="section-heading">
         <div>
           <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
@@ -86,6 +90,8 @@ export default function Dashboard() {
             Try again
           </Button>
         </div>
+      ) : !meals.isLoading && !summary.meals.length ? (
+        <section className="bloom-panel"><p>No meals recorded today. Your nutrition snapshot will appear after you log food; an empty journal is not a measurement of zero intake.</p></section>
       ) : (
         <div className="daily-grid">
           {[
@@ -190,9 +196,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="journal-empty">
-            <span className="meal-icon">
-              <Utensils size={24} />
-            </span>
+            <img className="empty-journal-art" src="/brand/empty-journal-illustration.svg" width={160} height={100} alt="" />
             <div>
               <h3>A fresh page for today.</h3>
               <p>

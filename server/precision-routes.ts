@@ -5,6 +5,7 @@ import { z } from "zod";
 import type { IStorage } from "./storage";
 import {
   buildPrecisionReport,
+  labSchema,
   contextSchema,
   precisionEntrySchema,
   type TaxonReport,
@@ -511,6 +512,10 @@ export function registerPrecisionRoutes(
         .json({ error: p.error.issues.map((i) => i.message).join("; ") });
     try {
       const userId = req.session.userId!;
+      if (p.data.kind === "lab" && p.data.payload.unitReview &&
+        (p.data.payload.unitReview.status !== "pending" || p.data.payload.unitReview.confirmedAt !== null ||
+         p.data.payload.unitReview.supersedes !== null || p.data.payload.value !== p.data.payload.unitReview.originalValue))
+        return res.status(400).json({error:"Import provisional units first, then use the source-unit confirmation action."});
       if (p.data.kind === "checkin" && p.data.payload.planId) {
         const planId = p.data.payload.planId;
         const owned = await store.getPrecisionRecords(userId);
@@ -528,6 +533,25 @@ export function registerPrecisionRoutes(
     } catch (e) {
       unavailable(res, e);
     }
+  });
+  app.post("/api/precision/labs/:id/confirm-unit", async (req, res) => {
+    const request = z.object({unit:z.string().min(1).max(50)}).strict().safeParse(req.body);
+    if (!request.success) return res.status(400).json({error:"Choose the unit printed on your source report."});
+    try {
+      const userId=req.session.userId!, records=await store.getPrecisionRecords(userId);
+      const source=records.find(r=>r.id===req.params.id && r.kind==="lab");
+      if(!source) return res.status(404).json({error:"Laboratory record not found in your account."});
+      const parsed=labSchema.safeParse(source.payload);
+      if(!parsed.success || parsed.data.unitReview?.status!=="pending") return res.status(409).json({error:"This record is not awaiting a unit confirmation."});
+      const prior=records.find(r=>r.kind==="lab" && (r.payload as any)?.unitReview?.supersedes===source.id);
+      if(prior) return res.json(prior);
+      const original=parsed.data, review=original.unitReview!;
+      // Reinterpret the ORIGINAL number, never convert an earlier guessed normalization.
+      const payload=labSchema.safeParse({...original,value:review.originalValue,unit:request.data.unit,referenceLow:null,referenceHigh:null,
+        unitReview:{...review,status:"confirmed",confirmedAt:new Date().toISOString(),supersedes:source.id}});
+      if(!payload.success) return res.status(400).json({error:"Unsupported source unit for this marker."});
+      res.status(201).json(await store.insertPrecisionRecord(userId,"lab",payload.data));
+    }catch(e){ unavailable(res,e); }
   });
   app.post("/api/precision/plans", async (req, res) => {
     const p = z

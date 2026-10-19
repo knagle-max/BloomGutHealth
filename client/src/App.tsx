@@ -69,7 +69,13 @@ function AppContent() {
   const [location] = useLocation();
   const {mode}=useExperience();
   const { user } = useAuth();
-  useEffect(()=>{document.documentElement.dataset.experience=mode;},[mode]);
+  useEffect(()=>{
+    document.documentElement.dataset.experience=mode;
+    const icon=document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    const touch=document.querySelector<HTMLLinkElement>('link[rel="apple-touch-icon"]');
+    if(icon)icon.href=`/brand/bloom-icon-${mode}.svg`;
+    if(touch)touch.href=`/brand/bloom-icon-${mode}-192.png`;
+  },[mode]);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("theme");
@@ -88,6 +94,8 @@ function AppContent() {
       document.documentElement.classList.remove("dark");
     }
   }, [isDarkMode]);
+
+  useEffect(()=>{document.querySelector('meta[name="theme-color"]')?.setAttribute("content", mode === "athlete" ? "#0F1B2E" : isDarkMode ? "#182C24" : "#F7FAF8");},[mode,isDarkMode]);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);

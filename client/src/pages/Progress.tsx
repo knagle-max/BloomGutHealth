@@ -1,3 +1,5 @@
+import LabUnitReview from "@/components/LabUnitReview";
+import LabTrend from "@/components/LabTrend";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -31,26 +33,8 @@ export default function Progress() {
           <p role="status">Loading your laboratory history…</p>
         )}
         {report.error && <p role="alert">{report.error.message}</p>}
-        {report.data?.trends.map((t) => (
-          <article className="relationship-card" key={t.marker}>
-            <h3>{t.name}</h3>
-            <p>
-              {t.points.length} dated result(s).{" "}
-              {t.comparable
-                ? `Observed change: ${t.change! > 0 ? "+" : ""}${Number(t.change?.toFixed(3))} ${t.points[t.points.length - 1].unit}.`
-                : "A comparable change is not available."}
-            </p>
-            <p className="panel-note">{t.note}</p>
-            <details>
-              <summary>See recorded values</summary>
-              {t.points.map((v) => (
-                <p key={v.id}>
-                  {v.date.slice(0, 10)} · {v.value} {v.unit}
-                </p>
-              ))}
-            </details>
-          </article>
-        ))}
+        {report.data?.pendingLabs && <LabUnitReview labs={report.data.pendingLabs} />}
+        {report.data?.trends.map(t=><LabTrend key={t.marker} trend={t}/>)}
         {report.data && !report.data.trends.length && (
           <p>
             No dated laboratory results yet. Add a report's values to establish

@@ -1,6 +1,6 @@
+import BloomBrand from "./BloomBrand";
 import { ExperienceModeToggle, useExperience } from "@/lib/experience";
-import { Zap } from "lucide-react";
-import { Moon, Sun, Sprout, Plus, Menu } from "lucide-react";
+import { Moon, Sun, Plus, Menu } from "lucide-react";
 import { useState } from "react";
 import { NavigationLinks, navigationGroups } from "./AppNavigation";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
@@ -27,12 +27,7 @@ export default function AppHeader({
     <header className="bloom-header">
       <div className="bloom-header-inner">
         <Link href="/" className="bloom-brand" aria-label="Bloom home">
-          <span className="brand-mark">
-            {mode === "athlete" ? <span className="athlete-brand-mark"><Sprout size={25}/><Zap size={13}/></span> : <Sprout size={25} />}
-          </span>
-          <span>
-            bloom<span className="brand-period">.</span>{mode === "athlete" && <small className="athlete-wordmark">ATHLETE</small>}
-          </span>
+          <BloomBrand />
         </Link>
         <div className="header-context"><span>YOUR WORKSPACE</span><strong>{current}</strong></div>
         <div className="header-actions">
@@ -44,7 +39,7 @@ export default function AppHeader({
               <NavigationLinks onNavigate={() => setMenuOpen(false)} />
             </SheetContent>
           </Sheet>
-          <Link href="/log-meal" className="header-log">
+          <Link href="/log-meal" className="header-log" aria-label="Log a meal" title="Log a meal">
             <Plus size={16} /> Log meal
           </Link>
           {onToggleDarkMode && (

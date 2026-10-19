@@ -1,6 +1,6 @@
 import { eq, and, desc, sql } from "drizzle-orm";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
-import { contextSchema } from "../shared/precision-nutrition";
+import { labSchema, contextSchema } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -67,6 +67,18 @@ export class PrecisionStorage {
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
       const plan = payload as any;
+      if (kind === "lab" && plan?.unitReview?.status === "confirmed") {
+        const owned = await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
+        const decoded = owned.map(r=>({...r,payload:decryptPrecision(r.encryptedPayload,userId) as any}));
+        const prior = decoded.find(r=>r.payload?.unitReview?.supersedes===plan.unitReview.supersedes);
+        if(prior) return {id:prior.id,kind:prior.kind,payload:prior.payload,createdAt:prior.createdAt};
+        const source = decoded.find(r=>r.id===plan.unitReview.supersedes);
+        const parsed = labSchema.safeParse(source?.payload);
+        if(!parsed.success || parsed.data.unitReview?.status!=="pending" ||
+          parsed.data.unitReview.originalValue!==plan.value || parsed.data.marker!==plan.marker)
+          throw Error("LAB_SOURCE_CHANGED");
+      }
+
       if (kind === "plan" && plan?.type === "weekly-plan") {
         const [profile] = await tx
           .select()

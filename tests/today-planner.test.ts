@@ -233,7 +233,7 @@ test("goals create bounded actions and meal matches; raw preparation is separate
   assert.equal(recipe.ingredients[0].grams, 150);
   assert.ok(prep.minutes >= 35);
 });
-test("lab paste accepts multiple supported units, requires units/date, and flags duplicates and unrecognized rows", () => {
+test("lab paste accepts supported units, queues missing units, and flags duplicates and unrecognized rows", () => {
   const r = parseLabPaste(
     "Test, Value, Unit\nLDL, 3.2, mmol/L\nHbA1c\t5.4\t%\nVitamin D 75 nmol/L\nB12, 350, pmol/L",
     "2026-10-01T12:00:00Z",
@@ -247,7 +247,8 @@ test("lab paste accepts multiple supported units, requires units/date, and flags
     "LDL 3.2\nLDL 4 mg/dL\nLDL 5 mg/dL\nUnrecognized 7 U/L\nHbA1c 5 apples",
     "2026-10-01T12:00:00Z",
   );
-  assert.equal(bad.valid.length, 1);
+  assert.equal(bad.valid.length, 0);
+  assert.equal(bad.pending.length, 1);
   assert.equal(bad.errors.length, 4);
   assert.equal(parseLabPaste("LDL 3.2 mmol/L", "invalid").valid.length, 0);
 });

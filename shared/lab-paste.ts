@@ -26,13 +26,14 @@ export function parseLabPaste(
       line: number;
       payload: ReturnType<typeof labSchema.parse>;
     }> = [],
-    errors: Array<{ line: number; message: string }> = [];
+    errors: Array<{ line: number; message: string }> = [],
+    pending: typeof valid = [];
   rows.forEach((row, index) => {
     if (index === 0 && /^(marker|test|analyte)[,\t ]/i.test(row)) return;
-    // Unit is required, never guessed from magnitude. Reference intervals can be added in the detailed form.
+    // Suggestions use only the marker catalogue, never magnitude-based clinical inference.
     const match = row
       .trim()
-      .match(/^(.+?)[,\t ]+([0-9]+(?:\.[0-9]+)?)[,\t ]+([^,\t]+)(?:[,\t].*)?$/);
+      .match(/^(.+?)[,\t ]+([0-9]+(?:\.[0-9]+)?)(?:[,\t ]+([^,\t]+))?(?:[,\t].*)?$/);
     if (!match) {
       errors.push({
         line: index + 1,
@@ -54,20 +55,24 @@ export function parseLabPaste(
       });
       return;
     }
-    const rawUnit = match[3].trim().replace(/μ|µ/g, "u"),
+    const missingUnit = !match[3]?.trim();
+    const rawUnit = (match[3] || "").trim().replace(/μ|µ/g, "u"),
       unit = marker.units.find(
         (u) => u.toLowerCase().replace(/μ|µ/g, "u") === rawUnit.toLowerCase(),
       );
     const p = labSchema.safeParse({
       marker: marker.id,
       value: Number(match[2]),
-      unit: unit || rawUnit,
+      unit: missingUnit ? marker.units[0] : unit || rawUnit,
       measuredAt,
       laboratory: laboratory.trim() || "Not supplied",
       method: "Not supplied",
       fasting: "unknown",
       referenceLow: null,
       referenceHigh: null,
+      sourceInput:{text:row.slice(0,1000),number:match[2],suppliedUnit:missingUnit?null:rawUnit,capture:"pasted-report"},
+      ...(missingUnit ? {unitReview:{status:"pending",originalValue:Number(match[2]),originalUnit:null,
+        originalText:row.slice(0,1000),suggestedUnit:marker.units[0],confirmedAt:null,supersedes:null}} : {}),
       notes:
         "Imported from pasted results; verify against the original laboratory report.",
     });
@@ -78,14 +83,14 @@ export function parseLabPaste(
       });
       return;
     }
-    if (valid.some((v) => v.payload.marker === p.data.marker)) {
+    if ([...valid,...pending].some((v) => v.payload.marker === p.data.marker)) {
       errors.push({
         line: index + 1,
         message: `Duplicate ${marker.name}; import different test dates separately.`,
       });
       return;
     }
-    valid.push({ line: index + 1, payload: p.data });
+    (missingUnit ? pending : valid).push({ line: index + 1, payload: p.data });
   });
-  return { valid, errors };
+  return { valid, errors, pending };
 }

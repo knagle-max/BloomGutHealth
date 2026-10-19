@@ -285,7 +285,7 @@ export class ProductService {
     search: 0,
     read: 0,
   };
-  constructor(private fetchJson: ProductFetch = download) {}
+  constructor(private fetchJson: ProductFetch = download, private offEnabled: () => boolean = () => process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true") {}
   private async cached(key: string, read: () => Promise<any>) {
     const old = this.cache.get(key);
     if (old && old.until > Date.now()) return old.value;
@@ -368,7 +368,7 @@ export class ProductService {
             );
           }),
       );
-    if (kind !== "supplement")
+    if (kind !== "supplement" && this.offEnabled())
       jobs.push(
         this.cached("off-search:" + q.toLowerCase(), async () => {
           this.offLimit(true);
@@ -395,12 +395,13 @@ export class ProductService {
             );
           }),
       );
+    if(kind !== "supplement" && !this.offEnabled()) warnings.push("Public packaged-food lookup is unavailable pending source licensing review. Scan a privately saved label, enter its label, or choose a generic food.");
     await Promise.all(jobs);
     return {
       products: results,
       warnings,
       attribution:
-        "Generic foods: USDA FNDDS. Packaged foods: Open Food Facts (ODbL). Supplement labels: NIH DSLD. Saved labels are private to your account.",
+        `Generic foods: USDA FNDDS. ${this.offEnabled() ? "Packaged foods: Open Food Facts (ODbL). " : ""}Supplement labels: NIH DSLD. Saved labels are private to your account.`,
     };
   }
   async resolve(
@@ -431,6 +432,7 @@ export class ProductService {
         : all;
     }
     if (!/^\d{8,14}$/.test(ref.id)) throw Error("Invalid barcode.");
+    if(!this.offEnabled()) throw Error("Public packaged-food lookup is unavailable pending source licensing review. Enter or select a saved label instead.");
     return this.cached("off:" + ref.id, async () => {
       this.offLimit(false);
       const raw = await this.fetchJson(

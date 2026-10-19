@@ -61,10 +61,11 @@ export default function Demo() {
             Add to demo journal
           </Button>
           <p role="status">{entries.length} demo entries</p>
-          <p className="panel-note">
-            Example nutrient display: 350 kcal · 10 g protein · 8 g fiber. These
-            fixed illustrative values do not analyze your edited description.
-          </p>
+          <aside className="demo-fixed-example" aria-label="Separate fixed nutrition illustration">
+            <h3>Fixed illustration · not an analysis</h3>
+            <p>Example meal card: 350 kcal · 10 g protein · 8 g fiber.</p>
+            <p className="panel-note">These illustrative numbers belong only to this fixed example. They never change with the text above. Your demo journal records descriptions only; it does not calculate nutrients.</p>
+          </aside>
           {explanation.pathways.map((p) => (
             <details key={p.id}>
               <summary>{p.substrate}</summary>

@@ -15,3 +15,7 @@ The current pass, begun before this change, is explicitly authorized by the owne
 Separate chat threads do not have a direct live message channel. This repository and dated shared handoffs provide the review record; this document does not claim that another thread was notified.
 
 Pipeline: Received → Reviewed (architect-integrated for future work) → Implemented → Tested → Specialist review. Deployment is tracked separately and never implies clinical, security or product sign-off.
+
+## Revision 6 implementation return
+
+Future intake now uses Chief Architect v0.5 revision 6 and its Amended/B/C additions. Original brand assets are mandatory alongside consolidated guidance. `docs/architect-r6/IMPLEMENTATION_STATUS.md` maps this increment, original source/backlog copies and acceptance limits. Review the candidate branch and paired synthetic screenshot package before giving exact-build specialist acceptance. This is a review branch; no release approval is implied.

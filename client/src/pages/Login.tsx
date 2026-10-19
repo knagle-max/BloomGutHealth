@@ -1,3 +1,4 @@
+import BloomBrand from "@/components/BloomBrand";
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -5,7 +6,6 @@ import { Label } from '@/components/ui/label';
 import { useLocation } from 'wouter';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/auth';
-import heroImage from '@assets/generated_images/Microbiome_hero_background_image_ffdb574d.png';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -39,17 +39,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="relative h-48 overflow-hidden">
-        <img 
-          src={heroImage} 
-          alt="Microbiome background" 
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="font-display text-4xl font-bold text-white">Bloom</h1>
-        </div>
-      </div>
+      <div className="auth-brand"><BloomBrand /><p>Precision nutrition made practical.</p></div>
 
       <div className="flex-1 px-4 py-8 max-w-md mx-auto w-full">
         <div className="mb-8">

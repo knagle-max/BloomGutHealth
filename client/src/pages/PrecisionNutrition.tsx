@@ -1,3 +1,4 @@
+import LabUnitReview from "@/components/LabUnitReview";
 import { useExperience } from "@/lib/experience";
 import TodayPlanner from "@/components/TodayPlanner";
 import QuickLabEntry from "@/components/QuickLabEntry";
@@ -648,6 +649,7 @@ export default function PrecisionNutrition() {
             {tab === "labs" && (
               <>
                 <QuickLabEntry />
+                <LabUnitReview labs={r.pendingLabs || []} />
                 <details className="bloom-panel">
                   <summary>
                     Add one result with reference range & details

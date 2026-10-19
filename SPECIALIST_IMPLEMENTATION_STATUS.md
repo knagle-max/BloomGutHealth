@@ -67,3 +67,7 @@ Status labels: **Tested software** means the listed portion has implementation a
 - Reduced-motion style verified in browser. Complete accessibility/user comprehension, physical-phone camera and independent scientific/security assessments remain open.
 - Shared-budget tests use two limiter objects against one embedded PostgreSQL instance; they are not a deployed multi-region stress test.
 - Final GitHub/Neon/production evidence is reported in the PR/release follow-up after this commit. Do not infer deployment from local test success.
+
+## Architect v0.5 revision 6 follow-up (18 October 2026)
+
+The next increment is tracked in `docs/architect-r6/IMPLEMENTATION_STATUS.md`, using the architect's revision 6 plus amendments B and C and the original brand archive. The original 67-item backlog is retained in the private review package; it has not been globally re-certified by this pass. Current MKT-001–010 source meanings supersede the earlier eight-row MKT shorthand in this ledger where definitions differ. New code/brand/lab-unit evidence is associated with a separate review candidate and before/after package; no prior open specialist, legal, operational or clinical acceptance item is silently closed.

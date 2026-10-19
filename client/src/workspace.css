@@ -1,26 +1,6 @@
 /* Shared workspace: calm surfaces, clear hierarchy, and task-based navigation. */
-:root {
-  --background: 150 15% 97%;
-  --foreground: 155 18% 17%;
-  --primary: 158 43% 29%;
-  --primary-foreground: 0 0% 100%;
-  --muted: 150 12% 94%;
-  --muted-foreground: 150 7% 40%;
-  --border: 150 11% 87%;
-  --card-border: 150 11% 87%;
-  --ring: 158 43% 35%;
-}
-.dark {
-  --background: 155 15% 10%;
-  --foreground: 145 13% 91%;
-  --card: 155 12% 14%;
-  --muted: 155 12% 18%;
-  --muted-foreground: 145 7% 66%;
-  --border: 155 10% 25%;
-  --card-border: 155 10% 25%;
-  --primary: 150 34% 62%;
-  --primary-foreground: 155 24% 12%;
-}
+
+
 html { scroll-padding-top: 96px; }
 body { -webkit-font-smoothing: antialiased; }
 .skip-link { position:fixed; top:8px; left:240px; z-index:100; padding:12px 18px; border-radius:8px; background:hsl(var(--foreground)); color:hsl(var(--background)); transform:translateY(-160%); }
@@ -116,8 +96,8 @@ body { -webkit-font-smoothing: antialiased; }
 .header-actions button { min-width:44px; min-height:44px; }.app-shell .profile-link { width:40px; height:40px; }.mobile-navigation-sheet > button:last-child { min-width:40px; min-height:40px; display:grid; place-items:center; }
 .workspace-tabs > [role=tabpanel][data-state=inactive] { display:none; }
 /* Athlete mode has its own identity, not a reskin of everyday targets. */
-:root[data-experience=athlete] { --primary:218 65% 37%;--ring:218 65% 46%;--primary-foreground:0 0% 100%;--background:215 35% 97%;--foreground:218 30% 17%;--muted:215 24% 93%;--muted-foreground:218 13% 40%;--border:215 23% 86%;--card-border:215 23% 86%; }
-:root.dark[data-experience=athlete] { --primary:211 80% 72%;--ring:211 75% 67%;--primary-foreground:220 45% 13%;--background:219 28% 10%;--foreground:215 32% 93%;--card:219 24% 14%;--muted:218 21% 19%;--muted-foreground:215 18% 70%;--border:218 21% 28%;--card-border:218 21% 28%; }
+
+
 .athlete-mode .bloom-header { border-bottom:2px solid hsl(var(--primary)/.45); }.athlete-brand-mark{position:relative;display:flex;}.athlete-brand-mark>svg:last-child{position:absolute;bottom:-4px;right:-4px;fill:hsl(var(--primary));stroke:hsl(var(--card));stroke-width:1.2;}.athlete-wordmark{display:block;font-size:8px;letter-spacing:2.4px;line-height:1;margin:5px 0 0 1px;color:hsl(var(--primary));}.athlete-mode .profile-link{background:hsl(var(--primary)/.12);color:hsl(var(--primary));}
 .experience-switch{position:relative;}.experience-switch select{height:40px;border:1px solid hsl(var(--border));border-radius:8px;background:hsl(var(--primary)/.07);color:hsl(var(--primary));padding:6px 8px;font-size:12px;font-weight:600;max-width:100%;}.mode-error{position:absolute;top:44px;right:0;background:hsl(var(--card));border:1px solid hsl(var(--border));padding:6px;font-size:11px;white-space:nowrap;}
 .athlete-workspace .science-heading{border-left:3px solid hsl(var(--primary));padding-left:18px;}.athlete-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:5px;background:hsl(var(--primary)/.07);border:1px solid hsl(var(--primary)/.15);border-radius:12px;}.athlete-tabs a{padding:12px 16px;border-radius:8px;color:hsl(var(--muted-foreground));font-size:13px;}.athlete-tabs a[aria-current=page]{background:hsl(var(--card));color:hsl(var(--primary));font-weight:600;box-shadow:0 1px 5px hsl(var(--foreground)/.06);}.athlete-day-selector{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}.athlete-day-selector input{margin:0;}
@@ -144,7 +124,7 @@ body { -webkit-font-smoothing: antialiased; }
 
 /* Specialist handoff: shared accessible component tokens; modes change identity,
    never evidence confidence. These rules supersede legacy microtext guidance. */
-:root { --space-unit:4px; --control-size:44px; --surface-radius:14px; --body-size:16px; --note-size:14px; }
+:root { --space-unit:4px;     }
 .app-shell :is(a,button,input,select,textarea,summary):focus-visible { outline:3px solid hsl(var(--ring)); outline-offset:3px; }
 .app-shell main :is(button:not([role=checkbox]),.text-link,.hero-button,select,input:not([type=checkbox]):not([type=radio])) { min-height:var(--control-size); }
 .app-shell .text-link { display:inline-flex; align-items:center; gap:6px; }

@@ -10,7 +10,7 @@ import {
 } from "./meal-intelligence";
 import { pathways, evidenceSources } from "./science-coach";
 
-export const PRECISION_VERSION = "precision-2026-10-18.2";
+export const PRECISION_VERSION = "precision-2026-10-18.3";
 export const precisionSources = [
   {
     id: "pnpla3-study",
@@ -459,6 +459,16 @@ export const labSchema = z
     referenceLow: z.number().finite().nonnegative().nullable(),
     referenceHigh: z.number().finite().nonnegative().nullable(),
     notes: z.string().max(1000).default(""),
+    sourceInput: z.object({text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),capture:z.literal("pasted-report")}).strict().optional(),
+    unitReview: z.object({
+      status: z.enum(["pending", "confirmed"]),
+      originalValue: z.number().finite().nonnegative().max(1000000),
+      originalUnit: z.string().max(50).nullable(),
+      originalText: z.string().max(1000),
+      suggestedUnit: z.string().max(50),
+      confirmedAt: z.string().datetime().nullable(),
+      supersedes: z.string().max(100).nullable(),
+    }).strict().optional(),
   })
   .strict()
   .superRefine((l, ctx) => {
@@ -484,6 +494,7 @@ export const labSchema = z
   });
 export type Lab = z.infer<typeof labSchema>;
 export function canonicalLab(l: Lab) {
+  if (l.unitReview?.status === "pending") throw Error("Confirm the source unit before normalizing this laboratory result.");
   let value = l.value,
     unit = l.unit;
   if (
@@ -522,6 +533,7 @@ export function canonicalLab(l: Lab) {
   return { value, unit };
 }
 export function labFlag(l: Lab) {
+  if (l.unitReview?.status === "pending") return "unit unconfirmed";
   return l.referenceHigh !== null && l.value > l.referenceHigh
     ? "above reported range"
     : l.referenceLow !== null && l.value < l.referenceLow
@@ -694,13 +706,16 @@ export function buildPrecisionReport(
       payload: r.payload,
     }),
   }));
-  const labs = entries
+  const allLabs = entries
     .flatMap((e) =>
       e.parsed.success && e.parsed.data.kind === "lab"
         ? [{ ...e.parsed.data.payload, id: e.record.id }]
         : [],
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
+  const superseded = new Set(allLabs.flatMap(l => l.unitReview?.supersedes ? [l.unitReview.supersedes] : []));
+  const pendingLabs = allLabs.filter(l => l.unitReview?.status === "pending" && !superseded.has(l.id));
+  const labs = allLabs.filter(l => l.unitReview?.status !== "pending" && !superseded.has(l.id));
   const latest = markerDefinitions.flatMap((m) => {
     const l = labs.find((l) => l.marker === m.id);
     return l
@@ -1025,15 +1040,12 @@ export function buildPrecisionReport(
     if (!series.length) return [];
     const first = series[0],
       last = series[series.length - 1];
-    const comparable =
-      series.length > 1 &&
-      first.laboratory === last.laboratory &&
-      first.method === last.method &&
-      !/^unknown$/i.test(first.method) &&
-      first.fasting === last.fasting &&
-      (!["glucose", "triglycerides"].includes(m.id) ||
-        first.fasting !== "unknown") &&
-      +new Date(first.measuredAt) < +new Date(last.measuredAt);
+    const known = (v: string) => !!v.trim() && !/^(unknown|not supplied)$/i.test(v.trim());
+    const comparable = series.length > 1 && known(first.laboratory) && known(first.method) &&
+      new Set(series.map(l => l.measuredAt)).size === series.length &&
+      series.every(l => l.laboratory === first.laboratory && l.method === first.method &&
+        l.fasting === first.fasting && canonicalLab(l).unit === canonicalLab(first).unit) &&
+      (!["glucose", "triglycerides"].includes(m.id) || first.fasting !== "unknown");
     return [
       {
         marker: m.id,
@@ -1041,6 +1053,8 @@ export function buildPrecisionReport(
         points: series.map((l) => ({
           id: l.id,
           date: l.measuredAt,
+          laboratory: l.laboratory, method: l.method, sourceValue: l.value, sourceUnit: l.unit,
+          provenance: l.unitReview ? "User-confirmed source unit" : "User-entered result",
           ...canonicalLab(l),
         })),
         comparable,
@@ -1061,6 +1075,7 @@ export function buildPrecisionReport(
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
   return {
+    pendingLabs,
     version: PRECISION_VERSION,
     generatedAt: new Date(now).toISOString(),
     context,
