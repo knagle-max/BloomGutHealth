@@ -1350,6 +1350,20 @@ export default function PrecisionNutrition() {
                     ].map(([name, label, max]) => (
                       <label key={name}>
                         {label}
+                        {name==="weightKg"&&<select
+                          aria-label="Unit for check-in weight"
+                          className="bloom-input w-full"
+                          disabled={unitsSaving}
+                          value={settings.displayUnits.bodyWeight}
+                          onChange={e=>patch({displayUnits:{...settings.displayUnits,bodyWeight:e.target.value as "kg"|"lb"}})}
+                        ><option value="kg">kg</option><option value="lb">lb</option></select>}
+                        {name==="waistCm"&&<select
+                          aria-label="Unit for check-in waist"
+                          className="bloom-input w-full"
+                          disabled={unitsSaving}
+                          value={settings.displayUnits.circumference}
+                          onChange={e=>patch({displayUnits:{...settings.displayUnits,circumference:e.target.value as "cm"|"in"}})}
+                        ><option value="cm">cm</option><option value="in">inches</option></select>}
                         <input
                           name={String(name)}
                           className="bloom-input w-full"
