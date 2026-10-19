@@ -17,3 +17,31 @@ export function cmToHeight(cm:number,unit:HeightUnit):{primary:number;inches:num
 }
 export function kgToDisplay(kg:number,unit:WeightUnit):number {return unit==="lb"?kg*poundsPerKg:kg;}
 export function displayToKg(value:number,unit:WeightUnit):number {return unit==="lb"?value/poundsPerKg:value;}
+
+/** Source values stay canonical; presentation never mutates recorded provenance. */
+export type QuantityKind = "circumference"|"hydration"|"temperature"|"energy"|"foodWeight";
+export type QuantityDisplayUnit = "cm"|"in"|"mL"|"L"|"US-fl-oz"|"C"|"F"|"kcal"|"kJ"|"g"|"oz";
+const allowed: Record<QuantityKind, readonly QuantityDisplayUnit[]> = {
+ circumference:["cm","in"], hydration:["mL","L","US-fl-oz"],
+ temperature:["C","F"], energy:["kcal","kJ"],foodWeight:["g","oz"],
+};
+export function quantityFromCanonical(kind:QuantityKind,value:number,unit:QuantityDisplayUnit):number {
+ if (!Number.isFinite(value) || !allowed[kind].includes(unit)) throw Error("Invalid display unit or value");
+ switch(kind){
+  case "circumference":return unit==="in"?value/2.54:value;
+  case "hydration":return unit==="L"?value/1000:unit==="US-fl-oz"?value/29.5735295625:value;
+  case "temperature":return unit==="F"?value*9/5+32:value;
+  case "energy":return unit==="kJ"?value*4.184:value;
+  case "foodWeight":return unit==="oz"?value/28.349523125:value;
+ }
+}
+export function quantityToCanonical(kind:QuantityKind,value:number,unit:QuantityDisplayUnit):number {
+ if (!Number.isFinite(value) || !allowed[kind].includes(unit)) throw Error("Invalid entry unit or value");
+ switch(kind){
+  case "circumference":return unit==="in"?value*2.54:value;
+  case "hydration":return unit==="L"?value*1000:unit==="US-fl-oz"?value*29.5735295625:value;
+  case "temperature":return unit==="F"?(value-32)*5/9:value;
+  case "energy":return unit==="kJ"?value/4.184:value;
+  case "foodWeight":return unit==="oz"?value*28.349523125:value;
+ }
+}
