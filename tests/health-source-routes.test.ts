@@ -21,7 +21,7 @@ test("health source routes enforce authentication, export account scope and expl
    assert.equal((await send("/export","GET","")).status,401);
    const a=await send("/export");assert.equal(a.status,200);
    assert.equal(a.headers.get("cache-control"),"no-store");
-   assert.match(a.headers.get("content-disposition")||"","attachment");
+   assert.match(a.headers.get("content-disposition")||"",/attachment/);
    const body=await a.json();assert.equal(body.observations[0].marker,"a");
    const b=await (await send("/export","GET","b")).json();assert.equal(b.observations[0].marker,"b");
    assert.equal((await send("/apple_health","DELETE")).status,400);
