@@ -45,7 +45,9 @@ export function reconcileHealthBatch(
   if (candidate.length > 1000) throw new Error("HEALTH_BATCH_LIMIT");
   const validated = candidate.map(item => healthObservationSchema.parse(item));
   const approved = consents.map(item => healthImportConsentSchema.parse(item));
-  const active = new Map(approved.filter(c => !c.revokedAt || Date.parse(c.revokedAt) > now.getTime())
+  if (new Set(approved.map(c => c.provider)).size !== approved.length) throw new Error("HEALTH_DUPLICATE_CONSENT");
+  const active = new Map(approved.filter(c => Date.parse(c.grantedAt) <= now.getTime() &&
+    (!c.revokedAt || Date.parse(c.revokedAt) > now.getTime()))
     .map(c => [c.provider, new Set(c.allowedKinds)]));
   const state = new Map(existing.map(item => [healthObservationKey(healthObservationSchema.parse(item)), item]));
   const accepted = new Map<string, HealthObservation>();
@@ -63,8 +65,13 @@ export function reconcileHealthBatch(
       else conflicts++;
       continue;
     }
-    // Revision identifiers are opaque, never ordered lexicographically.
-    // An authenticated connector must establish the revision sequence.
+    // Revision IDs are opaque; reject a correction whose receipt predates
+    // the stored one, rather than rolling a record back after an old retry.
+    // Equal receipt times for different revisions cannot establish order.
+    if (prior && Date.parse(item.receivedAt) <= Date.parse(prior.receivedAt)) {
+      conflicts++;
+      continue;
+    }
     state.set(key, item);
     accepted.set(key, item);
   }
