@@ -6,7 +6,7 @@ import QuickLabEntry from "@/components/QuickLabEntry";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, useRef, type FormEvent } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -179,6 +179,25 @@ function ContextEditor({
 }
 export default function PrecisionNutrition() {
   const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
+  const [weightDraft,setWeightDraft]=useState("");
+  const [waistDraft,setWaistDraft]=useState("");
+  const entryUnits=useRef({bodyWeight:settings.displayUnits.bodyWeight,circumference:settings.displayUnits.circumference});
+  useEffect(()=>{
+    const previous=entryUnits.current, next=settings.displayUnits;
+    if(previous.bodyWeight!==next.bodyWeight){
+      setWeightDraft(old=>{
+        if(!old.trim()||!Number.isFinite(Number(old))||Number(old)<=0)return old;
+        return String(Number(kgToDisplay(displayToKg(Number(old),previous.bodyWeight),next.bodyWeight).toFixed(5)));
+      });
+    }
+    if(previous.circumference!==next.circumference){
+      setWaistDraft(old=>{
+        if(!old.trim()||!Number.isFinite(Number(old))||Number(old)<=0)return old;
+        return String(Number(quantityFromCanonical("circumference",quantityToCanonical("circumference",Number(old),previous.circumference),next.circumference).toFixed(5)));
+      });
+    }
+    entryUnits.current={bodyWeight:next.bodyWeight,circumference:next.circumference};
+  },[settings.displayUnits.bodyWeight,settings.displayUnits.circumference]);
   const [tab, setTab] = useState("overview"),
     [sampleId, setSampleId] = useState("");
   const [status, setStatus] = useState(""),
@@ -1302,9 +1321,9 @@ export default function PrecisionNutrition() {
                         kind: "checkin",
                         payload: {
                           measuredAt: date(d, "measuredAt"),
-                          weightKg: number(d, "weightKg")===null?null:displayToKg(Number(d.get("weightKg")),settings.displayUnits.bodyWeight),
+                          weightKg: weightDraft.trim()===""?null:displayToKg(Number(weightDraft),entryUnits.current.bodyWeight),
                           bodyFatPercent: number(d, "bodyFatPercent"),
-                          waistCm: number(d, "waistCm")===null?null:quantityToCanonical("circumference",Number(d.get("waistCm")),settings.displayUnits.circumference),
+                          waistCm: waistDraft.trim()===""?null:quantityToCanonical("circumference",Number(waistDraft),entryUnits.current.circumference),
                           bloating: number(d, "bloating"),
                           energy: number(d, "energy"),
                           adherencePercent: number(d, "adherencePercent"),
@@ -1368,6 +1387,7 @@ export default function PrecisionNutrition() {
                           name={String(name)}
                           className="bloom-input w-full"
                           type="number"
+                          {...(name==="weightKg"?{value:weightDraft,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>setWeightDraft(e.target.value)}:name==="waistCm"?{value:waistDraft,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>setWaistDraft(e.target.value)}:{})}
                           min={
                             name === "weightKg" ||
                             name === "bodyFatPercent" ||
