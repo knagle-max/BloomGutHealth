@@ -46,15 +46,22 @@ export function reconcileHealthBatch(
   const validated = candidate.map(item => healthObservationSchema.parse(item));
   const approved = consents.map(item => healthImportConsentSchema.parse(item));
   if (new Set(approved.map(c => c.provider)).size !== approved.length) throw new Error("HEALTH_DUPLICATE_CONSENT");
+  // Consent is checked both at import and at the recorded receipt time.
+  // An active permission cannot retroactively authorize previously received
+  // data; equally, a future-dated receipt cannot use a revoked permission.
   const active = new Map(approved.filter(c => Date.parse(c.grantedAt) <= now.getTime() &&
     (!c.revokedAt || Date.parse(c.revokedAt) > now.getTime()))
-    .map(c => [c.provider, new Set(c.allowedKinds)]));
+    .map(c => [c.provider, c]));
   const state = new Map(existing.map(item => [healthObservationKey(healthObservationSchema.parse(item)), item]));
   const accepted = new Map<string, HealthObservation>();
   let replayed = 0, rejected = 0, conflicts = 0;
   for (const item of validated) {
-    if (item.source.provider === "manual" || !active.get(item.source.provider)?.has(item.kind) ||
-      Date.parse(item.receivedAt) > now.getTime() + 5 * 60_000) {
+    const consent = active.get(item.source.provider as "apple_health" | "health_connect");
+    const received = Date.parse(item.receivedAt);
+    if (item.source.provider === "manual" || !consent?.allowedKinds.includes(item.kind) ||
+      received < Date.parse(consent.grantedAt) ||
+      (consent.revokedAt !== null && received >= Date.parse(consent.revokedAt)) ||
+      received > now.getTime() + 5 * 60_000) {
       rejected++;
       continue;
     }
