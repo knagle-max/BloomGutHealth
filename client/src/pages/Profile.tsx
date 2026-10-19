@@ -2,7 +2,7 @@ import { useExperience } from "@/lib/experience";
 import { formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
 import type { DisplayUnits } from "@shared/experience";
 import ExperienceDataControls from "@/components/ExperienceDataControls";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -23,6 +23,7 @@ export default function Profile({
   const [heightEntry,setHeightEntry] = useState<HeightEntry>({unit:"cm",primary:"",inches:""});
   const [massEntry,setMassEntry] = useState<MassEntry>({unit:"kg",value:""});
   const [entryError,setEntryError] = useState("");
+  const lastHydratedProfile = useRef<string | null>(null);
   const profile = useQuery<any>({ queryKey: ["/api/profile"] });
   const [form, setForm] = useState({
     sex: "",
@@ -64,9 +65,14 @@ export default function Profile({
   // Do not reconstruct them from saved Profile values after a preference PATCH:
   // doing so silently discards unsaved measurements.
   useEffect(()=>{
-    if (loadingUnits || profile.isLoading) return;
-    setHeightEntry(formatHeightEntry(profile.data?.heightCm ?? null,units.height));
-    setMassEntry(formatMassEntry(profile.data?.weightKg ?? null,units.bodyWeight));
+    if (loadingUnits || profile.isLoading || !profile.data || !user) return;
+    // Hydrate only when the account or *saved measurement* changes, not when
+    // unrelated settings requests finish. This protects unsaved edits.
+    const stamp = JSON.stringify([user.id, profile.data.heightCm ?? null, profile.data.weightKg ?? null]);
+    if (lastHydratedProfile.current === stamp) return;
+    lastHydratedProfile.current = stamp;
+    setHeightEntry(formatHeightEntry(profile.data.heightCm ?? null,units.height));
+    setMassEntry(formatMassEntry(profile.data.weightKg ?? null,units.bodyWeight));
   },[profile.data?.heightCm,profile.data?.weightKg,user?.id,loadingUnits,profile.isLoading]);
   const heightParsed=parseHeightEntry(heightEntry);
   const massParsed=parseMassEntry(massEntry);
