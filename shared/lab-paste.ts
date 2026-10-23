@@ -20,7 +20,7 @@ export function parseLabPaste(
 ) {
   if (text.length > 30000)
     throw Error("Paste up to 30,000 characters at a time.");
-  if (!Number.isFinite(Date.parse(measuredAt))) throw Error("Choose a valid report date.");
+  if (!Number.isFinite(Date.parse(measuredAt))) return { valid: [], pending: [], errors: [{ line: 0, message: "Choose a valid report date." }] };
   const rows = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
   if (rows.length > 50) throw Error("Paste up to 50 results at a time.");
   const valid: Array<{

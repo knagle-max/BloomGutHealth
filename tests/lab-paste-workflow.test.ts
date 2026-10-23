@@ -26,6 +26,6 @@ test("ambiguous extra pasted details cannot quietly become a source unit",()=>{
  assert.equal(r.valid.length,0);assert.equal(r.errors.length,1);
 });
 test("invalid dates and excess rows are rejected before saving",()=>{
- assert.throws(()=>parseLabPaste("LDL, 2, mmol/L","not-a-date"));
+ assert.equal(parseLabPaste("LDL, 2, mmol/L","not-a-date").valid.length,0);
  assert.throws(()=>parseLabPaste(Array(51).fill("ALT, 15, U/L").join("\n"),date));
 });
