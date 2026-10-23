@@ -72,3 +72,22 @@ test("distance and hydration require independent metric-level consent",()=>{
  assert.equal(reconcileHealthBatch([], [distance,hydration],consent,now).rejected,2);
  assert.throws(()=>reconcileHealthBatch([], [{...hydration,value:0}],metrics,now));
 });
+
+
+test("same-batch duplicate revisions cannot overwrite the first accepted observation",()=>{
+ const changed={...row,value:2900};
+ const result=reconcileHealthBatch([], [row,changed],consent,now);
+ assert.equal(result.accepted.length,1);
+ assert.equal(result.accepted[0].value,1600);
+ assert.equal(result.conflicts,1);
+ const duplicate=reconcileHealthBatch([], [row,row],consent,now);
+ assert.equal(duplicate.accepted.length,1);
+ assert.equal(duplicate.replayed,1);
+});
+test("same-batch revised records cannot override the first receipt",()=>{
+ const second={...row,source:{...row.source,sourceRevision:"2"},receivedAt:"2026-10-18T17:00:00Z",value:2200};
+ const result=reconcileHealthBatch([], [row,second],consent,now);
+ assert.equal(result.accepted.length,1);
+ assert.equal(result.accepted[0].source.sourceRevision,"1");
+ assert.equal(result.conflicts,1);
+});

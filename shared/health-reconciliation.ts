@@ -54,6 +54,7 @@ export function reconcileHealthBatch(
     .map(c => [c.provider, c]));
   const state = new Map(existing.map(item => [healthObservationKey(healthObservationSchema.parse(item)), item]));
   const accepted = new Map<string, HealthObservation>();
+  const seenInBatch = new Map<string, HealthObservation>();
   let replayed = 0, rejected = 0, conflicts = 0;
   for (const item of validated) {
     const consent = active.get(item.source.provider as "apple_health" | "health_connect");
@@ -66,6 +67,17 @@ export function reconcileHealthBatch(
       continue;
     }
     const key = healthObservationKey(item);
+    // A single upload must not carry contradictory versions of the same record.
+    // Reject any later occurrence even if it has a different revision, so
+    // caller cannot silently replace the first accepted item in one batch.
+    if (seenInBatch.has(key)) {
+      const first = seenInBatch.get(key)!;
+      if (first.source.sourceRevision === item.source.sourceRevision &&
+          JSON.stringify(first) === JSON.stringify(item)) replayed++;
+      else conflicts++;
+      continue;
+    }
+    seenInBatch.set(key, item);
     const prior = state.get(key);
     if (prior && prior.source.sourceRevision === item.source.sourceRevision) {
       if (JSON.stringify(prior) === JSON.stringify(item)) replayed++;
