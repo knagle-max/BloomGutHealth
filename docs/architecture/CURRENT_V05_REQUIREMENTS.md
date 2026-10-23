@@ -527,3 +527,32 @@ Following meaningful implementation slices, report in concise form: requirement 
 **Core workflow: implement → test → commit → push to authorized review branch → deploy safe Render preview → summarize → continue.** Specialist sign-offs determine eventual acceptance/public launch, not permission to make normal development commits. No GitHub change is made by the Chief Architect through this amendment; Developer remains sole code/GitHub owner.
 
 > **Product Owner visual-evidence clarification (2026-10-23):** Before/after images are selective, not routine. Create them only for clearly visible, substantial UI/brand/workflow transformations. Mark the actual changes with small numbered callouts/highlights and supply unmarked originals. Never present near-identical screens as a meaningful comparison. For minor or invisible work, report code/tests and preview behavior instead. This rule supersedes broader comparison wording elsewhere in this document.
+
+
+---
+
+## Architect amendment — 2026-10-23: User Testing redundancy audit + Branding approval (active v0.5)
+
+**Sources:** `Bloom_User_Testing_Usability_Redundancy_Audit_2026-10-23.md` (UT-RED-201–208; reviewed source head `fe3d3377194ec54908c7f94990d842184c4f69db`) and `Bloom_Branding_UX_Signoff_UT_Redundancy_2026-10-23.md` (MKT-RED-001–005; approves 8/8 for requirements consolidation with conditions). Specialist findings are source-inspected hypotheses, **not independently browser-reproduced defects** or final implementation approval. Codex must inspect the latest working tree and avoid reimplementing already-fixed behavior.
+
+**Architect decision:** ACCEPT for v0.5 implementation/verification. Use the current shared preferences store, canonical measurement representation, existing lab workflows and existing UX components; no competing feature systems. The P0 statuses apply to correctness and the corresponding user-visible controls, but do not interrupt unrelated development or safe Render preview deployment.
+
+| Source ID | Priority | Canonical implementation and acceptance delta | Overlap/owners |
+|---|---|---|---|
+| **UT-RED-201** | **P0** | My Biology Progress: one authoritative edit control per display-unit preference on the same screen; check-in fields show suffixes, with convenient link to central preferences. When switching kg↔lb or cm↔in while editing, convert unsaved drafts **exactly once** and persist canonical equivalent values. Verify Profile/Progress/Athlete consistency. | ARC-UNIT-001, MKT-RED-001; Codex, Branding, User Testing |
+| **UT-RED-202** | **P0** | Profile: select a single coherent master unit-preferences group **or** contextual in-field controls, **not both**. Remove redundant dropdowns for height/weight, preserve focus, drafts, validation and saved meaning when switching units. | ARC-UNIT-001, MKT-RED-001 |
+| **UT-RED-203** | P1 | Progress: dated observations, comparable trends, and goal outcomes first; settings and undated profile snapshot secondary; guide sparse/empty states to first *dated* observation. | UT-107, MKT-RED-003 |
+| **UT-RED-204** | P1 | One canonical dietary-preferences editor/data source; elsewhere concise editable summary or direct link, preserving low-friction planner entry. Display allergy/restriction prominently; distinguish preferences from clinically sourced Biology goals; propagate edits across workspaces. | UT-101, MKT-RED-004 |
+| **UT-RED-205** | P1 | One primary **Add lab results** entry point with explicit **Paste several** and **Enter one** submodes; shared date/source/method, row-level unit confirmation, partial import corrections, retry idempotence and error handling; never treat guessed units as verified. | BIO-LAB-207, UT-RED-207, MKT-RED-003 |
+| **UT-RED-206** | P1 | General current Profile weight and Athlete training/competition reference mass may legitimately differ. Preserve **independent explicitly labelled values**, source/date/purpose. Offer **Use latest Profile weight** with preview and affirmative confirmation; never silently synchronize, overwrite or duplicate dated observations. Biology reviews semantics. | Athlete workflows, MKT-RED-004, BIO-26-305 |
+| **UT-RED-207** | **P0 safety** | Display preferences **must never rewrite original laboratory source units, raw values or assay context**. Clearly distinguish reported, converted, inferred/unconfirmed, and missing units. Unconfirmed interpretations must not drive verified clinical classifications/recommendations. Test unknown/ambiguous units and corrections. | BIO-LAB-207, LEG-002/003, MKT-RED-002; Biology/Security |
+| **UT-RED-208** | P1 | Reusable cross-workspace regression plan: canonical owner/editor/read-only summary map for units/preferences/goals/mass/labs; 320/375px/tablet/desktop, 200% zoom, keyboard/screen reader, account switching, error/loading/empty/retry, navigating away/back, and unit change during unsaved edits. Record synthetic and independent-persona findings separately. | UT-108, MKT-RED-005 |
+
+**Branding acceptance refinements (not separate duplicate workstreams):**
+- **MKT-RED-001 (P0):** single edit authority and safe conversion/preservation of unsaved drafts → UT-RED-201/202.
+- **MKT-RED-002 (P0):** visible distinction among original source units, confirmed conversions, inferred/unconfirmed assumptions, and unavailable data → UT-RED-207.
+- **MKT-RED-003 (P1):** outcome-first Progress and unified lab entry with submodes → UT-RED-203/205.
+- **MKT-RED-004 (P1):** contextual dietary-preference reuse and explicit Athlete-mass linkage → UT-RED-204/206.
+- **MKT-RED-005 (P1):** responsive, accessible cross-surface regression → UT-RED-208.
+
+**Execution order:** (1) verify latest implementation against all eight findings; (2) fix P0 duplicate unit controls and clinical provenance invariant; (3) consolidate P1 Progress, diet editor, lab forms, Athlete mass; (4) run regression and independent specialist review. Codex owns code, tests, GitHub and preview; no per-commit approval. For substantial **visible** redesigns only, before/after screenshots should highlight actual changes; skip near-identical screens. Capture current build SHA, focused tests, changed UX paths and Render preview state in progress updates. Branding/User Testing sign-off remains independent and must not stall other safe development.
