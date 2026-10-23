@@ -2,6 +2,8 @@
 
 Advances ARC-UNIT-001 and ARC-UT-03/07. Baseline: immutable `fe3d3377194ec54908c7f94990d842184c4f69db`. Candidate: the commit containing this package (capture manifests accurately record an uncommitted candidate).
 
+Visible differences: (1) day/meal energy and energy-check bounds use kJ; (2) prepared recipe amounts use ounces; (3) the shopping list uses ounces while the labelled canonical target editor stays in kcal. Unmarked originals are retained.
+
 Weekly day/meal energy, energy check values and bounds, nutrient detail rows, prepared ingredient quantities, shopping/print quantities and recipe-library shopping masses now consume the existing independent account preferences. Target-entry fields explicitly retain canonical kcal/source units. Saved requests, safety/check decisions, logging payloads, lab values and original source preparation instructions retain their existing meaning.
 
 | Viewport / theme | Before | After |
