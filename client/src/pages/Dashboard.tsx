@@ -73,7 +73,7 @@ export default function Dashboard() {
       </div>
 
       {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started"
-        ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} loading={meals.isLoading} />}
+        ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading} journalError={mealError} />}
       <div className="section-heading">
         <div>
           <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>

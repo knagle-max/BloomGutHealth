@@ -1,5 +1,7 @@
 # V0.5 external health ingestion — implementation boundary
 
+Historical contract-only snapshot. Later code adds encrypted source storage, account-scoped inspection/export/revocation/deletion routes and Progress observations, with no native connector activation. See [current reconciliation](../architecture/V05_IMPLEMENTATION_STATUS.md) and `server/health-source-{storage,routes}.ts` for the present boundary. The contract-only statements below apply to the original increment.
+
 Updated 2026-10-18. Branch: `enhance/bloom-experience`.
 
 ## What is implemented

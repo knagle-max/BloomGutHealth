@@ -15,6 +15,8 @@ else if(p==='/api/experience/athlete-day')json={...buildAthleteDay(settings.athl
 else if(p==='/api/experience/scan'){scanCount++;assert.equal(body.consent,true);json={scan:{description:'Synthetic photo draft',nutrients:[],name:'',brand:'',servingDescription:'',servingGrams:null},note:'Synthetic provider response; no external transfer.'};}
 else if(p==='/api/meals'&&req.method()==='POST'){const key=req.headers()['idempotency-key'];assert.ok(key);mealAttempts.push({key,body});if(!mealSaves.has(key))mealSaves.set(key,{id:'meal-'+mealSaves.size,userId:'synthetic',mealText:body.mealText,mealType:body.mealType,mealContext:body.mealContext,loggedAt:body.mealContext.eatenAt,totalCalories:null,totalProtein:null,totalCarbs:null,totalFat:null,nutritionalData:[],intelligence:null});if(loseMealResponse){loseMealResponse=false;await route.abort('failed');return;}json=mealSaves.get(key);}
 else if(p==='/api/profile')json={dietaryPreferences:prefs};
+else if(p==='/api/health-sources')json={connections:[]};
+else if(p==='/api/health-sources/observations')json={observations:[],returned:0,total:0,offset:0,limit:50,hasMore:false,interpretation:'Synthetic source observations; no device connected'};
 else if(p==='/api/experience/review')json={entries:0,metrics:[],from:'2026-10-11',to:'2026-10-18',next:'Record a check-in',note:'Synthetic fixture'};
 await route.fulfill({json});});
 const go=async p=>{await page.goto('http://127.0.0.1:5187'+p,{waitUntil:'domcontentloaded'});await page.getByRole('main').waitFor();};

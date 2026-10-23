@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { PrecisionReport } from "@shared/precision-nutrition";
-export default function TodayFocus({ mealCount = 0, loading = false }: { mealCount?: number; loading?: boolean }) {
+import { todayJournalAction } from "@shared/today-focus";
+export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
     goal = report.data?.goals.find((g) => g.id !== "unmapped");
+  const action = todayJournalAction({ mealCount, missingNutritionCount, loading, unavailable: journalError });
   return (
     <section className="bloom-panel today-focus space-y-3">
       <p className="eyebrow">TODAY’S FOCUS</p>
@@ -24,10 +26,10 @@ export default function TodayFocus({ mealCount = 0, loading = false }: { mealCou
         </p>
       )}
       <div className="today-next-action">
-        <Link className="hero-button" href={mealCount ? "/plan-day" : "/log-meal"}>
-          {mealCount ? "Choose my next meal" : "Log my first meal"}
+        <Link className="hero-button" href={action.href}>
+          {action.label}
         </Link>
-        <p className="panel-note">{loading ? "Your journal is loading. You can still add a meal." : mealCount ? "Suggestions use the meals you have logged today. Review portions and missing values." : "Start with what you ate. You can scan a package, choose a saved meal or type a description."}</p>
+        <p className="panel-note">{action.reason}</p>
       </div>
       <details><summary>Your focus & next steps</summary>
       <div className="flex flex-wrap gap-4">

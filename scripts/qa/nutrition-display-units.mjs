@@ -19,7 +19,7 @@ page.setDefaultTimeout(12000);
 await page.addInitScript(()=>localStorage.removeItem('theme'));
 await page.clock.install({time:new Date('2026-10-23T18:00:00Z')});
 const errors=[],writes=[],masses=[],captures=[];
-let alternateAccount=false;
+let alternateAccount=false, journalState='complete';
 page.on('pageerror',e=>errors.push(e.message));
 await page.route('https://fonts.**/**',r=>r.abort());
 const meal={id:'synthetic-meal',userId:'synthetic',mealText:'Synthetic oats lunch',mealType:'lunch',loggedAt:'2026-10-23T17:00:00Z',totalCalories:500,totalProtein:20,totalCarbs:60,totalFat:20,nutritionalData:[{name:'Synthetic oats',calories:500,protein_g:20,carbohydrates_total_g:60,fat_total_g:20,fiber_g:8}],intelligence:null};
@@ -29,6 +29,8 @@ await page.route('**/api/**',async route=>{
   if(req.method()!=='GET')writes.push({path:p,body:req.postDataJSON()});
   if(p==='/api/auth/me')json={user:{id:alternateAccount?'synthetic-second':'synthetic',username:'Synthetic Gardener'}};
   else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'},displayUnits:alternateAccount?{energy:'kcal',foodWeight:'g'}:{energy:'kJ',foodWeight:'oz'}};
+  else if(p.startsWith('/api/meals')&&req.method()==='GET'&&journalState==='unavailable')return route.fulfill({status:503,json:{error:'Synthetic journal outage'}});
+  else if(p.startsWith('/api/meals')&&req.method()==='GET'&&journalState==='partial')json=[{...meal,totalCalories:null,nutritionalData:[]}];
   else if(p.startsWith('/api/meals'))json=req.method()==='POST'?meal:[alternateAccount?{...meal,id:'second-meal',userId:'synthetic-second',mealText:'Second account lunch'}:meal];
   else if(p.startsWith('/api/nutrition/daily'))json={meals:[meal],totals:{calories:500,protein:20,carbs:60,fat:20,fiber:8,sugar:null,sodium:null,potassium:null}};
   else if(p.startsWith('/api/nutrition/targets'))json={calories:2000,protein:120,carbs:225,fat:67,fiber:30};
@@ -86,6 +88,17 @@ try{
     assert.equal(await page.getByText('Synthetic oats lunch',{exact:true}).count(),0);
     assert.ok((await page.locator('.meal-calories').innerText()).includes('500 kcal'));
     assert.equal((await page.locator('main').innerText()).includes('2092'),false);
+  }
+  alternateAccount=false;
+  await page.setViewportSize({width:390,height:1000});await page.emulateMedia({colorScheme:'light'});
+  for(const state of ['partial','unavailable']){
+    journalState=state;await go('/');
+    const action=page.locator('.today-next-action .hero-button');
+    if(stage==='after')await page.getByRole('link',{name:state==='partial'?'Review my meal estimates':'Log a meal',exact:true}).first().waitFor();
+    else if(state==='partial')await page.getByText('Synthetic oats lunch',{exact:true}).first().waitFor();
+    else await page.getByRole('button',{name:'Try again',exact:true}).first().waitFor();
+    if(stage==='after')assert.equal(await action.getAttribute('href'),state==='partial'?'/nutrition':'/log-meal');
+    await capture('today-'+state,390,'light');
   }
   assert.deepEqual(errors,[]);
   const evidence={stage,capturedAt:new Date().toISOString(),browser:browser.version(),os:process.platform,devicePixelRatio:1,fonts:'External fonts blocked; system fallback',sha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),fixtureTime:'2026-10-23T18:00:00Z',locale:'en-CA',timezone:'America/Regina',synthetic:true,providerCalls:'Intercepted; none external',captures,errors};
