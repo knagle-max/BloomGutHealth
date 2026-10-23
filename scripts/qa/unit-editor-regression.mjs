@@ -14,6 +14,8 @@ const vite=await createServer({configFile:root+'/vite.config.ts',server:{port:51
 const browser=await chromium.launch({headless:true,...(process.env.BLOOM_CHROMIUM_EXECUTABLE?{executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']}: {})});
 const page=await browser.newPage({viewport:{width:375,height:1000},locale:'en-CA',timezoneId:'America/Regina'});page.setDefaultTimeout(12000);
 let settings=experienceSettingsSchema.parse({}),failNextUnits=false;
+let preferences=structuredClone(defaultPreferences);preferences.exclusions=["nuts"];
+const safety=contextSchema.parse({allergies:["Synthetic sesame allergy"],safetyReviewed:false});
 let profile={heightCm:182.88,weightKg:75,sex:'female',age:30,activityLevel:'moderate',dietaryPreferences:defaultPreferences};
 const imported=parseLabPaste('LDL, 120\nALT, 73, U/L','2026-10-01T12:00:00Z','Synthetic lab');
 const records=[...imported.valid,...imported.pending].map((r,i)=>({id:'lab-'+i,kind:'lab',payload:r.payload,createdAt:'2026-10-01T12:00:00Z'}));
@@ -31,9 +33,14 @@ else if(p==='/api/experience/settings'){
 }
 else if(p==='/api/profile')json=profile;
 else if(p==='/api/user/synthetic-editor/profile'){profile={...profile,...body};json={success:true};}
-else if(p==='/api/preferences')json=defaultPreferences;
-else if(p==='/api/precision')json={...buildPrecisionReport(records,contextSchema.parse({}),defaultPreferences,null),records,availableReports:[],journalSymptoms:[],intake:{days:28,mealsLogged:0,nutrients:[]}};
+else if(p==='/api/preferences'){if(req.method()==='PUT')preferences=body;json=preferences;}
+else if(p==='/api/precision')json={...buildPrecisionReport(records,safety,preferences,null),records,availableReports:[],journalSymptoms:[],intake:{days:28,mealsLogged:0,nutrients:[]}};
 else if(p==='/api/precision/records'&&req.method()==='POST'){json={id:'checkin-'+records.length,kind:body.kind,payload:body.payload,createdAt:new Date().toISOString()};records.push(json);}
+else if(p==='/api/precision/today-plan')return route.fulfill({status:503,json:{error:'Synthetic empty planning state'}});
+else if(p==='/api/meal-planner')json={note:'Synthetic planning fixture',recentMeals:0,suggestions:[],pathways:[],sources:[],cohorts:[]};
+else if(p==='/api/meal-planner/progress')json={note:'Synthetic progress fixture',weeks:[],adherence:[]};
+else if(p==='/api/precision/planning-recipes')json={recipes:[],unknownAllergies:[]};
+else if(p==='/api/analysis/status')json={ai:{configured:false},nutrition:{liveLookupConfigured:false}};
 else if(p==='/api/health-sources')json={connections:[]};
 else if(p==='/api/health-sources/observations')json={observations:[],returned:0,total:0,hasMore:false};
 else if(p==='/api/experience/review')json={entries:0,metrics:[],from:'2026-10-16',to:'2026-10-23',next:'Record a check-in',note:'Synthetic fixture'};
@@ -67,8 +74,13 @@ await input('weightKg').fill('220.');const before=writes.length;await page.getBy
 await input('weightKg').fill('220.46226218487757');await page.getByLabel('Biology progress weight unit',{exact:true}).selectOption('kg');await page.waitForFunction(()=>document.querySelector('input[name="weightKg"]').value==='100');
 await page.getByRole('button',{name:'Save check-in',exact:true}).click();await page.waitForFunction(()=>document.querySelector('main')?.textContent?.includes('Saved'));
 const checkin=writes.find(w=>w.path==='/api/precision/records').body.payload;near(checkin.weightKg,100);near(checkin.waistCm,91.44);assert.equal(checkin.bodyFatPercent,null);
-assert.deepEqual(records.filter(r=>r.kind==='lab'),sourceLabs);const report=buildPrecisionReport(records,contextSchema.parse({}),defaultPreferences,null);assert.equal(report.pendingLabs.length,1);assert.equal(report.labs.length,1);assert.equal(report.labs[0].value,73);assert.equal(report.labs[0].unit,'U/L');
+assert.deepEqual(records.filter(r=>r.kind==='lab'),sourceLabs);const report=buildPrecisionReport(records,safety,preferences,null);assert.equal(report.pendingLabs.length,1);assert.equal(report.labs.length,1);assert.equal(report.labs[0].value,73);assert.equal(report.labs[0].unit,'U/L');
 outcomes.push('Single Biology editors; drafts convert once after success, failed/unfinished switches preserve meaning, canonical check-ins and untouched lab provenance.');
+await go('/profile');await page.getByRole('link',{name:'Edit shared food preferences',exact:true}).waitFor();assert.equal(await page.getByLabel('Foods you dislike (comma separated)').count(),0);await page.getByText('Synthetic sesame allergy',{exact:false}).waitFor();
+await page.getByRole('link',{name:'Edit shared food preferences',exact:true}).click();await page.getByRole('heading',{name:'Your food preferences & goals',exact:true}).waitFor();await page.getByLabel('Foods you dislike (comma separated)').fill('Synthetic disliked food');await page.getByRole('button',{name:'Save preferences',exact:true}).click();await page.getByText('Preferences saved to your account.',{exact:true}).waitFor();
+await go('/profile');await page.getByText('Synthetic disliked food',{exact:true}).waitFor();await go('/precision');await page.getByText('Synthetic disliked food',{exact:true}).waitFor();assert.equal(await page.getByLabel('Foods you dislike (comma separated)').count(),0);
+await go('/progress');await page.getByRole('heading',{name:'Your dated observations',exact:true}).waitFor();await page.getByText('Weight: 100 kg',{exact:false}).waitFor();assert.equal(await page.getByRole('heading',{name:'Body measurements & units',exact:true}).isVisible(),false);await page.getByRole('link',{name:'Record a dated body measurement',exact:true}).click();await page.getByRole('heading',{name:'Record your response',exact:true}).waitFor();
+outcomes.push('One food editor reached from read-only summaries; exclusions and allergy context stay visible, updates propagate, and dated Progress leads to the check-in subview.');
 for(const width of [320,375,768,1440]){await page.setViewportSize({width,height:1000});for(const route of ['/profile','/progress','/precision']){await go(route);if(route==='/precision')await page.getByRole('button',{name:'Progress',exact:true}).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${route} ${width}`);}}
 await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>document.documentElement.style.zoom='2');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.getByLabel('Biology progress weight unit',{exact:true}).focus();assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Biology progress weight unit');await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Biology progress waist unit');
 outcomes.push('320/375/768/1440 reflow, keyboard order and 200% CSS-zoom surrogate; physical devices/screen readers not claimed.');

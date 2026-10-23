@@ -7,7 +7,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/lib/auth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
-import { DietaryPreferenceEditor } from "./MealPlanner";
+import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 import { Link } from "wouter";
 interface ProfileProps {
   isDarkMode?: boolean;
@@ -220,7 +220,7 @@ export default function Profile({
         {save.isSuccess && <p role="status">Profile saved.</p>}
         {save.isError && <p role="alert">{save.error.message}</p>}
       </form>
-      <DietaryPreferenceEditor />
+      <DietaryPreferenceSummary />
       <section className="bloom-panel space-y-3" id="privacy">
         <h2>Privacy & data controls</h2>
         <p>Training and saved-meal exports and deletion are below. Genetic and laboratory records have separate controls in My biology.</p>

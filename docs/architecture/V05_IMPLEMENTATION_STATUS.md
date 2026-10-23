@@ -56,3 +56,11 @@ UT-RED-201/202, MKT-RED-001: Profile uses one master group; My Biology Progress 
 UT-RED-207/MKT-RED-002 is verified here as a regression boundary: original lab numbers/units and inferred-unit status do not change with display preferences; existing tests retain pending-unit exclusion from canonicalization, clinical flags and downstream ranking. No new clinical inference is activated.
 
 Validation: TypeScript, 182 Node tests, production build and [synthetic route-level browser assertions](../review/unit-editors-20261023/README.md). UT-RED-208 coverage includes failed saves, incomplete inputs, repeated changes, canonical payloads, responsive layouts and keyboard/zoom surrogates. Real-device, screen-reader and independent acceptance remain open. UT-RED-203–206 are the next actionable consolidated requirements; v0.5 remains incomplete.
+
+## Outcome-first Progress and shared dietary editor — 2026-10-23
+
+UT-RED-203/204 and MKT-RED-003/004: Progress now leads with the latest five dated body/response observations, preserves dates and missing values, links directly to a dated check-in subview and keeps the undated Profile snapshot/settings secondary. Weekly forms/experiments are disclosed after observational views. Laboratory source/method comparability remains intact.
+
+Profile and My Biology show concise preferences/exclusions and separately identified allergy/safety context, linking to the existing Meal Planner editor/store. No second preferences store or clinical-goal editor is added. Shared editor updates invalidate the existing workspace queries. My Biology now accepts validated `tab=progress` and `tab=labs` links, with invalid values falling back to Overview.
+
+Validation: TypeScript, all 182 Node tests, production build and extended synthetic browser checks for editor ownership, propagation, safety context, dated navigation and 320–1440px/keyboard/zoom surrogates. [Matched changed-screen comparison with callouts](../review/progress-layout-20261023/README.md); independent acceptance remains pending. P0 batch `2081821` passed CI run `40022253191` and reached Render `live` (`dep-dbdsgto473hc73bg41vg`). UT-RED-205/206 remain actionable; broader external v0.5 gates remain open.

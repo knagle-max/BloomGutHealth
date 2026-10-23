@@ -29,7 +29,7 @@ import {
   type PrecisionReport,
   type PrecisionRecord,
 } from "@shared/precision-nutrition";
-import { DietaryPreferenceEditor } from "./MealPlanner";
+import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 
 type Report = PrecisionReport & {
   availableReports: { id: string; date: string; name: string }[];
@@ -199,7 +199,10 @@ export default function PrecisionNutrition() {
     setDraftError("");
     patch({displayUnits:{...settings.displayUnits,[key]:value}});
   }
-  const [tab, setTab] = useState("overview"),
+  const [tab, setTab] = useState(() => {
+    const requested = new URLSearchParams(window.location.search).get("tab");
+    return requested && ["overview", "genetics", "labs", "recommendations", "progress"].includes(requested) ? requested : "overview";
+  }),
     [sampleId, setSampleId] = useState("");
   const [status, setStatus] = useState(""),
     [localError, setLocalError] = useState("");
@@ -480,10 +483,7 @@ export default function PrecisionNutrition() {
                     Explore molecule pathways & research populations
                   </Link>
                 </section>
-                <details className="bloom-panel">
-                  <summary>Dietary preferences & exclusions</summary>
-                  <DietaryPreferenceEditor />
-                </details>
+                <DietaryPreferenceSummary context={context} />
                 <details className="bloom-panel">
                   <summary>Data control</summary>
                   <p>
