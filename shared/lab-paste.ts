@@ -20,7 +20,8 @@ export function parseLabPaste(
 ) {
   if (text.length > 30000)
     throw Error("Paste up to 30,000 characters at a time.");
-  const rows = text.trim().split(/\r?\n/).filter(Boolean);
+  if (!Number.isFinite(Date.parse(measuredAt))) throw Error("Choose a valid report date.");
+  const rows = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
   if (rows.length > 50) throw Error("Paste up to 50 results at a time.");
   const valid: Array<{
       line: number;
@@ -53,6 +54,12 @@ export function parseLabPaste(
         line: index + 1,
         message: `Unsupported marker: ${match[1]}. Use one of the listed tests.`,
       });
+      return;
+    }
+    // A second trailing value is ambiguous (possibly reference ranges or notes).
+    // Preserve strict review instead of silently discarding it.
+    if (match[3] && /\s/.test(match[3].trim())) {
+      errors.push({line:index+1,message:"Use a single supported source unit; enter other report details separately."});
       return;
     }
     const missingUnit = !match[3]?.trim();
