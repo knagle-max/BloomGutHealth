@@ -16,7 +16,7 @@ import { recipeFailure } from "./recipe-generation";
 import { contextSchema } from "../shared/precision-nutrition";
 const clockSchema=z.object({date:dateKey,timezoneOffset:z.number().int().min(-840).max(840),hour:z.number().int().min(0).max(23)}).strict();
 const kindSchema=experienceEntrySchema.options.map(o=>o.shape.kind.value);
-const scanResultSchema=z.object({description:z.string(),name:z.string(),brand:z.string(),servingDescription:z.string(),servingGrams:z.number().nullable(),nutrients:z.array(z.object({key:z.enum(nutrientDefinitions.map(n=>n[0]) as [string,...string[]]),amount:z.number().nonnegative(),unit:z.string()}))});
+export const scanResultSchema=z.object({description:z.string(),name:z.string(),brand:z.string(),servingDescription:z.string(),servingGrams:z.number().nullable(),nutrients:z.array(z.object({key:z.enum(nutrientDefinitions.map(n=>n[0]) as [string,...string[]]),amount:z.number().nonnegative(),unit:z.string()}))});
 export function registerExperienceRoutes(app:Express, auth:RequestHandler, store:IStorage, precision:ReturnType<typeof registerPrecisionRoutes>) {
  app.use("/api/experience",auth,(_req,res,next)=>{res.setHeader("Cache-Control","no-store");next();});
  const counters=new Map<string,{at:number;count:number}>();

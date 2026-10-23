@@ -61,13 +61,14 @@ export const weeklyRequestSchema = z
     customRecipes: z.array(recipeProposalSchema).max(12).default([]),
     nutrientTargets: z
       .record(
-        z.enum(nutrientDefinitions.map((n) => n[0]) as [string, ...string[]]),
+        z.string().refine(key => nutrientDefinitions.some(n => n[0] === key), "Unsupported nutrient target"),
         nutrientTarget,
       )
       .refine((t) => Object.keys(t).length <= 21)
-      .default({}),
+      .prefault({}),
     locked: z
       .record(
+        z.string(),
         z
           .object({
             recipeId: z.string().max(100),
@@ -76,7 +77,7 @@ export const weeklyRequestSchema = z
           .strict(),
       )
       .refine((v) => Object.keys(v).length <= 28)
-      .default({}),
+      .prefault({}),
   })
   .strict()
   .refine(

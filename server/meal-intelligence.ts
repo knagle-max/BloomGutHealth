@@ -97,7 +97,7 @@ export function lookupLocalNutrition(ingredients: Ingredient[]) {
     ingredients.length,
   );
 }
-const parseSchema = z.object({
+export const parseSchema = z.object({
   ingredients: z
     .array(ingredientSchema.omit({ product: true, catalogue: true }))
     .min(1)

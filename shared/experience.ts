@@ -7,6 +7,11 @@ export const athleteProfileSchema = z.object({
   discipline: z.enum(["endurance", "strength-power", "team", "mixed", "skill"]).default("mixed"),
   level: z.enum(["recreational", "competitive", "professional", "olympic-paralympic"]).default("recreational"),
   weightKg: z.number().finite().min(30).max(250).nullable().default(null),
+  massReference: z.object({
+    source: z.enum(["manual", "profile-copy"]),
+    recordedAt: z.string().datetime({offset:true}),
+    profileWeightKg: z.number().finite().min(30).max(250).nullable(),
+  }).strict().nullable().default(null),
   adult: z.boolean().default(false), pregnancyNo: z.boolean().default(false),
   healthReviewed: z.boolean().default(false), needsClinicalReview: z.boolean().default(false),
   trainingPhase: z.enum(["base", "build", "competition", "taper", "recovery"]).default("base"),
@@ -15,7 +20,8 @@ export const athleteProfileSchema = z.object({
   energyKcal: z.number().finite().int().min(1200).max(12000).nullable().default(null),
   targetsConfirmed: z.boolean().default(false), teamPlanNotes: optionalText,
   reviewDate: dateKey.nullable().default(null),
-}).strict().refine(v=>(v.carbGkgMin===null&&v.carbGkgMax===null)||(v.carbGkgMin!==null&&v.carbGkgMax!==null&&v.carbGkgMin<=v.carbGkgMax), "Set both carbohydrate values with maximum at least minimum");
+}).strict().refine(v=>(v.carbGkgMin===null&&v.carbGkgMax===null)||(v.carbGkgMin!==null&&v.carbGkgMax!==null&&v.carbGkgMin<=v.carbGkgMax), "Set both carbohydrate values with maximum at least minimum")
+ .refine(v=>v.massReference===null || (v.weightKg!==null && (v.massReference.source==="manual"?v.massReference.profileWeightKg===null:v.massReference.profileWeightKg!==null&&Math.abs(v.massReference.profileWeightKg-v.weightKg)<0.00001)), "Reference mass provenance must match the saved reference");
 export type AthleteProfile = z.infer<typeof athleteProfileSchema>;
 export const practicalPreferencesSchema = z.object({
   minutes: z.number().int().min(5).max(180).default(30),
@@ -40,9 +46,9 @@ export type DisplayUnits = z.infer<typeof displayUnitsSchema>;
 
 export const experienceSettingsSchema = z.object({
   mode: z.enum(["everyday", "athlete"]).default("everyday"),
-  onboarding: onboardingSchema.default({}),
-  displayUnits: displayUnitsSchema.default({}),
-  athlete: athleteProfileSchema.default({}), practical: practicalPreferencesSchema.default({}),
+  onboarding: onboardingSchema.prefault({}),
+  displayUnits: displayUnitsSchema.prefault({}),
+  athlete: athleteProfileSchema.prefault({}), practical: practicalPreferencesSchema.prefault({}),
 }).strict();
 export type ExperienceSettings = z.infer<typeof experienceSettingsSchema>;
 export const settingsPatchSchema = z.object({

@@ -17,7 +17,7 @@ export const knowledgeEntitySchema = z.object({
   label: z.string(),
   kind: z.string(),
   summary: z.string(),
-  metadata: z.record(z.unknown()),
+  metadata: z.record(z.string(), z.unknown()),
 });
 export const knowledgeSourceSchema = z.object({
   id: z.string(),
