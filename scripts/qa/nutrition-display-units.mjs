@@ -88,7 +88,7 @@ try{
     assert.equal((await page.locator('main').innerText()).includes('2092'),false);
   }
   assert.deepEqual(errors,[]);
-  const evidence={stage,sha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),fixtureTime:'2026-10-23T18:00:00Z',locale:'en-CA',timezone:'America/Regina',synthetic:true,providerCalls:'Intercepted; none external',captures,errors};
+  const evidence={stage,capturedAt:new Date().toISOString(),browser:browser.version(),os:process.platform,devicePixelRatio:1,fonts:'External fonts blocked; system fallback',sha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),fixtureTime:'2026-10-23T18:00:00Z',locale:'en-CA',timezone:'America/Regina',synthetic:true,providerCalls:'Intercepted; none external',captures,errors};
   await fs.writeFile(path.join(output,`${stage}-manifest.json`),JSON.stringify(evidence,null,2));
   console.log(JSON.stringify(evidence,null,2));
 }catch(error){console.error({errors,body:await page.locator('body').innerText()});throw error;}finally{await browser.close();await vite.close();}
