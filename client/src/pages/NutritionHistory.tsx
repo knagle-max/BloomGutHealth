@@ -1,3 +1,5 @@
+import { useExperience } from "@/lib/experience";
+import { energyAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
 import MealAnalysis from "@/components/MealAnalysis";
 import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
@@ -46,6 +48,8 @@ function HistoricalTrends({
   userId: string;
   targets: any;
 }) {
+  const { settings } = useExperience();
+  const energyUnit = settings.displayUnits.energy;
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
@@ -101,16 +105,16 @@ function HistoricalTrends({
               <div>
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-xs text-muted-foreground">
-                    Avg Calories/Day
+                    Avg energy/day
                   </span>
                   <span
                     className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.calories, targets.calories)}`}
                   >
-                    {monthlyData.dailyAverages.calories}
+                    {energyAmount(monthlyData.dailyAverages.calories, energyUnit)} {energyUnit}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.calories}
+                  Target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
                 </p>
               </div>
               <div>
@@ -208,15 +212,15 @@ function HistoricalTrends({
             <div className="grid grid-cols-2 gap-3 pb-3 border-b">
               <div>
                 <p className="text-xs text-muted-foreground">
-                  Yearly Avg Calories
+                  Yearly average energy
                 </p>
                 <p
                   className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.calories, targets.calories)}`}
                 >
-                  {yearlyData.dailyAverages.calories}/day
+                  {energyAmount(yearlyData.dailyAverages.calories, energyUnit)} {energyUnit}/day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.calories}
+                  Target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
                 </p>
               </div>
               <div>
@@ -251,7 +255,7 @@ function HistoricalTrends({
                           targets.calories,
                         )}
                       >
-                        {month.avgCalories} cal/day
+                        {energyAmount(month.avgCalories, energyUnit)} {energyUnit}/day
                       </span>
                       <span
                         className={getStatusColor(
@@ -274,6 +278,8 @@ function HistoricalTrends({
 }
 
 export default function NutritionHistory() {
+  const { settings } = useExperience();
+  const energyUnit = settings.displayUnits.energy;
   const [historyLimit, setHistoryLimit] = useState(20);
   const [reviewingMealId, setReviewingMealId] = useState<string | null>(null);
   const [showLogForm, setShowLogForm] = useState(false);
@@ -574,16 +580,16 @@ export default function NutritionHistory() {
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Calories</span>
+              <span className="text-sm font-medium">Energy ({energyUnit})</span>
               <div className="flex items-center gap-2">
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
                 >
-                  {showAmount(totals.calories)}
+                  {energyAmount(totals.calories, energyUnit)}
                   {dailyData?.nutritionCoverage?.calories?.partial
                     ? " (partial)"
                     : ""}{" "}
-                  / {nutrientTargets.calories || 2000}
+                  / {energyAmount(nutrientTargets.calories || 2000, energyUnit)} {energyUnit}
                 </span>
                 <Badge
                   variant="outline"
@@ -841,8 +847,8 @@ export default function NutritionHistory() {
                         >
                           {meal.totalCalories == null
                             ? "Unavailable"
-                            : Math.round(meal.totalCalories)}{" "}
-                          cal
+                            : energyAmount(meal.totalCalories, energyUnit)}{" "}
+                          {energyUnit}
                         </Badge>
                         <Badge variant="secondary">
                           P:{" "}
@@ -933,10 +939,10 @@ export default function NutritionHistory() {
                               <div className="grid grid-cols-2 gap-2 text-xs">
                                 <div className="flex justify-between">
                                   <span className="text-muted-foreground">
-                                    Calories
+                                    Energy ({energyUnit})
                                   </span>
                                   <Badge variant="outline" className="h-5">
-                                    {item.calories}
+                                    {energyAmount(item.calories, energyUnit)} {energyUnit}
                                   </Badge>
                                 </div>
                                 <div className="flex justify-between">

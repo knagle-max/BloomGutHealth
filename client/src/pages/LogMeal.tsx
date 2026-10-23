@@ -1,3 +1,5 @@
+import { useExperience } from "@/lib/experience";
+import { energyAmount, foodMass } from "@shared/nutrition-display";
 import FoodCapture from "@/components/FoodCapture";
 import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
@@ -21,6 +23,7 @@ import {
 import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
+  const { settings } = useExperience();
   const params = new URLSearchParams(window.location.search);
   const requestedType = params.get("type");
   const catalogueId=params.get("fdcId"),catalogueGrams=Number(params.get("grams"));
@@ -197,7 +200,7 @@ export default function LogMeal() {
           </Button>
         </section>
       )}
-      {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{catalogueSelection.data.grams} g {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
+      {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{foodMass(catalogueSelection.data.grams, settings.displayUnits.foodWeight)} {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
       <FoodCapture onDescription={setDescription} onProduct={i=>setProducts(v=>[...v,i].slice(0,10))}/>
       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
       </fieldset>
@@ -354,7 +357,7 @@ export default function LogMeal() {
           {savedMeal.totalCalories !== null ? (
             <div className="saved-nutrients">
               <span>
-                <strong>{Math.round(savedMeal.totalCalories!)}</strong> kcal
+                <strong>{energyAmount(savedMeal.totalCalories, settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}
               </span>
               <span>
                 <strong>

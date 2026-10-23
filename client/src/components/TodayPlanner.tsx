@@ -1,3 +1,5 @@
+import { useExperience } from "@/lib/experience";
+import { foodMass, nutrientDisplay } from "@shared/nutrition-display";
 import { recipeDisplayName } from "@/lib/recipe-display";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -11,6 +13,8 @@ import { recipePreparation } from "@shared/recipe-preparation";
 const round = (v: number | null) =>
   v === null ? "Unknown" : Number(v.toFixed(1));
 export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?: () => void } = {}) {
+  const { settings } = useExperience();
+  const units = settings.displayUnits;
   const [edited, setEdited] = useState<WeeklyRequest | null>(null),
     [result, setResult] = useState<
       (TodayPlan & { targetSource: string }) | null
@@ -61,6 +65,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
           <details>
             <summary>Review daily targets</summary>
             <p className="panel-note">
+              Target entry retains canonical kcal and source nutrient units. Displayed estimates below use your saved unit preferences.
               Energy uses a ±10% planning range. Other maxima below are limits.
               These targets are not inferred from genetic variants or a
               diagnosis.
@@ -201,7 +206,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                 </h3>
                 <p className="panel-note">About {prep.minutes} minutes · {m.portion} × recipe</p>
                 <div className="meal-nutrition-strip">
-                  {[[m.nutrients.calories, "kcal"], [m.nutrients.protein_g, "g protein"], [m.nutrients.carbohydrates_total_g, "g carbs"], [m.nutrients.fat_total_g, "g fat"], [m.nutrients.fiber_g, "g fiber"]].map(([value, unit]) => <span key={String(unit)}>{value == null ? "Unknown" : Math.round(Number(value))} {unit}</span>)}
+                  {[[nutrientDisplay("calories", m.nutrients.calories, "kcal", units).amount, units.energy], [m.nutrients.protein_g, "g protein"], [m.nutrients.carbohydrates_total_g, "g carbs"], [m.nutrients.fat_total_g, "g fat"], [m.nutrients.fiber_g, "g fiber"]].map(([value, unit]) => <span key={String(unit)}>{value == null ? "Unknown" : Math.round(Number(value))} {unit}</span>)}
                 </div>
                 <details>
                   <summary>Ingredients, recipe & evidence</summary>
@@ -210,14 +215,14 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                     {prep.shopping.map((i) => (
                       <li key={i.name}>
                         {i.estimated ? "Approximately " : ""}
-                        {round(i.grams * m.portion)} g {i.name}
+                        {foodMass(i.grams * m.portion, units.foodWeight)} {i.name}
                       </li>
                     ))}
                   </ul>
                   <p className="panel-note">
                     Nutrition uses these prepared portions:{" "}
                     {m.recipe.ingredients
-                      .map((i) => `${round(i.grams * m.portion)} g ${i.name}`)
+                      .map((i) => `${foodMass(i.grams * m.portion, units.foodWeight)} ${i.name}`)
                       .join("; ")}
                     .
                   </p>
@@ -307,21 +312,23 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                   </tr>
                 </thead>
                 <tbody>
-                  {r.checks.map((c) => (
+                  {r.checks.map((c) => {
+                    const display = (v: number | null) => round(nutrientDisplay(c.key, v, c.unit, units).amount);
+                    return (
                     <tr key={c.key}>
                       <td>
-                        {c.name} ({c.unit})
+                        {c.name} ({nutrientDisplay(c.key, null, c.unit, units).unit})
                       </td>
-                      <td>{round(c.consumed)}</td>
-                      <td>{round(c.added)}</td>
-                      <td>{round(c.projected)}</td>
+                      <td>{display(c.consumed)}</td>
+                      <td>{display(c.added)}</td>
+                      <td>{display(c.projected)}</td>
                       <td>
-                        {c.min === null ? "" : `≥${round(c.min)} `}
-                        {c.max === null ? "" : `≤${round(c.max)}`}
+                        {c.min === null ? "" : `≥${display(c.min)} `}
+                        {c.max === null ? "" : `≤${display(c.max)}`}
                       </td>
                       <td>{c.status}</td>
                     </tr>
-                  ))}
+                  );})}
                 </tbody>
               </table>
             </div>

@@ -1,3 +1,4 @@
+import { energyAmount } from "@shared/nutrition-display";
 import EverydayStart from "@/components/EverydayStart";
 import { useExperience } from "@/lib/experience";
 import TodayFocus from "@/components/TodayFocus";
@@ -125,8 +126,8 @@ export default function Dashboard() {
             },
             {
               label: "Energy",
-              value: summary.calories?.toFixed(0) ?? "—",
-              unit: "kcal",
+              value: energyAmount(summary.calories, settings.displayUnits.energy),
+              unit: settings.displayUnits.energy,
               icon: FlaskConical,
               note: summary.coverage.calories.partial
                 ? `Partial: ${summary.coverage.calories.completeMeals} of ${summary.coverage.calories.totalMeals} meals complete`
@@ -188,7 +189,7 @@ export default function Dashboard() {
                 <span className="meal-calories">
                   {meal.totalCalories == null
                     ? "Unavailable"
-                    : `${Math.round(meal.totalCalories)} kcal`}
+                    : `${energyAmount(meal.totalCalories, settings.displayUnits.energy)} ${settings.displayUnits.energy}`}
                 </span>
                 <ChevronRight size={17} />
               </Link>

@@ -1,3 +1,5 @@
+import { useExperience } from "@/lib/experience";
+import { nutrientDisplay, foodMass } from "@shared/nutrition-display";
 import FoodRelationshipLinks from "./FoodRelationshipLinks";
 import ProductPicker from "./ProductPicker";
 import { unmatchedFoods } from "@shared/nutrition-review";
@@ -13,6 +15,8 @@ export default function MealAnalysis({
   onRecalculate?: (ingredients: Ingredient[]) => void;
   pending?: boolean;
 }) {
+  const { settings } = useExperience();
+  const units = settings.displayUnits;
   const [edits, setEdits] = useState<Ingredient[] | null>(null);
   const ingredients = edits ?? analysis.ingredients;
   const missing = unmatchedFoods(analysis);
@@ -42,6 +46,7 @@ export default function MealAnalysis({
       <details open>
         <summary>Review foods & estimated portions</summary>
         <p className="panel-note">
+          Portion corrections use source grams; saved label servings retain their printed basis.
           Working estimates, not measured intake. Check the amount you ate, meat
           cut, dressing and cooking fat. Unknown brand, salt and marinade can
           change nutrients substantially.
@@ -171,7 +176,7 @@ export default function MealAnalysis({
             ) : (
               <p>
                 {item.name}:{" "}
-                {item.grams === null ? "Amount unknown" : `${item.grams} g`}
+                {item.grams === null ? "Amount unknown" : foodMass(item.grams, units.foodWeight)}
               </p>
             )}
             <p className="panel-note">{item.assumption}</p>
@@ -231,7 +236,7 @@ export default function MealAnalysis({
                   <td className="p-2">
                     {n.amount === null
                       ? "Unavailable"
-                      : `${n.amount.toFixed(1)} ${n.unit}`}
+                      : `${nutrientDisplay(n.key, n.amount, n.unit, units).amount?.toFixed(1)} ${nutrientDisplay(n.key, n.amount, n.unit, units).unit}`}
                   </td>
                   <td className="p-2">
                     {n.coverage === 1
