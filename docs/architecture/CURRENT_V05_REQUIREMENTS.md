@@ -426,7 +426,7 @@ branding-comparison/
 ```
 **Lifecycle:** Received → Reviewed → Implemented → Tested → Specialist review. Implementation **not started/verified by this architect amendment**. **Ownership:** Developer captures/builds and maintains artifact; Branding reviews screenshots/code; User Testing evaluates usability; Security vets synthetic/public artifacts; Chief Architect consolidates; Product Owner provides final release authorization.
 
-**Hard gate:** Full branding implementation (ARC-BRAND-P0-01–06) is **not accepted** for v0.5 visual milestone without this before/after package and Branding Agent review. Release-go/no-go remains subject to independent science/security/legal/usability gates; a screenshot gallery alone is not certification.
+**Conditional visual evidence gate:** ARC-BRAND-P0-07 applies only to the substantial, visibly changed branding surfaces. Brand implementation ARC-BRAND-P0-01–06 still requires Branding Agent review; do not manufacture comparisons for unchanged screens. Release-go/no-go remains subject to independent science/security/legal/usability gates; a screenshot gallery alone is not certification.
 
 
 ---
@@ -451,7 +451,7 @@ branding-comparison/
 
 **Developer ownership / state:** Proposed for Developer intake; no implementation or tests independently verified. Developer owns code, tests, preview deploy and SHA evidence. Branding reviews unit control and accessibility; Biology reviews calculation/clinical correctness; User Testing confirms mixed-unit comprehension. Deploy to protected Render preview once safe minimum gates pass, without waiting on every specialist's final sign-off.
 
-**Required before/after deliverable:** Capture existing Nutrition Profile (`cm`, `kg`) and revised field controls using the same synthetic account/viewport, plus a `cm + lb` and `ft/in + kg` example. Link running preview commit and report actual conversion test results under the standing major-change comparison policy when this is part of a larger UI transformation.
+**Conditional before/after deliverable:** Capture Nutrition Profile only when the unit controls produce an obvious user-visible workflow/layout change; otherwise demonstrate mixed units through functional examples and conversion tests without a visual comparison. Link running preview commit and report actual conversion test results under the standing major-change comparison policy when this is part of a larger UI transformation.
 
 
 ---
@@ -485,13 +485,13 @@ branding-comparison/
 ### 17.3 Documentation is a lightweight by-product, not a development checkpoint
 
 - Maintain one concise cumulative status ledger per implementation slice: `ID | code status | test status | preview commit/URL | external block | specialist review status`. Create/update it as part of normal commits; **never defer core coding because the ledger or all evidence packages are not yet complete**.
-- Before/after packages remain **P0 milestone deliverables** for major UI/functional transformations, including the full Bloom v1 branding rollout, but their drafting and external review run in parallel with subsequent independent development. They block *final milestone acceptance*, not starting subsequent tasks or posting a safe preview.
+- Before/after packages are **conditional P0 milestone deliverables only for material user-visible transformations** (e.g., the actual Bloom v1 branding rollout or substantial redesigns). Skip unchanged or near-identical views; highlight visible differences. They never block unrelated development. They block *final milestone acceptance*, not starting subsequent tasks or posting a safe preview.
 - “Received → Reviewed → Implemented → Tested → Specialist review” is a traceability model, **not a strictly sequential approval chain**. Developer may advance implementation/testing while earlier reviews are pending; show true state separately instead of waiting or retroactively claiming approvals.
 - The document's repeated instructions to have the Architect “approve” every implementation detail, reapprove a plan, await every provider confirmation, receive final screenshots, or wait for Human/Testing studies **are nonblocking during development**. Only the specific affected regulated/vendor feature remains disabled when approval genuinely cannot be skipped.
 
 ### 17.4 Immediate Developer action — no stop-and-wait response
 
-**Upon receiving this amended handoff, continue implementing on `enhance/bloom-experience` using the latest repository head.** Deliver substantial working slices and refresh the protected Render preview, starting with actual brand assets/tokens and high-value current-web UX, followed by unit customization, meal capture, evidence/bloodwork, shared provenance and approved integrations. Capture baseline for before/after comparison from a prechange commit. Test, fix and keep moving through the rest of v0.5. **Do not stop at an analysis, planning, status-report or specialist-review stage when code work is independently actionable.**
+**Upon receiving this amended handoff, continue implementing on `enhance/bloom-experience` using the latest repository head.** Deliver substantial working slices and refresh the protected Render preview, starting with actual brand assets/tokens and high-value current-web UX, followed by unit customization, meal capture, evidence/bloodwork, shared provenance and approved integrations. For substantial visible redesigns only, capture baseline from a prechange commit and annotate actual changes; otherwise skip the comparison. Test, fix and keep moving through the rest of v0.5. **Do not stop at an analysis, planning, status-report or specialist-review stage when code work is independently actionable.**
 
 **Superseded process passages:** §3's “require Developer to map before creating tickets”; §12.5's “no code until design”; §13.4's architecture-first standstill; §14.4's “must first return a single status table”; §15.3's “return gap analysis and an implementation plan”; §16's screenshot/review hard gate **as a precondition for more development**; and every mention of waiting for Architect/Branding/User Testing/Biology/Security/Legal approval *before independently safe coding or preview deployment*. **Substantive medical/privacy/licensing restrictions, no false claims, P0 implementation requirements, testing expectations, launch limitations and independent release sign-offs remain in force.**
 
@@ -507,7 +507,7 @@ branding-comparison/
 - Implement, refactor, test, format and document changes within the agreed Bloom v0.5 scope.
 - Create as many appropriately scoped local Git commits as needed; push those commits directly to the existing authorized `enhance/bloom-experience` development branch and update the existing PR #1 (or normal successor review branch/PR if needed for the same scope).
 - Run CI, fix failures, amend follow-up commits, and redeploy the access-controlled Render *development preview* after safety checks pass.
-- Update developer status/evidence, before/after screenshots and relevant PR descriptions/comments as part of the ongoing workflow.
+- Update developer status/evidence and relevant PR descriptions/comments; include annotated before/after screenshots only for substantial visible transformations.
 - Continue through the next actionable backlog item immediately after pushing; do **not** pause to ask whether the Product Owner authorizes another commit, push or ordinary review-branch update.
 
 **Authorization is standing, not one-time.** No repeated 'May I push?', 'Do you approve this commit?', or 'Shall I proceed?' questions for these routine actions. An individual tool or service may still enforce its own confirmation or credentials; the Developer should comply with actual platform permission boundaries and should not invent a workaround or claim a push occurred when blocked by a tool.
@@ -522,6 +522,8 @@ branding-comparison/
 
 ### 18.3 Required transparency AFTER action, not approval BEFORE action
 
-Following meaningful implementation slices, report in concise form: requirement IDs advanced; commit SHA(s); PR/branch; tests run with pass/fail; actual Render preview URL/deployed SHA (if verified); known risks and external dependencies; relevant before/after artifact links. These reports are **informational and for post-hoc Product Owner review**, not mandatory pause points or implicit requests for approval. Continue other independent work if a specialist's review or an external dependency is pending.
+Following meaningful implementation slices, report in concise form: requirement IDs advanced; commit SHA(s); PR/branch; tests run with pass/fail; actual Render preview URL/deployed SHA (if verified); known risks and external dependencies; links to annotated before/after artifacts only if a substantial visible change warrants them. These reports are **informational and for post-hoc Product Owner review**, not mandatory pause points or implicit requests for approval. Continue other independent work if a specialist's review or an external dependency is pending.
 
 **Core workflow: implement → test → commit → push to authorized review branch → deploy safe Render preview → summarize → continue.** Specialist sign-offs determine eventual acceptance/public launch, not permission to make normal development commits. No GitHub change is made by the Chief Architect through this amendment; Developer remains sole code/GitHub owner.
+
+> **Product Owner visual-evidence clarification (2026-10-23):** Before/after images are selective, not routine. Create them only for clearly visible, substantial UI/brand/workflow transformations. Mark the actual changes with small numbered callouts/highlights and supply unmarked originals. Never present near-identical screens as a meaningful comparison. For minor or invisible work, report code/tests and preview behavior instead. This rule supersedes broader comparison wording elsewhere in this document.
