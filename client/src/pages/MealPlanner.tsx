@@ -1,4 +1,6 @@
 import { recipeDisplayName } from "@/lib/recipe-display";
+import { useExperience } from "@/lib/experience";
+import { foodMass } from "@shared/nutrition-display";
 import { recipePreparation } from "@shared/recipe-preparation";
 import TodayPlanner from "@/components/TodayPlanner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -262,6 +264,7 @@ interface Plan {
   recentMeals: number;
 }
 export default function MealPlanner() {
+  const { settings } = useExperience();
   const plan = useQuery<Plan>({ queryKey: ["/api/meal-planner"] });
   const progress = useQuery<any>({ queryKey: ["/api/meal-planner/progress"] });
   const [selected, setSelected] = useState<string | null>(null);
@@ -387,7 +390,7 @@ export default function MealPlanner() {
                   {recipePreparation(r).shopping.map((i) => (
                     <li key={i.name}>
                       {i.estimated ? "Approximately " : ""}
-                      {i.grams} g {i.name}
+                      {foodMass(i.grams, settings.displayUnits.foodWeight)} {i.name}
                     </li>
                   ))}
                 </ul>

@@ -1,0 +1,94 @@
+{
+  "stage": "after",
+  "source": {
+    "sha": "fe3d3377194ec54908c7f94990d842184c4f69db",
+    "dirty": true
+  },
+  "widths": [
+    390,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "synthetic": true,
+  "errors": [],
+  "writes": [
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/weekly-plans/save",
+      "body": {
+        "name": "Synthetic week",
+        "days": 1,
+        "householdServings": 2,
+        "targets": {
+          "calories": 2000,
+          "protein": 100,
+          "fiber": 30,
+          "fiberMaximum": 45,
+          "sodium": 2300,
+          "saturatedFat": 20
+        },
+        "customRecipes": [],
+        "nutrientTargets": {},
+        "locked": {}
+      }
+    },
+    {
+      "path": "/api/meals",
+      "body": {
+        "mealText": "150 g Synthetic oats",
+        "mealType": "breakfast",
+        "aiConsent": false
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    }
+  ]
+}

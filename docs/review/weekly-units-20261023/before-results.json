@@ -1,0 +1,51 @@
+{
+  "stage": "before",
+  "source": {
+    "sha": "fe3d3377194ec54908c7f94990d842184c4f69db",
+    "dirty": true
+  },
+  "widths": [
+    390,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "synthetic": true,
+  "errors": [],
+  "writes": [
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/precision/today-plan",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    }
+  ]
+}

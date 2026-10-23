@@ -34,3 +34,9 @@ ARC-UT-04 now routes a logged meal with missing energy estimates to journal revi
 | ARC-UT-08, ARC-BRAND-P0-05/06 | Synthetic browser, keyboard/reflow and regression infrastructure | Real phones, screen readers, full WCAG/200% zoom assessment, recruited persona study and seven-day follow-up remain independent work. No participant outcomes or specialist sign-offs are fabricated. |
 
 v0.5 remains incomplete. Implemented, tested, deployed and independently accepted are separate states. Continue approved independent engineering; blocked provider/legal/clinical features stay disabled.
+
+## Weekly planning and recipe-library unit follow-through — 2026-10-23
+
+ARC-UNIT-001, ARC-UT-03/07: weekly plan day/meal energy, energy checks and bounds, nutrient detail rows, prepared ingredient quantities, shopping/print quantities and recipe-library shopping masses now use the saved independent energy/food-mass preferences. Canonical target editors are explicitly labelled. Source instructions, planner arithmetic, account snapshots, safety decisions and meal-log payloads are preserved. No schema or credential changes.
+
+TypeScript, all 180 Node tests and production build passed. The reproducible synthetic Chromium runner covers light/dark 390/1440px views, unknown versus zero, source-unit preservation, incomplete-plan save blocking, canonical save/log requests, recipe-library ounce quantities and fresh kcal/gram settings. [Four matched comparison pairs and manifests](../review/weekly-units-20261023/README.md) accompany the code. These are isolated real-component screen tests with mocked APIs, not device/provider or specialist acceptance. Remote CI and deployment are verified after push. Broader unit surfaces, all-domain evidence consistency and previously listed external gates remain open; this increment does not complete v0.5.

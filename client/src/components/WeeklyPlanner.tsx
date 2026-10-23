@@ -1,4 +1,6 @@
 import { recipeDisplayName } from "@/lib/recipe-display";
+import { useExperience } from "@/lib/experience";
+import { energyAmount, foodMass, nutrientDisplay } from "@shared/nutrition-display";
 import { recipePreparation } from "@shared/recipe-preparation";
 import MetaboliteResearch from "./MetaboliteResearch";
 import { useState } from "react";
@@ -40,6 +42,8 @@ const targetFields = [
 const rounded = (v: number | null | undefined) =>
   v == null ? "Unavailable" : Math.round(v * 10) / 10;
 export default function WeeklyPlanner() {
+  const { settings } = useExperience();
+  const units = settings.displayUnits;
   const [request, setRequest] = useState<WeeklyRequest>(defaults);
   const [display, setDisplay] = useState<WeeklyPlan | null>(null);
   const [message, setMessage] = useState("");
@@ -173,6 +177,7 @@ export default function WeeklyPlanner() {
             reviewed adult profile and does not provide condition-specific diets
             or medication interaction screening.
           </p>
+          <p className="panel-note">Target entry uses canonical kcal and the nutrient units shown. Plan estimates and shopping quantities below use your saved display units.</p>
           <div className="precision-grid">
             {targetFields.map(([key, label, min, max]) => (
               <label className="block" key={key}>
@@ -453,21 +458,27 @@ export default function WeeklyPlanner() {
               open={d.day === 1}
             >
               <summary>
-                Day {d.day} · {rounded(d.nutrients.calories)} kcal ·{" "}
+                Day {d.day} · {energyAmount(d.nutrients.calories, units.energy)} {units.energy} ·{" "}
                 {rounded(d.nutrients.protein_g)} g protein ·{" "}
                 {d.checks.every((c) => c.passed)
                   ? "targets met"
                   : "review targets"}
               </summary>
               <ul className="list-disc pl-5">
-                {d.checks.map((c) => (
+                {d.checks.map((c) => {
+                  const unit = c.key === "calories" ? "kcal" : "";
+                  const value = nutrientDisplay(c.key, c.value, unit, units);
+                  const min = nutrientDisplay(c.key, c.min, unit, units);
+                  const max = nutrientDisplay(c.key, c.max, unit, units);
+                  return (
                   <li key={c.key}>
-                    {c.passed ? "✓" : "Needs review"} {c.label}:{" "}
-                    {rounded(c.value)}
-                    {c.min !== null ? ` (minimum ${Math.round(c.min)})` : ""}
-                    {c.max !== null ? ` (maximum ${Math.round(c.max)})` : ""}
+                    {c.passed ? "✓" : "Needs review"} {c.label}{c.key === "calories" ? ` (${units.energy})` : ""}:{" "}
+                    {rounded(value.amount)}
+                    {min.amount !== null ? ` (minimum ${rounded(min.amount)})` : ""}
+                    {max.amount !== null ? ` (maximum ${rounded(max.amount)})` : ""}
                   </li>
-                ))}
+                  );
+                })}
               </ul>
               {d.meals.map((m) => (
                 <article
@@ -477,7 +488,7 @@ export default function WeeklyPlanner() {
                   <p className="eyebrow">{m.slot}</p>
                   <h3>{recipeDisplayName(m.recipe.name)}</h3>
                   <p>
-                    {rounded(m.nutrients.calories)} kcal ·{" "}
+                    {energyAmount(m.nutrients.calories, units.energy)} {units.energy} ·{" "}
                     {rounded(m.nutrients.protein_g)} g protein · {m.portion} ×
                     base portion
                   </p>
@@ -487,7 +498,7 @@ export default function WeeklyPlanner() {
                       {recipePreparation(m.recipe).shopping.map((i) => (
                         <li key={i.name}>
                           {i.estimated ? "Approximately " : ""}
-                          {Math.round(i.grams * m.portion)} g {i.name}
+                          {foodMass(i.grams * m.portion, units.foodWeight)} {i.name}
                         </li>
                       ))}
                     </ul>
@@ -525,15 +536,18 @@ export default function WeeklyPlanner() {
                       </p>
                     ))}
                     <dl>
-                      {display.nutrientDefinitions.map((n) => (
+                      {display.nutrientDefinitions.map((n) => {
+                        const value = nutrientDisplay(n.key, m.nutrients[n.key], n.unit, units);
+                        return (
                         <div className="flex justify-between gap-3" key={n.key}>
                           <dt>{n.name}</dt>
                           <dd>
-                            {rounded(m.nutrients[n.key])}{" "}
-                            {m.nutrients[n.key] === null ? "" : n.unit}
+                            {rounded(value.amount)}{" "}
+                            {value.amount === null ? "" : value.unit}
                           </dd>
                         </div>
-                      ))}
+                        );
+                })}
                     </dl>
                   </details>
                   <label className="block">
@@ -599,7 +613,7 @@ export default function WeeklyPlanner() {
               <ul className="list-disc pl-5">
                 {display.shoppingList.map((i) => (
                   <li key={i.foodId}>
-                    {i.grams} g {i.name} ·{" "}
+                    {foodMass(i.grams, units.foodWeight)} {i.name} ·{" "}
                     <a
                       className="underline"
                       href={i.sourceUrl}
