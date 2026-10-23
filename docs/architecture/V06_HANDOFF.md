@@ -168,3 +168,25 @@ Documents reviewed (2026-10-23): Biology comprehensive research v1.1; Integratio
 **Architect priority:** implement reliable guideline-based combined actions, honest explanations, provenance, and ongoing measurements before any learned optimization or molecular simulations. Preserve separate user-facing vs research-only release states. The comparative ML and causal methods are **research proposals**, not a promise of personalized effectiveness. Coordinate safety gates with Biology, Security and Legal; measure comprehension with User Testing. Codex should keep focusing on v0.5 until that scope finishes; v0.6 remains a planning specification.
 
 **Submission checkpoint:** Biology, AI/ML, Integrations, Branding/UX, Security, User Testing and Legal handoffs all located as of 2026-10-23. Final v0.6 cross-specialist testing, clinical evidence decisions, licensing and release gates remain outstanding; no new user permission needed for ordinary future development commits once v0.6 is approved for implementation.
+
+
+## 13. Minimum useful v0.6 release checklist (Architect, 2026-10-23)
+
+These are the mandatory functional acceptance criteria for a useful first v0.6 release, not additions to v0.5. Research proposals and approved architecture do not imply implemented features.
+
+| ID | Acceptance target |
+|---|---|
+| V06-MH-01 | Multiple prioritized user goals, health limits, allergies, time/equipment and budget constraints; explicit trade-offs; optional assays never block setup. |
+| V06-MH-02 | One coordinated and usable Eat–Move–Recover daily/weekly plan with feasible concrete actions, edits/swaps, reasons and tracking. No conflicting parallel plans. |
+| V06-MH-03 | Evidence-reviewed guideline-first plan for users without genetics, microbiome data, wearables, coach or paid service; transparent sources and meaningful abstention. |
+| V06-MH-04 | Original biological assay, genetic, microbial and lab provenance and units preserved; no unsupported inference of enzymes, microbial flux, individual causation or clinical benefit. |
+| V06-MH-05 | Reliable reusable nutrition, activity and laboratory capture, import reconciliation, dated history and manual fallback; native device links only where actually supported. |
+| V06-MH-06 | Baselines, measurable goal outcomes, adherence, missingness and confounders; safe reviewable and reversible plan reassessment without naive causal claims. |
+| V06-MH-07 | Clear action-first mobile/desktop and accessible UI, canonical settings, transparent evidence statuses and no mandatory scientific graph exploration. |
+| V06-MH-08 | Tested account/data boundaries, scoped sharing, clinical contraindication checks, protected sensitive data, safe errors and abstention, applicable legal/licensing safeguards. |
+| V06-MH-09 | Versioned and reviewed research-to-claim-to-rule pipeline with correction/retraction handling, rollback and user-visible meaningful updates; no publication-to-advice autopublish. |
+| V06-MH-10 | End-to-end scenario tests from goal to action to outcome reassessment, including missing data, competing goals, unsafe inputs, unit errors and access denial; independent usability review and baseline comparative evaluation. |
+
+**Scope control:** Coach/team workflows, AI copilot, advanced genetic/microbial predictions, molecular simulation and extra connectors are separate phased capabilities with their own safety and validation gates; they cannot be claimed as complete merely because this initial core works. Compare sophisticated AI against a transparent guideline baseline before any outcome superiority claims.
+
+**Status contract:** Codex eventually reports each ID as proposed, built, tested or specialist-reviewed with specific SHA and working-preview evidence. Continue v0.5 independently now. Generate highlighted before/after UI screenshots only for substantive visual differences, not for invisible code changes.
