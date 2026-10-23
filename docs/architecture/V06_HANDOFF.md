@@ -218,3 +218,20 @@ These are the mandatory functional acceptance criteria for a useful first v0.6 r
 **Crosswalk:** V06-12 (goal-to-action), V06-13 (personal outcomes), V06-16 (wearable provenance), V06-17 (trust UX), V06-18 (safety/validation), V06-MH-02/05/06/08/10; BIO-COACH-404/405/416 and existing Athlete load/recovery features. This is a *functional refinement* of the combined exercise optimizer, not a new independent scoring system or Coach prerequisite.
 
 **Ownership and status:** Architect approved for v0.6 planning; Codex implements later after v0.5 scope, Biology validates exercise science, Integrations confirms source capabilities, Security checks consent and safety, User Testing validates comprehension. **Not implemented or independently validated by this documentation change.**
+
+
+
+## 15. Branding asset intake — Athlete three-state guidance (2026-10-23)
+
+**Source:** Branding & UX `Bloom_Athlete_Training_States_Design_Handoff_2026-10-23.md`, shared Library package `Bloom_Athlete_Training_States_Assets_2026-10-23.zip` (three icons and six SVG light/dark illustrative cards). **Design status:** approved for architecture intake only; not validated as deployed functionality. Supersedes no requirement in V06-TRAIN-01.
+
+**MKT-WORKOUT-301–305 accepted as implementation guidance for V06-TRAIN-01:**
+- **301 (P0), scientific boundaries:** Three states are decision support, not exercise/medical clearance. Biology-reviewed policies determine states; distinguish ordinary recovery from symptoms requiring professional evaluation; no invented numerical readiness score or injury-risk estimate.
+- **302 (P0), provenance:** Optional `Why this guidance?` reveals dated signals actually used, device/source quality, missing/stale observations, policy version and limits; separate coach instructions, approved deterministic rules and AI drafts. If data are insufficient, show an explicit unassessed fallback, *not* `Train as planned`.
+- **303 (P1), control:** Train → View workout; Modify → Review adjustments; Recover → Review recovery guidance or assessment information. No silent change to calendar/coach/clinical plan.
+- **304 (P0), accessibility:** Use Athlete blue as common workspace styling with restrained green/amber/rose state accents, accompanied by text and icons. One dominant state at 320px, WCAG 2.2 AA and dark-mode checks, and semantic HTML for production headings/text (SVG cards are only design templates).
+- **305 (P0), regression/privacy:** Cover normal load, high load, fatigue, conflicting/missing data, symptoms, stale sensors, corrections, clinician warnings and withdrawn coach permissions. Status must not leak private medical data to coach outside scoped derived-data consent.
+
+**Deliverable inventory:** `train-icon.svg`, `modify-icon.svg`, `recover-icon.svg`, `train-light.svg`, `train-dark.svg`, `modify-light.svg`, `modify-dark.svg`, `recover-light.svg`, `recover-dark.svg`. Branding's source archive also carries `DESIGN_HANDOFF.md`. Colours are proposals. Preserve the existing Bloom icon and token families; build a reusable semantic status component rather than dropping a complete SVG card as inaccessible UI text.
+
+**Validation/implementation state:** Received + Architect reviewed; not implemented, rendered, Biology certified, Security approved or UX tested. Assets must be checked into an accessible version-controlled location before Codex implementation; shared Library existence alone is not proof assets are in the Codex checkout. This is post-v0.5 scope and must not pause active v0.5 development.
