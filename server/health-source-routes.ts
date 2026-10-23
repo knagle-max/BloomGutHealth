@@ -26,22 +26,26 @@ export function registerHealthSourceRoutes(app:Express, auth:RequestHandler, sto
     const kind=req.query.kind;
     const provider=req.query.provider;
     const limitRaw=req.query.limit;
+    const offsetRaw=req.query.offset;
     const allowedKinds=new Set(["steps","heart_rate","body_mass","sleep","distance","hydration"]);
     const allowedProviders=new Set(["apple_health","health_connect"]);
     if ((kind!==undefined&&(typeof kind!=="string"||!allowedKinds.has(kind))) ||
         (provider!==undefined&&(typeof provider!=="string"||!allowedProviders.has(provider))) ||
-        (limitRaw!==undefined&&(typeof limitRaw!=="string"||!/^[1-9]\d{0,2}$/.test(limitRaw)||Number(limitRaw)>200)))
+        (limitRaw!==undefined&&(typeof limitRaw!=="string"||!/^[1-9]\d{0,2}$/.test(limitRaw)||Number(limitRaw)>200)) ||
+        (offsetRaw!==undefined&&(typeof offsetRaw!=="string"||!/^(0|[1-9]\d{0,4})$/.test(offsetRaw)||Number(offsetRaw)>50000)))
       return res.status(400).json({error:"Invalid observation filter."});
-    const limit=limitRaw===undefined?50:Number(limitRaw);
+    const limit=limitRaw===undefined?50:Number(limitRaw),offset=offsetRaw===undefined?0:Number(offsetRaw);
     try {
       const observations=await storage.getObservations(req.session.userId!);
       const filtered=observations.filter(item=>
         (kind===undefined||item.kind===kind)&&
         (provider===undefined||item.source.provider===provider));
       filtered.sort((a,b)=>Date.parse(b.endAt)-Date.parse(a.endAt)||
-        a.source.recordId.localeCompare(b.source.recordId));
-      res.json({observations:filtered.slice(0,limit),returned:Math.min(filtered.length,limit),
-        hasMore:filtered.length>limit,
+        a.source.provider.localeCompare(b.source.provider)||
+        a.source.deviceId.localeCompare(b.source.deviceId)||
+        a.source.recordId.localeCompare(b.source.recordId)||a.kind.localeCompare(b.kind));
+      res.json({observations:filtered.slice(offset,offset+limit),returned:Math.max(0,Math.min(filtered.length-offset,limit)),
+        total:filtered.length,offset,limit,hasMore:filtered.length>offset+limit,
         interpretation:"Source observations only. Overlapping sources must not be summed without reconciliation."});
     } catch {res.status(503).json({error:"Health observations could not be loaded."});}
   });

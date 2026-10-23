@@ -6,7 +6,7 @@ import { useExperience } from "@/lib/experience";
 import { kgToDisplay, quantityFromCanonical } from "@shared/display-units";
 import type { HealthObservation } from "@shared/health-ingestion";
 
-type Result = { observations: HealthObservation[]; returned:number; hasMore:boolean; interpretation:string };
+type Result = { observations: HealthObservation[]; returned:number; hasMore:boolean; total:number; offset:number; limit:number; interpretation:string };
 const labels: Record<HealthObservation["kind"],string> = {
  steps:"Steps", heart_rate:"Heart rate", body_mass:"Body weight", sleep:"Sleep",
  distance:"Distance",hydration:"Recorded hydration",
@@ -21,19 +21,27 @@ export default function DeviceObservations() {
  const {user}=useAuth();
  const {settings}=useExperience();
  const [kind,setKind]=useState("all");
- const q=useQuery<Result>({queryKey:["device-observations",user?.id,kind],
+ const [provider,setProvider]=useState("all"),[page,setPage]=useState(0);
+ const q=useQuery<Result>({queryKey:["device-observations",user?.id,kind,provider,page],
    enabled:!!user,
    queryFn:async()=>{
-     const suffix=kind==="all"?"":"?kind="+encodeURIComponent(kind);
-     return (await apiRequest("GET","/api/health-sources/observations"+suffix)).json();
+     const params=new URLSearchParams({limit:"50",offset:String(page*50)});
+     if(kind!=="all")params.set("kind",kind);
+     if(provider!=="all")params.set("provider",provider);
+     return (await apiRequest("GET","/api/health-sources/observations?"+params.toString())).json();
    }});
  return <section className="bloom-panel space-y-3" aria-labelledby="device-observation-title">
    <h2 id="device-observation-title">Device observations</h2>
    <p className="panel-note">Imported source measurements are displayed individually. Overlapping records are not combined into daily totals. A device connection is not currently available in this browser.</p>
    <label className="block">Measurement
-     <select className="bloom-input" value={kind} onChange={e=>setKind(e.target.value)}>
+     <select className="bloom-input" value={kind} onChange={e=>{setKind(e.target.value);setPage(0);}}>
        <option value="all">All measurements</option>
        {Object.entries(labels).map(([value,label])=><option key={value} value={value}>{label}</option>)}
+     </select>
+   </label>
+   <label className="block">Source
+     <select className="bloom-input" value={provider} onChange={e=>{setProvider(e.target.value);setPage(0);}}>
+       <option value="all">All device sources</option><option value="apple_health">Apple Health</option><option value="health_connect">Health Connect</option>
      </select>
    </label>
    {q.isPending && <p role="status">Loading source observations…</p>}
@@ -46,9 +54,20 @@ export default function DeviceObservations() {
       <tbody>{q.data.observations.map((o,i)=><tr key={`${o.source.provider}:${o.source.deviceId}:${o.source.recordId}:${i}`}>
         <td>{new Date(o.endAt).toLocaleString()}</td><td>{labels[o.kind]}</td>
         <td>{measurement(o,settings.displayUnits.bodyWeight,settings.displayUnits.hydration)}</td>
-        <td>{o.source.provider==="apple_health"?"Apple Health":o.source.provider==="health_connect"?"Health Connect":"Manual"}</td>
+        <td>{o.source.provider==="apple_health"?"Apple Health":o.source.provider==="health_connect"?"Health Connect":"Manual"}
+        <details><summary>Record source</summary>
+          <span className="block">Device: {o.source.deviceId}</span>
+          <span className="block">Record: {o.source.recordId}</span>
+          <span className="block">Revision: {o.source.sourceRevision}</span>
+          <span className="block">Received: {new Date(o.receivedAt).toLocaleString()}</span>
+        </details>
+        </td>
       </tr>)}</tbody>
     </table></div>)}
-   {q.data?.hasMore && <p className="panel-note">Showing the most recent 50 matching observations. Export your source records from data controls for the full available history.</p>}
+   {q.data && q.data.total>0 && <nav aria-label="Device observation pages" className="flex flex-wrap items-center gap-3">
+     <button type="button" className="text-link" disabled={page===0||q.isFetching} onClick={()=>setPage(p=>Math.max(0,p-1))}>Previous page</button>
+     <span className="panel-note">Records {q.data.offset+1}–{q.data.offset+q.data.returned} of {q.data.total}, not aggregated daily totals.</span>
+     <button type="button" className="text-link" disabled={!q.data.hasMore||q.isFetching} onClick={()=>setPage(p=>p+1)}>Next page</button>
+   </nav>}
  </section>;
 }
