@@ -1,0 +1,7 @@
+# Unit editor regression — UT-RED-201/202/207/208
+
+Profile has one master unit group. My Biology → Progress has one control for each unit; check-in fields show suffixes instead of another unit selector. Unit preferences persist through the existing encrypted, account-scoped store. Valid in-progress measurements convert once after the preference save succeeds. Failed preference saves leave the draft and its unit together. Unfinished/invalid drafts block that switch and check-in submission. Partial feet/inches entries cannot become an empty measurement. Original laboratory numbers, source units, assumed-unit status and assay context are unaffected.
+
+Reproduce with `node --import tsx scripts/qa/unit-editor-regression.mjs`. Set `BLOOM_PLAYWRIGHT_MODULE`, `BLOOM_CHROMIUM_EXECUTABLE` if needed; optional `BLOOM_REVIEW_OUTPUT` selects output. [Synthetic results](results.json) cover failed saves, repeated switches, saved canonical profile/check-in payloads, missing fields, pending/confirmed lab provenance, one editor per preference, 320/375/768/1440px reflow, keyboard order and a CSS 200% zoom surrogate. The runner uses real app routes and intercepted synthetic API responses. Physical devices, native browser zoom, screen-reader validation, independent specialist approval and real provider acceptance remain unverified.
+
+TypeScript, all 182 Node tests and production build passed locally. Remote CI and Render are verified separately after push. No routine image gallery is required for this control consolidation under the current selective-evidence instruction.

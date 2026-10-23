@@ -61,7 +61,7 @@ export default function Profile({
       });
     },
   });
-  // Unit dropdowns convert in-progress drafts in changeDisplayUnit.
+  // Convert drafts only after the shared preference has actually saved.
   // Do not reconstruct them from saved Profile values after a preference PATCH:
   // doing so silently discards unsaved measurements.
   useEffect(()=>{
@@ -74,6 +74,11 @@ export default function Profile({
     setHeightEntry(formatHeightEntry(profile.data.heightCm ?? null,units.height));
     setMassEntry(formatMassEntry(profile.data.weightKg ?? null,units.bodyWeight));
   },[profile.data?.heightCm,profile.data?.weightKg,user?.id,loadingUnits,profile.isLoading]);
+  useEffect(()=>{
+    if(loadingUnits)return;
+    setHeightEntry(old=>{const next=switchHeightUnit(old,units.height);return "unit" in next?next:old;});
+    setMassEntry(old=>{const next=switchMassUnit(old,units.bodyWeight);return "unit" in next?next:old;});
+  },[units.height,units.bodyWeight,loadingUnits]);
   const heightParsed=parseHeightEntry(heightEntry);
   const massParsed=parseMassEntry(massEntry);
   const incomplete=heightParsed.kind==="invalid"||heightParsed.kind==="incomplete"||
@@ -82,12 +87,10 @@ export default function Profile({
     if(key==="height"){
       const changed=switchHeightUnit(heightEntry,value as DisplayUnits["height"]);
       if(!("unit" in changed)){setEntryError("Finish or clear the height before switching units.");return;}
-      setHeightEntry(changed);
     }
     if(key==="bodyWeight"){
       const changed=switchMassUnit(massEntry,value as DisplayUnits["bodyWeight"]);
       if(!("unit" in changed)){setEntryError("Finish or clear the weight before switching units.");return;}
-      setMassEntry(changed);
     }
     setEntryError("");
     patch({displayUnits:{...selectedUnits,[key]:value} as DisplayUnits});
@@ -148,7 +151,7 @@ export default function Profile({
             <label className="block">Age
               <input className="bloom-input w-full" type="number" min="1" max="120" value={form.age} onChange={e=>setForm({...form,age:e.target.value})}/>
             </label>
-            <fieldset className="space-y-3">
+            <fieldset className="space-y-3" id="measurement-units">
               <legend className="font-medium">Measurement units</legend>
               <p className="panel-note">Choose units independently. Saved profile measurements remain in canonical centimetres and kilograms; laboratory source units are not changed.</p>
               <div className="grid grid-cols-2 gap-3">
@@ -166,21 +169,21 @@ export default function Profile({
                   </select>
                 </label>)}
               </div>
-              <p className="panel-note">Unit preferences save automatically when changed. Switch the unit beside a measurement below, or change any other unit here.</p>
+              <p className="panel-note">Unit preferences save automatically here. Completed measurement drafts convert after a successful save; unfinished drafts keep their labelled entry units.</p>
               {savingUnits&&<p role="status">Saving measurement units…</p>}
               {unitsError&&<p role="alert">Could not save measurement units: {unitsError}</p>}
             </fieldset>
-            <div className="space-y-2"><div className="flex items-center justify-between gap-3"><span className="font-medium">Height</span><label>Height unit <select className="bloom-input" aria-label="Height unit beside measurement" disabled={savingUnits||loadingUnits} value={selectedUnits.height} onChange={e=>changeDisplayUnit("height",e.target.value)}><option value="cm">cm</option><option value="m">m</option><option value="ft-in">feet + inches</option></select></label></div>
+            <div className="space-y-2"><span className="font-medium">Height ({heightEntry.unit==="ft-in"?"feet + inches":heightEntry.unit})</span>
               <div className="flex gap-2">
-                <input aria-label={selectedUnits.height==="ft-in"?"Height feet":"Height"} className="bloom-input w-full"
+                <input aria-label={heightEntry.unit==="ft-in"?"Height feet":"Height"} className="bloom-input w-full"
                   inputMode="decimal" value={heightEntry.primary}
                   onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,primary:e.target.value});}}/>
-                {selectedUnits.height==="ft-in"&&<input aria-label="Height inches" className="bloom-input w-full"
+                {heightEntry.unit==="ft-in"&&<input aria-label="Height inches" className="bloom-input w-full"
                   inputMode="decimal" value={heightEntry.inches}
                   onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,inches:e.target.value});}}/>}
               </div>
             </div>
-            <div className="space-y-2"><div className="flex items-center justify-between gap-3"><span className="font-medium">Body weight</span><label>Weight unit <select className="bloom-input" aria-label="Weight unit beside measurement" disabled={savingUnits||loadingUnits} value={selectedUnits.bodyWeight} onChange={e=>changeDisplayUnit("bodyWeight",e.target.value)}><option value="kg">kg</option><option value="lb">lb</option></select></label></div>
+            <div className="space-y-2"><span className="font-medium">Body weight ({massEntry.unit})</span>
               <input aria-label="Body weight" className="bloom-input w-full" inputMode="decimal"
                 value={massEntry.value} onChange={e=>{setEntryError("");setMassEntry({...massEntry,value:e.target.value});}}/>
             </div>
@@ -211,7 +214,7 @@ export default function Profile({
               Targets are formula-based estimates. Missing profile values
               currently use defaults.
             </p>
-            <Button disabled={save.isPending||incomplete}>Save nutrition profile</Button>
+            <Button disabled={save.isPending||incomplete||savingUnits||loadingUnits}>Save nutrition profile</Button>
           </>
         )}
         {save.isSuccess && <p role="status">Profile saved.</p>}

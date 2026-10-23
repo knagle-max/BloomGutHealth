@@ -1,4 +1,5 @@
-import { displayToKg, kgToDisplay, quantityFromCanonical, quantityToCanonical } from "@shared/display-units";
+import { formatMassEntry, parseMassEntry, parseCircumferenceEntry, switchMassUnit, switchCircumferenceUnit, type MassEntry, type CircumferenceEntry } from "@shared/measurement-entry";
+import { kgToDisplay, quantityFromCanonical } from "@shared/display-units";
 import LabUnitReview from "@/components/LabUnitReview";
 import { useExperience } from "@/lib/experience";
 import { useAuth } from "@/lib/auth";
@@ -7,7 +8,7 @@ import QuickLabEntry from "@/components/QuickLabEntry";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
-import { useEffect, useState, useRef, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -182,25 +183,22 @@ export default function PrecisionNutrition() {
   const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
   const {user}=useAuth();
   const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null}>({queryKey:["/api/profile"],enabled:!!user});
-  const [weightDraft,setWeightDraft]=useState("");
-  const [waistDraft,setWaistDraft]=useState("");
-  const entryUnits=useRef({bodyWeight:settings.displayUnits.bodyWeight,circumference:settings.displayUnits.circumference});
+  const [weightEntry,setWeightEntry]=useState<MassEntry>({unit:settings.displayUnits.bodyWeight,value:""});
+  const [waistEntry,setWaistEntry]=useState<CircumferenceEntry>({unit:settings.displayUnits.circumference,value:""});
+  const [draftError,setDraftError]=useState("");
+  const parsedWeight=parseMassEntry(weightEntry), parsedWaist=parseCircumferenceEntry(waistEntry);
+  const unfinished=[parsedWeight,parsedWaist].some(v=>v.kind==="incomplete"||v.kind==="invalid");
   useEffect(()=>{
-    const previous=entryUnits.current, next=settings.displayUnits;
-    if(previous.bodyWeight!==next.bodyWeight){
-      setWeightDraft(old=>{
-        if(!old.trim()||!Number.isFinite(Number(old))||Number(old)<=0)return old;
-        return String(Number(kgToDisplay(displayToKg(Number(old),previous.bodyWeight),next.bodyWeight).toFixed(5)));
-      });
-    }
-    if(previous.circumference!==next.circumference){
-      setWaistDraft(old=>{
-        if(!old.trim()||!Number.isFinite(Number(old))||Number(old)<=0)return old;
-        return String(Number(quantityFromCanonical("circumference",quantityToCanonical("circumference",Number(old),previous.circumference),next.circumference).toFixed(5)));
-      });
-    }
-    entryUnits.current={bodyWeight:next.bodyWeight,circumference:next.circumference};
+    setWeightEntry(old=>{const next=switchMassUnit(old,settings.displayUnits.bodyWeight);return "unit" in next?next:old;});
+    setWaistEntry(old=>{const next=switchCircumferenceUnit(old,settings.displayUnits.circumference);return "unit" in next?next:old;});
   },[settings.displayUnits.bodyWeight,settings.displayUnits.circumference]);
+  function changeCheckinUnit(key:"bodyWeight"|"circumference"|"height",value:string){
+    const converted=key==="bodyWeight"?switchMassUnit(weightEntry,value as MassEntry["unit"]):
+      key==="circumference"?switchCircumferenceUnit(waistEntry,value as CircumferenceEntry["unit"]):null;
+    if(converted&&!("unit" in converted)){setDraftError("Finish or clear the measurement before switching units.");return;}
+    setDraftError("");
+    patch({displayUnits:{...settings.displayUnits,[key]:value}});
+  }
   const [tab, setTab] = useState("overview"),
     [sampleId, setSampleId] = useState("");
   const [status, setStatus] = useState(""),
@@ -1295,38 +1293,41 @@ export default function PrecisionNutrition() {
                   <p className="panel-note">These preferences are shared with Profile, Athlete and the separate Progress dashboard. Existing readings retain their original stored units.</p>
                   <div className="precision-grid">
                     <label>Body weight unit
-                      <select aria-label="Biology progress weight unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.bodyWeight} onChange={e=>patch({displayUnits:{...settings.displayUnits,bodyWeight:e.target.value as "kg"|"lb"}})}>
+                      <select aria-label="Biology progress weight unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.bodyWeight} onChange={e=>changeCheckinUnit("bodyWeight",e.target.value)}>
                         <option value="kg">kg</option><option value="lb">lb</option>
                       </select>
                     </label>
                     <label>Waist/circumference unit
-                      <select aria-label="Biology progress waist unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.circumference} onChange={e=>patch({displayUnits:{...settings.displayUnits,circumference:e.target.value as "cm"|"in"}})}>
+                      <select aria-label="Biology progress waist unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.circumference} onChange={e=>changeCheckinUnit("circumference",e.target.value)}>
                         <option value="cm">cm</option><option value="in">inches</option>
                       </select>
                     </label>
                     <label>Height unit
-                      <select aria-label="Biology progress height unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.height} onChange={e=>patch({displayUnits:{...settings.displayUnits,height:e.target.value as "cm"|"m"|"ft-in"}})}>
+                      <select aria-label="Biology progress height unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.height} onChange={e=>changeCheckinUnit("height",e.target.value)}>
                         <option value="cm">cm</option><option value="m">m</option><option value="ft-in">feet + inches</option>
                       </select>
                     </label>
                   </div>
                   {unitsSaving&&<p role="status">Saving unit preferences…</p>}
                   {unitsError&&<p role="alert">{unitsError}</p>}
-                  <Link href="/profile" className="text-link">Review height and current profile weight</Link>
+                  {draftError&&<p role="alert">{draftError}</p>}
+                  <p className="panel-note">Change units once here. Completed drafts convert after the preference saves; unfinished drafts retain their labelled entry units. Original laboratory units are never changed.</p>
+                  <Link href="/profile#measurement-units" className="text-link">Central unit preferences & current profile measurements</Link>
                 </section>
                 <form
                   className="bloom-panel space-y-4"
                   onSubmit={(e) => {
                     e.preventDefault();
                     try {
+                      if(unfinished)throw Error("Finish or clear the weight and waist entries before saving.");
                       const d = new FormData(e.currentTarget);
                       send("/api/precision/records", {
                         kind: "checkin",
                         payload: {
                           measuredAt: date(d, "measuredAt"),
-                          weightKg: weightDraft.trim()===""?null:displayToKg(Number(weightDraft),entryUnits.current.bodyWeight),
+                          weightKg: parsedWeight.kind==="valid"?parsedWeight.canonical:null,
                           bodyFatPercent: number(d, "bodyFatPercent"),
-                          waistCm: waistDraft.trim()===""?null:quantityToCanonical("circumference",Number(waistDraft),entryUnits.current.circumference),
+                          waistCm: parsedWaist.kind==="valid"?parsedWaist.canonical:null,
                           bloating: number(d, "bloating"),
                           energy: number(d, "energy"),
                           adherencePercent: number(d, "adherencePercent"),
@@ -1347,7 +1348,7 @@ export default function PrecisionNutrition() {
                       onClick={()=>{
                         const kg=savedProfile.data?.weightKg;
                         if(kg!=null&&Number.isFinite(kg)&&kg>0){
-                          setWeightDraft(String(Number(kgToDisplay(kg,settings.displayUnits.bodyWeight).toFixed(2))));
+                          setWeightEntry(formatMassEntry(kg,weightEntry.unit));
                           setStatus("Profile weight filled in. Confirm today's actual measurement before saving.");
                         }
                       }}>Use saved Profile weight</Button>
@@ -1377,34 +1378,21 @@ export default function PrecisionNutrition() {
                       />
                     </label>
                     {[
-                      ["weightKg", `Weight (${settings.displayUnits.bodyWeight})`, settings.displayUnits.bodyWeight==="lb"?1102:500],
+                      ["weightKg", `Weight (${weightEntry.unit})`, weightEntry.unit==="lb"?1102:500],
                       ["bodyFatPercent", "Body fat (%)", 75],
-                      ["waistCm", `Waist (${settings.displayUnits.circumference})`, settings.displayUnits.circumference==="in"?118.11:300],
+                      ["waistCm", `Waist (${waistEntry.unit})`, waistEntry.unit==="in"?118.11:300],
                       ["bloating", "Bloating (0–10)", 10],
                       ["energy", "Energy (0–10)", 10],
                       ["adherencePercent", "Self-reported adherence (%)", 100],
                     ].map(([name, label, max]) => (
                       <label key={name}>
                         {label}
-                        {name==="weightKg"&&<select
-                          aria-label="Unit for check-in weight"
-                          className="bloom-input w-full"
-                          disabled={unitsSaving}
-                          value={settings.displayUnits.bodyWeight}
-                          onChange={e=>patch({displayUnits:{...settings.displayUnits,bodyWeight:e.target.value as "kg"|"lb"}})}
-                        ><option value="kg">kg</option><option value="lb">lb</option></select>}
-                        {name==="waistCm"&&<select
-                          aria-label="Unit for check-in waist"
-                          className="bloom-input w-full"
-                          disabled={unitsSaving}
-                          value={settings.displayUnits.circumference}
-                          onChange={e=>patch({displayUnits:{...settings.displayUnits,circumference:e.target.value as "cm"|"in"}})}
-                        ><option value="cm">cm</option><option value="in">inches</option></select>}
                         <input
                           name={String(name)}
                           className="bloom-input w-full"
-                          type="number"
-                          {...(name==="weightKg"?{value:weightDraft,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>setWeightDraft(e.target.value)}:name==="waistCm"?{value:waistDraft,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>setWaistDraft(e.target.value)}:{})}
+                          type={name==="weightKg"||name==="waistCm"?"text":"number"}
+                          inputMode="decimal"
+                          {...(name==="weightKg"?{value:weightEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWeightEntry({...weightEntry,value:e.target.value});}}:name==="waistCm"?{value:waistEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWaistEntry({...waistEntry,value:e.target.value});}}:{})}
                           min={
                             name === "weightKg" ||
                             name === "bodyFatPercent" ||
@@ -1432,7 +1420,8 @@ export default function PrecisionNutrition() {
                     Leave unmeasured fields blank. Zero is a recorded value, not
                     a substitute for missing information.
                   </p>
-                  <Button disabled={mutation.isPending}>Save check-in</Button>
+                  {unfinished&&<p role="alert">Finish or clear the weight and waist entries before saving.</p>}
+                  <Button disabled={mutation.isPending||unfinished||unitsSaving}>Save check-in</Button>
                 </form>
                 <section className="bloom-panel">
                   <h2>Repeatable biomarkers</h2>

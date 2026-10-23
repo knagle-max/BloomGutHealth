@@ -48,3 +48,11 @@ ARC-UNIT-001: Athlete daily team energy target, known intake, meal-option energy
 TypeScript, all 180 Node tests and production build passed. [Synthetic browser evidence](../review/athlete-units-20261023/README.md) covers overview/fueling, 390/1440px, light/dark, mixed unit settings, fresh metric settings, null values, canonical review links and reflow. No new gallery is generated for routine unit changes under the updated visual-evidence directive. Independent review and the remaining v0.5 backlog remain open.
 
 Prior batch `3513138`: GitHub Actions run `40016773955` passed (including isolated schema-only Neon setup, unit/integration tests, production build and live persistence); Render deploy `dep-dbdrt0eq1p3s73f0rbl0` reached `live`. Later architect documentation commits are retained. Remote CI/deployment for this Athlete batch is checked separately after push.
+
+## Redundancy audit P0 controls — 2026-10-23
+
+UT-RED-201/202, MKT-RED-001: Profile uses one master group; My Biology Progress uses one unit editor per preference and labelled check-in fields. Unsaved valid values convert only after preference persistence succeeds; failed saves preserve their original value/unit. Unfinished drafts cannot be silently reinterpreted or submitted. Feet/inches without feet no longer count as empty. The existing account-scoped settings store and canonical profile/check-in representation are retained.
+
+UT-RED-207/MKT-RED-002 is verified here as a regression boundary: original lab numbers/units and inferred-unit status do not change with display preferences; existing tests retain pending-unit exclusion from canonicalization, clinical flags and downstream ranking. No new clinical inference is activated.
+
+Validation: TypeScript, 182 Node tests, production build and [synthetic route-level browser assertions](../review/unit-editors-20261023/README.md). UT-RED-208 coverage includes failed saves, incomplete inputs, repeated changes, canonical payloads, responsive layouts and keyboard/zoom surrogates. Real-device, screen-reader and independent acceptance remain open. UT-RED-203–206 are the next actionable consolidated requirements; v0.5 remains incomplete.

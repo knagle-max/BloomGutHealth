@@ -1,9 +1,36 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {parseHeightEntry,parseMassEntry,formatMassEntry,formatHeightEntry,switchHeightUnit,switchMassUnit} from "../shared/measurement-entry";
+import {parseHeightEntry,parseMassEntry,formatMassEntry,formatHeightEntry,switchHeightUnit,switchMassUnit,parseCircumferenceEntry,switchCircumferenceUnit} from "../shared/measurement-entry";
 test("mixed units preserve canonical quantities",()=>{
  assert.equal(parseHeightEntry({unit:"ft-in",primary:"6",inches:"0"}).canonical,182.88);
  assert.ok(Math.abs((parseMassEntry({unit:"lb",value:"206"}) as {canonical:number}).canonical-93.44)<.01);
+});
+
+test("circumference drafts preserve their physical value and reject unfinished or invalid conversion",()=>{
+ const initial={unit:"cm" as const,value:"91.44"};
+ const converted=switchCircumferenceUnit(initial,"in");
+ assert.deepEqual(converted,{unit:"in",value:"36"});
+ if("unit" in converted){
+  assert.deepEqual(parseCircumferenceEntry(converted),{kind:"valid",canonical:91.44});
+  assert.deepEqual(switchCircumferenceUnit(converted,"cm"),initial);
+ }
+ for(const value of [".","91.","-","91e2","Infinity","0","-2","301"]){
+  const entry={unit:"cm" as const,value};
+  assert.equal("unit" in switchCircumferenceUnit(entry,"in"),false,value);
+  assert.equal(parseCircumferenceEntry(entry).kind==="valid",false,value);
+ }
+ assert.deepEqual(switchCircumferenceUnit({unit:"cm",value:""},"in"),{unit:"in",value:""});
+});
+
+test("unchanged units do not rewrite valid or incomplete drafts on repeated hydration",()=>{
+ const mass={unit:"kg" as const,value:"75.00"};
+ const height={unit:"ft-in" as const,primary:"5",inches:"11."};
+ const waist={unit:"in" as const,value:"36."};
+ assert.equal(switchMassUnit(mass,"kg"),mass);
+ assert.equal(switchHeightUnit(height,"ft-in"),height);
+ assert.equal(switchCircumferenceUnit(waist,"in"),waist);
+ assert.deepEqual(parseHeightEntry({unit:"ft-in",primary:"",inches:"6"}),{kind:"incomplete"});
+ assert.deepEqual(switchHeightUnit({unit:"ft-in",primary:"",inches:"6"},"cm"),{kind:"incomplete"});
 });
 test("unfinished drafts are not silently reinterpreted on switch",()=>{
  assert.deepEqual(switchMassUnit({unit:"lb",value:"72."},"kg"),{kind:"incomplete"});
