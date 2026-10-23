@@ -190,3 +190,31 @@ These are the mandatory functional acceptance criteria for a useful first v0.6 r
 **Scope control:** Coach/team workflows, AI copilot, advanced genetic/microbial predictions, molecular simulation and extra connectors are separate phased capabilities with their own safety and validation gates; they cannot be claimed as complete merely because this initial core works. Compare sophisticated AI against a transparent guideline baseline before any outcome superiority claims.
 
 **Status contract:** Codex eventually reports each ID as proposed, built, tested or specialist-reviewed with specific SHA and working-preview evidence. Continue v0.5 independently now. Generate highlighted before/after UI screenshots only for substantive visual differences, not for invisible code changes.
+
+
+## 14. Adaptive Training Readiness & Workload Guidance — Product Owner approved (2026-10-23)
+
+**Requirement V06-TRAIN-01 — Explainable three-state exercise guidance (P1 feature; P0 safety/claim integrity).** Bloom shall provide daily, context-sensitive training advice that helps a user decide *whether to train, how hard, and when to recover*, complemented by a goal-aligned weekly training schedule. **No numerical readiness score is required or implied.** The three user-facing states are:
+
+1. **Train as planned** — No meaningful, supported reason identified to change the scheduled workout. Does not guarantee readiness or absence of injury.
+2. **Consider modifying** — Suggest an explainable reduction in effort, volume or duration, or an appropriate switch in workout modality, based on recent workload, recovery context and user-reported symptoms.
+3. **Recovery or assessment advised** — Recommend recovery or professional assessment when appropriate to the observed context; do not diagnose injury, illness or overtraining.
+
+**Signals and appropriate use:** Combine validated and available wearable measures (sleep duration/trends, resting heart rate, HRV trends, activity and completed training) with workload (frequency, volume/intensity, duration × session RPE where available, rest between demanding sessions), recent performance, and optional athlete-reported sleep quality, fatigue, soreness, illness and limitations. Compare within-person baselines and account for device quality, artifacts, travel, changing devices, unusual circumstances and missing data. A lone HRV/sleep score may not dictate a high-stakes workout change. Human genotype and microbiome signals must **not** drive readiness classification without specific prospective evidence.
+
+**Weekly prescription:** In addition to today's state, suggest goal-dependent training frequency, intensity distribution, progressive loading, recovery days and feasible alternatives based on equipment, availability, athlete experience and previous training—not a universal weekly prescription. Explicitly distinguish recommended plan from observed activities and allow review/adjustment without silently rescheduling or overwriting coach-approved/clinician-restricted programs.
+
+**Transparency and uncertainty:** Show *why* the state was offered, which actual signals were used, what is missing, and a practical next action. When data are insufficient, explicitly say that readiness cannot be assessed reliably and fall back to the existing safe, guideline-based training plan with self-assessment advice; **do not automatically label missing data as “Train as planned.”** Avoid invented probabilities of injury, readiness certainty, universal acute:chronic workload thresholds or diagnosis. Do not discourage safe exercise just because a consumer wearable value fluctuates.
+
+**Consent/integration:** Wearable access is opt-in and provenance-aware; source permissions, revocation and account isolation must work end to end. Native Apple Health/HealthKit and Android Health Connect require supported native app capabilities; do not claim web-browser access. The functionality must remain usable with manually recorded workouts and symptoms and with no wearable connected.
+
+**Acceptance tests:**
+- Representative recorded scenarios yield distinguishable explanations for all three states, plus an **insufficient-information/unknown** fallback that is *not* falsely presented as a fourth readiness rating.
+- Test rest vs planned interval workout, strength progressions, newly intensified training, fatigue without wearable data, sleep/HRV disagreement, bad sensor data, illness/injury symptoms, and conflicting clinician restrictions.
+- Test normal training history with no unsupported physiological alarm, incomplete/contradictory source data, unverified device source, and high-risk symptoms triggering suitable abstention or professional assessment.
+- Validate across novice strength, endurance, mixed-goal Everyday and Athlete personas; compare to simple schedule+symptom rules before promoting wearable-specific logic. Independent Biology, Security and User Testing reviews required before claiming validated readiness behavior.
+- Check mobile accessibility, user understanding of state vs diagnosis, manual input, control over adjustments, historical decision reproducibility and visual evidence only if the implementation makes a substantial visible UI change.
+
+**Crosswalk:** V06-12 (goal-to-action), V06-13 (personal outcomes), V06-16 (wearable provenance), V06-17 (trust UX), V06-18 (safety/validation), V06-MH-02/05/06/08/10; BIO-COACH-404/405/416 and existing Athlete load/recovery features. This is a *functional refinement* of the combined exercise optimizer, not a new independent scoring system or Coach prerequisite.
+
+**Ownership and status:** Architect approved for v0.6 planning; Codex implements later after v0.5 scope, Biology validates exercise science, Integrations confirms source capabilities, Security checks consent and safety, User Testing validates comprehension. **Not implemented or independently validated by this documentation change.**
