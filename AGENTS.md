@@ -32,7 +32,7 @@ Amendment E is the latest architect execution directive and supersedes conflicti
 Codex replaces the former Developer Agent as the **sole engineering implementer** for BloomGutHealth. Codex owns architecture implementation, code, tests, commits, PR updates and Render development deployments. Chief Architect & Integration Lead owns consolidated handoffs and resolves cross-specialist requirements; specialists advise and review only. Product Owner reviews working changes after they are pushed. No former Developer Agent approval is necessary.
 
 ## Source of truth and precedence
-1. `docs/architecture/CURRENT_V05_REQUIREMENTS.md`: current v0.5 Revision 6 + Amendment F, including earlier amendments and P0 brand asset integration, required before/after evidence, unit customization, continuous development and push authorization.
+1. `docs/architecture/CURRENT_V05_REQUIREMENTS.md`: current v0.5 Revision 6 + Amendment F, including earlier amendments and P0 brand asset integration, selectively required annotated before/after evidence for substantial visible changes, unit customization, continuous development and push authorization.
 2. `docs/architecture/POST_V05_ROADMAP.md`: **future planning**; do not switch from incomplete v0.5 work to this roadmap prematurely.
 3. Current repository code, migrations, CI, `SPECIALIST_IMPLEMENTATION_STATUS.md`, existing backlog and specialist source handoffs as evidence of actual state. A requirement in a document is not proof of implementation; verify current code, tests and Render before deciding what remains.
 
@@ -47,7 +47,7 @@ Latest PR baseline at handoff preparation: `knagle-max/BloomGutHealth`, PR #1, `
 
 ## Nonnegotiable acceptance
 - Branding package is a P0 **implementation**, not a keep-existing-CSS instruction. Inventory and adopt approved logos, icons, tokens, visual system and screen specifications. Request Branding review on the *running result*.
-- For every major transformation: capture a reproducible **before** baseline, corresponding **after** screenshots/videos at matched viewport, theme, fixture and state, code/functional diff, tests and specialist-review status. Provide Product Owner a comparison gallery; never block unrelated development while waiting for review.
+- **Selective visual evidence only:** create before/after images only when a milestone materially changes what the user can see or interact with (e.g., substantial branding rollout, navigation redesign, new screen, major layout/workflow). Do not generate them for backend changes, invisible refactors, copy-only edits, minor styling, or near-identical screens. Compare only genuinely changed screens, using matched viewport/theme/fixture/state. Include 2–5 concise callouts or unobtrusive numbered annotations identifying the actual visible differences, plus a plain-text change summary; retain unannotated originals. If the difference is not readily visible, omit the gallery and provide test/code evidence instead. This is not a per-commit requirement or a blocker to other development.
 - Unit preferences: locale suggestions only; independent choices for cm vs ft/in, kg vs lb, etc. No mixed-unit restriction; retain canonical measurements and exact conversion behavior.
 - Protect account boundaries, secrets, consent, lab-unit confirmation, clinical abstentions and source/evidence integrity. Do not present unreviewed medical claims, fictitious integrations or fabricated data.
 - Keep the existing Render preview usable for Product Owner review with synthetic fixtures and clearly identified deployed SHA.
@@ -56,8 +56,11 @@ Latest PR baseline at handoff preparation: `knagle-max/BloomGutHealth`, PR #1, `
 1. Check PR #1 HEAD, CI, current app, current Render preview and relevant branding assets.
 2. Reconcile `CURRENT_V05_REQUIREMENTS.md` with implementation status and identify next incomplete P0/P1 work. Prefer concrete code delivery over new process documents.
 3. Implement/test/commit/push/deploy the next meaningful increment without waiting for routine per-commit approval.
-4. Supply concise release notes, status and before/after artifacts when a major milestone lands.
+4. Supply concise release notes/status; provide annotated before/after artifacts only when the milestone produces substantial visible differences.
 5. Only after v0.5 completion, use `POST_V05_ROADMAP.md` to select the next phase, starting with living evidence governance and free-first discovery, without direct article-to-live recommendation publishing.
 
 ## Limits of this file
 These are Product Owner standing instructions conveyed by the Chief Architect, not proof that Codex is already connected to this repo or has started work. AGENTS.md takes effect when made available in the Codex working checkout.
+
+
+> **Product Owner visual-evidence clarification (2026-10-23):** Before/after images are selective, not routine. Create them only for clearly visible, substantial UI/brand/workflow transformations. Mark the actual changes with small numbered callouts/highlights and supply unmarked originals. Never present near-identical screens as a meaningful comparison. For minor or invisible work, report code/tests and preview behavior instead. This rule supersedes broader comparison wording elsewhere in this document.
