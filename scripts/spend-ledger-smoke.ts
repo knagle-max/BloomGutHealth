@@ -13,11 +13,14 @@ try {
     const result = await Promise.all([left.reserve(input('one'), limits), right.reserve(input('two'), limits)]);
     assert.equal(result.filter(r => r.allowed).length, 1);
     const winner = result[0].allowed ? 'one' : 'two';
-    assert.equal(await left.settle(account, winner, 10, 'actual'), true);
-    assert.equal(await right.settle(account, winner, 10, 'actual'), true);
+    const usage={providerResponseId:'synthetic-provider-receipt',inputTokens:5,cachedInputTokens:0,outputTokens:0};
+    assert.equal(await left.settle(account, winner, 10, 'actual',usage), true);
+    assert.equal(await right.settle(account, winner, 10, 'actual',usage), true);
+    const stored=(await pool.query('SELECT provider_usage FROM ai_spend_requests WHERE feature=$1 AND state=$2',[feature,'settled'])).rows[0].provider_usage;
+    assert.equal(stored.inputTokens,5);assert.match(stored.providerResponseHash,/^[a-f0-9]{64}$/);assert.ok(!JSON.stringify(stored).includes(usage.providerResponseId));
     assert.equal(await right.settle('other-account', winner, 0, 'actual'), false);
     assert.equal((await left.reserve(input('three'), limits)).allowed, true);
-    console.log('PASS: isolated Neon concurrent monetary reservation, idempotent settlement and account isolation; synthetic units only');
+    console.log('PASS: isolated Neon concurrent monetary reservation, idempotent settlement, private usage receipt and account isolation; synthetic units only');
 }
 finally {
     await pool.query('DELETE FROM ai_spend_requests WHERE feature=$1', [feature]);

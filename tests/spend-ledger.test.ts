@@ -9,6 +9,7 @@ async function setup() {
     const db = new PGlite();
     const migration = await readFile(new URL('../migrations/0009_ai_spend_ledger.sql', import.meta.url), 'utf8');
     await db.exec(migration);
+    await db.exec(await readFile(new URL('../migrations/0010_ai_usage_receipts.sql', import.meta.url), 'utf8'));
     await db.exec(migration);
     const transaction: SpendTransaction = work => db.transaction(async (tx) => { await tx.query('SELECT pg_advisory_xact_lock(142590, 1)'); return work(tx as any); });
     const a = new SpendLedger(transaction, 'synthetic-identity-secret-long-enough'), b = new SpendLedger(transaction, 'synthetic-identity-secret-long-enough');
@@ -112,3 +113,19 @@ test('UTC daily reset preserves monthly charges, per-feature limits and global c
         await db.close();
     }
 });
+test('usage receipts are atomic, idempotent and retain only token counts plus a hashed provider identifier', async () => { const { db, a } = await setup(); try {
+    await a.reserve(request('synthetic-a', 'receipt', 60), limits);
+    const usage = { providerResponseId: 'resp_private_synthetic', inputTokens: 10, cachedInputTokens: 0, outputTokens: 1 };
+    assert.equal(await a.settle('synthetic-a', 'receipt', 28, 'actual', usage), true);
+    assert.equal(await a.settle('synthetic-a', 'receipt', 28, 'actual', usage), true);
+    const row = (await db.query('SELECT provider_usage FROM ai_spend_requests')).rows[0];
+    assert.equal(row.provider_usage.inputTokens, 10);
+    assert.equal(row.provider_usage.cachedInputTokens, 0);
+    assert.match(row.provider_usage.providerResponseHash, /^[a-f0-9]{64}$/);
+    assert.ok(!JSON.stringify(row).includes('resp_private_synthetic'));
+    await assert.rejects(() => a.settle('synthetic-a', 'receipt', 28, 'actual', { ...usage, inputTokens: 11 }), /conflict/);
+    await assert.rejects(() => a.settle('synthetic-a', 'receipt', 28, 'actual', { ...usage, cachedInputTokens: 20 }), /Invalid provider usage/);
+}
+finally {
+    await db.close();
+} });

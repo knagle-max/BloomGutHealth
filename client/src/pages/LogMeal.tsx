@@ -63,6 +63,7 @@ export default function LogMeal() {
     "small" | "medium" | "large" | "specified"
   >("specified");
   const [aiConsent, setAIConsent] = useState(false);
+  const aiStatus=useQuery<{ai:{features?:{ingredientParsing:boolean;recipeRanking:boolean}}}>({queryKey:["/api/analysis/status"]});
   const [symptoms, setSymptoms] = useState<
     Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
   >({ bloating: null, energy: null, comfort: null, clarity: null });
@@ -324,6 +325,7 @@ export default function LogMeal() {
               ),
             )}
           </fieldset>
+          {aiStatus.data?.ai?.features?.ingredientParsing && <>
           <label className="block text-sm">
             <input
               type="checkbox"
@@ -334,6 +336,7 @@ export default function LogMeal() {
             the configured AI provider; nutrient numbers come from food
             databases.
           </label>
+          </>}
             </div>
           </details>
           {save.isError && (

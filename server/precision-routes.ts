@@ -1,3 +1,4 @@
+import {aiExecutionContext} from "./metered-ai";
 import { requireRestrictedCapability } from "./capability-policy";
 import { buildTodayPlan } from "../shared/today-planner";
 import { localDayBounds } from "../shared/nutrition-summary";
@@ -413,6 +414,7 @@ export function registerPrecisionRoutes(
           saved.success ? saved.data : defaultPreferences,
           report.context.allergies,
           parsed.data.instruction,
+          aiExecutionContext(id, true),
         ),
         note: "AI proposed ingredient combinations from sourced foods. The server validates restrictions and calculates nutrition; the weekly optimizer must still verify the complete plan.",
       });

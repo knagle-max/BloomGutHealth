@@ -1,3 +1,4 @@
+import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
 import { mlServiceTarget } from "./ml-service";
 import { mealSaveReceipt, checkMealReceipt } from "./meal-save";
 import { memoryKey } from "../shared/experience";
@@ -46,16 +47,17 @@ export function registerPlannerRoutes(
 ) {
   registerProductRoutes(app, requireAuth, storage);
   const limited = new Map<string, { at: number; count: number }>();
-  app.get("/api/analysis/status", requireAuth, (_req, res) => {
+  app.get("/api/analysis/status", requireAuth, (req, res) => {
     res.setHeader("Cache-Control", "no-store");
     let serviceConfigured=false;
     try{mlServiceTarget("/api/ml/analyze");serviceConfigured=true;}catch{}
+    const features=meteredAIFeatures(req.session.userId!);
+    const configured=Object.values(features).some(Boolean);
     res.json({
       ai: {
-        configured: !!(
-          process.env.OPENAI_API_KEY && process.env.OPENAI_SCIENCE_MODEL
-        ),
-        model: process.env.OPENAI_SCIENCE_MODEL || null,
+        configured,
+        features,
+        model: configured ? process.env.OPENAI_SCIENCE_MODEL || null : null,
         tested: false,
       },
       nutrition: {
@@ -136,6 +138,7 @@ export function registerPlannerRoutes(
             ),
             preferences,
             req.body.aiConsent,
+            aiExecutionContext(req.session.userId!, req.body.aiConsent),
           ),
         );
       } catch {

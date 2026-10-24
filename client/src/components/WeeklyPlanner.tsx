@@ -280,6 +280,7 @@ export default function WeeklyPlanner() {
             {build.isPending ? "Balancing meals…" : "Generate a weekly plan"}
           </Button>
         </form>
+        {providers.data?.ai?.features?.recipeGeneration && <>
         <details>
           <summary>Optional AI recipe ideas</summary>
           <p>
@@ -329,6 +330,7 @@ export default function WeeklyPlanner() {
             </p>
           )}
         </details>
+        </>}
         {providers.data && (
           <details>
             <summary>Analysis connections</summary>

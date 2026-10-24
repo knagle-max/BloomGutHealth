@@ -71,3 +71,5 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Choices: Supply reviewed configuration and authorize only separately cleared optional features; or defer monetary activation and keep no new provider enablement.
 - Recommended default: No invented tariffs, dollar limits, billing promises or new paid provider activation. Build/test with explicitly synthetic integer units. Store secrets only through approved secret management, never the handoff.
 - Impact: Blocks real monetary policy/paid-feature acceptance, not ledger, provider-unit contracts or other v0.5 work. The new ledger alone does not control current parser/recipe callsites.
+
+Monetary activation clarification (OPS-702-EXEC): provide reviewed pinned provider/model response identity and bounds for maximum complete serialized text request, input tokens and output tokens, with review reference; no guessed tokenizer/character bound is used. Default remains no installed runtime. Implementing configuration/composition, circuits and reporting remains independently OPEN, not a user-input blocker. No real tariff/key/migration activation occurred.

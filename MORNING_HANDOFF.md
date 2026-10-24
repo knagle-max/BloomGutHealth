@@ -22,11 +22,11 @@ Actual Render's fixed public USDA Kit Kat startup lookup most recently recorded 
 
 ## Remaining work in priority order
 
-1. **P0 OPEN:** Complete authenticated runtime provider accounting integration: verified token/request bounds, current tariff configuration, provider receipts, retries/stream/cancellation/unknown-outcome reconciliation, shared circuits and private aggregate alerts. Existing ledger/cost functions alone do not govern parser/recipe SDKs. Continue with synthetic adapters and default denial pending configuration; no new paid enablement.
+1. **P0 OPEN:** Complete authenticated runtime provider accounting integration: verified token/request bounds, current tariff configuration, provider receipts, retries/stream/cancellation/unknown-outcome reconciliation, shared circuits and private aggregate alerts. Text SDKs now use the guard described below; real reviewed installation remains absent. Continue with synthetic adapters and default denial pending configuration; no new paid enablement.
 2. **P0 OPEN:** Complete route/output/job/tool/export/cache capability mapping and execution guards, incident suppression audit, in-situ development module composition and reactive revocation. Preserve safe T1/manual/curated flows. Never treat provisional Legal JSON or reviewer preference as approval.
 3. **P0 OPEN / scoped external dependencies:** Managed recovery, erasure replay and vendor/log lifecycle; execute synthetic work independently, retain live restore policy/target as blocked input. Owner-reported missing tester1 toggle requires reviewed identity/environment provisioning; not a public self-enrolment fix.
 4. **P0/P1 OPEN:** Continue concrete copy/layout, unit/export/chart and evidence/missingness audits. Energy target editor gap is fixed; broad UNIT-105 is not complete. Brand/science asset adoption awaits accessible approved package. Actual menus remain licensing blocked, manual logging works.
-5. **Release gates:** Independent Branding, Science, Security/Privacy/Legal, native/device/accessibility/persona and exact hosted SKU acceptance. v0.6 remains deferred.
+5. **Release gates:** Independent Branding, Science, Security/Privacy/Legal, native/device/accessibility/persona and exact hosted SKU acceptance. v0.6 begins automatically once actionable v0.5 is exhausted; scoped external blockers must not hold independent approved v0.6.
 
 ## Decisions and external evidence needed
 
@@ -46,3 +46,7 @@ These are deferred records, not requests to stop independent development. Exact 
 ## Resume immediately
 
 Read NEXT_ACTIONS.md and the active Architect queue; verify newest exact SHA CI/Render, preserve concurrent commits, then implement the highest unblocked P0 slice above. Refresh source inventory after route-file edits. Run meaningful tests and required build/security checks, commit/push to the same development branch, update all four root records and continue. Do not repeat blocked questions or reconstruct completed work. No secrets belong in files, reports or tool output.
+
+## Latest runtime accounting checkpoint
+
+OPS-702-EXEC integrates the three active text SDK adapters with authenticated context, explicit consent, reviewed policy/bounds, shared reservation and atomic usage receipts. Default installation remains absent: no new paid enablement, migration or real monetary assumptions. Manual logging/curated planning remain available and ordinary unavailable AI controls are hidden. 236 full tests plus final 8 focused executor tests, TypeScript/build and food/planner browser regressions passed. Source inventory refreshed. Exact publication/CI/Render status is tracked in NEXT_ACTIONS and the development log. Remaining P0 composition/circuits/reconciliation/reporting and full capability audit are actionable; this is not v0.5 completion.

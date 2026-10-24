@@ -1,3 +1,4 @@
+import {executeMeteredAI,type AIExecutionContext} from "./metered-ai";
 import OpenAI from "openai";
 import { z } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
@@ -19,6 +20,7 @@ export async function prioritizeRecipes<T extends Recipe>(
   eligible: T[],
   preferences: DietaryPreferences,
   consent: boolean,
+  execution?: AIExecutionContext,
 ): Promise<{ suggestions: T[]; aiStatus: string }> {
   if (!consent)
     return {
@@ -47,7 +49,7 @@ export async function prioritizeRecipes<T extends Recipe>(
         z.enum(eligible.map((r) => r.id) as [string, ...string[]]),
       ),
     });
-    const response = await client.responses.parse({
+    const response = await executeMeteredAI("recipe-ranking", execution, {
       model: process.env.OPENAI_SCIENCE_MODEL,
       store: false,
       input: [
@@ -69,12 +71,12 @@ export async function prioritizeRecipes<T extends Recipe>(
         },
       ],
       text: { format: zodTextFormat(schema, "recipe_priority") },
-    });
+    }, payload => client.responses.parse(payload as Parameters<typeof client.responses.parse>[0]));
     if (!response.output_parsed) throw Error("No ranking");
     return {
       suggestions: validateRecipeRanking(
         eligible,
-        response.output_parsed.recipeIds,
+        schema.parse(response.output_parsed).recipeIds,
       ),
       aiStatus:
         "AI-prioritized complete recipes from the evidence-linked catalogue; ingredients and evidence were not rewritten.",

@@ -131,7 +131,7 @@ test("local day boundaries include Regina evening meals on the same calendar day
   assert.throws(() => localDayBounds("2026-10-17", 9999));
 });
 
-test("AI consent gates requests and quota failures expose a safe local-fallback notice", async () => {
+test("AI consent and credentials cannot bypass missing metered execution policy", async () => {
   const { parseMeal } = await import("../server/meal-intelligence");
   const previousFetch = globalThis.fetch,
     previousKey = process.env.OPENAI_API_KEY,
@@ -156,9 +156,9 @@ test("AI consent gates requests and quota failures expose a safe local-fallback 
     await parseMeal("mystery xyz sauce", false);
     assert.equal(calls, 0);
     const fallback = await parseMeal("mystery xyz sauce", true);
-    assert.equal(calls, 1);
+    assert.equal(calls, 0);
     assert.equal(fallback.parser, "rules");
-    assert.match(fallback.parserNotice!, /insufficient API quota/);
+    assert.match(fallback.parserNotice!, /AI parsing was unavailable/);
     assert.ok(!fallback.parserNotice!.includes("PRIVATE_PROVIDER_SENTINEL"));
   } finally {
     globalThis.fetch = previousFetch;

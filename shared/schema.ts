@@ -395,6 +395,7 @@ export const capabilityPreferences = pgTable("capability_preferences", {
 
 // Monetary accounting foundation: HMAC identities only; no health or prompt content.
 export const aiSpendRequests = pgTable("ai_spend_requests", {
+    providerUsage:jsonb("provider_usage"),
     requestKey: text("request_key").primaryKey(), accountKey: text("account_key").notNull(),
     feature: text("feature").notNull(), provider: text("provider").notNull(), model: text("model").notNull(), tariffReference: text("tariff_reference").notNull(),
     reservedMicroUsd: bigint("reserved_micro_usd", { mode: "bigint" }).notNull(), settledMicroUsd: bigint("settled_micro_usd", { mode: "bigint" }),

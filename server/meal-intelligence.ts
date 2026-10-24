@@ -1,3 +1,4 @@
+import {executeMeteredAI,aiExecutionContext,AIExecutionUnavailable,type AIExecutionContext} from "./metered-ai";
 import { lookupProductNutrition, type ProductStore, type ProductService } from "./products";
 import {
   catalogueFoods,
@@ -107,6 +108,7 @@ export const parseSchema = z.object({
 export async function parseMeal(
   text: string,
   aiConsent = false,
+  execution?: AIExecutionContext,
 ): Promise<{
   ingredients: Ingredient[];
   clarificationQuestions: string[];
@@ -129,7 +131,7 @@ export async function parseMeal(
         timeout: 20000,
         maxRetries: 0,
       });
-      const result = await client.responses.parse({
+      const result = await executeMeteredAI("ingredient-parsing", execution, {
         model: process.env.OPENAI_SCIENCE_MODEL,
         store: false,
         input: [
@@ -141,7 +143,7 @@ export async function parseMeal(
           { role: "user", content: text },
         ],
         text: { format: zodTextFormat(parseSchema, "meal_ingredients") },
-      });
+      }, payload => client.responses.parse(payload as Parameters<typeof client.responses.parse>[0]));
       if (result.output_parsed) {
         const validated = parseSchema.parse(result.output_parsed);
         validated.ingredients = validated.ingredients.map((i) =>
@@ -166,7 +168,7 @@ export async function parseMeal(
             : e.status === 429
               ? "the provider rate-limited the request"
               : "the provider request failed";
-      parserNotice = `AI parsing was unavailable because ${reason}. Local USDA food matching was used; review the foods and portions.`;
+      parserNotice = error instanceof AIExecutionUnavailable ? "AI parsing was unavailable. Local food matching was used; review the foods and portions." : `AI parsing was unavailable because ${reason}. Local USDA food matching was used; review the foods and portions.`;
     }
   }
   const ingredients = fallback;
@@ -277,7 +279,7 @@ export async function analyzeMeal(
         parser: "rules" as const,
       }
     : text.trim()
-      ? await parseMeal(text, aiConsent)
+      ? await parseMeal(text, aiConsent, aiExecutionContext(productContext?.userId, aiConsent))
       : {
           ingredients: [] as Ingredient[],
           clarificationQuestions: [] as string[],

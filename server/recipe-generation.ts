@@ -1,3 +1,4 @@
+import {executeMeteredAI,AIExecutionUnavailable,type AIExecutionContext} from "./metered-ai";
 import OpenAI from "openai";
 import { z } from "zod";
 import { zodTextFormat } from "openai/helpers/zod";
@@ -34,6 +35,7 @@ export async function generateRecipes(
   prefs: DietaryPreferences,
   allergies: string[],
   instruction: string,
+  execution?: AIExecutionContext,
 ) {
   if (!process.env.OPENAI_API_KEY || !process.env.OPENAI_SCIENCE_MODEL)
     throw Error(
@@ -44,7 +46,7 @@ export async function generateRecipes(
     timeout: 25000,
     maxRetries: 0,
   });
-  const result = await client.responses.parse({
+  const result = await executeMeteredAI("recipe-generation", execution, {
     model: process.env.OPENAI_SCIENCE_MODEL,
     store: false,
     input: [
@@ -76,13 +78,14 @@ export async function generateRecipes(
       },
     ],
     text: { format: zodTextFormat(recipeProposalsSchema, "recipe_proposals") },
-  });
+  }, payload => client.responses.parse(payload as Parameters<typeof client.responses.parse>[0]));
   if (!result.output_parsed) throw Error("AI returned no valid recipes.");
-  return validateProposals(result.output_parsed.recipes, prefs, allergies);
+  return validateProposals(recipeProposalsSchema.parse(result.output_parsed).recipes, prefs, allergies);
 }
 
 // Never expose provider error bodies: they may contain request data or credentials.
 export function recipeFailure(error: unknown) {
+  if(error instanceof AIExecutionUnavailable)return {code:"AI_UNAVAILABLE",error:"Optional recipe ideas are unavailable. Use the structured recipes."};
   const e = error instanceof OpenAI.APIError ? error : undefined;
   if (e && (e.type === "insufficient_quota" || ["insufficient_quota", "credit_balance_exhausted", "organization_spend_limit_exceeded", "project_spend_limit_exceeded", "organization_usage_limit_exceeded"].includes(e.code || "")))
     return { code: "AI_QUOTA", error: "The AI provider reports insufficient API quota. Check API billing, available credits and project spending limits." };

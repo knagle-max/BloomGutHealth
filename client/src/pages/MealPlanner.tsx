@@ -269,6 +269,7 @@ export default function MealPlanner() {
   const progress = useQuery<any>({ queryKey: ["/api/meal-planner/progress"] });
   const [selected, setSelected] = useState<string | null>(null);
   const [aiConsent, setConsent] = useState(false);
+  const aiStatus=useQuery<{ai:{features?:{ingredientParsing:boolean;recipeRanking:boolean}}}>({queryKey:["/api/analysis/status"]});
   const analyze = useMutation({
     mutationFn: async (recipe: Recipe) =>
       (await (
@@ -334,6 +335,7 @@ export default function MealPlanner() {
             {plan.data.note} Based on {plan.data.recentMeals} meals in the last
             14 days.
           </p>
+          {aiStatus.data?.ai?.features?.recipeRanking && <>
           <label className="block text-sm">
             <input
               type="checkbox"
@@ -344,6 +346,7 @@ export default function MealPlanner() {
             Sends recipe text and saved preferences to the configured AI
             provider; off by default.
           </label>
+          </>}
           <div className="flex flex-wrap gap-3">
             <Button
               disabled={prioritize.isPending}
