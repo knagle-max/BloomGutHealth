@@ -105,3 +105,11 @@ Ledger batch local verification: all 224 tests, TypeScript and production build 
 Added ai-costing.ts and four regression tests for OpenAI Responses usage subset semantics, malformed/missing counters, effective-dated exact-model tariff validation, integer micro-USD rounding and worst-case no-cache reservation. All rates are explicitly synthetic fixtures; no actual vendor price asserted. Missing usage does not become zero/actual spend. Runtime token upper bounds, provider receipts and callsite integration remain OPEN. 228 tests, TypeScript and build passed.
 
 Ledger ac7ff5941b80d868ed22d5122648c9fcab0cc82d CI 40077584409 succeeded, including actual isolated Neon multi-connection atomic reservations/idempotent settlement/account isolation at 08:22:27 UTC. Render dep-dbe6k34s728c73c8mmfg live. No application-side monetary activation or existing Render migration.
+
+## Planner energy target editor unit gap
+
+Concrete audit found TodayPlanner and WeeklyPlanner target inputs still labelled/stored UI as kcal when the account selected kJ. Both now convert only the energy editor value and weekly bounds to selected kcal/kJ; input returns through the existing exact inverse to canonical targets. Other nutrient/source units unchanged. Canonical saved requests are preserved without serializing rounded display strings.
+
+228 tests/types/build passed. Synthetic rendered scripts/qa/planner-target-units-journey.mjs verifies daily 8368 kJ for original 2000 kcal, entering 9204.8 kJ sends 2200 kcal from both daily/weekly forms, converted min/max, protein unchanged, metric reset and no overflow. Uses real domain Today plan/report with intercepted HTTP; not independent hosted acceptance. No near-identical screenshot gallery for this focused label/input fix.
+
+Costing b092ec8c920d38be0d3a900dd0df5cfca4dc4e89 CI 40077838047 success; Render dep-dbe6lsmk1f9s73f0crr0 live.

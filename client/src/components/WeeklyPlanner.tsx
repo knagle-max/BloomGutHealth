@@ -1,3 +1,4 @@
+import {quantityFromCanonical,quantityToCanonical} from "@shared/display-units";
 import { recipeDisplayName } from "@/lib/recipe-display";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, foodMass, nutrientDisplay } from "@shared/nutrition-display";
@@ -177,24 +178,25 @@ export default function WeeklyPlanner() {
             reviewed adult profile and does not provide condition-specific diets
             or medication interaction screening.
           </p>
-          <p className="panel-note">Target entry uses canonical kcal and the nutrient units shown. Plan estimates and shopping quantities below use your saved display units.</p>
+          <p className="panel-note">Energy entry, plan estimates and shopping quantities use your saved display units. Other targets use the nutrient units shown.</p>
           <div className="precision-grid">
             {targetFields.map(([key, label, min, max]) => (
               <label className="block" key={key}>
-                {label}
+                {key === "calories" ? `Energy (${settings.displayUnits.energy})` : label}
                 <input
                   type="number"
                   className="bloom-input w-full"
                   required
-                  min={min}
-                  max={max}
-                  value={request.targets[key]}
+                  step="any"
+                  min={key === "calories" ? quantityFromCanonical("energy", min, settings.displayUnits.energy) : min}
+                  max={key === "calories" ? quantityFromCanonical("energy", max, settings.displayUnits.energy) : max}
+                  value={key === "calories" ? quantityFromCanonical("energy", request.targets[key], settings.displayUnits.energy) : request.targets[key]}
                   onChange={(e) =>
                     setRequest({
                       ...request,
                       targets: {
                         ...request.targets,
-                        [key]: Number(e.target.value),
+                        [key]: key === "calories" ? quantityToCanonical("energy", Number(e.target.value), settings.displayUnits.energy) : Number(e.target.value),
                       },
                     })
                   }

@@ -1,3 +1,4 @@
+import {quantityFromCanonical,quantityToCanonical} from "@shared/display-units";
 import { useExperience } from "@/lib/experience";
 import { foodMass, nutrientDisplay } from "@shared/nutrition-display";
 import { recipeDisplayName } from "@/lib/recipe-display";
@@ -65,7 +66,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
           <details>
             <summary>Review daily targets</summary>
             <p className="panel-note">
-              Target entry retains canonical kcal and source nutrient units. Displayed estimates below use your saved unit preferences.
+              Energy entry uses your saved display unit; other targets use the nutrient units shown.
               Energy uses a ±10% planning range. Other maxima below are limits.
               These targets are not inferred from genetic variants or a
               diagnosis.
@@ -84,7 +85,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                 <label key={k}>
                   {
                     {
-                      calories: "Energy (kcal)",
+                      calories: `Energy (${units.energy})`,
                       protein: "Protein minimum (g)",
                       fiber: "Fiber minimum (g)",
                       fiberMaximum: "Fiber maximum (g)",
@@ -97,13 +98,13 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                     type="number"
                     step="any"
                     min="0"
-                    value={request.targets[k]}
+                    value={k === "calories" ? quantityFromCanonical("energy", request.targets[k], units.energy) : request.targets[k]}
                     onChange={(e) =>
                       setEdited({
                         ...request,
                         targets: {
                           ...request.targets,
-                          [k]: Number(e.target.value),
+                          [k]: k === "calories" ? quantityToCanonical("energy", Number(e.target.value), units.energy) : Number(e.target.value),
                         },
                       })
                     }
