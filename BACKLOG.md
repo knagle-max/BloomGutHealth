@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Last published implementation: `a8c8c9322eabf1fc06799bfae1a3ec38e3c0bba0`; CI 40120787805 passed; Render dep-dbefh3ubs3rs73c2mpeg live.
+Branch: `enhance/bloom-experience`. Last published implementation: `b2b159771ff88b8f318d87804e49325d8c8d14b6`; CI 40121354184 passed; Render dep-dbefkhajnfac73dpgahg live.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish v0.5 before v0.6. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -43,6 +43,9 @@ This execution ledger follows the owner's overnight directive. Scope and priorit
 | BLOOM-SCI-01-TIME | P0 scientific integrity | Prevent same-instant lab comparisons and retain source context in existing table | IMPLEMENTED_AND_TESTED (synthetic) | 251 full + 16 focused tests/types/build; rendered duplicate/compatible/single/empty, original offset/unit/zero/reference/fasting, keyboard and 320–1280 light/dark reflow. Clinical/device acceptance separate. |
 | BLOOM-CAP-01-SOURCE2 | P0 audit | Close static-array and silent dynamic-route inventory omissions | IMPLEMENTED_AND_TESTED (source only) | 4 AST/current-source assertions and tool TypeScript; 80 static endpoints + 6 mounts, 13 dynamic/unscoped sites, 15 source hashes. No runtime approval or full 52-feature completion. |
 | BLOOM-OPS-01-CONFIG | P0 v0.5 | Strict offline policy validation and trusted staged executor composition | IMPLEMENTED_AND_TESTED (synthetic); types/build/inventory passed | 259 full tests; strict dates/model/bounds/shared allowances/grants/circuits, default Legal denial, immutable account/feature expiry and CLI privacy. No actual executor installed or secrets/credentials configured. |
+
+| BLOOM-CAP-01-CROSSWALK | P0 audit | Initial all-registry source/action-surface crosswalk with drift check | IMPLEMENTED_AND_TESTED (source only) | 52 IDs / 75 source files; 2 coverage/drift/no-promotion tests and standalone tool types. Authorization/runtime action review remains OPEN. |
+| OPS-702-RECONCILE | P0 paid acceptance | Resolve unknown charge only from authoritative matching evidence | BLOCKED_USER_INPUT | store:false/lost response may lack a recoverable per-request receipt; no fabricated zero/expiry/replay. Exact evidence-source decision in BLOCKED_USER_INPUT.md; independent engineering continues. |
 
 Notes:
 Execution resources recovered after the stated reset time on 2026-10-24. Normal approval succeeded; resume autonomous implementation. Earlier rejection remains recorded in the development log.

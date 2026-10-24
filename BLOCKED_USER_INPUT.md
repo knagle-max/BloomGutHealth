@@ -77,3 +77,11 @@ Monetary activation clarification (OPS-702-EXEC): provide reviewed pinned provid
 ACCEPT-108 / BLOOM-TODAY-01: physical iPhone Safari/VoiceOver and direct hosted layout acceptance remain BLOCKED_TECHNICAL here (no physical device/VoiceOver; hosted proxy denial). Which approved tester/device environment can provide those checks? Options: independent synthetic-account device test, or owner-supplied actual results; recommend independent testing. This blocks device sign-off only, not browser engineering.
 
 OPS-01 circuit activation is covered by the existing monetary policy decision: supply reviewed provider/platform failure thresholds, cooldown and recovery-probe lease (at least the current 25-second SDK timeout). No defaults were installed; tests use synthetic explicit policies. This does not block further engineering.
+
+## OPS-702-RECONCILE — authoritative unknown-charge evidence
+
+- Status: BLOCKED_USER_INPUT for provider evidence/operations decision; safe accounting and unrelated engineering continue.
+- Exact question: Which authoritative billing source and matching protocol can resolve a timeout/lost response from a store:false provider request without guessing whether it was charged?
+- Choices: Reviewed provider billing/audit evidence linked to the original reservation; or retain unresolved liability and keep paid activation disabled until such evidence exists.
+- Recommended default: Retain liability, deny replay and preserve manual/curated fallback. A missing response or old age is not evidence of zero charge. No automatic expiry/refund or renewed provider execution.
+- Impact: Prevents automatic unknown-outcome reconciliation and real paid-operation acceptance, not configuration/circuits/reporting or core app development. The existing authenticated settlement primitive is not itself an authoritative billing source.
