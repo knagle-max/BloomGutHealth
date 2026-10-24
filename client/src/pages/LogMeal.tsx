@@ -26,6 +26,7 @@ export default function LogMeal() {
   const { settings } = useExperience();
   const params = new URLSearchParams(window.location.search);
   const requestedType = params.get("type");
+  const productQuery = (params.get("productQuery") || "").slice(0,120);
   const catalogueId=params.get("fdcId"),catalogueGrams=Number(params.get("grams"));
   const [catalogueEnabled,setCatalogueEnabled]=useState(!!catalogueId);
   const catalogueSelection=useQuery<{fdcId:number;description:string;grams:number}>({queryKey:["/api/biology/catalogue",catalogueId,catalogueGrams],enabled:catalogueEnabled&&/^\d+$/.test(catalogueId||"")&&catalogueGrams>0&&catalogueGrams<=3000,queryFn:async()=>(await apiRequest("GET",`/api/biology/catalogue/${catalogueId}?grams=${catalogueGrams}`)).json()});
@@ -62,7 +63,7 @@ export default function LogMeal() {
     Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
   >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [products, setProducts] = useState<Ingredient[]>([]);
-  const [showProducts, setShowProducts] = useState(false);
+  const [showProducts, setShowProducts] = useState(params.has("productQuery"));
   const [scanRequested, setScanRequested] = useState(false);
   const [scannerKey,setScannerKey] = useState(0);
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
@@ -166,7 +167,7 @@ export default function LogMeal() {
             setProducts((v) => [...v, i].slice(0, 10));
             setShowProducts(false);
           }}
-          initialQuery={description.slice(0, 120)}
+          initialQuery={productQuery || description.slice(0, 120)} autoSearch={!!productQuery}
         />
       )}
       {products.length > 0 && (

@@ -330,7 +330,7 @@ export default function Explore() {
                 <p>
                   No reviewed relationship matches this search. This means
                   unreviewed, not ineffective. You can still log the food
-                  normally.
+                  normally. <Link className="text-link" href={`/log-meal?productQuery=${encodeURIComponent(search.trim().slice(0,120))}`}>Search package labels or enter nutrition</Link>
                 </p>
               )}
               <p className="panel-note">
