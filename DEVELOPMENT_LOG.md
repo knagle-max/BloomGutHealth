@@ -113,3 +113,9 @@ Concrete audit found TodayPlanner and WeeklyPlanner target inputs still labelled
 228 tests/types/build passed. Synthetic rendered scripts/qa/planner-target-units-journey.mjs verifies daily 8368 kJ for original 2000 kcal, entering 9204.8 kJ sends 2200 kcal from both daily/weekly forms, converted min/max, protein unchanged, metric reset and no overflow. Uses real domain Today plan/report with intercepted HTTP; not independent hosted acceptance. No near-identical screenshot gallery for this focused label/input fix.
 
 Costing b092ec8c920d38be0d3a900dd0df5cfca4dc4e89 CI 40077838047 success; Render dep-dbe6lsmk1f9s73f0crr0 live.
+
+## Capability audit source inventory
+
+Added non-executing TypeScript AST inventory generator and hash/drift check for literal /api declarations. Actual count: 78 endpoints plus 6 middleware mounts, 13 source files. Reproduction/check passed. All dispositions remain REVIEW_REQUIRED rather than inventing runtime authorization approval. Source-only scope and exact next review priorities documented in docs/operations/API_EXPOSURE_REVIEW.md. Added CI check alongside TypeScript; no routes, permissions or providers activated. Python, dynamic routes, UI, jobs, tools, export/cache fields and full 52-feature coverage remain OPEN.
+
+Planner target editor f2f56c376b9e9726232e4b735fc1686141dff7ad published; Render dep-dbe6oktg1s2s7392uuo0 live. CI 40078220788 completed successfully.

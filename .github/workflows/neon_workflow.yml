@@ -70,8 +70,10 @@ jobs:
             exit 1
           fi
           npm run db:seed:knowledge
-      - name: Type check
-        run: npm run check
+      - name: Type check and API source inventory
+        run: |
+          npm run check
+          node --import tsx scripts/api-exposure-inventory.ts --check
       - name: Unit and embedded PostgreSQL tests
         run: npm test
       - name: Production build

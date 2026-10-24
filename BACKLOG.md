@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Last published implementation: `b092ec8c920d38be0d3a900dd0df5cfca4dc4e89`; CI 40077838047 passed; Render dep-dbe6lsmk1f9s73f0crr0 live.
+Branch: `enhance/bloom-experience`. Last published implementation: `f2f56c376b9e9726232e4b735fc1686141dff7ad`; CI 40078220788 passed; Render dep-dbe6oktg1s2s7392uuo0 live.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish v0.5 before v0.6. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -26,7 +26,8 @@ This execution ledger follows the owner's overnight directive. Scope and priorit
 | NATIVE-107 | Conditional P0 | Real HealthKit/Health Connect and hardware acceptance | BLOCKED_USER_INPUT / platform dependency | See `BLOCKED_USER_INPUT.md`. Browser is explicitly unsupported for actual device access; do not substitute mocks as native completion. |
 | ACCEPT-108 | Release | Independent branding, biology, security/privacy/legal, device/accessibility/persona acceptance | EXTERNAL_REVIEW_PENDING | Synthetic tests and preview deployment do not constitute sign-off. Continue independent engineering. |
 | OPS-702-UNITS | P0 | Responses billed-unit normalization and current tariff integer costing | IMPLEMENTED_AND_TESTED (synthetic) | 228 tests/types/build. No real tariff or bill. Unknown/inconsistent units and stale/mismatched tariff deny costing; cached/reasoning subsets not double-counted. Provider adapter/callsite integration remains OPEN. |
-| UNIT-105-EDIT | P1 | Daily/weekly energy target entry follows kcal/kJ preference | IMPLEMENTED_AND_TESTED; publication pending | 228 tests/types/build plus synthetic browser confirms 9204.8 kJ writes 2200 kcal, converted weekly bounds, unchanged protein and metric reset. Other unit/export/chart audits remain OPEN. |
+| UNIT-105-EDIT | P1 | Daily/weekly energy target entry follows kcal/kJ preference | IMPLEMENTED_AND_TESTED | 228 tests/types/build plus synthetic browser confirms 9204.8 kJ writes 2200 kcal, converted weekly bounds, unchanged protein and metric reset. Other unit/export/chart audits remain OPEN. |
+| GATE-701-SOURCE | P0 | Reproducible literal API exposure inventory | IMPLEMENTED_AND_TESTED (source only) | 78 endpoint declarations + 6 mounts across 13 files, source hashes and CI drift check. All remain REVIEW_REQUIRED for authorization; Python/jobs/UI/tools/export/cache and full 52-feature mapping still OPEN. |
 | V06-109 | Future | v0.6 roadmap | DEFERRED | v0.5 remains incomplete. |
 | OPS-702-RECOVERY | P0 | Isolated encrypted snapshot/key recovery regression | IMPLEMENTED_AND_TESTED (synthetic only) | 218 tests and TypeScript passed. Restored original zero/null/units, account isolation, two historical keys, missing/wrong-key failure and idempotent migration. Old snapshot restores deleted records: deletion replay remains required. Managed recovery is separately blocked on operator inputs below. |
 | FOOD-510 / 8cb808e | P0 | Remove dedicated incomplete menu search; retain manual restaurant entry inside Describe | IMPLEMENTED_AND_TESTED | 218 tests, TypeScript, production build and synthetic rendered save/totals journey passed. Three working chooser options; old restaurant deep links open manual Describe with text retained. No fabricated menu catalogue. |
