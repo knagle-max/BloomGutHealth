@@ -1,219 +1,421 @@
-import { useState } from 'react';
-import MealTypeSelector, { MealType } from '@/components/MealTypeSelector';
-import SymptomSlider from '@/components/SymptomSlider';
-import { Activity, Zap, Heart, Brain, Clock, Loader2 } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { apiRequest, queryClient } from '@/lib/queryClient';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import {useAuth} from "@/lib/auth";
+import RestaurantEntry from "@/components/RestaurantEntry";
+import FoodCapture from "@/components/FoodCapture";
+import { useExperience } from "@/lib/experience";
+import { energyAmount, foodMass } from "@shared/nutrition-display";
+import {foodEntryMethods,availableFoodEntryMethods,resolveFoodEntryRoute,type FoodEntryMethod} from "@shared/food-entry";
+import { SaveMealButton } from "@/components/SavedMeals";
+import ProductPicker from "@/components/ProductPicker";
+import { nutritionUpdateFeedback } from "@shared/nutrition-review";
+import { useEffect, useRef, useState } from "react";
+import { Link } from "wouter";
+import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import MealTypeSelector, { type MealType } from "@/components/MealTypeSelector";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import MealAnalysis from "@/components/MealAnalysis";
+import {
+  recipes,
+  type Ingredient,
+  type MealIntelligence,
+} from "@shared/meal-intelligence";
+import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
-  const [mealType, setMealType] = useState<MealType>('breakfast');
-  const [foodDescription, setFoodDescription] = useState('');
-  const [portionSize, setPortionSize] = useState('medium');
-  const [bloating, setBloating] = useState(5);
-  const [energy, setEnergy] = useState(5);
-  const [comfort, setComfort] = useState(5);
-  const [mood, setMood] = useState(5);
-  const [nutritionData, setNutritionData] = useState<any>(null);
-  const { toast } = useToast();
-
-  const { data: demoUser } = useQuery({
-    queryKey: ['/api/demo/user'],
+  const { settings } = useExperience();
+  const {user}=useAuth();
+  const params = new URLSearchParams(window.location.search);
+  const requestedType = params.get("type");
+  const productQuery = (params.get("productQuery") || "").slice(0,120);
+  const catalogueId=params.get("fdcId"),catalogueGrams=Number(params.get("grams"));
+  const [catalogueEnabled,setCatalogueEnabled]=useState(!!catalogueId);
+  const catalogueSelection=useQuery<{fdcId:number;description:string;grams:number}>({queryKey:["/api/biology/catalogue",catalogueId,catalogueGrams],enabled:catalogueEnabled&&/^\d+$/.test(catalogueId||"")&&catalogueGrams>0&&catalogueGrams<=3000,queryFn:async()=>(await apiRequest("GET",`/api/biology/catalogue/${catalogueId}?grams=${catalogueGrams}`)).json()});
+  const [mealType, setMealType] = useState<MealType>(
+    ["breakfast", "lunch", "dinner", "snack"].includes(requestedType || "")
+      ? (requestedType as MealType)
+      : new Date().getHours() < 11
+        ? "breakfast"
+        : new Date().getHours() < 16
+          ? "lunch"
+          : "dinner",
+  );
+  const recipe = recipes.find(
+    (r) => r.id === new URLSearchParams(window.location.search).get("recipe"),
+  );
+  const [description, setDescription] = useState(
+    recipe
+      ? recipe.ingredients
+          .map((i) => `${i.grams} g ${i.name.replaceAll(",", " ")}`)
+          .join(", ")
+      : (params.get("description") || "").slice(0, 2000),
+  );
+  const [eatenAt, setEatenAt] = useState(() => {
+    const date = new Date();
+    return new Date(+date - date.getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 16);
   });
-
-  const logMealMutation = useMutation({
-    mutationFn: async (data: any) => {
-      const response = await apiRequest('POST', '/api/meals', data);
-      return await response.json();
-    },
-    onSuccess: (data) => {
-      if (data.nutritionalData) {
-        setNutritionData(data.nutritionalData);
-      }
-      
-      const userId = demoUser?.id || 'demo-user-123';
-      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
-      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
-      
-      toast({
-        title: 'Meal logged successfully!',
-        description: 'Your food has been analyzed with nutritional breakdown.',
-      });
-      
-      setFoodDescription('');
-      setBloating(5);
-      setEnergy(5);
-      setComfort(5);
-      setMood(5);
-    },
-    onError: (error: any) => {
-      toast({
-        title: 'Error logging meal',
-        description: error.message || 'Please try again',
-        variant: 'destructive',
-      });
-    },
-  });
-
-  const handleSubmit = () => {
-    logMealMutation.mutate({
-      userId: demoUser?.id || 'demo-user-123',
-      mealText: foodDescription,
-      mealType,
-    });
+  const [portion, setPortion] = useState<
+    "small" | "medium" | "large" | "specified"
+  >("specified");
+  const [aiConsent, setAIConsent] = useState(false);
+  const [symptoms, setSymptoms] = useState<
+    Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
+  >({ bloating: null, energy: null, comfort: null, clarity: null });
+  const [products, setProducts] = useState<Ingredient[]>([]);
+  const [method,setMethod]=useState<FoodEntryMethod|null>(resolveFoodEntryRoute(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
+  const capabilities=useQuery<{foodEntry?:Partial<Record<FoodEntryMethod,boolean>>}>({queryKey:["/api/capabilities",user?.id],enabled:!!user,queryFn:async()=>(await apiRequest("GET","/api/capabilities")).json()});
+  const availableMethods=availableFoodEntryMethods(capabilities.data?.foodEntry);
+  const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search"].includes(params.get("method")||""));
+  const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("Canada"),[restaurantVisited,setRestaurantVisited]=useState(params.get("method")==="restaurant");
+  const chooserHeading=useRef<HTMLHeadingElement>(null);
+  const changeMethod=(requested:FoodEntryMethod|null)=>{
+    const next=requested&&availableMethods.some(m=>m.id===requested)?requested:null;
+    if(next&&["barcode","search"].includes(next))setPickerVisited(true);
+    const url=new URL(window.location.href);if(next)url.searchParams.set("method",next);else url.searchParams.delete("method");
+    window.history.pushState(null,"",url.pathname+url.search);setMethod(next);
+    requestAnimationFrame(()=>chooserHeading.current?.focus());
   };
-
+  useEffect(()=>{const back=()=>{const next=resolveFoodEntryRoute(new URLSearchParams(window.location.search).get("method"));setMethod(next);if(next&&["barcode","search"].includes(next))setPickerVisited(true);};window.addEventListener("popstate",back);return()=>window.removeEventListener("popstate",back);},[]);
+  useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.get("method")==="restaurant"){url.searchParams.set("method","describe");window.history.replaceState(null,"",url.pathname+url.search);}else if(url.searchParams.get("method")==="photo"){url.searchParams.delete("method");window.history.replaceState(null,"",url.pathname+url.search);setMethod(null);requestAnimationFrame(()=>chooserHeading.current?.focus());}},[]);
+  const recentMeals=useQuery<Meal[]>({queryKey:["/api/meals",user?.id],enabled:!!user&&method==="describe"&&restaurantVisited});
+  const recentRestaurants=(recentMeals.data||[]).flatMap(meal=>{const context=(meal.mealContext as any)?.restaurantContext;return typeof context?.restaurant==="string"&&typeof context?.market==="string"?[{restaurant:context.restaurant,market:context.market}]:[];});
+  const pickerActive=method==="barcode"||method==="search";
+  const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
+  const { toast } = useToast();
+  const saveAttempt = useRef<{ payload: string; key: string } | null>(null);
+  const save = useMutation({
+    mutationFn: async () => {
+      const payload = {
+          mealText: catalogueEnabled&&catalogueSelection.data?`${catalogueSelection.data.grams} g ${catalogueSelection.data.description}`:description.trim(),
+          products,
+          ...(catalogueEnabled&&catalogueSelection.data?{ingredients:[{name:catalogueSelection.data.description.slice(0,120),grams:catalogueSelection.data.grams,preparation:catalogueSelection.data.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:catalogueSelection.data.fdcId}}]}:{}),
+          mealType,
+          aiConsent,
+          mealContext: {
+            eatenAt: new Date(eatenAt).toISOString(),
+            portion,
+            symptoms,
+            ...((restaurant.trim()||restaurantVisited)?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{}),
+          },
+        };
+      const serialized = JSON.stringify(payload);
+      if (saveAttempt.current?.payload !== serialized)
+        saveAttempt.current = { payload: serialized, key: crypto.randomUUID() };
+      return (await apiRequest("POST", "/api/meals", payload, { "Idempotency-Key": saveAttempt.current.key })).json() as Promise<Meal>;
+    },
+    onSuccess: (meal) => {
+      saveAttempt.current = null;
+      setSavedMeal(meal);
+      setDescription("");
+      setProducts([]);
+      setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
+      setCatalogueEnabled(false);
+      queryClient.invalidateQueries({
+        predicate: (query) =>
+          [
+            "/api/meals",
+            "/api/precision",
+            "/api/nutrition/",
+            "/api/health/",
+            "/api/microbiome/diet-prediction",
+          ].some((prefix) => String(query.queryKey[0]).startsWith(prefix)),
+      });
+      toast({
+        title: "Added to your journal",
+        description:
+          meal.totalCalories === null
+            ? "Your meal is saved; nutrition needs more information or a provider."
+            : "Your nutrition overview is up to date.",
+      });
+    },
+  });
+  const recalculate = useMutation({
+    mutationFn: async (ingredients: Ingredient[]) =>
+      (await (
+        await apiRequest("PUT", `/api/meals/${savedMeal!.id}`, {
+          mealText: savedMeal!.mealText,
+          ingredients,
+        })
+      ).json()) as Meal,
+    onSuccess: (meal) => {
+      setSavedMeal(meal);
+      queryClient.invalidateQueries();
+      toast(nutritionUpdateFeedback(meal.intelligence as MealIntelligence));
+    },
+    onError: (error) =>
+      toast({
+        title: "Could not recalculate",
+        description: error.message,
+        variant: "destructive",
+      }),
+  });
   return (
-    <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
-      <div>
-        <h1 className="font-display text-2xl font-semibold mb-2">Log Your Meal</h1>
-        <p className="text-sm text-muted-foreground">Track what you eat and how you feel</p>
+    <main className="meal-page">
+      <Link href="/" className="text-link">
+        <ArrowLeft size={16} /> Back to overview
+      </Link>
+      <div className="meal-page-heading">
+        <span className="panel-icon">
+          <Utensils size={24} />
+        </span>
+        <p className="eyebrow">NOURISH & NOTICE</p>
+        <h1>Add Food</h1>
+        <p className="muted">
+          Choose how to add each item. Review all items together before saving.
+        </p>
       </div>
+      <fieldset disabled={save.isPending} className="space-y-3">
+      <legend className="sr-only">Choose foods to log</legend>
+      <section className="bloom-panel space-y-3">
+        <h2 ref={chooserHeading} tabIndex={-1}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
+        {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
+        {!method&&<div className="grid gap-3 sm:grid-cols-2">{availableMethods.map(m=><Button className="h-auto whitespace-normal text-left block" type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.description}</span></Button>)}</div>}
+        <p className="panel-note">Selected items and your description stay in this draft. Save only when ready.</p>
+        {method==="describe"&&<div className="space-y-3"><p>Type foods and amounts in the shared meal review below. Selected products are counted separately.</p><FoodCapture voiceOnly onDescription={text=>setDescription(current=>[current,text].filter(Boolean).join("; "))} onProduct={()=>{}}/></div>}
+        {method==="describe"&&<div className="space-y-3"><Button type="button" variant="outline" aria-expanded={restaurantVisited} aria-controls="restaurant-context" onClick={()=>setRestaurantVisited(value=>!value)}>Log a restaurant meal</Button>{restaurantVisited&&<div id="restaurant-context" className="space-y-3"><p className="panel-note">Describe what you ate below. Restaurant names add context; menu item search is not available.</p><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={setMarket}/><details><summary>Why?</summary><p>Names do not verify menu nutrition or allergens. Generic food matches are estimates. To use published nutrition, add it as a private label through Search foods; missing values stay unknown.</p></details></div>}</div>}
 
-      <MealTypeSelector selected={mealType} onChange={setMealType} />
-
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="food-input">What did you eat?</Label>
-          <Textarea
-            id="food-input"
-            placeholder="E.g., Grilled salmon with quinoa and steamed broccoli..."
-            value={foodDescription}
-            onChange={(e) => setFoodDescription(e.target.value)}
-            className="min-h-24 resize-none"
-            data-testid="input-food-description"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Time</Label>
-            <div className="flex items-center gap-2 h-10 px-3 rounded-lg border border-input bg-background">
-              <Clock className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">{new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="portion">Portion Size</Label>
-            <Select value={portionSize} onValueChange={setPortionSize}>
-              <SelectTrigger id="portion" data-testid="select-portion">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="small">Small</SelectItem>
-                <SelectItem value="medium">Medium</SelectItem>
-                <SelectItem value="large">Large</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <div>
-          <h2 className="font-display text-lg font-semibold mb-1">How are you feeling?</h2>
-          <p className="text-xs text-muted-foreground">Rate 2-4 hours after eating</p>
-        </div>
-
-        <SymptomSlider icon={Activity} label="Bloating Level" value={bloating} onChange={setBloating} />
-        <SymptomSlider icon={Zap} label="Energy Level" value={energy} onChange={setEnergy} />
-        <SymptomSlider icon={Heart} label="Digestive Comfort" value={comfort} onChange={setComfort} />
-        <SymptomSlider icon={Brain} label="Mental Clarity" value={mood} onChange={setMood} />
-      </div>
-
-      <Button 
-        onClick={handleSubmit} 
-        className="w-full h-12" 
-        disabled={!foodDescription.trim() || logMealMutation.isPending}
-        data-testid="button-save-meal"
-      >
-        {logMealMutation.isPending ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Analyzing Nutrition...
-          </>
-        ) : (
-          'Save Meal Entry'
-        )}
-      </Button>
-
-      {nutritionData && nutritionData.length > 0 && (
-        <Card className="p-4" data-testid="card-nutrition-breakdown">
-          <h3 className="font-display font-semibold mb-4">Nutritional Breakdown</h3>
-          
-          <div className="space-y-4">
-            {nutritionData.map((item: any, idx: number) => (
-              <div key={idx} className="space-y-3">
-                <h4 className="font-medium text-sm capitalize">{item.name}</h4>
-                
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Calories</span>
-                    <Badge variant="outline" data-testid={`badge-calories-${idx}`}>{item.calories}</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Protein</span>
-                    <Badge variant="outline" data-testid={`badge-protein-${idx}`}>{item.protein_g}g</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Carbs</span>
-                    <Badge variant="outline" data-testid={`badge-carbs-${idx}`}>{item.carbohydrates_total_g}g</Badge>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Fat</span>
-                    <Badge variant="outline" data-testid={`badge-fat-${idx}`}>{item.fat_total_g}g</Badge>
-                  </div>
-                </div>
-
-                {item.fiber_g > 0 && (
-                  <div className="pt-2 border-t">
-                    <p className="text-xs text-muted-foreground mb-2">Micronutrients & Fiber</p>
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      {item.fiber_g > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Fiber</span>
-                          <span>{item.fiber_g}g</span>
-                        </div>
-                      )}
-                      {item.sugar_g > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Sugar</span>
-                          <span>{item.sugar_g}g</span>
-                        </div>
-                      )}
-                      {item.sodium_mg > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Sodium</span>
-                          <span>{item.sodium_mg}mg</span>
-                        </div>
-                      )}
-                      {item.potassium_mg > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Potassium</span>
-                          <span>{item.potassium_mg}mg</span>
-                        </div>
-                      )}
-                      {item.cholesterol_mg > 0 && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Cholesterol</span>
-                          <span>{item.cholesterol_mg}mg</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </Card>
+        {products.length>=10&&<p role="alert">This meal supports up to 10 labelled products. Save the meal or remove one before adding another.</p>}
+        {pickerVisited&&<div hidden={!pickerActive}><ProductPicker active={pickerActive} showBarcode={method==="barcode"} pending={products.length>=10} onPick={i=>{setProducts(v=>v.length>=10?v:[...v,i]);changeMethod(null);}} initialQuery={productQuery||description.slice(0,120)} autoSearch={!!productQuery}/></div>}
+      </section>
+      {products.length > 0 && (
+        <section className="bloom-panel">
+          <h2>Selected products</h2>
+          <p>
+            These products are counted separately. In the meal description,
+            include only other foods to avoid counting the same product twice.
+          </p>
+          {products.map((i, index) => (
+            <p key={index}>
+              {i.name} · {i.product!.servings} labelled serving(s){" "}
+              <button
+                type="button"
+                className="text-link"
+                onClick={() =>
+                  setProducts((v) => v.filter((_, n) => n !== index))
+                }
+              >
+                Remove
+              </button>
+            </p>
+          ))}
+          <Button
+            className="whitespace-normal h-auto max-w-full"
+            type="button"
+            variant="outline"
+            onClick={() => setDescription("")}
+          >
+            Use selected products as the whole entry
+          </Button>
+        </section>
       )}
-    </div>
+      {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{foodMass(catalogueSelection.data.grams, settings.displayUnits.foodWeight)} {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
+      <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
+      </fieldset>
+      {(method==="describe"||products.length>0||description.trim()||catalogueEnabled)&&<form
+        className="bloom-panel space-y-6"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if ((description.trim() || products.length || catalogueEnabled&&catalogueSelection.data) && !save.isPending && (!catalogueEnabled||!!catalogueSelection.data))
+            save.mutate();
+        }}
+      >
+        <fieldset disabled={save.isPending} className="space-y-6">
+          <legend className="sr-only">Meal details</legend>
+          <h2>Review this meal</h2>
+          {(restaurant||restaurantVisited)&&<p className="panel-note">Restaurant context (entered by you): {restaurant||"restaurant not specified"} · {market||"market not specified"}. This context does not verify the nutrition source.</p>}
+          <MealTypeSelector selected={mealType} onChange={setMealType} />
+          <div className="space-y-2">
+            {!catalogueEnabled&&<><Label htmlFor="food-input">Describe your meal</Label>
+            <Textarea
+              id="food-input"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="For example: 150g grilled chicken, 1 cup brown rice, and broccoli"
+              className="min-h-32 text-base"
+              maxLength={2000}
+              required={!products.length&&!catalogueEnabled}
+              data-testid="input-food-description"
+            />
+            <p className="text-xs text-muted-foreground">
+              Include quantities for a more useful nutrition estimate. You can
+              review the breakdown after saving.
+            </p></>}
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label>
+              Meal date & time
+              <input
+                className="bloom-input w-full"
+                type="datetime-local"
+                value={eatenAt}
+                onChange={(e) => setEatenAt(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <details className="workspace-disclosure">
+            <summary>Optional details & symptom check-in</summary>
+            <div className="space-y-5 pt-4">
+            <label className="block">
+              Portion context
+              <select
+                className="bloom-input w-full"
+                value={portion}
+                onChange={(e) => setPortion(e.target.value as any)}
+              >
+                <option value="specified">Amounts in description</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
+            </label>
+          <p className="panel-note">
+            Portion labels are saved as context; they do not automatically
+            multiply nutrients. Common portions can be estimated; review and
+            correct the calculated gram amounts after saving.
+          </p>
+          <fieldset className="space-y-3">
+            <legend>Optional symptom check-in</legend>
+            {(["bloating", "energy", "comfort", "clarity"] as const).map(
+              (key) => (
+                <div key={key}>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={symptoms[key] !== null}
+                      onChange={(e) =>
+                        setSymptoms({
+                          ...symptoms,
+                          [key]: e.target.checked ? 5 : null,
+                        })
+                      }
+                    />{" "}
+                    Record{" "}
+                    {key === "comfort"
+                      ? "digestive comfort"
+                      : key === "clarity"
+                        ? "mental clarity"
+                        : key}
+                  </label>
+                  {symptoms[key] !== null && (
+                    <label className="flex gap-3 items-center">
+                      <input
+                        aria-label={`${key} level`}
+                        type="range"
+                        min="0"
+                        max="10"
+                        value={symptoms[key]!}
+                        onChange={(e) =>
+                          setSymptoms({
+                            ...symptoms,
+                            [key]: Number(e.target.value),
+                          })
+                        }
+                      />
+                      <span>{symptoms[key]}/10</span>
+                    </label>
+                  )}
+                </div>
+              ),
+            )}
+          </fieldset>
+          <label className="block text-sm">
+            <input
+              type="checkbox"
+              checked={aiConsent}
+              onChange={(e) => setAIConsent(e.target.checked)}
+            />{" "}
+            Use optional AI ingredient parsing. Sends this meal description to
+            the configured AI provider; nutrient numbers come from food
+            databases.
+          </label>
+            </div>
+          </details>
+          {save.isError && (
+            <div role="alert" className="space-y-2">
+              <p className="font-semibold">We couldn’t confirm your meal was saved.</p>
+              <p>{save.error.message}</p>
+              <p>Your details are still here while this page stays open. Retry the same details to recover this save without adding a duplicate. Before changing the entry, check your journal in case the first save arrived.</p>
+              <Link href="/nutrition" className="text-link" target="_blank" rel="noopener">Check journal in a new tab</Link>
+            </div>
+          )}
+          <Button
+            className="w-full h-12"
+            disabled={
+              (!description.trim() && !products.length && !(catalogueEnabled&&catalogueSelection.data)) || (catalogueEnabled&&!catalogueSelection.data) || save.isPending
+            }
+            data-testid="button-save-meal"
+          >
+            {save.isPending ? (
+              <>
+                <Loader2 size={17} className="animate-spin mr-2" /> Saving your
+                meal…
+              </>
+            ) : (
+              save.isError ? "Retry saving my meal" : "Save to my journal"
+            )}
+          </Button>
+        </fieldset>
+      </form>}
+      {savedMeal && (
+        <section className="bloom-panel saved-meal" role="status">
+          <h2 className="flex items-center gap-2">
+            <CheckCircle2 size={20} /> Your meal is saved.
+          </h2>
+          <p className="my-3">{savedMeal.mealText}</p>
+          {savedMeal.totalCalories !== null ? (
+            <div className="saved-nutrients">
+              <span>
+                <strong>{energyAmount(savedMeal.totalCalories, settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}
+              </span>
+              <span>
+                <strong>
+                  {savedMeal.totalProtein == null
+                    ? "—"
+                    : Math.round(savedMeal.totalProtein)}
+                  g
+                </strong>{" "}
+                protein
+              </span>
+              <span>
+                <strong>
+                  {savedMeal.totalCarbs == null
+                    ? "—"
+                    : Math.round(savedMeal.totalCarbs)}
+                  g
+                </strong>{" "}
+                carbs
+              </span>
+            </div>
+          ) : (
+            <p>
+              Complete nutrition totals unavailable; the description and
+              check-in are saved.
+            </p>
+          )}
+          <Link href="/nutrition" className="text-link mt-5">
+            View your food journal{" "}
+            <ArrowLeft size={16} className="rotate-180" />
+          </Link>
+        </section>
+      )}
+      {savedMeal && <SaveMealButton meal={savedMeal}/>}
+      {Boolean(savedMeal?.intelligence) && (
+        <MealAnalysis
+          key={(savedMeal!.intelligence as MealIntelligence).analyzedAt}
+          analysis={savedMeal!.intelligence as MealIntelligence}
+          onRecalculate={(ingredients) => recalculate.mutate(ingredients)}
+          pending={recalculate.isPending}
+        />
+      )}
+      <p className="panel-note text-center">
+        Nutrition values are estimates from the nutrition provider.
+      </p>
+    </main>
   );
 }

@@ -1,0 +1,48 @@
+# Bloom v0.5 development handoff — 2026-10-24
+
+Progress checkpoint, not v0.5 completion. Branch `enhance/bloom-experience`, existing PR #1 and existing Render development service only. No main merge, replacement service, production credential change or paid provider activation.
+
+## Delivered and verified
+
+| Change | Commit | Evidence |
+| --- | --- | --- |
+| Encrypted synthetic snapshot/key recovery regression | dd59a6b | 218 tests/types; CI 40076326533 passed; development deployment was live. Original zero/null/units and account isolation preserved; missing historical keys fail. Old snapshots resurrect deleted data, so managed deletion reconciliation remains required. |
+| Truthful manual restaurant fallback | b023b81 | 218 tests/types/build, rendered canonical save/totals; CI 40076500931 passed and Render live. Dedicated incomplete menu search removed; optional Log a restaurant meal is within Describe. Legacy links preserve draft. No real menu catalogue claimed. |
+| Today mobile journal correction | 316fa8a | 218 tests/types/build, rendered 320/375/390 light/dark, empty/one-meal/error, keyboard/focus/end-of-page clearance; CI 40076962159 passed and Render live. One empty state/CTA; unavailable energy remains visible. Evidence docs/review/today-mobile-20261024. |
+| Coaching execution gate | 4d5d4f0 | 219 tests/types/build, direct forged-consent/provider-key denial and rendered curated plan; CI 40077179797 passed and Render live. Unapproved AI ranking unavailable; curated evidence remains usable. |
+| Shared monetary reservation foundation | ac7ff59 | 224 tests/types/build; CI 40077584409 passed including real isolated Neon multi-connection atomic reserve, idempotent settle and account isolation. Render live. Not connected to current SDK calls; no actual tariff/budget configured. |
+| Provider-unit costing contract | b092ec8 | 228 tests/types/build; CI 40077838047 passed and Render live. Synthetic tariffs only; cached/reasoning subsets not double-counted, exact integer cost, stale/mismatched tariff and unknown usage rejected. |
+| Daily/weekly target units | f2f56c3 | 228 tests/types/build and rendered kJ entry -> canonical kcal writes, converted bounds, unchanged protein and metric reset. Render dep-dbe6oktg1s2s7392uuo0 live; CI 40078220788 passed. |
+
+Earlier delivered slices remain recorded in BACKLOG.md: product-result certainty cleanup, shared USDA source request allowance, one canonical Add Food draft/save, internal-only reviewer preference and orthogonal readiness/release labels. Internal module composition is incomplete and no real tester1 grant is provisioned. Public chooser currently has three working methods; unfinished photo and dedicated restaurant menu search are absent. OFF remains disabled.
+
+The current source-inventory checkpoint records 78 literal endpoint declarations and six middleware mounts across 13 files, reproducibly checked against source hashes. Every authorization review remains REVIEW_REQUIRED. This does not complete the 52-feature policy audit or enumerate Python/jobs/tools/UI/export/cache. See docs/operations/API_EXPOSURE_REVIEW.md.
+
+Actual Render's fixed public USDA Kit Kat startup lookup most recently recorded 20 results at 07:49:13 UTC. This verifies source access, not exact Canadian variant/portion/meal-save acceptance. Direct hosted browser access from this environment is blocked by proxy; local browser fixtures are labelled synthetic. No physical Safari/VoiceOver, independent review or full managed restore acceptance is claimed.
+
+## Remaining work in priority order
+
+1. **P0 OPEN:** Complete authenticated runtime provider accounting integration: verified token/request bounds, current tariff configuration, provider receipts, retries/stream/cancellation/unknown-outcome reconciliation, shared circuits and private aggregate alerts. Existing ledger/cost functions alone do not govern parser/recipe SDKs. Continue with synthetic adapters and default denial pending configuration; no new paid enablement.
+2. **P0 OPEN:** Complete route/output/job/tool/export/cache capability mapping and execution guards, incident suppression audit, in-situ development module composition and reactive revocation. Preserve safe T1/manual/curated flows. Never treat provisional Legal JSON or reviewer preference as approval.
+3. **P0 OPEN / scoped external dependencies:** Managed recovery, erasure replay and vendor/log lifecycle; execute synthetic work independently, retain live restore policy/target as blocked input. Owner-reported missing tester1 toggle requires reviewed identity/environment provisioning; not a public self-enrolment fix.
+4. **P0/P1 OPEN:** Continue concrete copy/layout, unit/export/chart and evidence/missingness audits. Energy target editor gap is fixed; broad UNIT-105 is not complete. Brand/science asset adoption awaits accessible approved package. Actual menus remain licensing blocked, manual logging works.
+5. **Release gates:** Independent Branding, Science, Security/Privacy/Legal, native/device/accessibility/persona and exact hosted SKU acceptance. v0.6 remains deferred.
+
+## Decisions and external evidence needed
+
+These are deferred records, not requests to stop independent development. Exact details are in BLOCKED_USER_INPUT.md.
+
+| Task / unlock | Exact input | Choices | Recommended default and impact of deferral |
+| --- | --- | --- | --- |
+| OPS-702 monetary activation | Which provider/model tariff source/effective date, account daily/monthly/feature allowances, platform/provider/concurrency ceilings, stable identity-secret recovery/rotation and ledger retention are approved? | Reviewed configuration for separately cleared capabilities; or defer activation. | No invented tariffs or paid enablement. Runtime adapter/accounting engineering can proceed; real monetary acceptance waits. |
+| GATE-701 tester1 | Which reviewed isolated-synthetic environment/dataset boundary, actual authenticated reviewer ID, territory, purpose, expiry and low-risk capability scope are approved? | Verify existing preview meets conditions and provision audited identity; or use synthetic harness until an appropriate environment is confirmed. | No real grants by guessed username; default denied. Blocks live reviewer control acceptance, not module engineering. |
+| OPS-702 / PRIV-103 managed recovery | Which Render-bound project/branch, isolated restore target/cost ceiling, reviewed RPO/RTO/retention, historical key recovery location and deletion reconciliation policy are authorized? | Approved isolated operator drill; or defer managed recovery acceptance. | Keep existing configuration; synthetic in-memory recovery only. No live health-data copy/destructive restore. Managed readiness stays open. |
+| REST-ARCH / FOOD-508 | Which licensed versioned Canadian chain menu source/records are approved for item/size/modifier/provenance/nutrients? | Approved catalogue/licence/provider configuration; or manual restaurant entry. | Manual description; no scraped or invented official menus. Blocks source-backed menu search only. |
+| NATIVE-107 | Does v0.5 ship actual native HealthKit/Health Connect clients, or is browser/PWA with truthful unavailable device access the approved target? | Browser/PWA scope; or named native/hybrid platform and OS/device/entitlement targets. | Continue browser work without claiming native completion. Native engineering/hardware acceptance depends on the platform decision. |
+| Brand/science asset intake | What authorized connector or versioned repository path contains the approved current editable kits? | Accessible approved package; or retain existing approved assets. | Existing Bloom tokens/assets; no invented adoption. Exact asset integration/review waits. |
+| FOOD-501 exact hosted product acceptance | Can an independent tester verify deployed Kit Kat/KitKat/kit kit bar and Michelina's, genuine country/variant/serving, selection/save and daily totals? | Independent synthetic-account tester; or owner supplies actual findings. | Independent tester recommended; proxy blocks this environment. Source access already works; exact SKU acceptance remains open. |
+| OFF and release review | What written source-rights decision and running-build specialist approvals apply? | Approved specific source/capability; or keep it off pending review. | OFF/unapproved clinical/research features remain disabled. Does not block ordinary preview engineering. |
+
+## Resume immediately
+
+Read NEXT_ACTIONS.md and the active Architect queue; verify newest exact SHA CI/Render, preserve concurrent commits, then implement the highest unblocked P0 slice above. Refresh source inventory after route-file edits. Run meaningful tests and required build/security checks, commit/push to the same development branch, update all four root records and continue. Do not repeat blocked questions or reconstruct completed work. No secrets belong in files, reports or tool output.

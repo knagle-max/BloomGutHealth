@@ -1,0 +1,15 @@
+# Planning the remainder of a local day
+
+The authenticated rest-of-day endpoint combines meals inside a validated local calendar-day/UTC-offset window with the user's saved preferences and current precision context. Breakfast is omitted after 11:00, lunch after 16:00, and an explicitly logged breakfast/lunch/dinner is not proposed again. Snacks remain optional. Future meal entries are excluded from consumed intake.
+
+Targets come from an explicitly submitted form, the latest saved weekly plan, or a clearly labelled profile estimate. Without an adequate profile/saved plan, example targets require confirmation before suggestions are shown. Users can review energy, protein, fiber range, sodium, saturated fat and optional macro/micronutrient minima/maxima. The energy band is explicitly ±10%. No weight-loss deficit, supplementation dose or genotype-based nutrient target is invented.
+
+The bounded search scales eligible sourced recipes, reduces remaining nutrient gaps and then considers supported goals, microbiome food goals and variety. It sums known intake plus proposed food before enforcing each upper limit. It can leave slots empty or retain unmet targets. Partial intake remains visible; an unknown nutrient never becomes a measured zero or a passed daily check. The small planning food snapshot still limits recipe variety and cannot ensure every possible target is feasible. Food/label lookup does not automatically add every branded product to the optimizer's ingredient catalogue.
+
+Dietary pattern, category exclusions, dislikes, cooking time, sensitive-gut choices and recognized allergies filter recipes. Cuisine free text guides optional AI recipe proposals only with consent; the local engine does not claim to interpret arbitrary cuisine text. Unsupported medical contexts and unknown allergies require review as in the weekly optimizer. Supplements remain separate, conditional assessments rather than automatically calculated doses.
+
+NAFLD/MASLD, muscle-building and healthy-aging/longevity goals now have practical, source-linked dietary-pattern actions, tracking suggestions and food/meal matches. These are not claims of liver reversal, guaranteed muscle gain or predicted lifespan. Unknown goals request a more specific measurable target.
+
+Meal cards have collapsible ingredient/recipe/evidence and personal-relevance sections. Preparation begins with raw foods and supplies cooking instructions and safe temperatures. Approximate shopping yields are explicitly separated from the cooked/prepared gram amounts used for nutrition. Realistic preparation times filter recipes; chilling and soaking need additional time. Unexplained numeric “rule priority” labels have been removed from the recommendation cards.
+
+Laboratory entry supports a shared test date/source, pasted rows with explicit units and a review preview. Unsupported rows, duplicates and unit problems are shown before saving. Successfully saved rows are removed from the pending queue to avoid resubmitting them on retry. Detailed single-marker entry remains available for reference ranges, fasting status and assay details.

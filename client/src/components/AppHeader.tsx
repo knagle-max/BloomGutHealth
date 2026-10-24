@@ -1,7 +1,11 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Moon, Sun } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import BloomBrand from "./BloomBrand";
+import { ExperienceModeToggle, useExperience } from "@/lib/experience";
+import { Moon, Sun, Plus, Menu } from "lucide-react";
+import { useState } from "react";
+import { NavigationLinks, navigationGroups } from "./AppNavigation";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Link, useLocation } from "wouter";
 
 interface AppHeaderProps {
   userName?: string;
@@ -9,35 +13,53 @@ interface AppHeaderProps {
   onToggleDarkMode?: () => void;
 }
 
-export default function AppHeader({ userName = 'User', isDarkMode = false, onToggleDarkMode }: AppHeaderProps) {
-  const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
 
+export default function AppHeader({
+  userName = "User",
+  isDarkMode = false,
+  onToggleDarkMode,
+}: AppHeaderProps) {
+  const [location] = useLocation();
+  const {mode}=useExperience();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const current = navigationGroups.flatMap(g => g.items).find(i => i.path === location)?.label || (location.startsWith("/athlete") ? "Athlete performance" : "Log a meal");
   return (
-    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-lg border-b border-border">
-      <div className="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="font-display text-2xl font-semibold bg-gradient-to-r from-primary to-[hsl(var(--info))] bg-clip-text text-transparent">
-            Bloom
-          </h1>
-        </div>
-        <div className="flex items-center gap-3">
+    <header className="bloom-header">
+      <div className="bloom-header-inner">
+        <Link href="/" className="bloom-brand" aria-label="Bloom home">
+          <BloomBrand />
+        </Link>
+        <div className="header-context"><span>YOUR WORKSPACE</span><strong>{current}</strong></div>
+        <div className="header-actions">
+          <ExperienceModeToggle/>
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild><Button className="mobile-menu-trigger" variant="ghost" size="icon" aria-label="Open navigation"><Menu size={20} /></Button></SheetTrigger>
+            <SheetContent side="left" className="mobile-navigation-sheet">
+              <SheetHeader><SheetTitle>Explore Bloom</SheetTitle><SheetDescription>Your daily tools and health information.</SheetDescription></SheetHeader>
+              <NavigationLinks onNavigate={() => setMenuOpen(false)} />
+            </SheetContent>
+          </Sheet>
+          <Link href="/log-meal" className="header-log" aria-label="Log a meal" title="Log a meal">
+            <Plus size={16} /> Log meal
+          </Link>
           {onToggleDarkMode && (
             <Button
               size="icon"
               variant="ghost"
               onClick={onToggleDarkMode}
-              className="rounded-full"
+              aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
               data-testid="button-theme-toggle"
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
             </Button>
           )}
-          <Link href="/profile">
-            <Avatar className="w-9 h-9 cursor-pointer hover-elevate" data-testid="avatar-user">
-              <AvatarFallback className="bg-primary text-primary-foreground text-sm font-medium">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
+          <Link
+            href="/profile"
+            className="profile-link"
+            aria-label={`Profile for ${userName}`}
+            data-testid="avatar-user"
+          >
+            {userName.slice(0, 2).toUpperCase()}
           </Link>
         </div>
       </div>

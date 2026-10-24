@@ -1,0 +1,66 @@
+/* Generated from client/public/brand/design-tokens.json by scripts/brand-tokens.py. */
+:root {
+  --background: 140.000000 23.076923% 97.450980%;
+  --foreground: 156.000000 29.411765% 13.333333%;
+  --card: 0.000000 0.000000% 100.000000%;
+  --card-foreground: 156.000000 29.411765% 13.333333%;
+  --popover: 0.000000 0.000000% 100.000000%;
+  --popover-foreground: 156.000000 29.411765% 13.333333%;
+  --primary: 157.183099 49.650350% 28.039216%;
+  --brand-hover: 156.610169 54.128440% 21.372549%;
+  --primary-foreground: 0.000000 0.000000% 100.000000%;
+  --muted: 136.363636 29.729730% 92.745098%;
+  --muted-foreground: 147.272727 12.087912% 35.686275%;
+  --border: 135.000000 18.181818% 87.058824%;
+  --card-border: 135.000000 18.181818% 87.058824%;
+  --input: 135.000000 18.181818% 87.058824%;
+  --ring: 160.519481 63.636364% 23.725490%;
+  --accent: 136.363636 29.729730% 92.745098%;
+  --accent-foreground: 156.000000 29.411765% 13.333333%;
+  --secondary: 136.363636 29.729730% 92.745098%;
+  --secondary-foreground: 156.000000 29.411765% 13.333333%;
+}
+:root.dark {
+  --background: 156.000000 29.411765% 13.333333%;
+  --foreground: 140.000000 23.076923% 97.450980%;
+  --card: 156.610169 54.128440% 21.372549%;
+  --card-foreground: 140.000000 23.076923% 97.450980%;
+  --popover: 156.610169 54.128440% 21.372549%;
+  --popover-foreground: 140.000000 23.076923% 97.450980%;
+  --primary: 136.363636 29.729730% 92.745098%;
+  --brand-hover: 140.000000 23.076923% 97.450980%;
+  --primary-foreground: 156.000000 29.411765% 13.333333%;
+  --muted: 157.183099 49.650350% 28.039216%;
+  --muted-foreground: 136.363636 29.729730% 92.745098%;
+  --border: 147.272727 12.087912% 35.686275%;
+  --card-border: 147.272727 12.087912% 35.686275%;
+  --input: 147.272727 12.087912% 35.686275%;
+  --ring: 136.363636 29.729730% 92.745098%;
+  --accent: 157.183099 49.650350% 28.039216%;
+  --accent-foreground: 140.000000 23.076923% 97.450980%;
+  --secondary: 157.183099 49.650350% 28.039216%;
+  --secondary-foreground: 140.000000 23.076923% 97.450980%;
+}
+:root[data-experience=athlete], :root.dark[data-experience=athlete] {
+  --background: 216.774194 50.819672% 11.960784%;
+  --foreground: 218.571429 100.000000% 97.254902%;
+  --card: 214.666667 48.387097% 18.235294%;
+  --card-foreground: 218.571429 100.000000% 97.254902%;
+  --popover: 214.666667 48.387097% 18.235294%;
+  --popover-foreground: 218.571429 100.000000% 97.254902%;
+  --primary: 210.952381 100.000000% 75.294118%;
+  --brand-hover: 210.681818 100.000000% 82.745098%;
+  --primary-foreground: 216.774194 50.819672% 11.960784%;
+  --muted: 215.820896 51.145038% 25.686275%;
+  --muted-foreground: 213.157895 46.341463% 83.921569%;
+  --border: 210.508475 35.757576% 32.352941%;
+  --card-border: 210.508475 35.757576% 32.352941%;
+  --input: 210.508475 35.757576% 32.352941%;
+  --ring: 210.681818 100.000000% 82.745098%;
+  --accent: 215.820896 51.145038% 25.686275%;
+  --accent-foreground: 218.571429 100.000000% 97.254902%;
+  --secondary: 215.820896 51.145038% 25.686275%;
+  --secondary-foreground: 218.571429 100.000000% 97.254902%;
+}
+:root { --brand-type-body: 16px; --brand-type-bodySmall: 14px; --brand-type-caption: 12px; --brand-type-h1: 32px; --brand-type-h2: 24px; --brand-type-h3: 20px; --brand-space-0: 4px; --brand-space-1: 8px; --brand-space-2: 12px; --brand-space-3: 16px; --brand-space-4: 24px; --brand-space-5: 32px; --brand-space-6: 48px; --brand-radius-modal: 20px; --brand-line-height: 1.5; --brand-error: #B42318; --brand-warning: #8B5B0D; --brand-information: #17659A; --brand-success: #287445; --brand-notMeasured: #6A7680; }
+:root { --font-sans: Inter, system-ui, sans-serif; --font-display: var(--font-sans); --radius: 10px; --surface-radius: 16px; --control-size: 44px; --body-size: 16px; --note-size: 14px; --brand-motion-fast:120ms; --brand-motion-normal:200ms; }

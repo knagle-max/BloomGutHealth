@@ -1,5 +1,12 @@
-import { 
-  type User, 
+import { BiologyStorage } from "./biology-storage";
+import { insertMealWithReceipt, type MealSaveReceipt } from "./meal-save";
+import type { BiologicalRegistry } from "../shared/biological-model";
+import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
+import { nutritionProducts } from "../shared/schema";
+import { encryptPrecision, decryptPrecision } from "./precision-crypto";
+import type { LabelInput, Product } from "../shared/products";
+import {
+  type User,
   type InsertUser,
   type UpdateUserProfile,
   type MicrobiomeSample,
@@ -29,57 +36,89 @@ import {
   meals,
 } from "@shared/schema";
 import { db } from "./db";
+import { PrecisionStorage } from "./precision-storage";
+import type {
+  PrecisionContext,
+  PrecisionRecord,
+} from "../shared/precision-nutrition";
 import { eq, and, sql, desc } from "drizzle-orm";
 
-export interface IStorage {
+export interface IStorage extends ExperienceStore {
+  getBiologicalRegistry(): Promise<BiologicalRegistry>;
+  getNutritionProducts(userId: string): Promise<Product[]>;
+  insertNutritionProduct(userId: string, label: LabelInput): Promise<Product>;
+  deleteNutritionProduct(userId: string, id: string): Promise<boolean>;
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserProfile(id: string, profile: UpdateUserProfile): Promise<void>;
-  
+
   getMicrobiomeSample(id: string): Promise<MicrobiomeSample | undefined>;
-  insertMicrobiomeSample(sample: InsertMicrobiomeSample): Promise<MicrobiomeSample>;
-  updateMicrobiomeSample(id: string, updates: Partial<MicrobiomeSample>): Promise<void>;
+  insertMicrobiomeSample(
+    sample: InsertMicrobiomeSample,
+  ): Promise<MicrobiomeSample>;
+  updateMicrobiomeSample(
+    id: string,
+    updates: Partial<MicrobiomeSample>,
+  ): Promise<void>;
   getUserSamples(userId: string): Promise<MicrobiomeSample[]>;
-  
+
   getBacterialComposition(sampleId: string): Promise<BacterialComposition[]>;
-  insertBacterialComposition(composition: InsertBacterialComposition): Promise<void>;
-  
+  insertBacterialComposition(
+    composition: InsertBacterialComposition,
+  ): Promise<void>;
+
   getMetabolites(sampleId: string): Promise<Metabolite[]>;
   insertMetabolite(metabolite: InsertMetabolite): Promise<void>;
-  
+
   getHealthImpacts(metaboliteId: string): Promise<HealthImpact[]>;
   insertHealthImpact(impact: InsertHealthImpact): Promise<void>;
-  
+
   getCohortReferences(): Promise<CohortReference[]>;
   insertCohortReference(cohort: InsertCohortReference): Promise<void>;
-  
+
   getMlAnalyses(sampleId: string): Promise<MlAnalysis[]>;
   insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string>;
-  
+
   getRecommendations(sampleId: string): Promise<Recommendation[]>;
   insertRecommendation(recommendation: InsertRecommendation): Promise<void>;
-  
+
   getMeal(id: string): Promise<Meal | undefined>;
   getMeals(userId: string): Promise<Meal[]>;
-  insertMeal(meal: InsertMeal): Promise<Meal>;
+  insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal>;
   updateMeal(id: string, updates: Partial<Meal>): Promise<Meal>;
   deleteMeal(id: string): Promise<void>;
-  
+
+  getPrecisionContext(userId: string): Promise<unknown>;
+  putPrecisionContext(userId: string, context: PrecisionContext): Promise<void>;
+  getPrecisionRecords(userId: string): Promise<PrecisionRecord[]>;
+  insertPrecisionRecord(
+    userId: string,
+    kind: string,
+    payload: unknown,
+    saveKey?: string,
+  ): Promise<PrecisionRecord>;
+  deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
+  clearPrecisionData(userId: string): Promise<void>;
   getDemoUser(): Promise<User | undefined>;
   getDemoSamples(): Promise<MicrobiomeSample[]>;
 }
 
 export class DatabaseStorage implements IStorage {
+  private biology = new BiologyStorage(db);
+  getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}
   private demoUserId: string = "demo-user-123";
-  
+
   constructor() {
     this.seedDemoData();
   }
-  
+
   private async seedDemoData() {
     try {
-      const existingDemo = await db.select().from(users).where(eq(users.id, this.demoUserId));
+      const existingDemo = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, this.demoUserId));
       if (existingDemo.length > 0) return;
 
       await db.insert(users).values({
@@ -159,7 +198,10 @@ export class DatabaseStorage implements IStorage {
           pathwayId: "KEGG:ko00640",
           predictedConcentration: 12.4,
           confidence: 0.88,
-          productionGenes: ["methylmalonyl-CoA mutase", "propionyl-CoA carboxylase"],
+          productionGenes: [
+            "methylmalonyl-CoA mutase",
+            "propionyl-CoA carboxylase",
+          ],
         },
         {
           id: "demo-met-3",
@@ -180,8 +222,10 @@ export class DatabaseStorage implements IStorage {
           recommendationType: "dietary",
           category: "prebiotics",
           itemName: "Resistant Starch",
-          reasoning: "Your Faecalibacterium levels are good but could be optimized. Resistant starch feeds butyrate-producing bacteria.",
-          details: "Add 1-2 tablespoons of raw potato starch or cooked & cooled rice/potatoes daily",
+          reasoning:
+            "Your Faecalibacterium levels are good but could be optimized. Resistant starch feeds butyrate-producing bacteria.",
+          details:
+            "Add 1-2 tablespoons of raw potato starch or cooked & cooled rice/potatoes daily",
           priority: 1,
           expectedImpact: 0.85,
           targetBacteria: ["Faecalibacterium prausnitzii", "Roseburia spp."],
@@ -193,7 +237,8 @@ export class DatabaseStorage implements IStorage {
           recommendationType: "dietary",
           category: "probiotics",
           itemName: "Fermented Foods",
-          reasoning: "To maintain your beneficial Lactobacillus and Bifidobacterium populations",
+          reasoning:
+            "To maintain your beneficial Lactobacillus and Bifidobacterium populations",
           details: "Include kimchi, sauerkraut, or kefir 3-4 times per week",
           priority: 2,
           expectedImpact: 0.72,
@@ -206,7 +251,8 @@ export class DatabaseStorage implements IStorage {
           recommendationType: "lifestyle",
           category: "exercise",
           itemName: "Moderate Cardio",
-          reasoning: "Exercise increases microbial diversity and promotes Akkermansia growth",
+          reasoning:
+            "Exercise increases microbial diversity and promotes Akkermansia growth",
           details: "30-45 minutes of moderate cardio 4-5 times per week",
           priority: 3,
           expectedImpact: 0.68,
@@ -231,10 +277,14 @@ export class DatabaseStorage implements IStorage {
           },
         },
         confidence: 0.89,
-        comparedCohorts: ["elite_athletes", "centenarians", "mediterranean_diet"],
+        comparedCohorts: [
+          "elite_athletes",
+          "centenarians",
+          "mediterranean_diet",
+        ],
       });
     } catch (error) {
-      console.error("Demo data seeding error (likely already exists):", error);
+      console.error("Demo reference data could not be initialized.");
     }
   }
 
@@ -244,7 +294,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
+    const [user] = await db
+      .select()
+      .from(users)
+      .where(eq(users.username, username));
     return user || undefined;
   }
 
@@ -253,38 +306,68 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
-  async updateUserProfile(id: string, profile: UpdateUserProfile): Promise<void> {
+  async updateUserProfile(
+    id: string,
+    profile: UpdateUserProfile,
+  ): Promise<void> {
     await db.update(users).set(profile).where(eq(users.id, id));
   }
 
   async getMicrobiomeSample(id: string): Promise<MicrobiomeSample | undefined> {
-    const [sample] = await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.id, id));
+    const [sample] = await db
+      .select()
+      .from(microbiomeSamples)
+      .where(eq(microbiomeSamples.id, id));
     return sample || undefined;
   }
 
-  async insertMicrobiomeSample(sample: InsertMicrobiomeSample): Promise<MicrobiomeSample> {
-    const [newSample] = await db.insert(microbiomeSamples).values(sample).returning();
+  async insertMicrobiomeSample(
+    sample: InsertMicrobiomeSample,
+  ): Promise<MicrobiomeSample> {
+    const [newSample] = await db
+      .insert(microbiomeSamples)
+      .values(sample)
+      .returning();
     return newSample;
   }
 
-  async updateMicrobiomeSample(id: string, updates: Partial<MicrobiomeSample>): Promise<void> {
-    await db.update(microbiomeSamples).set(updates).where(eq(microbiomeSamples.id, id));
+  async updateMicrobiomeSample(
+    id: string,
+    updates: Partial<MicrobiomeSample>,
+  ): Promise<void> {
+    await db
+      .update(microbiomeSamples)
+      .set(updates)
+      .where(eq(microbiomeSamples.id, id));
   }
 
   async getUserSamples(userId: string): Promise<MicrobiomeSample[]> {
-    return await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId, userId));
+    return await db
+      .select()
+      .from(microbiomeSamples)
+      .where(eq(microbiomeSamples.userId, userId));
   }
 
-  async getBacterialComposition(sampleId: string): Promise<BacterialComposition[]> {
-    return await db.select().from(bacterialComposition).where(eq(bacterialComposition.sampleId, sampleId));
+  async getBacterialComposition(
+    sampleId: string,
+  ): Promise<BacterialComposition[]> {
+    return await db
+      .select()
+      .from(bacterialComposition)
+      .where(eq(bacterialComposition.sampleId, sampleId));
   }
 
-  async insertBacterialComposition(composition: InsertBacterialComposition): Promise<void> {
+  async insertBacterialComposition(
+    composition: InsertBacterialComposition,
+  ): Promise<void> {
     await db.insert(bacterialComposition).values(composition);
   }
 
   async getMetabolites(sampleId: string): Promise<Metabolite[]> {
-    return await db.select().from(metabolites).where(eq(metabolites.sampleId, sampleId));
+    return await db
+      .select()
+      .from(metabolites)
+      .where(eq(metabolites.sampleId, sampleId));
   }
 
   async insertMetabolite(metabolite: InsertMetabolite): Promise<void> {
@@ -292,7 +375,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHealthImpacts(metaboliteId: string): Promise<HealthImpact[]> {
-    return await db.select().from(healthImpacts).where(eq(healthImpacts.metaboliteId, metaboliteId));
+    return await db
+      .select()
+      .from(healthImpacts)
+      .where(eq(healthImpacts.metaboliteId, metaboliteId));
   }
 
   async insertHealthImpact(impact: InsertHealthImpact): Promise<void> {
@@ -308,7 +394,10 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getMlAnalyses(sampleId: string): Promise<MlAnalysis[]> {
-    return await db.select().from(mlAnalyses).where(eq(mlAnalyses.sampleId, sampleId));
+    return await db
+      .select()
+      .from(mlAnalyses)
+      .where(eq(mlAnalyses.sampleId, sampleId));
   }
 
   async insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string> {
@@ -317,10 +406,15 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getRecommendations(sampleId: string): Promise<Recommendation[]> {
-    return await db.select().from(recommendations).where(eq(recommendations.sampleId, sampleId));
+    return await db
+      .select()
+      .from(recommendations)
+      .where(eq(recommendations.sampleId, sampleId));
   }
 
-  async insertRecommendation(recommendation: InsertRecommendation): Promise<void> {
+  async insertRecommendation(
+    recommendation: InsertRecommendation,
+  ): Promise<void> {
     await db.insert(recommendations).values(recommendation);
   }
 
@@ -330,21 +424,98 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getMeals(userId: string): Promise<Meal[]> {
-    return await db.select().from(meals).where(eq(meals.userId, userId)).orderBy(desc(meals.loggedAt));
+    return await db
+      .select()
+      .from(meals)
+      .where(eq(meals.userId, userId))
+      .orderBy(desc(meals.loggedAt));
   }
 
-  async insertMeal(meal: InsertMeal): Promise<Meal> {
-    const [newMeal] = await db.insert(meals).values(meal).returning();
-    return newMeal;
+  async insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal> {
+    return insertMealWithReceipt(db, meal, receipt);
   }
 
   async updateMeal(id: string, updates: Partial<Meal>): Promise<Meal> {
-    const [updatedMeal] = await db.update(meals).set(updates).where(eq(meals.id, id)).returning();
+    const [updatedMeal] = await db
+      .update(meals)
+      .set(updates)
+      .where(eq(meals.id, id))
+      .returning();
     return updatedMeal;
   }
 
   async deleteMeal(id: string): Promise<void> {
     await db.delete(meals).where(eq(meals.id, id));
+  }
+
+  private readonly experience = new ExperienceStorage(db);
+  getExperienceSettings: ExperienceStore["getExperienceSettings"] = (id) => this.experience.getExperienceSettings(id);
+  putExperienceSettings: ExperienceStore["putExperienceSettings"] = (id,p) => this.experience.putExperienceSettings(id,p);
+  getExperienceRecords: ExperienceStore["getExperienceRecords"] = (id,kind) => this.experience.getExperienceRecords(id,kind);
+  insertExperienceRecord: ExperienceStore["insertExperienceRecord"] = (id,p) => this.experience.insertExperienceRecord(id,p);
+  updateExperienceRecord: ExperienceStore["updateExperienceRecord"] = (id,r,p) => this.experience.updateExperienceRecord(id,r,p);
+  deleteExperienceRecord: ExperienceStore["deleteExperienceRecord"] = (id,r) => this.experience.deleteExperienceRecord(id,r);
+  clearExperienceData: ExperienceStore["clearExperienceData"] = (id) => this.experience.clearExperienceData(id);
+  private readonly precision = new PrecisionStorage(db);
+  getPrecisionContext(userId: string) {
+    return this.precision.getPrecisionContext(userId);
+  }
+  putPrecisionContext(userId: string, context: PrecisionContext) {
+    return this.precision.putPrecisionContext(userId, context);
+  }
+  async getNutritionProducts(userId: string): Promise<Product[]> {
+    const rows = await db
+      .select()
+      .from(nutritionProducts)
+      .where(eq(nutritionProducts.userId, userId))
+      .orderBy(desc(nutritionProducts.createdAt))
+      .limit(200);
+    return rows.map((row) => ({
+      ...(decryptPrecision(row.encryptedPayload, userId) as LabelInput),
+      source: "manual" as const,
+      id: row.id,
+      url: null,
+      retrievedAt: row.createdAt.toISOString(),
+      notes: ["Entered from your package label; not independently verified."],
+    }));
+  }
+  async insertNutritionProduct(
+    userId: string,
+    label: LabelInput,
+  ): Promise<Product> {
+    const [row] = await db
+      .insert(nutritionProducts)
+      .values({ userId, encryptedPayload: encryptPrecision(label, userId) })
+      .returning();
+    return {
+      ...label,
+      source: "manual",
+      id: row.id,
+      url: null,
+      retrievedAt: row.createdAt.toISOString(),
+      notes: ["Entered from your package label; not independently verified."],
+    };
+  }
+  async deleteNutritionProduct(userId: string, id: string) {
+    const rows = await db
+      .delete(nutritionProducts)
+      .where(
+        and(eq(nutritionProducts.userId, userId), eq(nutritionProducts.id, id)),
+      )
+      .returning({ id: nutritionProducts.id });
+    return rows.length > 0;
+  }
+  getPrecisionRecords(userId: string) {
+    return this.precision.getPrecisionRecords(userId);
+  }
+  insertPrecisionRecord(userId: string, kind: string, payload: unknown, saveKey?: string) {
+    return this.precision.insertPrecisionRecord(userId, kind, payload, saveKey);
+  }
+  deletePrecisionRecord(userId: string, id: string) {
+    return this.precision.deletePrecisionRecord(userId, id);
+  }
+  clearPrecisionData(userId: string) {
+    return this.precision.clearPrecisionData(userId);
   }
 
   async getDemoUser(): Promise<User | undefined> {

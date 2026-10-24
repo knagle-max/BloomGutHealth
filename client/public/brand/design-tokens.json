@@ -1,0 +1,68 @@
+{
+  "status": "proposed-design-tokens-v1",
+  "colors": {
+    "everyday": {
+      "brand": "#246B50",
+      "brandHover": "#19543D",
+      "brandTint": "#E7F2EA",
+      "background": "#F7FAF8",
+      "surface": "#FFFFFF",
+      "text": "#182C24",
+      "mutedText": "#50665A",
+      "border": "#D8E4DB",
+      "focus": "#16634A"
+    },
+    "athlete": {
+      "brand": "#81BEFF",
+      "brandHover": "#A7D2FF",
+      "brandTint": "#203B63",
+      "background": "#0F1B2E",
+      "surface": "#182B45",
+      "text": "#F1F6FF",
+      "mutedText": "#C3D4E9",
+      "border": "#355270",
+      "focus": "#A7D2FF"
+    },
+    "semantics": {
+      "error": "#B42318",
+      "warning": "#8B5B0D",
+      "information": "#17659A",
+      "success": "#287445",
+      "notMeasured": "#6A7680"
+    }
+  },
+  "typography": {
+    "family": "Inter, system-ui, sans-serif",
+    "sizesPx": {
+      "body": 16,
+      "bodySmall": 14,
+      "caption": 12,
+      "h1": 32,
+      "h2": 24,
+      "h3": 20
+    },
+    "lineHeightBody": 1.5
+  },
+  "radiusPx": {
+    "control": 10,
+    "card": 16,
+    "modal": 20
+  },
+  "spacePx": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48
+  ],
+  "targetSizePx": 44,
+  "motion": {
+    "durationMs": {
+      "fast": 120,
+      "normal": 200
+    },
+    "respectReducedMotion": true
+  }
+}

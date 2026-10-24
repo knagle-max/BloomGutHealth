@@ -1,0 +1,28 @@
+{
+  "synthetic": true,
+  "stage": "after",
+  "checks": [
+    {
+      "width": 320,
+      "empty": true
+    },
+    {
+      "width": 375,
+      "empty": true
+    },
+    {
+      "width": 390,
+      "empty": true
+    },
+    {
+      "pageEndClear": true,
+      "zoomEquivalent": "320 CSS pixel viewport models 640-wide browser at 200%; not physical browser zoom acceptance"
+    },
+    {
+      "disconnectedNotEmpty": true
+    }
+  ],
+  "errors": [],
+  "physicalSafariVerified": false,
+  "voiceOverVerified": false
+}

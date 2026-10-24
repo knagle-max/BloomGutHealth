@@ -1,0 +1,13 @@
+# API exposure review checkpoint
+
+The generated inventory records 78 literal Express endpoint declarations and six middleware mounts in 13 top-level server TypeScript files. Every declaration deliberately remains REVIEW_REQUIRED; a named middleware is not proof of effective authorization. Scope excludes dynamic routes, Python, UI, tools, jobs, export fields and caches. Run `node --import tsx scripts/api-exposure-inventory.ts` after source changes and inspect the diff; `--check` compares source hashes/declarations. No application source executes during extraction. This is a P0 capability-audit input, not completion of the 52-feature policy inventory.
+
+Priority manual review:
+
+1. Trace the two direct restricted middleware calls (photo extraction and microbiome flux) and the science coaching SDK factory/execution guard through direct requests, consent, identity, role/territory and cached results. Already delivered tests prove denial of those specific current restricted operations; they do not certify all endpoints.
+2. Trace `routes.ts`/analysis-boundary historical output filtering and retired-health-routes. Metabolite health scores and genotype-only dietary rankings must remain unavailable. Verify stored/exported/job-derived values as well as the active response, while preserving original observations and safe education.
+3. Inventory optional AI ingredient parser, recipe prioritization and recipe generation. They still need authenticated monetary execution integration, trustworthy units and upper bounds, current tariffs, retry/stream/cancellation receipts and circuits. The new ledger/cost functions alone do not control these calls. Separate curated/manual operation from paid ranking/generation.
+4. Review precision routes' adult/safety-context, account ownership and source-unit confirmation across reports, plans, uploads, exported snapshots and background weekly workers. Preserve T1 preview behavior; provisional registry classifications are not new launch approval or a reason to blanket-disable functioning low-risk journaling.
+5. Map remaining literal endpoints and every non-HTTP surface to stable registry IDs with actual purpose/consent, territory, implementation readiness, incident state and approval evidence. Unknown restricted capabilities default deny. Complete server-authorized in-situ internal composition and cache/request revocation; no ordinary self-enrolment or incident bypass.
+
+Remaining independent engineering is OPEN, not deferred as user input. Real reviewer provisioning, source licences and reviewed monetary/clinical activation are separately scoped external dependencies in BLOCKED_USER_INPUT.md. Do not substitute the source inventory for real runtime, specialist or device acceptance.

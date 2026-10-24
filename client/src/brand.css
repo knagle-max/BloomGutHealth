@@ -1,0 +1,72 @@
+/* v1 identity integration. Palette roles are generated in brand-tokens.css. */
+body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
+.bloom-identity { display:inline-flex; flex-direction:column; align-items:flex-start; line-height:1; }
+.bloom-wordmark { width:144px; height:auto; max-width:100%; }
+.bloom-wordmark-reversed { display:none; }
+.dark .bloom-wordmark-ink, [data-experience=athlete] .bloom-wordmark-ink { display:none; }
+.dark .bloom-wordmark-reversed, [data-experience=athlete] .bloom-wordmark-reversed { display:block; }
+.bloom-mode-label { font-size:12px; font-weight:600; letter-spacing:.1em; margin-top:2px; margin-left:35px; color:hsl(var(--primary)); }
+.bloom-app-icon { border-radius:10px; flex-shrink:0; }
+.auth-brand { display:grid; justify-items:center; gap:12px; padding:48px 24px; background:hsl(var(--muted)); }
+.auth-brand .bloom-wordmark { width:200px; }
+.auth-brand p { color:hsl(var(--muted-foreground)); font-size:16px; text-align:center; }
+.app-shell .bloom-panel, .app-shell .relationship-card { border-radius:var(--surface-radius); }
+.app-shell main :is(button,.hero-button,.bloom-input), .bloom-input { border-radius:var(--radius); }
+.app-shell h1 { font-size:32px; } .app-shell .bloom-panel h2 { font-size:24px; }
+.app-shell main p, .app-shell main label, .app-shell .bloom-input { font-size:16px; }
+.app-shell .panel-note, .app-shell .stat-note { font-size:14px; }
+.app-shell .eyebrow, .navigation-group > p, .header-context > span { font-size:12px; }
+.app-shell .today-focus > .panel-note { display:block; }
+.app-shell .bloom-input { background:hsl(var(--card)); color:hsl(var(--foreground)); }
+.app-shell :is(button,.hero-button,.text-link,summary,select) { min-height:44px; }
+.app-shell .header-log { min-height:44px; }
+.app-shell .experience-switch select { min-height:44px; font-size:16px; }
+.app-shell :is(a,button,input,select,textarea,summary):focus-visible, .auth-brand a:focus-visible { outline:3px solid hsl(var(--ring)); outline-offset:3px; }
+.app-shell label:has(> input[type=checkbox]) { display:flex; align-items:flex-start; gap:8px; min-height:44px; padding:10px 0; }
+.app-shell main input[type=checkbox] { flex-shrink:0; margin-top:4px; }
+.app-shell .bloom-bottom-nav { padding-bottom:env(safe-area-inset-bottom,0px); }
+.empty-journal-art { width:120px; height:auto; flex-shrink:0; border-radius:12px; }
+.demo-fixed-example { border:1px dashed hsl(var(--border)); border-radius:16px; padding:20px; margin-top:24px; background:hsl(var(--muted)); }
+.quick-start { border-top:4px solid hsl(var(--primary)) !important; }
+.quick-start-heading { display:flex; gap:16px; align-items:center; }
+.quick-start .bloom-input { display:block; width:100%; }
+.evidence-state { display:inline-flex; width:fit-content; gap:6px; align-items:center; border:1px solid hsl(var(--border)); border-radius:8px; padding:5px 9px; font-size:14px; font-weight:600; background:hsl(var(--muted)); }
+.insight-value { font-size:28px !important; font-weight:650; letter-spacing:-.5px; }
+.evidence-insight { display:grid; gap:12px; }
+.lab-chart { width:100%; height:auto; color:hsl(var(--primary)); overflow:visible; }
+.lab-chart text { fill:hsl(var(--foreground)); font-size:12px; }
+.lab-history-table { width:100%; border-collapse:collapse; font-size:14px; }
+.lab-history-table :is(td,th) { text-align:left; padding:10px 6px; border-bottom:1px solid hsl(var(--border)); overflow-wrap:anywhere; }
+.lab-review-row { border:1px solid hsl(var(--border)); border-radius:16px; padding:20px; display:grid; gap:12px; }
+.lab-review-row select { width:100%; }
+.lab-source-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+@media(max-width:600px) {
+ .app-shell .bloom-header-inner { gap:6px; padding:0 12px; }
+ .app-shell .bloom-brand { width:auto; flex:1; min-width:0; }
+ .bloom-wordmark { width:114px; }
+ .app-shell .experience-switch select { width:92px; padding:4px; font-size:14px; }
+ .app-shell .header-actions { gap:0; }
+ .app-shell .header-actions button { min-width:44px; }
+ .app-shell .bloom-panel { padding:20px; }
+ .app-shell main, .app-shell .science-page { padding-left:16px; padding-right:16px; }
+ .app-shell .bloom-panel h2 { font-size:22px; }
+ .empty-journal-art { width:80px; }
+ .quick-start-heading { align-items:flex-start; }
+ .lab-history-table { font-size:12px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important; scroll-behavior:auto!important; } }
+@media(max-width:600px) {
+ .app-shell .header-log { display:flex; font-size:0; gap:0; padding:0; width:44px; min-width:44px; justify-content:center; }
+ .app-shell .header-log svg { width:20px; height:20px; }
+}
+@media(max-width:359px) {
+ .app-shell .header-actions [data-testid=button-theme-toggle] { display:none; }
+ .bloom-wordmark { width:98px; }
+}
+/* Form boundaries need stronger contrast than decorative card dividers. */
+.app-shell .bloom-input { border-color:hsl(var(--muted-foreground)); }
+.app-shell main p { line-height:var(--brand-line-height); }
+.app-shell [role=dialog] { border-radius:var(--brand-radius-modal); }
+.app-shell h1 { font-size:var(--brand-type-h1); }
+.app-shell h3 { font-size:var(--brand-type-h3); line-height:1.4; }
+.app-shell .hero-button:hover, .app-shell button.bg-primary:hover { background:hsl(var(--brand-hover)); }

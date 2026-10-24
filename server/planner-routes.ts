@@ -1,0 +1,364 @@
+import { mlServiceTarget } from "./ml-service";
+import { mealSaveReceipt, checkMealReceipt } from "./meal-save";
+import { memoryKey } from "../shared/experience";
+import { registerProductRoutes } from "./products";
+import type { Express, RequestHandler } from "express";
+import { z } from "zod";
+import {
+  preferenceSchema,
+  defaultPreferences,
+  recommendMeals,
+  cohortResearch,
+  mealContextSchema,
+  ingredientSchema,
+  recipes,
+} from "../shared/meal-intelligence";
+import { pathways, evidenceSources } from "../shared/science-coach";
+import { analyzeMeal, nutritionTotals } from "./meal-intelligence";
+import { prioritizeRecipes } from "./recipe-ranking";
+import type { IStorage } from "./storage";
+const requestSchema = z
+  .object({
+    mealText: z.string().trim().max(2000),
+    products: z
+      .array(
+        ingredientSchema
+          .strict()
+          .refine((i) => !!i.product, "Select a product"),
+      )
+      .max(10)
+      .optional(),
+    mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]).optional(),
+    mealContext: mealContextSchema.optional(),
+    aiConsent: z.boolean().default(false),
+    ingredients: z.array(ingredientSchema.strict()).min(1).max(20).optional(),
+  })
+  .strict()
+  .refine(
+    (v) => !!v.mealText || !!v.products?.length,
+    "Describe a food or select a product",
+  );
+export function registerPlannerRoutes(
+  app: Express,
+  requireAuth: RequestHandler,
+  storage: IStorage,
+  analyzer = analyzeMeal,
+) {
+  registerProductRoutes(app, requireAuth, storage);
+  const limited = new Map<string, { at: number; count: number }>();
+  app.get("/api/analysis/status", requireAuth, (_req, res) => {
+    res.setHeader("Cache-Control", "no-store");
+    let serviceConfigured=false;
+    try{mlServiceTarget("/api/ml/analyze");serviceConfigured=true;}catch{}
+    res.json({
+      ai: {
+        configured: !!(
+          process.env.OPENAI_API_KEY && process.env.OPENAI_SCIENCE_MODEL
+        ),
+        model: process.env.OPENAI_SCIENCE_MODEL || null,
+        tested: false,
+      },
+      nutrition: {
+        liveLookupConfigured: !!process.env.USDA_FDC_API_KEY,
+        alternateProviderConfigured: !!process.env.API_NINJAS_KEY,
+        offlinePlanningCatalogue: true,
+        offlineJournalCatalogue: true,
+        offlineJournalFoodCount: 5431,
+      },
+      microbiome: {
+        serviceConfigured,
+        validatedFluxModel: false,
+      },
+      note: "Configured does not mean a provider call has succeeded. Offline planning uses a sourced food snapshot; biological pathways are evidence-linked hypotheses, not simulated metabolite quantities.",
+    });
+  });
+  const limit: RequestHandler = (req, res, next) => {
+    const now = Date.now();
+    for (const [id, v] of Array.from(limited))
+      if (now - v.at > 60000) limited.delete(id);
+    const id = req.session.userId!;
+    const entry = limited.get(id) || { at: now, count: 0 };
+    if (entry.count >= 6)
+      return void res
+        .status(429)
+        .json({ error: "Please wait a minute before another analysis." });
+    entry.count++;
+    limited.set(id, entry);
+    next();
+  };
+  app.get("/api/preferences", requireAuth, async (req, res) => {
+    try {
+      const user = await storage.getUser(req.session.userId!);
+      const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+      res.json(saved.success ? saved.data : defaultPreferences);
+    } catch {
+      res.status(503).json({ error: "Preferences could not load." });
+    }
+  });
+  app.put("/api/preferences", requireAuth, async (req, res) => {
+    const parsed = preferenceSchema.safeParse(req.body);
+    if (!parsed.success)
+      return res.status(400).json({ error: "Invalid preferences" });
+    try {
+      await storage.updateUserProfile(req.session.userId!, {
+        dietaryPreferences: parsed.data,
+      });
+      res.json(parsed.data);
+    } catch {
+      res.status(503).json({ error: "Preferences could not save." });
+    }
+  });
+  app.post(
+    "/api/meal-planner/prioritize",
+    requireAuth,
+    limit,
+    async (req, res) => {
+      if (
+        !z.object({ aiConsent: z.boolean() }).strict().safeParse(req.body)
+          .success
+      )
+        return res.status(400).json({ error: "Choose AI consent." });
+      try {
+        const user = await storage.getUser(req.session.userId!);
+        const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+        const preferences = saved.success ? saved.data : defaultPreferences;
+        const meals = await storage.getMeals(req.session.userId!);
+        const recent = meals.filter(
+          (m) =>
+            +new Date(m.loggedAt) >= Date.now() - 14 * 86400000 &&
+            +new Date(m.loggedAt) <= Date.now(),
+        );
+        res.json(
+          await prioritizeRecipes(
+            recommendMeals(
+              preferences,
+              recent.map((m) => m.mealText),
+            ),
+            preferences,
+            req.body.aiConsent,
+          ),
+        );
+      } catch {
+        res.status(503).json({ error: "Meal prioritization unavailable." });
+      }
+    },
+  );
+  app.get("/api/meal-planner", requireAuth, async (req, res) => {
+    try {
+      const user = await storage.getUser(req.session.userId!);
+      const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+      const preferences = saved.success ? saved.data : defaultPreferences;
+      const meals = await storage.getMeals(req.session.userId!);
+      const recent = meals.filter(
+        (m) =>
+          +new Date(m.loggedAt) >= Date.now() - 14 * 86400000 &&
+          +new Date(m.loggedAt) <= Date.now(),
+      );
+      const suggestions = recommendMeals(
+        preferences,
+        recent.map((m) => m.mealText),
+      );
+      const ids = new Set(suggestions.flatMap((r) => r.pathwayIds));
+      res.json({
+        preferences,
+        suggestions,
+        pathways: pathways.filter((p) => ids.has(p.id)),
+        sources: evidenceSources,
+        cohorts: cohortResearch.filter((c) =>
+          preferences.goals.includes(c.id as any),
+        ),
+        recentMeals: recent.length,
+        note: "Curated complete recipes ranked by supported goals and recent food mentions. Recipes are practical translations, not trial-tested interventions. AI ingredient parsing is optional when analyzing meals; this planner does not yet generate unrestricted recipes.",
+      });
+    } catch {
+      res.status(503).json({ error: "Meal plan could not load." });
+    }
+  });
+  app.post("/api/meals/analyze", requireAuth, limit, async (req, res) => {
+    const p = requestSchema.safeParse(req.body);
+    if (!p.success)
+      return res
+        .status(400)
+        .json({ error: "Invalid meal description or context." });
+    try {
+      res.json(
+        await analyzer(p.data.mealText, p.data.aiConsent, p.data.ingredients, {
+          userId: req.session.userId!,
+          store: storage,
+          products: p.data.products,
+        }),
+      );
+    } catch {
+      res
+        .status(503)
+        .json({ error: "Analysis unavailable. Try saving the meal." });
+    }
+  });
+  // Register before the legacy /api/meals handlers. Existing clients remain compatible.
+  app.post("/api/meals", requireAuth, async (req, res) => {
+    const key = req.get("Idempotency-Key");
+    if (key && !z.string().uuid().safeParse(key).success)
+      return res.status(400).json({ error: "Invalid meal save reference." });
+    const p = requestSchema.safeParse(req.body);
+    if (!p.success)
+      return res
+        .status(400)
+        .json({ error: "Invalid meal description or context." });
+    try {
+      const receipt = key ? mealSaveReceipt(req.session.userId!, key, p.data) : undefined;
+      if (receipt) {
+        const previous = await storage.getMeal(receipt.id);
+        if (previous) {
+          if (previous.userId !== req.session.userId!) throw new Error("MEAL_SAVE_CONFLICT");
+          return res.json(checkMealReceipt(previous, receipt));
+        }
+      }
+      // A completed-save replay needs no analysis and must remain recoverable
+      // even when the account's analysis budget has been consumed.
+      let withinLimit = false;
+      limit(req, res, () => { withinLimit = true; });
+      if (!withinLimit) return;
+      const remembered = !p.data.ingredients && !p.data.products?.length && storage.getExperienceRecords
+        ? (await storage.getExperienceRecords(req.session.userId!, "food-memory")).find(r => r.kind === "food-memory" && r.payload.key === memoryKey(p.data.mealText)) : undefined;
+      const result = await analyzer(
+        p.data.mealText,
+        p.data.aiConsent,
+        p.data.ingredients || (remembered?.kind === "food-memory" ? remembered.payload.ingredients : undefined),
+        {
+          userId: req.session.userId!,
+          store: storage,
+          products: p.data.products,
+        },
+      );
+      const meal = await storage.insertMeal({
+        userId: req.session.userId!,
+        mealText: [
+          p.data.mealText,
+          ...(p.data.products || []).map(
+            (i) => `${i.product!.servings} serving(s) ${i.name}`,
+          ),
+        ]
+          .filter(Boolean)
+          .join("; "),
+        mealType: p.data.mealType,
+        mealContext: p.data.mealContext,
+        intelligence: result.intelligence,
+        nutritionalData: result.nutritionalData,
+        ...nutritionTotals(result.nutritionalData),
+        ...(p.data.mealContext?.eatenAt
+          ? { loggedAt: new Date(p.data.mealContext.eatenAt) }
+          : {}),
+      } as any, receipt);
+      res.json(meal);
+    } catch (error) {
+      if (error instanceof Error && error.message === "MEAL_SAVE_CONFLICT")
+        return res.status(409).json({ error: "This save reference was already used for different meal details. Check your journal before saving again." });
+      res.status(503).json({ error: "Meal could not save. Please retry." });
+    }
+  });
+  app.put("/api/meals/:mealId", requireAuth, limit, async (req, res) => {
+    const p = requestSchema.safeParse(req.body);
+    if (!p.success)
+      return res
+        .status(400)
+        .json({ error: "Invalid meal description or context." });
+    try {
+      const meal = await storage.getMeal(req.params.mealId);
+      if (!meal) return res.status(404).json({ error: "Meal not found" });
+      if (meal.userId !== req.session.userId)
+        return res.status(403).json({ error: "Access denied" });
+      const result = await analyzer(
+        p.data.mealText,
+        p.data.aiConsent,
+        p.data.ingredients,
+        {
+          userId: req.session.userId!,
+          store: storage,
+          products: p.data.products,
+        },
+      );
+      const updatedMeal = await storage.updateMeal(meal.id, {
+          mealText: [
+            p.data.mealText,
+            ...(p.data.products || []).map(
+              (i) => `${i.product!.servings} serving(s) ${i.name}`,
+            ),
+          ]
+            .filter(Boolean)
+            .join("; "),
+          mealType: p.data.mealType ?? meal.mealType,
+          mealContext: p.data.mealContext ? { ...p.data.mealContext, ...((meal.mealContext as any)?._saveReceipt ? { _saveReceipt: (meal.mealContext as any)._saveReceipt } : {}) } : meal.mealContext,
+          ...(p.data.mealContext?.eatenAt
+            ? { loggedAt: new Date(p.data.mealContext.eatenAt) }
+            : {}),
+          intelligence: result.intelligence,
+          nutritionalData: result.nutritionalData,
+          ...nutritionTotals(result.nutritionalData),
+        });
+      if (p.data.ingredients?.length && storage.insertExperienceRecord) {
+        try { await storage.insertExperienceRecord(req.session.userId!, {kind:"food-memory",payload:{key:memoryKey(p.data.mealText),ingredients:result.intelligence.ingredients}}); }
+        catch { /* A remembered shortcut must never prevent an otherwise saved correction. */ }
+      }
+      res.json(updatedMeal);
+    } catch {
+      res.status(503).json({ error: "Meal could not update." });
+    }
+  });
+  app.get("/api/meal-planner/progress", requireAuth, async (req, res) => {
+    try {
+      const meals = await storage.getMeals(req.session.userId!);
+      const cutoff = Date.now() - 28 * 86400000;
+      const recent = meals.filter(
+        (m) =>
+          +new Date(m.loggedAt) >= cutoff &&
+          +new Date(m.loggedAt) <= Date.now(),
+      );
+      res.json({
+        weeks: Array.from({ length: 4 }, (_, index) => {
+          const start = cutoff + index * 7 * 86400000;
+          const entries = recent.filter(
+            (m) =>
+              +new Date(m.loggedAt) >= start &&
+              +new Date(m.loggedAt) < start + 7 * 86400000,
+          );
+          return {
+            start: new Date(start).toISOString(),
+            meals: entries.length,
+            nutritionAvailable: entries.filter((m) => m.totalCalories !== null)
+              .length,
+            symptoms: ["bloating", "energy", "comfort", "clarity"].map(
+              (key) => {
+                const values = entries
+                  .map((m) => (m.mealContext as any)?.symptoms?.[key])
+                  .filter((v) => typeof v === "number");
+                return {
+                  key,
+                  average: values.length
+                    ? values.reduce((n, v) => n + v, 0) / values.length
+                    : null,
+                  entries: values.length,
+                };
+              },
+            ),
+          };
+        }),
+        adherence: recipes.map((r) => ({
+          id: r.id,
+          name: r.name,
+          possibleMatches: recent.filter((m) =>
+            r.ingredients.every((i) =>
+              i.name
+                .toLowerCase()
+                .split(" ")
+                .filter((w) => w.length > 3)
+                .some((w) => m.mealText.toLowerCase().includes(w)),
+            ),
+          ).length,
+        })),
+        note: "Food matches are approximate and do not prove a recipe was followed. Symptom trends are observations, not evidence of causation.",
+      });
+    } catch {
+      res.status(503).json({ error: "Progress could not load." });
+    }
+  });
+}
