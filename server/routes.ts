@@ -1,3 +1,5 @@
+import { registerAccountRoutes } from "./account-routes";
+import { AccountExportStorage } from "./account-export";
 import { reportedAbundanceAnalysis, historicalAnalysisMetadata, publicSample } from "./analysis-boundary";
 import { registerRetiredHealthRoutes } from "./retired-health-routes";
 import { registerBiologyRoutes } from "./biology-routes";
@@ -42,6 +44,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     getPreferences: async (userId) =>
       (await storage.getUser(userId))?.dietaryPreferences,
   });
+  registerAccountRoutes(app, requireAuth, new AccountExportStorage(db));
   registerPlannerRoutes(app, requireAuth, storage);
   const precisionService = registerPrecisionRoutes(app, requireAuth, storage);
   registerExperienceRoutes(app, requireAuth, storage, precisionService);

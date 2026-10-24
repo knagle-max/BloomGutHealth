@@ -410,6 +410,15 @@ try {
     201,
   );
   assert.equal((await request("/api/precision")).checkins[0].bloating, 0);
+  const accountExport = await request("/api/account/export");
+  assert.equal(accountExport.profile.id,first.id);
+  assert.ok(accountExport.journal.some(m=>m.id===meal.id));
+  assert.ok(accountExport.savedLabels.some(p=>p.id===personalProduct.id));
+  assert.ok(accountExport.biology.records.some(r=>r.id===lab.id));
+  assert.ok(accountExport.gutReports.samples.some(s=>s.id===functional.sampleId));
+  assert.equal(Object.hasOwn(accountExport.profile,"password"),false);
+  assert.equal(JSON.stringify(accountExport).includes("encryptedPayload"),false);
+  console.log("PASS: combined account export preserves persisted records and excludes auth material");
   const today = await request("/api/precision/today-plan", "POST", {
     date: new Date().toISOString().slice(0, 10),
     timezoneOffset: 0,
@@ -454,6 +463,12 @@ try {
   await request(`/api/experience/records/${training.id}`,"DELETE",undefined,404);
   await request(`/api/experience/templates/${savedMeal.id}/log`,"POST",{servings:1,mealType:"breakfast",eatenAt:"2026-10-18T18:00:00Z"},404);
 
+  const secondExport = await request("/api/account/export");
+  assert.equal(secondExport.format,"bloom-account-records-v1");
+  assert.equal(secondExport.profile.id,second.id);
+  assert.equal(secondExport.savedLabels.length,0);
+  assert.equal(secondExport.gutReports.samples.length,0);
+  assert.equal(JSON.stringify(secondExport).includes(personalProduct.id),false);
   assert.equal((await request("/api/precision")).labs.length, 0);
   assert.equal((await request("/api/biology/foods/food:oats")).observations.labs.length,0);
   assert.equal((await request("/api/products/saved")).length, 0);

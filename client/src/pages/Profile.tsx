@@ -1,3 +1,4 @@
+import AccountDataExport from "@/components/AccountDataExport";
 import { useExperience } from "@/lib/experience";
 import { formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
 import type { DisplayUnits } from "@shared/experience";
@@ -223,9 +224,9 @@ export default function Profile({
       <DietaryPreferenceSummary />
       <section className="bloom-panel space-y-3" id="privacy">
         <h2>Privacy & data controls</h2>
-        <p>Training and saved-meal exports and deletion are below. Genetic and laboratory records have separate controls in My biology.</p>
+        <p>Download account records here. Separate deletion controls for training and biology remain available below.</p>
         <a href="/precision" className="text-link">Manage biology records & exports</a>
-        <p className="panel-note">These controls do not yet provide a complete account export or erasure. Journal entries, gut reports and backup retention require additional coverage. Contact the app operator before uploading information you need fully erased.</p>
+        <AccountDataExport/><p className="panel-note">Complete account erasure and backup/vendor retention controls remain unfinished. Contact the app operator before uploading information you need fully erased.</p>
       </section>
       <section className="bloom-panel space-y-3"><h2>Your data & choices</h2><p>Review the privacy and export controls below, or revisit optional Everyday setup.</p><Button variant="outline" onClick={()=>patch({onboarding:{status:"not-started"},mode:"everyday"})}>Revisit Everyday setup</Button><img src="/brand/bloom-icon-monochrome.svg" width={32} height={32} alt="" /></section>
       <ExperienceDataControls/>
