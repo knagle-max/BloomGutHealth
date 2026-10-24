@@ -82,3 +82,14 @@ The consolidated dependency-led sequence is in `docs/architecture/DEVELOPER_EXEC
 7. **Preserve delivery priorities:** fix verified current user-facing defects first within v0.5, protect existing working features, and do not interrupt routine approved GitHub commits/pushes or Render preview updates. Do not claim a feature or protection has been tested unless it was actually tested.
 
 **Canonical elaboration:** `docs/architecture/V06_HANDOFF.md` §§22–23 (`MOD-ARCH-01–05`, `ENG-EVOL-01–10`) and `docs/architecture/DEVELOPER_EXECUTION_ORDER.md`. This AGENTS policy is intentionally cross-release and authoritative for Codex implementation conduct, while the respective version's scope documents define which features to build now.
+
+
+## Functional integration takes precedence over artificial isolation (2026-10-23)
+
+**Owner clarification, binding across releases:** Module boundaries exist to reduce change impact and protect data, **not** to compromise functionality, cross-domain intelligence, integrated user journeys or delivery velocity. Favor a cohesive modular monolith with stable, typed contracts and domain-owned services. Legitimate, authorized flows across food, nutrition, exercise, recovery, lab, genotype, microbiome, evidence and AI must work as a unified product. Do not create isolated feature silos, extra service hops, duplicated canonical records or generic interface layers with no demonstrated benefit. Security and consent restrictions still apply to every data flow.
+
+**Decision rule:** Choose the simplest maintainable solution that delivers complete user value while retaining meaningful safety and swapability; refactor only measured architectural blockers. Module APIs/events may exchange permissioned observations and derived features; provider-specific payloads stay at adapters. An updated adapter should not force unrelated rewrites, but changing an intentionally shared domain contract may legitimately require coordinated versioned consumer migrations.
+
+**End-to-end gate:** In addition to domain/contract tests, prove representative cross-domain journeys (completed run → training load → readiness/recovery guidance → nutrition adjustment → plan tracking; food log → nutrient totals → goal optimization → outcome review; lab update → appropriately reviewed interpretation → goal plan). Confirm accurate provenance, explicit missingness, no unapproved cross-user/coach/research sharing and no loss of working functionality. Measure user task success and avoid slowing core flows to pursue theoretical purity.
+
+**Priority:** Active v0.5 functionality and P0 defects before speculative v0.6 restructuring. For new v0.6 features, implement the smallest functional vertical slice crossing relevant modules, backed by contracts and regression tests; do not build a generic abstraction platform before the real user workflow.
