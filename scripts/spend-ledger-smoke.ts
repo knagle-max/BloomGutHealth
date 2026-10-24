@@ -1,4 +1,5 @@
 import { SharedProviderCircuit } from "../server/provider-circuit";
+import { operatorSpendReport } from '../server/spend-report';
 import assert from 'node:assert/strict';
 import { randomBytes } from 'node:crypto';
 import { Pool } from 'pg';
@@ -35,7 +36,15 @@ try {
     assert.equal(probes.filter(Boolean).length, 1);
     await firstCircuit.success(probes.find(Boolean)!);
     assert.ok(await secondCircuit.admit([circuitKey]));
-    console.log('PASS: isolated Neon concurrent monetary reservation, private receipt, single provider recovery probe and account isolation; synthetic units only');
+    const report = await operatorSpendReport(pool);
+    const summary = report.byProviderFeature.find(row => row.feature === feature);
+    assert.ok(summary);
+    assert.equal(summary.actualMicroUsd, '10');
+    assert.equal(summary.unresolvedReservedMicroUsd, '60');
+    assert.equal(summary.averageSettledCost.denominatorMeteredAccounts, '1');
+    assert.equal(report.monitoring.configured, false);
+    assert.ok(!JSON.stringify(report).includes(account));
+    console.log('PASS: isolated Neon concurrent reservation, private receipt, single recovery probe, read-only aggregate and account isolation; synthetic units only');
 }
 finally {
     await pool.query('DELETE FROM provider_circuits WHERE circuit_key=$1', [circuitKey]);

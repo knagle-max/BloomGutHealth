@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Last published implementation: `4f8cf143d38554427daf787aef62cfae28e899ac`; CI 40116850822 passed; Render dep-dbeeoum7bikc73b6c9eg live.
+Branch: `enhance/bloom-experience`. Last published implementation: `d7a103da4c32b3d481a624411802d22faf597169`; CI 40119564999 passed; Render dep-dbef9jmk1f9s73f975f0 live.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish v0.5 before v0.6. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -47,3 +47,5 @@ Execution resources recovered after the stated reset time on 2026-10-24. Normal 
 Mobile evidence: docs/review/today-mobile-20261024. 218 tests/types/build and rendered empty/one-meal/error/keyboard/light-dark/320–390 checks passed. Neutral card surfaces already present; physical Safari/VoiceOver and Athlete/internal composition remain unverified.
 
 | BLOOM-CAP-02-UI | P0 v0.5 | Explicitly scoped internal local photo preview at Add Food | IMPLEMENTED_AND_TESTED (synthetic) | 246 tests/types/build, 11 focused checks, actual-handler browser role/OFF/cache/draft/save regression. No upload/inference or real reviewer provisioned. See task index and docs/review/development-photo-20261024. |
+
+| BLOOM-OPS-01-REPORT | P0 v0.5 | Private read-only cost/liability report and explicit alert exit codes | IMPLEMENTED_AND_TESTED (synthetic); publication pending | 250 full + 4 final focused tests; exact money, metered-account ratio, all outstanding liabilities, safe errors and transaction cleanup. No live DB query, provider calls, settlement writes, admin role or monitoring activation. |
