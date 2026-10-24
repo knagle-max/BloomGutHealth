@@ -63,3 +63,10 @@ test("fixed public startup check reuses the product search cache without account
  let calls=0;const info=console.info;console.info=()=>{};
  try{const service=new ProductService(async(_url,init)=>{calls++;assert.equal(JSON.parse(String(init?.body)).query,'kit kat');return {foods:[food]};},()=>false,()=>"synthetic-key");await service.verifyUSDABrandedSource();const result=await service.search('Kit Kat','food',store(),'a');assert.equal(calls,1);assert.ok(result.products.some(p=>p.id==='101'));}finally{console.info=info;}
 });
+test("USDA gateway diagnostics allowlist error codes and exclude raw provider text",async()=>{
+ const original=globalThis.fetch,warn=console.warn,logs:string[]=[];console.warn=message=>logs.push(String(message));
+ try{for(const code of ['API_KEY_INVALID','API_KEY_UNVERIFIED','upstream-secret-value']){
+  globalThis.fetch=async()=>Response.json({error:{code,message:'private response'}},{status:403});
+  await new ProductService(undefined,()=>false,()=>"synthetic-key").verifyUSDABrandedSource();
+ }assert.ok(logs.some(l=>l.includes('API_KEY_INVALID')));assert.ok(logs.some(l=>l.includes('API_KEY_UNVERIFIED')));assert.equal(logs.some(l=>/upstream-secret-value|private response|synthetic-key/.test(l)),false);}finally{globalThis.fetch=original;console.warn=warn;}
+});

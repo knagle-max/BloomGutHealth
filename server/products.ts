@@ -22,9 +22,18 @@ export type ProductStore = Pick<
 >;
 export type ProductFetch = (url: string, init?: RequestInit) => Promise<any>;
 export class ProductSourceError extends Error {
-  constructor(readonly category: "http"|"timeout"|"network"|"size"|"invalid-response"|"budget", readonly status?:number) {super("Product source unavailable");}
+  constructor(readonly category: "http"|"timeout"|"network"|"size"|"invalid-response"|"budget", readonly status?:number, readonly providerCode?:string) {super("Product source unavailable");}
 }
 const sourceFailure=(error:unknown)=>error instanceof ProductSourceError?error:new ProductSourceError((error as any)?.name==="TimeoutError"||(error as any)?.name==="AbortError"?"timeout":"network");
+const gatewayCodes=new Set(["API_KEY_INVALID","API_KEY_MISSING","API_KEY_DISABLED","API_KEY_UNVERIFIED","OVER_RATE_LIMIT","HTTPS_REQUIRED"]);
+async function gatewayFailure(response:Response) {
+  const reader=response.body?.getReader();let bytes=0,text="";
+  try {
+    if(reader)while(true){const part=await reader.read();if(part.done)break;bytes+=part.value.byteLength;if(bytes>8192){await reader.cancel();break;}text+=new TextDecoder().decode(part.value);}
+    try{const code=JSON.parse(text)?.error?.code;if(gatewayCodes.has(code))return code as string;}catch{}
+    return response.headers.get("content-type")?.includes("text/html")?"NON_JSON_DENIAL":"UNCLASSIFIED";
+  }catch{return "UNCLASSIFIED";}finally{reader?.releaseLock();}
+}
 const downloadResponse: ProductFetch = async (url, init) => {
   const r = await fetch(url, {
     ...init,
@@ -35,7 +44,7 @@ const downloadResponse: ProductFetch = async (url, init) => {
       ...init?.headers,
     },
   });
-  if (!r.ok) {await r.body?.cancel();throw new ProductSourceError("http",r.status); }
+  if (!r.ok) {throw new ProductSourceError("http",r.status,await gatewayFailure(r)); }
   if(Number(r.headers.get("content-length"))>3000000||!r.body){await r.body?.cancel();throw new ProductSourceError("size");}
   const reader=r.body.getReader(),decoder=new TextDecoder();let text="",bytes=0,parts=0;
   try{while(true){const {done,value}=await reader.read();if(done)break;bytes+=value.byteLength;
@@ -321,7 +330,7 @@ export class ProductService {
       console.info(`USDA Branded startup check: status=ok; returned=${foods.length}; elapsedMs=${Date.now()-start}`);
     } catch(error) {
       const failure=sourceFailure(error);
-      console.warn(`USDA Branded startup check: category=${failure.category}; status=${failure.status||0}; elapsedMs=${Date.now()-start}`);
+      console.warn(`USDA Branded startup check: category=${failure.category}; status=${failure.status||0}; gateway=${failure.providerCode||"none"}; elapsedMs=${Date.now()-start}`);
     }
   }
   private async cached(key: string, read: () => Promise<any>) {
@@ -377,7 +386,7 @@ export class ProductService {
       for(const raw of (Array.isArray(data.foods)?data.foods:[]).slice(0,20))try{results.push(normalizeUSDABranded(raw,false));}catch{}
     }).catch(error=>{
       const failure=sourceFailure(error);
-      console.warn(`USDA Branded request failed: category=${failure.category}; status=${failure.status||0}`);
+      console.warn(`USDA Branded request failed: category=${failure.category}; status=${failure.status||0}; gateway=${failure.providerCode||"none"}`);
       const reason=failure.category==="http"&&[401,403].includes(failure.status||0)?"access was denied by the source. The app operator needs to check the configured API key"
         :failure.category==="budget"||failure.status===429?"request limit reached. Wait a minute before retrying"
         :failure.category==="timeout"?"request timed out. Retry shortly"
