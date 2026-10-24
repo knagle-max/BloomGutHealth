@@ -1,3 +1,4 @@
+import {SharedProviderCircuit} from "../server/provider-circuit";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -10,7 +11,8 @@ const policy: AIExecutionPolicy = { tariff: { reference: 'synthetic-test-v1', pr
 const context = (requestId: string) => ({ userId: 'synthetic-a', requestId, consent: true });
 const request = { model: 'synthetic-model', input: 'synthetic description' };
 const response = { id: 'resp_synthetic', model: 'synthetic-model', usage: { input_tokens: 10, input_tokens_details: { cached_tokens: 0 }, output_tokens: 1, total_tokens: 11 }, output_parsed: { safe: true } };
-async function setup(authorize = () => true, resolve = () => structuredClone(policy)) { const db = new PGlite(); await db.exec(await readFile(new URL('../migrations/0009_ai_spend_ledger.sql', import.meta.url), 'utf8')); await db.exec(await readFile(new URL('../migrations/0010_ai_usage_receipts.sql', import.meta.url), 'utf8')); const transaction: SpendTransaction = work => db.transaction(async (tx) => { await tx.query('SELECT pg_advisory_xact_lock(142590, 1)'); return work(tx as any); }); const executor = new MeteredAIExecutor(new SpendLedger(transaction, 'synthetic-stable-identity-secret-long-enough'), resolve, authorize, () => now); return { db, executor }; }
+async function setup(authorize = () => true, resolve = () => structuredClone(policy)) { const db = new PGlite(); await db.exec(await readFile(new URL('../migrations/0009_ai_spend_ledger.sql', import.meta.url), 'utf8')); await db.exec(await readFile(new URL('../migrations/0010_ai_usage_receipts.sql', import.meta.url), 'utf8'));
+    await db.exec(await readFile(new URL('../migrations/0011_provider_circuits.sql',import.meta.url),'utf8')); const transaction: SpendTransaction = work => db.transaction(async (tx) => { await tx.query('SELECT pg_advisory_xact_lock(142590, 1)'); return work(tx as any); }); const executor = new MeteredAIExecutor(new SpendLedger(transaction, 'synthetic-stable-identity-secret-long-enough'), resolve, authorize,new SharedProviderCircuit(transaction,{'platform:ai':{maximumFailures:5,cooldownSeconds:60,probeLeaseSeconds:30},'provider:openai':{maximumFailures:2,cooldownSeconds:60,probeLeaseSeconds:30}}), () => now); return { db, executor }; }
 test('metered executor reserves before invocation, bounds SDK output, settles actual units once and denies replay', async () => { const { db, executor } = await setup(); let calls = 0; try {
     const output = await executor.execute('ingredient-parsing', context('once'), request, async (payload) => { calls++; const row = (await db.query('SELECT * FROM ai_spend_requests')).rows[0]; assert.equal(row.state, 'reserved'); assert.equal(Number(row.reserved_micro_usd), 2800); assert.equal(payload.max_output_tokens, 100); assert.equal(payload.store, false); return response; });
     assert.deepEqual(output, response);
@@ -122,3 +124,15 @@ finally {
 } });
 
 test('runtime disable withholds in-flight output, settles incurred usage and prevents subsequent reservations',async()=>{const {db,executor}=await setup();try{await assert.rejects(()=>executor.execute('recipe-ranking',context('runtime-off'),request,async()=>{executor.disable();return response;}),AIExecutionUnavailable);assert.equal((await db.query('SELECT state FROM ai_spend_requests')).rows[0].state,'settled');assert.equal(executor.available('recipe-ranking','synthetic-a','synthetic-model'),false);let calls=0;await assert.rejects(()=>executor.execute('recipe-ranking',context('after-off'),request,async()=>{calls++;return response;}));assert.equal(calls,0);assert.equal((await db.query('SELECT * FROM ai_spend_requests')).rows.length,1);}finally{await db.close();}});
+
+test('shared provider outage blocks another account before invocation and releases only its unstarted reservation', async () => { const { db, executor } = await setup(); let calls = 0; try {
+    await assert.rejects(() => executor.execute('recipe-ranking', context('provider-failed'), request, async () => { calls++; throw Object.assign(Error('synthetic shared provider outage'), { status: 429 }); }));
+    await assert.rejects(() => executor.execute('recipe-ranking', { ...context('provider-open'), userId: 'synthetic-b' }, request, async () => { calls++; return response; }), AIExecutionUnavailable);
+    assert.equal(calls, 1);
+    const rows = (await db.query('SELECT state FROM ai_spend_requests ORDER BY created_at')).rows;
+    assert.deepEqual(rows.map(row => row.state), ['reserved', 'released']);
+    assert.ok((await db.query("SELECT * FROM provider_circuits WHERE circuit_key='provider:openai' AND open_until>clock_timestamp()")).rows.length === 1);
+}
+finally {
+    await db.close();
+} });
