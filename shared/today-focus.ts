@@ -28,3 +28,29 @@ export function todayJournalAction({ mealCount, missingNutritionCount = 0, loadi
     reason: "Suggestions use the meals you have logged today. Review portions and missing values.",
   };
 }
+
+/** Schedule routing only: no inferred workload, intake deficit or clinical advice. */
+export function todayContextAction(input: Parameters<typeof todayJournalAction>[0] & {
+  goal?: { mapping: string; sourceIds: string[] };
+  sessions?: { title: string; startsAt: string; status: string }[];
+  now?: Date;
+}) {
+  const base = todayJournalAction(input);
+  if (input.loading || input.unavailable || !input.mealCount || (input.missingNutritionCount || 0) > 0) return base;
+  const now = input.now || new Date();
+  const session = input.sessions?.filter(s => {
+    const start = new Date(s.startsAt);
+    return s.status === "planned" && Number.isFinite(+start) && +start >= +now &&
+      start.getFullYear() === now.getFullYear() && start.getMonth() === now.getMonth() && start.getDate() === now.getDate();
+  }).sort((a,b) => +new Date(a.startsAt) - +new Date(b.startsAt))[0];
+  if (session) return {
+    href: "/athlete/fueling",
+    label: "Review my session fueling plan",
+    reason: `You have “${session.title}” scheduled later today. Review your saved session and rehearsed food plan; a scheduled session does not establish an energy requirement.`,
+  };
+  if (input.goal?.sourceIds.length) return {
+    ...base,
+    reason: `Plan your next meal around your saved focus: ${input.goal.mapping}. Suggestions use logged meals and saved targets; missing nutrients are not evidence of deficiency.`,
+  };
+  return base;
+}
