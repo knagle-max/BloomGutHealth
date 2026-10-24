@@ -271,3 +271,22 @@ Create reusable **Workout Effort & Recovery** components that fit Athlete's exis
 - **Evidence rule:** No unreviewed wearable-derived *exact* recovery timer. No new generic readiness number. Distinguish suggested training guidance from medical clearance.
 
 **Implementation scope:** Research/UX specification now; functionality, wearable integration, algorithms, clinical validation and actual user sessions are unverified. Major visible UI changes may warrant highlighted before/after screenshots; unchanged views do not.
+
+
+## 17. Branding concept intake — Post-workout effort/recovery dashboard (2026-10-23)
+
+**Received visual concept:** `Bloom Athlete Training Guidance Dashboard.png` (shared Bloom Library; added 2026-10-23) depicting V06-TRAIN-02. **Review disposition:** Architect accepts its component architecture as the visual direction, conditional on Biology, accessibility and implementation verification. This is an illustrative **design image**, not a live screenshot, an interactive build, proven recovery algorithm, or confirmation of a separate production-ready SVG/component package.
+
+**Visual structure approved as reference:** (1) Workout Effort Summary with observed duration, heart rate and user-entered RPE; verbal Easy/Moderate/Hard/Very hard classification; (2) expandable `What made it demanding?` inputs with available/not-applicable provenance; (3) Recovery & Next Workout with reviewable alternatives; (4) Weekly Training Load, clearly identifying session modality/effort and rest/recovery rather than pretending all load units are interchangeable; (5) Connection to three-state training guidance; (6) reusable effort badges, icons, explanations, next-session cards and Athlete semantic tokens.
+
+**Corrections/constraints before production:** 
+- The illustrated hypothetical 45-minute run, HR 158 bpm, RPE 7/10, time in zones, 320 m elevation, and comparative load wording are *placeholder values*; real labels and classifications must derive from traceable source inputs, user-specific zone validation, signal-quality checks and Biology-approved rules.
+- `HRV stable` or `sleep adequate` may be displayed as dated observations, but cannot alone guarantee recovery or resolve clinical warnings. Preserve an explicit insufficient-data state.
+- The dashboard's graphical `relative training load` values are illustrative only; Codex must define a modality-sensitive, validated metric/legend or prefer session counts, duration, RPE and separate sport views. Never fabricate unified stress units.
+- Hard/Very hard workout labels do **not** automatically map to `Recovery or assessment advised`. The training guidance state is a separate forward-looking judgment with user-reported context.
+- The composition is desktop-wide; produce responsive mobile, dark-mode, 200% zoom, keyboard/screen-reader specifications and semantic HTML rather than a flattened image/card text.
+- The concept's colours and example recommendations remain conditional on contrast verification, science review and safety/error-case tests.
+
+**Asset tracking:** Source visual `/Bloom gut health/Bloom Athlete Training Guidance Dashboard.png` is accessible through the shared project Library. No separately dated V06-TRAIN-02-specific editable SVG/React asset archive or accompanying final written handoff was discoverable at this intake; the previously reviewed `Bloom_Athlete_Training_States_Assets_2026-10-23.zip` belongs to **V06-TRAIN-01**, not proof of a new V06-TRAIN-02 source asset package. Branding should supply/check in the editable original components and current design tokens for Codex whenever ready, ideally `docs/agent-handoffs/` and a stable asset folder. Do not confuse Library files with already committed GitHub assets.
+
+**Status:** visual reference received and architect-reviewed; developer implementation and corresponding source asset publication not verified. This does not add v0.6 work to active v0.5.
