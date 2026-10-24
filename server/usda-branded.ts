@@ -25,7 +25,7 @@ export function normalizeUSDABranded(raw:any, detail=true):Product {
   const barcode=normalizeBarcode(text(raw.gtinUpc,16));
   const serving=text(raw.householdServingFullText,120)||`${raw.servingSize||""} ${text(raw.servingSizeUnit,20)}`.trim();
   return {source:"usda-branded",id:String(raw.fdcId),name:text(raw.description,120),brand:text(raw.brandName,100)||text(raw.brandOwner,100),...(barcode?{barcode}:{}),
-    servingGrams:detail?(per100g?100:grams):null,servingDescription:detail?(per100g?"100 g — package serving unavailable":serving||"One source label serving"):"Select to review the exact label and serving",
+    servingGrams:detail?(per100g?100:grams):null,servingDescription:detail?(per100g?"100 g — package serving unavailable":serving||"One source label serving"):serving||"Serving unavailable — open label to review",
     perServing,url:`https://fdc.nal.usda.gov/food-details/${raw.fdcId}/nutrients`,retrievedAt:new Date().toISOString(),
     provenance:{version:"usda-branded-v1",fdcId:raw.fdcId,gtin:text(raw.gtinUpc,16)||null,brandOwner:text(raw.brandOwner,100),marketCountry:text(raw.marketCountry,100)||null,publishedDate:text(raw.publicationDate,40)||null,modifiedDate:text(raw.modifiedDate,40)||null,ingredients:text(raw.ingredients,4000)||null},
     notes:["USDA Branded Foods: manufacturer-supplied label data, not the generic FNDDS catalogue. Confirm package, barcode, variety, country and serving; a US record does not establish Canadian formulation or availability.",...(detail&&per100g?["Source serving is unavailable; values are per 100 g, not per package. No volume-to-mass conversion was assumed."]:[]),"Missing source nutrients remain unknown. Label data do not establish allergen safety or clinical suitability."]};

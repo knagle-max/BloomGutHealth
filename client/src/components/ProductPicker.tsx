@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useId } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -7,6 +7,7 @@ import {
   type Ingredient,
 } from "@shared/meal-intelligence";
 import { productIngredient, type Product } from "@shared/products";
+import { productMatchStatus } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
 import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
 export default function ProductPicker({
@@ -32,9 +33,12 @@ export default function ProductPicker({
     [manual, setManual] = useState(false),
     [error, setError] = useState("");
   const started = useRef(false);
+  const resultId=useId();
+  const [submittedQuery,setSubmittedQuery]=useState(initialQuery);
   const manualForm=useRef<HTMLFormElement>(null);
   useEffect(()=>{if(manual)manualForm.current?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();},[manual]);
   const search = useMutation({
+    onMutate:(override?:string)=>setSubmittedQuery(override||query),
     mutationFn: async (override?: string) =>
       (
         await apiRequest(
@@ -54,6 +58,8 @@ export default function ProductPicker({
       setError("");
     },
   });
+  const resultQuery=search.data?.query?.original||submittedQuery;
+  const allPossible=!!search.data?.products.length&&search.data.products.every(p=>productMatchStatus(p,resultQuery)==="possible");
   const resolve = useMutation({
     mutationFn: async (p: Product) =>
       (
@@ -193,14 +199,16 @@ export default function ProductPicker({
               or enter the label below.
             </p>
           )}
+          {allPossible&&<p className="panel-note">Possible matches for your search. Choose the product and variety on your package before confirming the amount.</p>}
           <ul className="space-y-2 max-h-80 overflow-y-auto">
-            {search.data.products.map((p) => (
+            {search.data.products.map((p,index) => (
               <li key={p.source + p.id}>
                 <Button
                   className="whitespace-normal h-auto text-left"
                   variant="outline"
                   type="button"
-                  disabled={resolve.isPending}
+                  disabled={resolve.isPending||search.isPending}
+                  aria-describedby={`${resultId}-result-${index}`}
                   onClick={() => resolve.mutate(p)}
                 >
                   {p.name} · {p.brand} ·{" "}
@@ -214,7 +222,14 @@ export default function ProductPicker({
                         ? "Your saved label"
                         : "USDA generic food"}
                 </Button>
-                <p className="panel-note">{p.source==="usda-local"?"Generic estimate — not an exact packaged product":canonicalBarcode(query)&&p.barcode&&canonicalBarcode(query)===canonicalBarcode(p.barcode)?"Matching barcode — confirm the current country, formula and serving":"Name suggestion — confirm exact package and variety"}</p>
+                <p id={`${resultId}-result-${index}`} className="panel-note">
+                  {productMatchStatus(p,resultQuery)==="barcode"&&<span>Matching barcode · </span>}
+                  {!allPossible&&productMatchStatus(p,resultQuery)==="possible"&&<span>Possible match · </span>}
+                  {p.servingDescription}{p.provenance?.marketCountry?` · ${p.provenance.marketCountry}`:""}
+                  {p.perServing.calories!==undefined?` · ${Number(p.perServing.calories.toFixed(1))} kcal per source serving`:""}
+                  {p.perServing.protein_g!==undefined?` · ${Number(p.perServing.protein_g.toFixed(1))} g protein per source serving`:""}
+                  <span className="sr-only"> Source record {p.id}.</span>
+                </p>
               </li>
             ))}
           </ul>
@@ -227,6 +242,7 @@ export default function ProductPicker({
           <h4>
             {choice.name} · {choice.brand}
           </h4>
+          <p className="panel-note">Confirm this exact product, variety, country and label serving against your package. A name match alone does not confirm the formulation.</p>
           {variants.length > 1 && (
             <label>
               Label serving

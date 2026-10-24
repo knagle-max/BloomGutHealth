@@ -24,3 +24,7 @@ Full regression/build command was rejected before execution by automatic approva
 ### Assumptions and next priorities
 
 No automatic native/provider/license/clinical approvals. No main merge, production-data mutation or credential exposure. Next: finish FOOD-506 validation/publication, then audit backup/restore/vendor lifecycle and remaining unit/evidence surfaces in current authoritative queue order. See `NEXT_ACTIONS.md` for exact continuation.
+
+## 2026-10-24 06:45 UTC — automatic continuation
+
+The environment clock passed the approval review's stated reset time. A single retry through the normal approval path succeeded; no restriction was bypassed. FOOD-506 full regression now passes: 204 tests, TypeScript and production build. Existing branded save/manual fallback and advisory verification are in progress. New upstream handoffs (through d3859eb) add the v0.5 five-route Add Food chooser and P0 capability/operational controls; preserve these documentation commits when rebasing.

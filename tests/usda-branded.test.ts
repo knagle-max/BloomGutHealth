@@ -70,3 +70,11 @@ test("USDA gateway diagnostics allowlist error codes and exclude raw provider te
   await new ProductService(undefined,()=>false,()=>"synthetic-key").verifyUSDABrandedSource();
  }assert.ok(logs.some(l=>l.includes('API_KEY_INVALID')));assert.ok(logs.some(l=>l.includes('API_KEY_UNVERIFIED')));assert.equal(logs.some(l=>/upstream-secret-value|private response|synthetic-key/.test(l)),false);}finally{globalThis.fetch=original;console.warn=warn;}
 });
+
+test("product match presentation distinguishes literal names, aliases, barcode certainty and generic estimates",async()=>{
+ const {productMatchStatus}=await import('../shared/product-search');const p=normalizeUSDABranded({...food,description:'Kit Kat original bar'});
+ assert.equal(productMatchStatus(p,'Kit Kat'),'name');assert.equal(productMatchStatus(p,'kitkat'),'name');assert.equal(productMatchStatus(p,'kit kit bar'),'possible');assert.equal(productMatchStatus(p,'unrelated'),'possible');assert.equal(productMatchStatus(p,'00012345678905'),'barcode');
+ assert.equal(productMatchStatus({...p,source:'usda-local'},'Kit Kat'),'generic');
+ const summary=normalizeUSDABranded(food,false);assert.equal(summary.servingDescription,'1 bar (40 g)');assert.deepEqual(summary.perServing,{});
+ const unknown=normalizeUSDABranded({...food,servingSize:undefined,servingSizeUnit:undefined,householdServingFullText:undefined},false);assert.match(unknown.servingDescription,/Serving unavailable/);
+});
