@@ -565,6 +565,7 @@ try {
 } catch (error) {
   // Keep captured application output private: it can contain signed cookies or URLs.
   console.error("FAIL:", error.message);
+  for(const diagnostic of processOutput.match(/Account export unavailable: stage=[a-z-]+; code=[A-Za-z0-9_]+/g)||[])console.error(diagnostic);
   process.exitCode = 1;
 } finally {
   app.kill("SIGTERM");
