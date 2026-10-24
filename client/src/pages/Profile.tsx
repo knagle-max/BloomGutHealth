@@ -1,3 +1,4 @@
+import AccountErasure from "@/components/AccountErasure";
 import AccountDataExport from "@/components/AccountDataExport";
 import { useExperience } from "@/lib/experience";
 import { formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
@@ -226,7 +227,7 @@ export default function Profile({
         <h2>Privacy & data controls</h2>
         <p>Download account records here. Separate deletion controls for training and biology remain available below.</p>
         <a href="/precision" className="text-link">Manage biology records & exports</a>
-        <AccountDataExport/><p className="panel-note">Complete account erasure and backup/vendor retention controls remain unfinished. Contact the app operator before uploading information you need fully erased.</p>
+        <AccountDataExport/><AccountErasure/><p className="panel-note">Backup, operational-log and vendor retention/removal remain separate from active account deletion and require operator/provider handling.</p>
       </section>
       <section className="bloom-panel space-y-3"><h2>Your data & choices</h2><p>Review the privacy and export controls below, or revisit optional Everyday setup.</p><Button variant="outline" onClick={()=>patch({onboarding:{status:"not-started"},mode:"everyday"})}>Revisit Everyday setup</Button><img src="/brand/bloom-icon-monochrome.svg" width={32} height={32} alt="" /></section>
       <ExperienceDataControls/>

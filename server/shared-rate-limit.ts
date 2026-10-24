@@ -34,14 +34,15 @@ export class SharedRateLimiter {
   middleware(): RequestHandler {
     return async (req, res, next) => {
       const path = req.path;
-      const auth = path === "/api/auth/login" || path === "/api/auth/signup";
+      const reauthentication=path === "/api/account" && req.method === "DELETE";
+      const auth = reauthentication || path === "/api/auth/login" || path === "/api/auth/signup";
       const costly = /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export)/i.test(path);
       if (!auth && !costly) return next();
       const scope = auth ? "authentication" : "resource";
       const windowSeconds = auth ? 900 : 60;
       try {
         const sourceAllowed = await this.consume(scope + ":source", req.ip || "unknown", auth ? 60 : 120, windowSeconds);
-        const identity = auth ? (typeof req.body?.username === "string" ? req.body.username.toLowerCase() : "invalid") : req.session?.userId;
+        const identity = reauthentication ? req.session?.userId : auth ? (typeof req.body?.username === "string" ? req.body.username.toLowerCase() : "invalid") : req.session?.userId;
         const accountAllowed = sourceAllowed && (!identity || await this.consume(scope + ":account", identity, auth ? 20 : 30, windowSeconds));
         if (!accountAllowed) {
           res.setHeader("Retry-After", String(windowSeconds));

@@ -47,6 +47,7 @@ export default function Login() {
           <p className="text-sm text-muted-foreground">Sign in to continue your gut health journey</p>
         </div>
 
+        {new URLSearchParams(window.location.search).get("accountDeleted")==="1" && <p role="status" className="panel-note mb-4">Your account and active app records were deleted. Backups, operational logs and external-provider records are outside this deletion.</p>}
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>

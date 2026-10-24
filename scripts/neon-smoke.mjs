@@ -562,6 +562,20 @@ try {
   console.log(
     "PASS: production planning worker, nutrient constraints, encrypted weekly-plan persistence and shopping list",
   );
+  const firstSession=cookie;
+  await request("/api/auth/login","POST",{username:first.username,password});
+  const alternateSession=cookie;
+  await request("/api/account","DELETE",{password:"wrong-synthetic-password",confirmation:"DELETE ACCOUNT"},401);
+  assert.equal((await request("/api/auth/me")).user.id,first.id);
+  const erased=await request("/api/account","DELETE",{password,confirmation:"DELETE ACCOUNT"});
+  assert.equal(erased.scope,"active-application-records");
+  assert.equal((await pool.query("SELECT count(*)::int AS n FROM users WHERE id=$1",[first.id])).rows[0].n,0);
+  assert.equal((await pool.query("SELECT count(*)::int AS n FROM session WHERE sess->>'userId'=$1",[first.id])).rows[0].n,0);
+  for(const oldSession of [firstSession,alternateSession]){cookie=oldSession;await request("/api/account/export","GET",undefined,401);}
+  cookie="";await request("/api/auth/login","POST",{username:first.username,password},401);
+  cookie=second.cookie;assert.equal((await request("/api/auth/me")).user.id,second.id);
+  assert.ok((await request("/api/account/export")).journal.some(m=>m.id===pinnedMeal.id));
+  console.log("PASS: active account erasure, password confirmation, all stored sessions revoked and other account preserved");
 } catch (error) {
   // Keep captured application output private: it can contain signed cookies or URLs.
   console.error("FAIL:", error.message);

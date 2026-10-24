@@ -87,3 +87,9 @@ test("multipart reports reject raw, oversized, invalid and excessive fields with
     assert.equal((await fetch(base+"/api/microbiome/upload",{method:"POST",body:form})).status,200);assert.equal(writes,1);
   } finally {await new Promise<void>(r=>server.close(()=>r()));}
 });
+test("account deletion password attempts use shared authentication budgets keyed to the session",async()=>{
+ const limiter=new SharedRateLimiter({query:async()=>({rows:[]})},'synthetic-secret');const calls:any[]=[];
+ limiter.consume=async(...args:any[])=>{calls.push(args);return true;};let continued=false;
+ await (limiter.middleware() as any)({path:'/api/account',method:'DELETE',ip:'source',session:{userId:'owner'},body:{password:'never-budget-or-log-this',username:'foreign'}},{setHeader(){},status(){return this;},json(){}},()=>{continued=true;});
+ assert.equal(continued,true);assert.deepEqual(calls,[['authentication:source','source',60,900],['authentication:account','owner',20,900]]);assert.equal(JSON.stringify(calls).includes('never-budget-or-log-this'),false);
+});

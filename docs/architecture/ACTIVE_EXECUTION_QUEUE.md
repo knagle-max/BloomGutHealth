@@ -33,7 +33,7 @@
 
 ## Verification snapshot
 
-The packaged-food adapter/fallback engineering is now implemented with 193 Node tests and a synthetic search/label → saved meal → daily totals journey. Existing isolated-Neon CI checks now also cover private label spelling/query persistence. The local USDA credential is absent; running-service credential/connectivity verification, real Canadian exact-item/formulation/bilingual benchmarking and physical-device acceptance remain open. OFF remains independently licensing-gated. Verify the pushed SHA's CI/Render before claiming this increment deployed. **v0.5 remains incomplete**; sequence 2 and later engineering/release work remains outstanding.
+Packaged-food source connectivity is now live: after the owner replaced the rejected key, Render's fixed public Kit Kat startup check returned 20 USDA Branded results (2026-10-24T03:35:11Z). Exact Canadian SKU/formulation and hosted selection/save acceptance remain open; OFF stays disabled. Today goal/session context and combined account export are implemented. The current increment adds password-confirmed transactional active-account deletion/session revocation with 203 Node tests and synthetic browser evidence; verify the pushed SHA's CI/Render before claiming it deployed. **v0.5 remains incomplete**: backup/vendor/restore lifecycle, remaining evidence/unit surfaces, native and independent acceptance remain outstanding.
 
 ## New Branding deliverables reconciled — 2026-10-23 (Architect intake)
 

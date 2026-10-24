@@ -1,3 +1,5 @@
+import { AccountErasureStorage } from "./account-erasure";
+import { requireActiveAccount, AccountSessionGuard } from "./account-auth";
 import { registerAccountRoutes } from "./account-routes";
 import { AccountExportStorage } from "./account-export";
 import { reportedAbundanceAnalysis, historicalAnalysisMetadata, publicSample } from "./analysis-boundary";
@@ -30,12 +32,7 @@ import {
 import { abundanceSchema } from "@shared/report-import";
 
 
-function requireAuth(req: Request, res: Response, next: NextFunction) {
-  if (!req.session.userId) {
-    return res.status(401).json({ error: "Authentication required" });
-  }
-  next();
-}
+const requireAuth=requireActiveAccount(async id=>!!await storage.getUser(id));
 
 export async function registerRoutes(app: Express): Promise<Server> {
   registerScienceRoutes(app, {
@@ -44,7 +41,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     getPreferences: async (userId) =>
       (await storage.getUser(userId))?.dietaryPreferences,
   });
-  registerAccountRoutes(app, requireAuth, new AccountExportStorage(db));
+  registerAccountRoutes(app, requireAuth, new AccountExportStorage(db), new AccountErasureStorage(db));
   registerPlannerRoutes(app, requireAuth, storage);
   const precisionService = registerPrecisionRoutes(app, requireAuth, storage);
   registerExperienceRoutes(app, requireAuth, storage, precisionService);
@@ -700,7 +697,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   registerRetiredHealthRoutes(app, requireAuth, storage);
 
-  registerAuthRoutes(app, storage);
+  const sessionGuard=new AccountSessionGuard(db);
+  registerAuthRoutes(app, storage, undefined, (id,save)=>sessionGuard.withActiveAccount(id,save));
 
   const httpServer = createServer(app);
 

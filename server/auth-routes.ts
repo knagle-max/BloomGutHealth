@@ -10,7 +10,7 @@ async function establishSession(req: Request, user: { id: string; username: stri
   req.session.username = user.username;
   await new Promise<void>((resolve, reject) => req.session.save(error => error ? reject(error) : resolve()));
 }
-export function registerAuthRoutes(app: Express, store: AuthStore, limiter = new AuthAttemptLimiter()) {
+export function registerAuthRoutes(app: Express, store: AuthStore, limiter = new AuthAttemptLimiter(), withAccountSession: (id:string,save:()=>Promise<void>)=>Promise<void> = async(id,save)=>{if(!await store.getUser(id))throw Error("Account unavailable");await save();}) {
   // Equal-cost comparison for unknown accounts; no credentials or database errors enter logs.
   const dummyHash = bcrypt.hash("unusable-random-account-placeholder", 10);
   for (const action of ["signup", "login"] as const) app.post(`/api/auth/${action}`, async (req, res) => {
@@ -31,7 +31,7 @@ export function registerAuthRoutes(app: Express, store: AuthStore, limiter = new
         const valid = await bcrypt.compare(password, existing?.password || await dummyHash);
         if (!existing || !valid) return res.status(401).json({ error: "Invalid username or password" });
       } else user = await store.createUser({ username, password: await bcrypt.hash(password, 10) });
-      await establishSession(req, user!);
+      await withAccountSession(user!.id,()=>establishSession(req, user!));
       res.json({ success: true, user: { id: user!.id, username: user!.username } });
     } catch {
       res.status(503).json({ error: "Sign-in could not be completed. Please retry." });
