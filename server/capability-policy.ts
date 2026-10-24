@@ -18,3 +18,6 @@ export function requireRestrictedCapability(id:string):RequestHandler {
     res.status(403).json({code:"CAPABILITY_UNAVAILABLE",capability:id,error:"This capability is unavailable in this build. Use a supported manual or educational alternative."});
   };
 }
+
+/** Server lookup only. Callers must project safe metadata, not expose the full provisional record. */
+export function capabilityRecord(id:string){const feature=registry.features.find(feature=>feature.feature_id===id);return feature?structuredClone(feature):null;}

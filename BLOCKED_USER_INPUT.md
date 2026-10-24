@@ -62,7 +62,7 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Exact question: What reviewed isolated-synthetic environment/dataset boundary, authenticated reviewer account ID, territory, purpose, expiry and low-risk capability scope are approved for this owner test?
 - Choices: Verify the existing preview meets those requirements and supply audited provisioning inputs; or retain no live grants and use synthetic harness pending an appropriate environment.
 - Recommended default: Preserve fail-closed grants; do not guess identity from username, enable public self-enrolment, or label an exposed service isolated without evidence.
-- Impact: Real tester1 toggle remains unavailable; internal module engineering proceeds with fixtures. Migration/recovery approval and separate capability clearances remain required.
+- Impact: Real tester1 toggle remains unavailable; internal module engineering proceeds with fixtures. The photo UI fixture uses explicit uiPreview purpose synthetic-ui-review, dataset synthetic-only and photo scope plus allowedCapabilities; these grant display only, never image inference. Migration/recovery approval and separate capability clearances remain required.
 
 ## OPS-702 — monetary policy and tariff activation
 

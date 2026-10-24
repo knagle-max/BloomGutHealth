@@ -1,9 +1,11 @@
+import {useCapabilities} from "@/lib/capabilities";
+import DevelopmentPhotoPreview from "@/components/DevelopmentPhotoPreview";
 import {useAuth} from "@/lib/auth";
 import RestaurantEntry from "@/components/RestaurantEntry";
 import FoodCapture from "@/components/FoodCapture";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, foodMass } from "@shared/nutrition-display";
-import {foodEntryMethods,availableFoodEntryMethods,resolveFoodEntryRoute,type FoodEntryMethod} from "@shared/food-entry";
+import {foodEntryMethods,availableFoodEntryMethods,resolveFoodEntryRoute,parseFoodEntryMethod,type FoodEntryMethod} from "@shared/food-entry";
 import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
 import { nutritionUpdateFeedback } from "@shared/nutrition-review";
@@ -69,20 +71,25 @@ export default function LogMeal() {
   >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [products, setProducts] = useState<Ingredient[]>([]);
   const [method,setMethod]=useState<FoodEntryMethod|null>(resolveFoodEntryRoute(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
-  const capabilities=useQuery<{foodEntry?:Partial<Record<FoodEntryMethod,boolean>>}>({queryKey:["/api/capabilities",user?.id],enabled:!!user,queryFn:async()=>(await apiRequest("GET","/api/capabilities")).json()});
-  const availableMethods=availableFoodEntryMethods(capabilities.data?.foodEntry);
+  const capabilities=useCapabilities(),photoPreview=capabilities.photoPreview,photoAllowed=!!photoPreview;
+  const publicMethods=availableFoodEntryMethods(capabilities.data?.foodEntry);
+  const availableMethods=foodEntryMethods.filter(option=>publicMethods.some(item=>item.id===option.id)||option.id==='photo'&&photoAllowed);
+  const methodSignature=availableMethods.map(option=>option.id).join(',');
+  const [photoVisited,setPhotoVisited]=useState(false),[methodNotice,setMethodNotice]=useState('');
   const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search"].includes(params.get("method")||""));
   const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("Canada"),[restaurantVisited,setRestaurantVisited]=useState(params.get("method")==="restaurant");
   const chooserHeading=useRef<HTMLHeadingElement>(null);
   const changeMethod=(requested:FoodEntryMethod|null)=>{
+    setMethodNotice("");
     const next=requested&&availableMethods.some(m=>m.id===requested)?requested:null;
+    if(next==="photo")setPhotoVisited(true);
     if(next&&["barcode","search"].includes(next))setPickerVisited(true);
     const url=new URL(window.location.href);if(next)url.searchParams.set("method",next);else url.searchParams.delete("method");
     window.history.pushState(null,"",url.pathname+url.search);setMethod(next);
     requestAnimationFrame(()=>chooserHeading.current?.focus());
   };
-  useEffect(()=>{const back=()=>{const next=resolveFoodEntryRoute(new URLSearchParams(window.location.search).get("method"));setMethod(next);if(next&&["barcode","search"].includes(next))setPickerVisited(true);};window.addEventListener("popstate",back);return()=>window.removeEventListener("popstate",back);},[]);
-  useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.get("method")==="restaurant"){url.searchParams.set("method","describe");window.history.replaceState(null,"",url.pathname+url.search);}else if(url.searchParams.get("method")==="photo"){url.searchParams.delete("method");window.history.replaceState(null,"",url.pathname+url.search);setMethod(null);requestAnimationFrame(()=>chooserHeading.current?.focus());}},[]);
+  useEffect(()=>{const back=()=>{const value=new URLSearchParams(window.location.search).get('method'),candidate=value==='restaurant'?'describe':parseFoodEntryMethod(value);const next=candidate&&availableMethods.some(option=>option.id===candidate)?candidate:null;setMethod(next);if(next==='photo')setPhotoVisited(true);if(next&&['barcode','search'].includes(next))setPickerVisited(true);if(value==='photo'&&!next){const url=new URL(window.location.href);url.searchParams.delete('method');window.history.replaceState(null,'',url.pathname+url.search);requestAnimationFrame(()=>chooserHeading.current?.focus());}};window.addEventListener('popstate',back);return()=>window.removeEventListener('popstate',back);},[methodSignature]);
+  useEffect(()=>{if(capabilities.isLoading)return;const url=new URL(window.location.href),incoming=url.searchParams.get('method');if(!photoAllowed)setPhotoVisited(false);if(incoming==='restaurant'){url.searchParams.set('method','describe');window.history.replaceState(null,'',url.pathname+url.search);}else if(incoming==='photo'){if(photoAllowed){setMethod('photo');setPhotoVisited(true);}else{if(method==='photo')setMethodNotice('This entry method is no longer available. Your meal draft is still here.');url.searchParams.delete('method');window.history.replaceState(null,'',url.pathname+url.search);setMethod(null);requestAnimationFrame(()=>chooserHeading.current?.focus());}}},[capabilities.isLoading,photoAllowed]);
   const recentMeals=useQuery<Meal[]>({queryKey:["/api/meals",user?.id],enabled:!!user&&method==="describe"&&restaurantVisited});
   const recentRestaurants=(recentMeals.data||[]).flatMap(meal=>{const context=(meal.mealContext as any)?.restaurantContext;return typeof context?.restaurant==="string"&&typeof context?.market==="string"?[{restaurant:context.restaurant,market:context.market}]:[];});
   const pickerActive=method==="barcode"||method==="search";
@@ -114,7 +121,7 @@ export default function LogMeal() {
       setSavedMeal(meal);
       setDescription("");
       setProducts([]);
-      setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
+      setPhotoVisited(false);setMethodNotice("");setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
       setCatalogueEnabled(false);
       queryClient.invalidateQueries({
         predicate: (query) =>
@@ -175,8 +182,10 @@ export default function LogMeal() {
       <section className="bloom-panel space-y-3">
         <h2 ref={chooserHeading} tabIndex={-1}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
         {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
-        {!method&&<div className="grid gap-3 sm:grid-cols-2">{availableMethods.map(m=><Button className="h-auto whitespace-normal text-left block" type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.description}</span></Button>)}</div>}
+        {!method&&<div className="grid gap-3 sm:grid-cols-2">{availableMethods.map(m=><Button className={`h-auto whitespace-normal text-left block ${m.id==="photo"&&photoPreview?"development-feature":""}`} type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.id==="photo"&&photoPreview?"Preview a synthetic image locally, then describe it.":m.description}</span>{m.id==="photo"&&photoPreview&&<span className="development-status">Development · {photoPreview.label}</span>}</Button>)}</div>}
         <p className="panel-note">Selected items and your description stay in this draft. Save only when ready.</p>
+        {methodNotice&&<p role="status">{methodNotice}</p>}
+        {photoVisited&&photoPreview&&<div hidden={method!=='photo'}><DevelopmentPhotoPreview feature={photoPreview}/></div>}
         {method==="describe"&&<div className="space-y-3"><p>Type foods and amounts in the shared meal review below. Selected products are counted separately.</p><FoodCapture voiceOnly onDescription={text=>setDescription(current=>[current,text].filter(Boolean).join("; "))} onProduct={()=>{}}/></div>}
         {method==="describe"&&<div className="space-y-3"><Button type="button" variant="outline" aria-expanded={restaurantVisited} aria-controls="restaurant-context" onClick={()=>setRestaurantVisited(value=>!value)}>Log a restaurant meal</Button>{restaurantVisited&&<div id="restaurant-context" className="space-y-3"><p className="panel-note">Describe what you ate below. Restaurant names add context; menu item search is not available.</p><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={setMarket}/><details><summary>Why?</summary><p>Names do not verify menu nutrition or allergens. Generic food matches are estimates. To use published nutrition, add it as a private label through Search foods; missing values stay unknown.</p></details></div>}</div>}
 
@@ -217,7 +226,7 @@ export default function LogMeal() {
       {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{foodMass(catalogueSelection.data.grams, settings.displayUnits.foodWeight)} {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
       </fieldset>
-      {(method==="describe"||products.length>0||description.trim()||catalogueEnabled)&&<form
+      {(method==="describe"||method==="photo"&&photoAllowed||products.length>0||description.trim()||catalogueEnabled)&&<form
         className="bloom-panel space-y-6"
         onSubmit={(e) => {
           e.preventDefault();

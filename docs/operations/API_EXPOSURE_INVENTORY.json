@@ -11,7 +11,7 @@
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
-    "server/capability-access.ts": "05996dcd6989ed0ecaa607e2be6f879374ba8c1accc62d1b59ba02ac26ca288c",
+    "server/capability-access.ts": "444a2c8f0bd41a3628a644dd029e785bd17d946a5e3a0bd4988123a7fd10ec6d",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
@@ -119,7 +119,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 24,
+      "line": 33,
       "method": "USE",
       "path": "/api/capabilities",
       "declaredMiddleware": [
@@ -129,7 +129,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 25,
+      "line": 34,
       "method": "GET",
       "path": "/api/capabilities",
       "declaredMiddleware": [],
@@ -137,7 +137,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 26,
+      "line": 43,
       "method": "PATCH",
       "path": "/api/capabilities/experimental",
       "declaredMiddleware": [],
