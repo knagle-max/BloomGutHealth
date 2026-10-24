@@ -510,6 +510,8 @@ export function registerPrecisionRoutes(
       return res
         .status(400)
         .json({ error: p.error.issues.map((i) => i.message).join("; ") });
+    const saveKey=req.get("Idempotency-Key");
+    if(saveKey!==undefined&&(p.data.kind!=="lab"||!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)))return res.status(400).json({error:"Use a valid laboratory save reference."});
     try {
       const userId = req.session.userId!;
       if (p.data.kind === "lab" && p.data.payload.unitReview &&
@@ -528,9 +530,11 @@ export function registerPrecisionRoutes(
         userId,
         p.data.kind,
         p.data.payload,
+        saveKey,
       );
       res.status(201).json(record);
     } catch (e) {
+      if(e instanceof Error&&e.message==="PRECISION_SAVE_CONFLICT")return res.status(409).json({error:"This save reference belongs to different results. Retry the original result or start a separate reviewed entry."});
       unavailable(res, e);
     }
   });

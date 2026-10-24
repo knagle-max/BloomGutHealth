@@ -96,6 +96,7 @@ export interface IStorage extends ExperienceStore {
     userId: string,
     kind: string,
     payload: unknown,
+    saveKey?: string,
   ): Promise<PrecisionRecord>;
   deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
   clearPrecisionData(userId: string): Promise<void>;
@@ -507,8 +508,8 @@ export class DatabaseStorage implements IStorage {
   getPrecisionRecords(userId: string) {
     return this.precision.getPrecisionRecords(userId);
   }
-  insertPrecisionRecord(userId: string, kind: string, payload: unknown) {
-    return this.precision.insertPrecisionRecord(userId, kind, payload);
+  insertPrecisionRecord(userId: string, kind: string, payload: unknown, saveKey?: string) {
+    return this.precision.insertPrecisionRecord(userId, kind, payload, saveKey);
   }
   deletePrecisionRecord(userId: string, id: string) {
     return this.precision.deletePrecisionRecord(userId, id);

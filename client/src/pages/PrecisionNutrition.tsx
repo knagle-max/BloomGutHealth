@@ -8,7 +8,7 @@ import QuickLabEntry from "@/components/QuickLabEntry";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -250,9 +250,7 @@ export default function PrecisionNutrition() {
     setLocalError("");
     mutation.mutate({ url, body, method });
   };
-  const [marker, setMarker] = useState("ldl"),
-    [unit, setUnit] = useState("mmol/L"),
-    [consent, setConsent] = useState(false),
+  const [consent, setConsent] = useState(false),
     [geneticDate, setGeneticDate] = useState(localNow());
   const [geneticPreview, setGeneticPreview] = useState<ReturnType<
     typeof parse23andMe
@@ -313,29 +311,7 @@ export default function PrecisionNutrition() {
     setLocalError(
       e instanceof Error ? e.message : "Check the information entered.",
     );
-  function submitLab(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    try {
-      const d = new FormData(e.currentTarget);
-      send("/api/precision/records", {
-        kind: "lab",
-        payload: {
-          marker,
-          value: number(d, "value"),
-          unit,
-          measuredAt: date(d, "measuredAt"),
-          laboratory: String(d.get("laboratory") || "Not supplied"),
-          method: String(d.get("method") || "Not supplied"),
-          fasting: d.get("fasting"),
-          referenceLow: number(d, "referenceLow"),
-          referenceHigh: number(d, "referenceHigh"),
-          notes: String(d.get("notes") || ""),
-        },
-      });
-    } catch (e) {
-      formError(e);
-    }
-  }
+
   const r = result.data;
   return (
     <main className="science-page precision-page">
@@ -671,134 +647,6 @@ export default function PrecisionNutrition() {
               <>
                 <QuickLabEntry />
                 <LabUnitReview labs={r.pendingLabs || []} />
-                <details className="bloom-panel">
-                  <summary>
-                    Add one result with reference range & details
-                  </summary>
-                  <form className="space-y-4" onSubmit={submitLab}>
-                    <h2>Add a dated laboratory result</h2>
-                    <p className="panel-note">
-                      Use your report's units and reference interval. A
-                      reference interval is not an individualized treatment
-                      target.
-                    </p>
-                    <div className="precision-grid">
-                      <label>
-                        Marker
-                        <select
-                          className="bloom-input w-full"
-                          value={marker}
-                          onChange={(e) => {
-                            setMarker(e.target.value);
-                            setUnit(
-                              markerDefinitions.find(
-                                (m) => m.id === e.target.value,
-                              )!.units[0],
-                            );
-                          }}
-                        >
-                          {markerDefinitions.map((m) => (
-                            <option key={m.id} value={m.id}>
-                              {m.name}
-                            </option>
-                          ))}
-                        </select>
-                      </label>
-                      <label>
-                        Value
-                        <input
-                          name="value"
-                          className="bloom-input w-full"
-                          type="number"
-                          step="any"
-                          min="0"
-                          required
-                        />
-                      </label>
-                      <label>
-                        Unit
-                        <select
-                          className="bloom-input w-full"
-                          value={unit}
-                          onChange={(e) => setUnit(e.target.value)}
-                        >
-                          {markerDefinitions
-                            .find((m) => m.id === marker)!
-                            .units.map((u) => (
-                              <option key={u}>{u}</option>
-                            ))}
-                        </select>
-                      </label>
-                      <label>
-                        Measured at
-                        <input
-                          name="measuredAt"
-                          className="bloom-input w-full"
-                          type="datetime-local"
-                          defaultValue={localNow()}
-                          required
-                        />
-                      </label>
-                      <label>
-                        Report reference low (optional)
-                        <input
-                          name="referenceLow"
-                          className="bloom-input w-full"
-                          type="number"
-                          min="0"
-                          step="any"
-                        />
-                      </label>
-                      <label>
-                        Report reference high (optional)
-                        <input
-                          name="referenceHigh"
-                          className="bloom-input w-full"
-                          type="number"
-                          min="0"
-                          step="any"
-                        />
-                      </label>
-                      <label>
-                        Laboratory
-                        <input
-                          name="laboratory"
-                          className="bloom-input w-full"
-                          maxLength={200}
-                        />
-                      </label>
-                      <label>
-                        Method / assay (optional)
-                        <input
-                          name="method"
-                          className="bloom-input w-full"
-                          maxLength={200}
-                        />
-                      </label>
-                      <label>
-                        Fasting
-                        <select name="fasting" className="bloom-input w-full">
-                          <option value="unknown">
-                            Unknown / not applicable
-                          </option>
-                          <option value="yes">Yes</option>
-                          <option value="no">No</option>
-                        </select>
-                      </label>
-                      <label>
-                        Notes
-                        <input
-                          name="notes"
-                          className="bloom-input w-full"
-                          maxLength={1000}
-                        />
-                      </label>
-                    </div>
-                    <Button disabled={mutation.isPending}>
-                      Save laboratory result
-                    </Button>
-                  </form>
-                </details>
                 <section className="bloom-panel">
                   <h2>Latest results</h2>
                   {r.labs.length ? (

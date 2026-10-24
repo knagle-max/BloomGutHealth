@@ -1,4 +1,6 @@
 import { eq, and, desc, sql } from "drizzle-orm";
+import { createHash } from "node:crypto";
+import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
 import { labSchema, contextSchema } from "../shared/precision-nutrition";
 import {
@@ -60,12 +62,22 @@ export class PrecisionStorage {
     userId: string,
     kind: string,
     payload: unknown,
+    saveKey?: string,
   ): Promise<PrecisionRecord> {
     const encryptedPayload = encryptPrecision(payload, userId);
     return this.db.transaction(async (tx) => {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
+      const id = saveKey ? createHash("sha256").update(JSON.stringify(["precision-save-v1",userId,saveKey])).digest("hex") : undefined;
+      if(id){
+        const [existing]=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.id,id),eq(precisionRecords.userId,userId)));
+        if(existing){
+          const decoded=decryptPrecision(existing.encryptedPayload,userId);
+          if(existing.kind!==kind||!isDeepStrictEqual(decoded,payload))throw Error("PRECISION_SAVE_CONFLICT");
+          return {id:existing.id,kind:existing.kind,payload:decoded,createdAt:existing.createdAt};
+        }
+      }
       const plan = payload as any;
       if (kind === "lab" && plan?.unitReview?.status === "confirmed") {
         const owned = await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
@@ -129,7 +141,7 @@ export class PrecisionStorage {
       }
       const [row] = await tx
         .insert(precisionRecords)
-        .values({ userId, kind, encryptedPayload })
+        .values({ ...(id?{id}:{}), userId, kind, encryptedPayload })
         .returning();
       return { id: row.id, kind: row.kind, payload, createdAt: row.createdAt };
     });

@@ -459,7 +459,7 @@ export const labSchema = z
     referenceLow: z.number().finite().nonnegative().nullable(),
     referenceHigh: z.number().finite().nonnegative().nullable(),
     notes: z.string().max(1000).default(""),
-    sourceInput: z.object({text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),capture:z.literal("pasted-report")}).strict().optional(),
+    sourceInput: z.object({text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),capture:z.enum(["pasted-report","manual-report"])}).strict().optional(),
     unitReview: z.object({
       status: z.enum(["pending", "confirmed"]),
       originalValue: z.number().finite().nonnegative().max(1000000),
