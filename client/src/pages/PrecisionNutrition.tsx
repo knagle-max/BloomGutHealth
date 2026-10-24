@@ -8,7 +8,7 @@ import QuickLabEntry from "@/components/QuickLabEntry";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -218,6 +218,9 @@ export default function PrecisionNutrition() {
       ).json(),
   });
   const [context, setContext] = useState(contextSchema.parse({}));
+  const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
+  const editGoals=new URLSearchParams(window.location.search).get("edit")==="goals";
+  useEffect(()=>{if(editGoals&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,context]);
   useEffect(() => {
     if (result.data) setContext(result.data.context);
   }, [result.data]);
@@ -420,7 +423,7 @@ export default function PrecisionNutrition() {
                     fabricated result.
                   </p>
                 </section>
-                <details className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
+                <details ref={goalsDisclosure} className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
                 <summary>Your goals & health context</summary>
                 <ContextEditor
                   key={JSON.stringify(r.context)}

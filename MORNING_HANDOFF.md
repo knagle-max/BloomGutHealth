@@ -50,3 +50,7 @@ Read NEXT_ACTIONS.md and the active Architect queue; verify newest exact SHA CI/
 ## Latest runtime accounting checkpoint
 
 OPS-702-EXEC integrates the three active text SDK adapters with authenticated context, explicit consent, reviewed policy/bounds, shared reservation and atomic usage receipts. Default installation remains absent: no new paid enablement, migration or real monetary assumptions. Manual logging/curated planning remain available and ordinary unavailable AI controls are hidden. 236 full tests plus final 8 focused executor tests, TypeScript/build and food/planner browser regressions passed. Source inventory refreshed. Exact publication/CI/Render status is tracked in NEXT_ACTIONS and the development log. Remaining P0 composition/circuits/reconciliation/reporting and full capability audit are actionable; this is not v0.5 completion.
+
+## Task-first Today checkpoint
+
+BLOOM-TODAY-01: one first-viewport action, full Why/source depth, optional setup, collapsed nutrition metrics and no repeated empty explanation. Canonical Adjust goals opens/focuses existing context editor; a single explicit save changes Today. 237 full tests/types/build, 4 focused priorities and actual-render goal/no-data/error/keyboard/320–1280/effective zoom checks passed. Physical/hosted/specialist acceptance remains open. Next unblocked work is OPS circuits/configuration/reconciliation, followed by full capability/lifecycle audits; see the concise persistent task index first. OPS 861b04a passed CI 40112511251 and Render dep-dbedu4eq1p3s73e5g1cg is live.

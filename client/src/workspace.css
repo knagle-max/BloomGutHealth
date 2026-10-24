@@ -168,3 +168,8 @@ body { -webkit-font-smoothing: antialiased; }
  .food-journal-panel .meal-row .meal-calories { display:block; grid-column:2; white-space:normal; }
  .food-journal-panel .meal-row > svg:last-child { grid-column:3; grid-row:1 / span 2; }
 }
+
+.today-focus h2 { overflow-wrap:anywhere; }
+.today-focus .hero-button { display:inline-flex; align-items:center; min-height:44px; white-space:normal; }
+.today-nutrition { margin-bottom:20px; }
+.bloom-dashboard > .workspace-disclosure { margin-top:20px; }

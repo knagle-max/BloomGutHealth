@@ -23,7 +23,7 @@ if(state==='session')await focus.getByRole('link',{name:'Review my session fueli
 if(state==='goal')await focus.getByText(/saved focus: Protein distribution/).waitFor();
 if(state==='partial')await focus.getByRole('link',{name:'Review my meal estimates'}).waitFor();
 if(state==='error')await focus.getByText(/Training schedule unavailable/).waitFor();
-await focus.getByText('Your focus & next steps').click();await focus.getByRole('link',{name:'Synthetic source reference'}).waitFor();
+await focus.getByText('Why this?').click();await focus.getByRole('link',{name:'Synthetic source reference'}).waitFor();
 }
 await page.goto('http://127.0.0.1:5188/explore');await page.getByRole('textbox',{name:'Find a food',exact:true}).fill('Kit Kat');await page.getByRole('link',{name:'Find a packaged food or enter its label'}).click();await page.getByRole('textbox',{name:'Product name / barcode'}).waitFor();assert.equal(await page.getByRole('textbox',{name:'Product name / barcode'}).inputValue(),'Kit Kat');await page.getByText('USDA Branded Foods is not configured.',{exact:true}).waitFor();
 assert.deepEqual(errors,[]);console.log('PASS: synthetic session/goal/partial/unavailable Today states and evidence disclosure; Explore→product query handoff');}catch(e){console.error(errors);console.error((await page.locator('body').innerText()).slice(0,3500));throw e;}finally{await browser.close();await vite.close();}

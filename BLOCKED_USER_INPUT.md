@@ -73,3 +73,5 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Impact: Blocks real monetary policy/paid-feature acceptance, not ledger, provider-unit contracts or other v0.5 work. The new ledger alone does not control current parser/recipe callsites.
 
 Monetary activation clarification (OPS-702-EXEC): provide reviewed pinned provider/model response identity and bounds for maximum complete serialized text request, input tokens and output tokens, with review reference; no guessed tokenizer/character bound is used. Default remains no installed runtime. Implementing configuration/composition, circuits and reporting remains independently OPEN, not a user-input blocker. No real tariff/key/migration activation occurred.
+
+ACCEPT-108 / BLOOM-TODAY-01: physical iPhone Safari/VoiceOver and direct hosted layout acceptance remain BLOCKED_TECHNICAL here (no physical device/VoiceOver; hosted proxy denial). Which approved tester/device environment can provide those checks? Options: independent synthetic-account device test, or owner-supplied actual results; recommend independent testing. This blocks device sign-off only, not browser engineering.

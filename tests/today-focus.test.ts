@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { todayJournalAction } from "../shared/today-focus";
 
 test("empty, complete and incomplete journals choose useful distinct next actions", () => {
-  assert.equal(todayJournalAction({mealCount:0}).label, "Log my first meal");
+  assert.equal(todayJournalAction({mealCount:0}).label, "Add food");
   assert.equal(todayJournalAction({mealCount:2}).href, "/plan-day");
   const partial = todayJournalAction({mealCount:2,missingNutritionCount:1});
   assert.equal(partial.href, "/nutrition");

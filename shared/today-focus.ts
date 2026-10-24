@@ -14,8 +14,8 @@ export function todayJournalAction({ mealCount, missingNutritionCount = 0, loadi
   };
   if (!mealCount) return {
     href: "/log-meal",
-    label: "Log my first meal",
-    reason: "Start with what you ate. You can scan a package, choose a saved meal or type a description.",
+    label: "Add food",
+    reason: "Log a meal to see today’s nutrition. Unlogged intake is unknown.",
   };
   if (missingNutritionCount > 0) return {
     href: "/nutrition",
@@ -50,7 +50,7 @@ export function todayContextAction(input: Parameters<typeof todayJournalAction>[
   };
   if (input.goal?.sourceIds.length) return {
     ...base,
-    reason: `Plan your next meal around your saved focus: ${input.goal.mapping}. Suggestions use logged meals and saved targets; missing nutrients are not evidence of deficiency.`,
+    reason: `Your saved focus: ${input.goal.mapping}. Use logged meals and targets; missing nutrients are not evidence of deficiency.`,
   };
   return base;
 }

@@ -127,3 +127,9 @@ Wired existing ingredient parser, recipe ranking and recipe generation SDKs to o
 236 full tests passed; final 8 executor tests separately validate last kill/timestamp hardening and actual SDK synthetic response/usage and quota fallback. TypeScript/build, source inventory, rendered canonical Add Food save/totals and planner kcal/kJ writes passed. No screenshot gallery for this predominantly backend slice; QA can now skip screenshot generation. Exact new CI/Render verification follows publication. Remaining actionable work includes policy composition/config validation, circuits/reconciliation, admin-only aggregates, full capability inventory and other v0.5 requirements.
 
 Latest user explicitly authorizes v0.6 once actionable v0.5 is exhausted; external v0.5 blockers do not hold independent approved v0.6. Current actionable v0.5 remains, so no transition claimed.
+
+## BLOOM-TODAY-01 — first action and canonical correction
+
+One primary action now precedes explanation; duplicate empty copy removed, nutrition/deeper options disclosed, setup optional. Adjust opens/focuses the existing goal editor; one explicit canonical save updates Today. A reproduced saved-goal effective-zoom obstruction was fixed through action-first ordering, with no critical text truncation. 237 full tests/types/build, 4 focused priorities and two browser journeys passed; source/goal/error/unknown/keyboard/320–1280/effective-zoom evidence in docs/review/task-first-today-20261024. Physical/hosted/independent review remains unverified.
+
+Prior OPS batch 861b04a6d25afd6affe1551c01761fc8801b6031 passed CI 40112511251; Render dep-dbedu4eq1p3s73e5g1cg live. Actionable v0.5 remains: next OPS provider/global circuit and configuration/reconciliation work, then capability audit. No version completion declared.

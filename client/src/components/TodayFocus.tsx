@@ -10,17 +10,13 @@ export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, l
   const action = todayContextAction({ mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) });
   return (
     <section className="bloom-panel today-focus space-y-3">
-      <p className="eyebrow">TODAY’S FOCUS</p>
-      <h2>{goal?.mapping || "Build a consistent meal routine"}</h2>
-      <p>
-        {goal?.actions[0] ||
-          "Log what you eat, review portions, and use your remaining nutrition to choose the next meal."}
-      </p>
-      <p className="panel-note">
-        {goal
-          ? "Based on your saved goal. This is a practical dietary focus, not a diagnosis or predicted effect."
-          : "Add your goals and health context to connect food choices with useful priorities."}
-      </p>
+      <h2>Your next step</h2>
+      <div className="flex flex-wrap gap-3 items-center">
+        <Link className="hero-button" href={action.href}>{action.label}</Link>
+        <Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust goals</Link>
+      </div>
+      <p>{action.reason}</p>
+      {goal && <p className="panel-note">Not a diagnosis or predicted effect.</p>}
       {report.error && (
         <p role="alert" className="panel-note">
           Your saved focus could not load. This general routine suggestion
@@ -28,13 +24,9 @@ export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, l
         </p>
       )}
       {sessions.isError && <p className="panel-note">Training schedule unavailable. This action uses your journal and saved focus only.</p>}
-      {(mealCount > 0 || loading || journalError) && <div className="today-next-action">
-        <Link className="hero-button" href={action.href}>
-          {action.label}
-        </Link>
-        <p className="panel-note">{action.reason}</p>
-      </div>}
-      <details><summary>Your focus & next steps</summary>
+      <details><summary>Why this?</summary>
+      {goal && <h3>{goal.mapping}</h3>}
+      <p className="panel-note">{goal?.actions[0] || "This step uses your food journal and available saved context. Unlogged intake does not establish a nutrient deficit."}</p>
       {goal && <div className="space-y-2">{report.data?.sources.filter(s => goal.sourceIds.includes(s.id)).map(s => <p key={s.id} className="panel-note"><a className="text-link" href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a> — {s.limitation}</p>)}</div>}
       <div className="flex flex-wrap gap-4">
         <Link className="text-link" href={mealCount ? "/log-meal" : "/plan-day"}>

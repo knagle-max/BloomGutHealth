@@ -62,9 +62,6 @@ export default function Dashboard() {
           <h1>
             Today
           </h1>
-          <p className="muted">
-            Welcome back, {user?.username}. Here’s where things stand today.
-          </p>
         </div>
         <span className="date-pill">
           <CalendarDays size={16} />
@@ -72,9 +69,10 @@ export default function Dashboard() {
         </span>
       </div>
 
-      {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started"
-        ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading} journalError={mealError} />}
+      <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading} journalError={mealError} />
       {(meals.isLoading || mealError || summary.meals.length > 0) && <>
+      <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>
+      <summary>Nutrition so far</summary>
       <div className="section-heading">
         <div>
           <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
@@ -152,6 +150,7 @@ export default function Dashboard() {
         </div>
       )}
 
+      </details>
       </>}
 
       <section className="bloom-panel food-journal-panel" aria-labelledby="meals-title">
@@ -198,14 +197,12 @@ export default function Dashboard() {
             <img className="empty-journal-art" src="/brand/empty-journal-illustration.svg" width={160} height={100} alt="" />
             <div>
               <h3>No meals yet</h3>
-              <p>Add food to see today's nutrition. Unlogged intake is unknown.</p>
             </div>
-            <Link href="/log-meal" className="hero-button journal-add-action">
-              <Plus size={16} /> Add food
-            </Link>
           </div>
         )}
       </section>
+      {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}
+      <details className="bloom-panel workspace-disclosure"><summary>Explore your options</summary>
       <div className="workspace-shortcuts">
         {[
           { path: "/plan-day", title: "Plan what’s next", description: "Meals that fit the rest of your day", Icon: CalendarDays },
@@ -214,6 +211,7 @@ export default function Dashboard() {
         ].map(({path, title, description, Icon}) => <Link href={path} className="workspace-shortcut" key={path}><Icon size={20} /><div><strong>{title}</strong><span>{description}</span></div><ChevronRight size={16} /></Link>)}
       </div>
 
+      </details>
       <details className="bloom-panel workspace-disclosure"><summary>Logging history & gut reports</summary>
       <div className="dashboard-columns">
         <section className="bloom-panel" aria-labelledby="consistency-title">
