@@ -99,3 +99,9 @@ Targeted embedded PostgreSQL tests passed; full suite/build in progress. Added g
 Science gate 4d5d4f04312900a89860a83af7b97f1ff3bbe7a2 CI 40077179797 success, Render dep-dbe6h66k1f9s73f08tg0 live.
 
 Ledger batch local verification: all 224 tests, TypeScript and production build passed. UTC-reset test uses a non-UTC database session and checks month-boundary behavior. Real multi-connection Neon CI is pending publication; no runtime billing enforcement is claimed.
+
+## Provider-unit costing contract
+
+Added ai-costing.ts and four regression tests for OpenAI Responses usage subset semantics, malformed/missing counters, effective-dated exact-model tariff validation, integer micro-USD rounding and worst-case no-cache reservation. All rates are explicitly synthetic fixtures; no actual vendor price asserted. Missing usage does not become zero/actual spend. Runtime token upper bounds, provider receipts and callsite integration remain OPEN. 228 tests, TypeScript and build passed.
+
+Ledger ac7ff5941b80d868ed22d5122648c9fcab0cc82d CI 40077584409 succeeded, including actual isolated Neon multi-connection atomic reservations/idempotent settlement/account isolation at 08:22:27 UTC. Render dep-dbe6k34s728c73c8mmfg live. No application-side monetary activation or existing Render migration.
