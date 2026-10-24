@@ -1,9 +1,8 @@
 import ImportedReportDetails from "@/components/ImportedReportDetails";
 import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
-import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { cohortResearch } from "@shared/meal-intelligence";
 import { evidenceSources } from "@shared/science-coach";
@@ -12,7 +11,6 @@ export default function Microbiome() {
   const [sampleId, setSampleId] = useState("");
   const [comparisonId, setComparisonId] = useState("");
   const [tab, setTab] = useState("results");
-  const [cohorts, setCohorts] = useState(["general_population"]);
   const samples = useQuery<any[]>({
     queryKey: ["/api/microbiome/samples", user?.id],
     enabled: !!user,
@@ -33,26 +31,6 @@ export default function Microbiome() {
     queryKey: ["/api/microbiome/diet-prediction", user?.id],
     enabled: !!user && tab === "diet",
   });
-  const analyze = useMutation({
-    mutationFn: async () => {
-      return (
-        await apiRequest("POST", `/api/microbiome/analyze/${currentId}`, {
-          cohortsToCompare: cohorts,
-        })
-      ).json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["/api/microbiome/results", currentId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["/api/microbiome/samples", user?.id],
-      });
-    },
-  });
-  const model = results.data?.analyses?.find(
-    (a: any) => a.analysisType === "comprehensive",
-  )?.results;
   return (
     <main className="science-page space-y-5">
       <div className="science-heading">
@@ -156,18 +134,16 @@ export default function Microbiome() {
             Diversity index:{" "}
             {results.data.sample.diversityIndex ?? "Not computed"}
           </p>
-          <p>
-            Stored molecule estimates: {results.data.metabolites.length} ·
-            Recommendations: {results.data.recommendations.length}
-          </p>
+          <p className="panel-note">Unsupported historical molecule estimates and recommendations are withheld. This does not mean no records were stored.</p>
           <p className="panel-note">
             Diversity is method-dependent and is not a universal health score.
           </p>
           {results.data.analyses.map((a: any) => (
             <p className="panel-note" key={a.id}>
               {a.analysisType} · {a.modelVersion} ·{" "}
-              {a.results?.provenance ||
-                "Experimental or legacy model; provenance requires verification"}
+              {a.analysisType === "reported-composition"
+                ? "Descriptive summary of supplied relative abundance; no biological prediction."
+                : "Historical analysis record; unsupported outputs are withheld."}
             </p>
           ))}
         </section>
@@ -361,7 +337,8 @@ export default function Microbiome() {
       )}
       {tab === "cohorts" && (
         <section className="bloom-panel space-y-4">
-          <h2>Compare research populations</h2>
+          <h2>Research populations</h2>
+          <p className="panel-note">General research summaries. Personal cohort comparisons are unavailable without validated reference data.</p>
           {cohortResearch.map((c) => (
             <article key={c.id}>
               <h3>{c.name}</h3>
@@ -379,83 +356,7 @@ export default function Microbiome() {
               </a>
             </article>
           ))}
-          <details>
-            <summary>Original experimental cohort comparison</summary>
-            <p className="panel-note">
-              The Python prototype uses hand-entered reference profiles for
-              athletes, long-lived people, general population and Mediterranean
-              diet followers. These are illustrative, not validated study
-              distributions or health targets. Similarity is a model
-              calculation, not a likelihood of performance or longevity.
-            </p>
-            <fieldset>
-              <legend>Choose prototype groups</legend>
-              {[
-                "elite_athletes",
-                "centenarians",
-                "general_population",
-                "mediterranean_diet",
-              ].map((id) => (
-                <label key={id} className="block">
-                  <input
-                    type="checkbox"
-                    checked={cohorts.includes(id)}
-                    onChange={(e) =>
-                      setCohorts(
-                        e.target.checked
-                          ? [...cohorts, id]
-                          : cohorts.filter((c) => c !== id),
-                      )
-                    }
-                  />{" "}
-                  {id.replaceAll("_", " ")}
-                </label>
-              ))}
-            </fieldset>
-            <Button
-              disabled={
-                !currentId ||
-                !cohorts.length ||
-                analyze.isPending ||
-                !results.data?.sample?.structuredData?.bacteria_percentages
-              }
-              onClick={() => analyze.mutate()}
-            >
-              {analyze.isPending
-                ? "Analyzing…"
-                : "Run experimental report model"}
-            </Button>
-            {analyze.isError && <p role="alert">{analyze.error.message}</p>}
-            {model?.cohort_comparisons &&
-              Object.entries(model.cohort_comparisons).map(
-                ([id, c]: [string, any]) => (
-                  <article key={id} className="my-3">
-                    <h3>{c.cohort_name}</h3>
-                    <p>
-                      Illustrative similarity:{" "}
-                      {c.similarity_score ?? c.similarity ?? "Not available"}
-                    </p>
-                    <p>
-                      Prototype reference diversity:{" "}
-                      {c.diversity_comparison?.cohort ?? "Not available"}
-                    </p>
-                    <details>
-                      <summary>Modeled gaps & strengths</summary>
-                      <pre className="whitespace-pre-wrap break-words text-xs">
-                        {JSON.stringify(
-                          {
-                            gaps: c.bacterial_gaps || c.gaps,
-                            strengths: c.bacterial_strengths || c.strengths,
-                          },
-                          null,
-                          2,
-                        )}
-                      </pre>
-                    </details>
-                  </article>
-                ),
-              )}
-          </details>
+
         </section>
       )}
       {results.data?.recommendations?.length > 0 && (

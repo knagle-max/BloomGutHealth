@@ -20,9 +20,9 @@
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/precision-routes.ts": "cc0dcdf84f1ffe13f78afd712d962a1ba9b430e4ec818a6f8bcfdcdd63b522ac",
     "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
-    "server/report-routes.ts": "b31cecb2972b204f7e229e78694ee5725bf28b16170db2445ea316ce33327061",
+    "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
-    "server/routes.ts": "186015e6c05c84a00b662e3bb52026596371ee14dd2e20850273c56f75c3ee62",
+    "server/routes.ts": "59479bbb7f8752a4912e6c671ec8f3fa6da5dfd933785a4b00e5ae095e0047ce",
     "server/science-coach.ts": "af850052f4af68b0e2b6f857a2818d7f669cf01350c20356e0f48642a2d83947",
     "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
   },
@@ -607,7 +607,18 @@
     },
     {
       "file": "server/report-routes.ts",
-      "line": 124,
+      "line": 126,
+      "method": "GET",
+      "path": "/api/microbiome/cohorts",
+      "declaredMiddleware": [
+        "auth",
+        "noCache"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/report-routes.ts",
+      "line": 129,
       "method": "POST",
       "path": "/api/microbiome/import",
       "declaredMiddleware": [
@@ -618,7 +629,7 @@
     },
     {
       "file": "server/report-routes.ts",
-      "line": 180,
+      "line": 185,
       "method": "POST",
       "path": "/api/microbiome/upload",
       "declaredMiddleware": [
@@ -639,7 +650,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 54,
+      "line": 55,
       "method": "POST",
       "path": "/api/microbiome/analyze/:sampleId",
       "declaredMiddleware": [
@@ -649,7 +660,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 198,
+      "line": 58,
       "method": "GET",
       "path": "/api/microbiome/results/:sampleId",
       "declaredMiddleware": [
@@ -659,17 +670,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 237,
-      "method": "GET",
-      "path": "/api/microbiome/cohorts",
-      "declaredMiddleware": [
-        "requireAuth"
-      ],
-      "review": "REVIEW_REQUIRED"
-    },
-    {
-      "file": "server/routes.ts",
-      "line": 250,
+      "line": 97,
       "method": "GET",
       "path": "/api/ml/health",
       "declaredMiddleware": [],
@@ -677,7 +678,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 261,
+      "line": 108,
       "method": "GET",
       "path": "/api/demo/user",
       "declaredMiddleware": [],
@@ -685,7 +686,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 273,
+      "line": 120,
       "method": "GET",
       "path": "/api/demo/samples",
       "declaredMiddleware": [],
@@ -693,7 +694,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 283,
+      "line": 130,
       "method": "GET",
       "path": "/api/meals",
       "declaredMiddleware": [
@@ -703,7 +704,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 283,
+      "line": 130,
       "method": "GET",
       "path": "/api/meals/:userId",
       "declaredMiddleware": [
@@ -713,7 +714,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 300,
+      "line": 147,
       "method": "DELETE",
       "path": "/api/meals/:mealId",
       "declaredMiddleware": [
@@ -723,7 +724,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 322,
+      "line": 169,
       "method": "GET",
       "path": "/api/nutrition/targets/:userId",
       "declaredMiddleware": [
@@ -733,7 +734,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 377,
+      "line": 224,
       "method": "GET",
       "path": "/api/nutrition/daily/:userId",
       "declaredMiddleware": [
@@ -743,7 +744,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 425,
+      "line": 272,
       "method": "GET",
       "path": "/api/nutrition/monthly/:userId",
       "declaredMiddleware": [
@@ -753,7 +754,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 523,
+      "line": 370,
       "method": "GET",
       "path": "/api/nutrition/yearly/:userId",
       "declaredMiddleware": [
@@ -763,7 +764,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 641,
+      "line": 488,
       "method": "GET",
       "path": "/api/profile",
       "declaredMiddleware": [
@@ -773,7 +774,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 651,
+      "line": 498,
       "method": "PATCH",
       "path": "/api/user/:userId/profile",
       "declaredMiddleware": [
@@ -783,7 +784,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 665,
+      "line": 512,
       "method": "GET",
       "path": "/api/microbiome/samples/:userId",
       "declaredMiddleware": [
@@ -793,7 +794,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 680,
+      "line": 527,
       "method": "GET",
       "path": "/api/microbiome/diet-prediction/:userId",
       "declaredMiddleware": [

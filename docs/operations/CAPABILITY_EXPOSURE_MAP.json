@@ -706,7 +706,8 @@
         "logicOrJobs": [
           "shared/report-import.ts",
           "server/analysis-boundary.ts",
-          "ml_service/main.py"
+          "ml_service/main.py",
+          "server/report-analysis.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -736,7 +737,8 @@
         "logicOrJobs": [
           "shared/report-import.ts",
           "server/analysis-boundary.ts",
-          "ml_service/main.py"
+          "ml_service/main.py",
+          "server/report-analysis.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -748,7 +750,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "observation": "Reported composition is summarized locally from owned source percentages, with no sidecar transfer or personal prediction. No validated reference dataset is installed; cohort API remains unavailable and prototype UI is removed.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -763,7 +765,8 @@
         ],
         "logicOrJobs": [
           "shared/structured-report.ts",
-          "server/analysis-boundary.ts"
+          "server/analysis-boundary.ts",
+          "server/report-analysis.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1360,7 +1363,7 @@
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "a446edddae6b97aba193d8f9c3a99eeefbde02c4c28d59d29cd376e0a07843f8",
     "client/src/pages/MealPlanner.tsx": "bb5810c386a36d4bb999d9b3e2c03f61e0e6ea5d6c01fc486aae358abf6a6c19",
-    "client/src/pages/Microbiome.tsx": "449341fdd5eb22e8a62f6b9bf462ec381537539ec31dc43d961a18524324532f",
+    "client/src/pages/Microbiome.tsx": "168783d0208282e7781acbda7ea811f9be7dbadc8400d0646f65d82771017eec",
     "client/src/pages/PrecisionNutrition.tsx": "30c6a83a4d023a0dc0b80f671263bed6aac2e0538e48664741f483fde266c69c",
     "client/src/pages/Profile.tsx": "defac16038ef0d2458866b2e0c4b5be36c6085315b3bd9cc3d4c39c8c128094d",
     "client/src/pages/Progress.tsx": "14d12bf4947e31d9aebbb33a9d704796b8a2b9494ca369385829153e35f16072",
@@ -1372,7 +1375,7 @@
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/ai-configuration.ts": "7a03ce5dd75901904c6ef9afc697c1a169c9c5da3dff7a54f6b61b02893dbe86",
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
-    "server/analysis-boundary.ts": "b935105113165d216dfff413ba1a9e64035d584f192f00a2ace0b6069694234a",
+    "server/analysis-boundary.ts": "81f3bdfb4f03e036b616f3194cd69fe7669fd29413bf21780f9316c8d5695d37",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "444a2c8f0bd41a3628a644dd029e785bd17d946a5e3a0bd4988123a7fd10ec6d",
     "server/capability-policy.ts": "9635eed046bfdcfb70ce2f3a857d99ff04a00afa96a553ade85c95a346af7fd0",
@@ -1388,9 +1391,10 @@
     "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
     "server/recipe-ranking.ts": "99f74c8711694fc4779d8dbf8232a4d32d47a716186ae9d2e7c6dffa9e2c9595",
-    "server/report-routes.ts": "b31cecb2972b204f7e229e78694ee5725bf28b16170db2445ea316ce33327061",
+    "server/report-analysis.ts": "2a4e80da76c55c1beb3165264c5982b9ada91d02f9325605ec3598747139e3e5",
+    "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
-    "server/routes.ts": "186015e6c05c84a00b662e3bb52026596371ee14dd2e20850273c56f75c3ee62",
+    "server/routes.ts": "59479bbb7f8752a4912e6c671ec8f3fa6da5dfd933785a4b00e5ae095e0047ce",
     "server/science-coach.ts": "af850052f4af68b0e2b6f857a2818d7f669cf01350c20356e0f48642a2d83947",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
     "server/storage.ts": "521c7725b15676274be6c4a2adb408a89d7fc13253c382d2a5408ec8c3ffafda",

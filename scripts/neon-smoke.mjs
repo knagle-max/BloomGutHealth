@@ -34,6 +34,8 @@ const app = spawn(process.execPath, ["dist/index.js"], {
     OPENAI_API_KEY: "",
     USDA_FDC_API_KEY: "",
     API_NINJAS_KEY: "",
+    ML_SERVICE_URL: "",
+    ML_SERVICE_TOKEN: "",
   },
   stdio: ["ignore", "pipe", "pipe"],
 });
@@ -284,11 +286,24 @@ try {
     "PASS: reusable encrypted product label, per-serving meal nutrition and pasted functional-report persistence",
   );
   const imported = await request("/api/microbiome/import", "POST", {
-    bacteria_percentages: { "Ruminococcus bromii": 2, Bifidobacterium: 5 },
+    bacteria_percentages: { "Ruminococcus bromii": 2, Bifidobacterium: 5, Roseburia: 0 },
     testingCompany: "Synthetic CI lab",
     testDate: new Date().toISOString(),
   });
   assert.ok(imported.sampleId);
+  const cohortAvailability=await request('/api/microbiome/cohorts');
+  assert.deepEqual(cohortAvailability.cohorts,[]);
+  assert.equal(cohortAvailability.interpretationStatus,'no_validated_reference_dataset');
+  const localComposition=await request(`/api/microbiome/analyze/${imported.sampleId}`,'POST',{cohortsToCompare:['elite_athletes']});
+  assert.equal(localComposition.results.model_version,'reported-abundance-v3');
+  assert.equal(localComposition.results.bacterial_composition.find(row=>row.bacterial_name==='Roseburia').abundance,0);
+  assert.deepEqual(localComposition.results.metabolites,[]);
+  assert.deepEqual(localComposition.results.cohort_comparisons,{});
+  const compositionReceipt=(await pool.query('SELECT analysis_type,confidence,compared_cohorts FROM ml_analyses WHERE id=$1',[localComposition.analysisId])).rows[0];
+  assert.equal(compositionReceipt.analysis_type,'reported-composition');
+  assert.equal(compositionReceipt.confidence,null);
+  assert.deepEqual(compositionReceipt.compared_cohorts,[]);
+  console.log('PASS: isolated live local reported composition without ML credentials, original zero and no fictitious cohort comparison');
   await request("/api/precision/context", "PUT", {
     ageGroup: "adult",
     pregnancy: "no",

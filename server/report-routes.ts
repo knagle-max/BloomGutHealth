@@ -121,6 +121,11 @@ export function registerReportRoutes(
     res.setHeader("Cache-Control", "no-store");
     next();
   };
+  // No reference dataset with reviewed provenance is installed. Never let an
+  // older processing service turn its hard-coded prototype profiles into one.
+  app.get('/api/microbiome/cohorts', auth, noCache, (_req, res) => {
+    res.json({cohorts:[],status:'unavailable',interpretationStatus:'no_validated_reference_dataset',message:'Validated reference cohorts are not installed. No sample sizes, reference profiles or personal comparisons are available.'});
+  });
   app.post("/api/microbiome/import", auth, noCache, async (req, res) => {
     const fields = requestSchema.safeParse(req.body);
     if (!fields.success)

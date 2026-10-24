@@ -1,3 +1,4 @@
+import {analyzeReportedComposition} from "./report-analysis";
 import { registerCapabilityAccess, CapabilityPreferenceStorage } from "./capability-access";
 import { AccountErasureStorage } from "./account-erasure";
 import { requireActiveAccount, AccountSessionGuard } from "./account-auth";
@@ -50,149 +51,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   registerHealthSourceRoutes(app, requireAuth, new HealthSourceStorage(db));
   registerReportRoutes(app, requireAuth, storage);
   registerBiologyRoutes(app, requireAuth, storage, precisionService);
-  // Trigger ML analysis
-  app.post(
-    "/api/microbiome/analyze/:sampleId",
-    requireAuth,
-    async (req, res) => {
-      let authorizedSampleId: string | undefined;
-      try {
-        const { sampleId } = req.params;
-        const { cohortsToCompare = ["general_population"] } = req.body;
-        const userId = req.session.userId!;
-
-        const sample = await storage.getMicrobiomeSample(sampleId);
-        if (!sample) {
-          return res.status(404).json({ error: "Sample not found" });
-        }
-
-        if (sample.userId !== userId) {
-          return res.status(403).json({ error: "Access denied" });
-        }
-
-        if (!abundanceSchema.safeParse((sample.structuredData as any)?.bacteria_percentages).success) {
-          return res.status(422).json({error:"This report has no supported quantitative bacterial percentages. Functional scores and organism detection are viewable report data, not inputs for abundance-based modelling. No analysis was run."});
-        }
-        authorizedSampleId = sampleId;
-        // Update status to processing
-        await storage.updateMicrobiomeSample(sampleId, {
-          processingStatus: "processing",
-        });
-
-        // Trigger ML analysis
-        const mlResponse = await mlServiceFetch("/api/ml/analyze", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            sample_id: "structured-processing-request",
-            user_id: "server-authorized",
-            raw_data: { bacteria_percentages: (sample.structuredData as any).bacteria_percentages },
-            cohorts_to_compare: [],
-          }),
-        });
-
-        await mlResponse.json();
-        const mlResult = reportedAbundanceAnalysis(sampleId,(sample.structuredData as any).bacteria_percentages);
-
-        // Save ML analysis results
-        if (!mlResponse.ok) {
-          await storage.updateMicrobiomeSample(sampleId, {
-            processingStatus: "failed",
-          });
-          return res
-            .status(mlResponse.status)
-            .json({ error: "Microbiome analysis could not be completed. Review the report or retry later." });
-        }
-        const analysisId = await storage.insertMlAnalysis({
-          sampleId,
-          analysisType: "comprehensive",
-          modelVersion: mlResult.model_version,
-          results: mlResult as any,
-          confidence: mlResult.confidence,
-          comparedCohorts: cohortsToCompare,
-        });
-
-        const existingBacteria =
-          await storage.getBacterialComposition(sampleId);
-        const existingMetabolites = await storage.getMetabolites(sampleId);
-        const existingRecommendations =
-          await storage.getRecommendations(sampleId);
-        // Preserve reported composition; avoid duplicate rows on repeated model runs.
-        for (const bacteria of mlResult.bacterial_composition) {
-          if (
-            existingBacteria.some(
-              (row) => row.bacterialName === bacteria.bacterial_name,
-            )
-          )
-            continue;
-          await storage.insertBacterialComposition({
-            sampleId,
-            bacterialName: bacteria.bacterial_name,
-            taxonomyLevel: bacteria.taxonomy_level,
-            abundance: bacteria.abundance,
-            genomeData: bacteria.genome_data,
-          });
-        }
-
-        // Save metabolites
-        for (const metabolite of mlResult.metabolites) {
-          if (
-            existingMetabolites.some(
-              (row) => row.metaboliteName === metabolite.metabolite_name,
-            )
-          )
-            continue;
-          await storage.insertMetabolite({
-            sampleId,
-            metaboliteName: metabolite.metabolite_name,
-            pathwayId: metabolite.pathway_id,
-            predictedConcentration: metabolite.predicted_concentration,
-            confidence: metabolite.confidence,
-            productionGenes: metabolite.production_genes,
-          });
-        }
-
-        // Save recommendations
-        for (const rec of mlResult.recommendations) {
-          if (existingRecommendations.some((row) => row.itemName === rec.item))
-            continue;
-          await storage.insertRecommendation({
-            sampleId,
-            analysisId,
-            recommendationType: rec.type,
-            category: rec.category,
-            itemName: rec.item,
-            reasoning: rec.reasoning,
-            details: rec.details,
-            priority: rec.priority,
-            expectedImpact: rec.expected_impact,
-            targetBacteria: rec.target_bacteria,
-            targetMetabolites: rec.target_metabolites,
-          });
-        }
-
-        // Update sample with diversity index and status
-        await storage.updateMicrobiomeSample(sampleId, {
-          diversityIndex: mlResult.diversity_index,
-          processingStatus: "completed",
-        });
-
-        res.json({
-          success: true,
-          analysisId,
-          results: mlResult,
-        });
-      } catch (error: any) {
-        console.error("Analysis request could not be completed.");
-        if (authorizedSampleId) await storage
-          .updateMicrobiomeSample(authorizedSampleId, {
-            processingStatus: "failed",
-          })
-          .catch(() => {});
-        res.status(503).json({ error: "Analysis could not be completed. Please retry later." });
-      }
-    },
-  );
+  // Local descriptive summary of supported reported composition only.
+  app.post('/api/microbiome/analyze/:sampleId',requireAuth,analyzeReportedComposition(storage));
 
   // Get analysis results
   app.get(
@@ -232,19 +92,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     },
   );
-
-  // Get available cohorts
-  app.get("/api/microbiome/cohorts", requireAuth, async (req, res) => {
-    try {
-      const mlResponse = await mlServiceFetch("/api/ml/cohorts");
-      if (!mlResponse.ok) throw Error("Cohort service unavailable.");
-      const cohorts = await mlResponse.json();
-      res.json(cohorts);
-    } catch (error: any) {
-      console.error("Cohort service could not be reached.");
-      res.status(503).json({ error: "Cohort information is unavailable." });
-    }
-  });
 
   // Health check for ML service
   app.get("/api/ml/health", async (req, res) => {

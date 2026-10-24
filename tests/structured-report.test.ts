@@ -8,6 +8,30 @@ import {
 } from "../shared/structured-report";
 import { registerReportRoutes } from "../server/report-routes";
 import { insertMicrobiomeSampleSchema } from "../shared/schema";
+test('cohort API cannot promote an older unvalidated processing dataset or caller flags to reference/personal comparison outputs',async()=>{
+ let legacyCalls=0;
+ const legacy=express();legacy.get('/api/ml/cohorts',(_req,res)=>{legacyCalls++;res.json({cohorts:[{id:'elite_athletes',sample_size:250,diversity_index:3.4,privateUnsupportedSentinel:'unvalidated-reference-profile'}]});});
+ const oldServer=legacy.listen(0,'127.0.0.1');await new Promise<void>(resolve=>oldServer.on('listening',resolve));
+ const oldUrl=`http://127.0.0.1:${(oldServer.address() as any).port}`;
+ const fixture=await (await fetch(oldUrl+'/api/ml/cohorts')).json();assert.equal(fixture.cohorts[0].sample_size,250);legacyCalls=0;
+ const app=express();
+ registerReportRoutes(app,(req,res,next)=>req.header('x-user')?next():void res.status(401).json({error:'Auth required'}),new Proxy({},{get(){throw Error('No account storage needed for cohort availability');}}) as any,oldUrl);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.on('listening',resolve));
+ const base=`http://127.0.0.1:${(server.address() as any).port}`;
+ try{
+  assert.equal((await fetch(base+'/api/microbiome/cohorts')).status,401);
+  for(const path of ['/api/microbiome/cohorts','/api/microbiome/cohorts?developer=true&researchConsent=true&sampleId=other']){
+   const response=await fetch(base+path,{headers:{'x-user':'synthetic-reviewer','x-bloom-development':'true'}});
+   assert.equal(response.status,200);assert.equal(response.headers.get('cache-control'),'no-store');
+   const result=await response.json();assert.deepEqual(result.cohorts,[]);assert.equal(result.status,'unavailable');assert.equal(result.interpretationStatus,'no_validated_reference_dataset');
+   assert.doesNotMatch(JSON.stringify(result),/sample_size|diversity_index|elite_athletes|unvalidated-reference-profile/);
+  }
+  assert.equal(legacyCalls,0);
+ }finally{
+  server.closeAllConnections();oldServer.closeAllConnections();
+  await Promise.all([new Promise<void>(resolve=>server.close(()=>resolve())),new Promise<void>(resolve=>oldServer.close(()=>resolve()))]);
+ }
+});
 export const syntheticReport = {
   schema_version: "1.0",
   data_origin: "Synthetic reconstruction; not an official export",

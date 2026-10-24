@@ -4,7 +4,7 @@ const limitation="Relative organism percentages do not establish gene activity, 
 export function reportedAbundanceAnalysis(sampleId:string,reported:unknown){
  const percentages=abundanceSchema.parse(reported);
  const positive=Object.values(percentages).filter(v=>v>0),total=positive.reduce((a,b)=>a+b,0);
- const diversity=total>0?-positive.reduce((n,v)=>n+(v/total)*Math.log(v/total),0):null;
+ const diversity=total>0?Math.max(0,-positive.reduce((n,v)=>n+(v/total)*Math.log(v/total),0)):null;
  return {sample_id:sampleId,status:"completed",model_version:"reported-abundance-v3",interpretation_status:"reported_composition_only",confidence:null,diversity_index:diversity,
   bacterial_composition:Object.entries(percentages).map(([bacterial_name,abundance])=>({bacterial_name,abundance,taxonomy_level:"reported taxon",genome_data:{gene_count:null,metabolic_pathways:[]}})),
   metabolites:[] as any[],health_impacts:[],recommendations:[] as any[],cohort_comparisons:{},limitations:[limitation,"Shannon diversity describes the supplied relative composition; a higher value does not establish better health."]};
