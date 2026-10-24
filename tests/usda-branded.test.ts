@@ -49,3 +49,17 @@ test("default product transport rejects oversized streams before decoding the wh
  globalThis.fetch=async()=>new Response(new ReadableStream({start(c){c.enqueue(new Uint8Array(3000001));},cancel(){cancelled=true;}}));
  try{const service=new ProductService(undefined,()=>false,()=>"synthetic-key");const result=await service.search("KitKat","food",store(),"a");assert.ok(result.warnings.some(w=>/temporarily unavailable/.test(w)));assert.equal(cancelled,true);}finally{globalThis.fetch=original;}
 });
+
+test("live transport classifies denied access, throttling, timeout and malformed data without leaking credentials",async()=>{
+ const original=globalThis.fetch,warn=console.warn,logs:string[]=[];console.warn=(message)=>logs.push(String(message));
+ try {
+  for(const [status,phrase] of [[403,/access was denied/],[429,/request limit reached/]] as const){globalThis.fetch=async()=>new Response('private upstream text',{status});const service=new ProductService(undefined,()=>false,()=>"synthetic-secret");const r=await service.search('private query','food',store(),'a');assert.ok(r.warnings.some(w=>phrase.test(w)));}
+  globalThis.fetch=async()=>{throw new DOMException('URL with secret','TimeoutError');};assert.ok((await new ProductService(undefined,()=>false,()=>"synthetic-secret").search('private query','food',store(),'a')).warnings.some(w=>/timed out/.test(w)));
+  globalThis.fetch=async()=>Response.json({unexpected:'shape'});assert.ok((await new ProductService(undefined,()=>false,()=>"synthetic-secret").search('private query','food',store(),'a')).warnings.some(w=>/temporarily unavailable/.test(w)));
+  assert.equal(logs.some(x=>/synthetic-secret|private query|private upstream|URL/.test(x)),false);
+ }finally{globalThis.fetch=original;console.warn=warn;}
+});
+test("fixed public startup check reuses the product search cache without account data",async()=>{
+ let calls=0;const info=console.info;console.info=()=>{};
+ try{const service=new ProductService(async(_url,init)=>{calls++;assert.equal(JSON.parse(String(init?.body)).query,'kit kat');return {foods:[food]};},()=>false,()=>"synthetic-key");await service.verifyUSDABrandedSource();const result=await service.search('Kit Kat','food',store(),'a');assert.equal(calls,1);assert.ok(result.products.some(p=>p.id==='101'));}finally{console.info=info;}
+});

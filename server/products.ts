@@ -21,7 +21,11 @@ export type ProductStore = Pick<
   "getNutritionProducts" | "insertNutritionProduct" | "deleteNutritionProduct"
 >;
 export type ProductFetch = (url: string, init?: RequestInit) => Promise<any>;
-const download: ProductFetch = async (url, init) => {
+export class ProductSourceError extends Error {
+  constructor(readonly category: "http"|"timeout"|"network"|"size"|"invalid-response"|"budget", readonly status?:number) {super("Product source unavailable");}
+}
+const sourceFailure=(error:unknown)=>error instanceof ProductSourceError?error:new ProductSourceError((error as any)?.name==="TimeoutError"||(error as any)?.name==="AbortError"?"timeout":"network");
+const downloadResponse: ProductFetch = async (url, init) => {
   const r = await fetch(url, {
     ...init,
     signal: AbortSignal.timeout(10000),
@@ -31,15 +35,16 @@ const download: ProductFetch = async (url, init) => {
       ...init?.headers,
     },
   });
-  if (!r.ok) throw Error("Product source temporarily unavailable.");
-  if(Number(r.headers.get("content-length"))>3000000||!r.body){await r.body?.cancel();throw Error("Product response too large or unavailable.");}
+  if (!r.ok) {await r.body?.cancel();throw new ProductSourceError("http",r.status); }
+  if(Number(r.headers.get("content-length"))>3000000||!r.body){await r.body?.cancel();throw new ProductSourceError("size");}
   const reader=r.body.getReader(),decoder=new TextDecoder();let text="",bytes=0,parts=0;
   try{while(true){const {done,value}=await reader.read();if(done)break;bytes+=value.byteLength;
-    if(bytes>3000000||++parts>4096){await reader.cancel();throw Error("Product response too large.");}
+    if(bytes>3000000||++parts>4096){await reader.cancel();throw new ProductSourceError("size");}
     text+=decoder.decode(value,{stream:true});
   }text+=decoder.decode();}finally{reader.releaseLock();}
-  return JSON.parse(text);
+  try{return JSON.parse(text);}catch{throw new ProductSourceError("invalid-response");}
 };
+const download:ProductFetch=async(url,init)=>{try{return await downloadResponse(url,init);}catch(error){throw sourceFailure(error);}};
 const num = (v: unknown): v is number =>
   typeof v === "number" && Number.isFinite(v) && v >= 0;
 const now = () => new Date().toISOString();
@@ -289,7 +294,7 @@ export class ProductService {
   private usdaWindow={at:0,count:0};
   private usdaLimit(){
     if(Date.now()-this.usdaWindow.at>60000)this.usdaWindow={at:Date.now(),count:0};
-    if(this.usdaWindow.count>=12)throw Error("USDA source busy");
+    if(this.usdaWindow.count>=12)throw new ProductSourceError("budget");
     this.usdaWindow.count++;
   }
   private offWindow: { at: number; search: number; read: number } = {
@@ -297,7 +302,28 @@ export class ProductService {
     search: 0,
     read: 0,
   };
-  constructor(private fetchJson: ProductFetch = download, private offEnabled: () => boolean = () => process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true", private usdaKey:()=>string|undefined=()=>process.env.USDA_FDC_API_KEY) {}
+  constructor(private fetchJson: ProductFetch = download, private offEnabled: () => boolean = () => process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true", private usdaKey:()=>string|undefined=()=>process.env.USDA_FDC_API_KEY?.trim()) {}
+  private usdaSearch(query:string) {
+    return this.cached("usda-branded-search:"+brandedSearchQuery(query),()=>{
+      this.usdaLimit();
+      const key=this.usdaKey()?.trim();
+      return this.fetchJson(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(key||"")}`,
+        {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({query:brandedSearchQuery(query),dataType:["Branded"],pageSize:20})}).then(data=>{if(!Array.isArray(data?.foods))throw new ProductSourceError("invalid-response");return data;});
+    });
+  }
+  /** Fixed public startup check, no account/query data. Warms the same bounded cache as search. */
+  async verifyUSDABrandedSource() {
+    if(!this.usdaKey()?.trim())return;
+    const start=Date.now();
+    try {
+      const data=await this.usdaSearch("Kit Kat");
+      const foods=Array.isArray(data.foods)?data.foods:[];
+      console.info(`USDA Branded startup check: status=ok; returned=${foods.length}; elapsedMs=${Date.now()-start}`);
+    } catch(error) {
+      const failure=sourceFailure(error);
+      console.warn(`USDA Branded startup check: category=${failure.category}; status=${failure.status||0}; elapsedMs=${Date.now()-start}`);
+    }
+  }
   private async cached(key: string, read: () => Promise<any>) {
     const old = this.cache.get(key);
     if (old && old.until > Date.now()) return old.value;
@@ -347,12 +373,17 @@ export class ProductService {
       );
     const jobs = [] as Promise<void>[];
     const key=this.usdaKey();
-    if(kind!=="supplement"&&key)jobs.push(this.cached("usda-branded-search:"+brandedSearchQuery(q),()=>{this.usdaLimit();return this.fetchJson(
-      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(key)}`,
-      {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({query:brandedSearchQuery(q),dataType:["Branded"],pageSize:20})}
-    );}).then(data=>{
+    if(kind!=="supplement"&&key)jobs.push(this.usdaSearch(q).then(data=>{
       for(const raw of (Array.isArray(data.foods)?data.foods:[]).slice(0,20))try{results.push(normalizeUSDABranded(raw,false));}catch{}
-    }).catch(()=>{warnings.push("USDA Branded Foods is temporarily unavailable. Your saved labels and manual label entry still work.");}));
+    }).catch(error=>{
+      const failure=sourceFailure(error);
+      console.warn(`USDA Branded request failed: category=${failure.category}; status=${failure.status||0}`);
+      const reason=failure.category==="http"&&[401,403].includes(failure.status||0)?"access was denied by the source. The app operator needs to check the configured API key"
+        :failure.category==="budget"||failure.status===429?"request limit reached. Wait a minute before retrying"
+        :failure.category==="timeout"?"request timed out. Retry shortly"
+        :"is temporarily unavailable";
+      warnings.push(`USDA Branded Foods ${reason}. Your saved labels and manual label entry still work.`);
+    }));
     if(kind!=="supplement"&&!key)warnings.push("USDA Branded Foods is not configured. Enter your package label or use a private saved product; generic USDA foods are estimates.");
     if (kind !== "food")
       jobs.push(

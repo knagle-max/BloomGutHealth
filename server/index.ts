@@ -1,3 +1,4 @@
+import { productService } from "./products";
 import "./env";
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
@@ -101,6 +102,7 @@ app.use((req, res, next) => {
     },
     () => {
       log(`serving on port ${port}`);
+      void productService.verifyUSDABrandedSource();
       log(`Food sources: USDA Branded credential configured=${!!process.env.USDA_FDC_API_KEY?.trim()}; Open Food Facts approved=${process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true"}`);
     },
   );
