@@ -1,3 +1,4 @@
+import {decryptPrecision} from "../server/precision-crypto";
 import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
@@ -29,6 +30,6 @@ test("lab unit confirmation is authenticated, encrypted, owner-bound and transac
   assert.equal(a.data.payload.unitReview.supersedes,source.data.id);assert.ok(a.data.payload.unitReview.confirmedAt);
   const retry=await request(endpoint,{unit:'mg/dL'});assert.equal(retry.data.id,a.data.id);
   assert.equal((await store.getPrecisionRecords('a')).length,2);assert.equal((await store.getPrecisionRecords('b')).length,0);
-  const raw=await pg.query('SELECT encrypted_payload FROM precision_records');assert.ok(raw.rows.every((r:any)=>!JSON.stringify(r.encrypted_payload).includes('Synthetic lab')&&!JSON.stringify(r.encrypted_payload).includes('LDL')));
+  const raw=await pg.query('SELECT encrypted_payload FROM precision_records');for(const row of raw.rows as any[]){const envelope=row.encrypted_payload;assert.ok([1,2].includes(envelope.version));assert.ok(Object.keys(envelope).every(key=>['version','keyId','iv','tag','ciphertext'].includes(key)));assert.equal(Object.hasOwn(envelope,'value'),false);assert.equal((decryptPrecision(envelope,'a') as any).value,120);assert.throws(()=>decryptPrecision(envelope,'b'));}
  }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
 });

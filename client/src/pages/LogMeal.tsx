@@ -1,3 +1,5 @@
+import {useAuth} from "@/lib/auth";
+import RestaurantEntry from "@/components/RestaurantEntry";
 import FoodCapture from "@/components/FoodCapture";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, foodMass } from "@shared/nutrition-display";
@@ -25,6 +27,7 @@ import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
   const { settings } = useExperience();
+  const {user}=useAuth();
   const params = new URLSearchParams(window.location.search);
   const requestedType = params.get("type");
   const productQuery = (params.get("productQuery") || "").slice(0,120);
@@ -66,15 +69,18 @@ export default function LogMeal() {
   const [products, setProducts] = useState<Ingredient[]>([]);
   const [method,setMethod]=useState<FoodEntryMethod|null>(parseFoodEntryMethod(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
   const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search","restaurant"].includes(params.get("method")||""));
-  const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("");
+  const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("Canada"),[restaurantVisited,setRestaurantVisited]=useState(params.get("method")==="restaurant");
   const chooserHeading=useRef<HTMLHeadingElement>(null);
   const changeMethod=(next:FoodEntryMethod|null)=>{
+    if(next==="restaurant")setRestaurantVisited(true);
     if(next&&["barcode","search","restaurant"].includes(next))setPickerVisited(true);
     const url=new URL(window.location.href);if(next)url.searchParams.set("method",next);else url.searchParams.delete("method");
     window.history.pushState(null,"",url.pathname+url.search);setMethod(next);
     requestAnimationFrame(()=>chooserHeading.current?.focus());
   };
   useEffect(()=>{const back=()=>{const next=parseFoodEntryMethod(new URLSearchParams(window.location.search).get("method"));setMethod(next);if(next&&["barcode","search","restaurant"].includes(next))setPickerVisited(true);};window.addEventListener("popstate",back);return()=>window.removeEventListener("popstate",back);},[]);
+  const recentMeals=useQuery<Meal[]>({queryKey:["/api/meals",user?.id],enabled:!!user&&method==="restaurant"});
+  const recentRestaurants=(recentMeals.data||[]).flatMap(meal=>{const context=(meal.mealContext as any)?.restaurantContext;return typeof context?.restaurant==="string"&&typeof context?.market==="string"?[{restaurant:context.restaurant,market:context.market}]:[];});
   const pickerActive=method==="barcode"||method==="search"||method==="restaurant";
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
@@ -91,7 +97,7 @@ export default function LogMeal() {
             eatenAt: new Date(eatenAt).toISOString(),
             portion,
             symptoms,
-            ...((restaurant.trim()||market.trim())?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{}),
+            ...((restaurant.trim()||restaurantVisited)?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{}),
           },
         };
       const serialized = JSON.stringify(payload);
@@ -104,7 +110,7 @@ export default function LogMeal() {
       setSavedMeal(meal);
       setDescription("");
       setProducts([]);
-      setRestaurant("");setMarket("");setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
+      setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
       setCatalogueEnabled(false);
       queryClient.invalidateQueries({
         predicate: (query) =>
@@ -166,10 +172,10 @@ export default function LogMeal() {
         <h2 ref={chooserHeading} tabIndex={-1}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
         {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
         {!method&&<div className="grid gap-3 sm:grid-cols-2">{foodEntryMethods.map(m=><Button className="h-auto whitespace-normal text-left block" type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.description}</span></Button>)}</div>}
-        <p className="panel-note">Changing methods keeps this meal's description, selected products and unfinished product search. Camera access stops when you leave scanning. Nothing is saved until you confirm below.</p>
+        <p className="panel-note">Selected items and your description stay in this draft. Save only when ready.</p>
         {method==="describe"&&<div className="space-y-3"><p>Type foods and amounts in the shared meal review below. Selected products are counted separately.</p><FoodCapture voiceOnly onDescription={text=>setDescription(current=>[current,text].filter(Boolean).join("; "))} onProduct={()=>{}}/></div>}
-        <div hidden={method!=="restaurant"} className="space-y-3"><p>No official restaurant-menu catalogue is connected. Product search may find a published record; confirm country, item and serving. Generic foods are estimates. You can enter official menu nutrition as a private label or describe the meal without invented values.</p><label className="block">Restaurant name<input className="bloom-input w-full" maxLength={150} value={restaurant} onChange={e=>setRestaurant(e.target.value)}/></label><label className="block">Market / country (optional)<input className="bloom-input w-full" maxLength={100} value={market} onChange={e=>setMarket(e.target.value)}/></label><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe restaurant meal instead</Button></div>
-        {method==="photo"&&<div role="status" className="space-y-3"><p>Automatic photo interpretation is unavailable pending provider, privacy and accuracy approval. No image is requested or sent. You can enter the printed label or describe what you ate.</p><Button type="button" variant="outline" onClick={()=>changeMethod("search")}>Enter package nutrition instead</Button><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe food instead</Button></div>}
+        <div hidden={method!=="restaurant"} className="space-y-3"><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={setMarket}/><p className="panel-note">No official menu catalogue is connected. Check source and country; generic matches are estimates.</p><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe restaurant meal instead</Button><details><summary>Why?</summary><p>Common brands and saved restaurant names do not verify menu nutrition, availability or allergens. Enter values from the menu as a private label or use a description; missing values stay unknown.</p></details></div>
+        {method==="photo"&&<div role="status" className="space-y-3"><p>Automatic photo interpretation is unavailable. No image is requested or sent. Enter a label or describe your food.</p><Button type="button" variant="outline" onClick={()=>changeMethod("search")}>Enter package nutrition instead</Button><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe food instead</Button></div>}
         {products.length>=10&&<p role="alert">This meal supports up to 10 labelled products. Save the meal or remove one before adding another.</p>}
         {pickerVisited&&<div hidden={!pickerActive}><ProductPicker active={pickerActive} showBarcode={method==="barcode"} pending={products.length>=10} onPick={i=>{setProducts(v=>v.length>=10?v:[...v,i]);changeMethod(null);}} initialQuery={productQuery||description.slice(0,120)} autoSearch={!!productQuery}/></div>}
       </section>
@@ -218,7 +224,7 @@ export default function LogMeal() {
         <fieldset disabled={save.isPending} className="space-y-6">
           <legend className="sr-only">Meal details</legend>
           <h2>Review this meal</h2>
-          {(restaurant||market)&&<p className="panel-note">Restaurant context (entered by you): {restaurant} · {market||"market not specified"}. This context does not verify the nutrition source.</p>}
+          {(restaurant||restaurantVisited)&&<p className="panel-note">Restaurant context (entered by you): {restaurant||"restaurant not specified"} · {market||"market not specified"}. This context does not verify the nutrition source.</p>}
           <MealTypeSelector selected={mealType} onChange={setMealType} />
           <div className="space-y-2">
             {!catalogueEnabled&&<><Label htmlFor="food-input">Describe your meal</Label>

@@ -1,0 +1,6 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {commonRestaurantNames,restaurantSuggestions} from '../shared/restaurant-entry';
+test('restaurant shortcuts support a few typed characters and punctuation without claiming nearby/menu coverage',()=>{
+ assert.deepEqual(commonRestaurantNames('mcd','Canada'),["McDonald's"]);assert.deepEqual(commonRestaurantNames("McDonald’s",'Canada'),["McDonald's"]);assert.ok(commonRestaurantNames('','Canada').includes('Tim Hortons'));assert.equal(commonRestaurantNames('Panera','Canada').length,0);assert.ok(commonRestaurantNames('Panera','United States').includes('Panera Bread'));assert.deepEqual(commonRestaurantNames('anything','Other / unspecified'),[]);assert.deepEqual(commonRestaurantNames('synthetic unknown restaurant','Canada'),[]);
+});
+
+test('recent restaurant shortcuts are limited to the selected market and deduplicate common brands',()=>{const rows=restaurantSuggestions('','Canada',[{restaurant:'Synthetic Bistro',market:'Canada'},{restaurant:'US only',market:'United States'},{restaurant:"McDonald’s",market:'Canada'}]);assert.equal(rows[0].kind,'Recent restaurant');assert.equal(rows.some(r=>r.name==='US only'),false);assert.equal(rows.filter(r=>/McDonald/.test(r.name)).length,1);});
