@@ -89,3 +89,13 @@ Science AI status previously checked only credentials, although bloom.coach.gene
 219 tests, TypeScript, production build and synthetic rendered curated evidence workflow passed. Full source/capability inventory, recipe/parser cost enforcement and monetary ledger remain independently OPEN. This gate does not certify all AI services safe or budgeted.
 
 Today mobile 316fa8a6c72c48af754281e054d4671b8e838069: CI 40076962159 success; Render dep-dbe6fjs9v7es73c62o3g live. Restaurant b023b81 CI 40076500931 also success.
+
+## Atomic monetary accounting foundation (no provider activation)
+
+Added additive ai_spend_requests migration/Drizzle schema and SpendLedger with PostgreSQL transaction/advisory-lock serialization, HMAC account/request keys, integer micro-USD, explicit configured per-account daily/monthly and feature/day plus provider/platform month ceilings and shared concurrency. Retry returns prior state, settlement is idempotent and account-scoped, conflicting settlement rejects, actual overage persists, unknown outcome stays reserved across calendar resets, known pre-execution release frees allowance. Missing config denies; DB failure throws without permitting execution.
+
+Targeted embedded PostgreSQL tests passed; full suite/build in progress. Added guarded isolated-Neon multi-connection smoke to CI and support migration only in explicitly isolated preview process. No existing Render schema migration, key/tariff/budget configuration, paid API, provider enablement, account-data copy or actual billing took place. Not connected to current parser/recipe SDKs: runtime integration, billed-unit receipts, tariff freshness, circuits, aggregate alerts and secret/retention policy remain OPEN. docs/operations/AI_SPEND_LEDGER.md records exact integration and rollback constraints.
+
+Science gate 4d5d4f04312900a89860a83af7b97f1ff3bbe7a2 CI 40077179797 success, Render dep-dbe6h66k1f9s73f08tg0 live.
+
+Ledger batch local verification: all 224 tests, TypeScript and production build passed. UTC-reset test uses a non-UTC database session and checks month-boundary behavior. Real multi-connection Neon CI is pending publication; no runtime billing enforcement is claimed.

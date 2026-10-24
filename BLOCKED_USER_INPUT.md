@@ -63,3 +63,11 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Choices: Verify the existing preview meets those requirements and supply audited provisioning inputs; or retain no live grants and use synthetic harness pending an appropriate environment.
 - Recommended default: Preserve fail-closed grants; do not guess identity from username, enable public self-enrolment, or label an exposed service isolated without evidence.
 - Impact: Real tester1 toggle remains unavailable; internal module engineering proceeds with fixtures. Migration/recovery approval and separate capability clearances remain required.
+
+## OPS-702 — monetary policy and tariff activation
+
+- Status: BLOCKED_USER_INPUT for reviewed monetary configuration only; provider adapter/accounting engineering remains OPEN and independently actionable.
+- Exact question: Which provider/model tariff source and effective date, per-account daily/monthly and per-feature allowances, platform/provider ceiling, concurrency policy, stable accounting-identity secret-management/rotation and pseudonymous ledger retention are approved?
+- Choices: Supply reviewed configuration and authorize only separately cleared optional features; or defer monetary activation and keep no new provider enablement.
+- Recommended default: No invented tariffs, dollar limits, billing promises or new paid provider activation. Build/test with explicitly synthetic integer units. Store secrets only through approved secret management, never the handoff.
+- Impact: Blocks real monetary policy/paid-feature acceptance, not ledger, provider-unit contracts or other v0.5 work. The new ledger alone does not control current parser/recipe callsites.

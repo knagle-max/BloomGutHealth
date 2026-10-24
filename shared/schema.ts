@@ -7,6 +7,7 @@ import {
   varchar,
   timestamp,
   integer,
+  bigint,
   real,
   jsonb,
   boolean,
@@ -391,3 +392,14 @@ export const capabilityPreferences = pgTable("capability_preferences", {
   grantFingerprint:text("grant_fingerprint").notNull(),
   updatedAt:timestamp("updated_at").notNull().defaultNow(),
 });
+
+// Monetary accounting foundation: HMAC identities only; no health or prompt content.
+export const aiSpendRequests = pgTable("ai_spend_requests", {
+    requestKey: text("request_key").primaryKey(), accountKey: text("account_key").notNull(),
+    feature: text("feature").notNull(), provider: text("provider").notNull(), model: text("model").notNull(), tariffReference: text("tariff_reference").notNull(),
+    reservedMicroUsd: bigint("reserved_micro_usd", { mode: "bigint" }).notNull(), settledMicroUsd: bigint("settled_micro_usd", { mode: "bigint" }),
+    state: text("state").notNull(), billingBasis: text("billing_basis"), createdAt: timestamp("created_at", { withTimezone: true }).notNull().default(sql `clock_timestamp()`), settledAt: timestamp("settled_at", { withTimezone: true }),
+}, table => [index("ai_spend_account_time").on(table.accountKey, table.createdAt), index("ai_spend_provider_time").on(table.provider, table.createdAt),
+    check("ai_spend_reserved_positive", sql `${table.reservedMicroUsd} > 0`), check("ai_spend_settled_nonnegative", sql `${table.settledMicroUsd} >= 0`),
+    check("ai_spend_state", sql `${table.state} IN ('reserved','settled','released')`), check("ai_spend_basis", sql `${table.billingBasis} IN ('actual','estimated')`),
+    check("ai_spend_consistency", sql `(${table.state} = 'reserved' AND ${table.settledMicroUsd} IS NULL AND ${table.billingBasis} IS NULL AND ${table.settledAt} IS NULL) OR (${table.state} = 'settled' AND ${table.settledMicroUsd} IS NOT NULL AND ${table.billingBasis} IS NOT NULL AND ${table.settledAt} IS NOT NULL) OR (${table.state} = 'released' AND ${table.settledMicroUsd} = 0 AND ${table.billingBasis} IS NULL AND ${table.settledAt} IS NOT NULL)`)]);
