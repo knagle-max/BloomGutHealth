@@ -15,31 +15,38 @@ test("account snapshot includes every owned class, decrypts original payloads an
  try {
  const tables=[schema.users,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.healthSourceConsents,schema.healthObservations,schema.capabilityPreferences];
  for(const table of tables){const c=getTableConfig(table);await pg.exec(`CREATE TABLE "${c.name}" (${c.columns.map(col=>`"${col.name}" ${col.getSQLType()}`).join(',')})`);}
- const db=drizzle(pg),store=new AccountExportStorage(db as any);
+ const queries:string[]=[];const db=drizzle(pg,{logger:{logQuery(query){queries.push(query);}}}),store=new AccountExportStorage(db as any);
  for(const user of ['a','b']) {
   await db.insert(schema.users).values({id:user,username:user,password:'HASH-MUST-NOT-EXPORT'});
   await db.insert(schema.capabilityPreferences).values({userId:user,enabled:true,grantFingerprint:'AUTH-GRANT-MUST-NOT-EXPORT'});
   await db.insert(schema.meals).values({id:'meal-'+user,userId:user,mealText:user+' lunch',totalCalories:0,nutritionalData:{calories:0,protein:null}});
   await db.insert(schema.microbiomeSamples).values({id:'sample-'+user,userId:user,testDate:new Date('2026-10-01Z'),rawDataPath:'/private/internal.fastq',structuredData:{originalUnit:'percent'}});
-  await db.insert(schema.bacterialComposition).values({id:'bac-'+user,sampleId:'sample-'+user,bacterialName:user,taxonomyLevel:'species',abundance:0});
-  await db.insert(schema.metabolites).values({id:'met-'+user,sampleId:'sample-'+user,metaboliteName:user});
-  await db.insert(schema.healthImpacts).values({id:'impact-'+user,metaboliteId:'met-'+user,impactCategory:'historical',impactDescription:user});
-  await db.insert(schema.mlAnalyses).values({id:'analysis-'+user,sampleId:'sample-'+user,analysisType:'historical',modelVersion:'old',results:{owner:user}});
-  await db.insert(schema.recommendations).values({id:'rec-'+user,sampleId:'sample-'+user,recommendationType:'historical',category:'old',itemName:user,reasoning:'stored'});
+  await db.insert(schema.bacterialComposition).values({id:'bac-'+user,sampleId:'sample-'+user,bacterialName:user,taxonomyLevel:'species',abundance:0,genomeData:{gene_count:88,metabolic_pathways:['FORBIDDEN_FUNCTION_SENTINEL']}});
+  await db.insert(schema.metabolites).values({id:'met-'+user,sampleId:'sample-'+user,metaboliteName:user,predictedConcentration:9.87654,confidence:.98,productionGenes:['FORBIDDEN_GENE_SENTINEL']});
+  await db.insert(schema.healthImpacts).values({id:'impact-'+user,metaboliteId:'met-'+user,impactCategory:'historical',impactDescription:'FORBIDDEN_CLINICAL_SENTINEL',impactScore:9.87654,mechanismOfAction:'FORBIDDEN_MECHANISM_SENTINEL'});
+  await db.insert(schema.mlAnalyses).values({id:'analysis-'+user,sampleId:'sample-'+user,analysisType:'historical',modelVersion:'old',results:{owner:user,score:9.87654,advice:'FORBIDDEN_ANALYSIS_SENTINEL'},confidence:.98,explainability:{note:'FORBIDDEN_EXPLANATION_SENTINEL'},analyzedAt:new Date('2026-10-02T12:00:00Z')});
+  await db.insert(schema.recommendations).values({id:'rec-'+user,sampleId:'sample-'+user,recommendationType:'historical',category:'old',itemName:'FORBIDDEN_DOSE_SENTINEL',reasoning:'FORBIDDEN_REASONING_SENTINEL',details:'FORBIDDEN_ADVICE_SENTINEL',expectedImpact:.987654});
   const payload={owner:user,value:12,unit:'source-unit',confirmation:'provisional'};
   for(const table of [schema.precisionRecords,schema.nutritionProducts,schema.experienceRecords,schema.healthObservations])await db.insert(table as any).values({id:'private-'+user,userId:user,kind:'lab',sourceKey:'key-'+user,encryptedPayload:encryptPrecision(payload,user)});
   await db.insert(schema.precisionProfiles).values({userId:user,encryptedContext:encryptPrecision(payload,user)});
   await db.insert(schema.experienceSettings).values({userId:user,encryptedPayload:encryptPrecision(payload,user)});
   await db.insert(schema.healthSourceConsents).values({userId:user,provider:'apple_health',encryptedPayload:encryptPrecision(payload,user)});
  }
- const a=await store.exportAccount('a'),b=await store.exportAccount('b');
+ queries.length=0;const a=await store.exportAccount('a'),b=await store.exportAccount('b');
+ assert.equal(a.format,'bloom-account-records-v2');assert.equal(a.derivedOutputPolicy.historicalGeneratedRecords,'metadata-only');
+ assert.ok(queries.every(query=>!['predicted_concentration','impact_description','expected_impact','genome_data','results','explainability'].some(column=>query.includes(String.fromCharCode(34)+column+String.fromCharCode(34)))));
+ assert.equal(a.gutReports.bacteria[0].abundance,0);assert.equal(a.gutReports.bacteria[0].genomeData,null);assert.deepEqual(a.gutReports.samples[0].structuredData,{originalUnit:'percent'});
+ for(const rows of [a.gutReports.metabolites,a.gutReports.healthImpacts,a.gutReports.analyses,a.gutReports.recommendations])assert.equal(rows[0].interpretationStatus,'historical_model_outputs_withheld');
+ assert.equal(a.gutReports.analyses[0].results,null);assert.equal(a.gutReports.analyses[0].confidence,null);assert.equal(a.gutReports.analyses[0].createdAt.toISOString(),'2026-10-02T12:00:00.000Z');
+ assert.ok((await db.select().from(schema.metabolites)).every(row=>row.predictedConcentration!>9));
+ assert.ok((await db.select().from(schema.mlAnalyses)).every(row=>(row.results as any).advice==='FORBIDDEN_ANALYSIS_SENTINEL'));
  assert.equal(a.experimentalPreference?.enabled,true);assert.equal(a.profile.id,'a');assert.equal(a.journal.length,1);assert.equal(a.journal[0].totalCalories,0);
  assert.deepEqual(a.journal[0].nutritionalData,{calories:0,protein:null});
  for(const rows of Object.values(a.gutReports))assert.equal(rows.length,1);
  assert.equal(a.gutReports.samples[0].id,'sample-a');assert.equal(b.gutReports.samples[0].id,'sample-b');
  assert.deepEqual((a.biology.records[0].payload as any),{owner:'a',value:12,unit:'source-unit',confirmation:'provisional'});
  assert.equal((a.savedLabels[0].payload as any).owner,'a');assert.equal((a.experience.records[0].payload as any).owner,'a');assert.equal((a.healthSources.observations![0].payload as any).owner,'a');
- const text=JSON.stringify(a);for(const forbidden of ['HASH-MUST-NOT-EXPORT','AUTH-GRANT-MUST-NOT-EXPORT','/private/internal.fastq','encryptedPayload','ciphertext','sample-b','meal-b'])assert.equal(text.includes(forbidden),false);
+ const text=JSON.stringify(a);for(const forbidden of ['HASH-MUST-NOT-EXPORT','AUTH-GRANT-MUST-NOT-EXPORT','/private/internal.fastq','encryptedPayload','ciphertext','sample-b','meal-b','FORBIDDEN_','predictedConcentration','impactScore','productionGenes'])assert.equal(text.includes(forbidden),false);
  await assert.rejects(()=>store.exportAccount('missing'));
  await pg.exec('DROP TABLE health_source_consents');const older=await store.exportAccount('a');assert.equal(older.healthSources.storage.consents,'not-provisioned');assert.equal(older.healthSources.consents,null);assert.equal(older.healthSources.observations!.length,1);assert.equal(older.journal.length,1);
  await pg.exec('DROP TABLE health_observations');assert.equal((await store.exportAccount('a')).healthSources.observations,null);
@@ -53,5 +60,5 @@ test("account export requires auth, uses session identity only and returns safe 
  app.use((req,_res,next)=>{req.session={userId:req.headers['x-test-user']} as any;next();});
  registerAccountRoutes(app,(req,res,next)=>req.session.userId?next():void res.status(401).end(),{exportAccount:async id=>{calls.push(id);if(fail)throw Error('private database detail');return oversized?{data:'x'.repeat(26*1024*1024)}:{profile:{id}};}});
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server.on('listening',r));const url='http://127.0.0.1:'+(server.address() as any).port+'/api/account/export';
- try{assert.equal((await fetch(url)).status,401);const response=await fetch(url+'?userId=b',{headers:{'x-test-user':'a'}});assert.equal(response.headers.get('cache-control'),'no-store');assert.match(response.headers.get('content-disposition')||'',/attachment/);assert.equal((await response.json()).profile.id,'a');assert.deepEqual(calls,['a']);fail=true;const error=await fetch(url,{headers:{'x-test-user':'a'}});assert.equal(error.status,503);assert.equal((await error.text()).includes('private database detail'),false);assert.equal(error.headers.get('content-disposition'),null);fail=false;oversized=true;const large=await fetch(url,{headers:{'x-test-user':'a'}});assert.equal(large.status,503);assert.equal(large.headers.get('content-disposition'),null);}finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
+ try{assert.equal((await fetch(url)).status,401);const response=await fetch(url+'?userId=b&includeRaw=true&experimental=true',{headers:{'x-test-user':'a','x-internal-tester':'true'}});assert.equal(response.headers.get('cache-control'),'no-store');assert.match(response.headers.get('content-disposition')||'',/attachment/);assert.equal((await response.json()).profile.id,'a');assert.deepEqual(calls,['a']);fail=true;const error=await fetch(url,{headers:{'x-test-user':'a'}});assert.equal(error.status,503);assert.equal((await error.text()).includes('private database detail'),false);assert.equal(error.headers.get('content-disposition'),null);fail=false;oversized=true;const large=await fetch(url,{headers:{'x-test-user':'a'}});assert.equal(large.status,503);assert.equal(large.headers.get('content-disposition'),null);}finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
 });

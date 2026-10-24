@@ -414,7 +414,10 @@ try {
     201,
   );
   assert.equal((await request("/api/precision")).checkins[0].bloating, 0);
+  const legacyExportRecord=await pool.query("INSERT INTO ml_analyses(sample_id,analysis_type,model_version,results,confidence) VALUES($1,'synthetic-legacy','unreviewed-synthetic',$2::jsonb,0.99) RETURNING id",[functional.sampleId,JSON.stringify({unsupportedScore:0.987654,advice:'UNSUPPORTED_EXPORT_SENTINEL'})]);
   const accountExport = await request("/api/account/export");
+  assert.equal(accountExport.format,"bloom-account-records-v2");
+  const exportedLegacy=accountExport.gutReports.analyses.find(row=>row.id===legacyExportRecord.rows[0].id);assert.ok(exportedLegacy);assert.equal(exportedLegacy.results,null);assert.equal(exportedLegacy.confidence,null);assert.equal(exportedLegacy.interpretationStatus,"historical_model_outputs_withheld");assert.equal(JSON.stringify(accountExport).includes('UNSUPPORTED_EXPORT_SENTINEL'),false);
   assert.equal(accountExport.profile.id,first.id);
   assert.ok(accountExport.journal.some(m=>m.id===meal.id));
   assert.ok(accountExport.savedLabels.some(p=>p.id===personalProduct.id));
@@ -422,7 +425,7 @@ try {
   assert.ok(accountExport.gutReports.samples.some(s=>s.id===functional.sampleId));
   assert.equal(Object.hasOwn(accountExport.profile,"password"),false);
   assert.equal(JSON.stringify(accountExport).includes("encryptedPayload"),false);
-  console.log("PASS: combined account export preserves persisted records and excludes auth material");
+  console.log("PASS: combined account export preserves original records, withholds unsupported generated outputs and excludes auth material");
   const today = await request("/api/precision/today-plan", "POST", {
     date: new Date().toISOString().slice(0, 10),
     timezoneOffset: 0,
@@ -468,7 +471,7 @@ try {
   await request(`/api/experience/templates/${savedMeal.id}/log`,"POST",{servings:1,mealType:"breakfast",eatenAt:"2026-10-18T18:00:00Z"},404);
 
   const secondExport = await request("/api/account/export");
-  assert.equal(secondExport.format,"bloom-account-records-v1");
+  assert.equal(secondExport.format,"bloom-account-records-v2");
   assert.equal(secondExport.profile.id,second.id);
   assert.equal(secondExport.savedLabels.length,0);
   assert.equal(secondExport.gutReports.samples.length,0);

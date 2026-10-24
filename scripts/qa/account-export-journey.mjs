@@ -13,13 +13,13 @@ else if(p==='/api/precision')json={context:{allergies:[]},goals:[]};
 else if(p==='/api/health-sources')json={connections:[]};
 else if(p==='/api/profile')json={};
 else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
-else if(p==='/api/account/export'){calls++;if(unavailable)return route.fulfill({status:503,json:{error:'Account records could not be exported. No partial download was produced.'}});json={format:'bloom-account-records-v1',profile:{id:'synthetic-export'},journal:[{totalCalories:0,nutritionalData:{protein:null}}],limits:['Synthetic browser fixture only']};}
+else if(p==='/api/account/export'){calls++;if(unavailable)return route.fulfill({status:503,json:{error:'Account records could not be exported. No partial download was produced.'}});json={format:'bloom-account-records-v2',derivedOutputPolicy:{historicalGeneratedRecords:'metadata-only'},gutReports:{analyses:[{id:'synthetic-legacy',results:null,interpretationStatus:'historical_model_outputs_withheld'}]},profile:{id:'synthetic-export'},journal:[{totalCalories:0,nutritionalData:{protein:null}}],limits:['Synthetic browser fixture only']};}
 await route.fulfill({json});});
 try {
  await page.goto('http://127.0.0.1:5189/profile');
  const button=page.getByRole('button',{name:'Download my account records',exact:true});await button.waitFor();assert.equal(await button.isDisabled(),true);assert.equal(calls,0);
  await page.getByRole('checkbox',{name:/I understand this file contains sensitive health/}).check();
- const downloadPromise=page.waitForEvent('download');await button.click();const download=await downloadPromise;assert.equal(download.suggestedFilename(),'bloom-account-records.json');const data=JSON.parse(await readFile(await download.path(),'utf8'));assert.equal(data.profile.id,'synthetic-export');assert.equal(data.journal[0].totalCalories,0);assert.equal(data.journal[0].nutritionalData.protein,null);
+ const downloadPromise=page.waitForEvent('download');await button.click();const download=await downloadPromise;assert.equal(download.suggestedFilename(),'bloom-account-records.json');const data=JSON.parse(await readFile(await download.path(),'utf8'));assert.equal(data.profile.id,'synthetic-export');assert.equal(data.format,'bloom-account-records-v2');assert.equal(data.derivedOutputPolicy.historicalGeneratedRecords,'metadata-only');assert.equal(data.gutReports.analyses[0].results,null);assert.equal(data.journal[0].totalCalories,0);assert.equal(data.journal[0].nutritionalData.protein,null);
  unavailable=true;await button.click();await page.getByRole('alert').filter({hasText:'No partial download'}).waitFor();assert.equal(calls,2);
  for(const width of [320,768,1440]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
  assert.deepEqual(errors,[]);console.log('PASS: synthetic Profile export acknowledgement, JSON download, failure/retry and 320–1440px reflow');
