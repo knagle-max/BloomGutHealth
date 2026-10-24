@@ -1,3 +1,4 @@
+import {restrictedCapabilityAllowed} from "./capability-policy";
 import OpenAI from "openai";
 import {
   preferenceSchema,
@@ -40,7 +41,7 @@ export async function prepareSciencePlan(
     return {
       ...plan,
       aiStatus:
-        "AI ranking is not configured. This is a curated evidence plan, with no AI call.",
+        "Curated evidence plan; no AI ranking was used.",
     };
   if (!plan.actions.length)
     return {
@@ -60,9 +61,10 @@ export async function prepareSciencePlan(
 }
 
 export function configuredRanker(): EvidenceRanker | undefined {
-  if (!process.env.OPENAI_API_KEY || !process.env.OPENAI_SCIENCE_MODEL)
+  if (!restrictedCapabilityAllowed("bloom.coach.general") || !process.env.OPENAI_API_KEY || !process.env.OPENAI_SCIENCE_MODEL)
     return undefined;
   return async (plan, preferences) => {
+    if (!restrictedCapabilityAllowed("bloom.coach.general")) throw new Error("Capability unavailable");
     const client = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
       timeout: 20000,
@@ -118,9 +120,7 @@ export function registerScienceRoutes(
   const windows = new Map<string, { start: number; requests: number }>();
   app.get("/api/science/status", dependencies.requireAuth, (_req, res) => {
     res.json({
-      aiAvailable: !!(
-        process.env.OPENAI_API_KEY && process.env.OPENAI_SCIENCE_MODEL
-      ),
+      aiAvailable: !!configuredRanker(),
     });
   });
   app.post("/api/science/plan", dependencies.requireAuth, async (req, res) => {

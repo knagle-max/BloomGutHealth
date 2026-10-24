@@ -81,3 +81,11 @@ Removed duplicated empty nutrition panel and duplicated journal CTA, shortened h
 Actual before/after Chromium renders at 320/375/390, light/dark, one incomplete meal, disconnected state, canonical keyboard Add food, 44px target, no horizontal overflow, focus and page-end clearance passed. Existing Today session/goal/partial/unavailable regression passed. 218 full tests, TypeScript and production build passed. CSS root zoom generated a harness-only header overflow; replaced with reduced CSS viewport model, explicitly not physical zoom acceptance. Actual Safari/VoiceOver remains external. Neutral cards already in baseline; no invented palette defect.
 
 Restaurant correction published b023b8156863b6596e90211653d02fd2544eb5ae; Render dep-dbe6c8pr5j6c73fj9n80 live. Recovery dd59a6b CI 40076326533 passed and Render dep-dbe6b3ijnfac73dfobog was live.
+
+## Coaching provider availability respects capability policy
+
+Science AI status previously checked only credentials, although bloom.coach.general remains HIDDEN_PENDING_APPROVAL. Both configured SDK factory and returned execution now check the central restricted policy; direct forged consent/provider credentials cause zero provider calls while returning a curated evidence plan. Unavailable AI control is absent without an unavailable company-setup tile. Pure injected-ranker tests remain synthetic and cannot be selected through HTTP. No capability activated and no credentials changed.
+
+219 tests, TypeScript, production build and synthetic rendered curated evidence workflow passed. Full source/capability inventory, recipe/parser cost enforcement and monetary ledger remain independently OPEN. This gate does not certify all AI services safe or budgeted.
+
+Today mobile 316fa8a6c72c48af754281e054d4671b8e838069: CI 40076962159 success; Render dep-dbe6fjs9v7es73c62o3g live. Restaurant b023b81 CI 40076500931 also success.

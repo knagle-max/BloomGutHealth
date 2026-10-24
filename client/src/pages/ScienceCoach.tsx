@@ -188,7 +188,7 @@ function GoalForm({ userId }: { userId: string }) {
             constitute a low-FODMAP diet or clinical plan.
           </p>
         </fieldset>
-        <details className="ai-options">
+        {status.data?.aiAvailable && <details className="ai-options">
           <summary>
             <Sparkles size={17} /> Optional AI prioritization{" "}
             <ChevronDown size={15} />
@@ -238,16 +238,8 @@ function GoalForm({ userId }: { userId: string }) {
                 Preferences stay in memory and are not saved in this form.
               </p>
             </>
-          ) : (
-            <p className="panel-note">
-              {status.isLoading
-                ? "Checking AI availability…"
-                : status.isError
-                  ? "Could not check AI availability. You can still generate a curated evidence plan."
-                  : "AI ranking is not configured on this server. The cited evidence planner is available."}
-            </p>
-          )}
-        </details>
+          ) : null}
+        </details>}
         {generate.isError && (
           <p role="alert" className="text-destructive text-sm">
             {generate.error.message}

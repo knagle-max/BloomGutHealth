@@ -11,6 +11,7 @@ import {
 } from "../shared/science-coach";
 import {
   prepareSciencePlan,
+  configuredRanker,
   registerScienceRoutes,
 } from "../server/science-coach";
 import express from "express";
@@ -106,7 +107,7 @@ test("no AI or unsupported cohorts return honest evidence plans", async () => {
         [],
       )
     ).aiStatus,
-    /not configured/,
+    /no AI ranking/,
   );
   let calls = 0;
   const plan = await prepareSciencePlan(
@@ -209,4 +210,15 @@ test("plan endpoint enforces auth, user scope, recent window, validation and req
   } finally {
     await new Promise<void>((resolve) => server.close(() => resolve()));
   }
+});
+
+test("provider credentials and forged AI consent cannot enable unapproved coaching; curated evidence stays available",async()=>{
+ const oldKey=process.env.OPENAI_API_KEY,oldModel=process.env.OPENAI_SCIENCE_MODEL,oldFetch=globalThis.fetch;let providerCalls=0;
+ process.env.OPENAI_API_KEY='synthetic-not-a-credential';process.env.OPENAI_SCIENCE_MODEL='synthetic-model';
+ const app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:'synthetic'} as any;next();});registerScienceRoutes(app,{requireAuth:(_req,_res,next)=>next(),getMeals:async()=>[]});
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server.on('listening',r));
+ const base='http://127.0.0.1:'+(server.address() as any).port;
+ globalThis.fetch=(async(input,init)=>{if(String(input).startsWith('https://api.openai.com')){providerCalls++;throw Error('Provider must not execute');}return oldFetch(input,init);}) as typeof fetch;
+ try{assert.equal(configuredRanker(),undefined);const status=await fetch(base+'/api/science/status');assert.deepEqual(await status.json(),{aiAvailable:false});const response=await fetch(base+'/api/science/plan',{method:'POST',headers:{'content-type':'application/json','x-internal-tester':'true'},body:JSON.stringify({goals:['diversity'],aiConsent:true})});assert.equal(response.status,200);const plan=await response.json();assert.ok(plan.actions.length>0);assert.match(plan.aiStatus,/no AI ranking/);assert.equal(providerCalls,0);}
+ finally{globalThis.fetch=oldFetch;if(oldKey===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=oldKey;if(oldModel===undefined)delete process.env.OPENAI_SCIENCE_MODEL;else process.env.OPENAI_SCIENCE_MODEL=oldModel;server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
 });

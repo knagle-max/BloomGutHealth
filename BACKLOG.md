@@ -35,3 +35,5 @@ Execution resources recovered after the stated reset time on 2026-10-24. Normal 
 | MKT-MOB-1401–1405 | P0/P1 | Screenshot-backed Today journal empty state, reflow and safe-area validation | IMPLEMENTED_AND_TESTED (browser); DEVICE_ACCEPTANCE_PENDING | New Architect 9cba721 owner screenshot handoff. Inspect current Dashboard and reproduce before changes. |
 
 Mobile evidence: docs/review/today-mobile-20261024. 218 tests/types/build and rendered empty/one-meal/error/keyboard/light-dark/320–390 checks passed. Neutral card surfaces already present; physical Safari/VoiceOver and Athlete/internal composition remain unverified.
+
+| GATE-701-COACH | P0 | Gate unapproved optional coaching ranking at SDK factory/execution and status | IMPLEMENTED_AND_TESTED | 219 tests/types/build and synthetic rendered curated-plan journey passed. Provider keys/forged consent do not authorize AI. Curated evidence retained. This is not full 52-feature enforcement or an AI spend ledger. |
