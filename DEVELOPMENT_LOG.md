@@ -73,3 +73,11 @@ Architect 8cb808e records no menu items after brand selection. Removed dedicated
 Recovery regression published dd59a6beb43f512391e54a21b81a8f91ac33083f after preserving Architect 11cf8f7/8cb808e. Exact CI/deploy pending at publication.
 
 Restaurant readiness correction: 218 tests, TypeScript and production build passed; synthetic rendered journey passed at mobile through desktop. Actual menu-source/live acceptance remains blocked, not inferred from fixture success.
+
+## Today mobile journal — screenshot-backed P0 fix
+
+Removed duplicated empty nutrition panel and duplicated journal CTA, shortened heading to Food journal and kept No meals yet plus explicit unknown intake. Empty Today focus no longer duplicates the journal logging action. Logged/partial/error focus paths preserved. Heading/action wrap; mobile row now shows energy missingness previously hidden by legacy CSS. Safe-area-aware bottom padding and focus scroll spacing preserve reachability above fixed navigation.
+
+Actual before/after Chromium renders at 320/375/390, light/dark, one incomplete meal, disconnected state, canonical keyboard Add food, 44px target, no horizontal overflow, focus and page-end clearance passed. Existing Today session/goal/partial/unavailable regression passed. 218 full tests, TypeScript and production build passed. CSS root zoom generated a harness-only header overflow; replaced with reduced CSS viewport model, explicitly not physical zoom acceptance. Actual Safari/VoiceOver remains external. Neutral cards already in baseline; no invented palette defect.
+
+Restaurant correction published b023b8156863b6596e90211653d02fd2544eb5ae; Render dep-dbe6c8pr5j6c73fj9n80 live. Recovery dd59a6b CI 40076326533 passed and Render dep-dbe6b3ijnfac73dfobog was live.

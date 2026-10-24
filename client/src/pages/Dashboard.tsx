@@ -74,6 +74,7 @@ export default function Dashboard() {
 
       {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started"
         ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading} journalError={mealError} />}
+      {(meals.isLoading || mealError || summary.meals.length > 0) && <>
       <div className="section-heading">
         <div>
           <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
@@ -91,8 +92,6 @@ export default function Dashboard() {
             Try again
           </Button>
         </div>
-      ) : !meals.isLoading && !summary.meals.length ? (
-        <section className="bloom-panel"><p>No meals recorded today. Your nutrition snapshot will appear after you log food; an empty journal is not a measurement of zero intake.</p></section>
       ) : (
         <div className="daily-grid">
           {[
@@ -153,15 +152,14 @@ export default function Dashboard() {
         </div>
       )}
 
-      <section className="bloom-panel" aria-labelledby="meals-title">
+      </>}
+
+      <section className="bloom-panel food-journal-panel" aria-labelledby="meals-title">
         <div className="panel-heading">
-          <div>
-            <p className="eyebrow">YOUR FOOD JOURNAL</p>
-            <h2 id="meals-title">On the menu today</h2>
-          </div>
-          <Link href="/log-meal" className="text-link">
-            <Plus size={16} /> Add meal
-          </Link>
+          <h2 id="meals-title">Food journal</h2>
+          {(summary.meals.length > 0 || mealError) && <Link href="/log-meal" className="text-link journal-add-action">
+            <Plus size={16} /> Add food
+          </Link>}
         </div>
         {mealError ? (
           <p className="panel-note">
@@ -199,14 +197,11 @@ export default function Dashboard() {
           <div className="journal-empty">
             <img className="empty-journal-art" src="/brand/empty-journal-illustration.svg" width={160} height={100} alt="" />
             <div>
-              <h3>A fresh page for today.</h3>
-              <p>
-                Add breakfast, lunch, dinner, or a snack. Your entries will
-                appear here.
-              </p>
+              <h3>No meals yet</h3>
+              <p>Add food to see today's nutrition. Unlogged intake is unknown.</p>
             </div>
-            <Link href="/log-meal" className="text-link">
-              Start your journal <ArrowRight size={16} />
+            <Link href="/log-meal" className="hero-button journal-add-action">
+              <Plus size={16} /> Add food
             </Link>
           </div>
         )}

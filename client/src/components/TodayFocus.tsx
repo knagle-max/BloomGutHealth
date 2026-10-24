@@ -28,12 +28,12 @@ export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, l
         </p>
       )}
       {sessions.isError && <p className="panel-note">Training schedule unavailable. This action uses your journal and saved focus only.</p>}
-      <div className="today-next-action">
+      {(mealCount > 0 || loading || journalError) && <div className="today-next-action">
         <Link className="hero-button" href={action.href}>
           {action.label}
         </Link>
         <p className="panel-note">{action.reason}</p>
-      </div>
+      </div>}
       <details><summary>Your focus & next steps</summary>
       {goal && <div className="space-y-2">{report.data?.sources.filter(s => goal.sourceIds.includes(s.id)).map(s => <p key={s.id} className="panel-note"><a className="text-link" href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a> — {s.limitation}</p>)}</div>}
       <div className="flex flex-wrap gap-4">
