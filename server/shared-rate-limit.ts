@@ -36,7 +36,7 @@ export class SharedRateLimiter {
       const path = req.path;
       const reauthentication=path === "/api/account" && req.method === "DELETE";
       const auth = reauthentication || path === "/api/auth/login" || path === "/api/auth/signup";
-      const costly = path.startsWith("/api/capabilities") || /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export)/i.test(path);
+      const costly = path.startsWith("/api/capabilities") || /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export|search)/i.test(path);
       if (!auth && !costly) return next();
       const scope = auth ? "authentication" : "resource";
       const windowSeconds = auth ? 900 : 60;
@@ -56,4 +56,11 @@ export class SharedRateLimiter {
       }
     };
   }
+}
+
+/** Existing development allowance, configurable without inventing monetary tariffs. */
+export function usdaSharedRequestLimit(value=process.env.BLOOM_USDA_SHARED_REQUESTS_PER_MINUTE) {
+  if(value===undefined||value==='')return 12;
+  if(!/^[1-9]\d{0,3}$/.test(value))return 0;
+  const count=Number(value);return count<=1000?count:0; // Invalid configuration fails closed for this provider only.
 }

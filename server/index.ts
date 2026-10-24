@@ -2,7 +2,7 @@ import { productService } from "./products";
 import "./env";
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
-import { SharedRateLimiter } from "./shared-rate-limit";
+import { SharedRateLimiter, usdaSharedRequestLimit } from "./shared-rate-limit";
 import connectPgSimple from "connect-pg-simple";
 import { Pool } from "pg";
 import { registerRoutes } from "./routes";
@@ -60,6 +60,7 @@ app.use((req, res, next) => {
 (async () => {
   const budgets = new SharedRateLimiter(pgPool, sessionSecret());
   await budgets.initialize();
+  productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",usdaSharedRequestLimit(),60));
   app.use(budgets.middleware());
   const budgetCleanup = setInterval(() => { void budgets.prune().catch(() => {}); }, 60_000);
   budgetCleanup.unref();

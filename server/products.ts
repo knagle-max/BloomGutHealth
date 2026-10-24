@@ -300,6 +300,13 @@ export function localProduct(id: string): Product {
 export class ProductService {
   private cache = new Map<string, { until: number; value: any }>();
   private inFlight = new Map<string, Promise<any>>();
+  private sharedSourceBudget:((source:"usda-branded")=>Promise<boolean>)|undefined;
+  setSharedSourceBudget(check:(source:"usda-branded")=>Promise<boolean>){this.sharedSourceBudget=check;}
+  private async usdaRead(url:string,init?:RequestInit){
+    this.usdaLimit();
+    if(this.sharedSourceBudget&&!await this.sharedSourceBudget("usda-branded"))throw new ProductSourceError("budget");
+    return this.fetchJson(url,init);
+  }
   private usdaWindow={at:0,count:0};
   private usdaLimit(){
     if(Date.now()-this.usdaWindow.at>60000)this.usdaWindow={at:Date.now(),count:0};
@@ -314,9 +321,8 @@ export class ProductService {
   constructor(private fetchJson: ProductFetch = download, private offEnabled: () => boolean = () => process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true", private usdaKey:()=>string|undefined=()=>process.env.USDA_FDC_API_KEY?.trim()) {}
   private usdaSearch(query:string) {
     return this.cached("usda-branded-search:"+brandedSearchQuery(query),()=>{
-      this.usdaLimit();
       const key=this.usdaKey()?.trim();
-      return this.fetchJson(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(key||"")}`,
+      return this.usdaRead(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(key||"")}`,
         {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({query:brandedSearchQuery(query),dataType:["Branded"],pageSize:20})}).then(data=>{if(!Array.isArray(data?.foods))throw new ProductSourceError("invalid-response");return data;});
     });
   }
@@ -483,8 +489,7 @@ export class ProductService {
       if(!key)throw Error("USDA Branded Foods is not configured. Enter the package label instead.");
       if(!/^\d{1,10}$/.test(ref.id))throw Error("Invalid USDA record");
       return this.cached("usda-branded:"+ref.id,async()=>{
-        this.usdaLimit();
-        const raw=await this.fetchJson(`https://api.nal.usda.gov/fdc/v1/food/${ref.id}?api_key=${encodeURIComponent(key)}`);
+        const raw=await this.usdaRead(`https://api.nal.usda.gov/fdc/v1/food/${ref.id}?api_key=${encodeURIComponent(key)}`);
         const product=normalizeUSDABranded(raw);
         if(product.id!==ref.id)throw Error("USDA record identity changed");
         return [product];
