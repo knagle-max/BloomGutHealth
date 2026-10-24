@@ -287,6 +287,32 @@ Create reusable **Workout Effort & Recovery** components that fit Athlete's exis
 - The composition is desktop-wide; produce responsive mobile, dark-mode, 200% zoom, keyboard/screen-reader specifications and semantic HTML rather than a flattened image/card text.
 - The concept's colours and example recommendations remain conditional on contrast verification, science review and safety/error-case tests.
 
-**Asset tracking:** Source visual `/Bloom gut health/Bloom Athlete Training Guidance Dashboard.png` is accessible through the shared project Library. No separately dated V06-TRAIN-02-specific editable SVG/React asset archive or accompanying final written handoff was discoverable at this intake; the previously reviewed `Bloom_Athlete_Training_States_Assets_2026-10-23.zip` belongs to **V06-TRAIN-01**, not proof of a new V06-TRAIN-02 source asset package. Branding should supply/check in the editable original components and current design tokens for Codex whenever ready, ideally `docs/agent-handoffs/` and a stable asset folder. Do not confuse Library files with already committed GitHub assets.
+**Asset tracking update:** The subsequently delivered, editable V06-TRAIN-02 source package has been located and inspected: `Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip` (shared Library `/Bloom gut health/Agent Handoffs/`), with accompanying `Bloom_V06_TRAIN_02_Design_Handoff_2026-10-23.md`. See Section 18 for exact inventory and integration checks. The source package is in Library, not yet verified in the GitHub checkout.
 
 **Status:** visual reference received and architect-reviewed; developer implementation and corresponding source asset publication not verified. This does not add v0.6 work to active v0.5.
+
+
+## 18. Editable training-analysis assets intake — 2026-10-23
+
+**Received and inspected:** `Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip`, dated Branding/UX handoff `Bloom_V06_TRAIN_02_Design_Handoff_2026-10-23.md`, shared Library folder `/Bloom gut health/Agent Handoffs/`. Archive was verified to contain 15 entries: `DESIGN_HANDOFF.md`; 11 editable, currentColor SVG icons (`moon`, `edit`, `calendar`, `run`, `check`, `weight`, `chevron`, `heart`, `effort`, `rest`, `info`); `components/TrainingGuidance.tsx`; `components/training-guidance.css`; and `examples/Usage.example.tsx`. These are **actual editable source components**, not merely a dashboard screenshot.
+
+**Architect design disposition: ACCEPT for V06-TRAIN-02 implementation handoff, with the following safeguards.** This supersedes Section 17's older finding that no editable package could be found. It does not signify Codex has implemented it or that source files are already committed into GitHub.
+
+| Branding ID | Priority | Source component | Acceptance and required integration |
+|---|---|---|---|
+| **MKT-TRAIN-401** | P0 scientific clarity | `WorkoutEffortSummary` | Easy/Moderate/Hard/Very hard describes completed workout effort only; do not infer from raw average HR or unsupported RPE without reviewed policy. Missing data -> unclassified. |
+| **MKT-TRAIN-402** | P0 explainability | `DemandingFactors` | Show only actually used contributing observations; mark missing, stale or not-used inputs; show source and date. No fabricated sleep, zone or training-history signals. |
+| **MKT-TRAIN-403** | P0 safety | `RecoveryNextWorkout` | Distinguish recovery advice from exertion rating; conditional reviewed next-session alternatives, no exact countdown/diagnosis, appropriate symptom escalation. |
+| **MKT-TRAIN-404** | P1 | `WeeklyTrainingLoad` | Use compatible and meaningful sport-specific workload units/scale and source provenance; no universal fake load or rest-day imputation. Accessible text equivalent and responsive chart. |
+| **MKT-TRAIN-405** | P0 | `TrainingGuidanceLink` | Link to separately determined train/modify/recovery/insufficient state; completed effort must never directly set readiness, clinical clearance or Coach sharing. |
+| **MKT-TRAIN-406** | P0 UI/accessibility | shared stylesheet and 11 icons | Reuse existing Bloom Athlete tokens, verify light/dark WCAG 2.2 AA, 320px/375px, 200% zoom, keyboard, screen-reader semantics; don't replace semantic content with decorative SVG cards. |
+
+**Source code integration precautions identified by Architect inspection:**
+- Components are **presentational only**; they accept typed props and contain no classification algorithm, wearable connection, clinical eligibility evaluation or persistence. Codex must supply independently reviewed domain services, source-validated metrics and permission checks.
+- The example `158 bpm`, `7/10` RPE and `Hard` status are synthetic. Use them only in explicitly labelled fixtures and tests, never as evidence of measured readiness.
+- The `WeeklyTrainingLoad` component currently renders bars with CSS percentages by clamping `load` to 2–100 without a defined unit or normalization policy, and renders a tiny placeholder bar for missing load. **Do not ship arbitrary chart heights as real training load**: revise the component to require explicitly comparable normalized values or use trustworthy actual duration/effort categories instead; label unavailable data as unknown and provide an accessible equivalent.
+- The `DemandingFactors` static explanation says inputs were used in an “illustrative explanation”; adapt production copy to actual provenance and runtime review state. Validate derived observations rather than trusting UI props from unreviewed data.
+
+**Proposed staging:** Keep original archive in shared Library and version it in the future Codex implementation checkout under a stable source-assets location once the development phase begins; preserve the original design handoff and avoid forking independent visual systems. Codex owns code/assets import, adaptations and tests after v0.5. No user authorization pause needed for standard commits. No requirement for before/after screenshots until the feature produces substantial visible UI changes; highlight those actual changes if captured.
+
+**Implementation status:** design source received and content reviewed, **not implemented or validated**. Security, Biology, Integrations and User Testing review remains needed for deployed functionality.
