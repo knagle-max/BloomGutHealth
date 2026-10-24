@@ -58,3 +58,10 @@ Preserved 7af47d5 after push rejection. It supersedes always-five visible routes
 ### Unified development mode and readiness checkpoint
 
 Preserved the new 91f16c8 handoff. One internal-only Show development features control now spans incomplete/regulatory development intent; the preference still grants no restricted services. Added independent typed readiness/approval labels, including combined, research and hard-incident states. Final 217 tests/types/build plus public readiness/deep-link/draft and internal toggle/revocation/Appearance browser checks passed. Current public food methods are only the four working implementations; no unfinished photo/Nearby or connection-status placeholders. Preparing the exact-SHA CI/Render verification. Full capability exposure inventory, role-data-context integration, spend reservations/circuits, recovery and broader copy/layout audit remain actionable; no goal completion claim.
+
+## Synthetic encrypted recovery regression — 2026-10-24
+
+- Added tests/synthetic-recovery.test.ts: actual PGlite snapshot export/reload in memory with exclusively synthetic records and random ephemeral keys. Confirms original 0/null/source units, second-account isolation, both historical key IDs, wrong-account authentication failure and missing/wrong/absent key failure. Reapplies additive migration after reload.
+- Explicitly demonstrates deletion resurrection from an older snapshot; managed restore must include separately reviewed erasure reconciliation before activation. This test is not a Neon/PITR, full account restore, vendor erasure or operational readiness claim. No live health data or durable key artifact.
+- TypeScript and all 218 tests passed. Read-only Neon metadata audit recorded separately in BLOCKED_USER_INPUT.md; no cloud data/config mutations, restore, new service or charges. Managed target/policy/secret recovery remain external inputs.
+- Previous published b859fac verified: CI 40075554046 success; Render dep-dbe65bcs728c73c8a6l0 live. Actual public Kit Kat source lookup returned 20 results at 07:49:13 UTC (800ms). Exact hosted SKU/save acceptance remains open.

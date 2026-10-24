@@ -37,3 +37,13 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 
 - Experimental account provisioning/activation remains default-denied. Any real internal tester grant needs server-side identity, expiry, territory, capability scope, consent and approved synthetic/explicit dataset context. No self-enrolment or client flag grants access. Do not ask the owner repeatedly; build/test policy with synthetic fixtures first and list exact provisioning inputs only when needed.
 - Branding ZIPs are reported in shared Library but not present in the repository or available filesystem. Continue with existing approved Bloom tokens/components; do not claim new asset adoption. Morning question: where can the approved current editable kits be read through an authorized connector or repository path? Recommended: provide a versioned approved asset path, with no confidential data. This blocks exact asset adoption/sign-off only.
+
+## OPS-702 / PRIV-103 — managed recovery authorization and policy
+
+- Status: BLOCKED_USER_INPUT for the managed drill and approved operational policy only; synthetic recovery engineering continues.
+- Exact question: Which Neon project/branch is bound to the existing Render service, which isolated synthetic restore target and cost ceiling are authorized, and what reviewed RPO/RTO, retention, historical-key recovery location and deletion-reconciliation policy apply?
+- Why needed: No live data copy, destructive restore, secret retrieval, new paid service or retention decision is authorized by the preview-deploy permission. No Render database binding has been verified.
+- Choices: (1) Operator supplies approved target/policy and performs or explicitly authorizes the isolated synthetic managed drill; (2) retain current configuration and defer managed recovery acceptance.
+- Recommended default: Option 2 until target and policy are explicit; continue in-memory synthetic recovery, with no real health records or key material in artifacts.
+- Impact: Blocks managed RPO/RTO, backup lifecycle and deletion-after-restore sign-off; does not block other v0.5 engineering.
+- Read-only observations (2026-10-24): Neon project fancy-smoke-82120373 reports history_retention_seconds=21600; snapshot listing was empty. This does not mean PITR is unavailable or prove a recovery guarantee. PR-1 branch is schema-only. No snapshots, restores, configuration changes or live data reads were performed. Local .neon link absent; actual Render branch binding unverified.
