@@ -17,6 +17,8 @@ export default function ProductPicker({
   confirmLabel = "Use selected product & amount",
   pending = false,
   startScanner = false,
+  active = true,
+  showBarcode = true,
 }: {
   onPick: (i: Ingredient) => void;
   initialQuery?: string;
@@ -24,6 +26,8 @@ export default function ProductPicker({
   confirmLabel?: string;
   pending?: boolean;
   startScanner?: boolean;
+  active?: boolean;
+  showBarcode?: boolean;
 }) {
   const [query, setQuery] = useState(productSearchText(initialQuery)),
     [kind, setKind] = useState<"all" | "food" | "supplement">("all"),
@@ -137,7 +141,7 @@ export default function ProductPicker({
   return (
     <div className="space-y-3 border rounded-xl p-3 min-w-0 break-words">
       <h3>Find a food or supplement</h3>
-      <BarcodeScanner startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>
+      {showBarcode&&<BarcodeScanner active={active} startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>}
       <p className="panel-note">
         Search by product name or barcode, then confirm the exact variant and
         serving. The search sends only this query to public product databases.

@@ -7,9 +7,11 @@ import type { IScannerControls } from "@zxing/browser";
 export default function BarcodeScanner({
   onScan,
   startImmediately = false,
+  active = true,
 }: {
   onScan: (code: string) => void;
   startImmediately?: boolean;
+  active?: boolean;
 }) {
   const [open, setOpen] = useState(startImmediately);
   const [busy, setBusy] = useState(false);
@@ -34,6 +36,7 @@ export default function BarcodeScanner({
     setOpen(false);
     setBusy(false);
   }, [stop]);
+  useEffect(()=>{if(!active){photoGeneration.current++;close();}},[active,close]);
   useEffect(
     () => () => {
       photoGeneration.current++;
@@ -63,7 +66,7 @@ export default function BarcodeScanner({
     };
   }
   useEffect(() => {
-    if (!open) return;
+    if (!open||!active) return;
     const ticket = ++generation.current;
     setMessage("");
     setBusy(true);
@@ -124,7 +127,7 @@ export default function BarcodeScanner({
       document.removeEventListener("visibilitychange", hidden);
       stop();
     };
-  }, [open, stop, close]);
+  }, [open, active, stop, close]);
   return (
     <section className="barcode-scanner" aria-label="Package barcode scanner">
       <div className="flex flex-wrap gap-2">

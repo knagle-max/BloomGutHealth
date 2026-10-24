@@ -15,3 +15,6 @@ bloom-coach-*.png
 .env.*
 !.env.example
 .neon
+
+# Local synthetic QA scratch output; curated evidence lives under docs/review.
+/work/

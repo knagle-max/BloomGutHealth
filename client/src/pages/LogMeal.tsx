@@ -1,10 +1,11 @@
+import FoodCapture from "@/components/FoodCapture";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, foodMass } from "@shared/nutrition-display";
-import FoodCapture from "@/components/FoodCapture";
+import {foodEntryMethods,parseFoodEntryMethod,type FoodEntryMethod} from "@shared/food-entry";
 import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
 import { nutritionUpdateFeedback } from "@shared/nutrition-review";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { ArrowLeft, Loader2, Utensils, CheckCircle2 } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -63,9 +64,18 @@ export default function LogMeal() {
     Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
   >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [products, setProducts] = useState<Ingredient[]>([]);
-  const [showProducts, setShowProducts] = useState(params.has("productQuery"));
-  const [scanRequested, setScanRequested] = useState(false);
-  const [scannerKey,setScannerKey] = useState(0);
+  const [method,setMethod]=useState<FoodEntryMethod|null>(parseFoodEntryMethod(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
+  const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search","restaurant"].includes(params.get("method")||""));
+  const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("");
+  const chooserHeading=useRef<HTMLHeadingElement>(null);
+  const changeMethod=(next:FoodEntryMethod|null)=>{
+    if(next&&["barcode","search","restaurant"].includes(next))setPickerVisited(true);
+    const url=new URL(window.location.href);if(next)url.searchParams.set("method",next);else url.searchParams.delete("method");
+    window.history.pushState(null,"",url.pathname+url.search);setMethod(next);
+    requestAnimationFrame(()=>chooserHeading.current?.focus());
+  };
+  useEffect(()=>{const back=()=>{const next=parseFoodEntryMethod(new URLSearchParams(window.location.search).get("method"));setMethod(next);if(next&&["barcode","search","restaurant"].includes(next))setPickerVisited(true);};window.addEventListener("popstate",back);return()=>window.removeEventListener("popstate",back);},[]);
+  const pickerActive=method==="barcode"||method==="search"||method==="restaurant";
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
   const saveAttempt = useRef<{ payload: string; key: string } | null>(null);
@@ -81,6 +91,7 @@ export default function LogMeal() {
             eatenAt: new Date(eatenAt).toISOString(),
             portion,
             symptoms,
+            ...((restaurant.trim()||market.trim())?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{}),
           },
         };
       const serialized = JSON.stringify(payload);
@@ -93,6 +104,7 @@ export default function LogMeal() {
       setSavedMeal(meal);
       setDescription("");
       setProducts([]);
+      setRestaurant("");setMarket("");setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
       setCatalogueEnabled(false);
       queryClient.invalidateQueries({
         predicate: (query) =>
@@ -143,33 +155,24 @@ export default function LogMeal() {
           <Utensils size={24} />
         </span>
         <p className="eyebrow">NOURISH & NOTICE</p>
-        <h1>Log a meal</h1>
+        <h1>Add Food</h1>
         <p className="muted">
-          Describe what you ate, or select a food or supplement label.
+          Choose how to add each item. Review all items together before saving.
         </p>
       </div>
       <fieldset disabled={save.isPending} className="space-y-3">
       <legend className="sr-only">Choose foods to log</legend>
-      <Button type="button" className="mr-2 mb-3" onClick={()=>{setScannerKey(v=>v+1);setScanRequested(true);setShowProducts(true);}}>Scan package barcode</Button>
-      <Button
-        className="whitespace-normal h-auto max-w-full"
-        type="button"
-        variant="outline"
-        onClick={() => {setScanRequested(false);setShowProducts(!showProducts);}}
-      >
-        {showProducts
-          ? "Close product search"
-          : "Search a food, brand or supplement"}
-      </Button>
-      {showProducts && (
-        <ProductPicker key={scannerKey} startScanner={scanRequested}
-          onPick={(i) => {
-            setProducts((v) => [...v, i].slice(0, 10));
-            setShowProducts(false);
-          }}
-          initialQuery={productQuery || description.slice(0, 120)} autoSearch={!!productQuery}
-        />
-      )}
+      <section className="bloom-panel space-y-3">
+        <h2 ref={chooserHeading} tabIndex={-1}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
+        {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
+        {!method&&<div className="grid gap-3 sm:grid-cols-2">{foodEntryMethods.map(m=><Button className="h-auto whitespace-normal text-left block" type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.description}</span></Button>)}</div>}
+        <p className="panel-note">Changing methods keeps this meal's description, selected products and unfinished product search. Camera access stops when you leave scanning. Nothing is saved until you confirm below.</p>
+        {method==="describe"&&<div className="space-y-3"><p>Type foods and amounts in the shared meal review below. Selected products are counted separately.</p><FoodCapture voiceOnly onDescription={text=>setDescription(current=>[current,text].filter(Boolean).join("; "))} onProduct={()=>{}}/></div>}
+        <div hidden={method!=="restaurant"} className="space-y-3"><p>No official restaurant-menu catalogue is connected. Product search may find a published record; confirm country, item and serving. Generic foods are estimates. You can enter official menu nutrition as a private label or describe the meal without invented values.</p><label className="block">Restaurant name<input className="bloom-input w-full" maxLength={150} value={restaurant} onChange={e=>setRestaurant(e.target.value)}/></label><label className="block">Market / country (optional)<input className="bloom-input w-full" maxLength={100} value={market} onChange={e=>setMarket(e.target.value)}/></label><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe restaurant meal instead</Button></div>
+        {method==="photo"&&<div role="status" className="space-y-3"><p>Automatic photo interpretation is unavailable pending provider, privacy and accuracy approval. No image is requested or sent. You can enter the printed label or describe what you ate.</p><Button type="button" variant="outline" onClick={()=>changeMethod("search")}>Enter package nutrition instead</Button><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe food instead</Button></div>}
+        {products.length>=10&&<p role="alert">This meal supports up to 10 labelled products. Save the meal or remove one before adding another.</p>}
+        {pickerVisited&&<div hidden={!pickerActive}><ProductPicker active={pickerActive} showBarcode={method==="barcode"} pending={products.length>=10} onPick={i=>{setProducts(v=>v.length>=10?v:[...v,i]);changeMethod(null);}} initialQuery={productQuery||description.slice(0,120)} autoSearch={!!productQuery}/></div>}
+      </section>
       {products.length > 0 && (
         <section className="bloom-panel">
           <h2>Selected products</h2>
@@ -202,10 +205,9 @@ export default function LogMeal() {
         </section>
       )}
       {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{foodMass(catalogueSelection.data.grams, settings.displayUnits.foodWeight)} {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
-      <FoodCapture onDescription={setDescription} onProduct={i=>setProducts(v=>[...v,i].slice(0,10))}/>
       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
       </fieldset>
-      <form
+      {(method==="describe"||products.length>0||description.trim()||catalogueEnabled)&&<form
         className="bloom-panel space-y-6"
         onSubmit={(e) => {
           e.preventDefault();
@@ -215,6 +217,8 @@ export default function LogMeal() {
       >
         <fieldset disabled={save.isPending} className="space-y-6">
           <legend className="sr-only">Meal details</legend>
+          <h2>Review this meal</h2>
+          {(restaurant||market)&&<p className="panel-note">Restaurant context (entered by you): {restaurant} · {market||"market not specified"}. This context does not verify the nutrition source.</p>}
           <MealTypeSelector selected={mealType} onChange={setMealType} />
           <div className="space-y-2">
             {!catalogueEnabled&&<><Label htmlFor="food-input">Describe your meal</Label>
@@ -348,7 +352,7 @@ export default function LogMeal() {
             )}
           </Button>
         </fieldset>
-      </form>
+      </form>}
       {savedMeal && (
         <section className="bloom-panel saved-meal" role="status">
           <h2 className="flex items-center gap-2">

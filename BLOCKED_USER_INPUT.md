@@ -28,7 +28,12 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 
 ## EXEC-RESOURCE — execution limit, not user product input
 
-- Status: BLOCKED_EXECUTION_RESOURCES.
+- Status: RESOLVED at 2026-10-24 06:45 UTC after the review's stated reset time; normal approval succeeded.
 - Evidence: Automatic approval review refused the full regression/build command with an account usage-limit message. It explicitly said the command was not executed, this was not an unsafe-action determination, and not to bypass the review.
 - Resolution: Resume when the account's execution resources are available. Do not repeatedly retry or use another path to perform the rejected command. No new product decision or repeated deployment permission is required.
-- Impact: Local food-result cleanup remains uncommitted/unpublished pending final checks. Verified account-erasure work is already committed, CI-passing and live.
+- Impact: Historical only. FOOD-506 is now verified, published and live; autonomous work resumed.
+
+## Experimental access and asset intake
+
+- Experimental account provisioning/activation remains default-denied. Any real internal tester grant needs server-side identity, expiry, territory, capability scope, consent and approved synthetic/explicit dataset context. No self-enrolment or client flag grants access. Do not ask the owner repeatedly; build/test policy with synthetic fixtures first and list exact provisioning inputs only when needed.
+- Branding ZIPs are reported in shared Library but not present in the repository or available filesystem. Continue with existing approved Bloom tokens/components; do not claim new asset adoption. Morning question: where can the approved current editable kits be read through an authorized connector or repository path? Recommended: provide a versioned approved asset path, with no confidential data. This blocks exact asset adoption/sign-off only.

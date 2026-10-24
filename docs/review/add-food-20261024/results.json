@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "provider": "intercepted",
+  "storage": "in-memory; actual analysis/product services",
+  "outcomes": [
+    "Five neutral choices",
+    "Denied camera and numeric fallback",
+    "Confirmed product + typed item in one meal",
+    "Description preserved across restaurant/photo/chooser methods",
+    "Restaurant context retained without nutrition claim",
+    "Photo unavailable without image transfer",
+    "One save and neutral next chooser",
+    "320–1440px reflow"
+  ],
+  "errors": []
+}

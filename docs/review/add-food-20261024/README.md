@@ -1,0 +1,7 @@
+# Five-route Add Food review
+
+The initial Add Food chooser replaces stacked entry controls with five focused methods. They share the existing meal draft, source resolution, nutrition calculation and idempotent save. Confirmed products and text survive method changes; leaving barcode mode stops camera access; save returns to a neutral chooser. Restaurant name/market is explicitly user-entered context. Photo AI is unavailable with manual alternatives and direct server denial. Browser dictation remains optional in Describe.
+
+Actual previous screen: `before-mobile.png` from baseline 75a598b. Current: `chooser-mobile.png`; `chooser-mobile-annotated.png` marks the five method choices. Same 375×1000/light synthetic account. `shared-review-mobile.png` shows retained mixed-method review. Unmarked originals retained. Existing Bloom components/tokens are used; shared-Library kit adoption is not claimed.
+
+207 tests, types and production build passed. `results.json` records synthetic denied-camera, five-choice, cross-method draft, source product + typed item save, descriptive restaurant context, no-photo-transfer and 320–1440px checks. These are not real-device scanning, live restaurant catalogue, photo accuracy or independent screen-reader acceptance. CI additionally verifies restaurant context survives actual database reread. Capability policy coverage beyond the photo/flux guards remains open.

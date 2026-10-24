@@ -28,3 +28,9 @@ No automatic native/provider/license/clinical approvals. No main merge, producti
 ## 2026-10-24 06:45 UTC — automatic continuation
 
 The environment clock passed the approval review's stated reset time. A single retry through the normal approval path succeeded; no restriction was bypassed. FOOD-506 full regression now passes: 204 tests, TypeScript and production build. Existing branded save/manual fallback and advisory verification are in progress. New upstream handoffs (through d3859eb) add the v0.5 five-route Add Food chooser and P0 capability/operational controls; preserve these documentation commits when rebasing.
+
+### FOOD-506 publication and next slice
+
+Published `b5dce7c`; CI 40071570397 passed and Render dep-dbe58q6i0phs73bnvfr0 reached live. Product warning cleanup is verified in the development preview; hosted Canadian exact-item acceptance remains separate.
+
+FOOD-507 local implementation: five focused chooser methods, persistent shared product/description draft, camera cleanup, neutral chooser after save, browser history and keyboard focus, optional browser dictation retained, restaurant/market descriptive JSON context. No duplicate save pipeline or invented menu nutrients. Photo interpretation is unavailable under latest approval requirements, with manual alternatives. The provisional 52-feature registry is read immutably; legacy review states normalize without becoming approved. Two restricted API paths (photo and microbial flux) now deny before provider execution and the flux component unmounts from weekly planning. This is the first gate slice, not complete regulatory/runtime coverage. 207 full tests/types/build passed. Browser fixtures prove denied camera and cross-method source-product + typed-food saving, context preservation, neutral next entry and reflow. New branded/manual save regression passed. No credentials or production data changed.

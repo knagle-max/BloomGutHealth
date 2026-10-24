@@ -1,3 +1,4 @@
+import { requireRestrictedCapability } from "./capability-policy";
 import { buildTodayPlan } from "../shared/today-planner";
 import { localDayBounds } from "../shared/nutrition-summary";
 import type { Express, RequestHandler } from "express";
@@ -316,7 +317,7 @@ export function registerPrecisionRoutes(
   });
   const planningRequests = new Map<string, { at: number; count: number }>();
   const researchRequests = new Map<string, number>();
-  app.post("/api/precision/metabolite-research", async (req, res) => {
+  app.post("/api/precision/metabolite-research", requireRestrictedCapability("bloom.microbiome.flux"), async (req, res) => {
     const parsed = z
       .object({
         planId: z.string().min(1).max(100),

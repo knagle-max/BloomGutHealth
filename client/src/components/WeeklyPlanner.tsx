@@ -360,7 +360,7 @@ export default function WeeklyPlanner() {
         )}
         {log.isError && <p role="alert">{log.error.message}</p>}
       </div>
-      <MetaboliteResearch plans={saved.data || []} />
+
       {display && (
         <>
           <section className="bloom-panel space-y-3">

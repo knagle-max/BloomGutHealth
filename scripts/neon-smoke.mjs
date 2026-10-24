@@ -488,11 +488,12 @@ try {
   const catalogue = await request("/api/biology/catalogue?q=salmon");
   const selectedFood = catalogue.foods[0];
   const composition = await request(`/api/biology/catalogue/${selectedFood.fdcId}?grams=150`);
-  const pinnedMeal = await request("/api/meals", "POST", {mealText:"Selected catalogue food",mealType:"lunch",ingredients:[{name:"Client description is not authoritative",grams:150,preparation:"",assumption:"Reviewed choice",catalogue:{source:"usda-fndds",fdcId:selectedFood.fdcId}}]});
+  const pinnedMeal = await request("/api/meals", "POST", {mealText:"Selected catalogue food",mealType:"lunch",mealContext:{restaurantContext:{restaurant:"Synthetic Bistro",market:"Canada",source:"user-entered-context"}},ingredients:[{name:"Client description is not authoritative",grams:150,preparation:"",assumption:"Reviewed choice",catalogue:{source:"usda-fndds",fdcId:selectedFood.fdcId}}]});
   assert.equal(pinnedMeal.intelligence.foodMatches[0].fdcId, selectedFood.fdcId);
   assert.equal(pinnedMeal.intelligence.foodMatches[0].grams, 150);
   const persistedPinned = (await request(`/api/meals/${second.id}`)).find(m=>m.id===pinnedMeal.id);
   assert.equal(persistedPinned.intelligence.ingredients[0].catalogue.fdcId,selectedFood.fdcId);
+  assert.deepEqual(persistedPinned.mealContext.restaurantContext,{restaurant:"Synthetic Bistro",market:"Canada",source:"user-entered-context"});
   assert.equal(persistedPinned.intelligence.nutrients.find(n=>n.key==="protein_g").amount,Math.round(composition.contributions.find(n=>n.key==="protein_g").amount*100)/100);
   const retired = await request(`/api/health/analysis/${second.id}`,"GET",undefined,410);
   assert.equal(retired.code,"UNVALIDATED_MODEL_RETIRED");

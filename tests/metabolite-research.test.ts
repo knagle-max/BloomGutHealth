@@ -203,19 +203,11 @@ test("research route enforces authentication, plan ownership, consent, no-store 
     });
   try {
     assert.equal((await post("")).status, 401);
-    assert.equal((await post("other")).status, 404);
-    assert.equal((await post("owner", { run: true })).status, 400);
-    const preview = await post("owner");
-    assert.equal(preview.headers.get("cache-control"), "no-store");
-    assert.equal((await preview.json()).result, null);
-    assert.equal(
-      (await post("owner", { run: true, researchConsent: true })).status,
-      200,
-    );
-    assert.equal(
-      (await post("owner", { run: true, researchConsent: true })).status,
-      429,
-    );
+    assert.equal((await post("other")).status,403);
+    for(const extra of [{},{run:true},{run:true,researchConsent:true},{run:true,researchConsent:true,experimental:true}]) {
+      const response=await post("owner",extra);assert.equal(response.status,403);
+      assert.equal(response.headers.get("cache-control"),"no-store");assert.equal((await response.json()).code,"CAPABILITY_UNAVAILABLE");
+    }
   } finally {
     server.closeAllConnections();
     await new Promise<void>((r) => server.close(() => r()));

@@ -39,6 +39,7 @@ export const mealContextSchema = z
   .object({
     eatenAt: z.string().datetime({ offset: true }).optional(),
     portion: z.enum(["small", "medium", "large", "specified"]).optional(),
+    restaurantContext:z.object({restaurant:z.string().trim().max(150),market:z.string().trim().max(100),source:z.literal("user-entered-context")}).strict().optional(),
     symptoms: z
       .object({
         bloating: z.number().int().min(0).max(10).nullable(),
