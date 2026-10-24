@@ -1,24 +1,21 @@
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { apiRequest } from "@/lib/queryClient";
-import { useAuth } from "@/lib/auth";
 import { refreshExperience } from "@/lib/experience";
 import { WorkspaceExport } from "./WeeklyReview";
 function HealthSourceControls(){
- const {user}=useAuth();
  const [confirmation,setConfirmation]=useState("");
  const [deleteText,setDeleteText]=useState("");
  const queryClient=useQueryClient();
- const status=useQuery<{connections:Array<{provider:string;state:string;note:string}>}>({queryKey:["/api/health-sources",user?.id],enabled:!!user,queryFn:async()=>{const r=await fetch("/api/health-sources",{credentials:"include"});if(!r.ok)throw Error("Health source status unavailable");return r.json();}});
+
  const remove=useMutation({mutationFn:async(provider:string)=>{
  const all=provider==="all";
  const r=await fetch(all?"/api/health-sources":"/api/health-sources/"+provider,{method:"DELETE",credentials:"include",headers:{"x-bloom-confirm":all?"delete-all-health-sources":"delete-health-source"}});
  if(!r.ok)throw Error("Health-source deletion failed");
  },onSuccess:()=>{setConfirmation("");setDeleteText("");queryClient.invalidateQueries({queryKey:["/api/health-sources"]});queryClient.invalidateQueries({queryKey:["device-observations"]});}});
- return <details><summary>External health data and device connections</summary><p className="panel-note">Apple Health and Android Health Connect are not connected. Bloom cannot access device data through this browser. The records below are private and are not proof of an active connection.</p>
- {status.isLoading?<p>Checking device connection status…</p>:status.error?<p role="alert">Connection status unavailable.</p>:<ul>{status.data?.connections.map(c=><li key={c.provider}><strong>{c.provider==="apple_health"?"Apple Health":"Health Connect"}</strong> — Not connected</li>)}</ul>}
+ return <details><summary>Stored health-source records</summary><p className="panel-note">Export or remove records stored in Bloom. These actions do not connect a device or change provider permissions.</p>
  <p><a href="/api/health-sources/export" download="bloom-health-observations.json">Export stored health source data (JSON)</a></p>
  <label className="block">Delete data for a provider<select className="bloom-input w-full" value={confirmation} onChange={e=>setConfirmation(e.target.value)}><option value="">Select a source</option><option value="apple_health">Apple Health</option><option value="health_connect">Health Connect</option><option value="all">All device source data</option></select></label>
  <label className="block">Type DELETE SOURCE to confirm permanent removal of stored source records<input className="bloom-input w-full" autoComplete="off" value={deleteText} onChange={e=>setDeleteText(e.target.value)}/></label>

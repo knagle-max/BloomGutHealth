@@ -1,3 +1,4 @@
+import {foodEntryImplementationReady} from "../shared/food-entry";
 import {createHash} from "node:crypto";
 import {z} from "zod";
 import {eq} from "drizzle-orm";
@@ -21,7 +22,7 @@ export class CapabilityPreferenceStorage implements CapabilityPreferenceStore {
 }
 export function registerCapabilityAccess(app:Express,auth:RequestHandler,store:CapabilityPreferenceStore,grantFor:(userId:string)=>ReturnType<typeof internalPreviewGrant>=internalPreviewGrant){
  app.use('/api/capabilities',auth,(_req,res,next)=>{res.setHeader('Cache-Control','no-store');next();});
- app.get('/api/capabilities',async(req,res)=>{try{const id=req.session.userId!,grant=grantFor(id);const pref=grant?await store.get(id):null;res.json({version:capabilityPolicyVersion,eligible:!!grant,experimentalEnabled:!!grant&&!!pref?.enabled&&pref.grantFingerprint===grant.fingerprint,capabilities:[],note:'Internal synthetic preview only. This setting does not grant clinical, research, provider, territory or licensing approval. Restricted services remain unavailable until individually cleared.'});}catch{res.status(503).json({error:'Experimental eligibility could not be checked.'});}});
+ app.get('/api/capabilities',async(req,res)=>{try{const id=req.session.userId!,grant=grantFor(id);const pref=grant?await store.get(id):null;res.json({version:capabilityPolicyVersion,foodEntry:foodEntryImplementationReady,eligible:!!grant,experimentalEnabled:!!grant&&!!pref?.enabled&&pref.grantFingerprint===grant.fingerprint,capabilities:[],note:'Internal synthetic preview only. This setting does not grant clinical, research, provider, territory or licensing approval. Restricted services remain unavailable until individually cleared.'});}catch{res.status(503).json({error:'Experimental eligibility could not be checked.'});}});
  app.patch('/api/capabilities/experimental',async(req,res)=>{
   const parsed=z.object({enabled:z.boolean()}).strict().safeParse(req.body);if(!parsed.success)return void res.status(400).json({error:'Choose an experimental preference only.'});
   const id=req.session.userId!,grant=grantFor(id);if(!grant)return void res.status(403).json({error:'Internal preview access is not available for this account.'});

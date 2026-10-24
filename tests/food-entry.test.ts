@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import express from 'express';
-import {foodEntryMethods,parseFoodEntryMethod} from '../shared/food-entry';import {mealContextSchema} from '../shared/meal-intelligence';
+import {foodEntryMethods,parseFoodEntryMethod,availableFoodEntryMethods,parseAvailableFoodEntryMethod} from '../shared/food-entry';import {mealContextSchema} from '../shared/meal-intelligence';
 import {capabilityApproval,restrictedCapabilityAllowed,requireRestrictedCapability} from '../server/capability-policy';
 test('five food methods share strict route identifiers and retain optional user-entered restaurant context',()=>{
  assert.equal(foodEntryMethods.length,5);assert.equal(new Set(foodEntryMethods.map(m=>m.id)).size,5);
@@ -14,3 +14,5 @@ test('direct restricted API access rejects client-forged tester flags before exe
  const app=express();let calls=0;app.use(express.json());app.post('/photo',requireRestrictedCapability('bloom.food.photo_ai'),(_req,res)=>{calls++;res.json({});});
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server.on('listening',r));try{const response=await fetch('http://127.0.0.1:'+(server.address() as any).port+'/photo',{method:'POST',headers:{'content-type':'application/json','x-internal-tester':'true'},body:JSON.stringify({experimental:true,consent:true,approved:true})});assert.equal(response.status,403);assert.equal((await response.json()).code,'CAPABILITY_UNAVAILABLE');assert.equal(calls,0);}finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
 });
+
+test('unfinished photo workflow is absent even with a forged ready flag and direct route falls back safely',()=>{assert.equal(availableFoodEntryMethods().length,4);assert.equal(availableFoodEntryMethods({photo:true}).some(method=>method.id==='photo'),false);assert.equal(parseAvailableFoodEntryMethod('photo'),null);assert.equal(parseAvailableFoodEntryMethod('barcode'),'barcode');assert.equal(availableFoodEntryMethods({search:false}).some(method=>method.id==='search'),false);});

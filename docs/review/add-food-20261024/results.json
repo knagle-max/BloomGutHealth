@@ -3,12 +3,12 @@
   "provider": "intercepted",
   "storage": "in-memory; actual analysis/product services",
   "outcomes": [
-    "Five neutral choices",
+    "Four working choices; unfinished photo hidden",
     "Denied camera and numeric fallback",
     "Confirmed product + typed item in one meal",
-    "Description preserved across restaurant/photo/chooser methods",
+    "Description preserved across restaurant/chooser methods",
     "Restaurant context retained without nutrition claim",
-    "Photo unavailable without image transfer",
+    "No unfinished photo tile, warning or image transfer",
     "One save and neutral next chooser",
     "320–1440px reflow"
   ],
