@@ -37,9 +37,11 @@ test("account snapshot includes every owned class, decrypts original payloads an
  for(const rows of Object.values(a.gutReports))assert.equal(rows.length,1);
  assert.equal(a.gutReports.samples[0].id,'sample-a');assert.equal(b.gutReports.samples[0].id,'sample-b');
  assert.deepEqual((a.biology.records[0].payload as any),{owner:'a',value:12,unit:'source-unit',confirmation:'provisional'});
- assert.equal((a.savedLabels[0].payload as any).owner,'a');assert.equal((a.experience.records[0].payload as any).owner,'a');assert.equal((a.healthSources.observations[0].payload as any).owner,'a');
+ assert.equal((a.savedLabels[0].payload as any).owner,'a');assert.equal((a.experience.records[0].payload as any).owner,'a');assert.equal((a.healthSources.observations![0].payload as any).owner,'a');
  const text=JSON.stringify(a);for(const forbidden of ['HASH-MUST-NOT-EXPORT','/private/internal.fastq','encryptedPayload','ciphertext','sample-b','meal-b'])assert.equal(text.includes(forbidden),false);
  await assert.rejects(()=>store.exportAccount('missing'));
+ await pg.exec('DROP TABLE health_source_consents');const older=await store.exportAccount('a');assert.equal(older.healthSources.storage.consents,'not-provisioned');assert.equal(older.healthSources.consents,null);assert.equal(older.healthSources.observations!.length,1);assert.equal(older.journal.length,1);
+ await pg.exec('DROP TABLE health_observations');assert.equal((await store.exportAccount('a')).healthSources.observations,null);
  await db.update(schema.precisionRecords).set({encryptedPayload:encryptPrecision({owner:'b'},'b')});
  await assert.rejects(()=>store.exportAccount('a')); // No partial export on authentication/decryption failure.
  } finally {await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
