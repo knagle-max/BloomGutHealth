@@ -62,3 +62,15 @@
 4. **Deferred postlaunch independent initiative:** study registry, protocol/recruitment, REB/IRB/ethics process, fine-grained research consent/withdrawals, controlled researcher workbench, cohort exports, returns, randomized studies and commercial access. RNET-DATA-06 P2, with feature-specific P0 Legal/Security/Biology/User Testing activation gates. Do **not** add research UX to Today/Athlete onboarding.
 
 **Priority principle:** Future compatibility is worthwhile only where it enhances reliable, consented core product records today. No indefinite raw biological data hoarding for hypothetical science. Deduplication and full IDs in `V06_HANDOFF.md` §20. Codex current top priority remains completing v0.5.
+
+
+## AI-ready data contracts: foundation before optimizer, not a network launch (2026-10-23)
+
+**Binding priority clarification:** Future research compatibility and all Bloom AI systems depend on reliable and permissioned **source → event → canonical record → derived feature → recommendation → measured outcome** lineage. Treat this as a shared product data contract, not as a separate AI database or early research network build.
+
+1. **Foundation P0, before v0.6 planner:** DATA-AI-01/02/03/04/09: minimal stable event IDs/relationships, provenance and dual timestamps, valid/missing distinctions, purpose-specific permission boundaries, safe deduplication/corrections, and recommendation input/evidence lineage. Reuse existing working APIs and records, migrate incrementally.
+2. **Before longitudinal adaptive engine or any trained AI:** DATA-AI-05/06: reproducible point-in-time feature derivation, training/serving parity, leakage checks, authorized datasets only, evaluation snapshots and baseline comparators.
+3. **As supported modalities/connectors expand:** DATA-AI-07/08/10: quality coverage, standard identifiers/units/assay data, versioned interoperability adapters, minimal necessary retention and efficient storage. Avoid collecting unused sensitive fields merely because a future research study might need them.
+4. **Explicitly deferred:** study enrollment, consent UI, university access, cohort downloads, human-subject research or research-specific AI training. No research functionality in initial launch. Distinct permissions required before future real uses.
+
+**Acceptance:** Reconstruct with synthetic data a traceable food+workout+laboratory timeline (sources, changes, interventions, outcomes, gaps and AI decisions), prove cross-account isolation, as-of prediction cutoff, revocation and loss-aware export. Record gaps and implementation SHA, not a blanket “research-ready” claim. See V06_HANDOFF.md §21. Finish current v0.5 first.
