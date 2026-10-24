@@ -64,3 +64,6 @@ These are Product Owner standing instructions conveyed by the Chief Architect, n
 
 
 > **Product Owner visual-evidence clarification (2026-10-23):** Before/after images are selective, not routine. Create them only for clearly visible, substantial UI/brand/workflow transformations. Mark the actual changes with small numbered callouts/highlights and supply unmarked originals. Never present near-identical screens as a meaningful comparison. For minor or invisible work, report code/tests and preview behavior instead. This rule supersedes broader comparison wording elsewhere in this document.
+
+## Execution order clarification — 2026-10-23
+The consolidated dependency-led sequence is in `docs/architecture/DEVELOPER_EXECUTION_ORDER.md`. **Finish v0.5 before beginning v0.6 implementation**. For future v0.6, use `V06_HANDOFF.md` for requirements and the execution-order document for sequencing; the older post-v0.5 roadmap is supporting context, not competing priority order. This guidance does not add new v0.5 work or require approvals for routine commits.
