@@ -36,3 +36,16 @@
 - **M6** Coach/advanced research only on separate secure, validated opt-in gates.
 
 **This ordering does not assert any feature is already built or clinically validated.**
+
+## Priority integration policy — all future specialist handoffs (2026-10-23)
+
+**Standing Product Owner instruction:** Whenever a specialist submits a new handoff, Chief Architect must **automatically review, deduplicate, prioritize, assign a dependency position and update this execution order and the v0.6 requirements** without waiting for an additional prioritization request. Priority must consider (a) user value and completion of usable outcomes; (b) safety, privacy, legal and claim integrity gates; (c) prerequisites/reuse of working components; (d) implementation cost and complexity; and (e) validation maturity. Give each recommendation a phase, risk priority, overlap and verifiable acceptance criteria. Source priority labels alone do not dictate calendar order.
+
+### Intake disposition — latest Biology and AI research (2026-10-23)
+- **Early mandatory foundation, not extra user features:** LAB-TRANS-01, relevant LAB-TRANS-04/05 safeguards, ML-FRONTIER-01, FREE-BIO-01/06. Approved claims, precise scope-of-use, canonical provenance and licensing/consent constraints belong in the safe data/evidence foundation.
+- **Concurrent measurement/evaluation design:** LAB-TRANS-02/03 and ML-FRONTIER-04 inform baseline comparisons and safety tests early; do **not** postpone the practical first working planner for unperformed independent trials of hypothetical genomic features.
+- **After integrated plan and response loop:** LAB-TRANS-06/07/08 and small FREE-BIO-02/03 / ML-FRONTIER-06 curated graph, only as necessary to make incremental actionability or version provenance useful.
+- **Research-only late lane:** ML-FRONTIER-02/03, FREE-BIO-04/05 protein/genomic foundation models and MICOM metabolic simulation. Benchmarks, dataset/model commercial rights, compute feasibility and clinically meaningful incremental value required before any promotion. No paid inference service or GPU dependency for the baseline product.
+- **Science operating model:** `Discover → Replicate → Predict → Intervene → Validate → Review → Controlled Release → Monitor`. A proposed research stage, approved advice rule and public clinical/regulatory release have different gates.
+
+**Traceability:** Full deduplicated source-ID map and acceptance conditions are in `V06_HANDOFF.md` §19. The newest reviewed handoffs are not verified as implemented. **v0.5 remains the only active Codex development priority.**
