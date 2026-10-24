@@ -65,3 +65,11 @@ Preserved the new 91f16c8 handoff. One internal-only Show development features c
 - Explicitly demonstrates deletion resurrection from an older snapshot; managed restore must include separately reviewed erasure reconciliation before activation. This test is not a Neon/PITR, full account restore, vendor erasure or operational readiness claim. No live health data or durable key artifact.
 - TypeScript and all 218 tests passed. Read-only Neon metadata audit recorded separately in BLOCKED_USER_INPUT.md; no cloud data/config mutations, restore, new service or charges. Managed target/policy/secret recovery remain external inputs.
 - Previous published b859fac verified: CI 40075554046 success; Render dep-dbe65bcs728c73c8a6l0 live. Actual public Kit Kat source lookup returned 20 results at 07:49:13 UTC (800ms). Exact hosted SKU/save acceptance remains open.
+
+## Owner restaurant acceptance failure corrected
+
+Architect 8cb808e records no menu items after brand selection. Removed dedicated ordinary restaurant-search choice and moved optional restaurant context into Describe under Log a restaurant meal. No fake menu records or source activation. Legacy restaurant links preserve descriptions and open the manual context. Synthetic browser verifies three chooser paths, absence of unfinished controls, keyboard brand/market selection, no GPS, camera-denied/manual fallback, selected product plus described food in one save and daily calories. Full catalogue blocked on source rights; record is distinct from working manual context.
+
+Recovery regression published dd59a6beb43f512391e54a21b81a8f91ac33083f after preserving Architect 11cf8f7/8cb808e. Exact CI/deploy pending at publication.
+
+Restaurant readiness correction: 218 tests, TypeScript and production build passed; synthetic rendered journey passed at mobile through desktop. Actual menu-source/live acceptance remains blocked, not inferred from fixture success.

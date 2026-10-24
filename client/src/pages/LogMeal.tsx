@@ -3,7 +3,7 @@ import RestaurantEntry from "@/components/RestaurantEntry";
 import FoodCapture from "@/components/FoodCapture";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, foodMass } from "@shared/nutrition-display";
-import {foodEntryMethods,availableFoodEntryMethods,parseAvailableFoodEntryMethod,type FoodEntryMethod} from "@shared/food-entry";
+import {foodEntryMethods,availableFoodEntryMethods,resolveFoodEntryRoute,type FoodEntryMethod} from "@shared/food-entry";
 import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
 import { nutritionUpdateFeedback } from "@shared/nutrition-review";
@@ -67,25 +67,24 @@ export default function LogMeal() {
     Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
   >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [products, setProducts] = useState<Ingredient[]>([]);
-  const [method,setMethod]=useState<FoodEntryMethod|null>(parseAvailableFoodEntryMethod(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
+  const [method,setMethod]=useState<FoodEntryMethod|null>(resolveFoodEntryRoute(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
   const capabilities=useQuery<{foodEntry?:Partial<Record<FoodEntryMethod,boolean>>}>({queryKey:["/api/capabilities",user?.id],enabled:!!user,queryFn:async()=>(await apiRequest("GET","/api/capabilities")).json()});
   const availableMethods=availableFoodEntryMethods(capabilities.data?.foodEntry);
-  const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search","restaurant"].includes(params.get("method")||""));
+  const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search"].includes(params.get("method")||""));
   const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("Canada"),[restaurantVisited,setRestaurantVisited]=useState(params.get("method")==="restaurant");
   const chooserHeading=useRef<HTMLHeadingElement>(null);
   const changeMethod=(requested:FoodEntryMethod|null)=>{
     const next=requested&&availableMethods.some(m=>m.id===requested)?requested:null;
-    if(next==="restaurant")setRestaurantVisited(true);
-    if(next&&["barcode","search","restaurant"].includes(next))setPickerVisited(true);
+    if(next&&["barcode","search"].includes(next))setPickerVisited(true);
     const url=new URL(window.location.href);if(next)url.searchParams.set("method",next);else url.searchParams.delete("method");
     window.history.pushState(null,"",url.pathname+url.search);setMethod(next);
     requestAnimationFrame(()=>chooserHeading.current?.focus());
   };
-  useEffect(()=>{const back=()=>{const next=parseAvailableFoodEntryMethod(new URLSearchParams(window.location.search).get("method"));setMethod(next);if(next&&["barcode","search","restaurant"].includes(next))setPickerVisited(true);};window.addEventListener("popstate",back);return()=>window.removeEventListener("popstate",back);},[]);
-  useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.get("method")==="photo"){url.searchParams.delete("method");window.history.replaceState(null,"",url.pathname+url.search);setMethod(null);requestAnimationFrame(()=>chooserHeading.current?.focus());}},[]);
-  const recentMeals=useQuery<Meal[]>({queryKey:["/api/meals",user?.id],enabled:!!user&&method==="restaurant"});
+  useEffect(()=>{const back=()=>{const next=resolveFoodEntryRoute(new URLSearchParams(window.location.search).get("method"));setMethod(next);if(next&&["barcode","search"].includes(next))setPickerVisited(true);};window.addEventListener("popstate",back);return()=>window.removeEventListener("popstate",back);},[]);
+  useEffect(()=>{const url=new URL(window.location.href);if(url.searchParams.get("method")==="restaurant"){url.searchParams.set("method","describe");window.history.replaceState(null,"",url.pathname+url.search);}else if(url.searchParams.get("method")==="photo"){url.searchParams.delete("method");window.history.replaceState(null,"",url.pathname+url.search);setMethod(null);requestAnimationFrame(()=>chooserHeading.current?.focus());}},[]);
+  const recentMeals=useQuery<Meal[]>({queryKey:["/api/meals",user?.id],enabled:!!user&&method==="describe"&&restaurantVisited});
   const recentRestaurants=(recentMeals.data||[]).flatMap(meal=>{const context=(meal.mealContext as any)?.restaurantContext;return typeof context?.restaurant==="string"&&typeof context?.market==="string"?[{restaurant:context.restaurant,market:context.market}]:[];});
-  const pickerActive=method==="barcode"||method==="search"||method==="restaurant";
+  const pickerActive=method==="barcode"||method==="search";
   const [savedMeal, setSavedMeal] = useState<Meal | null>(null);
   const { toast } = useToast();
   const saveAttempt = useRef<{ payload: string; key: string } | null>(null);
@@ -178,7 +177,7 @@ export default function LogMeal() {
         {!method&&<div className="grid gap-3 sm:grid-cols-2">{availableMethods.map(m=><Button className="h-auto whitespace-normal text-left block" type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.description}</span></Button>)}</div>}
         <p className="panel-note">Selected items and your description stay in this draft. Save only when ready.</p>
         {method==="describe"&&<div className="space-y-3"><p>Type foods and amounts in the shared meal review below. Selected products are counted separately.</p><FoodCapture voiceOnly onDescription={text=>setDescription(current=>[current,text].filter(Boolean).join("; "))} onProduct={()=>{}}/></div>}
-        <div hidden={method!=="restaurant"} className="space-y-3"><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={setMarket}/><p className="panel-note">Use published menu values or describe the item. Generic matches are estimates.</p><Button type="button" variant="outline" onClick={()=>changeMethod("describe")}>Describe restaurant meal instead</Button><details><summary>Why?</summary><p>Common brands and saved restaurant names do not verify menu nutrition, availability or allergens. Enter values from the menu as a private label or use a description; missing values stay unknown.</p></details></div>
+        {method==="describe"&&<div className="space-y-3"><Button type="button" variant="outline" aria-expanded={restaurantVisited} aria-controls="restaurant-context" onClick={()=>setRestaurantVisited(value=>!value)}>Log a restaurant meal</Button>{restaurantVisited&&<div id="restaurant-context" className="space-y-3"><p className="panel-note">Describe what you ate below. Restaurant names add context; menu item search is not available.</p><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={setMarket}/><details><summary>Why?</summary><p>Names do not verify menu nutrition or allergens. Generic food matches are estimates. To use published nutrition, add it as a private label through Search foods; missing values stay unknown.</p></details></div>}</div>}
 
         {products.length>=10&&<p role="alert">This meal supports up to 10 labelled products. Save the meal or remove one before adding another.</p>}
         {pickerVisited&&<div hidden={!pickerActive}><ProductPicker active={pickerActive} showBarcode={method==="barcode"} pending={products.length>=10} onPick={i=>{setProducts(v=>v.length>=10?v:[...v,i]);changeMethod(null);}} initialQuery={productQuery||description.slice(0,120)} autoSearch={!!productQuery}/></div>}

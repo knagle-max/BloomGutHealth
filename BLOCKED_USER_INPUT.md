@@ -47,3 +47,19 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Recommended default: Option 2 until target and policy are explicit; continue in-memory synthetic recovery, with no real health records or key material in artifacts.
 - Impact: Blocks managed RPO/RTO, backup lifecycle and deletion-after-restore sign-off; does not block other v0.5 engineering.
 - Read-only observations (2026-10-24): Neon project fancy-smoke-82120373 reports history_retention_seconds=21600; snapshot listing was empty. This does not mean PITR is unavailable or prove a recovery guarantee. PR-1 branch is schema-only. No snapshots, restores, configuration changes or live data reads were performed. Local .neon link absent; actual Render branch binding unverified.
+
+## REST-ARCH / FOOD-508 — source-backed Canadian menu catalogue
+
+- Status: BLOCKED_USER_INPUT for actual menu activation. Manual description remains usable. Owner's live no-menu acceptance overrides any implication of full restaurant-search completion.
+- Exact question: Which licensed/rights-cleared menu source and versioned Canadian chain records are approved for item, size, modifiers, provenance and nutrient display?
+- Choices: (1) Supply an approved catalogue/licence and provider configuration via authorized secret management; (2) keep manual restaurant descriptions and defer real menu search.
+- Recommended default: Option 2. Do not scrape or invent official McDonald's/Tim Hortons Canadian records.
+- Impact: Blocks menu items and real-source restaurant search/save acceptance; does not block brand context or manual nutrition logging. Dedicated unfinished menu choice is removed from ordinary chooser.
+
+## GATE-701 / tester1 — real internal access prerequisites
+
+- Status: BLOCKED_USER_INPUT for live provisioning; synthetic policy/UI checks pass. No real reviewer grant is claimed.
+- Exact question: What reviewed isolated-synthetic environment/dataset boundary, authenticated reviewer account ID, territory, purpose, expiry and low-risk capability scope are approved for this owner test?
+- Choices: Verify the existing preview meets those requirements and supply audited provisioning inputs; or retain no live grants and use synthetic harness pending an appropriate environment.
+- Recommended default: Preserve fail-closed grants; do not guess identity from username, enable public self-enrolment, or label an exposed service isolated without evidence.
+- Impact: Real tester1 toggle remains unavailable; internal module engineering proceeds with fixtures. Migration/recovery approval and separate capability clearances remain required.
