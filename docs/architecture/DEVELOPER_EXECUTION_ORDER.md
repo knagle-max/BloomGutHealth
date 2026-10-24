@@ -49,3 +49,16 @@
 - **Science operating model:** `Discover → Replicate → Predict → Intervene → Validate → Review → Controlled Release → Monitor`. A proposed research stage, approved advice rule and public clinical/regulatory release have different gates.
 
 **Traceability:** Full deduplicated source-ID map and acceptance conditions are in `V06_HANDOFF.md` §19. The newest reviewed handoffs are not verified as implemented. **v0.5 remains the only active Codex development priority.**
+
+
+## Future research compatibility — no research-network launch (2026-10-23)
+
+**Product Owner scope decision:** The Participant-Controlled Research Network is **not a v0.6 launch feature**. It is **deferred P2** with independent P0 gates before any research-specific processing, recruitment, investigator access, interventions, AI research training, return of findings or external transfer.
+
+**Integrate now, without disrupting v0.5 or building a network:**
+1. **At v0.6 data foundation:** preserve trustworthy canonical original observations, units/time zone, provenance, assay/device method and confidence, correction/version trail and purpose/account scope; no missing-value invention. RNET-DATA-01 P0 and RNET-DATA-03 P1.
+2. **At goal/action/learning-loop phases:** record goal-to-intervention timelines, planned/actual nutrition/training, adherence, dated outcomes, relevant optional confounders, missingness and changes. Reuse existing food and Athlete logs; no research surveys. RNET-DATA-02 P1.
+3. **At permissions/evidence foundations:** architect separate research-purpose grants for *future* use but keep all research access disabled, unenrolled and unconsented now. Existing user data cannot be silently redirected into research. Preserve evidence claims approval firewall. RNET-DATA-04/05 P0.
+4. **Deferred postlaunch independent initiative:** study registry, protocol/recruitment, REB/IRB/ethics process, fine-grained research consent/withdrawals, controlled researcher workbench, cohort exports, returns, randomized studies and commercial access. RNET-DATA-06 P2, with feature-specific P0 Legal/Security/Biology/User Testing activation gates. Do **not** add research UX to Today/Athlete onboarding.
+
+**Priority principle:** Future compatibility is worthwhile only where it enhances reliable, consented core product records today. No indefinite raw biological data hoarding for hypothetical science. Deduplication and full IDs in `V06_HANDOFF.md` §20. Codex current top priority remains completing v0.5.
