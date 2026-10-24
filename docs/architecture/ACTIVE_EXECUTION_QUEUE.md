@@ -33,7 +33,7 @@
 
 ## Verification snapshot
 
-At the last Architect check PR #1 reports **188 Node tests** and live Render deployment for implementation commit `082f081`; subsequent architect-only documentation commits do not themselves verify latest running code. **v0.5 is incomplete.** New packaged-food incident requirements and alternate USDA branded source plan are **documented but not confirmed implemented**. Codex must update this snapshot from current code and CI before asserting a new status.
+The packaged-food adapter/fallback engineering is now implemented with 193 Node tests and a synthetic search/label → saved meal → daily totals journey. Existing isolated-Neon CI checks now also cover private label spelling/query persistence. The local USDA credential is absent; running-service credential/connectivity verification, real Canadian exact-item/formulation/bilingual benchmarking and physical-device acceptance remain open. OFF remains independently licensing-gated. Verify the pushed SHA's CI/Render before claiming this increment deployed. **v0.5 remains incomplete**; sequence 2 and later engineering/release work remains outstanding.
 
 ## New Branding deliverables reconciled — 2026-10-23 (Architect intake)
 

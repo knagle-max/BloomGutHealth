@@ -180,7 +180,7 @@ try {
     "/api/products",
     "POST",
     {
-      name: "Synthetic reusable label",
+      name: "Michelina's synthetic CI label",
       brand: "CI fixture",
       servingDescription: "1 scoop (12 g)",
       servingGrams: 12,
@@ -197,6 +197,7 @@ try {
   );
   const barcodeMatch=await request("/api/products/search?q=0012345678905&kind=all");
   assert.ok(barcodeMatch.products.some(p=>p.id===personalProduct.id));
+  const spellingMatch=await request("/api/products/search?q=Michelinas&kind=food");assert.ok(spellingMatch.products.some(p=>p.id===personalProduct.id));
   const productMeal = await request("/api/meals", "POST", {
     mealText: "",
     mealType: "snack",
@@ -206,11 +207,13 @@ try {
         grams: 24,
         preparation: "Selected label",
         assumption: "Synthetic fixture",
-        product: { source: "manual", id: personalProduct.id, servings: 2 },
+        product: { source: "manual", id: personalProduct.id, servings: 2, query:"Michelinas" },
       },
     ],
   });
   assert.equal(productMeal.totalCalories, 80);
+  assert.equal(productMeal.intelligence.ingredients.find(i=>i.product).product.query,"Michelinas");
+  const persistedProductMeal=(await request(`/api/meals/${first.id}`)).find(m=>m.id===productMeal.id);assert.equal(persistedProductMeal.totalCalories,80);assert.equal(persistedProductMeal.intelligence.ingredients.find(i=>i.product).product.query,"Michelinas");
   assert.equal(productMeal.totalCarbs, 24);
   assert.equal(
     productMeal.intelligence.nutrients.find((n) => n.key === "fiber_g").amount,

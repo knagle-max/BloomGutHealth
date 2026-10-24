@@ -90,6 +90,7 @@ export interface MealIntelligence {
     name: string;
     serving: string;
     source: string;
+    provenance?: import("./products").Product["provenance"];
     otherNutrients: { name: string; amount: number; unit: string }[];
   }>;
   provider: string;

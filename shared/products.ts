@@ -2,9 +2,10 @@ import { z } from "zod";
 import { normalizeBarcode } from "./barcodes";
 export const productRefSchema = z
   .object({
-    source: z.enum(["usda-local", "off", "dsld", "manual"]),
+    source: z.enum(["usda-local", "usda-branded", "off", "dsld", "manual"]),
     id: z.string().regex(/^[a-zA-Z0-9:-]{1,100}$/),
     servings: z.number().finite().positive().max(100),
+    query: z.string().max(120).optional(),
   })
   .strict();
 export type ProductRef = z.infer<typeof productRefSchema>;
@@ -50,6 +51,16 @@ export type Product = {
   retrievedAt: string;
   notes: string[];
   otherNutrients?: { name: string; amount: number; unit: string }[];
+  provenance?: {
+    version: "usda-branded-v1";
+    fdcId: number;
+    gtin: string | null;
+    brandOwner: string;
+    marketCountry: string | null;
+    publishedDate: string | null;
+    modifiedDate: string | null;
+    ingredients: string | null;
+  };
 };
 export function productIngredient(product: Product, servings = 1) {
   return {

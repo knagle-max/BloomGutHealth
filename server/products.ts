@@ -1,4 +1,6 @@
 import { canonicalBarcode } from "../shared/barcodes";
+import { normalizeProductQuery, brandedSearchQuery, rankProducts } from "../shared/product-search";
+import { normalizeUSDABranded } from "./usda-branded";
 import {
   nutrientDefinitions,
   type Ingredient,
@@ -30,8 +32,12 @@ const download: ProductFetch = async (url, init) => {
     },
   });
   if (!r.ok) throw Error("Product source temporarily unavailable.");
-  const text = await r.text();
-  if (text.length > 3000000) throw Error("Product response too large.");
+  if(Number(r.headers.get("content-length"))>3000000||!r.body){await r.body?.cancel();throw Error("Product response too large or unavailable.");}
+  const reader=r.body.getReader(),decoder=new TextDecoder();let text="",bytes=0,parts=0;
+  try{while(true){const {done,value}=await reader.read();if(done)break;bytes+=value.byteLength;
+    if(bytes>3000000||++parts>4096){await reader.cancel();throw Error("Product response too large.");}
+    text+=decoder.decode(value,{stream:true});
+  }text+=decoder.decode();}finally{reader.releaseLock();}
   return JSON.parse(text);
 };
 const num = (v: unknown): v is number =>
@@ -280,12 +286,18 @@ export function localProduct(id: string): Product {
 export class ProductService {
   private cache = new Map<string, { until: number; value: any }>();
   private inFlight = new Map<string, Promise<any>>();
+  private usdaWindow={at:0,count:0};
+  private usdaLimit(){
+    if(Date.now()-this.usdaWindow.at>60000)this.usdaWindow={at:Date.now(),count:0};
+    if(this.usdaWindow.count>=12)throw Error("USDA source busy");
+    this.usdaWindow.count++;
+  }
   private offWindow: { at: number; search: number; read: number } = {
     at: 0,
     search: 0,
     read: 0,
   };
-  constructor(private fetchJson: ProductFetch = download, private offEnabled: () => boolean = () => process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true") {}
+  constructor(private fetchJson: ProductFetch = download, private offEnabled: () => boolean = () => process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true", private usdaKey:()=>string|undefined=()=>process.env.USDA_FDC_API_KEY) {}
   private async cached(key: string, read: () => Promise<any>) {
     const old = this.cache.get(key);
     if (old && old.until > Date.now()) return old.value;
@@ -326,7 +338,7 @@ export class ProductService {
     }
     results.push(
       ...own.filter((p) =>
-        `${p.name} ${p.brand}`.toLowerCase().includes(q.toLowerCase()),
+        normalizeProductQuery(`${p.name} ${p.brand}`).includes(normalizeProductQuery(q)),
       ),
     );
     if (kind !== "supplement")
@@ -334,6 +346,14 @@ export class ProductService {
         ...findFoodCandidates(q, 5).map((f) => localProduct(String(f.fdcId))),
       );
     const jobs = [] as Promise<void>[];
+    const key=this.usdaKey();
+    if(kind!=="supplement"&&key)jobs.push(this.cached("usda-branded-search:"+brandedSearchQuery(q),()=>{this.usdaLimit();return this.fetchJson(
+      `https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${encodeURIComponent(key)}`,
+      {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({query:brandedSearchQuery(q),dataType:["Branded"],pageSize:20})}
+    );}).then(data=>{
+      for(const raw of (Array.isArray(data.foods)?data.foods:[]).slice(0,20))try{results.push(normalizeUSDABranded(raw,false));}catch{}
+    }).catch(()=>{warnings.push("USDA Branded Foods is temporarily unavailable. Your saved labels and manual label entry still work.");}));
+    if(kind!=="supplement"&&!key)warnings.push("USDA Branded Foods is not configured. Enter your package label or use a private saved product; generic USDA foods are estimates.");
     if (kind !== "food")
       jobs.push(
         this.cached("dsld-search:" + q.toLowerCase(), () =>
@@ -395,13 +415,14 @@ export class ProductService {
             );
           }),
       );
-    if(kind !== "supplement" && !this.offEnabled()) warnings.push("Public packaged-food lookup is unavailable pending source licensing review. Scan a privately saved label, enter its label, or choose a generic food.");
+    if(kind !== "supplement" && !this.offEnabled()) warnings.push("Open Food Facts is disabled pending source licensing review. USDA Branded Foods, if configured, and your private saved labels are separate sources.");
     await Promise.all(jobs);
     return {
-      products: results,
+      products: rankProducts(results,q),
+      query: {original:q,normalized:brandedSearchQuery(q)},
       warnings,
       attribution:
-        `Generic foods: USDA FNDDS. ${this.offEnabled() ? "Packaged foods: Open Food Facts (ODbL). " : ""}Supplement labels: NIH DSLD. Saved labels are private to your account.`,
+        `Generic estimates: USDA FNDDS. ${key?"Manufacturer labels: USDA Branded Foods (US public-domain data); verify country and formulation. ":""}${this.offEnabled() ? "Packaged foods: Open Food Facts (ODbL). " : ""}Supplement labels: NIH DSLD. Saved labels are private to your account.`,
     };
   }
   async resolve(
@@ -417,6 +438,18 @@ export class ProductService {
       return [p];
     }
     if (ref.source === "usda-local") return [localProduct(ref.id)];
+    if(ref.source==="usda-branded"){
+      const key=this.usdaKey();
+      if(!key)throw Error("USDA Branded Foods is not configured. Enter the package label instead.");
+      if(!/^\d{1,10}$/.test(ref.id))throw Error("Invalid USDA record");
+      return this.cached("usda-branded:"+ref.id,async()=>{
+        this.usdaLimit();
+        const raw=await this.fetchJson(`https://api.nal.usda.gov/fdc/v1/food/${ref.id}?api_key=${encodeURIComponent(key)}`);
+        const product=normalizeUSDABranded(raw);
+        if(product.id!==ref.id)throw Error("USDA record identity changed");
+        return [product];
+      });
+    }
     if (ref.source === "dsld") {
       const id = ref.id.split(":")[0];
       if (!/^\d{1,9}$/.test(id)) throw Error("Invalid label ID.");
@@ -483,6 +516,7 @@ export async function lookupProductNutrition(
         name: p.name,
         serving: `${servings} × ${p.servingDescription}`,
         source: p.source,
+        ...(p.provenance?{provenance:p.provenance}:{}),
         otherNutrients: (p.otherNutrients || []).map((n) => ({
           ...n,
           amount: n.amount * servings,
@@ -492,7 +526,7 @@ export async function lookupProductNutrition(
         ingredient: i.name,
         grams: p.servingGrams === null ? null : p.servingGrams * servings,
         serving: `${servings} × ${p.servingDescription}`,
-        fdcId: p.source === "usda-local" ? Number(p.id) : null,
+        fdcId: p.source === "usda-local"||p.source==="usda-branded" ? Number(p.id) : null,
         description: `${p.brand} ${p.name} · ${p.source}`,
         url: p.url || "",
         needsConfirmation: true,
@@ -623,7 +657,7 @@ export function registerProductRoutes(
 }
 const productRefSchemaForRoute = z
   .object({
-    source: z.enum(["usda-local", "off", "dsld", "manual"]),
+    source: z.enum(["usda-local", "usda-branded", "off", "dsld", "manual"]),
     id: z.string().regex(/^[a-zA-Z0-9:-]{1,100}$/),
   })
   .strict();

@@ -1,4 +1,4 @@
-import { lookupProductNutrition, type ProductStore } from "./products";
+import { lookupProductNutrition, type ProductStore, type ProductService } from "./products";
 import {
   catalogueFoods,
   splitMealDescription,
@@ -265,6 +265,7 @@ export async function analyzeMeal(
     userId: string;
     store: ProductStore;
     products?: Ingredient[];
+    service?: ProductService;
   },
 ): Promise<{ intelligence: MealIntelligence; nutritionalData: any[] }> {
   const parsed = reviewedIngredients
@@ -296,6 +297,7 @@ export async function analyzeMeal(
       parsed.ingredients,
       productContext.store,
       productContext.userId,
+      productContext.service,
     );
     productDetails = products.productDetails;
     snapshot = mergeNutrition(

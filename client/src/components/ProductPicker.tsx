@@ -8,7 +8,7 @@ import {
 } from "@shared/meal-intelligence";
 import { productIngredient, type Product } from "@shared/products";
 import BarcodeScanner from "./BarcodeScanner";
-import { productSearchText, normalizeBarcode } from "@shared/barcodes";
+import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
 export default function ProductPicker({
   onPick,
   initialQuery = "",
@@ -32,6 +32,8 @@ export default function ProductPicker({
     [manual, setManual] = useState(false),
     [error, setError] = useState("");
   const started = useRef(false);
+  const manualForm=useRef<HTMLFormElement>(null);
+  useEffect(()=>{if(manual)manualForm.current?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();},[manual]);
   const search = useMutation({
     mutationFn: async (override?: string) =>
       (
@@ -43,6 +45,7 @@ export default function ProductPicker({
         products: Product[];
         warnings: string[];
         attribution: string;
+        query?: { original:string; normalized:string };
       }>,
     onSuccess: (result, code) => {
       if (normalizeBarcode(code || query) && result.products.length === 1) resolve.mutate(result.products[0]);
@@ -147,6 +150,7 @@ export default function ProductPicker({
         <label>
           Search in
           <select
+            aria-label="Search in"
             className="bloom-input w-full"
             value={kind}
             onChange={(e) => setKind(e.target.value as any)}
@@ -172,6 +176,10 @@ export default function ProductPicker({
           </p>
         ))}
       {error && <p role="alert">{error}</p>}
+      {(search.error || (search.data && !search.data.products.some(p=>["usda-branded","off","manual"].includes(p.source))))&&<div className="report-context space-y-2">
+        <p>No verified package match is available for “{query}”. A generic estimate is not the same product. You can still log the nutrition printed on your package; unlisted values stay unknown.</p>
+        <Button type="button" variant="outline" onClick={()=>setManual(true)}>Enter package nutrition</Button>
+      </div>}
       {search.data && (
         <div>
           {search.data.warnings.map((s, i) => (
@@ -200,10 +208,13 @@ export default function ProductPicker({
                     ? "NIH supplement label"
                     : p.source === "off"
                       ? "Open Food Facts"
+                      : p.source === "usda-branded"
+                        ? "USDA manufacturer label"
                       : p.source === "manual"
                         ? "Your saved label"
                         : "USDA generic food"}
                 </Button>
+                <p className="panel-note">{p.source==="usda-local"?"Generic estimate — not an exact packaged product":canonicalBarcode(query)&&p.barcode&&canonicalBarcode(query)===canonicalBarcode(p.barcode)?"Matching barcode — confirm the current country, formula and serving":"Name suggestion — confirm exact package and variety"}</p>
               </li>
             ))}
           </ul>
@@ -292,6 +303,7 @@ export default function ProductPicker({
               {n}
             </p>
           ))}
+          {choice.provenance&&<details><summary>Source record & formulation</summary><p>Market country: {choice.provenance.marketCountry||"Not supplied; Canadian formulation is not confirmed"}</p><p>Source barcode: {choice.provenance.gtin||"Not supplied"}</p><p>Published: {choice.provenance.publishedDate||"Not supplied"} · Updated: {choice.provenance.modifiedDate||"Not supplied"}</p>{choice.provenance.ingredients&&<p>Source ingredients: {choice.provenance.ingredients}</p>}</details>}
           {choice.url && (
             <a
               className="text-link"
@@ -309,7 +321,8 @@ export default function ProductPicker({
               pending || !Number.isFinite(servings) || servings <= 0 || servings > 100
             }
             onClick={() => {
-              onPick(productIngredient(choice, servings));
+              const ingredient=productIngredient(choice,servings);
+              onPick({...ingredient,product:{...ingredient.product,query:search.data?.query?.original||query}});
               setChoice(null);
               setVariants([]);
             }}
@@ -358,6 +371,7 @@ export default function ProductPicker({
       </Button>
       {manual && (
         <form
+          ref={manualForm}
           className="space-y-3"
           onSubmit={(e) => {
             e.preventDefault();

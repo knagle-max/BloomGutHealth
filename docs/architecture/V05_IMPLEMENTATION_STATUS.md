@@ -1,5 +1,23 @@
 # v0.5 implementation reconciliation — 2026-10-23
 
+## Current completion snapshot (this commit)
+
+**v0.5 is not complete.** “Implemented” below means engineering exists and has automated/synthetic evidence; it does not imply independent acceptance or public-launch approval.
+
+| Workstream | Implemented and tested | Outstanding |
+| --- | --- | --- |
+| Core experience / branding | Approved assets/tokens, responsive Everyday/Athlete shell, skippable onboarding and isolated demo | Exact-build Branding acceptance, real accessibility/device/persona and seven-day return study |
+| Food capture and journal | Generic USDA, exact-record portions, barcode/manual labels, consented photo review, saved foods, idempotent meal save and daily totals | Real Canadian packaged-food coverage/benchmark; provider/device acceptance |
+| Packaged-food incident | Separate versioned USDA Branded adapter, source-aware alias/name/GTIN ranking, private no-provider label fallback, original query and manufacturer provenance retained | USDA credential/connectivity verification on the running service; real Canadian SKU/formulation/bilingual benchmark. OFF stays gated pending written licensing approval |
+| Preferences / units / Progress | Independent account units, safe drafts, one unit editor per preference, one dietary editor, dated observations first, exact canonical payloads | Remaining unit/export surfaces and comprehension/correctness acceptance |
+| Athlete | Progressive safety-aware setup, training/fueling/hydration workflow, explicit independent Profile-weight copying with provenance | Real device integration, wider sport/context validation and independent acceptance |
+| Labs / biology | Shared paste/single lab entry, partial correction, durable retries, provisional units/confirmation audit, compatible-method trends, evidence/abstention foundations | Broader reviewed catalogue/context and consistent evidence presentation; clinical escalation remains disabled pending qualified review |
+| Security / privacy | Auth/tenant/origin/rate/encryption controls, scoped export/deletion, dependency gates, API/persistence regression | Complete account-wide export/erasure and backup/vendor lifecycle; managed key/restore/load/incident exercises and independent legal/security clearance |
+| Today / integrations | Journal-state next actions; owner-scoped source ingestion/status/revocation foundations | Richer supported goal/session next actions; actual native HealthKit/Health Connect permissions/authentication/cursors/hardware checks |
+
+Current candidate validation: **193 Node tests**, TypeScript, production build, zero production dependency advisories and synthetic branded-search/manual-label → meal → daily-card journeys. Live CI/Render are checked against the pushed SHA separately. Historical entries below retain their original per-batch evidence.
+
+
 Source: `CURRENT_V05_REQUIREMENTS.md` through Amendment F; PR #1, `enhance/bloom-experience`, inspected baseline `58f9e63ee732a97b0f6d6f92decf3effa58f31c3`. This is a current-code supplement to the historical specialist ledgers, not a replacement or release approval. Main remains unchanged; the post-v0.5 roadmap is not started.
 
 ## Current increment: nutrition unit preferences
@@ -86,3 +104,9 @@ The eight redundancy findings now have implemented or regression-tested engineer
 ## Request/upload advisory follow-up — 2026-10-23
 
 Preserved the later architect-only commits through `a6d2536`, including the explicit v0.5-first execution order; no v0.6 implementation was started. Its CI run `40047161649` exposed newly reported request-parser/upload advisories (`GHSA-27r3-jxmh-p828`, `GHSA-q7qp-rjg7-q26m`). The lockfile now resolves compatible body-parser 1.20.9 and multer 2.5.0. No advisory exception or weakened gate was added. Production audit again reports zero vulnerabilities; TypeScript, all 188 Node tests and production build passed after these patches. This also revalidates the integrated lab-entry batch after the documentation-only rebase. The resulting pushed SHA/CI/Render deployment are verified separately.
+
+## Packaged-food search to saved meal — UT-FOOD-501/502/503/505
+
+Implemented a source-separated USDA Branded Foods adapter behind the existing product service, with normalized brand suggestions and canonical GTIN filtering. Exact source serving/units, FDC identity, market/formulation/date provenance and original query survive meal analysis. Generic estimates remain labelled; no-results/source-error entry focuses the existing private label form. Nutrition is still derived server-side, not from client-provided product values. Public caching/streaming/time/rate limits and credential-before-cache checks bound failure behavior. No schema migration or credential change; rollback is the preceding compatible application commit.
+
+193 tests, TypeScript/build/advisory gate and the [synthetic cross-domain browser journey](../review/branded-food-20261023/results.json) passed locally. Existing isolated-Neon CI persistence checks were extended for manual-label spelling and raw-query persistence; remote results are verified after push. Local USDA key is absent, OFF is not approved, and real external/Canadian SKU coverage is not claimed. These are segregated live-provider/legal/benchmark blockers; the manual fallback remains functional without any provider. Queue sequence 2 (Today/nutrition correctness) and the snapshot's other engineering/release work remain outstanding.
