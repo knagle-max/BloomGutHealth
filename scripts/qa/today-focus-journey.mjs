@@ -10,7 +10,8 @@ let scenario='session';const errors=[];page.on('pageerror',e=>errors.push(e.mess
 await page.route('**/api/**',async route=>{const p=new URL(route.request().url()).pathname;let json=[];
 if(p==='/api/auth/me')json={user:{id:'synthetic',username:'Today fixture'}};
 else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
-else if(p==='/api/biology/registry')json={entities:[],relationships:[],summary:{},version:'synthetic'};
+else if(p==='/api/biology/registry')json={entities:[],relationships:[],summary:'Synthetic registry',version:'synthetic'};
+else if(p.startsWith('/api/biology/foods/'))json=null;
 else if(p.startsWith('/api/biology/catalogue'))json={foods:[],totalFoods:0};
 else if(p==='/api/products/search')json={products:[],warnings:['USDA Branded Foods is not configured.'],attribution:'Synthetic disabled source'};
 else if(p==='/api/precision')json={goals:[{id:'muscle',mapping:'Protein distribution',actions:['Include familiar protein foods.'],sourceIds:['goal-protein']}],sources:[{id:'goal-protein',title:'Synthetic source reference',url:'https://example.com',limitation:'No personal dose established.'}],context:{},safetyBlocks:[]};
@@ -25,4 +26,4 @@ if(state==='error')await focus.getByText(/Training schedule unavailable/).waitFo
 await focus.getByText('Your focus & next steps').click();await focus.getByRole('link',{name:'Synthetic source reference'}).waitFor();
 }
 await page.goto('http://127.0.0.1:5188/explore');await page.getByRole('textbox',{name:'Find a food',exact:true}).fill('Kit Kat');await page.getByRole('link',{name:'Find a packaged food or enter its label'}).click();await page.getByRole('textbox',{name:'Product name / barcode'}).waitFor();assert.equal(await page.getByRole('textbox',{name:'Product name / barcode'}).inputValue(),'Kit Kat');await page.getByText('USDA Branded Foods is not configured.',{exact:true}).waitFor();
-assert.deepEqual(errors,[]);console.log('PASS: synthetic session/goal/partial/unavailable Today states and evidence disclosure; Explore→product query handoff');}catch(e){console.error((await page.locator('body').innerText()).slice(0,3500));throw e;}finally{await browser.close();await vite.close();}
+assert.deepEqual(errors,[]);console.log('PASS: synthetic session/goal/partial/unavailable Today states and evidence disclosure; Explore→product query handoff');}catch(e){console.error(errors);console.error((await page.locator('body').innerText()).slice(0,3500));throw e;}finally{await browser.close();await vite.close();}
