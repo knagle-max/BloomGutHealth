@@ -42,3 +42,15 @@ This is the **short, persistent task ledger** for iterative and overnight Codex 
 - [Development sequencing](DEVELOPER_EXECUTION_ORDER.md)
 - [v0.6 consolidated requirements](V06_HANDOFF.md)
 - [Legal provisional feature registry](LEGAL_PROVISIONAL_FEATURE_REGISTRY_2026-10-24.json)
+
+
+## Product north star and cross-cutting acceptance — 2026-10-24
+
+**Owner's founding rule:** *Simple by default, powerful on demand.* The app must deliver immediate understandable benefit without sacrificing access to scientific explanations and deep personal data. **Today is the main product surface**: one most-relevant next action, short reason, linkage to specific user goals, then optional actual-input/evidence/uncertainty and deeper pathways/research. Keep optional biology, integrations and advanced models behind meaningful disclosure, never as prerequisites for useful everyday guidance. Safety/consent remains salient. Codex should evaluate every implemented slice for impact on the Today action or its underlying data, alongside correctness, privacy and performance.
+
+**Acceptance extension across existing tasks:** No competing default dashboard panels or copy essays; one accessible primary next action and meaningful Do/Skip/Adjust as appropriate; goal relevance visible; no unsupported personalization; deep analysis discoverable and complete when requested; empty/sparse-data path remains useful; accessible on mobile; feature flags retract incomplete/restricted components without dead space. This is a cross-cutting quality gate and **does not mean v0.6 multi-domain prioritization is already built**.
+
+| ID | Priority | Outcome / acceptance | Dependencies | Status |
+| --- | --- | --- | --- | --- |
+| BLOOM-TODAY-01 | P0 current UX | Existing Today first viewport exposes one useful next action, concise goal-linked explanation and optional `Why this?`; avoid simultaneous competing primary metrics and duplicated text; reliable skip/log/adjust when supported. Live mobile/desktop smoke + screen-reader check, no fabricated data. | UT-SIMPLE-901, MKT-SIMPLE-1001, UX-OPT-02, current TodayFocus, safety/consent | READY / inspect current partial implementation |
+| BLOOM-TODAY-02 | v0.6 key functional vertical slice | Integrated decisioning evaluates permissioned current nutrition, training, recovery, user goals, available labs and reviewed biology signals; prioritizes one actionable suggestion with provenance and conflict handling, then updates only with appropriate new evidence and user review. Show measured/inferred/general status and abstain when not supportable; preserves deep science on demand and usable no-data fallback. | DATA-AI, planner/learning, BIO/ML/LEGAL constraints; v0.5 | DEFERRED until foundation accepted |
