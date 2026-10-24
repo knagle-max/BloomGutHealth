@@ -74,3 +74,7 @@
 4. **Explicitly deferred:** study enrollment, consent UI, university access, cohort downloads, human-subject research or research-specific AI training. No research functionality in initial launch. Distinct permissions required before future real uses.
 
 **Acceptance:** Reconstruct with synthetic data a traceable food+workout+laboratory timeline (sources, changes, interventions, outcomes, gaps and AI decisions), prove cross-account isolation, as-of prediction cutoff, revocation and loss-aware export. Record gaps and implementation SHA, not a blanket “research-ready” claim. See V06_HANDOFF.md §21. Finish current v0.5 first.
+
+## Active v0.5 P0 incident — branded packaged foods (2026-10-23)
+
+**Immediate current-release priority:** UT-FOOD-501/502/503/505 (see `CURRENT_V05_REQUIREMENTS.md` latest addendum) cover the tester's failed `kit kit bar` and Michelina's searches, exact-versus-generic catalogue coverage, typo/alias matching, no-result-to-successful-log, and deployment/licence investigation. Reproduce with real preview configuration; do not claim OFF is enabled, or activate unapproved external lookup. UT-FOOD-504 Canadian bilingual/variant coverage is P1 after the basic reliable flow. Preserve raw food log and source provenance for future nutrition AI and research. This supersedes any implied ordering that would place v0.6 roadmap work before fixing current food logging. Codex owns implementation and independent tests remain pending.
