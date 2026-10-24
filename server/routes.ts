@@ -1,3 +1,4 @@
+import { registerCapabilityAccess, CapabilityPreferenceStorage } from "./capability-access";
 import { AccountErasureStorage } from "./account-erasure";
 import { requireActiveAccount, AccountSessionGuard } from "./account-auth";
 import { registerAccountRoutes } from "./account-routes";
@@ -41,6 +42,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     getPreferences: async (userId) =>
       (await storage.getUser(userId))?.dietaryPreferences,
   });
+  registerCapabilityAccess(app,requireAuth,new CapabilityPreferenceStorage(db));
   registerAccountRoutes(app, requireAuth, new AccountExportStorage(db), new AccountErasureStorage(db));
   registerPlannerRoutes(app, requireAuth, storage);
   const precisionService = registerPrecisionRoutes(app, requireAuth, storage);

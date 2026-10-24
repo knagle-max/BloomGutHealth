@@ -105,6 +105,10 @@ try {
     "PASS: live Neon direct database connection and production app startup",
   );
   const first = await addUser();
+  const capabilities=await request("/api/capabilities");
+  assert.equal(capabilities.eligible,false);assert.equal(capabilities.experimentalEnabled,false);
+  await request("/api/capabilities/experimental","PATCH",{enabled:true},403);
+
   console.log(
     "PASS: signup, secure proxy cookie and PostgreSQL-backed session persistence",
   );

@@ -13,11 +13,12 @@ import express from "express";
 test("account snapshot includes every owned class, decrypts original payloads and isolates another account",async()=>{
  const pg=new PGlite(),previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString("base64");
  try {
- const tables=[schema.users,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.healthSourceConsents,schema.healthObservations];
+ const tables=[schema.users,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.healthSourceConsents,schema.healthObservations,schema.capabilityPreferences];
  for(const table of tables){const c=getTableConfig(table);await pg.exec(`CREATE TABLE "${c.name}" (${c.columns.map(col=>`"${col.name}" ${col.getSQLType()}`).join(',')})`);}
  const db=drizzle(pg),store=new AccountExportStorage(db as any);
  for(const user of ['a','b']) {
   await db.insert(schema.users).values({id:user,username:user,password:'HASH-MUST-NOT-EXPORT'});
+  await db.insert(schema.capabilityPreferences).values({userId:user,enabled:true,grantFingerprint:'AUTH-GRANT-MUST-NOT-EXPORT'});
   await db.insert(schema.meals).values({id:'meal-'+user,userId:user,mealText:user+' lunch',totalCalories:0,nutritionalData:{calories:0,protein:null}});
   await db.insert(schema.microbiomeSamples).values({id:'sample-'+user,userId:user,testDate:new Date('2026-10-01Z'),rawDataPath:'/private/internal.fastq',structuredData:{originalUnit:'percent'}});
   await db.insert(schema.bacterialComposition).values({id:'bac-'+user,sampleId:'sample-'+user,bacterialName:user,taxonomyLevel:'species',abundance:0});
@@ -32,13 +33,13 @@ test("account snapshot includes every owned class, decrypts original payloads an
   await db.insert(schema.healthSourceConsents).values({userId:user,provider:'apple_health',encryptedPayload:encryptPrecision(payload,user)});
  }
  const a=await store.exportAccount('a'),b=await store.exportAccount('b');
- assert.equal(a.profile.id,'a');assert.equal(a.journal.length,1);assert.equal(a.journal[0].totalCalories,0);
+ assert.equal(a.experimentalPreference?.enabled,true);assert.equal(a.profile.id,'a');assert.equal(a.journal.length,1);assert.equal(a.journal[0].totalCalories,0);
  assert.deepEqual(a.journal[0].nutritionalData,{calories:0,protein:null});
  for(const rows of Object.values(a.gutReports))assert.equal(rows.length,1);
  assert.equal(a.gutReports.samples[0].id,'sample-a');assert.equal(b.gutReports.samples[0].id,'sample-b');
  assert.deepEqual((a.biology.records[0].payload as any),{owner:'a',value:12,unit:'source-unit',confirmation:'provisional'});
  assert.equal((a.savedLabels[0].payload as any).owner,'a');assert.equal((a.experience.records[0].payload as any).owner,'a');assert.equal((a.healthSources.observations![0].payload as any).owner,'a');
- const text=JSON.stringify(a);for(const forbidden of ['HASH-MUST-NOT-EXPORT','/private/internal.fastq','encryptedPayload','ciphertext','sample-b','meal-b'])assert.equal(text.includes(forbidden),false);
+ const text=JSON.stringify(a);for(const forbidden of ['HASH-MUST-NOT-EXPORT','AUTH-GRANT-MUST-NOT-EXPORT','/private/internal.fastq','encryptedPayload','ciphertext','sample-b','meal-b'])assert.equal(text.includes(forbidden),false);
  await assert.rejects(()=>store.exportAccount('missing'));
  await pg.exec('DROP TABLE health_source_consents');const older=await store.exportAccount('a');assert.equal(older.healthSources.storage.consents,'not-provisioned');assert.equal(older.healthSources.consents,null);assert.equal(older.healthSources.observations!.length,1);assert.equal(older.journal.length,1);
  await pg.exec('DROP TABLE health_observations');assert.equal((await store.exportAccount('a')).healthSources.observations,null);

@@ -1,3 +1,4 @@
+import ExperimentalSettings from "@/components/ExperimentalSettings";
 import AccountErasure from "@/components/AccountErasure";
 import AccountDataExport from "@/components/AccountDataExport";
 import { useExperience } from "@/lib/experience";
@@ -115,6 +116,7 @@ export default function Profile({
             {isDarkMode ? "Light mode" : "Dark mode"}
           </Button>
         )}
+        <ExperimentalSettings/>
         <Button variant="outline" onClick={() => logout()}>
           Log out
         </Button>

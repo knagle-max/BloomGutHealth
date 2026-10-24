@@ -1,5 +1,5 @@
 import { eq, sql } from "drizzle-orm";
-import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords, nutritionProducts, experienceSettings, experienceRecords, healthSourceConsents, healthObservations } from "../shared/schema";
+import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords, nutritionProducts, experienceSettings, experienceRecords, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
 import { decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 
@@ -44,13 +44,14 @@ export class AccountExportStorage {
       const [settings] = await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
       stage="experience-records";
       const experience = checked(await tx.select().from(experienceRecords).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
-      const healthTables=await tx.execute<{consent_table:string|null;observation_table:string|null}>(sql`SELECT to_regclass('health_source_consents')::text AS consent_table, to_regclass('health_observations')::text AS observation_table`);
+      const healthTables=await tx.execute<{consent_table:string|null;observation_table:string|null;preview_table:string|null}>(sql`SELECT to_regclass('health_source_consents')::text AS consent_table, to_regclass('health_observations')::text AS observation_table,to_regclass('capability_preferences')::text AS preview_table`);
       const healthStorage=healthTables.rows[0];
       stage="health-consents";
       const consents = healthStorage.consent_table ? checked(await tx.select().from(healthSourceConsents).where(eq(healthSourceConsents.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})) : null;
       stage="health-observations";
       const observations = healthStorage.observation_table ? checked(await tx.select().from(healthObservations).where(eq(healthObservations.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})) : null;
-      return {format:"bloom-account-records-v1",exportedAt:new Date().toISOString(),profile,journal,
+      const preview=healthStorage.preview_table?await tx.select({enabled:capabilityPreferences.enabled,updatedAt:capabilityPreferences.updatedAt}).from(capabilityPreferences).where(eq(capabilityPreferences.userId,userId)):[];
+      return {experimentalPreference:preview[0]||null,format:"bloom-account-records-v1",exportedAt:new Date().toISOString(),profile,journal,
         gutReports:{samples,bacteria,metabolites:compounds,healthImpacts:impacts,analyses,recommendations:advice},
         biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision},
         savedLabels:labels,experience:{settings:settings?{payload:decryptPrecision(settings.encryptedPayload,userId),updatedAt:settings.updatedAt}:null,records:experience},healthSources:{storage:{consents:healthStorage.consent_table?"provisioned":"not-provisioned",observations:healthStorage.observation_table?"provisioned":"not-provisioned"},consents,observations},

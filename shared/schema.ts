@@ -383,3 +383,11 @@ export const healthObservations = pgTable("health_observations", {
   encryptedPayload: jsonb("encrypted_payload").notNull(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 }, t => [primaryKey({columns:[t.userId,t.sourceKey]}),index("health_observations_user_updated_idx").on(t.userId,t.updatedAt.desc())]);
+
+// Internal-preview preference only; role/approval grants never come from this table.
+export const capabilityPreferences = pgTable("capability_preferences", {
+  userId:varchar("user_id").primaryKey().references(()=>users.id,{onDelete:"cascade"}),
+  enabled:boolean("enabled").notNull().default(false),
+  grantFingerprint:text("grant_fingerprint").notNull(),
+  updatedAt:timestamp("updated_at").notNull().defaultNow(),
+});

@@ -15,13 +15,14 @@ import {sameOriginWrites} from "../server/security";
 test("account erasure verifies credentials, rolls back all classes on failure, revokes sessions and isolates other accounts",async()=>{
  const pg=new PGlite();
  try{
- const tables=[s.users,s.meals,s.microbiomeSamples,s.bacterialComposition,s.metabolites,s.healthImpacts,s.mlAnalyses,s.recommendations,s.precisionProfiles,s.precisionRecords,s.nutritionProducts,s.experienceSettings,s.experienceRecords,s.healthSourceConsents,s.healthObservations];
+ const tables=[s.users,s.meals,s.microbiomeSamples,s.bacterialComposition,s.metabolites,s.healthImpacts,s.mlAnalyses,s.recommendations,s.precisionProfiles,s.precisionRecords,s.nutritionProducts,s.experienceSettings,s.experienceRecords,s.healthSourceConsents,s.healthObservations,s.capabilityPreferences];
  for(const table of tables){const c=getTableConfig(table);await pg.exec(`CREATE TABLE "${c.name}" (${[...c.columns.map(col=>`"${col.name}" ${col.getSQLType()} ${col.primary?'PRIMARY KEY':''}`),...c.primaryKeys.map(k=>`PRIMARY KEY (${k.columns.map(col=>`"${col.name}"`).join(',')})`)].join(',')})`);}
  for(const table of tables){const c=getTableConfig(table);for(const fk of c.foreignKeys){const r=fk.reference();await pg.exec(`ALTER TABLE "${c.name}" ADD FOREIGN KEY (${r.columns.map(col=>`"${col.name}"`).join(',')}) REFERENCES "${getTableName(r.foreignTable)}" (${r.foreignColumns.map(col=>`"${col.name}"`).join(',')}) ON DELETE ${fk.onDelete||'no action'}`);}}
  await pg.exec('CREATE TABLE session(sid text PRIMARY KEY,sess jsonb);CREATE TABLE erasure_hold(user_id varchar REFERENCES users(id));');
  const db=drizzle(pg),store=new AccountErasureStorage(db as any),password='synthetic-password';
  for(const user of ['a','b']){
   await db.insert(s.users).values({id:user,username:user,password:await bcrypt.hash(password,4)});
+  await db.insert(s.capabilityPreferences).values({userId:user,enabled:true,grantFingerprint:'synthetic-fingerprint'});
   await db.insert(s.meals).values({id:'meal-'+user,userId:user,mealText:user});
   await db.insert(s.microbiomeSamples).values({id:'sample-'+user,userId:user,testDate:new Date()});
   await db.insert(s.bacterialComposition).values({id:'bac-'+user,sampleId:'sample-'+user,bacterialName:user,taxonomyLevel:'species',abundance:1});

@@ -36,7 +36,7 @@ export class SharedRateLimiter {
       const path = req.path;
       const reauthentication=path === "/api/account" && req.method === "DELETE";
       const auth = reauthentication || path === "/api/auth/login" || path === "/api/auth/signup";
-      const costly = /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export)/i.test(path);
+      const costly = path.startsWith("/api/capabilities") || /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export)/i.test(path);
       if (!auth && !costly) return next();
       const scope = auth ? "authentication" : "resource";
       const windowSeconds = auth ? 900 : 60;
