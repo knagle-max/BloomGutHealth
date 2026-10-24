@@ -1,0 +1,21 @@
+# Resume Bloom development
+
+1. Work in `/workspace/BloomGutHealth` on `enhance/bloom-experience`. Read `AGENTS.md`, `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`, this root backlog and newer consolidated handoffs. Verify current Git status, PR #1 head/CI and existing Render service; preserve concurrent work. Do not reset or force-push.
+2. Last published local implementation is `9f8302856c3e0b89490e3935a83435a1c75f5b86`, with CI 40059692748 successful and Render `dep-dbe2k8ks728c738aphcg` live. Workspace `tea-db9toijrjlhs73850cp0`, existing service `srv-db9u7mjbc2fs73d86uv0`. Pass workspaceId on connector calls. No replacement service or main merge.
+3. Execution stopped because automatic approval review hit an account usage limit. Do not retry repeatedly or bypass the approval check. Resume the following commands only when execution resources are available; routine authorization already exists.
+4. Preserve and finish FOOD-506's current working changes:
+   - `client/src/components/ProductPicker.tsx`
+   - `server/usda-branded.ts`
+   - `shared/product-search.ts`
+   - `tests/usda-branded.test.ts`
+   - `scripts/qa/product-result-journey.mjs`
+   - `docs/review/product-results-20261024/`
+5. Already passed: TypeScript; 17 targeted product tests; synthetic product-result browser journey. Browser result was recovered from running shell session 81643 after the review rejection and exited successfully. Full regression/build was NOT executed for this increment. Run `npm run check`, `npm test`, `npm run build`, applicable advisory checks and the existing branded-food saved-meal journey. Regression tests use local sockets and normally require the authorized execution profile; do not work around a rejected approval.
+6. Browser runner environment: `BLOOM_PLAYWRIGHT_MODULE=/opt/codex/cua_node/lib/node_modules/playwright`, `BLOOM_CHROMIUM_EXECUTABLE=/usr/bin/chromium`. Run `node scripts/qa/product-result-journey.mjs`; it starts localhost:5192 and uses only intercepted synthetic responses. `scripts/qa/branded-food-journey.mjs` covers the existing save/daily-total flow using real domain services and fixture storage. Do not label either as hosted acceptance.
+7. Inspect final source diff and results; add a concise review README/status entry for FOOD-506. Use matching certainty only as presentation: literal name is not exact SKU, barcode must validate, source labels/generic distinctions and explicit variant/serving confirmation must remain. No invented nutrients or package sizes. Do not enable OFF.
+8. Commit verified FOOD-506 files and updated execution records; push `HEAD:enhance/bloom-experience`. If concurrent updates reject the push, fetch/inspect/rebase only your unpublished commits and resolve preserving both sides. Auto-deploy is configured; do not manually trigger another deploy after a push.
+9. Verify GitHub Actions for the exact pushed SHA and Render live status/deploy logs. Resolve real failures; never weaken security/advisory/persistence gates. Update PR #1 and the persistent log with exact evidence. Continue directly to the next highest-priority unblocked task.
+10. USDA owner-updated key has already succeeded on Render's fixed public Kit Kat startup request (20 results, 03:35:11 UTC). Do not ask for or reconfigure the key unnecessarily. Read safe runtime diagnostics after code deployments. Exact Canadian product/variant selection and hosted meal-save acceptance remain independent; direct hosted browsing has been blocked by the environment proxy. No credentials belong in files or logs.
+11. Next engineering candidates: backup/restore/deletion propagation and vendor lifecycle audit with isolated synthetic testing; remaining concrete display-unit/export/chart gaps; reviewed evidence/clinical presentation using existing components. Consult the latest queue before choosing. Keep native platform/hardware, source licensing and specialist/public-launch acceptance scoped as external blockers; continue other work.
+
+Temporary baseline worktree `/tmp/bloom-account-before` is detached at `75a598b`, with node_modules symlinked to the main checkout. It was used only for actual before/after Profile evidence. Do not delete the symlink target. Account-erasure evidence is already committed under `docs/review/account-erasure-20261024/`.
