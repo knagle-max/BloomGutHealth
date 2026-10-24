@@ -51,3 +51,5 @@ Mobile evidence: docs/review/today-mobile-20261024. 218 tests/types/build and re
 | BLOOM-OPS-01-REPORT | P0 v0.5 | Private read-only cost/liability report and explicit alert exit codes | IMPLEMENTED_AND_TESTED (synthetic); publication pending | 250 full + 4 final focused tests; exact money, metered-account ratio, all outstanding liabilities, safe errors and transaction cleanup. No live DB query, provider calls, settlement writes, admin role or monitoring activation. |
 
 | BLOOM-SCI-01-TIME | P0 scientific integrity | Prevent same-instant lab comparisons and retain source context in existing table | IMPLEMENTED_AND_TESTED (synthetic) | 251 full + 16 focused tests/types/build; rendered duplicate/compatible/single/empty, original offset/unit/zero/reference/fasting, keyboard and 320–1280 light/dark reflow. Clinical/device acceptance separate. |
+
+| BLOOM-CAP-01-SOURCE2 | P0 audit | Close static-array and silent dynamic-route inventory omissions | IMPLEMENTED_AND_TESTED (source only) | 4 AST/current-source assertions and tool TypeScript; 80 static endpoints + 6 mounts, 13 dynamic/unscoped sites, 15 source hashes. No runtime approval or full 52-feature completion. |

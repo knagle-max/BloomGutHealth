@@ -1,10 +1,12 @@
 {
-  "version": 1,
-  "scope": "Literal /api Express declarations in top-level server/*.ts only",
+  "version": 2,
+  "scope": "Static string and array /api declarations on app/router receivers in top-level server/*.ts; dynamic paths and unscoped middleware flagged separately",
   "limitations": [
     "USE rows are middleware mounts, not endpoints",
+    "Unresolved declarations are source sites, not enumerated endpoint counts; templates/bindings are never evaluated",
+    "Nonliteral USE may be global middleware or a dynamic mount; call arguments/inline bodies are omitted from summaries",
+    "Receiver aliases, chained/indirect registration, Python, UI, jobs, tools, export fields and caches are not enumerated",
     "In-handler auth, execution guards, family mounts and output filtering require manual review",
-    "Does not enumerate Python, dynamic routes, UI, jobs, tools, export fields or caches",
     "REVIEW_REQUIRED is an inventory disposition, not a change to release approval or public access"
   ],
   "sourceHashes": {
@@ -14,13 +16,15 @@
     "server/capability-access.ts": "444a2c8f0bd41a3628a644dd029e785bd17d946a5e3a0bd4988123a7fd10ec6d",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
+    "server/index.ts": "1b4b6f84889c727d5c3e11f23f27010e6497ba479e4f32e32a47feba1649de03",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/precision-routes.ts": "cc0dcdf84f1ffe13f78afd712d962a1ba9b430e4ec818a6f8bcfdcdd63b522ac",
     "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
     "server/report-routes.ts": "b31cecb2972b204f7e229e78694ee5725bf28b16170db2445ea316ce33327061",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
     "server/routes.ts": "186015e6c05c84a00b662e3bb52026596371ee14dd2e20850273c56f75c3ee62",
-    "server/science-coach.ts": "af850052f4af68b0e2b6f857a2818d7f669cf01350c20356e0f48642a2d83947"
+    "server/science-coach.ts": "af850052f4af68b0e2b6f857a2818d7f669cf01350c20356e0f48642a2d83947",
+    "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
   },
   "entries": [
     {
@@ -689,6 +693,26 @@
     },
     {
       "file": "server/routes.ts",
+      "line": 283,
+      "method": "GET",
+      "path": "/api/meals",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 283,
+      "method": "GET",
+      "path": "/api/meals/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
       "line": 300,
       "method": "DELETE",
       "path": "/api/meals/:mealId",
@@ -795,6 +819,112 @@
       "declaredMiddleware": [
         "dependencies.requireAuth"
       ],
+      "review": "REVIEW_REQUIRED"
+    }
+  ],
+  "unresolvedDeclarations": [
+    {
+      "file": "server/auth-routes.ts",
+      "line": 16,
+      "method": "POST",
+      "pathExpression": "`/api/auth/${action}`",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 21,
+      "method": "USE",
+      "pathExpression": "securityHeaders",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 24,
+      "method": "USE",
+      "pathExpression": "sameOriginWrites",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 25,
+      "method": "USE",
+      "pathExpression": "express.json(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 26,
+      "method": "USE",
+      "pathExpression": "express.urlencoded(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 33,
+      "method": "USE",
+      "pathExpression": "session(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 52,
+      "method": "USE",
+      "pathExpression": "[inline middleware]",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 64,
+      "method": "USE",
+      "pathExpression": "budgets.middleware(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 69,
+      "method": "USE",
+      "pathExpression": "[inline middleware]",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 426,
+      "method": "POST",
+      "pathExpression": "`/api/precision/weekly-plans/${action}`",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/retired-health-routes.ts",
+      "line": 7,
+      "method": "GET",
+      "pathExpression": "`/api/health/${kind}/:userId`",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/vite.ts",
+      "line": 43,
+      "method": "USE",
+      "pathExpression": "vite.middlewares",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/vite.ts",
+      "line": 79,
+      "method": "USE",
+      "pathExpression": "express.static(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
       "review": "REVIEW_REQUIRED"
     }
   ]
