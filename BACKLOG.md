@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Last published implementation: `d7a103da4c32b3d481a624411802d22faf597169`; CI 40119564999 passed; Render dep-dbef9jmk1f9s73f975f0 live.
+Branch: `enhance/bloom-experience`. Last published implementation: `824c6e2ba75d56ac7b9e5a9f8a68b6febb0c0dd1`; CI 40119991618 passed; Render dep-dbefc7k9v7es73cfa49g live.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish v0.5 before v0.6. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -49,3 +49,5 @@ Mobile evidence: docs/review/today-mobile-20261024. 218 tests/types/build and re
 | BLOOM-CAP-02-UI | P0 v0.5 | Explicitly scoped internal local photo preview at Add Food | IMPLEMENTED_AND_TESTED (synthetic) | 246 tests/types/build, 11 focused checks, actual-handler browser role/OFF/cache/draft/save regression. No upload/inference or real reviewer provisioned. See task index and docs/review/development-photo-20261024. |
 
 | BLOOM-OPS-01-REPORT | P0 v0.5 | Private read-only cost/liability report and explicit alert exit codes | IMPLEMENTED_AND_TESTED (synthetic); publication pending | 250 full + 4 final focused tests; exact money, metered-account ratio, all outstanding liabilities, safe errors and transaction cleanup. No live DB query, provider calls, settlement writes, admin role or monitoring activation. |
+
+| BLOOM-SCI-01-TIME | P0 scientific integrity | Prevent same-instant lab comparisons and retain source context in existing table | IMPLEMENTED_AND_TESTED (synthetic) | 251 full + 16 focused tests/types/build; rendered duplicate/compatible/single/empty, original offset/unit/zero/reference/fasting, keyboard and 320–1280 light/dark reflow. Clinical/device acceptance separate. |

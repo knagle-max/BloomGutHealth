@@ -47,3 +47,15 @@ test("skipping setup never grants safety clearance, consent or athlete targets",
  assert.equal(buildAthleteDay(s.athlete,[],[],[]).blocked,true);
  assert.equal(settingsPatchSchema.safeParse({onboarding:{status:"complete",consent:true}}).success,false);
 });
+test("the same instant with different UTC offsets cannot create a laboratory trend; original source context is retained",()=>{
+ const lab=labSchema.parse({marker:"glucose",value:0,unit:"mg/dL",measuredAt:"2026-09-30T23:30:00Z",laboratory:"Synthetic",method:"assay-A",fasting:"yes",referenceLow:0,referenceHigh:100});
+ const rows=[record("utc",lab),record("offset",{...lab,value:100,measuredAt:"2026-10-01T01:30:00+02:00",referenceLow:null,referenceHigh:null})];
+ const trend=report(rows).trends[0];
+ assert.equal(trend.comparable,false);assert.equal(trend.change,null);
+ assert.equal(trend.points.length,2);assert.equal(trend.points[1].date,"2026-10-01T01:30:00+02:00");
+ assert.equal(trend.points[0].sourceValue,0);assert.equal(trend.points[0].referenceLow,0);assert.equal(trend.points[0].referenceHigh,100);
+ assert.equal(trend.points[0].sourceUnit,"mg/dL");assert.equal(trend.points[0].unit,"mmol/L");assert.equal(trend.points[0].fasting,"yes");
+ assert.equal(trend.points[1].referenceLow,null);assert.equal(trend.points[1].referenceHigh,null);
+ rows[1].payload.measuredAt="2026-10-02T01:30:00+02:00";
+ assert.equal(report(rows).trends[0].comparable,true);
+});

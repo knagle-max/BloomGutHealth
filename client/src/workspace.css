@@ -178,3 +178,5 @@ body { -webkit-font-smoothing: antialiased; }
 .app-shell .development-feature { border-color:hsl(var(--muted-foreground)); border-style:dashed; background:hsl(var(--muted)/.8); color:hsl(var(--foreground)); }
 .development-status { display:flex; align-items:center; gap:8px; font-size:14px; line-height:1.5; margin-top:6px; }
 .development-photo { max-width:100%; max-height:240px; object-fit:contain; border-radius:8px; }
+.lab-source-table { max-width:100%; overflow-x:auto; }
+.lab-source-table time { overflow-wrap:anywhere; }

@@ -1042,7 +1042,7 @@ export function buildPrecisionReport(
       last = series[series.length - 1];
     const known = (v: string) => !!v.trim() && !/^(unknown|not supplied)$/i.test(v.trim());
     const comparable = series.length > 1 && known(first.laboratory) && known(first.method) &&
-      new Set(series.map(l => l.measuredAt)).size === series.length &&
+      new Set(series.map(l => Date.parse(l.measuredAt))).size === series.length &&
       series.every(l => l.laboratory === first.laboratory && l.method === first.method &&
         l.fasting === first.fasting && canonicalLab(l).unit === canonicalLab(first).unit) &&
       (!["glucose", "triglycerides"].includes(m.id) || first.fasting !== "unknown");
@@ -1054,6 +1054,7 @@ export function buildPrecisionReport(
           id: l.id,
           date: l.measuredAt,
           laboratory: l.laboratory, method: l.method, sourceValue: l.value, sourceUnit: l.unit,
+          referenceLow: l.referenceLow, referenceHigh: l.referenceHigh, fasting: l.fasting,
           provenance: l.unitReview ? "User-confirmed source unit" : "User-entered result",
           ...canonicalLab(l),
         })),
