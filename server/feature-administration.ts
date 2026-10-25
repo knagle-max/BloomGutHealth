@@ -10,7 +10,9 @@ export function featureAdminReadGrant(userId:string,env:Record<string,string|und
  if(!userId||!Number.isFinite(now)||!environment.safeParse(env.BLOOM_FEATURE_ADMIN_ENVIRONMENT).success||(env.BLOOM_FEATURE_ADMIN_KILL_SWITCH!==undefined&&env.BLOOM_FEATURE_ADMIN_KILL_SWITCH!=='false'))return false;
  try{
   const raw=env.BLOOM_FEATURE_ADMINS||'[]';if(raw.length>65536)return false;
-  const grants=z.array(grantSchema).max(100).parse(JSON.parse(raw)).filter(grant=>grant.userId===userId);
+  const base=z.array(grantSchema).max(100).parse(JSON.parse(raw));
+  const supplemental=env.BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT? [grantSchema.parse(JSON.parse(env.BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT))]:[];
+  const grants=[...base,...supplemental].filter(grant=>grant.userId===userId);
   return grants.length===1&&grants[0].serviceId===env.RENDER_SERVICE_ID&&grants[0].environment===env.BLOOM_FEATURE_ADMIN_ENVIRONMENT&&Date.parse(grants[0].expiresAt)>now;
  }catch{return false;}
 }
