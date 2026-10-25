@@ -1,3 +1,4 @@
+import {resolvePlanningContext} from "./planning-context";
 import {historicalPlanRecord} from "./plan-history";
 import {aiExecutionContext} from "./metered-ai";
 import { requireRestrictedCapability } from "./capability-policy";
@@ -92,12 +93,15 @@ export function registerPrecisionRoutes(
         predictions: [],
       };
     }
+    const resolved = resolvePlanningContext(context, user?.age);
     const result = buildPrecisionReport(
       records,
-      context,
+      resolved.context,
       preferences.success ? preferences.data : defaultPreferences,
       report,
     );
+    result.safetyBlocks.unshift(...resolved.blocks);
+    result.plans = result.plans.map(historicalPlanRecord);
     const meals = await store.getMeals(userId);
     const recent = meals.filter(
       (m) =>
@@ -133,6 +137,7 @@ export function registerPrecisionRoutes(
     });
     return {
       ...result,
+      ageSources: resolved.ageSources,
       availableReports: owned.map((s) => ({
         id: s.id,
         date: s.testDate.toISOString(),

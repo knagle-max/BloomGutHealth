@@ -45,7 +45,8 @@
         "logicOrJobs": [
           "shared/experience.ts",
           "shared/goal-guidance.ts",
-          "shared/today-focus.ts"
+          "shared/today-focus.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -76,7 +77,8 @@
         "logicOrJobs": [
           "shared/experience.ts",
           "shared/goal-guidance.ts",
-          "shared/today-focus.ts"
+          "shared/today-focus.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -107,7 +109,8 @@
         "logicOrJobs": [
           "shared/experience.ts",
           "shared/goal-guidance.ts",
-          "shared/today-focus.ts"
+          "shared/today-focus.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -377,7 +380,8 @@
         ],
         "logicOrJobs": [
           "shared/meal-intelligence.ts",
-          "shared/weekly-planner.ts"
+          "shared/weekly-planner.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -415,7 +419,8 @@
           "server/provider-circuit.ts",
           "server/ai-costing.ts",
           "server/recipe-ranking.ts",
-          "server/recipe-generation.ts"
+          "server/recipe-generation.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -548,7 +553,8 @@
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -576,7 +582,8 @@
         ],
         "logicOrJobs": [
           "shared/lab-paste.ts",
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -603,7 +610,8 @@
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -629,7 +637,8 @@
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -656,7 +665,8 @@
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -799,7 +809,8 @@
         ],
         "logicOrJobs": [
           "server/metabolite-research.ts",
-          "server/capability-policy.ts"
+          "server/capability-policy.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -825,7 +836,8 @@
         ],
         "logicOrJobs": [
           "server/analysis-boundary.ts",
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -848,7 +860,8 @@
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -874,7 +887,8 @@
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -900,7 +914,8 @@
         ],
         "logicOrJobs": [
           "server/analysis-boundary.ts",
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -990,7 +1005,8 @@
           "shared/meal-intelligence.ts",
           "shared/weekly-planner.ts",
           "server/weekly-runner.ts",
-          "server/weekly-worker.ts"
+          "server/weekly-worker.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1139,7 +1155,8 @@
         ],
         "logicOrJobs": [
           "shared/lab-paste.ts",
-          "shared/precision-nutrition.ts"
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1410,7 +1427,8 @@
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/plan-history.ts": "bde0384e99919777bc74053a401bdbf623039a023d7434ec686fc2ee9721ca9c",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
-    "server/precision-routes.ts": "bd5c5d359395d17278bb2b577d655b74128b30de7e987140790230c89c3823fc",
+    "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
+    "server/precision-routes.ts": "c1a2f257b9c54b1cfb6b740f3c2e1aa8bb88f7b59df8393b1c341492e9344cd8",
     "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
     "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
@@ -1445,6 +1463,6 @@
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/structured-report.ts": "901a12363895fbd5eedcbda261f83f9ee78dba8b3af03e564ba42de197aaa49c",
     "shared/today-focus.ts": "6254d4afd9b7a196e00b934aef14d55ffd6eda1ee0c6157a2f784f9a3b644917",
-    "shared/weekly-planner.ts": "591617193104e6185ac2267de0f781f388345ec9339ba16ff9b65c7e6062aab3"
+    "shared/weekly-planner.ts": "e79f804c97a92212cfbccca052adac7d8d7c2ec85a4395983038a706a4f1d417"
   }
 }

@@ -463,7 +463,9 @@ export function buildWeeklyPlan(
     !report.context.safetyReviewed
   )
     blocks.push(
-      "Confirm an adult profile, non-pregnant status and health context in Precision nutrition before generating a personalized plan.",
+      report.context.ageGroup === "under18"
+        ? "Adult nutrition planning is unavailable for a profile under 18. Review the recorded Profile and health context."
+        : "Confirm an adult profile, non-pregnant status and health context in Precision nutrition before generating a personalized plan.",
     );
   if (
     report.context.conditions.some((c) =>

@@ -56,15 +56,14 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Recommended default: Option 2. Do not scrape or invent official McDonald's/Tim Hortons Canadian records.
 - Impact: Blocks menu items and real-source restaurant search/save acceptance; does not block brand context or manual nutrition logging. Dedicated unfinished menu choice is removed from ordinary chooser.
 
-## GATE-701 / tester1 — real internal access prerequisites
+## GATE-701 / Tester1 — verified existing service provisioning
 
-- Status: BLOCKED_USER_INPUT for live provisioning; rechecked immediately under owner P0 directive ed8fffb on 2026-10-25. Synthetic UI tests are not live acceptance.
-- Observed: existing Render service is public, auto-deploys the authorized branch, and exposes no dataset certification or database binding in connected service metadata. Exact SQL `SELECT id FROM users WHERE username = 'tester1'` on connected Neon project fancy-smoke-82120373 / production branch br-orange-cloud-aru4p4fw returned zero rows. No health/password data fetched. Workspace DATABASE_URL names a different endpoint from both connected project branches; exact-account read failed DNS (EAI_AGAIN). No identity inferred, account created, migration run or grant installed.
-- Single owner decision: Which verified Render-bound database/account is the reviewer, and what reviewed synthetic-only dataset boundary, territory, purpose, expiry, low-risk module scope and additive-migration/recovery clearance apply?
-- Choices: Provide the verified existing-service binding plus authenticated account ID and scoped review/provisioning clearance; or retain no live grants until an approved isolated dataset is available.
-- Recommended default: Verify existing-service binding/account and independently reviewed synthetic-only scope first; keep grants fail-closed meanwhile. Public reachability alone neither establishes nor disproves dataset isolation.
-- Exact next step after inputs: recheck exact account ID against the approved binding, apply reviewed additive preference migration with recovery gates, provision expiring server-only display grant, then signed-in ON/OFF + ordinary-account denial + Render SHA/screenshot/revocation acceptance. Never use a display name as authority or change account credentials to obtain a session.
-- Impact: Live tester1 toggle remains blocked. Scoped photo preview engineering and independent capability policy/runtime work continue; image inference, incident and research execution remain denied.
+- Status: BLOCKED_USER_INPUT only for genuinely unavailable binding/dataset approval; immediate P0 diagnosis active under owner 6cd2b4c. Exact login is `Tester1`, capital T. No new account/rename/reset is authorized. Earlier lowercase `tester1` query on an unverified branch proves neither presence nor absence; do not repeat that inference.
+- Latest observed: existing Render commit6cd2b4c live; supplemental display/admin metadata-read code added by concurrent commits. Safe logs show capabilities200 through02:46 then503 after deployment at02:50/03:04. No actor identity, preferences-schema cause, env values or reviewed synthetic dataset boundary established. Connector exposes env mutation but no env read. No live grant/migration/credential changed by this audit.
+- Single actionable missing input if diagnostics cannot establish it: identify the approved Render-bound auth database and reviewed synthetic reviewer dataset boundary (safe supply: non-secret project/branch/endpoint identity plus existing review/provisioning reference, territory/purpose/expiry/scope and additive preference-migration/recovery clearance; never send passwords or database URLs).
+- Options: verify existing service binding and scoped reviewed dataset/provisioning through approved read-only metadata; or keep real grants/schema changes deferred until that boundary is known. Recommended: verify existing service rather than replace it or guess an account ID.
+- Next: audit supplemental configuration parsing and preferences storage with safe operator diagnostics; verify actual binding, then exact case-correct account lookup for immutable ID, reviewed additive storage/provisioning and real signed-in ON/OFF/no-leakage acceptance. Grant strings are not proof of independent review; synthetics/HTTP200 do not prove live eligibility.
+- Deferral impact: actual owner toggle/module acceptance remains open, while safe diagnostics and unrelated approved development continue.
 
 ## OPS-702 — monetary policy and tariff activation
 

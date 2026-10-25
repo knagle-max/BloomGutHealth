@@ -96,7 +96,9 @@ export function buildTodayPlan(
       : []),
     ...(blocked
       ? [
-          "Confirm adult health context, pregnancy status, safety review and recognized allergies in Precision nutrition before calculating a personalized plan.",
+          report.context.ageGroup === "under18"
+            ? "Adult nutrition planning is unavailable for a profile under 18. Review the recorded Profile and health context."
+            : "Confirm adult health context, pregnancy status, safety review and recognized allergies in Precision nutrition before calculating a personalized plan.",
         ]
       : []),
     ...(report.safetyBlocks || []),
