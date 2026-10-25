@@ -337,3 +337,17 @@ PROGRESS-CURRENT-SOURCE-01 — IN_PROGRESS P0: Progress now withholds cached bod
 
 
 PROGRESS-CURRENT-SOURCE-01 — LOCAL VERIFIED:320 tests/types/build/source105 PASS; new actual-handler freshness/draft/retry journey and existing lab offset/zero/unit/method/date/reflow journey PASS. No data mutation or clinical activation; no near-identical gallery. Publish and verify exact CI/Render.
+
+
+## HealthKit iOS companion specialist intake — 2026-10-25
+
+**HK-ARCH-01–08** accepted conditionally in `V06_HANDOFF.md` §35; maps INT-IOS-2026-01–06, HK-SEC-01–06, UT-HEALTH-1701–1708 and UT-HKSEC-1801–1806. Web-first React, native Capacitor feasibility **before** product commitment, read-only HealthKit bridge, same data/consent/reconciliation contract as web/manual and later Android Health Connect. UI never fakes HealthKit connection in PWA or implies Watch pairing. HealthKit availability, current sync state, missing/denied samples and actual health outcomes must be truthfully distinguished.
+
+| ID | Priority | Acceptance | Status |
+| --- | --- | --- | --- |
+| BLOOM-HK-01 | P0 feasibility/P1 iOS | Reproducible native iPhone build: authenticated React, secure WebView origin/deep link/session, maintained licensed native HealthKit bridge and entitlement, just-in-time permission and review of server-transfer consent. Exact SHA, real device and signing constraints reported. | READY feasibility; no proven build |
+| BLOOM-HK-02 | P0 data/privacy/P1 iOS | Read-only minimum metric scopes with anchored bounded backfill, deletions/corrections, replay/device deduplication, DST/overnight dates, source attribution, idempotent server ack, separate stop/disconnect/delete/erasure and cross-account isolation, failure/manual fallback. | AUDIT existing foundations; native integration unverified |
+| BLOOM-HK-03 | P0 native release | Actual signed-device/TestFlight journey and independent Security/Biology/Brand/User Testing verification of scopes, status, offline/sync/reinstall, revoke, no account leakage, no misleading Today totals; screenshot and logs redacted. | BLOCKED until physical device and completed implementation |
+| BLOOM-HK-04 | P1 follow-up | Android Health Connect reuses typed backend but independently verifies Android permission/background specifics. | DEFERRED |
+
+**No public or tester claim of functioning native HealthKit until physical-device acceptance.** Work may proceed on server-safe foundations without Apple enrollment, while a real native signing/build needs approved credentials, hardware and potentially owner action. Do not let native dependency block current web usefulness or unrelated v0.5 work.
