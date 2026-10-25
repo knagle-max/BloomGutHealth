@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useExperience } from "@/lib/experience";
 import { energyAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
@@ -41,9 +42,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-function invalidateNutritionPeriodHistory() {
-  void queryClient.invalidateQueries({predicate:query=>["/api/nutrition/monthly/","/api/nutrition/yearly/"].some(prefix=>String(query.queryKey[0]).startsWith(prefix))});
-}
 
 function HistoricalTrends({
   userId,
@@ -324,11 +322,7 @@ export default function NutritionHistory() {
     },
     onSuccess: async (newMeal: any) => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
-      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
-      invalidateNutritionPeriodHistory();
-      queryClient.invalidateQueries({
-        queryKey: ["/api/nutrition/daily", userId],
-      });
+      void invalidatePlanningInputs();
       queryClient.invalidateQueries({
         queryKey: [`/api/health/adherence/${userId}?days=7`],
       });
@@ -358,11 +352,7 @@ export default function NutritionHistory() {
     onSuccess: (meal) => {
       if (unmatchedFoods(meal.intelligence).length || meal.intelligence?.status === "unavailable") setReviewingMealId(meal.id);
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
-      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
-      invalidateNutritionPeriodHistory();
-      queryClient.invalidateQueries({
-        queryKey: ["/api/nutrition/daily", userId],
-      });
+      void invalidatePlanningInputs();
 
       toast(nutritionUpdateFeedback(meal.intelligence));
 
@@ -386,11 +376,7 @@ export default function NutritionHistory() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
-      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
-      invalidateNutritionPeriodHistory();
-      queryClient.invalidateQueries({
-        queryKey: ["/api/nutrition/daily", userId],
-      });
+      void invalidatePlanningInputs();
 
       toast({
         title: "Meal deleted successfully!",
