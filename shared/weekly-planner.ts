@@ -10,7 +10,7 @@ import { type PrecisionReport } from "./precision-nutrition";
 import { personalEvidence, NETWORK_VERSION } from "./evidence-network";
 import { pathways } from "./science-coach";
 
-export const PLAN_VERSION = "weekly-2026-10-17.1";
+export const PLAN_VERSION = "weekly-2026-10-25.1";
 const nutrientTarget = z
   .object({
     min: z.number().finite().nonnegative().max(100000).nullable(),
@@ -563,19 +563,7 @@ export function buildWeeklyPlan(
       out.push(
         "Current reported cardiometabolic lab flag supports prioritizing this whole-food dietary pattern; no exact biomarker change is predicted.",
       );
-    if (
-      priorities.geneticContext.some((g) => g.rsid === "rs1801133") &&
-      r.foodIngredients.some((i) =>
-        ["lentils", "spinach", "broccoli"].includes(i.foodId),
-      )
-    )
-      out.push(
-        "Folate-containing ingredients are relevant to recorded MTHFR context; the call does not establish a deficiency or supplement need.",
-      );
-    if (priorities.geneticContext.some((g) => g.rsid === "rs7903146"))
-      out.push(
-        "Recorded TCF7L2 context is shown alongside actual glucose measurements; it does not set a genetic carbohydrate limit.",
-      );
+    // Genetic pathway education never supplies a scoring bonus or target.
     if (prefs.cuisines && r.style === "Soup" && /soup/i.test(prefs.cuisines))
       out.push("Matches your saved soup preparation preference.");
     return out;
@@ -778,7 +766,7 @@ export function buildWeeklyPlan(
     recommendations: Array.from(
       new Set(days.flatMap((d) => d.meals.map((m) => m.recipeId))),
     ).map((id) => ({ id, name: byRecipe.get(id)!.name })),
-    rankingNote: `${NETWORK_VERSION}: measured laboratory context before genetic context; source-linked hypotheses are not biological effect estimates.`,
+    rankingNote: `${NETWORK_VERSION}: user targets, dietary preferences and supported measured context guide choices. Genetic pathways are educational only and do not rank meals or set portions.`,
   };
 }
 export type WeeklyPlan = ReturnType<typeof buildWeeklyPlan>;

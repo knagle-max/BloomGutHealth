@@ -48,6 +48,7 @@ export default function WeeklyPlanner() {
   const [request, setRequest] = useState<WeeklyRequest>(defaults);
   const [display, setDisplay] = useState<WeeklyPlan | null>(null);
   const [message, setMessage] = useState("");
+  const historicalOutput = (display as (WeeklyPlan & {historicalOutput?:{withheld:boolean;recordedMeals:number}}) | null)?.historicalOutput;
   const [historicalSavedAt, setHistoricalSavedAt] = useState<string | null>(null);
   const [aiConsent, setAIConsent] = useState(false),
     [recipeRequest, setRecipeRequest] = useState("");
@@ -373,11 +374,11 @@ export default function WeeklyPlanner() {
             <h2>{display.name}</h2>
             {historicalSavedAt && <div role="note" className="panel-note">
               <p>Saved snapshot · {new Date(historicalSavedAt).toLocaleDateString()}</p>
-              <p>Recorded estimates and checks only. Current health, preferences and sources have not been rechecked. Rebuild before using this as a current plan.</p>
+              <p>{historicalOutput?.withheld ? `${historicalOutput.recordedMeals} historical meal suggestions are withheld. Original targets and recorded context remain available; rebuild to review current choices.` : "Recorded estimates and checks only. Current health, preferences and sources have not been rechecked. Rebuild before using this as a current plan."}</p>
               <Button variant="outline" disabled={busy} onClick={() => build.mutate(display.request)}>Rebuild with current inputs</Button>
             </div>}
             <p role="status">
-              {historicalSavedAt ? "Checks and reasoning below describe the plan at save time; they are not current safety clearance." : display.status === "feasible"
+              {historicalOutput?.withheld ? "Historical genotype-influenced selections are unavailable. Rebuild before using this as a current plan." : historicalSavedAt ? "Checks and reasoning below describe the plan at save time; they are not current safety clearance." : display.status === "feasible"
                 ? "All planned days meet your specified nutrient checks."
                 : display.status === "blocked"
                   ? "Your profile needs review before automated planning."
@@ -405,11 +406,11 @@ export default function WeeklyPlanner() {
             ))}
           </section>
           <section className="bloom-panel space-y-3">
-            <h2>{historicalSavedAt ? "Recorded reasoning at save time" : "Why this plan for you?"}</h2>
+            <h2>{historicalOutput?.withheld ? "Recorded source context" : historicalSavedAt ? "Recorded reasoning at save time" : "Why this plan for you?"}</h2>
             <p>
               Laboratory flags provide context for food-pattern priorities; they
-              are not diagnoses. Genetics adds secondary pathway context and
-              does not prescribe a supplement or a nutrient limit.
+              are not diagnoses. Genetic pathways are educational context; they do not rank meals,
+              set portions or prescribe a supplement or nutrient limit.
             </p>
             {display.biologicalEvidence.labPriorities.length ? (
               display.biologicalEvidence.labPriorities.map((l) => (

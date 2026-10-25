@@ -61,3 +61,8 @@ This execution ledger follows the owner's overnight directive. Scope and priorit
 Notes:
 Execution resources recovered after the stated reset time on 2026-10-24. Normal approval succeeded; resume autonomous implementation. Earlier rejection remains recorded in the development log.
 Mobile evidence: docs/review/today-mobile-20261024. 218 tests/types/build and rendered empty/one-meal/error/keyboard/light-dark/320–390 checks passed. Neutral card surfaces already present; physical Safari/VoiceOver and Athlete/internal composition remain unverified.
+
+
+## GENOTYPE-WEEKLY-01 — active safety correction (2026-10-25)
+Controlled synthetic MTHFR-only change reproduced different weekly meal selection with identical targets, preferences and measured context. Removed genotype reason bonuses, versioned planner weekly-2026-10-25.1; education and original observations remain intact. Known legacy MTHFR scoring outputs are withdrawn in weekly history, report and account export, retaining original targets/context and stored source. Unaffected historical plans remain inspectable. Focused 15 tests and types pass; rendered synthetic withdrawal/current renal-context rebuild/mobile/dark/keyboard pass. All 290 tests and production build pass; publication pending. No new grants, approvals, external inference, migrations or credentials.
+Previous OFF recovery 1344702924ffcad1cd56a1edfef467a6176ad994 verified: CI40167652285 success; existing Render dep-dbepmks9v7es73co6le0 live. Next independent candidate: reproduce stale precision/biology cache after profile age update, then repair targeted invalidation. Full capability/history audit remains open.

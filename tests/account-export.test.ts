@@ -33,10 +33,12 @@ test("account snapshot includes every owned class, decrypts original payloads an
   await db.insert(schema.healthSourceConsents).values({userId:user,provider:'apple_health',encryptedPayload:encryptPrecision(payload,user)});
  }
  await db.insert(schema.precisionRecords).values({id:'saved-plan-a',userId:'a',kind:'plan',encryptedPayload:encryptPrecision({type:'weekly-plan',version:'old',checksPassed:true,request:{targets:{protein:0}},days:[]},'a')});
+ await db.insert(schema.precisionRecords).values({id:'legacy-genotype-a',userId:'a',kind:'plan',encryptedPayload:encryptPrecision({type:'weekly-plan',name:'Synthetic old genotype plan',version:'weekly-2026-10-17.1',request:{targets:{protein:0}},checksPassed:true,days:[{meals:[{recipeId:'FORBIDDEN_GENOTYPE_SELECTION',reasons:['Folate-containing ingredients are relevant to recorded MTHFR context; the call does not establish a deficiency or supplement need.']}]}],shoppingList:[{name:'FORBIDDEN_GENOTYPE_SELECTION'}],recommendations:[{name:'FORBIDDEN_GENOTYPE_SELECTION'}]},'a')});
  queries.length=0;const a=await store.exportAccount('a'),b=await store.exportAccount('b');
  const historical=a.biology.records.find(record=>record.id==='saved-plan-a') as any;
  assert.equal(historical.interpretationStatus,'historical_plan_not_revalidated');assert.equal(historical.currentUse,'rebuild_required');assert.equal(historical.payload.checksPassed,true);assert.equal(historical.payload.request.targets.protein,0);
  assert.ok(!b.biology.records.some(record=>record.id==='saved-plan-a'));
+ const withheld=a.biology.records.find(record=>record.id==='legacy-genotype-a') as any;assert.equal(withheld.interpretationStatus,'historical_genotype_ranking_withheld');assert.equal(withheld.payload.historicalOutput.recordedMeals,1);assert.deepEqual(withheld.payload.request,{targets:{protein:0}});assert.ok(!JSON.stringify(a).includes('FORBIDDEN_GENOTYPE_SELECTION'));assert.ok(!b.biology.records.some(record=>record.id==='legacy-genotype-a'));
  assert.equal(a.format,'bloom-account-records-v2');assert.equal(a.derivedOutputPolicy.historicalGeneratedRecords,'metadata-only');
  assert.ok(queries.every(query=>!['predicted_concentration','impact_description','expected_impact','genome_data','results','explainability'].some(column=>query.includes(String.fromCharCode(34)+column+String.fromCharCode(34)))));
  assert.equal(a.gutReports.bacteria[0].abundance,0);assert.equal(a.gutReports.bacteria[0].genomeData,null);assert.deepEqual(a.gutReports.samples[0].structuredData,{originalUnit:'percent'});
