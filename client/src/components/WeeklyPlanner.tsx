@@ -48,6 +48,7 @@ export default function WeeklyPlanner() {
   const [request, setRequest] = useState<WeeklyRequest>(defaults);
   const [display, setDisplay] = useState<WeeklyPlan | null>(null);
   const [message, setMessage] = useState("");
+  const [historicalSavedAt, setHistoricalSavedAt] = useState<string | null>(null);
   const [aiConsent, setAIConsent] = useState(false),
     [recipeRequest, setRecipeRequest] = useState("");
   const saved = useQuery<PrecisionRecord[]>({
@@ -64,6 +65,7 @@ export default function WeeklyPlanner() {
         await apiRequest("POST", "/api/precision/weekly-plans/preview", r)
       ).json() as Promise<WeeklyPlan>,
     onSuccess: (p) => {
+      setHistoricalSavedAt(null);
       setDisplay(p);
       setRequest(p.request);
       setMessage(
@@ -141,7 +143,7 @@ export default function WeeklyPlanner() {
     build.mutate({ ...display.request, locked });
   }
   return (
-    <section className="space-y-5" aria-labelledby="weekly-title">
+    <section className="space-y-5 [&_button]:max-w-full [&_button]:whitespace-normal [&_button]:h-auto" aria-labelledby="weekly-title">
       <div className="bloom-panel space-y-4">
         <p className="eyebrow">BIOLOGY-INFORMED PLANNING</p>
         <h2 id="weekly-title">Build a balanced week</h2>
@@ -369,8 +371,13 @@ export default function WeeklyPlanner() {
         <>
           <section className="bloom-panel space-y-3">
             <h2>{display.name}</h2>
+            {historicalSavedAt && <div role="note" className="panel-note">
+              <p>Saved snapshot · {new Date(historicalSavedAt).toLocaleDateString()}</p>
+              <p>Recorded estimates and checks only. Current health, preferences and sources have not been rechecked. Rebuild before using this as a current plan.</p>
+              <Button variant="outline" disabled={busy} onClick={() => build.mutate(display.request)}>Rebuild with current inputs</Button>
+            </div>}
             <p role="status">
-              {display.status === "feasible"
+              {historicalSavedAt ? "Checks and reasoning below describe the plan at save time; they are not current safety clearance." : display.status === "feasible"
                 ? "All planned days meet your specified nutrient checks."
                 : display.status === "blocked"
                   ? "Your profile needs review before automated planning."
@@ -386,7 +393,7 @@ export default function WeeklyPlanner() {
               zero.
             </p>
             <Button
-              disabled={busy || !display.checksPassed}
+              disabled={busy || !!historicalSavedAt || !display.checksPassed}
               onClick={() => save.mutate()}
             >
               {save.isPending ? "Saving…" : "Save this checked plan"}
@@ -398,7 +405,7 @@ export default function WeeklyPlanner() {
             ))}
           </section>
           <section className="bloom-panel space-y-3">
-            <h2>Why this plan for you?</h2>
+            <h2>{historicalSavedAt ? "Recorded reasoning at save time" : "Why this plan for you?"}</h2>
             <p>
               Laboratory flags provide context for food-pattern priorities; they
               are not diagnoses. Genetics adds secondary pathway context and
@@ -650,10 +657,11 @@ export default function WeeklyPlanner() {
             <Button
               variant="outline"
               onClick={() => {
+                setHistoricalSavedAt(new Date(p.createdAt).toISOString());
                 setDisplay(p.payload as WeeklyPlan);
                 setRequest((p.payload as WeeklyPlan).request);
                 setMessage(
-                  "Saved snapshot loaded. Rebuild before following it if your health, goals or preferences have changed.",
+                  "Historical snapshot loaded. Rebuild to check current inputs; your saved record is preserved.",
                 );
               }}
             >

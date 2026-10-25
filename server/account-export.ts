@@ -1,3 +1,4 @@
+import {historicalPlanRecord} from "./plan-history";
 import {historicalAnalysisMetadata,historicalDerivedMetadata} from "./analysis-boundary";
 import { eq, sql } from "drizzle-orm";
 import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords, nutritionProducts, experienceSettings, experienceRecords, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
@@ -38,7 +39,7 @@ export class AccountExportStorage {
       stage="biology-context";
       const [context] = await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
       stage="biology-records";
-      const precision = checked(await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
+      const precision = checked(await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})).map(historicalPlanRecord);
       stage="labels";
       const labels = checked(await tx.select().from(nutritionProducts).where(eq(nutritionProducts.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
       stage="experience-settings";

@@ -254,8 +254,9 @@ test("AI recipe proposals cannot smuggle excluded ingredients, new food IDs, dup
 });
 test("weekly API recomputes saved plans, enforces auth and isolates saved snapshots", async () => {
   const byUser = new Map<string, PrecisionRecord[]>();
+  let currentContext = context;
   const store: any = {
-    getPrecisionContext: async () => context,
+    getPrecisionContext: async () => currentContext,
     getPrecisionRecords: async (id: string) => byUser.get(id) || [],
     getUser: async () => ({ dietaryPreferences: prefs }),
     getUserSamples: async () => [],
@@ -312,6 +313,15 @@ test("weekly API recomputes saved plans, enforces auth and isolates saved snapsh
       })
     ).json();
     assert.equal(own.length, 1);
+    currentContext = contextSchema.parse({...context,conditions:['renal disease']});
+    const historical = await (await fetch(base + '/api/precision/weekly-plans', {headers:{'x-test-user':'a'}})).json();
+    assert.equal(historical[0].payload.checksPassed,true);
+    assert.deepEqual(historical[0].payload,row.payload);
+    assert.equal(historical[0].interpretationStatus,'historical_plan_not_revalidated');
+    const unsafeRebuild = await fetch(base + '/api/precision/weekly-plans/preview', {method:'POST',headers:{'content-type':'application/json','x-test-user':'a'},body:JSON.stringify(input())});
+    assert.equal((await unsafeRebuild.json()).status,'blocked');
+    currentContext = context;
+
     const other = await (
       await fetch(base + "/api/precision/weekly-plans", {
         headers: { "x-test-user": "b" },

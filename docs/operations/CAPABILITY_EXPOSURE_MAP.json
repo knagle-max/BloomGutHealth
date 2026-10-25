@@ -378,7 +378,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/plan-history.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -415,7 +416,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/plan-history.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -989,7 +991,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/plan-history.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -1382,7 +1385,7 @@
     "client/src/pages/Upload.tsx": "e07d4810dde028a07bfc3822ced47e7ca1f9f80cc25f4708343e1aec24cb6298",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
-    "server/account-export.ts": "0258cbf6b6b107714d5abc1ac91168e16df84f18c9fdc0552fdd137a239f177d",
+    "server/account-export.ts": "dada9d1f09825dfdc28d43855ffb5a750ae40e5a2b85d7799601ef18106b5879",
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/ai-configuration.ts": "b6bb5b437c7a279470c821d5dfb59f321f39ce59d275faeb38da3fa7999878d5",
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
@@ -1398,8 +1401,9 @@
     "server/meal-intelligence.ts": "c92f552af98591c9ee908ef14e4c0d8eaf65c17f2ea54d284e52d97701c2363d",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
     "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
+    "server/plan-history.ts": "bde0384e99919777bc74053a401bdbf623039a023d7434ec686fc2ee9721ca9c",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
-    "server/precision-routes.ts": "cc0dcdf84f1ffe13f78afd712d962a1ba9b430e4ec818a6f8bcfdcdd63b522ac",
+    "server/precision-routes.ts": "bd5c5d359395d17278bb2b577d655b74128b30de7e987140790230c89c3823fc",
     "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
     "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",

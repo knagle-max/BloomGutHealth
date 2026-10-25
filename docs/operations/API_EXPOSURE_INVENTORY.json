@@ -19,7 +19,7 @@
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/index.ts": "1b4b6f84889c727d5c3e11f23f27010e6497ba479e4f32e32a47feba1649de03",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
-    "server/precision-routes.ts": "cc0dcdf84f1ffe13f78afd712d962a1ba9b430e4ec818a6f8bcfdcdd63b522ac",
+    "server/precision-routes.ts": "bd5c5d359395d17278bb2b577d655b74128b30de7e987140790230c89c3823fc",
     "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
@@ -470,7 +470,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 53,
+      "line": 54,
       "method": "USE",
       "path": "/api/precision",
       "declaredMiddleware": [
@@ -480,7 +480,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 165,
+      "line": 166,
       "method": "GET",
       "path": "/api/precision/evidence-network",
       "declaredMiddleware": [],
@@ -488,7 +488,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 168,
+      "line": 169,
       "method": "GET",
       "path": "/api/precision/weekly-plans",
       "declaredMiddleware": [],
@@ -496,7 +496,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 181,
+      "line": 182,
       "method": "GET",
       "path": "/api/precision/planning-recipes",
       "declaredMiddleware": [],
@@ -504,7 +504,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 291,
+      "line": 292,
       "method": "POST",
       "path": "/api/precision/today-plan",
       "declaredMiddleware": [],
@@ -512,7 +512,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 321,
+      "line": 322,
       "method": "POST",
       "path": "/api/precision/metabolite-research",
       "declaredMiddleware": [
@@ -522,7 +522,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 376,
+      "line": 377,
       "method": "POST",
       "path": "/api/precision/recipe-ideas",
       "declaredMiddleware": [],
@@ -530,7 +530,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 482,
+      "line": 483,
       "method": "GET",
       "path": "/api/precision",
       "declaredMiddleware": [],
@@ -538,7 +538,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 499,
+      "line": 500,
       "method": "PUT",
       "path": "/api/precision/context",
       "declaredMiddleware": [],
@@ -546,7 +546,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 510,
+      "line": 511,
       "method": "POST",
       "path": "/api/precision/records",
       "declaredMiddleware": [],
@@ -554,7 +554,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 544,
+      "line": 545,
       "method": "POST",
       "path": "/api/precision/labs/:id/confirm-unit",
       "declaredMiddleware": [],
@@ -562,7 +562,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 563,
+      "line": 564,
       "method": "POST",
       "path": "/api/precision/plans",
       "declaredMiddleware": [],
@@ -570,7 +570,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 603,
+      "line": 604,
       "method": "DELETE",
       "path": "/api/precision/records/:id",
       "declaredMiddleware": [],
@@ -578,7 +578,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 614,
+      "line": 615,
       "method": "DELETE",
       "path": "/api/precision",
       "declaredMiddleware": [],
@@ -933,7 +933,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 426,
+      "line": 427,
       "method": "POST",
       "pathExpression": "`/api/precision/weekly-plans/${action}`",
       "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",

@@ -1,3 +1,4 @@
+import {historicalPlanRecord} from "./plan-history";
 import {aiExecutionContext} from "./metered-ai";
 import { requireRestrictedCapability } from "./capability-policy";
 import { buildTodayPlan } from "../shared/today-planner";
@@ -172,7 +173,7 @@ export function registerPrecisionRoutes(
         records.filter(
           (r) =>
             r.kind === "plan" && (r.payload as any)?.type === "weekly-plan",
-        ),
+        ).map(historicalPlanRecord),
       );
     } catch (e) {
       unavailable(res, e);
