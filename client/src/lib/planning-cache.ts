@@ -9,4 +9,10 @@ const affected = (query: {queryKey:readonly unknown[]}) => {
 export const invalidatePlanningInputs=()=>queryClient.invalidateQueries({predicate:affected});
 // Successful erasure must discard old derived personal values, including
 // inactive query variants, before active screens fetch the remaining inputs.
-export const resetPlanningInputs=()=>queryClient.resetQueries({predicate:affected});
+export const resetPlanningInputs=()=>{
+ // Completed source-write responses may contain the original deleted lab or
+ // genetic record. Discard browser mutation receipts after confirmed erasure;
+ // this does not cancel requests or delete unrelated persisted journal data.
+ queryClient.getMutationCache().clear();
+ return queryClient.resetQueries({predicate:affected});
+};
