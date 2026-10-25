@@ -15,22 +15,26 @@ export default function Microbiome() {
     queryKey: ["/api/microbiome/samples", user?.id],
     enabled: !!user,
   });
-  const sorted = [...(samples.data || [])].sort(
+  const currentSamples=samples.fetchStatus==="idle"&&!samples.isError?samples.data:undefined;
+  const sorted = [...(currentSamples || [])].sort(
     (a, b) => +new Date(b.testDate) - +new Date(a.testDate),
   );
-  const currentId = sampleId || sorted[0]?.id;
+  const currentId = sampleId ? sorted.find(sample=>sample.id===sampleId)?.id : sorted[0]?.id;
   const results = useQuery<any>({
     queryKey: ["/api/microbiome/results", currentId],
     enabled: !!currentId,
   });
   const comparison = useQuery<any>({
     queryKey: ["/api/microbiome/results", comparisonId],
-    enabled: !!comparisonId,
+    enabled: !!comparisonId&&comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId),
   });
   const prediction = useQuery<any>({
     queryKey: ["/api/microbiome/diet-prediction", user?.id],
     enabled: !!user && tab === "diet",
   });
+  const currentResults=currentId&&results.fetchStatus==="idle"&&!results.isError&&results.data?.sample?.id===currentId?results.data:undefined;
+  const currentComparison=comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId)&&comparison.fetchStatus==="idle"&&!comparison.isError&&comparison.data?.sample?.id===comparisonId?comparison.data:undefined;
+  const currentPrediction=prediction.fetchStatus==="idle"&&!prediction.isError?prediction.data:undefined;
   return (
     <main className="science-page space-y-5">
       <div className="science-heading">
@@ -56,7 +60,7 @@ export default function Microbiome() {
           Reports could not load.{" "}
           <Button onClick={() => samples.refetch()}>Retry</Button>
         </p>
-      ) : samples.isLoading ? (
+      ) : samples.isPending||samples.fetchStatus!=="idle" ? (
         <p role="status">Loading reports…</p>
       ) : (
         <section className="bloom-panel">
@@ -111,34 +115,34 @@ export default function Microbiome() {
           </Button>
         ))}
       </nav>
-      {currentId && results.isLoading && (
+      {currentId && (results.isPending||results.fetchStatus!=="idle") && (
         <p role="status">Loading composition…</p>
       )}
-      {results.isError && (
+      {currentId&&(results.isError||results.fetchStatus==="paused") && (
         <p role="alert">
           Results could not load.{" "}
           <Button onClick={() => results.refetch()}>Retry</Button>
         </p>
       )}
-      {tab === "results" && results.data && (
+      {tab === "results" && currentResults && (
         <section className="bloom-panel">
           <h2>Selected report</h2>
           <p>
-            {results.data.sample.testingCompany} ·{" "}
-            {new Date(results.data.sample.testDate).toLocaleDateString()} ·{" "}
-            {results.data.sample.processingStatus}
+            {currentResults.sample.testingCompany} ·{" "}
+            {new Date(currentResults.sample.testDate).toLocaleDateString()} ·{" "}
+            {currentResults.sample.processingStatus}
           </p>
-          <p>{results.data.sample.notes}</p>
-          <p>Reported taxa: {results.data.bacterial_composition.length}</p>
+          <p>{currentResults.sample.notes}</p>
+          <p>Reported taxa: {currentResults.bacterial_composition.length}</p>
           <p>
             Diversity index:{" "}
-            {results.data.sample.diversityIndex ?? "Not computed"}
+            {currentResults.sample.diversityIndex ?? "Not computed"}
           </p>
           <p className="panel-note">Unsupported historical molecule estimates and recommendations are withheld. This does not mean no records were stored.</p>
           <p className="panel-note">
             Diversity is method-dependent and is not a universal health score.
           </p>
-          {results.data.analyses.map((a: any) => (
+          {currentResults.analyses.map((a: any) => (
             <p className="panel-note" key={a.id}>
               {a.analysisType} · {a.modelVersion} ·{" "}
               {a.analysisType === "reported-composition"
@@ -149,9 +153,9 @@ export default function Microbiome() {
         </section>
       )}
       {tab === "results" &&
-        results.data?.sample?.structuredData?.schemaVersion ===
+        currentResults?.sample?.structuredData?.schemaVersion ===
           "bloom-report-v2" && (
-          <ImportedReportDetails report={results.data.sample.structuredData} />
+          <ImportedReportDetails report={currentResults.sample.structuredData} />
         )}
       {tab === "bacteria" && (
         <section className="bloom-panel">
@@ -177,30 +181,29 @@ export default function Microbiome() {
             </label>
           )}
           <p className="panel-note">
-            Compare only compatible assays and taxonomic levels. Differences are
-            percentage points, not absolute bacterial counts.
+            Source values are shown side by side. Assay compatibility has not been established, so no change or health interpretation is calculated. Relative percentages are not absolute bacterial counts.
           </p>
-          {comparison.isError && (
+          {comparisonId&&(comparison.isError||comparison.fetchStatus==="paused") && (
             <p role="alert">
               Comparison unavailable.{" "}
               <Button onClick={() => comparison.refetch()}>Retry</Button>
             </p>
           )}
-          {results.data?.bacterial_composition?.length ? (
+          {currentResults?.bacterial_composition?.length ? (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr>
                     <th className="text-left p-2">Taxon</th>
                     <th className="text-left p-2">Abundance</th>
-                    {comparisonId && <th className="text-left p-2">Change</th>}
+                    {comparisonId && <th className="text-left p-2">Other reported abundance</th>}
                   </tr>
                 </thead>
                 <tbody>
-                  {results.data.bacterial_composition.map((b: any) => {
+                  {currentResults.bacterial_composition.map((b: any) => {
                     const previous =
-                      comparison.data?.bacterial_composition?.find(
-                        (v: any) => v.bacterialName === b.bacterialName,
+                      currentComparison?.bacterial_composition?.find(
+                        (v: any) => v.bacterialName === b.bacterialName && !!b.taxonomyLevel && v.taxonomyLevel === b.taxonomyLevel,
                       );
                     return (
                       <tr key={b.id}>
@@ -210,8 +213,8 @@ export default function Microbiome() {
                         <td className="p-2">{b.abundance.toFixed(2)}%</td>
                         {comparisonId && (
                           <td className="p-2">
-                            {previous
-                              ? `${(b.abundance - previous.abundance).toFixed(2)} pp`
+                            {!currentComparison?"Comparison not checked":previous
+                              ? `${previous.abundance.toFixed(2)}% (reported)`
                               : "No matched taxon"}
                           </td>
                         )}
@@ -222,7 +225,7 @@ export default function Microbiome() {
               </table>
             </div>
           ) : (
-            <p>No reported abundance data yet.</p>
+            <p>{currentResults?"No reported abundance data yet.":"Reported abundance has not been checked for this selection."}</p>
           )}
         </section>
       )}
@@ -253,7 +256,7 @@ export default function Microbiome() {
               your gut.
             </p>
           </div>
-          {prediction.isLoading ? (
+          {prediction.isPending||prediction.fetchStatus!=="idle" ? (
             <p role="status">Checking your recorded meals…</p>
           ) : prediction.isError ? (
             <div role="alert">
@@ -264,13 +267,13 @@ export default function Microbiome() {
             <>
               <div className="report-context">
                 <h3>
-                  {prediction.data?.mealsAnalyzed || 0} meals logged in the last{" "}
-                  {prediction.data?.days || 28} days
+                  {currentPrediction?.mealsAnalyzed ?? "Not checked"} meals logged in the last{" "}
+                  {currentPrediction?.days ?? "unconfirmed"} days
                 </h3>
-                <p>{prediction.data?.message}</p>
+                <p>{currentPrediction?.message}</p>
               </div>
               <div className="report-card-grid">
-                {prediction.data?.observations?.map((o: any) => (
+                {currentPrediction?.observations?.map((o: any) => (
                   <article className="report-card" key={o.key}>
                     <p className="eyebrow">{o.name}</p>
                     <p className="diet-known-total">
@@ -323,7 +326,7 @@ export default function Microbiome() {
           <details className="report-context">
             <summary>What we can—and cannot—learn here</summary>
             <p>
-              {prediction.data?.note ||
+              {currentPrediction?.note ||
                 "Food logs do not measure bacterial abundance or metabolite production."}
             </p>
             <p>
@@ -359,14 +362,14 @@ export default function Microbiome() {
 
         </section>
       )}
-      {results.data?.recommendations?.length > 0 && (
+      {currentResults?.recommendations?.length > 0 && (
         <section className="bloom-panel">
           <h2>Stored report recommendations</h2>
           <p className="panel-note">
             Legacy experimental recommendations; check their evidence and your
             preferences before use.
           </p>
-          {results.data.recommendations.map((r: any) => (
+          {currentResults.recommendations.map((r: any) => (
             <details key={r.id}>
               <summary>{r.itemName}</summary>
               <p>{r.reasoning}</p>

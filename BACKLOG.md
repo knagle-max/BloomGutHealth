@@ -197,3 +197,9 @@ PROGRESS-CURRENT-SOURCE-01 — IN_PROGRESS P0: Progress now withholds cached bod
 
 
 PROGRESS-CURRENT-SOURCE-01 — LOCAL VERIFIED:320 tests/types/build/source105 PASS; new actual-handler freshness/draft/retry journey and existing lab offset/zero/unit/method/date/reflow journey PASS. No data mutation or clinical activation; no near-identical gallery. Publish and verify exact CI/Render.
+
+
+GUT-REPORT-CURRENT-SOURCE-01 — IN_PROGRESS P0: current successful-idle report list + exact selected result ID required; cached selected/comparison data and food-journal summaries retract during paused/failed checks. Comparison displays separately reported source percentages for exact known matching taxon/rank, not an automatic change across unestablished assays. No missing comparison is treated as missing taxon or0. Synthetic HTTP/browser checks verify list/result/comparison/diet withdrawal, retry, wrong-ID rejection, original0 and reflow; types/build/source105 PASS; full suite completing. No new gallery or source mutation. Progress c5baf9b Actions40227876715 SUCCESS / Render dep-dbf5qm15efls73bl9emg LIVE. Next actual master Add Food/Food Review source opened for canonical workflow integration; unfinished menu/photo remain gated.
+
+
+GUT-REPORT-CURRENT-SOURCE-01 — LOCAL VERIFIED:320 full tests/types/build/source105 and rendered synthetic HTTP source-list/result/comparison/food-pattern pause/failure/retry/exact-ID/zero/reflow journey PASS. No new source writes or clinical inference. Compare exact known taxon/rank source values side by side; derived change waits for actual compatible assay metadata. Publish/exact CI+Render pending. Food master baseline QA preparation intentionally excluded from this commit.
