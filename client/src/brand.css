@@ -3,8 +3,8 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .bloom-identity { display:inline-flex; flex-direction:column; align-items:flex-start; line-height:1; }
 .bloom-wordmark { width:144px; height:auto; max-width:100%; }
 .bloom-wordmark-reversed { display:none; }
-.dark .bloom-wordmark-ink, [data-experience=athlete] .bloom-wordmark-ink { display:none; }
-.dark .bloom-wordmark-reversed, [data-experience=athlete] .bloom-wordmark-reversed { display:block; }
+.dark .bloom-wordmark-ink { display:none; }
+.dark .bloom-wordmark-reversed { display:block; }
 .bloom-mode-label { font-size:12px; font-weight:600; letter-spacing:.1em; margin-top:2px; margin-left:35px; color:hsl(var(--primary)); }
 .bloom-app-icon { border-radius:10px; flex-shrink:0; }
 .auth-brand { display:grid; justify-items:center; gap:12px; padding:48px 24px; background:hsl(var(--muted)); }
@@ -124,3 +124,5 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .athlete-day-selector input { width:170px; min-height:44px; }
 .athlete-home-context-error { margin-top:12px; display:grid; gap:8px; }
 .athlete-home-context-error p { font-size:14px; }
+
+.app-shell .header-actions [data-testid=button-theme-toggle] { color:hsl(var(--foreground)); }

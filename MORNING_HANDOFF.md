@@ -1,3 +1,11 @@
+# Current development status — 2026-10-25
+
+Athlete Home8e01b63 is live on the existing Render service (dep-dbf5mnbbc2fs738rna5g); Actions40227213271 was processing at latest check.320 tests/types/build and actual source-state/save/date/draft browser journeys pass. Session-first home uses delivered master sources and canonical state. Gallery docs/review/athlete-home-20261025/README.md.
+
+Athlete appearance correction now passes local responsive/actual save/contrast/logo journeys and types/build; publishing next. Original active design access verified174 files; optional missing legacy PNG tracked separately. Whole-app P0 remains incomplete; Progress source safety and food/Biology/Progress integration next. Controller components remain uninstalled; native hardware, real authenticated acceptance, provider/clinical/legal and independent reviews remain scoped blockers. No user answer is needed for the next engineering tasks.
+
+Earlier chronological reports below may contain superseded pending statuses; current NEXT_ACTIONS.md and latest development log entries take precedence.
+
 # Latest safeguards and design delivery — 2026-10-25
 
 Publishing paused-context safeguards for daily suggestions, recipe eligibility, Explore personal priority and allergy context.318 full tests, types/build and three actual-handler/browser regressions pass; general research/composition and draft targets remain usable. No new visual gallery for this conditional change.
