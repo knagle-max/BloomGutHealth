@@ -1,3 +1,11 @@
+# Latest P0 work — 2026-10-25
+
+Athlete target-conflict diagnosis fix now passes322 tests,10 focused tests, types/build, actual API/Home/Fueling conflict/repair/minor journey and existing source/draft regression. Shared typed blocker causes preserve safe suppression and session logging, without falsely asking a reviewed profile to finish setup. Publishing next; edited confirmation invalidation/source-load races are immediate next P0 under incoming User Testing audit36f866d.
+
+My Biology source navigation96ef936 passed Actions40229893448 and is live (dep-dbf66kp5efls73blmcs0). One bloodwork action, canonical source rows, correct Gut Reports destination and deeper tools on demand; actual64-case matrix/draft/unit regressions passed. Add Food and Athlete/Home theme plus source safeguards already deployed. Whole-app v0.5 and independent acceptance remain incomplete. NEXT_ACTIONS.md records the exact next engineering task; no routine user input needed.
+
+Older reports below may be superseded.
+
 # Latest local and deployed status — 2026-10-25
 
 My Biology refresh safety now passes320 tests/types/build and actual handler/browser plus canonical unit regressions. Source-dependent controls hide/disable during pending/paused/failure, same-source drafts persist for retry, Profile weight prefill requires a current source. Publishing exact CI/Render next. Concurrent changed-source conflict handling remains open.

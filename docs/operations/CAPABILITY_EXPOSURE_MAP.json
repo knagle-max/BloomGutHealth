@@ -488,7 +488,8 @@
         ],
         "logicOrJobs": [
           "shared/athlete.ts",
-          "shared/athlete-calendar.ts"
+          "shared/athlete-calendar.ts",
+          "shared/athlete-eligibility.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -518,7 +519,8 @@
         ],
         "logicOrJobs": [
           "shared/athlete.ts",
-          "shared/athlete-calendar.ts"
+          "shared/athlete-calendar.ts",
+          "shared/athlete-eligibility.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -546,7 +548,8 @@
           "server/experience-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/athlete.ts"
+          "shared/athlete.ts",
+          "shared/athlete-eligibility.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -573,7 +576,8 @@
           "server/experience-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/athlete.ts"
+          "shared/athlete.ts",
+          "shared/athlete-eligibility.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1304,7 +1308,8 @@
           "server/experience-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/athlete.ts"
+          "shared/athlete.ts",
+          "shared/athlete-eligibility.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1459,7 +1464,7 @@
   "sourceHashes": {
     "client/src/App.tsx": "ff23a62ddd29c0b2212807f50b9c1bbab9d2e56c5d547fb79b9f8d057992e7b1",
     "client/src/components/AppNavigation.tsx": "624492d93ba005b04c6e1b19b9a9cf9c6a093ba79292a81cf1f3cd8c70dac3d4",
-    "client/src/components/AthleteHome.tsx": "38a62c44d186f8cb06a0d3034d72309f218ad3f1223547acd05a1d26ab6acbde",
+    "client/src/components/AthleteHome.tsx": "ccf7f894573b9a678a602af8e6dc21bb3c04ca12d2bcca18466d3861fdc2d884",
     "client/src/components/BiologyHome.tsx": "4cc8efb92a99d2720f8325b7578c7d253da59c2695bc83ca01070f40df018363",
     "client/src/components/CompanionHero.tsx": "c4c533e8dbcbed1e6e3adb2819c0eb308831a221f1a1461b1baf5b6b39f74585",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
@@ -1542,7 +1547,8 @@
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
     "shared/application-schema.ts": "ee592917ca958174e6bc339dd5388737672e416cb93cd4ddca6308a0424f87c8",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
-    "shared/athlete.ts": "d1ab4d6363fbc2543ffc4145be0479b2719237b4a84e46b4c82123bef2d6e398",
+    "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
+    "shared/athlete.ts": "380767ce6e5245df8fa52d6b66a60c41346022e0614f72f83cf2a58bbb6707b5",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",

@@ -63,3 +63,19 @@ test("practical alternatives obey next-meal slot, restrictions, equipment, known
  const full=practicalChoices([{totalCalories:request.targets.calories*1.1}],preferences,report,request,practical);assert.equal(full.choices.length,0);
  const cold=practicalChoices([],preferences,report,request,{...practical,equipment:["none"]});assert.ok(cold.choices.every(c=>!c.recipe.ingredients.some(i=>/chicken|salmon|egg|barley|rice|potato|lentil/.test(i.name.toLowerCase()))));
 });
+
+
+test("reviewed incompatible targets have the same explicit conflict in daily and session outputs without a false incomplete-profile diagnosis",()=>{
+ const reviewed={...p,energyKcal:1200,carbGkgMin:8,carbGkgMax:10};
+ const day=buildAthleteDay(reviewed,[session(90)],[],[]),fuel=sessionFuel(session(90),reviewed);
+ assert.deepEqual(day.blockers,["target_conflict"]);assert.deepEqual(fuel.blockers,["target_conflict"]);
+ assert.equal(day.blocked,true);assert.equal(fuel.eligible,false);assert.deepEqual(day.targets,{energyKcal:null,carbohydratesG:null,proteinG:null});assert.equal(fuel.carbsGHour,null);assert.equal(fuel.recoveryProteinG,null);
+ assert.ok(day.notices.some(note=>note.includes("energy and macro targets conflict")));assert.ok(fuel.notes.some(note=>note.includes("energy and macro targets conflict")));assert.equal([...day.notices,...fuel.notes].some(note=>/finish.*profile|confirm.*health context/i.test(note)),false);
+ assert.equal(fuel.timeline[1].action.includes("shorter"),false);assert.equal(day.sessions,1);assert.equal(day.minutes,90);assert.equal(day.consumed.calories,0);assert.equal(reviewed.targetsConfirmed,true);
+});
+test("Athlete blocker reasons preserve distinct eligibility causes and workload-compatible threshold semantics",()=>{
+ const cases=[[{healthReviewed:false},"profile_unreviewed"],[{weightKg:null},"reference_mass_missing"],[{needsClinicalReview:true},"health_context_requires_review"],[{targetsConfirmed:false},"targets_unconfirmed"],[{adult:false},"unsupported_context"],[{pregnancyNo:false},"unsupported_context"]] as const;
+ for(const [change,reason]of cases){const profile={...p,...change};assert.ok(buildAthleteDay(profile,[session()],[],[]).blockers.includes(reason));assert.ok(sessionFuel(session(),profile).blockers.includes(reason));}
+ const exact={...p,energyKcal:1610,carbGkgMin:3,carbGkgMax:5};assert.deepEqual(buildAthleteDay(exact,[session()],[],[]).blockers,[]);assert.deepEqual(sessionFuel(session(),exact).blockers,[]);assert.deepEqual(buildAthleteDay({...exact,energyKcal:1609},[session()],[],[]).blockers,["target_conflict"]);
+ const workload={...p,energyKcal:2000};const day=buildAthleteDay(workload,[session(200)],[],[]);assert.deepEqual(day.blockers,["target_conflict"]);assert.deepEqual(day.fueling[0].blockers,day.blockers);assert.equal(day.fueling[0].carbsGHour,null);
+});
