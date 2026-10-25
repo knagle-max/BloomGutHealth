@@ -56,6 +56,7 @@ export default function Explore() {
         )
       ).json(),
   });
+  const currentAssessment = !assessment.isError && !assessment.isFetching ? assessment.data : undefined;
   const r = registry.data,
     node = r?.entities.find((n) => n.id === selected),
     connected =
@@ -87,7 +88,7 @@ export default function Explore() {
     );
   };
   const detail = (e: KnowledgeRelationship) => {
-    const effect = assessment.data?.relationshipEffects.find(
+    const effect = currentAssessment?.relationshipEffects.find(
       (v: any) => v.id === e.id,
     );
     return (
@@ -112,8 +113,8 @@ export default function Explore() {
           {effect?.affectsRecommendation
             ? "Used in this food's current priority"
             : "Educational connection"}
-          {foodId && assessment.data
-            ? " · for " + assessment.data.food.label
+          {foodId && currentAssessment
+            ? " · for " + currentAssessment.food.label
             : ""}
           .{" "}
           {effect?.reason ||
@@ -202,25 +203,29 @@ export default function Explore() {
             <section className="bloom-panel space-y-4">
               <p className="eyebrow">YOUR FOOD PRIORITY</p>
               <h2>Why this food matters to you</h2>
-              {assessment.isLoading && (
+              {assessment.isFetching && (
                 <p role="status">Checking your saved context…</p>
               )}
               {assessment.error && (
-                <p role="alert">{assessment.error.message}</p>
+                <div>
+                  <p role="alert">{assessment.error.message}</p>
+                  <p className="panel-note">Current personal food context is unavailable. General research remains available below.</p>
+                  <Button type="button" variant="outline" disabled={assessment.isFetching} onClick={() => assessment.refetch()}>Retry food context</Button>
+                </div>
               )}
-              {assessment.data && (
+              {currentAssessment && (
                 <>
                   <h3>
-                    {assessment.data.food.label} · {assessment.data.decision}
+                    {currentAssessment.food.label} · {currentAssessment.decision}
                   </h3>
                   {[
-                    ...assessment.data.conflicts,
-                    ...assessment.data.reasons,
+                    ...currentAssessment.conflicts,
+                    ...currentAssessment.reasons,
                   ].map((v: string, i: number) => (
                     <p key={i}>{v}</p>
                   ))}
-                  {!assessment.data.reasons.length &&
-                    !assessment.data.conflicts.length && (
+                  {!currentAssessment.reasons.length &&
+                    !currentAssessment.conflicts.length && (
                       <p>
                         No personal priority rule is active for this food. You
                         can still learn from the general evidence.
@@ -228,24 +233,24 @@ export default function Explore() {
                     )}
                   <p>
                     Food components:{" "}
-                    {assessment.data.qualitativeNutrients.join(" · ")}.
+                    {currentAssessment.qualitativeNutrients.join(" · ")}.
                     Quantities depend on the serving.
                   </p>
                   <p className="panel-note">Independent scientific review is pending. These are food-priority suggestions, not validated personal biological effects.</p>
                   <div className="evidence-context" aria-label="How to read this food insight">
-                    <p><strong>Personal relevance:</strong> {assessment.data.relationshipEffects.some((e: any) => e.affectsRecommendation) ? "A saved-context rule contributes to this food priority. This does not predict your response." : "No reviewed relationship is changing this food priority."}</p>
+                    <p><strong>Personal relevance:</strong> {currentAssessment.relationshipEffects.some((e: any) => e.affectsRecommendation) ? "A saved-context rule contributes to this food priority. This does not predict your response." : "No reviewed relationship is changing this food priority."}</p>
                     <p><strong>General evidence:</strong> The research connections below describe studies and mechanisms, not measurements of your biology.</p>
                     <p><strong>Unknown:</strong> Personal enzyme activity, microbial output and treatment effects are not determined.</p>
                   </div>
                   <details><summary>Saved observations used for context</summary>
-                  {!assessment.data.observations.labs.length && !assessment.data.observations.genetics.length && <p>No relevant laboratory or genetic observation is recorded for this food.</p>}
-                  {assessment.data.observations.labs.map((l: any) => (
+                  {!currentAssessment.observations.labs.length && !currentAssessment.observations.genetics.length && <p>No relevant laboratory or genetic observation is recorded for this food.</p>}
+                  {currentAssessment.observations.labs.map((l: any) => (
                     <p className="report-context" key={l.marker}>
                       {l.marker.toUpperCase()}: {l.value} {l.unit} · {l.flag} ·{" "}
                       {l.date.slice(0, 10)}. {l.provenance}.
                     </p>
                   ))}
-                  {assessment.data.observations.genetics.map((g: any) => (
+                  {currentAssessment.observations.genetics.map((g: any) => (
                     <p className="panel-note" key={g.rsid}>
                       {g.gene} {g.rsid} {g.genotype} · {g.status}. {g.note}
                     </p>
@@ -253,10 +258,10 @@ export default function Explore() {
                   </details>
                   <details>
                     <summary>What to track & what remains uncertain</summary>
-                    {assessment.data.tracking.map((v: string, i: number) => (
+                    {currentAssessment.tracking.map((v: string, i: number) => (
                       <p key={i}>{v}</p>
                     ))}
-                    {assessment.data.limits.map((v: string, i: number) => (
+                    {currentAssessment.limits.map((v: string, i: number) => (
                       <p className="panel-note" key={i}>
                         {v}
                       </p>

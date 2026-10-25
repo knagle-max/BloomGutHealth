@@ -41,7 +41,7 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 ## OPS-702 / PRIV-103 — managed recovery authorization and policy
 
 - Status: BLOCKED_USER_INPUT for the managed drill and approved operational policy only; synthetic recovery engineering continues.
-- Exact question: Which Neon project/branch is bound to the existing Render service, which isolated synthetic restore target and cost ceiling are authorized, and what reviewed RPO/RTO, retention, historical-key recovery location and deletion-reconciliation policy apply?
+- Exact question: Which isolated synthetic managed restore target and cost ceiling are authorized, and what reviewed RPO/RTO, retention, historical-key recovery location and deletion-reconciliation policy apply? The existing Render runtime database binding is now verified; no binding information is requested again.
 - Why needed: No live data copy, destructive restore, secret retrieval, new paid service or retention decision is authorized by the preview-deploy permission. No Render database binding has been verified.
 - Choices: (1) Operator supplies approved target/policy and performs or explicitly authorizes the isolated synthetic managed drill; (2) retain current configuration and defer managed recovery acceptance.
 - Recommended default: Option 2 until target and policy are explicit; continue in-memory synthetic recovery, with no real health records or key material in artifacts.
@@ -71,7 +71,7 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 - Exact question: Which provider/model tariff source and effective date, per-account daily/monthly and per-feature allowances, platform/provider ceiling, concurrency policy, stable accounting-identity secret-management/rotation and pseudonymous ledger retention are approved?
 - Choices: Supply reviewed configuration and authorize only separately cleared optional features; or defer monetary activation and keep no new provider enablement.
 - Recommended default: No invented tariffs, dollar limits, billing promises or new paid provider activation. Build/test with explicitly synthetic integer units. Store secrets only through approved secret management, never the handoff.
-- Impact: Blocks real monetary policy/paid-feature acceptance, not ledger, provider-unit contracts or other v0.5 work. The new ledger alone does not control current parser/recipe callsites.
+- Impact: Blocks real monetary policy/paid-feature acceptance, not ledger, provider-unit contracts or other v0.5 work. Current parser/recipe/ranking callsites require the reviewed metered executor and deny paid execution without one; no real executor is installed.
 
 Monetary activation clarification (OPS-702-EXEC): provide reviewed pinned provider/model response identity and bounds for maximum complete serialized text request, input tokens and output tokens, with review reference; no guessed tokenizer/character bound is used. Default remains no installed runtime. Implementing configuration/composition, circuits and reporting remains independently OPEN, not a user-input blocker. No real tariff/key/migration activation occurred.
 

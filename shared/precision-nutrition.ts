@@ -1081,7 +1081,7 @@ export function buildPrecisionReport(
     generatedAt: new Date(now).toISOString(),
     context,
     genetics: {
-      coverage: `${variantCatalog.length} diet-ranking markers and ${genotypeAnnotations.length} markers with educational explanations; not whole-genome interpretation`,
+      coverage: `${variantCatalog.length} reviewed common-variant markers and ${genotypeAnnotations.length} markers with educational explanations; not whole-genome interpretation`,
       import: geneticData
         ? {
             id: genetics!.record.id,
@@ -1193,7 +1193,7 @@ export function buildPrecisionReport(
       })),
     ],
     rankingNote:
-      "Priority is a transparent rule score, not a probability, clinical benefit estimate or validated precision model. Recent laboratory flags contribute more than common variants. Unknown goals are retained without inventing recommendations.",
+      "Priority uses supported laboratory context, recorded goals and dietary preferences. Common variants provide educational context only and do not change food rank. Rule scores are not probabilities, clinical benefit estimates or a validated precision model. Unknown goals are retained without inventing recommendations.",
   };
 }
 export type PrecisionReport = ReturnType<typeof buildPrecisionReport>;
