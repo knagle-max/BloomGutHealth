@@ -116,3 +116,9 @@ BLOOM-ADMIN-01-STEPUP-PROTOCOL — next active unblocked slice: implement defaul
 
 
 BLOOM-ADMIN-01-STEPUP-PROTOCOL — TESTED local foundation (2026-10-25): explicit-secret signed proofs expire within120s, bind exact session/action/change and current credential/controller scope, and consume atomically across replicas. HMAC-only shared receipt storage; repeated request-local store checks revalidate revocation. Default adapters deny, immutable activation denies, no HTTP route/runtime installer or live grant. SQL0014 isolated-CI only.306 full tests +4 focused, types/build pass; source trace52/98 remains REVIEW_REQUIRED. An expiry fixture initially used separate clock reads and violated the120s check; corrected to one database clock and regression passes. Publication/CI PostgreSQL step-up smoke pending. Parent controller credential adapter, independent current-review composition and runtime enforcement remain actionable. See docs/operations/FEATURE_STEP_UP.md.
+
+
+BLOOM-ADMIN-01-CREDENTIAL-ADAPTER — TESTED local, unpublished (2026-10-25): actual bcrypt account verification + fresh account/credential/config lookup, explicit deployment-scoped controller-only config, default kill switch denial, no metadata/tester inheritance.308 full tests/types/build + actual read-only admin handler/browser journey pass. No route/installer or real grant/credential changes. Publication held while isolated schema reconciliation2BP01 is diagnosed.
+
+
+CI-SCHEMA-REGISTRY-01:53e511b CI40202645321 safely identifies dependent biology_entities.biology_entities_version_id_pk (2BP01). Existing SQL0005 owns versioned biological registry. Exclude biology_* from declared/introspected Drizzle schema, apply existing idempotent SQL0005 in isolated preparation and compare exact registry rows/constraints around reconciliation. No key drops, cascade, record deletion or Render migration. Local308 application tests and targeted serialization pass; corrected CI pending.

@@ -13,13 +13,13 @@ async function protectedSnapshot(){
  const client=await pool.connect();try{
  await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
  const tables={};
- for(const name of ['feature_control_states','feature_control_audit']){
-  const rows=(await client.query(`SELECT row_to_json(t)::text AS value FROM public.${name} t ORDER BY service_id,environment,feature_id,revision LIMIT 100001`)).rows;
+ for(const name of ['feature_control_states','feature_control_audit','biology_versions','biology_entities','biology_sources','biology_relationships','biology_relationship_sources']){
+  const rows=(await client.query(`SELECT row_to_json(t)::text AS value FROM public.${name} t ORDER BY row_to_json(t)::text LIMIT 100001`)).rows;
   assert.ok(rows.length<=100000,'Protected snapshot is too large for the CI guard');
   tables[name]=createHash('sha256').update(JSON.stringify(rows)).digest('hex');
  }
  const constraints=(await client.query(`SELECT c.conrelid::text AS relation_id,r.relname,c.conname,c.contype,c.condeferrable,c.condeferred,pg_get_constraintdef(c.oid) AS definition
-  FROM pg_constraint c JOIN pg_class r ON r.oid=c.conrelid WHERE c.conrelid IN ('public.feature_control_states'::regclass,'public.feature_control_audit'::regclass) ORDER BY r.relname,c.conname`)).rows;
+  FROM pg_constraint c JOIN pg_class r ON r.oid=c.conrelid WHERE c.conrelid IN ('public.feature_control_states'::regclass,'public.feature_control_audit'::regclass,'public.biology_versions'::regclass,'public.biology_entities'::regclass,'public.biology_sources'::regclass,'public.biology_relationships'::regclass,'public.biology_relationship_sources'::regclass) ORDER BY r.relname,c.conname`)).rows;
  const triggers=(await client.query(`SELECT tgname,tgenabled,pg_get_triggerdef(oid) AS definition FROM pg_trigger
   WHERE tgrelid='public.feature_control_audit'::regclass AND NOT tgisinternal ORDER BY tgname`)).rows;
  assert.ok(constraints.some(c=>c.conname==='feature_control_audit_request'&&c.contype==='u'),'The unique request constraint is required');

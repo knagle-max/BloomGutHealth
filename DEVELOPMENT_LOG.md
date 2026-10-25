@@ -343,3 +343,9 @@ BLOOM-ADMIN-01-STEPUP-PROTOCOL — TESTED local foundation (2026-10-25): explici
 Step-up CI fixture correction: protocol deployment binding is strict and excludes featureId; corrected the isolated smoke to pass only service/environment. Actual request still binds featureId. No production behavior changed.
 
 266a9c3 CI40202194519 fails closed at schema stage with2BP01 (before new PG protocol smoke); existing Render dep-dbf12r34qb4c73a3e080 live. Protected-table exclusion reproduces correctly in disposable PGlite planning; readonly CI catalog shows all expected tables. Add identifier-only dependency diagnostics (never raw CLI/connection data) to locate the remaining dependent constraint. Actual-account credential adapter meanwhile308 local tests/types/build and read-only admin browser pass, unpublished until CI issue is resolved. No unsafe retries or real DB schema changes.
+
+
+BLOOM-ADMIN-01-CREDENTIAL-ADAPTER — TESTED local, unpublished (2026-10-25): actual bcrypt account verification + fresh account/credential/config lookup, explicit deployment-scoped controller-only config, default kill switch denial, no metadata/tester inheritance.308 full tests/types/build + actual read-only admin handler/browser journey pass. No route/installer or real grant/credential changes. Publication held while isolated schema reconciliation2BP01 is diagnosed.
+
+
+CI-SCHEMA-REGISTRY-01:53e511b CI40202645321 safely identifies dependent biology_entities.biology_entities_version_id_pk (2BP01). Existing SQL0005 owns versioned biological registry. Exclude biology_* from declared/introspected Drizzle schema, apply existing idempotent SQL0005 in isolated preparation and compare exact registry rows/constraints around reconciliation. No key drops, cascade, record deletion or Render migration. Local308 application tests and targeted serialization pass; corrected CI pending.
