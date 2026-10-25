@@ -1,7 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';import {reviewRuntimeAudit} from '../server/review-runtime-audit';
 const env={DATABASE_URL:'postgresql://PRIVATE_USER:PRIVATE_PASSWORD@ep-synthetic-pooler.c-4.us-west-2.aws.neon.tech/PRIVATE_DATABASE?secret=PRIVATE_QUERY',RENDER_SERVICE_ID:'srv-syntheticreview',RENDER_GIT_COMMIT:'a'.repeat(40),BLOOM_INTERNAL_TESTERS:'PRIVATE_USER_GRANT',BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT:'PRIVATE_ADMIN_GRANT',BLOOM_EXPERIMENTAL_ENVIRONMENT:'isolated-synthetic'};
 test('runtime audit reads only catalog metadata and projects non-secret binding/schema facts, never grants or dataset approval',async()=>{
- let reads=0;const result=await reviewRuntimeAudit({query:async config=>{reads++;assert.equal(config.query_timeout,5000);assert.match(config.text,/^SELECT current_database/);assert.ok(!/FROM users|\b(?:DELETE|INSERT|UPDATE|CREATE|ALTER)\b/i.test(config.text));return {rows:[{database_name:'PRIVATE_DATABASE',preferences_table_present:false,preferences_columns_present:false}]};}},env);
+ let reads=0;const result=await reviewRuntimeAudit({query:async config=>{reads++;assert.equal(config.query_timeout,5000);assert.match(config.text,/^SELECT current_database/);assert.ok(!/FROM users/i.test(config.text));assert.ok(!config.text.includes(';'));return {rows:[{database_name:'PRIVATE_DATABASE',preferences_table_present:false,preferences_columns_present:false}]};}},env);
  assert.equal(reads,1);assert.equal(result.configuredNeonEndpoint,'ep-synthetic');assert.equal(result.databaseNameHash,createHash('sha256').update('PRIVATE_DATABASE').digest('hex'));assert.equal(result.preferenceStorage,'missing-table');assert.equal(result.configuration.supplementalAdminConfigurationPresent,true);assert.ok(!JSON.stringify(result).includes('PRIVATE_'));assert.match(result.note,/not verified account identity/);
 });
 test('runtime audit distinguishes present columns from missing columns and hides invalid bindings and raw driver errors',async()=>{
@@ -16,6 +16,6 @@ test('actual PostgreSQL catalog distinguishes absent, incomplete and migrated pr
  await db.exec('CREATE TABLE capability_preferences (user_id varchar PRIMARY KEY)');
  assert.equal((await reviewRuntimeAudit(pool,env)).preferenceStorage,'missing-columns');
  await db.exec('DROP TABLE capability_preferences; CREATE TABLE users(id varchar PRIMARY KEY)');await db.exec(await readFile(new URL('../migrations/0008_capability_preferences.sql',import.meta.url),'utf8'));
- assert.equal((await reviewRuntimeAudit(pool,env)).preferenceStorage,'columns-present');assert.equal((await db.query('SELECT count(*)::int AS n FROM users')).rows[0].n,0);
+ const ready=await reviewRuntimeAudit(pool,env);assert.equal(ready.preferenceStorage,'columns-present');assert.deepEqual(ready.preferenceAccess,{read:true,write:true});assert.equal((await db.query('SELECT count(*)::int AS n FROM users')).rows[0].n,0);
  }finally{await db.close();}
 });
