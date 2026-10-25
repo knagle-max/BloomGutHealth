@@ -95,3 +95,12 @@ OPS-01 circuit activation is covered by the existing monetary policy decision: s
 - Recommended default: No guessed identity, self-enrolment, inherited tester privileges or live grant. The first implementation grants source-metadata read only; it cannot activate features.
 - Impact: Blocks real administrator access, not control-plane engineering. Mutations still require separate step-up, independent scope approval, audit/rollback and reviewed deployment controls.
 - Source: docs/architecture/PERSISTENT_TASK_INDEX.md, BLOOM-ADMIN-01: “Do not invent real admin roles or configured deployment permissions.” This does not require pausing independent work or asking for per-commit permission.
+
+
+## TODAY-ASSETS-01 — exact redesign reference package
+
+- Status: BLOCKED_USER_INPUT for package-level asset adoption only. Written Architect31af acceptance and existing approved Bloom assets support ongoing implementation.
+- Exact question: Which accessible repository path or uploaded artifact contains Bloom_Today_Experience_Redesign_2026-10-25.zip and its final Branding handoff? No connected tool can read the referenced shared Library package, and the files are absent locally.
+- Choices: Commit the approved reference package to the shared repository; provide it as an uploaded artifact; or have Branding review the implemented result against their source package.
+- Recommended default: Continue adapting existing original Bloom tokens/icon and written acceptance; provide the package through the repository so future sessions can reproduce asset integration.
+- Impact: Exact package integration/Branding signoff stays unverified. Does not block the working Today redesign, source correctness or independent engineering. No new asset licence or clinical clearance is assumed.

@@ -1,3 +1,11 @@
+# Latest visible delivery — Today companion, 2026-10-25
+
+Publishing the first P0 Today redesign slice for Everyday: a contextual Bloom hero, one main action, compact dated Eat/Move/Recover source links, no duplicate empty journal card, and cached personal context retracted during refresh/failure. Original source observations/zero/missingness remain distinct; no readiness score or assumed planned rest.318 full tests,9 focused, types/build, matched actual responsive/light-dark screenshots, keyboard/canonical goal-save/AddFood and320×500 effective-zoom checks pass. Evidence: docs/review/today-companion-20261025/README.md. CI/Render for this new commit pending.
+
+Parent Today redesign remains incomplete: Athlete home, explicit planned-rest/Skip contracts, final ZIP adoption, actual browser/device/VoiceOver and independent task-time/Branding/User Testing acceptance. Today source package availability is scoped in BLOCKED_USER_INPUT; no need to stop independent engineering.
+
+Previous backend HTTP boundary aa22265c415f3ee702b06f93f70314bacd29856c passed Actions40205071021 and Render dep-dbf1k52jnfac73e92rkg live (now subject to newer deployment). It remains uninstalled; no actual controller grants, credential changes, runtime writes or main merge. Detailed foundations and external decisions follow.
+
 # Latest session status — 2026-10-25
 
 v0.5 remains incomplete. All work stays on enhance/bloom-experience / PR1 and the existing Render service; main, real credentials and actual controller roles remain unchanged.

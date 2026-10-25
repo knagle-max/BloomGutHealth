@@ -45,8 +45,8 @@ export function todayContextAction(input: Parameters<typeof todayJournalAction>[
   }).sort((a,b) => +new Date(a.startsAt) - +new Date(b.startsAt))[0];
   if (session) return {
     href: "/athlete/fueling",
-    label: "Review my session fueling plan",
-    reason: `You have “${session.title}” scheduled later today. Review your saved session and rehearsed food plan; a scheduled session does not establish an energy requirement.`,
+    label: "Review session fuel",
+    reason: `“${session.title}” is planned today. Review familiar foods and your saved plan; a planned session does not establish an energy requirement.`,
   };
   if (input.goal?.sourceIds.length) return {
     ...base,

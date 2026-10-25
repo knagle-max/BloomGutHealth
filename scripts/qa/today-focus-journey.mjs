@@ -19,7 +19,7 @@ else if(p.startsWith('/api/experience/records')){if(scenario==='error')return ro
 else if(p.startsWith('/api/meals'))json=[{id:'m',mealText:'Synthetic lunch',loggedAt:'2026-10-23T17:00:00Z',totalCalories:scenario==='partial'?null:400,protein:20,carbs:40,fat:12,nutritionalData:scenario==='partial'?{}:{calories:400,protein:20,carbs:40,fat:12}}];
 await route.fulfill({json});});
 try{for(const state of ['session','goal','partial','error']){scenario=state;await page.goto('http://127.0.0.1:5188/');const focus=page.locator('.today-focus');await focus.waitFor();
-if(state==='session')await focus.getByRole('link',{name:'Review my session fueling plan'}).waitFor();
+if(state==='session')await focus.getByRole('link',{name:'Review session fuel'}).waitFor();
 if(state==='goal')await focus.getByText(/saved focus: Protein distribution/).waitFor();
 if(state==='partial')await focus.getByRole('link',{name:'Review my meal estimates'}).waitFor();
 if(state==='error')await focus.getByText(/Training schedule unavailable/).waitFor();

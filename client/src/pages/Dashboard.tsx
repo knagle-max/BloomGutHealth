@@ -1,6 +1,7 @@
 import { energyAmount } from "@shared/nutrition-display";
 import EverydayStart from "@/components/EverydayStart";
 import { useExperience } from "@/lib/experience";
+import TodayStatus from "@/components/TodayStatus";
 import TodayFocus from "@/components/TodayFocus";
 import ResearchSummary from "@/components/ResearchSummary";
 import { useState } from "react";
@@ -58,7 +59,7 @@ export default function Dashboard() {
     <main className="bloom-dashboard">
       <div className="dashboard-heading">
         <div>
-          <p className="eyebrow">YOUR DAILY OVERVIEW</p>
+          <p className="eyebrow">A DAY AT YOUR PACE</p>
           <h1>
             Today
           </h1>
@@ -69,7 +70,8 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading} journalError={mealError} />
+      <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading || meals.isFetching} journalError={mealError} />
+      <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={meals.isLoading || meals.isFetching} unavailable={mealError} />
       {(meals.isLoading || mealError || summary.meals.length > 0) && <>
       <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>
       <summary>Nutrition so far</summary>
@@ -153,7 +155,7 @@ export default function Dashboard() {
       </details>
       </>}
 
-      <section className="bloom-panel food-journal-panel" aria-labelledby="meals-title">
+      {(meals.isLoading || mealError || summary.meals.length > 0) && <section className="bloom-panel food-journal-panel" aria-labelledby="meals-title">
         <div className="panel-heading">
           <h2 id="meals-title">Food journal</h2>
           {(summary.meals.length > 0 || mealError) && <Link href="/log-meal" className="text-link journal-add-action">
@@ -200,7 +202,7 @@ export default function Dashboard() {
             </div>
           </div>
         )}
-      </section>
+      </section>}
       {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}
       <details className="bloom-panel workspace-disclosure"><summary>Explore your options</summary>
       <div className="workspace-shortcuts">
