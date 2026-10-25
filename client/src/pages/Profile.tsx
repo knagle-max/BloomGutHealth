@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import ExperimentalSettings from "@/components/ExperimentalSettings";
 import AccountErasure from "@/components/AccountErasure";
 import AccountDataExport from "@/components/AccountDataExport";
@@ -62,13 +63,7 @@ export default function Profile({
       // stale by time, so cached reports must be rechecked after this write.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["/api/profile"] }),
-        queryClient.invalidateQueries({
-          predicate: (q) => {
-            const path = String(q.queryKey[0]);
-            return ["/api/nutrition", "/api/precision", "/api/biology/foods"]
-              .some(root => path === root || path.startsWith(root + "/"));
-          },
-        }),
+        invalidatePlanningInputs(),
       ]);
     },
   });

@@ -1,6 +1,7 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import {
   variantCatalog,
@@ -72,8 +73,8 @@ export default function ManualGenetics({
         kind: "genetics",
         payload: preview,
       }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+    onSuccess: async () => {
+      await invalidatePlanningInputs();
       onSaved();
     },
   });

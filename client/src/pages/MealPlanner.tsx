@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { recipeDisplayName } from "@/lib/recipe-display";
 import { useExperience } from "@/lib/experience";
 import { foodMass } from "@shared/nutrition-display";
@@ -59,14 +60,7 @@ export function DietaryPreferenceEditor() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/preferences"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
-      queryClient.invalidateQueries({
-        queryKey: ["/api/precision/today-plan"],
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/meal-planner"] });
-      queryClient.invalidateQueries({
-        queryKey: ["/api/precision/planning-recipes"],
-      });
+      return invalidatePlanningInputs();
     },
   });
   if (saved.isLoading) return <p role="status">Loading saved preferences…</p>;

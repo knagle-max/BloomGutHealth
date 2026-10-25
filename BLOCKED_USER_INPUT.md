@@ -42,11 +42,11 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 
 - Status: BLOCKED_USER_INPUT for the managed drill and approved operational policy only; synthetic recovery engineering continues.
 - Exact question: Which isolated synthetic managed restore target and cost ceiling are authorized, and what reviewed RPO/RTO, retention, historical-key recovery location and deletion-reconciliation policy apply? The existing Render runtime database binding is now verified; no binding information is requested again.
-- Why needed: No live data copy, destructive restore, secret retrieval, new paid service or retention decision is authorized by the preview-deploy permission. No Render database binding has been verified.
+- Why needed: No live data copy, destructive restore, secret retrieval, new paid service or retention decision is authorized by the preview-deploy permission. The existing Render runtime binding is verified; this does not authorize a managed restore or prove recovery policy.
 - Choices: (1) Operator supplies approved target/policy and performs or explicitly authorizes the isolated synthetic managed drill; (2) retain current configuration and defer managed recovery acceptance.
 - Recommended default: Option 2 until target and policy are explicit; continue in-memory synthetic recovery, with no real health records or key material in artifacts.
 - Impact: Blocks managed RPO/RTO, backup lifecycle and deletion-after-restore sign-off; does not block other v0.5 engineering.
-- Read-only observations (2026-10-24): Neon project fancy-smoke-82120373 reports history_retention_seconds=21600; snapshot listing was empty. This does not mean PITR is unavailable or prove a recovery guarantee. PR-1 branch is schema-only. No snapshots, restores, configuration changes or live data reads were performed. Local .neon link absent; actual Render branch binding unverified.
+- Read-only observations (2026-10-24): Neon project fancy-smoke-82120373 reports history_retention_seconds=21600; snapshot listing was empty. This does not mean PITR is unavailable or prove a recovery guarantee. PR-1 branch is schema-only. No snapshots, restores, configuration changes or live data reads were performed. Local .neon link absent; actual Render branch binding unverified. These are dated October24 observations, superseded for binding only by the October25 trusted runtime audit: endpoint/branch/database and minimal exact Tester1 identity verified; additive0008 preference table applied on the actual bound branch. No snapshot/restore/data copy performed. See docs/operations/TESTER1_TAKEOVER_AUDIT.md.
 
 ## REST-ARCH / FOOD-508 — source-backed Canadian menu catalogue
 

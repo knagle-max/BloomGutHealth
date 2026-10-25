@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -16,7 +17,7 @@ export default function EverydayStart() {
       goals:goal ? [goal] : prefs.data.goals,
       exclusions:Array.from(new Set([...prefs.data.exclusions,...exclusions]))});
     await apiRequest("PATCH","/api/experience/settings",{onboarding:{status:"complete"}});
-  },onSuccess:()=>{queryClient.invalidateQueries({queryKey:["/api/preferences"]});queryClient.invalidateQueries({queryKey:["/api/precision"]});refreshExperience();navigate("/log-meal");}});
+  },onSuccess:async()=>{await Promise.all([queryClient.invalidateQueries({queryKey:["/api/preferences"]}),invalidatePlanningInputs()]);refreshExperience();navigate("/log-meal");}});
   return <section className="bloom-panel quick-start space-y-4" aria-label="Optional Everyday setup">
     <div className="quick-start-heading"><BloomBrand icon/><div><p className="eyebrow">START SMALL · OPTIONAL SETUP</p><h2>Build your first food snapshot</h2></div></div>
     <p>Start with one meal. You can use Bloom without lab results, genetics or a microbiome test.</p>

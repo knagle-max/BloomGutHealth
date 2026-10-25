@@ -1,11 +1,12 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import { markerDefinitions, type PrecisionReport } from "@shared/precision-nutrition";
 import { Button } from "./ui/button";
 export default function LabUnitReview({labs}:{labs:PrecisionReport["pendingLabs"]}) {
   const [choices,setChoices]=useState<Record<string,string>>({}),[confirmed,setConfirmed]=useState<Record<string,boolean>>({});
-  const save=useMutation({mutationFn:async(id:string)=>apiRequest("POST",`/api/precision/labs/${id}/confirm-unit`,{unit:choices[id]}),onSuccess:()=>{queryClient.invalidateQueries({queryKey:["/api/precision"]});queryClient.invalidateQueries({predicate:q=>String(q.queryKey[0]).includes("today-plan")});}});
+  const save=useMutation({mutationFn:async(id:string)=>apiRequest("POST",`/api/precision/labs/${id}/confirm-unit`,{unit:choices[id]}),onSuccess:()=>invalidatePlanningInputs()});
   if(!labs.length)return save.isSuccess ? <p role="status">Source unit confirmed.</p> : null;
   return <section className="bloom-panel space-y-4" aria-label="Laboratory unit review"><h2>{labs.length} result(s) need unit confirmation</h2><p>These original values are saved for review. They are excluded from nutrition recommendations, range flags and trend calculations.</p>
     {labs.map(l=><article className="lab-review-row" key={l.id}><span className="evidence-state">Unit assumed — confirm</span><h3>{markerDefinitions.find(m=>m.id===l.marker)?.name}</h3><p className="insight-value">{l.unitReview!.originalValue} <span className="text-base">· unit unconfirmed</span></p><p>{l.measuredAt.slice(0,10)} · {l.laboratory}</p><p className="panel-note lab-source-text">Original row: {l.unitReview!.originalText}</p><p>System guess — confirm: {l.unitReview!.suggestedUnit}. Check the original report; this suggestion does not establish the source unit.</p>

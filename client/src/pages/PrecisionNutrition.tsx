@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs,resetPlanningInputs} from "@/lib/planning-cache";
 import { formatMassEntry, parseMassEntry, parseCircumferenceEntry, switchMassUnit, switchCircumferenceUnit, type MassEntry, type CircumferenceEntry } from "@shared/measurement-entry";
 import { kgToDisplay, quantityFromCanonical } from "@shared/display-units";
 import LabUnitReview from "@/components/LabUnitReview";
@@ -11,7 +12,7 @@ import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, useRef } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import {
   Dna,
@@ -239,13 +240,10 @@ export default function PrecisionNutrition() {
     },
     onSuccess: () => {
       setStatus(
-        "Saved. Your recommendations and tracking have been refreshed.",
+        "Saved. Review current recommendations and tracking after they reload.",
       );
       setLocalError("");
-      queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
-      queryClient.invalidateQueries({
-        queryKey: ["/api/precision/today-plan"],
-      });
+      return invalidatePlanningInputs();
     },
   });
   const send = (url: string, body: unknown, method = "POST") => {
@@ -268,14 +266,13 @@ export default function PrecisionNutrition() {
       });
       if (!res.ok) throw Error("Precision data could not be deleted.");
     },
-    onSuccess: () => {
-      queryClient.removeQueries({ queryKey: ["/api/precision"] });
+    onSuccess: async () => {
+      await resetPlanningInputs();
       setGeneticPreview(null);
       setDeleteConfirm(false);
       setStatus(
         "Precision inputs, health context and saved precision plans deleted. Your existing meal journal and microbiome reports are retained.",
       );
-      result.refetch();
     },
   });
   const remove = (record: PrecisionRecord) => {

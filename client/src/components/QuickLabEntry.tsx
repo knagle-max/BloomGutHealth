@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/lib/queryClient";
+import { invalidatePlanningInputs } from "@/lib/planning-cache";
 import { Button } from "@/components/ui/button";
 import { parseLabPaste } from "@shared/lab-paste";
 import { dateKey } from "@shared/experience";
@@ -23,7 +23,7 @@ export default function QuickLabEntry() {
         if(!response.ok)throw Error(response.status===409?"The save reference conflicts with another result. Keep this draft and review the original entry.":"We could not confirm all results were saved. Retry the remaining results with the same save references.");
         remaining.shift();setCompleted(old=>old+1);setPreview(old=>old?{...old,rows:[...remaining]}:old);
       }
-    }finally{queryClient.invalidateQueries({queryKey:["/api/precision"]});}
+    }finally{await invalidatePlanningInputs();}
   },onError:e=>setError(e.message.includes("conflicts")?e.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.")});
   const review=()=>{try{
     dateKey.parse(date);const measuredAt=new Date(date+"T"+(time||"12:00")).toISOString();

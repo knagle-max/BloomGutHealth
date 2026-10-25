@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState } from "react";
 import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -69,7 +70,7 @@ export default function Upload() {
           testId,
           notes,
         });
-        queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+        await invalidatePlanningInputs();
         queryClient.invalidateQueries({
           queryKey: ["/api/microbiome/samples"],
         });

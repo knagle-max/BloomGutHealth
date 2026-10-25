@@ -23,7 +23,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -55,7 +56,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -87,7 +89,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -119,7 +122,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -395,7 +399,8 @@
         "cache": [
           "client/src/lib/auth.tsx",
           "client/src/lib/queryClient.ts",
-          "server/products.ts"
+          "server/products.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Manual/curated preview rules preserved; optional paid text paths separately default denied by absent reviewed executor.",
@@ -434,7 +439,8 @@
         "cache": [
           "client/src/lib/auth.tsx",
           "client/src/lib/queryClient.ts",
-          "server/products.ts"
+          "server/products.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Manual/curated preview rules preserved; optional paid text paths separately default denied by absent reviewed executor.",
@@ -595,7 +601,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing manual/pasted source review and unit confirmation only; no autonomous external laboratory connector or clinical acceptance.",
@@ -650,7 +657,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Recorded flags/general reviewed context must remain distinct from diagnosis, urgent triage or treatment. Detailed clinical activation remains separately gated.",
@@ -735,7 +743,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -766,7 +775,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Reported composition is summarized locally from owned source percentages, with no sidecar transfer or personal prediction. No validated reference dataset is installed; cohort API remains unavailable and prototype UI is removed.",
@@ -873,7 +883,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Manual/report source handling and reviewed evidence are distinct from clinical genetic interpretation, diagnosis or genotype-only food ranking.",
@@ -900,7 +911,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Manual/report source handling and reviewed evidence are distinct from clinical genetic interpretation, diagnosis or genotype-only food ranking.",
@@ -1019,7 +1031,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Manual/curated preview rules preserved; optional paid text paths separately default denied by absent reviewed executor.",
@@ -1168,7 +1181,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Existing manual/pasted source review and unit confirmation only; no autonomous external laboratory connector or clinical acceptance.",
@@ -1195,7 +1209,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Owner-scoped active application operations; export historical-output filtering and active erasure do not prove backup/vendor lifecycle completion.",
@@ -1222,7 +1237,8 @@
         ],
         "cache": [
           "client/src/lib/auth.tsx",
-          "client/src/lib/queryClient.ts"
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
         ]
       },
       "observation": "Owner-scoped active application operations; export historical-output filtering and active erasure do not prove backup/vendor lifecycle completion.",
@@ -1392,13 +1408,14 @@
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
     "client/src/components/LabTrend.tsx": "6a96d520de066fa85e1ebbc446e841805725bd762f9530f0d68d20db0fad3631",
-    "client/src/components/LabUnitReview.tsx": "40b8d293a884a0d6e7c4295369306b48aa4e4819df650b78cefceff3cab121a8",
+    "client/src/components/LabUnitReview.tsx": "74cb3ccf5de89c0e70d6e138ddb91bfa4b17241de2e33160812a53db5c76a43b",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "478268d23a03de300e290de677df928ab56ad81c092dbe255c9e04703d95df50",
-    "client/src/components/QuickLabEntry.tsx": "85b9966d8494d23692aa34e14b6855d97f0a8ea5c342a40bae5447e6fd14d9f5",
+    "client/src/components/QuickLabEntry.tsx": "9c48d4e5860880e60889f3a7363e70611b036d27c45a61d30a86b69a1d04841e",
     "client/src/components/TodayFocus.tsx": "fe1cbd0b8f451df9a46fab9274c4043db4891bd5faf4ef60443522e8d9440cbd",
     "client/src/lib/auth.tsx": "796839344459bece651ad94135b8dc51575eb60bcb625d6ada6394b0553324df",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
+    "client/src/lib/planning-cache.ts": "3fd14e3fa64849c3b3f6e8ab756dd0141215c1929476c8ac331a74706086ea5d",
     "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
     "client/src/pages/AthleteWorkspace.tsx": "d5922de28cfaa4e3edb5061795e820ae77dee39686a50eacf842cdd367d8d645",
     "client/src/pages/Dashboard.tsx": "1579ee462a80e8671f7784628a13f57179ed54aebea14b8c73bc240577657e24",
@@ -1406,14 +1423,14 @@
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "a446edddae6b97aba193d8f9c3a99eeefbde02c4c28d59d29cd376e0a07843f8",
-    "client/src/pages/MealPlanner.tsx": "bb5810c386a36d4bb999d9b3e2c03f61e0e6ea5d6c01fc486aae358abf6a6c19",
+    "client/src/pages/MealPlanner.tsx": "6591fb82ef4292176cfc299d60f0c7b8dfef21c85dc993cec54131082b44c7d8",
     "client/src/pages/Microbiome.tsx": "168783d0208282e7781acbda7ea811f9be7dbadc8400d0646f65d82771017eec",
     "client/src/pages/NutritionHistory.tsx": "e699c89004aee55bd66ac23473ddf68083c9570e95bc6a15ffab6ef64dba1b1d",
-    "client/src/pages/PrecisionNutrition.tsx": "001edb538f0f55754a1e8666aa5493dc3ce63b1b378537baf9a7792f82ac67ab",
-    "client/src/pages/Profile.tsx": "789084ba35703f06cf103cc8721e0bde233098f49fab7a59d050652f0fddcf8e",
+    "client/src/pages/PrecisionNutrition.tsx": "aa27f6214f513921e480717acee93316edd0aeb300c56645ebbd2e5efebcbad5",
+    "client/src/pages/Profile.tsx": "6cf4d9466a7ada6b6d75867be8c3ee77d8d5a54cbcf7a09e28394db8f63976eb",
     "client/src/pages/Progress.tsx": "14d12bf4947e31d9aebbb33a9d704796b8a2b9494ca369385829153e35f16072",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
-    "client/src/pages/Upload.tsx": "e07d4810dde028a07bfc3822ced47e7ca1f9f80cc25f4708343e1aec24cb6298",
+    "client/src/pages/Upload.tsx": "d674b4f71357c2a137f817a90bccfd194daa1241bbbe8ae187430db5086fecf7",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
     "server/account-export.ts": "dada9d1f09825dfdc28d43855ffb5a750ae40e5a2b85d7799601ef18106b5879",
