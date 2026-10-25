@@ -1,3 +1,4 @@
+import {aiExecutionContext, executeMeteredAI, meteredAIFeatures, type AIExecutionContext} from "./metered-ai";
 import {restrictedCapabilityAllowed} from "./capability-policy";
 import OpenAI from "openai";
 import {
@@ -60,11 +61,11 @@ export async function prepareSciencePlan(
   }
 }
 
-export function configuredRanker(): EvidenceRanker | undefined {
-  if (!restrictedCapabilityAllowed("bloom.coach.general") || !process.env.OPENAI_API_KEY || !process.env.OPENAI_SCIENCE_MODEL)
+export function configuredRanker(execution?: AIExecutionContext, sourceAllowed: () => boolean = () => restrictedCapabilityAllowed("bloom.coach.general")): EvidenceRanker | undefined {
+  if (!execution?.userId || execution.consent !== true || !sourceAllowed() || !meteredAIFeatures(execution.userId).scienceRanking)
     return undefined;
   return async (plan, preferences) => {
-    if (!restrictedCapabilityAllowed("bloom.coach.general")) throw new Error("Capability unavailable");
+    if (!sourceAllowed()) throw new Error("Capability unavailable");
     const client = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
       timeout: 20000,
@@ -75,7 +76,7 @@ export function configuredRanker(): EvidenceRanker | undefined {
       ...string[],
     ];
     const rankingSchema = z.object({ actionIds: z.array(z.enum(eligibleIds)) });
-    const result = await client.responses.parse({
+    const result = await executeMeteredAI("science-ranking", execution, {
       model: process.env.OPENAI_SCIENCE_MODEL!,
       store: false,
       input: [
@@ -98,9 +99,12 @@ export function configuredRanker(): EvidenceRanker | undefined {
         },
       ],
       text: { format: zodTextFormat(rankingSchema, "evidence_ranked_actions") },
+    }, payload => {
+      if (!sourceAllowed()) throw new Error("Capability unavailable");
+      return client.responses.parse(payload as Parameters<typeof client.responses.parse>[0]);
     });
-    if (!result.output_parsed) throw new Error("No valid ranked actions");
-    return result.output_parsed.actionIds;
+    if (!sourceAllowed() || !result.output_parsed) throw new Error("No valid ranked actions");
+    return rankingSchema.parse(result.output_parsed).actionIds;
   };
 }
 
@@ -118,12 +122,14 @@ export function registerScienceRoutes(
   },
 ) {
   const windows = new Map<string, { start: number; requests: number }>();
-  app.get("/api/science/status", dependencies.requireAuth, (_req, res) => {
+  app.get("/api/science/status", dependencies.requireAuth, (req, res) => {
+    res.setHeader("Cache-Control", "no-store");
     res.json({
-      aiAvailable: !!configuredRanker(),
+      aiAvailable: restrictedCapabilityAllowed("bloom.coach.general") && meteredAIFeatures(req.session.userId!).scienceRanking,
     });
   });
   app.post("/api/science/plan", dependencies.requireAuth, async (req, res) => {
+    res.setHeader("Cache-Control", "no-store");
     const parsed = coachRequestSchema.safeParse(req.body);
     if (!parsed.success)
       return res.status(400).json({
@@ -152,7 +158,7 @@ export function registerScienceRoutes(
       const plan = await prepareSciencePlan(
         parsed.data,
         recentDescriptions,
-        configuredRanker(),
+        configuredRanker(aiExecutionContext(userId, parsed.data.aiConsent)),
         dependencies.getPreferences
           ? preferenceSchema.parse(
               (await dependencies.getPreferences(userId)) || defaultPreferences,

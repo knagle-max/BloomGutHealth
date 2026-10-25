@@ -24,7 +24,7 @@
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
     "server/routes.ts": "7a0140b4c71a34792c25e3165b1eb94ccdc8e25474d56690879d8c686825916b",
-    "server/science-coach.ts": "af850052f4af68b0e2b6f857a2818d7f669cf01350c20356e0f48642a2d83947",
+    "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
   },
   "entries": [
@@ -839,7 +839,7 @@
     },
     {
       "file": "server/science-coach.ts",
-      "line": 121,
+      "line": 125,
       "method": "GET",
       "path": "/api/science/status",
       "declaredMiddleware": [
@@ -849,7 +849,7 @@
     },
     {
       "file": "server/science-coach.ts",
-      "line": 126,
+      "line": 131,
       "method": "POST",
       "path": "/api/science/plan",
       "declaredMiddleware": [

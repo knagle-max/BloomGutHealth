@@ -136,3 +136,55 @@ test('shared provider outage blocks another account before invocation and releas
 finally {
     await db.close();
 } });
+
+test('science SDK ranking requires scoped metering and consent, settles actual usage and preserves curated fallback on quota or revocation', async () => {
+ const {configuredRanker,prepareSciencePlan}=await import('../server/science-coach');
+ const {buildSciencePlan,coachRequestSchema}=await import('../shared/science-coach');
+ const {installMeteredAI,meteredAIFeatures}=await import('../server/metered-ai');
+ const {db,executor}=await setup();
+ const key=process.env.OPENAI_API_KEY,model=process.env.OPENAI_SCIENCE_MODEL,fetcher=globalThis.fetch;
+ let calls=0,fail=false,allowed=true,revoke=false;
+ const input=coachRequestSchema.parse({goals:['butyrate'],aiConsent:true});
+ const base=buildSciencePlan(input,[]),ids=base.actions.map(a=>a.id).reverse();
+ process.env.OPENAI_API_KEY='synthetic-only';process.env.OPENAI_SCIENCE_MODEL='synthetic-model';
+ globalThis.fetch=(async(_url,init)=>{
+  calls++;const payload=JSON.parse(String(init?.body));
+  assert.equal(payload.store,false);assert.equal(payload.max_output_tokens,100);
+  assert.ok((await db.query("SELECT * FROM ai_spend_requests WHERE feature='science-ranking' AND state='reserved'")).rows.length>0);
+  if(revoke)allowed=false;
+  return fail?new Response(JSON.stringify({error:{type:'insufficient_quota',code:'insufficient_quota',message:'PRIVATE_PROVIDER_SENTINEL'}}),{status:429,headers:{'content-type':'application/json'}}):new Response(JSON.stringify({id:`resp_science_${calls}`,object:'response',created_at:1,status:'completed',model:'synthetic-model',output:[{id:'msg_synthetic',type:'message',status:'completed',role:'assistant',content:[{type:'output_text',text:JSON.stringify({actionIds:ids}),annotations:[]}]}],usage:response.usage}),{status:200,headers:{'content-type':'application/json'}});
+ }) as typeof fetch;
+ try{
+  assert.equal(configuredRanker(context('no-install'),()=>true),undefined);
+  installMeteredAI(executor);
+  assert.equal(meteredAIFeatures('synthetic-a').scienceRanking,true);
+  assert.equal(configuredRanker(undefined,()=>true),undefined);
+  assert.equal(configuredRanker({...context('no-consent'),consent:false},()=>true),undefined);
+  assert.equal(configuredRanker(context('no-clearance')),undefined);
+  assert.equal((await db.query('SELECT * FROM ai_spend_requests')).rows.length,0);
+  const ranked=await prepareSciencePlan(input,[],configuredRanker(context('science-success'),()=>allowed));
+  assert.deepEqual(ranked.actions.map(a=>a.id),ids);
+  assert.equal((await db.query("SELECT settled_micro_usd FROM ai_spend_requests WHERE state='settled'")).rows.length,1);
+  revoke=true;
+  const withheld=await prepareSciencePlan(input,[],configuredRanker(context('science-revoke'),()=>allowed));
+  assert.deepEqual(withheld.actions.map(a=>a.id),base.actions.map(a=>a.id));
+  assert.equal((await db.query("SELECT * FROM ai_spend_requests WHERE state='settled'")).rows.length,2);
+  assert.equal(configuredRanker(context('after-revoke'),()=>allowed),undefined);
+  // A new independently authorized call can exercise the quota circuit. The
+  // quota attempt comes last: its real circuit must block subsequent SDK work.
+  allowed=true;revoke=false;fail=true;
+  const fallback=await prepareSciencePlan(input,[],configuredRanker(context('science-quota'),()=>allowed));
+  assert.deepEqual(fallback.actions.map(a=>a.id),base.actions.map(a=>a.id));
+  assert.match(fallback.aiStatus,/curated evidence plan/);assert.ok(!fallback.aiStatus.includes('PRIVATE_PROVIDER_SENTINEL'));
+  assert.equal((await db.query("SELECT * FROM ai_spend_requests WHERE state='reserved'")).rows.length,1);
+  assert.equal(calls,3);
+  const blocked=await prepareSciencePlan(input,[],configuredRanker(context('open-circuit'),()=>allowed));
+  assert.deepEqual(blocked.actions.map(a=>a.id),base.actions.map(a=>a.id));
+  assert.equal(calls,3);
+ }finally{
+  installMeteredAI(undefined);globalThis.fetch=fetcher;
+  if(key===undefined)delete process.env.OPENAI_API_KEY;else process.env.OPENAI_API_KEY=key;
+  if(model===undefined)delete process.env.OPENAI_SCIENCE_MODEL;else process.env.OPENAI_SCIENCE_MODEL=model;
+  await db.close();
+ }
+});

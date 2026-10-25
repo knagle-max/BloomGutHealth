@@ -2,7 +2,7 @@ import { SharedProviderCircuit, immediateProviderFailure, type CircuitClaim } fr
 import { randomUUID } from 'node:crypto';
 import { SpendLedger, configuredSpendLimits, type SpendLimits } from './spend-ledger';
 import { maximumTokenCostMicroUsd, openAIReportedUsage, tokenCostMicroUsd, type TokenTariff } from './ai-costing';
-export type AIFeature = 'ingredient-parsing' | 'recipe-ranking' | 'recipe-generation';
+export type AIFeature = 'ingredient-parsing' | 'recipe-ranking' | 'recipe-generation' | 'science-ranking';
 export interface AIExecutionContext {
     userId: string;
     requestId: string;
@@ -121,7 +121,7 @@ let executor: MeteredAIExecutor | undefined;
  * migration and account/capability policy. No live installation is provisioned. */
 export function installMeteredAI(value: MeteredAIExecutor | undefined) { if (executor && executor !== value)
     executor.disable(); executor = value; }
-export function meteredAIFeatures(userId: string) { const model = process.env.OPENAI_SCIENCE_MODEL; const ready = (feature: AIFeature) => !!executor && !!process.env.OPENAI_API_KEY && !!model && executor.available(feature, userId, model); return { ingredientParsing: ready("ingredient-parsing"), recipeRanking: ready("recipe-ranking"), recipeGeneration: ready("recipe-generation") }; }
+export function meteredAIFeatures(userId: string) { const model = process.env.OPENAI_SCIENCE_MODEL; const ready = (feature: AIFeature) => !!executor && !!process.env.OPENAI_API_KEY && !!model && executor.available(feature, userId, model); return { ingredientParsing: ready("ingredient-parsing"), recipeRanking: ready("recipe-ranking"), recipeGeneration: ready("recipe-generation"), scienceRanking: ready("science-ranking") }; }
 export function aiExecutionContext(userId: string | undefined, consent: boolean): AIExecutionContext | undefined { return userId ? { userId, consent, requestId: randomUUID() } : undefined; }
 export async function executeMeteredAI<T extends {
     usage?: unknown;

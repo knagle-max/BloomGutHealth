@@ -9,16 +9,16 @@ const identifier=z.string().regex(/^[A-Za-z0-9_.:/-]{1,120}$/);
 const instant=z.string().datetime({offset:true});
 const positive=z.number().int().positive().max(Number.MAX_SAFE_INTEGER);
 const money=positive.max(1000000000000);
-const features=['ingredient-parsing','recipe-ranking','recipe-generation'] as const;
+const features=['ingredient-parsing','recipe-ranking','recipe-generation','science-ranking'] as const;
 const tariff=z.object({reference:identifier,provider:z.literal('openai'),model:identifier,effectiveFrom:instant,expiresAt:instant,inputMicroUsdPerMillion:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),cachedInputMicroUsdPerMillion:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER),outputMicroUsdPerMillion:z.number().int().nonnegative().max(Number.MAX_SAFE_INTEGER)}).strict();
 const bounds=z.object({maximumRequestBytes:positive.max(2*1024*1024),maximumInputTokens:positive,maximumOutputTokens:positive,boundsReviewReference:identifier}).strict();
 const circuit=z.object({maximumFailures:positive.max(10000),cooldownSeconds:positive.max(86400),probeLeaseSeconds:positive.min(30).max(300)}).strict();
 const schema=z.object({
  version:z.literal('bloom-metered-ai-policy-v1'),reviewReference:identifier,model:identifier,effectiveFrom:instant,expiresAt:instant,
  limits:z.object({accountDaily:money,accountMonthly:money,featureDaily:money,providerMonthly:money,platformMonthly:money,accountConcurrency:positive.max(10000),platformConcurrency:positive.max(10000)}).strict(),
- policies:z.object({'ingredient-parsing':bounds.extend({tariff}).strict().optional(),'recipe-ranking':bounds.extend({tariff}).strict().optional(),'recipe-generation':bounds.extend({tariff}).strict().optional()}).strict(),
+ policies:z.object({'ingredient-parsing':bounds.extend({tariff}).strict().optional(),'recipe-ranking':bounds.extend({tariff}).strict().optional(),'recipe-generation':bounds.extend({tariff}).strict().optional(),'science-ranking':bounds.extend({tariff}).strict().optional()}).strict(),
  circuits:z.object({'platform:ai':circuit,'provider:openai':circuit}).strict(),
- grants:z.array(z.object({userId:z.string().min(1).max(200),features:z.array(z.enum(features)).min(1).max(3),expiresAt:instant,reviewReference:identifier}).strict()).min(1).max(100),
+ grants:z.array(z.object({userId:z.string().min(1).max(200),features:z.array(z.enum(features)).min(1).max(features.length),expiresAt:instant,reviewReference:identifier}).strict()).min(1).max(100),
 }).strict();
 export type AIConfiguration=z.infer<typeof schema>;
 /** Shape/currentness only: a review reference is not proof of legal or tariff approval. */
@@ -38,7 +38,7 @@ export function validateAIConfiguration(input:unknown,now=Date.now()):AIConfigur
  }
  return config;
 }
-const capabilityFor:Record<AIFeature,string>={'ingredient-parsing':'bloom.food.meal_logging','recipe-ranking':'bloom.coach.general','recipe-generation':'bloom.coach.general'};
+const capabilityFor:Record<AIFeature,string>={'ingredient-parsing':'bloom.food.meal_logging','recipe-ranking':'bloom.coach.general','recipe-generation':'bloom.coach.general','science-ranking':'bloom.coach.general'};
 /** Explicit trusted server composition, never an environment/HTTP installer.
  * Production startup intentionally does not call this or install an executor.
  * Synthetic tests may inject approval; the real default checks the Legal registry. */

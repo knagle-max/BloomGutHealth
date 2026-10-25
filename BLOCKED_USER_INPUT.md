@@ -58,11 +58,13 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 
 ## GATE-701 / tester1 — real internal access prerequisites
 
-- Status: BLOCKED_USER_INPUT for live provisioning; synthetic policy/UI checks pass. No real reviewer grant is claimed.
-- Exact question: What reviewed isolated-synthetic environment/dataset boundary, authenticated reviewer account ID, territory, purpose, expiry and low-risk capability scope are approved for this owner test?
-- Choices: Verify the existing preview meets those requirements and supply audited provisioning inputs; or retain no live grants and use synthetic harness pending an appropriate environment.
-- Recommended default: Preserve fail-closed grants; do not guess identity from username, enable public self-enrolment, or label an exposed service isolated without evidence.
-- Impact: Real tester1 toggle remains unavailable; internal module engineering proceeds with fixtures. The photo UI fixture uses explicit uiPreview purpose synthetic-ui-review, dataset synthetic-only and photo scope plus allowedCapabilities; these grant display only, never image inference. Migration/recovery approval and separate capability clearances remain required.
+- Status: BLOCKED_USER_INPUT for live provisioning; rechecked immediately under owner P0 directive ed8fffb on 2026-10-25. Synthetic UI tests are not live acceptance.
+- Observed: existing Render service is public, auto-deploys the authorized branch, and exposes no dataset certification or database binding in connected service metadata. Exact SQL `SELECT id FROM users WHERE username = 'tester1'` on connected Neon project fancy-smoke-82120373 / production branch br-orange-cloud-aru4p4fw returned zero rows. No health/password data fetched. Workspace DATABASE_URL names a different endpoint from both connected project branches; exact-account read failed DNS (EAI_AGAIN). No identity inferred, account created, migration run or grant installed.
+- Single owner decision: Which verified Render-bound database/account is the reviewer, and what reviewed synthetic-only dataset boundary, territory, purpose, expiry, low-risk module scope and additive-migration/recovery clearance apply?
+- Choices: Provide the verified existing-service binding plus authenticated account ID and scoped review/provisioning clearance; or retain no live grants until an approved isolated dataset is available.
+- Recommended default: Verify existing-service binding/account and independently reviewed synthetic-only scope first; keep grants fail-closed meanwhile. Public reachability alone neither establishes nor disproves dataset isolation.
+- Exact next step after inputs: recheck exact account ID against the approved binding, apply reviewed additive preference migration with recovery gates, provision expiring server-only display grant, then signed-in ON/OFF + ordinary-account denial + Render SHA/screenshot/revocation acceptance. Never use a display name as authority or change account credentials to obtain a session.
+- Impact: Live tester1 toggle remains blocked. Scoped photo preview engineering and independent capability policy/runtime work continue; image inference, incident and research execution remain denied.
 
 ## OPS-702 — monetary policy and tariff activation
 

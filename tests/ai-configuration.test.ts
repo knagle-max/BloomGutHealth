@@ -47,3 +47,10 @@ test('offline CLI accepts only current policy shape and never installs, queries 
  const result=await run(current);assert.equal(result.code,0);assert.deepEqual(JSON.parse(result.stdout),{configuration:'STRUCTURALLY_VALID_AND_CURRENT',approval:'NOT_VERIFIED',executorInstalled:false,providerCalls:0});assert.doesNotMatch(result.stdout+result.stderr,/synthetic-reviewer|private-/);
  const invalid=await run({...fixture(),secret:'private-input-secret'});assert.equal(invalid.code,1);assert.equal(invalid.stdout,'');assert.doesNotMatch(invalid.stderr,/private-input-secret|private-database-secret|private-provider-secret/);
 });
+
+test('science ranking is an explicit independently bounded feature, never inherited from recipe grants',()=>{
+ const input:any=fixture();input.policies['science-ranking']=structuredClone(input.policies['ingredient-parsing']);
+ input.grants[0].features=['science-ranking'];
+ assert.deepEqual(validateAIConfiguration(input,time).grants[0].features,['science-ranking']);
+ delete input.policies['science-ranking'];assert.throws(()=>validateAIConfiguration(input,time));
+});
