@@ -1,3 +1,4 @@
+import CompanionHero from "./CompanionHero";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { PrecisionReport } from "@shared/precision-nutrition";
@@ -10,14 +11,7 @@ export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, l
   const action = todayContextAction({ mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
   const sessionAction = action.href === '/athlete/fueling';
   return (
-    <section className="today-focus" aria-labelledby="today-action-title">
-      <div className="today-focus-heading"><div><p className="eyebrow">A LITTLE CARE, EVERY DAY</p><h2 id="today-action-title">{loading ? 'Make space for today' : journalError ? 'Keep a place for your day' : !mealCount ? 'Start with a meal' : missingNutritionCount ? 'A clearer food picture' : sessionAction ? 'Fuel your planned session' : 'One good next step'}</h2></div><img src="/brand/bloom-icon-everyday.svg" width={54} height={54} alt="" className="today-focus-mark"/></div>
-      <div className="today-focus-actions">
-        <Link className="hero-button" href={action.href}>{action.label}</Link>
-        <Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust</Link>
-      </div>
-      <p className="today-focus-reason">{action.reason}</p>
-
+    <CompanionHero title={loading ? 'Make space for today' : journalError ? 'Keep a place for your day' : !mealCount ? 'Start with a meal' : missingNutritionCount ? 'A clearer food picture' : sessionAction ? 'Fuel your planned session' : 'One good next step'} eyebrow="A LITTLE CARE, EVERY DAY" reason={action.reason} actions={<><Link className="hero-button" href={action.href}>{action.label}</Link><Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust</Link></>}>
       {report.error && (
         <p role="alert" className="panel-note">
           Your saved focus could not load. This general routine suggestion
@@ -40,6 +34,6 @@ export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, l
           Review my progress
         </Link>
       </div></details>
-    </section>
+    </CompanionHero>
   );
 }

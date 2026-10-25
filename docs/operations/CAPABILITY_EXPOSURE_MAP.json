@@ -39,7 +39,8 @@
         "ui": [
           "client/src/pages/Dashboard.tsx",
           "client/src/components/TodayFocus.tsx",
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -72,7 +73,8 @@
         "ui": [
           "client/src/pages/Dashboard.tsx",
           "client/src/components/TodayFocus.tsx",
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -106,7 +108,9 @@
           "client/src/pages/Dashboard.tsx",
           "client/src/components/TodayFocus.tsx",
           "client/src/pages/PrecisionNutrition.tsx",
-          "client/src/components/TodayStatus.tsx"
+          "client/src/components/TodayStatus.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteHome.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -116,7 +120,8 @@
           "shared/experience.ts",
           "shared/goal-guidance.ts",
           "shared/today-focus.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/athlete-calendar.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -455,13 +460,16 @@
       "implementation": "PREVIEW_SOURCE_PATHS",
       "surfaces": {
         "ui": [
-          "client/src/pages/AthleteWorkspace.tsx"
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteHome.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/athlete.ts"
+          "shared/athlete.ts",
+          "shared/athlete-calendar.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -482,13 +490,16 @@
       "surfaces": {
         "ui": [
           "client/src/pages/AthleteWorkspace.tsx",
-          "client/src/components/TodayStatus.tsx"
+          "client/src/components/TodayStatus.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteHome.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/athlete.ts"
+          "shared/athlete.ts",
+          "shared/athlete-calendar.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -509,7 +520,8 @@
       "surfaces": {
         "ui": [
           "client/src/pages/AthleteWorkspace.tsx",
-          "client/src/components/TodayStatus.tsx"
+          "client/src/components/TodayStatus.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -535,7 +547,8 @@
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
         "ui": [
-          "client/src/pages/AthleteWorkspace.tsx"
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -1257,7 +1270,8 @@
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
         "ui": [
-          "client/src/pages/AthleteWorkspace.tsx"
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -1418,6 +1432,8 @@
   "sourceHashes": {
     "client/src/App.tsx": "ff23a62ddd29c0b2212807f50b9c1bbab9d2e56c5d547fb79b9f8d057992e7b1",
     "client/src/components/AppNavigation.tsx": "624492d93ba005b04c6e1b19b9a9cf9c6a093ba79292a81cf1f3cd8c70dac3d4",
+    "client/src/components/AthleteHome.tsx": "38a62c44d186f8cb06a0d3034d72309f218ad3f1223547acd05a1d26ab6acbde",
+    "client/src/components/CompanionHero.tsx": "c4c533e8dbcbed1e6e3adb2819c0eb308831a221f1a1461b1baf5b6b39f74585",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "919e565d0e22404a28e9065e6462706d99fe79baa4f1f51571dc8a30cc72dbad",
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
@@ -1427,13 +1443,13 @@
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "478268d23a03de300e290de677df928ab56ad81c092dbe255c9e04703d95df50",
     "client/src/components/QuickLabEntry.tsx": "9c48d4e5860880e60889f3a7363e70611b036d27c45a61d30a86b69a1d04841e",
-    "client/src/components/TodayFocus.tsx": "b248040b9caef7ddc1f80d4ec75bb40d1452d827d08cb8de6af93adc656db8b0",
+    "client/src/components/TodayFocus.tsx": "c64bf9c4d7d089efad04ba297af372144f2518f023cfaceda8b988f0986ff9d1",
     "client/src/components/TodayStatus.tsx": "7ab8f78d8f2120002df08d9eb877d7bb3123e8914802bcce4cdcdceb4aa13ee0",
     "client/src/lib/auth.tsx": "796839344459bece651ad94135b8dc51575eb60bcb625d6ada6394b0553324df",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/planning-cache.ts": "e32518c7adb3a08919b47687daeaec4706fb60453769e07ba30763323bb05fcf",
     "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
-    "client/src/pages/AthleteWorkspace.tsx": "70f8ae128f424bc8a2af702a59914b7a5a95bcc89223a6007630f960ae18607f",
+    "client/src/pages/AthleteWorkspace.tsx": "2cce9b54f2f620d0f9748fa8c24393dc2468477f917ffce70191e858cf242d08",
     "client/src/pages/Dashboard.tsx": "e4e4ce948352c411211663059a39ba2db812503cc7aa1f396492ba14cfe63112",
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
@@ -1496,6 +1512,7 @@
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
     "shared/application-schema.ts": "ee592917ca958174e6bc339dd5388737672e416cb93cd4ddca6308a0424f87c8",
+    "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
     "shared/athlete.ts": "d1ab4d6363fbc2543ffc4145be0479b2719237b4a84e46b4c82123bef2d6e398",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",

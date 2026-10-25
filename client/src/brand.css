@@ -103,3 +103,24 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
  .today-status-source { font-size:14px; }
 }
 @media(prefers-reduced-motion:reduce) { .today-focus,.today-status-item { transition:none; animation:none; } }
+
+/* Adapted from the verified whole-app master athlete_home.svg; real source actions. */
+.athlete-home-hero { background:#2563A6; color:#FFFFFF; border-color:#2563A6; }
+.athlete-home-hero .eyebrow,.athlete-home-hero .panel-note { color:#FFFFFF; }
+.athlete-home-hero .hero-button { background:#FFFFFF; color:#2563A6; }
+.athlete-home-hero .text-link { color:#FFFFFF; padding:10px 0; }
+.athlete-home-hero .today-focus-evidence { border-color:#FFFFFF66; }
+.athlete-home-hero .today-focus-evidence p { font-size:14px; line-height:1.6; }
+.athlete-home-links { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-bottom:20px; }
+.athlete-home-links .workspace-shortcut { width:100%; text-align:left; display:flex; align-items:center; gap:14px; background:hsl(var(--card)); border:1px solid hsl(var(--border)); padding:18px; border-radius:16px; color:hsl(var(--foreground)); }
+.athlete-home-links .workspace-shortcut > svg { flex-shrink:0; color:hsl(var(--primary)); }
+.athlete-home-links .workspace-shortcut > svg:last-child { margin-left:auto; }
+.athlete-home-links strong { display:block; font-size:16px; }
+.athlete-home-links small { display:block; font-size:14px; color:hsl(var(--muted-foreground)); margin-top:4px; line-height:1.5; }
+.athlete-workspace :is(#athlete-training-calendar,#athlete-add-session,#athlete-profile,#athlete-load-context,[id^=athlete-session-]) { scroll-margin-top:90px; }
+.app-shell .athlete-tabs a { font-size:14px; min-height:44px; }
+@media(max-width:600px) { .athlete-home-links { grid-template-columns:minmax(0,1fr); } .athlete-home-links .workspace-shortcut { padding:16px; } }
+.athlete-workspace:has(.athlete-home-hero) > .science-heading { border-left:0; padding-left:0; }
+.athlete-day-selector input { width:170px; min-height:44px; }
+.athlete-home-context-error { margin-top:12px; display:grid; gap:8px; }
+.athlete-home-context-error p { font-size:14px; }

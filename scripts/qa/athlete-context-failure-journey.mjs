@@ -23,7 +23,7 @@ await page.route('https://fonts.**/**',route=>route.abort());await page.route('*
  await route.fulfill({json});});
 const refresh=()=>page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');void queryClient.invalidateQueries({predicate:q=>q.queryKey[0]==='/api/experience/athlete-day'});});
 try{
- await page.goto('http://127.0.0.1:5205/athlete');await page.locator('.athlete-metrics').waitFor();assert.match(await page.locator('.athlete-metrics').innerText(),/2500/);
+ await page.goto('http://127.0.0.1:5205/athlete');await page.getByText('Reference targets & recorded effort',{exact:true}).click();await page.locator('.athlete-metrics').waitFor();assert.match(await page.locator('.athlete-metrics').innerText(),/2500/);
  await page.getByText('Athlete setup & reviewed targets',{exact:true}).click();const draft=page.locator('textarea[name="teamPlanNotes"]');await draft.fill('PRIVATE_UNSAVED_PROFILE');
  await page.evaluate(async()=>{const{queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({predicate:q=>q.queryKey[0]==='/api/experience/athlete-day'}))query.setState({fetchStatus:'paused'});});await page.clock.runFor(50);assert.equal(await page.locator('.athlete-metrics').count(),0,'Paused revalidation is not current context');
  await page.evaluate(async()=>{const{queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({predicate:q=>q.queryKey[0]==='/api/experience/athlete-day'}))query.setState({fetchStatus:'idle'});});await page.locator('.athlete-metrics').waitFor();
@@ -31,7 +31,7 @@ try{
  fail=true;hold=false;release();await page.getByRole('button',{name:'Retry athlete day',exact:true}).waitFor();assert.equal(await page.locator('.athlete-metrics').count(),0);assert.equal(await draft.inputValue(),'PRIVATE_UNSAVED_PROFILE');assert.ok(!(await page.getByRole('main').innerText()).includes('PRIVATE_DRIVER_SENTINEL'));
  age=17;fail=false;await page.getByRole('button',{name:'Retry athlete day',exact:true}).click();await page.locator('.athlete-metrics').waitFor();assert.doesNotMatch(await page.locator('.athlete-metrics').innerText(),/2500/);assert.match(await page.locator('.athlete-metrics').innerText(),/Not set/);assert.equal(await draft.inputValue(),'PRIVATE_UNSAVED_PROFILE');
  age=30;await refresh();await page.waitForFunction(()=>document.querySelector('.athlete-metrics')?.textContent.includes('2500'));
- await page.getByRole('navigation',{name:'Athlete workspace'}).getByRole('link',{name:'Fueling',exact:true}).click();await page.getByRole('heading',{name:'Daily fuel alongside training',exact:true}).waitFor();
+ await page.getByRole('link',{name:'Fueling',exact:true}).click();await page.getByRole('heading',{name:'Daily fuel alongside training',exact:true}).waitFor();
  const sourceForm=page.locator('form').filter({has:page.locator('input[name="preKg"]')});await sourceForm.evaluate(form=>{const details=form.closest('details');if(details)details.open=true;});await sourceForm.locator('input[name="preKg"]').fill('71');
  hold=true;await refresh();await page.waitForFunction(()=>!document.querySelector('main').textContent.includes('Daily fuel alongside training'));assert.equal(await page.getByRole('heading',{name:'Training-day meal options',exact:true}).count(),0);
  fail=true;hold=false;release();await page.getByRole('button',{name:'Retry athlete day',exact:true}).waitFor();assert.equal(await sourceForm.locator('input[name="preKg"]').inputValue(),'71');
