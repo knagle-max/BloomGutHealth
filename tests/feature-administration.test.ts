@@ -42,3 +42,12 @@ test('actual admin endpoints deny public/tester/non-admin reads and all writes, 
   assert.equal((await get(grant.userId)).status,403);assert.equal(restrictedCapabilityAllowed('bloom.metabolite.scores'),false);
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
 });
+
+test('supplemental admin read grant is account-specific and cannot silently duplicate an existing role',()=>{
+ const candidate={...grant,userId:'tester1',grantId:'tester1-review'};
+ const scoped={...env(),BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT:JSON.stringify(candidate)};
+ assert.equal(featureAdminReadGrant('tester1',scoped,now),true);
+ assert.equal(featureAdminReadGrant(grant.userId,scoped,now),true);
+ assert.equal(featureAdminReadGrant('stranger',scoped,now),false);
+ assert.equal(featureAdminReadGrant(grant.userId,{...scoped,BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT:JSON.stringify(grant)},now),false);
+});
