@@ -19,3 +19,13 @@ test('preference API denies self-enrollment, ignores stale grants and rechecks r
  const get=(user='a')=>fetch(base,{headers:{'x-user':user}});const patch=(body:any,user='a')=>fetch(base+'/experimental',{method:'PATCH',headers:{'x-user':user,'content-type':'application/json'},body:JSON.stringify(body)});
  try{assert.equal((await get('')).status,401);assert.equal((await (await get('b')).json()).eligible,false);assert.equal(loads,0);assert.equal((await patch({enabled:true},'b')).status,403);assert.equal((await patch({enabled:true,userId:'b',approved:true})).status,400);assert.equal((await (await get()).json()).experimentalEnabled,false);await patch({enabled:true});assert.equal((await (await get()).json()).experimentalEnabled,true);assert.deepEqual((await (await get()).json()).capabilities,[]);rows.set('a',{enabled:true,grantFingerprint:'old-grant'});assert.equal((await (await get()).json()).experimentalEnabled,false);revokeDuringSave=true;assert.equal((await patch({enabled:true})).status,403);assert.equal(rows.get('a').enabled,false);assert.equal((await (await get()).json()).eligible,false);}finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
 });
+
+test('a supplemental tester grant preserves other grants and cannot override duplicate identities',()=>{
+ const now=Date.parse('2026-10-24T00:00:00Z');
+ const extra={...grant,userId:'tester1',grantId:'supplemental-1'};
+ const scoped={...env,BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT:JSON.stringify(extra)};
+ assert.ok(internalPreviewGrant('tester1',scoped,now));
+ assert.ok(internalPreviewGrant('a',scoped,now));
+ assert.equal(internalPreviewGrant('other',scoped,now),null);
+ assert.equal(internalPreviewGrant('a',{...scoped,BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT:JSON.stringify(grant)},now),null);
+});
