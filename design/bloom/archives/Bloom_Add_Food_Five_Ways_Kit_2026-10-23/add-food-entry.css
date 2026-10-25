@@ -1,0 +1,11 @@
+:root { --bloom-food-accent:#246B50; --bloom-food-bg:#F7FAF8; --bloom-food-surface:#FFF; --bloom-food-text:#20352B; --bloom-food-muted:#53675A; --bloom-food-border:#D8E4DB; }
+.bloom-add-food{color:var(--bloom-food-text);max-width:760px;margin:auto;padding:clamp(16px,3vw,32px);font-family:Inter,system-ui,sans-serif}
+.bloom-add-food h1{font-size:clamp(26px,5vw,34px);line-height:1.2;margin:0 0 8px}
+.bloom-add-food__intro{color:var(--bloom-food-muted);margin:0 0 24px}
+.bloom-add-food__methods{display:grid;gap:12px}.bloom-add-food__item{min-width:0}
+.bloom-add-food__method{width:100%;display:flex;align-items:center;text-align:left;gap:16px;min-height:91px;border:1px solid var(--bloom-food-border);border-radius:16px;padding:15px;background:var(--bloom-food-surface);color:var(--bloom-food-text);cursor:pointer}
+.bloom-add-food__method img{width:50px;height:50px;flex:0 0 auto}.bloom-add-food__method span:nth-child(2){flex:1;min-width:0}.bloom-add-food__method strong,.bloom-add-food__method small{display:block}.bloom-add-food__method strong{font-size:17px}.bloom-add-food__method small{font-size:13px;color:var(--bloom-food-muted);margin-top:5px}.bloom-add-food__method span:last-child{font-size:28px;color:var(--bloom-food-accent)}
+.bloom-add-food__method:focus-visible,.bloom-add-food__status button:focus-visible{outline:3px solid var(--bloom-food-accent);outline-offset:3px}.bloom-add-food__method:disabled{opacity:.65;cursor:not-allowed}
+.bloom-add-food__status{font-size:13px;padding:0 12px;color:var(--bloom-food-muted)}.bloom-add-food__status button{margin-left:8px;border:0;background:none;color:var(--bloom-food-accent);text-decoration:underline;cursor:pointer}.bloom-add-food__foot{font-size:13px;color:var(--bloom-food-muted);margin-top:25px}
+@media(max-width:400px){.bloom-add-food__method{gap:11px;padding:11px}.bloom-add-food__method img{width:44px;height:44px}}
+@media(prefers-color-scheme:dark){:root{--bloom-food-accent:#80CBB0;--bloom-food-bg:#101D24;--bloom-food-surface:#1E303A;--bloom-food-text:#EEF7F3;--bloom-food-muted:#BBCBC5;--bloom-food-border:#40545D}}

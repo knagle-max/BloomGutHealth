@@ -1,0 +1,12 @@
+Surface,Existing asset baseline,Redesign requirement,Acceptance
+Today,Existing P0 Today redesign,Primary action + contextual small summaries,User finds next action in first viewport; no overlay
+Add Food,Existing Five Ways kit,Five options per new entry,All routes use single editable draft/save
+Food Review / Journal,Existing food/photo/restaurant kits,"Focused review, completeness badge and clear save",No duplicate records; correct maths; no crowded header
+Progress,Existing Scientific Insights and VIS kit,"Dated trends, meaningful milestone details",No duplicate unit editors; source visible
+My Biology / Science,Existing Evidence and Depth kits,"Four compact entry cards, opt-in deep science",No fabricated personal inferences
+Goals / Onboarding,Partial v0.6 UX-OPT kit,Short multi-goal wizard,No test required for baseline
+Connections,Existing connectivity SVG,"Provider health, synced date, permissions",Graceful offline/manual pathway
+Athlete,Existing Athlete state/training load kits,Session-first and compact recovery context,No implied medical clearance
+Coach,Partial palette only,"Athlete roster, plan changes and athlete-owned scopes",No access outside explicit grants
+Research,Existing consent concept,Clearly separate optional research permissions,Never imply approved enrolment
+Settings,No full art kit,Canonical preferences with quiet/balanced/celebratory,One owner for each setting
