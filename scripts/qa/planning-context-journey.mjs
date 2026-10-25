@@ -16,6 +16,7 @@ await page.route('**/api/**',async route=>{const req=route.request(),url=new URL
 });
 try{
  await page.goto('http://127.0.0.1:5192/meal-planner');await page.getByText('Adult nutrition planning is unavailable for a profile under 18. Review the recorded Profile and health context.',{exact:true}).first().waitFor();
+ await page.getByText('Targets: Example targets — review and confirm to personalize.',{exact:true}).waitFor();assert.equal(await page.locator('.meal-suggestion').count(),0);
  await page.getByRole('tab',{name:'Weekly plan',exact:true}).click();await page.getByRole('button',{name:'Generate a weekly plan',exact:true}).click();await page.getByText('Adult nutrition planning is unavailable for a profile under 18. Review the recorded Profile and health context.',{exact:true}).last().waitFor();assert.equal(await page.getByRole('button',{name:'Save this checked plan',exact:true}).isEnabled(),false);
  for(const width of [320,1280]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
  await page.goto('http://127.0.0.1:5192/log-meal?description=100%20g%20banana');await page.getByLabel('Describe your meal',{exact:true}).waitFor();assert.equal(await page.getByLabel('Describe your meal',{exact:true}).inputValue(),'100 g banana');assert.equal(source.ageGroup,'adult');assert.equal(source.safetyReviewed,true);assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);

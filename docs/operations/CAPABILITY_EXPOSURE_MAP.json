@@ -1438,7 +1438,7 @@
     "server/plan-history.ts": "e5e19e94821047a1516c64685a4cb5926e3523c127c1f30f9de61240c1d93c7f",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
-    "server/precision-routes.ts": "c1a2f257b9c54b1cfb6b740f3c2e1aa8bb88f7b59df8393b1c341492e9344cd8",
+    "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
     "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
     "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",

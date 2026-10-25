@@ -1,3 +1,4 @@
+import {nutritionTargetReference} from "./nutrition-targets";
 import {resolvePlanningContext} from "./planning-context";
 import {historicalPlanRecord} from "./plan-history";
 import {aiExecutionContext} from "./metered-ai";
@@ -218,35 +219,17 @@ export function registerPrecisionRoutes(
       const saved = weeklyRequestSchema.safeParse(
         (recentPlan?.payload as any)?.request,
       );
-      const profileComplete = !!(
-        user?.age &&
-        user?.sex &&
-        user?.heightCm &&
-        user?.weightKg &&
-        user?.activityLevel
-      );
-      const multiplier: Record<string, number> = {
-        sedentary: 1.2,
-        light: 1.375,
-        moderate: 1.55,
-        active: 1.725,
-        very_active: 1.9,
-      };
-      const energy = profileComplete
-        ? Math.round(
-            (10 * user!.weightKg! +
-              6.25 * user!.heightCm! -
-              5 * user!.age! +
-              (user!.sex === "male" ? 5 : -161)) *
-              (multiplier[user!.activityLevel!] || 1.55),
-          )
-        : 2200;
+      const reference = nutritionTargetReference(user);
+      const profileComplete = reference.basis.usesProfile;
+      // Keep the existing explicit planning examples and bounds; only actual,
+      // supported adult fields can supply a profile-derived estimate.
+      const energy = profileComplete ? reference.calories : 2200;
       const base = weeklyRequestSchema.parse({
         days: 1,
         targets: {
           calories: Math.min(4500, Math.max(1200, energy)),
           protein: profileComplete
-            ? Math.min(250, Math.max(40, Math.round(user!.weightKg! * 1.6)))
+            ? Math.min(250, Math.max(40, reference.protein))
             : 100,
           fiber: 30,
           fiberMaximum: 45,
