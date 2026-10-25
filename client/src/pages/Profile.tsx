@@ -215,8 +215,8 @@ export default function Profile({
               </select>
             </label>
             <p className="panel-note">
-              Targets are formula-based estimates. Missing profile values
-              currently use defaults.
+              Complete adult Profile fields support formula estimates. Otherwise,
+              the journal shows labelled example references.
             </p>
             <Button disabled={save.isPending||incomplete||savingUnits||loadingUnits}>Save nutrition profile</Button>
           </>
