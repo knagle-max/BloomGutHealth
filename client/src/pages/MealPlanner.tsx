@@ -260,6 +260,7 @@ interface Plan {
 export default function MealPlanner() {
   const { settings } = useExperience();
   const plan = useQuery<Plan>({ queryKey: ["/api/meal-planner"] });
+  const currentPlan = !plan.isError && !plan.isFetching ? plan.data : undefined;
   const progress = useQuery<any>({ queryKey: ["/api/meal-planner/progress"] });
   const [selected, setSelected] = useState<string | null>(null);
   const [aiConsent, setConsent] = useState(false);
@@ -316,17 +317,17 @@ export default function MealPlanner() {
         <TabsContent value="today" forceMount><TodayPlanner onEditPreferences={() => setEditing(true)} /></TabsContent>
         <TabsContent value="week" forceMount><WeeklyPlanner /></TabsContent>
         <TabsContent value="recipes" forceMount>
-      {plan.isLoading && <p role="status">Loading your meal plan…</p>}
+      {plan.isFetching && <p role="status">Checking recipes against your current preferences…</p>}
       {plan.isError && (
         <p role="alert">
           {plan.error.message}{" "}
-          <Button onClick={() => plan.refetch()}>Retry</Button>
+          <Button disabled={plan.isFetching} onClick={() => plan.refetch()}>Retry</Button>
         </p>
       )}
-      {plan.data && (
+      {currentPlan && (
         <>
           <p className="panel-note">
-            {plan.data.note} Based on {plan.data.recentMeals} meals in the last
+            {currentPlan.note} Based on {currentPlan.recentMeals} meals in the last
             14 days.
           </p>
           {aiStatus.data?.ai?.features?.recipeRanking && <>
@@ -359,7 +360,7 @@ export default function MealPlanner() {
               <p role="alert">{prioritize.error.message}</p>
             )}
           </div>
-          {!plan.data.suggestions.length && (
+          {!currentPlan.suggestions.length && (
             <section className="bloom-panel">
               <h2>No supported recipes fit these choices yet.</h2>
               <p>
@@ -370,7 +371,7 @@ export default function MealPlanner() {
               </p>
             </section>
           )}
-          {plan.data.suggestions.map((r) => (
+          {currentPlan.suggestions.map((r) => (
             <article key={r.id} className="bloom-panel space-y-3">
               <h2>{recipeDisplayName(r.name)}</h2>
               <p className="panel-note">
@@ -460,10 +461,10 @@ export default function MealPlanner() {
               )}
             </article>
           ))}
-          {plan.data.cohorts.length > 0 && (
+          {currentPlan.cohorts.length > 0 && (
             <section className="bloom-panel">
               <h2>Research population comparison</h2>
-              {plan.data.cohorts.map((c) => (
+              {currentPlan.cohorts.map((c) => (
                 <article key={c.id} className="my-4">
                   <h3>{c.name}</h3>
                   <p>{c.finding}</p>
@@ -472,7 +473,7 @@ export default function MealPlanner() {
                   <a
                     className="underline"
                     href={
-                      plan.data!.sources.find((s) => s.id === c.sourceId)?.url
+                      currentPlan!.sources.find((s) => s.id === c.sourceId)?.url
                     }
                     target="_blank"
                     rel="noreferrer"
