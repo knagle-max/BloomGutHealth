@@ -11,10 +11,12 @@
           "client/src/pages/Profile.tsx"
         ],
         "api": [
-          "server/routes.ts"
+          "server/routes.ts",
+          "server/auth-routes.ts"
         ],
         "logicOrJobs": [
-          "shared/display-units.ts"
+          "shared/display-units.ts",
+          "server/shared-rate-limit.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1201,7 +1203,8 @@
         ],
         "logicOrJobs": [
           "server/account-export.ts",
-          "server/account-erasure.ts"
+          "server/account-erasure.ts",
+          "server/shared-rate-limit.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1229,7 +1232,8 @@
         ],
         "logicOrJobs": [
           "server/account-export.ts",
-          "server/account-erasure.ts"
+          "server/account-erasure.ts",
+          "server/shared-rate-limit.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1440,6 +1444,7 @@
     "server/ai-configuration.ts": "b6bb5b437c7a279470c821d5dfb59f321f39ce59d275faeb38da3fa7999878d5",
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
     "server/analysis-boundary.ts": "81f3bdfb4f03e036b616f3194cd69fe7669fd29413bf21780f9316c8d5695d37",
+    "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
@@ -1469,6 +1474,7 @@
     "server/review-runtime-audit.ts": "12d4d26b37e0967da4273d0c8b3d990e106695f73f6f8f39f7c925070867008f",
     "server/routes.ts": "0076666c9d3775a9c2082c910725cb38bddb10fed10ce0b053e6e2264afb84e6",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
+    "server/shared-rate-limit.ts": "6e03addd10677f36bb0e8fbc941e6861f7f411c1312f9340a2de0777f8a13f71",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
     "server/storage.ts": "521c7725b15676274be6c4a2adb408a89d7fc13253c382d2a5408ec8c3ffafda",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",

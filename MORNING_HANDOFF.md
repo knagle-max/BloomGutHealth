@@ -1,8 +1,8 @@
 # Bloom development handoff — 2026-10-25
 
-v0.5 remains incomplete. Work continues on `enhance/bloom-experience`, PR #1 and the existing BloomGutHealth Render service. No main merge, replacement service, credential change or paid-provider activation. Previous history and exact earlier milestones remain in DEVELOPMENT_LOG.md.
+v0.5 remains incomplete. Work is on enhance/bloom-experience, PR1 and the existing Render service. No main merge, replacement service, credential change, new live controller role or paid-provider activation. Detailed chronology and failures remain in DEVELOPMENT_LOG.md; exact resume instructions in NEXT_ACTIONS.md.
 
-## Latest development
+## Completed and active engineering
 
 | Commit | Completed change | Verification |
 | --- | --- | --- |
@@ -17,16 +17,20 @@ v0.5 remains incomplete. Work continues on `enhance/bloom-experience`, PR #1 and
 | 7f8c813 | Recipe guidance retracts during pending/failed current-preference check; retry respects new dairy exclusion | Actual recipe handler/UI held-fetch/failure/retry/mobile/dark, daily regression/types/build/source; CI40171124172 success / Render dep-dbeqhs2jnfac73e2h8i0 live |
 | c925dd5 | Confirmed precision erasure also discards cached completed source-write mutation responses | Actual source mutation +failed/successful erasure/UI/API/privacy/cache regression, Profile/types/build/source pass; CI40171734941 success / Render dep-dbeqmcmk1f9s73fj01lg live |
 
-“Live” records each commit's successful development deployment; newer deployments supersede older ones. Synthetic fixtures and disposable CI databases do not establish real-account, physical-device or independent specialist acceptance. No source observations were deleted to withdraw old generated advice; the synthetic erasure test exercises an explicitly confirmed deletion in its isolated fixture only.
+| 9c40672 +1a77db5 | Encrypted versioned control storage, atomic CAS/idempotent audit and immutable SQL guard; isolated schema setup fix | 298 full +14 focused/types/build/admin browser; CI40174679954 passed actual schema-only Neon migration/CAS/audit; Render dep-dberc9ijnfac73e34jn0 live |
+| Local AUTH-PATH-BUDGET-01 | Shared authentication/deletion budgets cover Express-accepted case and trailing-slash variants | 300 full +13 focused/types/build/source; two-Express-instance outage/allowance regressions; publication pending |
 
-Earlier reviewer repair remains verified: trusted Render-to-Neon binding, exact capital-T Tester1 identity and additive committed0008 preference storage were checked; the actual app role has read/write privileges. Existing account/health rows, credentials and grants were preserved. Actual authenticated Tester1 scope/expiry and ON/OFF review remain external. No identity/session forging or new live grants.
+“Live” means each batch completed its development deployment; newer deployments supersede older ones. Synthetic fixtures and isolated CI do not establish real-account, physical-device or independent specialist acceptance. Control storage is administrative metadata; no runtime repository/approval adapter or mutation service is installed. Existing controller writes remain denied and no0012 control migration was applied to Render's bound database.
 
-## Remaining engineering priorities
+The exact Tester1 account, trusted runtime database binding, additive0008 preference storage and actual app read/write privileges were verified earlier. Authenticated scope/expiry and in-situ ON/OFF acceptance remain external. No credential recovery, session forging, account replacement or new grant was performed.
 
-1. P0: Administrator mutation/step-up/persistent audit controls remain unimplemented beyond read-only metadata and the independent effective-policy foundation. Continue this approved task without inventing live roles or activation. Complete runtime capability/output/history/job/cache/revocation coverage. The52-feature crosswalk is a source trace, not authorization or proof all functions were audited. Continue concrete reproductions; preserve safe general functions and original observations.
-2. P0: Operational deletion replay, retention/key lifecycle, managed recovery and independent acceptance; existing synthetic recovery is not managed RPO/RTO proof. Real tariff/runtime activation and authoritative unknown-charge matching remain separately gated.
-3. P0/P1: Remaining current v0.5 evidence/unit/interaction gaps and applicable real Canadian product, device/accessibility/branding/security/science acceptance. No blanket release or all-blocked claim.
-4. Begin independent approved v0.6 only after actionable v0.5 work is exhausted, carrying scoped external blockers forward.
+## Remaining priorities
+
+1. P0 administrator control plane: separate controller authorization and fresh session/action-bound step-up with shared single-use receipt, followed by guarded mutations, current independent approval facts, runtime enforcement and UI. Storage/schema foundation is tested; parent is open.
+2. P0 full52-feature runtime output/history/job/cache/revocation audit;95 referenced source files are traceability, not permission or exhaustive completion.
+3. P0 operational deletion replay, key/retention/managed recovery and independent acceptance; real tariff/runtime configuration and authoritative unknown-charge evidence remain gated.
+4. P0/P1 remaining concrete v0.5 evidence/unit/interaction gaps and actual product/device/accessibility/branding/security/science acceptance. Continue independent engineering while scoped inputs/reviews are deferred.
+5. Reconcile/start approved independent v0.6 only after actionable v0.5 work is exhausted, carrying external blockers.
 
 ## Decisions and external acceptance
 
@@ -42,8 +46,4 @@ Exact questions/options/evidence are maintained in BLOCKED_USER_INPUT.md; none p
 | FOOD-501: actual Canadian package/serving/search selection/save/totals evidence | Independent synthetic-account tester or owner reports exact source findings; recommend independent tester | Exact SKU acceptance, not missing API-key work |
 | Asset intake / specialist gates: approved editable brand-kit path and actual running-build reviews | Versioned authorized asset path and independent reviews; recommend existing approved tokens until available | Exact asset adoption and applicable specialist sign-off |
 
-The latest documentation publication d1ed503 passed CI40171423163 and Render dep-dbeqk14s728c73crcjog; it contains the same previously verified functional source. No new user answer is required for the next independent coding task. NEXT_ACTIONS.md identifies the local batch and exact verification/resume instructions. Do not request the USDA key again; it works. No physical Safari/VoiceOver, whole-dataset isolation, new clinical approval or live paid executor is claimed.
-
-Execution handoff: ten functional batches are verified and published. Remaining administrator/control-plane and broader audit engineering is actionable; this is a session execution-resource handoff, not v0.5 completion or an all-blocked determination. Resume the precise NEXT_ACTIONS.md task; do not ask the owner to reconfirm standing development authorization.
-
-Current active continuation: BLOOM-ADMIN-01-STORE durable encrypted control-history foundation is implemented locally with298 full +14 focused tests/types/build and no-gallery actual-handler administrator browser passing; isolated Neon CI migration/CAS/immutable-audit smoke pending publication. Administrator mutation/step-up/runtime activation remains open and denied. No real grant, live migration, provider or source activation. Source files are a storage foundation, not proof of a configured control service.
+No new owner answer is required for the next safe implementation slice. USDA is working; do not request/change/print its key. No physical Safari/VoiceOver, whole-dataset isolation, new clinical approval or live paid executor is claimed.

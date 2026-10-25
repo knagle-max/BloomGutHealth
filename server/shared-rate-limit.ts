@@ -33,7 +33,9 @@ export class SharedRateLimiter {
   }
   middleware(): RequestHandler {
     return async (req, res, next) => {
-      const path = req.path;
+      // Express routes accept case differences and one trailing slash by
+      // default. Budget the same accepted paths before any credential work.
+      const path = req.path.toLowerCase().replace(/\/$/, "");
       const reauthentication=path === "/api/account" && req.method === "DELETE";
       const auth = reauthentication || path === "/api/auth/login" || path === "/api/auth/signup";
       const costly = path.startsWith("/api/capabilities") || /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export|search)/i.test(path);
