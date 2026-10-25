@@ -403,3 +403,16 @@ BLOOM-ATHLETE-GATE-01 — LOCAL VERIFIED P0: shared typed blocker causes now dis
 | ARC-RELEASE-2026-01 | P0 merge governance | Continue active v0.5 development branch; merge only with required release gates; stage v0.6 on separate branch thereafter | No merge authorization; Codex prepares evidence at validated milestone; ARCHITECT GUIDANCE |
 
 **Execution:** Resume existing `NEXT_ACTIONS.md` P0 Athlete gating before v0.6 feature implementation; Codex owns source/CI/Render verification and implementation statuses. No account, database, restricted feature or deployment configuration changes in this architect documentation review. Future Architect review decisions must be published and indexed in the same existing documents.
+
+## 2026-10-25 Chief Architect product-value gate intake
+
+**Authoritative consolidation:** `docs/architecture/V06_HANDOFF.md` §38, commit `7195bf95b03261773566173ddc4990ecf61d88fd`. Sources: UT-VALUE-2101–2104 and MKT-VALUE-2201–2206. Status for all: **ARCHITECT_REVIEWED / awaiting Developer latest-code crosswalk**, not new system approvals, running acceptance, implemented work or independently measured results. Existing `EXP-COHERENCE-01–08` is the parent scope. Prioritize actionable v0.5 integrity and UX, then v0.6 adaptation/evaluation; do not stop active v0.5 work.
+
+| ID | Priority | Acceptance outcome | Next action |
+| --- | --- | --- | --- |
+| ARC-VALUE-01 | P0 first value | One goal→comprehended eligible action without optional tests/devices/AI; proposed median <=5 minutes incl failure/dropout denominator and P90 | Codex audit existing onboarding/Today, test synthetic cross-state flows; Design+UT independent timing |
+| ARC-VALUE-02 | P0 full journey | Goal→canonical save/activity or skip→feedback→accept/dismiss→dated Progress→next-day persistence; same source truth after corrections/outages/account switch; proposed >=90% independent task success | Codex audit existing handlers/UI before coding, add missing end-to-end regression |
+| ARC-VALUE-03 | P1 UX / P0 safety | Reversible nonpunitive plan adjustment for missed week/travel/fatigue/illness/goal conflict; no hidden coach/clinician override or deleted history | Align with V06-TRAIN-01/02 and existing planner/versioning; later feature implementation |
+| ARC-VALUE-04 | P0 analytics definitions/privacy / P1 effectiveness | Consent/redaction-reviewed event schema, accurate denominators, error/correction and comprehension/retention, comparative evaluation; no raw health data; >=80% comprehension is target only | Security/Legal/UT/Biology review and independent study design; no new instrumentation automatically authorized |
+
+**Requested Developer reporting:** Match stable IDs to existing `EXP-COHERENCE-02/04`, UT-EXPERIENCE-1401–1408, v0.5 first-run/daily journey and `ARC-ATP` work. Per row state: Received → Reviewed → Implemented → Tested → Specialist review/Accepted, with exact commit, CI/browser/real-device evidence and specific gaps. Do not merge, rewire deployment or represent metrics as observed from this documentation-only change.
