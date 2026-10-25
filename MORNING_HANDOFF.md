@@ -13,18 +13,16 @@ v0.5 remains incomplete. Work continues on `enhance/bloom-experience`, PR #1 and
 | 135ca23 | Daily target estimates reuse validated actual adult inputs; unsupported inputs get examples and no automatic suggestions | 292 tests +6 focused/types/build/source, minor/adult rendered regressions; CI40169749224 success / Render dep-dbeq79uq1p3s73egkseg live |
 | 9fa8786 | Explore retracts stale personal decision/rule attribution while general research/composition remain usable; correct obsolete genotype-ranking disclosures | 12 focused/types/build/source, actual held-fetch/failure/retry/composition/mobile/dark browser; CI40169987001 success / Render dep-dbeq94s9v7es73coihl0 live |
 | 21f3bcd | Shared derived refresh after profile/preferences/labs/genetic/report changes; successful precision erasure resets related personal cache variants | Actual lab save and explicit erasure/UI/handler checks, Profile and measurement editor regressions/types/build/source pass; CI40170491815 success / Render dep-dbeqd15g1s2s739l7ki0 live |
+| 815a6e8 | Legacy journal add/recalculate/delete refresh remaining-day and other derived planning caches | Actual history/save/cache and journal-failure regressions/types/build/source; CI40170760305 success / Render dep-dbeqf2ajnfac73e2f650 live |
+| 7f8c813 | Recipe guidance retracts during pending/failed current-preference check; retry respects new dairy exclusion | Actual recipe handler/UI held-fetch/failure/retry/mobile/dark, daily regression/types/build/source; CI40171124172 success / Render dep-dbeqhs2jnfac73e2h8i0 live |
 
 “Live” records each commit's successful development deployment; newer deployments supersede older ones. Synthetic fixtures and disposable CI databases do not establish real-account, physical-device or independent specialist acceptance. No source observations were deleted to withdraw old generated advice; the synthetic erasure test exercises an explicitly confirmed deletion in its isolated fixture only.
 
 Earlier reviewer repair remains verified: trusted Render-to-Neon binding, exact capital-T Tester1 identity and additive committed0008 preference storage were checked; the actual app role has read/write privileges. Existing account/health rows, credentials and grants were preserved. Actual authenticated Tester1 scope/expiry and ON/OFF review remain external. No identity/session forging or new live grants.
 
-Published815a6e8 JOURNAL-PLANNING-CACHE-01: legacy journal add/recalculate/delete now refresh the distinct remaining-day planner and other derived keys. Actual save/cache/history and journal-failure browser regressions/types/build/source pass; CI40170760305 success / Render dep-dbeqf2ajnfac73e2f650 live.
-
-Local RECIPE-LIBRARY-REFRESH-01 verified: cached recipe advice retracts during pending/failed current-preference checks; actual dairy exclusion/retry/mobile/dark and daily regression/types/build/source passed. Publication pending.
-
 ## Remaining engineering priorities
 
-1. P0: Complete runtime capability/output/history/job/cache/revocation coverage. The52-feature crosswalk is a source trace, not authorization or proof all functions were audited. Continue concrete reproductions; preserve safe general functions and original observations.
+1. P0: Administrator mutation/step-up/persistent audit controls remain unimplemented beyond read-only metadata and the independent effective-policy foundation. Continue this approved task without inventing live roles or activation. Complete runtime capability/output/history/job/cache/revocation coverage. The52-feature crosswalk is a source trace, not authorization or proof all functions were audited. Continue concrete reproductions; preserve safe general functions and original observations.
 2. P0: Operational deletion replay, retention/key lifecycle, managed recovery and independent acceptance; existing synthetic recovery is not managed RPO/RTO proof. Real tariff/runtime activation and authoritative unknown-charge matching remain separately gated.
 3. P0/P1: Remaining current v0.5 evidence/unit/interaction gaps and applicable real Canadian product, device/accessibility/branding/security/science acceptance. No blanket release or all-blocked claim.
 4. Begin independent approved v0.6 only after actionable v0.5 work is exhausted, carrying scoped external blockers forward.

@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Latest verified: `815a6e8956fe58aa2d1774b74d82b26d3e346d13`, CI40170760305 success / Render dep-dbeqf2ajnfac73e2f650 live. RECIPE-LIBRARY-REFRESH-01 tested locally, publication pending. Full backend milestone292 tests; no v0.5 acceptance claim.
+Branch: `enhance/bloom-experience`. Latest verified implementation: `7f8c8139d9482b73829040b647ee81eab228b95f`, CI40171124172 success / Render dep-dbeqhs2jnfac73e2h8i0 live. All nine functional batches in this continuation passed exact CI/Render; full292 tests plus focused/rendered checks. v0.5 remains incomplete; administrator mutation/step-up/audit and broader runtime/external acceptance work remain open.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish actionable v0.5 first, then reconcile and begin approved independent v0.6 work while external v0.5 blockers carry forward. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
