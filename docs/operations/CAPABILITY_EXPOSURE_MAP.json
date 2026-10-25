@@ -1382,7 +1382,8 @@
           "server/index.ts",
           "shared/schema-management.ts",
           "server/feature-step-up.ts",
-          "server/feature-controller-auth.ts"
+          "server/feature-controller-auth.ts",
+          "server/feature-control-service.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1452,12 +1453,13 @@
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
-    "server/effective-capability.ts": "a505921dc34fb29e567d50f21a31a16e0774a68ac177758d84e6f88e974435ee",
+    "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
+    "server/feature-control-service.ts": "c3fe2f9b8c728e738998c5ce86d1d827b11dc02dcc6fa802c7a707c42c2a437e",
     "server/feature-control-storage.ts": "1762d4f0d9b0e39bae98a0d9fa583beebed01b25e73762b00d392a9105fcf13e",
     "server/feature-controller-auth.ts": "f349587780d99a77c51b9beb6088ce235b5cab7be179a8227c60df42861bfea0",
-    "server/feature-step-up.ts": "7807e27b51271479ee8e1b9dc570b7908d2f36d2aa62b037f97215b0b334d033",
+    "server/feature-step-up.ts": "ebac6a30a6e6f65fc5770e9f2fa74bf9e063b141f82ead69cf9addcd749f5e29",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",

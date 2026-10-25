@@ -30,19 +30,29 @@ const deny=(reason:CapabilityDenial):EffectiveCapabilityDecision=>({allowed:fals
  * No live repository/installer is configured by this module. No IDs, keys or
  * bucket values are returned. Account rollout is stable across replicas and
  * control revisions, and domain-separated by feature/service/environment/cohort. */
-export function effectiveCapabilityDecision(input:unknown,lookupSource:(id:string)=>RegisteredCapability|null=compiledSource):EffectiveCapabilityDecision{
- const parsed=schema.safeParse(input);if(!parsed.success)return deny('INVALID_CONTEXT');
- const {now,deployment,implementation,review,control,subject,rolloutKey}=parsed.data;
- const canonical=compiledSource(parsed.data.featureId);
+const reviewedControlSchema=schema.omit({subject:true,rolloutKey:true});
+export type ReviewedCapabilityControlFacts=z.infer<typeof reviewedControlSchema>;
+/** Candidate-control governance only. This neither authenticates a controller nor
+ * permits personal execution. All facts must come from trusted current sources. */
+export function reviewedCapabilityControlDecision(input:unknown,lookupSource:(id:string)=>RegisteredCapability|null=compiledSource):EffectiveCapabilityDecision{
+ const parsed=reviewedControlSchema.safeParse(input);if(!parsed.success)return deny('INVALID_CONTEXT');
+ const decision=reviewedControl(parsed.data,lookupSource,false);if(!decision.allowed)return decision;
+ const {review,control}=parsed.data;if(!review||!control)return deny('EXECUTION_UNCONFIGURED');
+ if(new Set(review.cohorts.map(cohort=>cohort.id)).size!==review.cohorts.length||!review.cohorts.some(cohort=>cohort.id===control.cohortId))return deny('ACTIVATION_SCOPE_INVALID');
+ return {allowed:true,reason:null};
+}
+function reviewedControl(facts:EffectiveCapabilityFacts,lookupSource:(id:string)=>RegisteredCapability|null,execution:boolean):EffectiveCapabilityDecision{
+ const {now,deployment,implementation,review,control,subject,rolloutKey}=facts;
+ const canonical=compiledSource(facts.featureId);
  if(!canonical)return deny('UNKNOWN_FEATURE');
  if(canonical.category==='DISABLED_INCIDENT')return deny('INCIDENT_DISABLED');
  if(canonical.category==='INTERNAL_RESEARCH_ONLY')return deny('RESEARCH_ISOLATION');
- let record:RegisteredCapability|null;try{record=lookupSource(parsed.data.featureId);}catch{return deny('INVALID_CONTEXT');}
- if(!record||record.id!==parsed.data.featureId)return deny('UNKNOWN_FEATURE');
+ let record:RegisteredCapability|null;try{record=lookupSource(facts.featureId);}catch{return deny('INVALID_CONTEXT');}
+ if(!record||record.id!==facts.featureId)return deny('UNKNOWN_FEATURE');
  const checked=sourceSchema.safeParse(record);if(!checked.success)return deny('INVALID_CONTEXT');const source=checked.data;
  if(source.category!==canonical.category)return deny('SOURCE_APPROVAL_REQUIRED');
  if(source.category!=='GENERAL_RELEASE'||source.approval!=='APPROVED'||!source.publicEnabled)return deny('SOURCE_APPROVAL_REQUIRED');
- if(!deployment||!implementation||!review||!control||!subject||!rolloutKey)return deny('EXECUTION_UNCONFIGURED');
+ if(!deployment||!implementation||!review||!control||(execution&&(!subject||!rolloutKey)))return deny('EXECUTION_UNCONFIGURED');
  if(implementation.readiness!=='VERIFIED'||implementation.materialDigest!==deployment.materialDigest)return deny('IMPLEMENTATION_UNVERIFIED');
  if(review.featureId!==source.id||review.status!=='APPROVED'||Date.parse(review.validFrom)>=Date.parse(review.expiresAt)||now<Date.parse(review.validFrom)||now>=Date.parse(review.expiresAt))return deny('REVIEW_INVALID');
  if(review.serviceId!==deployment.serviceId||review.environment!==deployment.environment||review.materialDigest!==deployment.materialDigest)return deny('REVIEW_VERSION_MISMATCH');
@@ -53,6 +63,14 @@ export function effectiveCapabilityDecision(input:unknown,lookupSource:(id:strin
  if(control.state!=='enabled'||control.rolloutPercent===0)return deny('ACTIVATION_OFF');
  const scopeKeys=['territories','populations','purposes'] as const;
  if(control.featureId!==source.id||control.serviceId!==deployment.serviceId||control.environment!==deployment.environment||control.materialDigest!==deployment.materialDigest||control.reviewId!==review.id||Date.parse(control.expiresAt)>Math.min(Date.parse(review.expiresAt),...review.evidence.map(item=>Date.parse(item.expiresAt)))||now>=Date.parse(control.expiresAt)||control.rolloutPercent>review.maximumRolloutPercent||scopeKeys.some(key=>new Set(control.scope[key]).size!==control.scope[key].length||control.scope[key].some(value=>!review.scope[key].includes(value))))return deny('ACTIVATION_SCOPE_INVALID');
+ return {allowed:true,reason:null};
+}
+export function effectiveCapabilityDecision(input:unknown,lookupSource:(id:string)=>RegisteredCapability|null=compiledSource):EffectiveCapabilityDecision{
+ const parsed=schema.safeParse(input);if(!parsed.success)return deny('INVALID_CONTEXT');
+ const checked=reviewedControl(parsed.data,lookupSource,true);if(!checked.allowed)return checked;
+ const {deployment,review,control,subject,rolloutKey}=parsed.data;
+ if(!deployment||!review||!control||!subject||!rolloutKey)return deny('EXECUTION_UNCONFIGURED');
+ const now=parsed.data.now,source={id:parsed.data.featureId};
  if(!subject.populationVerified||subject.population==='unknown'||!control.scope.territories.includes(subject.territory)||!control.scope.populations.includes(subject.population)||!control.scope.purposes.includes(subject.purpose))return deny('SUBJECT_SCOPE_REQUIRED');
  if(deployment.consentPurpose&&(!subject.consent?.granted||subject.consent.purpose!==deployment.consentPurpose||now>=Date.parse(subject.consent.expiresAt)))return deny('CONSENT_REQUIRED');
  if(new Set(review.cohorts.map(cohort=>cohort.id)).size!==review.cohorts.length||rolloutKey.id!==review.rolloutKeyId)return deny('ACTIVATION_SCOPE_INVALID');

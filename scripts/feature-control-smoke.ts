@@ -1,4 +1,5 @@
 import {FeatureStepUp,FeatureStepUpReceipts,type StepUpController} from '../server/feature-step-up';
+import {FeatureControlService} from '../server/feature-control-service';
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -45,13 +46,19 @@ try {
     assert.equal((await right.history(binding, 'synthetic-ci-operator')).length, 2);
     stage='step-up';
     const context={actorId:'synthetic-ci-operator',sessionId:randomBytes(24).toString('base64url')}, change=request(3), intent={action:'pause' as const,change};
-    const grant:StepUpController={serviceId:binding.serviceId,environment:binding.environment,userId:context.actorId,role:'feature-controller',scopes:['features:control'],grantId:'synthetic-ci-grant',reviewReference:'synthetic-no-release-approval',featureIds:[binding.featureId],actions:['pause'],credentialVersion:'c'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString()};
+    const grant:StepUpController={serviceId:binding.serviceId,environment:binding.environment,userId:context.actorId,role:'feature-controller',scopes:['features:control'],grantId:'synthetic-ci-grant',reviewReference:'synthetic-no-release-approval',featureIds:[binding.featureId],actions:['pause','emergency-disable'],credentialVersion:'c'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString()};
     const adapters={reauthenticate:async()=>grant,current:async()=>grant}, receipts=new FeatureStepUpReceipts(pool),secret=randomBytes(32).toString('hex');
     const proofService=new FeatureStepUp({serviceId:binding.serviceId,environment:binding.environment},secret,receipts,adapters), issued=await proofService.issue(context,intent,'synthetic-ci-password');
     const competing=await Promise.allSettled([proofService.consume(context,intent,issued.proof),new FeatureStepUp({serviceId:binding.serviceId,environment:binding.environment},secret,receipts,adapters).consume(context,intent,issued.proof)]);
     assert.equal(competing.filter(row=>row.status==='fulfilled').length,1);
     const lease=competing.find(row=>row.status==='fulfilled');assert.ok(lease&&lease.status==='fulfilled');
     assert.equal((await new FeatureControlStorage(transaction,lease.value.authorize).append(change)).control.revision,3);
+    stage='control-service';
+    const command=request(4),disable={action:'emergency-disable' as const,change:{...command,control:{...command.control,state:'incident-disabled' as const,rolloutPercent:0}}};
+    const service=new FeatureControlService(transaction,proofService),reauth=await service.issue(context,disable,'synthetic-ci-password');
+    assert.equal((await service.apply(context,disable,reauth.proof)).control.state,'incident-disabled');
+    assert.equal((await right.history(binding,context.actorId)).length,4);
+    console.log('PASS: isolated PostgreSQL control service composes proof, emergency disable and encrypted audit; no HTTP/runtime installation');
     console.log('PASS: isolated PostgreSQL step-up cross-replica consumption and transactional authorization; synthetic adapters only');
     console.log('PASS: isolated Neon control-history default denial, real concurrent CAS, encrypted audit, historical replay and immutable SQL guard; no runtime activation');
 }

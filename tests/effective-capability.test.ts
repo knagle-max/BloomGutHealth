@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {effectiveCapabilityDecision,type EffectiveCapabilityFacts,type RegisteredCapability} from '../server/effective-capability';
+import {reviewedCapabilityControlDecision,effectiveCapabilityDecision,type EffectiveCapabilityFacts,type RegisteredCapability} from '../server/effective-capability';
 import {restrictedCapabilityAllowed} from '../server/capability-policy';
 const featureId='bloom.food.meal_logging',now=Date.parse('2026-10-25T00:00:00Z'),materialDigest='a'.repeat(64);
 const source:RegisteredCapability={id:featureId,category:'GENERAL_RELEASE',approval:'APPROVED',publicEnabled:true};
@@ -85,4 +85,26 @@ test('rollout uses stable independent HMAC vectors, remains monotone across perc
  }
  const targeted=fixture();targeted.review!.cohorts[0].accountIds=['subject-0'];
  assert.equal(effectiveCapabilityDecision(targeted,lookup).allowed,true);targeted.subject!.accountId='other-subject';assert.equal(effectiveCapabilityDecision(targeted,lookup).allowed,false);
+});
+
+test('candidate control governance uses the execution review checks without fabricating subject consent or rollout eligibility',()=>{
+ const full=fixture();const {subject,rolloutKey,...candidate}=full;
+ assert.deepEqual(reviewedCapabilityControlDecision(candidate,lookup),{allowed:true,reason:null});
+ assert.deepEqual(effectiveCapabilityDecision(candidate,lookup),{allowed:false,reason:'EXECUTION_UNCONFIGURED'});
+ assert.deepEqual(reviewedCapabilityControlDecision({...candidate,subject},lookup),{allowed:false,reason:'INVALID_CONTEXT'});
+ assert.deepEqual(reviewedCapabilityControlDecision(candidate),{allowed:false,reason:'SOURCE_APPROVAL_REQUIRED'});
+ const mutations:Array<(value:any)=>void>=[
+  p=>p.implementation.readiness='FUNCTIONALLY_COMPLETE',p=>p.review.materialDigest='c'.repeat(64),
+  p=>p.review.evidence[0].status='SUSPENDED',p=>p.review.evidence[0].expiresAt='2026-10-25T00:00:00Z',
+  p=>p.control.changedBy='legal-reviewer',p=>p.review.evidence[1].reviewerId='legal-reviewer',
+  p=>p.control.scope.territories.push('US'),p=>p.review.maximumRolloutPercent=1,
+  p=>p.control.cohortId='unreviewed',p=>p.review.cohorts.push(p.review.cohorts[0]),
+  p=>p.control.expiresAt='2026-10-27T00:00:00Z',p=>p.review.environment='development-review',
+  p=>p.deployment.highConsequence=true,p=>p.control.state='paused'
+ ];
+ for(const mutate of mutations){const changed=structuredClone(candidate);mutate(changed);assert.equal(reviewedCapabilityControlDecision(changed,lookup).allowed,false);}
+ for(const id of ['bloom.genetics.diet_rank','bloom.microbiome.flux']){
+  const changed=structuredClone(candidate);changed.featureId=changed.control!.featureId=changed.review!.featureId=id;
+  assert.equal(reviewedCapabilityControlDecision(changed,featureId=>({...source,id:featureId})).allowed,false);
+ }
 });

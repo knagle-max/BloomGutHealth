@@ -7,9 +7,9 @@ const environment = z.enum(['development-review', 'isolated-synthetic']);
 const bindingSchema = z.object({ serviceId: z.string().regex(/^srv-[a-z0-9]+$/), environment }).strict();
 const contextSchema = z.object({ actorId: id, sessionId: z.string().regex(/^[A-Za-z0-9_-]{16,256}$/) }).strict();
 const actionSchema = z.enum(['enable', 'pause', 'rollback', 'emergency-disable']);
-const intentSchema = z.object({ action: actionSchema, change: featureControlChangeSchema }).strict();
+export const featureStepUpIntentSchema = z.object({ action: actionSchema, change: featureControlChangeSchema }).strict();
 export type StepUpContext = z.infer<typeof contextSchema>;
-export type StepUpIntent = z.infer<typeof intentSchema>;
+export type StepUpIntent = z.infer<typeof featureStepUpIntentSchema>;
 // Server-provisioned scope and credential version only. A metadata read grant
 // cannot satisfy this schema; the credential adapter must verify actual login.
 export const stepUpControllerSchema = z.object({ userId: id, role: z.literal('feature-controller'), scopes: z.tuple([z.literal('features:control')]), grantId: id, reviewReference: id, ...bindingSchema.shape, featureIds: z.array(id).min(1).max(52), actions: z.array(actionSchema).min(1).max(4), credentialVersion: digest, expiresAt: z.string().datetime({ offset: true }) }).strict();
@@ -84,7 +84,7 @@ export class FeatureStepUp {
         return fail('UNAVAILABLE'); return now; }
     private hmac(purpose: string, value: unknown) { return createHmac('sha256', this.secret).update(JSON.stringify(['bloom-feature-stepup-v1', purpose, value])).digest('hex'); }
     private parsed(context: unknown, intent: unknown) {
-        const c = contextSchema.safeParse(context), i = intentSchema.safeParse(intent);
+        const c = contextSchema.safeParse(context), i = featureStepUpIntentSchema.safeParse(intent);
         if (!c.success || !i.success)
             return fail('INVALID_REQUEST');
         const request = i.data, change = request.change, source = registry.features.find(row => row.feature_id === change.binding.featureId);
