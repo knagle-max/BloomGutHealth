@@ -1316,7 +1316,7 @@ export default function PrecisionNutrition() {
                         {new Date(p.createdAt).toLocaleDateString()}
                       </summary>
                       <p>Evidence version: {(p.payload as any).version}</p>
-                      {(p.payload as any).historicalOutput?.withheld && <p>Historical genotype-influenced meal suggestions are withheld. Original targets and recorded context remain available; rebuild in Meal plans before using current choices.</p>}
+                      {(p.payload as any).historicalOutput?.withheld ? <p>{(p.payload as any).type === "weekly-plan" ? "Historical genotype-influenced meal suggestions are withheld. Original targets and recorded context remain available; rebuild in Meal plans before using current choices." : "Historical genotype-influenced food recommendations are withheld. Recorded goals and observations remain available; review current recommendations using current inputs."}</p> : <p className="panel-note">Recorded recommendations describe the plan at save time. Current health, preferences and sources have not been rechecked.</p>}
                       <p>
                         {r.checkins.filter((c) => c.planId === p.id).length}{" "}
                         linked check-ins

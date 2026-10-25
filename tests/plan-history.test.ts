@@ -16,3 +16,12 @@ test('known legacy genotype ranking is withdrawn across history without deleting
  assert.equal(view.interpretationStatus,'historical_genotype_ranking_withheld');assert.equal(view.payload.checksPassed,false);assert.equal(view.payload.status,'blocked');assert.deepEqual(view.payload.days,[]);assert.deepEqual(view.payload.shoppingList,[]);assert.deepEqual(view.payload.recommendations,[]);assert.equal(view.payload.historicalOutput.recordedMeals,1);assert.deepEqual(view.payload.request,payload.request);assert.deepEqual(view.payload.biologicalEvidence,payload.biologicalEvidence);assert.deepEqual(record,before);
  const safe={...record,payload:{...payload,days:[{meals:[{recipeId:'safe-selected',reasons:['Fits dietary preferences.']}]}]}};assert.equal((historicalPlanRecord(safe) as any).payload,safe.payload);
 });
+
+
+test('legacy precision recommendations cannot replay genotype-only ranking; safe snapshots remain historical and original check-ins stay untouched',()=>{
+ const payload={name:'Synthetic precision plan',version:'precision-r6',startedAt:'2026-10-01',goals:['heart'],recommendations:[{id:'unsupported',name:'FORBIDDEN_GENOTYPE_SELECTION',reasons:['MTHFR provides secondary folate-pathway context, not a measured deficiency.'],matchedRecordIds:['original-gene']}],supplements:[{name:'Recorded source context'}],reviewFlags:[]};
+ const original={id:'legacy',kind:'plan',payload},before=structuredClone(original),view=historicalPlanRecord(original) as any;
+ assert.equal(view.interpretationStatus,'historical_genotype_ranking_withheld');assert.deepEqual(view.payload.recommendations,[]);assert.equal(view.payload.historicalOutput.recordedRecommendations,1);assert.deepEqual(view.payload.goals,payload.goals);assert.deepEqual(view.payload.supplements,payload.supplements);assert.deepEqual(original,before);
+ const safe={...original,payload:{...payload,recommendations:[{id:'safe',name:'Whole foods',reasons:['Matches saved goals.']}]}};const safeView=historicalPlanRecord(safe) as any;assert.equal(safeView.interpretationStatus,'historical_plan_not_revalidated');assert.equal(safeView.payload,safe.payload);
+ const checkin={kind:'checkin',payload:{planId:'legacy',adherencePercent:0}};assert.equal(historicalPlanRecord(checkin),checkin);
+});
