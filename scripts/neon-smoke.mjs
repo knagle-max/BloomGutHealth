@@ -147,6 +147,16 @@ try {
   console.log(
     "PASS: signup, secure proxy cookie and PostgreSQL-backed session persistence",
   );
+  const exampleReference=await request(`/api/nutrition/targets/${first.id}`);
+  assert.equal(exampleReference.basis.kind,'example-reference');assert.equal(exampleReference.basis.usesProfile,false);assert.equal(exampleReference.calories,2000);
+  await request('/api/nutrition/targets/not-this-account','GET',undefined,403);
+  await request(`/api/user/${first.id}/profile`,'PATCH',{age:30,sex:'male',heightCm:175,weightKg:75,activityLevel:'moderate'});
+  const profileReference=await request(`/api/nutrition/targets/${first.id}`);
+  assert.equal(profileReference.basis.kind,'profile-estimate');assert.equal(profileReference.calories,2633);assert.equal(profileReference.protein,120);
+  assert.equal(Object.hasOwn(profileReference,'password'),false);
+  await request(`/api/user/${first.id}/profile`,'PATCH',{age:null,sex:null,heightCm:null,weightKg:null});
+  assert.equal((await request(`/api/nutrition/targets/${first.id}`)).basis.kind,'example-reference');
+  console.log('PASS: production target references distinguish incomplete profiles from actual adult formula inputs, preserve ownership and retract stale estimates');
   const preferences = {
     dietaryPattern: "vegan",
     exclusions: ["seafood", "nuts"],

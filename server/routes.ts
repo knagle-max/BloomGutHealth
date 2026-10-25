@@ -1,3 +1,4 @@
+import {registerNutritionTargetRoutes} from "./nutrition-targets";
 import {registerNutritionHistoryRoutes} from "./nutrition-history";
 import {analyzeReportedComposition} from "./report-analysis";
 import {registerFeatureAdministration} from './feature-administration';
@@ -169,60 +170,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/nutrition/targets/:userId", requireAuth, async (req, res) => {
-    try {
-      const userId = req.session.userId!;
-      const requestedUserId = req.params.userId;
-
-      if (userId !== requestedUserId) {
-        return res.status(403).json({ error: "Access denied" });
-      }
-
-      const user = await storage.getUser(userId);
-
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      const age = user.age || 30;
-      const sex = user.sex || "male";
-      const heightCm = user.heightCm || 175;
-      const weightKg = user.weightKg || 75;
-      const activityLevel = user.activityLevel || "moderate";
-
-      const heightM = heightCm / 100;
-      const bmr =
-        sex === "male"
-          ? 10 * weightKg + 6.25 * heightCm - 5 * age + 5
-          : 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
-
-      const activityMultipliers: Record<string, number> = {
-        sedentary: 1.2,
-        light: 1.375,
-        moderate: 1.55,
-        active: 1.725,
-        very_active: 1.9,
-      };
-
-      const tdee = bmr * (activityMultipliers[activityLevel] || 1.55);
-
-      const targets = {
-        calories: Math.round(tdee),
-        protein: Math.round(weightKg * 1.6),
-        carbs: Math.round((tdee * 0.45) / 4),
-        fat: Math.round((tdee * 0.3) / 9),
-        fiber: 30,
-        sodium: 2300,
-        potassium: 3500,
-        cholesterol: 300,
-        sugar: 50,
-      };
-
-      res.json(targets);
-    } catch (error: any) {
-      res.status(503).json({ error: "This request could not be completed. Please retry." });
-    }
-  });
+  registerNutritionTargetRoutes(app,requireAuth,storage);
 
   app.get("/api/nutrition/daily/:userId", requireAuth, async (req, res) => {
     try {

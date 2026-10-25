@@ -273,7 +273,8 @@
         "api": [
           "server/planner-routes.ts",
           "server/products.ts",
-          "server/nutrition-history.ts"
+          "server/nutrition-history.ts",
+          "server/nutrition-targets.ts"
         ],
         "logicOrJobs": [
           "shared/products.ts",
@@ -298,7 +299,7 @@
           "server/products.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit. Journal planning references distinguish explicit examples from estimates using complete actual adult profile inputs; no demographic defaults or clinical clearance.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1381,7 +1382,7 @@
     "client/src/pages/LogMeal.tsx": "a446edddae6b97aba193d8f9c3a99eeefbde02c4c28d59d29cd376e0a07843f8",
     "client/src/pages/MealPlanner.tsx": "bb5810c386a36d4bb999d9b3e2c03f61e0e6ea5d6c01fc486aae358abf6a6c19",
     "client/src/pages/Microbiome.tsx": "168783d0208282e7781acbda7ea811f9be7dbadc8400d0646f65d82771017eec",
-    "client/src/pages/NutritionHistory.tsx": "a412b095f22894c8f84b74f84b51d6eff830ee3bb5dd0678703b58410f73020a",
+    "client/src/pages/NutritionHistory.tsx": "e699c89004aee55bd66ac23473ddf68083c9570e95bc6a15ffab6ef64dba1b1d",
     "client/src/pages/PrecisionNutrition.tsx": "30c6a83a4d023a0dc0b80f671263bed6aac2e0538e48664741f483fde266c69c",
     "client/src/pages/Profile.tsx": "defac16038ef0d2458866b2e0c4b5be36c6085315b3bd9cc3d4c39c8c128094d",
     "client/src/pages/Progress.tsx": "14d12bf4947e31d9aebbb33a9d704796b8a2b9494ca369385829153e35f16072",
@@ -1406,6 +1407,7 @@
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
     "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
+    "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/plan-history.ts": "bde0384e99919777bc74053a401bdbf623039a023d7434ec686fc2ee9721ca9c",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/precision-routes.ts": "bd5c5d359395d17278bb2b577d655b74128b30de7e987140790230c89c3823fc",
@@ -1416,7 +1418,7 @@
     "server/report-analysis.ts": "2a4e80da76c55c1beb3165264c5982b9ada91d02f9325605ec3598747139e3e5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
-    "server/routes.ts": "dca1784cc27c4d6ddcacab64dfadf9fd4dd14f74647a1b916062182ef54bc848",
+    "server/routes.ts": "0076666c9d3775a9c2082c910725cb38bddb10fed10ce0b053e6e2264afb84e6",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
     "server/storage.ts": "521c7725b15676274be6c4a2adb408a89d7fc13253c382d2a5408ec8c3ffafda",

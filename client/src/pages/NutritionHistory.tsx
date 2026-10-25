@@ -118,7 +118,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
                 </p>
               </div>
               <div>
@@ -133,7 +133,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"protein","g")}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"protein","g")}
                 </p>
               </div>
               <div>
@@ -148,7 +148,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"carbs","g")}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"carbs","g")}
                 </p>
               </div>
               <div>
@@ -163,7 +163,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"fat","g")}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"fat","g")}
                 </p>
               </div>
               <div>
@@ -178,7 +178,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"fiber","g")}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"fiber","g")}
                 </p>
               </div>
               <div>
@@ -193,7 +193,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"sugar","g")}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"sugar","g")}
                 </p>
               </div>
             </div>
@@ -224,7 +224,7 @@ function HistoricalTrends({
                   {historyAmount(yearlyData, "calories", energyUnit)}/logged day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
                 </p>
               </div>
               <div>
@@ -237,7 +237,7 @@ function HistoricalTrends({
                   {historyAmount(yearlyData, "protein", "g")}/logged day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {historyAmount({dailyAverages:currentTargets},"protein","g")}
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"protein","g")}
                 </p>
               </div>
             </div>
@@ -482,6 +482,7 @@ export default function NutritionHistory() {
   const nutrientTargets = targets || {};
 
   const summaryValueKnown = (key: string) => typeof totals[key] === "number" && Number.isFinite(totals[key]) && totals[key] >= 0;
+  const summaryCanCompare = (key: string) => summaryValueKnown(key) && typeof nutrientTargets[key] === "number" && Number.isFinite(nutrientTargets[key]) && nutrientTargets[key] > 0;
   const retrySummary = () => { void Promise.allSettled([retryDaily(), retryTargets()]); };
   const summaryAmount = (key: string, unit: string) => summaryValueKnown(key) ? `${Math.round(totals[key])} ${unit}` : "Unavailable";
   const showAmount = (value: number | null | undefined) =>
@@ -581,6 +582,7 @@ export default function NutritionHistory() {
             <Calendar className="h-5 w-5" />
             Today's Summary
           </CardTitle>
+          {targets?.basis?.note && !targetsError && <p className="text-sm text-muted-foreground">{targets.basis.note} <a className="text-primary underline" href="/profile#measurement-units">Review profile inputs</a></p>}
         </CardHeader>
         {dailyError || !dailyData ? (
           <CardContent className="space-y-3">
@@ -621,9 +623,9 @@ export default function NutritionHistory() {
                   {dailyData?.nutritionCoverage?.calories?.partial
                     ? " (partial)"
                     : ""}{" "}
-                  / {energyAmount(nutrientTargets.calories || 2000, energyUnit)} {energyUnit}
+                  / {energyAmount(nutrientTargets.calories, energyUnit)} {energyUnit}
                 </span>
-                {summaryValueKnown("calories") && (<Badge
+                {summaryCanCompare("calories") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(
@@ -643,7 +645,7 @@ export default function NutritionHistory() {
                 </Badge>)}
               </div>
             </div>
-            {summaryValueKnown("calories") && (<Progress
+            {summaryCanCompare("calories") && (<Progress
               value={calculatePercentage(
                 totals.calories,
                 nutrientTargets.calories,
@@ -660,9 +662,9 @@ export default function NutritionHistory() {
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
                 >
                   {summaryAmount("protein", "g")} /{" "}
-                  {nutrientTargets.protein || 120}g
+                  {showAmount(nutrientTargets.protein)}g
                 </span>
-                {summaryValueKnown("protein") && (<Badge
+                {summaryCanCompare("protein") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(
@@ -681,7 +683,7 @@ export default function NutritionHistory() {
                 </Badge>)}
               </div>
             </div>
-            {summaryValueKnown("protein") && (<Progress
+            {summaryCanCompare("protein") && (<Progress
               value={calculatePercentage(
                 totals.protein,
                 nutrientTargets.protein,
@@ -697,9 +699,9 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
                 >
-                  {summaryAmount("carbs", "g")} / {nutrientTargets.carbs || 225}g
+                  {summaryAmount("carbs", "g")} / {showAmount(nutrientTargets.carbs)}g
                 </span>
-                {summaryValueKnown("carbs") && (<Badge
+                {summaryCanCompare("carbs") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(totals.carbs, nutrientTargets.carbs),
@@ -712,7 +714,7 @@ export default function NutritionHistory() {
                 </Badge>)}
               </div>
             </div>
-            {summaryValueKnown("carbs") && (<Progress
+            {summaryCanCompare("carbs") && (<Progress
               value={calculatePercentage(totals.carbs, nutrientTargets.carbs)}
               className="h-2"
             />)}
@@ -725,9 +727,9 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
                 >
-                  {summaryAmount("fat", "g")} / {nutrientTargets.fat || 67}g
+                  {summaryAmount("fat", "g")} / {showAmount(nutrientTargets.fat)}g
                 </span>
-                {summaryValueKnown("fat") && (<Badge
+                {summaryCanCompare("fat") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(totals.fat, nutrientTargets.fat),
@@ -740,7 +742,7 @@ export default function NutritionHistory() {
                 </Badge>)}
               </div>
             </div>
-            {summaryValueKnown("fat") && (<Progress
+            {summaryCanCompare("fat") && (<Progress
               value={calculatePercentage(totals.fat, nutrientTargets.fat)}
               className="h-2"
             />)}
