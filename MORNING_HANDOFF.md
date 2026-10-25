@@ -1,3 +1,17 @@
+# Latest session status — 2026-10-25
+
+v0.5 remains incomplete. All work stays on enhance/bloom-experience / PR1 and the existing Render service; main, real credentials and actual controller roles remain unchanged.
+
+Completed backend foundations: signed120s session/action-bound shared single-use proofs (47defaa/266a9c3), actual bcrypt/controller scope adapter (c8df7d0), independently reviewed transactional control service (7bc4c29), explicit encrypted action audit (3b72e0e), and immutable-target rollback requiring current review (8ca623f). These are components, not an installed live controller. Latest verified functional8ca Actions40204373386 passes314 tests and real PostgreSQL rollback smoke; current live Render31af209 includes the same functional source plus Today P0 documentation.
+
+CI bugs resolved: reject logged schema errors despite zero CLI exit; preserve SQL-owned audit and biological registry rows/constraints, avoiding dependent primary-key drops. Historical false-green reconciliation evidence remains explicitly invalidated in DEVELOPMENT_LOG.
+
+Active: optional HTTP adapter with session-derived context, strict exact-feature payloads, safe no-store receipts, cross-replica budgets before credential work and a two-second budget deadline.8 focused tests/types/build pass; stable full318 run pending after an earlier hash-edit race was detected. No application installation.
+
+Next priority after this coherent boundary: Architect31af Today P0 companion redesign in existing Dashboard/TodayFocus, grounded Eat/Move/Recover states, canonical Add Food, substantial actual before/after responsive/accessible evidence. Human usability/specialist acceptance remains external. Controller runtime/restore fences, actual approved fact adapters, rollout monitoring and full52-feature enforcement audit also remain outstanding. External decisions and exact questions remain in BLOCKED_USER_INPUT.md (native/platform/device, source rights, live acceptance and independent reviews); no new user decision is needed for ongoing engineering.
+
+Earlier detailed handoff follows.
+
 # Bloom development handoff — 2026-10-25
 
 v0.5 remains incomplete. Work is on enhance/bloom-experience, PR1 and the existing Render service. No main merge, replacement service, credential change, new live controller role or paid-provider activation. Detailed chronology and failures remain in DEVELOPMENT_LOG.md; exact resume instructions in NEXT_ACTIONS.md.
@@ -77,3 +91,6 @@ BLOOM-ADMIN-01-ACTION-AUDIT — TESTED local:313 full +14 focused/type/build/sou
 
 
 BLOOM-ADMIN-01-ROLLBACK — TESTED local component:314 full +11 final focused, types/build/standalone PG smoke typing/source checks pass. Historical exact snapshot binding, signed target, new audited revision, fresh-review rejection and fresh-proof idempotent retry verified. Add isolated PG target3→new5 paused rollback smoke. No SQL or live runtime/credential changes. Publication CI/Render pending; next safe HTTP/shared reauthentication budget boundary, then actual trusted fact/runtime installation and restore/rollout acceptance.
+
+
+BLOOM-ADMIN-01-HTTP — TESTED local: stable318 full suite PASS,8 focused HTTP/source tests, types/build and deterministic inventories PASS (92 static API declarations/13 unresolved;52/101 source trace, all REVIEW_REQUIRED). Optional HTTP adapter remains uninstalled; no real role/credential or application write-route changes. Commit/publish and exact CI/Render next, then Today P0 redesign per incoming31af handoff.

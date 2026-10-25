@@ -1370,7 +1370,8 @@
         "api": [
           "server/capability-policy.ts",
           "server/capability-access.ts",
-          "server/feature-administration.ts"
+          "server/feature-administration.ts",
+          "server/feature-control-http.ts"
         ],
         "logicOrJobs": [
           "shared/capability-state.ts",
@@ -1456,6 +1457,7 @@
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
+    "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
     "server/feature-control-storage.ts": "a8f0621d78dba162d419506bad4d941d409b2300689c107c915cb947f57f55bf",
     "server/feature-controller-auth.ts": "f349587780d99a77c51b9beb6088ce235b5cab7be179a8227c60df42861bfea0",

@@ -375,3 +375,16 @@ BLOOM-ADMIN-01-ROLLBACK — IN_PROGRESS: exact encrypted historical snapshot + e
 
 
 BLOOM-ADMIN-01-ROLLBACK — TESTED local component:314 full +11 final focused, types/build/standalone PG smoke typing/source checks pass. Historical exact snapshot binding, signed target, new audited revision, fresh-review rejection and fresh-proof idempotent retry verified. Add isolated PG target3→new5 paused rollback smoke. No SQL or live runtime/credential changes. Publication CI/Render pending; next safe HTTP/shared reauthentication budget boundary, then actual trusted fact/runtime installation and restore/rollout acceptance.
+
+
+BLOOM-ADMIN-01-HTTP — IN_PROGRESS optional adapter, NOT INSTALLED: authenticated session-derived context; exact feature/strict intent, safe no-store minimal responses; atomic shared source/account budgets before credential work (5 reauth attempts/account/15min,20/source, separate write budget). Three actual HTTP/two-replica PGlite budget tests/types pass; full validation next. Existing read-only app registration retains403 and no actual grant/fact/runtime installation. No owner input needed.3b72e0e action-audit CI40204004511 SUCCESS / Render dep-dbf1dlss728c73d1pol0 live before rollback8ca623f publication.8ca623f CI40204373386 pending verification.
+
+HTTP adapter update: static declarations now92 plus13 unresolved (replaced temporary loop declaration with literal route registration). Source trace52/101 all REVIEW_REQUIRED. Final8 focused HTTP/source tests include two-second hung-budget denial; types/build pass. Full baseline317 running; new timeout case will make CI318. Existing read-only admin router is not changed or installed over.
+
+
+Published rollback8ca623f214b1fce0bddc359d33ac451e07175a60: Actions40204373386 SUCCESS including314 tests and real PG exact-target rollback→new audited paused revision. Current live Render31af20980d0998401fec310d34bb49b87c5563f4 (dep-dbf1i1ek1f9s73fpdnu0) includes that functional source plus Architect Today P0 handoff. No runtime controller installed. Incoming31af handoff is fetched, not merged yet because HTTP changes are uncommitted. Finish HTTP validation/commit, preserve remote through rebase/merge, then prioritize Today P0 redesign in existing Dashboard/TodayFocus; full source design ZIP unavailable locally, adapt existing tokens/components from approved written acceptance without claiming asset package integration.
+
+HTTP validation correction: first broad run317 had316 pass and one source-crosswalk failure because module/hash edits occurred while tests ran. No runtime failure. Source and inventories now stable/reviewed; final318 run in /tmp/control-http-full-final.log is running. Do not claim317 passed.8 focused final HTTP/source tests and types/build pass, including hung-budget deadline.
+
+
+BLOOM-ADMIN-01-HTTP — TESTED local: stable318 full suite PASS,8 focused HTTP/source tests, types/build and deterministic inventories PASS (92 static API declarations/13 unresolved;52/101 source trace, all REVIEW_REQUIRED). Optional HTTP adapter remains uninstalled; no real role/credential or application write-route changes. Commit/publish and exact CI/Render next, then Today P0 redesign per incoming31af handoff.
