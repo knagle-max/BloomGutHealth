@@ -16,7 +16,8 @@ const binding = { serviceId: 'srv-' + randomBytes(12).toString('hex'), environme
 const request = (revision = 1) => ({ binding, actorId: 'synthetic-ci-operator', requestId: randomUUID(), expectedRevision: revision - 1, reason: 'Synthetic schema-only control history test', control: { ...binding, revision, state: 'paused' as const, materialDigest: 'a'.repeat(64), reviewId: 'synthetic-no-release-approval', scope: { territories: ['CA'], populations: ['adult'], purposes: ['synthetic-ci'] }, rolloutPercent: 0, cohortId: 'synthetic-ci', changedBy: 'synthetic-ci-operator', expiresAt: new Date(Date.now() + 3600000).toISOString() } });
 let stage = 'migration';
 try {
-    await pool.query(await readFile(new URL('../migrations/0012_feature_control_history.sql', import.meta.url), 'utf8'));
+    for(const file of ['0012_feature_control_history.sql','0013_feature_control_request_unique.sql'])await pool.query(await readFile(new URL('../migrations/'+file,import.meta.url),'utf8'));
+    assert.equal((await pool.query("SELECT count(*)::int AS n FROM pg_constraint WHERE conrelid='feature_control_audit'::regclass AND conname='feature_control_audit_request' AND contype='u'")).rows[0].n,1);
     const transaction = postgresFeatureControlTransaction(pool), left = new FeatureControlStorage(transaction, async () => true), right = new FeatureControlStorage(transaction, async () => true);
     stage = 'default-deny';
     await assert.rejects(() => new FeatureControlStorage(transaction).append(request()), error => error instanceof FeatureControlStorageError && error.code === 'ACCESS_DENIED');

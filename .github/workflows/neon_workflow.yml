@@ -64,11 +64,7 @@ jobs:
           DATABASE_URL_UNPOOLED: ${{ steps.neon.outputs.db_url }}
         run: |
           node scripts/prepare-preview-schema.mjs
-          npm run db:push -- --force 2>&1 | tee /tmp/bloom-schema-push.log
-          if grep -Eq "Error:|Interactive prompts require" /tmp/bloom-schema-push.log; then
-            echo "Schema push did not finish non-interactively."
-            exit 1
-          fi
+          node scripts/push-preview-schema.mjs
           npm run db:seed:knowledge
       - name: Type check and API source inventory
         run: |

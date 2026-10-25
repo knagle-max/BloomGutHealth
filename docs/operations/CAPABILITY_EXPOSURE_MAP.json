@@ -1379,13 +1379,15 @@
           "server/effective-capability.ts",
           "server/supplemental-grant.ts",
           "server/review-runtime-audit.ts",
-          "server/index.ts"
+          "server/index.ts",
+          "shared/schema-management.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
           "shared/schema.ts",
-          "server/feature-control-storage.ts"
+          "server/feature-control-storage.ts",
+          "shared/application-schema.ts"
         ],
         "cache": []
       },
@@ -1481,6 +1483,7 @@
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
+    "shared/application-schema.ts": "d469888574cdd8671540db9a8a2362fa3a721f1291be8044685fac665e5cecbd",
     "shared/athlete.ts": "d1ab4d6363fbc2543ffc4145be0479b2719237b4a84e46b4c82123bef2d6e398",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
@@ -1497,6 +1500,7 @@
     "shared/precision-nutrition.ts": "231e72f38c8b037b771629624a9849f3bebb91675cd1dacadfbd10181d2271a8",
     "shared/products.ts": "86a119656c8e1cd43ea76957ce70018418de7735081e9890524d2f7b25669b3c",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
+    "shared/schema-management.ts": "bf7dfdb94c1f50b999896ffda87a397e53432a49ce6fcf8fc822294748cdc94f",
     "shared/schema.ts": "9f33d7e6725bcd97027b426b965f18b0d8ff5ffa8debea6cf5bff9b4ad5097b1",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/structured-report.ts": "901a12363895fbd5eedcbda261f83f9ee78dba8b3af03e564ba42de197aaa49c",

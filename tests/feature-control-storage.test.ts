@@ -91,6 +91,11 @@ test('state and encrypted audit commit atomically; append-only audit and deferre
         await db.exec(await readFile(new URL('../migrations/0012_feature_control_history.sql', import.meta.url), 'utf8'));
         assert.equal((await db.query("SELECT condeferrable FROM pg_constraint WHERE conname='feature_control_state_audit'")).rows[0].condeferrable, true);
         await left.append(change());
+        const beforeRepair=(await db.query('SELECT * FROM feature_control_audit')).rows;
+        await db.exec('ALTER TABLE feature_control_audit DROP CONSTRAINT feature_control_audit_request');
+        const repair=await readFile(new URL('../migrations/0013_feature_control_request_unique.sql',import.meta.url),'utf8');await db.exec(repair);await db.exec(repair);
+        assert.deepEqual((await db.query('SELECT * FROM feature_control_audit')).rows,beforeRepair);
+        await assert.rejects(()=>db.exec('INSERT INTO feature_control_audit SELECT service_id,environment,feature_id,revision+1,request_id,event_digest,encrypted_event,created_at FROM feature_control_audit'),/feature_control_audit_request/);
         const failed = new FeatureControlStorage(work => transaction(tx => work({ query: async (sql, values) => { if (sql.startsWith('INSERT INTO feature_control_audit'))
                 throw Error('PRIVATE_SQL_SENTINEL'); return tx.query(sql, values); } })), async () => true, () => time);
         await assert.rejects(() => failed.append(change(2)), code('UNAVAILABLE'));
