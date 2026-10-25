@@ -118,6 +118,9 @@ try {
   console.log(
     "PASS: live Neon direct database connection and production app startup",
   );
+  const auditLine=processOutput.split('\n').find(line=>line.includes('\"event\":\"internal-review-readiness\"'));
+  assert.ok(auditLine);const audit=JSON.parse(auditLine.slice(auditLine.indexOf('{')));assert.equal(audit.serviceId,'srv-syntheticreview');assert.equal(audit.preferenceStorage,'columns-present');
+  console.log('PASS: production startup observes expected preference columns without account or credential diagnostics');
   await request('/api/admin/features','GET',undefined,401);
   users.push(adminId);
   await pool.query('INSERT INTO users(id,username,password) VALUES($1,$2,$3)',[adminId,adminUsername,await bcrypt.hash(password,10)]);

@@ -13,11 +13,11 @@
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
-    "server/capability-access.ts": "ebb241f71a78ebfcdf92f3fdf6c7432197c04d717faeb95c004aba3be82514af",
+    "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
-    "server/feature-administration.ts": "9ae97bc9d4bbb4078ae88d57f7a6ab355faa90879a2bfcab03d0a6d08ec25469",
+    "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
-    "server/index.ts": "1b4b6f84889c727d5c3e11f23f27010e6497ba479e4f32e32a47feba1649de03",
+    "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
@@ -126,7 +126,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 34,
+      "line": 37,
       "method": "USE",
       "path": "/api/capabilities",
       "declaredMiddleware": [
@@ -136,7 +136,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 35,
+      "line": 38,
       "method": "GET",
       "path": "/api/capabilities",
       "declaredMiddleware": [],
@@ -144,7 +144,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 44,
+      "line": 47,
       "method": "PATCH",
       "path": "/api/capabilities/experimental",
       "declaredMiddleware": [],
@@ -295,7 +295,7 @@
     },
     {
       "file": "server/feature-administration.ts",
-      "line": 33,
+      "line": 36,
       "method": "USE",
       "path": "/api/admin",
       "declaredMiddleware": [
@@ -305,7 +305,7 @@
     },
     {
       "file": "server/feature-administration.ts",
-      "line": 37,
+      "line": 40,
       "method": "GET",
       "path": "/api/admin/features",
       "declaredMiddleware": [],
@@ -313,7 +313,7 @@
     },
     {
       "file": "server/feature-administration.ts",
-      "line": 41,
+      "line": 44,
       "method": "POST",
       "path": "/api/admin/features/:featureId/control",
       "declaredMiddleware": [],
@@ -321,7 +321,7 @@
     },
     {
       "file": "server/feature-administration.ts",
-      "line": 42,
+      "line": 45,
       "method": "USE",
       "path": "/api/admin",
       "declaredMiddleware": [],
@@ -871,7 +871,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 21,
+      "line": 22,
       "method": "USE",
       "pathExpression": "securityHeaders",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -879,7 +879,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 24,
+      "line": 25,
       "method": "USE",
       "pathExpression": "sameOriginWrites",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -887,7 +887,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 25,
+      "line": 26,
       "method": "USE",
       "pathExpression": "express.json(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -895,7 +895,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 26,
+      "line": 27,
       "method": "USE",
       "pathExpression": "express.urlencoded(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -903,7 +903,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 33,
+      "line": 34,
       "method": "USE",
       "pathExpression": "session(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -911,7 +911,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 52,
+      "line": 53,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -919,7 +919,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 64,
+      "line": 66,
       "method": "USE",
       "pathExpression": "budgets.middleware(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -927,7 +927,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 69,
+      "line": 71,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",

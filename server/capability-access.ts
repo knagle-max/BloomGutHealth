@@ -1,3 +1,4 @@
+import {readSupplementalGrant} from "./supplemental-grant";
 import {developmentStatusLabel} from "../shared/capability-state";
 import {featureAdminReadGrant} from './feature-administration';
 import type {DevelopmentFeature} from "../shared/development-features";
@@ -13,8 +14,8 @@ const grantSchema=z.object({serviceId:z.string().regex(/^srv-[a-z0-9]+$/),userId
 export function internalPreviewGrant(userId:string,environment:Record<string,string|undefined>=process.env,now=Date.now()) {
  if(!Number.isFinite(now)||!environment.RENDER_SERVICE_ID||environment.BLOOM_EXPERIMENTAL_ENVIRONMENT!=="isolated-synthetic"||(environment.BLOOM_EXPERIMENTAL_KILL_SWITCH!==undefined&&environment.BLOOM_EXPERIMENTAL_KILL_SWITCH!=="false"))return null;
  try{const parsed=z.array(grantSchema).max(100).parse(JSON.parse(environment.BLOOM_INTERNAL_TESTERS||"[]"));
- const additional=environment.BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT?[grantSchema.parse(JSON.parse(environment.BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT))]:[];
- const grants=[...parsed,...additional].filter(g=>g.userId===userId);if(grants.length!==1)return null;const grant=grants[0];
+ const additional=readSupplementalGrant(environment.BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT,userId,grantSchema);if(additional.deniesAccount)return null;
+ const grants=[...parsed,...additional.grants].filter(g=>g.userId===userId);if(grants.length!==1)return null;const grant=grants[0];
   if(grant.serviceId!==environment.RENDER_SERVICE_ID||+new Date(grant.expiresAt)<=now||!grant.territories.includes(environment.BLOOM_PREVIEW_TERRITORY||"")||!grant.allowedCapabilities.includes("bloom.dev.preview"))return null;
   return {fingerprint:createHash("sha256").update(JSON.stringify(grant)).digest("hex"),...(grant.uiPreview?{uiFeatures:grant.uiPreview.features.filter(id=>grant.allowedCapabilities.includes(id))}:{})};
  }catch{return null;}

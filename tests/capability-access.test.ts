@@ -29,3 +29,8 @@ test('a supplemental tester grant preserves other grants and cannot override dup
  assert.equal(internalPreviewGrant('other',scoped,now),null);
  assert.equal(internalPreviewGrant('a',{...scoped,BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT:JSON.stringify(grant)},now),null);
 });
+
+test('malformed optional tester provisioning never revokes unrelated base access and never self-grants',()=>{
+ const now=Date.parse('2026-10-24T00:00:00Z');for(const raw of ['invalid','null',JSON.stringify({...grant,userId:'other',unexpected:true})]){const scoped={...env,BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT:raw};assert.ok(internalPreviewGrant('a',scoped,now));assert.equal(internalPreviewGrant('other',scoped,now),null);}
+ assert.equal(internalPreviewGrant('a',{...env,BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT:JSON.stringify({...grant,unexpected:true})},now),null);
+});

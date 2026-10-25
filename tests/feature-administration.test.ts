@@ -51,3 +51,8 @@ test('supplemental admin read grant is account-specific and cannot silently dupl
  assert.equal(featureAdminReadGrant('stranger',scoped,now),false);
  assert.equal(featureAdminReadGrant(grant.userId,{...scoped,BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT:JSON.stringify(grant)},now),false);
 });
+
+test('malformed optional administrator provisioning isolates failures and cannot grant or override a role',()=>{
+ for(const raw of ['invalid','null',JSON.stringify({...grant,userId:'other',scopes:['features:write']})]){const scoped={...env(),BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT:raw};assert.equal(featureAdminReadGrant(grant.userId,scoped,now),true);assert.equal(featureAdminReadGrant('other',scoped,now),false);}
+ assert.equal(featureAdminReadGrant(grant.userId,{...env(),BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT:JSON.stringify({...grant,scopes:['features:write']})},now),false);
+});

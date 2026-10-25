@@ -1,3 +1,4 @@
+import {readSupplementalGrant} from "./supplemental-grant";
 import type {Express,RequestHandler} from 'express';
 import {z} from 'zod';
 import {capabilityApproval,capabilityPolicyVersion,capabilityRecords} from './capability-policy';
@@ -11,8 +12,8 @@ export function featureAdminReadGrant(userId:string,env:Record<string,string|und
  try{
   const raw=env.BLOOM_FEATURE_ADMINS||'[]';if(raw.length>65536)return false;
   const base=z.array(grantSchema).max(100).parse(JSON.parse(raw));
-  const supplemental=env.BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT? [grantSchema.parse(JSON.parse(env.BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT))]:[];
-  const grants=[...base,...supplemental].filter(grant=>grant.userId===userId);
+  const supplemental=readSupplementalGrant(env.BLOOM_ADDITIONAL_FEATURE_ADMIN_GRANT,userId,grantSchema);if(supplemental.deniesAccount)return false;
+  const grants=[...base,...supplemental.grants].filter(grant=>grant.userId===userId);
   return grants.length===1&&grants[0].serviceId===env.RENDER_SERVICE_ID&&grants[0].environment===env.BLOOM_FEATURE_ADMIN_ENVIRONMENT&&Date.parse(grants[0].expiresAt)>now;
  }catch{return false;}
 }

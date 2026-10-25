@@ -1,3 +1,4 @@
+import {reviewRuntimeAudit} from "./review-runtime-audit";
 import { productService } from "./products";
 import "./env";
 import express, { type Request, Response, NextFunction } from "express";
@@ -60,6 +61,7 @@ app.use((req, res, next) => {
 (async () => {
   const budgets = new SharedRateLimiter(pgPool, sessionSecret());
   await budgets.initialize();
+  log(JSON.stringify(await reviewRuntimeAudit(pgPool, process.env)));
   productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",usdaSharedRequestLimit(),60));
   app.use(budgets.middleware());
   const budgetCleanup = setInterval(() => { void budgets.prune().catch(() => {}); }, 60_000);
