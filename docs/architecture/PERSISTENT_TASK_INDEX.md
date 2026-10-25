@@ -386,3 +386,20 @@ BIOLOGY-HOME-MASTER-01 — LOCAL VERIFIED P0: delivered MyBiology source adapted
 
 
 BLOOM-ATHLETE-GATE-01 — LOCAL VERIFIED P0: shared typed blocker causes now distinguish review/reference mass/clinical context/target confirmation/target conflict/unsupported context, with stale/unavailable source codes for presentation. Day and session use the same eligibility calculation and explicit workload band; conflict no longer impersonates targets-unconfirmed or emits Finish profile. Numerical targets/recovery doses suppressed; recorded intake/session access retained. Diagnostic contract athlete-2026-10-25.1; existing conflict threshold/range constants unchanged.322 full +10 focused/types/build/source108 PASS; actual API/Home/Fueling conflict→fresh compatible source→actual minor abstention journey PASS. Source-refresh/draft regression completing. No migration/data mutation/new gallery. GATE-02 saved-edit confirmation invalidation and source-load race handling remain nextP0. BiologyHome96ef936 Actions40229893448 SUCCESS / Render dep-dbf66kp5efls73blmcs0 LIVE.
+
+## 2026-10-25 successor Architect consolidated intake — Adaptive Training and release lifecycle
+
+**Source:** `docs/architecture/V06_HANDOFF.md` §§36–37, published as `e9ed1e7883708ee7ebcb0d7e424704f42383f161`. **Status:** ARCHITECT_REVIEWED, awaiting Developer mapping; not implemented or independently accepted by this documentation commit. These integrate existing V06-TRAIN-01/02, V06-13/16; do not create duplicate implementation tracks or interrupt actionable v0.5.
+
+| ID | Priority | Outcome | Next owner action/status |
+| --- | --- | --- | --- |
+| ARC-ATP-01 | P0 integrity / P1 v0.6 | Canonical source-correct planned/completed training records and manual/no-wearable recovery observations | Codex inspect current Athlete foundations, avoid duplicate stores; ARCHITECT_REVIEWED |
+| ARC-ATP-02 | P0 truth / P1 v0.6 | Sport-specific, provenance-backed effort and workload; no arbitrary load bars or exact recovery timer | Biology policies and Codex assessment; ARCHITECT_REVIEWED |
+| ARC-ATP-03 | P1 v0.6 | Safe goal/experience/schedule-specific weekly and training-block progression | Biology + UX requirements and Codex intake; ARCHITECT_REVIEWED |
+| ARC-ATP-04 | P0 safety / P1 v0.6 | Deterministic three-state exercise guidance with genuine insufficient-data fallback | Biology/Security/UT independent gates; ARCHITECT_REVIEWED |
+| ARC-ATP-05 | P1 v0.6 | Evidence-gated training-linked nutrition using existing journal | Biology review, no unsupported genetics/microbiome extrapolation; ARCHITECT_REVIEWED |
+| ARC-ATP-06 | P0 evaluation / later v0.6 | Versioned adaptive response with measurable comparable outcomes and simple baselines | ML/Biology validation before personalized efficacy claims; ARCHITECT_REVIEWED |
+| ARC-ATP-07 | P0 permissions/UX / P1 | Existing approved design kit, provenance, consent, responsive/accessibility test and independent sign-off | Design/Integration/Security/UT; ARCHITECT_REVIEWED |
+| ARC-RELEASE-2026-01 | P0 merge governance | Continue active v0.5 development branch; merge only with required release gates; stage v0.6 on separate branch thereafter | No merge authorization; Codex prepares evidence at validated milestone; ARCHITECT GUIDANCE |
+
+**Execution:** Resume existing `NEXT_ACTIONS.md` P0 Athlete gating before v0.6 feature implementation; Codex owns source/CI/Render verification and implementation statuses. No account, database, restricted feature or deployment configuration changes in this architect documentation review. Future Architect review decisions must be published and indexed in the same existing documents.
