@@ -305,3 +305,9 @@ ATHLETE-CONTEXT-FRESHNESS-01 — P0 IN_PROGRESS: actual local experience/athlete
 
 
 ATHLETE-CONTEXT-FRESHNESS-01 — TESTED local:318 full/types/build/source102 PASS; actual-handler/browser age30→17 target retraction+retry, profile/hydration draft/no-write preservation PASS; Today6-state matrix+paused query state retraction/canonical paths PASS without new screenshots. Day values are current only with idle successful fetch status; source forms remain mounted. Publication verification pending.
+
+
+WEEKLY-REVIEW-CONTEXT-ENTRY-01 — P0 IN_PROGRESS. Actual handler/browser reproduces cached weekly metrics/advice during held review (1 summary vs expected0). New successful-idle-only summary, safe explicit retry; check-in/experiment drafts and source routines remain. Measurement form now blank/required instead of guessed6energy/8hsleep/4adherence; empty strings are not converted to0. Actual server POST confirms explicitly entered0 values in both modes, blank form makes no request, historical0 vs no-entry— remains distinct. Pending/error/paused/refetch/draft tests/types pass; full318/build running. No stored records/migrations/credentials changed or new gallery. d4892cb Actions40208285680 SUCCESS / Render dep-dbf276ajnfac73e9prig live.
+
+
+WEEKLY-REVIEW-CONTEXT-ENTRY-01 — TESTED local:318 full +2 API/storage focused/types/build/source102 PASS. Actual-handler browser verifies both modes, blank form no request, explicit0 persisted, missing review— distinct from0, pending/error/paused summary withdrawal, safe retry, preserved check-in/experiment drafts/routine. No live data, migration or new gallery. Publish then fix reproduced remaining paused planner:2 cached meal suggestions persisted during paused current-context check; new browser repro in scripts/qa/planning-refresh-failure-journey.mjs is locally modified for that next slice and intentionally excluded from this commit.

@@ -1,3 +1,11 @@
+# Latest source-integrity delivery — 2026-10-25
+
+Publishing current-only weekly review and explicit check-in entry: pending/paused/failed checks retract cached metrics/advice, retry preserves check-in/experiment drafts, blank measurement fields cannot submit guessed defaults, and explicitly entered zeros persist in both modes.318 full +2 focused/types/build and actual-handler browser checks pass. Exact new Actions/Render pending.
+
+Athlete/Today context safeguards d4892cb584d05f804e8c0dc2444db491d9012b28 now pass Actions40208285680 and are live (Render dep-dbf276ajnfac73e9prig). Everyday Today3f2bdc2 passed Actions40207206025/live earlier and remains included. Whole-app original asset/fidelity and independent acceptance remain open; controller components remain uninstalled. Next is the reproduced paused daily planner/allergy/recipe/research context boundary, then approved high-impact app work as actual assets become available.
+
+Earlier detail follows.
+
 # Latest correctness delivery — 2026-10-25
 
 Publishing cached-context safeguards: Athlete targets, fueling guidance and meal choices withdraw during pending/paused/failed current-context checks; explicit retry respects the actual under-18 gate. Source profile and hydration drafts remain intact. Today also distinguishes paused source checks from confirmed absent records and does not retain personal routing as current.318 full/type/build and actual-handler/browser checks pass. New commit CI/Render pending.
