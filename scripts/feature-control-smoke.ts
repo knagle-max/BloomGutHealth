@@ -47,8 +47,8 @@ try {
     const context={actorId:'synthetic-ci-operator',sessionId:randomBytes(24).toString('base64url')}, change=request(3), intent={action:'pause' as const,change};
     const grant:StepUpController={serviceId:binding.serviceId,environment:binding.environment,userId:context.actorId,role:'feature-controller',scopes:['features:control'],grantId:'synthetic-ci-grant',reviewReference:'synthetic-no-release-approval',featureIds:[binding.featureId],actions:['pause'],credentialVersion:'c'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString()};
     const adapters={reauthenticate:async()=>grant,current:async()=>grant}, receipts=new FeatureStepUpReceipts(pool),secret=randomBytes(32).toString('hex');
-    const proofService=new FeatureStepUp(binding,secret,receipts,adapters), issued=await proofService.issue(context,intent,'synthetic-ci-password');
-    const competing=await Promise.allSettled([proofService.consume(context,intent,issued.proof),new FeatureStepUp(binding,secret,receipts,adapters).consume(context,intent,issued.proof)]);
+    const proofService=new FeatureStepUp({serviceId:binding.serviceId,environment:binding.environment},secret,receipts,adapters), issued=await proofService.issue(context,intent,'synthetic-ci-password');
+    const competing=await Promise.allSettled([proofService.consume(context,intent,issued.proof),new FeatureStepUp({serviceId:binding.serviceId,environment:binding.environment},secret,receipts,adapters).consume(context,intent,issued.proof)]);
     assert.equal(competing.filter(row=>row.status==='fulfilled').length,1);
     const lease=competing.find(row=>row.status==='fulfilled');assert.ok(lease&&lease.status==='fulfilled');
     assert.equal((await new FeatureControlStorage(transaction,lease.value.authorize).append(change)).control.revision,3);
