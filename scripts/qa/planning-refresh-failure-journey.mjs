@@ -19,6 +19,8 @@ await page.route('**/api/**',async route=>{const req=route.request(),url=new URL
 });
 try{
  await page.goto('http://127.0.0.1:5195/meal-planner');await page.locator('.meal-suggestion').first().waitFor();
+ await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({predicate:q=>q.queryKey[0]==='/api/precision/today-plan'}))query.setState({fetchStatus:'paused'});});await page.waitForTimeout(50);assert.equal(await page.locator('.meal-suggestion').count(),0,'Paused revalidation cannot retain current meal guidance');
+ await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({predicate:q=>q.queryKey[0]==='/api/precision/today-plan'}))query.setState({fetchStatus:'idle'});});await page.locator('.meal-suggestion').first().waitFor();
  await page.getByText('Review daily targets',{exact:true}).click();await page.getByRole('tabpanel',{name:'Rest of today',exact:true}).getByLabel('Energy (kcal)',{exact:true}).fill('2100');failToday=true;
  await page.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();await page.getByRole('alert').filter({hasText:'Synthetic current-plan check unavailable'}).waitFor();
  assert.equal(await page.locator('.meal-suggestion').count(),0,'failed refresh must not fall back to the previous suggestions');
@@ -26,6 +28,8 @@ try{
  failToday=true;await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');await queryClient.invalidateQueries({predicate:q=>q.queryKey[0]==='/api/precision/today-plan'});});assert.equal(await page.locator('.meal-suggestion').count(),0);
  failToday=false;await page.getByRole('button',{name:'Retry suggestions',exact:true}).click();await page.locator('.meal-suggestion').first().waitFor();assert.equal(todayWrites.at(-1).plan.targets.calories,2100);assert.equal(todayWrites.length,5);
  await page.getByRole('link',{name:'Profile',exact:true}).first().click();await page.getByText('No allergies recorded; this does not certify allergen safety.',{exact:false}).waitFor();
+ await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({queryKey:['/api/precision']}))query.setState({fetchStatus:'paused'});});await page.getByText('Checking your saved allergy context…',{exact:false}).waitFor();assert.equal(await page.getByText('No allergies recorded; this does not certify allergen safety.',{exact:false}).count(),0);
+ await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({queryKey:['/api/precision']}))query.setState({fetchStatus:'idle'});});await page.getByText('No allergies recorded; this does not certify allergen safety.',{exact:false}).waitFor();
  failBiology=true;await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');await queryClient.invalidateQueries({queryKey:['/api/precision']});});
  await page.getByText('Allergy context could not load.',{exact:false}).waitFor();assert.equal(await page.getByText('No allergies recorded; this does not certify allergen safety.',{exact:false}).count(),0);
  failBiology=false;await page.getByRole('button',{name:'Retry allergy context',exact:true}).click();await page.getByText('No allergies recorded; this does not certify allergen safety.',{exact:false}).waitFor();

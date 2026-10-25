@@ -1,3 +1,11 @@
+# Latest safeguards and design delivery — 2026-10-25
+
+Publishing paused-context safeguards for daily suggestions, recipe eligibility, Explore personal priority and allergy context.318 full tests, types/build and three actual-handler/browser regressions pass; general research/composition and draft targets remain usable. No new visual gallery for this conditional change.
+
+Weekly explicit check-in/current-review aa3b2ab1b9205e03ccd2984b59ba0a6e6469960d passed Actions40209246237. The branch now also has incoming e66af34/2af0998 consolidated Branding sources. Current Render2af0998 includes previous functional safeguards and source files; actual source checkout/hash/open audit is next, so asset transfer is not yet marked verified here. New Branding Agent owns future design/review; Codex implements.
+
+After integration: audit master app-wide SVG/CSS/inventory and specialized kits, verify manifest bytes/hashes and open representative originals; update scoped blocker/evidence, then execute high-impact whole-app P0 journeys from actual source. Clinical/rights/native/role/independent acceptance remains separate; design transfer never authorizes feature activation. Main, real credentials/controller roles and production data remain unchanged. Earlier detail follows.
+
 # Latest source-integrity delivery — 2026-10-25
 
 Publishing current-only weekly review and explicit check-in entry: pending/paused/failed checks retract cached metrics/advice, retry preserves check-in/experiment drafts, blank measurement fields cannot submit guessed defaults, and explicitly entered zeros persist in both modes.318 full +2 focused/types/build and actual-handler browser checks pass. Exact new Actions/Render pending.

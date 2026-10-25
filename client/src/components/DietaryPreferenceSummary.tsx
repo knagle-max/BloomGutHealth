@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export default function DietaryPreferenceSummary({ context }: { context?: PrecisionContext }) {
   const preferences = useQuery<DietaryPreferences>({ queryKey: ["/api/preferences"] });
   const biology = useQuery<PrecisionReport>({ queryKey: ["/api/precision"], enabled: !context });
-  const safety = context || (!biology.isError && !biology.isFetching ? biology.data?.context : undefined);
+  const safety = context || (biology.fetchStatus === "idle" && !biology.isError ? biology.data?.context : undefined);
   const p = preferences.data;
   return <section className="bloom-panel space-y-3" aria-labelledby="dietary-summary-title">
     <h2 id="dietary-summary-title">Food preferences & restrictions</h2>

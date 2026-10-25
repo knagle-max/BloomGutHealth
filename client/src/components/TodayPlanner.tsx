@@ -46,7 +46,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
     mutationFn: () => fetchPlan(edited || (result || initial.data)!.request),
     onSuccess: (r) => setResult(r),
   });
-  const checking = initial.isFetching || build.isPending;
+  const checking = initial.isPending || initial.fetchStatus !== "idle" || build.isPending;
   // A failed or unfinished current-context check cannot fall back to a
   // previous suggestion set. Keep the draft targets for an explicit retry.
   const r = checking || initial.isError || build.isError ? null : result || initial.data,

@@ -260,7 +260,7 @@ interface Plan {
 export default function MealPlanner() {
   const { settings } = useExperience();
   const plan = useQuery<Plan>({ queryKey: ["/api/meal-planner"] });
-  const currentPlan = !plan.isError && !plan.isFetching ? plan.data : undefined;
+  const currentPlan = plan.fetchStatus === "idle" && !plan.isError ? plan.data : undefined;
   const progress = useQuery<any>({ queryKey: ["/api/meal-planner/progress"] });
   const [selected, setSelected] = useState<string | null>(null);
   const [aiConsent, setConsent] = useState(false);
@@ -317,7 +317,7 @@ export default function MealPlanner() {
         <TabsContent value="today" forceMount><TodayPlanner onEditPreferences={() => setEditing(true)} /></TabsContent>
         <TabsContent value="week" forceMount><WeeklyPlanner /></TabsContent>
         <TabsContent value="recipes" forceMount>
-      {plan.isFetching && <p role="status">Checking recipes against your current preferences…</p>}
+      {(plan.isPending || plan.fetchStatus !== "idle") && <p role="status">Checking recipes against your current preferences…</p>}
       {plan.isError && (
         <p role="alert">
           {plan.error.message}{" "}

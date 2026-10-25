@@ -56,7 +56,7 @@ export default function Explore() {
         )
       ).json(),
   });
-  const currentAssessment = !assessment.isError && !assessment.isFetching ? assessment.data : undefined;
+  const currentAssessment = assessment.fetchStatus === "idle" && !assessment.isError ? assessment.data : undefined;
   const r = registry.data,
     node = r?.entities.find((n) => n.id === selected),
     connected =
@@ -203,7 +203,7 @@ export default function Explore() {
             <section className="bloom-panel space-y-4">
               <p className="eyebrow">YOUR FOOD PRIORITY</p>
               <h2>Why this food matters to you</h2>
-              {assessment.isFetching && (
+              {(assessment.isPending || assessment.fetchStatus !== "idle") && (
                 <p role="status">Checking your saved context…</p>
               )}
               {assessment.error && (
