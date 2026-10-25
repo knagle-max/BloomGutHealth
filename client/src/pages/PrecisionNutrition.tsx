@@ -1,3 +1,4 @@
+import BiologyHome from "@/components/BiologyHome";
 import {invalidatePlanningInputs,resetPlanningInputs} from "@/lib/planning-cache";
 import { formatMassEntry, parseMassEntry, parseCircumferenceEntry, switchMassUnit, switchCircumferenceUnit, type MassEntry, type CircumferenceEntry } from "@shared/measurement-entry";
 import { kgToDisplay, quantityFromCanonical } from "@shared/display-units";
@@ -315,21 +316,8 @@ export default function PrecisionNutrition() {
   const r = result.data;
   const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
-  return (
-    <main className="science-page precision-page">
-      <div className="flex flex-wrap gap-3 justify-between items-start">
-        <div className="science-heading">
-          <p className="eyebrow">Your evidence, connected</p>
-          <h1>My biology</h1>
-          <p className="science-intro">
-            Genetics, laboratory results, microbiome reports and everyday
-            meals—brought together with evidence you can inspect.
-          </p>
-        </div>
-        <Link className="text-link" href="/meal-planner">
-          Food preferences & meal planner
-        </Link>
-      </div>
+  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?"#biology-bloodwork-results":'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
+  const tabNavigation=(
       <div
         className="precision-tabs"
         role="group"
@@ -352,6 +340,20 @@ export default function PrecisionNutrition() {
           </Button>
         ))}
       </div>
+  );
+  return (
+    <main className="science-page precision-page">
+      <div className="flex flex-wrap gap-3 justify-between items-start">
+        <div className="science-heading">
+          {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
+          <h1>My biology</h1>
+          <p className="science-intro">
+            {tab==="overview"?"Understand your recorded data.":"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
+          </p>
+        </div>
+        {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
+      </div>
+      {tab==="overview"?<details className="biology-more-tools"><summary>Explore biology tools</summary>{tabNavigation}</details>:tabNavigation}
       <div aria-live="polite">
         {status && (
           <p className="bloom-panel" role="status">
@@ -378,48 +380,7 @@ export default function PrecisionNutrition() {
           <fieldset disabled={!currentResult} className="min-w-0 border-0 p-0 m-0" aria-label="Current biology inputs">
             {tab === "overview" && (
               <>
-                <section className="bloom-panel">
-                  <h2>Your health information</h2>
-                  <div className="precision-grid">
-                    {[
-                      [
-                        "Genetics",
-                        r.genetics.import
-                          ? `${r.genetics.findings.filter((f) => f.status === "reported raw call" || f.status === "self-reported call").length} reviewed calls`
-                          : "No genetic import",
-                      ],
-                      [
-                        "Bloodwork",
-                        `${r.labs.length} markers · ${r.labs.filter((l) => l.stale).length} older than six months`,
-                      ],
-                      [
-                        "Microbiome",
-                        r.microbiome.report
-                          ? `${r.microbiome.report.taxa.length} reported taxa`
-                          : "No supported structured report",
-                      ],
-                      [
-                        "Measured metabolites",
-                        `${r.microbiome.measuredMetabolites.length} entered measurements`,
-                      ],
-                      [
-                        "Response tracking",
-                        `${r.checkins.length} check-ins · ${r.plans.length} saved plans`,
-                      ],
-                    ].map(([name, value]) => (
-                      <button type="button" className="biology-summary-tile" key={name} onClick={() => setTab(name === "Genetics" ? "genetics" : name === "Response tracking" ? "progress" : "labs")}>
-                        <h3>{name}</h3>
-                        <p>{value}</p><span>View details →</span>
-                      </button>
-                    ))}
-                  </div>
-                  <p className="panel-note">
-                    A working, bounded evidence engine—not a clinically
-                    validated treatment model. Genetic coverage and supported
-                    rules are explicitly limited. Missing data never becomes a
-                    fabricated result.
-                  </p>
-                </section>
+                <BiologyHome report={r} onOpen={openSource}/>
                 <details ref={goalsDisclosure} className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
                 <summary>Your goals & health context</summary>
                 <ContextEditor
@@ -648,7 +609,7 @@ export default function PrecisionNutrition() {
                 <QuickLabEntry />
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
-                  <h2>Latest results</h2>
+                  <h2 id="biology-bloodwork-results">Latest results</h2>
                   {r.labs.length ? (
                     r.labs.map((l) => (
                       <article className="precision-observation" key={l.id}>

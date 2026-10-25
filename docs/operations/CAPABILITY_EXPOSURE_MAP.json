@@ -40,7 +40,8 @@
           "client/src/pages/Dashboard.tsx",
           "client/src/components/TodayFocus.tsx",
           "client/src/pages/PrecisionNutrition.tsx",
-          "client/src/components/CompanionHero.tsx"
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/BiologyHome.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -74,7 +75,8 @@
           "client/src/pages/Dashboard.tsx",
           "client/src/components/TodayFocus.tsx",
           "client/src/pages/PrecisionNutrition.tsx",
-          "client/src/components/CompanionHero.tsx"
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/BiologyHome.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -110,7 +112,8 @@
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/TodayStatus.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/AthleteHome.tsx"
+          "client/src/components/AthleteHome.tsx",
+          "client/src/components/BiologyHome.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -400,7 +403,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/MealPlanner.tsx",
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -433,7 +438,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/MealPlanner.tsx",
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -672,7 +679,9 @@
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
         "ui": [
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -898,7 +907,9 @@
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
         "ui": [
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -926,7 +937,9 @@
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
         "ui": [
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1041,7 +1054,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/MealPlanner.tsx",
-          "client/src/pages/PrecisionNutrition.tsx"
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -1445,6 +1460,7 @@
     "client/src/App.tsx": "ff23a62ddd29c0b2212807f50b9c1bbab9d2e56c5d547fb79b9f8d057992e7b1",
     "client/src/components/AppNavigation.tsx": "624492d93ba005b04c6e1b19b9a9cf9c6a093ba79292a81cf1f3cd8c70dac3d4",
     "client/src/components/AthleteHome.tsx": "38a62c44d186f8cb06a0d3034d72309f218ad3f1223547acd05a1d26ab6acbde",
+    "client/src/components/BiologyHome.tsx": "4cc8efb92a99d2720f8325b7578c7d253da59c2695bc83ca01070f40df018363",
     "client/src/components/CompanionHero.tsx": "c4c533e8dbcbed1e6e3adb2819c0eb308831a221f1a1461b1baf5b6b39f74585",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "aae960f39fd5e1d86ebdec46502ac20e9390b8344389cf005ed953e33456f217",
@@ -1471,7 +1487,7 @@
     "client/src/pages/MealPlanner.tsx": "6d9d6b8698e99eb9bddc5e072d5450154722e439cee8023d6a950a4ae00c2a5a",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "94984eb398d1bdd5f8caefe850c2ab7b12d427e002c0a6c00b2a76365caa9639",
-    "client/src/pages/PrecisionNutrition.tsx": "c733212b91a134bfb0b49cff64ebf6787e6f56126a63e238130f9fe57770f9cf",
+    "client/src/pages/PrecisionNutrition.tsx": "22187fdfb0d1f24e975c9075494d3b878e25b45a4ccf97e05a90c2da1819cf4f",
     "client/src/pages/Profile.tsx": "6cf4d9466a7ada6b6d75867be8c3ee77d8d5a54cbcf7a09e28394db8f63976eb",
     "client/src/pages/Progress.tsx": "e4dff71da674338f9c8588b2d988d76d1e91c29b5430ad8e1832c2d3619f1c65",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
