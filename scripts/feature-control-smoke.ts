@@ -46,7 +46,7 @@ try {
     assert.equal((await right.history(binding, 'synthetic-ci-operator')).length, 2);
     stage='step-up';
     const context={actorId:'synthetic-ci-operator',sessionId:randomBytes(24).toString('base64url')}, change=request(3), intent={action:'pause' as const,change};
-    const grant:StepUpController={serviceId:binding.serviceId,environment:binding.environment,userId:context.actorId,role:'feature-controller',scopes:['features:control'],grantId:'synthetic-ci-grant',reviewReference:'synthetic-no-release-approval',featureIds:[binding.featureId],actions:['pause','emergency-disable'],credentialVersion:'c'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString()};
+    const grant:StepUpController={serviceId:binding.serviceId,environment:binding.environment,userId:context.actorId,role:'feature-controller',scopes:['features:control'],grantId:'synthetic-ci-grant',reviewReference:'synthetic-no-release-approval',featureIds:[binding.featureId],actions:['pause','emergency-disable','rollback'],credentialVersion:'c'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString()};
     const adapters={reauthenticate:async()=>grant,current:async()=>grant}, receipts=new FeatureStepUpReceipts(pool),secret=randomBytes(32).toString('hex');
     const proofService=new FeatureStepUp({serviceId:binding.serviceId,environment:binding.environment},secret,receipts,adapters), issued=await proofService.issue(context,intent,'synthetic-ci-password');
     const competing=await Promise.allSettled([proofService.consume(context,intent,issued.proof),new FeatureStepUp({serviceId:binding.serviceId,environment:binding.environment},secret,receipts,adapters).consume(context,intent,issued.proof)]);
@@ -58,6 +58,12 @@ try {
     const service=new FeatureControlService(transaction,proofService),reauth=await service.issue(context,disable,'synthetic-ci-password');
     assert.equal((await service.apply(context,disable,reauth.proof)).control.state,'incident-disabled');
     const audited=await right.history(binding,context.actorId);assert.equal(audited.length,4);assert.equal(audited[0].action,'emergency-disable');assert.equal(audited[1].action,undefined);
+    stage='historical-rollback';
+    const rollback={action:'rollback' as const,change:{...request(5),rollbackRevision:3,control:{...change.control,revision:5,changedBy:context.actorId}}};
+    const rollbackProof=await service.issue(context,rollback,'synthetic-ci-password');
+    assert.equal((await service.apply(context,rollback,rollbackProof.proof)).control.state,'paused');
+    const restored=(await right.history(binding,context.actorId))[0];assert.equal(restored.action,'rollback');assert.equal(restored.rollbackRevision,3);assert.equal(restored.control.revision,5);
+    console.log('PASS: isolated PostgreSQL rollback binds immutable target and appends a distinct audited revision; execution stays paused');
     console.log('PASS: isolated PostgreSQL control service composes proof, emergency disable and encrypted audit; no HTTP/runtime installation');
     console.log('PASS: isolated PostgreSQL step-up cross-replica consumption and transactional authorization; synthetic adapters only');
     console.log('PASS: isolated Neon control-history default denial, real concurrent CAS, encrypted audit, historical replay and immutable SQL guard; no runtime activation');

@@ -7,7 +7,7 @@ import registry from '../docs/architecture/LEGAL_PROVISIONAL_FEATURE_REGISTRY_20
 const identifier = z.string().regex(/^[A-Za-z0-9_.:/-]{1,120}$/);
 const bindingSchema = z.object({ serviceId: z.string().regex(/^srv-[a-z0-9]+$/), environment: z.enum(['development-review', 'isolated-synthetic']), featureId: identifier }).strict();
 export type FeatureControlBinding = z.infer<typeof bindingSchema>;
-export const featureControlChangeSchema = z.object({ binding: bindingSchema, actorId: identifier, requestId: z.uuid(), expectedRevision: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER - 1), reason: z.string().trim().min(1).max(500), action: z.enum(['enable','pause','rollback','emergency-disable']).optional(), control: capabilityControlSchema }).strict();
+export const featureControlChangeSchema = z.object({ binding: bindingSchema, actorId: identifier, requestId: z.uuid(), expectedRevision: z.number().int().min(0).max(Number.MAX_SAFE_INTEGER - 1), reason: z.string().trim().min(1).max(500), action: z.enum(['enable','pause','rollback','emergency-disable']).optional(), rollbackRevision: z.number().int().positive().max(Number.MAX_SAFE_INTEGER-1).optional(), control: capabilityControlSchema }).strict();
 export type FeatureControlChange = z.infer<typeof featureControlChangeSchema>;
 const eventSchema = featureControlChangeSchema.extend({ recordedAt: z.string().datetime({ offset: true }) });
 export type FeatureControlAccess = {
@@ -99,6 +99,8 @@ export class FeatureControlStorage {
             return fail('INVALID_REQUEST');
         const change = parsed.data, binding = this.binding(change.binding), control = change.control, source = registry.features.find(row => row.feature_id === binding.featureId)!;
         if (control.featureId !== binding.featureId || control.serviceId !== binding.serviceId || control.environment !== binding.environment || control.changedBy !== change.actorId || control.revision !== change.expectedRevision + 1)
+            return fail('INVALID_REQUEST');
+        if (change.action === 'rollback' ? change.rollbackRevision === undefined || change.rollbackRevision > change.expectedRevision : change.rollbackRevision !== undefined)
             return fail('INVALID_REQUEST');
         // Even an injected authorizer cannot override immutable incident/research boundaries.
         if (control.state === 'enabled' && source.release_category !== 'GENERAL_RELEASE')

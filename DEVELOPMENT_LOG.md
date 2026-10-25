@@ -369,3 +369,9 @@ BLOOM-ADMIN-01-ACTION-AUDIT — IN_PROGRESS: service records exact authenticated
 
 
 BLOOM-ADMIN-01-ACTION-AUDIT — TESTED local:313 full +14 focused/type/build/source checks; standalone PG smoke typing clean. New reader preserves old unlabeled history/replay; conflicting labels and retrofitted idempotent metadata deny. Existing old readers cannot consume newer labeled events (strict schema); backout disables writes and retains action-aware reader, never rewrites audit. Real PG smoke asserts new emergency action plus unlabeled legacy command. Publish/verify next.
+
+
+BLOOM-ADMIN-01-ROLLBACK — IN_PROGRESS: exact encrypted historical snapshot + explicit rollbackRevision bind a new signed command and audit event. Source history is read only through a purpose-scoped request-local controller lease; candidate state/material/review/scope/cohort/percentage/expiry must match target, with new revision/changer. Restoring enabled state still needs fresh independent review. No overwrites or extended expiry; missing/future targets and forged controls deny, incident-disabled target uses explicit emergency operation instead.9 focused tests/types pass; full314 running. Add isolated PG rollback-to-paused smoke. Existing service remains uninstalled; no real account/grant changes.
+
+
+BLOOM-ADMIN-01-ROLLBACK — TESTED local component:314 full +11 final focused, types/build/standalone PG smoke typing/source checks pass. Historical exact snapshot binding, signed target, new audited revision, fresh-review rejection and fresh-proof idempotent retry verified. Add isolated PG target3→new5 paused rollback smoke. No SQL or live runtime/credential changes. Publication CI/Render pending; next safe HTTP/shared reauthentication budget boundary, then actual trusted fact/runtime installation and restore/rollout acceptance.

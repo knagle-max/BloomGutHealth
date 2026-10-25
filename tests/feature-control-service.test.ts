@@ -39,9 +39,9 @@ test('controller service combines actual password proof, independent current rev
         const service = f.service(), request = f.request(), proof = await service.issue(f.context, request, 'synthetic-password');
         const result = await service.apply(f.context, request, proof.proof);
         assert.equal(result.control.state, 'enabled');
-        const {FeatureControlStorage}=await import('../server/feature-control-storage');
-        const history=await new FeatureControlStorage(f.transaction,async()=>true).history(request.change.binding,f.context.actorId);
-        assert.equal(history[0].action,'enable');
+        const { FeatureControlStorage } = await import('../server/feature-control-storage');
+        const history = await new FeatureControlStorage(f.transaction, async () => true).history(request.change.binding, f.context.actorId);
+        assert.equal(history[0].action, 'enable');
         assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_audit')).rows[0].n, 1);
         assert.equal(effectiveCapabilityDecision({ ...f.facts, featureId: request.change.binding.featureId, control: result.control, now: Date.now() }, () => f.source).allowed, false, 'A control record never substitutes for subject consent and rollout checks');
         await assert.rejects(() => service.apply(f.context, request, proof.proof));
@@ -66,7 +66,8 @@ test('controller service denies unconfigured promotions and rolls back when revi
         assert.equal(checks, 3);
         assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_audit')).rows[0].n, 0);
         checks = 0;
-        service = f.service({ ...f.reviews, current: async () => { if (++checks >= 3) f.revoke(); return structuredClone(f.facts); } });
+        service = f.service({ ...f.reviews, current: async () => { if (++checks >= 3)
+                f.revoke(); return structuredClone(f.facts); } });
         request = f.request();
         proof = await service.issue(f.context, request, 'synthetic-password');
         await assert.rejects(() => service.apply(f.context, request, proof.proof), denied);
@@ -87,16 +88,64 @@ test('authorized emergency disable works without promotion approvals; unbound ro
         assert.equal((await service.apply(f.context, request, proof.proof)).control.state, 'incident-disabled');
         const rollback = f.request(2);
         rollback.action = 'rollback';
-        await assert.rejects(() => service.issue(f.context, rollback, 'synthetic-password'), denied);
+        await assert.rejects(() => service.issue(f.context, rollback, 'synthetic-password'), error => error instanceof FeatureControlStorageError && error.code === 'INVALID_REQUEST');
     }
     finally {
         await f.db.close();
     }
 });
-
-test('controller audit refuses conflicting action labels before issuing authentication receipts',async()=>{
- const f=await setup();try{const request=f.request();request.change.action='pause';
- await assert.rejects(()=>f.service().issue(f.context,request,'synthetic-password'),error=>error instanceof FeatureControlStorageError&&error.code==='INVALID_REQUEST');
- assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_step_up_receipts')).rows[0].n,0);
- }finally{await f.db.close();}
+test('controller audit refuses conflicting action labels before issuing authentication receipts', async () => {
+    const f = await setup();
+    try {
+        const request = f.request();
+        request.change.action = 'pause';
+        await assert.rejects(() => f.service().issue(f.context, request, 'synthetic-password'), error => error instanceof FeatureControlStorageError && error.code === 'INVALID_REQUEST');
+        assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_step_up_receipts')).rows[0].n, 0);
+    }
+    finally {
+        await f.db.close();
+    }
+});
+test('rollback is a new audited revision bound to exact immutable history and current independent review', async () => {
+    const f = await setup();
+    try {
+        const service = f.service(), first = f.request();
+        let proof = await service.issue(f.context, first, 'synthetic-password');
+        await service.apply(f.context, first, proof.proof);
+        const paused = f.request(2);
+        paused.action = 'pause';
+        paused.change.control.state = 'paused';
+        paused.change.control.rolloutPercent = 0;
+        proof = await service.issue(f.context, paused, 'synthetic-password');
+        await service.apply(f.context, paused, proof.proof);
+        const rollback = f.request(3);
+        rollback.action = 'rollback';
+        rollback.change.rollbackRevision = 1;
+        const altered = structuredClone(rollback);
+        altered.change.control.rolloutPercent = 99;
+        proof = await service.issue(f.context, altered, 'synthetic-password');
+        await assert.rejects(() => service.apply(f.context, altered, proof.proof), denied);
+        proof = await service.issue(f.context, rollback, 'synthetic-password');
+        const changedTarget = structuredClone(rollback);
+        changedTarget.change.rollbackRevision = 2;
+        await assert.rejects(() => service.apply(f.context, changedTarget, proof.proof));
+        const result = await service.apply(f.context, rollback, proof.proof);
+        assert.equal(result.control.revision, 3);
+        assert.equal(result.control.state, 'enabled');
+        const retryProof=await service.issue(f.context,rollback,'synthetic-password');assert.equal((await service.apply(f.context,rollback,retryProof.proof)).replay,true);
+        const { FeatureControlStorage } = await import('../server/feature-control-storage');
+        const history = await new FeatureControlStorage(f.transaction, async () => true).history(first.change.binding, f.context.actorId);
+        assert.deepEqual(history.map(event => [event.control.revision, event.action, event.rollbackRevision]), [[3, 'rollback', 1], [2, 'pause', undefined], [1, 'enable', undefined]]);
+        // A new rollback still needs current independent reviews, not historical approval.
+        const stale = f.request(4);
+        stale.action = 'rollback';
+        stale.change.rollbackRevision = 1;
+        const unavailable = new FeatureControlService(f.transaction, f.stepUp);
+        proof = await unavailable.issue(f.context, stale, 'synthetic-password');
+        await assert.rejects(() => unavailable.apply(f.context, stale, proof.proof), denied);
+        assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_audit')).rows[0].n, 3);
+    }
+    finally {
+        await f.db.close();
+    }
 });

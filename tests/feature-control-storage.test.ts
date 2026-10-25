@@ -27,7 +27,7 @@ test('default-denied storage accepts no public override; scope/revision/actor an
         await assert.rejects(() => denied.append(change()), code('ACCESS_DENIED'));
         await assert.rejects(() => denied.get(binding, 'PRIVATE_ADMIN'), code('ACCESS_DENIED'));
         assert.equal(reads, 0);
-        for (const patch of [{ approved: true }, { expectedRevision: 9 }, { actorId: 'other' }, { binding: { ...binding, environment: 'production' } }, { binding: { ...binding, featureId: 'unknown' } }, { control: { ...change().control, serviceId: 'srv-other' } }])
+        for (const patch of [{action:'rollback'}, {rollbackRevision:1}, {action:'rollback',rollbackRevision:1}, { approved: true }, { expectedRevision: 9 }, { actorId: 'other' }, { binding: { ...binding, environment: 'production' } }, { binding: { ...binding, featureId: 'unknown' } }, { control: { ...change().control, serviceId: 'srv-other' } }])
             await assert.rejects(() => left.append({ ...change(), ...patch }), code('INVALID_REQUEST'));
         for (const featureId of ['bloom.genetics.diet_rank', 'bloom.microbiome.flux']) {
             const request = change();

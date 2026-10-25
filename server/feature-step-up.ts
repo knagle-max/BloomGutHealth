@@ -93,6 +93,7 @@ export class FeatureStepUp {
             return fail('DENIED');
         if (request.action === 'enable' && change.control.state !== 'enabled' || request.action === 'pause' && change.control.state !== 'paused' || request.action === 'emergency-disable' && change.control.state !== 'incident-disabled')
             return fail('DENIED');
+        if (request.action === 'rollback' ? change.rollbackRevision === undefined || change.rollbackRevision > change.expectedRevision : change.rollbackRevision !== undefined) return fail('INVALID_REQUEST');
         if (request.action === 'rollback' && change.control.state === 'incident-disabled')
             return fail('DENIED');
         if (change.control.state === 'enabled' && source.release_category !== 'GENERAL_RELEASE')
