@@ -1381,7 +1381,8 @@
           "server/review-runtime-audit.ts",
           "server/index.ts",
           "shared/schema-management.ts",
-          "server/feature-step-up.ts"
+          "server/feature-step-up.ts",
+          "server/feature-controller-auth.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1455,6 +1456,7 @@
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-storage.ts": "1762d4f0d9b0e39bae98a0d9fa583beebed01b25e73762b00d392a9105fcf13e",
+    "server/feature-controller-auth.ts": "f349587780d99a77c51b9beb6088ce235b5cab7be179a8227c60df42861bfea0",
     "server/feature-step-up.ts": "7807e27b51271479ee8e1b9dc570b7908d2f36d2aa62b037f97215b0b334d033",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
@@ -1485,7 +1487,7 @@
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
-    "shared/application-schema.ts": "d469888574cdd8671540db9a8a2362fa3a721f1291be8044685fac665e5cecbd",
+    "shared/application-schema.ts": "ee592917ca958174e6bc339dd5388737672e416cb93cd4ddca6308a0424f87c8",
     "shared/athlete.ts": "d1ab4d6363fbc2543ffc4145be0479b2719237b4a84e46b4c82123bef2d6e398",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
@@ -1502,7 +1504,7 @@
     "shared/precision-nutrition.ts": "231e72f38c8b037b771629624a9849f3bebb91675cd1dacadfbd10181d2271a8",
     "shared/products.ts": "86a119656c8e1cd43ea76957ce70018418de7735081e9890524d2f7b25669b3c",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
-    "shared/schema-management.ts": "bf7dfdb94c1f50b999896ffda87a397e53432a49ce6fcf8fc822294748cdc94f",
+    "shared/schema-management.ts": "081b56a9e8e9d3a1841d43ed06132baca06b1983c278d8cc3105aab44ad68548",
     "shared/schema.ts": "28b577b3707bdbedd6af44181cf97a64deedcd47b2d46b7a3c01f33fe5289854",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/structured-report.ts": "901a12363895fbd5eedcbda261f83f9ee78dba8b3af03e564ba42de197aaa49c",

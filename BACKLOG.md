@@ -122,3 +122,5 @@ BLOOM-ADMIN-01-CREDENTIAL-ADAPTER — TESTED local, unpublished (2026-10-25): ac
 
 
 CI-SCHEMA-REGISTRY-01:53e511b CI40202645321 safely identifies dependent biology_entities.biology_entities_version_id_pk (2BP01). Existing SQL0005 owns versioned biological registry. Exclude biology_* from declared/introspected Drizzle schema, apply existing idempotent SQL0005 in isolated preparation and compare exact registry rows/constraints around reconciliation. No key drops, cascade, record deletion or Render migration. Local308 application tests and targeted serialization pass; corrected CI pending.
+
+Credential adapter publication:308 full +12 integrated tests/types/build and read-only admin browser pass. Publishing alongside reviewed52/99 source hashes after registry ownership correction; exact Actions/Render acceptance still pending. No live credential/role/HTTP changes.
