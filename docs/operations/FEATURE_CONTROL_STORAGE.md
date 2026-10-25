@@ -1,0 +1,24 @@
+# Feature control storage foundation
+
+This repository stores versioned administrative snapshots and audit events. It does not authorize execution or provide a live Feature Management mutation service. Current administrator routes remain read-only and all mutation requests still return403. No repository or migration is installed against the Render database at application startup.
+
+The accepted storage boundary is `server/feature-control-storage.ts`; it reuses `capabilityControlSchema` from the effective policy. The constructor denies reads and writes unless a trusted server authorizer is supplied. That future authorizer must check actual account/session, separate controller scope, deployment, fresh step-up bound to the exact action/revision/reason, and independent current review facts. Never supply a Boolean from a request body or infer write access from the existing `features:read` grant. The repository rechecks access inside the transaction and before commit; execution must still evaluate the full effective policy with current subject/consent/rollout facts.
+
+## Storage and recovery contract
+
+- `feature_control_states` is scoped by service, review environment and canonical feature ID. Revisions advance through compare-and-swap; competing requests cannot overwrite each other. The supported environments are development-review and isolated-synthetic. Production control installation is outside this slice.
+- `feature_control_audit` retains encrypted command/reason/actor/control snapshots. The digest covers randomized ciphertext rather than guessable plaintext reasons. Encryption binds purpose, service, environment, feature and revision using the existing versioned data keyring. All historical keys are necessary to read all history; no key retrieval or rotation is performed here.
+- State and its corresponding audit event commit together. A deferred foreign key prevents state without an audit revision; a SQL trigger rejects audit update, delete and truncate. These are application/SQL safeguards, not proof against a database owner changing DDL, a compromised key holder or restoring an older whole-database snapshot. Operational retention, external audit anchoring and managed recovery remain separate acceptance work.
+- A UUID request is unique within service/environment. Retrying the same complete command is idempotent across key versions and replicas; changed actor, reason, feature or command conflicts. Replay can return an older recorded revision and explicitly reports the current storage revision. Neither snapshot is execution clearance.
+- History is bounded to50 entries and supports an exclusive revision cursor. Missing state means no configured snapshot; it does not prove a feature is deployed, enabled or disabled. Unknown feature IDs and malformed/cross-boundary commands fail before writes; immutable incident/research categories cannot be enabled even by an injected authorizer.
+- Failures expose fixed storage error codes. Authorization revocation, invalid clocks, encryption failures, stale revisions and SQL failure do not partially commit. Authorizers are read-only and receive an abort signal; a maximum2-second decision timeout denies hung/late results. The PostgreSQL adapter uses a separate transaction advisory lock and bounded lock/statement/idle-in-transaction timeouts.
+
+## Migration and verification
+
+`migrations/0012_feature_control_history.sql` is additive and repeatable. The shared Drizzle schema describes the tables and FK; the SQL migration additionally installs the immutable-audit trigger and ensures deferred FK behavior after schema bootstrap. Apply it only to an explicitly authorized target when implementing the actual controller service. No live Render migration is requested or implied by the source commit.
+
+Local tests use disposable PGlite databases and synthetic encryption keys. The guarded `scripts/feature-control-smoke.ts` runs only in the existing schema-only PR GitHub Actions workflow with its injected direct database URL; it applies0012 there and exercises actual PostgreSQL transactions, concurrent CAS, idempotent historical replay, encrypted metadata and the immutable-audit guard. It preserves its append-only synthetic audit in that disposable branch. It supplies no real approvals, roles or activation.
+
+Backout: leave the existing read-only routes and runtime adapters unconfigured. Revert the repository/schema code if needed while preserving control and audit rows and historical keys. Do not drop or truncate audit data as a routine rollback.
+
+Remaining parent work: separately authorized controller grants and step-up; trusted approval/material/deployment adapters; audited enable/pause/rollback/emergency operations; authoritative enforcement in UI/API/jobs/exports/caches; reviewed runtime installation and independent Security/Legal acceptance.

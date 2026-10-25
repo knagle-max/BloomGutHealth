@@ -8,6 +8,8 @@ const environment=z.enum(['development-review','isolated-synthetic','production'
 const scope=z.object({territories:z.array(z.string().regex(/^[A-Z]{2}$/)).min(1).max(100),populations:z.array(id).min(1).max(100),purposes:z.array(id).min(1).max(100)}).strict();
 const reviewRole=z.enum(['LEGAL','SECURITY','SCIENCE','DATA_RIGHTS']);
 const sourceSchema=z.object({id,category:z.enum(['GENERAL_RELEASE','HIDDEN_PENDING_APPROVAL','INTERNAL_RESEARCH_ONLY','DISABLED_INCIDENT']),approval:z.enum(['PROPOSED','UNDER_REVIEW','APPROVED','REJECTED','SUSPENDED']),publicEnabled:z.boolean()}).strict();
+export const capabilityControlSchema=z.object({featureId:id,revision:z.number().int().positive().max(Number.MAX_SAFE_INTEGER),state:z.enum(['enabled','paused','disabled','incident-disabled']),serviceId:id,environment,materialDigest:digest,reviewId:id,scope,rolloutPercent:z.number().int().min(0).max(100),cohortId:id,changedBy:id,expiresAt:date}).strict();
+export type CapabilityControl=z.infer<typeof capabilityControlSchema>;
 export interface RegisteredCapability {id:string;category:string;approval:string;publicEnabled:boolean;}
 const compiledSource=(featureId:string):RegisteredCapability|null=>{const row=registry.features.find(record=>record.feature_id===featureId);return row?{id:row.feature_id,category:row.release_category,approval:normalizeCapabilityApproval(row.approval_status),publicEnabled:row.public_enabled}:null;};
 const schema=z.object({
@@ -16,7 +18,7 @@ const schema=z.object({
  deployment:z.object({serviceId:id,environment,materialDigest:digest,requiredReviews:z.array(reviewRole).min(2).max(4),highConsequence:z.boolean(),requireDistinctReviewers:z.boolean(),consentPurpose:id.nullable()}).strict().nullable().optional(),
  implementation:z.object({readiness:z.enum(['PLANNED','IN_DEVELOPMENT','TESTABLE','FUNCTIONALLY_COMPLETE','VERIFIED']),materialDigest:digest,verificationReference:id}).strict().nullable().optional(),
  review:z.object({id,featureId:id,status:z.enum(['PROPOSED','UNDER_REVIEW','APPROVED','REJECTED','SUSPENDED']),serviceId:id,environment,materialDigest:digest,validFrom:date,expiresAt:date,scope,maximumRolloutPercent:z.number().int().min(0).max(100),rolloutKeyId:id,cohorts:z.array(z.object({id,accountIds:z.array(z.string().min(1).max(200)).min(1).max(10000).nullable()}).strict()).min(1).max(100),evidence:z.array(z.object({role:reviewRole,reviewerId:id,reference:id,status:z.enum(['PROPOSED','UNDER_REVIEW','APPROVED','REJECTED','SUSPENDED']),materialDigest:digest,validFrom:date,expiresAt:date}).strict()).min(2).max(4)}).strict().nullable().optional(),
- control:z.object({featureId:id,revision:z.number().int().positive().max(Number.MAX_SAFE_INTEGER),state:z.enum(['enabled','paused','disabled','incident-disabled']),serviceId:id,environment,materialDigest:digest,reviewId:id,scope,rolloutPercent:z.number().int().min(0).max(100),cohortId:id,changedBy:id,expiresAt:date}).strict().nullable().optional(),
+ control:capabilityControlSchema.nullable().optional(),
  subject:z.object({accountId:z.string().min(1).max(200),territory:z.string().regex(/^[A-Z]{2}$/),population:id,populationVerified:z.boolean(),purpose:id,consent:z.object({purpose:id,granted:z.boolean(),expiresAt:date}).strict().nullable()}).strict().nullable().optional(),
  rolloutKey:z.object({id,secret:z.string().min(32).max(512).regex(/^\S+$/)}).strict().nullable().optional(),
 }).strict();

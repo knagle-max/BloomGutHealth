@@ -87,6 +87,7 @@ jobs:
         run: |
           npm run test:neon
           node --import tsx scripts/spend-ledger-smoke.ts
+          node --import tsx scripts/feature-control-smoke.ts
 
   delete_neon_branch:
     name: Delete Neon PR database

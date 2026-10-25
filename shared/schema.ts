@@ -3,6 +3,8 @@ import {
   pgTable,
   primaryKey,
   foreignKey,
+  unique,
+  uuid,
   text,
   varchar,
   timestamp,
@@ -406,3 +408,19 @@ export const aiSpendRequests = pgTable("ai_spend_requests", {
     check("ai_spend_consistency", sql `(${table.state} = 'reserved' AND ${table.settledMicroUsd} IS NULL AND ${table.billingBasis} IS NULL AND ${table.settledAt} IS NULL) OR (${table.state} = 'settled' AND ${table.settledMicroUsd} IS NOT NULL AND ${table.billingBasis} IS NOT NULL AND ${table.settledAt} IS NOT NULL) OR (${table.state} = 'released' AND ${table.settledMicroUsd} = 0 AND ${table.billingBasis} IS NULL AND ${table.settledAt} IS NOT NULL)`)]);
 
 export const providerCircuits=pgTable("provider_circuits",{circuitKey:text("circuit_key").primaryKey(),failures:integer("failures").notNull().default(0),openUntil:timestamp("open_until",{withTimezone:true}),probeToken:text("probe_token"),probeExpiresAt:timestamp("probe_expires_at",{withTimezone:true}),generation:bigint("generation",{mode:"bigint"}).notNull().default(sql`0`),updatedAt:timestamp("updated_at",{withTimezone:true}).notNull().default(sql`clock_timestamp()`)},table=>[check("provider_circuit_failures",sql`${table.failures} >= 0`),check("provider_circuit_probe",sql`(${table.probeToken} IS NULL AND ${table.probeExpiresAt} IS NULL) OR (${table.probeToken} IS NOT NULL AND ${table.probeExpiresAt} IS NOT NULL)`)]);
+
+// Global operator metadata, not user-health rows. No live control repository is
+// installed. 0012 additionally installs append-only audit protection and the
+// deferred FK; schema bootstrap alone does not authorize control writes.
+export const featureControlAudit=pgTable("feature_control_audit",{
+ serviceId:text("service_id").notNull(),environment:text("environment").notNull(),featureId:text("feature_id").notNull(),revision:bigint("revision",{mode:"number"}).notNull(),requestId:uuid("request_id").notNull(),eventDigest:text("event_digest").notNull(),encryptedEvent:jsonb("encrypted_event").notNull(),createdAt:timestamp("created_at",{withTimezone:true}).notNull().default(sql`clock_timestamp()`),
+},table=>[
+ primaryKey({name:"feature_control_audit_pkey",columns:[table.serviceId,table.environment,table.featureId,table.revision]}),unique("feature_control_audit_request").on(table.serviceId,table.environment,table.requestId),
+ check("feature_control_audit_service_id_check",sql`${table.serviceId} ~ '^srv-[a-z0-9]+$'`),check("feature_control_audit_environment_check",sql`${table.environment} IN ('development-review','isolated-synthetic')`),check("feature_control_audit_revision_check",sql`${table.revision} > 0 AND ${table.revision} <= 9007199254740991`),check("feature_control_audit_event_digest_check",sql`${table.eventDigest} ~ '^[a-f0-9]{64}$'`),
+]);
+export const featureControlStates=pgTable("feature_control_states",{
+ serviceId:text("service_id").notNull(),environment:text("environment").notNull(),featureId:text("feature_id").notNull(),revision:bigint("revision",{mode:"number"}).notNull(),state:text("state").notNull(),materialDigest:text("material_digest").notNull(),encryptedControl:jsonb("encrypted_control").notNull(),updatedAt:timestamp("updated_at",{withTimezone:true}).notNull().default(sql`clock_timestamp()`),
+},table=>[
+ primaryKey({name:"feature_control_states_pkey",columns:[table.serviceId,table.environment,table.featureId]}),foreignKey({name:"feature_control_state_audit",columns:[table.serviceId,table.environment,table.featureId,table.revision],foreignColumns:[featureControlAudit.serviceId,featureControlAudit.environment,featureControlAudit.featureId,featureControlAudit.revision]}),
+ check("feature_control_states_service_id_check",sql`${table.serviceId} ~ '^srv-[a-z0-9]+$'`),check("feature_control_states_environment_check",sql`${table.environment} IN ('development-review','isolated-synthetic')`),check("feature_control_states_revision_check",sql`${table.revision} > 0 AND ${table.revision} <= 9007199254740991`),check("feature_control_states_state_check",sql`${table.state} IN ('enabled','paused','disabled','incident-disabled')`),check("feature_control_states_material_digest_check",sql`${table.materialDigest} ~ '^[a-f0-9]{64}$'`),
+]);

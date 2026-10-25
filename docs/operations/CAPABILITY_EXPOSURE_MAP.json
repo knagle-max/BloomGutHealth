@@ -1380,7 +1380,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/feature-control-storage.ts"
         ],
         "cache": []
       },
@@ -1442,9 +1443,10 @@
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
-    "server/effective-capability.ts": "256b4241e39daedc46b6815955d5e998b081276267376f30c99e87a7bdaa57b2",
+    "server/effective-capability.ts": "a505921dc34fb29e567d50f21a31a16e0774a68ac177758d84e6f88e974435ee",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
+    "server/feature-control-storage.ts": "1762d4f0d9b0e39bae98a0d9fa583beebed01b25e73762b00d392a9105fcf13e",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
@@ -1489,7 +1491,7 @@
     "shared/precision-nutrition.ts": "231e72f38c8b037b771629624a9849f3bebb91675cd1dacadfbd10181d2271a8",
     "shared/products.ts": "86a119656c8e1cd43ea76957ce70018418de7735081e9890524d2f7b25669b3c",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
-    "shared/schema.ts": "de07b760f19922723f103f62c1a819c7060b19152c9da9a76d89c4c1fd81aac0",
+    "shared/schema.ts": "9f33d7e6725bcd97027b426b965f18b0d8ff5ffa8debea6cf5bff9b4ad5097b1",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/structured-report.ts": "901a12363895fbd5eedcbda261f83f9ee78dba8b3af03e564ba42de197aaa49c",
     "shared/today-focus.ts": "6254d4afd9b7a196e00b934aef14d55ffd6eda1ee0c6157a2f784f9a3b644917",
