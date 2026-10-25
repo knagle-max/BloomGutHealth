@@ -221,7 +221,7 @@ export default function PrecisionNutrition() {
   const [context, setContext] = useState(contextSchema.parse({}));
   const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
   const editGoals=new URLSearchParams(window.location.search).get("edit")==="goals";
-  useEffect(()=>{if(editGoals&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,context]);
+  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,result.fetchStatus,result.isError,context]);
   useEffect(() => {
     if (result.data) setContext(result.data.context);
   }, [result.data]);
@@ -313,6 +313,8 @@ export default function PrecisionNutrition() {
     );
 
   const r = result.data;
+  const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
+  const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
   return (
     <main className="science-page precision-page">
       <div className="flex flex-wrap gap-3 justify-between items-start">
@@ -362,20 +364,18 @@ export default function PrecisionNutrition() {
           </p>
         )}
       </div>
-      {result.isLoading ? (
-        <p role="status">Connecting your precision nutrition inputs…</p>
-      ) : result.isError ? (
+      {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
+      {(result.isError||result.fetchStatus==="paused")&&(
         <section className="bloom-panel">
-          <h2>Precision workspace unavailable</h2>
-          <p role="alert">{result.error.message}</p>
-          <Button onClick={() => result.refetch()}>Retry</Button>
-          {sampleId && (
-            <Button onClick={() => setSampleId("")}>Use latest report</Button>
-          )}
+          <h2>Biology inputs could not be checked</h2>
+          <p role="alert">Previously loaded observations and actions are withheld until their source can be checked. Your draft stays on this page.</p>
+          <Button disabled={result.isFetching} onClick={()=>result.refetch()}>Retry biology inputs</Button>
+          {sampleId&&<Button onClick={()=>setSampleId("")}>Use latest report</Button>}
         </section>
-      ) : (
-        r && (
-          <>
+      )}
+      {r&&(
+        <div hidden={!currentResult}>
+          <fieldset disabled={!currentResult} className="min-w-0 border-0 p-0 m-0" aria-label="Current biology inputs">
             {tab === "overview" && (
               <>
                 <section className="bloom-panel">
@@ -1192,16 +1192,17 @@ export default function PrecisionNutrition() {
                   <div className="space-y-2">
                     <p className="panel-note">You can optionally reuse the current weight from your saved Profile. Check that it matches your actual measurement for this date before saving; Bloom does not assume a Profile value was measured today.</p>
                     <Button type="button" variant="outline"
-                      disabled={savedProfile.isPending||savedProfile.isError||savedProfile.data?.weightKg==null}
+                      disabled={!currentProfile||currentProfile.weightKg==null}
                       onClick={()=>{
-                        const kg=savedProfile.data?.weightKg;
+                        const kg=currentProfile?.weightKg;
                         if(kg!=null&&Number.isFinite(kg)&&kg>0){
                           setWeightEntry(formatMassEntry(kg,weightEntry.unit));
                           setStatus("Profile weight filled in. Confirm today's actual measurement before saving.");
                         }
                       }}>Use saved Profile weight</Button>
                     {savedProfile.isError&&<p role="alert">Profile weight unavailable. Enter this check-in manually.</p>}
-                    {savedProfile.data?.weightKg==null&&!savedProfile.isPending&&!savedProfile.isError&&<p className="panel-note">No weight saved in Profile yet.</p>}
+                    {savedProfile.fetchStatus!=="idle"&&<p role="status">Checking the latest Profile weight…</p>}
+                    {currentProfile&&currentProfile.weightKg==null&&<p className="panel-note">No weight saved in Profile yet.</p>}
                   </div>
                   <label className="block">
                     Related plan
@@ -1401,8 +1402,8 @@ export default function PrecisionNutrition() {
                 </section>
               </>
             )}
-          </>
-        )
+          </fieldset>
+        </div>
       )}
     </main>
   );

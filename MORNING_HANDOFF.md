@@ -1,3 +1,11 @@
+# Latest local and deployed status — 2026-10-25
+
+My Biology refresh safety now passes320 tests/types/build and actual handler/browser plus canonical unit regressions. Source-dependent controls hide/disable during pending/paused/failure, same-source drafts persist for retry, Profile weight prefill requires a current source. Publishing exact CI/Render next. Concurrent changed-source conflict handling remains open.
+
+Add Food b71ac7b Actions40228747327 SUCCESS and Render dep-dbf5vsp5efls73blfj3g LIVE. Gut aa87652 Actions40228326389 SUCCESS and deployed. Both join verified Athlete home/theme and Progress safeguards. Next: source-backed My Biology home and corrected source navigation; broader v0.5/design/device/clinical/legal acceptance remains open. No new user decision needed for next engineering work.
+
+Older chronological entries below may be superseded; NEXT_ACTIONS.md is the current continuation record.
+
 # Latest implementation status — 2026-10-25
 
 Add Food source-backed chooser locally verified:320 tests/types/build/source106, real product/meal-analysis services with synthetic provider/storage, mode/theme/width matrix and single canonical meal save. Publishing next. Barcode primary plus search/description rows; unfinished photo/menu remain gated. Gallery docs/review/add-food-master-20261025/README.md. Full Food Review/master acceptance remains open.
