@@ -41,6 +41,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+function invalidateNutritionPeriodHistory() {
+  void queryClient.invalidateQueries({predicate:query=>["/api/nutrition/monthly/","/api/nutrition/yearly/"].some(prefix=>String(query.queryKey[0]).startsWith(prefix))});
+}
+
 function HistoricalTrends({
   userId,
   targets,
@@ -51,32 +55,29 @@ function HistoricalTrends({
   const { settings } = useExperience();
   const energyUnit = settings.displayUnits.energy;
   const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getUTCMonth();
+  const currentYear = currentDate.getUTCFullYear();
 
-  const { data: monthlyData } = useQuery<any>({
+  const { data: monthlyData, isError: monthlyError } = useQuery<any>({
     queryKey: [
       `/api/nutrition/monthly/${userId}?year=${currentYear}&month=${currentMonth}`,
     ],
     enabled: !!userId,
   });
 
-  const { data: yearlyData } = useQuery<any>({
+  const { data: yearlyData, isError: yearlyError } = useQuery<any>({
     queryKey: [`/api/nutrition/yearly/${userId}?year=${currentYear}`],
     enabled: !!userId,
   });
 
-  if (!monthlyData && !yearlyData) {
-    return null;
-  }
+  if (!monthlyData && !yearlyData && !monthlyError && !yearlyError) return null;
 
-  const getStatusColor = (current: number, target: number) => {
-    const percentage = (current / target) * 100;
-    if (percentage >= 90 && percentage <= 110)
-      return "text-green-600 dark:text-green-400";
-    if (percentage >= 70 && percentage <= 130)
-      return "text-yellow-600 dark:text-yellow-400";
-    return "text-red-600 dark:text-red-400";
+  // Recorded partial days are not an adequacy assessment against today's targets.
+  const historyAmount = (period: any, key: string, unit: string) => {
+    const value=period.dailyAverages?.[key];
+    if(typeof value!=="number"||!Number.isFinite(value))return "Unavailable";
+    const text=key==="calories"?`${energyAmount(value,energyUnit)} ${energyUnit}`:`${value} ${unit}`;
+    return text+(period.nutritionCoverage?.[key]?.partial?" · partial":"");
   };
 
   return (
@@ -85,6 +86,8 @@ function HistoricalTrends({
         <Calendar className="h-5 w-5" />
         Historical Trends
       </h2>
+      <p className="text-sm text-muted-foreground">Known recorded contributions per UTC day with a meal. Unlogged meals and missing nutrients are not measured zeros; these averages do not establish total intake or adequacy.</p>
+      {(monthlyError||yearlyError)&&<p role="alert">Some nutrition history could not load. Missing reports are not empty records; your daily journal remains available.</p>}
 
       {monthlyData?.dailyAverages && (
         <Card data-testid="card-monthly-averages">
@@ -94,27 +97,27 @@ function HistoricalTrends({
                 month: "long",
                 year: "numeric",
               })}{" "}
-              - Daily Averages
+              - Recorded Daily Averages
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              Based on {monthlyData.daysWithMeals} days of logged meals
+              Based on {monthlyData.daysWithMeals} UTC days with logged meals
             </p>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <div className="flex justify-between items-center mb-1">
                   <span className="text-xs text-muted-foreground">
                     Avg energy/day
                   </span>
                   <span
-                    className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.calories, targets.calories)}`}
+                    className="text-sm font-semibold text-foreground"
                   >
-                    {energyAmount(monthlyData.dailyAverages.calories, energyUnit)} {energyUnit}
+                    {historyAmount(monthlyData, "calories", energyUnit)}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
+                  Current target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
                 </p>
               </div>
               <div>
@@ -123,13 +126,13 @@ function HistoricalTrends({
                     Avg Protein/Day
                   </span>
                   <span
-                    className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.protein, targets.protein)}`}
+                    className="text-sm font-semibold text-foreground"
                   >
-                    {monthlyData.dailyAverages.protein}g
+                    {historyAmount(monthlyData, "protein", "g")}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.protein}g
+                  Current target: {targets.protein}g
                 </p>
               </div>
               <div>
@@ -138,13 +141,13 @@ function HistoricalTrends({
                     Avg Carbs/Day
                   </span>
                   <span
-                    className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.carbs, targets.carbs)}`}
+                    className="text-sm font-semibold text-foreground"
                   >
-                    {monthlyData.dailyAverages.carbs}g
+                    {historyAmount(monthlyData, "carbs", "g")}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.carbs}g
+                  Current target: {targets.carbs}g
                 </p>
               </div>
               <div>
@@ -153,13 +156,13 @@ function HistoricalTrends({
                     Avg Fat/Day
                   </span>
                   <span
-                    className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.fat, targets.fat)}`}
+                    className="text-sm font-semibold text-foreground"
                   >
-                    {monthlyData.dailyAverages.fat}g
+                    {historyAmount(monthlyData, "fat", "g")}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.fat}g
+                  Current target: {targets.fat}g
                 </p>
               </div>
               <div>
@@ -168,13 +171,13 @@ function HistoricalTrends({
                     Avg Fiber/Day
                   </span>
                   <span
-                    className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.fiber, targets.fiber)}`}
+                    className="text-sm font-semibold text-foreground"
                   >
-                    {monthlyData.dailyAverages.fiber}g
+                    {historyAmount(monthlyData, "fiber", "g")}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.fiber}g
+                  Current target: {targets.fiber}g
                 </p>
               </div>
               <div>
@@ -183,13 +186,13 @@ function HistoricalTrends({
                     Avg Sugar/Day
                   </span>
                   <span
-                    className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.sugar, targets.sugar)}`}
+                    className="text-sm font-semibold text-foreground"
                   >
-                    {monthlyData.dailyAverages.sugar}g
+                    {historyAmount(monthlyData, "sugar", "g")}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.sugar}g
+                  Current target: {targets.sugar}g
                 </p>
               </div>
             </div>
@@ -209,18 +212,18 @@ function HistoricalTrends({
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 pb-3 border-b">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3 border-b">
               <div>
                 <p className="text-xs text-muted-foreground">
                   Yearly average energy
                 </p>
                 <p
-                  className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.calories, targets.calories)}`}
+                  className="text-lg font-semibold text-foreground"
                 >
-                  {energyAmount(yearlyData.dailyAverages.calories, energyUnit)} {energyUnit}/day
+                  {historyAmount(yearlyData, "calories", energyUnit)}/logged day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
+                  Current target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
                 </p>
               </div>
               <div>
@@ -228,12 +231,12 @@ function HistoricalTrends({
                   Yearly Avg Protein
                 </p>
                 <p
-                  className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.protein, targets.protein)}`}
+                  className="text-lg font-semibold text-foreground"
                 >
-                  {yearlyData.dailyAverages.protein}g/day
+                  {historyAmount(yearlyData, "protein", "g")}/logged day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Target: {targets.protein}g
+                  Current target: {targets.protein}g
                 </p>
               </div>
             </div>
@@ -244,26 +247,20 @@ function HistoricalTrends({
                 {yearlyData.monthlyBreakdown.map((month: any) => (
                   <div
                     key={month.month}
-                    className="flex items-center justify-between text-sm"
+                    className="flex flex-wrap items-center justify-between gap-2 text-sm"
                   >
                     <span className="font-medium">{month.monthName}</span>
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                       <span>{month.mealsLogged} meals</span>
                       <span
-                        className={getStatusColor(
-                          month.avgCalories,
-                          targets.calories,
-                        )}
+                        className="text-foreground"
                       >
-                        {energyAmount(month.avgCalories, energyUnit)} {energyUnit}/day
+                        {historyAmount({dailyAverages:{calories:month.avgCalories},nutritionCoverage:month.nutritionCoverage}, "calories", energyUnit)}/logged day
                       </span>
                       <span
-                        className={getStatusColor(
-                          month.avgProtein,
-                          targets.protein,
-                        )}
+                        className="text-foreground"
                       >
-                        {month.avgProtein}g protein/day
+                        {historyAmount({dailyAverages:{protein:month.avgProtein},nutritionCoverage:month.nutritionCoverage}, "protein", "g protein")}/logged day
                       </span>
                     </div>
                   </div>
@@ -327,6 +324,7 @@ export default function NutritionHistory() {
     onSuccess: async (newMeal: any) => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+      invalidateNutritionPeriodHistory();
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });
@@ -360,6 +358,7 @@ export default function NutritionHistory() {
       if (unmatchedFoods(meal.intelligence).length || meal.intelligence?.status === "unavailable") setReviewingMealId(meal.id);
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+      invalidateNutritionPeriodHistory();
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });
@@ -387,6 +386,7 @@ export default function NutritionHistory() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
       queryClient.invalidateQueries({ queryKey: ["/api/precision"] });
+      invalidateNutritionPeriodHistory();
       queryClient.invalidateQueries({
         queryKey: ["/api/nutrition/daily", userId],
       });

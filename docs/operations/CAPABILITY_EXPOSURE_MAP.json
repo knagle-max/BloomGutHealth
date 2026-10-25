@@ -267,11 +267,13 @@
       "surfaces": {
         "ui": [
           "client/src/pages/LogMeal.tsx",
-          "client/src/components/ProductPicker.tsx"
+          "client/src/components/ProductPicker.tsx",
+          "client/src/pages/NutritionHistory.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
-          "server/products.ts"
+          "server/products.ts",
+          "server/nutrition-history.ts"
         ],
         "logicOrJobs": [
           "shared/products.ts",
@@ -282,7 +284,8 @@
           "server/provider-circuit.ts",
           "server/ai-costing.ts",
           "server/recipe-ranking.ts",
-          "server/recipe-generation.ts"
+          "server/recipe-generation.ts",
+          "shared/nutrition-summary.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -295,7 +298,7 @@
           "server/products.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1378,6 +1381,7 @@
     "client/src/pages/LogMeal.tsx": "a446edddae6b97aba193d8f9c3a99eeefbde02c4c28d59d29cd376e0a07843f8",
     "client/src/pages/MealPlanner.tsx": "bb5810c386a36d4bb999d9b3e2c03f61e0e6ea5d6c01fc486aae358abf6a6c19",
     "client/src/pages/Microbiome.tsx": "168783d0208282e7781acbda7ea811f9be7dbadc8400d0646f65d82771017eec",
+    "client/src/pages/NutritionHistory.tsx": "0368bf66428e309f37c0f2e8524bd5e49cc45a105533bdfca31de6efc82abe8f",
     "client/src/pages/PrecisionNutrition.tsx": "30c6a83a4d023a0dc0b80f671263bed6aac2e0538e48664741f483fde266c69c",
     "client/src/pages/Profile.tsx": "defac16038ef0d2458866b2e0c4b5be36c6085315b3bd9cc3d4c39c8c128094d",
     "client/src/pages/Progress.tsx": "14d12bf4947e31d9aebbb33a9d704796b8a2b9494ca369385829153e35f16072",
@@ -1401,6 +1405,7 @@
     "server/meal-intelligence.ts": "c92f552af98591c9ee908ef14e4c0d8eaf65c17f2ea54d284e52d97701c2363d",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
     "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
+    "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/plan-history.ts": "bde0384e99919777bc74053a401bdbf623039a023d7434ec686fc2ee9721ca9c",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/precision-routes.ts": "bd5c5d359395d17278bb2b577d655b74128b30de7e987140790230c89c3823fc",
@@ -1411,7 +1416,7 @@
     "server/report-analysis.ts": "2a4e80da76c55c1beb3165264c5982b9ada91d02f9325605ec3598747139e3e5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
-    "server/routes.ts": "7a0140b4c71a34792c25e3165b1eb94ccdc8e25474d56690879d8c686825916b",
+    "server/routes.ts": "dca1784cc27c4d6ddcacab64dfadf9fd4dd14f74647a1b916062182ef54bc848",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
     "server/storage.ts": "521c7725b15676274be6c4a2adb408a89d7fc13253c382d2a5408ec8c3ffafda",
@@ -1430,6 +1435,7 @@
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
     "shared/lab-paste.ts": "60fbf20f3f994231342e864b32bcd5df904ef3f16f6bbe024051c11a4981d3ab",
     "shared/meal-intelligence.ts": "0e7efde421f61ba47f76a90e339894833bb68c877e56a58bca1460074d486f5d",
+    "shared/nutrition-summary.ts": "0d57fe4ede7daf971448dd3b299c49c03d187c9e599bd2c1cc3a59cf00a4b46b",
     "shared/precision-nutrition.ts": "e1a833a64f643fc935a1593f29511737073b2ac4f38cba2d6cf3207a4f5d4655",
     "shared/products.ts": "86a119656c8e1cd43ea76957ce70018418de7735081e9890524d2f7b25669b3c",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",

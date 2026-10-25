@@ -210,6 +210,15 @@ try {
     undefined,
     400,
   );
+  for(const period of ['monthly','yearly']){
+    const history=await request(`/api/nutrition/${period}/${first.id}?year=2026${period==='monthly'?'&month=9':''}`);
+    assert.equal(history.calendar,'UTC');assert.equal(history.totalMeals,3);assert.equal(history.daysWithMeals,2);
+    assert.ok(Math.abs(history.totals.calories-daily.totals.calories)<0.02);
+    assert.ok(Math.abs(history.dailyAverages.calories-daily.totals.calories/2)<0.02);
+    assert.equal(history.nutritionCoverage.calories.partial,true);assert.ok(history.totals.fiber>0);
+    if(period==='yearly'){assert.equal(history.monthlyBreakdown.length,1);assert.equal(history.monthlyBreakdown[0].month,9);}
+  }
+  console.log('PASS: production history retains known/partial nutrient contributions and explicit UTC logged-day denominators');
   await request(`/api/meals/${burger.id}`, "DELETE", {});
   await request(`/api/meals/${unknown.id}`, "DELETE", {});
   console.log(
