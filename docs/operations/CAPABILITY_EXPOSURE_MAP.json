@@ -143,7 +143,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/LogMeal.tsx",
-          "client/src/components/ProductPicker.tsx"
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -222,7 +224,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/LogMeal.tsx",
-          "client/src/components/ProductPicker.tsx"
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -252,7 +256,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/LogMeal.tsx",
-          "client/src/components/ProductPicker.tsx"
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -283,7 +289,9 @@
         "ui": [
           "client/src/pages/LogMeal.tsx",
           "client/src/components/ProductPicker.tsx",
-          "client/src/pages/NutritionHistory.tsx"
+          "client/src/pages/NutritionHistory.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -324,7 +332,9 @@
       "surfaces": {
         "ui": [
           "client/src/pages/LogMeal.tsx",
-          "client/src/components/ProductPicker.tsx"
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -355,7 +365,9 @@
         "ui": [
           "client/src/components/DevelopmentPhotoPreview.tsx",
           "client/src/pages/LogMeal.tsx",
-          "client/src/components/ExperimentalSettings.tsx"
+          "client/src/components/ExperimentalSettings.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -1438,6 +1450,7 @@
     "client/src/components/DeviceObservations.tsx": "aae960f39fd5e1d86ebdec46502ac20e9390b8344389cf005ed953e33456f217",
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
+    "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/LabTrend.tsx": "6a96d520de066fa85e1ebbc446e841805725bd762f9530f0d68d20db0fad3631",
     "client/src/components/LabUnitReview.tsx": "74cb3ccf5de89c0e70d6e138ddb91bfa4b17241de2e33160812a53db5c76a43b",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
@@ -1454,7 +1467,7 @@
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "a446edddae6b97aba193d8f9c3a99eeefbde02c4c28d59d29cd376e0a07843f8",
+    "client/src/pages/LogMeal.tsx": "628628decb8b2e757b3f45739a0dd7ceadd7490c31189b162b2fb93ca00e6067",
     "client/src/pages/MealPlanner.tsx": "6d9d6b8698e99eb9bddc5e072d5450154722e439cee8023d6a950a4ae00c2a5a",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "94984eb398d1bdd5f8caefe850c2ab7b12d427e002c0a6c00b2a76365caa9639",

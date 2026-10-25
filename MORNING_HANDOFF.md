@@ -1,3 +1,11 @@
+# Latest implementation status — 2026-10-25
+
+Add Food source-backed chooser locally verified:320 tests/types/build/source106, real product/meal-analysis services with synthetic provider/storage, mode/theme/width matrix and single canonical meal save. Publishing next. Barcode primary plus search/description rows; unfinished photo/menu remain gated. Gallery docs/review/add-food-master-20261025/README.md. Full Food Review/master acceptance remains open.
+
+Gut aa87652 is live (dep-dbf5tcb8vfls7392ggpg), CI40228326389 processing. Progress c5baf9b CI40227876715 SUCCESS and deployed; Athlete home/theme previously passed and deployed. New HealthKit handoff preserved without claims of native device acceptance. Next PrecisionNutrition cached-source/draft boundary, then remaining whole-app v0.5 integration. No new user decision required for these engineering tasks.
+
+Older chronological entries below may be superseded; current NEXT_ACTIONS.md governs continuation.
+
 # Latest verified development — 2026-10-25
 
 Athlete Home8e01b63 Actions40227213271 SUCCESS and source-backed light/dark6cbc232 Actions40227507049 SUCCESS; latest Render dep-dbf5oguk1f9s73fug46g LIVE.320 tests and actual responsive source/save journeys passed. Original master access verified; whole-app P0 and independent review remain incomplete.

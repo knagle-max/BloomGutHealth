@@ -1,3 +1,4 @@
+import FoodEntryChooser from "@/components/FoodEntryChooser";
 import {useCapabilities} from "@/lib/capabilities";
 import DevelopmentPhotoPreview from "@/components/DevelopmentPhotoPreview";
 import {useAuth} from "@/lib/auth";
@@ -171,18 +172,18 @@ export default function LogMeal() {
         <span className="panel-icon">
           <Utensils size={24} />
         </span>
-        <p className="eyebrow">NOURISH & NOTICE</p>
+
         <h1>Add Food</h1>
         <p className="muted">
-          Choose how to add each item. Review all items together before saving.
+          Choose how to add food. Review your items together before saving.
         </p>
       </div>
       <fieldset disabled={save.isPending} className="space-y-3">
       <legend className="sr-only">Choose foods to log</legend>
-      <section className="bloom-panel space-y-3">
-        <h2 ref={chooserHeading} tabIndex={-1}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
+      <section className={`bloom-panel space-y-3 ${!method?"food-entry-selection":""}`}>
+        <h2 ref={chooserHeading} tabIndex={-1} className={!method?"sr-only":undefined}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
         {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
-        {!method&&<div className="grid gap-3 sm:grid-cols-2">{availableMethods.map(m=><Button className={`h-auto whitespace-normal text-left block ${m.id==="photo"&&photoPreview?"development-feature":""}`} type="button" variant="outline" key={m.id} onClick={()=>{setSavedMeal(null);changeMethod(m.id);}}><strong className="block">{m.label}</strong><span className="block text-sm font-normal">{m.id==="photo"&&photoPreview?"Preview a synthetic image locally, then describe it.":m.description}</span>{m.id==="photo"&&photoPreview&&<span className="development-status">Development · {photoPreview.label}</span>}</Button>)}</div>}
+        {!method&&<FoodEntryChooser methods={availableMethods} photoLabel={photoPreview?.label} onSelect={next=>{setSavedMeal(null);changeMethod(next);}}/>}
         <p className="panel-note">Selected items and your description stay in this draft. Save only when ready.</p>
         {methodNotice&&<p role="status">{methodNotice}</p>}
         {photoVisited&&photoPreview&&<div hidden={method!=='photo'}><DevelopmentPhotoPreview feature={photoPreview}/></div>}

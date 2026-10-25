@@ -126,3 +126,16 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .athlete-home-context-error p { font-size:14px; }
 
 .app-shell .header-actions [data-testid=button-theme-toggle] { color:hsl(var(--foreground)); }
+
+/* Delivered app-wide Add Food reference; ready workflows and draft state stay canonical. */
+.app-shell .food-entry-selection { padding:0; border:0; background:transparent; box-shadow:none; }
+.food-entry-hero { background:hsl(var(--primary)); color:hsl(var(--primary-foreground)); border-color:hsl(var(--primary)); padding:24px; border-radius:20px; margin-bottom:16px; }
+.food-entry-hero .eyebrow,.food-entry-hero .today-focus-reason { color:inherit; }
+.app-shell .food-entry-hero .hero-button { background:hsl(var(--card)); color:hsl(var(--primary)); }
+.food-entry-alternatives { display:grid; gap:12px; }
+.food-entry-method { width:100%; min-height:80px; text-align:left; display:flex; gap:16px; align-items:center; padding:20px; border-radius:16px; background:hsl(var(--card)); color:hsl(var(--foreground)); border:1px solid hsl(var(--border)); }
+.food-entry-method > svg { color:hsl(var(--primary)); flex-shrink:0; }
+.food-entry-method > span { flex:1; min-width:0; }
+.food-entry-method strong { font-size:17px; }
+.food-entry-description { display:block; font-size:14px; line-height:1.5; margin-top:4px; color:hsl(var(--muted-foreground)); }
+@media(max-width:390px) { .food-entry-hero { padding:20px; }.food-entry-method { padding:16px; gap:12px; } }
