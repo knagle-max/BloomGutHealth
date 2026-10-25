@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),{chromium}=require(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright'),{createServer}=await import('vite');
+const vite=await createServer({server:{host:'127.0.0.1',port:5195,strictPort:true}});await vite.listen();const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:1000}});page.setDefaultTimeout(6000);await page.clock.install({time:new Date('2026-10-25T12:00:00Z')});let failure='daily';const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.route('https://fonts.**/**',r=>r.abort());
+const meal={id:'synthetic-meal',mealText:'Synthetic recorded lunch',mealType:'lunch',loggedAt:'2026-10-25T11:00:00Z',totalCalories:100,totalProtein:0,totalCarbs:null,totalFat:null,nutritionalData:[]};
+await page.route('**/api/**',async route=>{const p=new URL(route.request().url()).pathname;let json=[];
+ if(p===`/api/nutrition/${failure}/synthetic-failure`||failure==='meals'&&p==='/api/meals/synthetic-failure')return route.fulfill({status:503,json:{error:'PRIVATE_UPSTREAM_SENTINEL'}});
+ if(p==='/api/auth/me')json={user:{id:'synthetic-failure',username:'Synthetic failure'}};
+ else if(p==='/api/experience/settings')json={mode:'everyday',displayUnits:{energy:'kcal'},onboarding:{status:'complete'}};
+ else if(p.startsWith('/api/nutrition/targets'))json={calories:2000,protein:100,carbs:200,fat:70,fiber:30,sugar:50,sodium:2300,potassium:3500};
+ else if(p.startsWith('/api/nutrition/daily'))json={meals:[meal],totals:{calories:100,protein:0,carbs:null,fat:null,fiber:null,sugar:null,sodium:null,potassium:null},nutritionCoverage:{},isPartial:true};
+ else if(p==='/api/meals/synthetic-failure')json=[meal,{...meal,id:'synthetic-older',mealText:'Synthetic older history',loggedAt:'2026-10-01T11:00:00Z'}];
+ else if(p==='/api/analysis/status')json={ai:{configured:false}};
+ await route.fulfill({json});
+});
+try{
+ await page.goto('http://127.0.0.1:5195/nutrition');const summary=page.getByTestId('card-daily-summary');await summary.getByText("Today's totals could not load. Your saved journal remains available.",{exact:true}).waitFor();assert.equal(await summary.getByRole('progressbar').count(),0);assert.equal(await page.getByTestId('badge-calories-percentage').count(),0);await page.getByText('Synthetic recorded lunch',{exact:true}).waitFor();
+ failure='none';await summary.getByRole('button',{name:'Retry summary',exact:true}).click();await page.getByTestId('badge-calories-percentage').waitFor();assert.ok((await summary.innerText()).includes('100'));assert.equal(await summary.getByRole('progressbar').count(),2);assert.ok((await summary.innerText()).includes('Unavailable'));
+ failure='daily';await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');await queryClient.invalidateQueries({predicate:q=>String(q.queryKey[0]).startsWith('/api/nutrition/daily')});});await summary.getByText("Today's totals could not load. Your saved journal remains available.",{exact:true}).waitFor();assert.equal(await summary.getByRole('progressbar').count(),0);await page.getByText('Synthetic older history',{exact:true}).waitFor();
+ failure='targets';await page.reload();await summary.getByText('Planning targets could not load. Recorded totals are shown without target comparisons.',{exact:true}).waitFor();assert.equal(await summary.getByRole('progressbar').count(),0);assert.equal(await page.getByTestId('badge-calories-percentage').count(),0);assert.ok((await summary.innerText()).includes('100 kcal'));assert.ok((await summary.innerText()).includes('0 g'));assert.ok(!(await summary.innerText()).includes('2000'));
+ failure='meals';await page.reload();await page.getByText("The full journal could not load. Available entries for today are shown; this is not your complete history.",{exact:true}).waitFor();await page.getByText('Synthetic recorded lunch',{exact:true}).waitFor();assert.equal(await page.getByText('Synthetic older history',{exact:true}).count(),0);
+ for(const width of [320,1280]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
+ assert.ok(!(await page.locator('body').innerText()).includes('PRIVATE_UPSTREAM_SENTINEL'));assert.deepEqual(errors,[]);console.log('PASS synthetic journal failures: no fabricated zero totals or target percentages, preserved saved/today entries, known zero and manual retry, 320/1280 reflow and private errors.');
+}finally{await browser.close();await vite.close();}

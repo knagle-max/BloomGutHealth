@@ -54,6 +54,7 @@ function HistoricalTrends({
 }) {
   const { settings } = useExperience();
   const energyUnit = settings.displayUnits.energy;
+  const currentTargets = targets || {};
   const currentDate = new Date();
   const currentMonth = currentDate.getUTCMonth();
   const currentYear = currentDate.getUTCFullYear();
@@ -117,7 +118,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
+                  Current target: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
                 </p>
               </div>
               <div>
@@ -132,7 +133,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {targets.protein}g
+                  Current target: {historyAmount({dailyAverages:currentTargets},"protein","g")}
                 </p>
               </div>
               <div>
@@ -147,7 +148,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {targets.carbs}g
+                  Current target: {historyAmount({dailyAverages:currentTargets},"carbs","g")}
                 </p>
               </div>
               <div>
@@ -162,7 +163,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {targets.fat}g
+                  Current target: {historyAmount({dailyAverages:currentTargets},"fat","g")}
                 </p>
               </div>
               <div>
@@ -177,7 +178,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {targets.fiber}g
+                  Current target: {historyAmount({dailyAverages:currentTargets},"fiber","g")}
                 </p>
               </div>
               <div>
@@ -192,7 +193,7 @@ function HistoricalTrends({
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {targets.sugar}g
+                  Current target: {historyAmount({dailyAverages:currentTargets},"sugar","g")}
                 </p>
               </div>
             </div>
@@ -223,7 +224,7 @@ function HistoricalTrends({
                   {historyAmount(yearlyData, "calories", energyUnit)}/logged day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
+                  Current target: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
                 </p>
               </div>
               <div>
@@ -236,7 +237,7 @@ function HistoricalTrends({
                   {historyAmount(yearlyData, "protein", "g")}/logged day
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Current target: {targets.protein}g
+                  Current target: {historyAmount({dailyAverages:currentTargets},"protein","g")}
                 </p>
               </div>
             </div>
@@ -294,7 +295,7 @@ export default function NutritionHistory() {
   const today = new Date();
   const localDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   const timezoneOffset = today.getTimezoneOffset();
-  const { data: dailyData, isLoading: dailyLoading } = useQuery<any>({
+  const { data: dailyData, isLoading: dailyLoading, isError: dailyError, refetch: retryDaily } = useQuery<any>({
     queryKey: ["/api/nutrition/daily", userId, localDate, timezoneOffset],
     queryFn: async () =>
       (
@@ -306,12 +307,12 @@ export default function NutritionHistory() {
     enabled: !!userId,
   });
 
-  const { data: targets, isLoading: targetsLoading } = useQuery<any>({
+  const { data: targets, isLoading: targetsLoading, isError: targetsError, refetch: retryTargets } = useQuery<any>({
     queryKey: ["/api/nutrition/targets", userId],
     enabled: !!userId,
   });
 
-  const { data: allMeals, isLoading: mealsLoading } = useQuery<any[]>({
+  const { data: allMeals, isLoading: mealsLoading, isError: mealsError, refetch: retryMeals } = useQuery<any[]>({
     queryKey: ["/api/meals", userId],
     enabled: !!userId,
   });
@@ -461,31 +462,28 @@ export default function NutritionHistory() {
     );
   }
 
-  const journalMeals = [...(allMeals || dailyData?.meals || [])].sort(
+  const journalSource = !mealsError && allMeals
+    ? allMeals
+    : !dailyError ? dailyData?.meals || [] : [];
+  const journalMeals = [...journalSource].sort(
     (a, b) => +new Date(b.loggedAt) - +new Date(a.loggedAt),
   );
   const meals = journalMeals.slice(0, historyLimit);
   const totals = dailyData?.totals || {
-    calories: 0,
-    protein: 0,
-    carbs: 0,
-    fat: 0,
-    fiber: 0,
-    sugar: 0,
-    sodium: 0,
-    potassium: 0,
+    calories: null,
+    protein: null,
+    carbs: null,
+    fat: null,
+    fiber: null,
+    sugar: null,
+    sodium: null,
+    potassium: null,
   };
-  const nutrientTargets = targets || {
-    calories: 2000,
-    protein: 120,
-    carbs: 225,
-    fat: 67,
-    fiber: 30,
-    sugar: 50,
-    sodium: 2300,
-    potassium: 3500,
-  };
+  const nutrientTargets = targets || {};
 
+  const summaryValueKnown = (key: string) => typeof totals[key] === "number" && Number.isFinite(totals[key]) && totals[key] >= 0;
+  const retrySummary = () => { void Promise.allSettled([retryDaily(), retryTargets()]); };
+  const summaryAmount = (key: string, unit: string) => summaryValueKnown(key) ? `${Math.round(totals[key])} ${unit}` : "Unavailable";
   const showAmount = (value: number | null | undefined) =>
     value == null ? "Unavailable" : Math.round(value);
   const calculatePercentage = (current: number | null, target: number) => {
@@ -562,13 +560,20 @@ export default function NutritionHistory() {
         </Card>
       )}
 
-      {dailyData?.isPartial && (
+      {!dailyError && dailyData?.isPartial && (
         <p className="bloom-panel text-sm" role="status">
           Partial daily totals: known nutrition is included. Some meals or
           nutrients are missing; unavailable values are not counted as zero.
         </p>
       )}
       <div className="journal-workspace">
+      {mealsError && (
+        <div role="alert" className="bloom-panel space-y-3">
+          <p>The full journal could not load. Available entries for today are shown; this is not your complete history.</p>
+          <Button variant="outline" onClick={() => {void retryMeals();}}>Retry journal</Button>
+        </div>
+      )}
+
 
       <Card className="mb-6" data-testid="card-daily-summary">
         <CardHeader>
@@ -577,7 +582,34 @@ export default function NutritionHistory() {
             Today's Summary
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        {dailyError || !dailyData ? (
+          <CardContent className="space-y-3">
+            <p role="alert">Today's totals could not load. Your saved journal remains available.</p>
+            <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
+          </CardContent>
+        ) : targetsError || !targets ? (
+          <CardContent className="space-y-3">
+          <p role="alert">Planning targets could not load. Recorded totals are shown without target comparisons.</p>
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              ["calories", "Energy", energyUnit], ["protein", "Protein", "g"],
+              ["carbs", "Carbs", "g"], ["fat", "Fat", "g"], ["fiber", "Fiber", "g"],
+              ["sugar", "Sugar", "g"], ["sodium", "Sodium", "mg"], ["potassium", "Potassium", "mg"],
+            ].map(([key, label, unit]) => (
+              <div key={key}>
+                <dt>{label}</dt>
+                <dd>
+                  {key === "calories"
+                    ? summaryValueKnown(key) ? `${energyAmount(totals[key], energyUnit)} ${unit}` : "Unavailable"
+                    : summaryAmount(key, unit)}
+                  {dailyData.nutritionCoverage?.[key]?.partial ? " · partial" : ""}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
+        </CardContent>
+        ) : (<CardContent className="space-y-4">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Energy ({energyUnit})</span>
@@ -591,7 +623,7 @@ export default function NutritionHistory() {
                     : ""}{" "}
                   / {energyAmount(nutrientTargets.calories || 2000, energyUnit)} {energyUnit}
                 </span>
-                <Badge
+                {summaryValueKnown("calories") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(
@@ -608,16 +640,16 @@ export default function NutritionHistory() {
                     ),
                   )}
                   %
-                </Badge>
+                </Badge>)}
               </div>
             </div>
-            <Progress
+            {summaryValueKnown("calories") && (<Progress
               value={calculatePercentage(
                 totals.calories,
                 nutrientTargets.calories,
               )}
               className="h-2"
-            />
+            />)}
           </div>
 
           <div className="space-y-2">
@@ -627,10 +659,10 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
                 >
-                  {showAmount(totals.protein)}g /{" "}
+                  {summaryAmount("protein", "g")} /{" "}
                   {nutrientTargets.protein || 120}g
                 </span>
-                <Badge
+                {summaryValueKnown("protein") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(
@@ -646,16 +678,16 @@ export default function NutritionHistory() {
                     ),
                   )}
                   %
-                </Badge>
+                </Badge>)}
               </div>
             </div>
-            <Progress
+            {summaryValueKnown("protein") && (<Progress
               value={calculatePercentage(
                 totals.protein,
                 nutrientTargets.protein,
               )}
               className="h-2"
-            />
+            />)}
           </div>
 
           <div className="space-y-2">
@@ -665,9 +697,9 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
                 >
-                  {showAmount(totals.carbs)}g / {nutrientTargets.carbs || 225}g
+                  {summaryAmount("carbs", "g")} / {nutrientTargets.carbs || 225}g
                 </span>
-                <Badge
+                {summaryValueKnown("carbs") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(totals.carbs, nutrientTargets.carbs),
@@ -677,13 +709,13 @@ export default function NutritionHistory() {
                     calculatePercentage(totals.carbs, nutrientTargets.carbs),
                   )}
                   %
-                </Badge>
+                </Badge>)}
               </div>
             </div>
-            <Progress
+            {summaryValueKnown("carbs") && (<Progress
               value={calculatePercentage(totals.carbs, nutrientTargets.carbs)}
               className="h-2"
-            />
+            />)}
           </div>
 
           <div className="space-y-2">
@@ -693,9 +725,9 @@ export default function NutritionHistory() {
                 <span
                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
                 >
-                  {showAmount(totals.fat)}g / {nutrientTargets.fat || 67}g
+                  {summaryAmount("fat", "g")} / {nutrientTargets.fat || 67}g
                 </span>
-                <Badge
+                {summaryValueKnown("fat") && (<Badge
                   variant="outline"
                   className={getStatusColor(
                     calculatePercentage(totals.fat, nutrientTargets.fat),
@@ -705,13 +737,13 @@ export default function NutritionHistory() {
                     calculatePercentage(totals.fat, nutrientTargets.fat),
                   )}
                   %
-                </Badge>
+                </Badge>)}
               </div>
             </div>
-            <Progress
+            {summaryValueKnown("fat") && (<Progress
               value={calculatePercentage(totals.fat, nutrientTargets.fat)}
               className="h-2"
-            />
+            />)}
           </div>
 
           <div className="pt-4 border-t">
@@ -720,32 +752,32 @@ export default function NutritionHistory() {
               <div>
                 <p className="text-xs text-muted-foreground">Fiber</p>
                 <p className="text-sm font-medium">
-                  {showAmount(totals.fiber)}g / {nutrientTargets.fiber}g
+                  {summaryAmount("fiber", "g")} / {nutrientTargets.fiber}g
                 </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Sugar</p>
                 <p className="text-sm font-medium">
-                  {showAmount(totals.sugar)}g / {nutrientTargets.sugar}g
+                  {summaryAmount("sugar", "g")} / {nutrientTargets.sugar}g
                 </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Sodium</p>
                 <p className="text-sm font-medium">
-                  {showAmount(totals.sodium)}mg / {nutrientTargets.sodium}
+                  {summaryAmount("sodium", "mg")} / {nutrientTargets.sodium}
                   mg
                 </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Potassium</p>
                 <p className="text-sm font-medium">
-                  {showAmount(totals.potassium)}mg / {nutrientTargets.potassium}
+                  {summaryAmount("potassium", "mg")} / {nutrientTargets.potassium}
                   mg
                 </p>
               </div>
             </div>
           </div>
-        </CardContent>
+        </CardContent>)}
       </Card>
 
       <div className="mb-6">
@@ -1099,7 +1131,7 @@ export default function NutritionHistory() {
       </div>
       <details className="bloom-panel workspace-disclosure mb-6">
         <summary>Nutrition history & trends</summary>
-        <HistoricalTrends userId={userId} targets={nutrientTargets} />
+        <HistoricalTrends userId={userId} targets={targetsError ? null : targets} />
       </details>
       {journalMeals.length > historyLimit && (
         <Button
