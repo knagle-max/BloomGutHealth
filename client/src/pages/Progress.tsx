@@ -18,6 +18,10 @@ export default function Progress() {
       queryKey: ["/api/precision"],
       enabled: !!user,
     });
+  const currentReport=report.fetchStatus==="idle"&&!report.isError?report.data:undefined;
+  const currentProfile=profile.fetchStatus==="idle"&&!profile.isError?profile.data:undefined;
+  const currentHydration=sessions.fetchStatus==="idle"&&!sessions.isError?sessions.data:undefined;
+  const checkingReport=report.isPending||report.fetchStatus!=="idle";
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
@@ -31,10 +35,10 @@ export default function Progress() {
       <section className="bloom-panel space-y-3">
         <h2>Your dated observations</h2>
         <p>Use repeat measurements and check-ins to review what changed. A current Profile value is not a dated observation.</p>
-        {report.isLoading && <p role="status">Loading dated observations…</p>}
-        {report.isError && <p role="alert">Dated observations could not load. Retry by reopening Progress; your records are not treated as empty.</p>}
-        {report.data && (report.data.checkins.length ? <ol className="space-y-3">
-          {[...report.data.checkins].sort((a,b)=>+new Date(b.measuredAt)-+new Date(a.measuredAt)).slice(0,5).map(c=><li className="precision-observation block" key={c.id}>
+        {checkingReport && <p role="status">Checking current dated observations…</p>}
+        {report.isError && <p role="alert">Dated observations could not be checked. Your records are not treated as empty.</p>}
+        {currentReport && (currentReport.checkins.length ? <ol className="space-y-3">
+          {[...currentReport.checkins].sort((a,b)=>+new Date(b.measuredAt)-+new Date(a.measuredAt)).slice(0,5).map(c=><li className="precision-observation block" key={c.id}>
             <h3>{new Date(c.measuredAt).toLocaleDateString()}</h3>
             <p>{[
               c.weightKg == null ? null : `Weight: ${Number(kgToDisplay(c.weightKg,settings.displayUnits.bodyWeight).toFixed(2))} ${settings.displayUnits.bodyWeight}`,
@@ -58,13 +62,14 @@ export default function Progress() {
           Comparisons need compatible units, dates, lab methods and relevant
           fasting conditions. Entered results are not independently verified.
         </p>
-        {report.isLoading && (
-          <p role="status">Loading your laboratory history…</p>
+        {checkingReport && (
+          <p role="status">Checking current laboratory history…</p>
         )}
-        {report.error && <p role="alert">{report.error.message}</p>}
-        {report.data?.pendingLabs && <LabUnitReview labs={report.data.pendingLabs} />}
-        {report.data?.trends.map(t=><LabTrend key={t.marker} trend={t}/>)}
-        {report.data && !report.data.trends.length && (
+        {report.isError && <p role="alert">Laboratory history could not be checked. Previously loaded results are not shown as current.</p>}
+        {(report.isError||report.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={report.isFetching} onClick={()=>report.refetch()}>Retry Progress observations</button>}
+        <div hidden={!currentReport}><fieldset disabled={!currentReport}><LabUnitReview labs={report.data?.pendingLabs||[]} /></fieldset></div>
+        {currentReport?.trends.map(t=><LabTrend key={t.marker} trend={t}/>)}
+        {currentReport && !currentReport.trends.length && (
           <p>
             No dated laboratory results yet. Add a report's values to establish
             a baseline.
@@ -117,17 +122,19 @@ export default function Progress() {
         </div>
         {saving&&<p role="status">Saving units…</p>}
         {settingsError&&<p role="alert">Could not save units: {settingsError}</p>}
-        {profile.isPending&&<p role="status">Loading saved profile measurements…</p>}
-        {profile.isError&&<p role="alert">Saved profile measurements could not load.</p>}
-        {profile.data&&<dl className="grid grid-cols-2 gap-3">
-          <div><dt className="panel-note">Current profile height</dt><dd className="font-medium">{profile.data.heightCm == null?"Not recorded":(()=>{
-            const value=cmToHeight(profile.data.heightCm,settings.displayUnits.height);
+        {(profile.isPending||profile.fetchStatus!=="idle")&&<p role="status">Loading saved profile measurements…</p>}
+        {profile.isError&&<p role="alert">Saved profile measurements could not load. <button type="button" className="text-link" onClick={()=>profile.refetch()}>Retry Profile measurements</button></p>}
+        {currentProfile&&<dl className="grid grid-cols-2 gap-3">
+          <div><dt className="panel-note">Current profile height</dt><dd className="font-medium">{currentProfile.heightCm == null?"Not recorded":(()=>{
+            const value=cmToHeight(currentProfile.heightCm,settings.displayUnits.height);
             return settings.displayUnits.height==="ft-in"?value.primary+" ft "+Number(value.inches.toFixed(1))+" in":Number(value.primary.toFixed(2))+" "+settings.displayUnits.height;
           })()}</dd></div>
-          <div><dt className="panel-note">Current profile weight</dt><dd className="font-medium">{profile.data.weightKg==null?"Not recorded":Number(kgToDisplay(profile.data.weightKg,settings.displayUnits.bodyWeight).toFixed(1))+" "+settings.displayUnits.bodyWeight}</dd></div>
+          <div><dt className="panel-note">Current profile weight</dt><dd className="font-medium">{currentProfile.weightKg==null?"Not recorded":Number(kgToDisplay(currentProfile.weightKg,settings.displayUnits.bodyWeight).toFixed(1))+" "+settings.displayUnits.bodyWeight}</dd></div>
         </dl>}
         <p className="panel-note">Source: your latest saved nutrition Profile values; these are not dated weight-history entries. Athlete session weigh-ins and device measurements remain separately identified, so overlapping values are not silently merged.</p>
-        {sessions.data&&<p className="panel-note">Athlete hydration observations recorded: {sessions.data.length}. These retain their original session dates and are not substituted for your current profile weight.</p>}
+        {sessions.fetchStatus!=="idle"&&<p role="status">Checking current hydration observations…</p>}
+        {sessions.isError&&<p role="alert">Hydration observations could not load. <button type="button" className="text-link" onClick={()=>sessions.refetch()}>Retry hydration observations</button></p>}
+        {currentHydration&&<p className="panel-note">Athlete hydration observations recorded: {currentHydration.length}. These retain their original session dates and are not substituted for your current profile weight.</p>}
         <Link className="text-link" href="/profile#measurement-units">Edit your saved body measurements in Profile</Link>
       </section>
       </details>

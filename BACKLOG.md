@@ -191,3 +191,9 @@ ATHLETE-HOME-01 — IMPLEMENTED/LOCAL VERIFIED: source-backed session-first home
 
 
 ATHLETE-THEME-01 — VERIFIED local: generator derives Athlete light from delivered master SVG, preserves original public/archive token bytes and existing dark palette; ink/reversed logo now follows appearance. Actual browser seven-state/six-width/save workflow regression PASS, >=4.5 text/support/button contrast and logo/background separation checks PASS at visible toggle widths; types/build/source105 PASS. Selective evidence docs/review/athlete-theme-20261025/README.md. No exhaustive accessibility/independent Design acceptance claimed. Prior8e01b63 Render dep-dbf5mnbbc2fs738rna5g LIVE; Actions40227213271 still processing at check. Next: Progress cached laboratory/observation source safety, then remaining whole-app master integration.
+
+
+PROGRESS-CURRENT-SOURCE-01 — IN_PROGRESS P0: Progress now withholds cached body/lab/Profile/hydration/device observations during non-idle or failed checks. Explicit retry, safe error text, no false empty/zero. Lab-unit draft component stays mounted but hidden/disabled until current source returns; actual browser verifies unsaved choice survives paused/held/error/retry. Actual precision handler returns current81kg/explicit0energy, original0mg/dL preserved; manual device0count withheld/restored in paused cache fixture. No source writes or new gallery. Types/browser/source105 PASS; full320/build/lab-source regression completing. Athlete8e01b63 Actions40227213271 SUCCESS; theme6cbc232 Actions40227507049 SUCCESS / Render dep-dbf5oguk1f9s73fug46g LIVE. Whole-app acceptance remains open.
+
+
+PROGRESS-CURRENT-SOURCE-01 — LOCAL VERIFIED:320 tests/types/build/source105 PASS; new actual-handler freshness/draft/retry journey and existing lab offset/zero/unit/method/date/reflow journey PASS. No data mutation or clinical activation; no near-identical gallery. Publish and verify exact CI/Render.
