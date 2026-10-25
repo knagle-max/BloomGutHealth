@@ -7,7 +7,7 @@ import path from 'node:path';
 import {buildPrecisionReport,contextSchema} from '../../shared/precision-nutrition.ts';
 import {defaultPreferences} from '../../shared/meal-intelligence.ts';
 const phase=process.argv[2];assert.ok(['before','after'].includes(phase));
-const root='docs/review/today-companion-20261025',out=root+'/'+phase;await mkdir(out,{recursive:true});
+const evidence=process.env.BLOOM_TODAY_CAPTURE!=='false';const root='docs/review/today-companion-20261025',out=root+'/'+phase;if(evidence)await mkdir(out,{recursive:true});const capture=options=>evidence?page.screenshot(options):Promise.resolve();
 const {chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');
 const baseline='aa22265c415f3ee702b06f93f70314bacd29856c';
 const sources=phase==='before'?new Map(['client/src/components/TodayFocus.tsx','client/src/pages/Dashboard.tsx','client/src/brand.css','shared/today-focus.ts'].map(file=>[path.resolve(file),execFileSync('git',['show',baseline+':'+file],{encoding:'utf8'})])):new Map();
@@ -48,11 +48,11 @@ try{
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   const cta=await page.locator('.today-focus .hero-button').boundingBox();assert.ok(cta&&cta.height>=44&&cta.y+cta.height<830);
   if(phase==='after'){assert.equal(await page.locator('.today-status-strip').count(),1);assert.equal(await page.locator('main a.hero-button:visible').count(),1);if(state==='recorded')assert.equal(await page.locator('.meal-list .meal-row').count(),1);}
-  await page.screenshot({path:`${out}/${state}-${width}.png`});
-  if(width===375){await page.evaluate(()=>document.documentElement.classList.add('dark'));await page.clock.runFor(350);await page.screenshot({path:`${out}/${state}-dark-375.png`});await page.evaluate(()=>document.documentElement.classList.remove('dark'));await page.clock.runFor(350);}
-  if(phase==='after'&&width===375&&state==='empty'){
+  await capture({path:`${out}/${state}-${width}.png`});
+  if(width===375){await page.evaluate(()=>document.documentElement.classList.add('dark'));await page.clock.runFor(350);await capture({path:`${out}/${state}-dark-375.png`});await page.evaluate(()=>document.documentElement.classList.remove('dark'));await page.clock.runFor(350);}
+  if(evidence&&phase==='after'&&width===375&&state==='empty'){
    await page.evaluate(()=>{['.today-focus-heading','.today-status-strip','.today-focus-evidence'].forEach((selector,index)=>{const node=document.querySelector(selector),box=node.getBoundingClientRect();node.style.outline='2px solid #9b6b26';const badge=document.createElement('span');badge.dataset.reviewMarker='true';badge.textContent=String(index+1);Object.assign(badge.style,{position:'absolute',left:(box.left-7+scrollX)+'px',top:(box.top-9+scrollY)+'px',background:'#9b6b26',color:'white',borderRadius:'50%',width:'20px',height:'20px',font:'bold 12px sans-serif',display:'grid',placeItems:'center',zIndex:100,pointerEvents:'none'});document.body.append(badge);});});
-   await page.screenshot({path:`${out}/empty-375-annotated.png`});await page.evaluate(()=>{document.querySelectorAll('[data-review-marker]').forEach(node=>node.remove());document.querySelectorAll('.today-focus-heading,.today-status-strip,.today-focus-evidence').forEach(node=>node.style.outline='');});
+   await capture({path:`${out}/empty-375-annotated.png`});await page.evaluate(()=>{document.querySelectorAll('[data-review-marker]').forEach(node=>node.remove());document.querySelectorAll('.today-focus-heading,.today-status-strip,.today-focus-evidence').forEach(node=>node.style.outline='');});
   }
   checks.push({width,state,primaryInViewport:true});releasePending?.();releasePending=undefined;
  }
@@ -68,9 +68,11 @@ try{
   failPrecision=true;holdPrecision=false;releasePrecision();await focus.getByText(/Your saved focus could not load/).waitFor();assert.ok(!(await focus.textContent()).includes(mapping));
   failPrecision=false;await refresh(['/api/precision']);await focus.getByText(new RegExp(mapping)).first().waitFor();
   observedSleep=0;await refresh(['/api/experience/records','synthetic-companion','checkin']);await page.locator('.today-status-item').filter({hasText:'Recover'}).getByText('0 h sleep',{exact:true}).waitFor();
+  await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({predicate:q=>['/api/precision','/api/meals','/api/experience/records'].includes(q.queryKey[0])}))query.setState({fetchStatus:'paused'});});await page.clock.runFor(50);assert.equal(await page.locator('.today-status-item').getByText('Checking…',{exact:true}).count(),3);assert.ok(!(await focus.textContent()).includes(mapping));assert.equal(await focus.getByRole('link',{name:'Log a meal',exact:true}).count(),1);
+  await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');for(const query of queryClient.getQueryCache().findAll({predicate:q=>['/api/precision','/api/meals','/api/experience/records'].includes(q.queryKey[0])}))query.setState({fetchStatus:'idle'});});await page.clock.runFor(50);
   await focus.getByRole('link',{name:'Adjust',exact:true}).click();const goalInput=page.getByRole('textbox',{name:'Goals (comma separated)',exact:true});await goalInput.waitFor();assert.equal(await goalInput.evaluate(node=>document.activeElement===node),true);
   state='empty';await page.goto('http://127.0.0.1:5204/');const addFood=focus.getByRole('link',{name:'Add food',exact:true});await addFood.focus();await page.keyboard.press('Enter');await page.getByRole('heading',{name:'Add Food',exact:true}).waitFor();
   checks.push({cachedSessionRetractedDuringRefreshAndFailure:true,cachedGoalRetractedDuringRefreshAndFailure:true,explicitRetryRestores:true,recordedZeroSleepPreserved:true,canonicalGoalAdjustment:true,canonicalAddFood:true});
  }
- assert.deepEqual(errors,[]);await writeFile(`${out}/results.json`,JSON.stringify({synthetic:true,phase,baseline,checks,errors,nativeSafari:false,voiceOver:false,plannedRestContract:false},null,2));console.log(`PASS: actual ${phase} Today renders,6 source states ×4 widths, dark375, primary action/touch width/no overflow`);
+ assert.deepEqual(errors,[]);if(evidence)await writeFile(`${out}/results.json`,JSON.stringify({synthetic:true,phase,baseline,checks,errors,nativeSafari:false,voiceOver:false,plannedRestContract:false},null,2));console.log(`PASS: actual ${phase} Today renders,6 source states ×4 widths, dark375, primary action/touch width/no overflow`);
 }finally{releasePending?.();releasePrecision?.();releaseSessions?.();await browser.close();await vite.close();}

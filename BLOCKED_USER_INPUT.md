@@ -104,3 +104,6 @@ OPS-01 circuit activation is covered by the existing monetary policy decision: s
 - Choices: Commit the approved reference package to the shared repository; provide it as an uploaded artifact; or have Branding review the implemented result against their source package.
 - Recommended default: Continue adapting existing original Bloom tokens/icon and written acceptance; provide the package through the repository so future sessions can reproduce asset integration.
 - Impact: Exact package integration/Branding signoff stays unverified. Does not block the working Today redesign, source correctness or independent engineering. No new asset licence or clinical clearance is assumed.
+
+
+TODAY-ASSETS-01 scope update: Architect c4f178d/91b4a84 confirms raw-byte materialization was not authorized for the original packages and the latest master is now Bloom_App_Wide_Experience_Redesign_2026-10-25.zip, with14 conceptual mobile SVGs/CSS/inventory. Exact design fidelity for the whole application is blocked on actual accessible originals, not only Today. The existing question/options/default apply to this master package and prior Today/scientific-depth kits. No recreated SVG/prose-based UI is claimed to be those original sources. Safety, accessibility and correctness work continues; full desktop/dark/Coach/research patterns also remain incomplete design deliverables.

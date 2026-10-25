@@ -70,8 +70,8 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading || meals.isFetching} journalError={mealError} />
-      <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={meals.isLoading || meals.isFetching} unavailable={mealError} />
+      <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isPending || meals.fetchStatus !== "idle"} journalError={mealError} />
+      <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={meals.isPending || meals.fetchStatus !== "idle"} unavailable={mealError} />
       {(meals.isLoading || mealError || summary.meals.length > 0) && <>
       <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>
       <summary>Nutrition so far</summary>

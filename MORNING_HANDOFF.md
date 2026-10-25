@@ -1,3 +1,11 @@
+# Latest correctness delivery — 2026-10-25
+
+Publishing cached-context safeguards: Athlete targets, fueling guidance and meal choices withdraw during pending/paused/failed current-context checks; explicit retry respects the actual under-18 gate. Source profile and hydration drafts remain intact. Today also distinguishes paused source checks from confirmed absent records and does not retain personal routing as current.318 full/type/build and actual-handler/browser checks pass. New commit CI/Render pending.
+
+Visible Everyday Today slice3f2bdc2e265ce69eb443c5f17835cefafd2f2893 passed Actions40207206025 and is live on the existing Render service (dep-dbf20r6k1f9s73fpv94g). Actual before/after evidence: docs/review/today-companion-20261025/README.md. This is partial engineering under the newer whole-app P0 direction91b4a84, not final asset/design acceptance. Original ZIPs remain inaccessible; exact fidelity and independent Brand/UX/device acceptance remain pending.
+
+Next: weekly-review and remaining paused planning consumers; then high-impact whole-app/Athlete work consistent with actual source deliverables and permissions. Wider v0.5, native/platform/source-rights/clinical/independent acceptance and controller runtime/restore/rollout remain open. Main, real roles/credentials and production data are unchanged. Earlier detail follows.
+
 # Latest visible delivery — Today companion, 2026-10-25
 
 Publishing the first P0 Today redesign slice for Everyday: a contextual Bloom hero, one main action, compact dated Eat/Move/Recover source links, no duplicate empty journal card, and cached personal context retracted during refresh/failure. Original source observations/zero/missingness remain distinct; no readiness score or assumed planned rest.318 full tests,9 focused, types/build, matched actual responsive/light-dark screenshots, keyboard/canonical goal-save/AddFood and320×500 effective-zoom checks pass. Evidence: docs/review/today-companion-20261025/README.md. CI/Render for this new commit pending.

@@ -5,9 +5,9 @@ import { todayContextAction } from "@shared/today-focus";
 import { useExperienceRecords } from "@/lib/experience";
 export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
-    goal = !report.isFetching && !report.isError ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
+    goal = report.fetchStatus === "idle" && !report.isError ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
   const sessions = useExperienceRecords("session");
-  const action = todayContextAction({ mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: !sessions.isFetching && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
+  const action = todayContextAction({ mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
   const sessionAction = action.href === '/athlete/fueling';
   return (
     <section className="today-focus" aria-labelledby="today-action-title">
