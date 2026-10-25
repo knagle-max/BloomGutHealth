@@ -1,3 +1,4 @@
+import {FeatureStepUp,FeatureStepUpReceipts,type StepUpController} from '../server/feature-step-up';
 import assert from 'node:assert/strict';
 import { randomBytes, randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -16,7 +17,7 @@ const binding = { serviceId: 'srv-' + randomBytes(12).toString('hex'), environme
 const request = (revision = 1) => ({ binding, actorId: 'synthetic-ci-operator', requestId: randomUUID(), expectedRevision: revision - 1, reason: 'Synthetic schema-only control history test', control: { ...binding, revision, state: 'paused' as const, materialDigest: 'a'.repeat(64), reviewId: 'synthetic-no-release-approval', scope: { territories: ['CA'], populations: ['adult'], purposes: ['synthetic-ci'] }, rolloutPercent: 0, cohortId: 'synthetic-ci', changedBy: 'synthetic-ci-operator', expiresAt: new Date(Date.now() + 3600000).toISOString() } });
 let stage = 'migration';
 try {
-    for(const file of ['0012_feature_control_history.sql','0013_feature_control_request_unique.sql'])await pool.query(await readFile(new URL('../migrations/'+file,import.meta.url),'utf8'));
+    for(const file of ['0012_feature_control_history.sql','0013_feature_control_request_unique.sql','0014_feature_control_step_up_receipts.sql'])await pool.query(await readFile(new URL('../migrations/'+file,import.meta.url),'utf8'));
     assert.equal((await pool.query("SELECT count(*)::int AS n FROM pg_constraint WHERE conrelid='feature_control_audit'::regclass AND conname='feature_control_audit_request' AND contype='u'")).rows[0].n,1);
     const transaction = postgresFeatureControlTransaction(pool), left = new FeatureControlStorage(transaction, async () => true), right = new FeatureControlStorage(transaction, async () => true);
     stage = 'default-deny';
@@ -42,6 +43,16 @@ try {
     stage = 'immutable-audit';
     await assert.rejects(() => pool.query('UPDATE feature_control_audit SET revision=revision WHERE service_id=$1', [binding.serviceId]), error => typeof error === 'object' && error !== null && 'code' in error && error.code === '55000');
     assert.equal((await right.history(binding, 'synthetic-ci-operator')).length, 2);
+    stage='step-up';
+    const context={actorId:'synthetic-ci-operator',sessionId:randomBytes(24).toString('base64url')}, change=request(3), intent={action:'pause' as const,change};
+    const grant:StepUpController={serviceId:binding.serviceId,environment:binding.environment,userId:context.actorId,role:'feature-controller',scopes:['features:control'],grantId:'synthetic-ci-grant',reviewReference:'synthetic-no-release-approval',featureIds:[binding.featureId],actions:['pause'],credentialVersion:'c'.repeat(64),expiresAt:new Date(Date.now()+3600000).toISOString()};
+    const adapters={reauthenticate:async()=>grant,current:async()=>grant}, receipts=new FeatureStepUpReceipts(pool),secret=randomBytes(32).toString('hex');
+    const proofService=new FeatureStepUp(binding,secret,receipts,adapters), issued=await proofService.issue(context,intent,'synthetic-ci-password');
+    const competing=await Promise.allSettled([proofService.consume(context,intent,issued.proof),new FeatureStepUp(binding,secret,receipts,adapters).consume(context,intent,issued.proof)]);
+    assert.equal(competing.filter(row=>row.status==='fulfilled').length,1);
+    const lease=competing.find(row=>row.status==='fulfilled');assert.ok(lease&&lease.status==='fulfilled');
+    assert.equal((await new FeatureControlStorage(transaction,lease.value.authorize).append(change)).control.revision,3);
+    console.log('PASS: isolated PostgreSQL step-up cross-replica consumption and transactional authorization; synthetic adapters only');
     console.log('PASS: isolated Neon control-history default denial, real concurrent CAS, encrypted audit, historical replay and immutable SQL guard; no runtime activation');
 }
 catch {

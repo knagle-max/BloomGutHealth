@@ -11,7 +11,7 @@ import {assertSchemaPushResult} from '../scripts/lib/schema-push-output.mjs';
 test('actual Drizzle serialization excludes SQL-owned audit tables while every application table remains represented',()=>{
  const names=(values:Record<string,unknown>)=>Object.values(values).filter(value=>is(value,PgTable)).map(value=>getTableName(value as PgTable)).sort();
  const all=names(complete),app=names(application),owned=all.filter(isMigrationManagedTable);
- assert.deepEqual(owned,['feature_control_audit','feature_control_states']);assert.deepEqual(app,all.filter(name=>!isMigrationManagedTable(name)));
+ assert.deepEqual(owned,['feature_control_audit','feature_control_states','feature_control_step_up_receipts']);assert.deepEqual(app,all.filter(name=>!isMigrationManagedTable(name)));
  const generated=generateDrizzleJson(application),tables=Object.values(generated.tables).map(table=>table.name).sort();assert.deepEqual(tables,app);assert.ok(!tables.some(isMigrationManagedTable));
  const full=generateDrizzleJson(complete);assert.ok(Object.values(full.tables).some(table=>table.name==='feature_control_audit'));
 });
