@@ -1,0 +1,234 @@
+{
+  "sourceCommit": "2af0998c96b21a9d07320863946e4230fc5edf7f",
+  "manifestSha256": "53d7f19bb1fda08cbbf00934278c2969cc4d90fa48562bd61bf5c011ea19ee83",
+  "manifestFiles": 175,
+  "uniquePaths": 175,
+  "presentFiles": 174,
+  "matchedFiles": 174,
+  "missing": [
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/previews/brand-concept-reference.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "fc29dad9473cdaf17d7c82281f06fd523df6498e47511b690300bcd1d73c4463",
+      "bytes": 1697994
+    }
+  ],
+  "mismatched": [],
+  "unexpected": [],
+  "packs": {
+    "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip": {
+      "expected": 12,
+      "matched": 12,
+      "missing": []
+    },
+    "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip": {
+      "expected": 17,
+      "matched": 17,
+      "missing": []
+    },
+    "Bloom_Asset_Audit_Addendum_2026-10-23.zip": {
+      "expected": 3,
+      "matched": 3,
+      "missing": []
+    },
+    "Bloom_Athlete_Training_States_Assets_2026-10-23.zip": {
+      "expected": 10,
+      "matched": 10,
+      "missing": []
+    },
+    "Bloom_Biology_AI_UX_Pack_2026-10-23.zip": {
+      "expected": 9,
+      "matched": 9,
+      "missing": []
+    },
+    "Bloom_Coherent_Experience_2026-10-24.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_Concise_UI_Kit_2026-10-24.zip": {
+      "expected": 6,
+      "matched": 6,
+      "missing": []
+    },
+    "Bloom_Layout_Copy_Correction_2026-10-24.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_Mobile_Screenshot_Fix_2026-10-24.zip": {
+      "expected": 2,
+      "matched": 2,
+      "missing": []
+    },
+    "Bloom_Photo_Logging_Branding_UX_2026-10-23.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_Restaurant_UX_Kit_2026-10-23.zip": {
+      "expected": 10,
+      "matched": 10,
+      "missing": []
+    },
+    "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip": {
+      "expected": 12,
+      "matched": 12,
+      "missing": []
+    },
+    "Bloom_Scientific_Depth_UX_Kit_2026-10-25.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_Today_Experience_Redesign_2026-10-25.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_Today_P0_Polish_2026-10-25.zip": {
+      "expected": 5,
+      "matched": 5,
+      "missing": []
+    },
+    "Bloom_UT_Simplicity_UX_Review_2026-10-23.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip": {
+      "expected": 8,
+      "matched": 8,
+      "missing": []
+    },
+    "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip": {
+      "expected": 15,
+      "matched": 15,
+      "missing": []
+    },
+    "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip": {
+      "expected": 5,
+      "matched": 5,
+      "missing": []
+    },
+    "Bloom_Visual_Phases23_Addendum_2026-10-24.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip": {
+      "expected": 11,
+      "matched": 11,
+      "missing": []
+    },
+    "Bloom_v06_Branding_UX_Research_Package_2026-10-23.zip": {
+      "expected": 4,
+      "matched": 4,
+      "missing": []
+    },
+    "bloom_brand_delivery_v1.zip": {
+      "expected": 18,
+      "matched": 17,
+      "missing": [
+        "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/previews/brand-concept-reference.png"
+      ]
+    }
+  },
+  "svgParseErrors": [],
+  "svgWithActiveContent": [],
+  "svgWithExternalImageOrUse": [],
+  "existingBrandComparison": [
+    {
+      "file": "bloom-icon-athlete-64.png",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-monochrome.svg",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-athlete-512.png",
+      "same_bytes": true
+    },
+    {
+      "file": "design-tokens.json",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-everyday-192.png",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-wordmark-light.svg",
+      "same_bytes": true
+    },
+    {
+      "file": "empty-journal-illustration.svg",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-everyday.svg",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-everyday-512.png",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-athlete.svg",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-everyday-64.png",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-icon-athlete-192.png",
+      "same_bytes": true
+    },
+    {
+      "file": "bloom-wordmark-dark.svg",
+      "same_bytes": true
+    }
+  ],
+  "applicationIntegrationClaimed": false,
+  "archiveZipHashesIndependentlyVerified": false,
+  "tsxSyntax": [
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/AddFoodEntry.tsx",
+      "parseErrors": 0
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/components/ScenarioComparison.tsx",
+      "parseErrors": 0
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/components/TrainingGuidance.tsx",
+      "parseErrors": 0
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/examples/Usage.example.tsx",
+      "parseErrors": 0
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/examples/ExampleUsage.tsx",
+      "parseErrors": 0
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/components/ScientificInsight.tsx",
+      "parseErrors": 0
+    }
+  ],
+  "openedOriginals": {
+    "svg": [
+      "today.svg",
+      "athlete_home.svg",
+      "my_biology.svg",
+      "progress.svg"
+    ],
+    "html": "Bloom_Today_Experience_Redesign_2026-10-25/prototype.html",
+    "htmlScriptsEnabled": false,
+    "externalNetworkAllowed": false,
+    "tsx": "Bloom_v05_Scientific_Insights_UI_Kit/components/ScientificInsight.tsx"
+  }
+}

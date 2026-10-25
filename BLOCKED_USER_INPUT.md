@@ -99,11 +99,20 @@ OPS-01 circuit activation is covered by the existing monetary policy decision: s
 
 ## TODAY-ASSETS-01 — exact redesign reference package
 
-- Status: BLOCKED_USER_INPUT for package-level asset adoption only. Written Architect31af acceptance and existing approved Bloom assets support ongoing implementation.
+- Status: RESOLVED for current source access after imported2af0998 was fetched, opened and byte-verified; see design/bloom/VERIFICATION.md. Visual integration and independent acceptance remain open. Historical question follows.
 - Exact question: Which accessible repository path or uploaded artifact contains Bloom_Today_Experience_Redesign_2026-10-25.zip and its final Branding handoff? No connected tool can read the referenced shared Library package, and the files are absent locally.
 - Choices: Commit the approved reference package to the shared repository; provide it as an uploaded artifact; or have Branding review the implemented result against their source package.
 - Recommended default: Continue adapting existing original Bloom tokens/icon and written acceptance; provide the package through the repository so future sessions can reproduce asset integration.
 - Impact: Exact package integration/Branding signoff stays unverified. Does not block the working Today redesign, source correctness or independent engineering. No new asset licence or clinical clearance is assumed.
 
 
-TODAY-ASSETS-01 scope update: Architect c4f178d/91b4a84 confirms raw-byte materialization was not authorized for the original packages and the latest master is now Bloom_App_Wide_Experience_Redesign_2026-10-25.zip, with14 conceptual mobile SVGs/CSS/inventory. Exact design fidelity for the whole application is blocked on actual accessible originals, not only Today. The existing question/options/default apply to this master package and prior Today/scientific-depth kits. No recreated SVG/prose-based UI is claimed to be those original sources. Safety, accessibility and correctness work continues; full desktop/dark/Coach/research patterns also remain incomplete design deliverables.
+Historical TODAY-ASSETS-01 scope update before2af0998: Architect c4f178d/91b4a84 confirms raw-byte materialization was not authorized for the original packages and the latest master is now Bloom_App_Wide_Experience_Redesign_2026-10-25.zip, with14 conceptual mobile SVGs/CSS/inventory. Exact design fidelity for the whole application is blocked on actual accessible originals, not only Today. The existing question/options/default apply to this master package and prior Today/scientific-depth kits. No recreated SVG/prose-based UI is claimed to be those original sources. Safety, accessibility and correctness work continues; full desktop/dark/Coach/research patterns also remain incomplete design deliverables.
+
+
+## ARTIFACT-LEGACY-PREVIEW-01 — optional original archive completeness
+
+- Status: BLOCKED_USER_INPUT for one legacy reference PNG only; current master, Today and scientific-depth sources are verified accessible.
+- Exact question: Can the original brand-concept-reference.png (1,697,994 bytes, SHA256 fc29dad9473cdaf17d7c82281f06fd523df6498e47511b690300bcd1d73c4463) be supplied at the manifest path, or should its absence remain documented?
+- Choices: Restore the exact original; or retain the explicit missing-file record while prioritizing current app implementation.
+- Recommended default: Keep the missing legacy preview tracked and continue using the complete editable current sources. Never manufacture a replacement with the same provenance.
+- Deferral impact: Only full legacy archive completeness. No block to current app-wide design integration or normal development; source verification does not grant final design/release acceptance.
