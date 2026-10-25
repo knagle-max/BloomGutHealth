@@ -1391,7 +1391,7 @@
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
     "server/analysis-boundary.ts": "81f3bdfb4f03e036b616f3194cd69fe7669fd29413bf21780f9316c8d5695d37",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
-    "server/capability-access.ts": "e23157af4671aca26f235d0b0c0d744233a180822ddef073bdad625b148ec866",
+    "server/capability-access.ts": "ebb241f71a78ebfcdf92f3fdf6c7432197c04d717faeb95c004aba3be82514af",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "256b4241e39daedc46b6815955d5e998b081276267376f30c99e87a7bdaa57b2",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",

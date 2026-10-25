@@ -25,6 +25,7 @@ const password = randomBytes(24).toString("base64url");
 const users = [];
 const adminId=randomUUID(),adminUsername=`neon-admin-${randomBytes(8).toString('hex')}`;
 const syntheticAdminGrant={userId:adminId,grantId:'isolated-admin-read-test',role:'feature-admin',scopes:['features:read'],serviceId:'srv-syntheticreview',environment:'isolated-synthetic',purpose:'feature-metadata-review',reviewReference:'isolated-ci-only',expiresAt:new Date(Date.now()+3600000).toISOString()};
+const syntheticPreviewGrant={serviceId:syntheticAdminGrant.serviceId,userId:adminId,grantId:'isolated-ui-preview-test',expiresAt:syntheticAdminGrant.expiresAt,territories:['CA'],reviewReference:'isolated-ci-only',allowedCapabilities:['bloom.dev.preview','bloom.food.photo_ai'],uiPreview:{purpose:'synthetic-ui-review',dataset:'synthetic-only',features:['bloom.food.photo_ai']}};
 let processOutput = "";
 const app = spawn(process.execPath, ["dist/index.js"], {
   env: {
@@ -43,6 +44,10 @@ const app = spawn(process.execPath, ["dist/index.js"], {
     BLOOM_FEATURE_ADMIN_ENVIRONMENT: 'isolated-synthetic',
     BLOOM_FEATURE_ADMIN_KILL_SWITCH: 'false',
     BLOOM_FEATURE_ADMINS: JSON.stringify([syntheticAdminGrant]),
+    BLOOM_EXPERIMENTAL_ENVIRONMENT: 'isolated-synthetic',
+    BLOOM_EXPERIMENTAL_KILL_SWITCH: 'false',
+    BLOOM_PREVIEW_TERRITORY: 'CA',
+    BLOOM_INTERNAL_TESTERS: JSON.stringify([syntheticPreviewGrant]),
   },
   stdio: ["ignore", "pipe", "pipe"],
 });
@@ -122,8 +127,15 @@ try {
   assert.ok(adminReview.entries.every(entry=>entry.activation.state==='UNCONFIGURED'&&entry.implementationReadiness===null));
   assert.equal((await request('/api/capabilities')).featureAdministration.canRead,true);
   await request('/api/admin/features/bloom.metabolite.scores/control','POST',{enabled:true,approved:true},403);
+  const initialPreview=await request('/api/capabilities');assert.equal(initialPreview.eligible,true);assert.equal(initialPreview.experimentalEnabled,false);
+  await request('/api/capabilities/experimental','PATCH',{enabled:true});
+  const enabledPreview=await request('/api/capabilities');assert.equal(enabledPreview.experimentalEnabled,true);assert.equal(enabledPreview.developmentFeatures.length,1);assert.equal(enabledPreview.developmentFeatures[0].outputClass,'synthetic-ui-only');assert.deepEqual(enabledPreview.capabilities,[]);
+  await request('/api/experience/scan','POST',{approved:true,experimental:true,consent:true},403);
+  await request('/api/capabilities/experimental','PATCH',{enabled:false});assert.deepEqual((await request('/api/capabilities')).developmentFeatures,[]);
+  console.log('PASS: isolated production-session deployment-bound preview ON/OFF and no execution grant');
+
   await request('/api/account','DELETE',{password,confirmation:'DELETE ACCOUNT'});
-  cookie=adminCookie;await request('/api/admin/features','GET',undefined,401);
+  cookie=adminCookie;await request('/api/admin/features','GET',undefined,401);await request('/api/capabilities','GET',undefined,401);await request('/api/capabilities/experimental','PATCH',{enabled:true},401);
   console.log('PASS: isolated PostgreSQL-backed admin metadata review, no feature promotion and deleted-session denial');
   const first = await addUser();
   const capabilities=await request("/api/capabilities");

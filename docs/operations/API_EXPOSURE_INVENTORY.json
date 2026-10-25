@@ -13,7 +13,7 @@
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
-    "server/capability-access.ts": "e23157af4671aca26f235d0b0c0d744233a180822ddef073bdad625b148ec866",
+    "server/capability-access.ts": "ebb241f71a78ebfcdf92f3fdf6c7432197c04d717faeb95c004aba3be82514af",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/feature-administration.ts": "9ae97bc9d4bbb4078ae88d57f7a6ab355faa90879a2bfcab03d0a6d08ec25469",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",

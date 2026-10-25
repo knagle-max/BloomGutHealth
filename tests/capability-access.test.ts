@@ -1,11 +1,11 @@
 import test from 'node:test';import assert from 'node:assert/strict';import express from 'express';import {PGlite} from '@electric-sql/pglite';import {drizzle} from 'drizzle-orm/pglite';import {readFile} from 'node:fs/promises';
 import {internalPreviewGrant,registerCapabilityAccess,CapabilityPreferenceStorage} from '../server/capability-access';
-const grant={userId:'a',grantId:'review-1',expiresAt:'2026-12-01T00:00:00Z',territories:['CA'],reviewReference:'synthetic-review-reference',allowedCapabilities:['bloom.dev.preview']};
-const env={BLOOM_EXPERIMENTAL_ENVIRONMENT:'isolated-synthetic',BLOOM_PREVIEW_TERRITORY:'CA',BLOOM_INTERNAL_TESTERS:JSON.stringify([grant])};
+const grant={serviceId:'srv-syntheticreview',userId:'a',grantId:'review-1',expiresAt:'2026-12-01T00:00:00Z',territories:['CA'],reviewReference:'synthetic-review-reference',allowedCapabilities:['bloom.dev.preview']};
+const env={RENDER_SERVICE_ID:'srv-syntheticreview',BLOOM_EXPERIMENTAL_ENVIRONMENT:'isolated-synthetic',BLOOM_PREVIEW_TERRITORY:'CA',BLOOM_INTERNAL_TESTERS:JSON.stringify([grant])};
 test('internal preference grants require trusted environment, identity, territory, expiry and non-duplicated provisioning',()=>{
  const now=+new Date('2026-10-24T00:00:00Z');assert.ok(internalPreviewGrant('a',env,now));
- for(const candidate of [{...env,BLOOM_EXPERIMENTAL_ENVIRONMENT:'production'},{...env,BLOOM_PREVIEW_TERRITORY:'US'},{...env,BLOOM_EXPERIMENTAL_KILL_SWITCH:'true'},{...env,BLOOM_INTERNAL_TESTERS:'invalid'},{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([grant,grant])}])assert.equal(internalPreviewGrant('a',candidate,now),null);
- assert.equal(internalPreviewGrant('b',env,now),null);assert.equal(internalPreviewGrant('a',env,+new Date(grant.expiresAt)),null);
+ for(const candidate of [{...env,RENDER_SERVICE_ID:undefined},{...env,RENDER_SERVICE_ID:'srv-anotherreview'},{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([{...grant,serviceId:undefined}])},{...env,BLOOM_EXPERIMENTAL_ENVIRONMENT:'production'},{...env,BLOOM_PREVIEW_TERRITORY:'US'},{...env,BLOOM_EXPERIMENTAL_KILL_SWITCH:'true'},{...env,BLOOM_INTERNAL_TESTERS:'invalid'},{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([grant,grant])}])assert.equal(internalPreviewGrant('a',candidate,now),null);
+ assert.equal(internalPreviewGrant('a',env,NaN),null);assert.equal(internalPreviewGrant('b',env,now),null);assert.equal(internalPreviewGrant('a',env,+new Date(grant.expiresAt)),null);
  assert.notEqual(internalPreviewGrant('a',env,now)?.fingerprint,internalPreviewGrant('a',{...env,BLOOM_INTERNAL_TESTERS:JSON.stringify([{...grant,grantId:'review-2'}])},now)?.fingerprint);
 });
 test('preference storage is account-scoped, additive and cascades on active account deletion',async()=>{
