@@ -28,14 +28,16 @@ async function protectedSnapshot(){
  await client.query('COMMIT');return {tables,constraints,triggers};
  }catch(error){await client.query('ROLLBACK').catch(()=>{});throw error;}finally{client.release();}
 }
-let stage='protected-baseline',sqlState='none';
+let stage='protected-baseline',sqlState='none',dependency='none';
 try{
  const before=await protectedSnapshot();stage='schema-reconciliation';
  const result=spawnSync(process.execPath,[fileURLToPath(new URL('../node_modules/drizzle-kit/bin.cjs',import.meta.url)),'push','--force'],{cwd:fileURLToPath(new URL('..',import.meta.url)),env:process.env,encoding:'utf8',timeout:120000,maxBuffer:5*1024*1024});
  sqlState=(result.stdout+'\n'+result.stderr).match(/\bcode:\s*['"]([A-Z0-9]{5})['"]/)?.[1]??'none';
+ const blocked=(result.stdout+'\n'+result.stderr).match(/cannot drop constraint ([a-z_0-9]{1,63}) on table ([a-z_0-9]{1,63}) because other objects depend on it/);
+ if(blocked)dependency=blocked[2]+'.'+blocked[1];
  assertSchemaPushResult(result);stage='protected-verification';
  assert.deepEqual(await protectedSnapshot(),before,'Schema push must preserve control snapshots, audit rows, constraints and triggers');
  console.log('PASS: isolated schema reconciliation preserved protected control data, constraints and immutable audit guard.');
 }catch{
- console.error(`FAIL: isolated schema reconciliation; stage=${stage}; sqlstate=${sqlState}`);process.exitCode=1;
+ console.error(`FAIL: isolated schema reconciliation; stage=${stage}; sqlstate=${sqlState}; dependency=${dependency}`);process.exitCode=1;
 }finally{await pool.end().catch(()=>{});}
