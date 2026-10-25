@@ -1410,7 +1410,7 @@
     "client/src/pages/Microbiome.tsx": "168783d0208282e7781acbda7ea811f9be7dbadc8400d0646f65d82771017eec",
     "client/src/pages/NutritionHistory.tsx": "e699c89004aee55bd66ac23473ddf68083c9570e95bc6a15ffab6ef64dba1b1d",
     "client/src/pages/PrecisionNutrition.tsx": "405aece1b0adb1b352cd88703a44c1fdbbca5980f9ea9865047f930a17ad06ca",
-    "client/src/pages/Profile.tsx": "075e5188c25a7d0be5a06136c523f6d18ee9d5a30a6c0feeae4b92312b054952",
+    "client/src/pages/Profile.tsx": "789084ba35703f06cf103cc8721e0bde233098f49fab7a59d050652f0fddcf8e",
     "client/src/pages/Progress.tsx": "14d12bf4947e31d9aebbb33a9d704796b8a2b9494ca369385829153e35f16072",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
     "client/src/pages/Upload.tsx": "e07d4810dde028a07bfc3822ced47e7ca1f9f80cc25f4708343e1aec24cb6298",

@@ -57,11 +57,19 @@ export default function Profile({
       };
       await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/profile"] });
-      queryClient.invalidateQueries({
-        predicate: (q) => String(q.queryKey[0]).startsWith("/api/nutrition/"),
-      });
+    onSuccess: async () => {
+      // Profile age is a planning safety input. The default cache never goes
+      // stale by time, so cached reports must be rechecked after this write.
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["/api/profile"] }),
+        queryClient.invalidateQueries({
+          predicate: (q) => {
+            const path = String(q.queryKey[0]);
+            return ["/api/nutrition", "/api/precision", "/api/biology/foods"]
+              .some(root => path === root || path.startsWith(root + "/"));
+          },
+        }),
+      ]);
     },
   });
   // Convert drafts only after the shared preference has actually saved.
