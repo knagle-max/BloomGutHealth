@@ -41,7 +41,8 @@ test('default-denied storage accepts no public override; scope/revision/actor an
         const incident = change();
         incident.binding.featureId = incident.control.featureId = 'bloom.genetics.diet_rank';
         await mutationAttempt.append(incident);
-        assert.equal((await left.get(incident.binding, 'PRIVATE_ADMIN'))?.state, 'paused'); // callback cannot mutate the stored command
+        assert.equal((await left.get(incident.binding, 'PRIVATE_ADMIN'))?.state, 'paused');
+        assert.equal((await left.history(incident.binding,'PRIVATE_ADMIN'))[0].action,undefined,'Legacy events do not acquire an invented action label'); // callback cannot mutate the stored command
         const truthy = new FeatureControlStorage(transaction, async () => ({ approved: true }) as any);
         await assert.rejects(() => truthy.append(change()), code('ACCESS_DENIED'));
         assert.equal((await db.query('SELECT count(*)::int AS n FROM feature_control_audit')).rows[0].n, 1);
@@ -59,6 +60,7 @@ test('replicas serialize CAS and exactly-once retries; superseded replay is hist
         assert.equal(results.filter(r => r.status === 'rejected' && code('CONFLICT')(r.reason)).length, 1);
         const winning = results[0].status === 'fulfilled' ? first : other;
         assert.equal((await right.append(winning)).replay, true);
+        await assert.rejects(()=>right.append({...winning,action:'pause'}),code('CONFLICT'));
         const second = change(2);
         second.control.state = 'disabled';
         await right.append(second);

@@ -68,3 +68,9 @@ Verified published c8df7d0d64ccf8871bc2c53834cc01581d6e6863: Actions40202907703 
 
 
 BLOOM-ADMIN-01-CONTROL-SERVICE — TESTED local integrated foundation:312 full +7 focused, types/build, standalone CI smoke typing and existing read-only admin browser pass. Candidate governance and actual credential proof compose with encrypted atomic history; post-write review/account revocation rolls back. Real PG service smoke added to isolated CI, publication acceptance pending. No HTTP/runtime installation. Historical rollback explicitly denied, next actionable target-binding slice; further HTTP shared budgets, runtime/restore fencing, rollout monitoring and independent acceptance remain.
+
+
+7bc4c295c602e26daa27fd12f1133219bc0dcedd verified: Actions40203598087 SUCCESS, including312 tests and isolated PostgreSQL control-service proof/emergency-disable/encrypted audit smoke. Existing Render dep-dbf1b815efls73bft9jg completed live before concurrent documentation8e7e975 superseded it. Action-aware audit batch follows; no runtime role/HTTP activation.
+
+
+BLOOM-ADMIN-01-ACTION-AUDIT — TESTED local:313 full +14 focused/type/build/source checks; standalone PG smoke typing clean. New reader preserves old unlabeled history/replay; conflicting labels and retrofitted idempotent metadata deny. Existing old readers cannot consume newer labeled events (strict schema); backout disables writes and retains action-aware reader, never rewrites audit. Real PG smoke asserts new emergency action plus unlabeled legacy command. Publish/verify next.

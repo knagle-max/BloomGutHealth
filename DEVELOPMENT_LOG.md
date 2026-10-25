@@ -360,3 +360,12 @@ BLOOM-ADMIN-01-CONTROL-SERVICE — IN_PROGRESS local integrated domain service (
 
 
 BLOOM-ADMIN-01-CONTROL-SERVICE — TESTED local integrated foundation:312 full +7 focused, types/build, standalone CI smoke typing and existing read-only admin browser pass. Candidate governance and actual credential proof compose with encrypted atomic history; post-write review/account revocation rolls back. Real PG service smoke added to isolated CI, publication acceptance pending. No HTTP/runtime installation. Historical rollback explicitly denied, next actionable target-binding slice; further HTTP shared budgets, runtime/restore fencing, rollout monitoring and independent acceptance remain.
+
+
+BLOOM-ADMIN-01-ACTION-AUDIT — IN_PROGRESS: service records exact authenticated action in encrypted event, rejects conflicting caller labels before issuing receipts; optional audit field preserves legacy events without inventing labels, and old idempotency requests cannot silently gain new metadata.14 focused tests passed initially; full313 validation running. This precedes historical rollback target binding; no route/runtime installation. Concurrent Architect f0eb5b7/8e7e975 scientific-depth intake preserved by fast-forward; current v0.5 safety audit applies, future pathway/simulator requirements do not interrupt active slice.
+
+
+7bc4c295c602e26daa27fd12f1133219bc0dcedd verified: Actions40203598087 SUCCESS, including312 tests and isolated PostgreSQL control-service proof/emergency-disable/encrypted audit smoke. Existing Render dep-dbf1b815efls73bft9jg completed live before concurrent documentation8e7e975 superseded it. Action-aware audit batch follows; no runtime role/HTTP activation.
+
+
+BLOOM-ADMIN-01-ACTION-AUDIT — TESTED local:313 full +14 focused/type/build/source checks; standalone PG smoke typing clean. New reader preserves old unlabeled history/replay; conflicting labels and retrofitted idempotent metadata deny. Existing old readers cannot consume newer labeled events (strict schema); backout disables writes and retains action-aware reader, never rewrites audit. Real PG smoke asserts new emergency action plus unlabeled legacy command. Publish/verify next.

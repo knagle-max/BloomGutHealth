@@ -57,7 +57,7 @@ try {
     const command=request(4),disable={action:'emergency-disable' as const,change:{...command,control:{...command.control,state:'incident-disabled' as const,rolloutPercent:0}}};
     const service=new FeatureControlService(transaction,proofService),reauth=await service.issue(context,disable,'synthetic-ci-password');
     assert.equal((await service.apply(context,disable,reauth.proof)).control.state,'incident-disabled');
-    assert.equal((await right.history(binding,context.actorId)).length,4);
+    const audited=await right.history(binding,context.actorId);assert.equal(audited.length,4);assert.equal(audited[0].action,'emergency-disable');assert.equal(audited[1].action,undefined);
     console.log('PASS: isolated PostgreSQL control service composes proof, emergency disable and encrypted audit; no HTTP/runtime installation');
     console.log('PASS: isolated PostgreSQL step-up cross-replica consumption and transactional authorization; synthetic adapters only');
     console.log('PASS: isolated Neon control-history default denial, real concurrent CAS, encrypted audit, historical replay and immutable SQL guard; no runtime activation');

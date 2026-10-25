@@ -39,6 +39,9 @@ test('controller service combines actual password proof, independent current rev
         const service = f.service(), request = f.request(), proof = await service.issue(f.context, request, 'synthetic-password');
         const result = await service.apply(f.context, request, proof.proof);
         assert.equal(result.control.state, 'enabled');
+        const {FeatureControlStorage}=await import('../server/feature-control-storage');
+        const history=await new FeatureControlStorage(f.transaction,async()=>true).history(request.change.binding,f.context.actorId);
+        assert.equal(history[0].action,'enable');
         assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_audit')).rows[0].n, 1);
         assert.equal(effectiveCapabilityDecision({ ...f.facts, featureId: request.change.binding.featureId, control: result.control, now: Date.now() }, () => f.source).allowed, false, 'A control record never substitutes for subject consent and rollout checks');
         await assert.rejects(() => service.apply(f.context, request, proof.proof));
@@ -89,4 +92,11 @@ test('authorized emergency disable works without promotion approvals; unbound ro
     finally {
         await f.db.close();
     }
+});
+
+test('controller audit refuses conflicting action labels before issuing authentication receipts',async()=>{
+ const f=await setup();try{const request=f.request();request.change.action='pause';
+ await assert.rejects(()=>f.service().issue(f.context,request,'synthetic-password'),error=>error instanceof FeatureControlStorageError&&error.code==='INVALID_REQUEST');
+ assert.equal((await f.db.query('SELECT count(*)::int AS n FROM feature_control_step_up_receipts')).rows[0].n,0);
+ }finally{await f.db.close();}
 });

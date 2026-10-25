@@ -19,7 +19,9 @@ export class FeatureControlService {
         // arbitrary caller-supplied control as a verified historical rollback.
         if (parsed.data.action === 'rollback')
             throw new FeatureControlStorageError('ACCESS_DENIED');
-        return parsed.data;
+        if (parsed.data.change.action !== undefined && parsed.data.change.action !== parsed.data.action)
+            throw new FeatureControlStorageError('INVALID_REQUEST');
+        return {...parsed.data,change:{...parsed.data.change,action:parsed.data.action}};
     }
     async issue(context: unknown, input: unknown, password: unknown) {
         return this.stepUp.issue(context, this.intent(input), password);

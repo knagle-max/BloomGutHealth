@@ -88,6 +88,7 @@ export class FeatureStepUp {
         if (!c.success || !i.success)
             return fail('INVALID_REQUEST');
         const request = i.data, change = request.change, source = registry.features.find(row => row.feature_id === change.binding.featureId);
+        if (change.action !== undefined && change.action !== request.action) return fail('DENIED');
         if (!source || change.binding.serviceId !== this.binding.serviceId || change.binding.environment !== this.binding.environment || change.actorId !== c.data.actorId || change.control.changedBy !== c.data.actorId || change.control.featureId !== change.binding.featureId || change.control.serviceId !== this.binding.serviceId || change.control.environment !== this.binding.environment || change.control.revision !== change.expectedRevision + 1)
             return fail('DENIED');
         if (request.action === 'enable' && change.control.state !== 'enabled' || request.action === 'pause' && change.control.state !== 'paused' || request.action === 'emergency-disable' && change.control.state !== 'incident-disabled')
