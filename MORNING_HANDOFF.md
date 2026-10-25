@@ -45,3 +45,10 @@ Full detail and prior evidence: BLOCKED_USER_INPUT.md. The USDA key is already w
 ## Resume
 
 Follow NEXT_ACTIONS.md and the short persistent task index first. Continue with the highest-priority independent runtime boundary issue, then remaining approved v0.5. No permission is needed for routine review-branch commits/pushes. This handoff is a progress checkpoint, not release completion.
+
+## 2026-10-25 continuation
+
+- f3dce55: 264 tests/types/build/browser; local descriptive report summary removes unnecessary sidecar health-data transfer, false compared-cohort metadata and unsupported public model controls. CI 40144577299 passed including isolated production-handler persistence without ML credentials; Render dep-dbeka50473hc7397ncpg live.
+- ADMIN-01-READ pending publication: 267 full + 9 focused tests/types/build, actual-handler source review UI and real request/signal abort; ordinary Settings/Add Food passed. Default-denied independent read role, unknown readiness/deployment kept explicit, all change actions unavailable. No actual administrator provisioned. Parent step-up/audit/rollback/rollout and runtime effective-state integration remain outstanding, not claimed complete.
+- New owner input only for actual provisioning: reviewed authenticated account IDs, service/environment, purpose/expiry and provisioning review. Recommend no live grant until supplied; synthetic engineering proceeds. Full exact question/options/impact/source are in BLOCKED_USER_INPUT.md.
+- Architect admin/coherent-experience updates through 0bf5c57 preserved. No v0.5 completion or v0.6 transition claimed; continue unblocked governance/operational/runtime work.

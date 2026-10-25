@@ -11,6 +11,7 @@ import BottomNav from "@/components/BottomNav";
 import AppNavigation from "@/components/AppNavigation";
 import Dashboard from "@/pages/Dashboard";
 const Explore = lazy(() => import("@/pages/Explore"));
+const FeatureManagement = lazy(() => import('@/pages/FeatureManagement'));
 const Progress = lazy(() => import("@/pages/Progress"));
 const AthleteWorkspace = lazy(() => import("@/pages/AthleteWorkspace"));
 const PlanDay = lazy(() => import("@/pages/PlanDay"));
@@ -103,7 +104,7 @@ function AppContent() {
   };
 
   useEffect(() => {
-    const labels: Record<string, string> = { "/explore":"Explore", "/progress":"Progress", "/athlete":"Training day", "/athlete/fueling":"Athlete fueling", "/athlete/recovery":"Athlete recovery", "/athlete/competition":"Competition", "/plan-day":"Plan my day", "/weekly-review":"Weekly review", "/saved-meals":"Saved meals", "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
+    const labels: Record<string, string> = { "/admin/features":"Feature management", "/explore":"Explore", "/progress":"Progress", "/athlete":"Training day", "/athlete/fueling":"Athlete fueling", "/athlete/recovery":"Athlete recovery", "/athlete/competition":"Competition", "/plan-day":"Plan my day", "/weekly-review":"Weekly review", "/saved-meals":"Saved meals", "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
     document.title = `${labels[location] || "Welcome"} · Bloom`;
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [location]);
@@ -135,6 +136,7 @@ function AppContent() {
           <Route path="/">
             {() => <ProtectedRoute component={HomeExperience} />}
           </Route>
+          <Route path="/admin/features"><ProtectedRoute component={FeatureManagement}/></Route>
           <Route path="/explore"><ProtectedRoute component={Explore}/></Route>
           <Route path="/progress"><ProtectedRoute component={Progress}/></Route>
           <Route path="/athlete/:section"><ProtectedRoute component={AthleteWorkspace}/></Route>

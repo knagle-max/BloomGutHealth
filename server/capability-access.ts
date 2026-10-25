@@ -1,4 +1,5 @@
 import {developmentStatusLabel} from "../shared/capability-state";
+import {featureAdminReadGrant} from './feature-administration';
 import type {DevelopmentFeature} from "../shared/development-features";
 import {foodEntryImplementationReady} from "../shared/food-entry";
 import {createHash} from "node:crypto";
@@ -29,7 +30,7 @@ export class CapabilityPreferenceStorage implements CapabilityPreferenceStore {
  async get(userId:string){const [row]=await this.db.select().from(capabilityPreferences).where(eq(capabilityPreferences.userId,userId));return row||null;}
  async put(userId:string,enabled:boolean,grantFingerprint:string){await this.db.insert(capabilityPreferences).values({userId,enabled,grantFingerprint}).onConflictDoUpdate({target:capabilityPreferences.userId,set:{enabled,grantFingerprint,updatedAt:new Date()}});}
 }
-export function registerCapabilityAccess(app:Express,auth:RequestHandler,store:CapabilityPreferenceStore,grantFor:(userId:string)=>ReturnType<typeof internalPreviewGrant>=internalPreviewGrant){
+export function registerCapabilityAccess(app:Express,auth:RequestHandler,store:CapabilityPreferenceStore,grantFor:(userId:string)=>ReturnType<typeof internalPreviewGrant>=internalPreviewGrant,adminFor:(userId:string)=>boolean=featureAdminReadGrant){
  app.use('/api/capabilities',auth,(_req,res,next)=>{res.setHeader('Cache-Control','no-store');next();});
  app.get('/api/capabilities',async(req,res)=>{
   try{
@@ -37,7 +38,7 @@ export function registerCapabilityAccess(app:Express,auth:RequestHandler,store:C
    const current=initial?grantFor(id):null;
    const grant=current?.fingerprint===initial?.fingerprint?current:null;
    const enabled=!!grant&&!!pref?.enabled&&pref.grantFingerprint===grant.fingerprint;
-   res.json({version:capabilityPolicyVersion,foodEntry:foodEntryImplementationReady,eligible:!!grant,experimentalEnabled:enabled,developmentFeatures:enabled?developmentFeatures(grant?.uiFeatures):[],capabilities:[],note:'Internal synthetic preview only. This setting does not grant clinical, research, provider, territory or licensing approval. Restricted services remain unavailable until individually cleared.'});
+   res.json({version:capabilityPolicyVersion,foodEntry:foodEntryImplementationReady,eligible:!!grant,experimentalEnabled:enabled,developmentFeatures:enabled?developmentFeatures(grant?.uiFeatures):[],capabilities:[],featureAdministration:{canRead:adminFor(id),canChange:false},note:'Internal synthetic preview only. This setting does not grant clinical, research, provider, territory or licensing approval. Restricted services remain unavailable until individually cleared.'});
   }catch{res.status(503).json({error:'Experimental eligibility could not be checked.'});}
  });
  app.patch('/api/capabilities/experimental',async(req,res)=>{

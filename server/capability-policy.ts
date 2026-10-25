@@ -21,3 +21,4 @@ export function requireRestrictedCapability(id:string):RequestHandler {
 
 /** Server lookup only. Callers must project safe metadata, not expose the full provisional record. */
 export function capabilityRecord(id:string){const feature=registry.features.find(feature=>feature.feature_id===id);return feature?structuredClone(feature):null;}
+export function capabilityRecords(){return structuredClone(registry.features);}

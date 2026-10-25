@@ -85,3 +85,12 @@ OPS-01 circuit activation is covered by the existing monetary policy decision: s
 - Choices: Reviewed provider billing/audit evidence linked to the original reservation; or retain unresolved liability and keep paid activation disabled until such evidence exists.
 - Recommended default: Retain liability, deny replay and preserve manual/curated fallback. A missing response or old age is not evidence of zero charge. No automatic expiry/refund or renewed provider execution.
 - Impact: Prevents automatic unknown-outcome reconciliation and real paid-operation acceptance, not configuration/circuits/reporting or core app development. The existing authenticated settlement primitive is not itself an authoritative billing source.
+
+## BLOOM-ADMIN-01 — real administrator provisioning
+
+- Status: BLOCKED_USER_INPUT for live provisioning only; independent server/UI engineering proceeds with synthetic roles.
+- Exact question: Which authenticated Bloom administrator account IDs, reviewed service/environment, read-only review purpose, expiry and provisioning review are approved?
+- Choices: Verify the existing review environment and supply audited server-provisioning inputs; or retain no live admin grants while using isolated synthetic review fixtures.
+- Recommended default: No guessed identity, self-enrolment, inherited tester privileges or live grant. The first implementation grants source-metadata read only; it cannot activate features.
+- Impact: Blocks real administrator access, not control-plane engineering. Mutations still require separate step-up, independent scope approval, audit/rollback and reviewed deployment controls.
+- Source: docs/architecture/PERSISTENT_TASK_INDEX.md, BLOOM-ADMIN-01: “Do not invent real admin roles or configured deployment permissions.” This does not require pausing independent work or asking for per-commit permission.

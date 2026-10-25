@@ -1311,13 +1311,20 @@
       "featureId": "bloom.regulatory.flags",
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
-        "ui": [],
+        "ui": [
+          "client/src/pages/FeatureManagement.tsx",
+          "client/src/App.tsx",
+          "client/src/components/AppNavigation.tsx"
+        ],
         "api": [
           "server/capability-policy.ts",
-          "server/capability-access.ts"
+          "server/capability-access.ts",
+          "server/feature-administration.ts"
         ],
         "logicOrJobs": [
-          "shared/capability-state.ts"
+          "shared/capability-state.ts",
+          "shared/feature-administration.ts",
+          "client/src/lib/capabilities.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1326,7 +1333,7 @@
         ],
         "cache": []
       },
-      "observation": "Provisional categories/readiness are orthogonal. This source crosswalk is not a runtime authorization registry or promotion event.",
+      "observation": "Provisional classification/readiness are orthogonal. Separate deployment-bound administrator metadata-read role and read-only review UI; no live role provisioned or activation/step-up/audit/rollout writes. Tester preference never grants admin access.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1344,6 +1351,8 @@
     }
   ],
   "sourceHashes": {
+    "client/src/App.tsx": "ff23a62ddd29c0b2212807f50b9c1bbab9d2e56c5d547fb79b9f8d057992e7b1",
+    "client/src/components/AppNavigation.tsx": "624492d93ba005b04c6e1b19b9a9cf9c6a093ba79292a81cf1f3cd8c70dac3d4",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "919e565d0e22404a28e9065e6462706d99fe79baa4f1f51571dc8a30cc72dbad",
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
@@ -1355,11 +1364,12 @@
     "client/src/components/QuickLabEntry.tsx": "85b9966d8494d23692aa34e14b6855d97f0a8ea5c342a40bae5447e6fd14d9f5",
     "client/src/components/TodayFocus.tsx": "fe1cbd0b8f451df9a46fab9274c4043db4891bd5faf4ef60443522e8d9440cbd",
     "client/src/lib/auth.tsx": "796839344459bece651ad94135b8dc51575eb60bcb625d6ada6394b0553324df",
-    "client/src/lib/capabilities.ts": "4b5d172f4035b15da8e9f900e2b786b57adf573ffee69cc817e50d1cae3406df",
-    "client/src/lib/queryClient.ts": "e60c4c272751c0b73535c62cec5c577dcb498b819e991e2c7cedbe80b2764a5e",
+    "client/src/lib/capabilities.ts": "eee1f25f502191b886b8a01ba2a026bc9df751e156aebdd88bc557356b0465e5",
+    "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
     "client/src/pages/AthleteWorkspace.tsx": "d5922de28cfaa4e3edb5061795e820ae77dee39686a50eacf842cdd367d8d645",
     "client/src/pages/Dashboard.tsx": "1579ee462a80e8671f7784628a13f57179ed54aebea14b8c73bc240577657e24",
     "client/src/pages/Explore.tsx": "2f2a195521b6385850128ea8a3cfc62903405ea08e4cdd212735497c58b540da",
+    "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "a446edddae6b97aba193d8f9c3a99eeefbde02c4c28d59d29cd376e0a07843f8",
     "client/src/pages/MealPlanner.tsx": "bb5810c386a36d4bb999d9b3e2c03f61e0e6ea5d6c01fc486aae358abf6a6c19",
@@ -1377,9 +1387,10 @@
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
     "server/analysis-boundary.ts": "81f3bdfb4f03e036b616f3194cd69fe7669fd29413bf21780f9316c8d5695d37",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
-    "server/capability-access.ts": "444a2c8f0bd41a3628a644dd029e785bd17d946a5e3a0bd4988123a7fd10ec6d",
-    "server/capability-policy.ts": "9635eed046bfdcfb70ce2f3a857d99ff04a00afa96a553ade85c95a346af7fd0",
+    "server/capability-access.ts": "e23157af4671aca26f235d0b0c0d744233a180822ddef073bdad625b148ec866",
+    "server/capability-policy.ts": "ab6af6b2ac4a9c3da85289545e06145c2c75aa56f25cf8404ed1c12c620a88a4",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
+    "server/feature-administration.ts": "9ae97bc9d4bbb4078ae88d57f7a6ab355faa90879a2bfcab03d0a6d08ec25469",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/meal-intelligence.ts": "c92f552af98591c9ee908ef14e4c0d8eaf65c17f2ea54d284e52d97701c2363d",
@@ -1394,7 +1405,7 @@
     "server/report-analysis.ts": "2a4e80da76c55c1beb3165264c5982b9ada91d02f9325605ec3598747139e3e5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
-    "server/routes.ts": "59479bbb7f8752a4912e6c671ec8f3fa6da5dfd933785a4b00e5ae095e0047ce",
+    "server/routes.ts": "7a0140b4c71a34792c25e3165b1eb94ccdc8e25474d56690879d8c686825916b",
     "server/science-coach.ts": "af850052f4af68b0e2b6f857a2818d7f669cf01350c20356e0f48642a2d83947",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
     "server/storage.ts": "521c7725b15676274be6c4a2adb408a89d7fc13253c382d2a5408ec8c3ffafda",
@@ -1404,10 +1415,11 @@
     "shared/athlete.ts": "d1ab4d6363fbc2543ffc4145be0479b2719237b4a84e46b4c82123bef2d6e398",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "41c751e67f3fe1ba79488020863f4e7c84da719b7540cd57c334c666bf000d12",
-    "shared/development-features.ts": "aa001d765f3cd6e97105384cf23e052ca4bc4d230b37907173f47a7072f511db",
+    "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
     "shared/experience.ts": "7207df9ccdb4bf51d7f6c8c02097b1307b1bc4c1341946080521f277335569ed",
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
+    "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/goal-guidance.ts": "46000666caadd6ac1aaf541d1e2b76bb24b93208ba30caf535469771db6dff5a",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
     "shared/lab-paste.ts": "60fbf20f3f994231342e864b32bcd5df904ef3f16f6bbe024051c11a4981d3ab",

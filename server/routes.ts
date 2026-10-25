@@ -1,4 +1,5 @@
 import {analyzeReportedComposition} from "./report-analysis";
+import {registerFeatureAdministration} from './feature-administration';
 import { registerCapabilityAccess, CapabilityPreferenceStorage } from "./capability-access";
 import { AccountErasureStorage } from "./account-erasure";
 import { requireActiveAccount, AccountSessionGuard } from "./account-auth";
@@ -37,6 +38,7 @@ import { abundanceSchema } from "@shared/report-import";
 const requireAuth=requireActiveAccount(async id=>!!await storage.getUser(id));
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  registerFeatureAdministration(app,requireAuth);
   registerScienceRoutes(app, {
     requireAuth,
     getMeals: (userId) => storage.getMeals(userId),

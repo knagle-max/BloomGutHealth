@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { randomBytes } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
+import bcrypt from 'bcrypt';
 import { spawn } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 import { Pool } from "pg";
@@ -22,6 +23,8 @@ const port = 4173;
 const base = `http://127.0.0.1:${port}`;
 const password = randomBytes(24).toString("base64url");
 const users = [];
+const adminId=randomUUID(),adminUsername=`neon-admin-${randomBytes(8).toString('hex')}`;
+const syntheticAdminGrant={userId:adminId,grantId:'isolated-admin-read-test',role:'feature-admin',scopes:['features:read'],serviceId:'srv-syntheticreview',environment:'isolated-synthetic',purpose:'feature-metadata-review',reviewReference:'isolated-ci-only',expiresAt:new Date(Date.now()+3600000).toISOString()};
 let processOutput = "";
 const app = spawn(process.execPath, ["dist/index.js"], {
   env: {
@@ -36,6 +39,10 @@ const app = spawn(process.execPath, ["dist/index.js"], {
     API_NINJAS_KEY: "",
     ML_SERVICE_URL: "",
     ML_SERVICE_TOKEN: "",
+    RENDER_SERVICE_ID: syntheticAdminGrant.serviceId,
+    BLOOM_FEATURE_ADMIN_ENVIRONMENT: 'isolated-synthetic',
+    BLOOM_FEATURE_ADMIN_KILL_SWITCH: 'false',
+    BLOOM_FEATURE_ADMINS: JSON.stringify([syntheticAdminGrant]),
   },
   stdio: ["ignore", "pipe", "pipe"],
 });
@@ -106,9 +113,23 @@ try {
   console.log(
     "PASS: live Neon direct database connection and production app startup",
   );
+  await request('/api/admin/features','GET',undefined,401);
+  users.push(adminId);
+  await pool.query('INSERT INTO users(id,username,password) VALUES($1,$2,$3)',[adminId,adminUsername,await bcrypt.hash(password,10)]);
+  await request('/api/auth/login','POST',{username:adminUsername,password});
+  const adminCookie=cookie,adminReview=await request('/api/admin/features');
+  assert.equal(adminReview.mode,'READ_ONLY');assert.equal(adminReview.entries.length,52);
+  assert.ok(adminReview.entries.every(entry=>entry.activation.state==='UNCONFIGURED'&&entry.implementationReadiness===null));
+  assert.equal((await request('/api/capabilities')).featureAdministration.canRead,true);
+  await request('/api/admin/features/bloom.metabolite.scores/control','POST',{enabled:true,approved:true},403);
+  await request('/api/account','DELETE',{password,confirmation:'DELETE ACCOUNT'});
+  cookie=adminCookie;await request('/api/admin/features','GET',undefined,401);
+  console.log('PASS: isolated PostgreSQL-backed admin metadata review, no feature promotion and deleted-session denial');
   const first = await addUser();
   const capabilities=await request("/api/capabilities");
   assert.equal(capabilities.eligible,false);assert.equal(capabilities.experimentalEnabled,false);
+  assert.equal(capabilities.featureAdministration.canRead,false);
+  await request('/api/admin/features','GET',undefined,403);
   await request("/api/capabilities/experimental","PATCH",{enabled:true},403);
 
   console.log(

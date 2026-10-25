@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Last published implementation: `4eb07f9c4228fcbcdb45ef061b329c51f9d34305`; CI 40122101603 passed; Render dep-dbefp56q1p3s73e7lt30 live.
+Branch: `enhance/bloom-experience`. Last published implementation: `f3dce557122fb7f093517375d502b4e7c32c0051`; CI 40144577299 passed; Render dep-dbeka50473hc7397ncpg live.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish v0.5 before v0.6. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -48,6 +48,8 @@ This execution ledger follows the owner's overnight directive. Scope and priorit
 | OPS-702-RECONCILE | P0 paid acceptance | Resolve unknown charge only from authoritative matching evidence | BLOCKED_USER_INPUT | store:false/lost response may lack a recoverable per-request receipt; no fabricated zero/expiry/replay. Exact evidence-source decision in BLOCKED_USER_INPUT.md; independent engineering continues. |
 
 | BLOOM-CAP-01-COHORT | P0 v0.5 | Local source-only composition; no unvalidated cohort promotion or false compared metadata/public controls | IMPLEMENTED_AND_TESTED (local); publication pending | 264 full + 7 focused tests/types/build and synthetic browser passed. Ownership/source zero/no sidecar/private errors; real study links retained and withholding not shown as empty records. CI isolated production-handler smoke extended. |
+
+| BLOOM-ADMIN-01-READ | P0/P1 v0.5 | Independently authorized read-only feature review, distinct from activation and tester preference | IMPLEMENTED_AND_TESTED (synthetic); publication pending | 267 full + 9 focused tests/types/build, final actual-handler UI/native request abort, ordinary Settings/Add Food passed. No real role or activation/write/step-up/audit/rollout implemented. Parent BLOOM-ADMIN-01 remains OPEN. |
 
 Notes:
 Execution resources recovered after the stated reset time on 2026-10-24. Normal approval succeeded; resume autonomous implementation. Earlier rejection remains recorded in the development log.

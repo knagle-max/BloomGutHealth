@@ -1,6 +1,6 @@
 import type {ImplementationReadiness} from './capability-state';
 export interface DevelopmentFeature {id:'bloom.food.photo_ai';readiness:ImplementationReadiness;category:string;approval:string;label:string;outputClass:'synthetic-ui-only';}
-export interface CapabilitySnapshot {eligible:boolean;experimentalEnabled:boolean;note?:string;foodEntry?:Partial<Record<'barcode'|'search'|'restaurant'|'photo'|'describe',boolean>>;developmentFeatures?:DevelopmentFeature[];capabilities?:string[];}
+export interface CapabilitySnapshot {eligible:boolean;experimentalEnabled:boolean;note?:string;foodEntry?:Partial<Record<'barcode'|'search'|'restaurant'|'photo'|'describe',boolean>>;developmentFeatures?:DevelopmentFeature[];capabilities?:string[];featureAdministration?:{canRead:boolean;canChange:false};}
 /** Client rendering only; this never authorizes an API operation. */
 export function activeDevelopmentPhoto(snapshot:CapabilitySnapshot|undefined):DevelopmentFeature|null {
  if(snapshot?.eligible!==true||snapshot.experimentalEnabled!==true||!Array.isArray(snapshot.developmentFeatures))return null;
