@@ -1324,7 +1324,8 @@
         "logicOrJobs": [
           "shared/capability-state.ts",
           "shared/feature-administration.ts",
-          "client/src/lib/capabilities.ts"
+          "client/src/lib/capabilities.ts",
+          "server/effective-capability.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1333,7 +1334,7 @@
         ],
         "cache": []
       },
-      "observation": "Provisional classification/readiness are orthogonal. Separate deployment-bound administrator metadata-read role and read-only review UI; no live role provisioned or activation/step-up/audit/rollout writes. Tester preference never grants admin access.",
+      "observation": "Provisional classification/readiness are orthogonal. Separate deployment-bound administrator metadata-read role and read-only review UI; no live role provisioned or activation/step-up/audit/rollout writes. Tester preference never grants admin access. Shared execution evaluator binds independent reviews, immutable categories, material version, scope, consent and narrow staged rollout; no actual facts/control adapter installed.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1388,7 +1389,8 @@
     "server/analysis-boundary.ts": "81f3bdfb4f03e036b616f3194cd69fe7669fd29413bf21780f9316c8d5695d37",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "e23157af4671aca26f235d0b0c0d744233a180822ddef073bdad625b148ec866",
-    "server/capability-policy.ts": "ab6af6b2ac4a9c3da85289545e06145c2c75aa56f25cf8404ed1c12c620a88a4",
+    "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
+    "server/effective-capability.ts": "256b4241e39daedc46b6815955d5e998b081276267376f30c99e87a7bdaa57b2",
     "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
     "server/feature-administration.ts": "9ae97bc9d4bbb4078ae88d57f7a6ab355faa90879a2bfcab03d0a6d08ec25469",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
@@ -1414,7 +1416,7 @@
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
     "shared/athlete.ts": "d1ab4d6363fbc2543ffc4145be0479b2719237b4a84e46b4c82123bef2d6e398",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
-    "shared/capability-state.ts": "41c751e67f3fe1ba79488020863f4e7c84da719b7540cd57c334c666bf000d12",
+    "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
     "shared/experience.ts": "7207df9ccdb4bf51d7f6c8c02097b1307b1bc4c1341946080521f277335569ed",

@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Last published implementation: `f3dce557122fb7f093517375d502b4e7c32c0051`; CI 40144577299 passed; Render dep-dbeka50473hc7397ncpg live.
+Branch: `enhance/bloom-experience`. Last published implementation: `3ce8e9cc626106f4e490b01c955f96d709a80744`; CI 40146891714 passed; Render dep-dbekqptg1s2s739hatf0 live.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish v0.5 before v0.6. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -50,6 +50,8 @@ This execution ledger follows the owner's overnight directive. Scope and priorit
 | BLOOM-CAP-01-COHORT | P0 v0.5 | Local source-only composition; no unvalidated cohort promotion or false compared metadata/public controls | IMPLEMENTED_AND_TESTED (local); publication pending | 264 full + 7 focused tests/types/build and synthetic browser passed. Ownership/source zero/no sidecar/private errors; real study links retained and withholding not shown as empty records. CI isolated production-handler smoke extended. |
 
 | BLOOM-ADMIN-01-READ | P0/P1 v0.5 | Independently authorized read-only feature review, distinct from activation and tester preference | IMPLEMENTED_AND_TESTED (synthetic); publication pending | 267 full + 9 focused tests/types/build, final actual-handler UI/native request abort, ordinary Settings/Add Food passed. No real role or activation/write/step-up/audit/rollout implemented. Parent BLOOM-ADMIN-01 remains OPEN. |
+
+| BLOOM-ADMIN-01-POLICY | P0 v0.5 | Shared source-authoritative scoped execution decision and stable rollout contract | IMPLEMENTED_AND_TESTED (synthetic); publication pending | 270 full + 7 focused tests/types/build; canonical hard stops, individual approval/version/expiry/quorum/no-self-review, control narrowing/consent, independent HMAC vectors. Actual adapters/controls remain unconfigured and restricted callers denied. |
 
 Notes:
 Execution resources recovered after the stated reset time on 2026-10-24. Normal approval succeeded; resume autonomous implementation. Earlier rejection remains recorded in the development log.

@@ -1,5 +1,10 @@
 /** Implementation and release review are independent. Labels never confer access. */
 export type ImplementationReadiness='PLANNED'|'IN_DEVELOPMENT'|'TESTABLE'|'FUNCTIONALLY_COMPLETE'|'VERIFIED';
+export function normalizeCapabilityApproval(value:string) {
+ if(value==='REVIEW_REQUIRED')return 'UNDER_REVIEW';
+ if(value==='NOT_APPROVED')return 'PROPOSED';
+ return ['PROPOSED','UNDER_REVIEW','APPROVED','REJECTED','SUSPENDED'].includes(value)?value:'PROPOSED';
+}
 export function developmentStatusLabel(readiness:ImplementationReadiness,category:string,approval:string):string|null {
  if(category==='DISABLED_INCIDENT')return 'Unavailable';
  const unfinished=readiness!=='VERIFIED'&&readiness!=='FUNCTIONALLY_COMPLETE';
