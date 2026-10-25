@@ -36,7 +36,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
     ).json() as Promise<TodayPlan & { targetSource: string }>;
   const initial = useQuery({
     queryKey: ["/api/precision/today-plan", day, hour],
-    queryFn: () => fetchPlan(),
+    queryFn: () => fetchPlan(edited || undefined),
     staleTime: 60000,
   });
   useEffect(() => {
@@ -46,7 +46,10 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
     mutationFn: () => fetchPlan(edited || (result || initial.data)!.request),
     onSuccess: (r) => setResult(r),
   });
-  const r = result || initial.data,
+  const checking = initial.isFetching || build.isPending;
+  // A failed or unfinished current-context check cannot fall back to a
+  // previous suggestion set. Keep the draft targets for an explicit retry.
+  const r = checking || initial.isError || build.isError ? null : result || initial.data,
     request = edited || r?.request;
   return (
     <section className="bloom-panel space-y-4">
@@ -55,9 +58,13 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
         Suggestions use today’s logged meals, your local time, saved food
         preferences and the targets below. Refresh after logging a meal.
       </p>
-      {initial.isLoading && <p role="status">Checking today’s intake…</p>}
+      {checking && <p role="status">Checking today’s intake and current context…</p>}
       {(initial.isError || build.isError) && (
-        <p role="alert">{(build.error || initial.error)?.message}</p>
+        <div>
+          <p role="alert">{(build.error || initial.error)?.message}</p>
+          <p className="panel-note">Current suggestions are unavailable until the check succeeds. Your edited targets are retained for retry.</p>
+          <Button type="button" disabled={checking} onClick={() => initial.isError ? initial.refetch() : build.mutate()}>Retry suggestions</Button>
+        </div>
       )}
       {r && request && (
         <>

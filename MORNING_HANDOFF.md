@@ -1,4 +1,4 @@
-# Bloom development handoff — 2026-10-24
+# Bloom development handoff — 2026-10-25
 
 v0.5 remains incomplete. Work is on `enhance/bloom-experience`, existing PR #1 and existing Render workspace/service. No main merge, replacement service, production credential change, real reviewer provisioning or paid-provider activation. Detailed history: DEVELOPMENT_LOG.md; current task evidence: docs/architecture/PERSISTENT_TASK_INDEX.md.
 
@@ -87,3 +87,5 @@ This update supersedes earlier pending-publication/absence wording. Development 
 - v0.5 remains incomplete: full capability/output/history/revocation audit, operational deletion/managed recovery and applicable independent provider/native/device/reviewer acceptance remain. Existing blocked decision groups in BLOCKED_USER_INPUT.md still apply; no new owner question or credential required for these fixes.
 
 PRECISION-HISTORY-01 local milestone: legacy nonweekly genotype-ranked recommendation replay is selectively withdrawn using its exact historical scoring rationale, not version/gene presence alone. Safe saved advice explicitly historical, original stored records/goals/context/zero check-ins retained. All291 tests/types/build/source checks and actual report/export/UI mobile/dark tests passed. Publication awaits db34aaa exact CI/Render. Profile cache db34aaa3ea6a8ba56c090695912454c6e38d28aa published; CI40169138091 / Render dep-dbeq2h6k1f9s73figbc0 pending. Weekly24e3d45 CI40168894335 passed / Render dep-dbeq0hrbc2fs738ftf00 live.
+
+PLANNING-REFRESH-01 tested locally: failed daily/current-allergy refresh no longer displays old guidance as current. Explicit retries preserve edited targets; actual-handler/browser, target-unit regression, types/build/source checks passed. Latest verified Profiledb34aaa CI40169138091 / Render dep-dbeq2h6k1f9s73figbc0 live. Legacy-history8bee0ea CI40169358740 / Render dep-dbeq4ju7bikc73bgg9ag pending. External decision groups unchanged; no additional owner interaction needed.

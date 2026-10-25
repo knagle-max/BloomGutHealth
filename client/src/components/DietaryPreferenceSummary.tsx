@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export default function DietaryPreferenceSummary({ context }: { context?: PrecisionContext }) {
   const preferences = useQuery<DietaryPreferences>({ queryKey: ["/api/preferences"] });
   const biology = useQuery<PrecisionReport>({ queryKey: ["/api/precision"], enabled: !context });
-  const safety = context || biology.data?.context;
+  const safety = context || (!biology.isError && !biology.isFetching ? biology.data?.context : undefined);
   const p = preferences.data;
   return <section className="bloom-panel space-y-3" aria-labelledby="dietary-summary-title">
     <h2 id="dietary-summary-title">Food preferences & restrictions</h2>
@@ -17,6 +17,7 @@ export default function DietaryPreferenceSummary({ context }: { context?: Precis
       <strong>Allergies & safety context</strong>
       {safety ? <p>{safety.allergies?.length ? safety.allergies.join(", ") : "No allergies recorded; this does not certify allergen safety."} {!safety.safetyReviewed && "Safety context has not been confirmed."}</p>
         : <p>{biology.isError ? "Allergy context could not load." : "Checking your saved allergy context…"} Review My Biology before relying on food filters.</p>}
+      {!context && biology.isError && <Button type="button" variant="outline" onClick={() => biology.refetch()}>Retry allergy context</Button>}
       <Link className="text-link" href="/precision">Review allergies & health context</Link>
     </div>
     {p && <dl className="space-y-2">
