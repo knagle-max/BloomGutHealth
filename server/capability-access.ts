@@ -12,7 +12,9 @@ import type {db as appDatabase} from "./db";
 const grantSchema=z.object({serviceId:z.string().regex(/^srv-[a-z0-9]+$/),userId:z.string().min(1).max(100),grantId:z.string().min(1).max(100),expiresAt:z.string().datetime({offset:true}),territories:z.array(z.string().regex(/^[A-Z]{2}$/)).min(1).max(10),reviewReference:z.string().trim().min(1).max(200),allowedCapabilities:z.array(z.string().min(1).max(100)).max(52),uiPreview:z.object({purpose:z.literal("synthetic-ui-review"),dataset:z.literal("synthetic-only"),features:z.array(z.literal("bloom.food.photo_ai")).min(1).max(1)}).strict().optional()}).strict();
 export function internalPreviewGrant(userId:string,environment:Record<string,string|undefined>=process.env,now=Date.now()) {
  if(!Number.isFinite(now)||!environment.RENDER_SERVICE_ID||environment.BLOOM_EXPERIMENTAL_ENVIRONMENT!=="isolated-synthetic"||(environment.BLOOM_EXPERIMENTAL_KILL_SWITCH!==undefined&&environment.BLOOM_EXPERIMENTAL_KILL_SWITCH!=="false"))return null;
- try{const parsed=z.array(grantSchema).max(100).parse(JSON.parse(environment.BLOOM_INTERNAL_TESTERS||"[]"));const grants=parsed.filter(g=>g.userId===userId);if(grants.length!==1)return null;const grant=grants[0];
+ try{const parsed=z.array(grantSchema).max(100).parse(JSON.parse(environment.BLOOM_INTERNAL_TESTERS||"[]"));
+ const additional=environment.BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT?[grantSchema.parse(JSON.parse(environment.BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT))]:[];
+ const grants=[...parsed,...additional].filter(g=>g.userId===userId);if(grants.length!==1)return null;const grant=grants[0];
   if(grant.serviceId!==environment.RENDER_SERVICE_ID||+new Date(grant.expiresAt)<=now||!grant.territories.includes(environment.BLOOM_PREVIEW_TERRITORY||"")||!grant.allowedCapabilities.includes("bloom.dev.preview"))return null;
   return {fingerprint:createHash("sha256").update(JSON.stringify(grant)).digest("hex"),...(grant.uiPreview?{uiFeatures:grant.uiPreview.features.filter(id=>grant.allowedCapabilities.includes(id))}:{})};
  }catch{return null;}
