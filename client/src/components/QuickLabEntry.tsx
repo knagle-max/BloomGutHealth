@@ -1,5 +1,5 @@
 import {possibleLabReimports} from "@shared/lab-reimport";
-import type {LabHistoryRow} from "@shared/lab-history";
+import type {AnyLabHistoryRow} from "@shared/lab-history";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { invalidatePlanningInputs } from "@/lib/planning-cache";
@@ -9,7 +9,7 @@ import { dateKey } from "@shared/experience";
 import { labSchema, sourceOnlyLabSchema, markerDefinitions, type Lab, type SourceOnlyLab } from "@shared/precision-nutrition";
 type Row = { line:number; payload:Lab|SourceOnlyLab; key:string };
 type Preview = { sourceOnlyOffered:number; keptSourceOnly:boolean; rows:Row[]; errors:Array<{line:number;message:string}> };
-export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistoryRow[]}) {
+export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHistoryRow[]}) {
   const [importId,setImportId]=useState(()=>crypto.randomUUID());
   const [reportIdentifier,setReportIdentifier]=useState(""),[specimenIdentifier,setSpecimenIdentifier]=useState("");
   const [mode,setMode]=useState<"paste"|"single">("paste");
@@ -17,7 +17,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
   const [marker,setMarker]=useState("ldl"),[value,setValue]=useState(""),[unit,setUnit]=useState(""),[low,setLow]=useState(""),[high,setHigh]=useState(""),[notes,setNotes]=useState("");
   const [preview,setPreview]=useState<Preview|null>(null),[error,setError]=useState(""),[started,setStarted]=useState(false),[completed,setCompleted]=useState(0);
   const [reviewedMatches,setReviewedMatches]=useState("");
-  const reimports=(preview?.rows||[]).flatMap(row=>{if("sourceOnly" in row.payload)return [];const matches=possibleLabReimports(row.payload,existingLabs);return matches.length?[{row,matches}]:[];});
+  const reimports=(preview?.rows||[]).flatMap(row=>{const matches=possibleLabReimports(row.payload,existingLabs);return matches.length?[{row,matches}]:[];});
   const matchBasis=JSON.stringify(reimports.map(({row,matches})=>[row.key,matches.map(match=>match.id).sort()]));
   const matchesReviewed=!reimports.length||reviewedMatches===matchBasis;
   const clear=()=>{setPreview(null);setError("");setReviewedMatches("");};
@@ -100,8 +100,8 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
     {preview&&<div className="space-y-3">
       {!!reimports.length&&!started&&<div className="border rounded-xl p-3 space-y-3" role="status">
         <h3>These results may already be recorded</h3>
-        <p>{reimports.length} preview row(s) match recorded marker, source value/unit, time and assay context. Matching values do not prove the same specimen. Different supplied report or specimen identifiers stay separate.</p>
-        <ul>{reimports.map(({row,matches})=><li key={row.key}>Line {row.line}: {markerDefinitions.find(marker=>marker.id===("marker" in row.payload?row.payload.marker:undefined))?.name} · {matches.length} recorded match(es)</li>)}</ul>
+        <p>{reimports.length} preview row(s) match recorded analyte, original source value/unit, time and assay context. Matching values do not prove the same specimen. Different supplied report or specimen identifiers stay separate.</p>
+        <ul>{reimports.map(({row,matches})=><li key={row.key}>Line {row.line}: {"sourceOnly" in row.payload?row.payload.reportedAnalyte:markerDefinitions.find(marker=>marker.id===("marker" in row.payload?row.payload.marker:undefined))?.name} · {matches.length} recorded match(es)</li>)}</ul>
         <a className="text-link" href="#lab-source-history">Review recorded source history</a>
         <label className="block"><input type="checkbox" checked={matchesReviewed} onChange={event=>setReviewedMatches(event.target.checked?matchBasis:"")}/> I reviewed the matches; these are separate results to record.</label>
         <p className="panel-note">If this is the same report, leave it unsaved. No existing result is merged or removed automatically.</p>

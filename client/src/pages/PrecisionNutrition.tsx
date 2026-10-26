@@ -637,7 +637,7 @@ export default function PrecisionNutrition() {
             )}
             {tab === "labs" && (
               <>
-                <QuickLabEntry existingLabs={[...r.labHistory,...(r.pendingLabs||[])]}/>
+                <QuickLabEntry existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
                   <h2 id="biology-bloodwork-results">Latest results</h2>
