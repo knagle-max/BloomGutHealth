@@ -1,0 +1,11 @@
+# Laboratory source metadata — staged compatibility rollout
+
+MKT-LAB-2610–2612 / Architect §47. Preserve actual source headings and row order separately from Bloom marker taxonomy. Metadata does not establish assay comparability, source authenticity, clinical interpretation or professional review.
+
+1. Reader expansion: optional sourceInput.reportedSection (verbatim string, maximum1000 characters) and rowOrder (zero-based row position, integer0–30000). Existing canonical source number/unit/text/capture/date/laboratory remain. Old payloads stay unchanged; no backfill. Parser/UI writers are unchanged in this commit.
+2. Verify exact reader commit CI and existing Render deployment LIVE before publishing parser emission. Actual authenticated API/PostgreSQL tests cover metadata save/confirmation/reload/encryption/owner isolation and strict invalid values. No production migration or new store.
+3. Writer follow-up: preserve explicit bracketed source headings and original raw line positions without inferring taxonomy; keep original row number/unit/text, pending units, safe partial-import errors and existing stable save receipts. Arbitrary headings/group counts within documented safety limits; no fixed6 dates/9 groups/92 markers assumption. Complete panel identity, reimport ambiguity and source-defined grouped historical UI need their own actual tests; two optional fields alone do not deliver the entire contract.
+
+Backout: after any metadata-bearing write, retain a reader version that accepts these fields. Revert parser emission while keeping reader support; never strip historical source metadata or rewrite originals to satisfy an older strict reader. Pre-expansion readers reject unknown sourceInput fields, so an arbitrary rollback to older code is not compatible. This is why reader deployment is verified first. Long-lived old browser validation may need reload; it must not silently discard metadata.
+
+New visual source ZIP access and qualified clinical/independent acceptance are tracked separately in BLOCKED_USER_INPUT.md; neither pauses this source-only engineering. Ordinary current parser emits no metadata in reader phase. Actual source panel/section and canonical biological category are distinct; unknown source labels are valid, not medical findings.

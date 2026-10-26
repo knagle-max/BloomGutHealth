@@ -19,9 +19,13 @@ Architect2cac83b/8fe04cd activity handoffs and b6f1f8e food-search handoff prese
 
 ## Current macro correction
 
-Confirmed source-backed fractional-display bug fixed locally: actual0.5g almonds savesP0.11/C0.11/F0.26g but previous overview rounding showedzero. Shared precision now preserves positive values, actualzero and unknown; all macros includingfat are shown in confirmation.331/331 tests/types/build/source117/API, actual save/correct/journal, units/AddFood/Athlete/Today regressions PASS; publication next. The actual hosted five-food owner incident remains uncaptured, not claimed fixed. See docs/operations/FOOD_REVIEW_MACRO_INCIDENT.md.
+Confirmed source-backed fractional-display bug fixed locally: actual0.5g almonds savesP0.11/C0.11/F0.26g but previous overview rounding showedzero. Shared precision now preserves positive values, actualzero and unknown; all macros includingfat are shown in confirmation.331/331 tests/types/build/source117/API, actual save/correct/journal, units/AddFood/Athlete/Today regressions PASS; published as01fdc50c33832b71b99fe40828c76db88fd684fd; Render dep-dbfefujbc2fs7393u0bg LIVE, exact CI40275565437 verification recorded in next checkpoint. The actual hosted five-food owner incident remains uncaptured, not claimed fixed. See docs/operations/FOOD_REVIEW_MACRO_INCIDENT.md.
 
 New incoming requirements preserved throughb60ee75 include FoodReview owner/visual/homemade and Bloodwork clinical/dynamic/source grouping. Current new visual archives require original access; earlier174-source inventory remains verified. Next P0 MKT-LAB-2610 source integrity must stage optional metadata reader before parser writes; no hardcoded panel/group counts or medical interpretation.
+
+## Current laboratory source-reader stage
+
+Optional sourceInput.reportedSection/rowOrder reader expansion is locally verified:333/333 tests/types/build/source117,8 actual API/encryption/owner/unit-confirmation/legacy tests and original lab-history browser PASS. No normal parser writer emits fields yet. Publish/verify exact reader SHA CI+Render before writer; see LAB_SOURCE_METADATA_ROLLOUT.md. Next parser preserves raw headings/rows/source order and correction-only drafts; whole panel identity/reimport ambiguity, grouped historical UX and clinical interpretation remain open.
 
 ## Broader completed foundations
 
