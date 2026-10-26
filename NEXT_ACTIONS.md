@@ -1,3 +1,7 @@
+# Active Move checkpoint — 2026-10-26
+
+0f265410e5747a884be760eddae57df19f9ce7c2 pushed; Render dep-dbfahdr8vfls7395chp0 LIVE; Actions40252980254 in progress. Optional setup tests/types/build/Today pass, source-map2 tests pass after hash refresh. Current Move P0 fix reproduced actual baseline dead end and passed synthetic source/date/account/keyboard/failure journey. Final full325 tests, types/build and selective gallery in progress; publish and verify exact CI/Render before next substantial batch. Next saved-meal unknown-response/idempotency audit. New basic activity entry remains v0.6, no native activation.
+
 # Active checkpoint — 2026-10-26
 
 First-goal integrity batch implemented; finish full325 tests, types/build, Today regression and source crosswalk, then commit/push and verify exact CI/Render. New QA scripts/qa/first-goal-source-journey.mjs passes (synthetic HTTP storage). Prior d95b65c CI40251150014 SUCCESS/Render dep-dbfa6qdg1s2s73a56i2g LIVE. Next audit SavedMeals unknown-response/idempotency using existing meal receipt infrastructure; do not invent a parallel store. Keep v0.5 P0 ahead of v0.6.

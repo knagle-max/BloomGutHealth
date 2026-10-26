@@ -1495,7 +1495,7 @@
     "client/src/components/ProductPicker.tsx": "478268d23a03de300e290de677df928ab56ad81c092dbe255c9e04703d95df50",
     "client/src/components/QuickLabEntry.tsx": "9c48d4e5860880e60889f3a7363e70611b036d27c45a61d30a86b69a1d04841e",
     "client/src/components/TodayFocus.tsx": "c64bf9c4d7d089efad04ba297af372144f2518f023cfaceda8b988f0986ff9d1",
-    "client/src/components/TodayStatus.tsx": "7ab8f78d8f2120002df08d9eb877d7bb3123e8914802bcce4cdcdceb4aa13ee0",
+    "client/src/components/TodayStatus.tsx": "43f4ce4bd8290eb12a7185769d00e1aab829abac4fdbecf0158603ad73aace9a",
     "client/src/lib/auth.tsx": "796839344459bece651ad94135b8dc51575eb60bcb625d6ada6394b0553324df",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",

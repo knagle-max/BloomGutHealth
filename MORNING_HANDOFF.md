@@ -1,3 +1,7 @@
+# Latest checkpoint — 2026-10-26
+
+ARC-ACT-01 Move dead end reproduced and fixed as inline dated canonical source;325/325 tests, types/build/source111, new movement browser and Today responsive/dark regressions PASS. Publishing next. Optional setup0f265410e5747a884be760eddae57df19f9ce7c2 is live on Render dep-dbfahdr8vfls7395chp0; exactCI40252980254 verification pending. New separate template-save regression reproduces ignored save receipt/duplicate row; next implementation uses existing meal-save mechanism. Basic activity entry/native/independent acceptance remain open and distinct.
+
 # Current batch — 2026-10-26
 
 Optional first-goal integrity implemented and browser/type/build verified; full run324/325 with source-hash timing failure resolved by both crosswalk tests passing after hash refresh. Publishing/CI full-suite confirmation pending. d95b65c CI40251150014 SUCCESS/Render verified live; later incoming2cac83b docs live and preserved. Next P0: ARC-ACT-01 Today Move navigation/source truth, before deferred v0.6 basic activity feature.
