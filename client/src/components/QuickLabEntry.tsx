@@ -36,7 +36,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
   },onError:e=>setError((e.message.includes("conflicts")||e.message.startsWith("Review possible"))?e.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.")});
   const review=(keepSourceOnly=false)=>{try{
     dateKey.parse(date);const measuredAt=new Date(date+"T"+(time||"12:00")).toISOString();
-    const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting,sourceReport:{importId,...(reportIdentifier.trim()?{reportIdentifier}:{}),...(specimenIdentifier.trim()?{specimenIdentifier}:{})}};
+    const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting,sourceReport:{importId,enteredDate:date,...(time?{enteredTime:time}:{}),...(reportIdentifier.trim()?{reportIdentifier}:{}),...(specimenIdentifier.trim()?{specimenIdentifier}:{})}};
     let rows:Array<{line:number;payload:Lab|SourceOnlyLab}>,errors:Preview["errors"]=[],sourceOnlyOffered=0;
     if(mode==="paste"){
       const parsed=parseLabPaste(text,measuredAt,common.laboratory);errors=parsed.errors;

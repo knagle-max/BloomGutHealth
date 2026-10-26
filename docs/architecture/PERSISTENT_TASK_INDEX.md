@@ -757,3 +757,7 @@ LAB-SOURCE-ONLY-WRITE-01 offers unsupported delimited source rows only after exp
 ## 2026-10-26 — explicit entered calendar reader (ARC-LAB-01/02 source integrity)
 
 LAB-ENTERED-DATE-READ-01 confirms+14 source-date mismatch and adds optional entered date/time provenance, valid-calendar/clock checks, full date-only global-offset window without invented time, explicit readonly source labels and Recorded fallback without legacy backfill.369 full local tests PASS; final day-window refinement10 focused/types/build/API94+13/source130 and actual metadata/legacy+14 browsers PASS. No normal writer yet; exact reader CI/Render required before capture. Contract LAB_ENTERED_DATE_CONTRACT.md. Full date correction/specimen/reimport/independent clinical acceptance remains separate.
+
+## 2026-10-26 — capture explicit entered lab day/time
+
+LAB-ENTERED-DATE-WRITE-01 preserves actual input calendar/time separately from canonical timestamp; no missing-time metadata invention or old-row backfill. Encrypted App/API+14/−12/midnight/DST fixed-instant vectors and receipt/correction/raw/known/history/delete-plan paths PASS; ordinary/manual/unit/legacy regressions and types/build/API94+13/source130 PASS. Reader e859334 Actions40381726560 SUCCESS (369 tests)/existing Render dep-dbfq3529lscs73bm4d50 LIVE verified before writer. Writer publication/exactCI next; arbitrary date correction and source concurrency remain OPEN.

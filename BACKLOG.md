@@ -474,3 +474,7 @@ Source-only writer final local367/367 tests/types/build/API94+13/source130, focu
 
 Confirmed user-date/UTC label mismatch in+14 browser: date-onlyOctober15 source shownas reportedOctober14. Optional explicit entered date/time reader and readonly labels, strict calendar/clock/global-offset binding, legacy Recorded fallback and no inferred backfill.8 focused metadata/SQL/source tests plus real readonly/source+legacy+14 browser PASS; full369/types/build/source130 running. Writer emission waits exact reader CI+Render. Existing canonical instants and clinical calculations unchanged.52b1399 source-only writer exact Actions40378738031 SUCCESS / Render dep-dbfppoe417fc73eoa4s0 LIVE verified.
 Entered-date reader local369 full tests PASS; final no-assumed-time day-window refinement10 focused/types/build/API/source130 PASS. Actual explicit-date/legacy+14 browsers PASS. Reader publication/exactCI required before normal capture; original instants unchanged.
+
+## LAB-ENTERED-DATE-WRITE-01 — local verified
+
+Normal capture records actual entered date/time, empty time absent; exact canonical timestamp retained. Four encrypted App/API timezone/midnight/DST vectors + full receipt/correction/source/known-output/history/delete-plan chains PASS; ordinary manual/unit-confirmation and existing history/context regressions PASS. Types/build/API/source130 PASS; reader e859334 Actions40381726560 SUCCESS/Render dep-dbfq3529lscs73bm4d50 LIVE verified. Ready publish/exactCI. Full arbitrary date correction remains OPEN.
