@@ -483,3 +483,18 @@ AddFood correction final local verification:326/326 tests/types/build/source115/
 Read incoming Architectb6f1f8e §40; existing USDA Branded is retained, no duplicate provider. Before tests reproduce zero-overlap candidates returned for KitKat and invalid numeric GTIN returning unrelated source records. New numeric intent rejects invalid length/check digit before private/provider lookup, valid identifiers skip generic food and NIH name search, formatted valid codes use OFF identifier path only if independently enabled. Ranker excludes zero-overlap names and invalid numeric queries. Existing private ownership/public cache and provider budgets remain; name aliases remain suggestions.13 focused tests PASS, actual ProductService/rendered invalid/exact/no-match/manual fallback browser PASS. Old provider-availability test corrected to query matching source fixtures, while explicitly rejecting unrelated public candidates for private query. Full328/types/build/source117/API92+13 in progress. No claimed full gold relevance metric, typed semantic routing, restaurant/market/preparation ranking or live SKU acceptance.
 
 Identifier/no-match final verification:328/328 full tests/types/build/source117/API92+13 PASS;13 focused product/budget tests and actual ProductService UI invalid/exact/no-match/manual fallback PASS; canonical AddFood actual ProductService save/receipt-loss/Athlete-cache regression PASS. Prior correction8a25e48 Actions40255449705 SUCCESS/Render dep-dbfavhrsp5es73clojm0 LIVE. Next snapshot test confirms per-product labelSnapshot absent, distinct from already persisted aggregate nutrient totals; outside this batch.
+
+## 2026-10-25 Food Search Relevance — Architect intake
+
+**Source:** `docs/architecture/V06_HANDOFF.md` §40, commit `b6f1f8ebddd2d7e8bb18578e0c7f928616034b31`; Integrations INT-SEARCH-2026-01–06. **ARCHITECT_REVIEWED**, implementation/relevance benchmark not verified by this handoff. Map into existing `BLOOM-FOOD-01–03` and REST-ARCH before creating issues. USDA Branded search already exists in source: don't reimplement.
+
+| ID | Priority | Outcome / Codex action | Status |
+| --- | --- | --- | --- |
+| ARC-SEARCH-01 | P0 | Search-intent source routing for barcode/generic/branded/supplement/restaurant/saved, no ordinary food→supplement contamination; verify current service and picker first | ARCHITECT_REVIEWED |
+| ARC-SEARCH-02 | P0 | Deterministic relevance, source/market/preparation and exact-SKU integrity; gold queries and false-exact benchmarks | ARCHITECT_REVIEWED |
+| ARC-SEARCH-03 | P1/P0 misleading result | Short clear 5–10 result sets, source/serving and more-result UX; manual fallback | ARCHITECT_REVIEWED |
+| ARC-SEARCH-04 | P0 licence/cost | Existing USDA FNDDS+Branded verified, NIH supplement by intent, OFF disabled until Legal; no new paid API | ARCHITECT_REVIEWED |
+| ARC-SEARCH-05 | P0 historic saved nutrition | Snapshot exact user-selected source/version/serving/nutrients; future re-ranking never rewrites meal | ARCHITECT_REVIEWED |
+| ARC-SEARCH-06 | P1/P0 honest fallback | Real Canadian restaurant menu only once provider/rights/data verified; don't substitute unrelated branded products as official menu | ARCHITECT_REVIEWED |
+
+**Next:** Codex compares actual current search ranks to golden benchmark, reports error distribution, reproduces and fixes confirmed v0.5 P0 issues alongside active queue (not displacing more urgent P0), then shares exact code/CI/Render results; Biology, Design, User Testing, Security/Legal sign off their domains. No search changes in this documentation commit.
