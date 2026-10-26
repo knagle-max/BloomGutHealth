@@ -562,11 +562,14 @@ export async function lookupProductNutrition(
           n.amount = (n.amount ?? 0) + p.perServing[n.key] * servings;
           counts[n.key] = (counts[n.key] || 0) + 1;
         }
+      // Do not retain references into a mutable provider/cache or private-label object.
+      const labelSnapshot=structuredClone(p);
       productDetails.push({
+        labelSnapshot,
         name: p.name,
         serving: `${servings} × ${p.servingDescription}`,
         source: p.source,
-        ...(p.provenance?{provenance:p.provenance}:{}),
+        ...(labelSnapshot.provenance?{provenance:labelSnapshot.provenance}:{}),
         otherNutrients: (p.otherNutrients || []).map((n) => ({
           ...n,
           amount: n.amount * servings,

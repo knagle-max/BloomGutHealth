@@ -23,7 +23,7 @@
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
-    "server/products.ts": "4aeac403703eb0672e9f348ba93153fbf39d35fa4b03eda17793ddc42ca84cc0",
+    "server/products.ts": "6d2d58f73dd28deebc579faf426b22429920714aa4b91ae93c16e20dc0d773aa",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
     "server/routes.ts": "0076666c9d3775a9c2082c910725cb38bddb10fed10ce0b053e6e2264afb84e6",
@@ -637,7 +637,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 623,
+      "line": 626,
       "method": "USE",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -647,7 +647,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 627,
+      "line": 630,
       "method": "GET",
       "path": "/api/products/search",
       "declaredMiddleware": [
@@ -657,7 +657,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 649,
+      "line": 652,
       "method": "GET",
       "path": "/api/products/saved",
       "declaredMiddleware": [],
@@ -665,7 +665,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 656,
+      "line": 659,
       "method": "GET",
       "path": "/api/products/:source/:id",
       "declaredMiddleware": [
@@ -675,7 +675,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 671,
+      "line": 674,
       "method": "POST",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -685,7 +685,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 696,
+      "line": 699,
       "method": "DELETE",
       "path": "/api/products/:id",
       "declaredMiddleware": [],

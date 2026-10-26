@@ -36,7 +36,7 @@ No noncritical question should pause other approved work. Keep safe defaults, ne
 ## Experimental access and asset intake
 
 - Experimental account provisioning/activation remains default-denied. Any real internal tester grant needs server-side identity, expiry, territory, capability scope, consent and approved synthetic/explicit dataset context. No self-enrolment or client flag grants access. Do not ask the owner repeatedly; build/test policy with synthetic fixtures first and list exact provisioning inputs only when needed.
-- Branding ZIPs are reported in shared Library but not present in the repository or available filesystem. Continue with existing approved Bloom tokens/components; do not claim new asset adoption. Morning question: where can the approved current editable kits be read through an authorized connector or repository path? Recommended: provide a versioned approved asset path, with no confidential data. This blocks exact asset adoption/sign-off only.
+- Current design-source access is RESOLVED:174 files verified in design/bloom/VERIFICATION.md after2af0998. Current master/Today/scientific packs are complete. Do not request source uploads again. Only the optional legacy preview remains absent under ARTIFACT-LEGACY-PREVIEW-01; running-build visual acceptance remains separate.
 
 ## OPS-702 / PRIV-103 — managed recovery authorization and policy
 

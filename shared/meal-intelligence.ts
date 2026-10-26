@@ -92,6 +92,8 @@ export interface MealIntelligence {
     serving: string;
     source: string;
     provenance?: import("./products").Product["provenance"];
+    /** Source label at this explicit analysis, before portion scaling; absent in older meals. */
+    labelSnapshot?: import("./products").Product;
     otherNutrients: { name: string; amount: number; unit: string }[];
   }>;
   provider: string;

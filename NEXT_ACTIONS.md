@@ -1,3 +1,7 @@
+# Active label-snapshot checkpoint — 2026-10-26
+
+Searchfba8a6cbffb17bbb23e516d4cb02d7bfc637ab05 pushed; Actions40256223204 in progress, verify Render. Correction8a25e48 Actions40255449705 SUCCESS/live; previous six batches verified CI/live. Current optional per-label snapshot actual adapter+PostgreSQL tests PASS; full330/types/build/source117/API and canonical AddFood receipt/Athlete regression running. Finish checks, publish/verify exact CI+Render. Snapshot is normalized per-label source evidence, not raw archive/correction history. Next P0 remaining semantic query/food-vs-supplement/prepared/market ranking, complete daily journey, same-account CAS/draft conflict and whole-app source master integration; keep independent/native/licensing gates separate. No v0.6 or new provider/OFF activation.
+
 # Active search checkpoint — 2026-10-26
 
 Correction8a25e4857e616f7e7bacbdcee84a9250ac86f9bd pushed after preserving Architectb6f1f8e food-search §40; Render dep-dbfavhrsp5es73clojm0 LIVE, Actions40255449705 in progress. Current identifier/no-match fix:13 focused and actual ProductService UI PASS, full328/types/build/source117/API92+13 running. Finish AddFood/product regressions, publish/verify exact CI+Render. Next §40 selected-product historical snapshot audit (canonical per-product identity/version/serving/source values), remaining semantic/market/preparation ranking and fullProfile CAS, all under v0.5 P0. No OFF enablement/newprovider/main merge/native activation.
