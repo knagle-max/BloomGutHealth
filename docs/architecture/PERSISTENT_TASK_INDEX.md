@@ -498,3 +498,17 @@ Identifier/no-match final verification:328/328 full tests/types/build/source117/
 | ARC-SEARCH-06 | P1/P0 honest fallback | Real Canadian restaurant menu only once provider/rights/data verified; don't substitute unrelated branded products as official menu | ARCHITECT_REVIEWED |
 
 **Next:** Codex compares actual current search ranks to golden benchmark, reports error distribution, reproduces and fixes confirmed v0.5 P0 issues alongside active queue (not displacing more urgent P0), then shares exact code/CI/Render results; Biology, Design, User Testing, Security/Legal sign off their domains. No search changes in this documentation commit.
+
+## 2026-10-25 Describe Food / Meal Review incident — Architect intake
+
+**Source:** `docs/architecture/V06_HANDOFF.md` §41, commit `552f2fbab82604c4d25d16cc925708eaa9ffca9b`. User Testing UT-DESC-2301–2307 and later superseding *incident wording* from Branding MKT-FOOD-2401–2408 v1.1. **Reported symptom: meal overview literal P/C/F zero even though saved food values or detailed summation have P/C/F; not merely unknown/dashes.** Root cause/current reproducibility unverified; preserve separate missing-nutrient tests. Map against existing v0.5 canonical Add Food, meal summary, UT-FOOD-501–505, ARC-SEARCH and no duplicate systems.
+
+| ID | Priority | Codex next acceptance action | Status |
+| --- | --- | --- | --- |
+| ARC-REVIEW-01 | **P0 v0.5** | Reproduce same saved meal ID item/detail P/C/F nonzero but overview literal0; trace DTO→summary→save/recalc→refetch/cache→journal/daily/Progress; assert identical known macros and distinct null vs legitimate zero | ARCHITECT_REVIEWED, code diagnosis pending |
+| ARC-REVIEW-02 | **P0 v0.5** | One canonical ingredient/product counted identity and idempotent save/correction; changing selected ground beef cannot double add, lost response/retry cannot duplicate | ARCHITECT_REVIEWED |
+| ARC-REVIEW-03 | P1 UX / P0 mismatch safety | Safe plausible ingredient default for described meal, targeted manual correction instead of five mandatory searches, no false exact SKU or oils | ARCHITECT_REVIEWED |
+| ARC-REVIEW-04 | P1 UX / P0 truth | Human scannable ingredient rows, `Ground beef · 4 oz`, Change/Amount/Remove, source/ambiguity in accessible details, one Save action | ARCHITECT_REVIEWED |
+| ARC-REVIEW-05 | P0 accuracy / P1 study | Same source values across details/overview/Today/Progress/export, true partial fixtures, 320px and a11y, provenance and independent specialists | ARCHITECT_REVIEWED |
+
+**Immediate scope:** Real example `Sweet potato, ground beef with taco seasoning, avacado, shredded cheese and salsa`; reported 644 kcal is not a validated calculated result. Match historical meal detail and overview from current build and preserve source response evidence; prioritize P0 correctness before P1 nicer auto-match. No implementation/testing is claimed by documentation update; Developer owns commits and state promotion.
