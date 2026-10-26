@@ -541,3 +541,19 @@ Identifier/no-match final verification:328/328 full tests/types/build/source117/
 
 ## P0 ARC-SEARCH-01–03 — Homemade meal owner acceptance amendment (2026-10-25)
 Approved, implementation/test status unverified. Canonical Developer instructions and four mandatory query regressions: `docs/architecture/ARC_SEARCH_HOMEMADE_MEAL_AMENDMENT_2026-10-25.md` (commit `139a808e`). Reuse existing search ranker, source metadata and meal/recipe save; no parallel engine/database. Assert homemade intent ranking, accurate Generic/Home-prepared/Branded labels, differentiated branded alternatives, explicit user confirmation, functional ingredient fallback and successful logged meal. Codex reports exact tested commit/CI/browser/Render and unresolved source availability. This extends existing ARC-SEARCH-01–03; it is not a new feature.
+
+## 2026-10-25 Bloodwork Intelligence / qualified medical professional boundary
+
+**Source:** `docs/architecture/V06_HANDOFF.md` §45, commit `db6745f71d6df48148d6407d433458b277badb92`; detailed consolidated reviewer source `docs/architecture/BLOODWORK_PROFESSIONAL_REVIEW_AMENDMENT_2026-10-25.md`. BIO-LAB-201–209, UT-IMPORT-2401–2409 and UT-LAB-2501–2506 integrated, **not duplicated**. Explicit owner instruction is binding: flag findings **worth looking into**, make **no diagnosis, medical claims or treatment/dose decisions**; advise healthcare professional evaluation for potential issues, with clinician-reviewed urgency escalation where appropriate. Requirements approved, not clinically validated or implemented by Architect.
+
+| ID | Priority | Acceptance for Developer | State |
+| --- | --- | --- | --- |
+| ARC-LAB-01 | P0 data accuracy / P1 interpretation | Date/units/source preserving observed trend even with missing lab method, with prominent *comparability unverified* and no unsupported clinical significance; prior five-LDL regression | ARCHITECT_REVIEWED |
+| ARC-LAB-02 | P0 unit/interval safety | Inferred units and reference ranges visibly provisional, independently correctable; unsafe/ambiguous data do not trigger definitive clinical result | ARCHITECT_REVIEWED |
+| ARC-LAB-03 | **P0 medical safeguards** | "Things worth discussing with a healthcare professional" with source/uncertainty, no disease diagnosis, medication/supplement/hormone instructions; time-sensitive escalations require approved clinical policy | OWNER-DIRECTED / ARCHITECT_REVIEWED |
+| ARC-LAB-04 | P0 contradiction/trend visibility | Preserve synthetic Hct 0.468→0.522 L/L/Hgb157→174 alongside improved LDL/ALT/ApoB/HbA1c, as neutral observation; reviewed referral path, no testosterone cause/dose claim | ARCHITECT_REVIEWED |
+| ARC-LAB-05 | P0 input identity/P1 coverage | Source-labelled 92 distinct marker × six synthetic panels = 552 fixture rows, strict assay identity, provenance/unit/date/roundtrip and synthetic segregation; import != medical interpretation | ARCHITECT_REVIEWED |
+| ARC-LAB-06 | P1 contextual education | What marker measures, evidence and uncertainties, questions for clinician; no fabricated causal personal or treatment claims | ARCHITECT_REVIEWED |
+| ARC-LAB-07 | P0 release gate | Negative/unknown-unit, contradictory marker, clinician escalation, false alarm/reassurance, real mobile accessibility and independent Biology, qualified clinical, Legal/Security/UT checks | ARCHITECT_REVIEWED; acceptance pending |
+
+**Developer:** First audit existing branch lab trend/import/interpretation features, fix actual P0 incorrect data displays without duplicate importer, then implement safe reviewed clinician-discussion UX. Report exact commit and API/browser/CI/Render tests. No unreviewed medical alert/recommendation activation.
