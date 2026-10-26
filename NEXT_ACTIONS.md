@@ -25,6 +25,10 @@ Actual external refresh reset180cmdraft to171cm reproduced. Dirty fields now ret
 
 PROFILE_REVISION_CONTRACT.md: source revision reads and optional If-Match atomic row-lock/write; newwebpins reviewedrevision, stale409 retainsdraft, malformedreadblocksSave.2 actualAPI/PG tests +actualtwo-tabSQL browser PASS, explicitlatest unchangedmeasurement hydrateedge fixed. Legacy noheader deliberately compatible => wholeProfile/settings concurrency remains OPEN. Isolated Neon smoke adds concurrentrequests; do not claim until exactCI. Full347 `/tmp/profile-cas-full.log`, types/build/API/source122 and draft/unknown-save/mixedunit regression PASS; publish/verify exactCI including realNeon production smoke. Dirty3481677 Actions40288612595 SUCCESS/live.
 
+## Active explicit home-prepared source
+
+Bundled audit:onlyexplicit homemade Salsa redFDC2709739 wasthird forHomemadesalsa; now source-onlycategory/ranking first, accurategeneric/homeprepared grams review, packaged confirmation unchanged. ActualApp/catalogue/ProductService/foodroute/PGlite30g snapshot/save plusgenericSoupnonrelabelling PASS;4focused/types/build PASS; full348 `/tmp/home-source-full.log`, foodkind routefinalbrowser `/tmp/home-source-final-browser.log`, canonical AddFood loss/Athlete `/tmp/home-source-add-food.log` PASS; readypublish. Publish/exactCI+Render afterchecks. Profile7891efa CI40290012763 SUCCESS including realNeon concurrentwrites/RenderLIVE. Legacy enforcement/settings CAS stillOPEN.
+
 ## Immediate sequence
 
 1. Check actual working tree and full-suite result; do not recreate completed work. Commit verified mass fix and persistent records, fetch/preserve incoming Architect docs before push. Only rebase own unpublished commits. No force push; inspect FETCH_HEAD because remote tracking ref is not configured.

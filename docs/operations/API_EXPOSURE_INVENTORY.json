@@ -23,7 +23,7 @@
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "e72ff71b6387a688c08faa91353ff1246505190a00e2086d97290701d5ae3804",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
-    "server/products.ts": "041e96b4f1f0b86481d5df674a951121d613e1177ce143d4dd76626fe963e785",
+    "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
@@ -638,7 +638,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 627,
+      "line": 629,
       "method": "USE",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -648,7 +648,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 631,
+      "line": 633,
       "method": "GET",
       "path": "/api/products/search",
       "declaredMiddleware": [
@@ -658,7 +658,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 653,
+      "line": 655,
       "method": "GET",
       "path": "/api/products/saved",
       "declaredMiddleware": [],
@@ -666,7 +666,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 660,
+      "line": 662,
       "method": "GET",
       "path": "/api/products/:source/:id",
       "declaredMiddleware": [
@@ -676,7 +676,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 675,
+      "line": 677,
       "method": "POST",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -686,7 +686,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 700,
+      "line": 702,
       "method": "DELETE",
       "path": "/api/products/:id",
       "declaredMiddleware": [],

@@ -32,3 +32,7 @@ test('homemade retrieval exposes real generic estimates without inventing prepar
  const fallback=await unavailable.search('Homemade chicken noodle soup','food',store,'a');assert.equal(fallback.products[0].source,'usda-local');assert.ok(fallback.warnings.some(w=>w.includes('temporarily unavailable')));
  assert.deepEqual(rankProducts([product('missing','Unrelated vitamin')],'Homemade chicken noodle soup'),[]);
 });
+test('explicit USDA homemade preparation ranks ahead of generic salsa while other sources never inherit the category',async()=>{
+ const {isHomePreparedSource}=await import('../shared/product-search');const {localProduct}=await import('../server/products');const home=localProduct('2709739');assert.equal(home.name,'Salsa, red, homemade');assert.equal(isHomePreparedSource(home),true);assert.equal(isHomePreparedSource({...home,source:'manual'}),false);assert.equal(isHomePreparedSource({...home,source:'usda-branded'}),false);assert.equal(isHomePreparedSource(localProduct('2709738')),false);
+ const service=new ProductService(async()=>({foods:[]}),()=>false,()=>undefined);const result=await service.search('Homemade salsa','food',{getNutritionProducts:async()=>[]} as any,'owner');assert.equal(result.products[0].id,'2709739');assert.equal(result.products[0].source,'usda-local');assert.ok(result.products.some(p=>p.id==='2709738'));assert.ok(result.warnings.some(w=>w.includes('reference recipe')));assert.equal(result.products.find(p=>p.id==='2709738')!.name,'Salsa, red','Query must not relabel a generic source');
+});

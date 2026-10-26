@@ -7,7 +7,7 @@ import {
   type Ingredient,
 } from "@shared/meal-intelligence";
 import { productIngredient, replacementLabelAmount, type Product } from "@shared/products";
-import { productMatchStatus, homePreparedQuery } from "@shared/product-search";
+import { productMatchStatus, homePreparedQuery, isHomePreparedSource } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
 import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
 export default function ProductPicker({
@@ -238,7 +238,7 @@ export default function ProductPicker({
                         ? "USDA manufacturer label"
                       : p.source === "manual"
                         ? "Your saved label"
-                        : "USDA generic food"}
+                        : isHomePreparedSource(p)?"USDA home-prepared food":"USDA generic food"}
                 </Button>
                 <p id={`${resultId}-result-${index}`} className="panel-note">
                   {productMatchStatus(p,resultQuery)==="barcode"&&<span>Matching barcode · </span>}
@@ -260,7 +260,7 @@ export default function ProductPicker({
           <h4>
             {choice.name} · {choice.brand}
           </h4>
-          <p className="panel-note">Confirm this exact product, variety, country and label serving against your package. A name match alone does not confirm the formulation.</p>
+          <p className="panel-note">{choice.source==="usda-local"?(isHomePreparedSource(choice)?"USDA describes this source record as homemade. Recipe ingredients and amounts can differ; review the food and grams eaten, or build from individual ingredients.":"USDA generic estimate. Review the food, preparation and grams eaten. Recipes and cooking methods can differ."):"Confirm this exact product, variety, country and label serving against your package. A name match alone does not confirm the formulation."}</p>
           {variants.length > 1 && (
             <label>
               Label serving

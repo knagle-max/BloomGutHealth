@@ -26,8 +26,9 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 |3385e5a|Original lab row, heading, number, unit and physical line available in latest and longitudinal source details.|40287210671 SUCCESS; LIVE|
 |3726265|Freeze submitted Profile including units; guard repeated pending submits; minor safety refresh retained.|40287917826 SUCCESS; LIVE|
 |3481677|Dirty Profile fields survive current-source refresh; changed values need explicit review, unrelated preferences do not conflict.|40288612595 SUCCESS; LIVE|
+|7891efa|Current web reviewed-revision saves compare/update atomically; stale two-tab writes409; explicit latest resets all fields.|40290012763 SUCCESS including actual Neon concurrency; LIVE|
 
-Latest verified code:3385e5a8c61e47d90aa2b9d12fab3539537cf97c, Render dep-dbfg7mijnfac73enq4mg LIVE.345 full tests/types/build/API92+13/source120 and canonical food save/PGmacro browsers passed. Historical full SHAs/deployments and corrections are in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only CI failure is disclosed; the following fallback commit passed the repaired gate. No skipped checks.
+Latest verified code:7891efa9ddc4ec3cfeb0d849905482f33b11692c, Render dep-dbfgk2ks728c73dh7fkg LIVE.347full/types/build/API92+13/source122 and actual two-tab/API/PostgreSQL browsers pass. Isolated production Neon smoke confirms concurrent versioned Profile requests yield one winner and stale409; passwords/owner/session boundaries retained. Historical SHAs/deployments and corrected claims remain in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only failure was corrected by567a744; no skipped gates.
 
 ## Lab source-history delivered
 
@@ -41,7 +42,7 @@ Minor source/backend/copy changes use code/test evidence. Selective substantial 
 | --- | --- | --- |
 |P0|Actual owner hosted macro discrepancy and exact packaged SKU/market acceptance.|Authorized same-ID/source/DTO capture on current Render; fractional bug is confirmed independently, not declared sole root cause.|
 |P0|Food homemade/prepared/brand/market and food-vs-supplement semantic routing/ranking.|Audit actual catalogue/source metadata and golden queries before rule changes; no inferred exact SKU/Home-prepared labels or made-up confidence.|
-|P0|Whole-profile same-account concurrent writes and draft conflict resolution.|Current acknowledgements are freshness-bound; arbitrary whole-profile writes remain last-writer-wins. Add real CAS/source conflict safeguards with storage/browser cases.|
+|P0|Whole-profile same-account concurrent writes and draft conflict resolution.|Current web versioned Profile saves have atomic CAS and dirty conflict review. Inventory/enforce versioned legacy writers and implement separate Experience/settings CAS; legacy no-header compatibility can still overwrite.|
 |P0/P1|Full FoodReview pre-save/live preview, dynamic source-qualified default matches, split/merge and final concise layout.|Reuse current ingredient array/save/receipts; retrieve original new editable kit before design-fidelity claims.|
 |P0/P1|Lab source panel/specimen identity, independent reimport ambiguity, unknown analytes and full grouped longitudinal display.|Extend canonical provenance safely; preserve original headings versus taxonomy, dynamic actual dates/counts and clinical abstentions. Current initial-paste metadata/export is not full panel acceptance.|
 |P0/P1|Complete goal→feedback→dated Progress→next-day journey and remaining whole-app master integration.|Audit delivered paths first; no duplicate goal/action/observation store or invented product metrics.|
@@ -71,3 +72,7 @@ Actual external refresh discarded an unsaved180cm measurement for saved171cm. Di
 ## Atomic versioned Profile source — locally verified
 
 Current web adopts private source revision and sends quoted If-Match. Server validates owner/header and compares revision under row lock before update; stale409 does not apply draft. Actual two tabs/SQL preserve dirty fields until explicit review; explicit Load latest now also resets measurements when only saved age changed. Malformed read blocks Save.347full/types/build/API92+13/source122 and actual API/PGlite/two-tab, source/draft/unknownresponse/minor-safety/mixedunit browsers PASS. Real Neon production concurrency smoke awaits exactCI. PROFILE_REVISION_CONTRACT.md documents compatibility/backout: noheader legacy writers remain allowed, so universal Profile/settings CAS is still open. No schema or real-account mutation.
+
+## Explicit homemade-source follow-up — local validation
+
+Only one bundled USDA record explicitly says homemade: Salsa red2709739. It now ranks first for homemade intent, category comes from actual source description only, generic soup remains Generic, and selected reference foods review grams/preparation rather than package identity.4 focused and actual App/ProductService/canonical food/PGlite30g save/snapshot/keyboard/mobile PASS. Full348/types/build/API/source122 and canonical packaged retry regression PASS; publication/exactCI+Render next. Broader brand/market/semantic search and full recipe acceptance remain open.
