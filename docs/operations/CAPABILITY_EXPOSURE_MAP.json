@@ -41,7 +41,9 @@
           "client/src/components/TodayFocus.tsx",
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/BiologyHome.tsx"
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/EverydayStart.tsx",
+          "client/src/App.tsx"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -1475,7 +1477,7 @@
     }
   ],
   "sourceHashes": {
-    "client/src/App.tsx": "ff23a62ddd29c0b2212807f50b9c1bbab9d2e56c5d547fb79b9f8d057992e7b1",
+    "client/src/App.tsx": "aced5d77dd5c1d4211e4f13304613b872360481cd45d2d5ddfcafcebc3e40853",
     "client/src/components/AppNavigation.tsx": "624492d93ba005b04c6e1b19b9a9cf9c6a093ba79292a81cf1f3cd8c70dac3d4",
     "client/src/components/AthleteHome.tsx": "ccf7f894573b9a678a602af8e6dc21bb3c04ca12d2bcca18466d3861fdc2d884",
     "client/src/components/AthleteProfileForm.tsx": "8411532777c82d1ae96dba61351d23352e7438f38d92606ca2d0c0c1e19737e9",
@@ -1483,6 +1485,7 @@
     "client/src/components/CompanionHero.tsx": "c4c533e8dbcbed1e6e3adb2819c0eb308831a221f1a1461b1baf5b6b39f74585",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "aae960f39fd5e1d86ebdec46502ac20e9390b8344389cf005ed953e33456f217",
+    "client/src/components/EverydayStart.tsx": "cc1e5892ac0448c61862dab2cceddd0d7a4e633f640c87f446423f95fe042b95",
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
@@ -1498,7 +1501,7 @@
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",
     "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
     "client/src/pages/AthleteWorkspace.tsx": "40d2c27904663bd6daa3c74364d3876d4073663dd5d3ff2affddc62d32ec85e7",
-    "client/src/pages/Dashboard.tsx": "e4e4ce948352c411211663059a39ba2db812503cc7aa1f396492ba14cfe63112",
+    "client/src/pages/Dashboard.tsx": "5a587a568221c9f48d1b675f7435ce4b2bbbdec6b790f390bb63d4b2b2336db4",
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",

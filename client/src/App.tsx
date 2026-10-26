@@ -64,7 +64,7 @@ function ProfileWrapper({
   );
 }
 
-function HomeExperience() { const {mode,loading}=useExperience(); if(loading)return <main className="science-page" role="status">Loading your workspace…</main>;return mode==="athlete"?<Redirect to="/athlete"/>:<Dashboard/>; }
+function HomeExperience() { const {mode,loading,hasSettings}=useExperience(); if(loading&&!hasSettings)return <main className="science-page" role="status">Loading your workspace…</main>;return mode==="athlete"?<Redirect to="/athlete"/>:<Dashboard/>; }
 function PlannerExperience(){const {mode}=useExperience();return mode==="athlete"?<Redirect to="/athlete/fueling"/>:<MealPlanner/>;}
 function AppContent() {
   const [location] = useLocation();

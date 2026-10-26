@@ -1,3 +1,7 @@
+# Active checkpoint — 2026-10-26
+
+First-goal integrity batch implemented; finish full325 tests, types/build, Today regression and source crosswalk, then commit/push and verify exact CI/Render. New QA scripts/qa/first-goal-source-journey.mjs passes (synthetic HTTP storage). Prior d95b65c CI40251150014 SUCCESS/Render dep-dbfa6qdg1s2s73a56i2g LIVE. Next audit SavedMeals unknown-response/idempotency using existing meal receipt infrastructure; do not invent a parallel store. Keep v0.5 P0 ahead of v0.6.
+
 # Resume Bloom development — 2026-10-26
 
 Authorized enhance/bloom-experience/PR1. Render workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. No main merge/replacement/real credentials or grants.

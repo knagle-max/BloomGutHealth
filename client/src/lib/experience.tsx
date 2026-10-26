@@ -5,7 +5,7 @@ import { useAuth } from "./auth";
 import { apiRequest, queryClient } from "./queryClient";
 import { experienceSettingsSchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord } from "@shared/experience";
 const defaults=experienceSettingsSchema.parse({});
-const Context=createContext({settings:defaults,mode:"everyday" as ExperienceSettings["mode"],loading:false,ready:false,retry:()=>{},saving:false,error:"",patch:(_v:ExperienceSettingsPatch)=>{}});
+const Context=createContext({settings:defaults,mode:"everyday" as ExperienceSettings["mode"],loading:false,hasSettings:false,ready:false,retry:()=>{},saving:false,error:"",patch:(_v:ExperienceSettingsPatch)=>{}});
 export function refreshExperience(){queryClient.invalidateQueries({predicate:q=>String(q.queryKey[0]).startsWith("/api/experience")});}
 export function ExperienceProvider({children}:{children:ReactNode}){
  const {user}=useAuth(), [,navigate]=useLocation();
@@ -17,7 +17,7 @@ export function ExperienceProvider({children}:{children:ReactNode}){
  const ready=!!q.data&&q.fetchStatus==="idle"&&!q.isStale&&!q.isError&&!saving;
 
  const settings=q.data||defaults;
- return <Context.Provider value={{settings,mode:settings.mode,loading:q.isPending||q.fetchStatus!=="idle"||q.isStale&&!q.isError,ready,retry:refreshExperience,saving,error:((mutation.variables?.actorId===user?.id?mutation.error:null)||q.error)?.message||"",patch:v=>{if(user?.id)mutation.mutate({patch:v,actorId:user.id});}}}>{children}</Context.Provider>;
+ return <Context.Provider value={{settings,hasSettings:!!q.data,mode:settings.mode,loading:q.isPending||q.fetchStatus!=="idle"||q.isStale&&!q.isError,ready,retry:refreshExperience,saving,error:((mutation.variables?.actorId===user?.id?mutation.error:null)||q.error)?.message||"",patch:v=>{if(user?.id)mutation.mutate({patch:v,actorId:user.id});}}}>{children}</Context.Provider>;
 }
 export const useExperience=()=>useContext(Context);
 export function ExperienceModeToggle(){const {mode,patch,saving,error,loading,ready}=useExperience();return <div className="experience-switch"><label><span className="sr-only">Experience mode</span><select aria-label="Experience mode" value={mode} disabled={saving||loading||!ready} onChange={e=>patch({mode:e.target.value as ExperienceSettings["mode"]})}><option value="everyday">Everyday</option><option value="athlete">Athlete</option></select></label>{error&&<span role="alert" className="mode-error" title={error}>Mode unavailable</span>}</div>;}

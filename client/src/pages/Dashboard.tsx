@@ -32,7 +32,7 @@ import type { MicrobiomeSample } from "@shared/schema";
 
 export default function Dashboard() {
   const { user } = useAuth();
-  const { settings, loading:settingsLoading } = useExperience();
+  const { settings, hasSettings } = useExperience();
   const [days, setDays] = useState(7);
   const meals = useQuery<LoggedMeal[]>({
     queryKey: ["/api/meals", user?.id],
@@ -203,7 +203,7 @@ export default function Dashboard() {
           </div>
         )}
       </section>}
-      {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}
+      {hasSettings && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}
       <details className="bloom-panel workspace-disclosure"><summary>Explore your options</summary>
       <div className="workspace-shortcuts">
         {[
