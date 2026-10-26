@@ -1537,7 +1537,7 @@
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "81ab5a026a1bcdf79bfafbedd5659d54e5f13dd154eee6c6a4f220c2915ce6ea",
-    "client/src/pages/MealPlanner.tsx": "6d9d6b8698e99eb9bddc5e072d5450154722e439cee8023d6a950a4ae00c2a5a",
+    "client/src/pages/MealPlanner.tsx": "94eb191d648f1116ac7c4e83420bc8e1de8d20a947e6634a306270c7489c28c9",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "c9369e9a09557ef92522437ce445e3f3079644b8c36f0eee45147d105aec24bd",
     "client/src/pages/PrecisionNutrition.tsx": "f45039ea84933f1c2043e24be8389e1781e1ae51742136f544709fe3a84d1a06",

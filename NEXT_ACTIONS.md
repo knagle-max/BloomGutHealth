@@ -33,6 +33,12 @@ Bundled audit:onlyexplicit homemade Salsa redFDC2709739 wasthird forHomemadesals
 
 Search foods oldall default reproducedred; optionalPicker initialKind defaultall, suppliedfoodonlyLogMeal, explicit supplementselection remains acrossmethodswitches. ActualProductService/browser foodnoNIH, explicitsuppNIHonly, barcode/no-match PASS. Full348 `/tmp/food-route-full.log`, types/build/source and canonicalAddFood/replacement browsers PASS; publish/exactCI+Render next. dc57033cb21419a2b23028f4bb648aa0fcbbf9b5 published, Render dep-dbfgo915efls73bveao0 building; query Actions withFULL SHA. No broadersemanticcompleteclaim.
 
+## Active saved-preference source recovery
+
+PREFS-SOURCE-01 actual HEAD editor/PGlite committednuts+503 leftoldcache reproduced; onSettledrefreshprefs+planning, pendingfreeze/submitguard, dirtytextretention/current-source+changed-source explicitreview nowPASS actualApp/SQL. Earlyanalysis-status fixturecrash correctedbeforebaselineclaim. Full348 `/tmp/preferences-recovery-full.log`, types/build/source122, firstgoal+practicalchoice browser PASS; readypublish/exactCI+Render. 30971dd CI40291601343 SUCCESS/RenderLIVE anddc57033 CI40291022595 SUCCESS/live verified. Publish/exactCI+Render afterchecks.
+
+Next strong candidate PREFS-REVISION-01: optional quotedIf-Match preferences token rowlock compare/currentweb two writers (MealPlanner editor +EverydayStart). Preserve strict preferenceSchema body/legacyclient compatibility: return revision via HTTPETag rather than new JSONfield (old clients spread strict body). A unified preference-read adapter must captureheader for all cachedreaders; currentweb strips view metadata beforePUT and pinsreviewed source. GETbody mustremaincanonicalprefs; noheader legacy pathdocumentedstillnotuniversalCAS. Reproduce2client staleexclusionoverwrite/SQLbeforeimplementation. No schema/credential/userdecision needed.
+
 ## Immediate sequence
 
 1. Check actual working tree and full-suite result; do not recreate completed work. Commit verified mass fix and persistent records, fetch/preserve incoming Architect docs before push. Only rebase own unpublished commits. No force push; inspect FETCH_HEAD because remote tracking ref is not configured.

@@ -5,7 +5,7 @@ import { foodMass } from "@shared/nutrition-display";
 import { recipePreparation } from "@shared/recipe-preparation";
 import TodayPlanner from "@/components/TodayPlanner";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -25,10 +25,14 @@ export function DietaryPreferenceEditor() {
     queryKey: ["/api/preferences"],
   });
   const [preferences, setPreferences] = useState(defaultPreferences);
+  const [dirty,setDirty]=useState(false),sourceBasis=useRef<string|null>(null);
+  const currentSource=!!saved.data&&saved.fetchStatus==="idle"&&!saved.isStale&&!saved.isError;
+  const sourceChanged=dirty&&sourceBasis.current!==null&&!!saved.data&&JSON.stringify(saved.data)!==sourceBasis.current;
   const [dislikes, setDislikes] = useState("");
   const [extraGoals, setExtraGoals] = useState("");
   useEffect(() => {
-    if (saved.data) {
+    if (saved.data&&!dirty) {
+      sourceBasis.current=JSON.stringify(saved.data);
       setPreferences(saved.data);
       setDislikes(saved.data.dislikes.join(", "));
       setExtraGoals(
@@ -37,7 +41,7 @@ export function DietaryPreferenceEditor() {
           .join(", "),
       );
     }
-  }, [saved.data]);
+  }, [saved.data,dirty]);
   const save = useMutation({
     mutationFn: async () => {
       const body = {
@@ -58,9 +62,12 @@ export function DietaryPreferenceEditor() {
       };
       return (await apiRequest("PUT", "/api/preferences", body)).json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/preferences"] });
-      return invalidatePlanningInputs();
+    onSettled: async (_data,error) => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["/api/preferences"] }),
+        invalidatePlanningInputs(),
+      ]);
+      if(!error)setDirty(false);
     },
   });
   if (saved.isLoading) return <p role="status">Loading saved preferences…</p>;
@@ -76,10 +83,15 @@ export function DietaryPreferenceEditor() {
       className="bloom-panel space-y-4"
       onSubmit={(e) => {
         e.preventDefault();
+        if(!currentSource||sourceChanged||save.isPending||(!preferences.goals.length&&!extraGoals.trim()))return;
         save.mutate();
       }}
     >
+      <fieldset disabled={save.isPending} onChangeCapture={()=>setDirty(true)} className="space-y-4">
+      <legend className="sr-only">Food preference fields</legend>
       <h2>Your food preferences & goals</h2>
+      {!currentSource&&<p role="status">Checking current saved preferences before saving…</p>}
+      {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved food preferences changed while you were editing. Your draft is still here. Load the latest saved preferences to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentSource} onClick={()=>setDirty(false)}>Load latest saved preferences</Button></div>}
       <label className="block">
         Foods you dislike (comma separated)
         <input
@@ -228,7 +240,7 @@ export function DietaryPreferenceEditor() {
       </p>
       <Button
         disabled={
-          save.isPending || (!preferences.goals.length && !extraGoals.trim())
+          !currentSource || sourceChanged || save.isPending || (!preferences.goals.length && !extraGoals.trim())
         }
       >
         {save.isPending ? "Saving…" : "Save preferences"}
@@ -243,6 +255,7 @@ export function DietaryPreferenceEditor() {
         matching does not interpret arbitrary cuisine text.
       </p>
       {save.isError && <p role="alert">{save.error.message}</p>}
+      </fieldset>
     </form>
   );
 }

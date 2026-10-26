@@ -27,8 +27,10 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 |3726265|Freeze submitted Profile including units; guard repeated pending submits; minor safety refresh retained.|40287917826 SUCCESS; LIVE|
 |3481677|Dirty Profile fields survive current-source refresh; changed values need explicit review, unrelated preferences do not conflict.|40288612595 SUCCESS; LIVE|
 |7891efa|Current web reviewed-revision saves compare/update atomically; stale two-tab writes409; explicit latest resets all fields.|40290012763 SUCCESS including actual Neon concurrency; LIVE|
+|dc57033|Explicit homemade USDA salsa ranks before generic alternatives; generic/reference review uses preparation/grams, no relabelling.|40291022595 SUCCESS; LIVE|
+|30971dd|Food-entry startsfood sources, no automaticNIH; explicit supplementselection/filterdraft retained.|40291601343 SUCCESS; LIVE|
 
-Latest verified code:7891efa9ddc4ec3cfeb0d849905482f33b11692c, Render dep-dbfgk2ks728c73dh7fkg LIVE.347full/types/build/API92+13/source122 and actual two-tab/API/PostgreSQL browsers pass. Isolated production Neon smoke confirms concurrent versioned Profile requests yield one winner and stale409; passwords/owner/session boundaries retained. Historical SHAs/deployments and corrected claims remain in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only failure was corrected by567a744; no skipped gates.
+Latest verified code:30971dd6a738d21403b43490bc3446e90d7d310c, Render dep-dbfgqkuq1p3s73f72jr0 LIVE.348full/types/build/API92+13/source122 and source/canonicalfood/retry/PG correction browsers pass. Isolated productionNeon Profileconcurrency evidence belongs to7891efa Actions40290012763 (also passes inlaterCI). Historical SHAs/deployments and correctedclaims are in DEVELOPMENT_LOG/BACKLOG; inventory-onlyfailedhomequery fixedby567a744.
 
 ## Lab source-history delivered
 
@@ -80,3 +82,7 @@ Only one bundled USDA record explicitly says homemade: Salsa red2709739. It now 
 ## Food-entry source routing — locally verified
 
 Search foods now startsfood sources viaoptionalPickerinitialKind; explicit supplementselection survivesmethodswitches and stillqueriesNIH. Unknown/mixed/correction contexts keepdefaultall. Actual ProductService/browser provesnoautomaticNIHcallforfoodentry; numericidentifier/manual/nomatch cases, canonicalpackaged/fallback/lostresponse/Athlete andPG foodreplacement allPASS.348full/types/build/API92+13/source122 PASS. dc57033 sourceprepared commitLIVE/Actions40291022595 stillinprogress; newroutingpublicationverification next.
+
+## Saved food-preferences source recovery — local PASS
+
+Actual HEAD editor committednuts exclusion butsynthetic503 retainedoldcache. onSettled nowrefreshes savedprefs and linkedpersonal planning, freezespendingwrites, retainsdirtyrawtext, and requiresreviewofchangedcurrent source.348full/types/build/API/source122 and actualApp/handlers/PGlite plusfirstgoal/practicalchoice/minor-safety browsers PASS. Publish/exactCI+Render next. Optional serverpreference source revisions are nextcandidate; no current preferenceCAS claim.
