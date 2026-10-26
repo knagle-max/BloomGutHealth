@@ -86,3 +86,7 @@ Search foods now startsfood sources viaoptionalPickerinitialKind; explicit suppl
 ## Saved food-preferences source recovery — local PASS
 
 Actual HEAD editor committednuts exclusion butsynthetic503 retainedoldcache. onSettled nowrefreshes savedprefs and linkedpersonal planning, freezespendingwrites, retainsdirtyrawtext, and requiresreviewofchangedcurrent source.348full/types/build/API/source122 and actualApp/handlers/PGlite plusfirstgoal/practicalchoice/minor-safety browsers PASS. Publish/exactCI+Render next. Optional serverpreference source revisions are nextcandidate; no current preferenceCAS claim.
+
+## Preference revision follow-up
+
+350full/types/build/API/source124 and actual API/PGlite/two-tab/versionedsetup/unknown-response/malformedheader browser PASS. Header-only transport preserves strict JSON; current web saves compare atomically before replacing preferences. Legacy writers/enforcement and settings CAS remain open. Publish and verify exact CI including real-Neon preference concurrency. v0.6 begins after actionable v0.5 work, with scoped external blockers carried forward.

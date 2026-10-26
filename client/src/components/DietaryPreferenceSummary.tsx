@@ -1,17 +1,18 @@
+import {useSavedPreferences} from "@/lib/preferences-source";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import type { DietaryPreferences } from "@shared/meal-intelligence";
 import type { PrecisionContext, PrecisionReport } from "@shared/precision-nutrition";
 import { Button } from "@/components/ui/button";
 
 export default function DietaryPreferenceSummary({ context }: { context?: PrecisionContext }) {
-  const preferences = useQuery<DietaryPreferences>({ queryKey: ["/api/preferences"] });
+  const preferences = useSavedPreferences();
   const biology = useQuery<PrecisionReport>({ queryKey: ["/api/precision"], enabled: !context });
   const safety = context || (biology.fetchStatus === "idle" && !biology.isError ? biology.data?.context : undefined);
-  const p = preferences.data;
+  const p = preferences.fetchStatus==="idle"&&!preferences.isError&&!preferences.isStale?preferences.data:undefined;
   return <section className="bloom-panel space-y-3" aria-labelledby="dietary-summary-title">
     <h2 id="dietary-summary-title">Food preferences & restrictions</h2>
     {preferences.isLoading && <p role="status">Loading saved food preferences…</p>}
+    {!p&&!preferences.isLoading&&!preferences.isError&&<p role="status">Checking current saved food preferences…</p>}
     {preferences.isError && <p role="alert">Food preferences could not load. <Button type="button" variant="outline" onClick={() => preferences.refetch()}>Retry preferences</Button></p>}
     <div className="report-context">
       <strong>Allergies & safety context</strong>

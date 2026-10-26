@@ -1,3 +1,4 @@
+import {useSavedPreferences,preferenceValues,preferenceHeaders} from "@/lib/preferences-source";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { recipeDisplayName } from "@/lib/recipe-display";
 import { useExperience } from "@/lib/experience";
@@ -21,11 +22,9 @@ import {
 import MealAnalysis from "@/components/MealAnalysis";
 import WeeklyPlanner from "@/components/WeeklyPlanner";
 export function DietaryPreferenceEditor() {
-  const saved = useQuery<DietaryPreferences>({
-    queryKey: ["/api/preferences"],
-  });
+  const saved = useSavedPreferences();
   const [preferences, setPreferences] = useState(defaultPreferences);
-  const [dirty,setDirty]=useState(false),sourceBasis=useRef<string|null>(null);
+  const [dirty,setDirty]=useState(false),sourceBasis=useRef<string|null>(null),sourceRevision=useRef<string|undefined>(undefined);
   const currentSource=!!saved.data&&saved.fetchStatus==="idle"&&!saved.isStale&&!saved.isError;
   const sourceChanged=dirty&&sourceBasis.current!==null&&!!saved.data&&JSON.stringify(saved.data)!==sourceBasis.current;
   const [dislikes, setDislikes] = useState("");
@@ -33,7 +32,8 @@ export function DietaryPreferenceEditor() {
   useEffect(() => {
     if (saved.data&&!dirty) {
       sourceBasis.current=JSON.stringify(saved.data);
-      setPreferences(saved.data);
+      sourceRevision.current=saved.data.preferenceRevision;
+      setPreferences(preferenceValues(saved.data));
       setDislikes(saved.data.dislikes.join(", "));
       setExtraGoals(
         saved.data.goals
@@ -60,7 +60,7 @@ export function DietaryPreferenceEditor() {
           .map((s) => s.trim())
           .filter(Boolean),
       };
-      return (await apiRequest("PUT", "/api/preferences", body)).json();
+      return (await apiRequest("PUT", "/api/preferences", body,preferenceHeaders(sourceRevision.current))).json();
     },
     onSettled: async (_data,error) => {
       await Promise.all([

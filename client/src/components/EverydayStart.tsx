@@ -1,27 +1,27 @@
+import {useSavedPreferences,preferenceValues,preferenceHeaders,type SavedPreferences} from "@/lib/preferences-source";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useExperience, refreshExperience } from "@/lib/experience";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { type DietaryPreferences } from "@shared/meal-intelligence";
 import { useAuth } from "@/lib/auth";
 import BloomBrand from "./BloomBrand";
 import { Button } from "./ui/button";
 export default function EverydayStart() {
   const { patch, saving, error } = useExperience(), [, navigate] = useLocation();
-  const prefs = useQuery<DietaryPreferences>({queryKey:["/api/preferences"]});
+  const prefs = useSavedPreferences();
   const [goal,setGoal]=useState(""), [exclusions,setExclusions]=useState<string[]>([]);
   const {user}=useAuth();
   const actor=useRef(user?.id), mounted=useRef(false);
   actor.current=user?.id;
   useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
   const currentPrefs=prefs.fetchStatus==="idle"&&!prefs.isError&&!prefs.isStale ? prefs.data : undefined;
-  const save=useMutation({mutationFn:async(v:{owner:string;preferences:DietaryPreferences;goal:string;exclusions:string[]})=>{
+  const save=useMutation({mutationFn:async(v:{owner:string;preferences:SavedPreferences;goal:string;exclusions:string[]})=>{
     if(!mounted.current || actor.current!==v.owner) throw Error("Setup was interrupted. Your saved preferences can be reviewed when you return.");
-    await apiRequest("PUT","/api/preferences",{...v.preferences,
+    await apiRequest("PUT","/api/preferences",{...preferenceValues(v.preferences),
       goals:v.goal ? [v.goal] : v.preferences.goals,
-      exclusions:Array.from(new Set([...v.preferences.exclusions,...v.exclusions]))});
+      exclusions:Array.from(new Set([...v.preferences.exclusions,...v.exclusions]))},preferenceHeaders(v.preferences.preferenceRevision));
     if(!mounted.current || actor.current!==v.owner) throw Error("Setup was interrupted. Your saved preferences can be reviewed when you return.");
     await apiRequest("PATCH","/api/experience/settings",{onboarding:{status:"complete"}});
   },onSettled:async()=>{refreshExperience();await Promise.all([queryClient.invalidateQueries({queryKey:["/api/preferences"]}),invalidatePlanningInputs()]);},

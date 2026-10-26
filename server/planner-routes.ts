@@ -1,3 +1,4 @@
+import {preferenceRevision,PreferenceRevisionConflict} from "./preference-source";
 import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
 import { mlServiceTarget } from "./ml-service";
 import { mealSaveReceipt, checkMealReceipt } from "./meal-save";
@@ -94,21 +95,28 @@ export function registerPlannerRoutes(
     try {
       const user = await storage.getUser(req.session.userId!);
       const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+      const revision=preferenceRevision(req.session.userId!,user?.dietaryPreferences);
+      res.setHeader("Cache-Control","no-store");res.setHeader("ETag",`"${revision}"`);res.setHeader("X-Bloom-Preferences-Revision",revision);
       res.json(saved.success ? saved.data : defaultPreferences);
     } catch {
       res.status(503).json({ error: "Preferences could not load." });
     }
   });
   app.put("/api/preferences", requireAuth, async (req, res) => {
+    res.setHeader("Cache-Control","no-store");
+    const match=req.get("If-Match");
+    if(match!==undefined&&!/^"[a-f0-9]{64}"$/.test(match))return res.status(400).json({error:"Invalid preferences revision"});
     const parsed = preferenceSchema.safeParse(req.body);
     if (!parsed.success)
       return res.status(400).json({ error: "Invalid preferences" });
     try {
-      await storage.updateUserProfile(req.session.userId!, {
-        dietaryPreferences: parsed.data,
-      });
+      if(match!==undefined){
+        if(!storage.updateUserPreferences)return res.status(503).json({error:"Versioned preference updates are unavailable."});
+        await storage.updateUserPreferences(req.session.userId!,parsed.data,match.slice(1,-1));
+      }else await storage.updateUserProfile(req.session.userId!,{dietaryPreferences:parsed.data});
       res.json(parsed.data);
-    } catch {
+    } catch(error) {
+      if(error instanceof PreferenceRevisionConflict)return res.status(409).json({error:error.message});
       res.status(503).json({ error: "Preferences could not save." });
     }
   });

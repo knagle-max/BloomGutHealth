@@ -46,7 +46,8 @@
           "client/src/components/BiologyHome.tsx",
           "client/src/components/EverydayStart.tsx",
           "client/src/App.tsx",
-          "client/src/components/LabSourceContext.tsx"
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -169,7 +170,8 @@
           "server/meal-intelligence.ts",
           "shared/product-search.ts",
           "shared/barcodes.ts",
-          "server/food-catalog.ts"
+          "server/food-catalog.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -197,7 +199,8 @@
           "server/planner-routes.ts"
         ],
         "logicOrJobs": [
-          "server/usda-branded.ts"
+          "server/usda-branded.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -250,7 +253,8 @@
         ],
         "logicOrJobs": [
           "shared/products.ts",
-          "server/meal-intelligence.ts"
+          "server/meal-intelligence.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -282,7 +286,8 @@
         ],
         "logicOrJobs": [
           "shared/products.ts",
-          "server/meal-intelligence.ts"
+          "server/meal-intelligence.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -329,7 +334,8 @@
           "server/recipe-ranking.ts",
           "server/recipe-generation.ts",
           "shared/nutrition-summary.ts",
-          "shared/meal-portions.ts"
+          "shared/meal-portions.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -364,7 +370,8 @@
         ],
         "logicOrJobs": [
           "shared/products.ts",
-          "server/meal-intelligence.ts"
+          "server/meal-intelligence.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -425,7 +432,8 @@
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/BiologyHome.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/LabSourceContext.tsx"
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -434,7 +442,8 @@
         "logicOrJobs": [
           "shared/meal-intelligence.ts",
           "shared/weekly-planner.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -461,7 +470,8 @@
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/BiologyHome.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/LabSourceContext.tsx"
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -477,7 +487,8 @@
           "server/ai-costing.ts",
           "server/recipe-ranking.ts",
           "server/recipe-generation.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1076,7 +1087,8 @@
           "server/provider-circuit.ts",
           "server/ai-costing.ts",
           "server/recipe-ranking.ts",
-          "server/recipe-generation.ts"
+          "server/recipe-generation.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1100,7 +1112,8 @@
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/BiologyHome.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/LabSourceContext.tsx"
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -1111,7 +1124,8 @@
           "shared/weekly-planner.ts",
           "server/weekly-runner.ts",
           "server/weekly-worker.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "server/preference-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1512,7 +1526,7 @@
     "client/src/components/CompanionHero.tsx": "c4c533e8dbcbed1e6e3adb2819c0eb308831a221f1a1461b1baf5b6b39f74585",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "aae960f39fd5e1d86ebdec46502ac20e9390b8344389cf005ed953e33456f217",
-    "client/src/components/EverydayStart.tsx": "cc1e5892ac0448c61862dab2cceddd0d7a4e633f640c87f446423f95fe042b95",
+    "client/src/components/EverydayStart.tsx": "336ce0a8ae872cdb084fee3a6414a150c91a1750764c865e8f4d4ee87633cefa",
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
@@ -1530,6 +1544,7 @@
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/meal-cache.ts": "89b4b11900ce88ff19fa74a4b6fa766c4a0fb6ee811e617c0ad1cfc235b6a557",
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",
+    "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
     "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
     "client/src/pages/AthleteWorkspace.tsx": "40d2c27904663bd6daa3c74364d3876d4073663dd5d3ff2affddc62d32ec85e7",
     "client/src/pages/Dashboard.tsx": "8a20997bab0ffa380f6e8ea4fe0185a33ddbd0533db4f54012ae71af34f71e00",
@@ -1537,7 +1552,7 @@
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "81ab5a026a1bcdf79bfafbedd5659d54e5f13dd154eee6c6a4f220c2915ce6ea",
-    "client/src/pages/MealPlanner.tsx": "94eb191d648f1116ac7c4e83420bc8e1de8d20a947e6634a306270c7489c28c9",
+    "client/src/pages/MealPlanner.tsx": "df998338246829f09583399c4fe2db8c3fbb6a5115b5cdd08c0e1c7b086d8e03",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "c9369e9a09557ef92522437ce445e3f3079644b8c36f0eee45147d105aec24bd",
     "client/src/pages/PrecisionNutrition.tsx": "f45039ea84933f1c2043e24be8389e1781e1ae51742136f544709fe3a84d1a06",
@@ -1575,9 +1590,10 @@
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/plan-history.ts": "e5e19e94821047a1516c64685a4cb5926e3523c127c1f30f9de61240c1d93c7f",
-    "server/planner-routes.ts": "e72ff71b6387a688c08faa91353ff1246505190a00e2086d97290701d5ae3804",
+    "server/planner-routes.ts": "8a2b0283fdbdd83dc0d8c9d0b6747873bbc4db14e5b5be635ca253bf695c63dd",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
+    "server/preference-source.ts": "cb9d6e89cf1de2a76d184822be830ee287a4e4ea28824b6db017bd7f89e30126",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
     "server/profile-source.ts": "fa266296dd371b2807bdbed39461048f64d815f0da316f370a76104c6b155398",
@@ -1592,7 +1608,7 @@
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/shared-rate-limit.ts": "6e03addd10677f36bb0e8fbc941e6861f7f411c1312f9340a2de0777f8a13f71",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "8c9cae694b4d7f92bba3357effa8e9ccb87de1eaf96df9e69b538319326a317c",
+    "server/storage.ts": "143cfd8cc2f99fc419b88099840be16e3eb2a0800627fe3c6d7c30047ee60f94",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",

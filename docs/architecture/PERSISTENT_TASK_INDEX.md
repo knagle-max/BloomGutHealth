@@ -698,3 +698,9 @@ Actual baseline HEAD MealPlanner editor against real preference/experience handl
 ActualApp/API/PGlite heldnutswrite/mutationcount/cache+inactiveplanninginvalidations/rawtextretention/explicitreview PASS, firstgoal and practicalchoice source/under18 browser regressions PASS. Full348/types/build/source122 running.30971dd6a738d21403b43490bc3446e90d7d310c Actions40291601343 SUCCESS/Render dep-dbfgqkuq1p3s73f72jr0 LIVE; dc57033 Actions40291022595 SUCCESS/RenderLIVE verified.
 
 PREFS-SOURCE-01 final:348/348 full tests PASS (182693ms), TypeScript/build/API92+13/source122 PASS; actualApp/preference+experience handlers/PGlite committed503/currentcache/exclusion/rawdraft/review/freeze/onewrite and firstgoal/practicalchoice/minor-safety regressions PASS. Backendpreference CAS notyetimplemented; scalarPUTrace remainsopen. Publish/exactCI+Render next.
+
+## PREFS-REVISION-01 — local verification complete
+
+Header-only strong source revision preserves strict GET/PUT JSON and legacy readers. Shared canonical web adapter covers editor/setup/summary; current writers pin source and strip metadata. Row-locked owner update rejects stale versions409 without losing exclusions. Legacy omission remains compatible, so universal CAS/enforcement stays open.350/350 full tests PASS(198129ms), types/build/API92+13/source124 PASS. Actual API/PGlite two competing writes, two rendered tabs, malformed-summary withdrawal, versioned setup/actor guard, committed503 recovery and Profile safety browsers PASS. QA ambiguous text selector corrected; no product defect inferred. Actual Neon preference concurrency smoke added; exactCI still required. See PREFERENCE_REVISION_CONTRACT.md.
+
+Previous987c79bed87a504dadedb688836c302e0ac30ecc Actions40293085105 SUCCESS/Render dep-dbfh0lcs728c73dhjtcg LIVE verified.

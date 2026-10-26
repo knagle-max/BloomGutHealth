@@ -1,3 +1,5 @@
+import {updatePreferencesWithRevision} from "./preference-source";
+import type {DietaryPreferences} from "../shared/meal-intelligence";
 import {updateProfileWithRevision} from "./profile-source";
 import { BiologyStorage } from "./biology-storage";
 import { insertMealWithReceipt, type MealSaveReceipt } from "./meal-save";
@@ -53,6 +55,7 @@ export interface IStorage extends ExperienceStore {
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   updateUserProfile(id: string, profile: UpdateUserProfile, expectedRevision?:string): Promise<void>;
+  updateUserPreferences?(id:string,preferences:DietaryPreferences,expectedRevision:string):Promise<void>;
 
   getMicrobiomeSample(id: string): Promise<MicrobiomeSample | undefined>;
   insertMicrobiomeSample(
@@ -313,6 +316,10 @@ export class DatabaseStorage implements IStorage {
     expectedRevision?:string,
   ): Promise<void> {
     await updateProfileWithRevision(db,id,profile,expectedRevision);
+  }
+
+  async updateUserPreferences(id:string,preferences:DietaryPreferences,expectedRevision:string):Promise<void>{
+    await updatePreferencesWithRevision(db,id,preferences,expectedRevision);
   }
 
   async getMicrobiomeSample(id: string): Promise<MicrobiomeSample | undefined> {

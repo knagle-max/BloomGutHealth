@@ -176,6 +176,13 @@ try {
   };
   await request("/api/preferences", "PUT", preferences);
   assert.deepEqual((await request("/api/preferences")).dislikes, ["tofu"]);
+  const preferenceRead=await fetch(base+'/api/preferences',{headers:{cookie,'x-forwarded-proto':'https'}});const preferenceToken=preferenceRead.headers.get('x-bloom-preferences-revision');assert.match(preferenceToken,/^[a-f0-9]{64}$/);const preferenceBody=await preferenceRead.json();
+  const preferenceHeaders={'content-type':'application/json',cookie,'x-forwarded-proto':'https',origin:base.replace('http:','https:'),'if-match':`"${preferenceToken}"`};
+  const preferenceCompeting=await Promise.all(['Synthetic A','Synthetic B'].map(cuisines=>fetch(base+'/api/preferences',{method:'PUT',headers:preferenceHeaders,body:JSON.stringify({...preferenceBody,cuisines}),signal:AbortSignal.timeout(30000)})));
+  assert.deepEqual(preferenceCompeting.map(r=>r.status).sort(),[200,409]);await Promise.all(preferenceCompeting.map(r=>r.text()));const latestPreferenceRead=await fetch(base+'/api/preferences',{headers:{cookie,'x-forwarded-proto':'https'}}),latestPreferenceToken=latestPreferenceRead.headers.get('x-bloom-preferences-revision');const latestPreferenceBody=await latestPreferenceRead.json();assert.deepEqual(latestPreferenceBody.exclusions,['seafood','nuts']);
+  await request('/api/preferences','PUT',preferences,200,{'If-Match':`"${latestPreferenceToken}"`});
+  console.log('PASS: production preference revisions preserve strict JSON and exclusions; competing versioned writes yield one winner and one conflict; legacy compatibility explicit');
+
   const meal = await request("/api/meals", "POST", {
     mealText: "45 g oats and 80 g blueberries",
     mealType: "breakfast",
