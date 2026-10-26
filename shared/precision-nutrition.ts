@@ -451,7 +451,18 @@ export const labSourceReportSchema = z.object({
       importId:z.string().uuid(),
       reportIdentifier:z.string().max(200).optional(),
       specimenIdentifier:z.string().max(200).optional(),
-    }).strict();
+      enteredDate:z.iso.date().optional(),
+      enteredTime:z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/).optional(),
+    }).strict().refine(value=>!value.enteredTime||!!value.enteredDate,{message:"Keep the entered test date with its collection time."});
+function validateLabEntryClock(value:{measuredAt:string;sourceReport?:z.infer<typeof labSourceReportSchema>},ctx:z.RefinementCtx){
+ const source=value.sourceReport;
+ if(!source?.enteredDate)return;
+ const entered=Date.parse(`${source.enteredDate}T${source.enteredTime||"00:00"}:00Z`),recorded=Date.parse(value.measuredAt),offset=14*60*60*1000;
+ // Without a reported time, validate the entire calendar-day window; do not invent noon.
+ const conflicts=source.enteredTime?Math.abs(recorded-entered)>offset:recorded<entered-offset||recorded>=entered+24*60*60*1000+offset;
+ if(conflicts)
+  ctx.addIssue({code:"custom",path:["sourceReport","enteredDate"],message:"The entered source date/time conflicts with the recorded timestamp. Review both before saving."});
+}
 export const labSourceInputSchema = z.object({
       text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),
       capture:z.enum(["pasted-report","manual-report"]),
@@ -486,6 +497,7 @@ export const labSchema = z
   })
   .strict()
   .superRefine((l, ctx) => {
+    validateLabEntryClock(l,ctx);
     if (
       !(
         markerDefinitions.find((m) => m.id === l.marker)!
@@ -517,6 +529,7 @@ export const sourceOnlyLabSchema=z.object({
  measuredAt:isoDate,laboratory:shortText,method:shortText,fasting:z.enum(["yes","no","unknown"]),
  sourceReport:labSourceReportSchema.optional(),sourceInput:labSourceInputSchema,
 }).strict().superRefine((value,ctx)=>{
+ validateLabEntryClock(value,ctx);
  if(!value.sourceInput.text.trim()||value.sourceInput.number!==value.reportedValue||value.sourceInput.suppliedUnit!==value.reportedUnit)
   ctx.addIssue({code:"custom",message:"Keep the exact original source value, unit and report row."});
 });

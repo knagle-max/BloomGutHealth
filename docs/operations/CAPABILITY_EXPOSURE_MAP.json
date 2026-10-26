@@ -663,7 +663,8 @@
         ],
         "logicOrJobs": [
           "shared/precision-nutrition.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/lab-history.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -790,7 +791,8 @@
         ],
         "logicOrJobs": [
           "shared/precision-nutrition.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/lab-history.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1564,9 +1566,9 @@
     "client/src/components/ExperimentObservations.tsx": "7544d781a2c9b934205c130f97976c21894244bd2fefecfd1d01e35a3e841adb",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
-    "client/src/components/LabSourceContext.tsx": "7449fe740fca53d280a3fe757f815797474b9704629a0cc87ce0626dbe7d5a5c",
-    "client/src/components/LabSourceHistory.tsx": "811fac0db38e161002509aeff8c2362fa6719c810a39da1446d7f24343fb2e38",
-    "client/src/components/LabTrend.tsx": "8b5e30eefaba22702e5ed13d6158e6536af919df27b2cd62cbea82b0dbd5a38d",
+    "client/src/components/LabSourceContext.tsx": "076ce8a0745cc1b42d5e4acb03200e2642a2852aae08ac23e167c69f3f2b6278",
+    "client/src/components/LabSourceHistory.tsx": "f5e39b21dc5409ecf98c893e3e9cc4be862ac7997831e8f9c7bb4e28ec28bf9a",
+    "client/src/components/LabTrend.tsx": "b5e6bd9421aee70a0121556ffae299d5016dd7968861b3cbe4923d247644fb6c",
     "client/src/components/LabUnitReview.tsx": "74cb3ccf5de89c0e70d6e138ddb91bfa4b17241de2e33160812a53db5c76a43b",
     "client/src/components/MealAnalysis.tsx": "9d7d6255ca980ac4f2065da4287ad4f2eb79bbabb2b99b4c875f1a0bff1d59d7",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
@@ -1590,7 +1592,7 @@
     "client/src/pages/MealPlanner.tsx": "df998338246829f09583399c4fe2db8c3fbb6a5115b5cdd08c0e1c7b086d8e03",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "c9369e9a09557ef92522437ce445e3f3079644b8c36f0eee45147d105aec24bd",
-    "client/src/pages/PrecisionNutrition.tsx": "7a4728818dd99274bd80f00f1c8905bcdc3569a1bcf79545358b83fc418d67ab",
+    "client/src/pages/PrecisionNutrition.tsx": "3d54288bd4f26ee2966f567514265fa57ac8a5948dc9ab0820886ed6541603f9",
     "client/src/pages/Profile.tsx": "b4579327556dcbe5600ee30b9f4604730ed3abe0f45a67348b9e219f618cedfa",
     "client/src/pages/Progress.tsx": "e4dff71da674338f9c8588b2d988d76d1e91c29b5430ad8e1832c2d3619f1c65",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
@@ -1666,13 +1668,13 @@
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/goal-guidance.ts": "46000666caadd6ac1aaf541d1e2b76bb24b93208ba30caf535469771db6dff5a",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
-    "shared/lab-history.ts": "5404edf3718dac631715c363adb5c489c5b9a8a446a86025c571be7485a44a1a",
+    "shared/lab-history.ts": "67ab3a07f5ee1ba860faf2dfc54b42c92170f6bffe0bf497e398b4f40ae19248",
     "shared/lab-paste.ts": "606b21761c1a6623c5aea8ec112575281bc4af2fdae2fc92e96bbae41a96cc55",
     "shared/lab-reimport.ts": "6ba24741da049c0a8e3907e29938d8ebba4781d27b11b52855eb1ddedfb422ba",
     "shared/meal-intelligence.ts": "e5d0c1eb40a689722f8b112cfa46b77ae8851d803f54eea2f429c0e53676fe89",
     "shared/meal-portions.ts": "c7ca2439c969026acfcd6f195e7bd06ddcdd9f90f1668741a734d5a7e2dc0c0e",
     "shared/nutrition-summary.ts": "0d57fe4ede7daf971448dd3b299c49c03d187c9e599bd2c1cc3a59cf00a4b46b",
-    "shared/precision-nutrition.ts": "0113c8a4be10009e8f1310213abcd549ffdd7df4d3be0aa63ae7326a290178c4",
+    "shared/precision-nutrition.ts": "11d66266c20129165f9bdf240a4cd1d96065df752d8636316f60b9b3f5272b38",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "b40537b135fc6d80b02d0f946f06b721832f4872fd14151ff8de36e59dca56b9",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",

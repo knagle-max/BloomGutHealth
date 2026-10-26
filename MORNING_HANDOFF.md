@@ -4,6 +4,12 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**52b1399575634fb9618a05347b0b51b8f53dd7ca**: Actions40378738031 SUCCESS; Render dep-dbfppoe417fc73eoa4s0 LIVE. Explicit unsupported source preservation/import/history and plan-safe raw deletion verified with367 tests/types/build/source130 and actual encrypted/browser regressions. [Source-only evidence](docs/review/source-only-labs-20261026/README.md).
+
+Entered-date reader is locally ready: actual+14 bug reproduced; explicit optional date/time provenance, truthful legacy fallback, calendar/clock consistency without invented missing time.369 full tests, final10 focused/types/build/source130 and readonly/legacy timezone browsers pass. Publish/verify reader before ordinary date/time capture. No original timestamps rewritten or clinical calculations changed.
+
+Earlier corrected-reader checkpoint:
+
 **03ec914063ab35a8bc04e77b541ba72e46325362**: Actions40376407996 SUCCESS; Render dep-dbfpibijnfac73ej13o0 LIVE. Corrected source-only reader and clinical plan-save guard verified, including real-Neon raw-source/report/export/weekly save. c046's isolated CI409 is superseded.
 
 Explicit source-only writer/history is locally ready with367/367, types/build/source130, focused12 and actual encrypted App/API/receipt/correction/known-output/history/delete-plan/mobile plus legacy regressions. [Workflow evidence](docs/review/source-only-labs-20261026/README.md). Threshold/qualitative/unreported-unit rows require explicit opt-in and have no clinical interpretation. Publish/exactCI/live next. No ordinary assay registration or automatic dedup claim.

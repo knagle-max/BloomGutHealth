@@ -4,6 +4,7 @@ export default function LabSourceContext({source,report}:{source:Lab["sourceInpu
   if(!source&&!report)return <p className="panel-note">Original report row was not recorded.</p>;
   return <div className="panel-note space-y-1 break-words">
     {report&&<div className="space-y-1">
+      {report.enteredDate?<><p>User-entered test date: {report.enteredDate}</p><p>{report.enteredTime?`User-entered collection time: ${report.enteredTime}`:"Entered collection time was not supplied."}</p></>:<p>Date/time entry precision was not recorded.</p>}
       <p>Bloom import reference: {report.importId}</p>
       {report.reportIdentifier!==undefined&&<p className="whitespace-pre-wrap">User-entered report identifier: {report.reportIdentifier}</p>}
       {report.specimenIdentifier!==undefined&&<p className="whitespace-pre-wrap">User-entered specimen identifier: {report.specimenIdentifier}</p>}

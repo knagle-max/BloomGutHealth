@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {labSchema} from '../shared/precision-nutrition';
 import {parseLabPaste} from '../shared/lab-paste';
 const date='2026-10-15T12:00:00Z';
-const reportIdentity={importId:'fb001025-1025-4025-8025-000000000001',reportIdentifier:'  REPORT / source-A  ',specimenIdentifier:'  specimen # 2  '};
+const reportIdentity={importId:'fb001025-1025-4025-8025-000000000001',reportIdentifier:'  REPORT / source-A  ',specimenIdentifier:'  specimen # 2  ',enteredDate:'2026-10-15',enteredTime:'12:00'};
 test('lab reader accepts exact optional reported heading and row order without inventing taxonomy or changing legacy payloads',()=>{
  const original=structuredClone(parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload);
  delete original.sourceInput!.reportedSection;delete original.sourceInput!.rowOrder;
@@ -44,4 +44,11 @@ test('optional lab import identity is exact source metadata and cannot invent id
  for(const sourceReport of [{...reportIdentity,importId:'not-an-id'},{...reportIdentity,reportIdentifier:'x'.repeat(201)},{...reportIdentity,specimenIdentifier:'x'.repeat(201)},{...reportIdentity,verified:true}])assert.equal(labSchema.safeParse({...legacy,sourceReport}).success,false);
  const second={...reportIdentity,importId:'fb001025-1025-4025-8025-000000000002',specimenIdentifier:'different specimen'};
  assert.notDeepEqual(labSchema.parse({...legacy,sourceReport:second}).sourceReport,labSchema.parse({...legacy,sourceReport:reportIdentity}).sourceReport);
+});
+
+test('entered lab date/time reader preserves global-offset source clocks and rejects contradictory or malformed context',()=>{
+ const base=parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload;
+ for(const [measuredAt,enteredDate,enteredTime]of[['2026-10-14T22:00:00Z','2026-10-15',undefined],['2026-10-16T00:00:00Z','2026-10-15',undefined],['2026-10-15T12:00:00Z','2026-10-16',undefined],['2026-10-14T19:15:00Z','2026-10-15','09:15'],['2026-10-15T14:15:00Z','2026-10-15','09:15']]){const sourceReport={...reportIdentity,enteredDate,...(enteredTime?{enteredTime}:{enteredTime:undefined})};const result=labSchema.parse({...base,measuredAt,sourceReport});assert.equal(result.sourceReport?.enteredDate,enteredDate);assert.equal(result.measuredAt,measuredAt);}
+ for(const sourceReport of [{...reportIdentity,enteredDate:'2026-02-29'},{...reportIdentity,enteredTime:'24:00'},{...reportIdentity,enteredTime:'9:15'},{...reportIdentity,enteredDate:undefined},{...reportIdentity,enteredDate:'2026-10-18'}])assert.equal(labSchema.safeParse({...base,sourceReport}).success,false);
+ const legacy=labSchema.parse(base);assert.equal(legacy.sourceReport,undefined);
 });

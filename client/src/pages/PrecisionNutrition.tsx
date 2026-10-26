@@ -629,7 +629,7 @@ export default function PrecisionNutrition() {
                               : ""}
                           </p>
                           <p className="panel-note">
-                            {new Date(l.measuredAt).toLocaleString()} ·{" "}
+                            {l.sourceReport?.enteredDate?`${l.sourceReport.enteredDate}${l.sourceReport.enteredTime?` ${l.sourceReport.enteredTime}`:" · collection time not supplied"}`:new Date(l.measuredAt).toLocaleString()} ·{" "}
                             {l.laboratory} · {l.method} · fasting {l.fasting}
                           </p>
                           <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport}/></details>

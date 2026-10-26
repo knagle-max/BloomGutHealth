@@ -411,7 +411,7 @@ try {
     },
     201,
   );
-  const labSourceIdentity={importId:randomUUID(),reportIdentifier:"Synthetic CI report",specimenIdentifier:"Synthetic CI specimen"};
+  const labSourceIdentity={importId:randomUUID(),enteredDate:now.slice(0,10),enteredTime:now.slice(11,16),reportIdentifier:"Synthetic CI report",specimenIdentifier:"Synthetic CI specimen"};
   const lab = await request(
     "/api/precision/records",
     "POST",

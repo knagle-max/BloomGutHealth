@@ -14,3 +14,6 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
  const imports=Array.from(groups.values()).map(group=>({...group,rows:group.rows.map((row,index)=>({row,index})).sort((a,b)=>(a.row.sourceInput?.rowOrder??Infinity)-(b.row.sourceInput?.rowOrder??Infinity)||a.index-b.index).map(({row})=>row)}));
  return{imports,unlinked};
 }
+
+/** Prefer explicitly entered calendar text; do not reconstruct missing legacy entry context. */
+export function labDateText(timestamp:string,source?:Lab['sourceReport']){return source?.enteredDate||timestamp.slice(0,10);}
