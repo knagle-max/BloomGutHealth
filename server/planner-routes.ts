@@ -196,25 +196,27 @@ export function registerPlannerRoutes(
       res.status(503).json({ error: "Meal plan could not load." });
     }
   });
-  app.post("/api/meals/analyze", requireAuth, limit, async (req, res) => {
+  const handleMealReview=(complete=false):RequestHandler=>async(req,res)=>{
     const p = requestSchema.safeParse(req.body);
     if (!p.success)
       return res
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
-      const result=await analyzer(p.data.mealText,p.data.aiConsent,await reviewIngredients(storage,req.session.userId!,p.data),{userId:req.session.userId!,store:storage,products:p.data.products});
+      const result=await analyzer(p.data.mealText,p.data.aiConsent,await reviewIngredients(storage,req.session.userId!,p.data),{userId:req.session.userId!,store:storage,products:complete&&p.data.ingredients?[]:p.data.products});
       res.setHeader("Cache-Control","no-store");res.setHeader("X-Bloom-Meal-Review",mealReviewRevision(req.session.userId!,result));
       res.json(result);
     } catch (error) {
       if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
       res
         .status(503)
-        .json({ error: "Analysis unavailable. Try saving the meal." });
+        .json({ error: "Analysis unavailable. Your entry has not been saved. Retry the review." });
     }
-  });
+    };
+  app.post("/api/meals/analyze",requireAuth,limit,handleMealReview());
+  app.post("/api/meals/review",requireAuth,limit,handleMealReview(true));
   // Register before the legacy /api/meals handlers. Existing clients remain compatible.
-  app.post("/api/meals", requireAuth, async (req, res) => {
+  const handleMealSave=(complete=false):RequestHandler=>async(req,res)=>{
     res.setHeader("Cache-Control","no-store");
     const match=req.get("If-Match");
     if(match!==undefined&&!/^"[a-f0-9]{64}"$/.test(match))return res.status(400).json({error:"Invalid meal review reference."});
@@ -226,9 +228,10 @@ export function registerPlannerRoutes(
       return res
         .status(400)
         .json({ error: "Invalid meal description or context." });
+    if(complete&&(!p.data.reviewed||!p.data.ingredients))return res.status(400).json({error:"Review the complete ingredient list before saving."});
     if(p.data.reviewed&&match===undefined)return res.status(400).json({error:"Review the meal before confirming this save."});
     try {
-      const receipt = key ? mealSaveReceipt(req.session.userId!, key, match===undefined?p.data:{...p.data,reviewRevision:match.slice(1,-1)}) : undefined;
+      const receipt = key ? mealSaveReceipt(req.session.userId!, key, match===undefined?p.data:{...p.data,reviewRevision:match.slice(1,-1),...(complete?{completeIngredients:true}:{})}) : undefined;
       if (receipt) {
         const previous = await storage.getMeal(receipt.id);
         if (previous) {
@@ -248,7 +251,7 @@ export function registerPlannerRoutes(
         {
           userId: req.session.userId!,
           store: storage,
-          products: p.data.products,
+          products: complete ? [] : p.data.products,
         },
       );
       if(match!==undefined&&mealReviewRevision(req.session.userId!,result)!==match.slice(1,-1))return res.status(409).json({error:"Meal nutrition or its source changed. Review the meal again before saving."});
@@ -278,7 +281,9 @@ export function registerPlannerRoutes(
         return res.status(409).json({ error: "This save reference was already used for different meal details. Check your journal before saving again." });
       res.status(503).json({ error: "Meal could not save. Please retry." });
     }
-  });
+    };
+  app.post("/api/meals",requireAuth,handleMealSave());
+  app.post("/api/meals/confirm",requireAuth,handleMealSave(true));
   app.put("/api/meals/:mealId", requireAuth, limit, async (req, res) => {
     const p = requestSchema.safeParse(req.body);
     if (!p.success)

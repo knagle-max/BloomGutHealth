@@ -667,3 +667,5 @@ Previous backend push transient GitHub error resolved. Exact c2df959 Actions4034
 
 Final preview presentation: post-adjustment types/build/API/source checks PASS; source-change and complete pre-save browser including lost response rerun PASS. Mixed display-unit/catalogue adapter journey PASS after correcting its synthetic product-search response. Historical visual galleries were not regenerated. Local full suite remains356/356; no backend implementation changed after that run.
 Photo/public absence/revocation/manual-save regression PASS; no image provider invoked. Final milestone ready for publication.
+
+Publication correction: f30104a434c6f8866fd4bba117bdc61a91342242 is LIVE on Render dep-dbfmp2lg1s2s73aj0v4g, but Actions40346117658 failed source inventory. The tested server/planner-routes.ts was accidentally omitted from staging, so published routes lacked the web's new review/confirm aliases. No untested implementation fix: publishing that exact locally verified handler now. Keep ongoing ProductPicker boundary work uncommitted and separate. Do not call f30104a a complete working meal-review deployment.
