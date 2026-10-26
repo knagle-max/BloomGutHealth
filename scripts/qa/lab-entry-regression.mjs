@@ -38,9 +38,9 @@ else if(p==='/api/profile')json=profile;
 else if(p==='/api/user/synthetic-editor/profile'){profile={...profile,...body};json={success:true};}
 else if(p==='/api/preferences'){if(req.method()==='PUT')preferences=body;json=preferences;}
 else if(p==='/api/precision')json={...buildPrecisionReport(records,safety,preferences,null),records,availableReports:[],journalSymptoms:[],intake:{days:28,mealsLogged:0,nutrients:[]}};
-else if(p==='/api/precision/records'&&req.method()==='POST'){
+else if(p==='/api/precision/labs/import'&&req.method()==='POST'){
  const key=req.headers()['idempotency-key'];assert.ok(key);attempts.push({key,body});
- if(!receipts.has(key)){json={id:'lab-'+records.length,kind:body.kind,payload:body.payload,createdAt:new Date().toISOString()};receipts.set(key,json);records.push(json);}else json=receipts.get(key);
+ if(!receipts.has(key)){json={id:'lab-'+records.length,kind:'lab',payload:body.payload,createdAt:new Date().toISOString()};receipts.set(key,json);records.push(json);}else json=receipts.get(key);
  if(loseFirstLab){loseFirstLab=false;return route.abort('failed');}
 }
 else if(p.endsWith('/confirm-unit')){const source=records.find(r=>r.id===p.split('/')[4]);json={id:'confirmed-'+records.length,kind:'lab',payload:{...source.payload,unit:body.unit,unitReview:{...source.payload.unitReview,status:'confirmed',confirmedAt:new Date().toISOString(),supersedes:source.id}},createdAt:new Date().toISOString()};records.push(json);}

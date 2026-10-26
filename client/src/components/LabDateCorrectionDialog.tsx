@@ -1,4 +1,4 @@
-import { useRef, useState, useId } from 'react';
+import { useRef, useState, useId, useEffect } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '@/lib/auth';
 import { apiRequest, ApiRequestError } from '@/lib/queryClient';
@@ -10,6 +10,8 @@ import { labDateChangeFromLocal, localLabDateInstants, labUtcOffsetLabel, type L
 import type { AnyLabHistoryRow } from '@shared/lab-history';
 
 export default function LabDateCorrectionDialog({ source, onClose }: { source: AnyLabHistoryRow; onClose: () => void }) {
+  const active=useRef(true);
+  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
   const formId=useId();
   const { user } = useAuth(), actor = useRef(user?.id), currentActor = useRef(user?.id);
   currentActor.current = user?.id;
@@ -28,15 +30,15 @@ export default function LabDateCorrectionDialog({ source, onClose }: { source: A
   const unchanged = entered?.enteredDate === date && (entered?.enteredTime || '') === time;
   const save = useMutation({
     mutationFn: async (request: { input: LabDateChange; key: string }) => {
-      if (!actor.current || actor.current !== currentActor.current) throw Error('Your account changed. Reopen this result in your current account.');
+      if (!active.current || !actor.current || actor.current !== currentActor.current) throw Error('Your account changed. Reopen this result in your current account.');
       return apiRequest('POST', `/api/precision/labs/${encodeURIComponent(source.id)}/correct-date`, request.input, { 'Idempotency-Key': request.key, 'X-Bloom-Confirm': 'correct-lab-date' });
     },
     onSuccess: async () => {
-      if (actor.current !== currentActor.current) return;
+      if (!active.current || actor.current !== currentActor.current) return;
       await invalidatePlanningInputs();
-      if (actor.current === currentActor.current) onClose();
+      if (active.current && actor.current === currentActor.current) onClose();
     },
-    onError: async () => { if (actor.current === currentActor.current) await invalidatePlanningInputs(); },
+    onError: async () => { if (active.current && actor.current === currentActor.current) await invalidatePlanningInputs(); },
   });
   const knownFailure=save.isError&&save.error instanceof ApiRequestError&&[400,401,403,404,409].includes(save.error.status);
   const raw = 'sourceOnly' in source;

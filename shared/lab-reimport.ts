@@ -1,4 +1,5 @@
-import type {Lab,SourceOnlyLab} from './precision-nutrition';
+import {z} from 'zod';
+import {labSchema,sourceOnlyLabSchema,type Lab,type SourceOnlyLab} from './precision-nutrition';
 import type {AnyLabHistoryRow} from './lab-history';
 function facts(lab:Lab|SourceOnlyLab){
  if("sourceOnly" in lab)return JSON.stringify(["source-only",lab.reportedAnalyte,lab.reportedValue,lab.reportedUnit,lab.reportedReferenceInterval??null,Date.parse(lab.measuredAt),lab.laboratory,lab.method,lab.fasting]);
@@ -16,4 +17,11 @@ export function possibleLabReimports(incoming:Lab|SourceOnlyLab,existing:readonl
   }
   return signature===facts(row);
  });
+}
+
+/** Acknowledgment requires the exact validated source receipt, never merely a successful HTTP code. */
+export function labImportReceiptMatches(input:unknown,expected:Lab|SourceOnlyLab){
+ const receipt=z.object({id:z.string().min(1).max(100),kind:z.literal('lab'),payload:z.union([labSchema,sourceOnlyLabSchema]),createdAt:z.string().datetime({offset:true})}).strict().safeParse(input);
+ const source=z.union([labSchema,sourceOnlyLabSchema]).safeParse(expected);
+ return receipt.success&&source.success&&JSON.stringify(receipt.data.payload)===JSON.stringify(source.data);
 }

@@ -1,4 +1,4 @@
-import test from'node:test';import assert from'node:assert/strict';import{possibleLabReimports}from'../shared/lab-reimport';import{parseLabPaste}from'../shared/lab-paste';
+import test from'node:test';import assert from'node:assert/strict';import{possibleLabReimports,labImportReceiptMatches}from'../shared/lab-reimport';import{parseLabPaste}from'../shared/lab-paste';
 const base=parseLabPaste('LDL, 0.00, mmol/L','2026-10-01T12:00:00Z','Synthetic lab').valid[0].payload;
 test('possible reimports use original source facts, retain zero and respect distinct known specimens without merging records',()=>{
  const prior={...base,id:'original'},incoming={...base};assert.equal(possibleLabReimports(incoming,[]).length,0);assert.deepEqual(possibleLabReimports(incoming,[prior]),[prior]);
@@ -25,4 +25,14 @@ test('raw source reimport review compares exact reported facts without clinical 
  const zero=parseLabPaste('Qualitative assay, 0','2026-10-01T12:00:00Z').sourceOnly[0].payload;
  assert.equal(possibleLabReimports(zero,[{...zero,id:'zero'}]).length,1);
  assert.equal(possibleLabReimports({...zero,reportedValue:'Negative'},[{...zero,id:'zero'}]).length,0);
+});
+
+test('lab acknowledgment requires exact supported/raw source facts and a complete valid receipt',()=>{
+ const receipt={id:'source-receipt',kind:'lab',payload:base,createdAt:'2026-10-26T12:00:00Z'};
+ assert.equal(labImportReceiptMatches(receipt,base),true);
+ for(const change of [{id:''},{kind:'plan'},{createdAt:'invalid'},{payload:{...base,value:1}},{payload:{...base,sourceInput:{...base.sourceInput!,suppliedUnit:null}}},{extra:'unexpected'}])assert.equal(labImportReceiptMatches({...receipt,...change},base),false);
+ assert.equal(labImportReceiptMatches({success:true},base),false);
+ const raw=parseLabPaste('Unknown assay, <0.50','2026-10-15T12:00:00Z').sourceOnly[0].payload;
+ assert.equal(labImportReceiptMatches({...receipt,payload:raw},raw),true);
+ assert.equal(labImportReceiptMatches({...receipt,payload:{...raw,reportedValue:'0.50',sourceInput:{...raw.sourceInput,number:'0.50'}}},raw),false);
 });

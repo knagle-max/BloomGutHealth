@@ -1,16 +1,20 @@
 import {localLabDateInstants,labMeasuredAtFromLocal,labUtcOffsetLabel} from "@shared/lab-date-correction";
-import {possibleLabReimports} from "@shared/lab-reimport";
+import {possibleLabReimports,labImportReceiptMatches} from "@shared/lab-reimport";
 import type {AnyLabHistoryRow} from "@shared/lab-history";
-import { useState,useId } from "react";
+import { useState,useId,useRef,useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { invalidatePlanningInputs } from "@/lib/planning-cache";
 import { Button } from "@/components/ui/button";
 import { parseLabPaste, labPasteCorrections } from "@shared/lab-paste";
 import { dateKey } from "@shared/experience";
 import { labSchema, sourceOnlyLabSchema, markerDefinitions, type Lab, type SourceOnlyLab } from "@shared/precision-nutrition";
-type Row = { line:number; payload:Lab|SourceOnlyLab; key:string };
+type Row = { line:number; payload:Lab|SourceOnlyLab; key:string; reviewedMatchIds?:string[] };
 type Preview = { sourceOnlyOffered:number; keptSourceOnly:boolean; rows:Row[]; errors:Array<{line:number;message:string}> };
 export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHistoryRow[]}) {
+  const active=useRef(true),reviewFocusPending=useRef(false),completionFocusPending=useRef(false);
+  const reviewHeading=useRef<HTMLHeadingElement>(null),nextImportButton=useRef<HTMLButtonElement>(null);
+  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
+  const [needsMatchReview,setNeedsMatchReview]=useState(false),[hardConflict,setHardConflict]=useState(false);
   const offsetId=useId();
   const [selectedInstant,setSelectedInstant]=useState("");
   const [importId,setImportId]=useState(()=>crypto.randomUUID());
@@ -23,21 +27,39 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
   const [reviewedMatches,setReviewedMatches]=useState("");
   const reimports=(preview?.rows||[]).flatMap(row=>{const matches=possibleLabReimports(row.payload,existingLabs);return matches.length?[{row,matches}]:[];});
   const matchBasis=JSON.stringify(reimports.map(({row,matches})=>[row.key,matches.map(match=>match.id).sort()]));
-  const matchesReviewed=!reimports.length||reviewedMatches===matchBasis;
-  const clear=()=>{setPreview(null);setError("");setReviewedMatches("");};
+  const matchesReviewed=(!reimports.length&&!needsMatchReview)||reviewedMatches===matchBasis;
+  const clear=()=>{setPreview(null);setError("");setReviewedMatches("");setNeedsMatchReview(false);setHardConflict(false);};
   const save=useMutation({mutationFn:async()=>{
+    if(!active.current)throw Error("Your account or import form changed. Reopen the current form.");
     if(!preview?.rows.length)throw Error("Preview results first.");
-    if(!started&&!matchesReviewed)throw Error("Review possible previously recorded results before saving.");
-    setStarted(true);setError("");const remaining=[...preview.rows];
+    if((!started||needsMatchReview)&&!matchesReviewed)throw Error("Review possible previously recorded results before saving.");
+    if(hardConflict)throw Error("The source or save reference conflicts. Keep this draft and review source history.");
+    const remaining=preview.rows.map(row=>({...row,reviewedMatchIds:needsMatchReview||row.reviewedMatchIds===undefined?possibleLabReimports(row.payload,existingLabs).map(match=>match.id).sort():row.reviewedMatchIds}));
+    setStarted(true);setNeedsMatchReview(false);setError("");setPreview(old=>old?{...old,rows:[...remaining]}:old);
     try{
       while(remaining.length){
+        if(!active.current)throw Error("Your account or import form changed. No further results were sent.");
         const row=remaining[0];
-        const response=await fetch("/api/precision/records",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json","Idempotency-Key":row.key},body:JSON.stringify({kind:"lab",payload:row.payload})});
-        if(!response.ok)throw Error(response.status===409?"The save reference conflicts with another result. Keep this draft and review the original entry.":"We could not confirm all results were saved. Retry the remaining results with the same save references.");
-        remaining.shift();setCompleted(old=>old+1);setPreview(old=>old?{...old,rows:[...remaining]}:old);
+        const response=await fetch("/api/precision/labs/import",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json","Idempotency-Key":row.key},body:JSON.stringify({payload:row.payload,reviewedMatchIds:row.reviewedMatchIds})});
+        const receipt=await response.json().catch(()=>null);
+        if(!active.current)return;
+        if(!response.ok){
+          if(response.status===409&&receipt?.code==="LAB_REIMPORT_REVIEW_REQUIRED"){
+            setNeedsMatchReview(true);reviewFocusPending.current=true;setReviewedMatches("");
+            throw Error("Review possible previously recorded results again. Recorded source matches changed; no result from this attempt was inserted.");
+          }
+          if(response.status===409){setHardConflict(true);throw Error("The source or save reference conflicts. Keep this draft and review source history.");}
+          throw Error("We could not confirm all results were saved. Retry the remaining results with the same save references.");
+        }
+        if(!labImportReceiptMatches(receipt,row.payload))throw Error("We could not confirm the exact source receipt. Retry the remaining results with the same references.");
+        remaining.shift();if(!remaining.length)completionFocusPending.current=true;setCompleted(old=>old+1);setPreview(old=>old?{...old,rows:[...remaining]}:old);
       }
-    }finally{await invalidatePlanningInputs();}
-  },onError:e=>setError((e.message.includes("conflicts")||e.message.startsWith("Review possible"))?e.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.")});
+    }finally{if(active.current)await invalidatePlanningInputs();}
+  },onError:error=>{if(active.current)setError(error.message.includes("conflicts")||error.message.startsWith("Review possible")?error.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.");}});
+  useEffect(()=>{
+    if(needsMatchReview&&!save.isPending&&reviewFocusPending.current){reviewHeading.current?.focus();reviewFocusPending.current=false;}
+    if(!save.isPending&&!preview?.rows.length&&completionFocusPending.current){if(document.activeElement===document.body)nextImportButton.current?.focus();completionFocusPending.current=false;}
+  },[needsMatchReview,save.isPending,preview?.rows.length,matchBasis]);
   const review=(keepSourceOnly=false)=>{try{
     dateKey.parse(date);const measuredAt=labMeasuredAtFromLocal(date,time,selectedInstant||undefined);
     const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting,sourceReport:{importId,enteredDate:date,...(time?{enteredTime:time}:{}),...(reportIdentifier.trim()?{reportIdentifier}:{}),...(specimenIdentifier.trim()?{specimenIdentifier}:{})}};
@@ -63,7 +85,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
   const nextImport=(corrections=false)=>{
     if(!corrections){setSelectedInstant("");setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
     setText(corrections?labPasteCorrections(text,preview?.errors.map(e=>e.line)||[]):"");
-    setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");setStarted(false);
+    setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");setStarted(false);setNeedsMatchReview(false);setHardConflict(false);setReviewedMatches("");
   };
   const rows=preview?.rows||[];
   return <section className="bloom-panel space-y-4" aria-labelledby="add-labs-title">
@@ -103,8 +125,8 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
     {completed>0&&<p role="status">{completed} result(s) saved. Missing units still need confirmation below. Rows listed as errors were not saved; source-only rows have no interpretation.</p>}
     {save.isPending&&<p role="status">Saving remaining laboratory results…</p>}
     {preview&&<div className="space-y-3">
-      {!!reimports.length&&!started&&<div className="border rounded-xl p-3 space-y-3" role="status">
-        <h3>These results may already be recorded</h3>
+      {((!!reimports.length&&!started)||needsMatchReview)&&<div className="border rounded-xl p-3 space-y-3" role="status">
+        <h3 ref={reviewHeading} tabIndex={-1}>These results may already be recorded</h3>
         <p>{reimports.length} preview row(s) match recorded analyte, original source value/unit, time and assay context. Matching values do not prove the same specimen. Different supplied report or specimen identifiers stay separate.</p>
         <ul>{reimports.map(({row,matches})=><li key={row.key}>Line {row.line}: {"sourceOnly" in row.payload?row.payload.reportedAnalyte:markerDefinitions.find(marker=>marker.id===("marker" in row.payload?row.payload.marker:undefined))?.name} · {matches.length} recorded match(es)</li>)}</ul>
         <a className="text-link" href="#lab-source-history">Review recorded source history</a>
@@ -120,8 +142,9 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
         return <article className="lab-review-row" key={row.key}><h3>{markerDefinitions.find(marker=>marker.id===payload.marker)?.name}</h3><p>{payload.value} · {date} · {payload.laboratory} · {payload.method}</p>{payload.sourceInput?.reportedSection!==undefined&&<p className="panel-note whitespace-pre-wrap break-words">Reported section: {payload.sourceInput.reportedSection}</p>}<p className="evidence-state">{payload.unitReview?"Unit assumed — confirm":"Unit supplied — review against report"}</p><p>{payload.unitReview?`System guess — confirm: ${payload.unit}. This is not a verified source unit.`:`Source unit: ${payload.sourceInput?.suppliedUnit||payload.unit}`}</p></article>;
       })}
       <p className="panel-note">Review every row against the source. A reference interval is not a personal treatment target. {time?"The supplied collection time is retained with the report date.":"Test dates are stored at local noon for date-only ordering; no collection time is claimed."}</p>
-      {!!rows.length&&<Button type="button" disabled={save.isPending||!started&&!matchesReviewed} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>!("sourceOnly" in r.payload)&&r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
-      {started&&!rows.length&&<div className="flex flex-wrap gap-3"><Button type="button" variant="outline" onClick={()=>nextImport()}>Start another import</Button>{preview.errors.length>0&&mode==="paste"&&<Button type="button" variant="outline" onClick={()=>nextImport(true)}>Correct unrecognized rows</Button>}</div>}
+      {needsMatchReview&&<p className="panel-note" role="status">Recorded matches changed while saving. Acknowledged rows are retained. Review current matches above before retrying the remaining original source rows.</p>}
+      {!!rows.length&&<Button type="button" disabled={save.isPending||hardConflict||(!started||needsMatchReview)&&!matchesReviewed} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>!("sourceOnly" in r.payload)&&r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
+      {started&&!rows.length&&<div className="flex flex-wrap gap-3"><Button ref={nextImportButton} type="button" variant="outline" onClick={()=>nextImport()}>Start another import</Button>{preview.errors.length>0&&mode==="paste"&&<Button type="button" variant="outline" onClick={()=>nextImport(true)}>Correct unrecognized rows</Button>}</div>}
     </div>}
   </section>;
 }
