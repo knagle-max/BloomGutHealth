@@ -10,10 +10,12 @@ export default function MealAnalysis({
   analysis,
   onRecalculate,
   pending = false,
+  current = true,
 }: {
   analysis: MealIntelligence;
   onRecalculate?: (ingredients: Ingredient[]) => void;
   pending?: boolean;
+  current?: boolean;
 }) {
   const { settings } = useExperience();
   const units = settings.displayUnits;
@@ -24,9 +26,10 @@ export default function MealAnalysis({
   return (
     <section className="bloom-panel space-y-4">
       <h2>Nutrition & gut pathways</h2>
-      <FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/>
+      {current&&<FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/>}
+      {!current&&<p role="status">Current nutrition analysis is not confirmed. Your portion draft is retained; retry the correction to confirm saved nutrition.</p>}
       <p className="panel-note">
-        {analysis.provider} ·{" "}
+        {!current&&"Previous saved analysis: "}{analysis.provider} ·{" "}
         {analysis.parser === "ai"
           ? "AI ingredient interpretation"
           : "Description-based interpretation"}
@@ -43,6 +46,7 @@ export default function MealAnalysis({
           <p className="panel-note">Powders, gummies, capsules and sugared or sugar-free versions can have different labels. A heaping spoon is an estimate; check your package serving.</p>
         </div>
       )}
+      <fieldset disabled={pending} className="min-w-0">
       <details open>
         <summary>Review foods & estimated portions</summary>
         <p className="panel-note">
@@ -204,6 +208,8 @@ export default function MealAnalysis({
           </button>
         )}
       </details>
+      </fieldset>
+      <div hidden={!current} className="space-y-4">
       {analysis.clarificationQuestions.length > 0 && (
         <div>
           <h3>Improve this estimate</h3>
@@ -335,6 +341,7 @@ export default function MealAnalysis({
           </p>
         ))}
       </details>
+      </div>
     </section>
   );
 }

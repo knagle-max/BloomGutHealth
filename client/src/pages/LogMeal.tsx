@@ -373,7 +373,7 @@ export default function LogMeal() {
             <CheckCircle2 size={20} /> Your meal is saved.
           </h2>
           <p className="my-3">{savedMeal.mealText}</p>
-          {savedMeal.totalCalories !== null ? (
+          {recalculate.isPending||recalculate.isError ? <p role="status">{recalculate.isPending?"Checking corrected nutrition…":"Correction could not be confirmed. Retry with your retained portion draft, or open the journal to check the saved entry."}</p> : savedMeal.totalCalories !== null ? (
             <div className="saved-nutrients">
               <span>
                 <strong>{energyAmount(savedMeal.totalCalories, settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}
@@ -409,13 +409,14 @@ export default function LogMeal() {
           </Link>
         </section>
       )}
-      {savedMeal && <SaveMealButton meal={savedMeal}/>}
+      {savedMeal && !recalculate.isPending && !recalculate.isError && <SaveMealButton meal={savedMeal}/>}
       {Boolean(savedMeal?.intelligence) && (
         <MealAnalysis
           key={(savedMeal!.intelligence as MealIntelligence).analyzedAt}
           analysis={savedMeal!.intelligence as MealIntelligence}
           onRecalculate={(ingredients) => recalculate.mutate(ingredients)}
           pending={recalculate.isPending}
+          current={!recalculate.isPending&&!recalculate.isError}
         />
       )}
       <p className="panel-note text-center">

@@ -300,7 +300,8 @@
           "client/src/pages/NutritionHistory.tsx",
           "client/src/components/FoodEntryChooser.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/SavedMeals.tsx"
+          "client/src/components/SavedMeals.tsx",
+          "client/src/components/MealAnalysis.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -1495,6 +1496,7 @@
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/LabTrend.tsx": "6a96d520de066fa85e1ebbc446e841805725bd762f9530f0d68d20db0fad3631",
     "client/src/components/LabUnitReview.tsx": "74cb3ccf5de89c0e70d6e138ddb91bfa4b17241de2e33160812a53db5c76a43b",
+    "client/src/components/MealAnalysis.tsx": "88b0fecd83a9702c3b54ac0b19bb3979ed7d24b3dce318b5a1a1ea5d02fde4bd",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "478268d23a03de300e290de677df928ab56ad81c092dbe255c9e04703d95df50",
     "client/src/components/QuickLabEntry.tsx": "9c48d4e5860880e60889f3a7363e70611b036d27c45a61d30a86b69a1d04841e",
@@ -1511,7 +1513,7 @@
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "4a2b2d63069d20f3539496625212695e747310465569ea1617f0a38b7635abb8",
+    "client/src/pages/LogMeal.tsx": "66a6045ccaf8051b43a6ebc3a9caa5041dd9ae01e784cf60212e0e3aa54d7129",
     "client/src/pages/MealPlanner.tsx": "6d9d6b8698e99eb9bddc5e072d5450154722e439cee8023d6a950a4ae00c2a5a",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "981f5cb83a8ddb41451e5a4527373a79b2929c95636795991294e6527677afd6",

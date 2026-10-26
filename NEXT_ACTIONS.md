@@ -1,3 +1,7 @@
+# Active AddFood correction checkpoint — 2026-10-26
+
+Current-journal280119d457117f03920b3f17e8599e1d35e87878 pushed; Actions40254927370 in progress, verify Render. Prior mutationaae4676 Actions40254541527 SUCCESS/live; saved-template9b0bca3 Actions40254006736 SUCCESS/live; Move58568f6 and setup0f26541 CI/live verified. Current AddFood correction fix actual planner/PGlite browser PASS: pending frozen, lost committed response hides stale totals/analysis, preserves200g draft, retry one row. Finish326 tests/types/build, source115/API checks and canonical AddFood/Athlete/unit regressions; publish/verify exact CI+Render. Next highest-priority unblocked v0.5 whole-app/source task; same-account concurrent edits remain open. No v0.6 jump, main merge or restricted activation.
+
 # Active current-journal checkpoint — 2026-10-26
 
 Legacy mutation aae46768809ea73341306efe62f6f5285431b35c pushed; verify exact Actions/Render. Saved-template9b0bca3 Actions40254006736 SUCCESS/Render live; Move58568f6 Actions40253489175 SUCCESS/live; setup0f26541 Actions40252980254 SUCCESS/live. Current paused-source journal fix implemented, before2 comparison bars vs after0; daily/targets/history current-only, knownzero/fallback and draft retained. Full326/types/build and regression browser checks running; publish/CI/Render after verification. Then next eligible v0.5 P0/whole-app integration; preserve true external gates and do not switch to v0.6 basic entry/adaptation.

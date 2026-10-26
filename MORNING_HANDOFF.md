@@ -1,3 +1,7 @@
+# Latest delivery — 2026-10-26
+
+Five batches published and CI/live verified this continuation: optional goal0f26541, Everyday Move58568f6, saved-template receipts9b0bca3, journal uncertain-writeaae4676, current-only journal280119d. Sixth AddFood correction safeguards ready:326/326 tests/types/build/source115/API and actual planner/PGlite correction-loss, canonical AddFood/Athlete, display-unit journeys PASS. Publishing next. Next highest P0 candidate: same-account Athlete whole-profile concurrent-save CAS and preserved draft conflict UX (currently only acknowledgement freshness is enforced; raw full writes remain last-writer-wins). No new schema/real-user or approval edits.
+
 # Current source delivery — 2026-10-26
 
 Journal mutationaae4676 Actions40254541527 SUCCESS/Render dep-dbfaqa4s728c73dc15e0 LIVE. Current-only paused journal source fix ready:326/326 tests/types/build/source114 and four focused browser journeys pass. Unknown entries remain unknown; current recorded zero retained; manual editor draft mounted. Publishing next. Next actual AddFood correction pending-editor/uncertain-analysis audit uses real planner routes and PostgreSQL. No new external question blocks engineering.

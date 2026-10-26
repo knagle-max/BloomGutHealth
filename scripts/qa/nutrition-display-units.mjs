@@ -93,7 +93,7 @@ try{
   await page.setViewportSize({width:390,height:1000});await page.emulateMedia({colorScheme:'light'});
   for(const state of ['partial','unavailable']){
     journalState=state;await go('/');
-    const action=page.locator('.today-next-action .hero-button');
+    const action=page.locator(stage==='after'?'.today-focus .hero-button':'.today-next-action .hero-button');
     if(stage==='after')await page.getByRole('link',{name:state==='partial'?'Review my meal estimates':'Log a meal',exact:true}).first().waitFor();
     else if(state==='partial')await page.getByText('Synthetic oats lunch',{exact:true}).first().waitFor();
     else await page.getByRole('button',{name:'Try again',exact:true}).first().waitFor();
