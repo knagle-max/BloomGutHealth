@@ -168,3 +168,9 @@ test("AI consent and credentials cannot bypass missing metered execution policy"
     else process.env.OPENAI_SCIENCE_MODEL = previousModel;
   }
 });
+
+test("recalculation does not accumulate source warnings on unchanged ingredient rows",async()=>{
+ const first=await analyzeMeal("100 g banana, 20 g oats",false);
+ const again=await analyzeMeal("100 g banana, 20 g oats",false,structuredClone(first.intelligence.ingredients));
+ assert.deepEqual(again.intelligence.ingredients,first.intelligence.ingredients);assert.deepEqual(nutritionTotals(again.nutritionalData),nutritionTotals(first.nutritionalData));
+});

@@ -163,7 +163,8 @@
           "shared/products.ts",
           "server/meal-intelligence.ts",
           "shared/product-search.ts",
-          "shared/barcodes.ts"
+          "shared/barcodes.ts",
+          "server/food-catalog.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1498,9 +1499,9 @@
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/LabTrend.tsx": "6a96d520de066fa85e1ebbc446e841805725bd762f9530f0d68d20db0fad3631",
     "client/src/components/LabUnitReview.tsx": "74cb3ccf5de89c0e70d6e138ddb91bfa4b17241de2e33160812a53db5c76a43b",
-    "client/src/components/MealAnalysis.tsx": "d709cafbbe635cabc11730c0f756f0fd91007b9f9a2755e0578e485d59dec39c",
+    "client/src/components/MealAnalysis.tsx": "ce4836ae6023b4fcd902c6bacfe13759b3941b0a38f056166ce9356a115a7d47",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
-    "client/src/components/ProductPicker.tsx": "478268d23a03de300e290de677df928ab56ad81c092dbe255c9e04703d95df50",
+    "client/src/components/ProductPicker.tsx": "effe8733905392d003378b73dd285ad77e360c1472dbd01bdf6e41cf291338df",
     "client/src/components/QuickLabEntry.tsx": "f8fd7832cb20fc9a139917b2b635a50de7d9f78c1aa78a7245853173ad457226",
     "client/src/components/SavedMeals.tsx": "8cd61688a966a22992a27fd8d944c7151c4310227f7563e085523a3174d45004",
     "client/src/components/TodayFocus.tsx": "c64bf9c4d7d089efad04ba297af372144f2518f023cfaceda8b988f0986ff9d1",
@@ -1543,6 +1544,7 @@
     "server/feature-control-storage.ts": "a8f0621d78dba162d419506bad4d941d409b2300689c107c915cb947f57f55bf",
     "server/feature-controller-auth.ts": "f349587780d99a77c51b9beb6088ce235b5cab7be179a8227c60df42861bfea0",
     "server/feature-step-up.ts": "8a173d439d0faea45e2ff19adcf7880b9e28ff206fdfb8804e01f29d6289c0ca",
+    "server/food-catalog.ts": "1c4b766bdfaca6f6345155ae4acf2351b09edece0c3e1e26f31a5276571b172f",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
@@ -1593,7 +1595,7 @@
     "shared/nutrition-summary.ts": "0d57fe4ede7daf971448dd3b299c49c03d187c9e599bd2c1cc3a59cf00a4b46b",
     "shared/precision-nutrition.ts": "b4def6bf4cc23abca69f087c3a0f82c7559b2ed688da0490afc1646fca55313b",
     "shared/product-search.ts": "65872a108e2ed1cda0f20457af15c2a3b92029a4096c05822315843835152ef0",
-    "shared/products.ts": "86a119656c8e1cd43ea76957ce70018418de7735081e9890524d2f7b25669b3c",
+    "shared/products.ts": "70b6c0eca24cb349cd9a1e4ce4dea07ffa25c64b2e8fb97e09b4cd0e8cd0b34c",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
     "shared/schema-management.ts": "081b56a9e8e9d3a1841d43ed06132baca06b1983c278d8cc3105aab44ad68548",
     "shared/schema.ts": "28b577b3707bdbedd6af44181cf97a64deedcd47b2d46b7a3c01f33fe5289854",

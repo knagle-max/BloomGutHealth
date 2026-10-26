@@ -239,11 +239,9 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
     name: food.description.slice(0, 120),
     grams: Math.round(grams! * 100) / 100,
     preparation: food.description.slice(0, 120),
-    assumption:
-      `${reason}. Generic USDA match; brand, fat content and preparation may differ.`.slice(
-        0,
-        300,
-      ),
+    assumption: reason.includes("Generic USDA match; brand, fat content and preparation may differ.")
+      ? reason.slice(0,300)
+      : `${reason}. Generic USDA match; brand, fat content and preparation may differ.`.slice(0,300),
   };
 }
 export function lookupCatalogueNutrition(ingredients: Ingredient[]) {

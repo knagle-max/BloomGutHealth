@@ -29,7 +29,11 @@ Optional sourceInput.reportedSection/rowOrder reader expansion is locally verifi
 
 ## Laboratory parser writer ready
 
-337/337 tests/types/build/source117;13 focused schema/API/encrypted PostgreSQL/export/parser tests; grouped and ordinary lab-entry UI retry/correction/unit-confirmation/reflow journeys PASS. Bracketed source headings, original physical row order/raw unit/text retained, acknowledged rows blanked in correction drafts without changing original positions. No hardcoded section count, diagnosis or new store. Publishing exact writer CI/Render next; complete panel identity/reimport ambiguity and grouped historical UI remain open.
+337/337 tests/types/build/source117;13 focused schema/API/encrypted PostgreSQL/export/parser tests; grouped and ordinary lab-entry UI retry/correction/unit-confirmation/reflow journeys PASS. Bracketed source headings, original physical row order/raw unit/text retained, acknowledged rows blanked in correction drafts without changing original positions. No hardcoded section count, diagnosis or new store. Published d326aff899aa29970fae251328586a27fa2238d5, Actions40277856219 SUCCESS and Render dep-dbfergdg1s2s73a93720 LIVE; complete panel identity/reimport ambiguity and grouped historical UI remain open.
+
+## Current food-identity replacement
+
+340/340 tests/types/build/source118/API,9 focused and actual source/analysis/HTTP/PostgreSQL UI PASS: Change identity retains known mass, other rows and one meal; amount-only change retains identity; unknown/incompatible mass requires explicit amount review. New-entry defaults unchanged. Generic source warning no longer accumulates on unchanged recalculation. Publishing next. Dynamic missing-row Add and stable row state during Remove remain next owner-contract audit.
 
 ## Broader completed foundations
 

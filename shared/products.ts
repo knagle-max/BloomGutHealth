@@ -72,3 +72,12 @@ export function productIngredient(product: Product, servings = 1) {
     product: { source: product.source, id: product.id, servings },
   };
 }
+
+/** Replacement changes identity; retain recorded mass only where the source basis supports it. */
+export function replacementLabelAmount(servingGrams:number|null,originalGrams?:number|null) {
+  if(originalGrams===undefined)return {servings:1,requiresReview:false};
+  const servings=typeof originalGrams==="number"&&Number.isFinite(originalGrams)&&originalGrams>0&&originalGrams<=3000&&typeof servingGrams==="number"&&Number.isFinite(servingGrams)&&servingGrams>0?originalGrams/servingGrams:null;
+  return servings!==null&&servings>0&&servings<=100
+    ? {servings,requiresReview:false}
+    : {servings:1,requiresReview:true};
+}

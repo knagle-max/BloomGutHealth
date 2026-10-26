@@ -6,7 +6,7 @@ import {
   nutrientDefinitions,
   type Ingredient,
 } from "@shared/meal-intelligence";
-import { productIngredient, type Product } from "@shared/products";
+import { productIngredient, replacementLabelAmount, type Product } from "@shared/products";
 import { productMatchStatus } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
 import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
@@ -19,6 +19,7 @@ export default function ProductPicker({
   startScanner = false,
   active = true,
   showBarcode = true,
+  initialGrams,
 }: {
   onPick: (i: Ingredient) => void;
   initialQuery?: string;
@@ -28,6 +29,7 @@ export default function ProductPicker({
   startScanner?: boolean;
   active?: boolean;
   showBarcode?: boolean;
+  initialGrams?:number|null;
 }) {
   const [query, setQuery] = useState(productSearchText(initialQuery)),
     [kind, setKind] = useState<"all" | "food" | "supplement">("all"),
@@ -36,6 +38,14 @@ export default function ProductPicker({
     [servings, setServings] = useState(1),
     [manual, setManual] = useState(false),
     [error, setError] = useState("");
+  const [amountReviewRequired,setAmountReviewRequired]=useState(false),[amountReviewed,setAmountReviewed]=useState(false);
+  const [amountBasis,setAmountBasis]=useState(initialGrams);
+  function initialiseAmount(product:Product|null){
+    const amount=replacementLabelAmount(product?.servingGrams??null,initialGrams);
+    setServings(amount.servings);setAmountReviewRequired(amount.requiresReview);setAmountReviewed(false);setAmountBasis(initialGrams);
+  }
+  function chooseProduct(product:Product|null){setChoice(product);initialiseAmount(product);}
+  useEffect(()=>{if(choice&&!Object.is(amountBasis,initialGrams))initialiseAmount(choice);},[initialGrams,amountBasis,choice]);
   const started = useRef(false);
   const resultId=useId();
   const [submittedQuery,setSubmittedQuery]=useState(initialQuery);
@@ -74,8 +84,7 @@ export default function ProductPicker({
       ).json() as Promise<{ products: Product[] }>,
     onSuccess: (r) => {
       setVariants(r.products);
-      setChoice(r.products[0] || null);
-      setServings(1);
+      chooseProduct(r.products[0] || null);
       setError(
         r.products.length
           ? ""
@@ -126,10 +135,9 @@ export default function ProductPicker({
     },
     onSuccess: (p) => {
       queryClient.invalidateQueries({ queryKey: ["/api/products/saved"] });
-      setChoice(p);
+      chooseProduct(p);
       setVariants([p]);
       setManual(false);
-      setServings(1);
     },
   });
   const remove = useMutation({
@@ -254,8 +262,7 @@ export default function ProductPicker({
                 className="bloom-input w-full"
                 value={choice.id}
                 onChange={(e) => {
-                  setChoice(variants.find((p) => p.id === e.target.value)!);
-                  setServings(1);
+                  chooseProduct(variants.find((p) => p.id === e.target.value)!);
                 }}
               >
                 {variants.map((p) => (
@@ -299,6 +306,7 @@ export default function ProductPicker({
             scoops, use the labelled serving count. A heaping spoon can differ
             from a labelled rounded spoon.
           </p>
+          {amountReviewRequired&&<div className="space-y-2"><p role="status">This label cannot automatically keep the previous recorded amount. Review the replacement serving count before applying it.</p><label className="block"><input type="checkbox" checked={amountReviewed} onChange={e=>setAmountReviewed(e.target.checked)}/>Use this reviewed serving count instead of the previous amount.</label></div>}
           <dl>
             {nutrientDefinitions
               .filter(([k]) => choice.perServing[k] !== undefined)
@@ -338,7 +346,7 @@ export default function ProductPicker({
             className="whitespace-normal h-auto max-w-full"
             type="button"
             disabled={
-              pending || !Number.isFinite(servings) || servings <= 0 || servings > 100
+              pending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
             }
             onClick={() => {
               const ingredient=productIngredient(choice,servings);
@@ -361,8 +369,7 @@ export default function ProductPicker({
               variant="outline"
               onClick={() => {
                 setVariants([p]);
-                setChoice(p);
-                setServings(1);
+                chooseProduct(p);
               }}
             >
               {p.name}

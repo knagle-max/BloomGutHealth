@@ -153,6 +153,7 @@ export default function MealAnalysis({
                       : "Find the exact product or enter its label"}
                   </summary>
                   <ProductPicker
+                    initialGrams={item.grams}
                     initialQuery={item.name}
                     autoSearch={
                       index === firstMissingIndex
