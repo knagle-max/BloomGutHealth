@@ -29,6 +29,12 @@ export default function Profile({
   const [entryError,setEntryError] = useState("");
   const lastHydratedProfile = useRef<string | null>(null);
   const profile = useQuery<any>({ queryKey: ["/api/profile"] });
+  const currentProfile=!!profile.data&&profile.fetchStatus==="idle"&&!profile.isStale&&!profile.isError;
+  const [dirty,setDirty]=useState(false);
+  const sourceBasis=useRef<string|null>(null);
+  const profileBasis=(value:any)=>JSON.stringify([user?.id,value?.sex??null,value?.age??null,value?.heightCm??null,value?.weightKg??null,value?.activityLevel??null]);
+  const sourceChanged=dirty&&sourceBasis.current!==null&&!!profile.data&&profileBasis(profile.data)!==sourceBasis.current;
+  useEffect(()=>{sourceBasis.current=null;setDirty(false);},[user?.id]);
   const [form, setForm] = useState({
     sex: "",
     age: "",
@@ -37,7 +43,8 @@ export default function Profile({
     activityLevel: "moderate",
   });
   useEffect(() => {
-    if (profile.data)
+    if (profile.data&&!dirty) {
+      sourceBasis.current=profileBasis(profile.data);
       setForm({
         sex: profile.data.sex || "",
         age: profile.data.age?.toString() || "",
@@ -45,7 +52,8 @@ export default function Profile({
         weightKg: profile.data.weightKg?.toString() || "",
         activityLevel: profile.data.activityLevel || "moderate",
       });
-  }, [profile.data]);
+    }
+  }, [profile.data,dirty]);
   const selectedUnits = units;
   const save = useMutation({
     mutationFn: async () => {
@@ -58,20 +66,22 @@ export default function Profile({
       };
       await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data);
     },
-    onSettled: async () => {
+    onSettled: async (_data,error) => {
       // A failed response can follow a committed write. Recheck authoritative
       // Profile/health-derived sources after either outcome, including age gates.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["/api/profile"] }),
         invalidatePlanningInputs(),
       ]);
+      // Only an acknowledged save may adopt refreshed values automatically.
+      if(!error)setDirty(false);
     },
   });
   // Convert drafts only after the shared preference has actually saved.
   // Do not reconstruct them from saved Profile values after a preference PATCH:
   // doing so silently discards unsaved measurements.
   useEffect(()=>{
-    if (loadingUnits || profile.isLoading || !profile.data || !user) return;
+    if (dirty || loadingUnits || profile.isLoading || !profile.data || !user) return;
     // Hydrate only when the account or *saved measurement* changes, not when
     // unrelated settings requests finish. This protects unsaved edits.
     const stamp = JSON.stringify([user.id, profile.data.heightCm ?? null, profile.data.weightKg ?? null]);
@@ -79,7 +89,7 @@ export default function Profile({
     lastHydratedProfile.current = stamp;
     setHeightEntry(formatHeightEntry(profile.data.heightCm ?? null,units.height));
     setMassEntry(formatMassEntry(profile.data.weightKg ?? null,units.bodyWeight));
-  },[profile.data?.heightCm,profile.data?.weightKg,user?.id,loadingUnits,profile.isLoading]);
+  },[profile.data?.heightCm,profile.data?.weightKg,user?.id,loadingUnits,profile.isLoading,dirty]);
   useEffect(()=>{
     if(loadingUnits)return;
     setHeightEntry(old=>{const next=switchHeightUnit(old,units.height);return "unit" in next?next:old;});
@@ -128,13 +138,15 @@ export default function Profile({
         className="bloom-panel space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
-          if(save.isPending||incomplete||savingUnits||loadingUnits||profile.isLoading||profile.isError)return;
+          if(!currentProfile||sourceChanged||save.isPending||incomplete||savingUnits||loadingUnits||profile.isLoading||profile.isError)return;
           save.mutate();
         }}
       >
-        <fieldset disabled={save.isPending} className="space-y-4">
+        <fieldset disabled={save.isPending||loadingUnits||profile.isLoading} onChangeCapture={()=>setDirty(true)} className="space-y-4">
         <legend className="sr-only">Nutrition profile fields</legend>
         <h2>Nutrition profile</h2>
+        {dirty&&!currentProfile&&!profile.isError&&<p role="status">Checking current saved profile before saving…</p>}
+        {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved profile changed while you were editing. Your draft is still here. Load the latest saved profile to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentProfile} onClick={()=>setDirty(false)}>Load latest saved profile</Button></div>}
         {profile.isLoading ? (
           <p>Loading profile…</p>
         ) : profile.isError ? (
@@ -224,7 +236,7 @@ export default function Profile({
               Complete adult Profile fields support formula estimates. Otherwise,
               the journal shows labelled example references.
             </p>
-            <Button disabled={save.isPending||incomplete||savingUnits||loadingUnits}>Save nutrition profile</Button>
+            <Button disabled={!currentProfile||sourceChanged||save.isPending||incomplete||savingUnits||loadingUnits}>Save nutrition profile</Button>
           </>
         )}
         {save.isSuccess && <p role="status">Profile saved.</p>}

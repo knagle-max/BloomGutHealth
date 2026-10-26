@@ -17,6 +17,10 @@ Existing optional sourceInput now included in trend DTO and readonly context in 
 
 Held-save actual UI baseline ageenabled reproduced; new complete fieldset freezes canonical Profile +unitselectors during save, handler guards duplicate programmatic submit. Actual normal and committed503/age17 cache-refresh/minor-safety browser PASS. This is pending protection only; wholeprofile CAS/externalrefetch draft conflict remain OPEN. Full345 `/tmp/profile-pending-full.log`, types/build/source checks PASS; ready to publish and verify exact CI+Render. Lab3385e5a8c61e47d90aa2b9d12fab3539537cf97c published/Render dep-dbfg7mijnfac73enq4mg LIVE; Actions40287210671 SUCCESS verified.
 
+## Active dirty Profile source conflict
+
+Actual external refresh reset180cmdraft to171cm reproduced. Dirty fields now retained; changed canonical source blockssaveuntil explicit Load latest saved profile; current source required, known success clears only after refresh, committed503 retainsdraft/no false success. This is UI source review, NOT server CAS. Actual syntheticHTTP/current draft/mobile+held unknown-outcome safety browsers PASS; full345 `/tmp/profile-draft-full.log`, heldsource+unrelatedmetadata `/tmp/profile-draft-final-browser.log` and mixedunit `/tmp/profile-draft-units.log` PASS. Ready publish/exact CI+Render. Publish/verify afterchecks.3726265 pending-only batch CI40287917826 SUCCESS/RenderLIVE verified.
+
 ## Immediate sequence
 
 1. Check actual working tree and full-suite result; do not recreate completed work. Commit verified mass fix and persistent records, fetch/preserve incoming Architect docs before push. Only rebase own unpublished commits. No force push; inspect FETCH_HEAD because remote tracking ref is not configured.
