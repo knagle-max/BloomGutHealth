@@ -1060,6 +1060,7 @@ export function buildPrecisionReport(
         points: series.map((l) => ({
           id: l.id,
           date: l.measuredAt,
+          sourceInput: l.sourceInput,
           laboratory: l.laboratory, method: l.method, sourceValue: l.value, sourceUnit: l.unit,
           referenceLow: l.referenceLow, referenceHigh: l.referenceHigh, fasting: l.fasting,
           provenance: l.unitReview ? "User-confirmed source unit" : "User-entered result",

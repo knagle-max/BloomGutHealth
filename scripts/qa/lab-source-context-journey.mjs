@@ -9,8 +9,8 @@ const vite=await createServer({server:{port:5201,host:'127.0.0.1',strictPort:tru
 const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox','--single-process','--no-zygote']});
 const page=await browser.newPage({viewport:{width:375,height:900},timezoneId:'America/Regina'});page.setDefaultTimeout(12000);
 const errors=[],writes=[];let scenario='duplicate';
-const lab=labSchema.parse({marker:'glucose',value:0,unit:'mg/dL',measuredAt:'2026-09-30T23:30:00Z',laboratory:'Synthetic source lab',method:'Synthetic assay',fasting:'yes',referenceLow:0,referenceHigh:100});
-function fixture(){const records=scenario==='empty'?[]:[{id:'source-zero',kind:'lab',createdAt:lab.measuredAt,payload:lab},...(scenario==='single'?[]:[{id:'source-offset',kind:'lab',createdAt:lab.measuredAt,payload:{...lab,value:100,measuredAt:scenario==='compatible'?'2026-10-02T01:30:00+02:00':'2026-10-01T01:30:00+02:00',referenceLow:null,referenceHigh:null}}])];return {...buildPrecisionReport(records,contextSchema.parse({}),defaultPreferences,null,Date.parse('2026-10-24T12:00:00Z')),records,availableReports:[],intake:{days:28,mealsLogged:0,nutrients:[]}};}
+const lab=labSchema.parse({marker:'glucose',value:0,unit:'mg/dL',measuredAt:'2026-09-30T23:30:00Z',laboratory:'Synthetic source lab',method:'Synthetic assay',fasting:'yes',referenceLow:0,referenceHigh:100,sourceInput:{text:'  Glucose, 0, mg/dL  ',number:'0',suppliedUnit:'mg/dL',capture:'pasted-report',reportedSection:'  [ ORIGINAL UNKNOWN SECTION ]  ',rowOrder:4}});
+function fixture(){const records=scenario==='empty'?[]:[{id:'source-zero',kind:'lab',createdAt:lab.measuredAt,payload:scenario==='legacy'?{...lab,sourceInput:undefined}:lab},...(['single','legacy'].includes(scenario)?[]:[{id:'source-offset',kind:'lab',createdAt:lab.measuredAt,payload:{...lab,value:100,measuredAt:scenario==='compatible'?'2026-10-02T01:30:00+02:00':'2026-10-01T01:30:00+02:00',referenceLow:null,referenceHigh:null}}])];return {...buildPrecisionReport(records,contextSchema.parse({}),defaultPreferences,null,Date.parse('2026-10-24T12:00:00Z')),records,availableReports:[],intake:{days:28,mealsLogged:0,nutrients:[]}};}
 page.on('pageerror',error=>errors.push(error.message));
 await page.route('https://fonts.**/**',route=>route.abort());
 await page.route('**/api/**',async route=>{
@@ -34,7 +34,7 @@ try{
  assert.equal(await card.locator('polyline').count(),0);
  await card.getByText('Sources, method & recorded values',{exact:true}).click();
  const region=card.getByRole('region',{name:'Glucose recorded source details'});
- await region.getByRole('table').waitFor();
+ await region.getByRole('table').waitFor();await region.getByText('Reported section:   [ ORIGINAL UNKNOWN SECTION ]  ',{exact:true}).first().waitFor();await region.getByText('Report line: 4',{exact:true}).first().waitFor();await region.getByText('Original report row:   Glucose, 0, mg/dL  ',{exact:true}).first().waitFor();
  assert.equal(await region.getByRole('row').count(),3);
  await region.getByText('2026-10-01T01:30:00+02:00',{exact:true}).waitFor();
  await region.getByText('0–100 mg/dL',{exact:true}).waitFor();
@@ -45,6 +45,8 @@ try{
  for(const width of [320,375,390,1280]){await page.setViewportSize({width,height:width===320?500:900});for(const dark of [false,true]){await page.evaluate(value=>document.documentElement.classList.toggle('dark',value),dark);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Page reflow ${width}/${dark}`);}}
  scenario='compatible';await go();await card.getByText(/^Observed change:/).waitFor();assert.equal(await card.locator('polyline').count(),1);
  scenario='single';await go();await card.getByText('Not enough comparable data for a change.',{exact:true}).waitFor();assert.equal(await card.locator('circle').count(),1);assert.equal(await card.locator('polyline').count(),0);
+ await page.goto('http://127.0.0.1:5201/precision?tab=labs');await page.getByRole('heading',{name:'Latest results',exact:true}).waitFor();await page.getByText('Original report context',{exact:true}).click();assert.equal(await page.getByText('Original report row:',{exact:false}).textContent(),'Original report row:   Glucose, 0, mg/dL  ');assert.equal(await page.getByText('Reported section:',{exact:false}).textContent(),'Reported section:   [ ORIGINAL UNKNOWN SECTION ]  ');
+ scenario='legacy';await go();await card.getByText('Sources, method & recorded values',{exact:true}).click();await card.getByText('Original report row was not recorded.',{exact:true}).waitFor();assert.equal(await card.getByText('Reported section:',{exact:false}).count(),0);
  scenario='empty';await go();await page.getByText('No dated laboratory results yet.',{exact:false}).waitFor();assert.equal(await page.locator('.lab-chart').count(),0);
  assert.deepEqual(errors,[]);assert.deepEqual(writes,[]);
  console.log('PASS: real rendered synthetic lab history keeps original offset/zero/unit/reference/fasting, withholds same-instant change, permits distinct dates, single/empty states and keyboard/mobile reflow; no writes or real clinical review');

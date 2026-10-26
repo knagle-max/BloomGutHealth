@@ -7,6 +7,7 @@ import { useExperience } from "@/lib/experience";
 import { useAuth } from "@/lib/auth";
 import TodayPlanner from "@/components/TodayPlanner";
 import QuickLabEntry from "@/components/QuickLabEntry";
+import LabSourceContext from "@/components/LabSourceContext";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
@@ -630,6 +631,7 @@ export default function PrecisionNutrition() {
                             {new Date(l.measuredAt).toLocaleString()} ·{" "}
                             {l.laboratory} · {l.method} · fasting {l.fasting}
                           </p>
+                          <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput}/></details>
                         </div>
                         <Button
                           variant="outline"

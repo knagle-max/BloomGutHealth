@@ -6,8 +6,12 @@ Authorized branch: `enhance/bloom-experience`, PR1. Existing Render workspace `t
 
 - Published dynamic ingredient review: `7a03290107b907a32f60cf78859adc82813ebf49`, Actions40285115830 SUCCESS, Render dep-dbffu267bikc73c5pe8g LIVE;342 local tests and focused browser regressions pass.
 - Homemade routing: `e38bfd0f1809f8493bc867974f0ff4ecf32bbd3f`, Render dep-dbfg0gmk1f9s738823eg LIVE; Actions40285639945 FAILED on stale API inventory. No app-test failure inferred. Earlier local API PASS statement corrected in DEVELOPMENT_LOG.
-- Canonical ingredient fallback and reviewed API-inventory fix: `567a7442aa1e5bcdfffced4db8dfaf0c91c85c1e`, Render dep-dbfg2kcs728c73dgntfg LIVE; Actions40286095050 awaiting exact conclusion.343 full tests/types/build/keyboard draft+save/lost-response/Athlete browser PASS.
-- Active unknown aggregate mass fix: actual capsule gramsnull produced aggregate0, mixed unknown+80g produced misleading complete80g. Now aggregate massnull when any matched mass unknown; fully known sums/nutrients/truezeros unchanged. Focused test/types/build/API92+13/source119 and canonical AddFood/actual PostgreSQL macro browsers PASS. Full344 suite `/tmp/meal-mass-full.log` PASS; types/build/source and both browser journeys PASS; publication next. Source changes server/meal-intelligence.ts, test tests/meal-mass-completeness.test.ts and reviewed crosswalk hash. No schema changes or historical rewrites.
+- Canonical ingredient fallback and reviewed API-inventory fix: `567a7442aa1e5bcdfffced4db8dfaf0c91c85c1e`, Render dep-dbfg2kcs728c73dgntfg LIVE; Actions40286095050 SUCCESS.343 full tests/types/build/keyboard draft+save/lost-response/Athlete browser PASS.
+- Active unknown aggregate mass fix: actual capsule gramsnull produced aggregate0, mixed unknown+80g produced misleading complete80g. Now aggregate massnull when any matched mass unknown; fully known sums/nutrients/truezeros unchanged. Focused test/types/build/API92+13/source119 and canonical AddFood/actual PostgreSQL macro browsers PASS. Full344/types/build/source/browser PASS; published041cdac20e0cfd4fdfa2fccf71e5bc95828dc1cc Actions40286642337 SUCCESS, Render dep-dbfg54h5efls73bus4sg LIVE. Source changes server/meal-intelligence.ts, test tests/meal-mass-completeness.test.ts and reviewed crosswalk hash. No schema changes or historical rewrites.
+
+## Active lab history context
+
+Existing optional sourceInput now included in trend DTO and readonly context in Progress source details/My Biology latest results. No schema/writer/clinical changes.3 focused/tests/types/build/firstbrowser PASS; full345 `/tmp/lab-history-context-full.log` and extended latest+legacy browser `/tmp/lab-history-context-browser-final.log` PASS. Publish/verify exact CI+Render before next batch. New LabSourceContext exposure included/source120. Full panel identity/reimport/grouped report history still open.
 
 ## Immediate sequence
 

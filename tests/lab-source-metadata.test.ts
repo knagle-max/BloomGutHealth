@@ -26,3 +26,12 @@ test('encrypted lab source metadata survives authenticated save, source-unit con
   const encrypted=await pg.query('SELECT encrypted_payload FROM precision_records');for(const row of encrypted.rows as any[]){assert.equal(JSON.stringify(row.encrypted_payload).includes('UNKNOWN ORIGINAL'),false);assert.deepEqual((decryptPrecision(row.encrypted_payload,'a') as any).sourceInput,payload.sourceInput);assert.throws(()=>decryptPrecision(row.encrypted_payload,'b'));}
  }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
 });
+
+test('longitudinal report points retain exact original source metadata without deriving missing headings',async()=>{
+ const {buildPrecisionReport,contextSchema}=await import('../shared/precision-nutrition');const {defaultPreferences}=await import('../shared/meal-intelligence');
+ const sourceInput={text:'  Ferritin, 0, µg/L  ',number:'0',suppliedUnit:'µg/L',capture:'pasted-report' as const,reportedSection:' [ Unclassified original heading ] ',rowOrder:4};
+ const payload=labSchema.parse({marker:'ferritin',value:0,unit:'ug/L',measuredAt:date,laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'unknown',referenceLow:null,referenceHigh:null,sourceInput});
+ const records=[{id:'source',kind:'lab',createdAt:date,payload},{id:'legacy',kind:'lab',createdAt:date,payload:{...payload,measuredAt:'2026-10-16T12:00:00Z',sourceInput:undefined}}];
+ const report=buildPrecisionReport(records as any,contextSchema.parse({}),defaultPreferences,null,Date.parse('2026-10-26T12:00:00Z'));
+ const points=report.trends.find(t=>t.marker==='ferritin')!.points;assert.deepEqual(points[0].sourceInput,sourceInput);assert.equal(points[0].sourceValue,0);assert.equal(points[0].sourceUnit,'ug/L');assert.equal(points[1].sourceInput,undefined);assert.equal(report.labs[0].sourceInput,undefined,'Latest legacy entry must not inherit an earlier record’s source context');
+});

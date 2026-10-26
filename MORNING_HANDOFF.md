@@ -19,18 +19,18 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 |d326aff|Writer preserves reported headings/raw row/unit/order; correction-only drafts retain context without repeated acknowledged rows; export roundtrip.|40277856219 SUCCESS|
 |09092d5|Indexed food replacement retains known mass; incompatible amount requires explicit review; untouched source annotations idempotent.|40279374233 SUCCESS|
 |13495c9|No silent ingredient truncation: extraction retains all; existing20-entry bound returns400 before lookup/write.|40281888953 SUCCESS|
+|7a03290|Dynamic Add/Remove ingredient review retains unrelated drafts and current serving basis.|40285115830 SUCCESS; LIVE|
+|e38bfd0|Homemade hints retrieve Generic estimates without inventing Home-prepared labels.|40285639945 FAILED stale API inventory; fixed in567a744; LIVE|
+|567a744|Working ingredient-based search fallback preserves canonical drafts; reviewed inventory refreshed.|40286095050 SUCCESS; LIVE|
+|041cdac|Unknown source mass remains unknown in complete meal total; known nutrients/truezeros retained.|40286642337 SUCCESS; LIVE|
 
-|7a03290|Dynamic review rows/add/remove preserve unrelated drafts; current unsaved serving basis retained.|40285115830 SUCCESS; Render LIVE|
+Latest verified code:041cdac20e0cfd4fdfa2fccf71e5bc95828dc1cc, Render dep-dbfg54h5efls73bus4sg LIVE.344 full tests/types/build/API92+13/source119 and canonical food save/PGmacro browsers passed. Historical full SHAs/deployments and corrections are in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only CI failure is disclosed; the following fallback commit passed the repaired gate. No skipped checks.
 
-Actual Render deployment for13495c99cf5ecd66c8fc95edcebca6bcaeff3a69: dep-dbffevo473hc73a0ita0 LIVE. Full SHAs and earlier deployment IDs are in DEVELOPMENT_LOG/BACKLOG. Architect handoffs were preserved by rebasing only unpublished Codex commits; no force pushes.
+## Current lab source-history batch
 
-## Dynamic review batch — published7a03290; Render LIVE; Actions40285115830 SUCCESS
+Existing optional sourceInput is now carried into longitudinal DTO points and exposed read-only in Progress source details and My Biology latest-result details. Verbatim heading, raw row, physical line, number token and originally supplied unit remain separate from canonical converted values. Legacy absence remains unrecorded. No inferred panel/taxonomy, clinical interpretation, schema migration or writer change. New UI source mapped;120 source files.3 focused metadata/encrypted PGlite/owner-isolation/report tests, types/build, API/source checks and actual rendered source/offset/zero/reference/keyboard/mobile/dark plus exact whitespace/latest/legacy browser PASS. Full345 suite PASS; publish and verify exact Actions+Render.
 
-Stable per-row view keys prevent another ingredient’s search/filter draft being transferred on removal, and preserve unrelated drafts through a confirmed same-meal update. Add missing ingredient, explicit empty-draft protection and visible0–20 dynamic entries use existing canonical Ingredient[]/ProductPicker. Unsaved serving changes keep their known gram basis before identity replacement; unknown/incompatible quantities still require review. Source-bound names cannot spoof catalogue identity. Original description, meal ID and unchanged ingredients remain; keys are client-only, not a parallel data store. Unsaved notice labels displayed nutrition as last confirmed; full pre-save immediate preview remains separate work.
-
-342/342 tests, TypeScript, production build, source119/API92static+13unresolved checks PASS. Actual source/HTTP/PostgreSQL UI journeys pass: remove/add/reindex/save/empty/max20; replacement including current unsaved amount; committed correction response loss; fractional macro parity; canonical AddFood response loss/one row/Athlete totals. Synthetic fixtures are explicitly identified; no physical-device or independent study acceptance claimed.
-
-Selective substantial visual review: docs/review/today-movement-20261026/README.md. Minor source/precision/backend changes use tests, not near-identical galleries. Earlier Today/Athlete/AddFood/My Biology master integrations remain.174 earlier design files/current packs verified; later FoodReview/Bloodwork packs need original access.
+Minor source/backend/copy changes use code/test evidence. Selective substantial visual review remains docs/review/today-movement-20261026/README.md.174 original earlier design files/current packs verified; later FoodReview/Bloodwork packs unavailable separately. No physical-device, human study or independent clinical acceptance inferred.
 
 ## Remaining v0.5 priorities
 
@@ -56,19 +56,3 @@ Exact questions, choices, defaults and impact: BLOCKED_USER_INPUT.md. Highest-le
 - OFF/clinical/provider/controller rights or grants: scoped specialist evidence and explicit provisioning inputs; no self-enrolment, invented tariffs or production activation.
 
 No repeated deploy approval or API-key request is needed. No new noncritical question pauses development. Continue from NEXT_ACTIONS.md and PERSISTENT_TASK_INDEX; verify latest remote/CI/Render first. Agents do not run after a final response ends.
-
-## Homemade search follow-up
-
-343/343 tests, types/build/source/API checks and rendered source selection plus canonical save-recovery regression pass. Explicit homemade hints now retrieve fully matching bundled generic estimates before packaged alternatives without changing source names or claiming verified home preparation. Explicit brand query remains brand-sensitive. Full semantic/preparation metadata, recipe fallback acceptance and broader search gold cases remain open. Publication/deployment verification follows.
-
-## Ingredient fallback and CI correction
-
-Home routing e38bfd0f1809f8493bc867974f0ff4ecf32bbd3f is LIVE (dep-dbfg0gmk1f9s738823eg), but Actions40285639945 FAILED at stale API-inventory hash. Earlier local API PASS statement was incorrect; subsequent command masked its failure. Current batch refreshes reviewed hash/declaration line offsets only (same92static/13unresolved routes), both source checks now pass.
-
-Canonical AddFood now offers Build from individual ingredients after homemade or no-match food searches. Keyboard navigation focuses the existing Describe field, retains search/meal/products and does not save or choose any source.343 full tests/types/build/source checks and actual App/ProductService/analysis synthetic-storage keyboard/save/lost-response/Athlete regression pass. This is a working existing-flow fallback, not new recipe storage or nutritional/clinical verification of a homemade dish. Publish and verify exact CI+Render; full semantic/market/preparation ranking, pre-save review, concurrency and panel history remain outstanding.
-
-## Canonical aggregate mass audit
-
-Reproduced actual unknown capsule mass emitted as0 and mixed meal partialmass emitted as complete. Current fix returnsnull if any matched source grams unknown; allknown masses sum normally and known macros/truezeros stay unchanged. Focused domain test passes; full344/types/build/source and canonical save/PGmacro browser checks complete before publication. Original historical rows are not rewritten.
-
-Mass batch final local evidence:344/344 full tests PASS; types/build/API92+13/source119 checks PASS; canonical AddFood keyboard/fallback/save/lost-response/Athlete and actualPG macro save/correction/journal journeys PASS. No historical rewrite. Publication and exact deployment verification next.
