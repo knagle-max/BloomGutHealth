@@ -526,3 +526,15 @@ Identifier/no-match final verification:328/328 full tests/types/build/source117/
 | ARC-REVIEW-VIS-05 | P1 UX/P0 a11y | Real app before/after 320/390/desktop, light/dark/zoom/VoiceOver and independent Branding/UT visual fidelity; asset is NOT a screenshot of implementation | ARCHITECT_REVIEWED |
 
 **Next:** Developer secure version-controlled transfer of exact original assets (source currently Library only), preserve ongoing v0.5 P0 prioritization, implement after inspecting latest meal screen; independent Design, User Testing, Biology and Integrations review. No source-code change claimed by Architect.
+
+## 2026-10-25 Product Owner Food Review clarification — dynamic count and Change identity
+
+**Authoritative amendment:** `V06_HANDOFF.md` §43, commit `fe3d1bcb7715c98cfe1a9a1df24e3f25fb2f74c6`. **Supersedes any fixed five-ingredient interpretation of the UX kit.** Five is only its sample dataset, not a hard cap. **Change** selects a *different actual matched food*, not merely Amount. Owner-approved direct functional scope.
+
+| ID | Priority | Developer acceptance | Status |
+| --- | --- | --- | --- |
+| ARC-REVIEW-OWNER-01 | P0 truth / P1 UI | Dynamically render recognized ingredients for any description (0/1/3/5/8+), with no dropped/phantom items; allow add/removal and corrections, preserve original text | OWNER_APPROVED; implementation unverified |
+| ARC-REVIEW-OWNER-02 | P0 selection and nutrient integrity | Change opens targeted item search/alternatives/manual choice and *replaces* same ingredient's food identity; Amount separately changes amount, Remove deletes. No duplicate counted item, draft loss or false exact match | OWNER_APPROVED; implementation unverified |
+| ARC-REVIEW-OWNER-03 | P0 summary correctness | After identity or amount correction recompute source-grounded nutrition preview and save/journal/Today/Progress; respect unknown vs 0 and P0 detail↔overview macro parity | OWNER_APPROVED; implementation unverified |
+
+**Tests:** zero, one, many parsed rows; wrong raw/cooked/brand selection; editing single row without affecting others, independent amount control, remove/add, save/reload/retry/outage, mobile/VoiceOver; no fabricated nutrients. Codex preserve current P0 meal correctness queue and integrate with exact design package. No code changes in this architect commit.
