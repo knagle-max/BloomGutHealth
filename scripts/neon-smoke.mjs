@@ -56,7 +56,7 @@ for (const stream of [app.stdout, app.stderr])
     processOutput = (processOutput + chunk).slice(-20000);
   });
 let cookie = "";
-async function request(path, method = "GET", body, expected = 200) {
+async function request(path, method = "GET", body, expected = 200, extraHeaders = {}) {
   const response = await fetch(base + path, {
     method,
     headers: {
@@ -64,6 +64,7 @@ async function request(path, method = "GET", body, expected = 200) {
       "x-forwarded-proto": "https",
       "origin": base.replace("http:", "https:"),
       ...(cookie ? { cookie } : {}),
+      ...extraHeaders,
     },
     ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     signal: AbortSignal.timeout(30000),
@@ -153,7 +154,14 @@ try {
   const exampleReference=await request(`/api/nutrition/targets/${first.id}`);
   assert.equal(exampleReference.basis.kind,'example-reference');assert.equal(exampleReference.basis.usesProfile,false);assert.equal(exampleReference.calories,2000);
   await request('/api/nutrition/targets/not-this-account','GET',undefined,403);
-  await request(`/api/user/${first.id}/profile`,'PATCH',{age:30,sex:'male',heightCm:175,weightKg:75,activityLevel:'moderate'});
+  const initialProfile=await request('/api/profile');assert.match(initialProfile.profileRevision,/^[a-f0-9]{64}$/);
+  await request(`/api/user/${first.id}/profile`,'PATCH',{age:30,sex:'male',heightCm:175,weightKg:75,activityLevel:'moderate'},200,{'If-Match':`"${initialProfile.profileRevision}"`});
+  await request(`/api/user/${first.id}/profile`,'PATCH',{age:99},409,{'If-Match':`"${initialProfile.profileRevision}"`});
+  const concurrentBasis=await request('/api/profile');const concurrentHeaders={'content-type':'application/json','x-forwarded-proto':'https',origin:base.replace('http:','https:'),cookie,'if-match':`"${concurrentBasis.profileRevision}"`};
+  const competing=await Promise.all([31,32].map(age=>fetch(base+`/api/user/${first.id}/profile`,{method:'PATCH',headers:concurrentHeaders,body:JSON.stringify({age}),signal:AbortSignal.timeout(30000)})));
+  assert.deepEqual(competing.map(r=>r.status).sort(),[200,409]);await Promise.all(competing.map(r=>r.text()));const afterCompeting=await request('/api/profile');assert.ok([31,32].includes(afterCompeting.age));
+  await request(`/api/user/${first.id}/profile`,'PATCH',{age:30},200,{'If-Match':`"${afterCompeting.profileRevision}"`});
+  console.log('PASS: production versioned Profile writes reject stale and concurrent source revisions atomically; one winner; legacy compatibility remains explicit');
   const profileReference=await request(`/api/nutrition/targets/${first.id}`);
   assert.equal(profileReference.basis.kind,'profile-estimate');assert.equal(profileReference.calories,2633);assert.equal(profileReference.protein,120);
   assert.equal(Object.hasOwn(profileReference,'password'),false);

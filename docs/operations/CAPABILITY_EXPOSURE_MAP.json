@@ -12,11 +12,13 @@
         ],
         "api": [
           "server/routes.ts",
-          "server/auth-routes.ts"
+          "server/auth-routes.ts",
+          "server/profile-routes.ts"
         ],
         "logicOrJobs": [
           "shared/display-units.ts",
-          "server/shared-rate-limit.ts"
+          "server/shared-rate-limit.ts",
+          "server/profile-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -803,13 +805,15 @@
         ],
         "api": [
           "server/report-routes.ts",
-          "server/routes.ts"
+          "server/routes.ts",
+          "server/profile-routes.ts"
         ],
         "logicOrJobs": [
           "shared/report-import.ts",
           "server/analysis-boundary.ts",
           "ml_service/main.py",
-          "server/report-analysis.ts"
+          "server/report-analysis.ts",
+          "server/profile-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -835,13 +839,15 @@
         ],
         "api": [
           "server/report-routes.ts",
-          "server/routes.ts"
+          "server/routes.ts",
+          "server/profile-routes.ts"
         ],
         "logicOrJobs": [
           "shared/report-import.ts",
           "server/analysis-boundary.ts",
           "ml_service/main.py",
-          "server/report-analysis.ts"
+          "server/report-analysis.ts",
+          "server/profile-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1535,7 +1541,7 @@
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "c9369e9a09557ef92522437ce445e3f3079644b8c36f0eee45147d105aec24bd",
     "client/src/pages/PrecisionNutrition.tsx": "f45039ea84933f1c2043e24be8389e1781e1ae51742136f544709fe3a84d1a06",
-    "client/src/pages/Profile.tsx": "e54423df36a950b620aab95a401bc5331cde2a3e6829168415f67f3d75bf55ea",
+    "client/src/pages/Profile.tsx": "b4579327556dcbe5600ee30b9f4604730ed3abe0f45a67348b9e219f618cedfa",
     "client/src/pages/Progress.tsx": "e4dff71da674338f9c8588b2d988d76d1e91c29b5430ad8e1832c2d3619f1c65",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
     "client/src/pages/Upload.tsx": "d674b4f71357c2a137f817a90bccfd194daa1241bbbe8ae187430db5086fecf7",
@@ -1573,6 +1579,8 @@
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
     "server/products.ts": "041e96b4f1f0b86481d5df674a951121d613e1177ce143d4dd76626fe963e785",
+    "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
+    "server/profile-source.ts": "fa266296dd371b2807bdbed39461048f64d815f0da316f370a76104c6b155398",
     "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
     "server/recipe-ranking.ts": "99f74c8711694fc4779d8dbf8232a4d32d47a716186ae9d2e7c6dffa9e2c9595",
@@ -1580,11 +1588,11 @@
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
     "server/review-runtime-audit.ts": "12d4d26b37e0967da4273d0c8b3d990e106695f73f6f8f39f7c925070867008f",
-    "server/routes.ts": "0076666c9d3775a9c2082c910725cb38bddb10fed10ce0b053e6e2264afb84e6",
+    "server/routes.ts": "a5068e4b59b73b6558410ca261fcd0d5d89dbd0b37ef5ee54bb7edbff1523703",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/shared-rate-limit.ts": "6e03addd10677f36bb0e8fbc941e6861f7f411c1312f9340a2de0777f8a13f71",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "521c7725b15676274be6c4a2adb408a89d7fc13253c382d2a5408ec8c3ffafda",
+    "server/storage.ts": "8c9cae694b4d7f92bba3357effa8e9ccb87de1eaf96df9e69b538319326a317c",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",

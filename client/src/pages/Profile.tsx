@@ -29,12 +29,14 @@ export default function Profile({
   const [entryError,setEntryError] = useState("");
   const lastHydratedProfile = useRef<string | null>(null);
   const profile = useQuery<any>({ queryKey: ["/api/profile"] });
-  const currentProfile=!!profile.data&&profile.fetchStatus==="idle"&&!profile.isStale&&!profile.isError;
+  const revisionValid=profile.data?.profileRevision===undefined||(typeof profile.data.profileRevision==="string"&&/^[a-f0-9]{64}$/.test(profile.data.profileRevision));
+  const currentProfile=revisionValid&&!!profile.data&&profile.fetchStatus==="idle"&&!profile.isStale&&!profile.isError;
   const [dirty,setDirty]=useState(false);
   const sourceBasis=useRef<string|null>(null);
+  const sourceRevision=useRef<string|null>(null);
   const profileBasis=(value:any)=>JSON.stringify([user?.id,value?.sex??null,value?.age??null,value?.heightCm??null,value?.weightKg??null,value?.activityLevel??null]);
   const sourceChanged=dirty&&sourceBasis.current!==null&&!!profile.data&&profileBasis(profile.data)!==sourceBasis.current;
-  useEffect(()=>{sourceBasis.current=null;setDirty(false);},[user?.id]);
+  useEffect(()=>{sourceBasis.current=null;sourceRevision.current=null;setDirty(false);},[user?.id]);
   const [form, setForm] = useState({
     sex: "",
     age: "",
@@ -45,6 +47,7 @@ export default function Profile({
   useEffect(() => {
     if (profile.data&&!dirty) {
       sourceBasis.current=profileBasis(profile.data);
+      sourceRevision.current=typeof profile.data.profileRevision==="string"&&/^[a-f0-9]{64}$/.test(profile.data.profileRevision)?profile.data.profileRevision:null;
       setForm({
         sex: profile.data.sex || "",
         age: profile.data.age?.toString() || "",
@@ -64,7 +67,7 @@ export default function Profile({
         weightKg: massParsed.kind==="valid" ? massParsed.canonical : null,
         activityLevel: form.activityLevel,
       };
-      await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data);
+      await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data,sourceRevision.current?{"If-Match":`"${sourceRevision.current}"`}:undefined);
     },
     onSettled: async (_data,error) => {
       // A failed response can follow a committed write. Recheck authoritative
@@ -145,8 +148,9 @@ export default function Profile({
         <fieldset disabled={save.isPending||loadingUnits||profile.isLoading} onChangeCapture={()=>setDirty(true)} className="space-y-4">
         <legend className="sr-only">Nutrition profile fields</legend>
         <h2>Nutrition profile</h2>
-        {dirty&&!currentProfile&&!profile.isError&&<p role="status">Checking current saved profile before saving…</p>}
-        {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved profile changed while you were editing. Your draft is still here. Load the latest saved profile to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentProfile} onClick={()=>setDirty(false)}>Load latest saved profile</Button></div>}
+        {!revisionValid&&<p role="alert">Saved profile revision could not be verified. <Button type="button" variant="outline" onClick={()=>profile.refetch()}>Reload profile</Button></p>}
+        {dirty&&!currentProfile&&!profile.isError&&revisionValid&&<p role="status">Checking current saved profile before saving…</p>}
+        {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved profile changed while you were editing. Your draft is still here. Load the latest saved profile to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentProfile} onClick={()=>{lastHydratedProfile.current=null;setDirty(false);}}>Load latest saved profile</Button></div>}
         {profile.isLoading ? (
           <p>Loading profile…</p>
         ) : profile.isError ? (

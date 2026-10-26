@@ -24,9 +24,10 @@
     "server/planner-routes.ts": "e72ff71b6387a688c08faa91353ff1246505190a00e2086d97290701d5ae3804",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
     "server/products.ts": "041e96b4f1f0b86481d5df674a951121d613e1177ce143d4dd76626fe963e785",
+    "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
-    "server/routes.ts": "0076666c9d3775a9c2082c910725cb38bddb10fed10ce0b053e6e2264afb84e6",
+    "server/routes.ts": "a5068e4b59b73b6558410ca261fcd0d5d89dbd0b37ef5ee54bb7edbff1523703",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
   },
@@ -692,6 +693,26 @@
       "review": "REVIEW_REQUIRED"
     },
     {
+      "file": "server/profile-routes.ts",
+      "line": 6,
+      "method": "GET",
+      "path": "/api/profile",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/profile-routes.ts",
+      "line": 11,
+      "method": "PATCH",
+      "path": "/api/user/:userId/profile",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
       "file": "server/report-routes.ts",
       "line": 126,
       "method": "GET",
@@ -820,27 +841,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 225,
-      "method": "GET",
-      "path": "/api/profile",
-      "declaredMiddleware": [
-        "requireAuth"
-      ],
-      "review": "REVIEW_REQUIRED"
-    },
-    {
-      "file": "server/routes.ts",
-      "line": 235,
-      "method": "PATCH",
-      "path": "/api/user/:userId/profile",
-      "declaredMiddleware": [
-        "requireAuth"
-      ],
-      "review": "REVIEW_REQUIRED"
-    },
-    {
-      "file": "server/routes.ts",
-      "line": 249,
+      "line": 227,
       "method": "GET",
       "path": "/api/microbiome/samples/:userId",
       "declaredMiddleware": [
@@ -850,7 +851,7 @@
     },
     {
       "file": "server/routes.ts",
-      "line": 264,
+      "line": 242,
       "method": "GET",
       "path": "/api/microbiome/diet-prediction/:userId",
       "declaredMiddleware": [

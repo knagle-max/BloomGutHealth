@@ -21,6 +21,10 @@ Held-save actual UI baseline ageenabled reproduced; new complete fieldset freeze
 
 Actual external refresh reset180cmdraft to171cm reproduced. Dirty fields now retained; changed canonical source blockssaveuntil explicit Load latest saved profile; current source required, known success clears only after refresh, committed503 retainsdraft/no false success. This is UI source review, NOT server CAS. Actual syntheticHTTP/current draft/mobile+held unknown-outcome safety browsers PASS; full345 `/tmp/profile-draft-full.log`, heldsource+unrelatedmetadata `/tmp/profile-draft-final-browser.log` and mixedunit `/tmp/profile-draft-units.log` PASS. Ready publish/exact CI+Render. Publish/verify afterchecks.3726265 pending-only batch CI40287917826 SUCCESS/RenderLIVE verified.
 
+## Active versioned Profile saves
+
+PROFILE_REVISION_CONTRACT.md: source revision reads and optional If-Match atomic row-lock/write; newwebpins reviewedrevision, stale409 retainsdraft, malformedreadblocksSave.2 actualAPI/PG tests +actualtwo-tabSQL browser PASS, explicitlatest unchangedmeasurement hydrateedge fixed. Legacy noheader deliberately compatible => wholeProfile/settings concurrency remains OPEN. Isolated Neon smoke adds concurrentrequests; do not claim until exactCI. Full347 `/tmp/profile-cas-full.log`, types/build/API/source122 and draft/unknown-save/mixedunit regression PASS; publish/verify exactCI including realNeon production smoke. Dirty3481677 Actions40288612595 SUCCESS/live.
+
 ## Immediate sequence
 
 1. Check actual working tree and full-suite result; do not recreate completed work. Commit verified mass fix and persistent records, fetch/preserve incoming Architect docs before push. Only rebase own unpublished commits. No force push; inspect FETCH_HEAD because remote tracking ref is not configured.

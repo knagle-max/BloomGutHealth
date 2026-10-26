@@ -25,6 +25,7 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 |041cdac|Unknown source mass remains unknown in complete meal total; known nutrients/truezeros retained.|40286642337 SUCCESS; LIVE|
 |3385e5a|Original lab row, heading, number, unit and physical line available in latest and longitudinal source details.|40287210671 SUCCESS; LIVE|
 |3726265|Freeze submitted Profile including units; guard repeated pending submits; minor safety refresh retained.|40287917826 SUCCESS; LIVE|
+|3481677|Dirty Profile fields survive current-source refresh; changed values need explicit review, unrelated preferences do not conflict.|40288612595 SUCCESS; LIVE|
 
 Latest verified code:3385e5a8c61e47d90aa2b9d12fab3539537cf97c, Render dep-dbfg7mijnfac73enq4mg LIVE.345 full tests/types/build/API92+13/source120 and canonical food save/PGmacro browsers passed. Historical full SHAs/deployments and corrections are in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only CI failure is disclosed; the following fallback commit passed the repaired gate. No skipped checks.
 
@@ -66,3 +67,7 @@ Held Profile response reproduced editable submitted Age despite pending Save. Wh
 ## Dirty Profile source review — locally verified
 
 Actual external refresh discarded an unsaved180cm measurement for saved171cm. Dirty age/height/weight fields now remain; current source required before Save, changed canonical source blocks overwrite until explicit Load latest saved profile. Unrelated preference refresh causes no false conflict. Acknowledged save adopts fresh values after refresh; committed503 retains draft/no success.345full/types/build/API/source120 and actual held-source/unrelatedpreferences/normal/unknown-response/mobile/minor-safety/mixedunit browsers PASS. No server CAS; read-to-write race and cross-client writes remain open. Publish/verify exact CI+Render next.
+
+## Atomic versioned Profile source — locally verified
+
+Current web adopts private source revision and sends quoted If-Match. Server validates owner/header and compares revision under row lock before update; stale409 does not apply draft. Actual two tabs/SQL preserve dirty fields until explicit review; explicit Load latest now also resets measurements when only saved age changed. Malformed read blocks Save.347full/types/build/API92+13/source122 and actual API/PGlite/two-tab, source/draft/unknownresponse/minor-safety/mixedunit browsers PASS. Real Neon production concurrency smoke awaits exactCI. PROFILE_REVISION_CONTRACT.md documents compatibility/backout: noheader legacy writers remain allowed, so universal Profile/settings CAS is still open. No schema or real-account mutation.

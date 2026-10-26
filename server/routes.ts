@@ -1,3 +1,4 @@
+import {registerProfileRoutes} from "./profile-routes";
 import {registerNutritionTargetRoutes} from "./nutrition-targets";
 import {registerNutritionHistoryRoutes} from "./nutrition-history";
 import {analyzeReportedComposition} from "./report-analysis";
@@ -28,7 +29,6 @@ import { registerAuthRoutes } from "./auth-routes";
 import { registerScienceRoutes } from "./science-coach";
 import { registerPlannerRoutes } from "./planner-routes";
 import { registerPrecisionRoutes } from "./precision-routes";
-import { updateUserProfileSchema } from "@shared/schema";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -222,29 +222,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   registerNutritionHistoryRoutes(app,requireAuth,storage);
 
-  app.get("/api/profile", requireAuth, async (req, res) => {
-    try {
-      const user = await storage.getUser(req.session.userId!);
-      if (!user) return res.status(404).json({ error: "User not found" });
-      const { password, ...profile } = user;
-      res.json(profile);
-    } catch {
-      res.status(503).json({ error: "Profile unavailable" });
-    }
-  });
-  app.patch("/api/user/:userId/profile", requireAuth, async (req, res) => {
-    if (req.params.userId !== req.session.userId)
-      return res.status(403).json({ error: "Access denied" });
-    const parsed = updateUserProfileSchema.safeParse(req.body);
-    if (!parsed.success)
-      return res.status(400).json({ error: "Invalid profile" });
-    try {
-      await storage.updateUserProfile(req.session.userId!, parsed.data);
-      res.json({ success: true });
-    } catch {
-      res.status(503).json({ error: "Profile could not save" });
-    }
-  });
+  registerProfileRoutes(app,requireAuth,storage);
 
   app.get("/api/microbiome/samples/:userId", requireAuth, async (req, res) => {
     try {
