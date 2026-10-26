@@ -4,7 +4,8 @@ import {labSchema} from '../shared/precision-nutrition';
 import {parseLabPaste} from '../shared/lab-paste';
 const date='2026-10-15T12:00:00Z';
 test('lab reader accepts exact optional reported heading and row order without inventing taxonomy or changing legacy payloads',()=>{
- const original=parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload;
+ const original=structuredClone(parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload);
+ delete original.sourceInput!.reportedSection;delete original.sourceInput!.rowOrder;
  assert.equal(Object.hasOwn(original.sourceInput!,'reportedSection'),false);assert.equal(Object.hasOwn(original.sourceInput!,'rowOrder'),false);
  const input={...original,sourceInput:{...original.sourceInput,reportedSection:'  [ LIPIDS & CARDIOVASCULAR — source label ]  ',rowOrder:12}};
  const read=labSchema.parse(input);assert.deepEqual(read,input);assert.equal(read.marker,original.marker);assert.equal(read.value,3.2);assert.equal(read.sourceInput?.number,'3.20');

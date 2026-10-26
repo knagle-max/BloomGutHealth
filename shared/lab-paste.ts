@@ -13,6 +13,15 @@ const aliases: Record<string, string> = {
   aspartateaminotransferase: "ast",
 };
 const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+/** Explicit report headings only; never infer biological categories from a row. */
+export const isLabSectionHeading=(line:string)=>/^\[[^\r\n]*\]$/.test(line.trim());
+const isColumnHeading=(line:string)=>/^(marker|test|analyte)[,\t ]/i.test(line.trim());
+/** Keep physical row positions and source headings while removing acknowledged results. */
+export function labPasteCorrections(text:string,errorLines:number[]):string {
+  if(errorLines.some(line=>line<1))return text;
+  const keep=new Set(errorLines);
+  return text.split(/\r?\n/).map((raw,index)=>keep.has(index+1)||isLabSectionHeading(raw)?raw:"").join("\n");
+}
 export function parseLabPaste(
   text: string,
   measuredAt: string,
@@ -21,16 +30,25 @@ export function parseLabPaste(
   if (text.length > 30000)
     throw Error("Paste up to 30,000 characters at a time.");
   if (!Number.isFinite(Date.parse(measuredAt))) return { valid: [], pending: [], errors: [{ line: 0, message: "Choose a valid report date." }] };
-  const rows = text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
-  if (rows.length > 50) throw Error("Paste up to 50 results at a time.");
+  const rows = text.split(/\r?\n/).map((raw,index)=>({raw,row:raw.trim(),index})).filter(({row})=>Boolean(row));
+  if (rows.filter(({row})=>!isLabSectionHeading(row)&&!isColumnHeading(row)).length > 50) throw Error("Paste up to 50 results at a time.");
   const valid: Array<{
       line: number;
       payload: ReturnType<typeof labSchema.parse>;
     }> = [],
     errors: Array<{ line: number; message: string }> = [],
     pending: typeof valid = [];
-  rows.forEach((row, index) => {
-    if (index === 0 && /^(marker|test|analyte)[,\t ]/i.test(row)) return;
+  let reportedSection:string|undefined,sectionBlocked=false;
+  rows.forEach(({raw,row,index}) => {
+    if(isLabSectionHeading(raw)){
+      sectionBlocked=raw.length>1000;
+      reportedSection=sectionBlocked?undefined:raw;
+      if(sectionBlocked)errors.push({line:index+1,message:"Source section exceeds 1,000 characters. Correct it before importing its results."});
+      return;
+    }
+    if(isColumnHeading(row))return;
+    if(sectionBlocked){errors.push({line:index+1,message:"Correct the preceding source section before importing this result."});return;}
+    if(raw.length>1000){errors.push({line:index+1,message:"Source row exceeds 1,000 characters. Correct it before importing."});return;}
     // Suggestions use only the marker catalogue, never magnitude-based clinical inference.
     const match = row
       .trim()
@@ -63,7 +81,8 @@ export function parseLabPaste(
       return;
     }
     const missingUnit = !match[3]?.trim();
-    const rawUnit = (match[3] || "").trim().replace(/μ|µ/g, "u"),
+    const sourceUnit=(match[3] || "").trim();
+    const rawUnit = sourceUnit.replace(/μ|µ/g, "u"),
       unit = marker.units.find(
         (u) => u.toLowerCase().replace(/μ|µ/g, "u") === rawUnit.toLowerCase(),
       );
@@ -77,9 +96,9 @@ export function parseLabPaste(
       fasting: "unknown",
       referenceLow: null,
       referenceHigh: null,
-      sourceInput:{text:row.slice(0,1000),number:match[2],suppliedUnit:missingUnit?null:rawUnit,capture:"pasted-report"},
+      sourceInput:{text:raw,number:match[2],suppliedUnit:missingUnit?null:sourceUnit,capture:"pasted-report",rowOrder:index,...(reportedSection===undefined?{}:{reportedSection})},
       ...(missingUnit ? {unitReview:{status:"pending",originalValue:Number(match[2]),originalUnit:null,
-        originalText:row.slice(0,1000),suggestedUnit:marker.units[0],confirmedAt:null,supersedes:null}} : {}),
+        originalText:raw,suggestedUnit:marker.units[0],confirmedAt:null,supersedes:null}} : {}),
       notes:
         "Imported from pasted results; verify against the original laboratory report.",
     });

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { invalidatePlanningInputs } from "@/lib/planning-cache";
 import { Button } from "@/components/ui/button";
-import { parseLabPaste } from "@shared/lab-paste";
+import { parseLabPaste, labPasteCorrections } from "@shared/lab-paste";
 import { dateKey } from "@shared/experience";
 import { labSchema, markerDefinitions, type Lab } from "@shared/precision-nutrition";
 type Row = { line:number; payload:Lab; key:string };
@@ -44,8 +44,7 @@ export default function QuickLabEntry() {
     setPreview({rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");
   }catch{setError("Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
   const nextImport=(corrections=false)=>{
-    const lines=text.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
-    setText(corrections?(preview?.errors.map(e=>lines[e.line-1]).filter(Boolean).join("\n")||""):"");
+    setText(corrections?labPasteCorrections(text,preview?.errors.map(e=>e.line)||[]):"");
     setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");setStarted(false);
   };
   const rows=preview?.rows||[];
@@ -63,7 +62,7 @@ export default function QuickLabEntry() {
       <label>Method / assay (optional)<input className="bloom-input w-full" value={method} disabled={started} maxLength={200} onChange={e=>{setMethod(e.target.value);clear();}}/></label>
       <label>Fasting<select aria-label="Fasting" className="bloom-input w-full" value={fasting} disabled={started} onChange={e=>{setFasting(e.target.value as Lab["fasting"]);clear();}}><option value="unknown">Unknown / not applicable</option><option value="yes">Yes</option><option value="no">No</option></select></label>
     </div>
-    {mode==="paste"?<label className="block">Results<textarea aria-label="Results" className="bloom-input w-full" rows={5} maxLength={30000} disabled={started} placeholder={"LDL, 3.2, mmol/L\nALT, 73, U/L\nVitamin D, 75"} value={text} onChange={e=>{setText(e.target.value);clear();}}/></label>:<div className="precision-grid">
+    {mode==="paste"?<label className="block">Results<textarea aria-label="Results" className="bloom-input w-full" rows={5} maxLength={30000} disabled={started} placeholder={"[ Reported section ]\nLDL, 3.2, mmol/L\nALT, 73, U/L\nVitamin D, 75"} value={text} onChange={e=>{setText(e.target.value);clear();}}/></label>:<div className="precision-grid">
       <label>Marker<select aria-label="Marker" className="bloom-input w-full" disabled={started} value={marker} onChange={e=>{setMarker(e.target.value);setUnit("");clear();}}>{markerDefinitions.map(m=><option key={m.id} value={m.id}>{m.name}</option>)}</select></label>
       <label>Source value<input className="bloom-input w-full" inputMode="decimal" value={value} disabled={started} onChange={e=>{setValue(e.target.value);clear();}}/></label>
       <label>Source unit<select aria-label="Source unit" className="bloom-input w-full" disabled={started} value={unit} onChange={e=>{setUnit(e.target.value);clear();}}><option value="">Not reported — needs confirmation</option>{markerDefinitions.find(m=>m.id===marker)!.units.map(u=><option key={u} value={u}>{u}</option>)}</select></label>
@@ -71,6 +70,7 @@ export default function QuickLabEntry() {
       <label>Report reference high (optional)<input className="bloom-input w-full" inputMode="decimal" value={high} disabled={started} onChange={e=>{setHigh(e.target.value);clear();}}/></label>
       <label>Notes<input className="bloom-input w-full" maxLength={1000} value={notes} disabled={started} onChange={e=>{setNotes(e.target.value);clear();}}/></label>
     </div>}
+    {mode==="paste"&&<p className="panel-note">Optional section headings in [brackets] are retained as reported. Up to 50 results per paste; headings do not count toward that limit. Unsupported rows stay available for correction.</p>}
     <details><summary>Supported tests & units</summary><ul>{markerDefinitions.map(m=><li key={m.id}>{m.name}: {m.units.join(" or ")}</li>)}</ul></details>
     <Button type="button" onClick={review} disabled={started||!(mode==="paste"?text.trim():value.trim())}>Preview results</Button>
     {error&&<p role="alert">{error}</p>}
@@ -78,7 +78,7 @@ export default function QuickLabEntry() {
     {save.isPending&&<p role="status">Saving remaining laboratory results…</p>}
     {preview&&<div className="space-y-3">
       {preview.errors.map(e=><p role="alert" key={e.line}>Line {e.line}: {e.message} This row will not be saved.</p>)}
-      {rows.map(r=><article className="lab-review-row" key={r.key}><h3>{markerDefinitions.find(m=>m.id===r.payload.marker)?.name}</h3><p>{r.payload.value} · {date} · {r.payload.laboratory} · {r.payload.method}</p><p className="evidence-state">{r.payload.unitReview?"Unit assumed — confirm":"Unit supplied — review against report"}</p><p>{r.payload.unitReview?`System guess — confirm: ${r.payload.unit}. This is not a verified source unit.`:`Source unit: ${r.payload.unit}`}</p></article>)}
+      {rows.map(r=><article className="lab-review-row" key={r.key}><h3>{markerDefinitions.find(m=>m.id===r.payload.marker)?.name}</h3><p>{r.payload.value} · {date} · {r.payload.laboratory} · {r.payload.method}</p>{r.payload.sourceInput?.reportedSection!==undefined&&<p className="panel-note whitespace-pre-wrap break-words">Reported section: {r.payload.sourceInput.reportedSection}</p>}<p className="evidence-state">{r.payload.unitReview?"Unit assumed — confirm":"Unit supplied — review against report"}</p><p>{r.payload.unitReview?`System guess — confirm: ${r.payload.unit}. This is not a verified source unit.`:`Source unit: ${r.payload.sourceInput?.suppliedUnit||r.payload.unit}`}</p></article>)}
       <p className="panel-note">Review every row against the source. A reference interval is not a personal treatment target. {time?"The supplied collection time is retained with the report date.":"Test dates are stored at local noon for date-only ordering; no collection time is claimed."}</p>
       {!!rows.length&&<Button type="button" disabled={save.isPending} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
       {started&&!rows.length&&<div className="flex flex-wrap gap-3"><Button type="button" variant="outline" onClick={()=>nextImport()}>Start another import</Button>{preview.errors.length>0&&mode==="paste"&&<Button type="button" variant="outline" onClick={()=>nextImport(true)}>Correct unrecognized rows</Button>}</div>}
