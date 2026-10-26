@@ -192,11 +192,11 @@ try {
       symptoms: { bloating: 0, energy: null, comfort: null, clarity: null },
     },
   };
-  const mealPreview=await fetch(base+'/api/meals/analyze',{method:'POST',headers:{'content-type':'application/json',cookie,'x-forwarded-proto':'https',origin:base.replace('http:','https:')},body:JSON.stringify(reviewedMealInput),signal:AbortSignal.timeout(30000)});
-  assert.equal(mealPreview.status,200);const mealReview=mealPreview.headers.get('x-bloom-meal-review');assert.match(mealReview,/^[a-f0-9]{64}$/);await mealPreview.json();assert.equal((await request(`/api/meals/${first.id}`)).length,0);
+  const mealPreview=await fetch(base+'/api/meals/review',{method:'POST',headers:{'content-type':'application/json',cookie,'x-forwarded-proto':'https',origin:base.replace('http:','https:')},body:JSON.stringify(reviewedMealInput),signal:AbortSignal.timeout(30000)});
+  assert.equal(mealPreview.status,200);const mealReview=mealPreview.headers.get('x-bloom-meal-review');assert.match(mealReview,/^[a-f0-9]{64}$/);const reviewedAnalysis=await mealPreview.json();assert.equal((await request(`/api/meals/${first.id}`)).length,0);
   const reviewedMealKey=randomUUID(),reviewedHeaders={'If-Match':`"${mealReview}"`,'Idempotency-Key':reviewedMealKey};
-  const meal=await request('/api/meals','POST',{...reviewedMealInput,reviewed:true},200,reviewedHeaders);
-  const reviewedReplay=await request('/api/meals','POST',{...reviewedMealInput,reviewed:true},200,reviewedHeaders);assert.equal(reviewedReplay.id,meal.id);assert.equal((await request(`/api/meals/${first.id}`)).length,1);
+  const meal=await request('/api/meals/confirm','POST',{...reviewedMealInput,ingredients:reviewedAnalysis.intelligence.ingredients,reviewed:true},200,reviewedHeaders);
+  const reviewedReplay=await request('/api/meals/confirm','POST',{...reviewedMealInput,ingredients:reviewedAnalysis.intelligence.ingredients,reviewed:true},200,reviewedHeaders);assert.equal(reviewedReplay.id,meal.id);assert.equal((await request(`/api/meals/${first.id}`)).length,1);
   console.log('PASS: production nonpersisting meal review binds canonical source facts to one receipt-backed save and completed replay');
   assert.ok(meal.totalCalories > 0);
   assert.equal(

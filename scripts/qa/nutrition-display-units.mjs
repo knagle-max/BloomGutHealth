@@ -1,3 +1,5 @@
+import{analyzeMeal}from'../../server/meal-intelligence.ts';
+import{reviewThenSave}from'./lib/meal-flow.mjs';import{mealReviewRevision}from'../../server/meal-review-source.ts';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {execFileSync} from 'node:child_process';
@@ -31,9 +33,11 @@ await page.route('**/api/**',async route=>{
   else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'},displayUnits:alternateAccount?{energy:'kcal',foodWeight:'g'}:{energy:'kJ',foodWeight:'oz'}};
   else if(p.startsWith('/api/meals')&&req.method()==='GET'&&journalState==='unavailable')return route.fulfill({status:503,json:{error:'Synthetic journal outage'}});
   else if(p.startsWith('/api/meals')&&req.method()==='GET'&&journalState==='partial')json=[{...meal,totalCalories:null,nutritionalData:[]}];
+  else if(p==='/api/meals/review'){const input=req.postDataJSON(),analysis=await analyzeMeal('100 g banana',false);analysis.intelligence.ingredients=input.ingredients||analysis.intelligence.ingredients;return route.fulfill({json:analysis,headers:{'x-bloom-meal-review':mealReviewRevision('synthetic',analysis)}});}
   else if(p.startsWith('/api/meals'))json=req.method()==='POST'?meal:[alternateAccount?{...meal,id:'second-meal',userId:'synthetic-second',mealText:'Second account lunch'}:meal];
   else if(p.startsWith('/api/nutrition/daily'))json={meals:[meal],totals:{calories:500,protein:20,carbs:60,fat:20,fiber:8,sugar:null,sodium:null,potassium:null}};
   else if(p.startsWith('/api/nutrition/targets'))json={calories:2000,protein:120,carbs:225,fat:67,fiber:30};
+  else if(p==='/api/products/search')json={products:[],warnings:[],attribution:'Synthetic empty source',query:{original:'Synthetic oats',normalized:'Synthetic oats'}};
   else if(p==='/api/precision')json={goals:[],context:{},safetyBlocks:[]};
   else if(p==='/api/biology/registry')json={entities:[],relationships:[],sources:[]};
   else if(p.startsWith('/api/biology/foods/'))json={food:{label:'Synthetic oats'},decision:'No personal rule',conflicts:[],reasons:[],qualitativeNutrients:[],relationshipEffects:[],tracking:[],limits:[],observations:{labs:[],genetics:[]}};
@@ -75,14 +79,14 @@ try{
     assert.equal(await page.getByRole('link',{name:'Review & log this food'}).count(),0);
     await amount.fill('4');await page.getByRole('link',{name:'Review & log this food'}).click();
     await page.getByText(/4 oz Synthetic oats/).waitFor();
-    await page.getByRole('button',{name:'Save to my journal',exact:true}).click();
+    await reviewThenSave(page);
     await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
     assert.ok((await page.locator('.saved-nutrients').innerText()).includes('2092'));
-    const saved=writes.find(w=>w.path==='/api/meals').body;
+    const saved=writes.find(w=>w.path==='/api/meals/confirm').body;
     assert.equal(saved.ingredients[0].grams,113.3980925);
     assert.equal(saved.ingredients[0].catalogue.fdcId,123);
     assert.equal(saved.mealText,'113.3980925 g Synthetic oats');
-    assert.equal(writes.filter(w=>w.path==='/api/meals').length,1);
+    assert.equal(writes.filter(w=>w.path==='/api/meals/confirm').length,1);
     alternateAccount=true;await go('/');
     await page.getByText('Second account lunch',{exact:true}).first().waitFor();
     assert.equal(await page.getByText('Synthetic oats lunch',{exact:true}).count(),0);

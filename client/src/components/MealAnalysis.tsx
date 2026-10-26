@@ -11,11 +11,17 @@ export default function MealAnalysis({
   onRecalculate,
   pending = false,
   current = true,
+  preview = false,
+  disabled = false,
+  onDraftChange,
 }: {
   analysis: MealIntelligence;
   onRecalculate?: (ingredients: Ingredient[]) => void;
   pending?: boolean;
   current?: boolean;
+  preview?: boolean;
+  disabled?: boolean;
+  onDraftChange?: (dirty:boolean)=>void;
 }) {
   const { settings } = useExperience();
   const units = settings.displayUnits;
@@ -23,28 +29,30 @@ export default function MealAnalysis({
   const [hasEdits,setHasEdits]=useState(false);
   const ingredients=rows.map(row=>row.ingredient);
   // Confirmed corrections preserve request order. Keep row views/search drafts while adopting canonical source values.
-  useEffect(()=>{setRows(previous=>analysis.ingredients.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(false);},[analysis]);
-  const setEdits=(next:Ingredient[])=>{setRows(previous=>next.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(true);};
+  useEffect(()=>{setRows(previous=>analysis.ingredients.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(false);onDraftChange?.(false);},[analysis]);
+  const setEdits=(next:Ingredient[])=>{setRows(previous=>next.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(true);onDraftChange?.(true);};
   const addIngredient=()=>{
     const key=crypto.randomUUID();
     setRows(previous=>previous.length>=MAX_MEAL_INGREDIENTS?previous:[...previous,{key,ingredient:{name:"",grams:null,preparation:"As described",assumption:"User-added food; review the source and amount."}}]);
-    setHasEdits(true);
+    setHasEdits(true);onDraftChange?.(true);
     requestAnimationFrame(()=>document.querySelector<HTMLInputElement>(`[data-draft-row="${key}"] input[aria-label^="Food "]`)?.focus());
   };
   const missing = unmatchedFoods(analysis);
   const firstMissingIndex = ingredients.findIndex((i) => missing.some((m) => m.name === i.name && m.grams === i.grams));
+  const DetailContainer=preview?"details":"div";
+  const PortionGuidance=preview?"details":"div";
   return (
-    <section className="bloom-panel space-y-4">
-      <h2>Nutrition & gut pathways</h2>
-      {hasEdits&&current&&<p role="status">Unsaved ingredient changes. Nutrition and food explanations shown here still describe your last confirmed saved meal.</p>}
-      {current&&<FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/>}
-      {!current&&<p role="status">Current nutrition analysis is not confirmed. Your portion draft is retained; retry the correction to confirm saved nutrition.</p>}
-      <p className="panel-note">
-        {!current&&"Previous saved analysis: "}{analysis.provider} ·{" "}
+    <section className={preview?"space-y-4":"bloom-panel space-y-4"}>
+      {!preview&&<h2>Nutrition & gut pathways</h2>}
+      {hasEdits&&current&&<p role="status">Unsaved ingredient changes. Nutrition and food explanations shown here still describe your last confirmed {preview?"review":"saved meal"}.</p>}
+      {current&&!preview&&<FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/>}
+      {!current&&<p role="status">{preview?"This review needs updating. Your ingredient draft is retained; update the review before saving.":"Current nutrition analysis is not confirmed. Your portion draft is retained; retry the correction to confirm saved nutrition."}</p>}
+      {!preview&&<p className="panel-note">
+        {!current&&(preview?"Previous review: ":"Previous saved analysis: ")}{analysis.provider} ·{" "}
         {analysis.parser === "ai"
           ? "AI ingredient interpretation"
           : "Description-based interpretation"}
-      </p>
+      </p>}
       {analysis.parserNotice && (
         <p className="bloom-panel text-sm" role="status">
           {analysis.parserNotice}
@@ -53,19 +61,19 @@ export default function MealAnalysis({
       {missing.length > 0 && (
         <div className="border rounded-xl p-3 space-y-2" role="status">
           <h3>Choose a product to complete the nutrition</h3>
-          <p>Recalculation could not match {missing.map((i) => i.name).join("; ")}. Review the search results below, choose the exact formula and confirm the amount you ate. Confirming a product saves its nutrition immediately.</p>
+          <p>Recalculation could not match {missing.map((i) => i.name).join("; ")}. Review the search results below, choose the exact formula and confirm the amount you ate. {preview?"Choosing a product updates this review; save the meal only when ready.":"Confirming a product saves its nutrition immediately."}</p>
           <p className="panel-note">Powders, gummies, capsules and sugared or sugar-free versions can have different labels. A heaping spoon is an estimate; check your package serving.</p>
         </div>
       )}
-      <fieldset disabled={pending} className="min-w-0">
+      <fieldset disabled={pending||disabled} className="min-w-0">
       <details open>
         <summary>Review foods & estimated portions</summary>
-        <p className="panel-note">
+        <PortionGuidance>{preview&&<summary>Portion guidance & limits</summary>}<p className="panel-note">
           Portion corrections use source grams; saved label servings retain their printed basis.
           Working estimates, not measured intake. Check the amount you ate, meat
           cut, dressing and cooking fat. Unknown brand, salt and marinade can
           change nutrients substantially.
-        </p>
+        </p></PortionGuidance>
         {ingredients.map((item, index) => (
           <div className="border-t py-3 space-y-2" key={rows[index].key} data-draft-row={rows[index].key} role="group" aria-label={`Ingredient ${index+1}`}>
             {onRecalculate ? (
@@ -176,7 +184,7 @@ export default function MealAnalysis({
                   type="button"
                   className="text-link"
                   disabled={pending}
-                  onClick={() => {const key=rows[index].key;setRows(previous=>previous.filter(row=>row.key!==key));setHasEdits(true);}}
+                  onClick={() => {const key=rows[index].key;setRows(previous=>previous.filter(row=>row.key!==key));setHasEdits(true);onDraftChange?.(true);}}
                 >
                   Remove {item.name}
                 </button>
@@ -191,7 +199,7 @@ export default function MealAnalysis({
           </div>
         ))}
         {onRecalculate&&<div className="space-y-2"><button type="button" className="text-link min-h-[44px]" disabled={pending||ingredients.length>=MAX_MEAL_INGREDIENTS} onClick={addIngredient}>Add missing ingredient</button><p className="panel-note">{ingredients.length} of {MAX_MEAL_INGREDIENTS} ingredient entries in this draft.</p>{!ingredients.length&&<p role="status">No ingredients in this draft. Add any foods that were missed, or delete the whole entry from your journal.</p>}</div>}
-        {onRecalculate && <p className="panel-note">Reviewed corrections are remembered privately for this exact meal description. Manage or forget them in Saved meals.</p>}
+        {onRecalculate && !preview && <p className="panel-note">Reviewed corrections are remembered privately for this exact meal description. Manage or forget them in Saved meals.</p>}
         {onRecalculate && (
           <button
             type="button"
@@ -209,13 +217,14 @@ export default function MealAnalysis({
             onClick={() => onRecalculate(ingredients)}
           >
             {pending
-              ? "Recalculating…"
-              : "Save corrected portions & recalculate"}
+              ? (preview?"Updating review…":"Recalculating…")
+              : (preview?"Update meal review":"Save corrected portions & recalculate")}
           </button>
         )}
       </details>
       </fieldset>
-      <div hidden={!current} className="space-y-4">
+      <DetailContainer hidden={!current} className="space-y-4">
+      {preview&&<><summary>Nutrition sources & science</summary><FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/><p className="panel-note">{analysis.provider} · {analysis.parser==="ai"?"AI ingredient interpretation":"Description-based interpretation"}</p></>}
       {analysis.clarificationQuestions.length > 0 && (
         <div>
           <h3>Improve this estimate</h3>
@@ -226,7 +235,7 @@ export default function MealAnalysis({
           </ul>
           <p className="panel-note">
             Review the foods and amounts above, or edit the original meal
-            description and save again.
+            description and {preview?"review again before saving.":"save again."}
           </p>
         </div>
       )}
@@ -347,7 +356,7 @@ export default function MealAnalysis({
           </p>
         ))}
       </details>
-      </div>
+      </DetailContainer>
     </section>
   );
 }

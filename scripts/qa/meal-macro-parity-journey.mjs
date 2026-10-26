@@ -1,3 +1,4 @@
+import{reviewThenSave}from'./lib/meal-flow.mjs';
 import assert from 'node:assert/strict';import{createRequire}from'node:module';import express from'express';import{createServer}from'vite';import{PGlite}from'@electric-sql/pglite';import{drizzle}from'drizzle-orm/pglite';import{eq}from'drizzle-orm';import{meals}from'../../shared/schema.ts';import{insertMealWithReceipt}from'../../server/meal-save.ts';import{registerPlannerRoutes}from'../../server/planner-routes.ts';
 const pg=new PGlite();await pg.exec(`CREATE TABLE meals(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),user_id varchar NOT NULL,meal_text text NOT NULL,meal_type text,logged_at timestamp NOT NULL DEFAULT now(),nutritional_data jsonb,meal_context jsonb,intelligence jsonb,total_calories real,total_protein real,total_carbs real,total_fat real);`);const database=drizzle(pg);
 const store={getMeal:async id=>(await database.select().from(meals).where(eq(meals.id,id)))[0],getMeals:async id=>(await database.select().from(meals).where(eq(meals.userId,id))),insertMeal:(meal,receipt)=>insertMealWithReceipt(database,meal,receipt),updateMeal:async(id,updates)=>(await database.update(meals).set(updates).where(eq(meals.id,id)).returning())[0],getExperienceRecords:async()=>[],getNutritionProducts:async()=>[]};
@@ -5,9 +6,9 @@ const app=express();app.use(express.json());registerPlannerRoutes(app,(req,_res,
 const vite=await createServer({server:{host:'127.0.0.1',port:5224,strictPort:true}});await vite.listen();const{chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:1000}});page.setDefaultTimeout(12000);let lose=true,hold=true,release;const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.route('https://fonts.**/**',r=>r.abort());
 await page.route('**/api/**',async route=>{const req=route.request(),u=new URL(req.url());let json=[];
  if(u.pathname.startsWith('/api/meals')&&req.method()!=='GET'){
-  const response=await fetch(base+u.pathname,{method:req.method(),headers:{'content-type':'application/json',...(req.headers()['idempotency-key']?{'Idempotency-Key':req.headers()['idempotency-key']}:{})},body:req.postData()});
+  const response=await fetch(base+u.pathname,{method:req.method(),headers:{'content-type':'application/json',...(req.headers()['if-match']?{'If-Match':req.headers()['if-match']}:{}),...(req.headers()['idempotency-key']?{'Idempotency-Key':req.headers()['idempotency-key']}:{})},body:req.postData()});
   const body=await response.text();if(req.method()==='PUT'){if(hold)await new Promise(r=>{release=r;});if(lose)return route.fulfill({status:503,json:{error:'Synthetic committed correction response lost'}});}
-  return route.fulfill({status:response.status,contentType:'application/json',body});
+  return route.fulfill({status:response.status,contentType:'application/json',headers:{...(response.headers.get('x-bloom-meal-review')?{'x-bloom-meal-review':response.headers.get('x-bloom-meal-review')}:{})},body});
  }
  if(u.pathname==='/api/auth/me')json={user:{id:'correction-fixture',username:'Synthetic correction'}};
  else if(u.pathname==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
@@ -17,7 +18,7 @@ await page.route('**/api/**',async route=>{const req=route.request(),u=new URL(r
  await route.fulfill({json});});
 
 try{
- await page.goto('http://127.0.0.1:5224/log-meal?method=describe');await page.getByLabel('Describe your meal',{exact:true}).fill('0.5 g almonds');await page.getByRole('button',{name:'Save to my journal',exact:true}).click();await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
+ await page.goto('http://127.0.0.1:5224/log-meal?method=describe');await page.getByLabel('Describe your meal',{exact:true}).fill('0.5 g almonds');await reviewThenSave(page);await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
  const original=(await store.getMeals('correction-fixture'))[0];
  for(const [label,field] of [['protein','totalProtein'],['carbs','totalCarbs'],['fat','totalFat']]){
   assert.ok(original[field]>0&&original[field]<0.5);
