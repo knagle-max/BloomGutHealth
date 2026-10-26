@@ -1,3 +1,4 @@
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import FoodEntryChooser from "@/components/FoodEntryChooser";
 import {useCapabilities} from "@/lib/capabilities";
 import DevelopmentPhotoPreview from "@/components/DevelopmentPhotoPreview";
@@ -27,6 +28,11 @@ import {
   type MealIntelligence,
 } from "@shared/meal-intelligence";
 import type { Meal } from "@shared/schema";
+
+function refreshMealSources(){return Promise.all([
+  queryClient.invalidateQueries({predicate:query=>["/api/meals","/api/health/","/api/microbiome/diet-prediction","/api/experience/records"].some(prefix=>String(query.queryKey[0]).startsWith(prefix))}),
+  invalidatePlanningInputs(),
+]);}
 
 export default function LogMeal() {
   const { settings } = useExperience();
@@ -124,24 +130,15 @@ export default function LogMeal() {
       setProducts([]);
       setPhotoVisited(false);setMethodNotice("");setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");
       setCatalogueEnabled(false);
-      queryClient.invalidateQueries({
-        predicate: (query) =>
-          [
-            "/api/meals",
-            "/api/precision",
-            "/api/nutrition/",
-            "/api/health/",
-            "/api/microbiome/diet-prediction",
-          ].some((prefix) => String(query.queryKey[0]).startsWith(prefix)),
-      });
       toast({
         title: "Added to your journal",
         description:
           meal.totalCalories === null
             ? "Your meal is saved; nutrition needs more information or a provider."
-            : "Your nutrition overview is up to date.",
+            : "Your meal is saved. Linked nutrition totals are being refreshed.",
       });
     },
+    onSettled: refreshMealSources,
   });
   const recalculate = useMutation({
     mutationFn: async (ingredients: Ingredient[]) =>
@@ -153,9 +150,9 @@ export default function LogMeal() {
       ).json()) as Meal,
     onSuccess: (meal) => {
       setSavedMeal(meal);
-      queryClient.invalidateQueries();
       toast(nutritionUpdateFeedback(meal.intelligence as MealIntelligence));
     },
+    onSettled: refreshMealSources,
     onError: (error) =>
       toast({
         title: "Could not recalculate",

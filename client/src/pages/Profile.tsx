@@ -58,9 +58,9 @@ export default function Profile({
       };
       await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data);
     },
-    onSuccess: async () => {
-      // Profile age is a planning safety input. The default cache never goes
-      // stale by time, so cached reports must be rechecked after this write.
+    onSettled: async () => {
+      // A failed response can follow a committed write. Recheck authoritative
+      // Profile/health-derived sources after either outcome, including age gates.
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: ["/api/profile"] }),
         invalidatePlanningInputs(),

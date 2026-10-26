@@ -1,3 +1,11 @@
+# Latest source-truth delivery — 2026-10-26
+
+Locally verified source-write batch:325 tests/types/build, successful/lost-response meal save→actual Athlete intake refresh with one receipt row; committed Profile17 failure→rechecked general/practical/Athlete guards; practical choices retract paused/failed source and retain pantry draft. Publishing exact CI/Render next. No new state model, telemetry, migration or real-account edits.
+
+Fresh-reference feb9ffd passed Actions40248613058 and is live (dep-dbf9o12jnfac73ei33gg). Review/source/actor2879ab7 passed Actions40247529448 and deployed. Earlier Athlete, AddFood and My Biology layouts and correctness work included. New product-value source crosswalk is docs/operations/PRODUCT_VALUE_CROSSWALK.md; outcomes remain partially implemented/tested, not independent human or measured acceptance. Next: optional first-goal preferences and interrupted setup integrity, then remaining P0 source defects before v0.6.
+
+Precise resumption: NEXT_ACTIONS.md. Scoped external decisions: BLOCKED_USER_INPUT.md. Older chronology below may be superseded.
+
 # Latest implementation — 2026-10-26
 
 Publishing Athlete saved-review/source-truth safeguards:325 tests,5 focused encrypted storage/API tests, types/build, actual cold-load/save/failure/one-save re-review/source-reference/two-account browser and shared unit/source-draft regressions pass. Final actual Profile30→17 journey verifies cached adult Athlete guidance is invalidated and blocked on reread. Request-only acknowledgement metadata leaves stored schema unchanged; no migration or real-account edits.
