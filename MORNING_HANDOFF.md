@@ -2,7 +2,11 @@
 
 Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1). Existing Render workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0 only. No main merge, replacement service, production credentials, real-user/grant changes or restricted provider activation.
 
-## Latest verified milestone
+## Latest verified development head
+
+**9be6265ccaee56d812041c6844a3808cf6ccf317**: Actions40349224405 SUCCESS; Render dep-dbfn1u15efls73c824p0 LIVE. Optional exact lab report/specimen identity reader preserves encrypted save, unit confirmation, export and latest/history details;358 tests/type/build/source/browser checks pass. Following writer + grouped-history batch is locally verified359/359 and ready publication: exact optional identifiers, stable import identity through retry/correction, source groups with pending units and legacy separation. Evidence docs/review/lab-source-history-20261026. Reimport detection and unknown analytes remain open.
+
+## Verified meal review milestone
 
 Pre-save meal review is delivered by f30104a + corrective **9b201e29f9a89962c9b9e7658fc31e9fe55a7dbb**. Review and correct foods before explicit journal confirmation; no row during review, dirty/current-source checks, exact receipt recovery. Actions **40346711959 SUCCESS** including real Neon smoke; Render **dep-dbfmqo2jnfac73f0h9gg LIVE**. Initial f30104a omitted the locally tested server file and failed inventory CI; corrected immediately and verified. 356 local tests, types/build/API94+13/source126, actual API/PGlite and current/changed/unaware/lost-response/mixed-source/Athlete/portion/row/source/mobile journeys pass. Selective evidence: [meal review](docs/review/meal-presave-20261026/README.md).
 

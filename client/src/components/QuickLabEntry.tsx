@@ -8,6 +8,8 @@ import { labSchema, markerDefinitions, type Lab } from "@shared/precision-nutrit
 type Row = { line:number; payload:Lab; key:string };
 type Preview = { rows:Row[]; errors:Array<{line:number;message:string}> };
 export default function QuickLabEntry() {
+  const [importId,setImportId]=useState(()=>crypto.randomUUID());
+  const [reportIdentifier,setReportIdentifier]=useState(""),[specimenIdentifier,setSpecimenIdentifier]=useState("");
   const [mode,setMode]=useState<"paste"|"single">("paste");
   const [text,setText]=useState(""),[date,setDate]=useState(""),[time,setTime]=useState(""),[lab,setLab]=useState(""),[method,setMethod]=useState(""),[fasting,setFasting]=useState<Lab["fasting"]>("unknown");
   const [marker,setMarker]=useState("ldl"),[value,setValue]=useState(""),[unit,setUnit]=useState(""),[low,setLow]=useState(""),[high,setHigh]=useState(""),[notes,setNotes]=useState("");
@@ -27,7 +29,7 @@ export default function QuickLabEntry() {
   },onError:e=>setError(e.message.includes("conflicts")?e.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.")});
   const review=()=>{try{
     dateKey.parse(date);const measuredAt=new Date(date+"T"+(time||"12:00")).toISOString();
-    const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting};
+    const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting,sourceReport:{importId,...(reportIdentifier.trim()?{reportIdentifier}:{}),...(specimenIdentifier.trim()?{specimenIdentifier}:{})}};
     let rows:Array<{line:number;payload:Lab}>,errors:Preview["errors"]=[];
     if(mode==="paste"){
       const parsed=parseLabPaste(text,measuredAt,common.laboratory);errors=parsed.errors;
@@ -44,6 +46,7 @@ export default function QuickLabEntry() {
     setPreview({rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");
   }catch{setError("Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
   const nextImport=(corrections=false)=>{
+    if(!corrections){setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
     setText(corrections?labPasteCorrections(text,preview?.errors.map(e=>e.line)||[]):"");
     setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");setStarted(false);
   };
@@ -62,6 +65,13 @@ export default function QuickLabEntry() {
       <label>Method / assay (optional)<input className="bloom-input w-full" value={method} disabled={started} maxLength={200} onChange={e=>{setMethod(e.target.value);clear();}}/></label>
       <label>Fasting<select aria-label="Fasting" className="bloom-input w-full" value={fasting} disabled={started} onChange={e=>{setFasting(e.target.value as Lab["fasting"]);clear();}}><option value="unknown">Unknown / not applicable</option><option value="yes">Yes</option><option value="no">No</option></select></label>
     </div>
+    <details><summary>Report & specimen identifiers (optional)</summary>
+      <p className="panel-note">Copy identifiers from this report if available. They help distinguish reports or specimens collected on the same date; Bloom does not verify them with the laboratory.</p>
+      <div className="precision-grid">
+        <label>Report identifier (optional)<input className="bloom-input w-full" maxLength={200} value={reportIdentifier} disabled={started} onChange={e=>{setReportIdentifier(e.target.value);clear();}}/></label>
+        <label>Specimen identifier (optional)<input className="bloom-input w-full" maxLength={200} value={specimenIdentifier} disabled={started} onChange={e=>{setSpecimenIdentifier(e.target.value);clear();}}/></label>
+      </div>
+    </details>
     {mode==="paste"?<label className="block">Results<textarea aria-label="Results" className="bloom-input w-full" rows={5} maxLength={30000} disabled={started} placeholder={"[ Reported section ]\nLDL, 3.2, mmol/L\nALT, 73, U/L\nVitamin D, 75"} value={text} onChange={e=>{setText(e.target.value);clear();}}/></label>:<div className="precision-grid">
       <label>Marker<select aria-label="Marker" className="bloom-input w-full" disabled={started} value={marker} onChange={e=>{setMarker(e.target.value);setUnit("");clear();}}>{markerDefinitions.map(m=><option key={m.id} value={m.id}>{m.name}</option>)}</select></label>
       <label>Source value<input className="bloom-input w-full" inputMode="decimal" value={value} disabled={started} onChange={e=>{setValue(e.target.value);clear();}}/></label>

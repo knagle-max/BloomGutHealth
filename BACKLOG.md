@@ -443,3 +443,8 @@ Optional sourceReport(importId UUID, exact user report/specimen identifiers) acc
 
 FOOD-SOURCE-BOUNDARY-01 published01215d25c246af7e39a4997d4a594162d41a526b: Actions40347897021 SUCCESS; Render dep-dbfmu3g473hc73aa75fg LIVE.357 tests/types/build/source and malformed/late lookup plus canonical/PG regression evidence verified.
 LAB-REPORT-IDENTITY-READ-01 final local358/358/tests/types/build/API94+13/source126 and focused export/encrypted/browser checks PASS; publishing aware reader before normal writer. Earlier01215d2 exact Actions40347897021 SUCCESS/Render LIVE verified.
+
+## LAB-REPORT-IDENTITY-WRITE / LAB-SOURCE-HISTORY — active
+
+Reader9be6265 exact Actions40349224405 SUCCESS and Render dep-dbfn1u15efls73c824p0 LIVE. Optional exact printed identifiers + stable importUUID writer; corrections/retries retain same UUID, intentional next import resets UUID+identifiers. Grouped view derives from existing active labHistory/pendingLabs and separates missing identity instead of inferring panels from dates. Source order/headings/specimens/zero/pending units retained; inconsistent identifiers split groups.0/1/2/6/8/12 pure tests and writer lost-response/correction/manual-unit browser PASS; rendered source-history/full359 checks running. No actual report verification or reimport detection claimed.
+Writer/source-history final local359/359 tests/types/build/API94+13/source128, grouped/ordinary import/receipt/correction/metadata/legacy/source-history0/1/2/6/8/12 and keyboard/mobile/dark/delete regressions PASS. Ready publish; source-reader9be6265 CI/live verified. Evidence docs/review/lab-source-history-20261026. Full reimport/unknown analyte acceptance remains OPEN.

@@ -1,3 +1,4 @@
+import LabSourceHistory from "@/components/LabSourceHistory";
 import BiologyHome from "@/components/BiologyHome";
 import {invalidatePlanningInputs,resetPlanningInputs} from "@/lib/planning-cache";
 import { formatMassEntry, parseMassEntry, parseCircumferenceEntry, switchMassUnit, switchCircumferenceUnit, type MassEntry, type CircumferenceEntry } from "@shared/measurement-entry";
@@ -654,32 +655,8 @@ export default function PrecisionNutrition() {
                       optional too.
                     </p>
                   )}
-                  <details className="mt-4">
-                    <summary>
-                      All recorded laboratory results ({r.labHistory.length})
-                    </summary>
-                    {r.labHistory.map((l) => (
-                      <div className="precision-observation" key={l.id}>
-                        <p>
-                          {l.marker}: {l.value} {l.unit} ·{" "}
-                          {l.measuredAt.slice(0, 10)}
-                        </p>
-                        <Button
-                          variant="outline"
-                          onClick={() =>
-                            remove({
-                              id: l.id,
-                              kind: "lab",
-                              payload: l,
-                              createdAt: l.measuredAt,
-                            })
-                          }
-                        >
-                          Delete historical result
-                        </Button>
-                      </div>
-                    ))}
-                  </details>
+                  <LabSourceHistory labs={[...r.labHistory,...(r.pendingLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+
                 </section>
                 <section className="bloom-panel">
                   <h2>Microbiome evidence</h2>
