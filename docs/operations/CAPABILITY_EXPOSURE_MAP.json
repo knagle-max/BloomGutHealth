@@ -700,7 +700,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/precision-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -732,7 +733,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/precision-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -762,7 +764,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/precision-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -1156,7 +1159,8 @@
           "server/account-export.ts",
           "server/storage.ts",
           "shared/schema.ts",
-          "server/plan-history.ts"
+          "server/plan-history.ts",
+          "server/precision-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -1309,7 +1313,8 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/precision-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -1624,6 +1629,7 @@
     "server/planner-routes.ts": "149a097cf76c8b72b6a12be670025b174459bf6d15f7e2f2bc6040ae6cbe88b6",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
     "server/precision-routes.ts": "bac96e71de5efaf323c478f6853f32dcb99fdb8fd73e271dbe06ee56795fca15",
+    "server/precision-storage.ts": "dadd83a7e8300e0e22bd6b816fbbda79ed965fded46ba424c41332e418011a53",
     "server/preference-source.ts": "cb9d6e89cf1de2a76d184822be830ee287a4e4ea28824b6db017bd7f89e30126",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",

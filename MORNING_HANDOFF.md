@@ -6,7 +6,7 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 **32915c27bfbfbe18b120a3bb2ce180446af3a85d**: Actions40353364362 SUCCESS; Render dep-dbfndo4s728c73dqk550 LIVE.360 tests/types/build/API/source129 and import/history browsers pass. Possible reimports require explicit review before a separate new save; this remains advisory, without atomic/file deduplication.
 
-Current reader-only source preservation batch is locally verified363/363, types/build/source and encrypted API/export checks. It retains unmapped assay/value/unit text separately and cannot affect any clinical/trend/recommendation output. No normal writer yet; exact CI/deployment required first. Next: explicit source-only unsupported-row import/display, then remaining source/concurrency/feedback/search/integration scope.
+Source reader c046e90 passed363 local tests/types/build/source and encrypted API/export, but exact Actions40355115182 exposed a weekly-save409 caused by storage counting nonclinical raw lab IDs. Corrective strict source-only exclusion with4 focused database tests/types/build/source130 PASS is publishing before normal writer; c046 alone is not whole-CI verified. It retains unmapped assay/value/unit text separately and cannot affect any clinical/trend/recommendation output. No normal writer yet; exact CI/deployment required first. Next: explicit source-only unsupported-row import/display, then remaining source/concurrency/feedback/search/integration scope.
 
 Earlier source-history checkpoint:
 

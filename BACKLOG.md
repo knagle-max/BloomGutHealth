@@ -462,3 +462,5 @@ Strict source-only payload within existing encrypted lab kind preserves unrecogn
 
 Advisory reimport32915c27bfbfbe18b120a3bb2ce180446af3a85d LIVE on Render dep-dbfndo4s728c73dqk550; Actions40353364362 SUCCESS verified. No atomic dedup claim.
 Source-only reader final local363/363/tests/types/build/API94+13/source129 PASS; source/receipt/encrypted/export focused5 PASS. Normal writer remains next; exact reader deployment/CI required first.
+Source-only reader c046e90 Actions40355115182 FAILED isolated weekly-save source409 (source-only API/report/export passed), Render LIVE. Fix guard to exclude only strict raw source payloads; preserve ordinary input conflict protection. Actual database regression + existing storage tests4 PASS, typesPASS; build/source130 pending. No ordinary writer enabled; parser/UI partial changes stashed for safe separate correction publication.
+Reader weekly-source fix local4 focused/storage tests/types/build/API94+13/source130 PASS; publishing separately. No no-header downgrade or ignored clinical source change; source-only classification requires full strict schema. Writer stash remains safe.

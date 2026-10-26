@@ -2,7 +2,7 @@ import { eq, and, desc, sql } from "drizzle-orm";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
-import { labSchema, contextSchema } from "../shared/precision-nutrition";
+import { labSchema, sourceOnlyLabSchema, contextSchema } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -117,7 +117,9 @@ export class PrecisionStorage {
         )
           throw Error("PRECISION_INPUTS_CHANGED");
         const records = await tx
-          .select({ id: precisionRecords.id, kind: precisionRecords.kind })
+          // Only lab payloads need classification; do not transfer wide genetics/plan blobs.
+          .select({ id: precisionRecords.id, kind: precisionRecords.kind,
+            labPayload: sql<unknown>`CASE WHEN ${precisionRecords.kind} = 'lab' THEN ${precisionRecords.encryptedPayload} ELSE NULL END` })
           .from(precisionRecords)
           .where(eq(precisionRecords.userId, userId))
           .orderBy(desc(precisionRecords.createdAt));
@@ -125,7 +127,7 @@ export class PrecisionStorage {
         const sourceIds = records
           .filter(
             (r) =>
-              r.kind === "lab" ||
+              (r.kind === "lab" && !sourceOnlyLabSchema.safeParse(decryptPrecision(r.labPayload,userId)).success) ||
               r.kind === "metabolite" ||
               r.id === latestGenetics?.id,
           )
