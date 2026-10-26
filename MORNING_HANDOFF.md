@@ -1,3 +1,7 @@
+# Current source delivery — 2026-10-26
+
+Journal mutationaae4676 Actions40254541527 SUCCESS/Render dep-dbfaqa4s728c73dc15e0 LIVE. Current-only paused journal source fix ready:326/326 tests/types/build/source114 and four focused browser journeys pass. Unknown entries remain unknown; current recorded zero retained; manual editor draft mounted. Publishing next. Next actual AddFood correction pending-editor/uncertain-analysis audit uses real planner routes and PostgreSQL. No new external question blocks engineering.
+
 # Latest checkpoint — 2026-10-26
 
 Saved-template9b0bca3 Actions40254006736 SUCCESS/Render dep-dbfan80473hc739shrk0 LIVE. Legacy journal uncertain-write recovery finalized locally:326/326 tests/types/build/source114, create/correct/delete loss and draft browser, actual history/unit/missingness and source-failure regressions PASS. Publishing next. Next concrete P0: paused cached daily journal currently retains target comparisons (new browser reproduces2 progress bars); fix source currentness without dropping manual draft. Earlier optional goal and Move batches verified CI/live.

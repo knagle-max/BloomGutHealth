@@ -293,7 +293,7 @@ export default function NutritionHistory() {
   const today = new Date();
   const localDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
   const timezoneOffset = today.getTimezoneOffset();
-  const { data: dailyData, isLoading: dailyLoading, isError: dailyError, refetch: retryDaily } = useQuery<any>({
+  const { data: cachedDaily, fetchStatus: dailyFetch, isStale: dailyStale, isLoading: dailyLoading, isError: dailyError, refetch: retryDaily } = useQuery<any>({
     queryKey: ["/api/nutrition/daily", userId, localDate, timezoneOffset],
     queryFn: async () =>
       (
@@ -305,15 +305,22 @@ export default function NutritionHistory() {
     enabled: !!userId,
   });
 
-  const { data: targets, isLoading: targetsLoading, isError: targetsError, refetch: retryTargets } = useQuery<any>({
+  const { data: cachedTargets, fetchStatus: targetsFetch, isStale: targetsStale, isLoading: targetsLoading, isError: targetsError, refetch: retryTargets } = useQuery<any>({
     queryKey: ["/api/nutrition/targets", userId],
     enabled: !!userId,
   });
 
-  const { data: allMeals, isLoading: mealsLoading, isError: mealsError, refetch: retryMeals } = useQuery<any[]>({
+  const { data: cachedMeals, fetchStatus: mealsFetch, isStale: mealsStale, isLoading: mealsLoading, isError: mealsError, refetch: retryMeals } = useQuery<any[]>({
     queryKey: ["/api/meals", userId],
     enabled: !!userId,
   });
+
+  const dailyChecking=dailyFetch!=="idle"||dailyStale&&!dailyError;
+  const targetsChecking=targetsFetch!=="idle"||targetsStale&&!targetsError;
+  const mealsChecking=mealsFetch!=="idle"||mealsStale&&!mealsError;
+  const dailyData=!dailyChecking&&!dailyError?cachedDaily:undefined;
+  const targets=!targetsChecking&&!targetsError?cachedTargets:undefined;
+  const allMeals=!mealsChecking&&!mealsError?cachedMeals:undefined;
 
   const saveAttempt=useRef<{signature:string;key:string}|null>(null);
   const logMealMutation = useMutation({
@@ -552,6 +559,7 @@ export default function NutritionHistory() {
         </p>
       )}
       <div className="journal-workspace">
+      {mealsChecking&&<p role="status">Checking current journal history. Only current available entries for today are shown.</p>}
       {mealsError && (
         <div role="alert" className="bloom-panel space-y-3">
           <p>The full journal could not load. Available entries for today are shown; this is not your complete history.</p>
@@ -570,12 +578,12 @@ export default function NutritionHistory() {
         </CardHeader>
         {dailyError || !dailyData ? (
           <CardContent className="space-y-3">
-            <p role="alert">Today's totals could not load. Your saved journal remains available.</p>
+            {dailyChecking?<p role="status">Checking current recorded totals…</p>:<p role="alert">Today's totals could not load. Your saved journal remains available.</p>}
             <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
           </CardContent>
         ) : targetsError || !targets ? (
           <CardContent className="space-y-3">
-          <p role="alert">Planning targets could not load. Recorded totals are shown without target comparisons.</p>
+          {targetsChecking?<p role="status">Checking current planning targets. Recorded totals are shown without target comparisons.</p>:<p role="alert">Planning targets could not load. Recorded totals are shown without target comparisons.</p>}
           <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
               ["calories", "Energy", energyUnit], ["protein", "Protein", "g"],
@@ -788,9 +796,9 @@ export default function NutritionHistory() {
         {meals.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground">No meals logged today</p>
+              <p className="text-muted-foreground">{allMeals||dailyData?"No meals in the available journal.":"Current journal entries are unavailable."}</p>
               <p className="text-sm text-muted-foreground mt-1">
-                Start tracking your nutrition!
+                You can add a meal while keeping missing records distinct from zero intake.
               </p>
             </CardContent>
           </Card>

@@ -1,3 +1,7 @@
+# Active current-journal checkpoint — 2026-10-26
+
+Legacy mutation aae46768809ea73341306efe62f6f5285431b35c pushed; verify exact Actions/Render. Saved-template9b0bca3 Actions40254006736 SUCCESS/Render live; Move58568f6 Actions40253489175 SUCCESS/live; setup0f26541 Actions40252980254 SUCCESS/live. Current paused-source journal fix implemented, before2 comparison bars vs after0; daily/targets/history current-only, knownzero/fallback and draft retained. Full326/types/build and regression browser checks running; publish/CI/Render after verification. Then next eligible v0.5 P0/whole-app integration; preserve true external gates and do not switch to v0.6 basic entry/adaptation.
+
 # Active journal checkpoint — 2026-10-26
 
 Saved-template9b0bca3ef9345dba636094d13d0756483efcb55b is pushed/live(dep-dbfan80473hc739shrk0), Actions40254006736 in progress. Move58568f6 Actions40253489175 SUCCESS/live; setup0f26541 Actions40252980254 SUCCESS/live. Current legacy journal recovery: new browser before red/after PASS; finish326 tests/types/build, actual history/failure regressions, source114/API checks; commit/push and verify exact CI/Render. Drafts success-only, all uncertain outcomes refresh linked source, canonical receipt for create. Next complete daily feedback/source journey and remaining same-account concurrent CAS/draft conflict audit, then whole-app source integration under v0.5. Do not implement v0.6 basic activity/adaptation early.
