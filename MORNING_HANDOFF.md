@@ -1,3 +1,7 @@
+# Latest checkpoint — 2026-10-26
+
+Saved-template9b0bca3 Actions40254006736 SUCCESS/Render dep-dbfan80473hc739shrk0 LIVE. Legacy journal uncertain-write recovery finalized locally:326/326 tests/types/build/source114, create/correct/delete loss and draft browser, actual history/unit/missingness and source-failure regressions PASS. Publishing next. Next concrete P0: paused cached daily journal currently retains target comparisons (new browser reproduces2 progress bars); fix source currentness without dropping manual draft. Earlier optional goal and Move batches verified CI/live.
+
 # Current delivery — 2026-10-26
 
 Completed and verified: optional first-goal interruption/source/account safeguards0f26541 (CI40252980254 SUCCESS/live); Everyday Move source access58568f6 (CI40253489175 SUCCESS/live), source gallery docs/review/today-movement-20261026/README.md. Saved-template durable receipt recovery is ready to publish:326/326 tests, types/build, actual route/PGlite and synthetic UI, canonical AddFood uncertain-write/Athlete-cache, source114/API checks pass. No schema, credentials, account grants or mode rewiring.

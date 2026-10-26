@@ -1,3 +1,7 @@
+# Active journal checkpoint — 2026-10-26
+
+Saved-template9b0bca3ef9345dba636094d13d0756483efcb55b is pushed/live(dep-dbfan80473hc739shrk0), Actions40254006736 in progress. Move58568f6 Actions40253489175 SUCCESS/live; setup0f26541 Actions40252980254 SUCCESS/live. Current legacy journal recovery: new browser before red/after PASS; finish326 tests/types/build, actual history/failure regressions, source114/API checks; commit/push and verify exact CI/Render. Drafts success-only, all uncertain outcomes refresh linked source, canonical receipt for create. Next complete daily feedback/source journey and remaining same-account concurrent CAS/draft conflict audit, then whole-app source integration under v0.5. Do not implement v0.6 basic activity/adaptation early.
+
 # Active saved-template checkpoint — 2026-10-26
 
 0f265410e5747a884be760eddae57df19f9ce7c2 Actions40252980254 SUCCESS/Render live. Move58568f6f5bf702d3fb5ab15ed573babe396605d7 Render dep-dbfak7dg1s2s73a5hl40 LIVE/Actions40253489175 in progress. Current saved-template receipt fix: finish326 full tests/build/types, rerun browser after final copy, review source112/API92+13, commit/push exact CI/Render. Actual route/PGlite3 tests and browser already pass; canonical AddFood lost-response+Athlete-cache regression passes. Next legacy NutritionHistory mutation outcome audit; preserve forms, reset only on success. No v0.6 switch, main merge, real grants/schema/credential edits.

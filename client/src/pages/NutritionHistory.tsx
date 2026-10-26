@@ -1,4 +1,4 @@
-import {invalidatePlanningInputs} from "@/lib/planning-cache";
+import {refreshMealSources} from "@/lib/meal-cache";
 import { useExperience } from "@/lib/experience";
 import { energyAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
@@ -6,7 +6,7 @@ import MealAnalysis from "@/components/MealAnalysis";
 import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { explainFoods } from "@shared/meal-intelligence";
 import { type MealIntelligence } from "@shared/meal-intelligence";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import MealTypeSelector, { MealType } from "@/components/MealTypeSelector";
 import { useAuth } from "@/lib/auth";
 import {
@@ -315,26 +315,26 @@ export default function NutritionHistory() {
     enabled: !!userId,
   });
 
+  const saveAttempt=useRef<{signature:string;key:string}|null>(null);
   const logMealMutation = useMutation({
     mutationFn: async (data: any) => {
-      const response = await apiRequest("POST", "/api/meals", data);
+      const signature=JSON.stringify([userId,data]);
+      if(saveAttempt.current?.signature!==signature)saveAttempt.current={signature,key:crypto.randomUUID()};
+      const response = await apiRequest("POST", "/api/meals", data,{"Idempotency-Key":saveAttempt.current.key});
       return await response.json();
     },
     onSuccess: async (newMeal: any) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
-      void invalidatePlanningInputs();
-      queryClient.invalidateQueries({
-        queryKey: [`/api/health/adherence/${userId}?days=7`],
-      });
+      saveAttempt.current=null;
 
       toast({
         title: "Meal added to your journal",
-        description: "Your estimated nutrition breakdown is ready.",
+        description: newMeal.totalCalories===null?"Your meal is saved; some nutrition needs review.":"Your meal is saved. Linked nutrition totals are being refreshed.",
       });
 
       setFoodDescription("");
       setShowLogForm(false);
     },
+    onSettled: refreshMealSources,
     onError: (error: any) => {
       toast({
         title: "Error logging meal",
@@ -351,15 +351,13 @@ export default function NutritionHistory() {
     },
     onSuccess: (meal) => {
       if (unmatchedFoods(meal.intelligence).length || meal.intelligence?.status === "unavailable") setReviewingMealId(meal.id);
-      queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
-      void invalidatePlanningInputs();
-
       toast(nutritionUpdateFeedback(meal.intelligence));
 
       setFoodDescription("");
       setShowLogForm(false);
       setEditingMealId(null);
     },
+    onSettled: refreshMealSources,
     onError: (error: any) => {
       toast({
         title: "Error updating meal",
@@ -375,13 +373,11 @@ export default function NutritionHistory() {
       return await response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/meals", userId] });
-      void invalidatePlanningInputs();
-
       toast({
         title: "Meal deleted successfully!",
       });
     },
+    onSettled: refreshMealSources,
     onError: (error: any) => {
       toast({
         title: "Error deleting meal",
@@ -494,7 +490,8 @@ export default function NutritionHistory() {
               {editingMealId ? "Edit Meal" : "Log Your Meal"}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent>
+          <fieldset className="min-w-0 space-y-4" disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}>
             <MealTypeSelector selected={mealType} onChange={setMealType} />
 
             <div className="space-y-2">
@@ -543,6 +540,7 @@ export default function NutritionHistory() {
                 Cancel
               </Button>
             </div>
+          </fieldset>
           </CardContent>
         </Card>
       )}
@@ -778,6 +776,7 @@ export default function NutritionHistory() {
             <Button
               onClick={() => setShowLogForm(true)}
               size="sm"
+              disabled={deleteMealMutation.isPending}
               data-testid="button-show-log-meal"
             >
               <Plus className="h-4 w-4 mr-1" />
@@ -830,6 +829,7 @@ export default function NutritionHistory() {
                             e.stopPropagation();
                             handleEditMeal(meal);
                           }}
+                          disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}
                           data-testid={`button-edit-meal-${index}`}
                         >
                           <Pencil className="w-4 h-4" />
@@ -841,6 +841,7 @@ export default function NutritionHistory() {
                             e.stopPropagation();
                             handleDeleteMeal(meal.id);
                           }}
+                          disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}
                           data-testid={`button-delete-meal-${index}`}
                         >
                           <Trash2 className="w-4 h-4" />
