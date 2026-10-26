@@ -362,10 +362,9 @@ export async function analyzeMeal(
   ) {
     const row: any = {
       name: text,
-      serving_size_g: database.foodMatches.reduce(
-        (a, i) => a + (i.grams ?? 0),
-        0,
-      ),
+      serving_size_g: database.foodMatches.every(i=>i.grams!==null)
+        ? database.foodMatches.reduce((sum,i)=>sum+i.grams!,0)
+        : null,
     };
     for (const n of database.nutrients)
       if (n.amount !== null && n.coverage === 1) row[n.key] = n.amount;

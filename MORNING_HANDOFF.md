@@ -66,3 +66,9 @@ No repeated deploy approval or API-key request is needed. No new noncritical que
 Home routing e38bfd0f1809f8493bc867974f0ff4ecf32bbd3f is LIVE (dep-dbfg0gmk1f9s738823eg), but Actions40285639945 FAILED at stale API-inventory hash. Earlier local API PASS statement was incorrect; subsequent command masked its failure. Current batch refreshes reviewed hash/declaration line offsets only (same92static/13unresolved routes), both source checks now pass.
 
 Canonical AddFood now offers Build from individual ingredients after homemade or no-match food searches. Keyboard navigation focuses the existing Describe field, retains search/meal/products and does not save or choose any source.343 full tests/types/build/source checks and actual App/ProductService/analysis synthetic-storage keyboard/save/lost-response/Athlete regression pass. This is a working existing-flow fallback, not new recipe storage or nutritional/clinical verification of a homemade dish. Publish and verify exact CI+Render; full semantic/market/preparation ranking, pre-save review, concurrency and panel history remain outstanding.
+
+## Canonical aggregate mass audit
+
+Reproduced actual unknown capsule mass emitted as0 and mixed meal partialmass emitted as complete. Current fix returnsnull if any matched source grams unknown; allknown masses sum normally and known macros/truezeros stay unchanged. Focused domain test passes; full344/types/build/source and canonical save/PGmacro browser checks complete before publication. Original historical rows are not rewritten.
+
+Mass batch final local evidence:344/344 full tests PASS; types/build/API92+13/source119 checks PASS; canonical AddFood keyboard/fallback/save/lost-response/Athlete and actualPG macro save/correction/journal journeys PASS. No historical rewrite. Publication and exact deployment verification next.

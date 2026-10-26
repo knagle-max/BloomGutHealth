@@ -1549,7 +1549,7 @@
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
-    "server/meal-intelligence.ts": "c2e78ab568f0fdb32c98cc5d5fee7abbcbe815734730ca9a1cc269d9e9be69c1",
+    "server/meal-intelligence.ts": "2d2e2cea62a5283ef1b6b9aee961b884e100df82abfe91dffe5434faa5d3ccd3",
     "server/meal-save.ts": "4ed54debee262c7e3e3e5823387869c77ebe21b5b8718f01c107286d2d0538d5",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
     "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
