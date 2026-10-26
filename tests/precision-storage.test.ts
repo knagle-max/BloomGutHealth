@@ -1,3 +1,4 @@
+import {parseLabPaste} from "../shared/lab-paste";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -31,10 +32,7 @@ test("PostgreSQL migration and encrypted precision persistence enforce ownership
     assert.deepEqual(((await store.getPrecisionContext("a")) as any).goals, [
       "ApoB",
     ]);
-    const lab = await store.insertPrecisionRecord("a", "lab", {
-      marker: "ldl",
-      value: 4,
-    });
+    const lab = await store.insertPrecisionRecord("a", "lab", parseLabPaste("LDL, 4, mmol/L","2026-10-15T12:00:00Z").valid[0].payload);
     const plan1 = await store.insertPrecisionRecord("a", "plan", {
       name: "One",
     });

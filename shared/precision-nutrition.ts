@@ -734,6 +734,11 @@ export const precisionFoods = [
     food: "yogurt",
   },
 ];
+/** Canonical active supported observations, shared by reporting and transactional save guards. */
+export function activeLabObservations<Row extends Lab&{id:string}>(rows:readonly Row[]){
+ const superseded=new Set(rows.flatMap(row=>row.unitReview?.supersedes?[row.unitReview.supersedes]:[]));
+ return{pendingLabs:rows.filter(row=>row.unitReview?.status==="pending"&&!superseded.has(row.id)),labs:rows.filter(row=>row.unitReview?.status!=="pending"&&!superseded.has(row.id))};
+}
 export function buildPrecisionReport(
   records: PrecisionRecord[],
   context: PrecisionContext,
@@ -757,9 +762,7 @@ export function buildPrecisionReport(
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
   const sourceOnlyLabs=entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
     ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt));
-  const superseded = new Set(allLabs.flatMap(l => l.unitReview?.supersedes ? [l.unitReview.supersedes] : []));
-  const pendingLabs = allLabs.filter(l => l.unitReview?.status === "pending" && !superseded.has(l.id));
-  const labs = allLabs.filter(l => l.unitReview?.status !== "pending" && !superseded.has(l.id));
+  const {pendingLabs,labs}=activeLabObservations(allLabs);
   const latest = markerDefinitions.flatMap((m) => {
     const l = labs.find((l) => l.marker === m.id);
     return l

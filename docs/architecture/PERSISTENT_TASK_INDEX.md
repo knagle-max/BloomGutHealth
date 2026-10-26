@@ -761,3 +761,7 @@ LAB-ENTERED-DATE-READ-01 confirms+14 source-date mismatch and adds optional ente
 ## 2026-10-26 — capture explicit entered lab day/time
 
 LAB-ENTERED-DATE-WRITE-01 preserves actual input calendar/time separately from canonical timestamp; no missing-time metadata invention or old-row backfill. Encrypted App/API+14/−12/midnight/DST fixed-instant vectors and receipt/correction/raw/known/history/delete-plan paths PASS; ordinary/manual/unit/legacy regressions and types/build/API94+13/source130 PASS. Reader e859334 Actions40381726560 SUCCESS (369 tests)/existing Render dep-dbfq3529lscs73bm4d50 LIVE verified before writer. Writer publication/exactCI next; arbitrary date correction and source concurrency remain OPEN.
+
+## 2026-10-26 — clinical planning source selection
+
+PLANNING-LAB-SOURCES-01 fixes actual encrypted DB false409 under pending-unit results. Report and transactional save use one active supported observation selector; pending/superseded excluded, current confirmed included. Strict source-only exclusion and context/preference guards retained, unclassifiable labs always deny even if IDs supplied.370 full before final defensive refinement; final5 focused/types/build/API94+13/source130 PASS; exact CI/live next. Production smoke adds pending→confirmed weekly saves.13b69b3 date capture Actions40383005252 SUCCESS / Render dep-dbfq73bncjis738i7bi0 LIVE verified.

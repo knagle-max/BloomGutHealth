@@ -478,3 +478,8 @@ Entered-date reader local369 full tests PASS; final no-assumed-time day-window r
 ## LAB-ENTERED-DATE-WRITE-01 — local verified
 
 Normal capture records actual entered date/time, empty time absent; exact canonical timestamp retained. Four encrypted App/API timezone/midnight/DST vectors + full receipt/correction/source/known-output/history/delete-plan chains PASS; ordinary manual/unit-confirmation and existing history/context regressions PASS. Types/build/API/source130 PASS; reader e859334 Actions40381726560 SUCCESS/Render dep-dbfq3529lscs73bm4d50 LIVE verified. Ready publish/exactCI. Full arbitrary date correction remains OPEN.
+
+## PLANNING-LAB-SOURCES-01 — actual false conflict reproduced/fixed
+
+Canonical shared active lab selector used for reporting and transactional plan source guard. Pending/superseded known rows excluded, current confirmed included; invalid/unclassifiable source always denies, strict raw-only exclusion retained. Actual SQL red-before/green-after test plus old-source and malformed-ID denial PASS;370 full before last tightening,5 focused/types/source130 after PASS. Production smoke covers real pending→confirmed weekly saves; final build/checks and exactCI next. Date writer13b69b3 Actions40383005252 SUCCESS / Render dep-dbfq73bncjis738i7bi0 LIVE verified.
+Planning source selection final focused5/types/build/API/source130 PASS after final explicit-invalid-source denial; prior full370 PASS. Ready publish/exactCI including new pending→confirmed realNeon save smoke.

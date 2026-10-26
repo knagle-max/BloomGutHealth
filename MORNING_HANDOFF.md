@@ -4,6 +4,12 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**13b69b33a3a0ce0d457b93628a9971fe2767b870**: Actions40383005252 SUCCESS, Render dep-dbfq73bncjis738i7bi0 LIVE. Actual entered lab day/time is retained across timezone/midnight/DST/receipt/correction paths; no timestamp rewrite or legacy inference. Reader e859334 verified369 tests.
+
+Planning active-lab selection fix is locally ready: actual pending/superseded false409 repro fixed with shared canonical selector; malformed-source data still denies.370 full before final defensive tightening, final5 focused/types/build/source130 PASS; production smoke now covers pending→confirmed weekly saves. Publish/exactCI next.
+
+Earlier entered-date reader checkpoint:
+
 **e859334bf78b71df2be0dcd41d9ac4e48c3b54ce**: Actions40381726560 SUCCESS (369 tests); Render dep-dbfq3529lscs73bm4d50 LIVE. Entered date/time reader fixes source labelling without rewriting timestamps or inventing missing time. Ordinary writer is locally ready with four actual encrypted timezone/midnight/DST matrices, existing lab regressions and types/build/source checks; publish/exactCI next. Broader date correction and pending/superseded planning-source consistency remain actionable.
 
 Earlier source-only writer checkpoint:

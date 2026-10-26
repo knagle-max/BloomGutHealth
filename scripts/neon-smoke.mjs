@@ -656,6 +656,8 @@ try {
       saturatedFat: 20,
     },
   };
+  const pendingPlanSource=await request("/api/precision/records","POST",{kind:"lab",payload:{marker:"ldl",value:120,unit:"mmol/L",measuredAt:now,laboratory:"Synthetic CI lab",method:"CI assay",fasting:"unknown",referenceLow:null,referenceHigh:null,sourceReport:labSourceIdentity,sourceInput:{text:"LDL, 120",number:"120",suppliedUnit:null,capture:"pasted-report"},unitReview:{status:"pending",originalValue:120,originalUnit:null,originalText:"LDL, 120",suggestedUnit:"mmol/L",confirmedAt:null,supersedes:null}}},201);
+  assert.equal((await request("/api/precision")).pendingLabs.length,1);
   const weekly = await request(
     "/api/precision/weekly-plans/preview",
     "POST",
@@ -675,6 +677,10 @@ try {
     (await request("/api/precision/weekly-plans"))[0].id,
     weeklySaved.id,
   );
+  const confirmedPlanSource=await request(`/api/precision/labs/${pendingPlanSource.id}/confirm-unit`,"POST",{unit:"mg/dL"},201);
+  const afterUnitReview=await request("/api/precision");assert.equal(afterUnitReview.pendingLabs.length,0);assert.deepEqual(afterUnitReview.labHistory.map(row=>row.id),[confirmedPlanSource.id]);
+  const afterSupersession=await request("/api/precision/weekly-plans/save","POST",weeklyInput,201);assert.notEqual(afterSupersession.id,weeklySaved.id);
+  console.log("PASS: actual planning source guard excludes unconfirmed and superseded labs, retains the current confirmed source and accepts fresh weekly saves");
   const status = await request("/api/analysis/status");
   assert.equal(status.nutrition.offlinePlanningCatalogue, true);
   console.log(

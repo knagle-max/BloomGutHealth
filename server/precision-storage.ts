@@ -2,7 +2,7 @@ import { eq, and, desc, sql } from "drizzle-orm";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
-import { labSchema, sourceOnlyLabSchema, contextSchema } from "../shared/precision-nutrition";
+import { labSchema, sourceOnlyLabSchema, contextSchema, activeLabObservations, type Lab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -123,11 +123,19 @@ export class PrecisionStorage {
           .from(precisionRecords)
           .where(eq(precisionRecords.userId, userId))
           .orderBy(desc(precisionRecords.createdAt));
+        const supportedLabs:Array<Lab&{id:string}>=[],unresolvedLabs=new Set<string>();
+        for(const record of records.filter(row=>row.kind==="lab")){
+          const payload=decryptPrecision(record.labPayload,userId),supported=labSchema.safeParse(payload);
+          if(supported.success)supportedLabs.push({...supported.data,id:record.id});
+          else if(!sourceOnlyLabSchema.safeParse(payload).success)unresolvedLabs.add(record.id);
+        }
+        if(unresolvedLabs.size)throw Error("PRECISION_INPUTS_CHANGED");
+        const clinicalLabIds=new Set(activeLabObservations(supportedLabs).labs.map(row=>row.id));
         const latestGenetics = records.find((r) => r.kind === "genetics");
         const sourceIds = records
           .filter(
             (r) =>
-              (r.kind === "lab" && !sourceOnlyLabSchema.safeParse(decryptPrecision(r.labPayload,userId)).success) ||
+              (r.kind === "lab" && clinicalLabIds.has(r.id)) ||
               r.kind === "metabolite" ||
               r.id === latestGenetics?.id,
           )
