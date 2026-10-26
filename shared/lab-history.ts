@@ -1,8 +1,9 @@
-import type {Lab} from './precision-nutrition';
+import type {Lab,SourceOnlyLab} from './precision-nutrition';
 export type LabHistoryRow=Lab&{id:string};
+export type AnyLabHistoryRow=LabHistoryRow|(SourceOnlyLab&{id:string});
 /** A source view over canonical active records, never a new panel or deduplication model. */
-export function groupLabHistory(rows:readonly LabHistoryRow[]){
- const groups=new Map<string,{key:string;source:NonNullable<Lab['sourceReport']>;rows:LabHistoryRow[]}>(),unlinked:LabHistoryRow[]=[];
+export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[]){
+ const groups=new Map<string,{key:string;source:NonNullable<Lab['sourceReport']>;rows:Row[]}>(),unlinked:Row[]=[];
  for(const row of rows){
   const source=row.sourceReport;
   if(!source){unlinked.push(row);continue;}

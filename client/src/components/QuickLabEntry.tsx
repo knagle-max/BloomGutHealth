@@ -6,9 +6,9 @@ import { invalidatePlanningInputs } from "@/lib/planning-cache";
 import { Button } from "@/components/ui/button";
 import { parseLabPaste, labPasteCorrections } from "@shared/lab-paste";
 import { dateKey } from "@shared/experience";
-import { labSchema, markerDefinitions, type Lab } from "@shared/precision-nutrition";
-type Row = { line:number; payload:Lab; key:string };
-type Preview = { rows:Row[]; errors:Array<{line:number;message:string}> };
+import { labSchema, sourceOnlyLabSchema, markerDefinitions, type Lab, type SourceOnlyLab } from "@shared/precision-nutrition";
+type Row = { line:number; payload:Lab|SourceOnlyLab; key:string };
+type Preview = { sourceOnlyOffered:number; keptSourceOnly:boolean; rows:Row[]; errors:Array<{line:number;message:string}> };
 export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistoryRow[]}) {
   const [importId,setImportId]=useState(()=>crypto.randomUUID());
   const [reportIdentifier,setReportIdentifier]=useState(""),[specimenIdentifier,setSpecimenIdentifier]=useState("");
@@ -17,7 +17,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
   const [marker,setMarker]=useState("ldl"),[value,setValue]=useState(""),[unit,setUnit]=useState(""),[low,setLow]=useState(""),[high,setHigh]=useState(""),[notes,setNotes]=useState("");
   const [preview,setPreview]=useState<Preview|null>(null),[error,setError]=useState(""),[started,setStarted]=useState(false),[completed,setCompleted]=useState(0);
   const [reviewedMatches,setReviewedMatches]=useState("");
-  const reimports=(preview?.rows||[]).flatMap(row=>{const matches=possibleLabReimports(row.payload,existingLabs);return matches.length?[{row,matches}]:[];});
+  const reimports=(preview?.rows||[]).flatMap(row=>{if("sourceOnly" in row.payload)return [];const matches=possibleLabReimports(row.payload,existingLabs);return matches.length?[{row,matches}]:[];});
   const matchBasis=JSON.stringify(reimports.map(({row,matches})=>[row.key,matches.map(match=>match.id).sort()]));
   const matchesReviewed=!reimports.length||reviewedMatches===matchBasis;
   const clear=()=>{setPreview(null);setError("");setReviewedMatches("");};
@@ -34,13 +34,17 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
       }
     }finally{await invalidatePlanningInputs();}
   },onError:e=>setError((e.message.includes("conflicts")||e.message.startsWith("Review possible"))?e.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.")});
-  const review=()=>{try{
+  const review=(keepSourceOnly=false)=>{try{
     dateKey.parse(date);const measuredAt=new Date(date+"T"+(time||"12:00")).toISOString();
     const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting,sourceReport:{importId,...(reportIdentifier.trim()?{reportIdentifier}:{}),...(specimenIdentifier.trim()?{specimenIdentifier}:{})}};
-    let rows:Array<{line:number;payload:Lab}>,errors:Preview["errors"]=[];
+    let rows:Array<{line:number;payload:Lab|SourceOnlyLab}>,errors:Preview["errors"]=[],sourceOnlyOffered=0;
     if(mode==="paste"){
       const parsed=parseLabPaste(text,measuredAt,common.laboratory);errors=parsed.errors;
-      rows=[...parsed.valid,...parsed.pending].sort((a,b)=>a.line-b.line).map(r=>({...r,payload:labSchema.parse({...r.payload,...common})}));
+      sourceOnlyOffered=parsed.sourceOnly.length;
+      const raw=keepSourceOnly?parsed.sourceOnly.map(row=>({...row,payload:sourceOnlyLabSchema.parse({...row.payload,...common})})):[];
+      if(keepSourceOnly){const kept=new Set(raw.map(row=>row.line));errors=errors.filter(error=>!kept.has(error.line));}
+      rows=[...parsed.valid,...parsed.pending].map(row=>({...row,payload:labSchema.parse({...row.payload,...common})}));
+      rows=[...rows,...raw].sort((a,b)=>a.line-b.line);
     }else{
       if(!/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(value.trim()))throw Error("Enter a complete source number.");
       const definition=markerDefinitions.find(m=>m.id===marker)!;
@@ -50,7 +54,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
         ...(!unit?{unitReview:{status:"pending",originalValue:Number(value),originalUnit:null,originalText:raw,suggestedUnit:definition.units[0],confirmedAt:null,supersedes:null}}:{})});
       rows=[{line:1,payload}];
     }
-    setPreview({rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");setReviewedMatches("");
+    setPreview({sourceOnlyOffered,keptSourceOnly:keepSourceOnly,rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");setReviewedMatches("");
   }catch{setError("Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
   const nextImport=(corrections=false)=>{
     if(!corrections){setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
@@ -89,24 +93,29 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:LabHistor
     </div>}
     {mode==="paste"&&<p className="panel-note">Optional section headings in [brackets] are retained as reported. Up to 50 results per paste; headings do not count toward that limit. Unsupported rows stay available for correction.</p>}
     <details><summary>Supported tests & units</summary><ul>{markerDefinitions.map(m=><li key={m.id}>{m.name}: {m.units.join(" or ")}</li>)}</ul></details>
-    <Button type="button" onClick={review} disabled={started||!(mode==="paste"?text.trim():value.trim())}>Preview results</Button>
+    <Button type="button" onClick={()=>review()} disabled={started||!(mode==="paste"?text.trim():value.trim())}>Preview results</Button>
     {error&&<p role="alert">{error}</p>}
-    {completed>0&&<p role="status">{completed} result(s) saved. Missing units still need confirmation below. Unrecognized rows were not saved.</p>}
+    {completed>0&&<p role="status">{completed} result(s) saved. Missing units still need confirmation below. Rows listed as errors were not saved; source-only rows have no interpretation.</p>}
     {save.isPending&&<p role="status">Saving remaining laboratory results…</p>}
     {preview&&<div className="space-y-3">
       {!!reimports.length&&!started&&<div className="border rounded-xl p-3 space-y-3" role="status">
         <h3>These results may already be recorded</h3>
         <p>{reimports.length} preview row(s) match recorded marker, source value/unit, time and assay context. Matching values do not prove the same specimen. Different supplied report or specimen identifiers stay separate.</p>
-        <ul>{reimports.map(({row,matches})=><li key={row.key}>Line {row.line}: {markerDefinitions.find(marker=>marker.id===row.payload.marker)?.name} · {matches.length} recorded match(es)</li>)}</ul>
+        <ul>{reimports.map(({row,matches})=><li key={row.key}>Line {row.line}: {markerDefinitions.find(marker=>marker.id===("marker" in row.payload?row.payload.marker:undefined))?.name} · {matches.length} recorded match(es)</li>)}</ul>
         <a className="text-link" href="#lab-source-history">Review recorded source history</a>
         <label className="block"><input type="checkbox" checked={matchesReviewed} onChange={event=>setReviewedMatches(event.target.checked?matchBasis:"")}/> I reviewed the matches; these are separate results to record.</label>
         <p className="panel-note">If this is the same report, leave it unsaved. No existing result is merged or removed automatically.</p>
       </div>}
 
+      {!started&&!preview.keptSourceOnly&&preview.sourceOnlyOffered>0&&<div className="border rounded-xl p-3 space-y-2"><p>These delimited rows can be kept exactly as source records. They have no supported interpretation; no assay, unit, reference range or medical meaning is inferred.</p><Button type="button" variant="outline" onClick={()=>review(true)}>Keep {preview.sourceOnlyOffered} source-only row(s)</Button></div>}
       {preview.errors.map(e=><p role="alert" key={e.line}>Line {e.line}: {e.message} This row will not be saved.</p>)}
-      {rows.map(r=><article className="lab-review-row" key={r.key}><h3>{markerDefinitions.find(m=>m.id===r.payload.marker)?.name}</h3><p>{r.payload.value} · {date} · {r.payload.laboratory} · {r.payload.method}</p>{r.payload.sourceInput?.reportedSection!==undefined&&<p className="panel-note whitespace-pre-wrap break-words">Reported section: {r.payload.sourceInput.reportedSection}</p>}<p className="evidence-state">{r.payload.unitReview?"Unit assumed — confirm":"Unit supplied — review against report"}</p><p>{r.payload.unitReview?`System guess — confirm: ${r.payload.unit}. This is not a verified source unit.`:`Source unit: ${r.payload.sourceInput?.suppliedUnit||r.payload.unit}`}</p></article>)}
+      {rows.map(row=>{
+        const payload=row.payload;
+        if("sourceOnly" in payload)return <article className="lab-review-row" key={row.key}><h3>{payload.reportedAnalyte}</h3><p>{payload.reportedValue} · {payload.reportedUnit??"Unit not reported"} · {date}</p><p className="evidence-state">Source record only — no interpretation</p>{payload.sourceInput.reportedSection!==undefined&&<p className="panel-note whitespace-pre-wrap">Reported section: {payload.sourceInput.reportedSection}</p>}<p className="panel-note whitespace-pre-wrap">Original report row: {payload.sourceInput.text}</p></article>;
+        return <article className="lab-review-row" key={row.key}><h3>{markerDefinitions.find(marker=>marker.id===payload.marker)?.name}</h3><p>{payload.value} · {date} · {payload.laboratory} · {payload.method}</p>{payload.sourceInput?.reportedSection!==undefined&&<p className="panel-note whitespace-pre-wrap break-words">Reported section: {payload.sourceInput.reportedSection}</p>}<p className="evidence-state">{payload.unitReview?"Unit assumed — confirm":"Unit supplied — review against report"}</p><p>{payload.unitReview?`System guess — confirm: ${payload.unit}. This is not a verified source unit.`:`Source unit: ${payload.sourceInput?.suppliedUnit||payload.unit}`}</p></article>;
+      })}
       <p className="panel-note">Review every row against the source. A reference interval is not a personal treatment target. {time?"The supplied collection time is retained with the report date.":"Test dates are stored at local noon for date-only ordering; no collection time is claimed."}</p>
-      {!!rows.length&&<Button type="button" disabled={save.isPending||!started&&!matchesReviewed} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
+      {!!rows.length&&<Button type="button" disabled={save.isPending||!started&&!matchesReviewed} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>!("sourceOnly" in r.payload)&&r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
       {started&&!rows.length&&<div className="flex flex-wrap gap-3"><Button type="button" variant="outline" onClick={()=>nextImport()}>Start another import</Button>{preview.errors.length>0&&mode==="paste"&&<Button type="button" variant="outline" onClick={()=>nextImport(true)}>Correct unrecognized rows</Button>}</div>}
     </div>}
   </section>;

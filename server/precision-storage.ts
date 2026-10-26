@@ -158,10 +158,13 @@ export class PrecisionStorage {
         .where(
           and(eq(precisionRecords.userId, userId), eq(precisionRecords.id, id)),
         )
-        .returning({ id: precisionRecords.id, kind: precisionRecords.kind });
+         .returning({ id: precisionRecords.id, kind: precisionRecords.kind,
+          labPayload:sql<unknown>`CASE WHEN ${precisionRecords.kind} = 'lab' THEN ${precisionRecords.encryptedPayload} ELSE NULL END` });
       if (!removed.length) return false;
-      // Any derived plan can contain conclusions based on the removed source.
-      if (removed[0].kind !== "plan")
+      let sourceOnly=false;
+      if(removed[0].kind==="lab")try{sourceOnly=sourceOnlyLabSchema.safeParse(decryptPrecision(removed[0].labPayload,userId)).success;}catch{/* Unreadable sources retain conservative plan invalidation. */}
+      // Validated raw-only facts never entered a clinical plan's input set.
+      if (removed[0].kind !== "plan" && !sourceOnly)
         await tx
           .delete(precisionRecords)
           .where(

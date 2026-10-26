@@ -1,4 +1,4 @@
-import { markerDefinitions, labSchema } from "./precision-nutrition";
+import { markerDefinitions, labSchema, sourceOnlyLabSchema, type SourceOnlyLab } from "./precision-nutrition";
 const aliases: Record<string, string> = {
   ldlcholesterol: "ldl",
   hdlcholesterol: "hdl",
@@ -29,7 +29,7 @@ export function parseLabPaste(
 ) {
   if (text.length > 30000)
     throw Error("Paste up to 30,000 characters at a time.");
-  if (!Number.isFinite(Date.parse(measuredAt))) return { valid: [], pending: [], errors: [{ line: 0, message: "Choose a valid report date." }] };
+  if (!Number.isFinite(Date.parse(measuredAt))) return { valid: [], pending: [], sourceOnly: [], errors: [{ line: 0, message: "Choose a valid report date." }] };
   const rows = text.split(/\r?\n/).map((raw,index)=>({raw,row:raw.trim(),index})).filter(({row})=>Boolean(row));
   if (rows.filter(({row})=>!isLabSectionHeading(row)&&!isColumnHeading(row)).length > 50) throw Error("Paste up to 50 results at a time.");
   const valid: Array<{
@@ -38,6 +38,7 @@ export function parseLabPaste(
     }> = [],
     errors: Array<{ line: number; message: string }> = [],
     pending: typeof valid = [];
+  const sourceOnly:Array<{line:number;payload:SourceOnlyLab}>=[];
   let reportedSection:string|undefined,sectionBlocked=false;
   rows.forEach(({raw,row,index}) => {
     if(isLabSectionHeading(raw)){
@@ -49,15 +50,23 @@ export function parseLabPaste(
     if(isColumnHeading(row))return;
     if(sectionBlocked){errors.push({line:index+1,message:"Correct the preceding source section before importing this result."});return;}
     if(raw.length>1000){errors.push({line:index+1,message:"Source row exceeds 1,000 characters. Correct it before importing."});return;}
+    const reject=(message:string)=>{
+      errors.push({line:index+1,message});
+      // Only explicit delimited source columns; never guess a scientific assay or unit.
+      const fields=raw.split(/[,\t]/);
+      if(fields.length<2||fields.length>4||fields.some(field=>field.includes('"')))return;
+      const reportedValue=fields[1].trim(),reportedUnit=fields[2]?.trim()||null;
+      const parsed=sourceOnlyLabSchema.safeParse({sourceOnly:true,reportedAnalyte:fields[0].trim(),reportedValue,reportedUnit,
+        ...(fields[3]?.trim()?{reportedReferenceInterval:fields[3].trim()}:{}),measuredAt,laboratory:laboratory.trim()||"Not supplied",method:"Not supplied",fasting:"unknown",
+        sourceInput:{text:raw,number:reportedValue,suppliedUnit:reportedUnit,capture:"pasted-report",rowOrder:index,...(reportedSection===undefined?{}:{reportedSection})}});
+      if(parsed.success)sourceOnly.push({line:index+1,payload:parsed.data});
+    };
     // Suggestions use only the marker catalogue, never magnitude-based clinical inference.
     const match = row
       .trim()
       .match(/^(.+?)[,\t ]+([0-9]+(?:\.[0-9]+)?)(?:[,\t ]+([^,\t]+))?(?:[,\t].*)?$/);
     if (!match) {
-      errors.push({
-        line: index + 1,
-        message: "Use Marker, value, unit (for example LDL, 3.2, mmol/L).",
-      });
+      reject("Use Marker, value, unit (for example LDL, 3.2, mmol/L).");
       return;
     }
     const key = normalize(match[1]),
@@ -68,16 +77,13 @@ export function parseLabPaste(
           m.id === aliases[key],
       );
     if (!marker) {
-      errors.push({
-        line: index + 1,
-        message: `Unsupported marker: ${match[1]}. Use one of the listed tests.`,
-      });
+      reject(`Unsupported marker: ${match[1]}. Use one of the listed tests.`);
       return;
     }
     // A second trailing value is ambiguous (possibly reference ranges or notes).
     // Preserve strict review instead of silently discarding it.
     if (match[3] && /\s/.test(match[3].trim())) {
-      errors.push({line:index+1,message:"Use a single supported source unit; enter other report details separately."});
+      reject("Use a single supported source unit; enter other report details separately.");
       return;
     }
     const missingUnit = !match[3]?.trim();
@@ -103,20 +109,14 @@ export function parseLabPaste(
         "Imported from pasted results; verify against the original laboratory report.",
     });
     if (!p.success) {
-      errors.push({
-        line: index + 1,
-        message: `Check value and unit for ${marker.name}; accepted units: ${marker.units.join(", ")}.`,
-      });
+      reject(`Check value and unit for ${marker.name}; accepted units: ${marker.units.join(", ")}.`);
       return;
     }
     if ([...valid,...pending].some((v) => v.payload.marker === p.data.marker)) {
-      errors.push({
-        line: index + 1,
-        message: `Duplicate ${marker.name}; import different test dates separately.`,
-      });
+      reject(`Duplicate ${marker.name}; import different test dates separately.`);
       return;
     }
     (missingUnit ? pending : valid).push({ line: index + 1, payload: p.data });
   });
-  return { valid, errors, pending };
+  return { valid, errors, pending, sourceOnly };
 }

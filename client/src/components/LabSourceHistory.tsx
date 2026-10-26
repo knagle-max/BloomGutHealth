@@ -1,16 +1,22 @@
 import {useState} from 'react';
-import {groupLabHistory,type LabHistoryRow} from '@shared/lab-history';
+import {groupLabHistory,type AnyLabHistoryRow} from '@shared/lab-history';
 import {markerDefinitions} from '@shared/precision-nutrition';
 import {Button} from './ui/button';
 import LabSourceContext from './LabSourceContext';
-export default function LabSourceHistory({labs,onDelete}:{labs:LabHistoryRow[];onDelete:(row:LabHistoryRow)=>void}){
+export default function LabSourceHistory({labs,onDelete}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void}){
  const [open,setOpen]=useState(false),groups=groupLabHistory(labs);
- const rows=(items:LabHistoryRow[])=>items.map((row,index)=>{
-  const name=markerDefinitions.find(marker=>marker.id===row.marker)?.name||row.marker,pending=row.unitReview?.status==='pending';
+ const rows=(items:AnyLabHistoryRow[])=>items.map((row,index)=>{
+  const raw='sourceOnly' in row;
+  const name=raw?row.reportedAnalyte:markerDefinitions.find(marker=>marker.id===row.marker)?.name||row.marker;
+  const pending=!raw&&row.unitReview?.status==='pending';
+  const value=raw?row.reportedValue:row.unitReview?.status==='pending'?row.unitReview.originalValue:row.value;
+  const unit=raw?row.reportedUnit??'(unit not supplied)':row.unitReview?.status==='pending'?row.unitReview.originalUnit||'(unit not supplied)':row.unit;
   const section=row.sourceInput?.reportedSection;
   return <div key={row.id}>
    {(index===0||section!==items[index-1].sourceInput?.reportedSection)&&<p className="panel-note whitespace-pre-wrap break-words">{section===undefined?'Reported section not recorded':`Reported section: ${section}`}</p>}
-   <article className="precision-observation"><div><h4>{name}</h4><p>{pending?row.unitReview!.originalValue:row.value} {pending?row.unitReview!.originalUnit||'(unit not supplied)':row.unit} · <time dateTime={row.measuredAt}>{row.measuredAt}</time></p>
+   <article className="precision-observation"><div><h4>{name}</h4><p>{value} {unit} · <time dateTime={row.measuredAt}>{row.measuredAt}</time></p>
+    {raw&&<p className="evidence-state">Source record only — no interpretation</p>}
+    {raw&&row.reportedReferenceInterval!==undefined&&<p className="panel-note whitespace-pre-wrap">Reported reference text: {row.reportedReferenceInterval}</p>}
     {pending&&<p className="evidence-state">Unit provisional — confirm against the report before interpretation.</p>}
     <details><summary>Source details for {name}</summary><LabSourceContext source={row.sourceInput} report={row.sourceReport}/><p>{row.laboratory} · {row.method} · fasting {row.fasting}</p></details>
    </div><Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>

@@ -651,11 +651,10 @@ export default function PrecisionNutrition() {
                     ))
                   ) : (
                     <p>
-                      No bloodwork recorded. Genetics and microbiome data are
-                      optional too.
+                      {r.sourceOnlyLabs?.length||r.pendingLabs?.length?"No results ready for interpretation; review the recorded source rows below.":"No bloodwork recorded. Genetics and microbiome data are optional too."}
                     </p>
                   )}
-                  <LabSourceHistory labs={[...r.labHistory,...(r.pendingLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                  <LabSourceHistory labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
 
                 </section>
                 <section className="bloom-panel">

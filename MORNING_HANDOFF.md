@@ -4,6 +4,12 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**03ec914063ab35a8bc04e77b541ba72e46325362**: Actions40376407996 SUCCESS; Render dep-dbfpibijnfac73ej13o0 LIVE. Corrected source-only reader and clinical plan-save guard verified, including real-Neon raw-source/report/export/weekly save. c046's isolated CI409 is superseded.
+
+Explicit source-only writer/history is locally ready with367/367, types/build/source130, focused12 and actual encrypted App/API/receipt/correction/known-output/history/delete-plan/mobile plus legacy regressions. [Workflow evidence](docs/review/source-only-labs-20261026/README.md). Threshold/qualitative/unreported-unit rows require explicit opt-in and have no clinical interpretation. Publish/exactCI/live next. No ordinary assay registration or automatic dedup claim.
+
+Earlier advisory checkpoint:
+
 **32915c27bfbfbe18b120a3bb2ce180446af3a85d**: Actions40353364362 SUCCESS; Render dep-dbfndo4s728c73dqk550 LIVE.360 tests/types/build/API/source129 and import/history browsers pass. Possible reimports require explicit review before a separate new save; this remains advisory, without atomic/file deduplication.
 
 Source reader c046e90 passed363 local tests/types/build/source and encrypted API/export, but exact Actions40355115182 exposed a weekly-save409 caused by storage counting nonclinical raw lab IDs. Corrective strict source-only exclusion with4 focused database tests/types/build/source130 PASS is publishing before normal writer; c046 alone is not whole-CI verified. It retains unmapped assay/value/unit text separately and cannot affect any clinical/trend/recommendation output. No normal writer yet; exact CI/deployment required first. Next: explicit source-only unsupported-row import/display, then remaining source/concurrency/feedback/search/integration scope.
