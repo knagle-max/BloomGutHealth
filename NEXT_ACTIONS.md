@@ -13,6 +13,10 @@ Authorized branch: `enhance/bloom-experience`, PR1. Existing Render workspace `t
 
 Existing optional sourceInput now included in trend DTO and readonly context in Progress source details/My Biology latest results. No schema/writer/clinical changes.3 focused/tests/types/build/firstbrowser PASS; full345 `/tmp/lab-history-context-full.log` and extended latest+legacy browser `/tmp/lab-history-context-browser-final.log` PASS. Publish/verify exact CI+Render before next batch. New LabSourceContext exposure included/source120. Full panel identity/reimport/grouped report history still open.
 
+## Active Profile pending protection
+
+Held-save actual UI baseline ageenabled reproduced; new complete fieldset freezes canonical Profile +unitselectors during save, handler guards duplicate programmatic submit. Actual normal and committed503/age17 cache-refresh/minor-safety browser PASS. This is pending protection only; wholeprofile CAS/externalrefetch draft conflict remain OPEN. Full345 `/tmp/profile-pending-full.log`, types/build/source checks PASS; ready to publish and verify exact CI+Render. Lab3385e5a8c61e47d90aa2b9d12fab3539537cf97c published/Render dep-dbfg7mijnfac73enq4mg LIVE; Actions40287210671 SUCCESS verified.
+
 ## Immediate sequence
 
 1. Check actual working tree and full-suite result; do not recreate completed work. Commit verified mass fix and persistent records, fetch/preserve incoming Architect docs before push. Only rebase own unpublished commits. No force push; inspect FETCH_HEAD because remote tracking ref is not configured.

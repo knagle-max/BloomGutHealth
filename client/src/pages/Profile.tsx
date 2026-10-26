@@ -128,9 +128,12 @@ export default function Profile({
         className="bloom-panel space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
+          if(save.isPending||incomplete||savingUnits||loadingUnits||profile.isLoading||profile.isError)return;
           save.mutate();
         }}
       >
+        <fieldset disabled={save.isPending} className="space-y-4">
+        <legend className="sr-only">Nutrition profile fields</legend>
         <h2>Nutrition profile</h2>
         {profile.isLoading ? (
           <p>Loading profile…</p>
@@ -226,6 +229,7 @@ export default function Profile({
         )}
         {save.isSuccess && <p role="status">Profile saved.</p>}
         {save.isError && <p role="alert">{save.error.message}</p>}
+        </fieldset>
       </form>
       <DietaryPreferenceSummary />
       <section className="bloom-panel space-y-3" id="privacy">

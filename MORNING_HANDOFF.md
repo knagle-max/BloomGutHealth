@@ -23,12 +23,13 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 |e38bfd0|Homemade hints retrieve Generic estimates without inventing Home-prepared labels.|40285639945 FAILED stale API inventory; fixed in567a744; LIVE|
 |567a744|Working ingredient-based search fallback preserves canonical drafts; reviewed inventory refreshed.|40286095050 SUCCESS; LIVE|
 |041cdac|Unknown source mass remains unknown in complete meal total; known nutrients/truezeros retained.|40286642337 SUCCESS; LIVE|
+|3385e5a|Original lab row, heading, number, unit and physical line available in latest and longitudinal source details.|40287210671 SUCCESS; LIVE|
 
-Latest verified code:041cdac20e0cfd4fdfa2fccf71e5bc95828dc1cc, Render dep-dbfg54h5efls73bus4sg LIVE.344 full tests/types/build/API92+13/source119 and canonical food save/PGmacro browsers passed. Historical full SHAs/deployments and corrections are in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only CI failure is disclosed; the following fallback commit passed the repaired gate. No skipped checks.
+Latest verified code:3385e5a8c61e47d90aa2b9d12fab3539537cf97c, Render dep-dbfg7mijnfac73enq4mg LIVE.345 full tests/types/build/API92+13/source120 and canonical food save/PGmacro browsers passed. Historical full SHAs/deployments and corrections are in DEVELOPMENT_LOG/BACKLOG. The homequery inventory-only CI failure is disclosed; the following fallback commit passed the repaired gate. No skipped checks.
 
-## Current lab source-history batch
+## Lab source-history delivered
 
-Existing optional sourceInput is now carried into longitudinal DTO points and exposed read-only in Progress source details and My Biology latest-result details. Verbatim heading, raw row, physical line, number token and originally supplied unit remain separate from canonical converted values. Legacy absence remains unrecorded. No inferred panel/taxonomy, clinical interpretation, schema migration or writer change. New UI source mapped;120 source files.3 focused metadata/encrypted PGlite/owner-isolation/report tests, types/build, API/source checks and actual rendered source/offset/zero/reference/keyboard/mobile/dark plus exact whitespace/latest/legacy browser PASS. Full345 suite PASS; publish and verify exact Actions+Render.
+Existing optional sourceInput is now carried into longitudinal DTO points and exposed read-only in Progress source details and My Biology latest-result details. Verbatim heading, raw row, physical line, number token and originally supplied unit remain separate from canonical converted values. Legacy absence remains unrecorded. No inferred panel/taxonomy, clinical interpretation, schema migration or writer change. New UI source mapped;120 source files.3 focused metadata/encrypted PGlite/owner-isolation/report tests, types/build, API/source checks and actual rendered source/offset/zero/reference/keyboard/mobile/dark plus exact whitespace/latest/legacy browser PASS. Full345 suite PASS; Actions40287210671 SUCCESS and exact Render LIVE verified.
 
 Minor source/backend/copy changes use code/test evidence. Selective substantial visual review remains docs/review/today-movement-20261026/README.md.174 original earlier design files/current packs verified; later FoodReview/Bloodwork packs unavailable separately. No physical-device, human study or independent clinical acceptance inferred.
 
@@ -56,3 +57,7 @@ Exact questions, choices, defaults and impact: BLOCKED_USER_INPUT.md. Highest-le
 - OFF/clinical/provider/controller rights or grants: scoped specialist evidence and explicit provisioning inputs; no self-enrolment, invented tariffs or production activation.
 
 No repeated deploy approval or API-key request is needed. No new noncritical question pauses development. Continue from NEXT_ACTIONS.md and PERSISTENT_TASK_INDEX; verify latest remote/CI/Render first. Agents do not run after a final response ends.
+
+## Current Profile pending protection
+
+Held Profile response reproduced editable submitted Age despite pending Save. Whole Profile fieldset now freezes including units; submit guard prevents repeated pending/invalid/source-error submissions. Actual App/precision/Athlete normal and committed503 age17 journeys pass, one mutation and current minor safety guards after refresh. Full345/types/build/source checks PASS; publication and exact CI/Render verification next. This is pending-draft protection, not complete same-account CAS or external-refetch conflict handling.
