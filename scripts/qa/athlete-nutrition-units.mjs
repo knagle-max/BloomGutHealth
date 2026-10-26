@@ -1,3 +1,4 @@
+import {athleteProfileSourceKey} from '../../shared/athlete-review.ts';import {experienceSettingsSchema} from '../../shared/experience.ts';
 import {createRequire} from 'node:module';
 import {createServer} from 'node:http';
 import path from 'node:path';
@@ -29,8 +30,8 @@ const day={minutes:60,recordedLoad:0,loadEntries:0,targets:{carbohydratesG:[300,
 await page.route('**/api/**',async route=>{const req=route.request(),p=new URL(req.url()).pathname;let json;
 if(req.method()!=='GET')writes.push({path:p,body:req.postDataJSON()});
 if(p==='/api/auth/me')json={user:{id:'synthetic-athlete',username:'Synthetic Athlete'}};
-else if(p==='/api/experience/settings')json={mode:'athlete',athlete:{sport:'Synthetic cycling',adult:true,pregnancyNo:true,healthReviewed:true,targetsConfirmed:true,energyKcal:2500},displayUnits:metric?{energy:'kcal',foodWeight:'g',hydration:'L',bodyWeight:'kg'}:{energy:'kJ',foodWeight:'oz',hydration:'US-fl-oz',bodyWeight:'lb'}};
-else if(p==='/api/experience/athlete-day'){json=structuredClone(day);if(unknown){json.consumed.calories=null;json.mealChoices.choices[0].nutrients.calories=null;json.targets.energyKcal=null;}}
+else if(p==='/api/experience/settings')json={mode:'athlete',athlete:{sport:'Synthetic cycling',weightKg:70,adult:true,pregnancyNo:true,healthReviewed:true,targetsConfirmed:true,energyKcal:2500},displayUnits:metric?{energy:'kcal',foodWeight:'g',hydration:'L',bodyWeight:'kg'}:{energy:'kJ',foodWeight:'oz',hydration:'US-fl-oz',bodyWeight:'lb'}};
+else if(p==='/api/experience/athlete-day'){json=structuredClone(day);json.profileSourceKey=athleteProfileSourceKey(experienceSettingsSchema.parse({athlete:{sport:'Synthetic cycling',weightKg:70,adult:true,pregnancyNo:true,healthReviewed:true,targetsConfirmed:true,energyKcal:2500}}).athlete);if(unknown){json.consumed.calories=null;json.mealChoices.choices[0].nutrients.calories=null;json.targets.energyKcal=null;}}
 else if(p.startsWith('/api/experience/records'))json=[];
 else return route.fulfill({status:503,json:{error:'Not used by athlete fixture'}});
 await route.fulfill({json});});

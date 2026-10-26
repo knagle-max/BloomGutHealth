@@ -17,3 +17,17 @@ test("experience migration, encrypted persistence, mode isolation and owner-scop
  await pg.exec("DELETE FROM users WHERE id='b'");assert.equal((await pg.query<any>("SELECT count(*)::int AS n FROM experience_records")).rows[0].n,0);
  }finally{await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
 });
+
+test("encrypted settings atomically invalidate stale review, reject repeated old acknowledgement and keep accounts and persisted schema independent",async()=>{
+ const {athleteTargetInputKey,athleteHealthInputKey,athleteProfileSourceKey}=await import('../shared/athlete-review');
+ const pg=new PGlite(),previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');
+ try{await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");await pg.exec(readFileSync(new URL('../migrations/0004_experience.sql',import.meta.url),'utf8'));const store=new ExperienceStorage(drizzle(pg)as any);
+ const p=experienceSettingsSchema.parse({athlete:{weightKg:70,adult:true,pregnancyNo:true,healthReviewed:true,targetsConfirmed:true,energyKcal:2500}}).athlete;
+ const proof={base:athleteProfileSourceKey(experienceSettingsSchema.parse({}).athlete),targets:athleteTargetInputKey(p),health:athleteHealthInputKey(p)};
+ const first=await store.putExperienceSettings('a',{mode:'athlete',athlete:p,athleteReviewFor:proof});assert.equal(first.athlete.targetsConfirmed,true);
+ const oldReview={...proof,base:athleteProfileSourceKey(first.athlete)};const changed={...p,weightKg:72};for(let attempt=0;attempt<2;attempt++)assert.equal((await store.putExperienceSettings('a',{athlete:changed,athleteReviewFor:oldReview})).athlete.targetsConfirmed,false);
+ const current=await store.putExperienceSettings('a',{athlete:changed,athleteReviewFor:{...proof,base:athleteProfileSourceKey((await store.getExperienceSettings("a")).athlete),targets:athleteTargetInputKey(changed)}});assert.equal(current.athlete.targetsConfirmed,true);
+ const units=await store.putExperienceSettings('a',{displayUnits:{...current.displayUnits,bodyWeight:'lb'}});assert.equal(units.athlete.targetsConfirmed,true);assert.equal(units.athlete.weightKg,72);assert.equal((await store.getExperienceSettings('b')).athlete.weightKg,null);
+ const {decryptPrecision}=await import('../server/precision-crypto');const row=await pg.query<any>("SELECT encrypted_payload FROM experience_settings WHERE user_id='a'");const persisted=decryptPrecision(row.rows[0].encrypted_payload,'a')as any;assert.equal('athleteReviewFor'in persisted,false);assert.deepEqual(experienceSettingsSchema.parse(persisted),units);
+ }finally{await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
+});

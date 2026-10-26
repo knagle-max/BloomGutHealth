@@ -1,3 +1,4 @@
+import {athleteProfileSourceKey,invalidateAthleteReview} from '../../shared/athlete-review.ts';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import fs from 'node:fs/promises';
@@ -28,7 +29,7 @@ if(p==='/api/auth/me')json={user:{id:'synthetic-editor',username:'Synthetic Edit
 else if(p==='/api/experience/settings'){
  if(req.method()==='PATCH'){
   if(failNextUnits){failNextUnits=false;return route.fulfill({status:503,json:{error:'Synthetic preference save failure'}});}
-  settings=experienceSettingsSchema.parse({...settings,...body});
+  {const previous=settings.athlete;const{athleteReviewFor,...values}=body;settings=experienceSettingsSchema.parse({...settings,...values});if(values.athlete)settings.athlete=invalidateAthleteReview(previous,settings.athlete,athleteReviewFor);}
  }
  json=settings;
 }
@@ -42,7 +43,7 @@ else if(p==='/api/precision/records'&&req.method()==='POST'){
  if(loseFirstLab){loseFirstLab=false;return route.abort('failed');}
 }
 else if(p.endsWith('/confirm-unit')){const source=records.find(r=>r.id===p.split('/')[4]);json={id:'confirmed-'+records.length,kind:'lab',payload:{...source.payload,unit:body.unit,unitReview:{...source.payload.unitReview,status:'confirmed',confirmedAt:new Date().toISOString(),supersedes:source.id}},createdAt:new Date().toISOString()};records.push(json);}
-else if(p==='/api/experience/athlete-day')json={...buildAthleteDay(settings.athlete,[],[],[]),hydration:[]};
+else if(p==='/api/experience/athlete-day')json={profileSourceKey:athleteProfileSourceKey(settings.athlete),...buildAthleteDay(settings.athlete,[],[],[]),hydration:[]};
 else if(p==='/api/precision/today-plan')return route.fulfill({status:503,json:{error:'Synthetic empty planning state'}});
 else if(p==='/api/meal-planner')json={note:'Synthetic planning fixture',recentMeals:0,suggestions:[],pathways:[],sources:[],cohorts:[]};
 else if(p==='/api/meal-planner/progress')json={note:'Synthetic progress fixture',weeks:[],adherence:[]};

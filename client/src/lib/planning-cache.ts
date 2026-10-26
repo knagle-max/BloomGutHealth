@@ -3,7 +3,7 @@ import {queryClient} from './queryClient';
 // profile inputs. Public composition/catalogue data has no such dependency.
 const affected = (query: {queryKey:readonly unknown[]}) => {
  const path=String(query.queryKey[0]);
- return ['/api/precision','/api/nutrition','/api/biology/foods','/api/meal-planner']
+ return ['/api/precision','/api/nutrition','/api/biology/foods','/api/meal-planner','/api/experience/athlete-day']
   .some(root=>path===root||path.startsWith(root+'/'));
 };
 export const invalidatePlanningInputs=()=>queryClient.invalidateQueries({predicate:affected});

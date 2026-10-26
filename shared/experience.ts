@@ -52,10 +52,12 @@ export const experienceSettingsSchema = z.object({
 }).strict();
 export type ExperienceSettings = z.infer<typeof experienceSettingsSchema>;
 export const settingsPatchSchema = z.object({
+  athleteReviewFor:z.object({base:z.string().max(1024).optional(),targets:z.string().max(1024).optional(),health:z.string().max(1024).optional()}).strict().optional(),
   onboarding: onboardingSchema.optional(),
   displayUnits: displayUnitsSchema.optional(),
   mode: z.enum(["everyday", "athlete"]).optional(), athlete: athleteProfileSchema.optional(), practical: practicalPreferencesSchema.optional(),
-}).strict().refine(v => Object.keys(v).length > 0);
+}).strict().refine(v => Object.keys(v).length > 0).refine(v=>!v.athleteReviewFor||!!v.athlete,"Review acknowledgement requires the corresponding Athlete inputs");
+export type ExperienceSettingsPatch=z.infer<typeof settingsPatchSchema>;
 export const trainingSessionSchema = z.object({
   title: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
   minutes: z.number().int().min(1).max(600), intensity: z.enum(["easy", "moderate", "hard", "competition"]),

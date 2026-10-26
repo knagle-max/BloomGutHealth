@@ -1,3 +1,4 @@
+import {athleteProfileSourceKey,invalidateAthleteReview} from '../../shared/athlete-review.ts';
 import assert from 'node:assert/strict';import {createRequire} from 'node:module';import fs from 'node:fs/promises';import path from 'node:path';import {fileURLToPath} from 'node:url';
 const require=createRequire(import.meta.url),{chromium}=require(process.env.BLOOM_PLAYWRIGHT_MODULE || 'playwright');
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');const {createServer}=await import(root+'/node_modules/vite/dist/node/index.js');const vite=await createServer({configFile:root+'/vite.config.ts',server:{port:5187,host:'127.0.0.1',strictPort:true}});await vite.listen();
@@ -6,12 +7,12 @@ const browser=await chromium.launch({headless:true,...(process.env.BLOOM_CHROMIU
 const errors=[],requests=[],records=[];let settings=experienceSettingsSchema.parse({}),prefs={...defaultPreferences,exclusions:['eggs']},scanCount=0;const mealSaves=new Map(),mealAttempts=[];let loseMealResponse=true;
 page.on('pageerror',e=>errors.push(e.message));await page.route('https://fonts.**/**',r=>r.abort());await page.route('**/api/**',async route=>{const req=route.request(),p=new URL(req.url()).pathname,body=req.method()==='GET'?{}:req.postDataJSON();if(req.method()!=='GET')requests.push({p,body});let json=[];
 if(p==='/api/auth/me')json={user:{id:'synthetic',username:'Demo Gardener'}};
-else if(p==='/api/experience/settings'){if(req.method()==='PATCH')settings=experienceSettingsSchema.parse({...settings,...body});json=settings;}
+else if(p==='/api/experience/settings'){if(req.method()==='PATCH'){const previous=settings.athlete;const{athleteReviewFor,...values}=body;settings=experienceSettingsSchema.parse({...settings,...values});if(values.athlete)settings.athlete=invalidateAthleteReview(previous,settings.athlete,athleteReviewFor);}json=settings;}
 else if(p==='/api/preferences'){if(req.method()==='PUT')prefs=body;json=prefs;}
 else if(p==='/api/precision')json={...buildPrecisionReport(records,contextSchema.parse({}),prefs,null),records,availableReports:[],intake:{days:28,mealsLogged:0,nutrients:[]}};
 else if(p==='/api/precision/records'&&req.method()==='POST'){const row={id:'r'+records.length,kind:body.kind,payload:body.payload,createdAt:new Date().toISOString()};records.push(row);json=row;}
 else if(p.includes('/confirm-unit')){const original=records.find(r=>r.id===p.split('/')[4]);const row={id:'confirmed',kind:'lab',payload:{...original.payload,unit:body.unit,value:original.payload.unitReview.originalValue,unitReview:{...original.payload.unitReview,status:'confirmed',confirmedAt:new Date().toISOString(),supersedes:original.id}},createdAt:new Date().toISOString()};records.push(row);json=row;}
-else if(p==='/api/experience/athlete-day')json={...buildAthleteDay(settings.athlete,[],[],[]),hydration:[]};
+else if(p==='/api/experience/athlete-day')json={profileSourceKey:athleteProfileSourceKey(settings.athlete),...buildAthleteDay(settings.athlete,[],[],[]),hydration:[]};
 else if(p==='/api/experience/scan'){scanCount++;assert.equal(body.consent,true);json={scan:{description:'Synthetic photo draft',nutrients:[],name:'',brand:'',servingDescription:'',servingGrams:null},note:'Synthetic provider response; no external transfer.'};}
 else if(p==='/api/meals'&&req.method()==='POST'){const key=req.headers()['idempotency-key'];assert.ok(key);mealAttempts.push({key,body});if(!mealSaves.has(key))mealSaves.set(key,{id:'meal-'+mealSaves.size,userId:'synthetic',mealText:body.mealText,mealType:body.mealType,mealContext:body.mealContext,loggedAt:body.mealContext.eatenAt,totalCalories:null,totalProtein:null,totalCarbs:null,totalFat:null,nutritionalData:[],intelligence:null});if(loseMealResponse){loseMealResponse=false;await route.abort('failed');return;}json=mealSaves.get(key);}
 else if(p==='/api/profile')json={dietaryPreferences:prefs};

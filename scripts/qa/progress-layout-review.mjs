@@ -1,3 +1,4 @@
+import {invalidateAthleteReview} from '../../shared/athlete-review.ts';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import fs from 'node:fs/promises';
@@ -28,7 +29,7 @@ if(p==='/api/auth/me')json={user:{id:'synthetic-editor',username:'Synthetic Edit
 else if(p==='/api/experience/settings'){
  if(req.method()==='PATCH'){
   if(failNextUnits){failNextUnits=false;return route.fulfill({status:503,json:{error:'Synthetic preference save failure'}});}
-  settings=experienceSettingsSchema.parse({...settings,...body});
+  {const previous=settings.athlete;const{athleteReviewFor,...values}=body;settings=experienceSettingsSchema.parse({...settings,...values});if(values.athlete)settings.athlete=invalidateAthleteReview(previous,settings.athlete,athleteReviewFor);}
  }
  json=settings;
 }

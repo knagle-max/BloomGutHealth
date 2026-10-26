@@ -518,7 +518,11 @@ try {
   );
   assert.equal(today.targetSource, "Targets confirmed in this form");
   assert.equal((await request("/api/experience/settings")).mode,"everyday");
-  await request("/api/experience/settings","PATCH",{mode:"athlete",athlete:{weightKg:70,adult:true,pregnancyNo:true,healthReviewed:true,targetsConfirmed:true}});
+  const {athleteTargetInputKey,athleteHealthInputKey,athleteProfileSourceKey}=await import('../shared/athlete-review.ts');
+  const unreviewedAthlete=await request("/api/experience/settings","PATCH",{mode:"athlete",athlete:{weightKg:70,adult:true,pregnancyNo:true,healthReviewed:false,targetsConfirmed:false}});
+  const reviewedAthlete={...unreviewedAthlete.athlete,healthReviewed:true,targetsConfirmed:true};
+  const confirmedAthlete=await request("/api/experience/settings","PATCH",{athlete:reviewedAthlete,athleteReviewFor:{base:athleteProfileSourceKey(unreviewedAthlete.athlete),targets:athleteTargetInputKey(reviewedAthlete),health:athleteHealthInputKey(reviewedAthlete)}});
+  assert.equal(confirmedAthlete.athlete.targetsConfirmed,true);assert.equal(confirmedAthlete.athlete.healthReviewed,true);
   const training=await request("/api/experience/records","POST",{kind:"session",payload:{title:"Synthetic deployment ride",startsAt:"2026-10-18T18:00:00Z",minutes:180,intensity:"hard",discipline:"endurance"}},201);
   const athleteDay=await request("/api/experience/athlete-day","POST",{date:"2026-10-18",timezoneOffset:360,hour:18});
   assert.equal(athleteDay.minutes,180);assert.equal(athleteDay.blocked,false);assert.deepEqual(athleteDay.fueling[0].carbsGHour,[30,60]);

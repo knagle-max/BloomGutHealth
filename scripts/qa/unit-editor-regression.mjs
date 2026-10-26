@@ -1,3 +1,4 @@
+import {athleteProfileSourceKey,invalidateAthleteReview} from '../../shared/athlete-review.ts';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import fs from 'node:fs/promises';
@@ -28,7 +29,7 @@ if(p==='/api/auth/me')json={user:{id:'synthetic-editor',username:'Synthetic Edit
 else if(p==='/api/experience/settings'){
  if(req.method()==='PATCH'){
   if(failNextUnits){failNextUnits=false;return route.fulfill({status:503,json:{error:'Synthetic preference save failure'}});}
-  settings=experienceSettingsSchema.parse({...settings,...body});
+  {const previous=settings.athlete;const{athleteReviewFor,...values}=body;settings=experienceSettingsSchema.parse({...settings,...values});if(values.athlete)settings.athlete=invalidateAthleteReview(previous,settings.athlete,athleteReviewFor);}
  }
  json=settings;
 }
@@ -37,7 +38,7 @@ else if(p==='/api/user/synthetic-editor/profile'){profile={...profile,...body};j
 else if(p==='/api/preferences'){if(req.method()==='PUT')preferences=body;json=preferences;}
 else if(p==='/api/precision')json={...buildPrecisionReport(records,safety,preferences,null),records,availableReports:[],journalSymptoms:[],intake:{days:28,mealsLogged:0,nutrients:[]}};
 else if(p==='/api/precision/records'&&req.method()==='POST'){json={id:'checkin-'+records.length,kind:body.kind,payload:body.payload,createdAt:new Date().toISOString()};records.push(json);}
-else if(p==='/api/experience/athlete-day')json={...buildAthleteDay(settings.athlete,[],[],[]),hydration:[]};
+else if(p==='/api/experience/athlete-day')json={profileSourceKey:athleteProfileSourceKey(settings.athlete),...buildAthleteDay(settings.athlete,[],[],[]),hydration:[]};
 else if(p==='/api/precision/today-plan')return route.fulfill({status:503,json:{error:'Synthetic empty planning state'}});
 else if(p==='/api/meal-planner')json={note:'Synthetic planning fixture',recentMeals:0,suggestions:[],pathways:[],sources:[],cohorts:[]};
 else if(p==='/api/meal-planner/progress')json={note:'Synthetic progress fixture',weeks:[],adherence:[]};
@@ -64,7 +65,7 @@ await page.getByLabel('Height inches',{exact:true}).fill('.');const count=writes
 await page.getByLabel('Height inches',{exact:true}).fill('11');await page.getByLabel('Height unit',{exact:true}).selectOption('cm');await page.getByLabel('Height',{exact:true}).waitFor();near(await page.getByLabel('Height',{exact:true}).inputValue(),180.34);
 await page.getByRole('button',{name:'Save nutrition profile',exact:true}).click();await page.getByText('Profile saved.',{exact:true}).waitFor();near(profile.weightKg,80);near(profile.heightCm,180.34);
 outcomes.push('Single Profile editors; unsaved values survive failed saves, repeated conversions, feet/inches validation and canonical submission.');
-await go('/precision');await page.getByRole('button',{name:'Progress',exact:true}).click();await page.getByLabel('Biology progress weight unit',{exact:true}).waitFor();
+await go('/precision');await page.getByRole('button',{name:/^Measurements/}).click();await page.getByLabel('Biology progress weight unit',{exact:true}).waitFor();
 assert.equal(await page.getByRole('combobox',{name:'Biology progress weight unit',exact:true}).count(),1);
 assert.equal(await page.getByRole('combobox',{name:'Biology progress waist unit',exact:true}).count(),1);
 assert.equal(await page.getByRole('combobox',{name:'Unit for check-in weight',exact:true}).count(),0);
@@ -88,7 +89,7 @@ const beforeCopy=writes.length,checkinCount=records.length;await page.getByRole(
 await page.getByRole('button',{name:'Use latest Profile weight',exact:true}).click();await page.getByRole('button',{name:'Use this weight in Athlete draft',exact:true}).click();near(await athleteMass.inputValue(),80*2.2046226218487757);assert.equal(settings.athlete.weightKg,75);await page.getByRole('button',{name:'Save athlete profile',exact:true}).click();await page.getByText('Profile snapshot copied with confirmation',{exact:false}).waitFor();near(settings.athlete.weightKg,80);assert.equal(settings.athlete.massReference.source,'profile-copy');near(profile.weightKg,80);assert.equal(records.length,checkinCount);
 profile={...profile,weightKg:82};await go('/athlete');await page.getByLabel('Athlete reference body mass (lb)',{exact:true}).waitFor();near(settings.athlete.weightKg,80);await page.getByLabel('Athlete reference body mass (lb)',{exact:true}).fill(String(81*2.2046226218487757));await page.getByRole('button',{name:'Save athlete profile',exact:true}).click();await page.getByText('Self-entered',{exact:false}).waitFor();near(settings.athlete.weightKg,81);assert.equal(settings.athlete.massReference.source,'manual');assert.equal(settings.athlete.massReference.profileWeightKg,null);near(profile.weightKg,82);assert.equal(records.length,checkinCount);settings.mode='everyday';
 outcomes.push('Independent Athlete reference mass, explicit preview/cancel/confirm, pound-to-kg preservation, recorded source/date and no Profile writes, silent sync or duplicate dated observations.');
-for(const width of [320,375,768,1440]){await page.setViewportSize({width,height:1000});for(const route of ['/profile','/progress','/precision']){await go(route);if(route==='/precision')await page.getByRole('button',{name:'Progress',exact:true}).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${route} ${width}`);}}
+for(const width of [320,375,768,1440]){await page.setViewportSize({width,height:1000});for(const route of ['/profile','/progress','/precision']){await go(route);if(route==='/precision')await page.getByRole('button',{name:/^Measurements/}).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${route} ${width}`);}}
 await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>document.documentElement.style.zoom='2');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.getByLabel('Biology progress weight unit',{exact:true}).focus();assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Biology progress weight unit');await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Biology progress waist unit');
 outcomes.push('320/375/768/1440 reflow, keyboard order and 200% CSS-zoom surrogate; physical devices/screen readers not claimed.');
 assert.deepEqual(errors,[]);const output=process.env.BLOOM_REVIEW_OUTPUT||path.join(root,'work/unit-editor-regression');await fs.mkdir(output,{recursive:true});await fs.writeFile(path.join(output,'results.json'),JSON.stringify({outcomes,errors,synthetic:true,independentAcceptance:false},null,2));console.log(JSON.stringify({outcomes,errors},null,2));

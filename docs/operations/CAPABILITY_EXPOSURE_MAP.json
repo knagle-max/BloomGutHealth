@@ -51,7 +51,8 @@
           "shared/experience.ts",
           "shared/goal-guidance.ts",
           "shared/today-focus.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -86,7 +87,8 @@
           "shared/experience.ts",
           "shared/goal-guidance.ts",
           "shared/today-focus.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -124,7 +126,8 @@
           "shared/goal-guidance.ts",
           "shared/today-focus.ts",
           "server/planning-context.ts",
-          "shared/athlete-calendar.ts"
+          "shared/athlete-calendar.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -489,7 +492,8 @@
         "logicOrJobs": [
           "shared/athlete.ts",
           "shared/athlete-calendar.ts",
-          "shared/athlete-eligibility.ts"
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -520,7 +524,8 @@
         "logicOrJobs": [
           "shared/athlete.ts",
           "shared/athlete-calendar.ts",
-          "shared/athlete-eligibility.ts"
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -549,7 +554,8 @@
         ],
         "logicOrJobs": [
           "shared/athlete.ts",
-          "shared/athlete-eligibility.ts"
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -577,7 +583,8 @@
         ],
         "logicOrJobs": [
           "shared/athlete.ts",
-          "shared/athlete-eligibility.ts"
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1309,7 +1316,8 @@
         ],
         "logicOrJobs": [
           "shared/athlete.ts",
-          "shared/athlete-eligibility.ts"
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1481,9 +1489,9 @@
     "client/src/components/TodayStatus.tsx": "7ab8f78d8f2120002df08d9eb877d7bb3123e8914802bcce4cdcdceb4aa13ee0",
     "client/src/lib/auth.tsx": "796839344459bece651ad94135b8dc51575eb60bcb625d6ada6394b0553324df",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
-    "client/src/lib/planning-cache.ts": "e32518c7adb3a08919b47687daeaec4706fb60453769e07ba30763323bb05fcf",
+    "client/src/lib/planning-cache.ts": "4f30249a69c76222e3675784d03f5928d2dfec3e89110e869434699ea83ea08c",
     "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
-    "client/src/pages/AthleteWorkspace.tsx": "2cce9b54f2f620d0f9748fa8c24393dc2468477f917ffce70191e858cf242d08",
+    "client/src/pages/AthleteWorkspace.tsx": "40d2c27904663bd6daa3c74364d3876d4073663dd5d3ff2affddc62d32ec85e7",
     "client/src/pages/Dashboard.tsx": "e4e4ce948352c411211663059a39ba2db812503cc7aa1f396492ba14cfe63112",
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
@@ -1509,7 +1517,7 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "b53378cd5b37f817ef76d4a7cb1feb6c5a6a5387f54fa0482dc363d4db1e8b5e",
+    "server/experience-routes.ts": "e1501d65f8cbbd4d3d999182fb0b0f5ece53fd0c314673463fd0b438e2b1605e",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -1548,12 +1556,13 @@
     "shared/application-schema.ts": "ee592917ca958174e6bc339dd5388737672e416cb93cd4ddca6308a0424f87c8",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
     "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
+    "shared/athlete-review.ts": "a0625e796a40e7ef639809c11dcd7ca60568ea23eafcdbfbe2df1b2165a92ea1",
     "shared/athlete.ts": "380767ce6e5245df8fa52d6b66a60c41346022e0614f72f83cf2a58bbb6707b5",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
-    "shared/experience.ts": "7207df9ccdb4bf51d7f6c8c02097b1307b1bc4c1341946080521f277335569ed",
+    "shared/experience.ts": "cd1e0f9c03eead20003e8053e042a1cedecbadfcaa36fc1c11a536fa5e1d936d",
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/goal-guidance.ts": "46000666caadd6ac1aaf541d1e2b76bb24b93208ba30caf535469771db6dff5a",

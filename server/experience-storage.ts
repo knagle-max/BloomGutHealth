@@ -1,6 +1,7 @@
+import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords } from "../shared/schema";
-import { experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
+import { experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -11,12 +12,14 @@ export class ExperienceStorage {
   const [r]=await this.db.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
   return experienceSettingsSchema.parse(r?decryptPrecision(r.encryptedPayload,userId):{});
  }
- async putExperienceSettings(userId:string, patch:Partial<ExperienceSettings>) {
+ async putExperienceSettings(userId:string, patch:ExperienceSettingsPatch) {
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const [r]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
    const current=experienceSettingsSchema.parse(r?decryptPrecision(r.encryptedPayload,userId):{});
-   const next=experienceSettingsSchema.parse({...current,...patch});
+   const {athleteReviewFor,...values}=patch;
+   const next=experienceSettingsSchema.parse({...current,...values});
+   if(patch.athlete)next.athlete=invalidateAthleteReview(current.athlete,next.athlete,athleteReviewFor);
    await tx.insert(experienceSettings).values({userId,encryptedPayload:encryptPrecision(next,userId)}).onConflictDoUpdate({target:experienceSettings.userId,set:{encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}});
    return next;
   });
@@ -63,7 +66,7 @@ export class ExperienceStorage {
 }
 export interface ExperienceStore {
  getExperienceSettings(userId:string):Promise<ExperienceSettings>;
- putExperienceSettings(userId:string,patch:Partial<ExperienceSettings>):Promise<ExperienceSettings>;
+ putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;
  insertExperienceRecord(userId:string,entry:ExperienceEntry):Promise<ExperienceRecord>;
  updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry):Promise<ExperienceRecord|null>;
