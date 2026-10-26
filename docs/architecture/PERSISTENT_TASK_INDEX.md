@@ -726,3 +726,8 @@ Nonpersisting analyze adds owner-bound fact/source hash header; reviewedSave mar
 3 focused API/PGlite/hash/memory testsPASS, typesPASS; initialtest incorrectlyexpected201 whereexistingAPIreturns200, fixturecorrectedwithout changingstatuscontract. Full355/build/API/source126 running. Settings7f94f737b34f2c00e44199c7774c7dc01725e927 exact Actions40334143261 SUCCESS/Render dep-dbfll94s728c73dnip9g LIVE verified, including newproductionconcurrencysmoke. UI pre-save flow stillnext, notclaimedcomplete.
 
 FOOD-REVIEW-PRESAVE-SOURCE final local:355/355 tests PASS(186356ms), types/build/API92+13/source126 PASS; existing canonical AddFood/unknown-response/one-row/Athlete and actualPG correction-loss/freeze/retry browser regressions PASS. Production smoke now uses nonpersisting analysis→reviewed-marker/header save→same receipt replay on the existing meal (no extra rows); JSsyntaxPASS, exactCI required. Backend only; pre-save web flow remains next.
+
+
+## 2026-10-26 — food review before journal confirmation
+
+FOOD-REVIEW-PRESAVE-WEB delivered f30104a + corrective9b201e29f9a89962c9b9e7658fc31e9fe55a7dbb. Shared complete-ingredient review/confirm handlers, source-bound explicit save, no writes during correction, current owner/input guards and exact receipt recovery.356 local tests/types/build/API94+13/source126 and actual API/PGlite/rendered regressions PASS; Actions40346711959 SUCCESS, Render dep-dbfmqo2jnfac73f0h9gg LIVE. Initial staging omission/failed inventory CI documented and corrected. Selective evidence docs/review/meal-presave-20261026. No new-pack fidelity/clinical/native/human acceptance inferred. Active next: FOOD-SOURCE-BOUNDARY-01 malformed-response and superseded lookup guards; panel/source-history and other v0.5 scope remain actionable.

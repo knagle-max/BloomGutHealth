@@ -1,3 +1,4 @@
+import {useAuth} from "@/lib/auth";
 import { useState, useEffect, useRef, useId } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -6,7 +7,7 @@ import {
   nutrientDefinitions,
   type Ingredient,
 } from "@shared/meal-intelligence";
-import { productIngredient, replacementLabelAmount, type Product } from "@shared/products";
+import { productResponseSchema, productListResponseSchema, productSearchResponseSchema, readProductResponse, productIngredient, replacementLabelAmount, type Product } from "@shared/products";
 import { productMatchStatus, homePreparedQuery, isHomePreparedSource } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
 import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
@@ -48,63 +49,48 @@ export default function ProductPicker({
     const amount=replacementLabelAmount(product?.servingGrams??null,initialGrams);
     setServings(amount.servings);setAmountReviewRequired(amount.requiresReview);setAmountReviewed(false);setAmountBasis(initialGrams);
   }
-  function chooseProduct(product:Product|null){setChoice(product);initialiseAmount(product);}
+  function chooseProduct(product:Product|null){choiceOwner.current=user?.id;setChoice(product);initialiseAmount(product);}
   useEffect(()=>{if(choice&&!Object.is(amountBasis,initialGrams))initialiseAmount(choice);},[initialGrams,amountBasis,choice]);
   const started = useRef(false);
+  const lookupEpoch=useRef(0);
+  const {user}=useAuth();const actor=useRef(user?.id),choiceOwner=useRef(user?.id);actor.current=user?.id;
+  useEffect(()=>()=>{lookupEpoch.current++;},[]);
   const resultId=useId();
   const [submittedQuery,setSubmittedQuery]=useState(initialQuery);
   const manualForm=useRef<HTMLFormElement>(null);
   useEffect(()=>{if(manual)manualForm.current?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();},[manual]);
   const search = useMutation({
-    onMutate:(override?:string)=>setSubmittedQuery(override||query),
-    mutationFn: async (override?: string) =>
-      (
-        await apiRequest(
-          "GET",
-          "/api/products/search?" + new URLSearchParams({ q: override || query, kind }),
-        )
-      ).json() as Promise<{
-        products: Product[];
-        warnings: string[];
-        attribution: string;
-        query?: { original:string; normalized:string };
-      }>,
-    onSuccess: (result, code) => {
-      if (normalizeBarcode(code || query) && result.products.length === 1) resolve.mutate(result.products[0]);
-      setVariants([]);
-      setChoice(null);
-      setError("");
+    mutationFn: async (override?:string)=>{
+      const submitted=override||query,epoch=++lookupEpoch.current,owner=user?.id;
+      setSubmittedQuery(submitted);setVariants([]);chooseProduct(null);setError("");
+      const response=await apiRequest("GET","/api/products/search?"+new URLSearchParams({q:submitted,kind}));
+      return {...readProductResponse(productSearchResponseSchema,await response.json()),epoch,submitted,owner};
+    },
+    onSuccess:result=>{
+      if(result.epoch!==lookupEpoch.current||result.owner!==actor.current)return;
+      if(normalizeBarcode(result.submitted)&&result.products.length===1)resolve.mutate(result.products[0]);
     },
   });
-  const resultQuery=search.data?.query?.original||submittedQuery;
-  const allPossible=!!search.data?.products.length&&search.data.products.every(p=>productMatchStatus(p,resultQuery)==="possible");
+  const searchResult=search.data?.epoch===lookupEpoch.current&&search.data.owner===user?.id?search.data:undefined;
+  const resultQuery=searchResult?.query?.original||submittedQuery;
+  const allPossible=!!searchResult?.products.length&&searchResult.products.every(p=>productMatchStatus(p,resultQuery)==="possible");
   const resolve = useMutation({
-    mutationFn: async (p: Product) =>
-      (
-        await apiRequest(
-          "GET",
-          `/api/products/${p.source}/${encodeURIComponent(p.id)}`,
-        )
-      ).json() as Promise<{ products: Product[] }>,
-    onSuccess: (r) => {
-      setVariants(r.products);
-      chooseProduct(r.products[0] || null);
-      setError(
-        r.products.length
-          ? ""
-          : "This source has no supported serving on this label. Enter your package label below.",
-      );
+    mutationFn:async(p:Product)=>{
+      const epoch=lookupEpoch.current,owner=user?.id;setVariants([]);chooseProduct(null);setError("");
+      const response=await apiRequest("GET",`/api/products/${p.source}/${encodeURIComponent(p.id)}`);
+      return {...readProductResponse(productListResponseSchema,await response.json()),epoch,owner};
+    },
+    onSuccess:result=>{
+      if(result.epoch!==lookupEpoch.current||result.owner!==actor.current)return;
+      setVariants(result.products);chooseProduct(result.products[0]||null);
+      setError(result.products.length?"":"This source has no supported serving on this label. Enter your package label below.");
     },
   });
-  const saved = useQuery<Product[]>({ queryKey: ["/api/products/saved"] });
-  useEffect(() => {
-    if (autoSearch && !started.current && query.length >= 2) {
-      started.current = true;
-      search.mutate(undefined);
-    }
-  }, []);
+  const saved=useQuery<Product[]>({queryKey:["/api/products/saved",user?.id],enabled:!!user,queryFn:async()=>readProductResponse(productResponseSchema.array(),await(await apiRequest("GET","/api/products/saved")).json())});
+  useEffect(()=>{if(autoSearch&&!started.current&&query.length>=2){started.current=true;search.mutate(undefined);}},[]);
   const create = useMutation({
     mutationFn: async (form: HTMLFormElement) => {
+      const epoch=++lookupEpoch.current,owner=user?.id;setVariants([]);chooseProduct(null);
       const d = new FormData(form),
         perServing: Record<string, number> = {};
       for (const [key] of nutrientDefinitions) {
@@ -113,8 +99,7 @@ export default function ProductPicker({
       }
       const activeName = String(d.get("activeName") || "").trim(),
         activeAmount = String(d.get("activeAmount") || "").trim();
-      return (
-        await apiRequest("POST", "/api/products", {
+      const response=await apiRequest("POST", "/api/products", {
           name: String(d.get("name") || ""),
           ...(d.get("barcode") ? {barcode:String(d.get("barcode"))} : {}),
           brand: String(d.get("brand") || ""),
@@ -134,16 +119,19 @@ export default function ProductPicker({
                 ],
               }
             : {}),
-        })
-      ).json() as Promise<Product>;
+        });
+      return {product:readProductResponse(productResponseSchema,await response.json()),epoch,owner};
     },
-    onSuccess: (p) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/products/saved"] });
+    onSuccess: ({product:p,epoch,owner}) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/products/saved",owner] });
+      if(epoch!==lookupEpoch.current||owner!==actor.current)return;
       chooseProduct(p);
       setVariants([p]);
       setManual(false);
     },
   });
+  const previousOwner=useRef(user?.id);
+  useEffect(()=>{if(previousOwner.current===user?.id)return;previousOwner.current=user?.id;lookupEpoch.current++;setChoice(null);setVariants([]);search.reset();resolve.reset();create.reset();},[user?.id]);
   const remove = useMutation({
     mutationFn: async (id: string) =>
       apiRequest("DELETE", "/api/products/" + encodeURIComponent(id)),
@@ -166,7 +154,7 @@ export default function ProductPicker({
             className="bloom-input w-full"
             maxLength={120}
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => {lookupEpoch.current++;setQuery(e.target.value);setVariants([]);chooseProduct(null);}}
           />
         </label>
         <label>
@@ -175,7 +163,7 @@ export default function ProductPicker({
             aria-label="Search in"
             className="bloom-input w-full"
             value={kind}
-            onChange={(e) => setKind(e.target.value as any)}
+            onChange={(e) => {lookupEpoch.current++;setKind(e.target.value as any);setVariants([]);chooseProduct(null);}}
           >
             <option value="all">Foods & supplements</option>
             <option value="food">Foods</option>
@@ -185,12 +173,12 @@ export default function ProductPicker({
       </div>
       <Button
         type="button"
-        disabled={query.trim().length < 2 || search.isPending}
+        disabled={query.trim().length < 2 || search.isPending || resolve.isPending || create.isPending}
         onClick={() => search.mutate(undefined)}
       >
         {search.isPending ? "Searching…" : "Search products"}
       </Button>
-      {[search.error, resolve.error, create.error, remove.error]
+      {[search.error, resolve.error, create.error, remove.error, saved.error]
         .filter(Boolean)
         .map((e, i) => (
           <p role="alert" key={i}>
@@ -198,22 +186,22 @@ export default function ProductPicker({
           </p>
         ))}
       {error && <p role="alert">{error}</p>}
-      {(search.error || (search.data && !search.data.products.some(p=>["usda-branded","off","manual"].includes(p.source))))&&<div className="report-context space-y-2">
+      {(search.error || (searchResult && !searchResult.products.some(p=>["usda-branded","off","manual"].includes(p.source))))&&<div className="report-context space-y-2">
         <p>No verified package match is available for “{query}”. A generic estimate is not the same product. You can still log the nutrition printed on your package; unlisted values stay unknown.</p>
         <Button type="button" variant="outline" onClick={()=>setManual(true)}>Enter package nutrition</Button>
       </div>}
-      {search.data && (
+      {searchResult && (
         <div>
-          {search.data.warnings.map((s, i) => (
+          {searchResult.warnings.map((s, i) => (
             <p className="panel-note" key={i}>
               {s}
             </p>
           ))}
-          {onDescribeIngredients&&kind!=="supplement"&&(homePreparedQuery(resultQuery).requested||!search.data.products.length)&&<div className="space-y-2">
+          {onDescribeIngredients&&kind!=="supplement"&&(homePreparedQuery(resultQuery).requested||!searchResult.products.length)&&<div className="space-y-2">
             <p>For your own recipe, enter the individual foods and amounts. Existing meal details and selected products stay in your draft.</p>
             <Button type="button" variant="outline" disabled={pending} onClick={onDescribeIngredients}>Build from individual ingredients</Button>
           </div>}
-          {!search.data.products.length && (
+          {!searchResult.products.length && (
             <p>
               No matching records found. Try the barcode, a different spelling,
               or enter the label below.
@@ -221,7 +209,7 @@ export default function ProductPicker({
           )}
           {allPossible&&<p className="panel-note">Possible matches for your search. Choose the product and variety on your package before confirming the amount.</p>}
           <ul className="space-y-2 max-h-80 overflow-y-auto">
-            {search.data.products.map((p,index) => (
+            {searchResult.products.map((p,index) => (
               <li key={p.source + p.id}>
                 <Button
                   className="whitespace-normal h-auto text-left"
@@ -253,11 +241,11 @@ export default function ProductPicker({
               </li>
             ))}
           </ul>
-          <p className="panel-note">{search.data.attribution}</p>
+          <p className="panel-note">{searchResult.attribution}</p>
         </div>
       )}
       {resolve.isPending && <p role="status">Loading the product label…</p>}
-      {choice && (
+      {choice && choiceOwner.current===user?.id && (
         <div className="space-y-3">
           <h4>
             {choice.name} · {choice.brand}
@@ -354,11 +342,11 @@ export default function ProductPicker({
             className="whitespace-normal h-auto max-w-full"
             type="button"
             disabled={
-              pending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
+              pending || search.isPending || resolve.isPending || create.isPending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
             }
             onClick={() => {
               const ingredient=productIngredient(choice,servings);
-              onPick({...ingredient,product:{...ingredient.product,query:search.data?.query?.original||query}});
+              onPick({...ingredient,product:{...ingredient.product,query:searchResult?.query?.original||query}});
               setChoice(null);
               setVariants([]);
             }}
@@ -375,8 +363,9 @@ export default function ProductPicker({
               className="whitespace-normal h-auto max-w-full text-left"
               type="button"
               variant="outline"
+              disabled={search.isPending||resolve.isPending}
               onClick={() => {
-                setVariants([p]);
+                lookupEpoch.current++;setVariants([p]);
                 chooseProduct(p);
               }}
             >

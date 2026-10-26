@@ -81,3 +81,24 @@ export function replacementLabelAmount(servingGrams:number|null,originalGrams?:n
     ? {servings,requiresReview:false}
     : {servings:1,requiresReview:true};
 }
+
+// Runtime boundaries for public lookup responses. Do not coerce missing, string,
+// negative or nonfinite nutrient amounts into plausible nutrition estimates.
+export const productResponseSchema = z.object({
+  source: productRefSchema.shape.source,
+  id: productRefSchema.shape.id,
+  name: z.string().min(1), brand: z.string(), barcode: z.string().optional(),
+  servingDescription: z.string(), servingGrams: z.number().finite().positive().nullable(),
+  perServing: z.record(z.string(),z.number().finite().nonnegative()),
+  url: z.string().refine(value=>{try{return ['https:','http:'].includes(new URL(value).protocol);}catch{return false;}}).nullable(),
+  retrievedAt: z.string(), notes: z.array(z.string()),
+  otherNutrients: z.array(z.object({name:z.string(),amount:z.number().finite().nonnegative(),unit:z.string()})).optional(),
+  provenance: z.object({version:z.literal('usda-branded-v1'),fdcId:z.number().int().positive(),gtin:z.string().nullable(),brandOwner:z.string(),marketCountry:z.string().nullable(),publishedDate:z.string().nullable(),modifiedDate:z.string().nullable(),ingredients:z.string().nullable()}).optional(),
+});
+export const productListResponseSchema=z.object({products:z.array(productResponseSchema)});
+export const productSearchResponseSchema=productListResponseSchema.extend({warnings:z.array(z.string()),attribution:z.string(),query:z.object({original:z.string(),normalized:z.string()}).optional()});
+export function readProductResponse<T>(schema:z.ZodType<T>,value:unknown):T{
+ const result=schema.safeParse(value);
+ if(!result.success)throw Error('The food source response could not be verified. Retry the search or enter the nutrition from your label.');
+ return result.data;
+}

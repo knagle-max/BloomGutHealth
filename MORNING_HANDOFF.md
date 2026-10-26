@@ -2,7 +2,15 @@
 
 Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1). Existing Render workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0 only. No main merge, replacement service, production credentials, real-user/grant changes or restricted provider activation.
 
-## Completed and published this continuation
+## Latest verified milestone
+
+Pre-save meal review is delivered by f30104a + corrective **9b201e29f9a89962c9b9e7658fc31e9fe55a7dbb**. Review and correct foods before explicit journal confirmation; no row during review, dirty/current-source checks, exact receipt recovery. Actions **40346711959 SUCCESS** including real Neon smoke; Render **dep-dbfmqo2jnfac73f0h9gg LIVE**. Initial f30104a omitted the locally tested server file and failed inventory CI; corrected immediately and verified. 356 local tests, types/build/API94+13/source126, actual API/PGlite and current/changed/unaware/lost-response/mixed-source/Athlete/portion/row/source/mobile journeys pass. Selective evidence: [meal review](docs/review/meal-presave-20261026/README.md).
+
+Other verified recent batches: preference unknown-outcome recovery987c79b; header-only preference CAScee6aa6; encrypted settings CAS7f94f73; reviewed meal source backendc2df959. Their exact CI/Render evidence is in DEVELOPMENT_LOG. Legacy unversioned writers still limit universal CAS; no claim otherwise.
+
+Current working batch: malformed product responses and superseded label/search withdrawal; focused schema/browser/types/build and canonical/PG replacement/home-source regressions pass, full357/357 PASS; publication next. Still actionable v0.5: panel/specimen identity and reimport/grouped lab history, broader semantic/market queries and owner macro incident confirmation, daily feedback linkage and remaining app-wide design/accessibility integration. Full release is not complete. Missing new editable packs, native/real Tester1/independent specialist review and approved provider/legal activation remain scoped blockers. No new key/account decision needed for current work.
+
+## Earlier completed and published work
 
 | Commit | Delivered | Exact Actions run; Render verified live |
 | --- | --- | --- |
@@ -30,7 +38,7 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 |dc57033|Explicit homemade USDA salsa ranks before generic alternatives; generic/reference review uses preparation/grams, no relabelling.|40291022595 SUCCESS; LIVE|
 |30971dd|Food-entry startsfood sources, no automaticNIH; explicit supplementselection/filterdraft retained.|40291601343 SUCCESS; LIVE|
 
-Latest verified code:30971dd6a738d21403b43490bc3446e90d7d310c, Render dep-dbfgqkuq1p3s73f72jr0 LIVE.348full/types/build/API92+13/source122 and source/canonicalfood/retry/PG correction browsers pass. Isolated productionNeon Profileconcurrency evidence belongs to7891efa Actions40290012763 (also passes inlaterCI). Historical SHAs/deployments and correctedclaims are in DEVELOPMENT_LOG/BACKLOG; inventory-onlyfailedhomequery fixedby567a744.
+Earlier checkpoint:30971dd6a738d21403b43490bc3446e90d7d310c, Render dep-dbfgqkuq1p3s73f72jr0 LIVE at that checkpoint.348full/types/build/API92+13/source122 and source/canonicalfood/retry/PG correction browsers pass. Isolated productionNeon Profileconcurrency evidence belongs to7891efa Actions40290012763 (also passes inlaterCI). Historical SHAs/deployments and correctedclaims are in DEVELOPMENT_LOG/BACKLOG; inventory-onlyfailedhomequery fixedby567a744.
 
 ## Lab source-history delivered
 

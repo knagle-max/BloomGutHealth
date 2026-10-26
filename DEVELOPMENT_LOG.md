@@ -669,3 +669,11 @@ Final preview presentation: post-adjustment types/build/API/source checks PASS; 
 Photo/public absence/revocation/manual-save regression PASS; no image provider invoked. Final milestone ready for publication.
 
 Publication correction: f30104a434c6f8866fd4bba117bdc61a91342242 is LIVE on Render dep-dbfmp2lg1s2s73aj0v4g, but Actions40346117658 failed source inventory. The tested server/planner-routes.ts was accidentally omitted from staging, so published routes lacked the web's new review/confirm aliases. No untested implementation fix: publishing that exact locally verified handler now. Keep ongoing ProductPicker boundary work uncommitted and separate. Do not call f30104a a complete working meal-review deployment.
+
+## 2026-10-26 — food lookup response and stale-request boundaries
+
+Added runtime response schemas for actual public/manual label shape without numeric coercion or new nutrient defaults. Malformed lookup/resolution/saved/create payloads produce recoverable source errors; unsafe source URL schemes rejected. Query/filter/new-request withdrawal and epoch/owner checks prevent late old lookups from applying. Saved labels use account-scoped query keys; pending/unknown meal receipt behavior unchanged.
+
+Focused shape/zero/unknown/invalid amounts/unsafe-link test PASS. Rendered controlled HTTP malformed search/label and held superseded search/label recovery PASS with zero writes. Actual canonical mixed-source/Athlete-cache/lost-save and HTTP/PGlite replacement/mass/unknown amount regressions PASS. Types/build/API94+13/source126 PASS; full357 running. No gallery for fault handling. Pre-save corrected9b201e2 LIVE on existing Render dep-dbfmqo2jnfac73f0h9gg; exact Actions40346711959 pending.
+
+FOOD-SOURCE-BOUNDARY-01 final local:357/357 full tests PASS(207742ms); TypeScript/build/API94+13/source126 PASS; malformed/late search+label browser, canonical mixed-source/Athlete/lost-response, actual PG replacement and home-prepared source journeys PASS. Source errors retain input/manual path; valid selections write nothing. Pre-save9b201e29f9a89962c9b9e7658fc31e9fe55a7dbb exact Actions40346711959 SUCCESS including real-Neon complete-review/confirm receipt smoke; existing Render dep-dbfmqo2jnfac73f0h9gg LIVE.
