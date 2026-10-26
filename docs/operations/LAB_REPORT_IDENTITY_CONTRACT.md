@@ -20,3 +20,9 @@ After the aware reader is verified, QuickLabEntry writes one importId for the cu
 LabSourceHistory derives from existing active labHistory and pendingLabs. Exact import/report/specimen tuples group source rows; inconsistent identifiers split rather than misattribute them. Original rowOrder controls ordering where recorded. Arbitrary reported headings remain source labels. Old rows without metadata remain unlinked, with no date-based panel inference. Pending units show original numbers/units and remain excluded from clinical interpretation. Existing delete and refresh paths remain canonical.
 
 This stage does not detect independently reimported files, verify provider identifiers, support new unknown analytes or claim complete panel identity acceptance. Those remain explicit backlog items. See docs/review/lab-source-history-20261026 for visible evidence.
+
+## Advisory reimport review
+
+QuickLabEntry compares a preview against the account's existing canonical active labHistory/pendingLabs. A candidate requires the same marker, original source number/unit, collection instant, laboratory/method/fasting context and reference interval. Original missing units remain missing even after a later unit confirmation. Different known printed report/specimen identifiers exclude a match. The current import's own reference is excluded so uncertain-save retry is not mistaken for a new import.
+
+Possible repeats require an explicit review of the matched rows before a new save. Changing the preview or candidate set resets that acknowledgment. Users may record an expressly reviewed separate result; no row is merged, deleted or silently omitted. This is an advisory web check, not server-enforced uniqueness, automatic file deduplication or proof of specimen identity. Concurrent writers, stale/unavailable history, missing/differently formatted metadata and unsupported analytes remain separate acceptance work.

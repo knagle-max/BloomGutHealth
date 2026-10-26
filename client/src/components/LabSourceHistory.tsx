@@ -16,7 +16,7 @@ export default function LabSourceHistory({labs,onDelete}:{labs:LabHistoryRow[];o
    </div><Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
   </div>;
  });
- return <details className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>
+ return <details id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>
   <summary>Reports & source history ({labs.length} results)</summary>
   {open&&<div className="space-y-4 mt-3">
    <p className="panel-note">{groups.imports.length} recorded source group(s). Import references and user-entered identifiers organize these results; they do not verify laboratory panels or detect reimports. Older unlinked rows remain separate below.</p>

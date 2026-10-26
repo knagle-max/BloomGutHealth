@@ -4,6 +4,10 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**1c2570bbe650944c0e0becc41853fe772ce0604c**: Actions40351499728 SUCCESS, Render dep-dbfn8drbc2fs739f1amg LIVE.359 tests/types/build/API94+13/source128 and source-preserving import/grouped history/source-context browsers pass. [Selective source-history evidence](docs/review/lab-source-history-20261026/README.md). Advisory reimport review is locally ready with360/360 plus types/build/source129 and grouped/ordinary review-gate regressions; publish/verify exact CI next. No atomic/file dedup claim.
+
+Earlier reader checkpoint:
+
 **9be6265ccaee56d812041c6844a3808cf6ccf317**: Actions40349224405 SUCCESS; Render dep-dbfn1u15efls73c824p0 LIVE. Optional exact lab report/specimen identity reader preserves encrypted save, unit confirmation, export and latest/history details;358 tests/type/build/source/browser checks pass. Following writer + grouped-history batch is locally verified359/359 and ready publication: exact optional identifiers, stable import identity through retry/correction, source groups with pending units and legacy separation. Evidence docs/review/lab-source-history-20261026. Reimport detection and unknown analytes remain open.
 
 ## Verified meal review milestone
