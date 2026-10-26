@@ -1,3 +1,4 @@
+import {mealReviewRevision} from "./meal-review-source";
 import {preferenceRevision,PreferenceRevisionConflict} from "./preference-source";
 import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
 import { mlServiceTarget } from "./ml-service";
@@ -42,6 +43,14 @@ const requestSchema = z
     (v) => !!v.mealText || !!v.products?.length,
     "Describe a food or select a product",
   );
+// The explicit marker makes older strict servers reject new reviewed saves rather
+// than silently ignore a precondition header during a mixed-version deployment.
+const saveRequestSchema=requestSchema.safeExtend({reviewed:z.literal(true).optional()});
+async function reviewIngredients(storage:IStorage,userId:string,input:z.infer<typeof requestSchema>){
+ if(input.ingredients||input.products?.length||!storage.getExperienceRecords)return input.ingredients;
+ const remembered=(await storage.getExperienceRecords(userId,"food-memory")).find(r=>r.kind==="food-memory"&&r.payload.key===memoryKey(input.mealText));
+ return remembered?.kind==="food-memory"?remembered.payload.ingredients:undefined;
+}
 export function registerPlannerRoutes(
   app: Express,
   requireAuth: RequestHandler,
@@ -194,13 +203,9 @@ export function registerPlannerRoutes(
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
-      res.json(
-        await analyzer(p.data.mealText, p.data.aiConsent, p.data.ingredients, {
-          userId: req.session.userId!,
-          store: storage,
-          products: p.data.products,
-        }),
-      );
+      const result=await analyzer(p.data.mealText,p.data.aiConsent,await reviewIngredients(storage,req.session.userId!,p.data),{userId:req.session.userId!,store:storage,products:p.data.products});
+      res.setHeader("Cache-Control","no-store");res.setHeader("X-Bloom-Meal-Review",mealReviewRevision(req.session.userId!,result));
+      res.json(result);
     } catch (error) {
       if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
       res
@@ -210,16 +215,20 @@ export function registerPlannerRoutes(
   });
   // Register before the legacy /api/meals handlers. Existing clients remain compatible.
   app.post("/api/meals", requireAuth, async (req, res) => {
+    res.setHeader("Cache-Control","no-store");
+    const match=req.get("If-Match");
+    if(match!==undefined&&!/^"[a-f0-9]{64}"$/.test(match))return res.status(400).json({error:"Invalid meal review reference."});
     const key = req.get("Idempotency-Key");
     if (key && !z.string().uuid().safeParse(key).success)
       return res.status(400).json({ error: "Invalid meal save reference." });
-    const p = requestSchema.safeParse(req.body);
+    const p = saveRequestSchema.safeParse(req.body);
     if (!p.success)
       return res
         .status(400)
         .json({ error: "Invalid meal description or context." });
+    if(p.data.reviewed&&match===undefined)return res.status(400).json({error:"Review the meal before confirming this save."});
     try {
-      const receipt = key ? mealSaveReceipt(req.session.userId!, key, p.data) : undefined;
+      const receipt = key ? mealSaveReceipt(req.session.userId!, key, match===undefined?p.data:{...p.data,reviewRevision:match.slice(1,-1)}) : undefined;
       if (receipt) {
         const previous = await storage.getMeal(receipt.id);
         if (previous) {
@@ -232,18 +241,17 @@ export function registerPlannerRoutes(
       let withinLimit = false;
       limit(req, res, () => { withinLimit = true; });
       if (!withinLimit) return;
-      const remembered = !p.data.ingredients && !p.data.products?.length && storage.getExperienceRecords
-        ? (await storage.getExperienceRecords(req.session.userId!, "food-memory")).find(r => r.kind === "food-memory" && r.payload.key === memoryKey(p.data.mealText)) : undefined;
       const result = await analyzer(
         p.data.mealText,
         p.data.aiConsent,
-        p.data.ingredients || (remembered?.kind === "food-memory" ? remembered.payload.ingredients : undefined),
+        await reviewIngredients(storage,req.session.userId!,p.data),
         {
           userId: req.session.userId!,
           store: storage,
           products: p.data.products,
         },
       );
+      if(match!==undefined&&mealReviewRevision(req.session.userId!,result)!==match.slice(1,-1))return res.status(409).json({error:"Meal nutrition or its source changed. Review the meal again before saving."});
       const meal = await storage.insertMeal({
         userId: req.session.userId!,
         mealText: [

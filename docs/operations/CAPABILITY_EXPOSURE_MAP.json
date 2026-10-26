@@ -174,7 +174,8 @@
           "shared/product-search.ts",
           "shared/barcodes.ts",
           "server/food-catalog.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -203,7 +204,8 @@
         ],
         "logicOrJobs": [
           "server/usda-branded.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -257,7 +259,8 @@
         "logicOrJobs": [
           "shared/products.ts",
           "server/meal-intelligence.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -290,7 +293,8 @@
         "logicOrJobs": [
           "shared/products.ts",
           "server/meal-intelligence.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -339,7 +343,8 @@
           "shared/nutrition-summary.ts",
           "shared/meal-portions.ts",
           "server/preference-source.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -375,7 +380,8 @@
         "logicOrJobs": [
           "shared/products.ts",
           "server/meal-intelligence.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -448,7 +454,8 @@
           "shared/meal-intelligence.ts",
           "shared/weekly-planner.ts",
           "server/planning-context.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -493,7 +500,8 @@
           "server/recipe-ranking.ts",
           "server/recipe-generation.ts",
           "server/planning-context.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1098,7 +1106,8 @@
           "server/ai-costing.ts",
           "server/recipe-ranking.ts",
           "server/recipe-generation.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1135,7 +1144,8 @@
           "server/weekly-runner.ts",
           "server/weekly-worker.ts",
           "server/planning-context.ts",
-          "server/preference-source.ts"
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1595,13 +1605,14 @@
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
     "server/meal-intelligence.ts": "2d2e2cea62a5283ef1b6b9aee961b884e100df82abfe91dffe5434faa5d3ccd3",
+    "server/meal-review-source.ts": "75a206547ffcfd627c75041d52fa641378ae22bb47c8429fa2ea50478530bb2e",
     "server/meal-save.ts": "4ed54debee262c7e3e3e5823387869c77ebe21b5b8718f01c107286d2d0538d5",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
     "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/plan-history.ts": "e5e19e94821047a1516c64685a4cb5926e3523c127c1f30f9de61240c1d93c7f",
-    "server/planner-routes.ts": "8a2b0283fdbdd83dc0d8c9d0b6747873bbc4db14e5b5be635ca253bf695c63dd",
+    "server/planner-routes.ts": "f3cd888fc93bbfb1e3f62b4c713e4fb8ff1d805a5d20f6767da935eec6a27b32",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
     "server/preference-source.ts": "cb9d6e89cf1de2a76d184822be830ee287a4e4ea28824b6db017bd7f89e30126",

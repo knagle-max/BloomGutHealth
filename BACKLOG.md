@@ -417,3 +417,11 @@ Actual encrypted ExperienceStorage baseline reproduced lostwholeathlete update: 
 Preferencecee6aa6e0b78aca5e59c6ae01ee09b011621f9bc exact Actions40328222952 SUCCESS/Render dep-dbfl27ek1f9s738e48o0 LIVE verified. Unpublished9e49abb docs-onlycheckpoint toamend intoverifiedsettingsbatch (noforcepush).
 
 SETTINGS-REVISION-01 final local:352/352 tests PASS(188551ms), TypeScript/build/API92+13/source125 PASS. Actual encrypted-store/API/two-tab stale-section/conflict/draft/unknown-outcome/retry/freeze/mode and setup/practical/minor/Profile-copy regressions PASS. No implementation changes after final suite began. New real-Neon concurrent settings smoke awaits exactCI. Amend into unpublished9e49abb checkpoint, fetch/preserve/push; never force. Legacy mandatory-version enforcement remains OPEN, not a user-input blocker.
+
+## FOOD-REVIEW-PRESAVE-SOURCE — backend stage active
+
+Nonpersisting analyze adds owner-bound fact/source hash header; reviewedSave marker+If-Match recomputes through current adapters and rejectschangedfacts409 beforeSQL. Marker makesoldstrictservers rejectnewclients instead ofignoringprecondition. LegacyJSON/body remainscompatible. No newstore/credential/calculator. Hashpreservesunits/zero/missing/sourceversions andrelationshipsources, excludesretrievalclock/aggregatetitle. Completedreceipt replay remainsbeforeanalysis/budget andbindsreviewsource. Analyze/save nowshareexistingowner-memorycorrection resolution; originaltext retained.
+
+3 focused API/PGlite/hash/memory testsPASS, typesPASS; initialtest incorrectlyexpected201 whereexistingAPIreturns200, fixturecorrectedwithout changingstatuscontract. Full355/build/API/source126 running. Settings7f94f737b34f2c00e44199c7774c7dc01725e927 exact Actions40334143261 SUCCESS/Render dep-dbfll94s728c73dnip9g LIVE verified, including newproductionconcurrencysmoke. UI pre-save flow stillnext, notclaimedcomplete.
+
+FOOD-REVIEW-PRESAVE-SOURCE final local:355/355 tests PASS(186356ms), types/build/API92+13/source126 PASS; existing canonical AddFood/unknown-response/one-row/Athlete and actualPG correction-loss/freeze/retry browser regressions PASS. Production smoke now uses nonpersisting analysis→reviewed-marker/header save→same receipt replay on the existing meal (no extra rows); JSsyntaxPASS, exactCI required. Backend only; pre-save web flow remains next.

@@ -96,3 +96,7 @@ Preference revision milestone:350full/types/build/API/source124 and actualAPI/PG
 ## Settings revision and draft retention milestone
 
 Preferencecee6aa6e0b78aca5e59c6ae01ee09b011621f9bc Actions40328222952 SUCCESS, Render dep-dbfl27ek1f9s738e48o0 LIVE verified. Settings now compare adopted source under existing encrypted-store lock; stale whole-section updates409 without erasing another target. Current web writers share provider lifecycle, retain editing basis, freeze submitted fields, and explicitly adopt changed sources. Fresh unchanged source permits retry; mode navigation follows acknowledgement.352full/types/build/API/source125 and actual SQL/API/two-tab/unknown-response/setup/practical/Profile-copy browsers PASS. Publication and exact real-Neon concurrency CI next. No universal legacy-enforcement or clinical acceptance claim.
+
+## Meal pre-save source comparison — backend stage
+
+Settings7f94f737b34f2c00e44199c7774c7dc01725e927 Actions40334143261 SUCCESS/Render dep-dbfll94s728c73dnip9g LIVE. New backend review hash binds owner/facts/source versions/units/missingness; reviewed marker+If-Match recomputes current adapters before new insertion and rejects changes. Older strict servers reject marker. Receipts replay before analysis/budget; private memories align preview/save.355full/types/build/API/source126 and actual API/PG/legacy/correction browsers PASS. Production smoke and deployment verification next. Web pre-save confirmation is next stage, not yet claimed.
