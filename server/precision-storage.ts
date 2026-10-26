@@ -2,7 +2,7 @@ import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
-import { labSchema, sourceOnlyLabSchema, contextSchema, activeLabObservations, type Lab } from "../shared/precision-nutrition";
+import { labSchema, sourceOnlyLabSchema, contextSchema, activeLabObservations, activeLabRows, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -79,13 +79,18 @@ export class PrecisionStorage {
         }
       }
       const plan = payload as any;
+      if (kind === "lab" && plan?.dateCorrection && plan?.unitReview?.status !== "confirmed") throw Error("LAB_SOURCE_CHANGED");
       if (kind === "lab" && plan?.unitReview?.status === "confirmed") {
         const owned = await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
         const decoded = owned.map(r=>({...r,payload:decryptPrecision(r.encryptedPayload,userId) as any}));
-        const prior = decoded.find(r=>r.payload?.unitReview?.supersedes===plan.unitReview.supersedes);
-        if(prior) return {id:prior.id,kind:prior.kind,payload:prior.payload,createdAt:prior.createdAt};
+        const supported=decoded.flatMap(row=>{const parsed=labSchema.safeParse(row.payload);return parsed.success?[{...parsed.data,id:row.id}]:[];});
+        const active=activeLabRows(supported);
+        const prior = active.find(row=>row.unitReview?.supersedes===plan.unitReview.supersedes);
         const source = decoded.find(r=>r.id===plan.unitReview.supersedes);
         const parsed = labSchema.safeParse(source?.payload);
+        if(!parsed.success||!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection))throw Error("LAB_SOURCE_CHANGED");
+        if(prior){const record=decoded.find(row=>row.id===prior.id)!;return {id:record.id,kind:record.kind,payload:record.payload,createdAt:record.createdAt};}
+        if(!active.some(row=>row.id===source?.id))throw Error("LAB_SOURCE_CHANGED");
         if(!parsed.success || parsed.data.unitReview?.status!=="pending" ||
           parsed.data.unitReview.originalValue!==plan.value || parsed.data.marker!==plan.marker)
           throw Error("LAB_SOURCE_CHANGED");
@@ -164,6 +169,7 @@ export class PrecisionStorage {
         .from(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "lab")));
       if (!rows.some(row => row.id === id)) return; // Idempotent, same response for absent/foreign IDs.
       const supported: (Lab & { id: string })[] = [];
+      const raw: (SourceOnlyLab & {id:string})[] = [];
       const links = new Map<string, Set<string>>(rows.map(row => [row.id, new Set<string>()]));
       for (const row of rows) {
         const payload = decryptPrecision(row.encryptedPayload, userId);
@@ -175,12 +181,18 @@ export class PrecisionStorage {
             links.get(row.id)!.add(parent);
             links.get(parent)!.add(row.id);
           }
-        } else if (!sourceOnlyLabSchema.safeParse(payload).success) {
-          throw Error("LAB_SOURCE_CHANGED");
+        } else {
+          const parsedRaw=sourceOnlyLabSchema.safeParse(payload);
+          if(!parsedRaw.success)throw Error("LAB_SOURCE_CHANGED");
+          raw.push({...parsedRaw.data,id:row.id});
         }
       }
+      for(const row of [...supported,...raw]){
+        const parent=row.dateCorrection?.supersedes;
+        if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+      }
       const active = activeLabObservations(supported);
-      if (supported.some(row => row.id === id) && ![...active.labs, ...active.pendingLabs].some(row => row.id === id))
+      if (!activeLabRows([...supported,...raw]).some(row => row.id === id))
         throw Error("LAB_SOURCE_CHANGED");
       const ids = [id], seen = new Set(ids);
       for (let index = 0; index < ids.length; index++) {

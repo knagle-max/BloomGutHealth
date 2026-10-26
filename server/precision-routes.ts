@@ -11,6 +11,7 @@ import type { IStorage } from "./storage";
 import {
   buildPrecisionReport,
   labSchema,
+  activeLabRows,
   contextSchema,
   precisionEntrySchema,
   type TaxonReport,
@@ -507,6 +508,8 @@ export function registerPrecisionRoutes(
     if(saveKey!==undefined&&(p.data.kind!=="lab"||!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)))return res.status(400).json({error:"Use a valid laboratory save reference."});
     try {
       const userId = req.session.userId!;
+      if (p.data.kind === "lab" && p.data.payload.dateCorrection)
+        return res.status(400).json({error:"Use the reviewed date correction action to preserve source history."});
       if (p.data.kind === "lab" && "unitReview" in p.data.payload && p.data.payload.unitReview &&
         (p.data.payload.unitReview.status !== "pending" || p.data.payload.unitReview.confirmedAt !== null ||
          p.data.payload.unitReview.supersedes !== null || p.data.payload.value !== p.data.payload.unitReview.originalValue))
@@ -540,15 +543,20 @@ export function registerPrecisionRoutes(
       if(!source) return res.status(404).json({error:"Laboratory record not found in your account."});
       const parsed=labSchema.safeParse(source.payload);
       if(!parsed.success || parsed.data.unitReview?.status!=="pending") return res.status(409).json({error:"This record is not awaiting a unit confirmation."});
-      const prior=records.find(r=>r.kind==="lab" && (r.payload as any)?.unitReview?.supersedes===source.id);
-      if(prior) return res.json(prior);
+      const active=activeLabRows(records.flatMap(record=>{const payload=record.kind==="lab"?labSchema.safeParse(record.payload):null;return payload?.success?[{...payload.data,id:record.id}]:[];}));
+      const prior=active.find(row=>row.unitReview?.supersedes===source.id);
+      if(!prior&&!active.some(row=>row.id===source.id))return res.status(409).json({error:"This source was revised. Reload and review the current result."});
+      if(prior) return res.json(records.find(record=>record.id===prior.id));
       const original=parsed.data, review=original.unitReview!;
       // Reinterpret the ORIGINAL number, never convert an earlier guessed normalization.
       const payload=labSchema.safeParse({...original,value:review.originalValue,unit:request.data.unit,referenceLow:null,referenceHigh:null,
         unitReview:{...review,status:"confirmed",confirmedAt:new Date().toISOString(),supersedes:source.id}});
       if(!payload.success) return res.status(400).json({error:"Unsupported source unit for this marker."});
       res.status(201).json(await store.insertPrecisionRecord(userId,"lab",payload.data));
-    }catch(e){ unavailable(res,e); }
+    }catch(e){
+      if(e instanceof Error&&e.message==="LAB_SOURCE_CHANGED")return res.status(409).json({error:"This source was revised. Reload and review the current result."});
+      unavailable(res,e);
+    }
   });
   app.post("/api/precision/plans", async (req, res) => {
     const p = z

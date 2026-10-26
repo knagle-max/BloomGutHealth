@@ -454,8 +454,21 @@ export const labSourceReportSchema = z.object({
       enteredDate:z.iso.date().optional(),
       enteredTime:z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/).optional(),
     }).strict().refine(value=>!value.enteredTime||!!value.enteredDate,{message:"Keep the entered test date with its collection time."});
-function validateLabEntryClock(value:{measuredAt:string;sourceReport?:z.infer<typeof labSourceReportSchema>},ctx:z.RefinementCtx){
- const source=value.sourceReport;
+export const labDateCorrectionSchema = z.object({
+ version:z.literal(1), supersedes:z.string().min(1).max(100),
+ previousMeasuredAt:isoDate, previousEnteredDate:z.iso.date().optional(),
+ previousEnteredTime:z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/).optional(),
+ enteredDate:z.iso.date(), enteredTime:z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/).optional(),
+ correctedAt:z.string().datetime(), reason:z.string().trim().min(1).max(300),
+ requestFingerprint:z.string().regex(/^[a-f0-9]{64}$/),
+}).strict().refine(value=>!value.previousEnteredTime||!!value.previousEnteredDate,{message:"Keep the previously entered date with its time."});
+export function labEnteredContext(value:{sourceReport?:z.infer<typeof labSourceReportSchema>;dateCorrection?:z.infer<typeof labDateCorrectionSchema>}){
+ return value.dateCorrection || value.sourceReport;
+}
+function validateLabEntryClock(value:{measuredAt:string;sourceReport?:z.infer<typeof labSourceReportSchema>;dateCorrection?:z.infer<typeof labDateCorrectionSchema>},ctx:z.RefinementCtx){
+ const source=labEnteredContext(value);
+ if(value.dateCorrection&&value.sourceReport&&(value.sourceReport.enteredDate!==source?.enteredDate||value.sourceReport.enteredTime!==source?.enteredTime))
+  ctx.addIssue({code:"custom",path:["dateCorrection"],message:"Corrected entry dates must agree with the recorded report context."});
  if(!source?.enteredDate)return;
  const entered=Date.parse(`${source.enteredDate}T${source.enteredTime||"00:00"}:00Z`),recorded=Date.parse(value.measuredAt),offset=14*60*60*1000;
  // Without a reported time, validate the entire calendar-day window; do not invent noon.
@@ -484,6 +497,7 @@ export const labSchema = z
     referenceHigh: z.number().finite().nonnegative().nullable(),
     notes: z.string().max(1000).default(""),
     sourceReport: labSourceReportSchema.optional(),
+    dateCorrection: labDateCorrectionSchema.optional(),
     sourceInput: labSourceInputSchema.optional(),
     unitReview: z.object({
       status: z.enum(["pending", "confirmed"]),
@@ -527,7 +541,7 @@ export const sourceOnlyLabSchema=z.object({
  reportedUnit:z.string().min(1).max(50).refine(value=>!!value.trim()).nullable(),
  reportedReferenceInterval:z.string().max(200).optional(),
  measuredAt:isoDate,laboratory:shortText,method:shortText,fasting:z.enum(["yes","no","unknown"]),
- sourceReport:labSourceReportSchema.optional(),sourceInput:labSourceInputSchema,
+ sourceReport:labSourceReportSchema.optional(),dateCorrection:labDateCorrectionSchema.optional(),sourceInput:labSourceInputSchema,
 }).strict().superRefine((value,ctx)=>{
  validateLabEntryClock(value,ctx);
  if(!value.sourceInput.text.trim()||value.sourceInput.number!==value.reportedValue||value.sourceInput.suppliedUnit!==value.reportedUnit)
@@ -735,9 +749,13 @@ export const precisionFoods = [
   },
 ];
 /** Canonical active supported observations, shared by reporting and transactional save guards. */
+export function activeLabRows<Row extends (Lab|SourceOnlyLab)&{id:string}>(rows:readonly Row[]){
+ const superseded=new Set(rows.flatMap(row=>[...(row.dateCorrection?[row.dateCorrection.supersedes]:[]),...("unitReview" in row&&row.unitReview?.supersedes?[row.unitReview.supersedes]:[])]));
+ return rows.filter(row=>!superseded.has(row.id));
+}
 export function activeLabObservations<Row extends Lab&{id:string}>(rows:readonly Row[]){
- const superseded=new Set(rows.flatMap(row=>row.unitReview?.supersedes?[row.unitReview.supersedes]:[]));
- return{pendingLabs:rows.filter(row=>row.unitReview?.status==="pending"&&!superseded.has(row.id)),labs:rows.filter(row=>row.unitReview?.status!=="pending"&&!superseded.has(row.id))};
+ const active=activeLabRows(rows);
+ return{pendingLabs:active.filter(row=>row.unitReview?.status==="pending"),labs:active.filter(row=>row.unitReview?.status!=="pending")};
 }
 export function buildPrecisionReport(
   records: PrecisionRecord[],
@@ -760,8 +778,8 @@ export function buildPrecisionReport(
         : [],
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
-  const sourceOnlyLabs=entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
-    ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt));
+  const sourceOnlyLabs=activeLabRows(entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
+    ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt)));
   const {pendingLabs,labs}=activeLabObservations(allLabs);
   const latest = markerDefinitions.flatMap((m) => {
     const l = labs.find((l) => l.marker === m.id);
@@ -1102,6 +1120,7 @@ export function buildPrecisionReport(
           date: l.measuredAt,
           sourceInput: l.sourceInput,
           sourceReport: l.sourceReport,
+          dateCorrection: l.dateCorrection,
           laboratory: l.laboratory, method: l.method, sourceValue: l.value, sourceUnit: l.unit,
           referenceLow: l.referenceLow, referenceHigh: l.referenceHigh, fasting: l.fasting,
           provenance: l.unitReview ? "User-confirmed source unit" : "User-entered result",

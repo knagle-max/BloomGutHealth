@@ -16,4 +16,4 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
 }
 
 /** Prefer explicitly entered calendar text; do not reconstruct missing legacy entry context. */
-export function labDateText(timestamp:string,source?:Lab['sourceReport']){return source?.enteredDate||timestamp.slice(0,10);}
+export function labDateText(timestamp:string,source?:Lab['sourceReport'],correction?:Lab['dateCorrection']){return correction?.enteredDate||source?.enteredDate||timestamp.slice(0,10);}

@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import {
   contextSchema,
+  labEnteredContext,
   markerDefinitions,
   parse23andMe,
   variantCatalog,
@@ -658,10 +659,10 @@ export default function PrecisionNutrition() {
                               : ""}
                           </p>
                           <p className="panel-note">
-                            {l.sourceReport?.enteredDate?`${l.sourceReport.enteredDate}${l.sourceReport.enteredTime?` ${l.sourceReport.enteredTime}`:" · collection time not supplied"}`:new Date(l.measuredAt).toLocaleString()} ·{" "}
+                            {labEnteredContext(l)?.enteredDate?`${labEnteredContext(l)!.enteredDate}${labEnteredContext(l)!.enteredTime?` ${labEnteredContext(l)!.enteredTime}`:" · collection time not supplied"}`:new Date(l.measuredAt).toLocaleString()} ·{" "}
                             {l.laboratory} · {l.method} · fasting {l.fasting}
                           </p>
-                          <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport}/></details>
+                          <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport} correction={l.dateCorrection}/></details>
                         </div>
                         <Button
                           variant="outline"

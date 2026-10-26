@@ -1,0 +1,13 @@
+# Laboratory date revision reader
+
+Date corrections are immutable successor observations, identified by a new record ID. The original encrypted observation is retained unchanged. This prevents date edits from bypassing planning source-ID comparisons and preserves the original date context for account export and review.
+
+Optional strict `dateCorrection` metadata carries version1, the previous record ID and timestamp, previous entered date/time only when known, corrected entered date/time, correction time, owner reason and a request fingerprint. Corrected calendar text must agree with the canonical timestamp within the same global offset rules as original capture. Existing report context, when present, must agree too. A legacy row without an import reference remains without one; date precision and specimen association are never backfilled by inference.
+
+The shared active-row selector excludes both unit and date superseded parents. Supported pending/confirmed and strict source-only classes retain their existing clinical boundaries. A correction replaces one active observation; it never fabricates an additional measurement or trend point. The clinical planning source guard uses the same selector, and raw-only revisions remain excluded from clinical computation.
+
+The normal import endpoint rejects correction metadata. Generic storage insertion also denies date successors except unit confirmation carrying the exact existing source audit. Unit confirmation checks current active sources; stale pending dates cannot create a fork. Explicit entry deletion traverses both date and unit links under the account transaction lock, so deleting a corrected result cannot resurrect a predecessor. The legacy row deletion API retains its row-only contract.
+
+Source details show the current entered date, previous stored timestamp, previous entered precision or its absence, correction time and reason. Trend points retain the audit; export retains all original records. No ordinary date writer or edit control ships in the reader batch. A dedicated owned active-source transaction, explicit review and durable receipt must be verified before emitting these fields.
+
+Evidence: `tests/lab-date-revision.test.ts` uses actual Express/encrypted PGlite to verify strict metadata, forged import denial, active source selection, planning conflicts, stale unit denial, unit confirmation carrying audit, raw exclusion and complete deletion. `scripts/qa/lab-source-context-journey.mjs` verifies corrected/legacy dates, a single active plotted point, audit display and absence of invented import identity. Fixtures are synthetic and do not establish independent clinical acceptance.

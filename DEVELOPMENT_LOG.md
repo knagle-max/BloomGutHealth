@@ -755,3 +755,14 @@ LAB-ENTRY-DELETE-01 full suite PASS; final ES-target queue refinement separately
 Extended existing possible-reimport review to strict source-only laboratory rows via the same canonical account-owned report data, without introducing clinical mapping or a second store. Exact reported analyte, threshold/qualitative/zero text, unit absence, source reference interval and date/lab/assay/fasting facts participate. Supported and raw namespaces remain separate; different known report/specimen IDs remain separate, current-import receipt recovery stays excluded. Review labels show the actual unmapped analyte. Save requires the existing explicit separate-result acknowledgment; editing resets it. No automatic dedup/merge/delete or concurrent server uniqueness claim.
 
 Six focused parser/reimport tests, types/build/source130 PASS. Actual encrypted React/API/storage browser PASS: existing receipt/correction/source-only/clinical deletion safety chain, raw candidate label, disabled save, no premature insert, edit resets review and explicit separate-result insertion. Initial browser extension mistakenly looked for a completed-import control after page reload; fixture corrected, final journey PASS. No gallery for extension of existing review. Exact CI/deployment required after push.
+
+
+## LAB-DATE-REVISION-READ-01 — immutable correction foundation
+
+Optional strict dateCorrection reader preserves previous source ID/timestamp/known entered context, new literal context, reason/time/receipt fingerprint. Existing sourceReport dates must agree; missing legacy import identity/precision is never invented. Shared active rows handle both unit/date lineage in clinical reports, trends, source-only history and planning guards. Generic import rejects correction metadata; ordinary storage denies forged successors except exact audit carried during owned unit confirmation. Stale pending date confirmation409; explicit deletion traverses date+unit history. Readonly audit propagates to source context and trends. Six focused actual encrypted API/storage/parser tests, types/build/API95+13/source130 and corrected+legacy rendered source/trend audit PASS. Full374 suite running. Reader has no normal correction writer/control. Prepare dedicated CAS/receipt/date-only action after exact reader publication.
+
+1192ffb raw review Render dep-dbfr08rncjis738jipug LIVE; Actions40391046838 pending at last check.618d62e deletion Actions40390469923 SUCCESS/live verified.
+
+1192ffb2b3773e3174fd9ad67d668d23d3b44183: Actions40391046838 SUCCESS; Render dep-dbfr08rncjis738jipug LIVE. Source-only reimport review verified. Normal date-correction writer remains unimplemented; reader first checks running.
+
+LAB-DATE-REVISION-READ-01 full374 tests PASS(199020ms), types/build/API95+13/source130 and corrected/legacy rendered audit PASS. Reader ready to publish; ordinary writer not yet enabled.
