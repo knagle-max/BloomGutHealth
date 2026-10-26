@@ -177,8 +177,9 @@ test("search exposes live candidates, caches only public source data and isolate
     b.products.some((p) => p.source === "manual"),
     false,
   );
-  assert.ok(a.products.some((p) => p.source === "off"));
-  assert.ok(a.products.some((p) => p.source === "dsld"));
+  assert.equal(a.products.some((p) => p.source === "off" || p.source === "dsld"), false, "Unrelated public source fixtures must not appear for a private-label query");
+  assert.ok((await service.search("Another brand cereal", "food", store, "a")).products.some(p=>p.source==="off"));
+  assert.ok((await service.search(label.fullName, "supplement", store, "a")).products.some(p=>p.source==="dsld"));
   assert.equal(
     (await service.resolve({ source: "dsld", id: "321:1" }, store, "a"))[0]
       .perServing.vitamin_d_ug,

@@ -1,4 +1,4 @@
-import { canonicalBarcode } from "../shared/barcodes";
+import { canonicalBarcode, isBarcodeSearch } from "../shared/barcodes";
 import { normalizeProductQuery, brandedSearchQuery, rankProducts } from "../shared/product-search";
 import { normalizeUSDABranded } from "./usda-branded";
 import {
@@ -371,8 +371,13 @@ export class ProductService {
     const q = query.trim(),
       results: Product[] = [],
       warnings: string[] = [];
-    const own = await store.getNutritionProducts(userId);
     const code=canonicalBarcode(q);
+    if(isBarcodeSearch(q)&&!code)return {
+      products:[],query:{original:q,normalized:q},
+      warnings:["This barcode has an unsupported length or check digit. Check the package digits, or search by product name."],
+      attribution:"No product identified. You can still enter the package label manually.",
+    };
+    const own = await store.getNutritionProducts(userId);
     if(code){
       const matches=own.filter(p=>p.barcode&&canonicalBarcode(p.barcode)===code);
       if(matches.length)return {products:matches,warnings:[],attribution:"Your privately saved package label. Confirm the current formula and serving."};
@@ -382,7 +387,7 @@ export class ProductService {
         normalizeProductQuery(`${p.name} ${p.brand}`).includes(normalizeProductQuery(q)),
       ),
     );
-    if (kind !== "supplement")
+    if (kind !== "supplement" && !code)
       results.push(
         ...findFoodCandidates(q, 5).map((f) => localProduct(String(f.fdcId))),
       );
@@ -400,7 +405,7 @@ export class ProductService {
       warnings.push(`USDA Branded Foods ${reason}. Your saved labels and manual label entry still work.`);
     }));
     if(kind!=="supplement"&&!key)warnings.push("USDA Branded Foods is not configured. Enter your package label or use a private saved product; generic USDA foods are estimates.");
-    if (kind !== "food")
+    if (kind !== "food" && !code)
       jobs.push(
         this.cached("dsld-search:" + q.toLowerCase(), () =>
           this.fetchJson(
@@ -438,9 +443,9 @@ export class ProductService {
       jobs.push(
         this.cached("off-search:" + q.toLowerCase(), async () => {
           this.offLimit(true);
-          if (/^\d{8,14}$/.test(q)) {
+          if (code) {
             const r = await this.fetchJson(
-              `https://world.openfoodfacts.org/api/v3.6/product/${q}.json`,
+              `https://world.openfoodfacts.org/api/v3.6/product/${q.replace(/[\s-]/g,"")}.json`,
             );
             return { products: r.product ? [r.product] : [] };
           }

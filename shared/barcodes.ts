@@ -34,3 +34,8 @@ export function expandUPCE(value: string): string | null {
 export function canonicalBarcode(value: string) {
   return normalizeBarcode(value)?.padStart(14, "0") ?? null;
 }
+
+/** Numeric identifier intent must never turn into a fuzzy product-name search. */
+export function isBarcodeSearch(value:string):boolean {
+  return /^\d+$/.test(value.trim().replace(/[\s-]/g,""));
+}

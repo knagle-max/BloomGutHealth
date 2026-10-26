@@ -1,3 +1,7 @@
+# Current search delivery — 2026-10-26
+
+Six published batches verified CI/live through correction8a25e48(Actions40255449705 SUCCESS/Render dep-dbfavhrsp5es73clojm0 LIVE). Identifier/no-match search ready:328/328 tests/types/build/source117/API,13 focused product tests, actual ProductService UI and canonical AddFood receipt/Athlete regression PASS. Existing provider-availability test now uses matching fixtures and rejects unrelated public results. No live relevance/region/SKU metrics or full semantic ranker acceptance claimed. Next ARC-SEARCH-05 optional immutable per-label snapshot in canonical MealIntelligence; aggregate saved totals already persist, no observed historical read drift claimed.
+
 # Latest delivery — 2026-10-26
 
 Five batches published and CI/live verified this continuation: optional goal0f26541, Everyday Move58568f6, saved-template receipts9b0bca3, journal uncertain-writeaae4676, current-only journal280119d. Sixth AddFood correction safeguards ready:326/326 tests/types/build/source115/API and actual planner/PGlite correction-loss, canonical AddFood/Athlete, display-unit journeys PASS. Publishing next. Next highest P0 candidate: same-account Athlete whole-profile concurrent-save CAS and preserved draft conflict UX (currently only acknowledgement freshness is enforced; raw full writes remain last-writer-wins). No new schema/real-user or approval edits.

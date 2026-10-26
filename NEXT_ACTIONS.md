@@ -1,3 +1,7 @@
+# Active search checkpoint — 2026-10-26
+
+Correction8a25e4857e616f7e7bacbdcee84a9250ac86f9bd pushed after preserving Architectb6f1f8e food-search §40; Render dep-dbfavhrsp5es73clojm0 LIVE, Actions40255449705 in progress. Current identifier/no-match fix:13 focused and actual ProductService UI PASS, full328/types/build/source117/API92+13 running. Finish AddFood/product regressions, publish/verify exact CI+Render. Next §40 selected-product historical snapshot audit (canonical per-product identity/version/serving/source values), remaining semantic/market/preparation ranking and fullProfile CAS, all under v0.5 P0. No OFF enablement/newprovider/main merge/native activation.
+
 # Active AddFood correction checkpoint — 2026-10-26
 
 Current-journal280119d457117f03920b3f17e8599e1d35e87878 pushed; Actions40254927370 in progress, verify Render. Prior mutationaae4676 Actions40254541527 SUCCESS/live; saved-template9b0bca3 Actions40254006736 SUCCESS/live; Move58568f6 and setup0f26541 CI/live verified. Current AddFood correction fix actual planner/PGlite browser PASS: pending frozen, lost committed response hides stale totals/analysis, preserves200g draft, retry one row. Finish326 tests/types/build, source115/API checks and canonical AddFood/Athlete/unit regressions; publish/verify exact CI+Render. Next highest-priority unblocked v0.5 whole-app/source task; same-account concurrent edits remain open. No v0.6 jump, main merge or restricted activation.

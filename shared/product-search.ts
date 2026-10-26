@@ -1,4 +1,4 @@
-import { canonicalBarcode } from "./barcodes";
+import { canonicalBarcode, isBarcodeSearch } from "./barcodes";
 import type { Product } from "./products";
 
 /** Search suggestions only: these aliases never select a SKU or change meal text. */
@@ -12,6 +12,7 @@ export function brandedSearchQuery(value: string) {
 }
 export function rankProducts(products: Product[], query: string) {
   const code=canonicalBarcode(query),tokens=normalizeProductQuery(query).split(" ").filter(Boolean);
+  if(isBarcodeSearch(query)&&!code)return [];
   const score=(p:Product)=>{
     if(code)return p.barcode&&canonicalBarcode(p.barcode)===code?1000:-1;
     const name=normalizeProductQuery(`${p.name} ${p.brand}`);
@@ -21,7 +22,7 @@ export function rankProducts(products: Product[], query: string) {
   };
   const seen=new Set<string>();
   return products.map(p=>({p,score:score(p)})).filter(({p,score})=>{
-    const key=`${p.source}:${p.id}`;if(score<0||seen.has(key))return false;seen.add(key);return true;
+    const key=`${p.source}:${p.id}`;if(score<=0||seen.has(key))return false;seen.add(key);return true;
   }).sort((a,b)=>b.score-a.score).slice(0,40).map(({p})=>p);
 }
 

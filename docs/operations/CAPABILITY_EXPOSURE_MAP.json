@@ -161,7 +161,9 @@
         ],
         "logicOrJobs": [
           "shared/products.ts",
-          "server/meal-intelligence.ts"
+          "server/meal-intelligence.ts",
+          "shared/product-search.ts",
+          "shared/barcodes.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1554,7 +1556,7 @@
     "server/planner-routes.ts": "3050c57d37c2af87f4014d9a76df0ecff8288979a10cfda1c40dd40a70aea7c1",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
     "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
-    "server/products.ts": "69538c7567c8a76d37a70a26add9aeb727ecd31d2af6f35937395fd6234b3013",
+    "server/products.ts": "4aeac403703eb0672e9f348ba93153fbf39d35fa4b03eda17793ddc42ca84cc0",
     "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
     "server/recipe-ranking.ts": "99f74c8711694fc4779d8dbf8232a4d32d47a716186ae9d2e7c6dffa9e2c9595",
@@ -1576,6 +1578,7 @@
     "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
     "shared/athlete-review.ts": "a0625e796a40e7ef639809c11dcd7ca60568ea23eafcdbfbe2df1b2165a92ea1",
     "shared/athlete.ts": "380767ce6e5245df8fa52d6b66a60c41346022e0614f72f83cf2a58bbb6707b5",
+    "shared/barcodes.ts": "6602a438f1cfe8addfd21e335c8126dee4c74270cb36c19b8683771fcd760f70",
     "shared/biological-model.ts": "4ad87ef1da9bc2cf96e49367854b4bbd43078a5fa586ab2719069ac35146bd44",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
@@ -1589,6 +1592,7 @@
     "shared/meal-intelligence.ts": "0e7efde421f61ba47f76a90e339894833bb68c877e56a58bca1460074d486f5d",
     "shared/nutrition-summary.ts": "0d57fe4ede7daf971448dd3b299c49c03d187c9e599bd2c1cc3a59cf00a4b46b",
     "shared/precision-nutrition.ts": "231e72f38c8b037b771629624a9849f3bebb91675cd1dacadfbd10181d2271a8",
+    "shared/product-search.ts": "65872a108e2ed1cda0f20457af15c2a3b92029a4096c05822315843835152ef0",
     "shared/products.ts": "86a119656c8e1cd43ea76957ce70018418de7735081e9890524d2f7b25669b3c",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
     "shared/schema-management.ts": "081b56a9e8e9d3a1841d43ed06132baca06b1983c278d8cc3105aab44ad68548",
