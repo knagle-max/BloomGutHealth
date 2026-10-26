@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   dailyMealSummary,
+  localDayKey,
   loggingHistory,
   type LoggedMeal,
 } from "../client/src/lib/dashboard-data";
@@ -85,4 +86,17 @@ test("a missing meal never erases other meals' known contributions", () => {
     totalMeals: 2,
     partial: true,
   });
+});
+
+test("an explicit local clock changes the selected journal day and history across DST without rewriting records",()=>{
+ const previous=process.env.TZ;
+ try{
+  process.env.TZ="America/New_York";
+  const records=[{...meal("yesterday",8),loggedAt:"2026-03-09T03:50:00Z"},{...meal("today",9),loggedAt:"2026-03-09T04:01:00Z"}];
+  const current=new Date("2026-03-09T04:05:00Z");
+  assert.equal(localDayKey(current),"2026-2-9");
+  assert.deepEqual(dailyMealSummary(records,current).meals.map(row=>row.id),["today"]);
+  assert.deepEqual(loggingHistory(records,3,current).map(day=>day.count),[0,1,1]);
+  assert.equal(records[0].loggedAt,"2026-03-09T03:50:00Z");
+ }finally{if(previous===undefined)delete process.env.TZ;else process.env.TZ=previous;}
 });

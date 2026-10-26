@@ -1,10 +1,11 @@
+import {useLocalClock} from "@/lib/use-local-clock";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import EverydayStart from "@/components/EverydayStart";
 import { useExperience } from "@/lib/experience";
 import TodayStatus from "@/components/TodayStatus";
 import TodayFocus from "@/components/TodayFocus";
 import ResearchSummary from "@/components/ResearchSummary";
-import { useState } from "react";
+import { useState,useRef,useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import {
@@ -25,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   dailyMealSummary,
+  localDayKey,
   loggingHistory,
   type LoggedMeal,
 } from "@/lib/dashboard-data";
@@ -32,23 +34,37 @@ import type { MicrobiomeSample } from "@shared/schema";
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const now=useLocalClock(),dayKey=localDayKey(now);
+  const lastDay=useRef({userId:user?.id,dayKey});
   const { settings, hasSettings } = useExperience();
   const [days, setDays] = useState(7);
   const meals = useQuery<LoggedMeal[]>({
     queryKey: ["/api/meals", user?.id],
     enabled: !!user,
+    staleTime:0,refetchOnMount:"always",refetchOnWindowFocus:true,
   });
   const samples = useQuery<MicrobiomeSample[]>({
     queryKey: ["/api/microbiome/samples", user?.id],
     enabled: !!user,
   });
-  const summary = dailyMealSummary(meals.data || []);
-  const history = loggingHistory(meals.data || [], days);
+  useEffect(()=>{
+    const previous=lastDay.current;lastDay.current={userId:user?.id,dayKey};
+    if(user&&previous.userId===user.id&&previous.dayKey!==dayKey&&localDayKey(new Date(meals.dataUpdatedAt))!==dayKey)void meals.refetch({cancelRefetch:false});
+  },[dayKey,user?.id,meals.refetch]);
+  useEffect(()=>{
+    if(!user)return;
+    const resume=()=>{if(document.visibilityState==="visible")void meals.refetch({cancelRefetch:false});};
+    window.addEventListener("focus",resume);
+    return()=>window.removeEventListener("focus",resume);
+  },[user?.id,meals.refetch]);
+  const checkingMeals=meals.isPending||meals.fetchStatus!=="idle";
+  const summary = dailyMealSummary(meals.data || [],now);
+  const history = loggingHistory(meals.data || [], days,now);
   const activeDays = history.filter((day) => day.count > 0).length;
   const latestSample = [...(samples.data || [])].sort(
     (a, b) => +new Date(b.testDate) - +new Date(a.testDate),
   )[0];
-  const date = new Date().toLocaleDateString(undefined, {
+  const date = now.toLocaleDateString(undefined, {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -70,9 +86,9 @@ export default function Dashboard() {
         </span>
       </div>
 
-      <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isPending || meals.fetchStatus !== "idle"} journalError={mealError} />
-      <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={meals.isPending || meals.fetchStatus !== "idle"} unavailable={mealError} />
-      {(meals.isLoading || mealError || summary.meals.length > 0) && <>
+      <TodayFocus now={now} mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={checkingMeals} journalError={mealError} />
+      <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={checkingMeals} unavailable={mealError} />
+      {(checkingMeals || mealError || summary.meals.length > 0) && <>
       <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>
       <summary>Nutrition so far</summary>
       <div className="section-heading">
@@ -139,7 +155,7 @@ export default function Dashboard() {
                 <span>{stat.label}</span>
                 <stat.icon size={18} />
               </div>
-              {meals.isLoading ? (
+              {checkingMeals ? (
                 <Skeleton className="h-10 w-24 my-3" />
               ) : (
                 <p className="stat-value">
@@ -155,7 +171,7 @@ export default function Dashboard() {
       </details>
       </>}
 
-      {(meals.isLoading || mealError || summary.meals.length > 0) && <section className="bloom-panel food-journal-panel" aria-labelledby="meals-title">
+      {(checkingMeals || mealError || summary.meals.length > 0) && <section className="bloom-panel food-journal-panel" aria-labelledby="meals-title">
         <div className="panel-heading">
           <h2 id="meals-title">Food journal</h2>
           {(summary.meals.length > 0 || mealError) && <Link href="/log-meal" className="text-link journal-add-action">
@@ -166,7 +182,7 @@ export default function Dashboard() {
           <p className="panel-note">
             Meals are unavailable while the journal is disconnected.
           </p>
-        ) : meals.isLoading ? (
+        ) : checkingMeals ? (
           <Skeleton className="h-24 w-full mt-4" />
         ) : summary.meals.length ? (
           <div className="meal-list">
@@ -203,7 +219,7 @@ export default function Dashboard() {
           </div>
         )}
       </section>}
-      {hasSettings && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}
+      {hasSettings && !checkingMeals && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started" && <details className="bloom-panel workspace-disclosure"><summary>Optional starting preferences</summary><EverydayStart /></details>}
       <details className="bloom-panel workspace-disclosure"><summary>Explore your options</summary>
       <div className="workspace-shortcuts">
         {[
@@ -238,7 +254,7 @@ export default function Dashboard() {
             <p className="muted">
               History is unavailable. Retry your meal journal above.
             </p>
-          ) : meals.isLoading ? (
+          ) : checkingMeals ? (
             <Skeleton className="h-40 w-full mt-6" />
           ) : (
             <>

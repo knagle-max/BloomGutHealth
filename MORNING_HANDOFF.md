@@ -14,16 +14,18 @@ Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutH
 | `dbe3f69` | Paste/manual/date editing require an explicit occurrence for repeated clocks; nonexistent spring times rejected; date-only precision preserved | Actions40394783399 SUCCESS377; Render live |
 | `15cf2d9` | Atomic reimport endpoint compares current owned source matches under the account lock; explicit separate results, exact receipts and no legacy fallback | Actions40396269159 SUCCESS378 including real concurrent Neon201/409/review/replay; Render dep-dbfrgp7avr4c73a3u8n0 LIVE |
 
-Latest fully verified full SHA: `0efaa508361bc58a1d417f77efc6022c55d46b83`; Actions40399237224 SUCCESS379 and Render dep-dbfrq7ks728c739ofodg LIVE.
+Latest fully verified full SHA: `6fe569e6c11db3adc4b12d6ffa46caa9645f0bdb`; Actions40419883304 SUCCESS383 and Render dep-dbfu3mc9v7es73dqui60 LIVE.
 
 Ordinary importer adoption is verified: frozen source/key/review snapshots, partial acknowledgments, renewed review only after a changed-match409, exact receipt validation, uncertain-response replay after another match, actor/navigation lifetime guards and keyboard focus recovery. Actual encrypted App/API, ordinary/grouped and NewYork clock/date/source regressions passed.
 
-Current local source-text file intake is ready for publication: CSV/TSV/TXT are read on-device into canonical preview, with fresh context, bounded validation, source fidelity and stale-read guards. Header-prefix loss and ignored extra-reference columns are fixed. Full383 had382 successes and one stale generated crosswalk hash; after refresh final15 focused/crosswalk checks, types/build/API97+13/source130 and actual encrypted file/race/receipt/mobile browsers pass. Exact final CI383/Render verification is next. No OCR or new file/specimen identity is claimed.
+Local source-text file intake is verified live: CSV/TSV/TXT remain on-device until canonical review; bounded reads, fresh context/identity, repeated-file review, stale-read protection, exact source rows and no hidden range interpretation. Header-prefix loss and ignored extra columns are fixed. Full383CI passed after the initially stale generated inventory was refreshed; actual encrypted file/race/receipt/mobile checks pass.
+
+Current Today clock fix is locally verified: the prior code reproducibly retains yesterday's date/source after midnight; the fix refreshes local day/source on rollover/resume, expires planned-session routing and withholds stale totals during checks without polling history each minute.12 focused/day/DST/source tests, types/build and actual clock/outage/resume/cleanup browser pass; existing Today/search regression and exact CI384/publication are next.
 
 ## Remaining priorities
 
-1. **P0:** Finish exact publication verification of file intake; preserve source/receipt/owner boundaries in subsequent work.
-2. **P1:** Reconcile remaining lab/source acceptance against approved handoffs; unsupported PDF/image/spreadsheet interpretation is unavailable, not fabricated.
+1. **P0:** Finish exact publication verification of Today clock; preserve source/receipt/owner boundaries in subsequent work.
+2. **P1:** Reconcile the complete approved v0.5 requirement trace against current code/tests; distinguish actionable gaps from genuine external blockers before transitioning to v0.6.
 3. **P1:** Reconcile remaining whole-app/source coverage, daily feedback/search and accessibility against approved handoffs. Synthetic checks do not close independent human, device, clinical or design acceptance.
 4. Carry external gates below separately. Begin approved independent v0.6 only after actionable v0.5 work is exhausted.
 

@@ -4,11 +4,11 @@ import { Link } from "wouter";
 import type { PrecisionReport } from "@shared/precision-nutrition";
 import { todayContextAction } from "@shared/today-focus";
 import { useExperienceRecords } from "@/lib/experience";
-export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
+export default function TodayFocus({ now,mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { now?:Date;mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
     goal = report.fetchStatus === "idle" && !report.isError ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
   const sessions = useExperienceRecords("session");
-  const action = todayContextAction({ mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
+  const action = todayContextAction({ now,mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
   const sessionAction = action.href === '/athlete/fueling';
   return (
     <CompanionHero title={loading ? 'Make space for today' : journalError ? 'Keep a place for your day' : !mealCount ? 'Start with a meal' : missingNutritionCount ? 'A clearer food picture' : sessionAction ? 'Fuel your planned session' : 'One good next step'} eyebrow="A LITTLE CARE, EVERY DAY" reason={action.reason} actions={<><Link className="hero-button" href={action.href}>{action.label}</Link><Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust</Link></>}>
