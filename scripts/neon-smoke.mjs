@@ -533,6 +533,13 @@ try {
   );
   assert.equal(today.targetSource, "Targets confirmed in this form");
   assert.equal((await request("/api/experience/settings")).mode,"everyday");
+  const settingsRead=await fetch(base+'/api/experience/settings',{headers:{cookie,'x-forwarded-proto':'https'}});const settingsToken=settingsRead.headers.get('x-bloom-settings-revision');assert.match(settingsToken,/^[a-f0-9]{64}$/);const settingsBody=await settingsRead.json();
+  const settingsHeaders={'content-type':'application/json',cookie,'x-forwarded-proto':'https',origin:base.replace('http:','https:'),'if-match':`"${settingsToken}"`};
+  const settingsCompeting=await Promise.all([45,60].map(minutes=>fetch(base+'/api/experience/settings',{method:'PATCH',headers:settingsHeaders,body:JSON.stringify({practical:{...settingsBody.practical,minutes}}),signal:AbortSignal.timeout(30000)})));
+  assert.deepEqual(settingsCompeting.map(r=>r.status).sort(),[200,409]);await Promise.all(settingsCompeting.map(r=>r.text()));const latestSettingsRead=await fetch(base+'/api/experience/settings',{headers:{cookie,'x-forwarded-proto':'https'}}),latestSettingsToken=latestSettingsRead.headers.get('x-bloom-settings-revision');const latestSettings=await latestSettingsRead.json();assert.ok([45,60].includes(latestSettings.practical.minutes));
+  await request('/api/experience/settings','PATCH',{practical:settingsBody.practical},200,{'If-Match':`"${latestSettingsToken}"`});
+  console.log('PASS: production encrypted settings revisions serialize concurrent writers with one winner; strict JSON and legacy compatibility retained');
+
   const {athleteTargetInputKey,athleteHealthInputKey,athleteProfileSourceKey}=await import('../shared/athlete-review.ts');
   const unreviewedAthlete=await request("/api/experience/settings","PATCH",{mode:"athlete",athlete:{weightKg:70,adult:true,pregnancyNo:true,healthReviewed:false,targetsConfirmed:false}});
   const reviewedAthlete={...unreviewedAthlete.athlete,healthReviewed:true,targetsConfirmed:true};

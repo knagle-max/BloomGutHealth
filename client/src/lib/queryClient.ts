@@ -1,5 +1,7 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
+export class ApiRequestError extends Error {constructor(readonly status:number,message:string){super(message);}}
+
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
@@ -8,7 +10,7 @@ async function throwIfResNotOk(res: Response) {
       const body = JSON.parse(text);
       message = body.error || body.message || text;
     } catch { /* Non-JSON responses retain their original message. */ }
-    throw new Error(message);
+    throw new ApiRequestError(res.status,message);
   }
 }
 

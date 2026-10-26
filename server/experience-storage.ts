@@ -1,3 +1,4 @@
+import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords } from "../shared/schema";
@@ -12,11 +13,14 @@ export class ExperienceStorage {
   const [r]=await this.db.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
   return experienceSettingsSchema.parse(r?decryptPrecision(r.encryptedPayload,userId):{});
  }
- async putExperienceSettings(userId:string, patch:ExperienceSettingsPatch) {
+ async putExperienceSettings(userId:string,patch:ExperienceSettingsPatch){return this.writeSettings(userId,patch);}
+ async putExperienceSettingsIfCurrent(userId:string,patch:ExperienceSettingsPatch,revision:string){return this.writeSettings(userId,patch,revision);}
+ private async writeSettings(userId:string, patch:ExperienceSettingsPatch,expectedRevision?:string) {
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const [r]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
    const current=experienceSettingsSchema.parse(r?decryptPrecision(r.encryptedPayload,userId):{});
+   if(expectedRevision!==undefined&&settingsRevision(userId,current)!==expectedRevision)throw new SettingsRevisionConflict();
    const {athleteReviewFor,...values}=patch;
    const next=experienceSettingsSchema.parse({...current,...values});
    if(patch.athlete)next.athlete=invalidateAthleteReview(current.athlete,next.athlete,athleteReviewFor);
@@ -67,6 +71,7 @@ export class ExperienceStorage {
 export interface ExperienceStore {
  getExperienceSettings(userId:string):Promise<ExperienceSettings>;
  putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
+ putExperienceSettingsIfCurrent?(userId:string,patch:ExperienceSettingsPatch,revision:string):Promise<ExperienceSettings>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;
  insertExperienceRecord(userId:string,entry:ExperienceEntry):Promise<ExperienceRecord>;
  updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry):Promise<ExperienceRecord|null>;

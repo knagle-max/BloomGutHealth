@@ -90,3 +90,9 @@ Actual HEAD editor committednuts exclusion butsynthetic503 retainedoldcache. onS
 ## Preference revision follow-up
 
 350full/types/build/API/source124 and actual API/PGlite/two-tab/versionedsetup/unknown-response/malformedheader browser PASS. Header-only transport preserves strict JSON; current web saves compare atomically before replacing preferences. Legacy writers/enforcement and settings CAS remain open. Publish and verify exact CI including real-Neon preference concurrency. v0.6 begins after actionable v0.5 work, with scoped external blockers carried forward.
+
+Preference revision milestone:350full/types/build/API/source124 and actualAPI/PGlite/two-tab/versionedsetup/unknown-response/malformedheader browsers PASS. Header transport preserves strict JSON; current writers bind reviewed source. Legacy enforcement/settings CAS remain open. Real-Neon concurrency verification pending exactCI. v0.6 transition follows completion of actionable v0.5 work.
+
+## Settings revision and draft retention milestone
+
+Preferencecee6aa6e0b78aca5e59c6ae01ee09b011621f9bc Actions40328222952 SUCCESS, Render dep-dbfl27ek1f9s738e48o0 LIVE verified. Settings now compare adopted source under existing encrypted-store lock; stale whole-section updates409 without erasing another target. Current web writers share provider lifecycle, retain editing basis, freeze submitted fields, and explicitly adopt changed sources. Fresh unchanged source permits retry; mode navigation follows acknowledgement.352full/types/build/API/source125 and actual SQL/API/two-tab/unknown-response/setup/practical/Profile-copy browsers PASS. Publication and exact real-Neon concurrency CI next. No universal legacy-enforcement or clinical acceptance claim.
