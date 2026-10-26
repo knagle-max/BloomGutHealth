@@ -1,6 +1,7 @@
+import {localLabDateInstants,labMeasuredAtFromLocal,labUtcOffsetLabel} from "@shared/lab-date-correction";
 import {possibleLabReimports} from "@shared/lab-reimport";
 import type {AnyLabHistoryRow} from "@shared/lab-history";
-import { useState } from "react";
+import { useState,useId } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { invalidatePlanningInputs } from "@/lib/planning-cache";
 import { Button } from "@/components/ui/button";
@@ -10,11 +11,14 @@ import { labSchema, sourceOnlyLabSchema, markerDefinitions, type Lab, type Sourc
 type Row = { line:number; payload:Lab|SourceOnlyLab; key:string };
 type Preview = { sourceOnlyOffered:number; keptSourceOnly:boolean; rows:Row[]; errors:Array<{line:number;message:string}> };
 export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHistoryRow[]}) {
+  const offsetId=useId();
+  const [selectedInstant,setSelectedInstant]=useState("");
   const [importId,setImportId]=useState(()=>crypto.randomUUID());
   const [reportIdentifier,setReportIdentifier]=useState(""),[specimenIdentifier,setSpecimenIdentifier]=useState("");
   const [mode,setMode]=useState<"paste"|"single">("paste");
   const [text,setText]=useState(""),[date,setDate]=useState(""),[time,setTime]=useState(""),[lab,setLab]=useState(""),[method,setMethod]=useState(""),[fasting,setFasting]=useState<Lab["fasting"]>("unknown");
   const [marker,setMarker]=useState("ldl"),[value,setValue]=useState(""),[unit,setUnit]=useState(""),[low,setLow]=useState(""),[high,setHigh]=useState(""),[notes,setNotes]=useState("");
+  const clockChoices=(()=>{try{return localLabDateInstants(date,time);}catch{return [];}})();
   const [preview,setPreview]=useState<Preview|null>(null),[error,setError]=useState(""),[started,setStarted]=useState(false),[completed,setCompleted]=useState(0);
   const [reviewedMatches,setReviewedMatches]=useState("");
   const reimports=(preview?.rows||[]).flatMap(row=>{const matches=possibleLabReimports(row.payload,existingLabs);return matches.length?[{row,matches}]:[];});
@@ -35,7 +39,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
     }finally{await invalidatePlanningInputs();}
   },onError:e=>setError((e.message.includes("conflicts")||e.message.startsWith("Review possible"))?e.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.")});
   const review=(keepSourceOnly=false)=>{try{
-    dateKey.parse(date);const measuredAt=new Date(date+"T"+(time||"12:00")).toISOString();
+    dateKey.parse(date);const measuredAt=labMeasuredAtFromLocal(date,time,selectedInstant||undefined);
     const common={measuredAt,laboratory:lab.trim()||"Not supplied",method:method.trim()||"Not supplied",fasting,sourceReport:{importId,enteredDate:date,...(time?{enteredTime:time}:{}),...(reportIdentifier.trim()?{reportIdentifier}:{}),...(specimenIdentifier.trim()?{specimenIdentifier}:{})}};
     let rows:Array<{line:number;payload:Lab|SourceOnlyLab}>,errors:Preview["errors"]=[],sourceOnlyOffered=0;
     if(mode==="paste"){
@@ -55,9 +59,9 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
       rows=[{line:1,payload}];
     }
     setPreview({sourceOnlyOffered,keptSourceOnly:keepSourceOnly,rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");setReviewedMatches("");
-  }catch{setError("Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
+  }catch(error){setError(error instanceof Error&&/^(?:This local time|This collection time|Review the collection time)/.test(error.message)?error.message:"Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
   const nextImport=(corrections=false)=>{
-    if(!corrections){setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
+    if(!corrections){setSelectedInstant("");setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
     setText(corrections?labPasteCorrections(text,preview?.errors.map(e=>e.line)||[]):"");
     setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");setStarted(false);
   };
@@ -70,12 +74,13 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
       <Button type="button" variant={mode==="single"?"default":"outline"} aria-pressed={mode==="single"} disabled={started} onClick={()=>{setMode("single");clear();}}>Enter one</Button>
     </div>
     <div className="precision-grid">
-      <label>Test date<input className="bloom-input w-full" type="date" value={date} disabled={started} onChange={e=>{setDate(e.target.value);clear();}}/></label>
-      <label>Collection time (optional)<input className="bloom-input w-full" type="time" value={time} disabled={started} onChange={e=>{setTime(e.target.value);clear();}}/></label>
+      <label>Test date<input className="bloom-input w-full" type="date" value={date} disabled={started} onChange={e=>{setDate(e.target.value);setSelectedInstant("");clear();}}/></label>
+      <label>Collection time (optional)<input className="bloom-input w-full" type="time" value={time} disabled={started} onChange={e=>{setTime(e.target.value);setSelectedInstant("");clear();}}/></label>
       <label>Laboratory (optional)<input className="bloom-input w-full" value={lab} disabled={started} maxLength={200} onChange={e=>{setLab(e.target.value);clear();}}/></label>
       <label>Method / assay (optional)<input className="bloom-input w-full" value={method} disabled={started} maxLength={200} onChange={e=>{setMethod(e.target.value);clear();}}/></label>
       <label>Fasting<select aria-label="Fasting" className="bloom-input w-full" value={fasting} disabled={started} onChange={e=>{setFasting(e.target.value as Lab["fasting"]);clear();}}><option value="unknown">Unknown / not applicable</option><option value="yes">Yes</option><option value="no">No</option></select></label>
     </div>
+    {clockChoices.length>1&&<div><label htmlFor={offsetId}>Collection time UTC offset</label><select id={offsetId} className="bloom-input w-full" value={selectedInstant} disabled={started} onChange={event=>{setSelectedInstant(event.target.value);clear();}}><option value="">Choose the occurrence shown by your source</option>{clockChoices.map(choice=><option key={choice.measuredAt} value={choice.measuredAt}>{labUtcOffsetLabel(choice.offsetMinutes)} · {choice.measuredAt}</option>)}</select><p className="panel-note">This clock time occurs twice in your current timezone. Choose the source's offset only when known, or leave collection time empty.</p></div>}
     <details><summary>Report & specimen identifiers (optional)</summary>
       <p className="panel-note">Copy identifiers from this report if available. They help distinguish reports or specimens collected on the same date; Bloom does not verify them with the laboratory.</p>
       <div className="precision-grid">

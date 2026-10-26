@@ -4,6 +4,10 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**b26dfd09f029aab7ef3bfd077b917e568083f81a: Actions40393634801 SUCCESS (376 tests plus isolated Neon correction/replay/stale-source/weekly-save/full-lineage deletion smoke); Render dep-dbfr8fu417fc73eqo9mg LIVE.**
+
+Completed this continuation: explicit source/unit-lineage deletion, source-only reimport review, immutable date/audit readers and reviewed date editor with exact retries/stale-source protection. Current local follow-up covers repeated/skipped local collection clocks in capture and correction; focused/types/build/encrypted browser PASS, ordinary regression/publication pending.
+
 **8e57897a44d38d24faaec8bb30213ed41b1978fe**: Actions40392145665 SUCCESS (374 tests), Render dep-dbfr3p95efls73fqvvcg LIVE. Immutable source/date/unit readers, planning guards, complete deletion and visible audit verified before writer publication.
 
 Current reviewed date editor:376 local tests, types/build/API96+13/source130 and actual encrypted UI/API lost-response/review/audit PASS; competing-client refresh check and exact writer publication/CI/live pending. Native/Tester1/independent clinical/legal/design review and remaining actionable scope are separate; v0.5 incomplete.

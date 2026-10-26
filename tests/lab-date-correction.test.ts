@@ -10,7 +10,7 @@ import { registerPrecisionRoutes } from '../server/precision-routes';
 import { contextSchema, buildPrecisionReport } from '../shared/precision-nutrition';
 import { defaultPreferences } from '../shared/meal-intelligence';
 import { parseLabPaste } from '../shared/lab-paste';
-import { applyLabDateChange, labDateChangeFromLocal, labDateChangeSchema } from '../shared/lab-date-correction';
+import { applyLabDateChange, labDateChangeFromLocal, labDateChangeSchema, localLabDateInstants } from '../shared/lab-date-correction';
 const request = labDateChangeSchema.parse({ enteredDate: '2026-10-16', measuredAt: '2026-10-16T12:00:00Z', reason: 'Reviewed source transcription error', reviewed: true });
 const known = parseLabPaste('ALT, 0, U/L', '2026-10-15T12:00:00Z').valid[0].payload;
 
@@ -119,4 +119,19 @@ test('owned date action serializes immutable corrections, exact receipts and sou
     await pg.close();
     if (previous === undefined) delete process.env.PRECISION_DATA_KEY; else process.env.PRECISION_DATA_KEY = previous;
   }
+});
+
+test('repeated local collection times require an explicit valid occurrence, including half-hour DST changes',()=>{
+ const previousTZ=process.env.TZ;
+ try{
+  process.env.TZ='America/New_York';
+  assert.deepEqual(localLabDateInstants('2025-11-02','01:30').map(choice=>choice.measuredAt),['2025-11-02T05:30:00.000Z','2025-11-02T06:30:00.000Z']);
+  assert.throws(()=>labDateChangeFromLocal('2025-11-02','01:30','Checked source'),/occurs twice/);
+  for(const instant of ['2025-11-02T05:30:00.000Z','2025-11-02T06:30:00.000Z'])assert.equal(labDateChangeFromLocal('2025-11-02','01:30','Checked source',instant).measuredAt,instant);
+  assert.throws(()=>labDateChangeFromLocal('2025-11-02','01:30','Checked source','2025-11-02T07:30:00.000Z'),/selected UTC offset/);
+  assert.equal(labDateChangeFromLocal('2025-11-02','','Checked source').enteredTime,undefined);
+  process.env.TZ='Australia/Lord_Howe';
+  assert.deepEqual(localLabDateInstants('2026-04-05','01:45').map(choice=>choice.measuredAt),['2026-04-04T14:45:00.000Z','2026-04-04T15:15:00.000Z']);
+  assert.throws(()=>labDateChangeFromLocal('2026-04-05','01:45','Checked source'),/occurs twice/);
+ }finally{if(previousTZ===undefined)delete process.env.TZ;else process.env.TZ=previousTZ;}
 });

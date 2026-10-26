@@ -520,3 +520,14 @@ Five focused actual API/encrypted storage/schema/deletion tests PASS; types/buil
 LAB-DATE-CORRECTION-WRITE-01 full376 tests PASS(212554ms), final explicit-label types/build/API96+13/source130 PASS. Actual encrypted rendered date review/lost-response exact retry/source preservation/audit chain PASS. Competing-client/refresh browser final check running. No new external user decision required.
 
 LAB-DATE-CORRECTION-WRITE-01 competing-client rendered check PASS: unfinished dialog draft survives canonical query refresh; another actual API client creates a newer immutable successor; stale submitted draft409 preserves that current source. Exact retry/audit/clinical plan/deletion/raw reimport regression chain also PASS. Ready publish with376 tests/types/build/API96+13/source130; verify isolated Neon extension in exactCI.
+
+b26dfd09f029aab7ef3bfd077b917e568083f81a: Actions40393634801 SUCCESS (376 tests plus isolated Neon correction/replay/stale-source/weekly-save/full-lineage deletion smoke); Render dep-dbfr8fu417fc73eqo9mg LIVE.
+
+
+## LAB-LOCAL-CLOCK-01 — explicit repeated-time choice across capture and correction
+
+Shared browser-local clock resolver rejects nonexistent spring times and enumerates real repeated-time occurrences using actual timezone offsets, including half-hour Lord Howe transitions. Date-only capture still omits collection-time provenance. Normal paste/manual capture and reviewed date editor require an explicit occurrence for ambiguous clock text; source offset is never guessed. Edits reset review/choice; another import resets its choice, while submitted receipts stay frozen. Definite400/401/403/404/409 correction failures cannot loop through uncertain-write retry; typed ApiRequestError status drives that boundary.
+
+Seven focused source/schema/actual encrypted API/storage tests, types/build/source130 PASS. Actual NewYork React/API/encrypted browser PASS: keyboard second occurrence choice and320px dialog, explicit first/second paste/manual instants, no writes before choice, next-import reset, spring gap denial, receipt/review/edit/canonical-refresh conflict/source-only/deletion regressions. Initial retry-disable check incorrectly parsed the error message for a status prefix; actual ApiRequestError carries a typed status, corrected and browser PASS. Backend request/schema unchanged; no new metadata migration. Ordinary import regression running; do not repeat full376 locally for this narrow client/shared helper batch. ExactCI377 required after publication.
+
+LAB-LOCAL-CLOCK-01 ordinary rendered regression PASS: shared-context paste/manual, exact frozen retry/no duplicates, correction-only context, explicit unit confirmation/provenance and320/375/768/1440 reflow. Final types/API96+13/source130 PASS.7 focused actual source tests and complete encrypted NewYork clock/date/conflict/deletion/reimport chain PASS. Ready publish, exactCI377/live required; prior b26 verified376 plus actualNeon smoke/live.

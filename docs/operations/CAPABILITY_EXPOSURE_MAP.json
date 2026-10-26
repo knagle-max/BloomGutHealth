@@ -1573,7 +1573,7 @@
     "client/src/components/MealAnalysis.tsx": "9d7d6255ca980ac4f2065da4287ad4f2eb79bbabb2b99b4c875f1a0bff1d59d7",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "5939c11a3c456081381ccf092c22bb0355d0f0324bc6afc0cc50dbcc2b1d149b",
-    "client/src/components/QuickLabEntry.tsx": "e878f9bd9f7094048fce59fdab4ba17d2fe024ad202adc174d9b4db17003333e",
+    "client/src/components/QuickLabEntry.tsx": "e9e6ac55e62d2913129e50391e2bb82a6123e5d084009546bfc3da7418611a37",
     "client/src/components/SavedMeals.tsx": "8cd61688a966a22992a27fd8d944c7151c4310227f7563e085523a3174d45004",
     "client/src/components/TodayFocus.tsx": "c64bf9c4d7d089efad04ba297af372144f2518f023cfaceda8b988f0986ff9d1",
     "client/src/components/TodayStatus.tsx": "43f4ce4bd8290eb12a7185769d00e1aab829abac4fdbecf0158603ad73aace9a",
