@@ -447,6 +447,19 @@ const markerIds = markerDefinitions.map((m) => m.id) as [
   MarkerId,
   ...MarkerId[],
 ];
+export const labSourceReportSchema = z.object({
+      importId:z.string().uuid(),
+      reportIdentifier:z.string().max(200).optional(),
+      specimenIdentifier:z.string().max(200).optional(),
+    }).strict();
+export const labSourceInputSchema = z.object({
+      text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),
+      capture:z.enum(["pasted-report","manual-report"]),
+      // Optional source metadata, never an inferred biological category or clinical finding.
+      // Reader expansion precedes parser emission so strict previous readers are not mixed with new writes.
+      reportedSection:z.string().max(1000).optional(),
+      rowOrder:z.number().int().min(0).max(30000).optional(),
+    }).strict();
 export const labSchema = z
   .object({
     marker: z.enum(markerIds),
@@ -459,21 +472,8 @@ export const labSchema = z
     referenceLow: z.number().finite().nonnegative().nullable(),
     referenceHigh: z.number().finite().nonnegative().nullable(),
     notes: z.string().max(1000).default(""),
-    // Optional source identity: Bloom's import reference is not a laboratory report ID.
-    // Exact identifiers remain user-entered provenance, never clinical verification.
-    sourceReport: z.object({
-      importId:z.string().uuid(),
-      reportIdentifier:z.string().max(200).optional(),
-      specimenIdentifier:z.string().max(200).optional(),
-    }).strict().optional(),
-    sourceInput: z.object({
-      text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),
-      capture:z.enum(["pasted-report","manual-report"]),
-      // Optional source metadata, never an inferred biological category or clinical finding.
-      // Reader expansion precedes parser emission so strict previous readers are not mixed with new writes.
-      reportedSection:z.string().max(1000).optional(),
-      rowOrder:z.number().int().min(0).max(30000).optional(),
-    }).strict().optional(),
+    sourceReport: labSourceReportSchema.optional(),
+    sourceInput: labSourceInputSchema.optional(),
     unitReview: z.object({
       status: z.enum(["pending", "confirmed"]),
       originalValue: z.number().finite().nonnegative().max(1000000),
@@ -507,6 +507,21 @@ export const labSchema = z
       });
   });
 export type Lab = z.infer<typeof labSchema>;
+/** Unmapped source data is retained verbatim and never enters clinical computation. */
+export const sourceOnlyLabSchema=z.object({
+ sourceOnly:z.literal(true),
+ reportedAnalyte:z.string().min(1).max(200).refine(value=>!!value.trim()),
+ reportedValue:z.string().min(1).max(100).refine(value=>!!value.trim()),
+ reportedUnit:z.string().min(1).max(50).refine(value=>!!value.trim()).nullable(),
+ reportedReferenceInterval:z.string().max(200).optional(),
+ measuredAt:isoDate,laboratory:shortText,method:shortText,fasting:z.enum(["yes","no","unknown"]),
+ sourceReport:labSourceReportSchema.optional(),sourceInput:labSourceInputSchema,
+}).strict().superRefine((value,ctx)=>{
+ if(!value.sourceInput.text.trim()||value.sourceInput.number!==value.reportedValue||value.sourceInput.suppliedUnit!==value.reportedUnit)
+  ctx.addIssue({code:"custom",message:"Keep the exact original source value, unit and report row."});
+});
+export type SourceOnlyLab=z.infer<typeof sourceOnlyLabSchema>;
+
 export function canonicalLab(l: Lab) {
   if (l.unitReview?.status === "pending") throw Error("Confirm the source unit before normalizing this laboratory result.");
   let value = l.value,
@@ -615,7 +630,7 @@ export const precisionEntrySchema = z.discriminatedUnion("kind", [
   z
     .object({ kind: z.literal("genetics"), payload: geneticsPayloadSchema })
     .strict(),
-  z.object({ kind: z.literal("lab"), payload: labSchema }).strict(),
+  z.object({ kind: z.literal("lab"), payload: z.union([labSchema,sourceOnlyLabSchema]) }).strict(),
   z
     .object({ kind: z.literal("metabolite"), payload: metaboliteSchema })
     .strict(),
@@ -722,11 +737,13 @@ export function buildPrecisionReport(
   }));
   const allLabs = entries
     .flatMap((e) =>
-      e.parsed.success && e.parsed.data.kind === "lab"
+      e.parsed.success && e.parsed.data.kind === "lab" && "marker" in e.parsed.data.payload
         ? [{ ...e.parsed.data.payload, id: e.record.id }]
         : [],
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
+  const sourceOnlyLabs=entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
+    ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt));
   const superseded = new Set(allLabs.flatMap(l => l.unitReview?.supersedes ? [l.unitReview.supersedes] : []));
   const pendingLabs = allLabs.filter(l => l.unitReview?.status === "pending" && !superseded.has(l.id));
   const labs = allLabs.filter(l => l.unitReview?.status !== "pending" && !superseded.has(l.id));
@@ -1092,6 +1109,7 @@ export function buildPrecisionReport(
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
   return {
+    sourceOnlyLabs,
     pendingLabs,
     version: PRECISION_VERSION,
     generatedAt: new Date(now).toISOString(),

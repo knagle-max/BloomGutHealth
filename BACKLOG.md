@@ -455,3 +455,10 @@ Preview compares original source facts/units/times/context/reference bounds agai
 
 Previous writer/history1c2570bbe650944c0e0becc41853fe772ce0604c exact Actions40351499728 SUCCESS; Render dep-dbfn8drbc2fs739f1amg LIVE.359tests/types/build/source and dynamic source/import/correction/mobile regressions verified.
 LAB-REIMPORT-REVIEW-01 final local360/360 tests/types/build/API94+13/source129, grouped/ordinary advisory review gate and canonical source-history regressions PASS. Ready publish/exactCI+Render. Server-enforced concurrent uniqueness and file reimport/unsupported analytes remain OPEN.
+
+## LAB-SOURCE-ONLY-READ-01 — active
+
+Strict source-only payload within existing encrypted lab kind preserves unrecognized source analyte/value/unit/reference text and exact source metadata. Supported Lab remains unchanged; raw source rows separately exposed, excluded from all clinical/normalization/trend/ranking outputs and unit-confirmation. No ordinary writer, new DB kind/schema or guessed assay.3 focused shape/0/1/2/6/8×92/exclusion/encrypted API/receipt/owner tests + account export checks PASS; full363/types/build/API/source129 running. See SOURCE_ONLY_LAB_CONTRACT.md; verify reader before future parser/UI emission.
+
+Advisory reimport32915c27bfbfbe18b120a3bb2ce180446af3a85d LIVE on Render dep-dbfndo4s728c73dqk550; Actions40353364362 SUCCESS verified. No atomic dedup claim.
+Source-only reader final local363/363/tests/types/build/API94+13/source129 PASS; source/receipt/encrypted/export focused5 PASS. Normal writer remains next; exact reader deployment/CI required first.

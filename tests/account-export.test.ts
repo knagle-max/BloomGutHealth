@@ -39,9 +39,12 @@ test("account snapshot includes every owned class, decrypts original payloads an
  const sourceLab=parseLabPaste("  [ ORIGINAL REPORTED GROUP ]  \nLDL, 0.00, mmol/L","2026-10-15T12:00:00Z","Synthetic source").valid[0].payload;
  sourceLab.sourceReport={importId:"fb001025-1025-4025-8025-000000000001",reportIdentifier:"  SOURCE REPORT / A  ",specimenIdentifier:" specimen-2 "};
  await db.insert(schema.precisionRecords).values({id:"source-lab-a",userId:"a",kind:"lab",encryptedPayload:encryptPrecision(sourceLab,"a")});
+ const {sourceOnlyLabSchema}=await import("../shared/precision-nutrition");const sourceOnly=sourceOnlyLabSchema.parse({sourceOnly:true,reportedAnalyte:" Unmapped source assay ",reportedValue:"<0.50",reportedUnit:null,measuredAt:"2026-10-15T12:00:00Z",laboratory:"Synthetic source",method:"Not supplied",fasting:"unknown",sourceReport:sourceLab.sourceReport,sourceInput:{text:" Unmapped source assay, <0.50 ",number:"<0.50",suppliedUnit:null,capture:"pasted-report",reportedSection:" [ Unknown source category ] ",rowOrder:9}});
+ await db.insert(schema.precisionRecords).values({id:"source-only-a",userId:"a",kind:"lab",encryptedPayload:encryptPrecision(sourceOnly,"a")});
  queries.length=0;const a=await store.exportAccount('a'),b=await store.exportAccount('b');
  const exportedSource=a.biology.records.find(record=>record.id==="source-lab-a") as any;
  assert.deepEqual(labSchema.parse(exportedSource.payload),sourceLab);assert.equal(exportedSource.payload.sourceInput.reportedSection,"  [ ORIGINAL REPORTED GROUP ]  ");assert.equal(exportedSource.payload.sourceInput.rowOrder,1);assert.equal(exportedSource.payload.sourceInput.number,"0.00");assert.ok(!b.biology.records.some(record=>record.id==="source-lab-a"));
+ assert.deepEqual((a.biology.records.find(record=>record.id==="source-only-a")as any).payload,sourceOnly);assert.ok(!b.biology.records.some(record=>record.id==="source-only-a"));
  const historical=a.biology.records.find(record=>record.id==='saved-plan-a') as any;
  assert.equal(historical.interpretationStatus,'historical_plan_not_revalidated');assert.equal(historical.currentUse,'rebuild_required');assert.equal(historical.payload.checksPassed,true);assert.equal(historical.payload.request.targets.protein,0);
  assert.ok(!b.biology.records.some(record=>record.id==='saved-plan-a'));

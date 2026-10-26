@@ -450,12 +450,16 @@ try {
     },
     201,
   );
+  const sourceOnlyPayload={sourceOnly:true,reportedAnalyte:"Synthetic unreviewed assay",reportedValue:"<0.50",reportedUnit:null,measuredAt:now,laboratory:"Synthetic CI lab",method:"Not supplied",fasting:"unknown",sourceReport:labSourceIdentity,sourceInput:{text:"Synthetic unreviewed assay, <0.50",number:"<0.50",suppliedUnit:null,capture:"pasted-report",reportedSection:"[ Unknown source category ]",rowOrder:8}};
+  const sourceOnlyLab=await request("/api/precision/records","POST",{kind:"lab",payload:sourceOnlyPayload},201,{"Idempotency-Key":randomUUID()});
+  await request(`/api/precision/labs/${sourceOnlyLab.id}/confirm-unit`,"POST",{unit:"mmol/L"},409);
   const report = await request("/api/precision");
   assert.equal(
     report.genetics.findings.find((f) => f.rsid === "rs1801133").genotype,
     "AG",
   );
   assert.equal(report.labs[0].flag, "above reported range");
+  assert.equal(report.sourceOnlyLabs.length,1);assert.deepEqual(report.sourceOnlyLabs[0],{...sourceOnlyPayload,id:sourceOnlyLab.id});assert.equal(report.labHistory.some(row=>row.id===sourceOnlyLab.id),false);
   assert.equal(report.microbiome.report.id, imported.sampleId);
   assert.equal(report.microbiome.measuredMetabolites[0].id, measured.id);
   assert.ok(report.recommendations.length && report.foods.length);
@@ -514,6 +518,7 @@ try {
   assert.equal(accountExport.profile.id,first.id);
   assert.ok(accountExport.journal.some(m=>m.id===meal.id));
   assert.ok(accountExport.savedLabels.some(p=>p.id===personalProduct.id));
+  assert.deepEqual(accountExport.biology.records.find(row=>row.id===sourceOnlyLab.id).payload,sourceOnlyPayload);
   assert.deepEqual(lab.payload.sourceReport,labSourceIdentity);
   assert.deepEqual(accountExport.biology.records.find(r=>r.id===lab.id).payload.sourceReport,labSourceIdentity);
   assert.ok(accountExport.gutReports.samples.some(s=>s.id===functional.sampleId));

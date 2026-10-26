@@ -22,7 +22,7 @@
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "149a097cf76c8b72b6a12be670025b174459bf6d15f7e2f2bc6040ae6cbe88b6",
-    "server/precision-routes.ts": "44fad22561024c95681568096892da32db22468935711ece21363601493b9f29",
+    "server/precision-routes.ts": "bac96e71de5efaf323c478f6853f32dcb99fdb8fd73e271dbe06ee56795fca15",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",

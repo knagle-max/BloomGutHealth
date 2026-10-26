@@ -4,6 +4,12 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**32915c27bfbfbe18b120a3bb2ce180446af3a85d**: Actions40353364362 SUCCESS; Render dep-dbfndo4s728c73dqk550 LIVE.360 tests/types/build/API/source129 and import/history browsers pass. Possible reimports require explicit review before a separate new save; this remains advisory, without atomic/file deduplication.
+
+Current reader-only source preservation batch is locally verified363/363, types/build/source and encrypted API/export checks. It retains unmapped assay/value/unit text separately and cannot affect any clinical/trend/recommendation output. No normal writer yet; exact CI/deployment required first. Next: explicit source-only unsupported-row import/display, then remaining source/concurrency/feedback/search/integration scope.
+
+Earlier source-history checkpoint:
+
 **1c2570bbe650944c0e0becc41853fe772ce0604c**: Actions40351499728 SUCCESS, Render dep-dbfn8drbc2fs739f1amg LIVE.359 tests/types/build/API94+13/source128 and source-preserving import/grouped history/source-context browsers pass. [Selective source-history evidence](docs/review/lab-source-history-20261026/README.md). Advisory reimport review is locally ready with360/360 plus types/build/source129 and grouped/ordinary review-gate regressions; publish/verify exact CI next. No atomic/file dedup claim.
 
 Earlier reader checkpoint:
