@@ -1,4 +1,4 @@
-import { energyAmount } from "@shared/nutrition-display";
+import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import EverydayStart from "@/components/EverydayStart";
 import { useExperience } from "@/lib/experience";
 import TodayStatus from "@/components/TodayStatus";
@@ -115,7 +115,7 @@ export default function Dashboard() {
             },
             {
               label: "Protein",
-              value: summary.protein?.toFixed(0) ?? "—",
+              value: summary.protein==null?"—":formatNutrientAmount(summary.protein),
               unit: "g",
               icon: Sprout,
               note: summary.coverage.protein.partial

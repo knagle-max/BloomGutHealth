@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { energyAmount, foodMass, foodMassDraft, nutrientDisplay } from "../shared/nutrition-display";
+import { energyAmount, foodMass, foodMassDraft, nutrientDisplay, formatNutrientAmount } from "../shared/nutrition-display";
 import { mealNutritionSummary } from "../shared/nutrition-summary";
 
 test("nutrition display keeps unknown, zero, partial coverage and stored kcal distinct", () => {
@@ -42,4 +42,10 @@ test("ounce portion entry preserves exact mass and rejects unfinished or unsuppo
   }
   assert.equal(foodMass(null, "oz"), "Amount unknown");
   assert.equal(foodMass(0, "oz"), "0 oz");
+});
+
+test("positive nutrient amounts remain positive on overview and detail while true zero and unknown stay distinct",()=>{
+ for(const value of [Number.MIN_VALUE,1e-9,0.00003,0.004,0.11,0.26,0.999])assert.ok(Number(formatNutrientAmount(value))>0);
+ assert.equal(formatNutrientAmount(0.11),"0.11");assert.equal(formatNutrientAmount(0.26),"0.26");assert.equal(formatNutrientAmount(35.14),"35.1");assert.equal(formatNutrientAmount(0),"0");
+ for(const value of [null,undefined,NaN,Infinity,-1])assert.equal(formatNutrientAmount(value),"Unavailable");
 });

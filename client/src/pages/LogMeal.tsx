@@ -6,7 +6,7 @@ import {useAuth} from "@/lib/auth";
 import RestaurantEntry from "@/components/RestaurantEntry";
 import FoodCapture from "@/components/FoodCapture";
 import { useExperience } from "@/lib/experience";
-import { energyAmount, foodMass } from "@shared/nutrition-display";
+import { energyAmount, foodMass, formatNutrientAmount } from "@shared/nutrition-display";
 import {foodEntryMethods,availableFoodEntryMethods,resolveFoodEntryRoute,parseFoodEntryMethod,type FoodEntryMethod} from "@shared/food-entry";
 import { SaveMealButton } from "@/components/SavedMeals";
 import ProductPicker from "@/components/ProductPicker";
@@ -382,7 +382,7 @@ export default function LogMeal() {
                 <strong>
                   {savedMeal.totalProtein == null
                     ? "—"
-                    : Math.round(savedMeal.totalProtein)}
+                    : formatNutrientAmount(savedMeal.totalProtein)}
                   g
                 </strong>{" "}
                 protein
@@ -391,11 +391,12 @@ export default function LogMeal() {
                 <strong>
                   {savedMeal.totalCarbs == null
                     ? "—"
-                    : Math.round(savedMeal.totalCarbs)}
+                    : formatNutrientAmount(savedMeal.totalCarbs)}
                   g
                 </strong>{" "}
                 carbs
               </span>
+              <span><strong>{savedMeal.totalFat==null?"—":formatNutrientAmount(savedMeal.totalFat)}g</strong> fat</span>
             </div>
           ) : (
             <p>

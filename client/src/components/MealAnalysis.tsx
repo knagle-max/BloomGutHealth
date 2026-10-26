@@ -1,5 +1,5 @@
 import { useExperience } from "@/lib/experience";
-import { nutrientDisplay, foodMass } from "@shared/nutrition-display";
+import { nutrientDisplay, foodMass, formatNutrientAmount } from "@shared/nutrition-display";
 import FoodRelationshipLinks from "./FoodRelationshipLinks";
 import ProductPicker from "./ProductPicker";
 import { unmatchedFoods } from "@shared/nutrition-review";
@@ -242,7 +242,7 @@ export default function MealAnalysis({
                   <td className="p-2">
                     {n.amount === null
                       ? "Unavailable"
-                      : `${nutrientDisplay(n.key, n.amount, n.unit, units).amount?.toFixed(1)} ${nutrientDisplay(n.key, n.amount, n.unit, units).unit}`}
+                      : `${formatNutrientAmount(nutrientDisplay(n.key, n.amount, n.unit, units).amount)} ${nutrientDisplay(n.key, n.amount, n.unit, units).unit}`}
                   </td>
                   <td className="p-2">
                     {n.coverage === 1

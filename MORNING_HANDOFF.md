@@ -13,9 +13,15 @@ Branch: enhance/bloom-experience; PR1. Existing Render workspace tea-db9toijrjlh
 |280119d457117f03920b3f17e8599e1d35e87878|Paused/stale/error journal sources withdraw dependent totals/comparisons/history; recorded zero and current fallback remain; unknown is not empty.|326 tests; Actions40254927370 SUCCESS; Render verified live.|
 |8a25e4857e616f7e7bacbdcee84a9250ac86f9bd|AddFood correction freezes pending draft and hides unconfirmed totals/analysis after lost committed response; retry restores one meal.|326 tests; Actions40255449705 SUCCESS; Render dep-dbfavhrsp5es73clojm0 verified live.|
 |fba8a6cbffb17bbb23e516d4cb02d7bfc637ab05|Invalid numeric identifiers stop before provider calls; valid codes skip fuzzy generic/NIH lookup; zero-overlap candidates cannot fill a no-match query.|328 tests; Actions40256223204 SUCCESS; Render dep-dbfb430473hc739ss8r0 verified live.|
-|Current snapshot batch|Optional detached per-product normalized label snapshot within canonical MealIntelligence; existing aggregate totals retained. Source identity/serving/zero/missing/provenance survive changed provider objects; old analyses stay absent.|330/330 tests, types/build, source117/API92+13; actual adapter/PostgreSQL snapshot and canonical AddFood response-loss/Athlete-cache journeys PASS. Publication/exact CI+Render next.|
+|1099d03eab002e5b6f7f9f1457c4f01cc38dd2b2|Optional detached per-product normalized label snapshot within canonical MealIntelligence; existing aggregate totals retained. Source identity/serving/zero/missing/provenance survive changed provider objects; old analyses stay absent.|330/330 tests, types/build, source117/API92+13; actual adapter/PostgreSQL snapshot and canonical AddFood response-loss/Athlete-cache journeys PASS. Actions40274276334 SUCCESS; Render dep-dbfe992jnfac73em118g LIVE.|
 
 Architect2cac83b/8fe04cd activity handoffs and b6f1f8e food-search handoff preserved and reviewed. No new third-party provider, OFF approval or paid activation. No measured live search relevance, participant performance, health benefit or independent acceptance claim.
+
+## Current macro correction
+
+Confirmed source-backed fractional-display bug fixed locally: actual0.5g almonds savesP0.11/C0.11/F0.26g but previous overview rounding showedzero. Shared precision now preserves positive values, actualzero and unknown; all macros includingfat are shown in confirmation.331/331 tests/types/build/source117/API, actual save/correct/journal, units/AddFood/Athlete/Today regressions PASS; publication next. The actual hosted five-food owner incident remains uncaptured, not claimed fixed. See docs/operations/FOOD_REVIEW_MACRO_INCIDENT.md.
+
+New incoming requirements preserved throughb60ee75 include FoodReview owner/visual/homemade and Bloodwork clinical/dynamic/source grouping. Current new visual archives require original access; earlier174-source inventory remains verified. Next P0 MKT-LAB-2610 source integrity must stage optional metadata reader before parser writes; no hardcoded panel/group counts or medical interpretation.
 
 ## Broader completed foundations
 

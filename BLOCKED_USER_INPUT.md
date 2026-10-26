@@ -116,3 +116,19 @@ Historical TODAY-ASSETS-01 scope update before2af0998: Architect c4f178d/91b4a84
 - Choices: Restore the exact original; or retain the explicit missing-file record while prioritizing current app implementation.
 - Recommended default: Keep the missing legacy preview tracked and continue using the complete editable current sources. Never manufacture a replacement with the same provenance.
 - Deferral impact: Only full legacy archive completeness. No block to current app-wide design integration or normal development; source verification does not grant final design/release acceptance.
+
+## ARC-REVIEW-01-CAPTURE — actual hosted owner incident acceptance
+
+- Status: EXTERNAL_ACCEPTANCE_PENDING; confirmed fractional-display defect is independently implemented/tested, not proof of the owner case root cause.
+- Exact evidence/question: Which authorized tester can capture the affected same meal ID, deployed version and redacted overview/detail/API field map on the existing Render service?
+- Choices: Independent synthetic-account reproduction of the reported text/selection path; or owner supplies affected-case findings through the existing review flow.
+- Recommended: Independent hosted tester with authorized session; current environment has no real session and direct hosted browsing has been denied. No credential/reset/session fabrication.
+- Deferral: Blocks exact owner-incident closure only; source/precision/correction and independent engineering continue.
+
+## ARTIFACT-FOODREVIEW-BLOODWORK-20261025 — newly delivered editable assets
+
+- Status: BLOCKED_USER_INPUT for original asset access/fidelity only.174 earlier files remain verified; these later packs are distinct.
+- Exact question: What authorized repository path contains original Bloom_Food_Review_Design_Assets_2026-10-25.zip and Bloom_Bloodwork_Classifications_Visual_Assets_2026-10-25.zip (and approved Bloodwork editable source pack)?
+- Choices: Version original ZIPs/editable files in the existing repo with source hashes; or make the exact approved library files readable through an available authorized connector.
+- Recommended: Versioned repository originals and hashes. Do not regenerate or claim inferred design fidelity.
+- Deferral: Only exact new visual integration/Design acceptance; functional nutrition and source-import integrity continue without a user question interrupt.

@@ -1,6 +1,6 @@
 import {refreshMealSources} from "@/lib/meal-cache";
 import { useExperience } from "@/lib/experience";
-import { energyAmount } from "@shared/nutrition-display";
+import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
 import MealAnalysis from "@/components/MealAnalysis";
 import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
@@ -473,9 +473,9 @@ export default function NutritionHistory() {
   const summaryValueKnown = (key: string) => typeof totals[key] === "number" && Number.isFinite(totals[key]) && totals[key] >= 0;
   const summaryCanCompare = (key: string) => summaryValueKnown(key) && typeof nutrientTargets[key] === "number" && Number.isFinite(nutrientTargets[key]) && nutrientTargets[key] > 0;
   const retrySummary = () => { void Promise.allSettled([retryDaily(), retryTargets()]); };
-  const summaryAmount = (key: string, unit: string) => summaryValueKnown(key) ? `${Math.round(totals[key])} ${unit}` : "Unavailable";
+  const summaryAmount = (key: string, unit: string) => summaryValueKnown(key) ? `${formatNutrientAmount(totals[key])} ${unit}` : "Unavailable";
   const showAmount = (value: number | null | undefined) =>
-    value == null ? "Unavailable" : Math.round(value);
+    formatNutrientAmount(value);
   const calculatePercentage = (current: number | null, target: number) => {
     if (!target || current == null) return 0;
     return Math.min((current / target) * 100, 100);
@@ -883,21 +883,21 @@ export default function NutritionHistory() {
                           P:{" "}
                           {meal.totalProtein == null
                             ? "—"
-                            : Math.round(meal.totalProtein)}
+                            : formatNutrientAmount(meal.totalProtein)}
                           g
                         </Badge>
                         <Badge variant="secondary">
                           C:{" "}
                           {meal.totalCarbs == null
                             ? "—"
-                            : Math.round(meal.totalCarbs)}
+                            : formatNutrientAmount(meal.totalCarbs)}
                           g
                         </Badge>
                         <Badge variant="secondary">
                           F:{" "}
                           {meal.totalFat == null
                             ? "—"
-                            : Math.round(meal.totalFat)}
+                            : formatNutrientAmount(meal.totalFat)}
                           g
                         </Badge>
                       </div>

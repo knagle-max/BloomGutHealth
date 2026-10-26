@@ -32,3 +32,10 @@ export function foodMassDraft(raw: string, unit: NutritionDisplayUnits["foodWeig
   const grams = Number(raw) * (unit === "oz" ? 28.349523125 : 1);
   return Number.isFinite(grams) && grams > 0 && grams <= 3000 ? grams : null;
 }
+
+/** Display precision only. A known positive source amount must not become literal zero. */
+export function formatNutrientAmount(value:number|null|undefined):string {
+  if(typeof value!=="number"||!Number.isFinite(value)||value<0)return "Unavailable";
+  if(value===0)return "0";
+  return String(Number(value<1?value.toPrecision(3):value.toFixed(1)));
+}
