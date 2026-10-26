@@ -15,7 +15,13 @@ const aliases: Record<string, string> = {
 const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
 /** Explicit report headings only; never infer biological categories from a row. */
 export const isLabSectionHeading=(line:string)=>/^\[[^\r\n]*\]$/.test(line.trim());
-const isColumnHeading=(line:string)=>/^(marker|test|analyte)[,\t ]/i.test(line.trim());
+const isColumnHeading=(line:string)=>{
+  const fields=line.split(/[,\t]/).map(field=>normalize(field.trim()));
+  const names=["marker","test","analyte","markername","testname","analytename"];
+  if(fields.length>1)return fields.length<=4&&names.includes(fields[0])&&["value","result"].includes(fields[1])&&
+    (fields.length<3||["unit","units"].includes(fields[2]))&&(fields.length<4||["reference","referenceinterval","referencerange"].includes(fields[3]));
+  return /^(?:marker|test|analyte)(?:\s+name)?\s+(?:value|result)(?:\s+units?(?:\s+reference(?:\s+(?:range|interval))?)?)?$/i.test(line.trim());
+};
 /** Keep physical row positions and source headings while removing acknowledged results. */
 export function labPasteCorrections(text:string,errorLines:number[]):string {
   if(errorLines.some(line=>line<1))return text;
@@ -61,6 +67,11 @@ export function parseLabPaste(
         sourceInput:{text:raw,number:reportedValue,suppliedUnit:reportedUnit,capture:"pasted-report",rowOrder:index,...(reportedSection===undefined?{}:{reportedSection})}});
       if(parsed.success)sourceOnly.push({line:index+1,payload:parsed.data});
     };
+    const delimited=raw.split(/[,\t]/);
+    if(delimited.length>4||(delimited.length===4&&!!delimited[3].trim())){
+      reject("Reference text or additional columns need separate source review. Keep as source-only, or enter the result and reference interval manually.");
+      return;
+    }
     // Suggestions use only the marker catalogue, never magnitude-based clinical inference.
     const match = row
       .trim()
@@ -106,7 +117,7 @@ export function parseLabPaste(
       ...(missingUnit ? {unitReview:{status:"pending",originalValue:Number(match[2]),originalUnit:null,
         originalText:raw,suggestedUnit:marker.units[0],confirmedAt:null,supersedes:null}} : {}),
       notes:
-        "Imported from pasted results; verify against the original laboratory report.",
+        "Imported from source text; verify against the original laboratory report.",
     });
     if (!p.success) {
       reject(`Check value and unit for ${marker.name}; accepted units: ${marker.units.join(", ")}.`);

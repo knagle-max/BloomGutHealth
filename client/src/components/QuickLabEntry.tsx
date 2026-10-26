@@ -1,3 +1,4 @@
+import {readLabTextFile} from "@shared/lab-text-file";
 import {localLabDateInstants,labMeasuredAtFromLocal,labUtcOffsetLabel} from "@shared/lab-date-correction";
 import {possibleLabReimports,labImportReceiptMatches} from "@shared/lab-reimport";
 import type {AnyLabHistoryRow} from "@shared/lab-history";
@@ -15,6 +16,8 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
   const reviewHeading=useRef<HTMLHeadingElement>(null),nextImportButton=useRef<HTMLButtonElement>(null);
   useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
   const [needsMatchReview,setNeedsMatchReview]=useState(false),[hardConflict,setHardConflict]=useState(false);
+  const fileReadEpoch=useRef(0),startedNow=useRef(false);
+  const [fileReading,setFileReading]=useState(false),[loadedFile,setLoadedFile]=useState("");
   const offsetId=useId();
   const [selectedInstant,setSelectedInstant]=useState("");
   const [importId,setImportId]=useState(()=>crypto.randomUUID());
@@ -35,7 +38,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
     if((!started||needsMatchReview)&&!matchesReviewed)throw Error("Review possible previously recorded results before saving.");
     if(hardConflict)throw Error("The source or save reference conflicts. Keep this draft and review source history.");
     const remaining=preview.rows.map(row=>({...row,reviewedMatchIds:needsMatchReview||row.reviewedMatchIds===undefined?possibleLabReimports(row.payload,existingLabs).map(match=>match.id).sort():row.reviewedMatchIds}));
-    setStarted(true);setNeedsMatchReview(false);setError("");setPreview(old=>old?{...old,rows:[...remaining]}:old);
+    startedNow.current=true;setStarted(true);setNeedsMatchReview(false);setError("");setPreview(old=>old?{...old,rows:[...remaining]}:old);
     try{
       while(remaining.length){
         if(!active.current)throw Error("Your account or import form changed. No further results were sent.");
@@ -80,47 +83,60 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
         ...(!unit?{unitReview:{status:"pending",originalValue:Number(value),originalUnit:null,originalText:raw,suggestedUnit:definition.units[0],confirmedAt:null,supersedes:null}}:{})});
       rows=[{line:1,payload}];
     }
+    if(!rows.length&&!errors.length)throw Error("No laboratory result rows were found. Check the source text.");
     setPreview({sourceOnlyOffered,keptSourceOnly:keepSourceOnly,rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");setReviewedMatches("");
-  }catch(error){setError(error instanceof Error&&/^(?:This local time|This collection time|Review the collection time)/.test(error.message)?error.message:"Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
+  }catch(error){setError(error instanceof Error&&/^(?:This local time|This collection time|Review the collection time|No laboratory result rows|Paste up to 50 results)/.test(error.message)?error.message:"Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
   const nextImport=(corrections=false)=>{
-    if(!corrections){setSelectedInstant("");setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
+    if(!corrections){setLoadedFile("");setSelectedInstant("");setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
     setText(corrections?labPasteCorrections(text,preview?.errors.map(e=>e.line)||[]):"");
-    setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");setStarted(false);setNeedsMatchReview(false);setHardConflict(false);setReviewedMatches("");
+    setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");startedNow.current=false;setStarted(false);setNeedsMatchReview(false);setHardConflict(false);setReviewedMatches("");
+  };
+  const loadFile=async(file:File)=>{
+    if(startedNow.current)return;
+    const epoch=++fileReadEpoch.current;setFileReading(true);setError("");
+    try{
+      const loaded=await readLabTextFile(file);
+      if(!active.current||epoch!==fileReadEpoch.current||startedNow.current)return;
+      nextImport();setMode("paste");setText(loaded.text);setLoadedFile(loaded.name);
+      setDate("");setTime("");setLab("");setMethod("");setFasting("unknown");
+    }catch(error){if(active.current&&epoch===fileReadEpoch.current)setError(error instanceof Error?error.message:"The source file could not be read.");}
+    finally{if(active.current&&epoch===fileReadEpoch.current)setFileReading(false);}
   };
   const rows=preview?.rows||[];
   return <section className="bloom-panel space-y-4" aria-labelledby="add-labs-title">
     <h2 id="add-labs-title">Add lab results</h2>
     <p>Use the report’s date, laboratory and assay context for either entry method. Results with missing units stay provisional and do not inform clinical flags or recommendations.</p>
     <div role="group" aria-label="Lab entry method" className="flex flex-wrap gap-3">
-      <Button type="button" variant={mode==="paste"?"default":"outline"} aria-pressed={mode==="paste"} disabled={started} onClick={()=>{setMode("paste");clear();}}>Paste several</Button>
-      <Button type="button" variant={mode==="single"?"default":"outline"} aria-pressed={mode==="single"} disabled={started} onClick={()=>{setMode("single");clear();}}>Enter one</Button>
+      <Button type="button" variant={mode==="paste"?"default":"outline"} aria-pressed={mode==="paste"} disabled={started||fileReading} onClick={()=>{setMode("paste");clear();}}>Paste several</Button>
+      <Button type="button" variant={mode==="single"?"default":"outline"} aria-pressed={mode==="single"} disabled={started||fileReading} onClick={()=>{setMode("single");clear();}}>Enter one</Button>
     </div>
+    {mode==="paste"&&<div className="space-y-2"><label className="block" htmlFor={offsetId+"-file"}>Load report text (CSV, TSV or TXT)</label><input className="block w-full min-w-0 max-w-full" id={offsetId+"-file"} type="file" accept=".csv,.tsv,.txt,text/plain,text/csv,text/tab-separated-values" disabled={started} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value="";if(file)void loadFile(file);}}/><p className="panel-note">Read on this device; nothing is saved until review. Use analyte, value and optional unit/reference columns, up to 30 KB and 50 results. Loading starts a new import; enter its source date and identifiers below. PDFs and images are not interpreted.</p>{fileReading&&<p role="status">Reading source text…</p>}{loadedFile&&<p role="status" className="panel-note break-all">Text loaded from {loadedFile}. The filename is not a laboratory report identifier; review any edits before saving.</p>}</div>}
     <div className="precision-grid">
-      <label>Test date<input className="bloom-input w-full" type="date" value={date} disabled={started} onChange={e=>{setDate(e.target.value);setSelectedInstant("");clear();}}/></label>
-      <label>Collection time (optional)<input className="bloom-input w-full" type="time" value={time} disabled={started} onChange={e=>{setTime(e.target.value);setSelectedInstant("");clear();}}/></label>
-      <label>Laboratory (optional)<input className="bloom-input w-full" value={lab} disabled={started} maxLength={200} onChange={e=>{setLab(e.target.value);clear();}}/></label>
-      <label>Method / assay (optional)<input className="bloom-input w-full" value={method} disabled={started} maxLength={200} onChange={e=>{setMethod(e.target.value);clear();}}/></label>
-      <label>Fasting<select aria-label="Fasting" className="bloom-input w-full" value={fasting} disabled={started} onChange={e=>{setFasting(e.target.value as Lab["fasting"]);clear();}}><option value="unknown">Unknown / not applicable</option><option value="yes">Yes</option><option value="no">No</option></select></label>
+      <label>Test date<input className="bloom-input w-full" type="date" value={date} disabled={started||fileReading} onChange={e=>{setDate(e.target.value);setSelectedInstant("");clear();}}/></label>
+      <label>Collection time (optional)<input className="bloom-input w-full" type="time" value={time} disabled={started||fileReading} onChange={e=>{setTime(e.target.value);setSelectedInstant("");clear();}}/></label>
+      <label>Laboratory (optional)<input className="bloom-input w-full" value={lab} disabled={started||fileReading} maxLength={200} onChange={e=>{setLab(e.target.value);clear();}}/></label>
+      <label>Method / assay (optional)<input className="bloom-input w-full" value={method} disabled={started||fileReading} maxLength={200} onChange={e=>{setMethod(e.target.value);clear();}}/></label>
+      <label>Fasting<select aria-label="Fasting" className="bloom-input w-full" value={fasting} disabled={started||fileReading} onChange={e=>{setFasting(e.target.value as Lab["fasting"]);clear();}}><option value="unknown">Unknown / not applicable</option><option value="yes">Yes</option><option value="no">No</option></select></label>
     </div>
-    {clockChoices.length>1&&<div><label htmlFor={offsetId}>Collection time UTC offset</label><select id={offsetId} className="bloom-input w-full" value={selectedInstant} disabled={started} onChange={event=>{setSelectedInstant(event.target.value);clear();}}><option value="">Choose the occurrence shown by your source</option>{clockChoices.map(choice=><option key={choice.measuredAt} value={choice.measuredAt}>{labUtcOffsetLabel(choice.offsetMinutes)} · {choice.measuredAt}</option>)}</select><p className="panel-note">This clock time occurs twice in your current timezone. Choose the source's offset only when known, or leave collection time empty.</p></div>}
+    {clockChoices.length>1&&<div><label htmlFor={offsetId}>Collection time UTC offset</label><select id={offsetId} className="bloom-input w-full" value={selectedInstant} disabled={started||fileReading} onChange={event=>{setSelectedInstant(event.target.value);clear();}}><option value="">Choose the occurrence shown by your source</option>{clockChoices.map(choice=><option key={choice.measuredAt} value={choice.measuredAt}>{labUtcOffsetLabel(choice.offsetMinutes)} · {choice.measuredAt}</option>)}</select><p className="panel-note">This clock time occurs twice in your current timezone. Choose the source's offset only when known, or leave collection time empty.</p></div>}
     <details><summary>Report & specimen identifiers (optional)</summary>
       <p className="panel-note">Copy identifiers from this report if available. They help distinguish reports or specimens collected on the same date; Bloom does not verify them with the laboratory.</p>
       <div className="precision-grid">
-        <label>Report identifier (optional)<input className="bloom-input w-full" maxLength={200} value={reportIdentifier} disabled={started} onChange={e=>{setReportIdentifier(e.target.value);clear();}}/></label>
-        <label>Specimen identifier (optional)<input className="bloom-input w-full" maxLength={200} value={specimenIdentifier} disabled={started} onChange={e=>{setSpecimenIdentifier(e.target.value);clear();}}/></label>
+        <label>Report identifier (optional)<input className="bloom-input w-full" maxLength={200} value={reportIdentifier} disabled={started||fileReading} onChange={e=>{setReportIdentifier(e.target.value);clear();}}/></label>
+        <label>Specimen identifier (optional)<input className="bloom-input w-full" maxLength={200} value={specimenIdentifier} disabled={started||fileReading} onChange={e=>{setSpecimenIdentifier(e.target.value);clear();}}/></label>
       </div>
     </details>
-    {mode==="paste"?<label className="block">Results<textarea aria-label="Results" className="bloom-input w-full" rows={5} maxLength={30000} disabled={started} placeholder={"[ Reported section ]\nLDL, 3.2, mmol/L\nALT, 73, U/L\nVitamin D, 75"} value={text} onChange={e=>{setText(e.target.value);clear();}}/></label>:<div className="precision-grid">
-      <label>Marker<select aria-label="Marker" className="bloom-input w-full" disabled={started} value={marker} onChange={e=>{setMarker(e.target.value);setUnit("");clear();}}>{markerDefinitions.map(m=><option key={m.id} value={m.id}>{m.name}</option>)}</select></label>
-      <label>Source value<input className="bloom-input w-full" inputMode="decimal" value={value} disabled={started} onChange={e=>{setValue(e.target.value);clear();}}/></label>
-      <label>Source unit<select aria-label="Source unit" className="bloom-input w-full" disabled={started} value={unit} onChange={e=>{setUnit(e.target.value);clear();}}><option value="">Not reported — needs confirmation</option>{markerDefinitions.find(m=>m.id===marker)!.units.map(u=><option key={u} value={u}>{u}</option>)}</select></label>
-      <label>Report reference low (optional)<input className="bloom-input w-full" inputMode="decimal" value={low} disabled={started} onChange={e=>{setLow(e.target.value);clear();}}/></label>
-      <label>Report reference high (optional)<input className="bloom-input w-full" inputMode="decimal" value={high} disabled={started} onChange={e=>{setHigh(e.target.value);clear();}}/></label>
-      <label>Notes<input className="bloom-input w-full" maxLength={1000} value={notes} disabled={started} onChange={e=>{setNotes(e.target.value);clear();}}/></label>
+    {mode==="paste"?<label className="block">Results<textarea aria-label="Results" className="bloom-input w-full" rows={5} maxLength={30000} disabled={started||fileReading} placeholder={"[ Reported section ]\nLDL, 3.2, mmol/L\nALT, 73, U/L\nVitamin D, 75"} value={text} onChange={e=>{setText(e.target.value);clear();}}/></label>:<div className="precision-grid">
+      <label>Marker<select aria-label="Marker" className="bloom-input w-full" disabled={started||fileReading} value={marker} onChange={e=>{setMarker(e.target.value);setUnit("");clear();}}>{markerDefinitions.map(m=><option key={m.id} value={m.id}>{m.name}</option>)}</select></label>
+      <label>Source value<input className="bloom-input w-full" inputMode="decimal" value={value} disabled={started||fileReading} onChange={e=>{setValue(e.target.value);clear();}}/></label>
+      <label>Source unit<select aria-label="Source unit" className="bloom-input w-full" disabled={started||fileReading} value={unit} onChange={e=>{setUnit(e.target.value);clear();}}><option value="">Not reported — needs confirmation</option>{markerDefinitions.find(m=>m.id===marker)!.units.map(u=><option key={u} value={u}>{u}</option>)}</select></label>
+      <label>Report reference low (optional)<input className="bloom-input w-full" inputMode="decimal" value={low} disabled={started||fileReading} onChange={e=>{setLow(e.target.value);clear();}}/></label>
+      <label>Report reference high (optional)<input className="bloom-input w-full" inputMode="decimal" value={high} disabled={started||fileReading} onChange={e=>{setHigh(e.target.value);clear();}}/></label>
+      <label>Notes<input className="bloom-input w-full" maxLength={1000} value={notes} disabled={started||fileReading} onChange={e=>{setNotes(e.target.value);clear();}}/></label>
     </div>}
     {mode==="paste"&&<p className="panel-note">Optional section headings in [brackets] are retained as reported. Up to 50 results per paste; headings do not count toward that limit. Unsupported rows stay available for correction.</p>}
     <details><summary>Supported tests & units</summary><ul>{markerDefinitions.map(m=><li key={m.id}>{m.name}: {m.units.join(" or ")}</li>)}</ul></details>
-    <Button type="button" onClick={()=>review()} disabled={started||!(mode==="paste"?text.trim():value.trim())}>Preview results</Button>
+    <Button type="button" onClick={()=>review()} disabled={started||fileReading||!(mode==="paste"?text.trim():value.trim())}>Preview results</Button>
     {error&&<p role="alert">{error}</p>}
     {completed>0&&<p role="status">{completed} result(s) saved. Missing units still need confirmation below. Rows listed as errors were not saved; source-only rows have no interpretation.</p>}
     {save.isPending&&<p role="status">Saving remaining laboratory results…</p>}
@@ -130,7 +146,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
         <p>{reimports.length} preview row(s) match recorded analyte, original source value/unit, time and assay context. Matching values do not prove the same specimen. Different supplied report or specimen identifiers stay separate.</p>
         <ul>{reimports.map(({row,matches})=><li key={row.key}>Line {row.line}: {"sourceOnly" in row.payload?row.payload.reportedAnalyte:markerDefinitions.find(marker=>marker.id===("marker" in row.payload?row.payload.marker:undefined))?.name} · {matches.length} recorded match(es)</li>)}</ul>
         <a className="text-link" href="#lab-source-history">Review recorded source history</a>
-        <label className="block"><input type="checkbox" checked={matchesReviewed} onChange={event=>setReviewedMatches(event.target.checked?matchBasis:"")}/> I reviewed the matches; these are separate results to record.</label>
+        <label className="block"><input type="checkbox" disabled={fileReading||save.isPending} checked={matchesReviewed} onChange={event=>setReviewedMatches(event.target.checked?matchBasis:"")}/> I reviewed the matches; these are separate results to record.</label>
         <p className="panel-note">If this is the same report, leave it unsaved. No existing result is merged or removed automatically.</p>
       </div>}
 
@@ -143,8 +159,8 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
       })}
       <p className="panel-note">Review every row against the source. A reference interval is not a personal treatment target. {time?"The supplied collection time is retained with the report date.":"Test dates are stored at local noon for date-only ordering; no collection time is claimed."}</p>
       {needsMatchReview&&<p className="panel-note" role="status">Recorded matches changed while saving. Acknowledged rows are retained. Review current matches above before retrying the remaining original source rows.</p>}
-      {!!rows.length&&<Button type="button" disabled={save.isPending||hardConflict||(!started||needsMatchReview)&&!matchesReviewed} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>!("sourceOnly" in r.payload)&&r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
-      {started&&!rows.length&&<div className="flex flex-wrap gap-3"><Button ref={nextImportButton} type="button" variant="outline" onClick={()=>nextImport()}>Start another import</Button>{preview.errors.length>0&&mode==="paste"&&<Button type="button" variant="outline" onClick={()=>nextImport(true)}>Correct unrecognized rows</Button>}</div>}
+      {!!rows.length&&<Button type="button" disabled={fileReading||save.isPending||hardConflict||(!started||needsMatchReview)&&!matchesReviewed} onClick={()=>save.mutate()}>{save.isPending?"Saving…":started?"Retry remaining results":`Save ${rows.length} result(s)${rows.some(r=>!("sourceOnly" in r.payload)&&r.payload.unitReview?.status==="pending")?" for review":" after review"}`}</Button>}
+      {started&&!rows.length&&<div className="flex flex-wrap gap-3"><Button ref={nextImportButton} disabled={fileReading} type="button" variant="outline" onClick={()=>nextImport()}>Start another import</Button>{preview.errors.length>0&&mode==="paste"&&<Button type="button" variant="outline" disabled={fileReading} onClick={()=>nextImport(true)}>Correct unrecognized rows</Button>}</div>}
     </div>}
   </section>;
 }

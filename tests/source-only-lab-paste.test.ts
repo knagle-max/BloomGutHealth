@@ -12,3 +12,29 @@ test('keeping source-only rows leaves only genuinely unresolved lines in a corre
 test('source-only candidates respect the existing50-result bound without truncation or a marker/panel cap',()=>{
  const text=Array.from({length:50},(_,i)=>`[ Arbitrary source ${i} ]\nUnmapped assay ${i}, ${i}.00, original-unit`).join('\n');const result=parseLabPaste(text,date);assert.equal(result.sourceOnly.length,50);assert.equal(result.errors.length,50);assert.equal(result.sourceOnly[49].payload.sourceInput.rowOrder,99);assert.throws(()=>parseLabPaste(text+'\nAnother assay, 1, unit',date),/50 results/);assert.equal(parseLabPaste('LDL, 3.2, mmol/L\nLDL, 4.2, mmol/L',date).sourceOnly.length,1,'Repeated reported rows are offered as uninterpreted source data, never silently merged');
 });
+
+test('real source analytes beginning Test, Marker or Analyte are never silently discarded as column headings',()=>{
+ const source='Analyte,Value,Unit\nTest assay, 0.00, original-unit\nMarker protein, Negative\nAnalyte, <0.50, arbitrary-unit';
+ const parsed=parseLabPaste(source,date);
+ assert.equal(parsed.sourceOnly.length,3);
+ assert.deepEqual(parsed.sourceOnly.map(row=>row.payload.reportedAnalyte),['Test assay','Marker protein','Analyte']);
+ assert.deepEqual(parsed.sourceOnly.map(row=>row.payload.sourceInput.rowOrder),[1,2,3]);
+ assert.equal(parsed.sourceOnly[0].payload.reportedValue,'0.00');
+ assert.equal(parsed.sourceOnly[1].payload.reportedUnit,null);
+ assert.equal(parsed.sourceOnly[2].payload.reportedValue,'<0.50');
+ assert.equal(parsed.errors.length,3);
+ for(const header of ['Marker,Value,Unit','Test name\tResult\tUnits\tReference interval','marker value unit'])assert.equal(parseLabPaste(header+'\nALT, 20, U/L',date).valid.length,1);
+ const many='Test,Value,Unit\n'+Array.from({length:50},(_,i)=>`Test assay ${i}, ${i}.00, original-unit`).join('\n');
+ assert.equal(parseLabPaste(many,date).sourceOnly.length,50,'Structural headings do not consume the result limit; actual Test-prefixed rows do');
+});
+
+test('extra report columns are never silently discarded or promoted into an interpreted result',()=>{
+ const parsed=parseLabPaste('Analyte,Value,Unit,Reference interval\nALT, 20, U/L, 10–30\nALT, 21, U/L, 10–30, unexplained',date);
+ assert.equal(parsed.valid.length,0);
+ assert.equal(parsed.errors.length,2);
+ assert.equal(parsed.sourceOnly.length,1);
+ assert.equal(parsed.sourceOnly[0].payload.reportedAnalyte,'ALT');
+ assert.equal(parsed.sourceOnly[0].payload.reportedReferenceInterval,'10–30');
+ assert.equal(parsed.sourceOnly[0].payload.sourceInput.rowOrder,1);
+ assert.equal(parseLabPaste('ALT, 20, U/L,',date).valid.length,1,'An empty trailing column does not manufacture a range');
+});

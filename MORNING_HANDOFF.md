@@ -14,14 +14,16 @@ Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutH
 | `dbe3f69` | Paste/manual/date editing require an explicit occurrence for repeated clocks; nonexistent spring times rejected; date-only precision preserved | Actions40394783399 SUCCESS377; Render live |
 | `15cf2d9` | Atomic reimport endpoint compares current owned source matches under the account lock; explicit separate results, exact receipts and no legacy fallback | Actions40396269159 SUCCESS378 including real concurrent Neon201/409/review/replay; Render dep-dbfrgp7avr4c73a3u8n0 LIVE |
 
-Latest fully verified full SHA: `15cf2d97e74cc5d1798c6be2492926aac641f1f2`.
+Latest fully verified full SHA: `0efaa508361bc58a1d417f77efc6022c55d46b83`; Actions40399237224 SUCCESS379 and Render dep-dbfrq7ks728c739ofodg LIVE.
 
-Current ordinary-importer adoption is locally complete: strict endpoint, frozen per-row source/key/review snapshot, renewed review only after a definite changed-match409, acknowledged rows retained, complete matching receipts required before acknowledgment, navigation/account lifetime guards and keyboard focus recovery. Four focused tests, types/build/API97+13/source130 and actual encrypted App/API browsers pass. Partial batch/new match/malformed committed receipt/another candidate/exact retry/navigation/keyboard are verified. Ordinary/grouped unit/receipt/correction/reflow and full NewYork source/date/clock/deletion regressions pass. Exact adoption commit/Actions379/Render verification is next; see NEXT_ACTIONS.md.
+Ordinary importer adoption is verified: frozen source/key/review snapshots, partial acknowledgments, renewed review only after a changed-match409, exact receipt validation, uncertain-response replay after another match, actor/navigation lifetime guards and keyboard focus recovery. Actual encrypted App/API, ordinary/grouped and NewYork clock/date/source regressions passed.
+
+Current local source-text file intake is ready for publication: CSV/TSV/TXT are read on-device into canonical preview, with fresh context, bounded validation, source fidelity and stale-read guards. Header-prefix loss and ignored extra-reference columns are fixed. Full383 had382 successes and one stale generated crosswalk hash; after refresh final15 focused/crosswalk checks, types/build/API97+13/source130 and actual encrypted file/race/receipt/mobile browsers pass. Exact final CI383/Render verification is next. No OCR or new file/specimen identity is claimed.
 
 ## Remaining priorities
 
-1. **P0:** Finish exact publication verification of the ordinary importer; preserve source/receipt/owner boundaries in subsequent work.
-2. **P1:** Approved file/reimport intake through the canonical lab parser and review. Plaintext/CSV/TSV need bounded local reads, honest unsupported/header handling, new import identity, stale-read protection and no silent saves or inferred clinical mapping.
+1. **P0:** Finish exact publication verification of file intake; preserve source/receipt/owner boundaries in subsequent work.
+2. **P1:** Reconcile remaining lab/source acceptance against approved handoffs; unsupported PDF/image/spreadsheet interpretation is unavailable, not fabricated.
 3. **P1:** Reconcile remaining whole-app/source coverage, daily feedback/search and accessibility against approved handoffs. Synthetic checks do not close independent human, device, clinical or design acceptance.
 4. Carry external gates below separately. Begin approved independent v0.6 only after actionable v0.5 work is exhausted.
 

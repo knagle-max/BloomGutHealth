@@ -1,0 +1,15 @@
+# Local laboratory source-text loading
+
+The lab text editor can read one `.csv`, `.tsv` or `.txt` file on the device. It is a convenience for the existing source-text protocol, not a new laboratory connector, uploaded-file store, OCR system or verified specimen identity. No data is saved until the ordinary preview/review and atomic import action. PDF, images and spreadsheets are explicitly unavailable.
+
+A file must be nonempty, at most30,000 bytes and decoded characters, and valid plain UTF-8 without binary/control/replacement data. PDF signatures are rejected even under a text extension. Unsupported/oversized/read-error files leave the previous draft intact; contents are never truncated. The existing50-result parse limit remains explicit. Header-only files report no results rather than implying success.
+
+Loading valid text starts a new import reference and clears prior date/time/laboratory/assay/fasting/report/specimen context for owner review. It never derives identifiers or a date from the filename. The filename is local UI context only and is not stored as a report ID or in a new provenance field. Source rows continue through the existing strict source-text payload; no new capture enum or database migration is emitted. Original decoded row text, arbitrary explicit headings, physical row positions, original values/units and entered context retain the canonical contracts.
+
+Explicit structural column headings are recognized by complete column names. A real analyte beginning `Test`, `Marker` or `Analyte` is not discarded merely because of its prefix. Extra columns are not silently ignored: a nonempty fourth reference column requires explicit source-only review or manual structured range entry; more columns remain errors. No reference range, scientific mapping or clinical finding is guessed. Raw facts remain excluded from clinical interpretation.
+
+Reads are component/account-lifetime and epoch scoped. A later chosen file wins; late reads after navigation or a submitted import cannot overwrite a draft. Editing/preview/save controls wait during a read. Once submission starts, the file chooser is disabled with the other frozen source fields. A new file always starts a new import, including after correction-only work, so acknowledged rows cannot bypass cross-import review through a reused reference.
+
+The same file loaded again is subject to source-match review, not filename/hash identity or automatic merging. Atomic source-match, receipt, owner and partial-import rules remain unchanged.
+
+Evidence: `tests/lab-text-file.test.ts`, source parser/workflow tests and `scripts/qa/lab-file-intake-journey.mjs`. The latter runs actual React/Express/encrypted PGlite for local CSV/TSV selection, unsupported/large files, CRLF/header/zero/unknown threshold/reference preservation, no writes before review, lost receipt, filename exclusion, repeat review, delayed read races, navigation, empty-header and51-result failure. Ordinary responsive/unit/receipt/correction regression is also verified. All data is synthetic; no production files or health records are used.
