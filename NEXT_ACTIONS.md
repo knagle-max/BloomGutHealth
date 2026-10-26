@@ -1,3 +1,11 @@
+# Current next step — 2026-10-26
+
+Publish WEIGHT-03-COPY (325/tests/types/build/source110/browser+units PASS), verify exact CI/Render. Immediate next P0 TRUTH-04-FOOD-01: LogMeal onSuccess custom list excludes `/api/experience/athlete-day` and general planner source families. Reuse invalidatePlanningInputs, retain separate meals/health/microbiome invalidation without duplicate source requests. Add actual food-save→cached Athlete regression (new row once, current consumed/remaining values). Existing add-food-journey.mjs uses real ProductService/analysis with synthetic storage; extend with actual ExperienceRoutes server + prefetched inactive day before save. Keep source clocks/actor/mode correct; no new gallery for invisible invalidation.
+
+2879ab714749402c2ce08eec916f44c6cf2579aa Actions40247529448 SUCCESS / Render dep-dbf9hplg1s2s73a4kb30 LIVE. Current source audit docs/operations/ATHLETE_SOURCE_TRUTH_AUDIT.md. New ARC-VALUE01/02 handoffs reinforce this P0 cross-screen integrity work; no analytics/telemetry/study metrics authorized or observed. V0.6 remains deferred until v0.5.
+
+Earlier detailed context (publication steps superseded above):
+
 # Resume Bloom development
 
 Authorized enhance/bloom-experience/PR1. Existing Render workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. No main merge, replacement service, real credential/grant changes.
