@@ -1,3 +1,7 @@
+# Active saved-template checkpoint — 2026-10-26
+
+0f265410e5747a884be760eddae57df19f9ce7c2 Actions40252980254 SUCCESS/Render live. Move58568f6f5bf702d3fb5ab15ed573babe396605d7 Render dep-dbfak7dg1s2s73a5hl40 LIVE/Actions40253489175 in progress. Current saved-template receipt fix: finish326 full tests/build/types, rerun browser after final copy, review source112/API92+13, commit/push exact CI/Render. Actual route/PGlite3 tests and browser already pass; canonical AddFood lost-response+Athlete-cache regression passes. Next legacy NutritionHistory mutation outcome audit; preserve forms, reset only on success. No v0.6 switch, main merge, real grants/schema/credential edits.
+
 # Active Move checkpoint — 2026-10-26
 
 0f265410e5747a884be760eddae57df19f9ce7c2 pushed; Render dep-dbfahdr8vfls7395chp0 LIVE; Actions40252980254 in progress. Optional setup tests/types/build/Today pass, source-map2 tests pass after hash refresh. Current Move P0 fix reproduced actual baseline dead end and passed synthetic source/date/account/keyboard/failure journey. Final full325 tests, types/build and selective gallery in progress; publish and verify exact CI/Render before next substantial batch. Next saved-meal unknown-response/idempotency audit. New basic activity entry remains v0.6, no native activation.

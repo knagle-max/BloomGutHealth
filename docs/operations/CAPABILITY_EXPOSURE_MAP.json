@@ -299,13 +299,15 @@
           "client/src/components/ProductPicker.tsx",
           "client/src/pages/NutritionHistory.tsx",
           "client/src/components/FoodEntryChooser.tsx",
-          "client/src/components/CompanionHero.tsx"
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/SavedMeals.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
           "server/products.ts",
           "server/nutrition-history.ts",
-          "server/nutrition-targets.ts"
+          "server/nutrition-targets.ts",
+          "server/experience-routes.ts"
         ],
         "logicOrJobs": [
           "shared/products.ts",
@@ -322,13 +324,15 @@
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/meal-save.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
           "client/src/lib/queryClient.ts",
           "server/products.ts",
-          "client/src/lib/planning-cache.ts"
+          "client/src/lib/planning-cache.ts",
+          "client/src/lib/meal-cache.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit. Journal planning references distinguish explicit examples from estimates using complete actual adult profile inputs; no demographic defaults or clinical clearance.",
@@ -1494,10 +1498,12 @@
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "478268d23a03de300e290de677df928ab56ad81c092dbe255c9e04703d95df50",
     "client/src/components/QuickLabEntry.tsx": "9c48d4e5860880e60889f3a7363e70611b036d27c45a61d30a86b69a1d04841e",
+    "client/src/components/SavedMeals.tsx": "8cd61688a966a22992a27fd8d944c7151c4310227f7563e085523a3174d45004",
     "client/src/components/TodayFocus.tsx": "c64bf9c4d7d089efad04ba297af372144f2518f023cfaceda8b988f0986ff9d1",
     "client/src/components/TodayStatus.tsx": "43f4ce4bd8290eb12a7185769d00e1aab829abac4fdbecf0158603ad73aace9a",
     "client/src/lib/auth.tsx": "796839344459bece651ad94135b8dc51575eb60bcb625d6ada6394b0553324df",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
+    "client/src/lib/meal-cache.ts": "89b4b11900ce88ff19fa74a4b6fa766c4a0fb6ee811e617c0ad1cfc235b6a557",
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",
     "client/src/lib/queryClient.ts": "a2390dcfb7cb0600fb03827d530f4dad3e3d06ab127ed11938b6b24814b1959a",
     "client/src/pages/AthleteWorkspace.tsx": "40d2c27904663bd6daa3c74364d3876d4073663dd5d3ff2affddc62d32ec85e7",
@@ -1505,7 +1511,7 @@
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "b619dddc15d81709291768fd4f77f26a506beffacef9141029529bad5c964526",
+    "client/src/pages/LogMeal.tsx": "4a2b2d63069d20f3539496625212695e747310465569ea1617f0a38b7635abb8",
     "client/src/pages/MealPlanner.tsx": "6d9d6b8698e99eb9bddc5e072d5450154722e439cee8023d6a950a4ae00c2a5a",
     "client/src/pages/Microbiome.tsx": "56e7a45fd65421fbe2f8a8c93412cff76c6fbbafc1e65e464d3375ada7e4603f",
     "client/src/pages/NutritionHistory.tsx": "94984eb398d1bdd5f8caefe850c2ab7b12d427e002c0a6c00b2a76365caa9639",
@@ -1526,7 +1532,7 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "e1501d65f8cbbd4d3d999182fb0b0f5ece53fd0c314673463fd0b438e2b1605e",
+    "server/experience-routes.ts": "b6e87295b99297c1a33202166f7f8a811d2bcb1e497d8bb035d53ec04e8ea1f4",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -1537,6 +1543,7 @@
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
     "server/meal-intelligence.ts": "c92f552af98591c9ee908ef14e4c0d8eaf65c17f2ea54d284e52d97701c2363d",
+    "server/meal-save.ts": "4ed54debee262c7e3e3e5823387869c77ebe21b5b8718f01c107286d2d0538d5",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
     "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",

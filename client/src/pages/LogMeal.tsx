@@ -1,4 +1,4 @@
-import {invalidatePlanningInputs} from "@/lib/planning-cache";
+import {refreshMealSources} from "@/lib/meal-cache";
 import FoodEntryChooser from "@/components/FoodEntryChooser";
 import {useCapabilities} from "@/lib/capabilities";
 import DevelopmentPhotoPreview from "@/components/DevelopmentPhotoPreview";
@@ -20,7 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest } from "@/lib/queryClient";
 import MealAnalysis from "@/components/MealAnalysis";
 import {
   recipes,
@@ -28,11 +28,6 @@ import {
   type MealIntelligence,
 } from "@shared/meal-intelligence";
 import type { Meal } from "@shared/schema";
-
-function refreshMealSources(){return Promise.all([
-  queryClient.invalidateQueries({predicate:query=>["/api/meals","/api/health/","/api/microbiome/diet-prediction","/api/experience/records"].some(prefix=>String(query.queryKey[0]).startsWith(prefix))}),
-  invalidatePlanningInputs(),
-]);}
 
 export default function LogMeal() {
   const { settings } = useExperience();

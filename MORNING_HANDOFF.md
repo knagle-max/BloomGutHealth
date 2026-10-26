@@ -1,3 +1,9 @@
+# Current delivery — 2026-10-26
+
+Completed and verified: optional first-goal interruption/source/account safeguards0f26541 (CI40252980254 SUCCESS/live); Everyday Move source access58568f6 (CI40253489175 SUCCESS/live), source gallery docs/review/today-movement-20261026/README.md. Saved-template durable receipt recovery is ready to publish:326/326 tests, types/build, actual route/PGlite and synthetic UI, canonical AddFood uncertain-write/Athlete-cache, source114/API checks pass. No schema, credentials, account grants or mode rewiring.
+
+Next P0: older NutritionHistory uncertain-write/draft/canonical receipt audit; full same-account source CAS/draft conflict and complete daily feedback journey remain. Broader whole-app integration and independent Design/native/clinical/licensing/Tester1/human acceptance are still outstanding; basic Everyday entry/adaptation remain v0.6. No new routine user decision blocks the next engineering task. Exact next instructions: NEXT_ACTIONS.md; external questions: BLOCKED_USER_INPUT.md.
+
 # Latest checkpoint — 2026-10-26
 
 ARC-ACT-01 Move dead end reproduced and fixed as inline dated canonical source;325/325 tests, types/build/source111, new movement browser and Today responsive/dark regressions PASS. Publishing next. Optional setup0f265410e5747a884be760eddae57df19f9ce7c2 is live on Render dep-dbfahdr8vfls7395chp0; exactCI40252980254 verification pending. New separate template-save regression reproduces ignored save receipt/duplicate row; next implementation uses existing meal-save mechanism. Basic activity entry/native/independent acceptance remain open and distinct.
