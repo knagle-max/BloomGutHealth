@@ -1,3 +1,4 @@
+import {LabImportReviewRequired} from "./precision-storage";
 import {labDateChangeSchema} from "../shared/lab-date-correction";
 import {nutritionTargetReference} from "./nutrition-targets";
 import {resolvePlanningContext} from "./planning-context";
@@ -12,6 +13,7 @@ import type { IStorage } from "./storage";
 import {
   buildPrecisionReport,
   labSchema,
+  sourceOnlyLabSchema,
   activeLabRows,
   contextSchema,
   precisionEntrySchema,
@@ -43,6 +45,7 @@ type Store = Pick<
   | "putPrecisionContext"
   | "getPrecisionRecords"
   | "insertPrecisionRecord"
+  | "insertReviewedLab"
   | "correctLabDate"
   | "deleteLabEntry"
   | "deletePrecisionRecord"
@@ -498,6 +501,23 @@ export function registerPrecisionRoutes(
       res.json(p.data);
     } catch (e) {
       unavailable(res, e);
+    }
+  });
+  app.post("/api/precision/labs/import", async(req,res)=>{
+    const input=z.object({payload:z.union([labSchema,sourceOnlyLabSchema]),reviewedMatchIds:z.array(z.string().min(1).max(100)).max(1000).refine(ids=>new Set(ids).size===ids.length)}).strict().safeParse(req.body);
+    const key=req.get("Idempotency-Key");
+    if(!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))return res.status(400).json({error:"Review the source result and current matches with a valid save reference."});
+    const payload=input.data.payload;
+    if(payload.dateCorrection||("unitReview" in payload&&payload.unitReview&&(payload.unitReview.status!=="pending"||payload.unitReview.confirmedAt!==null||payload.unitReview.supersedes!==null||payload.value!==payload.unitReview.originalValue)))
+      return res.status(400).json({error:"Import original source facts; use the separate date and unit review actions for revisions."});
+    try{
+      if(!store.insertReviewedLab)return res.status(503).json({error:"Atomic laboratory match review is unavailable. No legacy save was attempted."});
+      res.status(201).json(await store.insertReviewedLab(req.session.userId!,payload,key,input.data.reviewedMatchIds));
+    }catch(error){
+      if(error instanceof LabImportReviewRequired)return res.status(409).json({code:"LAB_REIMPORT_REVIEW_REQUIRED",error:"Recorded source matches changed. Review the current matches before recording a separate result.",matchedIds:error.matchedIds});
+      if(error instanceof Error&&error.message==="PRECISION_SAVE_CONFLICT")return res.status(409).json({code:"LAB_SAVE_CONFLICT",error:"This save reference belongs to different source facts. Keep the original request for retry."});
+      if(error instanceof Error&&error.message==="LAB_SOURCE_CHANGED")return res.status(409).json({code:"LAB_SOURCE_CHANGED",error:"Laboratory sources changed or cannot be classified safely. Review the current source history."});
+      unavailable(res,error);
     }
   });
   app.post("/api/precision/records", async (req, res) => {

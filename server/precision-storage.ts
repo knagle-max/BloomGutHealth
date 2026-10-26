@@ -1,3 +1,4 @@
+import {possibleLabReimports} from "../shared/lab-reimport";
 import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shared/lab-date-correction";
 import { createHash } from "node:crypto";
@@ -19,6 +20,9 @@ type PrecisionDatabase = Pick<
   typeof appDatabase,
   "select" | "insert" | "delete" | "transaction"
 >;
+export class LabImportReviewRequired extends Error {
+  constructor(readonly matchedIds:string[]){super("LAB_REIMPORT_REVIEW_REQUIRED");}
+}
 export class PrecisionStorage {
   constructor(private readonly db: PrecisionDatabase) {}
   async getPrecisionContext(userId: string): Promise<unknown> {
@@ -59,11 +63,16 @@ export class PrecisionStorage {
       createdAt: row.createdAt,
     }));
   }
+  insertReviewedLab(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]){
+    if(!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey))throw Error("LAB_SOURCE_CHANGED");
+    return this.insertPrecisionRecord(userId,"lab",payload,saveKey,reviewedMatches);
+  }
   async insertPrecisionRecord(
     userId: string,
     kind: string,
     payload: unknown,
     saveKey?: string,
+    reviewedLabMatches?:readonly string[],
   ): Promise<PrecisionRecord> {
     const encryptedPayload = encryptPrecision(payload, userId);
     return this.db.transaction(async (tx) => {
@@ -81,6 +90,19 @@ export class PrecisionStorage {
       }
       const plan = payload as any;
       if (kind === "lab" && plan?.dateCorrection && plan?.unitReview?.status !== "confirmed") throw Error("LAB_SOURCE_CHANGED");
+      if(reviewedLabMatches!==undefined){
+        const known=labSchema.safeParse(payload),raw=sourceOnlyLabSchema.safeParse(payload);
+        const incoming=known.success?known.data:raw.success?raw.data:null;
+        if(kind!=="lab"||!saveKey||!incoming||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
+        const owned=await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
+        const rows=owned.map(row=>{
+          const decoded=decryptPrecision(row.encryptedPayload,userId),supported=labSchema.safeParse(decoded),source=sourceOnlyLabSchema.safeParse(decoded);
+          if(!supported.success&&!source.success)throw Error("LAB_SOURCE_CHANGED");
+          return {...(supported.success?supported.data:source.data!),id:row.id};
+        });
+        const expected=possibleLabReimports(incoming,activeLabRows(rows)).map(row=>row.id).sort();
+        if(JSON.stringify(expected)!==JSON.stringify([...reviewedLabMatches].sort()))throw new LabImportReviewRequired(expected);
+      }
       if (kind === "lab" && plan?.unitReview?.status === "confirmed") {
         const owned = await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
         const decoded = owned.map(r=>({...r,payload:decryptPrecision(r.encryptedPayload,userId) as any}));

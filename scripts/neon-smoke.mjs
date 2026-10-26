@@ -696,6 +696,20 @@ try {
   const deletedLabReport=await request("/api/precision");assert.equal(deletedLabReport.labHistory.length,0);assert.equal(deletedLabReport.pendingLabs.length,0);assert.equal((await request("/api/precision/weekly-plans")).length,0);
   await request(`/api/precision/labs/${correctedLab.id}/entry`,"DELETE",undefined,204,{"X-Bloom-Confirm":"delete-lab-entry-and-revisions"});
   console.log("PASS: actual Neon immutable date correction, exact replay, stale source denial, current-source weekly save and complete date/unit lineage deletion");
+  const importPayload={marker:"alt",value:12,unit:"U/L",measuredAt:now,laboratory:"Synthetic CI lab",method:"CI assay",fasting:"unknown",referenceLow:null,referenceHigh:null,notes:"",sourceReport:{...labSourceIdentity,importId:randomUUID()},sourceInput:{text:"ALT, 12, U/L",number:"12",suppliedUnit:"U/L",capture:"pasted-report"}};
+  const simultaneousPayloads=[importPayload,{...importPayload,sourceReport:{...importPayload.sourceReport,importId:randomUUID()}}],simultaneousKeys=[randomUUID(),randomUUID()];
+  const simultaneousImports=await Promise.all(simultaneousPayloads.map(async(payload,index)=>{
+    const response=await fetch(base+"/api/precision/labs/import",{method:"POST",headers:{"content-type":"application/json","x-forwarded-proto":"https",origin:base.replace("http:","https:"),cookie,"Idempotency-Key":simultaneousKeys[index]},body:JSON.stringify({payload,reviewedMatchIds:[]}),signal:AbortSignal.timeout(30000)});
+    assert.equal(response.headers.get("cache-control"),"no-store");return{index,status:response.status,body:await response.json()};
+  }));
+  assert.deepEqual(simultaneousImports.map(row=>row.status).sort(),[201,409]);
+  const acceptedImport=simultaneousImports.find(row=>row.status===201),deniedImport=simultaneousImports.find(row=>row.status===409),firstImport=acceptedImport.body;
+  const secondImportPayload=simultaneousPayloads[deniedImport.index],secondImportHeaders={"Idempotency-Key":simultaneousKeys[deniedImport.index]};
+  assert.equal(deniedImport.body.code,"LAB_REIMPORT_REVIEW_REQUIRED");assert.deepEqual(deniedImport.body.matchedIds,[firstImport.id]);
+  const separateImport=await request("/api/precision/labs/import","POST",{payload:secondImportPayload,reviewedMatchIds:[firstImport.id]},201,secondImportHeaders);
+  assert.notEqual(separateImport.id,firstImport.id);
+  assert.equal((await request("/api/precision/labs/import","POST",{payload:secondImportPayload,reviewedMatchIds:[]},201,secondImportHeaders)).id,separateImport.id);
+  console.log("PASS: actual Neon concurrent source-match imports admit one, require new review for the other, retain explicit separate sources and replay committed receipts without merging");
   const status = await request("/api/analysis/status");
   assert.equal(status.nutrition.offlinePlanningCatalogue, true);
   console.log(

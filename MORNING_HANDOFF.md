@@ -4,6 +4,10 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**dbe3f69b7c2b0c5ff18a799efb40bb9409041b26: Actions40394783399 SUCCESS (377 tests), Render dep-dbfrc5e417fc73equtsg LIVE.**
+
+Clock choice across paste/manual/date correction, keyboard/mobile and ordinary import verified. Atomic reimport server boundary is locally ready; full378 and exact publication pending, ordinary importer remains on legacy endpoint until verified adoption.
+
 **b26dfd09f029aab7ef3bfd077b917e568083f81a: Actions40393634801 SUCCESS (376 tests plus isolated Neon correction/replay/stale-source/weekly-save/full-lineage deletion smoke); Render dep-dbfr8fu417fc73eqo9mg LIVE.**
 
 Completed this continuation: explicit source/unit-lineage deletion, source-only reimport review, immutable date/audit readers and reviewed date editor with exact retries/stale-source protection. Current local follow-up covers repeated/skipped local collection clocks in capture and correction; focused/types/build/encrypted browser PASS, ordinary regression/publication pending.
