@@ -413,7 +413,7 @@ export default function LogMeal() {
       {savedMeal && !recalculate.isPending && !recalculate.isError && <SaveMealButton meal={savedMeal}/>}
       {Boolean(savedMeal?.intelligence) && (
         <MealAnalysis
-          key={(savedMeal!.intelligence as MealIntelligence).analyzedAt}
+          key={savedMeal!.id}
           analysis={savedMeal!.intelligence as MealIntelligence}
           onRecalculate={(ingredients) => recalculate.mutate(ingredients)}
           pending={recalculate.isPending}

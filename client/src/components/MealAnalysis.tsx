@@ -3,8 +3,8 @@ import { nutrientDisplay, foodMass, formatNutrientAmount } from "@shared/nutriti
 import FoodRelationshipLinks from "./FoodRelationshipLinks";
 import ProductPicker from "./ProductPicker";
 import { unmatchedFoods } from "@shared/nutrition-review";
-import { useState } from "react";
-import type { Ingredient } from "@shared/meal-intelligence";
+import { useEffect, useState } from "react";
+import { MAX_MEAL_INGREDIENTS, type Ingredient } from "@shared/meal-intelligence";
 import type { MealIntelligence } from "@shared/meal-intelligence";
 export default function MealAnalysis({
   analysis,
@@ -19,13 +19,24 @@ export default function MealAnalysis({
 }) {
   const { settings } = useExperience();
   const units = settings.displayUnits;
-  const [edits, setEdits] = useState<Ingredient[] | null>(null);
-  const ingredients = edits ?? analysis.ingredients;
+  const [rows,setRows]=useState(()=>analysis.ingredients.map(ingredient=>({key:crypto.randomUUID(),ingredient})));
+  const [hasEdits,setHasEdits]=useState(false);
+  const ingredients=rows.map(row=>row.ingredient);
+  // Confirmed corrections preserve request order. Keep row views/search drafts while adopting canonical source values.
+  useEffect(()=>{setRows(previous=>analysis.ingredients.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(false);},[analysis]);
+  const setEdits=(next:Ingredient[])=>{setRows(previous=>next.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(true);};
+  const addIngredient=()=>{
+    const key=crypto.randomUUID();
+    setRows(previous=>previous.length>=MAX_MEAL_INGREDIENTS?previous:[...previous,{key,ingredient:{name:"",grams:null,preparation:"As described",assumption:"User-added food; review the source and amount."}}]);
+    setHasEdits(true);
+    requestAnimationFrame(()=>document.querySelector<HTMLInputElement>(`[data-draft-row="${key}"] input[aria-label^="Food "]`)?.focus());
+  };
   const missing = unmatchedFoods(analysis);
   const firstMissingIndex = ingredients.findIndex((i) => missing.some((m) => m.name === i.name && m.grams === i.grams));
   return (
     <section className="bloom-panel space-y-4">
       <h2>Nutrition & gut pathways</h2>
+      {hasEdits&&current&&<p role="status">Unsaved ingredient changes. Nutrition and food explanations shown here still describe your last confirmed saved meal.</p>}
       {current&&<FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/>}
       {!current&&<p role="status">Current nutrition analysis is not confirmed. Your portion draft is retained; retry the correction to confirm saved nutrition.</p>}
       <p className="panel-note">
@@ -56,7 +67,7 @@ export default function MealAnalysis({
           change nutrients substantially.
         </p>
         {ingredients.map((item, index) => (
-          <div className="border-t py-3 space-y-2" key={index}>
+          <div className="border-t py-3 space-y-2" key={rows[index].key} data-draft-row={rows[index].key} role="group" aria-label={`Ingredient ${index+1}`}>
             {onRecalculate ? (
               <>
                 <label className="block">
@@ -64,7 +75,7 @@ export default function MealAnalysis({
                   <input
                     className="bloom-input w-full"
                     aria-label={`Food ${index + 1}`}
-                    disabled={!!item.product}
+                    disabled={!!item.product||!!item.catalogue}
                     maxLength={120}
                     value={item.name}
                     onChange={(e) =>
@@ -93,21 +104,13 @@ export default function MealAnalysis({
                       max="100"
                       step="any"
                       value={item.product.servings}
-                      onChange={(e) =>
-                        setEdits(
-                          ingredients.map((v, i) =>
-                            i === index
-                              ? {
-                                  ...v,
-                                  product: {
-                                    ...v.product!,
-                                    servings: Number(e.target.value),
-                                  },
-                                }
-                              : v,
-                          ),
-                        )
-                      }
+                      onChange={(e) => {
+                        const servings=Number(e.target.value);
+                        setEdits(ingredients.map((v,i)=>i===index?{...v,
+                          grams:v.grams!==null&&v.product!.servings>0&&Number.isFinite(servings)&&servings>0?v.grams*servings/v.product!.servings:null,
+                          product:{...v.product!,servings},
+                        }:v));
+                      }}
                     />
                   </label>
                 ) : (
@@ -163,6 +166,8 @@ export default function MealAnalysis({
                     onPick={(product) => {
                       const updated = ingredients.map((v, i) => (i === index ? product : v));
                       setEdits(updated);
+                      const details=document.querySelector<HTMLDetailsElement>(`[data-draft-row="${rows[index].key}"] > details`);
+                      if(details){details.open=false;details.querySelector("summary")?.focus();}
                       onRecalculate(updated);
                     }}
                   />
@@ -171,9 +176,7 @@ export default function MealAnalysis({
                   type="button"
                   className="text-link"
                   disabled={pending}
-                  onClick={() =>
-                    setEdits(ingredients.filter((_, i) => i !== index))
-                  }
+                  onClick={() => {const key=rows[index].key;setRows(previous=>previous.filter(row=>row.key!==key));setHasEdits(true);}}
                 >
                   Remove {item.name}
                 </button>
@@ -187,6 +190,7 @@ export default function MealAnalysis({
             <p className="panel-note">{item.assumption}</p>
           </div>
         ))}
+        {onRecalculate&&<div className="space-y-2"><button type="button" className="text-link min-h-[44px]" disabled={pending||ingredients.length>=MAX_MEAL_INGREDIENTS} onClick={addIngredient}>Add missing ingredient</button><p className="panel-note">{ingredients.length} of {MAX_MEAL_INGREDIENTS} ingredient entries in this draft.</p>{!ingredients.length&&<p role="status">No ingredients in this draft. Add any foods that were missed, or delete the whole entry from your journal.</p>}</div>}
         {onRecalculate && <p className="panel-note">Reviewed corrections are remembered privately for this exact meal description. Manage or forget them in Saved meals.</p>}
         {onRecalculate && (
           <button
@@ -194,10 +198,11 @@ export default function MealAnalysis({
             className="hero-button"
             disabled={
               pending ||
-              !ingredients.length ||
+              !ingredients.length || ingredients.length>MAX_MEAL_INGREDIENTS ||
               ingredients.some(
                 (i) =>
                   !i.name.trim() ||
+                  !!i.product&&(!Number.isFinite(i.product.servings)||i.product.servings<=0||i.product.servings>100) ||
                   (i.grams !== null && (!(i.grams > 0) || i.grams > 3000)),
               )
             }
