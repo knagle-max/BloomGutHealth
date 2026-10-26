@@ -29,6 +29,10 @@ PROFILE_REVISION_CONTRACT.md: source revision reads and optional If-Match atomic
 
 Bundled audit:onlyexplicit homemade Salsa redFDC2709739 wasthird forHomemadesalsa; now source-onlycategory/ranking first, accurategeneric/homeprepared grams review, packaged confirmation unchanged. ActualApp/catalogue/ProductService/foodroute/PGlite30g snapshot/save plusgenericSoupnonrelabelling PASS;4focused/types/build PASS; full348 `/tmp/home-source-full.log`, foodkind routefinalbrowser `/tmp/home-source-final-browser.log`, canonical AddFood loss/Athlete `/tmp/home-source-add-food.log` PASS; readypublish. Publish/exactCI+Render afterchecks. Profile7891efa CI40290012763 SUCCESS including realNeon concurrentwrites/RenderLIVE. Legacy enforcement/settings CAS stillOPEN.
 
+## Active initial food routing
+
+Search foods oldall default reproducedred; optionalPicker initialKind defaultall, suppliedfoodonlyLogMeal, explicit supplementselection remains acrossmethodswitches. ActualProductService/browser foodnoNIH, explicitsuppNIHonly, barcode/no-match PASS. Full348 `/tmp/food-route-full.log`, types/build/source and canonicalAddFood/replacement browsers PASS; publish/exactCI+Render next. dc57033cb21419a2b23028f4bb648aa0fcbbf9b5 published, Render dep-dbfgo915efls73bveao0 building; query Actions withFULL SHA. No broadersemanticcompleteclaim.
+
 ## Immediate sequence
 
 1. Check actual working tree and full-suite result; do not recreate completed work. Commit verified mass fix and persistent records, fetch/preserve incoming Architect docs before push. Only rebase own unpublished commits. No force push; inspect FETCH_HEAD because remote tracking ref is not configured.

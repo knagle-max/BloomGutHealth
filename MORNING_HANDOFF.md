@@ -76,3 +76,7 @@ Current web adopts private source revision and sends quoted If-Match. Server val
 ## Explicit homemade-source follow-up — local validation
 
 Only one bundled USDA record explicitly says homemade: Salsa red2709739. It now ranks first for homemade intent, category comes from actual source description only, generic soup remains Generic, and selected reference foods review grams/preparation rather than package identity.4 focused and actual App/ProductService/canonical food/PGlite30g save/snapshot/keyboard/mobile PASS. Full348/types/build/API/source122 and canonical packaged retry regression PASS; publication/exactCI+Render next. Broader brand/market/semantic search and full recipe acceptance remain open.
+
+## Food-entry source routing — locally verified
+
+Search foods now startsfood sources viaoptionalPickerinitialKind; explicit supplementselection survivesmethodswitches and stillqueriesNIH. Unknown/mixed/correction contexts keepdefaultall. Actual ProductService/browser provesnoautomaticNIHcallforfoodentry; numericidentifier/manual/nomatch cases, canonicalpackaged/fallback/lostresponse/Athlete andPG foodreplacement allPASS.348full/types/build/API92+13/source122 PASS. dc57033 sourceprepared commitLIVE/Actions40291022595 stillinprogress; newroutingpublicationverification next.

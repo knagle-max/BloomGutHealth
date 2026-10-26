@@ -13,6 +13,7 @@ import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/b
 export default function ProductPicker({
   onPick,
   initialQuery = "",
+  initialKind = "all",
   autoSearch = false,
   confirmLabel = "Use selected product & amount",
   pending = false,
@@ -24,6 +25,7 @@ export default function ProductPicker({
 }: {
   onPick: (i: Ingredient) => void;
   initialQuery?: string;
+  initialKind?: "all"|"food"|"supplement";
   autoSearch?: boolean;
   confirmLabel?: string;
   pending?: boolean;
@@ -34,7 +36,7 @@ export default function ProductPicker({
   onDescribeIngredients?:()=>void;
 }) {
   const [query, setQuery] = useState(productSearchText(initialQuery)),
-    [kind, setKind] = useState<"all" | "food" | "supplement">("all"),
+    [kind, setKind] = useState<"all" | "food" | "supplement">(initialKind),
     [variants, setVariants] = useState<Product[]>([]),
     [choice, setChoice] = useState<Product | null>(null),
     [servings, setServings] = useState(1),

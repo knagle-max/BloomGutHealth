@@ -682,3 +682,11 @@ Focused4 search tests and actual App/catalogue/ProductService/foodroutes/PGlite3
 Versioned Profile7891efa9ddc4ec3cfeb0d849905482f33b11692c Actions40290012763 SUCCESS/Render dep-dbfgk2ks728c73dh7fkg LIVE verified; actual isolated production log confirms concurrent same-source writes one winner, stale409, legacycompatibility explicit (08:09:06UTC). No universal legacy/settings CAS claim.
 
 Explicit-home-source final:348/348 full tests PASS (183674ms), types/build/API92+13/source122 PASS; actual catalogue/ProductService/API/PGlite30g identity/query/snapshot save and genericSoup review/keyboard/mobile browser PASS; canonical packaged-food+fallback+committed-response-loss/same-receipt/Athlete regression PASS. No provider/source activation, inferred Home-prepared labels or exact-ownrecipe claims. Publish/exactCI+Render next.
+
+## Food-entry initial source routing — 2026-10-26
+
+Actual Search foods rendered picker defaultedtoall; browserred all!=food. ProductPicker now accepts optional initialKind (defaultall for unknown/mixed/correction contexts), suppliedfood onlybycanonicalLogMeal. Stateinitializedonce: explicit user supplement selection survives chooser/methodswitches. Actual ProductService/browser asserts food context sends noNIH supplementrequest, numericbarcodeonly/manual/no-match retained, explicit supplement choice stillcallsNIH only and remainsselectedaftermethodswitch. Private saved labels remainavailable; no inferred category or source relabelling. Broader query semanticclassification/market/brand/restaurant gates remainopen.
+
+Types/build and actualrouting browser PASS; full348/source122/API92+13 and canonical AddFood retry/correction regressions running. Latest published sourceprepared dc57033cb21419a2b23028f4bb648aa0fcbbf9b5 Render dep-dbfgo915efls73bveao0 stillbuilding; verifyexactCI/fullSHA (REST head_sha requires fullhash). No deployment, APIkey or permission question.
+
+Initialfoodrouting final:348/348 full tests PASS (188683ms), types/build/API92+13/source122 PASS. Actual ProductService/browser foodsource/noNIH, explicitsupplement/NIHonly/filterretention, numeric/manual/no-match PASS; canonical AddFood fallback/packaged/lostresponse/Athlete and actualPG correction/source/knownmass/unknownamount browsers PASS. Unknown/mixed/correction picker initialall preserved. dc57033 RenderLIVE; Actions40291022595 stillinprogress.
