@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`. Latest verified published `7891efa9ddc4ec3cfeb0d849905482f33b11692c`, Actions40290012763 SUCCESS including realNeon versioned Profile concurrent-write check, Render dep-dbfgk2ks728c73dh7fkg LIVE.347tests/types/build/API92+13/source122 and actual two-tab/SQL browsers pass. Current explicit USDA homemade-source ranking/review348 suite finishing; source-specific30g save/browser passes. Optional legacy Profile writes and settings CAS remain open. v0.5 incomplete; current handoff in MORNING_HANDOFF/NEXT_ACTIONS.
+Branch: `enhance/bloom-experience`. Latest verified published `33ee4217db9218afb8e8398d801ab22c9f175b3a`, Actions40387901449 SUCCESS, existing Render dep-dbfqmbq9lscs73bn38cg LIVE. Canonical laboratory planning sources, source-only imports and entered date capture are verified. Current logical lab deletion milestone and precise resumption state are in NEXT_ACTIONS.md; historical entries below retain their original checkpoint evidence. v0.5 remains incomplete.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish actionable v0.5 first, then reconcile and begin approved independent v0.6 work while external v0.5 blockers carry forward. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -483,3 +483,12 @@ Normal capture records actual entered date/time, empty time absent; exact canoni
 
 Canonical shared active lab selector used for reporting and transactional plan source guard. Pending/superseded known rows excluded, current confirmed included; invalid/unclassifiable source always denies, strict raw-only exclusion retained. Actual SQL red-before/green-after test plus old-source and malformed-ID denial PASS;370 full before last tightening,5 focused/types/source130 after PASS. Production smoke covers real pending→confirmed weekly saves; final build/checks and exactCI next. Date writer13b69b3 Actions40383005252 SUCCESS / Render dep-dbfq73bncjis738i7bi0 LIVE verified.
 Planning source selection final focused5/types/build/API/source130 PASS after final explicit-invalid-source denial; prior full370 PASS. Ready publish/exactCI including new pending→confirmed realNeon save smoke.
+
+
+## LAB-ENTRY-DELETE-01 — explicit logical deletion
+
+33ee4217db9218afb8e8398d801ab22c9f175b3a: Actions40387901449 SUCCESS, Render dep-dbfqmbq9lscs73bn38cg LIVE. Canonical active lab source consistency and isolated Neon pending→confirmed planning smoke verified.
+
+Reproduced legacy child-only deletion resurrecting the pending source in actual encrypted PGlite. New explicit authenticated DELETE /api/precision/labs/:id/entry requires X-Bloom-Confirm delete-lab-entry-and-revisions; owner transaction lock, source/unit lineage only, inactive target409, absent/foreign204, no old-endpoint fallback. Legacy row API unchanged. Explicit UI confirmation/cancel, exact retry; linked source rows removed atomically, other report rows retained. Clinical source removal clears plans; strictly raw/pending-only removal preserves plans. Unclassifiable lineage fails without partial deletion. Five focused actual database/API tests, types/build/source inventory and encrypted rendered cancellation/deletion chain PASS. Full suite and lost-response browser running. No database migration, production data change or inferred report grouping. Date correction remains actionable next.
+
+LAB-ENTRY-DELETE-01 full suite PASS; final ES-target queue refinement separately passes focused encrypted/API test, types, build, API95+13/source130. Both rendered history and encrypted cancellation/lost-response deletion browser PASS. Contract docs/operations/LAB_ENTRY_DELETE_CONTRACT.md. Publish and verify exact CI/live next.

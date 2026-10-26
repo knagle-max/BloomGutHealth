@@ -4,6 +4,10 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**33ee4217db9218afb8e8398d801ab22c9f175b3a: Actions40387901449 SUCCESS, Render dep-dbfqmbq9lscs73bn38cg LIVE. Canonical active lab source consistency and isolated Neon pending→confirmed planning smoke verified.**
+
+Current local batch: explicit lab entry/source-unit revision deletion, stale-target conflict, confirmation/cancel/idempotent retry and plan safety. Focused/database/browser checks pass; full suite/publication pending.
+
 **13b69b33a3a0ce0d457b93628a9971fe2767b870**: Actions40383005252 SUCCESS, Render dep-dbfq73bncjis738i7bi0 LIVE. Actual entered lab day/time is retained across timezone/midnight/DST/receipt/correction paths; no timestamp rewrite or legacy inference. Reader e859334 verified369 tests.
 
 Planning active-lab selection fix is locally ready: actual pending/superseded false409 repro fixed with shared canonical selector; malformed-source data still denies.370 full before final defensive tightening, final5 focused/types/build/source130 PASS; production smoke now covers pending→confirmed weekly saves. Publish/exactCI next.

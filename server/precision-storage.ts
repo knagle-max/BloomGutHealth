@@ -1,4 +1,4 @@
-import { eq, and, desc, sql } from "drizzle-orm";
+import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
@@ -154,6 +154,43 @@ export class PrecisionStorage {
         .values({ ...(id?{id}:{}), userId, kind, encryptedPayload })
         .returning();
       return { id: row.id, kind: row.kind, payload, createdAt: row.createdAt };
+    });
+  }
+  // Explicit logical-entry deletion; the legacy record endpoint remains row-only.
+  async deleteLabEntry(userId: string, id: string): Promise<void> {
+    await this.db.transaction(async (tx) => {
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+      const rows = await tx.select({ id: precisionRecords.id, encryptedPayload: precisionRecords.encryptedPayload })
+        .from(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "lab")));
+      if (!rows.some(row => row.id === id)) return; // Idempotent, same response for absent/foreign IDs.
+      const supported: (Lab & { id: string })[] = [];
+      const links = new Map<string, Set<string>>(rows.map(row => [row.id, new Set<string>()]));
+      for (const row of rows) {
+        const payload = decryptPrecision(row.encryptedPayload, userId);
+        const parsed = labSchema.safeParse(payload);
+        if (parsed.success) {
+          supported.push({ ...parsed.data, id: row.id });
+          const parent = parsed.data.unitReview?.supersedes;
+          if (parent && links.has(parent)) {
+            links.get(row.id)!.add(parent);
+            links.get(parent)!.add(row.id);
+          }
+        } else if (!sourceOnlyLabSchema.safeParse(payload).success) {
+          throw Error("LAB_SOURCE_CHANGED");
+        }
+      }
+      const active = activeLabObservations(supported);
+      if (supported.some(row => row.id === id) && ![...active.labs, ...active.pendingLabs].some(row => row.id === id))
+        throw Error("LAB_SOURCE_CHANGED");
+      const ids = [id], seen = new Set(ids);
+      for (let index = 0; index < ids.length; index++) {
+        for (const linked of Array.from(links.get(ids[index])!)) {
+          if (!seen.has(linked)) { seen.add(linked); ids.push(linked); }
+        }
+      }
+      await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "lab"), inArray(precisionRecords.id, ids)));
+      if (active.labs.some(row => seen.has(row.id)))
+        await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "plan")));
     });
   }
   async deletePrecisionRecord(userId: string, id: string): Promise<boolean> {

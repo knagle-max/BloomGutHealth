@@ -41,6 +41,7 @@ type Store = Pick<
   | "putPrecisionContext"
   | "getPrecisionRecords"
   | "insertPrecisionRecord"
+  | "deleteLabEntry"
   | "deletePrecisionRecord"
   | "clearPrecisionData"
 >;
@@ -586,6 +587,19 @@ export function registerPrecisionRoutes(
         }),
       );
     } catch (e) {
+      unavailable(res, e);
+    }
+  });
+  app.delete("/api/precision/labs/:id/entry", async (req, res) => {
+    if (req.headers["x-bloom-confirm"] !== "delete-lab-entry-and-revisions")
+      return res.status(400).json({ error: "Explicit result and revision deletion confirmation is required." });
+    try {
+      if (!store.deleteLabEntry) return res.status(503).json({ error: "Laboratory entry deletion is unavailable. No fallback deletion was attempted." });
+      await store.deleteLabEntry(req.session.userId!, req.params.id);
+      res.status(204).end();
+    } catch (e) {
+      if (e instanceof Error && e.message === "LAB_SOURCE_CHANGED")
+        return res.status(409).json({ error: "Laboratory sources changed. Reload and review the current result before deleting." });
       unavailable(res, e);
     }
   });

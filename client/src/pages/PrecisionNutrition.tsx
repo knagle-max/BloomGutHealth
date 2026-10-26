@@ -17,6 +17,7 @@ import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter } from "@/components/ui/alert-dialog";
 import {
   Dna,
   FlaskConical,
@@ -278,7 +279,22 @@ export default function PrecisionNutrition() {
       );
     },
   });
+  const [labToDelete, setLabToDelete] = useState<string | null>(null);
+  const deleteLab = useMutation({
+    mutationFn: (id: string) => apiRequest("DELETE", "/api/precision/labs/" + encodeURIComponent(id) + "/entry", undefined, { "X-Bloom-Confirm": "delete-lab-entry-and-revisions" }),
+    onSuccess: async () => {
+      setLabToDelete(null);
+      setStatus("Result and its source/unit revisions deleted. Current recommendations will reload.");
+      await invalidatePlanningInputs();
+    },
+    onError: async () => { await invalidatePlanningInputs(); },
+  });
   const remove = (record: PrecisionRecord) => {
+    if (record.kind === "lab") {
+      deleteLab.reset();
+      setLabToDelete(record.id);
+      return;
+    }
     send(
       "/api/precision/records/" + encodeURIComponent(record.id),
       undefined,
@@ -345,6 +361,19 @@ export default function PrecisionNutrition() {
   );
   return (
     <main className="science-page precision-page">
+      <AlertDialog open={labToDelete !== null} onOpenChange={open => { if (!open && !deleteLab.isPending) setLabToDelete(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete this laboratory result?</AlertDialogTitle>
+            <AlertDialogDescription>This deletes this result and its original source and unit revisions. Other results in the same report are retained. Saved precision plans using clinical inputs will be cleared. This cannot be undone.</AlertDialogDescription>
+          </AlertDialogHeader>
+          {deleteLab.isError && <p role="alert">{deleteLab.error.message} If the response was lost, retrying this same deletion is safe. If sources changed, cancel and review the reloaded result.</p>}
+          <AlertDialogFooter>
+            <Button variant="outline" disabled={deleteLab.isPending} onClick={() => setLabToDelete(null)}>Cancel</Button>
+            <Button variant="destructive" disabled={deleteLab.isPending} onClick={() => labToDelete && deleteLab.mutate(labToDelete)}>{deleteLab.isPending ? "Deleting…" : "Delete result and revisions"}</Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       <div className="flex flex-wrap gap-3 justify-between items-start">
         <div className="science-heading">
           {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
