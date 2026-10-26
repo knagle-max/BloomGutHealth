@@ -459,6 +459,13 @@ export const labSchema = z
     referenceLow: z.number().finite().nonnegative().nullable(),
     referenceHigh: z.number().finite().nonnegative().nullable(),
     notes: z.string().max(1000).default(""),
+    // Optional source identity: Bloom's import reference is not a laboratory report ID.
+    // Exact identifiers remain user-entered provenance, never clinical verification.
+    sourceReport: z.object({
+      importId:z.string().uuid(),
+      reportIdentifier:z.string().max(200).optional(),
+      specimenIdentifier:z.string().max(200).optional(),
+    }).strict().optional(),
     sourceInput: z.object({
       text:z.string().max(1000),number:z.string().max(100),suppliedUnit:z.string().max(50).nullable(),
       capture:z.enum(["pasted-report","manual-report"]),
@@ -1061,6 +1068,7 @@ export function buildPrecisionReport(
           id: l.id,
           date: l.measuredAt,
           sourceInput: l.sourceInput,
+          sourceReport: l.sourceReport,
           laboratory: l.laboratory, method: l.method, sourceValue: l.value, sourceUnit: l.unit,
           referenceLow: l.referenceLow, referenceHigh: l.referenceHigh, fasting: l.fasting,
           provenance: l.unitReview ? "User-confirmed source unit" : "User-entered result",

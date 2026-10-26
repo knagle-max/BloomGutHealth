@@ -37,6 +37,7 @@ test("account snapshot includes every owned class, decrypts original payloads an
  await db.insert(schema.precisionRecords).values({id:'legacy-precision-a',userId:'a',kind:'plan',encryptedPayload:encryptPrecision({name:'Synthetic precision history',version:'precision-r6',goals:['heart'],recommendations:[{name:'FORBIDDEN_GENOTYPE_SELECTION',reasons:['MTHFR provides secondary folate-pathway context, not a measured deficiency.']}]},'a')});
  const {parseLabPaste}=await import("../shared/lab-paste");const {labSchema}=await import("../shared/precision-nutrition");
  const sourceLab=parseLabPaste("  [ ORIGINAL REPORTED GROUP ]  \nLDL, 0.00, mmol/L","2026-10-15T12:00:00Z","Synthetic source").valid[0].payload;
+ sourceLab.sourceReport={importId:"fb001025-1025-4025-8025-000000000001",reportIdentifier:"  SOURCE REPORT / A  ",specimenIdentifier:" specimen-2 "};
  await db.insert(schema.precisionRecords).values({id:"source-lab-a",userId:"a",kind:"lab",encryptedPayload:encryptPrecision(sourceLab,"a")});
  queries.length=0;const a=await store.exportAccount('a'),b=await store.exportAccount('b');
  const exportedSource=a.biology.records.find(record=>record.id==="source-lab-a") as any;

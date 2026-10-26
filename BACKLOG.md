@@ -436,3 +436,10 @@ Runtime schemas validate search, resolved, saved and newly created label respons
 
 Pre-save web rollout f30104a accidentally omitted the locally tested route file; inventory CI failed. Corrective9b201e29f9a89962c9b9e7658fc31e9fe55a7dbb publishes that verified file, Render dep-dbfmqo2jnfac73f0h9gg LIVE; Actions40346711959 still running. This is an explicit publication correction, not a new source-calculation defect.
 FOOD-SOURCE-BOUNDARY-01 final local:357/357 tests(207742ms), types/build/API94+13/source126 and rendered boundary/canonical/Athlete/PG replacement/home-source journeys PASS. Ready commit/push/exactCI+Render. Pre-save9b201e2 Actions40346711959 SUCCESS and Render LIVE verified.
+
+## LAB-REPORT-IDENTITY-READ-01 — reader implementation
+
+Optional sourceReport(importId UUID, exact user report/specimen identifiers) accepted in existing encrypted Lab payload; no normal writer yet. Latest/history source details carry exact context; legacy absence remains absent, no inferred panel association, deduplication or clinical verification. Strict shape/legacy/whitespace, actual encrypted API/owner/unit-confirmation/export and rendered latest/history/legacy/mobile6 focused checks PASS; full358/types/build/source checks running. Production smoke extends existing synthetic lab and export assertion. See LAB_REPORT_IDENTITY_CONTRACT.md for reader-first/backout boundary. Full panel grouping/reimport/unknown analyte coverage remains OPEN.
+
+FOOD-SOURCE-BOUNDARY-01 published01215d25c246af7e39a4997d4a594162d41a526b: Actions40347897021 SUCCESS; Render dep-dbfmu3g473hc73aa75fg LIVE.357 tests/types/build/source and malformed/late lookup plus canonical/PG regression evidence verified.
+LAB-REPORT-IDENTITY-READ-01 final local358/358/tests/types/build/API94+13/source126 and focused export/encrypted/browser checks PASS; publishing aware reader before normal writer. Earlier01215d2 exact Actions40347897021 SUCCESS/Render LIVE verified.

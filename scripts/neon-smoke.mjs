@@ -411,6 +411,7 @@ try {
     },
     201,
   );
+  const labSourceIdentity={importId:randomUUID(),reportIdentifier:"Synthetic CI report",specimenIdentifier:"Synthetic CI specimen"};
   const lab = await request(
     "/api/precision/records",
     "POST",
@@ -427,6 +428,7 @@ try {
         referenceLow: 0.3,
         referenceHigh: 1,
         notes: "Synthetic test only",
+        sourceReport:labSourceIdentity,
       },
     },
     201,
@@ -512,7 +514,8 @@ try {
   assert.equal(accountExport.profile.id,first.id);
   assert.ok(accountExport.journal.some(m=>m.id===meal.id));
   assert.ok(accountExport.savedLabels.some(p=>p.id===personalProduct.id));
-  assert.ok(accountExport.biology.records.some(r=>r.id===lab.id));
+  assert.deepEqual(lab.payload.sourceReport,labSourceIdentity);
+  assert.deepEqual(accountExport.biology.records.find(r=>r.id===lab.id).payload.sourceReport,labSourceIdentity);
   assert.ok(accountExport.gutReports.samples.some(s=>s.id===functional.sampleId));
   assert.equal(Object.hasOwn(accountExport.profile,"password"),false);
   assert.equal(JSON.stringify(accountExport).includes("encryptedPayload"),false);

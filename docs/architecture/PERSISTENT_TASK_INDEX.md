@@ -731,3 +731,9 @@ FOOD-REVIEW-PRESAVE-SOURCE final local:355/355 tests PASS(186356ms), types/build
 ## 2026-10-26 — food review before journal confirmation
 
 FOOD-REVIEW-PRESAVE-WEB delivered f30104a + corrective9b201e29f9a89962c9b9e7658fc31e9fe55a7dbb. Shared complete-ingredient review/confirm handlers, source-bound explicit save, no writes during correction, current owner/input guards and exact receipt recovery.356 local tests/types/build/API94+13/source126 and actual API/PGlite/rendered regressions PASS; Actions40346711959 SUCCESS, Render dep-dbfmqo2jnfac73f0h9gg LIVE. Initial staging omission/failed inventory CI documented and corrected. Selective evidence docs/review/meal-presave-20261026. No new-pack fidelity/clinical/native/human acceptance inferred. Active next: FOOD-SOURCE-BOUNDARY-01 malformed-response and superseded lookup guards; panel/source-history and other v0.5 scope remain actionable.
+
+## 2026-10-26 — lab report identity reader preparation
+
+LAB-REPORT-IDENTITY-READ-01 adds optional exact sourceReport context in existing encrypted Lab schema, confirmation/export/latest/history paths. Bloom import reference is separate from user-entered report/specimen identifiers, never a verified provider ID or dedup claim. Legacy absence remains absent.358 tests/types/build/API/source and focused encrypted/owner/export/rendered checks PASS; exact CI/deployment required before ordinary writer emission. See docs/operations/LAB_REPORT_IDENTITY_CONTRACT.md. Writer, grouping and reimport acceptance remain OPEN.
+
+FOOD-SOURCE-BOUNDARY-01 delivered01215d25c246af7e39a4997d4a594162d41a526b; Actions40347897021 SUCCESS and existing Render dep-dbfmu3g473hc73aa75fg LIVE.357 tests and malformed/late source/browser plus canonical/PG regressions PASS.

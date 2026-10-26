@@ -631,7 +631,7 @@ export default function PrecisionNutrition() {
                             {new Date(l.measuredAt).toLocaleString()} ·{" "}
                             {l.laboratory} · {l.method} · fasting {l.fasting}
                           </p>
-                          <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput}/></details>
+                          <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport}/></details>
                         </div>
                         <Button
                           variant="outline"
