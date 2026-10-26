@@ -318,7 +318,6 @@ export function splitMealDescription(text: string): Ingredient[] {
     .split(/[,;+]|[.!?](?!\d)|\s+and\s+/i)
     .map((s) => s.trim())
     .filter((s) => s && !/^(?:no|without|hold|skip)\b/i.test(s))
-    .slice(0, 20)
     .map((name) => ({
       name,
       grams: null,

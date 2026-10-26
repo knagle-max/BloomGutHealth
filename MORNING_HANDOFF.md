@@ -33,7 +33,11 @@ Optional sourceInput.reportedSection/rowOrder reader expansion is locally verifi
 
 ## Current food-identity replacement
 
-340/340 tests/types/build/source118/API,9 focused and actual source/analysis/HTTP/PostgreSQL UI PASS: Change identity retains known mass, other rows and one meal; amount-only change retains identity; unknown/incompatible mass requires explicit amount review. New-entry defaults unchanged. Generic source warning no longer accumulates on unchanged recalculation. Publishing next. Dynamic missing-row Add and stable row state during Remove remain next owner-contract audit.
+340/340 tests/types/build/source118/API,9 focused and actual source/analysis/HTTP/PostgreSQL UI PASS: Change identity retains known mass, other rows and one meal; amount-only change retains identity; unknown/incompatible mass requires explicit amount review. New-entry defaults unchanged. Generic source warning no longer accumulates on unchanged recalculation. Published09092d542367ce6199259e99e18fd98696aba22e; Actions40279374233 SUCCESS/Render dep-dbff2ueq1p3s73f5di0g LIVE. Dynamic missing-row Add and stable row state during Remove remain next owner-contract audit.
+
+## Current no-truncation source fix
+
+342/342 full tests/types/build/source119/API,25 focused parser/API cases plus2 source-trace cases, actual React/parser/HTTP/PostgreSQL no-write/full-draft and ordinary AddFood receipt/Athlete journeys PASS. Extraction retains all components; existing20-entry service limit now returns actionable400 instead of silently saving a prefix. Supported0/1/3/5/8/20 cases tested; no fixed5-row layout. Publication next. Next owner-contract work: Add missing food and preserve per-row draft identity during Remove; broad semantic/source-panel/real-owner acceptance remains open.
 
 ## Broader completed foundations
 

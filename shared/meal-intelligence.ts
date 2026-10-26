@@ -4,6 +4,12 @@ import { recipePreparation } from "./recipe-preparation";
 import { z } from "zod";
 import { pathways, evidenceSources, type GoalId } from "./science-coach";
 
+export const MAX_MEAL_INGREDIENTS=20;
+export class MealIngredientLimitError extends Error {
+  constructor(){super(`Review up to ${MAX_MEAL_INGREDIENTS} ingredient entries at a time. Use a separate entry for additional foods.`);this.name="MealIngredientLimitError";}
+}
+export function requireMealIngredientLimit(count:number){if(count>MAX_MEAL_INGREDIENTS)throw new MealIngredientLimitError();}
+
 const tags = [
   "seafood",
   "dairy",
@@ -166,7 +172,6 @@ export function parseExplicitIngredients(text: string): Ingredient[] {
     .split(/[,;+]|\s+and\s+/i)
     .map((s) => s.trim())
     .filter(Boolean)
-    .slice(0, 20)
     .map((part) => {
       const m = part.match(/^(\d+(?:\.\d+)?)\s*(g|grams?|kg)\s+(.+)$/i);
       return {

@@ -12,6 +12,8 @@ import {
   cohortResearch,
   mealContextSchema,
   ingredientSchema,
+  MAX_MEAL_INGREDIENTS,
+  MealIngredientLimitError,
   recipes,
 } from "../shared/meal-intelligence";
 import { pathways, evidenceSources } from "../shared/science-coach";
@@ -32,7 +34,7 @@ const requestSchema = z
     mealType: z.enum(["breakfast", "lunch", "dinner", "snack"]).optional(),
     mealContext: mealContextSchema.optional(),
     aiConsent: z.boolean().default(false),
-    ingredients: z.array(ingredientSchema.strict()).min(1).max(20).optional(),
+    ingredients: z.array(ingredientSchema.strict()).min(1).max(MAX_MEAL_INGREDIENTS).optional(),
   })
   .strict()
   .refine(
@@ -191,7 +193,8 @@ export function registerPlannerRoutes(
           products: p.data.products,
         }),
       );
-    } catch {
+    } catch (error) {
+      if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
       res
         .status(503)
         .json({ error: "Analysis unavailable. Try saving the meal." });
@@ -254,6 +257,7 @@ export function registerPlannerRoutes(
       } as any, receipt);
       res.json(meal);
     } catch (error) {
+      if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
       if (error instanceof Error && error.message === "MEAL_SAVE_CONFLICT")
         return res.status(409).json({ error: "This save reference was already used for different meal details. Check your journal before saving again." });
       res.status(503).json({ error: "Meal could not save. Please retry." });
@@ -303,7 +307,8 @@ export function registerPlannerRoutes(
         catch { /* A remembered shortcut must never prevent an otherwise saved correction. */ }
       }
       res.json(updatedMeal);
-    } catch {
+    } catch (error) {
+      if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
       res.status(503).json({ error: "Meal could not update." });
     }
   });

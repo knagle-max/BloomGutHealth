@@ -16,6 +16,8 @@ import { z } from "zod";
 import { lookupSnapshotNutrition } from "../shared/food-snapshot";
 import {
   ingredientSchema,
+  MAX_MEAL_INGREDIENTS,
+  requireMealIngredientLimit,
   parseExplicitIngredients,
   explainFoods,
   scaleDatabaseNutrients,
@@ -41,7 +43,9 @@ export function resolveLoggedIngredient(input: Ingredient): Ingredient {
     : broad;
 }
 export function estimateLoggedIngredients(text: string): Ingredient[] {
-  const ingredients = splitMealDescription(text).map((i) =>
+  const described=splitMealDescription(text);
+  requireMealIngredientLimit(described.length);
+  const ingredients = described.map((i) =>
     resolveLoggedIngredient(parseExplicitIngredients(i.name)[0] || i),
   );
   for (const addition of estimateMealIngredients(text).filter((i) =>
@@ -50,7 +54,8 @@ export function estimateLoggedIngredients(text: string): Ingredient[] {
     if (!ingredients.some((i) => i.name === addition.name))
       ingredients.push(addition);
   }
-  return ingredients.slice(0, 20);
+  requireMealIngredientLimit(ingredients.length);
+  return ingredients;
 }
 function mergeNutrition(
   a: ReturnType<typeof lookupSnapshotNutrition>,
@@ -102,7 +107,7 @@ export const parseSchema = z.object({
   ingredients: z
     .array(ingredientSchema.omit({ product: true, catalogue: true }))
     .min(1)
-    .max(20),
+    .max(MAX_MEAL_INGREDIENTS),
   clarificationQuestions: z.array(z.string().max(300)).max(8),
 });
 export async function parseMeal(
@@ -270,6 +275,7 @@ export async function analyzeMeal(
     service?: ProductService;
   },
 ): Promise<{ intelligence: MealIntelligence; nutritionalData: any[] }> {
+  if(reviewedIngredients)requireMealIngredientLimit(reviewedIngredients.length);
   const parsed = reviewedIngredients
     ? {
         ingredients: reviewedIngredients.map((i) =>
@@ -291,6 +297,7 @@ export async function analyzeMeal(
     if (/Estimated|substitute/i.test(i.assumption))
       parsed.clarificationQuestions.push(`Review ${i.name}: ${i.assumption}`);
   }
+  requireMealIngredientLimit(parsed.ingredients.length);
   const explanation = explainFoods(parsed.ingredients.map(i=>i.name).join(", "));
   let productDetails: MealIntelligence["productDetails"];
   let snapshot = lookupLocalNutrition(parsed.ingredients);

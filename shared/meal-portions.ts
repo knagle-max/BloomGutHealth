@@ -108,5 +108,5 @@ export function estimateMealIngredients(text: string): Ingredient[] {
         });
     }
   }
-  return result.slice(0, 20);
+  return result;
 }
