@@ -60,3 +60,9 @@ No repeated deploy approval or API-key request is needed. No new noncritical que
 ## Homemade search follow-up
 
 343/343 tests, types/build/source/API checks and rendered source selection plus canonical save-recovery regression pass. Explicit homemade hints now retrieve fully matching bundled generic estimates before packaged alternatives without changing source names or claiming verified home preparation. Explicit brand query remains brand-sensitive. Full semantic/preparation metadata, recipe fallback acceptance and broader search gold cases remain open. Publication/deployment verification follows.
+
+## Ingredient fallback and CI correction
+
+Home routing e38bfd0f1809f8493bc867974f0ff4ecf32bbd3f is LIVE (dep-dbfg0gmk1f9s738823eg), but Actions40285639945 FAILED at stale API-inventory hash. Earlier local API PASS statement was incorrect; subsequent command masked its failure. Current batch refreshes reviewed hash/declaration line offsets only (same92static/13unresolved routes), both source checks now pass.
+
+Canonical AddFood now offers Build from individual ingredients after homemade or no-match food searches. Keyboard navigation focuses the existing Describe field, retains search/meal/products and does not save or choose any source.343 full tests/types/build/source checks and actual App/ProductService/analysis synthetic-storage keyboard/save/lost-response/Athlete regression pass. This is a working existing-flow fallback, not new recipe storage or nutritional/clinical verification of a homemade dish. Publish and verify exact CI+Render; full semantic/market/preparation ranking, pre-save review, concurrency and panel history remain outstanding.

@@ -1,3 +1,7 @@
+# Current ingredient-fallback checkpoint — 2026-10-26
+
+Home routing e38bfd0f1809f8493bc867974f0ff4ecf32bbd3f pushed; Actions40285639945 in progress; verify exact Render dep-dbfg0gmk1f9s738823eg. Current fallback actualApp/ProductService canonical describe/product/save/lost-response/Athlete journey PASS; full343/types/build/source validation finishing, keyboard rerun needed. Publish after checks then verify exact CI+Render. Dynamic review7a03290 CI40285115830 SUCCESS/live verified; PR1 current through that batch. Next semantic/brand/preparation no-match acceptance, fullprofile concurrent CAS or source-qualified pre-save review; no source relabelling, newrecipe store orv0.6. Full panel identity/unknownanalytes/reimport and scopedexternal evidence remain.
+
 # Current checkpoint — 2026-10-26
 
 Dynamic review7a03290107b907a32f60cf78859adc82813ebf49 pushed; Render dep-dbffu267bikc73c5pe8g LIVE; Actions40285115830 check exact final conclusion.342 full/local five-browser regressions PASS. Current homemade query routing: focused3, types/build and real ProductService/browser PASS; full343 and AddFood loss/Athlete regression running. Finish checks, commit/push/verify exact CI+Render; refresh PR1. Preserve original query/source identity; bundled soup is Generic, never claim Home-prepared. Approved whole-search/recipe workflow acceptance remains open. Next highest P0: source-honest prepared-food fallback and brand/semantic routing or same-account CAS; no new store/provider/restricted activation/v0.6 jump.

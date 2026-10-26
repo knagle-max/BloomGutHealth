@@ -7,7 +7,7 @@ import {
   type Ingredient,
 } from "@shared/meal-intelligence";
 import { productIngredient, replacementLabelAmount, type Product } from "@shared/products";
-import { productMatchStatus } from "@shared/product-search";
+import { productMatchStatus, homePreparedQuery } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
 import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
 export default function ProductPicker({
@@ -20,6 +20,7 @@ export default function ProductPicker({
   active = true,
   showBarcode = true,
   initialGrams,
+  onDescribeIngredients,
 }: {
   onPick: (i: Ingredient) => void;
   initialQuery?: string;
@@ -30,6 +31,7 @@ export default function ProductPicker({
   active?: boolean;
   showBarcode?: boolean;
   initialGrams?:number|null;
+  onDescribeIngredients?:()=>void;
 }) {
   const [query, setQuery] = useState(productSearchText(initialQuery)),
     [kind, setKind] = useState<"all" | "food" | "supplement">("all"),
@@ -205,6 +207,10 @@ export default function ProductPicker({
               {s}
             </p>
           ))}
+          {onDescribeIngredients&&kind!=="supplement"&&(homePreparedQuery(resultQuery).requested||!search.data.products.length)&&<div className="space-y-2">
+            <p>For your own recipe, enter the individual foods and amounts. Existing meal details and selected products stay in your draft.</p>
+            <Button type="button" variant="outline" disabled={pending} onClick={onDescribeIngredients}>Build from individual ingredients</Button>
+          </div>}
           {!search.data.products.length && (
             <p>
               No matching records found. Try the barcode, a different spelling,
