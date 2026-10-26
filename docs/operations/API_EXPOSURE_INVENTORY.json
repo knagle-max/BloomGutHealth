@@ -22,7 +22,7 @@
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "149a097cf76c8b72b6a12be670025b174459bf6d15f7e2f2bc6040ae6cbe88b6",
-    "server/precision-routes.ts": "9886e5144d4e93c1d464f2e36908828836bcafd1128f3fd934317005830de328",
+    "server/precision-routes.ts": "09162f63f940ac260a29f53615a7331a65135e75b57c45f62eac35bcf390c6ad",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
     "server/report-routes.ts": "bcf8d229ccda73de979f727e0c740b997a4a4822fead7eea93aca58abba49018",
@@ -543,7 +543,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 58,
+      "line": 60,
       "method": "USE",
       "path": "/api/precision",
       "declaredMiddleware": [
@@ -553,7 +553,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 174,
+      "line": 176,
       "method": "GET",
       "path": "/api/precision/evidence-network",
       "declaredMiddleware": [],
@@ -561,7 +561,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 177,
+      "line": 179,
       "method": "GET",
       "path": "/api/precision/weekly-plans",
       "declaredMiddleware": [],
@@ -569,7 +569,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 190,
+      "line": 192,
       "method": "GET",
       "path": "/api/precision/planning-recipes",
       "declaredMiddleware": [],
@@ -577,7 +577,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 282,
+      "line": 284,
       "method": "POST",
       "path": "/api/precision/today-plan",
       "declaredMiddleware": [],
@@ -585,7 +585,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 312,
+      "line": 314,
       "method": "POST",
       "path": "/api/precision/metabolite-research",
       "declaredMiddleware": [
@@ -595,7 +595,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 367,
+      "line": 369,
       "method": "POST",
       "path": "/api/precision/recipe-ideas",
       "declaredMiddleware": [],
@@ -603,7 +603,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 473,
+      "line": 475,
       "method": "GET",
       "path": "/api/precision",
       "declaredMiddleware": [],
@@ -611,7 +611,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 490,
+      "line": 492,
       "method": "PUT",
       "path": "/api/precision/context",
       "declaredMiddleware": [],
@@ -619,7 +619,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 501,
+      "line": 503,
       "method": "POST",
       "path": "/api/precision/records",
       "declaredMiddleware": [],
@@ -627,7 +627,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 537,
+      "line": 539,
       "method": "POST",
       "path": "/api/precision/labs/:id/confirm-unit",
       "declaredMiddleware": [],
@@ -635,7 +635,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 561,
+      "line": 563,
       "method": "POST",
       "path": "/api/precision/plans",
       "declaredMiddleware": [],
@@ -643,7 +643,15 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 601,
+      "line": 603,
+      "method": "POST",
+      "path": "/api/precision/labs/:id/correct-date",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 617,
       "method": "DELETE",
       "path": "/api/precision/labs/:id/entry",
       "declaredMiddleware": [],
@@ -651,7 +659,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 614,
+      "line": 630,
       "method": "DELETE",
       "path": "/api/precision/records/:id",
       "declaredMiddleware": [],
@@ -659,7 +667,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 625,
+      "line": 641,
       "method": "DELETE",
       "path": "/api/precision",
       "declaredMiddleware": [],
@@ -984,7 +992,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 417,
+      "line": 419,
       "method": "POST",
       "pathExpression": "`/api/precision/weekly-plans/${action}`",
       "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",

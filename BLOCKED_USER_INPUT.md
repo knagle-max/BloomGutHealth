@@ -132,3 +132,5 @@ Historical TODAY-ASSETS-01 scope update before2af0998: Architect c4f178d/91b4a84
 - Choices: Version original ZIPs/editable files in the existing repo with source hashes; or make the exact approved library files readable through an available authorized connector.
 - Recommended: Versioned repository originals and hashes. Do not regenerate or claim inferred design fidelity.
 - Deferral: Only exact new visual integration/Design acceptance; functional nutrition and source-import integrity continue without a user question interrupt.
+
+2026-10-26 date/deletion/reimport checkpoint: no new user decision or credential is needed for the implemented lab safety work. Existing external review/device/provider decisions remain scoped; none blocks the current date editor checks or other independent v0.5 work.

@@ -681,6 +681,21 @@ try {
   const afterUnitReview=await request("/api/precision");assert.equal(afterUnitReview.pendingLabs.length,0);assert.deepEqual(afterUnitReview.labHistory.map(row=>row.id),[confirmedPlanSource.id]);
   const afterSupersession=await request("/api/precision/weekly-plans/save","POST",weeklyInput,201);assert.notEqual(afterSupersession.id,weeklySaved.id);
   console.log("PASS: actual planning source guard excludes unconfirmed and superseded labs, retains the current confirmed source and accepts fresh weekly saves");
+  const correctedInstant=new Date(Date.parse(now)-86400000).toISOString();
+  const dateChange={enteredDate:correctedInstant.slice(0,10),enteredTime:correctedInstant.slice(11,16),measuredAt:correctedInstant,reason:"Synthetic CI source date correction",reviewed:true};
+  const dateHeaders={"Idempotency-Key":randomUUID(),"X-Bloom-Confirm":"correct-lab-date"};
+  const correctedLab=await request(`/api/precision/labs/${confirmedPlanSource.id}/correct-date`,"POST",dateChange,201,dateHeaders);
+  assert.equal((await request(`/api/precision/labs/${confirmedPlanSource.id}/correct-date`,"POST",dateChange,201,dateHeaders)).id,correctedLab.id);
+  assert.equal(correctedLab.payload.value,120);assert.equal(correctedLab.payload.unit,"mg/dL");assert.equal(correctedLab.payload.dateCorrection.previousMeasuredAt,now);
+  assert.equal(correctedLab.payload.sourceReport.importId,labSourceIdentity.importId);
+  await request(`/api/precision/labs/${confirmedPlanSource.id}/correct-date`,"POST",dateChange,409,{...dateHeaders,"Idempotency-Key":randomUUID()});
+  assert.equal((await request("/api/precision/weekly-plans")).length,0);
+  const revisedReport=await request("/api/precision");assert.deepEqual(revisedReport.labHistory.map(row=>row.id),[correctedLab.id]);assert.equal(revisedReport.pendingLabs.length,0);
+  await request("/api/precision/weekly-plans/save","POST",weeklyInput,201);
+  await request(`/api/precision/labs/${correctedLab.id}/entry`,"DELETE",undefined,204,{"X-Bloom-Confirm":"delete-lab-entry-and-revisions"});
+  const deletedLabReport=await request("/api/precision");assert.equal(deletedLabReport.labHistory.length,0);assert.equal(deletedLabReport.pendingLabs.length,0);assert.equal((await request("/api/precision/weekly-plans")).length,0);
+  await request(`/api/precision/labs/${correctedLab.id}/entry`,"DELETE",undefined,204,{"X-Bloom-Confirm":"delete-lab-entry-and-revisions"});
+  console.log("PASS: actual Neon immutable date correction, exact replay, stale source denial, current-source weekly save and complete date/unit lineage deletion");
   const status = await request("/api/analysis/status");
   assert.equal(status.nutrition.offlinePlanningCatalogue, true);
   console.log(

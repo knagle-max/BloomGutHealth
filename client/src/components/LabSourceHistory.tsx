@@ -3,7 +3,7 @@ import {groupLabHistory,labDateText,type AnyLabHistoryRow} from '@shared/lab-his
 import {markerDefinitions,labEnteredContext} from '@shared/precision-nutrition';
 import {Button} from './ui/button';
 import LabSourceContext from './LabSourceContext';
-export default function LabSourceHistory({labs,onDelete}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void}){
+export default function LabSourceHistory({labs,onDelete,onCorrect}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void}){
  const [open,setOpen]=useState(false),groups=groupLabHistory(labs);
  const rows=(items:AnyLabHistoryRow[])=>items.map((row,index)=>{
   const raw='sourceOnly' in row,entered=labEnteredContext(row);
@@ -19,7 +19,7 @@ export default function LabSourceHistory({labs,onDelete}:{labs:AnyLabHistoryRow[
     {raw&&row.reportedReferenceInterval!==undefined&&<p className="panel-note whitespace-pre-wrap">Reported reference text: {row.reportedReferenceInterval}</p>}
     {pending&&<p className="evidence-state">Unit provisional — confirm against the report before interpretation.</p>}
     <details><summary>Source details for {name}</summary><LabSourceContext source={row.sourceInput} report={row.sourceReport} correction={row.dateCorrection}/><p>Stored timestamp: {row.measuredAt}</p><p>{row.laboratory} · {row.method} · fasting {row.fasting}</p></details>
-   </div><Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
+   </div>{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
   </div>;
  });
  return <details id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>

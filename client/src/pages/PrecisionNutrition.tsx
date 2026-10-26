@@ -1,3 +1,5 @@
+import LabDateCorrectionDialog from "@/components/LabDateCorrectionDialog";
+import type {AnyLabHistoryRow} from "@shared/lab-history";
 import LabSourceHistory from "@/components/LabSourceHistory";
 import BiologyHome from "@/components/BiologyHome";
 import {invalidatePlanningInputs,resetPlanningInputs} from "@/lib/planning-cache";
@@ -280,6 +282,7 @@ export default function PrecisionNutrition() {
       );
     },
   });
+  const [labToCorrect,setLabToCorrect]=useState<{actor:string;source:AnyLabHistoryRow}|null>(null);
   const [labToDelete, setLabToDelete] = useState<string | null>(null);
   const deleteLab = useMutation({
     mutationFn: (id: string) => apiRequest("DELETE", "/api/precision/labs/" + encodeURIComponent(id) + "/entry", undefined, { "X-Bloom-Confirm": "delete-lab-entry-and-revisions" }),
@@ -362,6 +365,7 @@ export default function PrecisionNutrition() {
   );
   return (
     <main className="science-page precision-page">
+      {labToCorrect&&labToCorrect.actor===user?.id&&<LabDateCorrectionDialog key={labToCorrect.actor+":"+labToCorrect.source.id} source={labToCorrect.source} onClose={()=>setLabToCorrect(null)}/>}
       <AlertDialog open={labToDelete !== null} onOpenChange={open => { if (!open && !deleteLab.isPending) setLabToDelete(null); }}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -664,6 +668,7 @@ export default function PrecisionNutrition() {
                           </p>
                           <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport} correction={l.dateCorrection}/></details>
                         </div>
+                        <Button variant="outline" onClick={()=>user&&setLabToCorrect({actor:user.id,source:l})}>Correct result date</Button>
                         <Button
                           variant="outline"
                           onClick={() =>
@@ -684,7 +689,7 @@ export default function PrecisionNutrition() {
                       {r.sourceOnlyLabs?.length||r.pendingLabs?.length?"No results ready for interpretation; review the recorded source rows below.":"No bloodwork recorded. Genetics and microbiome data are optional too."}
                     </p>
                   )}
-                  <LabSourceHistory labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                  <LabSourceHistory onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
 
                 </section>
                 <section className="bloom-panel">

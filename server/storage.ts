@@ -1,3 +1,4 @@
+import type {LabDateChange} from "../shared/lab-date-correction";
 import {updatePreferencesWithRevision} from "./preference-source";
 import type {DietaryPreferences} from "../shared/meal-intelligence";
 import {updateProfileWithRevision} from "./profile-source";
@@ -102,6 +103,7 @@ export interface IStorage extends ExperienceStore {
     payload: unknown,
     saveKey?: string,
   ): Promise<PrecisionRecord>;
+  correctLabDate?(userId:string, sourceId:string, input:LabDateChange, saveKey:string):Promise<PrecisionRecord>;
   deleteLabEntry?(userId: string, id: string): Promise<void>;
   deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
   clearPrecisionData(userId: string): Promise<void>;
@@ -521,6 +523,9 @@ export class DatabaseStorage implements IStorage {
   }
   insertPrecisionRecord(userId: string, kind: string, payload: unknown, saveKey?: string) {
     return this.precision.insertPrecisionRecord(userId, kind, payload, saveKey);
+  }
+  correctLabDate(userId:string, sourceId:string, input:LabDateChange, saveKey:string) {
+    return this.precision.correctLabDate(userId,sourceId,input,saveKey);
   }
   deleteLabEntry(userId: string, id: string) {
     return this.precision.deleteLabEntry(userId, id);

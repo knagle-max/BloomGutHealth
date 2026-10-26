@@ -4,6 +4,10 @@ Branch enhance/bloom-experience; [PR1](https://github.com/knagle-max/BloomGutHea
 
 ## Latest verified development head
 
+**8e57897a44d38d24faaec8bb30213ed41b1978fe**: Actions40392145665 SUCCESS (374 tests), Render dep-dbfr3p95efls73fqvvcg LIVE. Immutable source/date/unit readers, planning guards, complete deletion and visible audit verified before writer publication.
+
+Current reviewed date editor:376 local tests, types/build/API96+13/source130 and actual encrypted UI/API lost-response/review/audit PASS; competing-client refresh check and exact writer publication/CI/live pending. Native/Tester1/independent clinical/legal/design review and remaining actionable scope are separate; v0.5 incomplete.
+
 **1192ffb2b3773e3174fd9ad67d668d23d3b44183: Actions40391046838 SUCCESS; Render dep-dbfr08rncjis738jipug LIVE. Source-only reimport review verified.**
 
 618d62e12e3b9da1bd6002222580cad7447d4548 deletion: Actions40390469923 SUCCESS / Render dep-dbfqufjncjis738jg32g LIVE;371 tests and actual encrypted cancel/lost-response/full-lineage deletion pass. Date-correction immutable reader is locally verified (schema/active selection/planning/unit/delete/audit), full374 running; no normal date writer yet.

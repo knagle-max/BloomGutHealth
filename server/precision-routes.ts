@@ -1,3 +1,4 @@
+import {labDateChangeSchema} from "../shared/lab-date-correction";
 import {nutritionTargetReference} from "./nutrition-targets";
 import {resolvePlanningContext} from "./planning-context";
 import {historicalPlanRecord} from "./plan-history";
@@ -42,6 +43,7 @@ type Store = Pick<
   | "putPrecisionContext"
   | "getPrecisionRecords"
   | "insertPrecisionRecord"
+  | "correctLabDate"
   | "deleteLabEntry"
   | "deletePrecisionRecord"
   | "clearPrecisionData"
@@ -596,6 +598,20 @@ export function registerPrecisionRoutes(
       );
     } catch (e) {
       unavailable(res, e);
+    }
+  });
+  app.post("/api/precision/labs/:id/correct-date", async (req, res) => {
+    const input=labDateChangeSchema.safeParse(req.body),key=req.get("Idempotency-Key");
+    if(req.get("X-Bloom-Confirm")!=="correct-lab-date"||!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))
+      return res.status(400).json({error:"Review a valid source date, optional time and correction reason, with a new correction reference."});
+    try{
+      if(!store.correctLabDate)return res.status(503).json({error:"Date correction is unavailable. No source was replaced."});
+      res.status(201).json(await store.correctLabDate(req.session.userId!,req.params.id,input.data,key));
+    }catch(e){
+      if(e instanceof Error&&e.message==="LAB_NOT_FOUND")return res.status(404).json({error:"Laboratory result not found in your account."});
+      if(e instanceof Error&&["LAB_SOURCE_CHANGED","PRECISION_SAVE_CONFLICT"].includes(e.message))return res.status(409).json({error:"The source or correction reference changed. Cancel and review the current result."});
+      if(e instanceof z.ZodError||e instanceof Error&&["LAB_DATE_UNCHANGED","LAB_DATE_INVALID"].includes(e.message))return res.status(400).json({error:"Review a changed source date/time and valid reason. Values and units cannot be changed here."});
+      unavailable(res,e);
     }
   });
   app.delete("/api/precision/labs/:id/entry", async (req, res) => {

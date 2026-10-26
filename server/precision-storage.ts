@@ -1,4 +1,5 @@
 import { eq, and, desc, sql, inArray } from "drizzle-orm";
+import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shared/lab-date-correction";
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
@@ -159,6 +160,39 @@ export class PrecisionStorage {
         .values({ ...(id?{id}:{}), userId, kind, encryptedPayload })
         .returning();
       return { id: row.id, kind: row.kind, payload, createdAt: row.createdAt };
+    });
+  }
+  async correctLabDate(userId: string, sourceId: string, input: LabDateChange, saveKey: string): Promise<PrecisionRecord> {
+    const request = labDateChangeSchema.parse(input);
+    if (!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey)) throw Error("LAB_DATE_INVALID");
+    const id = createHash("sha256").update(JSON.stringify(["lab-date-v1", userId, saveKey])).digest("hex");
+    const fingerprint = createHash("sha256").update(JSON.stringify([sourceId, request])).digest("hex");
+    return this.db.transaction(async tx => {
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+      const [receipt] = await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      if (receipt) {
+        const payload = decryptPrecision(receipt.encryptedPayload,userId);
+        const known = labSchema.safeParse(payload), raw = sourceOnlyLabSchema.safeParse(payload);
+        const parsed = known.success ? known.data : raw.success ? raw.data : null;
+        if(receipt.kind!=="lab"||parsed?.dateCorrection?.requestFingerprint!==fingerprint)throw Error("PRECISION_SAVE_CONFLICT");
+        return {id:receipt.id,kind:receipt.kind,payload:parsed,createdAt:receipt.createdAt};
+      }
+      const rows = await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload})
+        .from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
+      if(!rows.some(row=>row.id===sourceId))throw Error("LAB_NOT_FOUND");
+      const parsedRows = rows.map(row=>{
+        const payload=decryptPrecision(row.encryptedPayload,userId), known=labSchema.safeParse(payload), raw=sourceOnlyLabSchema.safeParse(payload);
+        if(!known.success&&!raw.success)throw Error("LAB_SOURCE_CHANGED");
+        return {...(known.success?known.data:raw.data!),id:row.id};
+      });
+      const source=activeLabRows(parsedRows).find(row=>row.id===sourceId);
+      if(!source)throw Error("LAB_SOURCE_CHANGED");
+      const {id:_sourceId,...payload}=source;
+      const corrected=applyLabDateChange(payload,sourceId,request,fingerprint,new Date().toISOString());
+      const [row]=await tx.insert(precisionRecords).values({id,userId,kind:"lab",encryptedPayload:encryptPrecision(corrected,userId)}).returning();
+      if("marker" in corrected&&corrected.unitReview?.status!=="pending")
+        await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan")));
+      return {id:row.id,kind:row.kind,payload:corrected,createdAt:row.createdAt};
     });
   }
   // Explicit logical-entry deletion; the legacy record endpoint remains row-only.
