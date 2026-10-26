@@ -1,5 +1,5 @@
 import { canonicalBarcode, isBarcodeSearch } from "../shared/barcodes";
-import { normalizeProductQuery, brandedSearchQuery, rankProducts } from "../shared/product-search";
+import { normalizeProductQuery, brandedSearchQuery, rankProducts, homePreparedQuery } from "../shared/product-search";
 import { normalizeUSDABranded } from "./usda-branded";
 import {
   nutrientDefinitions,
@@ -389,7 +389,7 @@ export class ProductService {
     );
     if (kind !== "supplement" && !code)
       results.push(
-        ...findFoodCandidates(q, 5).map((f) => localProduct(String(f.fdcId))),
+        ...findFoodCandidates(homePreparedQuery(q).food, 5).map((f) => localProduct(String(f.fdcId))),
       );
     const jobs = [] as Promise<void>[];
     const key=this.usdaKey();
@@ -468,6 +468,7 @@ export class ProductService {
       );
     if(kind !== "supplement" && !this.offEnabled()) warnings.push("Open Food Facts is disabled pending source licensing review. USDA Branded Foods, if configured, and your private saved labels are separate sources.");
     await Promise.all(jobs);
+    if(kind!=="supplement"&&homePreparedQuery(q).requested)warnings.push("Generic USDA results are estimates, not verified home-prepared recipes. Packaged labels are alternatives only; choose and review explicitly, or describe the individual ingredients in Add Food.");
     return {
       products: rankProducts(results,q),
       query: {original:q,normalized:brandedSearchQuery(q)},
