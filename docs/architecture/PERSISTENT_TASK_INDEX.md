@@ -512,3 +512,17 @@ Identifier/no-match final verification:328/328 full tests/types/build/source117/
 | ARC-REVIEW-05 | P0 accuracy / P1 study | Same source values across details/overview/Today/Progress/export, true partial fixtures, 320px and a11y, provenance and independent specialists | ARCHITECT_REVIEWED |
 
 **Immediate scope:** Real example `Sweet potato, ground beef with taco seasoning, avacado, shredded cheese and salsa`; reported 644 kcal is not a validated calculated result. Match historical meal detail and overview from current build and preserve source response evidence; prioritize P0 correctness before P1 nicer auto-match. No implementation/testing is claimed by documentation update; Developer owns commits and state promotion.
+
+## 2026-10-25 Food Review editable design asset addendum
+
+**Architect source and review:** `docs/architecture/V06_HANDOFF.md` §42, commit `78543271c05d49eb918e347d0ea5ed910e678f65`. Branding original `Bloom_Food_Review_Design_Assets_2026-10-25.zip` in shared Library, inspected inventory light/dark editable SVG + PNG previews + README + DESIGN_CONTRACT. MKT-FOOD-VIS-2501–2505 accepted as **visual reference**, not shipped app or true nutrition data. Replaces prior assistant illustrative layout. `644 kcal / 35 g / 60 g / 20 g` and portions are **synthetic design placeholders**.
+
+| ID | Priority | Codex action / acceptance | Status |
+| --- | --- | --- | --- |
+| ARC-REVIEW-VIS-01 | P1 | Verify/commit furnished design source and implement original-text + matched ingredients + four nutrients + Save hierarchy in canonical meal editor, no raster-only UI | ARCHITECT_REVIEWED; source ZIP in Library, checkout unverified |
+| ARC-REVIEW-VIS-02 | P0 | Actual saved overview P/C/F matches detailed meal values; no synthetic asset figures or unknown→0 | ARCHITECT_REVIEWED, existing ARC-REVIEW-01 |
+| ARC-REVIEW-VIS-03 | P1/P0 item integrity | Compact truthful match/needs-review and targeted Change, with discoverable Amount/Remove and no double count | ARCHITECT_REVIEWED |
+| ARC-REVIEW-VIS-04 | P0 safe state | Save, error, offline, source pending, partial coverage and user correction maintain data/source truth; avoid misleading checkmark verification | ARCHITECT_REVIEWED |
+| ARC-REVIEW-VIS-05 | P1 UX/P0 a11y | Real app before/after 320/390/desktop, light/dark/zoom/VoiceOver and independent Branding/UT visual fidelity; asset is NOT a screenshot of implementation | ARCHITECT_REVIEWED |
+
+**Next:** Developer secure version-controlled transfer of exact original assets (source currently Library only), preserve ongoing v0.5 P0 prioritization, implement after inspecting latest meal screen; independent Design, User Testing, Biology and Integrations review. No source-code change claimed by Architect.
