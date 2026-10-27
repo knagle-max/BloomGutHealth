@@ -25,6 +25,8 @@ export class ExperienceStorage {
    if(expectedRevision!==undefined&&settingsRevision(userId,current)!==expectedRevision)throw new SettingsRevisionConflict();
    const {athleteReviewFor,...values}=patch;
    const next=experienceSettingsSchema.parse({...current,...values});
+   // Unaware practical forms must not erase an explicitly saved browsing region.
+   if(patch.practical&&patch.practical.region===undefined&&current.practical.region!==undefined)next.practical.region=current.practical.region;
    if(patch.athlete)next.athlete=invalidateAthleteReview(current.athlete,next.athlete,athleteReviewFor);
    await tx.insert(experienceSettings).values({userId,encryptedPayload:encryptPrecision(next,userId)}).onConflictDoUpdate({target:experienceSettings.userId,set:{encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}});
    return next;

@@ -1,3 +1,4 @@
+import {restaurantRegions} from "./restaurant-entry";
 import { z } from "zod";
 import { ingredientSchema } from "./meal-intelligence";
 export const dateKey = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v => !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v, "Use a real calendar date");
@@ -24,6 +25,7 @@ export const athleteProfileSchema = z.object({
  .refine(v=>v.massReference===null || (v.weightKg!==null && (v.massReference.source==="manual"?v.massReference.profileWeightKg===null:v.massReference.profileWeightKg!==null&&Math.abs(v.massReference.profileWeightKg-v.weightKg)<0.00001)), "Reference mass provenance must match the saved reference");
 export type AthleteProfile = z.infer<typeof athleteProfileSchema>;
 export const practicalPreferencesSchema = z.object({
+  region: z.enum(restaurantRegions).nullable().optional(),
   minutes: z.number().int().min(5).max(180).default(30),
   budget: z.enum(["economical", "flexible"]).default("economical"),
   household: z.number().int().min(1).max(8).default(1),

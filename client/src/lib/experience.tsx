@@ -18,11 +18,11 @@ export function refreshExperience(){queryClient.invalidateQueries({predicate:q=>
 export function ExperienceProvider({children}:{children:ReactNode}){
  const{user}=useAuth(),[,navigate]=useLocation(),activeActor=useRef(user?.id),navigated=useRef<SettingsAttempt|null>(null);activeActor.current=user?.id;
  const key=["/api/experience/settings",user?.id];
- const q=useQuery({queryKey:key,enabled:!!user,queryFn:async({signal})=>readSettings(await apiRequest("GET","/api/experience/settings",undefined,undefined,signal))});
+ const q=useQuery({queryKey:key,enabled:!!user,queryFn:async({signal})=>readSettings(await apiRequest("GET","/api/experience/settings",undefined,{"X-Bloom-Settings-Fields":"practical-region-v1"},signal))});
  const adopted=useMemo(()=>{const{sourceRevision,...settings}=q.data||defaults as SettingsSource;return settings;},[q.data]);
  const mutation=useMutation({mutationFn:async(v:SettingsAttempt)=>{
   if(v.actorId!==activeActor.current||!v.canWrite)throw Error("Reload current saved settings before saving.");
-  return readSettings(await apiRequest("PATCH","/api/experience/settings",v.patch,v.revision?{"If-Match":`"${v.revision}"`}:undefined));
+  return readSettings(await apiRequest("PATCH","/api/experience/settings",v.patch,{"X-Bloom-Settings-Fields":"practical-region-v1",...(v.revision?{"If-Match":`"${v.revision}"`}:{})}));
  },onSuccess:(data,v)=>{if(v.actorId!==activeActor.current)return;queryClient.setQueryData(["/api/experience/settings",v.actorId],data);refreshExperience();},onError:(_error,v)=>{if(v.actorId===activeActor.current)refreshExperience();}});
  const attempt=mutation.variables?.actorId===user?.id?mutation.variables:undefined;
  const holding=!!attempt&&(mutation.isPending||mutation.isError),saving=!!attempt&&mutation.isPending;
