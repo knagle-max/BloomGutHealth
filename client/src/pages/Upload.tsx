@@ -1,7 +1,8 @@
+import {useStructuredReportSave} from "@/lib/useStructuredReportSave";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState, useRef, useEffect } from "react";
 import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { queryClient } from "@/lib/queryClient";
 import FileUploadZone from "@/components/FileUploadZone";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -23,7 +24,7 @@ import {
 import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useAuth } from "@/lib/auth";
 
 export default function Upload() {
@@ -34,7 +35,8 @@ export default function Upload() {
   const [notes, setNotes] = useState("");
   const [showManualEntry, setShowManualEntry] = useState(false);
   const [manualData, setManualData] = useState("");
-  const [isUploading, setIsUploading] = useState(false);
+  const [reading, setReading] = useState(false);
+  const save=useStructuredReportSave(),isUploading=reading||save.pending,frozen=isUploading||save.uncertain||!!save.saved;
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const { user } = useAuth();
@@ -42,91 +44,33 @@ export default function Upload() {
   useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
 
   const handleSubmit = async () => {
-    const owner=user?.id;if(!owner)return;
-    const pasted = showManualEntry ? manualData.trim() : "";
-    const selectedFile = showManualEntry ? null : file;
-    if (!selectedFile && !pasted) {
-      toast({ title: "Choose a file or enter data", variant: "destructive" });
-      return;
-    }
-    setIsUploading(true);
-
+    const owner=user?.id;if(!owner||isUploading||save.saved)return;
+    let acknowledged=false;
     try {
-      if (
-        pasted ||
-        selectedFile?.name.toLowerCase().endsWith(".json") ||
-        selectedFile?.name.toLowerCase().endsWith(".csv")
-      ) {
-        const text = pasted || (await selectedFile!.text());
-        if (selectedFile && !pasted && selectedFile.size > STRUCTURED_REPORT_MAX_BYTES) throw Error("JSON/CSV reports must be 2 MB or smaller.");
-        const parsed = parseReportDocument(
-          text,
-          pasted || selectedFile!.name.toLowerCase().endsWith(".json")
-            ? "json"
-            : "csv",
-        );
+      let result;
+      if(save.uncertain)result=await save.retry();
+      else {
+        const pasted=showManualEntry?manualData.trim():"",selected=showManualEntry?null:file;
+        if(!selected&&!pasted)throw Error("Choose a file or paste report data.");
+        if(selected&&selected.size>STRUCTURED_REPORT_MAX_BYTES)throw Error("JSON/CSV reports must be 2 MB or smaller.");
+        if(selected&&!/\.(json|csv)$/i.test(selected.name))throw Error("Choose a JSON or CSV report. Raw sequence processing is not available.");
+        setReading(true);
+        const text=pasted||await selected!.text(),parsed=parseReportDocument(text,pasted||selected!.name.toLowerCase().endsWith(".json")?"json":"csv");
         if(!active.current||actor.current!==owner)return;
-        const saved = await (await apiRequest("POST", "/api/microbiome/import", {
-          report: parsed.source,
-          originalFilename: pasted ? undefined : selectedFile?.name,
-          testDate: testDate ? format(testDate, "yyyy-MM-dd") : undefined,
-          testingCompany,
-          testId,
-          notes,
-        })).json();
-        if(saved?.success!==true||typeof saved.sampleId!=="string"||!saved.sampleId)throw Error("The report save could not be confirmed. Check Gut reports before trying again.");
-        if(!active.current||actor.current!==owner)return;
-        await invalidatePlanningInputs();
-        queryClient.invalidateQueries({
-          queryKey: ["/api/microbiome/samples"],
-        });
-        if(!active.current||actor.current!==owner)return;
-        toast({
-          title: "Report saved",
-          description:
-            `${parsed.parsed.scores.length} scores, ${parsed.parsed.organisms.length} reported organisms and ${Object.keys(parsed.parsed.bacteria_percentages || {}).length} quantified taxa saved. Missing measurements remain unavailable.`,
-        });
-        setLocation("/microbiome?sample="+encodeURIComponent(saved.sampleId));
-        return;
+        result=await save.submit({report:parsed.source,originalFilename:pasted?undefined:selected?.name,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes},{kind:parsed.parsed.kind,scores:parsed.parsed.scores.length,reportedOrganisms:parsed.parsed.organisms.length,quantifiedTaxa:Object.keys(parsed.parsed.bacteria_percentages||{}).length});
       }
-      const formData = new FormData();
-      formData.append("file", selectedFile!);
-      if (testDate) formData.append("testDate", format(testDate, "yyyy-MM-dd"));
-      if (testingCompany) formData.append("testingCompany", testingCompany);
-      if (testId) formData.append("testId", testId);
-      if (notes) formData.append("notes", notes);
-
-      const response = await fetch("/api/microbiome/upload", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Upload failed");
-      }
-
-      toast({
-        title: "Microbiome file uploaded",
-        description:
-          "File recorded. Raw-sequence taxonomic analysis requires a separate validated pipeline.",
-      });
-
-      setTimeout(() => {
-        setLocation("/microbiome");
-      }, 1500);
-    } catch (error: any) {
+      if(!result||!active.current||actor.current!==owner)return;
+      acknowledged=true;
+      await invalidatePlanningInputs();
+      await queryClient.invalidateQueries({queryKey:["/api/microbiome/samples"]});
       if(!active.current||actor.current!==owner)return;
-      toast({
-        title: "Upload failed",
-        description:
-          error.message || "Failed to upload file. Please try again.",
-        variant: "destructive",
-      });
+      toast({title:"Report saved",description:`${result.preview.scores} scores, ${result.preview.reportedOrganisms} reported organisms and ${result.preview.quantifiedTaxa} quantified taxa saved. Missing measurements remain unavailable.`});
+      setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
+    } catch(error) {
+      if(!active.current||actor.current!==owner)return;
+      toast({title:acknowledged?"Report saved":"Import needs review",description:acknowledged?"Open the saved report using the link below.":error instanceof Error?error.message:"Check your report and try again.",variant:acknowledged?"default":"destructive"});
     } finally {
-      if(active.current&&actor.current===owner)setIsUploading(false);
+      if(active.current&&actor.current===owner)setReading(false);
     }
   };
 
@@ -141,12 +85,14 @@ export default function Upload() {
         </p>
       </div>
 
+      <fieldset disabled={frozen} className="min-w-0 space-y-6 border-0 p-0 m-0"><legend className="sr-only">Gut report input</legend>
       <div className="method-switch" role="group" aria-label="Report entry method">
         <Button variant={!showManualEntry ? "default" : "outline"} aria-pressed={!showManualEntry} onClick={() => setShowManualEntry(false)}>Upload a file</Button>
         <Button variant={showManualEntry ? "default" : "outline"} aria-pressed={showManualEntry} onClick={() => setShowManualEntry(true)} data-testid="button-toggle-manual">Paste JSON data</Button>
       </div>
       {!showManualEntry && <FileUploadZone
-        onFileSelect={setFile}
+        disabled={frozen}
+        onFileSelect={next=>{if(!frozen)setFile(next);}}
         acceptedFormats={["JSON", "CSV"]}
         maxSizeMB={2}
       />}
@@ -170,7 +116,7 @@ export default function Upload() {
       </div>
 
 
-      {file && !showManualEntry && !/\.(json|csv)$/i.test(file.name) && <p className="report-context" role="status">This file can be stored. Automatic bacterial analysis of raw sequencing files is not available.</p>}
+
       <details className="bloom-panel workspace-disclosure">
       <summary>Report details (optional)</summary>
 
@@ -192,7 +138,7 @@ export default function Upload() {
               <Calendar
                 mode="single"
                 selected={testDate}
-                onSelect={setTestDate}
+                onSelect={next=>{if(!frozen)setTestDate(next);}}
                 initialFocus
               />
             </PopoverContent>
@@ -243,13 +189,17 @@ export default function Upload() {
 
 
       </details>
+      </fieldset>
+      {save.error&&<p role="alert">{save.error.message}</p>}
+      {save.uncertain&&<p role="status">Keep this page open to retry the same import. Your original details are locked until the save is confirmed. <Link className="text-link" href={save.checkHref} target="_blank" rel="noopener">Check saved reports</Link></p>}
+      {save.saved&&<p role="status">Report saved. <Link className="text-link" href={save.checkHref}>Open saved report</Link></p>}
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={(showManualEntry ? !manualData.trim() : !file) || isUploading}
+        disabled={(!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved}
         data-testid="button-submit-upload"
       >
-        {isUploading ? "Saving your report…" : "Save report"}
+        {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":"Save report"}
       </Button>
       <details className="workspace-disclosure"><summary>Supported report formats</summary><p className="panel-note">JSON and CSV reports support up to 2 MB. JSON can contain Viome-style scores and organisms, a reconstructed report, or bacteria_percentages. CSV uses bacteria and abundance percentage columns. Scores and organism listings stay separate from measured abundance. Raw sequence classification is not implemented.</p></details>
     </main>

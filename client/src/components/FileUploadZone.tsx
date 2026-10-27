@@ -5,12 +5,13 @@ interface FileUploadZoneProps {
   onFileSelect: (file: File) => void;
   acceptedFormats?: string[];
   maxSizeMB?: number;
+  disabled?: boolean;
 }
 
 export default function FileUploadZone({ 
   onFileSelect, 
   acceptedFormats = ['PDF', 'CSV', 'TXT', 'JSON'],
-  maxSizeMB = 10 
+  maxSizeMB = 10, disabled = false
 }: FileUploadZoneProps) {
   const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -19,6 +20,7 @@ export default function FileUploadZone({
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if(disabled)return;
     if (e.type === 'dragenter' || e.type === 'dragover') {
       setIsDragging(true);
     } else if (e.type === 'dragleave') {
@@ -45,6 +47,7 @@ export default function FileUploadZone({
   };
 
   const handleFile = (file: File) => {
+    if(disabled)return;
     setError("");
     const extension = file.name.split(".").pop()?.toUpperCase();
     if (!extension || !acceptedFormats.includes(extension)) { setError(`Choose ${acceptedFormats.join(" or ")} format.`); return; }
@@ -66,10 +69,12 @@ export default function FileUploadZone({
           ? 'border-green-500 bg-green-500/5'
           : 'border-muted bg-muted/20'
       }`}
+      aria-disabled={disabled}
       data-testid="upload-zone"
     >
       <input
         type="file"
+        disabled={disabled}
         onChange={handleFileInput}
         className="sr-only peer"
         id="file-upload"
@@ -87,7 +92,7 @@ export default function FileUploadZone({
             </div>
             <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
               <FileText className="w-5 h-5" />
-              <span className="font-medium">{uploadedFile.name}</span>
+              <span className="font-medium break-all min-w-0">{uploadedFile.name}</span>
             </div>
             <p className="text-sm text-muted-foreground">
               {(uploadedFile.size / (1024 * 1024)).toFixed(2)} MB
