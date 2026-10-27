@@ -1,3 +1,4 @@
+import RoutineLabTiming from "@/components/RoutineLabTiming";
 import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-units";
 import { useExperienceRecords } from "@/lib/experience";
 import DeviceObservations from "@/components/DeviceObservations";
@@ -14,6 +15,7 @@ export default function Progress() {
     { mode, settings, patch, saving, loading, error: settingsError } = useExperience(),
     profile = useQuery<{heightCm:number|null;weightKg:number|null}>({queryKey:["/api/profile"],enabled:!!user}),
     sessions = useExperienceRecords("hydration"),
+    routines=useExperienceRecords(),
     report = useQuery<PrecisionReport>({
       queryKey: ["/api/precision"],
       enabled: !!user,
@@ -75,6 +77,8 @@ export default function Progress() {
             a baseline.
           </p>
         )}
+        {currentReport&&!loading&&routines.fetchStatus==="idle"&&!routines.isError&&routines.data?<RoutineLabTiming key={`${user?.id}:${mode}`} trends={currentReport.trends} records={routines.data} mode={mode}/>:<p role={routines.isError?"alert":"status"} className="panel-note">{routines.isError?'Routine trial dates could not be checked.':'Checking source data before comparing routine dates…'}</p>}
+        {(routines.isError||routines.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={routines.isFetching} onClick={()=>routines.refetch()}>Retry routine dates</button>}
         <Link className="text-link" href="/precision?tab=labs">
           Add or review laboratory results
         </Link>
