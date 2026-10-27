@@ -87,7 +87,8 @@ export const focusFeedbackSchema=z.object({
 export type FocusFeedback=z.infer<typeof focusFeedbackSchema>;
 export const focusFeedbackRequestSchema=z.object({response:z.enum(focusFeedbackResponses).nullable(),sourceRevision:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
 export type FocusFeedbackRequest=z.infer<typeof focusFeedbackRequestSchema>;
-export type CheckinFeedbackView={source:{id:string;date:string;mode:"everyday"|"athlete";focus:string};feedback:Omit<FocusFeedback,"receiptHash"|"previousRevision">|null;revision:string};
+export const checkinFeedbackViewSchema=z.object({source:z.object({id:z.string().min(1),date:dateKey,mode:z.enum(["everyday","athlete"]),focus:z.string().max(200)}).strict(),feedback:focusFeedbackSchema.omit({receiptHash:true,previousRevision:true}).nullable(),revision:z.string().regex(/^[a-f0-9]{64}$/)}).strict();
+export type CheckinFeedbackView=z.infer<typeof checkinFeedbackViewSchema>;
 export const checkinSchema = z.object({
   date: dateKey, mode: z.enum(["everyday", "athlete"]),
   energy: z.number().int().min(0).max(10), hunger: z.number().int().min(0).max(10),

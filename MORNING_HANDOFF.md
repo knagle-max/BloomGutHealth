@@ -1,4 +1,4 @@
-# Bloom development handoff — October 26, 2026
+# Bloom development handoff — October 27, 2026
 
 Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com). Workspace `tea-db9toijrjlhs73850cp0`, service `srv-db9u7mjbc2fs73d86uv0`. No main merge, replacement service, credential changes, production data mutations or restricted activation. v0.5 is incomplete; v0.6 has not begun.
 
@@ -14,7 +14,7 @@ Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutH
 | `dbe3f69` | Paste/manual/date editing require an explicit occurrence for repeated clocks; nonexistent spring times rejected; date-only precision preserved | Actions40394783399 SUCCESS377; Render live |
 | `15cf2d9` | Atomic reimport endpoint compares current owned source matches under the account lock; explicit separate results, exact receipts and no legacy fallback | Actions40396269159 SUCCESS378 including real concurrent Neon201/409/review/replay; Render dep-dbfrgp7avr4c73a3u8n0 LIVE |
 
-Latest fully verified full SHA: `98501d9e5a43a7e11ca63ace984a759fb4d2f7fd`; Actions40426261305 SUCCESS389 and Render dep-dbfuuo7b9u1s73fn3m10 LIVE.
+Latest fully verified reader SHA: `6857d376b83a3b1ec2a791ab09704de501caf516`; Actions40428485309 SUCCESS391 and Render dep-dbfv8is9v7es73ds900g reached LIVE. Response action `a625c32c8b959fdf558b17229bd618b8a5c25655` is LIVE on Render dep-dbfvb9c9v7es73dsc460; Actions40429071687 is running. Its392-test local suite, types/build and encrypted regression checks pass.
 
 Ordinary importer adoption is verified: frozen source/key/review snapshots, partial acknowledgments, renewed review only after a changed-match409, exact receipt validation, uncertain-response replay after another match, actor/navigation lifetime guards and keyboard focus recovery. Actual encrypted App/API, ordinary/grouped and NewYork clock/date/source regressions passed.
 
@@ -24,14 +24,13 @@ Today midnight/resume source freshness is verified live: old-code stale date/sou
 
 Shared workspace admission is verified live: ordinary writes have a shared30/minute actor allowance, old costly/auth ceilings remain, outage/deadline fails closed before handlers, aliases are covered, late results cannot resume and privacy export remains available.389CI and actual Neon quota/export checks passed.
 
-Current BIO-09 focus-response reader is locally ready with391 passing tests, encrypted owner/context/legacy/export/forgery/corruption checks and types/build/API98+13/source130. Legacy absence is unknown; a six-choice self-report retains its original focus/date/mode. No ordinary producer/UI or automated personalization is enabled yet. Exact reader publication verification precedes the write action.
+BIO-09 routine-focus responses now have protected readers, an owned revision/receipt action, and locally verified optional Weekly Review UI. Six explicit self-reports retain their original context; uncertain retries cannot duplicate writes or overwrite newer responses, and newer ratings/notes remain intact. Full392 local action tests and final6 regressions pass; the actual encrypted rendered journey covers lost/malformed acknowledgments, conflicts/review, clear, source outage, owner isolation and320px keyboard flow. Matched synthetic before/after evidence is in docs/reviews/focus-feedback. UI publication and exact CI/Render verification remain the immediate step. No food identity, allergy or automatic clinical/personalization behavior is inferred.
 
 ## Remaining priorities
 
-1. **P0:** Finish exact publication verification of the subjective-feedback reader; preserve source/receipt/owner boundaries in subsequent work.
-2. **P1:** Continue approved trace reconciliation: BIO-09 explicit user focus responses are a concrete unimplemented slice. After verified readers, add the owned revision/receipt response action and UI without replacing numeric ratings or changing allergy/clinical ranks.
-3. **P1:** Reconcile remaining whole-app/source coverage, daily feedback/search and accessibility against approved handoffs. Synthetic checks do not close independent human, device, clinical or design acceptance.
-4. Carry external gates below separately. Begin approved independent v0.6 only after actionable v0.5 work is exhausted.
+1. Verify exact action/UI Actions and Render; publish final SHA and status.
+2. Continue approved v0.5 source-trace reconciliation, including broader food/supplement feedback identity and whole-app accessibility/source coverage. Routine-focus feedback is one concrete slice, not proof that all BIO09 is complete.
+3. Carry independent human/device/clinical/design/recovery/licensing gates separately; start approved independent v0.6 when actionable v0.5 is exhausted.
 
 ## User decisions and external evidence
 

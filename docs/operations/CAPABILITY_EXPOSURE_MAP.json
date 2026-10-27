@@ -1663,7 +1663,7 @@
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
-    "shared/experience.ts": "e93b4baa8a31fa9d0090d47d126a7987a8d5568ba6419775fac039b38564d6b3",
+    "shared/experience.ts": "6257fb19440df449ed157ac83edb2b3d986efd23feec5012caeee1ccc2c9e73f",
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/goal-guidance.ts": "46000666caadd6ac1aaf541d1e2b76bb24b93208ba30caf535469771db6dff5a",
