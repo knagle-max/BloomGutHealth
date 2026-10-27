@@ -18,7 +18,7 @@
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
-    "server/index.ts": "c3864d96fb1b5c6d9afdaa818c7e55872c30b653f0d4259d1ec78f86fc7e5dcc",
+    "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "abd1b20d63559b689c985d79330ef4519072e25a5e2e5034dd76f513a3081f0d",
@@ -1006,7 +1006,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 34,
+      "line": 36,
       "method": "USE",
       "pathExpression": "session(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1014,7 +1014,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 53,
+      "line": 55,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1022,7 +1022,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 66,
+      "line": 70,
       "method": "USE",
       "pathExpression": "budgets.middleware(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1030,7 +1030,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 71,
+      "line": 75,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",

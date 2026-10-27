@@ -29,6 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 const PgSession = connectPgSimple(session);
 const pgPool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  connectionTimeoutMillis: 5000,
+  query_timeout: 5000,
 });
 
 app.use(
@@ -60,7 +62,9 @@ app.use((req, res, next) => {
 
 (async () => {
   const budgets = new SharedRateLimiter(pgPool, sessionSecret());
+  log("Initializing shared request budgets before readiness.");
   await budgets.initialize();
+  log("Shared request budgets ready.");
   log(JSON.stringify(await reviewRuntimeAudit(pgPool, process.env)));
   productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",usdaSharedRequestLimit(),60));
   app.use(budgets.middleware());
@@ -109,4 +113,9 @@ app.use((req, res, next) => {
       log(`Food sources: USDA Branded credential configured=${!!process.env.USDA_FDC_API_KEY?.trim()}; Open Food Facts approved=${process.env.BLOOM_OPEN_FOOD_FACTS_APPROVED === "true"}`);
     },
   );
-})();
+})().catch(() => {
+  // Never publish an instance with missing shared safety budgets or print a
+  // database error containing credentials. Render retains the verified instance.
+  log("Application startup failed before readiness. Check database availability and the preceding startup stage.");
+  process.exit(1);
+});

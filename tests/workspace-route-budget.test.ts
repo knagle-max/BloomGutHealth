@@ -48,3 +48,11 @@ test('a stalled shared check has a bounded denial and a late allowed result cann
   assert.throws(()=>new SharedRateLimiter({query:async()=>({rows:[]})},'secret',0),/deadline/);
  }finally{await server.close();}
 });
+
+
+test('startup shared-budget initialization has the same bounded fail-closed deadline as request queries',async()=>{
+ let calls=0;
+ const limiter=new SharedRateLimiter({query:async()=>{calls++;return new Promise<never>(()=>{});}},'synthetic-startup-secret',25);
+ await assert.rejects(()=>limiter.initialize(),/SHARED_BUDGET_UNAVAILABLE/);
+ assert.equal(calls,1,'A stalled table initialization cannot continue to readiness or index work');
+});

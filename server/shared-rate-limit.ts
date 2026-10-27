@@ -22,10 +22,10 @@ export class SharedRateLimiter {
     }finally{if(timer)clearTimeout(timer);}
   }
   async initialize() {
-    await this.db.query(`CREATE TABLE IF NOT EXISTS request_budgets (
+    await this.budgetQuery(`CREATE TABLE IF NOT EXISTS request_budgets (
       identity text PRIMARY KEY, attempts integer NOT NULL, expires_at timestamptz NOT NULL
-    )`);
-    await this.db.query(`CREATE INDEX IF NOT EXISTS request_budgets_expiry ON request_budgets (expires_at)`);
+    )`,[]);
+    await this.budgetQuery(`CREATE INDEX IF NOT EXISTS request_budgets_expiry ON request_budgets (expires_at)`,[]);
   }
   async consume(scope: string, identity: string, maximum: number, seconds: number) {
     const key = createHmac("sha256", this.secret).update(scope).update("\0").update(identity).digest("hex");
