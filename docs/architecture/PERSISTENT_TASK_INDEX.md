@@ -10,6 +10,8 @@ This is the **short, persistent task ledger** for iterative and overnight Codex 
 
 **Fields per task:** stable ID; priority; workstream/release; user outcome; specific acceptance criteria; prerequisites/dependencies; status; current owner; implementation SHA; validation evidence (unit/CI/Render/real-device and specialist review separately); blocker + exact next action; source specialist IDs; updated timestamp. A requirement that lacks acceptance criteria should be clarified by Codex from its authoritative source **without waiting for the owner** when a safe testable interpretation is possible.
 
+> **PRODUCT OWNER TASK-SELECTION OVERRIDE — 2026-10-26:** Read [Core Functionality Execution Directive](CORE_FUNCTIONALITY_EXECUTION_DIRECTIVE_2026-10-26.md) **before choosing work**. Finish normal end-to-end user journeys first. Log rare nonblocking edge cases for stabilization, rather than repeatedly implementing them. Immediately fix real core blockers, misleading nutrition/source results, data loss/duplication, privacy/security issues, and medically unsafe claims. Old P0 labels require impact-based triage, not blind priority. This affects implementation sequence, **not** safety or release gates. Directive commit `3d2c6f8`.
+
 ## Current high-leverage index (verify latest repo before changing status)
 
 | ID | Priority | End-to-end outcome / acceptance | Dependencies / source | Status / evidence |
