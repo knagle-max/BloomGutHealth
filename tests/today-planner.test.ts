@@ -315,3 +315,16 @@ test("today endpoint uses only the authenticated account, validates dates/target
     await new Promise<void>((r) => server.close(() => r()));
   }
 });
+
+test('bounded planner explains unmet minimums and observed exclusions without relaxing limits or claiming impossibility',()=>{
+ const tight=weeklyRequestSchema.parse({...request,targets:{...request.targets,calories:1200,protein:250,saturatedFat:5}});
+ const plan=buildTodayPlan([],18,prefs,report,tight);
+ assert.ok(plan.tradeoffs);assert.ok(plan.tradeoffs.unmetMinimums.includes('Protein'));
+ assert.ok(plan.tradeoffs.excludedByLimits.length>0);assert.equal(plan.tradeoffs.scope,'bounded-search');
+ for(const check of plan.checks)if(check.max!==null&&check.projected!==null)assert.ok(check.projected<=check.max+1e-6);
+ assert.deepEqual(plan.request,tight);
+ const denied=buildTodayPlan([],18,prefs,buildPrecisionReport([],contextSchema.parse({}),prefs,null),tight);
+ assert.equal(denied.tradeoffs,null);assert.equal(denied.status,'needs-context');
+ const unknown=buildTodayPlan([{totalCalories:null,intelligence:{nutrients:[]}}],18,prefs,report,tight);
+ assert.equal(unknown.tradeoffs,null,'Incomplete intake cannot be presented as a measured minimum shortfall');
+});

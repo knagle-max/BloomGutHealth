@@ -140,6 +140,7 @@ export function buildTodayPlan(
       score: objective({}),
     },
   ];
+  const excludedByKnownLimit = new Set<string>();
   const candidates = menu.recipes.flatMap((recipe) =>
     [0.5, 0.75, 1, 1.25, 1.5].map((portion) => ({
       recipe,
@@ -177,16 +178,15 @@ export function buildTodayPlan(
                 : state.added[k]! + n[k]!,
             ]),
           );
-          if (
-            Object.entries(constraints).some(
-              ([k, t]) =>
-                t.max !== null &&
-                (added[k] === null ||
-                  (added[k]! > 0 &&
-                    (consumed[k] ?? 0) + added[k]! > t.max + 1e-6)),
-            )
-          )
-            continue;
+          const exceeded = Object.entries(constraints).filter(([key,t]) =>
+            t.max !== null && added[key] !== null && added[key]! > 0 &&
+            (consumed[key] ?? 0) + added[key]! > t.max + 1e-6);
+          for (const [key] of exceeded) {
+            if (!coverage[key].partial) excludedByKnownLimit.add(key);
+          }
+          // Preserve the existing fail-closed treatment of missing upper-limit data.
+          if (exceeded.length || Object.entries(constraints).some(([key,t]) =>
+            t.max !== null && added[key] === null)) continue;
           const names = recipe.ingredients.map((i) => i.name).join(" "),
             fits = goalMealFit(
               [...report.context.goals, ...prefs.goals],
@@ -281,6 +281,11 @@ export function buildTodayPlan(
     coverage,
     meals: best.meals,
     checks,
+    tradeoffs: !blocked && checks.some(check=>check.status==="Gap remains") ? {
+      unmetMinimums: checks.filter(check=>check.status==="Gap remains").map(check=>check.name),
+      excludedByLimits: nutrientDefinitions.filter(([key])=>excludedByKnownLimit.has(key)).map(([,name])=>name),
+      scope: "bounded-search" as const,
+    } : null,
     request,
     preferences: prefs,
     warnings,

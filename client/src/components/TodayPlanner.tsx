@@ -301,6 +301,12 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
               just to exceed a limit.
             </p>
           )}
+          {r.tradeoffs && <section className="bloom-panel space-y-2" aria-label="Planning trade-offs">
+            <h3 className="font-medium">Why gaps can remain</h3>
+            <p>The searched plan leaves these selected minimums unmet: {r.tradeoffs.unmetMinimums.join(", ")}.</p>
+            {r.tradeoffs.excludedByLimits.length>0 && <p>Candidate combinations were excluded for exceeding these known limits: {r.tradeoffs.excludedByLimits.join(", ")}. Limits were kept in place.</p>}
+            <p className="panel-note">This is a limited search of eligible recipes and portions, not proof that no other combination could fit. Missing intake remains provisional. Review the projected amounts and your saved targets; Bloom does not automatically relax limits to close a gap.</p>
+          </section>}
           <details>
             <summary>Projected daily nutrition & remaining gaps</summary>
             <p>
