@@ -4,7 +4,7 @@ import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords } from "../shared/schema";
-import { activitySchema,type Activity,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -59,17 +59,19 @@ export class ExperienceStorage {
    return updated.length?checkinFeedbackView(userId,id,next):null;
   });
  }
- async createActivity(userId:string,input:Activity,key:string):Promise<ExperienceRecord>{
-  const payload=activitySchema.parse(input);
-  if(!/^[a-f0-9-]{36}$/i.test(key))throw Error("ACTIVITY_INVALID_KEY");
-  const id="activity_"+createHash("sha256").update(JSON.stringify(["manual-activity-v1",userId,key])).digest("hex");
+ createActivity(userId:string,input:Activity,key:string):Promise<ExperienceRecord>{return this.createTimedRecord(userId,"activity",input,key);}
+ createSession(userId:string,input:TrainingSession,key:string):Promise<ExperienceRecord>{return this.createTimedRecord(userId,"session",input,key);}
+ private async createTimedRecord(userId:string,kind:"activity"|"session",input:Activity|TrainingSession,key:string):Promise<ExperienceRecord>{
+  const payload=kind==="activity"?activitySchema.parse(input):trainingSessionSchema.parse(input);
+  if(!/^[a-f0-9-]{36}$/i.test(key))throw Error("INVALID_SAVE_KEY");
+  const id=kind+"_"+createHash("sha256").update(JSON.stringify([`manual-${kind}-v1`,userId,key])).digest("hex");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
-   const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"activity")));
-   if(existing){const record=decode(existing,userId);if(record.kind!=="activity"||JSON.stringify(record.payload)!==JSON.stringify(payload))throw Error("ACTIVITY_SAVE_CONFLICT");return record;}
+   const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,kind)));
+   if(existing){const record=decode(existing,userId);if(record.kind!==kind||JSON.stringify(record.payload)!==JSON.stringify(payload))throw Error(kind==="activity"?"ACTIVITY_SAVE_CONFLICT":"SESSION_SAVE_CONFLICT");return record;}
    const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(eq(experienceRecords.userId,userId));
    if(count.count>=2000)throw Error("EXPERIENCE_LIMIT");
-   const [row]=await tx.insert(experienceRecords).values({id,userId,kind:"activity",encryptedPayload:encryptPrecision(payload,userId)}).returning();
+   const [row]=await tx.insert(experienceRecords).values({id,userId,kind,encryptedPayload:encryptPrecision(payload,userId)}).returning();
    return decode(row,userId);
   });
  }
@@ -124,6 +126,7 @@ export interface ExperienceStore {
  putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
  putExperienceSettingsIfCurrent?(userId:string,patch:ExperienceSettingsPatch,revision:string):Promise<ExperienceSettings>;
  putCheckinFeedback?(userId:string,id:string,request:FocusFeedbackRequest,key:string):Promise<CheckinFeedbackView|null>;
+ createSession?(userId:string,payload:TrainingSession,key:string):Promise<ExperienceRecord>;
  createActivity?(userId:string,payload:Activity,key:string):Promise<ExperienceRecord>;
  getCheckinFeedback?(userId:string,id:string):Promise<CheckinFeedbackView|null>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;

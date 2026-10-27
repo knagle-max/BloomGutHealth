@@ -732,17 +732,20 @@ try {
     const activityReplay=await request("/api/experience/activities","POST",activityPayload,201,activityHeaders);assert.equal(activityReplay.id,activitySaved.id);
     const activityCorrected=await request(`/api/experience/records/${activitySaved.id}`,"PUT",{kind:"activity",payload:{...activityPayload,minutes:30}});assert.equal(activityCorrected.payload.minutes,30);assert.equal(activityCorrected.payload.startedAt,activityPayload.startedAt);
     await request(`/api/experience/records/${activitySaved.id}`,"DELETE",undefined,204);assert.deepEqual(await request("/api/experience/records?kind=activity"),[]);
+    const sessionPayload={title:"Synthetic saved ride",startsAt:new Date().toISOString(),minutes:90,intensity:"moderate",discipline:"endurance",status:"planned"},sessionHeaders={"Idempotency-Key":randomUUID()};
+    const sessionSaved=await request("/api/experience/sessions","POST",sessionPayload,201,sessionHeaders),sessionReplay=await request("/api/experience/sessions","POST",sessionPayload,201,sessionHeaders);assert.equal(sessionReplay.id,sessionSaved.id);assert.equal((await request("/api/experience/records?kind=session")).length,1);
+    await request(`/api/experience/records/${sessionSaved.id}`,"DELETE",undefined,204);
     const responsePath=`/api/experience/checkins/${feedbackCheckin.id}/feedback`,responseBody={response:"liked",sourceRevision:feedbackSource.revision},responseHeaders={"Idempotency-Key":randomUUID()};
     const feedbackSaved=await request(responsePath,"POST",responseBody,200,responseHeaders);
     assert.equal(feedbackSaved.feedback.response,"liked");assert.equal(feedbackSaved.feedback.focus,"Synthetic routine feedback");
     const feedbackReplay=await request(responsePath,"POST",responseBody,200,responseHeaders);assert.equal(feedbackReplay.revision,feedbackSaved.revision);
     await request(responsePath,"POST",{...responseBody,response:"disliked"},409,responseHeaders);
     const feedbackClear=await request(responsePath,"POST",{response:null,sourceRevision:feedbackSaved.revision},200,{"Idempotency-Key":randomUUID()});assert.equal(feedbackClear.feedback.response,null);
-    for(let attempt=0;attempt<21;attempt++)await request("/api/experience/records","POST",{},400);
+    for(let attempt=0;attempt<18;attempt++)await request("/api/experience/records","POST",{},400);
     const quotaDenied=await fetch(base+"/api/experience/records",{method:"POST",headers:{"content-type":"application/json","x-forwarded-proto":"https",origin:base.replace("http:","https:"),cookie},body:"{}",signal:AbortSignal.timeout(30000)});
     assert.equal(quotaDenied.status,429);assert.equal(quotaDenied.headers.get("retry-after"),"60");await quotaDenied.arrayBuffer();
     await request("/api/experience/export");
-    console.log("PASS: actual encrypted activity save/replay/correction/deletion and check-in feedback source/save/replay/conflict/clear; shared workspace allowance denies before mutation while private export remains available");
+    console.log("PASS: actual encrypted session receipt and activity save/replay/correction/deletion and check-in feedback source/save/replay/conflict/clear; shared workspace allowance denies before mutation while private export remains available");
   }finally{cookie=priorQuotaCookie;}
   const erased=await request("/api/account","DELETE",{password,confirmation:"DELETE ACCOUNT"});
   assert.equal(erased.scope,"active-application-records");

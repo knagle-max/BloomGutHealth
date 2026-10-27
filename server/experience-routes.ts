@@ -8,7 +8,7 @@ import type { Express, RequestHandler } from "express";
 import { z } from "zod";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
-import { activitySchema,focusFeedbackRequestSchema,experienceEntrySchema, experienceSettingsSchema, settingsPatchSchema, dateKey, memoryKey, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
+import { trainingSessionSchema,activitySchema,focusFeedbackRequestSchema,experienceEntrySchema, experienceSettingsSchema, settingsPatchSchema, dateKey, memoryKey, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
 import type { IStorage } from "./storage";
 import { buildAthleteDay, sweatEstimate } from "../shared/athlete";
 import { localDayBounds } from "../shared/nutrition-summary";
@@ -52,6 +52,14 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
    if(error instanceof CheckinFeedbackInvalid)return res.status(400).json({error:error.message});
    fail(res,error);
   }
+ });
+ app.post("/api/experience/sessions",limit,async(req,res)=>{
+  const input=trainingSessionSchema.safeParse(req.body),key=req.get("Idempotency-Key");
+  if(!input.success||!key||!z.string().uuid().safeParse(key).success)return res.status(400).json({error:"Check the training session before saving."});
+  try{
+   if(!store.createSession)return res.status(503).json({error:"Training session logging is unavailable. Your draft is retained."});
+   res.status(201).json(await store.createSession(req.session.userId!,input.data,key));
+  }catch(error){if(error instanceof Error&&error.message==="SESSION_SAVE_CONFLICT")return res.status(409).json({error:"This save already has different session details. Review your calendar before starting a new save."});fail(res,error);}
  });
  app.post("/api/experience/activities",limit,async(req,res)=>{
   const input=activitySchema.safeParse(req.body),key=req.get("Idempotency-Key");

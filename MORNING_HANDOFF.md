@@ -2,7 +2,7 @@
 
 Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
 
-Latest fully verified reader `2042b61a2ae37070713ea62718d56390b47a0dea`: Actions40450056987 SUCCESS395; Render dep-dbg2hgjbc2fs739pbts0 LIVE. Everyday activity capture is locally complete with396 passing tests and awaits publication/exact CI/Render below.
+Latest fully verified `6bbc3c8473322769d0ab7f1339005ae8a4a1896b`: Actions40451628962 SUCCESS396 and Render dep-dbg2pgk9v7es73dvpljg LIVE. Everyday activity capture is published and verified. The observed Athlete duplicate-save bug is locally repaired and awaits its publication checks.
 
 ## Development summary
 
@@ -13,15 +13,15 @@ Latest fully verified reader `2042b61a2ae37070713ea62718d56390b47a0dea`: Actions
 |a5a7d68|Optional recorded routine dates alongside bloodwork, source-calendar/unknown context and source-failure recovery; no causal/effect claims|Actions40431328309 SUCCESS393; Render reached LIVE; encrypted normal journey|
 |91eda2f|My Biology/pending-unit dates honor entered/corrected calendars rather than UTC date slicing|Actions40431821839 SUCCESS393; Render descendant verified; red/green browser reproduction|
 |8a1217f|Visit-only offline review/save waiting states and opt-in exact reconnect retry; queued reviews stop on navigation/account change|Actions40433153715 SUCCESS393; Render dep-dbfvu7nf3r2c73b2fthg LIVE;8 representative actual HTTP/PostgreSQL browser scenarios|
-|2042b61|Encrypted manual-activity readers/filter/export/correction/deletion before capture|Actions40450056987 SUCCESS395; Render LIVE;5 focused schema/API/storage tests|
+|2042b61,6bbc3c8|Everyday activity readers then complete Today/log/correct/Progress/delete journey|Actions395/396 SUCCESS; Render LIVE; actual encrypted App/API and isolatedNeon smoke|
 
 Earlier active lab-source, immutable date/unit lineage, explicit deletion, atomic reimport, local source-text intake and Today midnight/resume fixes remain verified in DEVELOPMENT_LOG.md. Existing source/medical/tenant/consent gates remain required.
 
-Everyday activity now works locally end to end: Today Move→Log activity→save/exact uncertain retry→correct duration→Today→Progress→delete. It uses the existing encrypted experience store and owned routes; duration-only correction preserves source instant/timezone. General movement does not become an Athlete workout or infer energy expenditure, RPE, climate or fueling targets. Full396 tests PASS, types/build/API100+13/source130 PASS, actual encrypted rendered flow and previous movement regression PASS, keyboard320px. Matched evidence: docs/reviews/everyday-activity. Isolated Neon smoke includes create/replay/correct/delete. Capture commit and exact publication checks are the immediate next step.
+Everyday activity is verified end to end: Today Move→Log activity→save/exact uncertain retry→correct duration→Today→Progress→delete. It uses the existing encrypted experience store and owned routes; duration-only correction preserves source instant/timezone. General movement does not become an Athlete workout or infer energy expenditure, RPE, climate or fueling targets. Full396 tests PASS, types/build/API100+13/source130 PASS, actual encrypted rendered flow and previous movement regression PASS, keyboard320px. Matched evidence: docs/reviews/everyday-activity. Isolated Neon smoke includes create/replay/correct/delete. Capture6bbc3c8 is verified in Actions/Render. Athlete session save receipts now fix a reproduced normal retry duplication; green actual App/API yields one90-minute calendar entry, with3 focused tests/types/build/source checks passing. Its exact publication is next.
 
 ## Remaining priorities
 
-1. Publish/verify the activity vertical slice, exact Actions/Render and PR metadata.
+1. Publish/verify the Athlete session-save repair, exact Actions/Render and PR metadata.
 2. Reconcile approved v0.5 requirement traces and normal core journeys; prioritize a missing food, Everyday, import or Athlete path over further edge matrices. Deferred across-restart offline persistence is explicitly not claimed.
 3. Raw Viome format compatibility is BLOCKED_TECHNICAL: full reviewed handoff/representative export absent; one referenced gist read failed CONNECT403. Existing canonical structured import remains available. Do not guess provider schema or request credentials.
 4. Keep native/device/human, independent clinical/legal/design, recovery and provider-rights gates separate. Transition automatically to approved independentv0.6 once actionablev0.5 is exhausted.
