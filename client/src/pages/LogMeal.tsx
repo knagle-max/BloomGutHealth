@@ -1,3 +1,4 @@
+import {currentMealTimeZone,recordedMealTime} from "@shared/meal-time";
 import SavedMealSource from "@/components/SavedMealSource";
 import {useReconnectRetry} from "@/lib/useReconnectRetry";
 import {mealNutritionSummary} from "@shared/nutrition-summary";
@@ -60,6 +61,7 @@ export default function LogMeal() {
           .join(", ")
       : (params.get("description") || "").slice(0, 2000),
   );
+  const [mealTimeZone]=useState(currentMealTimeZone);
   const [eatenAt, setEatenAt] = useState(() => {
     const date = new Date();
     return new Date(+date - date.getTimezoneOffset() * 60000)
@@ -109,7 +111,7 @@ export default function LogMeal() {
     const catalogueItem:Ingredient|undefined=selected?{name:selected.description.slice(0,120),grams:selected.grams,preparation:selected.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:selected.fdcId}}:undefined;
     const loaded=savedIngredients&&savedIngredients.owner===user?.id&&savedIngredients.description===description&&!catalogueEnabled?savedIngredients.ingredients:undefined;
     const complete=ingredients||(loaded?[...loaded,...products]:catalogueItem?[catalogueItem,...products]:undefined);
-    return {mealText:selected?`${selected.grams} g ${selected.description}`:description.trim(),products,...(complete?{ingredients:complete}:{}),mealType,aiConsent,mealContext:{eatenAt:new Date(eatenAt).toISOString(),portion,symptoms,...((restaurant.trim()||restaurantVisited)?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{})}};
+    return {mealText:selected?`${selected.grams} g ${selected.description}`:description.trim(),products,...(complete?{ingredients:complete}:{}),mealType,aiConsent,mealContext:{eatenAt:new Date(eatenAt).toISOString(),timeZone:mealTimeZone,portion,symptoms,...((restaurant.trim()||restaurantVisited)?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{})}};
   }
   type ReviewPayload=ReturnType<typeof draftPayload>;
   type AnalysisResult={intelligence:MealIntelligence;nutritionalData:unknown[]};
@@ -274,6 +276,7 @@ export default function LogMeal() {
                 onChange={(e) => setEatenAt(e.target.value)}
                 required
               />
+              <span className="block text-xs text-muted-foreground">{mealTimeZone?`Device time zone: ${mealTimeZone}`:"Device local time; source time zone unavailable."}</span>
             </label>
           </div>
           <details className="workspace-disclosure">
@@ -386,6 +389,7 @@ export default function LogMeal() {
             <CheckCircle2 size={20} /> Your meal is saved.
           </h2>
           <p className="my-3">{savedMeal.mealText}</p>
+          {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)&&<p className="panel-note">Recorded meal time: {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)}</p>}
           {recalculate.isPending||recalculate.isError ? <p role="status">{recalculate.isPending?"Checking corrected nutrition…":"Correction could not be confirmed. Retry with your retained portion draft, or open the journal to check the saved entry."}</p> : savedMeal.totalCalories !== null ? (
             <div className="saved-nutrients">
               <span>

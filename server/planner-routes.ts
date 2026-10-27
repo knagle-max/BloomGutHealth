@@ -1,3 +1,4 @@
+import {preserveMealTimeZone} from "../shared/meal-time";
 import {contextSchema} from "../shared/precision-nutrition";
 import {checkedFoodPreferences} from "../shared/weekly-planner";
 import {foodPreferenceMatches,intoleranceWarnings} from "../shared/food-preference-policy";
@@ -320,7 +321,7 @@ export function registerPlannerRoutes(
             .filter(Boolean)
             .join("; "),
           mealType: p.data.mealType ?? meal.mealType,
-          mealContext: p.data.mealContext ? { ...p.data.mealContext, ...((meal.mealContext as any)?._saveReceipt ? { _saveReceipt: (meal.mealContext as any)._saveReceipt } : {}) } : meal.mealContext,
+          mealContext: p.data.mealContext ? { ...preserveMealTimeZone(meal.mealContext,p.data.mealContext,meal.loggedAt), ...((meal.mealContext as any)?._saveReceipt ? { _saveReceipt: (meal.mealContext as any)._saveReceipt } : {}) } : meal.mealContext,
           ...(p.data.mealContext?.eatenAt
             ? { loggedAt: new Date(p.data.mealContext.eatenAt) }
             : {}),

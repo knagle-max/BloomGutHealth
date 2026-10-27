@@ -1,3 +1,4 @@
+import {recordedMealTime} from "@shared/meal-time";
 import {refreshMealSources} from "@/lib/meal-cache";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
@@ -1060,6 +1061,7 @@ export default function NutritionHistory() {
                     {meal.mealContext && (
                       <details className="mt-3 text-sm">
                         <summary>Meal context & symptoms</summary>
+                        {recordedMealTime(meal.loggedAt,meal.mealContext)&&<p>Recorded meal time: {recordedMealTime(meal.loggedAt,meal.mealContext)}</p>}
                         <p>
                           Portion:{" "}
                           {(meal.mealContext as any).portion || "Not recorded"}

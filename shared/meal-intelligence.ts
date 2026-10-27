@@ -1,3 +1,4 @@
+import {recognizedMealTimeZone} from "./meal-time";
 import { roundNutrientEstimate } from "./nutrition-precision";
 import { tasteMatches } from "./food-preference-policy";
 import { productRefSchema } from "./products";
@@ -47,6 +48,7 @@ export const defaultPreferences = preferenceSchema.parse({});
 export const mealContextSchema = z
   .object({
     eatenAt: z.string().datetime({ offset: true }).optional(),
+    timeZone: z.string().refine(recognizedMealTimeZone,"Choose a recognized time zone").nullable().optional(),
     portion: z.enum(["small", "medium", "large", "specified"]).optional(),
     restaurantContext:z.object({restaurant:z.string().trim().max(150),market:z.string().trim().max(100),source:z.literal("user-entered-context")}).strict().optional(),
     symptoms: z

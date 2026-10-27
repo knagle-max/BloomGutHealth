@@ -21,7 +21,7 @@
     "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
-    "server/planner-routes.ts": "abd1b20d63559b689c985d79330ef4519072e25a5e2e5034dd76f513a3081f0d",
+    "server/planner-routes.ts": "25d614dc8dbd257dc2b007d647a187e00be798e6f125f1698eede586438fb946",
     "server/precision-routes.ts": "25f098a737a31fb6ca48b91060826e9fc65f7748321661788ea9e45a005d68be",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
@@ -467,7 +467,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 65,
+      "line": 66,
       "method": "GET",
       "path": "/api/analysis/status",
       "declaredMiddleware": [
@@ -477,7 +477,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 106,
+      "line": 107,
       "method": "GET",
       "path": "/api/preferences",
       "declaredMiddleware": [
@@ -487,7 +487,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 117,
+      "line": 118,
       "method": "PUT",
       "path": "/api/preferences",
       "declaredMiddleware": [
@@ -497,7 +497,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 135,
+      "line": 136,
       "method": "POST",
       "path": "/api/meal-planner/prioritize",
       "declaredMiddleware": [
@@ -508,7 +508,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 172,
+      "line": 173,
       "method": "GET",
       "path": "/api/meal-planner",
       "declaredMiddleware": [
@@ -518,7 +518,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 221,
+      "line": 222,
       "method": "POST",
       "path": "/api/meals/analyze",
       "declaredMiddleware": [
@@ -529,7 +529,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 222,
+      "line": 223,
       "method": "POST",
       "path": "/api/meals/review",
       "declaredMiddleware": [
@@ -540,7 +540,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 290,
+      "line": 291,
       "method": "POST",
       "path": "/api/meals",
       "declaredMiddleware": [
@@ -550,7 +550,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 291,
+      "line": 292,
       "method": "POST",
       "path": "/api/meals/confirm",
       "declaredMiddleware": [
@@ -560,7 +560,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 292,
+      "line": 293,
       "method": "PUT",
       "path": "/api/meals/:mealId",
       "declaredMiddleware": [
@@ -571,7 +571,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 341,
+      "line": 342,
       "method": "GET",
       "path": "/api/meal-planner/progress",
       "declaredMiddleware": [
