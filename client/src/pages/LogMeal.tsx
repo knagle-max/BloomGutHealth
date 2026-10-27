@@ -1,3 +1,4 @@
+import {useReconnectRetry} from "@/lib/useReconnectRetry";
 import {mealNutritionSummary} from "@shared/nutrition-summary";
 import {refreshMealSources} from "@/lib/meal-cache";
 import FoodEntryChooser from "@/components/FoodEntryChooser";
@@ -115,6 +116,7 @@ export default function LogMeal() {
   const [review,setReview]=useState<ReviewSnapshot|null>(null),[reviewDirty,setReviewDirty]=useState(false),[reviewRejected,setReviewRejected]=useState(false);
   const saveAttempt=useRef<{payload:string;revision:string;key:string;basis:string}|null>(null);
   const reviewMeal=useMutation({mutationFn:async(v:{payload:ReviewPayload;basis:string;owner:string})=>{
+    if(!mounted.current||actor.current!==v.owner)throw Error("The meal review was interrupted. Review the draft in the current account.");
     const response=await apiRequest("POST","/api/meals/review",v.payload),revision=response.headers.get("X-Bloom-Meal-Review");
     if(!revision||!/^[a-f0-9]{64}$/.test(revision))throw Error("Meal review is unavailable. Your entry has not been saved; retry the review.");
     const analysis=await response.json() as AnalysisResult;
@@ -140,6 +142,7 @@ export default function LogMeal() {
   const inputFrozen=save.isPending||reviewMeal.isPending||saveUnknown;
   const sameReview=!!review&&review.basis===basis&&review.owner===user?.id;
   const reviewCurrent=sameReview&&!reviewDirty&&!reviewRejected&&!reviewMeal.isPending&&!reviewMeal.isError;
+  const reconnect=useReconnectRetry({actorId:user?.id,attemptKey:save.variables?.key,eligible:saveUnknown&&sameReview&&saveAttempt.current?.key===save.variables?.key&&save.variables?.snapshot.owner===user?.id,retry:()=>{const attempt=save.variables;if(attempt&&mounted.current&&actor.current===attempt.snapshot.owner&&saveAttempt.current?.key===attempt.key)save.mutate(attempt);}});
   const previewNutrition=review?mealNutritionSummary([review.analysis]):null;
   function confirmReview(){if(!review||!reviewCurrent||save.isPending)return;const payload=confirmation(review),serialized=JSON.stringify(payload);if(saveAttempt.current?.payload!==serialized||saveAttempt.current.revision!==review.revision)saveAttempt.current={payload:serialized,revision:review.revision,key:crypto.randomUUID(),basis:review.basis};save.mutate({snapshot:review,payload,key:saveAttempt.current.key});}
   const recalculate = useMutation({
@@ -357,18 +360,20 @@ export default function LogMeal() {
             </div>
           )}
           {reviewMeal.isError&&<p role="alert">{reviewMeal.error.message}</p>}
-          <Button className="w-full h-12" disabled={(!description.trim()&&!products.length&&!(catalogueEnabled&&catalogueSelection.data))||(catalogueEnabled&&!catalogueSelection.data)||inputFrozen||!user} data-testid="button-review-meal">{reviewMeal.isPending?"Reviewing meal…":"Review meal"}</Button>
+          {reviewMeal.isPaused&&<p role="status">Waiting for a connection to review this draft. Keep this page open.</p>}
+          <Button className="w-full h-12" disabled={(!description.trim()&&!products.length&&!(catalogueEnabled&&catalogueSelection.data))||(catalogueEnabled&&!catalogueSelection.data)||inputFrozen||!user} data-testid="button-review-meal">{reviewMeal.isPaused?"Waiting to review…":reviewMeal.isPending?"Reviewing meal…":"Review meal"}</Button>
         </fieldset>
       </form>}
       {review&&sameReview&&<section className="bloom-panel space-y-4 meal-review" aria-labelledby="meal-review-heading">
         <h2 id="meal-review-heading" ref={reviewHeading} tabIndex={-1}>Review before saving</h2>
-        <p role="status">{saveUnknown?"The save is not confirmed. Retry the same entry or check your journal.":"This meal is not in your journal yet. Review the foods, amounts and source estimates below."}</p>
+        <p role="status">{save.isPaused?"Waiting for a connection. Keep this page open to finish saving this reviewed meal.":saveUnknown?"The save is not confirmed. Retry the same entry or check your journal.":"This meal is not in your journal yet. Review the foods, amounts and source estimates below."}</p>
         {reviewCurrent&&previewNutrition&&<div className="saved-nutrients"><span><strong>{previewNutrition.totals.calories===null?"—":energyAmount(previewNutrition.totals.calories,settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}</span>{([['protein','protein'],['carbs','carbs'],['fat','fat']] as const).map(([key,label])=><span key={key}><strong>{previewNutrition.totals[key]===null?"—":formatNutrientAmount(previewNutrition.totals[key])}g</strong> {label}</span>)}</div>}
         <p className="panel-note">Known contributions are estimates. Missing nutrients remain unavailable, including when only part of a meal has source data.</p>
         <MealAnalysis analysis={review.analysis.intelligence} preview onDraftChange={setReviewDirty} onRecalculate={ingredients=>{if(!inputFrozen&&user)reviewMeal.mutate({payload:{...review.payload,ingredients,aiConsent:false},basis,owner:user.id});}} pending={reviewMeal.isPending} disabled={save.isPending||saveUnknown} current={reviewCurrent}/>
         {reviewDirty&&<p role="status">Update the ingredient review before saving this meal.</p>}
         {reviewRejected&&<p role="alert">The source changed. Update the review before saving.</p>}
-        <Button type="button" className="w-full h-12" disabled={!reviewCurrent||save.isPending} onClick={confirmReview} data-testid="button-save-meal">{save.isPending?"Saving your meal…":saveUnknown?"Retry saving my meal":"Save to my journal"}</Button>
+        <Button type="button" className="w-full h-12" disabled={!reviewCurrent||save.isPending} onClick={confirmReview} data-testid="button-save-meal">{save.isPaused?"Waiting for connection…":save.isPending?"Saving your meal…":saveUnknown?"Retry saving my meal":"Save to my journal"}</Button>
+        {saveUnknown&&!reconnect.online&&<div className="space-y-2"><label className="flex items-start gap-2"><input type="checkbox" checked={reconnect.enabled} onChange={e=>reconnect.arm(e.target.checked)}/>Retry this reviewed save when the connection returns</label><p className="panel-note">Keep this page open. This option retains the same save for this account during this visit.</p></div>}
       </section>}
       {savedMeal && (
         <section className="bloom-panel saved-meal" role="status">
