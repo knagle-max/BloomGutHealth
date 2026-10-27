@@ -875,3 +875,18 @@ Progress optional calendar uses existing owned experiment and active confirmed l
 
 ## LAB-CALENDAR-LEGACY — shared source date labels
 Red actual encrypted rendered fixture reproduced UTC October2 vs enteredOctober1 in My Biology Progress, and UTC13 vs entered12 in pending-unit review. Both now use shared labDateText (corrected→entered→legacy timestamp fallback); numerical values, units and clinical calculations unchanged. Green actual Progress/timing/unit/legacy journey PASS,3 helper/history tests/types/build PASS. Minor date-label repair: no near-identical gallery. Timing a5a7d68 Actions40431328309 running / existing Render verification pending; prior Skip3760580 Actions40430319733 SUCCESS392, Render dep-dbfvgui9lscs738pj1tg LIVE. No new blocker or real data.
+
+## 2026-10-25 Viome offline-export compatibility — Architect intake
+
+**Source:** `V06_HANDOFF.md` §48, commit `4be872982096c90a0d54b65233f86328dfa100a3`; `Bloom_Integration_Viome_Gist_Review_2026-10-25.md`, INT-VIOME-2026-01–06. **ARCHITECT_REVIEWED**, not implemented or independently verified against authentic provider response. Map to existing structured report/INT-OPT-02/06/UT-IMPORT-2405, not duplicate importer.
+
+| ID | Priority | Codex acceptance | Status |
+| --- | --- | --- | --- |
+| INT-VIOME-2026-01 | P0 data correctness | Fixture-verified raw response variants, versioned adapter, separate provider scores/taxa/nutrients/advice and raw provenance; no scores as percent or measured effects | ARCHITECT_REVIEWED |
+| INT-VIOME-2026-02 | P0 identity/P1 history | Arbitrary dated reports by provider test ID, revision, idempotency, original date/scale, no six-sample cap | ARCHITECT_REVIEWED |
+| INT-VIOME-2026-03 | P0 attribution/P1 UI | Proprietary provider recommendations clearly labelled Viome, not automatically Bloom-endorsed | ARCHITECT_REVIEWED |
+| INT-VIOME-2026-04 | P0 security/legal | User-export/pasted JSON by default; no passwords, cookies or undocumented Viome internal auth; partner API only after rights/security approval | ARCHITECT_REVIEWED |
+| INT-VIOME-2026-05 | P0 truthful import/P1 UX | Per-test recognition/unknown/archived/error and safe bounded large-file review; synthetic fixture remains synthetic; no silent field loss | ARCHITECT_REVIEWED |
+| INT-VIOME-2026-06 | P1 modularity | Provider-format/adapter version and transformation journal; deterministic revisions and canonical backend reuse | ARCHITECT_REVIEWED |
+
+**Developer:** Check current structured-report importer before coding, regression actual fixture cases including malformed/multi-test/large source, trace preview-save-reload-history-export, CI/Render and privacy guards. Historic unofficial browser response gist is not a stable licensed API. No implementation claimed.
