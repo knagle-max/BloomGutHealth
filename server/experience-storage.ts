@@ -1,9 +1,10 @@
+import {createHash} from "node:crypto";
 import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords } from "../shared/schema";
-import { checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { activitySchema,type Activity,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -58,6 +59,20 @@ export class ExperienceStorage {
    return updated.length?checkinFeedbackView(userId,id,next):null;
   });
  }
+ async createActivity(userId:string,input:Activity,key:string):Promise<ExperienceRecord>{
+  const payload=activitySchema.parse(input);
+  if(!/^[a-f0-9-]{36}$/i.test(key))throw Error("ACTIVITY_INVALID_KEY");
+  const id="activity_"+createHash("sha256").update(JSON.stringify(["manual-activity-v1",userId,key])).digest("hex");
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
+   const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"activity")));
+   if(existing){const record=decode(existing,userId);if(record.kind!=="activity"||JSON.stringify(record.payload)!==JSON.stringify(payload))throw Error("ACTIVITY_SAVE_CONFLICT");return record;}
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(eq(experienceRecords.userId,userId));
+   if(count.count>=2000)throw Error("EXPERIENCE_LIMIT");
+   const [row]=await tx.insert(experienceRecords).values({id,userId,kind:"activity",encryptedPayload:encryptPrecision(payload,userId)}).returning();
+   return decode(row,userId);
+  });
+ }
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
   if(entry.kind==="activity")throw Error("ACTIVITY_ACTION_REQUIRED");
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
@@ -109,6 +124,7 @@ export interface ExperienceStore {
  putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
  putExperienceSettingsIfCurrent?(userId:string,patch:ExperienceSettingsPatch,revision:string):Promise<ExperienceSettings>;
  putCheckinFeedback?(userId:string,id:string,request:FocusFeedbackRequest,key:string):Promise<CheckinFeedbackView|null>;
+ createActivity?(userId:string,payload:Activity,key:string):Promise<ExperienceRecord>;
  getCheckinFeedback?(userId:string,id:string):Promise<CheckinFeedbackView|null>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;
  insertExperienceRecord(userId:string,entry:ExperienceEntry):Promise<ExperienceRecord>;

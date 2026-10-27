@@ -8,7 +8,7 @@ import type { Express, RequestHandler } from "express";
 import { z } from "zod";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
-import { focusFeedbackRequestSchema,experienceEntrySchema, experienceSettingsSchema, settingsPatchSchema, dateKey, memoryKey, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
+import { activitySchema,focusFeedbackRequestSchema,experienceEntrySchema, experienceSettingsSchema, settingsPatchSchema, dateKey, memoryKey, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
 import type { IStorage } from "./storage";
 import { buildAthleteDay, sweatEstimate } from "../shared/athlete";
 import { localDayBounds } from "../shared/nutrition-summary";
@@ -52,6 +52,14 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
    if(error instanceof CheckinFeedbackInvalid)return res.status(400).json({error:error.message});
    fail(res,error);
   }
+ });
+ app.post("/api/experience/activities",limit,async(req,res)=>{
+  const input=activitySchema.safeParse(req.body),key=req.get("Idempotency-Key");
+  if(!input.success||!key||!z.string().uuid().safeParse(key).success)return res.status(400).json({error:"Check the activity, date and duration before saving."});
+  try{
+   if(!store.createActivity)return res.status(503).json({error:"Activity logging is unavailable. Your draft is retained."});
+   res.status(201).json(await store.createActivity(req.session.userId!,input.data,key));
+  }catch(error){if(error instanceof Error&&error.message==="ACTIVITY_SAVE_CONFLICT")return res.status(409).json({error:"This save already has different activity details. Review your activity history before starting a new save."});fail(res,error);}
  });
  app.post("/api/experience/records",limit,async(req,res)=>{const p=experienceEntrySchema.safeParse(req.body);if(p.success&&p.data.kind==="activity")return res.status(400).json({error:"Use the activity logging action to save this entry."});if(!p.success)return res.status(400).json({error:"Check the required fields, dates, units and ranges. Sweat sodium requires its measurement source."});if(p.data.kind==="checkin"&&p.data.payload.focusFeedback!==undefined)return res.status(400).json({error:"Use the separate focus response action."});if(p.data.kind==="food-memory")return res.status(400).json({error:"Meal corrections are saved through the meal editor."});try{res.status(201).json(await store.insertExperienceRecord(req.session.userId!,p.data));}catch(e){fail(res,e);}});
  app.put("/api/experience/records/:id",limit,async(req,res)=>{const p=experienceEntrySchema.safeParse(req.body);if(!p.success||p.data.kind==="food-memory"||p.data.kind==="checkin"&&p.data.payload.focusFeedback!==undefined)return res.status(400).json({error:"Invalid record update."});try{const row=await store.updateExperienceRecord(req.session.userId!,req.params.id,p.data);if(!row)return res.status(404).json({error:"Record not found in your account."});res.json(row);}catch(e){fail(res,e);}});

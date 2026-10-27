@@ -1,3 +1,4 @@
+import {activityTimeText} from "@shared/activity";
 import RoutineLabTiming from "@/components/RoutineLabTiming";
 import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-units";
 import { useExperienceRecords } from "@/lib/experience";
@@ -58,6 +59,10 @@ export default function Progress() {
           <Link className="text-link" href="/weekly-review">Review goals & weekly responses</Link>
         </div>
       </section>
+      <details className="bloom-panel space-y-3"><summary>Recorded activity</summary><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
+       {routines.isError?<p role="alert">Activity history could not load.</p>:routines.fetchStatus!=="idle"||routines.isPending?<p role="status">Checking recorded activity…</p>:<>{routines.data?.some(row=>row.kind==="activity")?<ul className="space-y-3">{routines.data.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3><p>{activityTimeText(row.payload)} · {row.payload.minutes} minutes{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
+       <Link className="text-link" href="/activity">Log or correct activity</Link>
+      </details>
       <section className="bloom-panel space-y-4">
         <h2>Bloodwork over time</h2>
         <p className="panel-note">

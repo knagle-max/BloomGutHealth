@@ -1,40 +1,30 @@
-# Bloom development handoff — October 27, 2026
+# Bloom development handoff — October27,2026
 
-Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com). Workspace `tea-db9toijrjlhs73850cp0`, service `srv-db9u7mjbc2fs73d86uv0`. No main merge, replacement service, credential changes, production data mutations or restricted activation. v0.5 is incomplete; v0.6 has not begun.
+Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
 
-## Completed this continuation
+Latest fully verified reader `2042b61a2ae37070713ea62718d56390b47a0dea`: Actions40450056987 SUCCESS395; Render dep-dbg2hgjbc2fs739pbts0 LIVE. Everyday activity capture is locally complete with396 passing tests and awaits publication/exact CI/Render below.
 
-| Commit | Delivered | Verification |
+## Development summary
+
+| Commit | Completed behavior | Verification |
 | --- | --- | --- |
-| `33ee421` | Planning uses canonical active confirmed lab sources; pending/superseded/raw sources no longer cause false conflicts; malformed sources still deny | Actions40387901449 SUCCESS; Render live |
-| `618d62e` | Explicit lab deletion removes source/unit revisions without pending-source resurrection; confirmation, stale-target rejection, safe replay and plan protection | Actions40390469923 SUCCESS; Render live |
-| `1192ffb` | Source-only reimport review preserves exact threshold/qualitative/unit/reference context; no automatic merge | Actions40391046838 SUCCESS; Render live |
-| `8e57897` | Immutable date revision readers, audit, canonical active lineage, unit/planning/deletion safety | Actions40392145665 SUCCESS374; Render live |
-| `b26dfd0` | Reviewed date correction with reason, immutable original, receipt replay, stale-source rejection, preserved values/units and visible audit | Actions40393634801 SUCCESS376 including isolated Neon date/replay/save/deletion smoke; Render live |
-| `dbe3f69` | Paste/manual/date editing require an explicit occurrence for repeated clocks; nonexistent spring times rejected; date-only precision preserved | Actions40394783399 SUCCESS377; Render live |
-| `15cf2d9` | Atomic reimport endpoint compares current owned source matches under the account lock; explicit separate results, exact receipts and no legacy fallback | Actions40396269159 SUCCESS378 including real concurrent Neon201/409/review/replay; Render dep-dbfrgp7avr4c73a3u8n0 LIVE |
+|6857d37, a625c32,602dcb6|Optional Weekly Review routine responses, original context, explicit clear, revision/receipt retry protection, numerical ratings preserved|Actions391/392/392 SUCCESS; Render reached LIVE; actual encrypted rendered workflow|
+|3760580|Today visit-only Skip/Show suggestion; keyboard focus recovery without automatic focus jumps|Actions40430319733 SUCCESS392; Render LIVE; Today clock/source regressions|
+|a5a7d68|Optional recorded routine dates alongside bloodwork, source-calendar/unknown context and source-failure recovery; no causal/effect claims|Actions40431328309 SUCCESS393; Render reached LIVE; encrypted normal journey|
+|91eda2f|My Biology/pending-unit dates honor entered/corrected calendars rather than UTC date slicing|Actions40431821839 SUCCESS393; Render descendant verified; red/green browser reproduction|
+|8a1217f|Visit-only offline review/save waiting states and opt-in exact reconnect retry; queued reviews stop on navigation/account change|Actions40433153715 SUCCESS393; Render dep-dbfvu7nf3r2c73b2fthg LIVE;8 representative actual HTTP/PostgreSQL browser scenarios|
+|2042b61|Encrypted manual-activity readers/filter/export/correction/deletion before capture|Actions40450056987 SUCCESS395; Render LIVE;5 focused schema/API/storage tests|
 
-Latest fully verified SHA: `37605802afa921b9bb99e49e79fc29c9b08a6c8d`; Actions40430319733 SUCCESS392 and Render dep-dbfvgui9lscs738pj1tg reached LIVE. Feedback reader6857d37 SUCCESS391, actiona625c32 and UI602dcb6 SUCCESS392/live. Recorded trial/bloodwork calendar a5a7d68 has7 focused tests/types/build/actual encrypted rendered checks passing; exact Actions40431328309 and Render publication checks are in progress.
+Earlier active lab-source, immutable date/unit lineage, explicit deletion, atomic reimport, local source-text intake and Today midnight/resume fixes remain verified in DEVELOPMENT_LOG.md. Existing source/medical/tenant/consent gates remain required.
 
-Ordinary importer adoption is verified: frozen source/key/review snapshots, partial acknowledgments, renewed review only after a changed-match409, exact receipt validation, uncertain-response replay after another match, actor/navigation lifetime guards and keyboard focus recovery. Actual encrypted App/API, ordinary/grouped and NewYork clock/date/source regressions passed.
-
-Local source-text file intake is verified live: CSV/TSV/TXT remain on-device until canonical review; bounded reads, fresh context/identity, repeated-file review, stale-read protection, exact source rows and no hidden range interpretation. Header-prefix loss and ignored extra columns are fixed. Full383CI passed after the initially stale generated inventory was refreshed; actual encrypted file/race/receipt/mobile checks pass.
-
-Today midnight/resume source freshness is verified live: old-code stale date/source reproduced, fixed clock/query/session-expiry/unknown-state/no-polling/outage/retry/cleanup and existing evidence/search journeys pass.
-
-Shared workspace admission is verified live: ordinary writes have a shared30/minute actor allowance, old costly/auth ceilings remain, outage/deadline fails closed before handlers, aliases are covered, late results cannot resume and privacy export remains available.389CI and actual Neon quota/export checks passed.
-
-BIO-09 routine-focus responses are verified in Actions and Render: protected readers, owned revision/receipt action and optional Weekly Review UI. Six self-reports retain original context; uncertain retries preserve newer responses/ratings/notes.392 tests and isolated Neon save/replay/conflict/clear smoke pass. Actual encrypted rendered lost/malformed/retry/conflict/clear/outage/320px checks pass. This slice does not establish food identity, allergy, efficacy or automatic personalization.
-
-Today Skip/Show suggestion is verified: visit-only owner/day/action scope, no account writes or completion, explicit keyboard focus recovery and no automatic focus stealing.10 focused tests and Today/clock browser checks pass.
-
-LAB-05 calendar context is implemented and locally verified: existing saved trial intervals alongside active confirmed lab dates, unknown legacy calendar context retained, no effect/adherence/prespecification/comparability inference. Mode/owner/read-failure/retry/320px checks pass; matched evidence docs/reviews/lab-routine-timing. Exact CI/deployment checks continue. A further UTC date-label bug in the legacy My Biology and pending-unit views was reproduced and fixed locally with the shared source-aware date helper; green rendered/type/build checks pass.
+Everyday activity now works locally end to end: Today Move→Log activity→save/exact uncertain retry→correct duration→Today→Progress→delete. It uses the existing encrypted experience store and owned routes; duration-only correction preserves source instant/timezone. General movement does not become an Athlete workout or infer energy expenditure, RPE, climate or fueling targets. Full396 tests PASS, types/build/API100+13/source130 PASS, actual encrypted rendered flow and previous movement regression PASS, keyboard320px. Matched evidence: docs/reviews/everyday-activity. Isolated Neon smoke includes create/replay/correct/delete. Capture commit and exact publication checks are the immediate next step.
 
 ## Remaining priorities
 
-1. Publish the date-label fix and verify exact calendar/date-fix Actions and existing Render; update PR status.
-2. Continue approved v0.5 trace gaps, including FOOD12 offline confirmed-save recovery and whole-app source/accessibility coverage. Current session-only manual exact retry does not prove a durable offline queue. Routine feedback is one BIO09 slice, not full personalization acceptance.
-3. Carry independent native/human/device/clinical/design/recovery/licensing gates separately; begin approved independentv0.6 when actionablev0.5 is exhausted.
+1. Publish/verify the activity vertical slice, exact Actions/Render and PR metadata.
+2. Reconcile approved v0.5 requirement traces and normal core journeys; prioritize a missing food, Everyday, import or Athlete path over further edge matrices. Deferred across-restart offline persistence is explicitly not claimed.
+3. Raw Viome format compatibility is BLOCKED_TECHNICAL: full reviewed handoff/representative export absent; one referenced gist read failed CONNECT403. Existing canonical structured import remains available. Do not guess provider schema or request credentials.
+4. Keep native/device/human, independent clinical/legal/design, recovery and provider-rights gates separate. Transition automatically to approved independentv0.6 once actionablev0.5 is exhausted.
 
 ## User decisions and external evidence
 

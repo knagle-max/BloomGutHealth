@@ -17,6 +17,7 @@ const AthleteWorkspace = lazy(() => import("@/pages/AthleteWorkspace"));
 const PlanDay = lazy(() => import("@/pages/PlanDay"));
 const WeeklyReview = lazy(() => import("@/components/WeeklyReview"));
 const SavedMeals = lazy(() => import("@/components/SavedMeals"));
+const ActivityLog = lazy(() => import("@/pages/ActivityLog"));
 const LogMeal = lazy(() => import("@/pages/LogMeal"));
 const Upload = lazy(() => import("@/pages/Upload"));
 const Profile = lazy(() => import("@/pages/Profile"));
@@ -104,7 +105,7 @@ function AppContent() {
   };
 
   useEffect(() => {
-    const labels: Record<string, string> = { "/admin/features":"Feature management", "/explore":"Explore", "/progress":"Progress", "/athlete":"Training day", "/athlete/fueling":"Athlete fueling", "/athlete/recovery":"Athlete recovery", "/athlete/competition":"Competition", "/plan-day":"Plan my day", "/weekly-review":"Weekly review", "/saved-meals":"Saved meals", "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
+    const labels: Record<string, string> = { "/admin/features":"Feature management", "/explore":"Explore", "/progress":"Progress", "/activity":"Activity log", "/athlete":"Training day", "/athlete/fueling":"Athlete fueling", "/athlete/recovery":"Athlete recovery", "/athlete/competition":"Competition", "/plan-day":"Plan my day", "/weekly-review":"Weekly review", "/saved-meals":"Saved meals", "/": "Today", "/nutrition": "Food journal", "/meal-planner": "Meal plans", "/precision": "My biology", "/microbiome": "Gut reports", "/log-meal": "Log a meal", "/upload": "Add a report", "/profile": "Profile", "/insights": "Diet coach", "/health-insights": "Progress & insights" };
     document.title = `${labels[location] || "Welcome"} · Bloom`;
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [location]);
@@ -147,6 +148,7 @@ function AppContent() {
           <Route path="/nutrition">
             {() => <ProtectedRoute component={NutritionHistory} />}
           </Route>
+          <Route path="/activity"><ProtectedRoute component={ActivityLog}/></Route>
           <Route path="/log-meal">
             {() => <ProtectedRoute component={LogMeal} />}
           </Route>

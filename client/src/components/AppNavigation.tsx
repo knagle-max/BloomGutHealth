@@ -10,6 +10,7 @@ export const navigationGroups = [
   ] },
   { label: "More tools", items: [
     { path: "/nutrition", label: "Food journal", icon: UtensilsCrossed },
+    { path: "/activity", label: "Activity log", icon: Activity },
     { path: "/plan-day", label: "Plan my day", icon: CalendarDays },
     { path: "/meal-planner", label: "Meal plans", icon: CalendarDays },
     { path: "/saved-meals", label: "Saved meals", icon: UtensilsCrossed },
