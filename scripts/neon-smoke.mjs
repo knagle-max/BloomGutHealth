@@ -361,10 +361,11 @@ try {
   console.log(
     "PASS: reusable encrypted product label, per-serving meal nutrition and pasted functional-report persistence",
   );
+  const importedDate=new Date().toISOString();
   const imported = await request("/api/microbiome/import", "POST", {
     bacteria_percentages: { "Ruminococcus bromii": 2, Bifidobacterium: 5, Roseburia: 0 },
     testingCompany: "Synthetic CI lab",
-    testDate: new Date().toISOString(),
+    testDate: importedDate,
   });
   assert.ok(imported.sampleId);
   const cohortAvailability=await request('/api/microbiome/cohorts');
@@ -454,6 +455,9 @@ try {
   const sourceOnlyLab=await request("/api/precision/records","POST",{kind:"lab",payload:sourceOnlyPayload},201,{"Idempotency-Key":randomUUID()});
   await request(`/api/precision/labs/${sourceOnlyLab.id}/confirm-unit`,"POST",{unit:"mmol/L"},409);
   const report = await request("/api/precision");
+  assert.equal(report.microbiome.report.dateContext.source,"user-provided");
+  assert.equal(report.microbiome.report.dateContext.input,importedDate);
+  assert.equal(report.availableReports.find(row=>row.id===imported.sampleId).dateContext.input,importedDate);
   assert.equal(
     report.genetics.findings.find((f) => f.rsid === "rs1801133").genotype,
     "AG",

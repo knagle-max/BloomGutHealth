@@ -1,3 +1,4 @@
+import {reportDateText} from "@shared/report-dates";
 import {useLocalClock} from "@/lib/use-local-clock";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import EverydayStart from "@/components/EverydayStart";
@@ -311,7 +312,7 @@ export default function Dashboard() {
             <>
               <p>
                 {latestSample
-                  ? `Your latest test is from ${new Date(latestSample.testDate).toLocaleDateString()}. Explore your report and analysis status.`
+                  ? `Report on file: ${reportDateText(latestSample)}. Explore your report and analysis status.`
                   : "Have a microbiome test? Keep your report alongside your food journal for a more complete picture."}
               </p>
               {latestSample && (

@@ -1,3 +1,4 @@
+import {reportDateContext} from "../shared/report-dates";
 import {LabImportReviewRequired} from "./precision-storage";
 import {labDateChangeSchema} from "../shared/lab-date-correction";
 import {nutritionTargetReference} from "./nutrition-targets";
@@ -94,6 +95,7 @@ export function registerPrecisionRoutes(
       report = {
         id: sample.id,
         date: sample.testDate.toISOString(),
+        dateContext: reportDateContext(sample),
         taxa: Object.entries(percentages).map(([name, abundance]) => ({
           name,
           abundance,
@@ -149,6 +151,7 @@ export function registerPrecisionRoutes(
       availableReports: owned.map((s) => ({
         id: s.id,
         date: s.testDate.toISOString(),
+        dateContext: reportDateContext(s),
         name: s.testingCompany || "Structured report",
       })),
       intake: {

@@ -52,6 +52,7 @@ export async function saveStructuredReport(
         importInfo: {
           originalFilename: filename,
           dateSource: resolved.dateSource,
+          ...(resolved.dateSource === "user-provided" ? {testDateInput: fields.testDate} : {}),
         },
       },
       processingStatus: "processing",

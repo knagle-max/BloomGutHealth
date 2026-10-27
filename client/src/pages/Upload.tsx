@@ -1,5 +1,5 @@
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import FileUploadZone from "@/components/FileUploadZone";
@@ -38,8 +38,11 @@ export default function Upload() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const { user } = useAuth();
+  const active=useRef(true),actor=useRef(user?.id);actor.current=user?.id;
+  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
 
   const handleSubmit = async () => {
+    const owner=user?.id;if(!owner)return;
     const pasted = showManualEntry ? manualData.trim() : "";
     const selectedFile = showManualEntry ? null : file;
     if (!selectedFile && !pasted) {
@@ -62,29 +65,33 @@ export default function Upload() {
             ? "json"
             : "csv",
         );
-        await apiRequest("POST", "/api/microbiome/import", {
+        if(!active.current||actor.current!==owner)return;
+        const saved = await (await apiRequest("POST", "/api/microbiome/import", {
           report: parsed.source,
           originalFilename: pasted ? undefined : selectedFile?.name,
-          testDate: testDate?.toISOString(),
+          testDate: testDate ? format(testDate, "yyyy-MM-dd") : undefined,
           testingCompany,
           testId,
           notes,
-        });
+        })).json();
+        if(saved?.success!==true||typeof saved.sampleId!=="string"||!saved.sampleId)throw Error("The report save could not be confirmed. Check Gut reports before trying again.");
+        if(!active.current||actor.current!==owner)return;
         await invalidatePlanningInputs();
         queryClient.invalidateQueries({
           queryKey: ["/api/microbiome/samples"],
         });
+        if(!active.current||actor.current!==owner)return;
         toast({
           title: "Report saved",
           description:
             `${parsed.parsed.scores.length} scores, ${parsed.parsed.organisms.length} reported organisms and ${Object.keys(parsed.parsed.bacteria_percentages || {}).length} quantified taxa saved. Missing measurements remain unavailable.`,
         });
-        setLocation("/microbiome");
+        setLocation("/microbiome?sample="+encodeURIComponent(saved.sampleId));
         return;
       }
       const formData = new FormData();
       formData.append("file", selectedFile!);
-      if (testDate) formData.append("testDate", testDate.toISOString());
+      if (testDate) formData.append("testDate", format(testDate, "yyyy-MM-dd"));
       if (testingCompany) formData.append("testingCompany", testingCompany);
       if (testId) formData.append("testId", testId);
       if (notes) formData.append("notes", notes);
@@ -111,6 +118,7 @@ export default function Upload() {
         setLocation("/microbiome");
       }, 1500);
     } catch (error: any) {
+      if(!active.current||actor.current!==owner)return;
       toast({
         title: "Upload failed",
         description:
@@ -118,7 +126,7 @@ export default function Upload() {
         variant: "destructive",
       });
     } finally {
-      setIsUploading(false);
+      if(active.current&&actor.current===owner)setIsUploading(false);
     }
   };
 

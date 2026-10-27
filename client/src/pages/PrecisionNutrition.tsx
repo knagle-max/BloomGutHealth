@@ -1,3 +1,4 @@
+import {reportDateText,type ReportDateContext} from "@shared/report-dates";
 import {labDateText} from "@shared/lab-history";
 import LabDateCorrectionDialog from "@/components/LabDateCorrectionDialog";
 import type {AnyLabHistoryRow} from "@shared/lab-history";
@@ -41,7 +42,7 @@ import {
 import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 
 type Report = PrecisionReport & {
-  availableReports: { id: string; date: string; name: string }[];
+  availableReports: {dateContext?:ReportDateContext; id: string; date: string; name: string }[];
   intake: {
     days: number;
     mealsLogged: number;
@@ -720,7 +721,7 @@ export default function PrecisionNutrition() {
                       <option value="">Latest supported report</option>
                       {r.availableReports.map((s) => (
                         <option key={s.id} value={s.id}>
-                          {s.name} · {s.date.slice(0, 10)}
+                          {s.name} · {reportDateText({testDate:s.date,dateContext:s.dateContext})}
                         </option>
                       ))}
                     </select>
@@ -729,7 +730,7 @@ export default function PrecisionNutrition() {
                     <>
                       <p>
                         Report {r.microbiome.report.id} ·{" "}
-                        {r.microbiome.report.date.slice(0, 10)}
+                        {reportDateText({testDate:r.microbiome.report.date,dateContext:r.microbiome.report.dateContext})}
                       </p>
                       {r.microbiome.report.taxa.map((t) => (
                         <p key={t.name}>

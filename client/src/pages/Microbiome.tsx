@@ -1,3 +1,4 @@
+import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -8,7 +9,7 @@ import { cohortResearch } from "@shared/meal-intelligence";
 import { evidenceSources } from "@shared/science-coach";
 export default function Microbiome() {
   const { user } = useAuth();
-  const [sampleId, setSampleId] = useState("");
+  const [sampleId, setSampleId] = useState(() => new URLSearchParams(window.location.search).get("sample") || "");
   const [comparisonId, setComparisonId] = useState("");
   const [tab, setTab] = useState("results");
   const samples = useQuery<any[]>({
@@ -72,11 +73,11 @@ export default function Microbiome() {
                 <select
                   className="bloom-input w-full"
                   value={currentId}
-                  onChange={(e) => setSampleId(e.target.value)}
+                  onChange={(e) => {const id=e.target.value;setSampleId(id);const url=new URL(window.location.href);url.searchParams.set("sample",id);window.history.replaceState(null,"",url.pathname+url.search);}}
                 >
                   {sorted.map((s) => (
                     <option key={s.id} value={s.id}>
-                      {new Date(s.testDate).toLocaleDateString()} ·{" "}
+                      {reportDateText(s)} ·{" "}
                       {s.testingCompany || "Report"} · {s.processingStatus}
                     </option>
                   ))}
@@ -124,12 +125,13 @@ export default function Microbiome() {
           <Button onClick={() => results.refetch()}>Retry</Button>
         </p>
       )}
+      {sampleId && currentSamples && !currentId && <p role="alert">The requested report is not available in this account. Select another saved report.</p>}
       {tab === "results" && currentResults && (
         <section className="bloom-panel">
           <h2>Selected report</h2>
           <p>
             {currentResults.sample.testingCompany} ·{" "}
-            {new Date(currentResults.sample.testDate).toLocaleDateString()} ·{" "}
+            {reportDateText(currentResults.sample)} ·{" "}
             {currentResults.sample.processingStatus}
           </p>
           <p>{currentResults.sample.notes}</p>
@@ -173,7 +175,7 @@ export default function Microbiome() {
                   .filter((s) => s.id !== currentId)
                   .map((s) => (
                     <option key={s.id} value={s.id}>
-                      {new Date(s.testDate).toLocaleDateString()} ·{" "}
+                      {reportDateText(s)} ·{" "}
                       {s.testingCompany}
                     </option>
                   ))}

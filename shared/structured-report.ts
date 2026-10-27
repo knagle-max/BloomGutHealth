@@ -298,12 +298,8 @@ export function parseReportDocument(textInput: string, format: "json" | "csv") {
   }
   return { source, parsed: parseStructuredReport(source) };
 }
-export function resolveReportDate(
-  supplied: unknown,
-  report: StructuredReport,
-  now = new Date(),
-) {
-  const source = report.sourceReport;
+export function embeddedReportTestDate(value: unknown) {
+  const source = object(value) ? value : {};
   const payload = object(source.report)
     ? source.report
     : object(source.data)
@@ -314,11 +310,18 @@ export function resolveReportDate(
     : object(source.metadata)
       ? source.metadata
       : {};
-  const embedded =
-    payload.test_date ??
+  return payload.test_date ??
     payload.testDate ??
     metadata.test_date ??
     metadata.testDate;
+}
+
+export function resolveReportDate(
+  supplied: unknown,
+  report: StructuredReport,
+  now = new Date(),
+) {
+  const embedded = embeddedReportTestDate(report.sourceReport);
   const value =
     supplied !== undefined && supplied !== null && supplied !== ""
       ? supplied

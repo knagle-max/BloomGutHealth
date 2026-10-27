@@ -1,3 +1,4 @@
+import {reportDateText} from "@shared/report-dates";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -31,7 +32,7 @@ export default function ResearchSummary() {
         <>
           <p>
             {latest.testingCompany} ·{" "}
-            {new Date(latest.testDate).toLocaleDateString()}
+            {reportDateText(latest)}
           </p>
           <div className="grid gap-3 grid-cols-2 sm:grid-cols-4">
             <p>

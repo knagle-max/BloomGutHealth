@@ -12,13 +12,13 @@ Development branch enhance/bloom-experience, [PR1](https://github.com/knagle-max
 |b0562a2|Neutral recorded bloodwork differences despite unverified measurement comparability; optional professional questions|Actions40461705771 SUCCESS/liveNeon; Render reached LIVE;10 Precision tests; actual five-LDL source/pending/outage/320px journey; clinical comparison gate unchanged|
 |fc6c4fc|Optional encrypted manual exercise-set reader; unaware session edits preserve observations|Actions40462180578 SUCCESS/liveNeon; Renderdep-dbg4d4oae00c73fnudh0 LIVE;3 focused schema/storage/owner/receipt tests|
 |21759a4|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted journey; Actions40463677960 SUCCESS/liveNeon; original Renderdep-dbg4k7vf3r2c73b75jp0 FAILED no port; recovered through startupfix5f7ed6f LIVEdep-dbgahpq9lscs73960ilg|
-|Current local batch|Optional user-controlled rest timer, independent of record/status changes|Actual browser-clock pause/resume/finish/reset and unchanged encrypted records PASS; types/build pass; publication next|
+|Current local batch|Optional user-controlled rest timer, independent of record/status changes|Published b8c40e9: Actions40514058585 SUCCESS/liveNeon, RenderLIVEdep-dbgajc7f3r2c73ben940; browser-clock/no-write journey and types/build pass|
 
 Earlier verified activity logging, session save receipts, Today skip, lab source/date/unit lineage, calendar timing, routine feedback and visit-only reconnect recovery remain detailed in DEVELOPMENT_LOG.md. Full tests and source transfer do not imply release, clinical, Design or device acceptance.
 
 ## Remaining work and priorities
 
-1. Startup recovery5f7ed6f is live; publish/verify the locally tested optional manual rest timer.
+1. Startup and timer exact CI/Render verified. Publish/verify the gut report date/source correction, then fix confirmed report-import retry duplication.
 2. Continue the remaining original/specialist requirement trace and highest unblocked core workflow. The historical207-row status CSV is stale; no blanket release-complete claim.
 3. Exact flagship visual/interaction fidelity needs the named source archive/contracts; Viome raw-format adapter needs the reviewed versioned specification and authentic sanitized export. Independent core work continues.
 4. Keep noncritical stabilization separate; carry native device, hosted owner/tester, independent clinical/legal/design, provider rights, managed recovery and actual scoped provisioning gates.
@@ -188,3 +188,9 @@ Options: reviewed handoff plus representative sanitized exports; continue existi
 
 ## DEPLOY recovery / timer publication checkpoint
 Startup fix5f7ed6fb3226ba6d32ed7be110be34108153f68a reached RenderLIVEdep-dbgahpq9lscs73960ilg. This descendant delivers the previously CI-verified21759a4 set UI after its original rollout failed; do not rewrite failed217 status as success. Optional timer remains locally verified (actual App/API/encrypted/browserclock pause/resume/finish/reset with unchanged records, types/build), now eligible for separate publication. Source maps regenerated for the restored timer client; no manual redeploy, credentials, service replacement or production-data action.
+
+
+## FIX-004 / REPORT-DATE-SOURCE — Core Journey D source correctness
+Original-fix trace found undated gut imports shown as test dates (including latest-test copy) and older newly saved reports opening another default source. Shared reportDateText/dateContext now preserve entered/embedded day text, qualify import/legacyunknown provenance, and project only minimal dates into My Biology; Upload stores original date input and opens exact returned owned sample, selector keeps URL aligned.20 focused report/date/Precision +actual App/HTTP/PostgreSQL paste/undated/calendar/Regina/older-source selection/owner/320px PASS; types/build/source checks pass. Existing Neon assertions extended without new requests; exact409CI/Render pending publication. Minor source/copy correction, no gallery. Reconciled original FIX001–008 in both retained ledgers with specific code/test evidence, seven ALREADY_VERIFIED and FIX004 IMPLEMENTED_AND_TESTED; independent acceptance/raw classifier/provider-native compatibility not inferred. No blanket207-row closure.
+New concrete next P0 REPORT-IMPORT-RETRY: local actual HTTP/PostgreSQL reproduction /tmp/report-retry-red.log shows two completed samples when identical owned command and Idempotency-Key are replayed after a lost response. Current route ignores key. Fix after this date/source slice: minimal atomic receipt in existing sample/child transaction, preserve legacy clients, reader before frozen ordinary UI; no new datastore/provider.
+Startup5f7ed6f Actions40513549493 SUCCESS/liveNeon and RenderLIVEdep-dbgahpq9lscs73960ilg; timerb8c40e9 Actions40514058585 SUCCESS/liveNeon and RenderLIVEdep-dbgajc7f3r2c73ben940. SetUI21759a4 originalRenderFAILED, delivered by startup descendant; retain distinction.

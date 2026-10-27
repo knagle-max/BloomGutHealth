@@ -1,3 +1,4 @@
+import type {ReportDateContext} from "./report-dates";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
@@ -674,6 +675,7 @@ export type PrecisionRecord = {
   createdAt: Date | string;
 };
 export type TaxonReport = {
+  dateContext?: ReportDateContext;
   id: string;
   date: string;
   taxa: { name: string; abundance: number }[];

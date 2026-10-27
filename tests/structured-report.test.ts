@@ -236,6 +236,10 @@ test("manual and file imports use the same account-scoped path without a Python 
     assert.equal(old.status, 200);
     assert.equal(bacteria.length, 1);
     assert.equal(bacteria[0].abundance, 3.2);
+    assert.equal((await post("/api/microbiome/import",{report:syntheticReport,testDate:"2026-10-26"})).status,200);
+    assert.equal(samples.at(-1).structuredData.importInfo.testDateInput,"2026-10-26");
+    assert.equal(samples.at(-1).structuredData.importInfo.dateSource,"user-provided");
+    assert.equal(samples.at(-1).testDate.toISOString(),"2026-10-26T00:00:00.000Z");
   } finally {
     server.closeAllConnections();
     await new Promise<void>((r) => server.close(() => r()));
