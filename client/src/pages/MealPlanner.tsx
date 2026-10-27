@@ -29,6 +29,7 @@ export function DietaryPreferenceEditor() {
   const currentSource=!!saved.data&&saved.fetchStatus==="idle"&&!saved.isStale&&!saved.isError;
   const sourceChanged=dirty&&sourceBasis.current!==null&&!!saved.data&&JSON.stringify(saved.data)!==sourceBasis.current;
   const [dislikes, setDislikes] = useState("");
+  const [softDislikes, setSoftDislikes] = useState("");
   const [extraGoals, setExtraGoals] = useState("");
   useEffect(() => {
     if (saved.data&&!dirty) {
@@ -36,6 +37,7 @@ export function DietaryPreferenceEditor() {
       sourceRevision.current=saved.data.preferenceRevision;
       setPreferences(preferenceValues(saved.data));
       setDislikes(saved.data.dislikes.join(", "));
+      setSoftDislikes((saved.data.softDislikes || []).join(", "));
       setExtraGoals(
         saved.data.goals
           .filter((g) => !goals.some((known) => known.id === g))
@@ -56,6 +58,7 @@ export function DietaryPreferenceEditor() {
             .map((g) => g.trim())
             .filter(Boolean),
         ],
+        softDislikes: softDislikes.split(",").map(s => s.trim()).filter(Boolean),
         dislikes: dislikes
           .split(",")
           .map((s) => s.trim())
@@ -94,7 +97,7 @@ export function DietaryPreferenceEditor() {
       {!currentSource&&<p role="status">Checking current saved preferences before saving…</p>}
       {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved food preferences changed while you were editing. Your draft is still here. Load the latest saved preferences to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentSource} onClick={()=>setDirty(false)}>Load latest saved preferences</Button></div>}
       <label className="block">
-        Foods you dislike (comma separated)
+        Foods to avoid (comma separated)
         <input
           className="bloom-input w-full"
           value={dislikes}
@@ -104,9 +107,13 @@ export function DietaryPreferenceEditor() {
         />
       </label>
       <p className="panel-note">
-        Use the seafood exclusion below to exclude the entire category. Dislikes
-        also filter matching ingredient names.
+        These remain hard avoids, including your previously saved dislikes. Use category exclusions below for whole food groups. Record allergies separately in My Biology.
       </p>
+      <label className="block">
+        Foods you’d prefer less often (comma separated)
+        <input className="bloom-input w-full" value={softDislikes} maxLength={1800} onChange={e => setSoftDislikes(e.target.value)} placeholder="Mushrooms, olives" />
+      </label>
+      <p className="panel-note">Taste preferences influence ordering. These foods can still appear; use Foods to avoid to exclude them.</p>
       <label className="block">
         Dietary pattern
         <select
@@ -250,8 +257,8 @@ export function DietaryPreferenceEditor() {
         <p role="status">Preferences saved to your account.</p>
       )}
       <p className="panel-note">
-        Diet, exclusions, dislikes, cooking time and sensitive-gut choices
-        filter recipes. Microbiome and supported health goals influence ranking.
+        Diet, exclusions, hard avoids, cooking time and sensitive-gut choices
+        filter recipes. Softer taste preferences and supported goals influence ordering.
         Cuisine notes guide optional AI recipe suggestions after consent; local
         matching does not interpret arbitrary cuisine text.
       </p>
@@ -263,7 +270,7 @@ export function DietaryPreferenceEditor() {
 interface Plan {
   preferences: DietaryPreferences;
   suggestions: Array<
-    Recipe & { matchedGoals: string[]; alreadyMentioned: boolean }
+    Recipe & { matchedGoals: string[]; alreadyMentioned: boolean; warnings?: string[] }
   >;
   pathways: typeof pathways;
   sources: typeof evidenceSources;
@@ -301,9 +308,8 @@ export default function MealPlanner() {
     onSuccess: (result,source) => {
       const state=queryClient.getQueryState(["/api/meal-planner"]);
       if(!active.current||actor.current!==source.owner||state?.fetchStatus!=="idle"||state.isInvalidated)return;
-      queryClient.setQueryData<Plan>(["/api/meal-planner"], (current) =>
-        current===source.basis ? (rankedPlan.current={ ...current, suggestions: result.suggestions }) : current,
-      );
+      if(queryClient.getQueryData<Plan>(["/api/meal-planner"])!==source.basis)return;
+      rankedPlan.current=queryClient.setQueryData<Plan>(["/api/meal-planner"], {...source.basis,suggestions:result.suggestions}) ?? null;
     },
   });
   return (
@@ -400,6 +406,7 @@ export default function MealPlanner() {
                   : "An option to explore"}
               </p>
               <p>{r.rationale}</p>
+              {r.warnings?.map(warning => <p key={warning} className="report-context">{warning}</p>)}
               <details>
                 <summary>Ingredients, recipe & evidence</summary>
                 <ul className="list-disc pl-5">

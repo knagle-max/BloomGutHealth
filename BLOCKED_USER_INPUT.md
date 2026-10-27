@@ -140,3 +140,12 @@ Historical TODAY-ASSETS-01 scope update before2af0998: Architect c4f178d/91b4a84
 The new approved Architect§48 requires the full Integrations handoff and representative fixture validation. Full handoff/export examples are not checked into this checkout. One authorized public-reference read of the cited gist failed CONNECT403; GitHub connector does not support Gist endpoints. No repeated network retries or invented raw provider schema.
 Question: Which versioned repository path supplies Bloom_Integration_Viome_Gist_Review_2026-10-25.md and de-identified representative exported JSON for the approved adapter?
 Options: reviewed handoff plus representative sanitized exports; continue existing canonical structured file/paste input; future documented partner integration after rights/security approval. Recommended: keep current structured intake working, provide versioned source/fixtures for offline adapter work. No passwords, cookies, auth headers or live login are needed. Deferral blocks truthful raw-format recognition/validation, not current structured records or other core journeys. Reconsider only when source access/fixtures change.
+
+
+## FLAGSHIP-SOURCE-2809 — exact visual/interaction blueprint
+
+- Status: BLOCKED_USER_INPUT for exact flagship source/fidelity; independent core fixes continue. Architect c91e41f/b387395 names a Library archive not found by the scoped checkout design search; no callable Library file-access connector is available. Existing design masters remain available.
+- Exact question: What accessible file path or attachment contains `Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip`, including `contracts/UX_BLUEPRINT.md`, `contracts/IMPLEMENTATION_CONTRACT.md` and editable prototype HTML/CSS?
+- Choices: Supply/version the exact archive and contracts; identify an existing accessible checkout path; explicitly approve an alternative versioned specification.
+- Recommended default: Version the exact approved source and preserve existing canonical UI while implementing independent core functionality. The Architect explicitly requires those contracts before claiming target flagship fidelity.
+- Impact of deferral: Exact flagship styling/tap-flow implementation and acceptance remain blocked; food, activity, lab and session correctness need not stop. No substitute concepts or fabricated source verification. Reconsider when the archive or approved alternative becomes available.

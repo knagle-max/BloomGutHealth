@@ -1,6 +1,6 @@
 import {contextSchema} from "../shared/precision-nutrition";
 import {checkedFoodPreferences} from "../shared/weekly-planner";
-import {foodPreferenceMatches} from "../shared/food-preference-policy";
+import {foodPreferenceMatches,intoleranceWarnings} from "../shared/food-preference-policy";
 import {mealReviewRevision} from "./meal-review-source";
 import {preferenceRevision,PreferenceRevisionConflict} from "./preference-source";
 import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
@@ -154,8 +154,7 @@ export function registerPlannerRoutes(
             +new Date(m.loggedAt) >= Date.now() - 14 * 86400000 &&
             +new Date(m.loggedAt) <= Date.now(),
         );
-        res.json(
-          await prioritizeRecipes(
+        const prioritized = await prioritizeRecipes(
             recommendMeals(
               checked.preferences,
               recent.map((m) => m.mealText),
@@ -163,8 +162,8 @@ export function registerPlannerRoutes(
             preferences,
             req.body.aiConsent,
             aiExecutionContext(req.session.userId!, req.body.aiConsent),
-          ),
-        );
+          );
+        res.json({...prioritized,suggestions:prioritized.suggestions.map(recipe=>({...recipe,warnings:intoleranceWarnings(recipe.ingredients,context.intolerances)}))});
       } catch {
         res.status(503).json({ error: "Meal prioritization unavailable." });
       }
@@ -189,7 +188,7 @@ export function registerPlannerRoutes(
       const ids = new Set(suggestions.flatMap((r) => r.pathwayIds));
       res.json({
         preferences,
-        suggestions,
+        suggestions: suggestions.map(recipe=>({...recipe,warnings:intoleranceWarnings(recipe.ingredients,context.intolerances)})),
         pathways: pathways.filter((p) => ids.has(p.id)),
         sources: evidenceSources,
         cohorts: cohortResearch.filter((c) =>

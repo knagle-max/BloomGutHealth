@@ -1,3 +1,5 @@
+import {intoleranceWarnings} from "../shared/food-preference-policy";
+import {contextSchema} from "../shared/precision-nutrition";
 import {executeMeteredAI,aiExecutionContext,AIExecutionUnavailable,type AIExecutionContext} from "./metered-ai";
 import { lookupProductNutrition, type ProductStore, type ProductService } from "./products";
 import {
@@ -270,7 +272,7 @@ export async function analyzeMeal(
   reviewedIngredients?: Ingredient[],
   productContext?: {
     userId: string;
-    store: ProductStore;
+    store: ProductStore & { getPrecisionContext?: (userId: string) => Promise<unknown> };
     products?: Ingredient[];
     service?: ProductService;
   },
@@ -355,6 +357,14 @@ export async function analyzeMeal(
     warnings: [...explanation.warnings, ...database.warnings],
     analyzedAt: new Date().toISOString(),
   };
+  if (productContext?.store.getPrecisionContext) {
+    try {
+      const context = contextSchema.parse((await productContext.store.getPrecisionContext(productContext.userId)) ?? {});
+      intelligence.warnings.push(...intoleranceWarnings(parsed.ingredients, context.intolerances));
+    } catch {
+      intelligence.warnings.push("Your reported intolerance context could not be checked. Review your saved health context before relying on ingredient warnings.");
+    }
+  }
   // Existing journal API stays compatible. USDA incomplete totals are not emitted as complete values.
   if (
     database.foodMatches.length === parsed.ingredients.length &&

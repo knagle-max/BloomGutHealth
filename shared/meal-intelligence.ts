@@ -1,3 +1,4 @@
+import { tasteMatches } from "./food-preference-policy";
 import { productRefSchema } from "./products";
 import { goalMealFit } from "./goal-guidance";
 import { recipePreparation } from "./recipe-preparation";
@@ -596,7 +597,7 @@ export function recommendMeals(
           ),
       ),
     }))
-    .sort((a, b) => Number(a.alreadyMentioned) - Number(b.alreadyMentioned));
+    .sort((a, b) => tasteMatches(a.ingredients, prefs.softDislikes).length - tasteMatches(b.ingredients, prefs.softDislikes).length || Number(a.alreadyMentioned) - Number(b.alreadyMentioned));
 }
 export const cohortResearch = [
   {

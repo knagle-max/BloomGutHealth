@@ -1,3 +1,4 @@
+import {intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import {foodCategory as category,foodPreferenceMatches} from "./food-preference-policy";
 import { z } from "zod";
 import { snapshotFoods } from "./food-snapshot";
@@ -595,7 +596,7 @@ export function buildWeeklyPlan(
               portion,
               recipe: r,
               nutrients: nutrientsFor(r, portion),
-              reasons: rankedReasons(r),
+              reasons: [...rankedReasons(r),...intoleranceWarnings(r.ingredients,report.context.intolerances)],
               pathways: pathways.filter((p) => r.pathwayIds.includes(p.id)),
             };
             const meals = [...state.meals, meal];
@@ -615,7 +616,7 @@ export function buildWeeklyPlan(
               0,
             );
             const preferred =
-              meals.reduce((s, m) => s + m.reasons.length, 0) * 0.015;
+              meals.reduce((s, m) => s + rankedReasons(m.recipe).length, 0) * 0.015;
             expanded.push({
               meals,
               score:
@@ -633,7 +634,7 @@ export function buildWeeklyPlan(
                   ),
                 ) +
                 variety -
-                preferred,
+                preferred + meals.reduce((sum,meal)=>sum+tasteMatches(meal.recipe.ingredients,prefs.softDislikes).length,0)*0.02,
             });
           }
       beam = expanded

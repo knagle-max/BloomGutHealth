@@ -1,4 +1,4 @@
-import {foodPreferenceMatches,unknownAllergyTerms} from "./food-preference-policy";
+import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
 import { explainGenotypes, genotypeAnnotations } from "./genotype-explanations";
@@ -946,7 +946,7 @@ export function buildPrecisionReport(
       return {
         ...recipe,
         priority,
-        reasons,
+        reasons: [...reasons,...intoleranceWarnings(recipe.ingredients,context.intolerances)],
         matchedRecordIds: Array.from(new Set(matchedRecordIds)),
         sourceIds: Array.from(sourceIds),
         nutrientContributions: [
@@ -968,7 +968,7 @@ export function buildPrecisionReport(
       };
     })
     .filter((r) => r.priority > 0)
-    .sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id));
+    .sort((a, b) => b.priority - a.priority || tasteMatches(a.ingredients,prefs.softDislikes).length - tasteMatches(b.ingredients,prefs.softDislikes).length || a.id.localeCompare(b.id));
   const rankedFoods = precisionFoods
     .filter(
       (f) =>

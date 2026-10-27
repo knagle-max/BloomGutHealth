@@ -101,6 +101,7 @@ function ContextEditor({
             currentSupplements: list(data.get("currentSupplements")),
             conditions: list(data.get("conditions")),
             allergies: list(data.get("allergies")),
+            intolerances: list(data.get("intolerances")),
             ageGroup: data.get("ageGroup"),
             pregnancy: data.get("pregnancy"),
             safetyReviewed: data.get("safetyReviewed") === "on",
@@ -129,6 +130,7 @@ function ContextEditor({
           ["currentSupplements", "Current supplements, including doses"],
           ["conditions", "Medical conditions"],
           ["allergies", "Food allergies / medical food restrictions"],
+          ["intolerances", "Reported food intolerances"],
         ] as const
       ).map(([name, label]) => (
         <label className="block" key={name}>
@@ -136,11 +138,12 @@ function ContextEditor({
           <input
             className="bloom-input w-full"
             name={name}
-            defaultValue={context[name].join(", ")}
+            defaultValue={(context[name] || []).join(", ")}
             maxLength={3000}
           />
         </label>
       ))}
+      <p className="panel-note">Reported intolerances prompt ingredient warnings, not automatic exclusions or a diagnosis. Allergies remain separate hard restrictions. For foods you want excluded regardless, use Foods to avoid in shared food preferences.</p>
       <div className="precision-grid">
         <label>
           Age group

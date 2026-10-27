@@ -2,7 +2,7 @@
 
 Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
 
-Latest verified runtime reader `4a01f75f104af285cf9c623ee796d98943b1a586`: Actions40455048622 SUCCESS399; its Render dep-dbg3ajvf3r2c73b5te80 retired after docs successor b387395, now LIVE on dep-dbg3chjcrg8s73b2nucg. Activity6bbc3c8 and Athlete76a4a07 are verified396/397. A normal recipe allergy-context omission is fixed locally with401 passing tests and actual rendered source/refetch proof; publication is next. ID03 softer taste and intolerance UI still remain open.
+Latest fully verified runtime `45960eaa118cd6ce76068b31320abf3b97407734`: recipe suggestions/prioritization now enforce owned recorded allergy restrictions. Actions40459385080 SUCCESS401, including isolatedNeon smoke; existing Render dep-dbg3vvajnfac739kfvs0 LIVE. ID03 ordinary taste/intolerance controls are implemented with20 focused tests, actual encrypted rendered save/reload/correction and allergy-source regression PASS; full402 PASS233528ms; publication next. v0.5 is not complete.
 
 ## Development summary
 
