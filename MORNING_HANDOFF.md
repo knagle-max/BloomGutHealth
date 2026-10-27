@@ -11,14 +11,14 @@ Development branch enhance/bloom-experience, [PR1](https://github.com/knagle-max
 |1651888|Saved meal→scaled exact ingredient draft→review/correct→confirmed new journal entry; original recipe unchanged|Actions40461108066 SUCCESS/liveNeon; Render reached LIVE;6 targeted tests; actual encrypted source failure/retry/owner/mobile journey; matched visual evidence|
 |b0562a2|Neutral recorded bloodwork differences despite unverified measurement comparability; optional professional questions|Actions40461705771 SUCCESS/liveNeon; Render reached LIVE;10 Precision tests; actual five-LDL source/pending/outage/320px journey; clinical comparison gate unchanged|
 |fc6c4fc|Optional encrypted manual exercise-set reader; unaware session edits preserve observations|Actions40462180578 SUCCESS/liveNeon; Renderdep-dbg4d4oae00c73fnudh0 LIVE;3 focused schema/storage/owner/receipt tests|
-|21759a4|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted journey; Actions40463677960 SUCCESS/liveNeon; Renderdep-dbg4k7vf3r2c73b75jp0 FAILED no port, priorfc6c4fc restored|
+|21759a4|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted journey; Actions40463677960 SUCCESS/liveNeon; original Renderdep-dbg4k7vf3r2c73b75jp0 FAILED no port; recovered through startupfix5f7ed6f LIVEdep-dbgahpq9lscs73960ilg|
 |Current local batch|Optional user-controlled rest timer, independent of record/status changes|Actual browser-clock pause/resume/finish/reset and unchanged encrypted records PASS; types/build pass; publication next|
 
 Earlier verified activity logging, session save receipts, Today skip, lab source/date/unit lineage, calendar timing, routine feedback and visit-only reconnect recovery remain detailed in DEVELOPMENT_LOG.md. Full tests and source transfer do not imply release, clinical, Design or device acceptance.
 
 ## Remaining work and priorities
 
-1. Publish/verify the locally tested startup deadline fix after21759a4 Render failure; then publish the held optional manual rest timer.
+1. Startup recovery5f7ed6f is live; publish/verify the locally tested optional manual rest timer.
 2. Continue the remaining original/specialist requirement trace and highest unblocked core workflow. The historical207-row status CSV is stale; no blanket release-complete claim.
 3. Exact flagship visual/interaction fidelity needs the named source archive/contracts; Viome raw-format adapter needs the reviewed versioned specification and authentic sanitized export. Independent core work continues.
 4. Keep noncritical stabilization separate; carry native device, hosted owner/tester, independent clinical/legal/design, provider rights, managed recovery and actual scoped provisioning gates.
@@ -184,3 +184,7 @@ Options: reviewed handoff plus representative sanitized exports; continue existi
 
 ## DEPLOY-STARTUP-DEADLINE — Must-Fix P0 observed Render failure
 21759a4 Actions40463677960 SUCCESS (including isolated Neon structured-set persistence), but Renderdep-dbg4k7vf3r2c73b75jp0 UPDATE_FAILED after no port opened; logs showed npmstart then portscan timeout. Runtime automatically restored readerfc6c4fc, which logged serving10000 and USDA20/ok. Not a successful UI deployment. Found critical startup awaits unbounded SharedRateLimiter.initialize before any listener/stage log; plain PG pool had no connection/query deadlines. Initialize now reuses bounded fail-closed budgetQuery, pool gets5s connection/query timeouts, startup logs safe stages and exits1 on failure before readiness. No auth bypass/early listening, config/credentials/production data change.14 focused auth/workspace/product/audit tests PASS +types/build; production bundle with silent synthetic PG handshake exits within10s, no readiness/connection or secret output PASS. Exact provider root cause not proven; this fixes the demonstrated unbounded startup path, not a claim of credential or provider outage resolution. Current Render docs Markdown+HTML returned403; relied on actual logs/source and bundled stable constraints. Publish this narrow fix first; optional rest timer is locally verified but held. Source maps generated against committed21759a4 client to avoid staging an uncommitted timer hash.
+
+
+## DEPLOY recovery / timer publication checkpoint
+Startup fix5f7ed6fb3226ba6d32ed7be110be34108153f68a reached RenderLIVEdep-dbgahpq9lscs73960ilg. This descendant delivers the previously CI-verified21759a4 set UI after its original rollout failed; do not rewrite failed217 status as success. Optional timer remains locally verified (actual App/API/encrypted/browserclock pause/resume/finish/reset with unchanged records, types/build), now eligible for separate publication. Source maps regenerated for the restored timer client; no manual redeploy, credentials, service replacement or production-data action.

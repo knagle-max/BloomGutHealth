@@ -1583,7 +1583,7 @@
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",
     "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
     "client/src/lib/queryClient.ts": "79cfdd9c90f55ed75c2701a40fe642b0115a27df6bb5100a13053f46855c549f",
-    "client/src/pages/AthleteWorkspace.tsx": "9aad5d4312dc7ba19a4ae08ce37008224c9f00cd4e993bfa45b1a88f19579210",
+    "client/src/pages/AthleteWorkspace.tsx": "b277acfb6a60c9b038a7c9240d9929ce562e7f17113f53e10848ce30296c9370",
     "client/src/pages/Dashboard.tsx": "a4472055a4278cd63eb78035fcc1e9aa784607ee999041262e18042cccdbc9bf",
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
