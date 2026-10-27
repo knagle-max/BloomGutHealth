@@ -828,3 +828,14 @@ Reproduced before fix using matched synthetic runtime6fe569e: crossing local mid
 12 focused day/DST/Today/source-crosswalk tests, types/build/API97+13/source130 PASS. Actual rendered clock journey PASS: local midnight and fresh source, no old totals during hold, session expiry, no minute GET polling, focus outage/retry, hidden overnight resume and timer cleanup. Red old-code baseline separately reproduces stale date/source. Existing Today session/goal/partial/unavailable/evidence/search handoff regression running. Backend unchanged; no duplicate383 full local run, exactCI384 required. No new provider/source grants or user decision.
 
 TODAY-LOCAL-CLOCK-01 final existing session/goal/partial/unavailable/evidence and Explore→product handoff browser PASS.12 focused/types/build/API97+13/source130 and red/fixed clock journeys PASS. Ready publish/exactCI384/live.
+
+4acbde00b20a1ce497898908d4c1bb96168d9687: Actions40421942338 SUCCESS (384 tests), Render dep-dbfuc9fb9u1s73fmfg00 LIVE.
+
+
+## OPS-702-WORKSPACE-ADMISSION — shared per-actor write boundary
+
+Requirement reconciliation identified ordinary workspace writes skipped by global shared budgets, relying on per-process counters. Red-before actual Express/PGlite proves all35 writes across2 replicas admitted and DB outage reached handlers. Added distinct shared workspace scope for all /api/experience POST/PUT/PATCH/DELETE aliases; trusted session actor only, HMAC/no raw IDs. Existing costly resource/auth ceilings retained independently; ordinary reads unchanged, local counter supplementary not fallback. API admission no-store/Retry-After. Five-second default query deadline denies stalled dependency and late allowance cannot resume work; no claim of SQL cancellation/monetary billing.
+
+388 full tests PASS before final deadline refinement. Final21 focused workspace/auth/USDA/privacy/controller cases, types/build/API97+13/source130 PASS after refinement. Includes35→30/5cross-replica, outage aliases, forged actor, read isolation, overlapping old ceiling, deadline/late success and configured bounds. Final389 exactCI required; no duplicate broad local run for narrow final refinement. Isolated Neon smoke adds fresh synthetic actor quota exhaustion plus private export, restoring prior cookie for erasure; syntaxPASS. No schema, credentials, real records, paid tariff or activation changes. Contract WORKSPACE_REQUEST_BUDGET.md.
+
+BIO-09 trace gap identified: weekly check-ins have ratings/reflections but no explicit liked/disliked/intolerant/not-applicable/helped/no-benefit focus response. Safe self-reported capture/review remains next; automatic clinical personalization remains gated. No user input needed for capture engineering.

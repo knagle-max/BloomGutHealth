@@ -14,18 +14,20 @@ Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutH
 | `dbe3f69` | Paste/manual/date editing require an explicit occurrence for repeated clocks; nonexistent spring times rejected; date-only precision preserved | Actions40394783399 SUCCESS377; Render live |
 | `15cf2d9` | Atomic reimport endpoint compares current owned source matches under the account lock; explicit separate results, exact receipts and no legacy fallback | Actions40396269159 SUCCESS378 including real concurrent Neon201/409/review/replay; Render dep-dbfrgp7avr4c73a3u8n0 LIVE |
 
-Latest fully verified full SHA: `6fe569e6c11db3adc4b12d6ffa46caa9645f0bdb`; Actions40419883304 SUCCESS383 and Render dep-dbfu3mc9v7es73dqui60 LIVE.
+Latest fully verified full SHA: `4acbde00b20a1ce497898908d4c1bb96168d9687`; Actions40421942338 SUCCESS384 and Render dep-dbfuc9fb9u1s73fmfg00 LIVE.
 
 Ordinary importer adoption is verified: frozen source/key/review snapshots, partial acknowledgments, renewed review only after a changed-match409, exact receipt validation, uncertain-response replay after another match, actor/navigation lifetime guards and keyboard focus recovery. Actual encrypted App/API, ordinary/grouped and NewYork clock/date/source regressions passed.
 
 Local source-text file intake is verified live: CSV/TSV/TXT remain on-device until canonical review; bounded reads, fresh context/identity, repeated-file review, stale-read protection, exact source rows and no hidden range interpretation. Header-prefix loss and ignored extra columns are fixed. Full383CI passed after the initially stale generated inventory was refreshed; actual encrypted file/race/receipt/mobile checks pass.
 
-Current Today clock fix is locally verified: the prior code reproducibly retains yesterday's date/source after midnight; the fix refreshes local day/source on rollover/resume, expires planned-session routing and withholds stale totals during checks without polling history each minute.12 focused/day/DST/source tests, types/build and actual clock/outage/resume/cleanup browser pass; existing Today/search regression and exact CI384/publication are next.
+Today midnight/resume source freshness is verified live: old-code stale date/source reproduced, fixed clock/query/session-expiry/unknown-state/no-polling/outage/retry/cleanup and existing evidence/search journeys pass.
+
+Current shared workspace admission guard is locally ready. All workspace write aliases gain the existing30/minute allowance across replicas; old costly/auth limits remain, outage/deadline fail closed before handlers, late results cannot resume, reads/privacy export remain available.388 full tests passed before final deadline refinement; final21 focused security/controller/source tests, types/build/API97+13/source130 pass. Exact final389 Actions/Render and the added real-Neon quota/export smoke are next.
 
 ## Remaining priorities
 
-1. **P0:** Finish exact publication verification of Today clock; preserve source/receipt/owner boundaries in subsequent work.
-2. **P1:** Reconcile the complete approved v0.5 requirement trace against current code/tests; distinguish actionable gaps from genuine external blockers before transitioning to v0.6.
+1. **P0:** Finish exact publication verification of shared workspace admission; preserve source/receipt/owner boundaries in subsequent work.
+2. **P1:** Continue approved trace reconciliation: BIO-09 explicit user focus responses are a concrete unimplemented slice. Capture/review subjectively without automatic allergy/clinical ranking changes; verify readers before writers.
 3. **P1:** Reconcile remaining whole-app/source coverage, daily feedback/search and accessibility against approved handoffs. Synthetic checks do not close independent human, device, clinical or design acceptance.
 4. Carry external gates below separately. Begin approved independent v0.6 only after actionable v0.5 work is exhausted.
 

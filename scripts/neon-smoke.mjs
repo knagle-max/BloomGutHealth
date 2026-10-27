@@ -720,6 +720,15 @@ try {
   const alternateSession=cookie;
   await request("/api/account","DELETE",{password:"wrong-synthetic-password",confirmation:"DELETE ACCOUNT"},401);
   assert.equal((await request("/api/auth/me")).user.id,first.id);
+  const priorQuotaCookie=cookie;
+  try{
+    await addUser();
+    for(let attempt=0;attempt<30;attempt++)await request("/api/experience/records","POST",{},400);
+    const quotaDenied=await fetch(base+"/api/experience/records",{method:"POST",headers:{"content-type":"application/json","x-forwarded-proto":"https",origin:base.replace("http:","https:"),cookie},body:"{}",signal:AbortSignal.timeout(30000)});
+    assert.equal(quotaDenied.status,429);assert.equal(quotaDenied.headers.get("retry-after"),"60");await quotaDenied.arrayBuffer();
+    await request("/api/experience/export");
+    console.log("PASS: actual shared workspace allowance denies before mutation with Retry-After while private export remains available");
+  }finally{cookie=priorQuotaCookie;}
   const erased=await request("/api/account","DELETE",{password,confirmation:"DELETE ACCOUNT"});
   assert.equal(erased.scope,"active-application-records");
   assert.equal((await pool.query("SELECT count(*)::int AS n FROM users WHERE id=$1",[first.id])).rows[0].n,0);
