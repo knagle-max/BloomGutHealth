@@ -14,7 +14,15 @@ Development branch enhance/bloom-experience, [PR1](https://github.com/knagle-max
 |21759a4|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted journey; Actions40463677960 SUCCESS/liveNeon; original Renderdep-dbg4k7vf3r2c73b75jp0 FAILED no port; recovered through startupfix5f7ed6f LIVEdep-dbgahpq9lscs73960ilg|
 |b8c40e9|Optional user-controlled rest timer, independent of record/status changes|Published b8c40e9: Actions40514058585 SUCCESS/liveNeon, RenderLIVEdep-dbgajc7f3r2c73ben940; browser-clock/no-write journey and types/build pass|
 
-Latest report recovery97377c8: normal/file/paste/malformed-response actual PostgreSQL browser journeys pass; RenderLIVEdep-dbgc57c9v7es73ebei1g, Actions40530990663 still in progress. Reader a813911 verified411/liveNeon/RenderLIVE. Current FOOD-02 fix prevents small known nutrients being rounded to false zeros;42 focused tests,6 final precision checks, saved-meal correction browser journey, types/build pass; publication pending.
+Latest completed core batches:
+
+| Commit | Feature | Verification |
+|---|---|---|
+|a813911 +97377c8|Atomic owned report receipts and frozen file/paste recovery|Reader Actions40526566813 SUCCESS411/liveNeon; UI Actions40530990663 SUCCESS/liveNeon; both reached RenderLIVE; four actual PostgreSQL browser variants|
+|504d92a|Small positive nutrients preserved through scaling/label merge/daily totals|Actions40531474677 SUCCESS/liveNeon; RenderLIVEdep-dbgc6ivb9u1s73870t10; focused food tests and actual saved-meal parity journey|
+|8924d10|Explicit nonbinding browser-locale unit suggestions|10 unit/measurement tests and actual mixed-unit/editor journey PASS; Render reached LIVEdep-dbgca98ae00c7382gf7g; Actions40532778188 still active|
+|8dc18d3 +baedc69|Bounded planner trade-off explanation; optional recorded food time zone retained after correction/travel|415 full local tests PASS247386ms before timing slice;6 timing/review/save tests and real PostgreSQL Regina→UTC viewer journey PASS; types/build; baed RenderLIVEdep-dbgcenbbc2fs73a63i3g; Actions40534348071 pending|
+|Current local|Weekly recorded ingredient-name review with missingness and source retry|2 calendar/name tests and actual App synthetic-source browser PASS; final checks/commit/publication pending|
 
 Earlier verified activity logging, session save receipts, Today skip, lab source/date/unit lineage, calendar timing, routine feedback and visit-only reconnect recovery remain detailed in DEVELOPMENT_LOG.md. Full tests and source transfer do not imply release, clinical, Design or device acceptance.
 
