@@ -105,7 +105,13 @@ export class ExperienceStorage {
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const [existing]=await tx.select({encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind)));
    if(!existing)return null;
-   const payload=preserveFocusFeedback(entry,decryptPrecision(existing.encryptedPayload,userId));
+   const previous=decryptPrecision(existing.encryptedPayload,userId);
+   // Older session editors must not erase newer manual set observations.
+   let payload=preserveFocusFeedback(entry,previous);
+   if(entry.kind==="session"&&entry.payload.actualSets===undefined){
+    const current=trainingSessionSchema.parse(previous);
+    if(current.actualSets!==undefined)payload={...entry.payload,actualSets:current.actualSets};
+   }
    const [row]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).returning();
    return row?decode(row,userId):null;
   });

@@ -66,6 +66,17 @@ export const activitySchema=z.object({
  notes:optionalText,
 }).strict();
 export type Activity=z.infer<typeof activitySchema>;
+/** Optional manual observations; absence is not a completed or zero-load workout. */
+export const actualSetsSchema = z.object({
+  version: z.literal(1),
+  sets: z.array(z.object({
+    exercise: z.string().trim().min(1).max(120),
+    reps: z.number().int().min(0).max(1000).nullable(),
+    loadKg: z.number().finite().min(0).max(2000).nullable(),
+    completed: z.boolean(),
+  }).strict()).max(100),
+}).strict();
+export type ActualSets = z.infer<typeof actualSetsSchema>;
 export const trainingSessionSchema = z.object({
   title: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
   minutes: z.number().int().min(1).max(600), intensity: z.enum(["easy", "moderate", "hard", "competition"]),
@@ -77,6 +88,7 @@ export const trainingSessionSchema = z.object({
   fluidMl: z.number().finite().min(0).max(15000).nullable().default(null),
   gutComfort: z.number().int().min(0).max(10).nullable().default(null),
   performance: optionalText, notes: optionalText,
+  actualSets: actualSetsSchema.optional(),
 }).strict();
 export type TrainingSession = z.infer<typeof trainingSessionSchema>;
 export const hydrationSchema = z.object({
