@@ -1,3 +1,5 @@
+import {importStructuredReportWithReceipt} from "./structured-report-storage";
+import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
 import type {LabDateChange} from "../shared/lab-date-correction";
 import {updatePreferencesWithRevision} from "./preference-source";
 import type {DietaryPreferences} from "../shared/meal-intelligence";
@@ -67,6 +69,7 @@ export interface IStorage extends ExperienceStore {
     updates: Partial<MicrobiomeSample>,
   ): Promise<void>;
   getUserSamples(userId: string): Promise<MicrobiomeSample[]>;
+  importStructuredReport?(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string):Promise<ReportSaveResult>;
 
   getBacterialComposition(sampleId: string): Promise<BacterialComposition[]>;
   insertBacterialComposition(
@@ -333,6 +336,8 @@ export class DatabaseStorage implements IStorage {
       .where(eq(microbiomeSamples.id, id));
     return sample || undefined;
   }
+
+  importStructuredReport(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string){return importStructuredReportWithReceipt(db,userId,report,fields,filename,key);}
 
   async insertMicrobiomeSample(
     sample: InsertMicrobiomeSample,

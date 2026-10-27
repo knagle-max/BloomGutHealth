@@ -729,7 +729,7 @@ export default function PrecisionNutrition() {
                   {r.microbiome.report ? (
                     <>
                       <p>
-                        Report {r.microbiome.report.id} ·{" "}
+                        Report <span className="break-all">{r.microbiome.report.id}</span> ·{" "}
                         {reportDateText({testDate:r.microbiome.report.date,dateContext:r.microbiome.report.dateContext})}
                       </p>
                       {r.microbiome.report.taxa.map((t) => (

@@ -9,14 +9,17 @@ import {
   resolveReportDate,
   STRUCTURED_REPORT_MAX_BYTES,
   type StructuredReport,
+  type ReportSaveResult,
+  ReportSaveConflict,
 } from "../shared/structured-report";
-type Store = Pick<
+type BaseStore = Pick<
   IStorage,
   | "insertMicrobiomeSample"
   | "updateMicrobiomeSample"
   | "insertBacterialComposition"
   | "insertMlAnalysis"
 >;
+type Store = BaseStore & Pick<IStorage,"importStructuredReport">;
 const fieldsSchema = z.object({
   testDate: z.string().max(100).optional(),
   testingCompany: z.string().max(100).optional(),
@@ -31,12 +34,12 @@ const requestSchema = fieldsSchema
   })
   .strict();
 export async function saveStructuredReport(
-  store: Store,
+  store: BaseStore,
   userId: string,
   report: StructuredReport,
   fields: z.infer<typeof fieldsSchema>,
   filename: string | null = null,
-) {
+): Promise<ReportSaveResult> {
   const resolved = resolveReportDate(fields.testDate, report);
   let sampleId: string | undefined;
   try {
@@ -118,6 +121,11 @@ export function registerReportRoutes(
   store: Store,
   _legacyMlServiceUrl?: string,
 ) {
+  const sameActor:RequestHandler=(req,res,next)=>{const expected=req.get("X-Bloom-Report-Actor");if(expected!==undefined&&expected!==req.session.userId)return void res.status(409).json({error:"The signed-in account changed. Reload this page and review the current account before saving."});next();};
+  const keyFor=(req:Parameters<RequestHandler>[0])=>{const value=req.get("Idempotency-Key");if(value!==undefined&&!z.string().uuid().safeParse(value).success)throw Error("INVALID_REPORT_KEY");return value;};
+  const save=(owner:string,report:StructuredReport,fields:z.infer<typeof fieldsSchema>,filename:string|null,key:string|undefined)=>key!==undefined
+    ? store.importStructuredReport?store.importStructuredReport(owner,report,fields,filename,key):Promise.reject(Error("REPORT_RECEIPT_UNAVAILABLE"))
+    : saveStructuredReport(store,owner,report,fields,filename);
   const noCache: RequestHandler = (_req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     next();
@@ -127,7 +135,8 @@ export function registerReportRoutes(
   app.get('/api/microbiome/cohorts', auth, noCache, (_req, res) => {
     res.json({cohorts:[],status:'unavailable',interpretationStatus:'no_validated_reference_dataset',message:'Validated reference cohorts are not installed. No sample sizes, reference profiles or personal comparisons are available.'});
   });
-  app.post("/api/microbiome/import", auth, noCache, async (req, res) => {
+  app.post("/api/microbiome/import", auth, noCache, sameActor, async (req, res) => {
+    let key:string|undefined;try{key=keyFor(req);}catch{return res.status(400).json({error:"Invalid report save reference."});}
     const fields = requestSchema.safeParse(req.body);
     if (!fields.success)
       return res
@@ -149,20 +158,21 @@ export function registerReportRoutes(
     }
     try {
       res.json(
-        await saveStructuredReport(
-          store,
+        await save(
           req.session.userId!,
           report,
-          fields.data,
+          fieldsSchema.parse(fields.data),
           fields.data.originalFilename
             ? basename(fields.data.originalFilename)
             : null,
+          key,
         ),
       );
-    } catch {
+    } catch(error) {
+      if(error instanceof ReportSaveConflict)return res.status(409).json({error:error.message});
       res
         .status(503)
-        .json({ error: "Report could not be saved. Please retry." });
+        .json({ error: "Report could not be confirmed. Retry the same import or check your saved reports." });
     }
   });
   const upload = multer({
@@ -187,6 +197,7 @@ export function registerReportRoutes(
     "/api/microbiome/upload",
     auth,
     noCache,
+    sameActor,
     (req, res, next) => {
       upload.single("file")(req, res, (error) => {
         if (error)
@@ -203,6 +214,7 @@ export function registerReportRoutes(
       });
     },
     async (req, res) => {
+      let key:string|undefined;try{key=keyFor(req);}catch{return res.status(400).json({error:"Invalid report save reference."});}
       const file = req.file;
       if (!file)
         return res
@@ -234,18 +246,19 @@ export function registerReportRoutes(
           }
           try {
             return res.json(
-              await saveStructuredReport(
-                store,
+              await save(
                 req.session.userId!,
                 parsed,
                 fields.data,
                 basename(file.originalname),
+                key,
               ),
             );
-          } catch {
+          } catch(error) {
+            if(error instanceof ReportSaveConflict)return res.status(409).json({error:error.message});
             return res
               .status(503)
-              .json({ error: "Report could not be saved. Please retry." });
+              .json({ error: "Report could not be confirmed. Retry the same import or check your saved reports." });
           }
         }
         return res.status(415).json({ error: "Use a structured JSON or CSV report. Raw sequence processing is not available." });

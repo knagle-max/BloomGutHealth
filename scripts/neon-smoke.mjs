@@ -366,8 +366,8 @@ try {
     bacteria_percentages: { "Ruminococcus bromii": 2, Bifidobacterium: 5, Roseburia: 0 },
     testingCompany: "Synthetic CI lab",
     testDate: importedDate,
-  });
-  assert.ok(imported.sampleId);
+  },200,{"Idempotency-Key":randomUUID()});
+  assert.match(imported.sampleId,/^report_[a-f0-9]{64}$/);
   const cohortAvailability=await request('/api/microbiome/cohorts');
   assert.deepEqual(cohortAvailability.cohorts,[]);
   assert.equal(cohortAvailability.interpretationStatus,'no_validated_reference_dataset');

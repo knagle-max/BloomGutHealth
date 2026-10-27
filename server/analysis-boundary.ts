@@ -15,6 +15,11 @@ export function historicalAnalysisMetadata(analyses:any[]){return analyses.map(a
 /** Historical original file paths are server metadata, never browser API fields. */
 export function publicSample<T extends { rawDataPath?: unknown }>(sample:T) {
   const {rawDataPath: _privatePath, ...visible}=sample;
+  const data=(visible as {structuredData?:any}).structuredData;
+  if(data&&typeof data==='object'&&data.importInfo&&typeof data.importInfo==='object'&&Object.hasOwn(data.importInfo,'saveReceipt')){
+    const{saveReceipt:_internal,...info}=data.importInfo;
+    return {...visible,structuredData:{...data,importInfo:info}};
+  }
   return visible;
 }
 
