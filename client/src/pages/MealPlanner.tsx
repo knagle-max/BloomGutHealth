@@ -179,7 +179,7 @@ export function DietaryPreferenceEditor() {
         />
       </label>
       <p className="panel-note">
-        Liver health, muscle-building and healthy-aging goals now inform
+        General health has a sourced eating-pattern overview. Liver health, muscle-building and healthy-aging goals inform
         food-pattern matching. Unknown goals stay saved without a treatment
         claim.
       </p>

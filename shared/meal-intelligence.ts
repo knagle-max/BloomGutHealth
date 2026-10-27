@@ -2,7 +2,7 @@ import {recognizedMealTimeZone} from "./meal-time";
 import { roundNutrientEstimate } from "./nutrition-precision";
 import { tasteMatches } from "./food-preference-policy";
 import { productRefSchema } from "./products";
-import { goalMealFit } from "./goal-guidance";
+import { goalMealFit, goalGuidance } from "./goal-guidance";
 import { recipePreparation } from "./recipe-preparation";
 import { z } from "zod";
 import { pathways, evidenceSources, type GoalId } from "./science-coach";
@@ -569,10 +569,12 @@ export function recommendMeals(
   prefs: DietaryPreferences,
   recentMeals: string[] = [],
 ) {
+  // A broad goal exposes the existing eligible library without a health-score bonus.
+  const generalGoal = prefs.goals.some(goal => goalGuidance(goal).id === "general");
   const eligible = recipes.filter(
     (r) =>
       !preferenceConflicts(r, prefs).length &&
-      (r.goals.some((g) => prefs.goals.includes(g)) ||
+      (generalGoal || r.goals.some((g) => prefs.goals.includes(g)) ||
         goalMealFit(prefs.goals, r.ingredients.map((i) => i.name).join(" "))
           .length > 0),
   );

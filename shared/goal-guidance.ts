@@ -1,5 +1,19 @@
 export const goalSources = [
   {
+    id: "goal-general",
+    title: "Health Canada: Canada’s food guide snapshot",
+    url: "https://food-guide.canada.ca/artifacts/CFG-snapshot-EN.pdf",
+    type: "Public nutrition guidance",
+    limitation: "General eating-pattern guidance, not an individual nutrient prescription or measured health effect.",
+  },
+  {
+    id: "goal-healthy-fats",
+    title: "Health Canada: Canada’s Dietary Guidelines — food fats",
+    url: "https://food-guide.canada.ca/sites/default/files/artifact-pdf/CanadasDietaryGuidelines.pdf",
+    type: "Public nutrition guidance",
+    limitation: "Supports food-pattern choices; does not predict an individual laboratory change or replace clinical targets.",
+  },
+  {
     id: "goal-liver",
     title: "NIDDK: Eating for NAFLD / MASLD",
     url: "https://www.niddk.nih.gov/health-information/liver-disease/nafld-nash/eating-diet-nutrition",
@@ -77,7 +91,19 @@ export function goalGuidance(goal: string) {
         "Favor fiber-rich whole grains, legumes and vegetables; keep sodium and saturated fat within your selected limits.",
       ],
       tracking: "Review relevant laboratory trends with your clinician.",
-      sourceIds: ["goal-liver"],
+      sourceIds: ["goal-general", "goal-healthy-fats"],
+    };
+  if (/\b(general health|overall health|healthy eating|wellbeing|well-being)\b/.test(g))
+    return {
+      goal,
+      id: "general",
+      mapping: "General healthy-eating pattern",
+      actions: [
+        "Build meals around a variety of vegetables and fruit, whole grains and suitable protein foods, within your preferences and restrictions.",
+        "Use your food log to review practical meal routines. This goal does not add a calorie deficit, supplement dose or medical target.",
+      ],
+      tracking: "Review recorded meals and ingredient details over time. A meal-pattern match is not a diet-quality score or proof of a health improvement.",
+      sourceIds: ["goal-general"],
     };
   return {
     goal,
