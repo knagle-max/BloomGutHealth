@@ -14,7 +14,7 @@
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
-    "server/experience-routes.ts": "50b738a335b1d4854cac9865c2a7462ba7faf4b5a1173f055e9a648d4c4ccb15",
+    "server/experience-routes.ts": "12491a75a51c6caf38d2d7440912f81a274169c62780bdd1f397bebf1b2093ba",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
@@ -191,6 +191,14 @@
     {
       "file": "server/experience-routes.ts",
       "line": 33,
+      "method": "GET",
+      "path": "/api/experience/checkins/:id/feedback",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 41,
       "method": "POST",
       "path": "/api/experience/records",
       "declaredMiddleware": [
@@ -200,7 +208,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 34,
+      "line": 42,
       "method": "PUT",
       "path": "/api/experience/records/:id",
       "declaredMiddleware": [
@@ -210,7 +218,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 35,
+      "line": 43,
       "method": "DELETE",
       "path": "/api/experience/records/:id",
       "declaredMiddleware": [
@@ -220,7 +228,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 36,
+      "line": 44,
       "method": "GET",
       "path": "/api/experience/export",
       "declaredMiddleware": [],
@@ -228,7 +236,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 37,
+      "line": 45,
       "method": "DELETE",
       "path": "/api/experience",
       "declaredMiddleware": [
@@ -238,7 +246,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 38,
+      "line": 46,
       "method": "POST",
       "path": "/api/experience/athlete-day",
       "declaredMiddleware": [
@@ -248,7 +256,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 45,
+      "line": 53,
       "method": "POST",
       "path": "/api/experience/day-choices",
       "declaredMiddleware": [
@@ -258,7 +266,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 46,
+      "line": 54,
       "method": "GET",
       "path": "/api/experience/review",
       "declaredMiddleware": [],
@@ -266,7 +274,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 47,
+      "line": 55,
       "method": "POST",
       "path": "/api/experience/templates/from-meal",
       "declaredMiddleware": [
@@ -276,7 +284,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 48,
+      "line": 56,
       "method": "POST",
       "path": "/api/experience/templates/:id/log",
       "declaredMiddleware": [],
@@ -284,7 +292,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 79,
+      "line": 87,
       "method": "POST",
       "path": "/api/experience/scan",
       "declaredMiddleware": [

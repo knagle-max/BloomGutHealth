@@ -78,6 +78,14 @@ export const hydrationSchema = z.object({
   climate: z.enum(["cool", "temperate", "hot"]),
   sweatSodiumMgL: z.number().min(100).max(2500).nullable().default(null), testSource: optionalText,
 }).strict().refine(v => v.sweatSodiumMgL === null || !!v.testSource, "Record the source of measured sweat sodium");
+export const focusFeedbackResponses=["liked","disliked","intolerant","not-applicable","helped","no-benefit"] as const;
+export const focusFeedbackSchema=z.object({
+ version:z.literal(1),response:z.enum(focusFeedbackResponses).nullable(),
+ focus:z.string().trim().min(1).max(200),date:dateKey,mode:z.enum(["everyday","athlete"]),recordedAt:z.string().datetime({offset:true}),
+ receiptHash:z.string().regex(/^[a-f0-9]{64}$/),previousRevision:z.string().regex(/^[a-f0-9]{64}$/),
+}).strict();
+export type FocusFeedback=z.infer<typeof focusFeedbackSchema>;
+export type CheckinFeedbackView={source:{id:string;date:string;mode:"everyday"|"athlete";focus:string};feedback:Omit<FocusFeedback,"receiptHash"|"previousRevision">|null;revision:string};
 export const checkinSchema = z.object({
   date: dateKey, mode: z.enum(["everyday", "athlete"]),
   energy: z.number().int().min(0).max(10), hunger: z.number().int().min(0).max(10),
@@ -86,6 +94,7 @@ export const checkinSchema = z.object({
   adherence: z.number().int().min(0).max(7),
   focus: z.string().trim().max(200).default(""), notes: optionalText,
   professionalReview: z.boolean().default(false),
+  focusFeedback:focusFeedbackSchema.optional(),
 }).strict();
 export const experimentSchema = z.object({
   mode: z.enum(["everyday", "athlete"]), title: z.string().trim().min(1).max(160),

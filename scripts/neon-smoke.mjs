@@ -723,11 +723,14 @@ try {
   const priorQuotaCookie=cookie;
   try{
     await addUser();
-    for(let attempt=0;attempt<30;attempt++)await request("/api/experience/records","POST",{},400);
+    const feedbackCheckin=await request("/api/experience/records","POST",{kind:"checkin",payload:{date:new Date().toISOString().slice(0,10),mode:"everyday",energy:5,hunger:5,digestion:5,sleepHours:7,adherence:3,focus:"Synthetic routine feedback"}},201);
+    const feedbackSource=await request(`/api/experience/checkins/${feedbackCheckin.id}/feedback`);
+    assert.equal(feedbackSource.source.id,feedbackCheckin.id);assert.equal(feedbackSource.feedback,null);assert.match(feedbackSource.revision,/^[a-f0-9]{64}$/);
+    for(let attempt=0;attempt<29;attempt++)await request("/api/experience/records","POST",{},400);
     const quotaDenied=await fetch(base+"/api/experience/records",{method:"POST",headers:{"content-type":"application/json","x-forwarded-proto":"https",origin:base.replace("http:","https:"),cookie},body:"{}",signal:AbortSignal.timeout(30000)});
     assert.equal(quotaDenied.status,429);assert.equal(quotaDenied.headers.get("retry-after"),"60");await quotaDenied.arrayBuffer();
     await request("/api/experience/export");
-    console.log("PASS: actual shared workspace allowance denies before mutation with Retry-After while private export remains available");
+    console.log("PASS: actual encrypted check-in feedback reader retains unknown legacy response; shared workspace allowance denies before mutation while private export remains available");
   }finally{cookie=priorQuotaCookie;}
   const erased=await request("/api/account","DELETE",{password,confirmation:"DELETE ACCOUNT"});
   assert.equal(erased.scope,"active-application-records");

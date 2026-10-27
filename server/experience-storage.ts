@@ -1,8 +1,9 @@
+import {checkinFeedbackView,preserveFocusFeedback} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords } from "../shared/schema";
-import { experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
+import { experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -32,7 +33,12 @@ export class ExperienceStorage {
   const rows=await this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):eq(experienceRecords.userId,userId)).orderBy(desc(experienceRecords.updatedAt)).limit(2000);
   return rows.map(r=>decode(r,userId));
  }
+ async getCheckinFeedback(userId:string,id:string):Promise<CheckinFeedbackView|null>{
+  const [row]=await this.db.select({id:experienceRecords.id,encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin")));
+  return row?checkinFeedbackView(userId,row.id,decryptPrecision(row.encryptedPayload,userId)):null;
+ }
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
+  if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const rows=await tx.select({id:experienceRecords.id,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt}).from(experienceRecords).where(eq(experienceRecords.userId,userId)).orderBy(desc(experienceRecords.createdAt));
@@ -44,7 +50,8 @@ export class ExperienceStorage {
       return entry.kind==="food-memory" ? payload.key===entry.payload.key : payload.date===entry.payload.date && payload.mode===entry.payload.mode;
     });
     if(found) {
-     const [r]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(entry.payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.id,found.id),eq(experienceRecords.userId,userId))).returning();
+     const payload=preserveFocusFeedback(entry,decryptPrecision(found.encryptedPayload,userId));
+     const [r]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.id,found.id),eq(experienceRecords.userId,userId))).returning();
      return decode(r,userId);
     }
    }
@@ -54,8 +61,15 @@ export class ExperienceStorage {
   });
  }
  async updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry) {
-  const [r]=await this.db.update(experienceRecords).set({encryptedPayload:encryptPrecision(entry.payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).returning();
-  return r?decode(r,userId):null;
+  if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
+   const [existing]=await tx.select({encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind)));
+   if(!existing)return null;
+   const payload=preserveFocusFeedback(entry,decryptPrecision(existing.encryptedPayload,userId));
+   const [row]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).returning();
+   return row?decode(row,userId):null;
+  });
  }
  async deleteExperienceRecord(userId:string,id:string) {
   const r=await this.db.delete(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id))).returning({id:experienceRecords.id});return !!r.length;
@@ -72,6 +86,7 @@ export interface ExperienceStore {
  getExperienceSettings(userId:string):Promise<ExperienceSettings>;
  putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
  putExperienceSettingsIfCurrent?(userId:string,patch:ExperienceSettingsPatch,revision:string):Promise<ExperienceSettings>;
+ getCheckinFeedback?(userId:string,id:string):Promise<CheckinFeedbackView|null>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;
  insertExperienceRecord(userId:string,entry:ExperienceEntry):Promise<ExperienceRecord>;
  updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry):Promise<ExperienceRecord|null>;
