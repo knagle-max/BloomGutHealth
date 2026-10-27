@@ -1,3 +1,4 @@
+import {measurementUnitSuggestion} from "@shared/measurement-suggestions";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import ExperimentalSettings from "@/components/ExperimentalSettings";
 import AccountErasure from "@/components/AccountErasure";
@@ -24,6 +25,7 @@ export default function Profile({
   const { user, logout } = useAuth();
   const { patch, settings, saving: savingUnits, loading: loadingUnits, error: unitsError } = useExperience();
   const units = settings.displayUnits;
+  const [unitSuggestion]=useState(()=>measurementUnitSuggestion(typeof navigator!=="undefined"?navigator.language:undefined));
   const [heightEntry,setHeightEntry] = useState<HeightEntry>({unit:"cm",primary:"",inches:""});
   const [massEntry,setMassEntry] = useState<MassEntry>({unit:"kg",value:""});
   const [entryError,setEntryError] = useState("");
@@ -180,6 +182,7 @@ export default function Profile({
             <fieldset className="space-y-3" id="measurement-units">
               <legend className="font-medium">Measurement units</legend>
               <p className="panel-note">Choose units independently. Saved profile measurements remain in canonical centimetres and kilograms; laboratory source units are not changed.</p>
+              <p className="panel-note" data-testid="unit-suggestion">{unitSuggestion.locale?`Starting suggestions use browser language ${unitSuggestion.locale}, which does not establish where you live.`:"Browser region is unavailable; metric starting suggestions are provided."} Your saved choices are kept. Change any unit independently.</p>
               <div className="grid grid-cols-2 gap-3">
                 {([
                   ["height","Height",["cm","m","ft-in"]],
@@ -193,6 +196,7 @@ export default function Profile({
                   <select className="bloom-input w-full" aria-label={`${label} unit`} disabled={savingUnits||loadingUnits} value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
                     {options.map(option=><option key={option} value={option}>{option}</option>)}
                   </select>
+                  <span className="text-xs text-muted-foreground">Suggested: {unitSuggestion.units[key]}</span>
                 </label>)}
               </div>
               <p className="panel-note">Unit preferences save automatically here. Completed measurement drafts convert after a successful save; unfinished drafts keep their labelled entry units.</p>

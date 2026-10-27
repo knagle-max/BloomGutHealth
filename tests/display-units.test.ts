@@ -34,3 +34,14 @@ test("canonical display conversions for all remaining Amendment D quantities",()
   assert.ok(Math.abs(quantityToCanonical(kind,quantityFromCanonical(kind,value,unit),unit)-value)<1e-8);
  assert.throws(()=>quantityFromCanonical("hydration",100,"in"));
 });
+
+
+test("locale unit suggestions are nonbinding, bounded and do not invent residence from language",async()=>{
+ const {measurementUnitSuggestion:suggest}=await import('../shared/measurement-suggestions');
+ assert.equal(suggest('en-US').units.bodyWeight,'lb');assert.equal(suggest('en-US').units.height,'ft-in');
+ for(const locale of ['en-CA','fr-CA','en-GB','en','fr',undefined,null,'','not_a_locale','x'.repeat(129)]){const hint=suggest(locale);assert.equal(hint.units.bodyWeight,'kg');assert.equal(hint.units.height,'cm');assert.equal(hint.units.energy,'kcal');}
+ assert.equal(suggest('en-US-u-ms-metric').units.bodyWeight,'kg');
+ assert.equal(suggest('en-CA-u-ms-ussystem').units.bodyWeight,'lb');
+ assert.equal(suggest('EN-us').locale,'en-US');assert.equal(suggest(undefined).locale,null);
+ const saved=experienceSettingsSchema.parse({displayUnits:{height:'cm',bodyWeight:'lb',energy:'kJ'}}),before=structuredClone(saved);suggest('en-US');assert.deepEqual(saved,before);
+});
