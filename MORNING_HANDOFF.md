@@ -1,59 +1,181 @@
 # Bloom development handoff — October27,2026
 
-Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
-
-Latest fully verified runtime `141a0caf357529d26ee288e6d45a167fa85f073d`: distinct softer taste preferences and encrypted reported-intolerance warnings. Actions40460318163 SUCCESS402 including isolatedNeon smoke; Renderdep-dbg44c7b9u1s73fs7b20 LIVE. Allergy fix45960ea verified401/live. Saved-meal review1651888 is pushed, Renderdep-dbg482ff3r2c73b6qkcg LIVE; Actions40461108066 SUCCESS402/liveNeon. Bloodworkb0562a2 is live on Renderdep-dbg4at0473hc73fc8q2g, Actions40461705771 pending. Athlete set readers locally verified, publication next. v0.5 remains incomplete.
+Development branch enhance/bloom-experience, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com). Workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete, v0.6 not begun. No main merge, production data/credentials or restricted activation.
 
 ## Development summary
 
-| Commit | Completed behavior | Verification |
-| --- | --- | --- |
-|6857d37, a625c32,602dcb6|Optional Weekly Review routine responses, original context, explicit clear, revision/receipt retry protection, numerical ratings preserved|Actions391/392/392 SUCCESS; Render reached LIVE; actual encrypted rendered workflow|
-|3760580|Today visit-only Skip/Show suggestion; keyboard focus recovery without automatic focus jumps|Actions40430319733 SUCCESS392; Render LIVE; Today clock/source regressions|
-|a5a7d68|Optional recorded routine dates alongside bloodwork, source-calendar/unknown context and source-failure recovery; no causal/effect claims|Actions40431328309 SUCCESS393; Render reached LIVE; encrypted normal journey|
-|91eda2f|My Biology/pending-unit dates honor entered/corrected calendars rather than UTC date slicing|Actions40431821839 SUCCESS393; Render descendant verified; red/green browser reproduction|
-|8a1217f|Visit-only offline review/save waiting states and opt-in exact reconnect retry; queued reviews stop on navigation/account change|Actions40433153715 SUCCESS393; Render dep-dbfvu7nf3r2c73b2fthg LIVE;8 representative actual HTTP/PostgreSQL browser scenarios|
-|2042b61,6bbc3c8|Everyday activity readers then complete Today/log/correct/Progress/delete journey|Actions395/396 SUCCESS; Render LIVE; actual encrypted App/API and isolatedNeon smoke|
+| Commit | Completed work | Evidence |
+|---|---|---|
+|45960ea|Owned allergy restrictions across recipe suggestions/prioritization; late old-source responses rejected|Actions40459385080 SUCCESS401/liveNeon; Render reached LIVE; encrypted rendered source/refetch journey|
+|141a0ca|Separate softer taste from legacy hard avoids; encrypted reported-intolerance warnings across planning and review|Actions40460318163 SUCCESS402/liveNeon; Render reached LIVE; save/reload/correction/320px journey|
+|1651888|Saved meal→scaled exact ingredient draft→review/correct→confirmed new journal entry; original recipe unchanged|Actions40461108066 SUCCESS/liveNeon; Render reached LIVE;6 targeted tests; actual encrypted source failure/retry/owner/mobile journey; matched visual evidence|
+|b0562a2|Neutral recorded bloodwork differences despite unverified measurement comparability; optional professional questions|Actions40461705771 SUCCESS/liveNeon; Render reached LIVE;10 Precision tests; actual five-LDL source/pending/outage/320px journey; clinical comparison gate unchanged|
+|fc6c4fc|Optional encrypted manual exercise-set reader; unaware session edits preserve observations|Actions40462180578 SUCCESS/liveNeon; Renderdep-dbg4d4oae00c73fnudh0 LIVE;3 focused schema/storage/owner/receipt tests|
+|Current locally verified batch|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted lost-response retry/correct/reload/owner/320px/44px journey; types/finalbuild pass; publication next|
 
-Earlier active lab-source, immutable date/unit lineage, explicit deletion, atomic reimport, local source-text intake and Today midnight/resume fixes remain verified in DEVELOPMENT_LOG.md. Existing source/medical/tenant/consent gates remain required.
+Earlier verified activity logging, session save receipts, Today skip, lab source/date/unit lineage, calendar timing, routine feedback and visit-only reconnect recovery remain detailed in DEVELOPMENT_LOG.md. Full tests and source transfer do not imply release, clinical, Design or device acceptance.
 
-Everyday activity is verified end to end: Today Move→Log activity→save/exact uncertain retry→correct duration→Today→Progress→delete. It uses the existing encrypted experience store and owned routes; duration-only correction preserves source instant/timezone. General movement does not become an Athlete workout or infer energy expenditure, RPE, climate or fueling targets. Full396 tests PASS, types/build/API100+13/source130 PASS, actual encrypted rendered flow and previous movement regression PASS, keyboard320px. Matched evidence: docs/reviews/everyday-activity. Isolated Neon smoke includes create/replay/correct/delete. Capture6bbc3c8 is verified in Actions/Render. Athlete session save receipts now fix a reproduced normal retry duplication; green actual App/API yields one90-minute calendar entry, with3 focused tests/types/build/source checks passing. Actions397 and Render are verified for76a4a07.
+## Remaining work and priorities
 
-## Remaining priorities
+1. Publish/verify the locally completed actual-set UI, including its updated live Neon source assertions.
+2. Continue approved core Athlete functionality (optional manual rest timer) and the remaining original/specialist requirement trace. The historical207-row status CSV is stale; no blanket release-complete claim.
+3. Exact flagship visual/interaction fidelity needs the named source archive/contracts; Viome raw-format adapter needs the reviewed versioned specification and authentic sanitized export. Independent core work continues.
+4. Keep noncritical stabilization separate; carry native device, hosted owner/tester, independent clinical/legal/design, provider rights, managed recovery and actual scoped provisioning gates.
 
-1. Publish the core allergy-filter/cache safety repair (401 local tests and rendered flow pass), then complete ID03 taste/tolerance through the existing editors and suggestions. Its reader is already verified399.
-2. Reconcile approved v0.5 requirement traces and normal core journeys; prioritize a missing food, Everyday, import or Athlete path over further edge matrices. Deferred across-restart offline persistence is explicitly not claimed.
-3. New flagship source/Blueprint intake remains unverified; preserve core-first priority and do not claim target fidelity. Raw Viome format compatibility is BLOCKED_TECHNICAL: full reviewed handoff/representative export absent; one referenced gist read failed CONNECT403. Existing canonical structured import remains available. Do not guess provider schema or request credentials.
-4. Keep native/device/human, independent clinical/legal/design, recovery and provider-rights gates separate. Transition automatically to approved independentv0.6 once actionablev0.5 is exhausted.
+## Decisions and external acceptance
 
-## User decisions and external evidence
+Highest-leverage source decisions: provide the accessible flagship archive/contracts and the reviewed Viome handoff/representative sanitized export; existing UI masters and structured import remain the defaults. Native platform/entitlement scope and rights/policy decisions unlock only their corresponding gated work. USDA key replacement is resolved; do not request it again. Exact hosted product and real-device acceptance remain external checks.
 
-No new credential or user decision was needed for the work above. Full questions, choices, rationale and deferral impacts remain in [BLOCKED_USER_INPUT.md](BLOCKED_USER_INPUT.md); historical resolved asset/key entries must not be reopened merely because they remain in the log.
+The following is a snapshot of the existing persistent catalog. Questions, options, defaults and impact are preserved below; BLOCKED_USER_INPUT.md remains authoritative when dependencies change. No question here pauses independent engineering.
 
-| Item | Exact decision/evidence needed | Recommended default and deferral impact |
-| --- | --- | --- |
-| NATIVE-107 | Does v0.5 require native HealthKit/Health Connect clients, or browser/PWA with truthful unavailable device integration? | Continue browser work; retain unavailable native connections until platform/OS/entitlements are specified. Native implementation/device acceptance remains open. |
-| ARTIFACT-FOODREVIEW-BLOODWORK | What authorized repository path contains the original October25 Food Review and Bloodwork ZIPs/editable sources? | Versioned originals and hashes. Only new-pack fidelity/review is blocked;174 earlier originals are verified. |
-| OPS-702 / PRIV-103 | Which isolated synthetic managed restore target/cost ceiling and reviewed RPO/RTO, retention, historical-key recovery and deletion-reconciliation policy are authorized? | Defer managed drill until explicit target/policy; continue synthetic recovery engineering. No live copy/restore/key retrieval is authorized. |
-| REST-ARCH / FOOD-508 | Which licensed, versioned Canadian menu source is approved for items, sizes, modifiers, provenance and nutrients? | Keep manual descriptions; do not fabricate or activate a menu catalogue. |
-| FOOD-501 / ARC-REVIEW-01 | Authorized hosted evidence for the intended Kit Kat/Michelina's product selection/save/totals path and the owner's same-meal overview/detail incident | Independent synthetic-account tester or owner findings. USDA key is already corrected; source-independent work continues. Exact hosted incident/variant acceptance remains open. |
-| GATE-701 / BLOOM-ADMIN-01 / paid capabilities | Real reviewed tester/admin account scope and expiry, independent authorization and monetary/provider-rights evidence for activation | Keep default-denied/restricted/incident features off. Do not fabricate a session, grant, tariff, licence or clinical review. |
+### Persistent dependency catalog
 
-OFF, incident-disabled genetic ranking, unapproved model outputs and controller activation remain disabled. Managed recovery, native device/VoiceOver/Tester1, independent clinical/legal/design/study acceptance and new original packs are not claimed complete.
+No noncritical question should pause other approved work. Keep safe defaults, never invent credentials/reviews, and reconsider entries only when their dependencies change.
 
-After answers, native scope/assets/approved catalogue/recovery and reviewed provisioning can resume independently. Unblocked file intake and whole-app correctness work can resume immediately without waiting for them.
+## NATIVE-107 — native delivery scope
+
+- Status: BLOCKED_USER_INPUT / Architect platform decision. First inspect any newer consolidated handoff; do not ask again if it already resolves this.
+- Exact question: Does the v0.5 release require shipping native HealthKit/Health Connect clients, or is browser/PWA delivery with truthful unavailable device integration the approved release target?
+- Why needed: Real device permissions, incremental sync and hardware acceptance require a concrete native client/platform and entitlements; browser mocks cannot satisfy them.
+- Choices: (1) Confirm browser/PWA scope and retain unavailable device connections; (2) confirm a native/hybrid platform and required OS/device targets.
+- Recommended interim default: Continue the existing browser implementation and keep device access unavailable while the Architect confirms scope. This is not permission to omit native work if authoritative v0.5 acceptance requires it.
+- Deferral impact: Blocks native implementation/real hardware acceptance only; account, nutrition, evidence and browser correctness work can continue.
+
+## FOOD-501 — exact live packaged-product acceptance
+
+- Status: EXTERNAL_ACCEPTANCE_PENDING, not a missing-key decision. Owner already replaced the rejected key; Render's actual fixed public lookup returned 20 results.
+- Exact evidence needed: On the deployed intended product-search UI, verify Kit Kat / KitKat / kit kit bar and Michelina's; select the package's actual country/variant/serving, save the meal and confirm daily totals. Record genuine source IDs and failures, not invented SKUs.
+- Choices: Authorized independent tester performs this in the hosted UI; or owner supplies acceptance findings while engineering continues.
+- Recommended default: Independent tester on synthetic accounts. Direct hosted browsing from this execution environment has been blocked by proxy CONNECT 403.
+- Deferral impact: Keeps exact product/Canadian coverage acceptance open. Does not block source-independent development or manual labels.
+
+## OFF source activation and specialist sign-offs
+
+- Status: EXTERNAL_REVIEW_PENDING. Existing Legal/Integration, medical, privacy/security and launch gates remain binding.
+- Exact evidence needed: Written source-rights decision before OFF activation, and actual specialist review of the running build for their respective release gates.
+- Recommended default: OFF and unapproved clinical/provider/research capabilities remain disabled; continue approved independent engineering.
+- Deferral impact: Blocks the specific source/clinical activation or public release approval, not routine commits or development preview deployments.
+
+## EXEC-RESOURCE — execution limit, not user product input
+
+- Status: RESOLVED at 2026-10-24 06:45 UTC after the review's stated reset time; normal approval succeeded.
+- Evidence: Automatic approval review refused the full regression/build command with an account usage-limit message. It explicitly said the command was not executed, this was not an unsafe-action determination, and not to bypass the review.
+- Resolution: Resume when the account's execution resources are available. Do not repeatedly retry or use another path to perform the rejected command. No new product decision or repeated deployment permission is required.
+- Impact: Historical only. FOOD-506 is now verified, published and live; autonomous work resumed.
+
+## Experimental access and asset intake
+
+- Experimental account provisioning/activation remains default-denied. Any real internal tester grant needs server-side identity, expiry, territory, capability scope, consent and approved synthetic/explicit dataset context. No self-enrolment or client flag grants access. Do not ask the owner repeatedly; build/test policy with synthetic fixtures first and list exact provisioning inputs only when needed.
+- Current design-source access is RESOLVED:174 files verified in design/bloom/VERIFICATION.md after2af0998. Current master/Today/scientific packs are complete. Do not request source uploads again. Only the optional legacy preview remains absent under ARTIFACT-LEGACY-PREVIEW-01; running-build visual acceptance remains separate.
+
+## OPS-702 / PRIV-103 — managed recovery authorization and policy
+
+- Status: BLOCKED_USER_INPUT for the managed drill and approved operational policy only; synthetic recovery engineering continues.
+- Exact question: Which isolated synthetic managed restore target and cost ceiling are authorized, and what reviewed RPO/RTO, retention, historical-key recovery location and deletion-reconciliation policy apply? The existing Render runtime database binding is now verified; no binding information is requested again.
+- Why needed: No live data copy, destructive restore, secret retrieval, new paid service or retention decision is authorized by the preview-deploy permission. The existing Render runtime binding is verified; this does not authorize a managed restore or prove recovery policy.
+- Choices: (1) Operator supplies approved target/policy and performs or explicitly authorizes the isolated synthetic managed drill; (2) retain current configuration and defer managed recovery acceptance.
+- Recommended default: Option 2 until target and policy are explicit; continue in-memory synthetic recovery, with no real health records or key material in artifacts.
+- Impact: Blocks managed RPO/RTO, backup lifecycle and deletion-after-restore sign-off; does not block other v0.5 engineering.
+- Read-only observations (2026-10-24): Neon project fancy-smoke-82120373 reports history_retention_seconds=21600; snapshot listing was empty. This does not mean PITR is unavailable or prove a recovery guarantee. PR-1 branch is schema-only. No snapshots, restores, configuration changes or live data reads were performed. Local .neon link absent; actual Render branch binding unverified. These are dated October24 observations, superseded for binding only by the October25 trusted runtime audit: endpoint/branch/database and minimal exact Tester1 identity verified; additive0008 preference table applied on the actual bound branch. No snapshot/restore/data copy performed. See docs/operations/TESTER1_TAKEOVER_AUDIT.md.
+
+## REST-ARCH / FOOD-508 — source-backed Canadian menu catalogue
+
+- Status: BLOCKED_USER_INPUT for actual menu activation. Manual description remains usable. Owner's live no-menu acceptance overrides any implication of full restaurant-search completion.
+- Exact question: Which licensed/rights-cleared menu source and versioned Canadian chain records are approved for item, size, modifiers, provenance and nutrient display?
+- Choices: (1) Supply an approved catalogue/licence and provider configuration via authorized secret management; (2) keep manual restaurant descriptions and defer real menu search.
+- Recommended default: Option 2. Do not scrape or invent official McDonald's/Tim Hortons Canadian records.
+- Impact: Blocks menu items and real-source restaurant search/save acceptance; does not block brand context or manual nutrition logging. Dedicated unfinished menu choice is removed from ordinary chooser.
+
+## GATE-701 / Tester1 — real authenticated acceptance and reviewed scope
+
+- Status: VERIFIED_BINDING_AND_SCHEMA; real signed-in UI/scope acceptance remains EXTERNAL_ACCEPTANCE_PENDING. Exact existing `Tester1` found once on the runtime-verified target; immutable ID captured privately, never committed/logged. No replacement/rename/reset.
+- Resolved facts (2026-10-25): Render5952d09 startup matched connected Neon endpoint and database-name hash for project fancy-smoke-82120373 / branch br-orange-cloud-aru4p4fw / neondb. This branch is named production; it is the verified runtime binding of the owner's existing enhancement/review service, not a blanket assertion about all data. Missing capability_preferences explained the eligible preference-read failure. Committed additive0008 created only the empty preference table with OFF default, four expected columns, user-deletion cascade, short transactional timeouts; zero preference rows at verification. Existing account/health rows, credentials, grants and service configuration unchanged.
+- Single acceptance input still unavailable: from the existing authenticated Tester1 session, confirm the reviewed synthetic-only scope/expiry and actual Profile → Show development features ON/OFF/module behavior. Safe supply: acceptance observations or non-secret scope/review reference, never passwords, cookies, keys or connection URLs.
+- Options: perform that owner/session review on the existing service; or retain it as unverified and keep restricted/model execution denied. Recommended: review the actual Profile control after refresh; do not create accounts or invent session/scope proof.
+- Codex cannot manufacture a real signed-in session or independent dataset approval. Configuration flag/key presence is not that proof. Earlier lowercase query proved no absence; it is superseded by the case-correct verified lookup. Current navigation: https://bloomguthealth.onrender.com/profile, control by Light/Dark mode; ON module is in Add Food. Actual real UI success/expiry is not claimed.
+- Impact: real user/device acceptance remains open. Independent approved development continues; no new paid provider, clinical/research/incident or all-52 activation is authorized by this switch.
+
+## OPS-702 — monetary policy and tariff activation
+
+- Status: BLOCKED_USER_INPUT for reviewed monetary configuration only; provider adapter/accounting engineering remains OPEN and independently actionable.
+- Exact question: Which provider/model tariff source and effective date, per-account daily/monthly and per-feature allowances, platform/provider ceiling, concurrency policy, stable accounting-identity secret-management/rotation and pseudonymous ledger retention are approved?
+- Choices: Supply reviewed configuration and authorize only separately cleared optional features; or defer monetary activation and keep no new provider enablement.
+- Recommended default: No invented tariffs, dollar limits, billing promises or new paid provider activation. Build/test with explicitly synthetic integer units. Store secrets only through approved secret management, never the handoff.
+- Impact: Blocks real monetary policy/paid-feature acceptance, not ledger, provider-unit contracts or other v0.5 work. Current parser/recipe/ranking callsites require the reviewed metered executor and deny paid execution without one; no real executor is installed.
+
+Monetary activation clarification (OPS-702-EXEC): provide reviewed pinned provider/model response identity and bounds for maximum complete serialized text request, input tokens and output tokens, with review reference; no guessed tokenizer/character bound is used. Default remains no installed runtime. Implementing configuration/composition, circuits and reporting remains independently OPEN, not a user-input blocker. No real tariff/key/migration activation occurred.
+
+ACCEPT-108 / BLOOM-TODAY-01: physical iPhone Safari/VoiceOver and direct hosted layout acceptance remain BLOCKED_TECHNICAL here (no physical device/VoiceOver; hosted proxy denial). Which approved tester/device environment can provide those checks? Options: independent synthetic-account device test, or owner-supplied actual results; recommend independent testing. This blocks device sign-off only, not browser engineering.
+
+OPS-01 circuit activation is covered by the existing monetary policy decision: supply reviewed provider/platform failure thresholds, cooldown and recovery-probe lease (at least the current 25-second SDK timeout). No defaults were installed; tests use synthetic explicit policies. This does not block further engineering.
+
+## OPS-702-RECONCILE — authoritative unknown-charge evidence
+
+- Status: BLOCKED_USER_INPUT for provider evidence/operations decision; safe accounting and unrelated engineering continue.
+- Exact question: Which authoritative billing source and matching protocol can resolve a timeout/lost response from a store:false provider request without guessing whether it was charged?
+- Choices: Reviewed provider billing/audit evidence linked to the original reservation; or retain unresolved liability and keep paid activation disabled until such evidence exists.
+- Recommended default: Retain liability, deny replay and preserve manual/curated fallback. A missing response or old age is not evidence of zero charge. No automatic expiry/refund or renewed provider execution.
+- Impact: Prevents automatic unknown-outcome reconciliation and real paid-operation acceptance, not configuration/circuits/reporting or core app development. The existing authenticated settlement primitive is not itself an authoritative billing source.
+
+## BLOOM-ADMIN-01 — real administrator provisioning
+
+- Status: BLOCKED_USER_INPUT for live provisioning only; independent server/UI engineering proceeds with synthetic roles.
+- Exact question: Which authenticated Bloom administrator account IDs, reviewed service/environment, read-only review purpose, expiry and provisioning review are approved?
+- Choices: Verify the existing review environment and supply audited server-provisioning inputs; or retain no live admin grants while using isolated synthetic review fixtures.
+- Recommended default: No guessed identity, self-enrolment, inherited tester privileges or live grant. The first implementation grants source-metadata read only; it cannot activate features.
+- Impact: Blocks real administrator access, not control-plane engineering. Mutations still require separate step-up, independent scope approval, audit/rollback and reviewed deployment controls.
+- Source: docs/architecture/PERSISTENT_TASK_INDEX.md, BLOOM-ADMIN-01: “Do not invent real admin roles or configured deployment permissions.” This does not require pausing independent work or asking for per-commit permission.
 
 
-## FOOD-04 saved-source review — Core Journey A P1
-Saved meals now offer Review & adjust before logging: owned encrypted template→validated 2× ingredient/product snapshot→existing LogMeal/MealAnalysis review→correct amount/recalculate→explicit confirmation→one journal row. Source failures withhold load and retry; description changes stop reusing mismatched saved ingredients; source and previous meals remain unchanged. Existing quick log and exact save receipts remain. Actual App/API/encryptedPGlite source failure/retry/correction/owner/320px PASS /tmp/saved-review-journey-final.log;6 template/experience/review-source tests PASS /tmp/saved-review-tests.log, types/build PASS. No new API/table/provider. Contract SAVED_MEAL_REVIEW.md; matched workflow evidence docs/reviews/saved-meal-review (not list-only near-identical images). Publication next, no hosted/human acceptance inferred.
-ID03 141a0caf357529d26ee288e6d45a167fa85f073d now Actions40460318163 SUCCESS402 including isolatedNeon smoke; Renderdep-dbg44c7b9u1s73fs7b20 LIVE. Allergy45960ea verified401/live.
+## TODAY-ASSETS-01 — exact redesign reference package
+
+- Status: RESOLVED for current source access after imported2af0998 was fetched, opened and byte-verified; see design/bloom/VERIFICATION.md. Visual integration and independent acceptance remain open. Historical question follows.
+- Exact question: Which accessible repository path or uploaded artifact contains Bloom_Today_Experience_Redesign_2026-10-25.zip and its final Branding handoff? No connected tool can read the referenced shared Library package, and the files are absent locally.
+- Choices: Commit the approved reference package to the shared repository; provide it as an uploaded artifact; or have Branding review the implemented result against their source package.
+- Recommended default: Continue adapting existing original Bloom tokens/icon and written acceptance; provide the package through the repository so future sessions can reproduce asset integration.
+- Impact: Exact package integration/Branding signoff stays unverified. Does not block the working Today redesign, source correctness or independent engineering. No new asset licence or clinical clearance is assumed.
 
 
-## ARC-LAB-01 observed arithmetic / ARC-LAB-06 question slice — Core Journey C P1
-Progress now shows first-to-last recorded difference for distinct supported canonical-unit points even with unknown measurement method, prominently comparability unverified/not confirmed clinical change. Existing clinical trends.change/comparable and ranking gates unchanged; no connecting line for unverified series. Source disclosure adds neutral professional questions, not medical findings/urgency/treatment or reviewed marker education.10 Precision tests + actual encrypted App/API five LDL5.2→3.7/difference-1.5/source rows/pending excluded/GET-only/outage retry/320px PASS; types/build/API101+13/map130 PASS. Contract LAB_OBSERVED_DIFFERENCE.md. Clinical-content/independent acceptance remains open; no activation. Publication next.
-Saved-meal165188803500e79c7a25d1828b03d2d0da9debe5 Renderdep-dbg482ff3r2c73b6qkcg LIVE; Actions40461108066 in progress at this checkpoint.
+Historical TODAY-ASSETS-01 scope update before2af0998: Architect c4f178d/91b4a84 confirms raw-byte materialization was not authorized for the original packages and the latest master is now Bloom_App_Wide_Experience_Redesign_2026-10-25.zip, with14 conceptual mobile SVGs/CSS/inventory. Exact design fidelity for the whole application is blocked on actual accessible originals, not only Today. The existing question/options/default apply to this master package and prior Today/scientific-depth kits. No recreated SVG/prose-based UI is claimed to be those original sources. Safety, accessibility and correctness work continues; full desktop/dark/Coach/research patterns also remain incomplete design deliverables.
 
 
-## ATH-SETS-READER — Core Journey E dependency
-Optional version1 actualSets in the existing encrypted session: exercise, nullable reps/loadKg and explicit per-set completed, bounded100 rows. Legacy absence is not zero/completed. Unaware session PUTs preserve newer observations under the existing owner lock; explicit empty list clears. No migration, new table, change to duration/RPE/nutrition calculations or plan auto-completion. Safe interim manual-data contract; exact flagship UI/fidelity remains source-dependent.3 focused schema/encrypted persistence/owner/session-receipt tests +types/build PASS; full exact CI to verify404. Publish readers before emitting ordinary set fields; UI/previous-values/timer not implemented by this batch.
-Saved-meal1651888 Actions40461108066 now SUCCESS402/liveNeon; Render reachedLIVEdep-dbg482ff3r2c73b6qkcg then retired after bloodworkb0562a2 LIVEdep-dbg4at0473hc73fc8q2g. LabActions40461705771 pending after saved-meal success at this checkpoint.
+## ARTIFACT-LEGACY-PREVIEW-01 — optional original archive completeness
+
+- Status: BLOCKED_USER_INPUT for one legacy reference PNG only; current master, Today and scientific-depth sources are verified accessible.
+- Exact question: Can the original brand-concept-reference.png (1,697,994 bytes, SHA256 fc29dad9473cdaf17d7c82281f06fd523df6498e47511b690300bcd1d73c4463) be supplied at the manifest path, or should its absence remain documented?
+- Choices: Restore the exact original; or retain the explicit missing-file record while prioritizing current app implementation.
+- Recommended default: Keep the missing legacy preview tracked and continue using the complete editable current sources. Never manufacture a replacement with the same provenance.
+- Deferral impact: Only full legacy archive completeness. No block to current app-wide design integration or normal development; source verification does not grant final design/release acceptance.
+
+## ARC-REVIEW-01-CAPTURE — actual hosted owner incident acceptance
+
+- Status: EXTERNAL_ACCEPTANCE_PENDING; confirmed fractional-display defect is independently implemented/tested, not proof of the owner case root cause.
+- Exact evidence/question: Which authorized tester can capture the affected same meal ID, deployed version and redacted overview/detail/API field map on the existing Render service?
+- Choices: Independent synthetic-account reproduction of the reported text/selection path; or owner supplies affected-case findings through the existing review flow.
+- Recommended: Independent hosted tester with authorized session; current environment has no real session and direct hosted browsing has been denied. No credential/reset/session fabrication.
+- Deferral: Blocks exact owner-incident closure only; source/precision/correction and independent engineering continue.
+
+## ARTIFACT-FOODREVIEW-BLOODWORK-20261025 — newly delivered editable assets
+
+- Status: BLOCKED_USER_INPUT for original asset access/fidelity only.174 earlier files remain verified; these later packs are distinct.
+- Exact question: What authorized repository path contains original Bloom_Food_Review_Design_Assets_2026-10-25.zip and Bloom_Bloodwork_Classifications_Visual_Assets_2026-10-25.zip (and approved Bloodwork editable source pack)?
+- Choices: Version original ZIPs/editable files in the existing repo with source hashes; or make the exact approved library files readable through an available authorized connector.
+- Recommended: Versioned repository originals and hashes. Do not regenerate or claim inferred design fidelity.
+- Deferral: Only exact new visual integration/Design acceptance; functional nutrition and source-import integrity continue without a user question interrupt.
+
+2026-10-26 date/deletion/reimport checkpoint: no new user decision or credential is needed for the implemented lab safety work. Existing external review/device/provider decisions remain scoped; none blocks the current date editor checks or other independent v0.5 work.
+
+
+## INT-VIOME-2026-01–06 raw export compatibility — BLOCKED_TECHNICAL (core D)
+The new approved Architect§48 requires the full Integrations handoff and representative fixture validation. Full handoff/export examples are not checked into this checkout. One authorized public-reference read of the cited gist failed CONNECT403; GitHub connector does not support Gist endpoints. No repeated network retries or invented raw provider schema.
+Question: Which versioned repository path supplies Bloom_Integration_Viome_Gist_Review_2026-10-25.md and de-identified representative exported JSON for the approved adapter?
+Options: reviewed handoff plus representative sanitized exports; continue existing canonical structured file/paste input; future documented partner integration after rights/security approval. Recommended: keep current structured intake working, provide versioned source/fixtures for offline adapter work. No passwords, cookies, auth headers or live login are needed. Deferral blocks truthful raw-format recognition/validation, not current structured records or other core journeys. Reconsider only when source access/fixtures change.
+
+
+## FLAGSHIP-SOURCE-2809 — exact visual/interaction blueprint
+
+- Status: BLOCKED_USER_INPUT for exact flagship source/fidelity; independent core fixes continue. Architect c91e41f/b387395 names a Library archive not found by the scoped checkout design search; no callable Library file-access connector is available. Existing design masters remain available.
+- Exact question: What accessible file path or attachment contains `Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip`, including `contracts/UX_BLUEPRINT.md`, `contracts/IMPLEMENTATION_CONTRACT.md` and editable prototype HTML/CSS?
+- Choices: Supply/version the exact archive and contracts; identify an existing accessible checkout path; explicitly approve an alternative versioned specification.
+- Recommended default: Version the exact approved source and preserve existing canonical UI while implementing independent core functionality. The Architect explicitly requires those contracts before claiming target flagship fidelity.
+- Impact of deferral: Exact flagship styling/tap-flow implementation and acceptance remain blocked; food, activity, lab and session correctness need not stop. No substitute concepts or fabricated source verification. Reconsider when the archive or approved alternative becomes available.
