@@ -448,6 +448,7 @@ export default function PrecisionNutrition() {
                           ))}
                         </ul>
                         <p className="panel-note">{g.tracking}</p>
+                        {(g.id==="general"||g.id==="digestive")&&<Link className="text-link" href="/nutrition">Review meals and symptom notes</Link>}
                         {sources(g.sourceIds)}
                       </article>
                     ))

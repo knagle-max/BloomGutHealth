@@ -1,5 +1,12 @@
 export const goalSources = [
   {
+    id: "goal-digestive",
+    title: "NIDDK: Individual diet changes and digestive symptoms",
+    url: "https://www.niddk.nih.gov/health-information/digestive-diseases/irritable-bowel-syndrome/eating-diet-nutrition",
+    type: "Public patient information (IBS)",
+    limitation: "Condition-specific background, last reviewed November 2017. Choosing a comfort goal does not diagnose IBS or establish that this advice applies; special diets require individual professional review.",
+  },
+  {
     id: "goal-general",
     title: "Health Canada: Canada’s food guide snapshot",
     url: "https://food-guide.canada.ca/artifacts/CFG-snapshot-EN.pdf",
@@ -104,6 +111,18 @@ export function goalGuidance(goal: string) {
       ],
       tracking: "Review recorded meals and ingredient details over time. A meal-pattern match is not a diet-quality score or proof of a health improvement.",
       sourceIds: ["goal-general"],
+    };
+  if (/\b(digestive (comfort|tolerance)|gut comfort)\b/.test(g))
+    return {
+      goal,
+      id: "digestive",
+      mapping: "Digestive comfort observation",
+      actions: [
+        "Record usual meals, portions and comfort notes so you can review your own observations over time.",
+        "This goal does not diagnose IBS, establish a food intolerance or select an elimination diet. Review special dietary changes with a clinician or dietitian.",
+      ],
+      tracking: "Review dated meals and symptom notes together. A pattern is not proof that a food caused a symptom; individual tolerance can differ.",
+      sourceIds: ["goal-digestive"],
     };
   return {
     goal,
