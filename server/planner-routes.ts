@@ -1,3 +1,6 @@
+import {contextSchema} from "../shared/precision-nutrition";
+import {checkedFoodPreferences} from "../shared/weekly-planner";
+import {foodPreferenceMatches} from "../shared/food-preference-policy";
 import {mealReviewRevision} from "./meal-review-source";
 import {preferenceRevision,PreferenceRevisionConflict} from "./preference-source";
 import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
@@ -143,6 +146,8 @@ export function registerPlannerRoutes(
         const user = await storage.getUser(req.session.userId!);
         const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
         const preferences = saved.success ? saved.data : defaultPreferences;
+        const context=contextSchema.parse((await storage.getPrecisionContext(req.session.userId!))??{}),checked=checkedFoodPreferences(preferences,context.allergies);
+        if(checked.unknownAllergies.length)return res.status(409).json({error:"Review unrecognized allergy entries in My Biology before prioritizing meals."});
         const meals = await storage.getMeals(req.session.userId!);
         const recent = meals.filter(
           (m) =>
@@ -152,9 +157,9 @@ export function registerPlannerRoutes(
         res.json(
           await prioritizeRecipes(
             recommendMeals(
-              preferences,
+              checked.preferences,
               recent.map((m) => m.mealText),
-            ),
+            ).filter(recipe=>!foodPreferenceMatches(recipe.ingredients,context.allergies).length),
             preferences,
             req.body.aiConsent,
             aiExecutionContext(req.session.userId!, req.body.aiConsent),
@@ -170,16 +175,17 @@ export function registerPlannerRoutes(
       const user = await storage.getUser(req.session.userId!);
       const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
       const preferences = saved.success ? saved.data : defaultPreferences;
+      const context=contextSchema.parse((await storage.getPrecisionContext(req.session.userId!))??{}),checked=checkedFoodPreferences(preferences,context.allergies);
       const meals = await storage.getMeals(req.session.userId!);
       const recent = meals.filter(
         (m) =>
           +new Date(m.loggedAt) >= Date.now() - 14 * 86400000 &&
           +new Date(m.loggedAt) <= Date.now(),
       );
-      const suggestions = recommendMeals(
-        preferences,
+      const suggestions = checked.unknownAllergies.length?[]:recommendMeals(
+        checked.preferences,
         recent.map((m) => m.mealText),
-      );
+      ).filter(recipe=>!foodPreferenceMatches(recipe.ingredients,context.allergies).length);
       const ids = new Set(suggestions.flatMap((r) => r.pathwayIds));
       res.json({
         preferences,
@@ -190,7 +196,7 @@ export function registerPlannerRoutes(
           preferences.goals.includes(c.id as any),
         ),
         recentMeals: recent.length,
-        note: "Curated complete recipes ranked by supported goals and recent food mentions. Recipes are practical translations, not trial-tested interventions. AI ingredient parsing is optional when analyzing meals; this planner does not yet generate unrestricted recipes.",
+        note: (checked.unknownAllergies.length?"Suggestions are withheld because some recorded allergies cannot be matched. Review My Biology. ":"Recorded allergy restrictions were applied. Check exact ingredients, labels and cross-contact; filters are not allergen certification. ")+"Curated complete recipes ranked by supported goals and recent food mentions. Recipes are practical translations, not trial-tested interventions. AI ingredient parsing is optional when analyzing meals; this planner does not yet generate unrestricted recipes.",
       });
     } catch {
       res.status(503).json({ error: "Meal plan could not load." });

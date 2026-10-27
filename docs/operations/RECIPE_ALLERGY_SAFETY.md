@@ -1,0 +1,11 @@
+# Recorded allergy restrictions across recipe suggestions
+
+Core A Must-Fix P0: the plain recipe-library and prioritization handlers previously read food preferences without reading the owner's recorded allergy context. Precision recipe ranking also relied on literal allergy-name conflicts rather than consistently checking category/name aliases. Day/weekly paths already had stronger category restrictions.
+
+The library and prioritization now load the authenticated owner's encrypted context, apply the existing hard restrictions and common category/name matches before returning/ranking candidates, and withhold suggestions for unrecognized allergies. A failed context read returns unavailable, not unrestricted recipes. Medical context is not copied into stored/returned ordinary preferences or forwarded to the optional AI ranker; only its already-filtered candidates and the original food preferences reach that existing interface.
+
+One shared food-preference-policy module holds the existing category aliases plus name matching; sesame includes tahini. Precision recommendations and weekly eligibility apply it too. These are ingredient/name filters, not certified product/allergen or cross-contact safety. No diagnosis, clinical dose, new grant or provider activation is created. Manual consumption logging remains available as a record of what was actually eaten.
+
+The recipe UI only adopts a prioritization result for the same current owner and query basis, with no pending/invalidated source refresh. Old-page/old-restriction results cannot reinsert removed foods. Ordinary source invalidation remains the canonical refresh mechanism; no new revision datastore is introduced.
+
+Evidence: full401 tests PASS;21 focused API/Precision/weekly tests; actual React/HTTP/encrypted-PGlite allergy→recipe/priority→hard restriction save/refetch→late result discarded,320px; types/build/API101+13/source130 PASS. Initial browser harness needed the actual Recipe library tab and display-name helper, corrected before its final passing run. Isolated Neon smoke now checks recorded dairy filtering without copying it into ordinary preferences; existing30 workspace-write assertion is unchanged. Clinical/independent acceptance remains separate.

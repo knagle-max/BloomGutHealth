@@ -727,6 +727,8 @@ try {
     const feedbackSource=await request(`/api/experience/checkins/${feedbackCheckin.id}/feedback`);
     assert.equal(feedbackSource.source.id,feedbackCheckin.id);assert.equal(feedbackSource.feedback,null);assert.match(feedbackSource.revision,/^[a-f0-9]{64}$/);
     assert.deepEqual(await request("/api/experience/records?kind=activity"),[],"Manual activity reader is available before capture is enabled");
+    await request("/api/precision/context","PUT",{allergies:["dairy"]});
+    const allergyLibrary=await request("/api/meal-planner");assert.ok(Array.isArray(allergyLibrary.suggestions));assert.ok(allergyLibrary.suggestions.every(recipe=>recipe.ingredients.every(ingredient=>!ingredient.tags.includes("dairy"))));assert.deepEqual(allergyLibrary.preferences.exclusions,[],"Encrypted allergy context is not copied into ordinary preference fields");
     const activityPayload={title:"Synthetic lunch walk",startedAt:new Date().toISOString(),minutes:25,source:"manual",timeZone:"UTC",effort:null,notes:""},activityHeaders={"Idempotency-Key":randomUUID()};
     const activitySaved=await request("/api/experience/activities","POST",activityPayload,201,activityHeaders);
     const activityReplay=await request("/api/experience/activities","POST",activityPayload,201,activityHeaders);assert.equal(activityReplay.id,activitySaved.id);
@@ -745,7 +747,7 @@ try {
     const quotaDenied=await fetch(base+"/api/experience/records",{method:"POST",headers:{"content-type":"application/json","x-forwarded-proto":"https",origin:base.replace("http:","https:"),cookie},body:"{}",signal:AbortSignal.timeout(30000)});
     assert.equal(quotaDenied.status,429);assert.equal(quotaDenied.headers.get("retry-after"),"60");await quotaDenied.arrayBuffer();
     await request("/api/experience/export");
-    console.log("PASS: actual encrypted session receipt and activity save/replay/correction/deletion and check-in feedback source/save/replay/conflict/clear; shared workspace allowance denies before mutation while private export remains available");
+    console.log("PASS: actual encrypted allergy-filtered recipe source, session receipt and activity save/replay/correction/deletion and check-in feedback source/save/replay/conflict/clear; shared workspace allowance denies before mutation while private export remains available");
   }finally{cookie=priorQuotaCookie;}
   const erased=await request("/api/account","DELETE",{password,confirmation:"DELETE ACCOUNT"});
   assert.equal(erased.scope,"active-application-records");

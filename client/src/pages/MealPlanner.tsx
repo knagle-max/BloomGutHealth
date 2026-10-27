@@ -1,3 +1,4 @@
+import {useAuth} from "@/lib/auth";
 import {useSavedPreferences,preferenceValues,preferenceHeaders} from "@/lib/preferences-source";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { recipeDisplayName } from "@/lib/recipe-display";
@@ -271,9 +272,11 @@ interface Plan {
   recentMeals: number;
 }
 export default function MealPlanner() {
+  const {user}=useAuth(),actor=useRef(user?.id),active=useRef(true),rankedPlan=useRef<Plan|null>(null);actor.current=user?.id;
+  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
   const { settings } = useExperience();
   const plan = useQuery<Plan>({ queryKey: ["/api/meal-planner"] });
-  const currentPlan = plan.fetchStatus === "idle" && !plan.isError ? plan.data : undefined;
+  const currentPlan = plan.fetchStatus === "idle" && !plan.isError&&!plan.isStale ? plan.data : undefined;
   const progress = useQuery<any>({ queryKey: ["/api/meal-planner/progress"] });
   const [selected, setSelected] = useState<string | null>(null);
   const [aiConsent, setConsent] = useState(false);
@@ -291,13 +294,15 @@ export default function MealPlanner() {
   });
   const [editingPreferences, setEditing] = useState(new URLSearchParams(window.location.search).get("preferences") === "1");
   const prioritize = useMutation({
-    mutationFn: async () =>
-      (
-        await apiRequest("POST", "/api/meal-planner/prioritize", { aiConsent })
-      ).json(),
-    onSuccess: (result) => {
+    mutationFn: async (source:{basis:Plan;owner:string}) => {
+      if(!active.current||actor.current!==source.owner)throw Error("Meal prioritization was interrupted. Review the current account.");
+      return (await apiRequest("POST", "/api/meal-planner/prioritize", { aiConsent })).json();
+    },
+    onSuccess: (result,source) => {
+      const state=queryClient.getQueryState(["/api/meal-planner"]);
+      if(!active.current||actor.current!==source.owner||state?.fetchStatus!=="idle"||state.isInvalidated)return;
       queryClient.setQueryData<Plan>(["/api/meal-planner"], (current) =>
-        current ? { ...current, suggestions: result.suggestions } : current,
+        current===source.basis ? (rankedPlan.current={ ...current, suggestions: result.suggestions }) : current,
       );
     },
   });
@@ -358,13 +363,13 @@ export default function MealPlanner() {
           <div className="flex flex-wrap gap-3">
             <Button
               disabled={prioritize.isPending}
-              onClick={() => prioritize.mutate()}
+              onClick={() => {if(currentPlan&&user)prioritize.mutate({basis:currentPlan,owner:user.id});}}
             >
               {prioritize.isPending
                 ? "Prioritizing…"
                 : "Prioritize meals for my preferences"}
             </Button>
-            {prioritize.data && (
+            {prioritize.data&&currentPlan===rankedPlan.current && (
               <p role="status" className="panel-note">
                 {prioritize.data.aiStatus}
               </p>

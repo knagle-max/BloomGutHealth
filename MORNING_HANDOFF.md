@@ -2,7 +2,7 @@
 
 Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
 
-Latest fully verified `76a4a0739f2df690a2722f1d4b2e7f42b425d477`: Actions40453401550 SUCCESS397 and Render dep-dbg32gajnfac739jk5a0 LIVE. Everyday activity6bbc3c8 is also verified396/live. The source review found an actionable ID03 gap: separate reported intolerance warnings and softer taste preferences. Its reader/preservation foundation is locally verified; UI and food-policy integration remain open.
+Latest verified runtime reader `4a01f75f104af285cf9c623ee796d98943b1a586`: Actions40455048622 SUCCESS399; its Render dep-dbg3ajvf3r2c73b5te80 retired after docs successor b387395, now LIVE on dep-dbg3chjcrg8s73b2nucg. Activity6bbc3c8 and Athlete76a4a07 are verified396/397. A normal recipe allergy-context omission is fixed locally with401 passing tests and actual rendered source/refetch proof; publication is next. ID03 softer taste and intolerance UI still remain open.
 
 ## Development summary
 
@@ -21,9 +21,9 @@ Everyday activity is verified end to end: Today Move→Log activity→save/exact
 
 ## Remaining priorities
 
-1. Finish ID03 taste/tolerance separation through the existing preference/health editors and food suggestions, preserving all hard avoids/allergies and encrypted health data. Publish its reader before new UI emission.
+1. Publish the core allergy-filter/cache safety repair (401 local tests and rendered flow pass), then complete ID03 taste/tolerance through the existing editors and suggestions. Its reader is already verified399.
 2. Reconcile approved v0.5 requirement traces and normal core journeys; prioritize a missing food, Everyday, import or Athlete path over further edge matrices. Deferred across-restart offline persistence is explicitly not claimed.
-3. Raw Viome format compatibility is BLOCKED_TECHNICAL: full reviewed handoff/representative export absent; one referenced gist read failed CONNECT403. Existing canonical structured import remains available. Do not guess provider schema or request credentials.
+3. New flagship source/Blueprint intake remains unverified; preserve core-first priority and do not claim target fidelity. Raw Viome format compatibility is BLOCKED_TECHNICAL: full reviewed handoff/representative export absent; one referenced gist read failed CONNECT403. Existing canonical structured import remains available. Do not guess provider schema or request credentials.
 4. Keep native/device/human, independent clinical/legal/design, recovery and provider-rights gates separate. Transition automatically to approved independentv0.6 once actionablev0.5 is exhausted.
 
 ## User decisions and external evidence

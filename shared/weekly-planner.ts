@@ -1,3 +1,4 @@
+import {foodCategory as category,foodPreferenceMatches} from "./food-preference-policy";
 import { z } from "zod";
 import { snapshotFoods } from "./food-snapshot";
 import {
@@ -311,33 +312,6 @@ export function recipeNutrients(recipe: PlanningRecipe, portion = 1) {
     }),
   ) as Record<string, number | null>;
 }
-const aliases: Record<string, string[]> = {
-  seafood: [
-    "seafood",
-    "fish",
-    "shellfish",
-    "salmon",
-    "shrimp",
-    "prawns",
-    "tuna",
-  ],
-  dairy: ["dairy", "milk", "casein", "whey"],
-  gluten: ["gluten", "wheat", "barley", "rye"],
-  nuts: ["nuts", "tree nut", "walnut", "almond"],
-  eggs: ["egg"],
-  soy: ["soy", "soya", "tofu"],
-  legumes: ["legume", "beans", "lentil", "chickpea", "peanut"],
-  alliums: ["allium", "onion", "garlic"],
-  sesame: ["sesame"],
-  mustard: ["mustard"],
-  celery: ["celery"],
-};
-function category(term: string) {
-  const t = term.toLowerCase().trim();
-  return Object.entries(aliases).find(
-    ([key, words]) => words.some((w) => t.includes(w)) || t === key,
-  )?.[0];
-}
 export function checkedFoodPreferences(prefs: DietaryPreferences, allergies:string[]) {
   const unknownAllergies = allergies.filter(
     (a) =>
@@ -362,7 +336,7 @@ export function eligiblePlanningRecipes(prefs:DietaryPreferences, allergies:stri
   const {preferences:checked,unknownAllergies}=checkedFoodPreferences(prefs,allergies);
   return {
     recipes: planningRecipes(custom).filter(
-      (r) => !preferenceConflicts(r, checked).length,
+      (r) => !preferenceConflicts(r, checked).length&&!foodPreferenceMatches(r.ingredients,allergies).length,
     ),
     unknownAllergies,
   };

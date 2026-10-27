@@ -1,3 +1,4 @@
+import {foodPreferenceMatches,unknownAllergyTerms} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
 import { explainGenotypes, genotypeAnnotations } from "./genotype-explanations";
@@ -874,6 +875,8 @@ export function buildPrecisionReport(
     safetyBlocks.push(
       "Recorded conditions, medicines or supplements need clinician/pharmacist review; interaction screening is not comprehensive.",
     );
+  const unknownAllergies=unknownAllergyTerms(context.allergies,recipes.flatMap(recipe=>recipe.ingredients));
+  if(unknownAllergies.length)safetyBlocks.push("Some recorded allergies cannot be matched to recipe ingredients. Review your allergy entries before using personalized meal suggestions.");
   const allergyPrefs = {
     ...prefs,
     dislikes: [...prefs.dislikes, ...context.allergies],
@@ -883,7 +886,7 @@ export function buildPrecisionReport(
       `${l.marker}: ${l.value} ${l.unit}, ${l.flag} (${l.measuredAt.slice(0, 10)})`,
   );
   const ranked = recipes
-    .filter((r) => !preferenceConflicts(r, allergyPrefs).length)
+    .filter((r) => !unknownAllergies.length&&!preferenceConflicts(r, allergyPrefs).length&&!foodPreferenceMatches(r.ingredients,context.allergies).length)
     .map((recipe) => {
       const text = recipe.ingredients.map((i) => i.name).join(" ");
       const reasons: string[] = [],
