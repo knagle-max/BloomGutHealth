@@ -49,3 +49,29 @@ test("positive nutrient amounts remain positive on overview and detail while tru
  assert.equal(formatNutrientAmount(0.11),"0.11");assert.equal(formatNutrientAmount(0.26),"0.26");assert.equal(formatNutrientAmount(35.14),"35.1");assert.equal(formatNutrientAmount(0),"0");
  for(const value of [null,undefined,NaN,Infinity,-1])assert.equal(formatNutrientAmount(value),"Unavailable");
 });
+
+test("small positive source nutrients survive portion scaling and daily aggregation without becoming measured zero", async()=>{
+ const {scaleDatabaseNutrients}=await import('../shared/meal-intelligence');
+ const nutrients=scaleDatabaseNutrients([{grams:5,foodNutrients:[{nutrient:{id:1178},amount:0.003},{nutrient:{id:1093},amount:0}]}],2);
+ const b12=nutrients.find(n=>n.key==='vitamin_b12_ug')!;
+ assert.equal(b12.amount,0.00015);assert.equal(b12.coverage,0.5);
+ const rows=[{intelligence:{nutrients}},{nutritionalData:[{vitamin_b12_ug:0.00025,sodium_mg:0}]}];
+ const original=structuredClone(rows),summary=mealNutritionSummary(rows);
+ assert.ok(Math.abs(summary.totals.vitamin_b12_ug!-0.0004)<1e-15);
+ assert.equal(summary.coverage.vitamin_b12_ug.partial,true);
+ assert.equal(summary.totals.sodium,0);assert.equal(summary.totals.vitamin_d_ug,null);
+ assert.equal(formatNutrientAmount(summary.totals.vitamin_b12_ug),'0.0004');assert.deepEqual(rows,original);
+});
+
+test("a private label's small known amount survives the merged meal estimate and history reader",async()=>{
+ const {analyzeMeal}=await import('../server/meal-intelligence');
+ const {recordedNutritionPeriod}=await import('../server/nutrition-history');
+ const label={source:'manual' as const,id:'small-b12',name:'Synthetic source label',brand:'',servingDescription:'1 serving',servingGrams:1,perServing:{vitamin_b12_ug:0.0003,sodium_mg:0},retrievedAt:'2026-10-27',url:null,notes:[]};
+ const ingredient={name:label.name,grams:0.5,preparation:'Selected label',assumption:'User selected',product:{source:'manual' as const,id:label.id,servings:0.5}};
+ const result=await analyzeMeal('',false,undefined,{store:{getNutritionProducts:async()=>[label]},userId:'synthetic-precision',products:[ingredient]});
+ const b12=result.intelligence.nutrients.find(n=>n.key==='vitamin_b12_ug')!;
+ assert.equal(b12.amount,0.00015);assert.equal(b12.coverage,1);assert.equal(result.nutritionalData[0].vitamin_b12_ug,0.00015);
+ const history=recordedNutritionPeriod([{...result,loggedAt:'2026-10-27T12:00:00Z'}]);
+ assert.equal(history.totals.vitamin_b12_ug,0.00015);assert.equal(history.totals.sodium,0);assert.equal(history.totals.vitamin_d_ug,null);
+ assert.equal(label.perServing.vitamin_b12_ug,0.0003);
+});

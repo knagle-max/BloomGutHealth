@@ -12,7 +12,9 @@ Development branch enhance/bloom-experience, [PR1](https://github.com/knagle-max
 |b0562a2|Neutral recorded bloodwork differences despite unverified measurement comparability; optional professional questions|Actions40461705771 SUCCESS/liveNeon; Render reached LIVE;10 Precision tests; actual five-LDL source/pending/outage/320px journey; clinical comparison gate unchanged|
 |fc6c4fc|Optional encrypted manual exercise-set reader; unaware session edits preserve observations|Actions40462180578 SUCCESS/liveNeon; Renderdep-dbg4d4oae00c73fnudh0 LIVE;3 focused schema/storage/owner/receipt tests|
 |21759a4|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted journey; Actions40463677960 SUCCESS/liveNeon; original Renderdep-dbg4k7vf3r2c73b75jp0 FAILED no port; recovered through startupfix5f7ed6f LIVEdep-dbgahpq9lscs73960ilg|
-|Current local batch|Optional user-controlled rest timer, independent of record/status changes|Published b8c40e9: Actions40514058585 SUCCESS/liveNeon, RenderLIVEdep-dbgajc7f3r2c73ben940; browser-clock/no-write journey and types/build pass|
+|b8c40e9|Optional user-controlled rest timer, independent of record/status changes|Published b8c40e9: Actions40514058585 SUCCESS/liveNeon, RenderLIVEdep-dbgajc7f3r2c73ben940; browser-clock/no-write journey and types/build pass|
+
+Latest report recovery97377c8: normal/file/paste/malformed-response actual PostgreSQL browser journeys pass; RenderLIVEdep-dbgc57c9v7es73ebei1g, Actions40530990663 still in progress. Reader a813911 verified411/liveNeon/RenderLIVE. Current FOOD-02 fix prevents small known nutrients being rounded to false zeros;42 focused tests,6 final precision checks, saved-meal correction browser journey, types/build pass; publication pending.
 
 Earlier verified activity logging, session save receipts, Today skip, lab source/date/unit lineage, calendar timing, routine feedback and visit-only reconnect recovery remain detailed in DEVELOPMENT_LOG.md. Full tests and source transfer do not imply release, clinical, Design or device acceptance.
 

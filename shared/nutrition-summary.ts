@@ -1,3 +1,4 @@
+import { roundNutrientEstimate } from "./nutrition-precision";
 import { nutrientDefinitions } from "./meal-intelligence";
 const fields: Record<string, string> = {
   calories: "calories",
@@ -63,7 +64,7 @@ export function mealNutritionSummary(meals: Array<any>) {
       }
     }
     totals[key] =
-      knownMeals || !meals.length ? Math.round(sum * 100) / 100 : null;
+      knownMeals || !meals.length ? roundNutrientEstimate(sum) : null;
     coverage[key] = {
       knownMeals,
       completeMeals,

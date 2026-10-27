@@ -1,3 +1,4 @@
+import { roundNutrientEstimate } from "./nutrition-precision";
 import { tasteMatches } from "./food-preference-policy";
 import { productRefSchema } from "./products";
 import { goalMealFit } from "./goal-guidance";
@@ -217,7 +218,7 @@ export function scaleDatabaseNutrients(
       key,
       name,
       unit,
-      amount: coverage ? Math.round(amount * 100) / 100 : null,
+      amount: coverage ? roundNutrientEstimate(amount) : null,
       coverage: ingredientCount ? coverage / ingredientCount : 0,
     };
   });

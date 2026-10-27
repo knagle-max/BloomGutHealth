@@ -1,4 +1,4 @@
-# Publish verified Upload recovery, then continue v0.5 core backlog
+# Verify Upload and nutrient estimates, continue v0.5 core backlog
 
 Authorized enhance/bloom-experience / PR1 / existing Render tea-db9toijrjlhs73850cp0 / srv-db9u7mjbc2fs73d86uv0. No main merge, production data/credentials, replacement service or restricted activation. Preserve incoming work. v0.5 incomplete; v0.6 not begun.
 
@@ -9,3 +9,5 @@ Four actual App/HTTP/PostgreSQL variants PASS in /tmp/report-import-ui-{normal-f
 NEXT fetch enhancement branch, preserve incoming changes, commit all UI/helper/QA/maps/contract/records, push, verify exact Actions and existing Render deployment. Then inspect original ID/FOOD P0/P1 requirements against actual current code before selecting next core gap. Do not blanket close stale207/67 ledgers or claim acceptance. No runtime DatabaseStorage in local tests (seeds global database); use injected helper/PGlite.
 
 External blockers unchanged in BLOCKED_USER_INPUT.md: exact flagship editable archive, authentic raw Viome fixture/contract, native/device/clinical/legal/rights/restore/provisioning evidence. These do not block independent core functionality. Original217setUI Renderfailed noport, recovered via5f7 startupfix; do not rewrite that history. Continue autonomously.
+
+Upload97377c8 is pushed/LIVEdep-dbgc57c9v7es73ebei1g; Actions40530990663 in progress. Current FOOD-02 positive nutrient correction ready for commit after final fetch/checks: source scaling/merged labels/summary preserve positive values that cents rounding would erase.42 focused tests+6 final precision tests+actual saved-meal/correction/reload browser PASS; types/build pass. Include new shared/nutrition-precision.ts and refreshed map. Verify exact nextCI/Render. Next concrete trace: AmendmentD locale-suggested unit defaults appears absent (no navigator.language/suggestion path in Profile/experience), while independent selectors exist. Add only explicit, reversible suggestions from nonprecise locale, never overwrite saved choices or infer residence; confirm source first.

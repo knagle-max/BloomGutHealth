@@ -1,3 +1,4 @@
+import { roundNutrientEstimate } from "../shared/nutrition-precision";
 import {intoleranceWarnings} from "../shared/food-preference-policy";
 import {contextSchema} from "../shared/precision-nutrition";
 import {executeMeteredAI,aiExecutionContext,AIExecutionUnavailable,type AIExecutionContext} from "./metered-ai";
@@ -77,9 +78,7 @@ function mergeNutrition(
       amount:
         n.amount === null && b.nutrients[index].amount === null
           ? null
-          : Math.round(
-              ((n.amount ?? 0) + (b.nutrients[index].amount ?? 0)) * 100,
-            ) / 100,
+          : roundNutrientEstimate((n.amount ?? 0) + (b.nutrients[index].amount ?? 0)),
       coverage: totalCount
         ? (n.coverage * aCount + b.nutrients[index].coverage * bCount) /
           totalCount
