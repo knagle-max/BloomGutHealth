@@ -570,7 +570,7 @@ export function recommendMeals(
   recentMeals: string[] = [],
 ) {
   // A broad goal exposes the existing eligible library without a health-score bonus.
-  const broadGoal = prefs.goals.some(goal => ["general", "digestive"].includes(goalGuidance(goal).id));
+  const broadGoal = prefs.goals.some(goal => ["general", "digestive", "body", "training"].includes(goalGuidance(goal).id));
   const eligible = recipes.filter(
     (r) =>
       !preferenceConflicts(r, prefs).length &&

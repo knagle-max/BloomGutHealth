@@ -449,7 +449,9 @@ export default function PrecisionNutrition() {
                         </ul>
                         <p className="panel-note">{g.tracking}</p>
                         {(g.id==="general"||g.id==="digestive")&&<Link className="text-link" href="/nutrition">Review meals and symptom notes</Link>}
-                        {sources(g.sourceIds)}
+                        {g.id==="body"&&<Button variant="outline" onClick={()=>openSource("progress")}>Record a dated body measurement</Button>}
+                        {g.id==="training"&&<Link className="text-link" href="/activity">Review or log activity</Link>}
+                        {g.sourceIds.length>0&&sources(g.sourceIds)}
                       </article>
                     ))
                   ) : (

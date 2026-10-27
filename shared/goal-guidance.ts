@@ -124,6 +124,30 @@ export function goalGuidance(goal: string) {
       tracking: "Review dated meals and symptom notes together. A pattern is not proof that a food caused a symptom; individual tolerance can differ.",
       sourceIds: ["goal-digestive"],
     };
+  if (/\bbody (composition|measurements)\b/.test(g))
+    return {
+      goal,
+      id: "body",
+      mapping: "Dated body-measurement tracking",
+      actions: [
+        "If monitoring weight or waist is appropriate for you, use a dated measurement check-in with your chosen units and a consistent method.",
+        "Weight and waist observations do not directly measure body-fat composition. This goal does not create a calorie deficit or change your nutrition targets.",
+      ],
+      tracking: "Review dated observations rather than treating the latest Profile value as a weight history. Missing measurements remain unknown.",
+      sourceIds: [] as string[],
+    };
+  if (/\btraining\b/.test(g))
+    return {
+      goal,
+      id: "training",
+      mapping: "Activity and training record review",
+      actions: [
+        "Record the activity or training you choose to report, including its date, duration and optional self-reported effort.",
+        "Keep plans separate from work recorded as completed. This goal does not prescribe training load, readiness or nutrition targets.",
+      ],
+      tracking: "Review your dated activity and training records. A missing entry is unknown rather than evidence of a rest day.",
+      sourceIds: [] as string[],
+    };
   return {
     goal,
     id: "unmapped",
