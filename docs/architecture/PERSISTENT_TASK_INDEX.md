@@ -12,6 +12,8 @@ This is the **short, persistent task ledger** for iterative and overnight Codex 
 
 > **PRODUCT OWNER TASK-SELECTION OVERRIDE — 2026-10-26:** Read [Core Functionality Execution Directive](CORE_FUNCTIONALITY_EXECUTION_DIRECTIVE_2026-10-26.md) **before choosing work**. Finish normal end-to-end user journeys first. Log rare nonblocking edge cases for stabilization, rather than repeatedly implementing them. Immediately fix real core blockers, misleading nutrition/source results, data loss/duplication, privacy/security issues, and medically unsafe claims. Old P0 labels require impact-based triage, not blind priority. This affects implementation sequence, **not** safety or release gates. Directive commit `3d2c6f8`.
 
+> **Branding flagship architect integration (2026-10-26):** Read [BRANDING_FLAGSHIP_UX_ARCHITECT_REVIEW_2026-10-26.md](BRANDING_FLAGSHIP_UX_ARCHITECT_REVIEW_2026-10-26.md), commit `c91e41f`. Covers MKT-PREM-2701–2708, MKT-FLAG-2801–2808 and **MKT-FLAG-UX-2809**. Exact editable `contracts/UX_BLUEPRINT.md` + `contracts/IMPLEMENTATION_CONTRACT.md` and responsive HTML/CSS archive are required at implementation intake, not concept images alone. **Core Functionality Execution Directive remains higher priority**: integrate target styling/UX only with active normal-working user journeys; defer independent redesign/polish; retain P0 data, privacy and medical safety. Design owns fidelity signoff. Status ARCHITECT_REVIEWED, app implementation unverified.
+
 ## Current high-leverage index (verify latest repo before changing status)
 
 | ID | Priority | End-to-end outcome / acceptance | Dependencies / source | Status / evidence |
