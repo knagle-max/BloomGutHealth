@@ -623,6 +623,7 @@ export const contextSchema = z
     currentSupplements: z.array(shortText).max(40).default([]),
     conditions: z.array(shortText).max(30).default([]),
     allergies: z.array(shortText).max(30).default([]),
+    intolerances: z.array(shortText).max(30).optional(),
     pregnancy: z.enum(["no", "yes", "unknown"]).default("unknown"),
     ageGroup: z.enum(["adult", "under18", "unknown"]).default("unknown"),
     safetyReviewed: z.boolean().default(false),

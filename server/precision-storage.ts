@@ -36,11 +36,17 @@ export class PrecisionStorage {
     userId: string,
     context: PrecisionContext,
   ): Promise<void> {
-    const encryptedContext = encryptPrecision(context, userId);
     await this.db.transaction(async (tx) => {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
+      let next=context;
+      if(context.intolerances===undefined){
+        const [existing]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+        const previous=existing?decryptPrecision(existing.encryptedContext,userId):undefined;
+        if(previous&&typeof previous==="object"&&"intolerances" in previous&&previous.intolerances!==undefined)next={...context,intolerances:contextSchema.shape.intolerances.parse(previous.intolerances)};
+      }
+      const encryptedContext=encryptPrecision(next,userId);
       await tx
         .insert(precisionProfiles)
         .values({ userId, encryptedContext })

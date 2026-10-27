@@ -2,7 +2,7 @@
 
 Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
 
-Latest fully verified `6bbc3c8473322769d0ab7f1339005ae8a4a1896b`: Actions40451628962 SUCCESS396 and Render dep-dbg2pgk9v7es73dvpljg LIVE. Everyday activity capture is published and verified. The observed Athlete duplicate-save bug is locally repaired and awaits its publication checks.
+Latest fully verified `76a4a0739f2df690a2722f1d4b2e7f42b425d477`: Actions40453401550 SUCCESS397 and Render dep-dbg32gajnfac739jk5a0 LIVE. Everyday activity6bbc3c8 is also verified396/live. The source review found an actionable ID03 gap: separate reported intolerance warnings and softer taste preferences. Its reader/preservation foundation is locally verified; UI and food-policy integration remain open.
 
 ## Development summary
 
@@ -17,11 +17,11 @@ Latest fully verified `6bbc3c8473322769d0ab7f1339005ae8a4a1896b`: Actions4045162
 
 Earlier active lab-source, immutable date/unit lineage, explicit deletion, atomic reimport, local source-text intake and Today midnight/resume fixes remain verified in DEVELOPMENT_LOG.md. Existing source/medical/tenant/consent gates remain required.
 
-Everyday activity is verified end to end: Today Move→Log activity→save/exact uncertain retry→correct duration→Today→Progress→delete. It uses the existing encrypted experience store and owned routes; duration-only correction preserves source instant/timezone. General movement does not become an Athlete workout or infer energy expenditure, RPE, climate or fueling targets. Full396 tests PASS, types/build/API100+13/source130 PASS, actual encrypted rendered flow and previous movement regression PASS, keyboard320px. Matched evidence: docs/reviews/everyday-activity. Isolated Neon smoke includes create/replay/correct/delete. Capture6bbc3c8 is verified in Actions/Render. Athlete session save receipts now fix a reproduced normal retry duplication; green actual App/API yields one90-minute calendar entry, with3 focused tests/types/build/source checks passing. Its exact publication is next.
+Everyday activity is verified end to end: Today Move→Log activity→save/exact uncertain retry→correct duration→Today→Progress→delete. It uses the existing encrypted experience store and owned routes; duration-only correction preserves source instant/timezone. General movement does not become an Athlete workout or infer energy expenditure, RPE, climate or fueling targets. Full396 tests PASS, types/build/API100+13/source130 PASS, actual encrypted rendered flow and previous movement regression PASS, keyboard320px. Matched evidence: docs/reviews/everyday-activity. Isolated Neon smoke includes create/replay/correct/delete. Capture6bbc3c8 is verified in Actions/Render. Athlete session save receipts now fix a reproduced normal retry duplication; green actual App/API yields one90-minute calendar entry, with3 focused tests/types/build/source checks passing. Actions397 and Render are verified for76a4a07.
 
 ## Remaining priorities
 
-1. Publish/verify the Athlete session-save repair, exact Actions/Render and PR metadata.
+1. Finish ID03 taste/tolerance separation through the existing preference/health editors and food suggestions, preserving all hard avoids/allergies and encrypted health data. Publish its reader before new UI emission.
 2. Reconcile approved v0.5 requirement traces and normal core journeys; prioritize a missing food, Everyday, import or Athlete path over further edge matrices. Deferred across-restart offline persistence is explicitly not claimed.
 3. Raw Viome format compatibility is BLOCKED_TECHNICAL: full reviewed handoff/representative export absent; one referenced gist read failed CONNECT403. Existing canonical structured import remains available. Do not guess provider schema or request credentials.
 4. Keep native/device/human, independent clinical/legal/design, recovery and provider-rights gates separate. Transition automatically to approved independentv0.6 once actionablev0.5 is exhausted.

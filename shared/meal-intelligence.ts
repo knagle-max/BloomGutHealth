@@ -25,6 +25,7 @@ const tags = [
 export const preferenceSchema = z
   .object({
     dislikes: z.array(z.string().trim().min(1).max(60)).max(30).default([]),
+    softDislikes: z.array(z.string().trim().min(1).max(60)).max(30).optional(),
     exclusions: z.array(z.enum(tags)).max(10).default([]),
     dietaryPattern: z
       .enum(["omnivore", "vegetarian", "vegan"])
