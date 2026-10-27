@@ -2,7 +2,7 @@
 
 Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com), workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete; v0.6 has not begun. Owner core-functionality override3d2c6f8/b04b9b2 is incorporated: normal useful journeys first, noncritical edges deferred. No main merge, production-data/credential changes or restricted activation.
 
-Latest fully verified runtime `45960eaa118cd6ce76068b31320abf3b97407734`: recipe suggestions/prioritization now enforce owned recorded allergy restrictions. Actions40459385080 SUCCESS401, including isolatedNeon smoke; existing Render dep-dbg3vvajnfac739kfvs0 LIVE. ID03 ordinary taste/intolerance controls are implemented with20 focused tests, actual encrypted rendered save/reload/correction and allergy-source regression PASS; full402 PASS233528ms; publication next. v0.5 is not complete.
+Latest fully verified runtime `141a0caf357529d26ee288e6d45a167fa85f073d`: distinct softer taste preferences and encrypted reported-intolerance warnings. Actions40460318163 SUCCESS402 including isolatedNeon smoke; Renderdep-dbg44c7b9u1s73fs7b20 LIVE. Allergy fix45960ea verified401/live. Saved-meal review/correction before logging is now implemented and locally verified, publication next. v0.5 remains incomplete.
 
 ## Development summary
 
@@ -42,3 +42,8 @@ No new credential or user decision was needed for the work above. Full questions
 OFF, incident-disabled genetic ranking, unapproved model outputs and controller activation remain disabled. Managed recovery, native device/VoiceOver/Tester1, independent clinical/legal/design/study acceptance and new original packs are not claimed complete.
 
 After answers, native scope/assets/approved catalogue/recovery and reviewed provisioning can resume independently. Unblocked file intake and whole-app correctness work can resume immediately without waiting for them.
+
+
+## FOOD-04 saved-source review — Core Journey A P1
+Saved meals now offer Review & adjust before logging: owned encrypted template→validated 2× ingredient/product snapshot→existing LogMeal/MealAnalysis review→correct amount/recalculate→explicit confirmation→one journal row. Source failures withhold load and retry; description changes stop reusing mismatched saved ingredients; source and previous meals remain unchanged. Existing quick log and exact save receipts remain. Actual App/API/encryptedPGlite source failure/retry/correction/owner/320px PASS /tmp/saved-review-journey-final.log;6 template/experience/review-source tests PASS /tmp/saved-review-tests.log, types/build PASS. No new API/table/provider. Contract SAVED_MEAL_REVIEW.md; matched workflow evidence docs/reviews/saved-meal-review (not list-only near-identical images). Publication next, no hosted/human acceptance inferred.
+ID03 141a0caf357529d26ee288e6d45a167fa85f073d now Actions40460318163 SUCCESS402 including isolatedNeon smoke; Renderdep-dbg44c7b9u1s73fs7b20 LIVE. Allergy45960ea verified401/live.

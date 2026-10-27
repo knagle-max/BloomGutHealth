@@ -1,3 +1,4 @@
+import SavedMealSource from "@/components/SavedMealSource";
 import {useReconnectRetry} from "@/lib/useReconnectRetry";
 import {mealNutritionSummary} from "@shared/nutrition-summary";
 import {refreshMealSources} from "@/lib/meal-cache";
@@ -74,6 +75,7 @@ export default function LogMeal() {
     Record<"bloating" | "energy" | "comfort" | "clarity", number | null>
   >({ bloating: null, energy: null, comfort: null, clarity: null });
   const [products, setProducts] = useState<Ingredient[]>([]);
+  const [savedIngredients,setSavedIngredients]=useState<{owner:string;description:string;ingredients:Ingredient[]}|null>(null);
   const [method,setMethod]=useState<FoodEntryMethod|null>(resolveFoodEntryRoute(params.get("method"))||(params.has("productQuery")?"search":params.has("description")||recipe||catalogueId?"describe":null));
   const capabilities=useCapabilities(),photoPreview=capabilities.photoPreview,photoAllowed=!!photoPreview;
   const publicMethods=availableFoodEntryMethods(capabilities.data?.foodEntry);
@@ -105,13 +107,14 @@ export default function LogMeal() {
   function draftPayload(ingredients?:Ingredient[]){
     const selected=catalogueEnabled?catalogueSelection.data:undefined;
     const catalogueItem:Ingredient|undefined=selected?{name:selected.description.slice(0,120),grams:selected.grams,preparation:selected.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:selected.fdcId}}:undefined;
-    const complete=ingredients||(catalogueItem?[catalogueItem,...products]:undefined);
+    const loaded=savedIngredients&&savedIngredients.owner===user?.id&&savedIngredients.description===description&&!catalogueEnabled?savedIngredients.ingredients:undefined;
+    const complete=ingredients||(loaded?[...loaded,...products]:catalogueItem?[catalogueItem,...products]:undefined);
     return {mealText:selected?`${selected.grams} g ${selected.description}`:description.trim(),products,...(complete?{ingredients:complete}:{}),mealType,aiConsent,mealContext:{eatenAt:new Date(eatenAt).toISOString(),portion,symptoms,...((restaurant.trim()||restaurantVisited)?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{})}};
   }
   type ReviewPayload=ReturnType<typeof draftPayload>;
   type AnalysisResult={intelligence:MealIntelligence;nutritionalData:unknown[]};
   type ReviewSnapshot={payload:ReviewPayload;analysis:AnalysisResult;revision:string;basis:string;owner:string};
-  const basis=JSON.stringify([user?.id,description,products,catalogueEnabled,catalogueSelection.data?.fdcId,catalogueSelection.data?.grams,mealType,eatenAt,portion,symptoms,restaurant,market,restaurantVisited,aiConsent]);
+  const basis=JSON.stringify([user?.id,description,savedIngredients,products,catalogueEnabled,catalogueSelection.data?.fdcId,catalogueSelection.data?.grams,mealType,eatenAt,portion,symptoms,restaurant,market,restaurantVisited,aiConsent]);
   const basisRef=useRef(basis);basisRef.current=basis;
   const [review,setReview]=useState<ReviewSnapshot|null>(null),[reviewDirty,setReviewDirty]=useState(false),[reviewRejected,setReviewRejected]=useState(false);
   const saveAttempt=useRef<{payload:string;revision:string;key:string;basis:string}|null>(null);
@@ -134,7 +137,7 @@ export default function LogMeal() {
     if(!mounted.current||actor.current!==v.snapshot.owner||saveAttempt.current?.key!==v.key)return;
     saveAttempt.current=null;
     if(basisRef.current!==v.snapshot.basis){toast({title:"Previous entry saved",description:"Your newer draft is still here. Check the journal before logging it."});return;}
-    setSavedMeal(meal);setReview(null);setReviewDirty(false);setReviewRejected(false);setDescription("");setProducts([]);
+    setSavedMeal(meal);setReview(null);setReviewDirty(false);setReviewRejected(false);setDescription("");setProducts([]);setSavedIngredients(null);
     setPhotoVisited(false);setMethodNotice("");setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");setCatalogueEnabled(false);
     toast({title:"Added to your journal",description:meal.totalCalories===null?"Your meal is saved; some nutrition remains unavailable.":"Your meal is saved. Linked nutrition totals are being refreshed."});
   },onError:error=>{if(error instanceof ApiRequestError&&error.status===409)setReviewRejected(true);},onSettled:refreshMealSources});
@@ -182,6 +185,7 @@ export default function LogMeal() {
       </div>
       <fieldset disabled={inputFrozen} className="space-y-3">
       <legend className="sr-only">Choose foods to log</legend>
+      {params.get("template")&&<SavedMealSource id={params.get("template")!} servings={Number(params.get("servings")??1)} onLoad={(text,ingredients)=>{if(!user||inputFrozen)return;setDescription(text);setProducts([]);setCatalogueEnabled(false);setSavedIngredients({owner:user.id,description:text,ingredients});setReview(null);setReviewDirty(false);setReviewRejected(false);setSavedMeal(null);changeMethod("describe");requestAnimationFrame(()=>document.getElementById("food-input")?.focus());}}/>}
       <section className={`bloom-panel space-y-3 ${!method?"food-entry-selection":""}`}>
         <h2 ref={chooserHeading} tabIndex={-1} className={!method?"sr-only":undefined}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
         {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
@@ -240,6 +244,7 @@ export default function LogMeal() {
         <fieldset disabled={inputFrozen} className="space-y-6">
           <legend className="sr-only">Meal details</legend>
           <h2>Meal details</h2>
+          {savedIngredients&&<p className="panel-note">{savedIngredients.description===description?"Saved ingredient identities and portions are loaded. Use Review meal to adjust individual amounts before saving.":"The description changed. Review it again to identify the new foods; the saved ingredients will not be reused."}</p>}
           {(restaurant||restaurantVisited)&&<p className="panel-note">Restaurant context (entered by you): {restaurant||"restaurant not specified"} · {market||"market not specified"}. This context does not verify the nutrition source.</p>}
           <MealTypeSelector selected={mealType} onChange={setMealType} />
           <div className="space-y-2">
