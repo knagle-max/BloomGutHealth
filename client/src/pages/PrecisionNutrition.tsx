@@ -1,3 +1,4 @@
+import {labDateText} from "@shared/lab-history";
 import LabDateCorrectionDialog from "@/components/LabDateCorrectionDialog";
 import type {AnyLabHistoryRow} from "@shared/lab-history";
 import LabSourceHistory from "@/components/LabSourceHistory";
@@ -1259,7 +1260,7 @@ export default function PrecisionNutrition() {
                           {t.points
                             .map(
                               (p) =>
-                                `${p.date.slice(0, 10)}: ${display(p.value)} ${p.unit}`,
+                                `${labDateText(p.date,p.sourceReport,p.dateCorrection)}: ${display(p.value)} ${p.unit}`,
                             )
                             .join(" → ")}
                         </p>

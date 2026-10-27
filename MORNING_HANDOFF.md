@@ -14,7 +14,7 @@ Branch `enhance/bloom-experience`, [PR1](https://github.com/knagle-max/BloomGutH
 | `dbe3f69` | Paste/manual/date editing require an explicit occurrence for repeated clocks; nonexistent spring times rejected; date-only precision preserved | Actions40394783399 SUCCESS377; Render live |
 | `15cf2d9` | Atomic reimport endpoint compares current owned source matches under the account lock; explicit separate results, exact receipts and no legacy fallback | Actions40396269159 SUCCESS378 including real concurrent Neon201/409/review/replay; Render dep-dbfrgp7avr4c73a3u8n0 LIVE |
 
-Latest fully verified reader SHA: `6857d376b83a3b1ec2a791ab09704de501caf516`; Actions40428485309 SUCCESS391 and Render dep-dbfv8is9v7es73ds900g reached LIVE. Response action `a625c32c8b959fdf558b17229bd618b8a5c25655` is LIVE on Render dep-dbfvb9c9v7es73dsc460; Actions40429071687 is running. Its392-test local suite, types/build and encrypted regression checks pass.
+Latest fully verified SHA: `37605802afa921b9bb99e49e79fc29c9b08a6c8d`; Actions40430319733 SUCCESS392 and Render dep-dbfvgui9lscs738pj1tg reached LIVE. Feedback reader6857d37 SUCCESS391, actiona625c32 and UI602dcb6 SUCCESS392/live. Recorded trial/bloodwork calendar a5a7d68 has7 focused tests/types/build/actual encrypted rendered checks passing; exact Actions40431328309 and Render publication checks are in progress.
 
 Ordinary importer adoption is verified: frozen source/key/review snapshots, partial acknowledgments, renewed review only after a changed-match409, exact receipt validation, uncertain-response replay after another match, actor/navigation lifetime guards and keyboard focus recovery. Actual encrypted App/API, ordinary/grouped and NewYork clock/date/source regressions passed.
 
@@ -24,13 +24,17 @@ Today midnight/resume source freshness is verified live: old-code stale date/sou
 
 Shared workspace admission is verified live: ordinary writes have a shared30/minute actor allowance, old costly/auth ceilings remain, outage/deadline fails closed before handlers, aliases are covered, late results cannot resume and privacy export remains available.389CI and actual Neon quota/export checks passed.
 
-BIO-09 routine-focus responses now have protected readers, an owned revision/receipt action, and locally verified optional Weekly Review UI. Six explicit self-reports retain their original context; uncertain retries cannot duplicate writes or overwrite newer responses, and newer ratings/notes remain intact. Full392 local action tests and final6 regressions pass; the actual encrypted rendered journey covers lost/malformed acknowledgments, conflicts/review, clear, source outage, owner isolation and320px keyboard flow. Matched synthetic before/after evidence is in docs/reviews/focus-feedback. UI publication and exact CI/Render verification remain the immediate step. No food identity, allergy or automatic clinical/personalization behavior is inferred.
+BIO-09 routine-focus responses are verified in Actions and Render: protected readers, owned revision/receipt action and optional Weekly Review UI. Six self-reports retain original context; uncertain retries preserve newer responses/ratings/notes.392 tests and isolated Neon save/replay/conflict/clear smoke pass. Actual encrypted rendered lost/malformed/retry/conflict/clear/outage/320px checks pass. This slice does not establish food identity, allergy, efficacy or automatic personalization.
+
+Today Skip/Show suggestion is verified: visit-only owner/day/action scope, no account writes or completion, explicit keyboard focus recovery and no automatic focus stealing.10 focused tests and Today/clock browser checks pass.
+
+LAB-05 calendar context is implemented and locally verified: existing saved trial intervals alongside active confirmed lab dates, unknown legacy calendar context retained, no effect/adherence/prespecification/comparability inference. Mode/owner/read-failure/retry/320px checks pass; matched evidence docs/reviews/lab-routine-timing. Exact CI/deployment checks continue. A further UTC date-label bug in the legacy My Biology and pending-unit views was reproduced and fixed locally with the shared source-aware date helper; green rendered/type/build checks pass.
 
 ## Remaining priorities
 
-1. Verify exact action/UI Actions and Render; publish final SHA and status.
-2. Continue approved v0.5 source-trace reconciliation, including broader food/supplement feedback identity and whole-app accessibility/source coverage. Routine-focus feedback is one concrete slice, not proof that all BIO09 is complete.
-3. Carry independent human/device/clinical/design/recovery/licensing gates separately; start approved independent v0.6 when actionable v0.5 is exhausted.
+1. Publish the date-label fix and verify exact calendar/date-fix Actions and existing Render; update PR status.
+2. Continue approved v0.5 trace gaps, including FOOD12 offline confirmed-save recovery and whole-app source/accessibility coverage. Current session-only manual exact retry does not prove a durable offline queue. Routine feedback is one BIO09 slice, not full personalization acceptance.
+3. Carry independent native/human/device/clinical/design/recovery/licensing gates separately; begin approved independentv0.6 when actionablev0.5 is exhausted.
 
 ## User decisions and external evidence
 
