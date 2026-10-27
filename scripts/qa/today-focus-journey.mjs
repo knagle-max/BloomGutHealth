@@ -6,8 +6,8 @@ const vite=await createServer({server:{host:'127.0.0.1',port:5188,strictPort:tru
 const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});
 const page=await browser.newPage({viewport:{width:375,height:1000},timezoneId:'America/Regina'});await page.clock.install({time:new Date('2026-10-23T18:00:00Z')});
 page.setDefaultTimeout(10000);
-let scenario='session';const errors=[];page.on('pageerror',e=>errors.push(e.message));
-await page.route('**/api/**',async route=>{const p=new URL(route.request().url()).pathname;let json=[];
+let scenario='session',writes=0;const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.route('**/api/**',async route=>{const p=new URL(route.request().url()).pathname;let json=[];if(route.request().method()!=='GET')writes++;
 if(p==='/api/auth/me')json={user:{id:'synthetic',username:'Today fixture'}};
 else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
 else if(p==='/api/biology/registry')json={entities:[],relationships:[],summary:'Synthetic registry',version:'synthetic'};
@@ -23,7 +23,9 @@ if(state==='session')await focus.getByRole('link',{name:'Review session fuel'}).
 if(state==='goal')await focus.getByText(/saved focus: Protein distribution/).waitFor();
 if(state==='partial')await focus.getByRole('link',{name:'Review my meal estimates'}).waitFor();
 if(state==='error')await focus.getByText(/Training schedule unavailable/).waitFor();
+const original=(await focus.locator('.hero-button').innerText());await focus.getByRole('button',{name:'Skip for now',exact:true}).click();await focus.getByRole('heading',{name:'Suggestion paused',exact:true}).waitFor();assert.equal(await focus.locator('a.hero-button').count(),0);await page.waitForFunction(()=>document.activeElement?.id==='today-action-title');await focus.getByRole('button',{name:'Show suggestion',exact:true}).click();await focus.locator('a.hero-button').waitFor();assert.equal(await focus.locator('a.hero-button').innerText(),original);
 await focus.getByText('Why this?').click();await focus.getByRole('link',{name:'Synthetic source reference'}).waitFor();
 }
+await page.goto('http://127.0.0.1:5188/');await page.locator('.today-focus').getByRole('button',{name:'Skip for now',exact:true}).click();await page.getByRole('heading',{name:'Suggestion paused',exact:true}).waitFor();await page.locator('.today-focus').getByRole('link',{name:'Adjust',exact:true}).focus();await page.clock.runFor(12*60*60*1000+60000);await page.locator('.today-focus').getByRole('link',{name:'Add food',exact:true}).waitFor();assert.equal(await page.getByRole('heading',{name:'Suggestion paused',exact:true}).count(),0,'A local-day change cannot carry the previous suggestion pause');assert.equal(writes,0,'Skip/undo changes no account records');assert.equal(await page.evaluate(()=>document.activeElement?.textContent),'Adjust','Automatic clock/source refresh does not steal keyboard focus');
 await page.goto('http://127.0.0.1:5188/explore');await page.getByRole('textbox',{name:'Find a food',exact:true}).fill('Kit Kat');await page.getByRole('link',{name:'Find a packaged food or enter its label'}).click();await page.getByRole('textbox',{name:'Product name / barcode'}).waitFor();assert.equal(await page.getByRole('textbox',{name:'Product name / barcode'}).inputValue(),'Kit Kat');await page.getByText('USDA Branded Foods is not configured.',{exact:true}).waitFor();
-assert.deepEqual(errors,[]);console.log('PASS: synthetic session/goal/partial/unavailable Today states and evidence disclosure; Explore→product query handoff');}catch(e){console.error(errors);console.error((await page.locator('body').innerText()).slice(0,3500));throw e;}finally{await browser.close();await vite.close();}
+assert.deepEqual(errors,[]);console.log('PASS: synthetic session/goal/partial/unavailable Today skip/undo, focus recovery, midnight reset, no writes and evidence disclosure; Explore→product query handoff');}catch(e){console.error(errors);console.error((await page.locator('body').innerText()).slice(0,3500));throw e;}finally{await browser.close();await vite.close();}

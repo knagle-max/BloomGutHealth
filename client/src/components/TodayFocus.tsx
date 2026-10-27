@@ -1,17 +1,22 @@
+import {useEffect,useRef,useState} from "react";
+import {useAuth} from "@/lib/auth";
 import CompanionHero from "./CompanionHero";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import type { PrecisionReport } from "@shared/precision-nutrition";
 import { todayContextAction } from "@shared/today-focus";
-import { useExperienceRecords } from "@/lib/experience";
+import { localDate,useExperienceRecords } from "@/lib/experience";
 export default function TodayFocus({ now,mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { now?:Date;mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
+  const {user}=useAuth(),[skipped,setSkipped]=useState<string|null>(null),pendingFocus=useRef(false),current=now||new Date();
   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
     goal = report.fetchStatus === "idle" && !report.isError ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
   const sessions = useExperienceRecords("session");
-  const action = todayContextAction({ now,mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
+  const action = todayContextAction({ now:current,mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
+  const actionKey=JSON.stringify([user?.id,localDate(current),action]),paused=!loading&&!journalError&&skipped===actionKey;
+  useEffect(()=>{if(pendingFocus.current){pendingFocus.current=false;document.getElementById('today-action-title')?.focus();}},[skipped,paused]);
   const sessionAction = action.href === '/athlete/fueling';
   return (
-    <CompanionHero title={loading ? 'Make space for today' : journalError ? 'Keep a place for your day' : !mealCount ? 'Start with a meal' : missingNutritionCount ? 'A clearer food picture' : sessionAction ? 'Fuel your planned session' : 'One good next step'} eyebrow="A LITTLE CARE, EVERY DAY" reason={action.reason} actions={<><Link className="hero-button" href={action.href}>{action.label}</Link><Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust</Link></>}>
+    <CompanionHero title={paused ? 'Suggestion paused' : loading ? 'Make space for today' : journalError ? 'Keep a place for your day' : !mealCount ? 'Start with a meal' : missingNutritionCount ? 'A clearer food picture' : sessionAction ? 'Fuel your planned session' : 'One good next step'} eyebrow="A LITTLE CARE, EVERY DAY" reason={paused?'Paused for this visit. Bring the suggestion back when you are ready.':action.reason} actions={<>{paused?<button type="button" className="hero-button" onClick={()=>{pendingFocus.current=true;setSkipped(null);}}>Show suggestion</button>:<><Link className="hero-button" href={action.href}>{action.label}</Link>{!loading&&!journalError&&<button type="button" className="text-link" onClick={()=>{pendingFocus.current=true;setSkipped(actionKey);}}>Skip for now</button>}</>}<Link className="text-link" href="/precision?tab=overview&edit=goals">Adjust</Link></>}>
       {report.error && (
         <p role="alert" className="panel-note">
           Your saved focus could not load. This general routine suggestion

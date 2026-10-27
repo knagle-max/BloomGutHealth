@@ -11,7 +11,7 @@ export default function CompanionHero({ title, eyebrow, reason, actions, childre
     icon?: string;
 }) {
     return <section className={`today-focus ${className}`} aria-labelledby={headingId}>
-  <div className="today-focus-heading"><div><p className="eyebrow">{eyebrow}</p><h2 id={headingId}>{title}</h2></div><img src={icon} width={54} height={54} alt="" className="today-focus-mark"/></div>
+  <div className="today-focus-heading"><div><p className="eyebrow">{eyebrow}</p><h2 id={headingId} tabIndex={-1}>{title}</h2></div><img src={icon} width={54} height={54} alt="" className="today-focus-mark"/></div>
   <div className="today-focus-actions">{actions}</div><p className="today-focus-reason">{reason}</p>{children}
  </section>;
 }
