@@ -17,3 +17,11 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
 
 /** Prefer explicitly entered calendar text; do not reconstruct missing legacy entry context. */
 export function labDateText(timestamp:string,source?:Lab['sourceReport'],correction?:Lab['dateCorrection']){return correction?.enteredDate||source?.enteredDate||timestamp.slice(0,10);}
+
+/** Arithmetic over recorded canonical points, independent of clinical comparability. */
+export function recordedLabDifference(points: readonly {date:string;value:number;unit:string}[]) {
+ if(points.length<2||new Set(points.map(point=>Date.parse(point.date))).size!==points.length)return null;
+ const first=points[0],last=points[points.length-1];
+ if(!points.every(point=>Number.isFinite(point.value)&&Number.isFinite(Date.parse(point.date))&&point.unit===first.unit)||Date.parse(last.date)<=Date.parse(first.date))return null;
+ return last.value-first.value;
+}

@@ -1136,7 +1136,7 @@ export function buildPrecisionReport(
           : null,
         note: comparable
           ? "Same reported lab, known method and relevant fasting status; change is observational, not proof of dietary causation."
-          : "Need separate dates and matching lab, method and relevant fasting conditions before a comparison is shown.",
+          : "Measurement comparability is unverified. Separate dates and matching laboratory, method and relevant fasting conditions are needed to assess a change; recorded points do not establish clinical significance.",
       },
     ];
   });

@@ -1,3 +1,4 @@
+import {recordedLabDifference} from "../shared/lab-history";
 import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
@@ -276,13 +277,16 @@ test("repeat biomarker comparison requires known compatible methods, dates and r
   assert.ok(r.trends[0].comparable);
   assert.ok(Math.abs(r.trends[0].change! + 0.5) < 0.001);
   const incompatible = buildPrecisionReport(
-    [first, record("c", "lab", lab({ method: "unknown" }))],
+    [first, record("c", "lab", lab({ value: 3.5, method: "unknown" }))],
     context,
     defaultPreferences,
     null,
     now,
   );
   assert.equal(incompatible.trends[0].change, null);
+  assert.equal(incompatible.trends[0].comparable,false);
+  assert.ok(Math.abs(recordedLabDifference(incompatible.trends[0].points)! + .5)<.001,"Recorded mg/dL→mmol/L arithmetic remains visible without claiming clinical comparability");
+  assert.equal(recordedLabDifference([incompatible.trends[0].points[0]]),null);
 });
 test("missing check-in metrics stay null; adherence zero is valid and empty check-ins are rejected", () => {
   const c = {

@@ -66,8 +66,7 @@ export default function Progress() {
       <section className="bloom-panel space-y-4">
         <h2>Bloodwork over time</h2>
         <p className="panel-note">
-          Comparisons need compatible units, dates, lab methods and relevant
-          fasting conditions. Entered results are not independently verified.
+          Dated points show what was recorded. Assessing a clinical change needs compatible units, dates, laboratory methods and relevant fasting conditions. Entered results are not independently verified.
         </p>
         {checkingReport && (
           <p role="status">Checking current laboratory history…</p>
