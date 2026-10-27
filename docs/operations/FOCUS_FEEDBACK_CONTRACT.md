@@ -1,4 +1,4 @@
-# Subjective daily-focus response — reader stage
+# Subjective daily-focus response
 
 BIO-09 names explicit liked/disliked/intolerant/not-applicable/helped/no-benefit feedback. This increment defines a subjective response to the owner's stated daily focus. It is not a verified food identity, allergy diagnosis, treatment effect, clinical evidence or automatic ranking/personalization input.
 
@@ -8,7 +8,7 @@ An optional strict `focusFeedback` snapshot lives in the existing encrypted chec
 
 Generic record POST/PUT rejects supplied feedback metadata, and storage rejects equivalent direct generic mutation. Unaware updates preserve any existing complete snapshot, including its original context if the outer focus/date/mode changes. Read/preserve/update share the owner transaction lock. Unclassifiable stored feedback fails closed rather than being silently erased. Existing private export and record/account deletion include this data under their existing ownership boundaries.
 
-The reader stage has no response producer or ordinary UI control. Before writing, deploy/verify this reader. The dedicated action must require current source revision and an idempotency key, patch only the response under the same owner lock, replay a matching receipt before CAS, reject stale/conflicting requests, and never overwrite unrelated ratings. A stale retry after a newer response must not replace it. Explicit clear retains a receipt/context; whole-record erasure remains separate.
+The reader was deployed first (6857d37). The dedicated `POST /api/experience/checkins/:id/feedback` accepts only strict `{response,sourceRevision}` plus mandatory `Idempotency-Key` (8–128 opaque ASCII letters/digits/underscore/hyphen). Its explicit storage adapter is required; no generic fallback. Under the same owner lock it loads the current owned check-in, replays the current matching receipt before CAS, rejects stale/conflicting requests (409), and patches only feedback. Receipt reuse with different response/revision conflicts; a retry after a newer response conflicts. Unrelated numerical edits remain current and are never replaced by the reviewed snapshot. Empty focus cannot receive a response. Clear requires an existing nonnull response and preserves its original context with a new null-response receipt. Whole-record erasure remains separate. Future dates follow existing check-in behavior; response is subjective, never evidence of an observed clinical effect. Ordinary UI controls are the following stage.
 
 Existing numerical weekly/Athlete calculations and external-provider prompts do not use the new response. Future automatic personalization remains subject to its independent approved rules/review. No new medical/provider right or grant is implied.
 

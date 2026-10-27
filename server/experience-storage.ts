@@ -1,9 +1,9 @@
-import {checkinFeedbackView,preserveFocusFeedback} from "./checkin-feedback-source";
+import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords } from "../shared/schema";
-import { experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -36,6 +36,27 @@ export class ExperienceStorage {
  async getCheckinFeedback(userId:string,id:string):Promise<CheckinFeedbackView|null>{
   const [row]=await this.db.select({id:experienceRecords.id,encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin")));
   return row?checkinFeedbackView(userId,row.id,decryptPrecision(row.encryptedPayload,userId)):null;
+ }
+ async putCheckinFeedback(userId:string,id:string,request:FocusFeedbackRequest,key:string):Promise<CheckinFeedbackView|null>{
+  const input=focusFeedbackRequestSchema.parse(request);
+  if(!/^[A-Za-z0-9_-]{8,128}$/.test(key))throw new CheckinFeedbackInvalid();
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
+   const [row]=await tx.select({id:experienceRecords.id,encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin")));
+   if(!row)return null;
+   const payload=checkinSchema.parse(decryptPrecision(row.encryptedPayload,userId));
+   const view=checkinFeedbackView(userId,id,payload),receiptHash=focusFeedbackReceipt(userId,key),previous=payload.focusFeedback;
+   if(previous?.receiptHash===receiptHash){
+    if(previous.previousRevision!==input.sourceRevision||previous.response!==input.response)throw new CheckinFeedbackConflict();
+    return view;
+   }
+   if(view.revision!==input.sourceRevision)throw new CheckinFeedbackConflict();
+   if(input.response===null?previous?.response==null:!payload.focus)throw new CheckinFeedbackInvalid();
+   const context=input.response===null?previous!:{focus:payload.focus,date:payload.date,mode:payload.mode};
+   const next=checkinSchema.parse({...payload,focusFeedback:{version:1,response:input.response,focus:context.focus,date:context.date,mode:context.mode,recordedAt:new Date().toISOString(),receiptHash,previousRevision:input.sourceRevision}});
+   const updated=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin"))).returning({id:experienceRecords.id});
+   return updated.length?checkinFeedbackView(userId,id,next):null;
+  });
  }
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
@@ -86,6 +107,7 @@ export interface ExperienceStore {
  getExperienceSettings(userId:string):Promise<ExperienceSettings>;
  putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
  putExperienceSettingsIfCurrent?(userId:string,patch:ExperienceSettingsPatch,revision:string):Promise<ExperienceSettings>;
+ putCheckinFeedback?(userId:string,id:string,request:FocusFeedbackRequest,key:string):Promise<CheckinFeedbackView|null>;
  getCheckinFeedback?(userId:string,id:string):Promise<CheckinFeedbackView|null>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;
  insertExperienceRecord(userId:string,entry:ExperienceEntry):Promise<ExperienceRecord>;

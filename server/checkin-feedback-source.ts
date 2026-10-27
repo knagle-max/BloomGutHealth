@@ -18,3 +18,7 @@ export function preserveFocusFeedback(entry:ExperienceEntry,previous:unknown){
  }
  return entry.payload;
 }
+
+export class CheckinFeedbackConflict extends Error { constructor(){super("This focus or response changed. Review the current check-in before responding again.");} }
+export class CheckinFeedbackInvalid extends Error { constructor(){super("Choose a saved focus before responding, or an existing response to clear.");} }
+export const focusFeedbackReceipt=(userId:string,key:string)=>createHash("sha256").update(JSON.stringify(["focus-feedback-receipt-v1",userId,key])).digest("hex");

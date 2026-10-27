@@ -1,3 +1,4 @@
+import {CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {mealSaveReceipt, checkMealReceipt} from "./meal-save";
 import {athleteProfileSourceKey} from "../shared/athlete-review";
@@ -7,7 +8,7 @@ import type { Express, RequestHandler } from "express";
 import { z } from "zod";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
-import { experienceEntrySchema, experienceSettingsSchema, settingsPatchSchema, dateKey, memoryKey, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
+import { focusFeedbackRequestSchema,experienceEntrySchema, experienceSettingsSchema, settingsPatchSchema, dateKey, memoryKey, type ExperienceEntry, type ExperienceRecord } from "../shared/experience";
 import type { IStorage } from "./storage";
 import { buildAthleteDay, sweatEstimate } from "../shared/athlete";
 import { localDayBounds } from "../shared/nutrition-summary";
@@ -37,6 +38,20 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
    if(!view)return res.status(404).json({error:"Check-in not found in your account."});
    res.json(view);
   }catch(error){fail(res,error);}
+ });
+ app.post("/api/experience/checkins/:id/feedback",limit,async(req,res)=>{
+  const input=focusFeedbackRequestSchema.safeParse(req.body),key=req.get("Idempotency-Key");
+  if(!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))return res.status(400).json({error:"Choose a response and review the current focus before saving."});
+  try{
+   if(!store.putCheckinFeedback)return res.status(503).json({error:"Focus response updates are unavailable."});
+   const result=await store.putCheckinFeedback(req.session.userId!,req.params.id,input.data,key);
+   if(!result)return res.status(404).json({error:"Check-in not found in your account."});
+   res.json(result);
+  }catch(error){
+   if(error instanceof CheckinFeedbackConflict)return res.status(409).json({error:error.message});
+   if(error instanceof CheckinFeedbackInvalid)return res.status(400).json({error:error.message});
+   fail(res,error);
+  }
  });
  app.post("/api/experience/records",limit,async(req,res)=>{const p=experienceEntrySchema.safeParse(req.body);if(!p.success)return res.status(400).json({error:"Check the required fields, dates, units and ranges. Sweat sodium requires its measurement source."});if(p.data.kind==="checkin"&&p.data.payload.focusFeedback!==undefined)return res.status(400).json({error:"Use the separate focus response action."});if(p.data.kind==="food-memory")return res.status(400).json({error:"Meal corrections are saved through the meal editor."});try{res.status(201).json(await store.insertExperienceRecord(req.session.userId!,p.data));}catch(e){fail(res,e);}});
  app.put("/api/experience/records/:id",limit,async(req,res)=>{const p=experienceEntrySchema.safeParse(req.body);if(!p.success||p.data.kind==="food-memory"||p.data.kind==="checkin"&&p.data.payload.focusFeedback!==undefined)return res.status(400).json({error:"Invalid record update."});try{const row=await store.updateExperienceRecord(req.session.userId!,req.params.id,p.data);if(!row)return res.status(404).json({error:"Record not found in your account."});res.json(row);}catch(e){fail(res,e);}});
