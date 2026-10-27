@@ -726,6 +726,7 @@ try {
     const feedbackCheckin=await request("/api/experience/records","POST",{kind:"checkin",payload:{date:new Date().toISOString().slice(0,10),mode:"everyday",energy:5,hunger:5,digestion:5,sleepHours:7,adherence:3,focus:"Synthetic routine feedback"}},201);
     const feedbackSource=await request(`/api/experience/checkins/${feedbackCheckin.id}/feedback`);
     assert.equal(feedbackSource.source.id,feedbackCheckin.id);assert.equal(feedbackSource.feedback,null);assert.match(feedbackSource.revision,/^[a-f0-9]{64}$/);
+    assert.deepEqual(await request("/api/experience/records?kind=activity"),[],"Manual activity reader is available before capture is enabled");
     const responsePath=`/api/experience/checkins/${feedbackCheckin.id}/feedback`,responseBody={response:"liked",sourceRevision:feedbackSource.revision},responseHeaders={"Idempotency-Key":randomUUID()};
     const feedbackSaved=await request(responsePath,"POST",responseBody,200,responseHeaders);
     assert.equal(feedbackSaved.feedback.response,"liked");assert.equal(feedbackSaved.feedback.focus,"Synthetic routine feedback");

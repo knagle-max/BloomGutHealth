@@ -58,6 +58,14 @@ export const settingsPatchSchema = z.object({
   mode: z.enum(["everyday", "athlete"]).optional(), athlete: athleteProfileSchema.optional(), practical: practicalPreferencesSchema.optional(),
 }).strict().refine(v => Object.keys(v).length > 0).refine(v=>!v.athleteReviewFor||!!v.athlete,"Review acknowledgement requires the corresponding Athlete inputs");
 export type ExperienceSettingsPatch=z.infer<typeof settingsPatchSchema>;
+export const activitySchema=z.object({
+ title:z.string().trim().min(1).max(120),startedAt:z.string().datetime({offset:true}),
+ minutes:z.number().int().min(1).max(1440),effort:z.enum(["easy","moderate","hard"]).nullable().default(null),
+ source:z.literal("manual").default("manual"),
+ timeZone:z.string().min(1).max(100).refine(value=>{try{new Intl.DateTimeFormat("en",{timeZone:value});return true;}catch{return false;}},"Choose a recognized time zone").nullable().default(null),
+ notes:optionalText,
+}).strict();
+export type Activity=z.infer<typeof activitySchema>;
 export const trainingSessionSchema = z.object({
   title: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
   minutes: z.number().int().min(1).max(600), intensity: z.enum(["easy", "moderate", "hard", "competition"]),
@@ -146,6 +154,7 @@ export const memorySchema = z.object({
   key: z.string().trim().min(1).max(2000), ingredients: z.array(ingredientSchema.strict()).min(1).max(20),
 }).strict();
 export const experienceEntrySchema = z.discriminatedUnion("kind", [
+  z.object({kind:z.literal("activity"),payload:activitySchema}).strict(),
   z.object({kind:z.literal("session"), payload:trainingSessionSchema}).strict(),
   z.object({kind:z.literal("hydration"), payload:hydrationSchema}).strict(),
   z.object({kind:z.literal("checkin"), payload:checkinSchema}).strict(),
