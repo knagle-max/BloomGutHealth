@@ -57,7 +57,7 @@ await page.getByTestId('unit-suggestion').getByText(/en-CA/).waitFor();assert.eq
 assert.equal(await page.getByRole('combobox',{name:/Height unit/}).count(),1);
 assert.equal(await page.getByRole('combobox',{name:/Body weight unit|Weight unit/}).count(),1);
 await page.getByLabel('Body weight',{exact:true}).fill('80');await page.getByLabel('Height',{exact:true}).fill('180.34');
-failNextUnits=true;await page.getByLabel('Body weight unit',{exact:true}).selectOption('lb');await page.getByRole('alert').filter({hasText:'Could not save measurement units'}).waitFor();
+failNextUnits=true;await page.getByLabel('Body weight unit',{exact:true}).selectOption('lb');await page.getByRole('alert').filter({hasText:'Saved preferences could not be checked or updated'}).waitFor();
 assert.equal(await page.getByLabel('Body weight',{exact:true}).inputValue(),'80');assert.equal(await page.getByLabel('Body weight unit',{exact:true}).inputValue(),'kg');
 await page.getByLabel('Body weight unit',{exact:true}).selectOption('lb');await page.waitForFunction(()=>document.querySelector('input[aria-label="Body weight"]').value==='176.36981');
 for(const unit of ['kg','lb','kg']){await page.getByLabel('Body weight unit',{exact:true}).selectOption(unit);await page.waitForFunction(u=>document.querySelector('select[aria-label="Body weight unit"]').value===u&&!document.querySelector('select[aria-label="Body weight unit"]').disabled,unit);near(await page.getByLabel('Body weight',{exact:true}).inputValue(),unit==='kg'?80:176.36981);}

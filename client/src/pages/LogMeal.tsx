@@ -34,7 +34,7 @@ import {
 import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
-  const { settings } = useExperience();
+  const { settings, ready: settingsReady } = useExperience();
   const {user}=useAuth();
   const params = new URLSearchParams(window.location.search);
   const requestedType = params.get("type");
@@ -86,6 +86,7 @@ export default function LogMeal() {
   const [photoVisited,setPhotoVisited]=useState(false),[methodNotice,setMethodNotice]=useState('');
   const [pickerVisited,setPickerVisited]=useState(params.has("productQuery")||["barcode","search"].includes(params.get("method")||""));
   const [restaurant,setRestaurant]=useState(""),[market,setMarket]=useState("Canada"),[restaurantVisited,setRestaurantVisited]=useState(params.get("method")==="restaurant");
+  const [marketTouched,setMarketTouched]=useState(false),marketInitialized=useRef(false);
   const chooserHeading=useRef<HTMLHeadingElement>(null);
   const changeMethod=(requested:FoodEntryMethod|null)=>{
     setMethodNotice("");
@@ -145,6 +146,8 @@ export default function LogMeal() {
   },onError:error=>{if(error instanceof ApiRequestError&&error.status===409)setReviewRejected(true);},onSettled:refreshMealSources});
   const saveUnknown=save.isError&&(!(save.error instanceof ApiRequestError)||save.error.status>=500);
   const inputFrozen=save.isPending||reviewMeal.isPending||saveUnknown;
+  useEffect(()=>{marketInitialized.current=false;setMarketTouched(false);setMarket("Canada");},[user?.id]);
+  useEffect(()=>{if(settingsReady&&!marketInitialized.current&&!marketTouched&&!inputFrozen&&!review){setMarket(settings.practical.region||"Canada");marketInitialized.current=true;}},[settingsReady,settings.practical.region,marketTouched,inputFrozen,review]);
   const sameReview=!!review&&review.basis===basis&&review.owner===user?.id;
   const reviewCurrent=sameReview&&!reviewDirty&&!reviewRejected&&!reviewMeal.isPending&&!reviewMeal.isError;
   const reconnect=useReconnectRetry({actorId:user?.id,attemptKey:save.variables?.key,eligible:saveUnknown&&sameReview&&saveAttempt.current?.key===save.variables?.key&&save.variables?.snapshot.owner===user?.id,retry:()=>{const attempt=save.variables;if(attempt&&mounted.current&&actor.current===attempt.snapshot.owner&&saveAttempt.current?.key===attempt.key)save.mutate(attempt);}});
@@ -196,7 +199,7 @@ export default function LogMeal() {
         {methodNotice&&<p role="status">{methodNotice}</p>}
         {photoVisited&&photoPreview&&<div hidden={method!=='photo'}><DevelopmentPhotoPreview feature={photoPreview}/></div>}
         {method==="describe"&&<div className="space-y-3"><p>Type foods and amounts in the shared meal review below. Selected products are counted separately.</p><FoodCapture voiceOnly onDescription={text=>setDescription(current=>[current,text].filter(Boolean).join("; "))} onProduct={()=>{}}/></div>}
-        {method==="describe"&&<div className="space-y-3"><Button type="button" variant="outline" aria-expanded={restaurantVisited} aria-controls="restaurant-context" onClick={()=>setRestaurantVisited(value=>!value)}>Log a restaurant meal</Button>{restaurantVisited&&<div id="restaurant-context" className="space-y-3"><p className="panel-note">Describe what you ate below. Restaurant names add context; menu item search is not available.</p><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={setMarket}/><details><summary>Why?</summary><p>Names do not verify menu nutrition or allergens. Generic food matches are estimates. To use published nutrition, add it as a private label through Search foods; missing values stay unknown.</p></details></div>}</div>}
+        {method==="describe"&&<div className="space-y-3"><Button type="button" variant="outline" aria-expanded={restaurantVisited} aria-controls="restaurant-context" onClick={()=>setRestaurantVisited(value=>!value)}>Log a restaurant meal</Button>{restaurantVisited&&<div id="restaurant-context" className="space-y-3"><p className="panel-note">Describe what you ate below. Restaurant names add context; menu item search is not available.</p><RestaurantEntry recent={recentRestaurants} name={restaurant} region={market} onName={setRestaurant} onRegion={value=>{setMarketTouched(true);setMarket(value);}}/><details><summary>Why?</summary><p>Names do not verify menu nutrition or allergens. Generic food matches are estimates. To use published nutrition, add it as a private label through Search foods; missing values stay unknown.</p></details></div>}</div>}
 
         {products.length>=10&&<p role="alert">This meal supports up to 10 labelled products. Save the meal or remove one before adding another.</p>}
         {pickerVisited&&<div hidden={!pickerActive}><ProductPicker initialKind="food" onDescribeIngredients={()=>{changeMethod("describe");requestAnimationFrame(()=>document.getElementById("food-input")?.focus());}} active={pickerActive} showBarcode={method==="barcode"} pending={products.length>=10} onPick={i=>{setProducts(v=>v.length>=10?v:[...v,i]);changeMethod(null);}} initialQuery={productQuery||description.slice(0,120)} autoSearch={!!productQuery}/></div>}

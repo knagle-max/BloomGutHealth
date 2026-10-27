@@ -1,3 +1,4 @@
+import FoodRegionSettings from "@/components/FoodRegionSettings";
 import {measurementUnitSuggestion} from "@shared/measurement-suggestions";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import ExperimentalSettings from "@/components/ExperimentalSettings";
@@ -23,9 +24,9 @@ export default function Profile({
   onToggleDarkMode,
 }: ProfileProps) {
   const { user, logout } = useAuth();
-  const { patch, settings, saving: savingUnits, loading: loadingUnits, error: unitsError } = useExperience();
+  const { patch, settings, saving: savingUnits, loading: loadingUnits, error: unitsError, ready: settingsReady } = useExperience();
   const units = settings.displayUnits;
-  const [unitSuggestion]=useState(()=>measurementUnitSuggestion(typeof navigator!=="undefined"?navigator.language:undefined));
+  const unitSuggestion=measurementUnitSuggestion(typeof navigator!=="undefined"?navigator.language:undefined,settingsReady?settings.practical.region:undefined);
   const [heightEntry,setHeightEntry] = useState<HeightEntry>({unit:"cm",primary:"",inches:""});
   const [massEntry,setMassEntry] = useState<MassEntry>({unit:"kg",value:""});
   const [entryError,setEntryError] = useState("");
@@ -182,7 +183,7 @@ export default function Profile({
             <fieldset className="space-y-3" id="measurement-units">
               <legend className="font-medium">Measurement units</legend>
               <p className="panel-note">Choose units independently. Saved profile measurements remain in canonical centimetres and kilograms; laboratory source units are not changed.</p>
-              <p className="panel-note" data-testid="unit-suggestion">{unitSuggestion.locale?`Starting suggestions use browser language ${unitSuggestion.locale}, which does not establish where you live.`:"Browser region is unavailable; metric starting suggestions are provided."} Your saved choices are kept. Change any unit independently.</p>
+              <p className="panel-note" data-testid="unit-suggestion">{unitSuggestion.region?`Starting suggestions use your saved food browsing region (${unitSuggestion.region}), which does not establish residence.`:unitSuggestion.locale?`Starting suggestions use browser language ${unitSuggestion.locale}, which does not establish where you live.`:"Browser region is unavailable; metric starting suggestions are provided."} Your saved choices are kept. Change any unit independently.</p>
               <div className="grid grid-cols-2 gap-3">
                 {([
                   ["height","Height",["cm","m","ft-in"]],
@@ -193,15 +194,15 @@ export default function Profile({
                   ["energy","Energy",["kcal","kJ"]],
                   ["foodWeight","Food weight",["g","oz"]],
                 ] as const).map(([key,label,options])=><label className="block" key={key}>{label}
-                  <select className="bloom-input w-full" aria-label={`${label} unit`} disabled={savingUnits||loadingUnits} value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
+                  <select className="bloom-input w-full" aria-label={`${label} unit`} disabled={savingUnits||loadingUnits||!settingsReady} value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
                     {options.map(option=><option key={option} value={option}>{option}</option>)}
                   </select>
                   <span className="text-xs text-muted-foreground">Suggested: {unitSuggestion.units[key]}</span>
                 </label>)}
               </div>
               <p className="panel-note">Unit preferences save automatically here. Completed measurement drafts convert after a successful save; unfinished drafts keep their labelled entry units.</p>
-              {savingUnits&&<p role="status">Saving measurement units…</p>}
-              {unitsError&&<p role="alert">Could not save measurement units: {unitsError}</p>}
+              {savingUnits&&<p role="status">Saving preferences…</p>}
+              {unitsError&&<p role="alert">Saved preferences could not be checked or updated: {unitsError}</p>}
             </fieldset>
             <div className="space-y-2"><span className="font-medium">Height ({heightEntry.unit==="ft-in"?"feet + inches":heightEntry.unit})</span>
               <div className="flex gap-2">
@@ -259,6 +260,7 @@ export default function Profile({
         <AccountDataExport/><AccountErasure/><p className="panel-note">Backup, operational-log and vendor retention/removal remain separate from active account deletion and require operator/provider handling.</p>
       </section>
       <section className="bloom-panel space-y-3"><h2>Your data & choices</h2><p>Review the privacy and export controls below, or revisit optional Everyday setup.</p><Button variant="outline" onClick={()=>patch({onboarding:{status:"not-started"},mode:"everyday"})}>Revisit Everyday setup</Button><img src="/brand/bloom-icon-monochrome.svg" width={32} height={32} alt="" /></section>
+      <FoodRegionSettings/>
       <ExperienceDataControls/>
     </main>
   );
