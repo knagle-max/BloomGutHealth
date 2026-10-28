@@ -206,7 +206,14 @@ export default function Upload() {
         <p>{attempted?'Review of the source prepared for this import. Save status is shown below.':'Prepared locally; nothing has been uploaded or saved yet.'}</p>
         <p>{preview.parsed.scores.length} reported scores · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa</p>
         <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
-        <details><summary>Recognized data & missing measurements</summary><ImportedReportDetails report={preview.parsed}/></details>
+        <details><summary>Recognized data & missing measurements</summary>
+          {preview.parsed.bacteria_percentages&&<section aria-label="Reported relative abundance" className="space-y-2">
+            <h3>Reported relative abundance</h3>
+            <p className="panel-note">Percentages from this source are not absolute organism counts or proof of activity.</p>
+            <dl tabIndex={0} aria-label="Reported taxa percentages" className="max-h-80 overflow-auto space-y-2">{Object.entries(preview.parsed.bacteria_percentages).map(([name,value])=><div className="flex justify-between gap-3" key={name}><dt className="min-w-0 break-words">{name}</dt><dd>{value}%</dd></div>)}</dl>
+          </section>}
+          <ImportedReportDetails report={preview.parsed}/>
+        </details>
         {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);}}>Change report or details</Button>}
       </section>}
       {save.error&&<p role="alert">{save.error.message}</p>}

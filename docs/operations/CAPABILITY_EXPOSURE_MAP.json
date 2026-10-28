@@ -1618,7 +1618,7 @@
     "client/src/pages/Profile.tsx": "b715044b59c18565ec13465f966bea7e9810ceabdd2b357396b4432e40de03f2",
     "client/src/pages/Progress.tsx": "07a2ae9338e8ffe8025cb22e8e2b1dabcb7fa6d0d6dfc55e51417096537e1fe2",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
-    "client/src/pages/Upload.tsx": "166a94b991e1c7b2b420248f9622f9289facccbc57eb7ff27dd4c85401a0b1b4",
+    "client/src/pages/Upload.tsx": "962ea3ee6417162b7de29b46145152b9d6c58d32784b6d3374bbc2cded16ca05",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
     "server/account-export.ts": "dada9d1f09825dfdc28d43855ffb5a750ae40e5a2b85d7799601ef18106b5879",

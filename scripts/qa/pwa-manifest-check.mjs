@@ -1,11 +1,14 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createRequire } from 'node:module';
 import { createServer } from 'vite';
 const vite=await createServer({server:{host:'127.0.0.1',port:5264,strictPort:true}});
 await vite.listen();
 const {chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');
-const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});
+const profile=mkdtempSync(join(tmpdir(),'bloom-pwa-qa-'));
+const browser=await chromium.launchPersistentContext(profile,{headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});
 try {
  const page=await browser.newPage();
  await page.route('https://fonts.**/**',r=>r.abort());
@@ -22,6 +25,8 @@ try {
   const bytes=await response.body();assert.deepEqual(bytes,readFileSync('client/public'+icon.src));
   assert.equal(`${bytes.readUInt32BE(16)}x${bytes.readUInt32BE(20)}`,icon.sizes);
  }
+ const diagnostics=await session.send('Page.getInstallabilityErrors');
+ assert.deepEqual(diagnostics.installabilityErrors,[]);
  assert.equal(await page.evaluate(async()=>(await navigator.serviceWorker.getRegistrations()).length),0);
- console.log('PASS Chromium manifest parser, same-origin root/scope, actual approved icon bytes/dimensions; no service worker registered. OS installation and device acceptance are separate.');
-} finally {await browser.close();await vite.close();}
+ console.log('PASS Chromium normal-profile installability diagnostics and manifest parser, same-origin root/scope, actual approved icon bytes/dimensions; no service worker registered. OS installation and device acceptance are separate.');
+} finally {await browser.close();await vite.close();rmSync(profile,{recursive:true,force:true});}

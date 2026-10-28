@@ -1,3 +1,19 @@
+# Quantified gut review completion — 2026-10-28
+
+Final normal-path review found ImportedReportDetails renders functional scores/organisms but no bacteria_percentages. Upload's pre-save disclosure now shows the explicit reported taxon/value percentage pairs in a keyboard-focusable bounded list; no rounding, absolute-count or activity inference. Existing functional details/missing measurements remain separate. Actual App/API/PGlite journey now opens the disclosure and verifies Synthetic organism100% while import requests/rows remain0, then back-to-edit, explicit save, malformed200 exact receipt recovery, correct dates/history/owner320px.13 focused tests/types/build/source checks PASS (/tmp/gut-quant-preview-*). No new API/schema/provider.
+
+PWA verification strengthened to a temporary clean normal browser profile: actual Chrome installability errors[], manifest parser errors[], original icon bytes/dimensions and no service worker. Private test profile initially reported only in-incognito, a fixture limitation; normal profile resolves it, no product workaround. Temporary profile removed after test. /tmp/pwa-normal-profile-browser.log PASS. Actual OS/device installation remains independent acceptance.
+
+Latest published963774abbe0d788ce1aef5ecad3f3222e5d48a83 Actions40754765048 SUCCESS; completed logs confirm445tests/445pass/0fail plus production build/isolated-Neon persistence. Removal ec97042 Actions40754180797 SUCCESS. All substantive published batches now CI SUCCESS and RenderLIVE. QA-only545 standalone cancellation remains accurately recorded; included in verified descendants. Environment restart preserved source/docs/logs; no work lost.
+
+Scoped weekly-worker/runner source trace found a bounded pure calculation worker receiving server-owned report/preferences; authenticated/no-store route, transactional owner/current context/preferences/source-lab revalidation on save. No new gap demonstrated, no rewrite or blanket capability acceptance. CNF source/version remains unverified due source-access constraints; no source activation.
+
+# Live and CI evidence — 2026-10-28
+
+Chromium manifest baseline963774abbe0d788ce1aef5ecad3f3222e5d48a83 pushed/LIVEdep-dbh4q5i9lscs73e1kek0; Actions40754765048 queued behind removal40754180797. Completed f330 managed job logs confirm exact445tests/445pass/0fail (before removal fix), plus build/managed persistence overall SUCCESS. Do not extend that success to later runs until verified. Two latest Render fixed public USDA startup probes returned20 records, statusok,896/888ms; no account data/request logs inspected. This confirms source health, not exact Canadian SKU acceptance.
+
+Bounded CNF audit found no current adapter/version references in server/shared/migrations/scripts/package; connector public repository search unavailable and direct external-host probe blocked by environment proxy. Official dataset/version/licence/provenance not verified; no data/provider/configuration adopted. Existing USDA/manual fallback remains. This is scoped technical source-access dependence, no new user question/global stop.
+
 # Browser/PWA baseline — 2026-10-28
 
 Existing apple touch icon was present, but no manifest/link/service worker. Added same-origin manifest.webmanifest using existing byte-preserved approved192/512Everyday PNGs and current theme246B50, Bloom identity, root start/scope and standalone display. No install banner, native claim, service worker, private offline cache, account-specific URL or permission added. Current owner PWA-first scope authorizes safe browser baseline; native question already resolved, no new user decision.
