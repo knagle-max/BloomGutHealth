@@ -2,6 +2,8 @@
 
 v0.5 remains incomplete; v0.6 has not begun. Work stays on enhance/bloom-experience/PR1 and the existing Render review service. No main merge, production data/credential changes, replacement services, paid/restricted activation or external messages.
 
+Latest functional source **c60008cea3983f047c100eca396eaf7920e54268**: Actions40758240795 SUCCESS,445/445 tests, build and managed persistence; RenderLIVEdep-dbh552k9v7es739ss9rg. Final evidence/record-only follow-up has no production-code changes.
+
 ## Delivered and verified
 
 - Private nutrition source context: optional country/variant/source/date note stays in existing encrypted product storage, explicit selection review and immutable saved-meal snapshot. Label deletion retains original meal context. Manual notes never become verified provider/market provenance.
@@ -23,8 +25,10 @@ Browser install metadata963774a is LIVEdep-dbh4q5i9lscs73e1kek0; Actions40754765
 |6ea2495|Local gut import review|40750607534 SUCCESS|LIVE dep-dbh4da142hec73f3fir0|
 |f330b90|Genetics copy/core verification|40751817541 SUCCESS|LIVE dep-dbh4h0vb9u1s73eb1h6g|
 |ec97042|Clear deleted label selection/retry|40754180797 SUCCESS|LIVE dep-dbh4o9m1egvs73bao75g|
+|963774a|Browser install metadata|40754765048 SUCCESS|LIVE dep-dbh4q5i9lscs73e1kek0|
+|c60008c|Quantified gut source preview|40758240795 SUCCESS|LIVE dep-dbh552k9v7es739ss9rg|
 
-Final quantified gut percentage review and strengthened normal-profile Chrome installability QA publication are tracked in NEXT_ACTIONS.md. Supported-file QA/source mapping is included in verified descendants: actual file input, two supported calls/one discarded row, no raw/unsupported data in POST, explicit consent, older date/reload and prior dataset retention PASS. Completed963774a exact managed CI confirms445tests/445pass/0fail, build and isolated-Neon persistence (includes the removal fix). Source-note reader12 focused, Progress3 focused, gut13 focused, removal11 focused and genetics4 focused tests passed (overlapping cases are not summed). Types/build/source checks pass; actual App/API/PGlite browser paths cover failure, retry, single save, reload, unknown/zero/unit/source retention, account separation and320px. Existing Progress precision, encrypted Activity/Athlete, first-goal-source and weekly-food-review regressions pass. These are engineering fixtures, not clinical/device/independent acceptance. Direct hosted probe was blocked by environment proxy403; RenderLIVE and filtered listener log confirmed.
+Quantified gut review and normal-profile Chrome installability QA are verified. Selective annotated comparison: docs/review/gut-import-comparison-20261028/COMPARISON.md (clean actual8833cbc/c60008c, synthetic data/zero writes). Supported-file QA/source mapping is included in verified descendants: actual file input, two supported calls/one discarded row, no raw/unsupported data in POST, explicit consent, older date/reload and prior dataset retention PASS. Completed c60008c exact managed CI confirms445tests/445pass/0fail, build and isolated-Neon persistence (includes the removal fix). Source-note reader12 focused, Progress3 focused, gut13 focused, removal11 focused and genetics4 focused tests passed (overlapping cases are not summed). Types/build/source checks pass; actual App/API/PGlite browser paths cover failure, retry, single save, reload, unknown/zero/unit/source retention, account separation and320px. Existing Progress precision, encrypted Activity/Athlete, first-goal-source and weekly-food-review regressions pass. These are engineering fixtures, not clinical/device/independent acceptance. Direct hosted probe was blocked by environment proxy403; RenderLIVE and filtered listener log confirmed.
 
 ## Outstanding decisions and acceptance
 
@@ -40,4 +44,4 @@ Native-v0.5 scope is resolved to browser/PWA-first; no repeat platform question.
 
 ## Next steps
 
-Publish locally verified quantified gut preview/QA follow-up, verify exact CI/Render, and refresh PR metadata. Continue the next demonstrated unblocked core journey under the current core-first directive; reconcile existing code before adding features. Acquire missing authentic files/rights/review evidence only when dependencies change. NEXT_ACTIONS.md provides exact resume commands/state; BACKLOG.md and original ledgers preserve scoped outstanding work.
+Verify final evidence-only commit checks and PR metadata, then reconcile the next original mandatory criterion against actual code/tests. Functional c60008c is already fully CI/LIVE verified. Continue the next demonstrated unblocked core journey under the current core-first directive; reconcile existing code before adding features. Acquire missing authentic files/rights/review evidence only when dependencies change. NEXT_ACTIONS.md provides exact resume commands/state; BACKLOG.md and original ledgers preserve scoped outstanding work.

@@ -1,6 +1,20 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`, existing PR1/Render review service. Latest published963774abbe0d788ce1aef5ecad3f3222e5d48a83 Actions40754765048 SUCCESS (445tests/445pass, build, managed persistence), RenderLIVEdep-dbh4q5i9lscs73e1kek0. Source notes, food Progress, gut local review, selected genetics copy/core, removed-label recovery and browser manifest all published/verified. Final quantified-taxon preview enhancement is locally tested and ready for publication. v0.5 remains incomplete; v0.6 not begun. NEXT_ACTIONS.md is current; older appended records are historical.
+Branch: `enhance/bloom-experience`, existing PR1/Render review service. Latest functional commit c60008cea3983f047c100eca396eaf7920e54268: Actions40758240795 SUCCESS (445tests/445pass, build, isolated-Neon persistence), RenderLIVEdep-dbh552k9v7es739ss9rg. v0.5 remains incomplete; v0.6 not begun. NEXT_ACTIONS.md is current; older appended records are historical.
+
+## Current core continuity batch
+
+|Task|Priority|Delivered scope|Commit|Status|
+|---|---|---|---|---|
+|FOOD-MANUAL-SOURCE-CONTEXT|P1|Private source note across label/review/immutable meal history|d0c572b,8833cbc|Tested, CI SUCCESS, RenderLIVE; independent acceptance open|
+|FOOD-PROGRESS-DAYS|P1|Seven logged dates, same canonical totals, zero/unknown/partial/kcal-kJ|4ae6745|Tested, CI SUCCESS, RenderLIVE|
+|GUT-IMPORT-LOCAL-REVIEW|P1|Local recognized-data review before explicit save, existing exact retry|6ea2495|Tested, CI SUCCESS, RenderLIVE|
+|GENETICS-CORE-REVERIFY|P1|Existing selected/file import verified; education-only wording|f330b90,5453973|Tested, verified descendant CI SUCCESS/LIVE;545 standalone QA run cancelled by pending consolidation|
+|FOOD-LABEL-REMOVE-SELECTION|P1|Deleted source no longer selected; lost removal reply retry|ec97042|Tested, CI SUCCESS, RenderLIVE; old meals retained|
+|PWA-INSTALL-METADATA|P1|Approved icons/theme, same-origin manifest, Chrome installability|963774a|Tested, CI SUCCESS, RenderLIVE; real OS/device acceptance open|
+|GUT-IMPORT-QUANT-PREVIEW|P1|Reported quantitative pairs visible before save|c60008c|13 focused tests/browser/types/build, full445 CI SUCCESS, RenderLIVE|
+
+Selective before/after source evidence: docs/review/gut-import-comparison-20261028/COMPARISON.md. No release, clinical, rights or independent Design/device approval inferred.
 
 This execution ledger follows the owner's overnight directive. Scope and priority remain governed by `AGENTS.md`, `docs/architecture/CURRENT_V05_REQUIREMENTS.md` and `docs/architecture/ACTIVE_EXECUTION_QUEUE.md`. Finish actionable v0.5 first, then reconcile and begin approved independent v0.6 work while external v0.5 blockers carry forward. Do not merge main or alter credentials without the relevant authorization. Do not claim independent acceptance from synthetic tests.
 
@@ -795,4 +809,4 @@ Final file/lost-receipt/navigation and malformed200 report exact-retry/owned/dat
 
 | PWA-INSTALL-METADATA | P1 browser/PWA-first baseline | Same-origin web app manifest reusing approved brand icons | IMPLEMENTED_AND_TESTED; CI_SUCCESS_RENDER_LIVE | Approved owner October28 PWA-first scope. Existing approved192/512PNG bytes/dimensions, theme246B50, stable root identity/start/scope, standalone display. Actual Chromium manifest parser errors0/icon fetch bytes/dimensions/no service worker; production build includes manifest. No native/offline/device installation acceptance or private caching added. |
 
-| GUT-IMPORT-QUANT-PREVIEW | P1 Core Journey D | Show actual quantified taxa/percentages before gut save | IMPLEMENTED_AND_TESTED; PUBLICATION_PENDING | Existing score/organism display omitted quantitative pairs. Separate explicit relative-abundance list preserves reported values, no absolute/causal inference.13 focused tests/types/build/map and actual pre-save100%/zero writes/edit-back/unknown receipt retry/date/owner320px PASS. |
+| GUT-IMPORT-QUANT-PREVIEW | P1 Core Journey D | Show actual quantified taxa/percentages before gut save | IMPLEMENTED_AND_TESTED; CI_SUCCESS_RENDER_LIVE | Existing score/organism display omitted quantitative pairs. Separate explicit relative-abundance list preserves reported values, no absolute/causal inference.13 focused tests/types/build/map and actual pre-save100%/zero writes/edit-back/unknown receipt retry/date/owner320px PASS. |
