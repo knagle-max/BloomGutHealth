@@ -1,3 +1,15 @@
+# Queue consolidation — 2026-10-28
+
+To avoid delaying the observed label-removal fix behind a metadata-only batch, group QA-only5453973 with the new fix's descendant CI. Runtime/copy f33040751817541 remains running with cancel-in-progress:false; pending QA-only40753021150 may be superseded by the new push and must be recorded as such, never success. All545 source mapping/QA/ledger changes remain committed and included in the next exact full CI. This does not skip a substantive runtime batch's verification or cancel an active run. No user approval needed for this routine authorized development push.
+
+# Private label removal — observed normal-path bug fixed, 2026-10-28
+
+Existing removal UI was present; did not create duplicate management screen. Actual App/API/encrypted PGlite repro failed: after deleting selected private label, saved list became0 while Use selected product remained present (1!=0), so ordinary confirmation still offered a deleted source. ProductPicker now clears that selected manual ID/variants and stale lookup results, refreshes saved products, and pauses conflicting select/create/search/scan actions during deletion. A404 on exact retry means the private source is already absent (e.g. lost204reply); server owner filtering/404 and other errors remain unchanged. Help states saved meals retain original nutrition/source.
+
+11 focused source/product/snapshot tests, TypeScript/build/source checks PASS. Actual normal removal browser PASS. Extended lost-reply browser PASS: real DELETE204 committed but fixture returns503; explicit same UI retry gets real404, no stale choice; frozen note/history/420kcal/zero protein/unknown nutrients/Progress/reload/second owner320px remain correct. /tmp/private-label-remove-red.log preserves observed failure; /tmp/private-label-remove-final-browser.log preserves green after fix. No new endpoint/store/migration/provider or production data changes.
+
+Prior QA-only545397363cd77a9bc3916abceab63f23f30538a7 pushed; Actions40753021150 pending behind f33040751817541. Hold next push until QA starts to preserve exact queued verification. Gut6ea Actions40750607534 SUCCESS/LIVE. No active user-input blocker for this slice.
+
 # Goal and weekly food continuity — 2026-10-28
 
 Existing first-goal-source browser PASS at latest tree: interrupted canonical writes, current exclusions/drafts, skipped unknown safety and late account-bound continuation; synthetic HTTP storage, not hosted independent acceptance. Existing weekly-food-review browser PASS: seven-day ingredients/per-meal dedup, missing detail/portion uncertainty, unavailable-source withdrawal/retry, no writes/inferred diversity score,320px. Only original ID02/FOOD07/GEN01/MICRO01 scoped partial evidence updated, no blanket release closure. Gut6ea exact Actions40750607534 SUCCESS including managed persistence; f330 Actions40751817541 queued at checkpoint.

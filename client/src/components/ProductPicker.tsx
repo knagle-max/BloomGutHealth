@@ -1,7 +1,7 @@
 import {useAuth} from "@/lib/auth";
 import { useState, useEffect, useRef, useId } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiRequest, ApiRequestError, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import {
   nutrientDefinitions,
@@ -134,15 +134,25 @@ export default function ProductPicker({
   const previousOwner=useRef(user?.id);
   useEffect(()=>{if(previousOwner.current===user?.id)return;previousOwner.current=user?.id;lookupEpoch.current++;setChoice(null);setVariants([]);search.reset();resolve.reset();create.reset();},[user?.id]);
   const remove = useMutation({
-    mutationFn: async (id: string) =>
-      apiRequest("DELETE", "/api/products/" + encodeURIComponent(id)),
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: ["/api/products/saved"] }),
+    mutationFn: async (id: string) => {
+      const owner=user?.id;
+      try { await apiRequest("DELETE", "/api/products/" + encodeURIComponent(id)); }
+      // A retry may find an already-removed label after the first reply was lost.
+      catch(cause) { if(!(cause instanceof ApiRequestError&&cause.status===404))throw cause; }
+      return {id,owner};
+    },
+    onSuccess: ({id,owner}) => {
+      if(owner!==actor.current)return;
+      lookupEpoch.current++;search.reset();resolve.reset();
+      setVariants(current=>current.filter(p=>!(p.source==="manual"&&p.id===id)));
+      setChoice(current=>current?.source==="manual"&&current.id===id?null:current);
+      void queryClient.invalidateQueries({ queryKey: ["/api/products/saved"] });
+    },
   });
   return (
     <div className="space-y-3 border rounded-xl p-3 min-w-0 break-words">
       <h3>Find a food or supplement</h3>
-      {showBarcode&&<BarcodeScanner active={active} startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>}
+      {showBarcode&&<BarcodeScanner active={active&&!remove.isPending} startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>}
       <p className="panel-note">
         Search by product name or barcode, then confirm the exact variant and
         serving. The search sends only this query to public product databases.
@@ -174,7 +184,7 @@ export default function ProductPicker({
       </div>
       <Button
         type="button"
-        disabled={query.trim().length < 2 || search.isPending || resolve.isPending || create.isPending}
+        disabled={query.trim().length < 2 || remove.isPending || search.isPending || resolve.isPending || create.isPending}
         onClick={() => search.mutate(undefined)}
       >
         {search.isPending ? "Searching…" : "Search products"}
@@ -216,7 +226,7 @@ export default function ProductPicker({
                   className="whitespace-normal h-auto text-left"
                   variant="outline"
                   type="button"
-                  disabled={resolve.isPending||search.isPending}
+                  disabled={remove.isPending||resolve.isPending||search.isPending}
                   aria-describedby={`${resultId}-result-${index}`}
                   onClick={() => resolve.mutate(p)}
                 >
@@ -344,7 +354,7 @@ export default function ProductPicker({
             className="whitespace-normal h-auto max-w-full"
             type="button"
             disabled={
-              pending || search.isPending || resolve.isPending || create.isPending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
+              pending || remove.isPending || search.isPending || resolve.isPending || create.isPending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
             }
             onClick={() => {
               const ingredient=productIngredient(choice,servings);
@@ -359,13 +369,14 @@ export default function ProductPicker({
       )}
       <details>
         <summary>Your saved products ({saved.data?.length || 0})</summary>
+        <p className="panel-note">Removing a reusable label keeps the original nutrition and source context in meals already saved with it.</p>
         {saved.data?.map((p) => (
           <div className="flex flex-wrap gap-2 py-2" key={p.id}>
             <Button
               className="whitespace-normal h-auto max-w-full text-left"
               type="button"
               variant="outline"
-              disabled={search.isPending||resolve.isPending}
+              disabled={remove.isPending||search.isPending||resolve.isPending}
               onClick={() => {
                 lookupEpoch.current++;setVariants([p]);
                 chooseProduct(p);
@@ -377,7 +388,7 @@ export default function ProductPicker({
               type="button"
               variant="ghost"
               className="whitespace-normal h-auto max-w-full"
-              disabled={remove.isPending}
+              disabled={remove.isPending||create.isPending||search.isPending||resolve.isPending||pending}
               onClick={() => remove.mutate(p.id)}
             >
               Remove saved label
@@ -502,7 +513,7 @@ export default function ProductPicker({
               />
             </label>
           </details>
-          <Button type="submit" disabled={create.isPending}>
+          <Button type="submit" disabled={create.isPending||remove.isPending}>
             {create.isPending ? "Saving label…" : "Save my product label"}
           </Button>
         </form>
