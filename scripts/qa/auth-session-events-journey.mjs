@@ -9,6 +9,7 @@ const{chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODU
 if(process.env.BLOOM_AUTH_STORAGE_ONLY==='1')await context.addInitScript(()=>{window.BroadcastChannel=class{constructor(){throw Error('Synthetic unsupported channel');}};});
 const first=await context.newPage(),second=await context.newPage(),errors=[],actors=[];for(const page of[first,second]){page.setDefaultTimeout(12000);page.on('pageerror',error=>errors.push(error.message));}
 let session='owner-a',holdB=true,releaseB,failFirst=false;const gateB=new Promise(r=>{releaseB=r;});
+await context.route('https://fonts.**/**',route=>route.abort());
 await context.route('**/__auth-session',async route=>route.fulfill({contentType:'text/html',body:await vite.transformIndexHtml('/__auth-session','<div id="fixture"></div><script type="module" src="/qa-auth-session.js"></script>')}));
 await context.route('**/api/**',async route=>{
  const request=route.request(),path=new URL(request.url()).pathname;
@@ -33,5 +34,6 @@ try{
  await first.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));assert.equal(await first.locator('#private').count(),0);assert.equal(await first.locator('#identity').textContent(),'Checking account');
  session='owner-a';await first.evaluate(()=>window.dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await first.locator('#identity').filter({hasText:'owner-a'}).waitFor();assert.equal(await first.getByLabel('Private draft').inputValue(),'');
  await second.getByRole('button',{name:'Logout',exact:true}).click();await first.locator('#identity').filter({hasText:'Signed out'}).waitFor();assert.equal(await first.locator('#private').count(),0);
+ await second.waitForURL('**/login');await second.getByRole('heading',{name:'Welcome Back',exact:true}).waitFor();
  assert.deepEqual(errors,[]);console.log('PASS actual AuthProvider: cross-tab login withdraws private draft/cache before held server recheck; no message-owned identity; current-actor request; failed recheck withdraws private UI; persisted lifecycle scrubs/rechecks; logout retracts other tab. Transport='+ (process.env.BLOOM_AUTH_STORAGE_ONLY==='1'?'nonce-only storage fallback':'BroadcastChannel')+'. Lifecycle events are injected; real-device BFCache acceptance remains separate.');
-}finally{releaseB();await browser.close();await vite.close();}
+}finally{releaseB();await browser.close();vite.httpServer?.closeAllConnections();await vite.close();}

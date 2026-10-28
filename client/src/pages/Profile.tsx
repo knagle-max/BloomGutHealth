@@ -24,6 +24,7 @@ export default function Profile({
   onToggleDarkMode,
 }: ProfileProps) {
   const { user, logout } = useAuth();
+  const signOut = useMutation({mutationFn:logout});
   const { patch, settings, saving: savingUnits, loading: loadingUnits, error: unitsError, ready: settingsReady } = useExperience();
   const units = settings.displayUnits;
   const unitSuggestion=measurementUnitSuggestion(typeof navigator!=="undefined"?navigator.language:undefined,settingsReady?settings.practical.region:undefined);
@@ -136,9 +137,10 @@ export default function Profile({
           </Button>
         )}
         <ExperimentalSettings/>
-        <Button variant="outline" onClick={() => logout()}>
-          Log out
+        <Button variant="outline" disabled={signOut.isPending} onClick={() => signOut.mutate()}>
+          {signOut.isPending ? "Logging out…" : "Log out"}
         </Button>
+        {signOut.error && <p role="alert" className="panel-note">Sign-out could not be confirmed. Try again.</p>}
       </div>
       <form
         className="bloom-panel space-y-4"

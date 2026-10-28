@@ -19,17 +19,21 @@ v0.5 remains incomplete. v0.6 has not begun. Work is on enhance/bloom-experience
 |f38bb0c session/body/cancellation|40704377832 SUCCESS|reachedLIVE dep-dbh07ji9lscs7397fqu0|
 |b701ad9 meal SQL ownership|40705908129 SUCCESS|reachedLIVE dep-dbh0c0a9lscs7397m600|
 |ae66e6b report parents/startup|40707444905 FAILED: old403-vs404 smoke expectation only|reachedLIVE dep-dbh0gamq1p3s73bgimcg|
-|693cdc5 child inserts|40709082128 active; old smoke assertion still present|LIVE dep-dbh0l05g1s2s73ei25hg|
+|693cdc5 child inserts|40709082128 FAILED same old403/404 assertion; recovered by8c99|reachedLIVE dep-dbh0l05g1s2s73ei25hg|
+|8c99ea0 strict smoke correction|40710308757 SUCCESS/full suite +managed Neon|reachedLIVE dep-dbh0ofcs728c739da83g|
+|1a2d77f inactive API retirement|40711614208 active;12 local focused/types/build pass|LIVE dep-dbh0s5cs728c739dhal0|
 
-Current correction changes one exact managed smoke expectation to404 for another owner's report, matching the new owner-filtered lookup. Prior production startup/persistence/report/export checks passed; authorization is not weakened. Syntax and5 direct report-owner/analysis tests pass. Full441/441 local regression PASS (280979ms); corrective8c99ea0 exact Actions40710308757 active. A subsequent inactive-method retirement is locally verified with12 existing relevant tests/types/build; final descendant CI/deployment verification follows.
+Current correction changes one exact managed smoke expectation to404 for another owner's report, matching the new owner-filtered lookup. Prior production startup/persistence/report/export checks passed; authorization is not weakened. Syntax and5 direct report-owner/analysis tests pass. Full441/441 local regression PASS (280979ms); corrective8c99ea0 exact Actions40710308757 SUCCESS, including managed Neon. A subsequent inactive-method retirement is locally verified with12 existing relevant tests/types/build; final descendant CI/deployment verification follows.
 
 Focused verification includes actual App/HTTP/encrypted PGlite labs/exports/meal/templates, two-tab channel and storage fallback, late bootstrap/body, production PDF worker, source dates/zeros/thresholds, malformed200/lost receipt exact retry/no duplicates, owner denial, SQL statement counts, rollback, and320px. Types/build/source inventories pass. Previous local434 run had433pass/1source-hash drift, fixed by refresh+9 focused checks and later f38 exactCI success; retain that distinction. Final full441/441 run passed after all runtime edits; types/build/source checks pass. Synthetic evidence does not establish independent clinical/legal/device or hosted real-owner acceptance.
 
 Earlier sourced goal/region/unit/planner/weekly-food/training/privacy increments retain their detailed evidence in DEVELOPMENT_LOG. Region5df original Render failed; verified LIVE descendant8381 delivered it and passed Actions40693695657. No release completion or independent approval is inferred.
 
+Latest locally verified logout feedback: pending/duplicate-click guard,15s timeout and static unconfirmed/retry message; confirmed idempotent retry only then withdraws private views. Actual App503/timeout/unknown commit/retry/no health writes and both cross-tab regression modes PASS; types/build/source checks PASS. Minor feedback change, no new clinical/credential scope.
+
 ## Remaining priorities and resumption
 
-1. Commit/push the exact404 smoke expectation correction and verify final exact Actions/full suite/isolated-Neon and Render. Preserve prior failed evidence; do not relabel ae66 as green.
+1. Publish/verify latest logout feedback fix and inactive-API retirement exact Actions/Render. Strict404 smoke correction8c99 has already passed exactCI and managed Neon. Preserve prior failed evidence; do not relabel ae66 as green.
 2. Continue approved P0 inactive derived-record/non-HTTP/job/storage trace and remaining core v0.5 requirements. Original207/67 ledgers were updated for scoped ID01/LAB03 evidence, not blanket completion. Other actionable work is not globally blocked by the external catalog.
 3. Real report/layout/device acceptance, scanned OCR, exact Canadian SKU and source/legal/clinical/recovery gates remain separate. Carry unresolved gates into the next session. Begin approved independent v0.6 only when actionable v0.5 is exhausted.
 

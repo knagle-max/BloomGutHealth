@@ -1,0 +1,9 @@
+# Profile logout failure and retry
+
+Profile previously called the rejecting logout Promise directly from its click handler, with no pending/error state. It now uses a mutation: duplicate clicks are disabled while pending, an unconfirmed503/network/timeout response shows static retry copy, and successful logout retains the existing verified-session/cache reset/redirect behavior. The auth transport aborts an unresponsive logout request after15 seconds and clears its timer. No failure is reported as a confirmed logout; explicit retry is safe even when the previous server outcome is unknown.
+
+`scripts/qa/logout-retry-journey.mjs` runs the actual App/Profile/AuthProvider. It verifies503 feedback without backend detail, enabled retry, disabled pending duplicate action, clock-advanced15-second timeout, a possibly committed lost response followed by idempotent retry, confirmed Login redirect/private view removal, exactly three logout requests/no health writes and no unhandled rejection. Types/build/source checks pass. Existing actual AuthProvider two-tab channel and nonce-only-storage fallback regressions pass, including held/failed recheck/private notice/cache/draft withdrawal, logout and injected persisted lifecycle.
+
+The cross-tab fixture initially completed assertions but raced cleanup against its second tab's native Login redirect. It now waits for the rendered destination, blocks external font requests and closes residual HTTP connections; both modes finish cleanly. No product timeout/authorization was weakened to fix test teardown. The visible change is minor pending/error feedback, with rendered tests rather than a near-identical screenshot gallery.
+
+This does not claim server session revocation on a failed/unconfirmed request, actual-device BFCache acceptance or full v0.5 completion.

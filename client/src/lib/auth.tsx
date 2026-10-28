@@ -95,7 +95,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await apiRequest('POST', '/api/auth/logout', {});
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),15000);
+    try{await apiRequest('POST', '/api/auth/logout', {},undefined,controller.signal);}
+    finally{clearTimeout(timeout);}
     authReadEpoch.current++;
     sessionEvents.current?.announce();
     await queryClient.cancelQueries();
