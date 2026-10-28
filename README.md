@@ -1,5 +1,46 @@
 # Bloom Gut Health
 
+> **Development project — browser/PWA-first v0.5.** Working features and external integrations vary by branch, configuration, permissions and source availability. The README describes the application and development process; it is **not** evidence that every planned capability has shipped or been independently accepted.
+
+Bloom is a personalized nutrition and health-information application connecting everyday meal and activity logging, nutrition estimates, goals, dated bloodwork, genetics and microbiome reports, and an optional Athlete experience. Its primary goal is a useful, trustworthy daily workflow: **capture → review/correct → save → see meaningful results**.
+
+## Start here — current development priorities (October 28, 2026)
+
+**The product owner's binding direction is core functionality first.** Complete and verify normal user journeys before broad edge-case hardening, extra infrastructure or cosmetic redesign. Record noncritical exceptions for a later stabilization pass; address confirmed privacy, security, data-integrity, nutritional-accuracy and medical-safety issues immediately.
+
+- **Food:** Canadian-aware generic/branded/homemade search → dynamically editable ingredients and portions → accurate macro overview/details → canonical saved journal and Today totals; preserve working KitKat search and reliable manual entry.
+- **Everyday:** Goal-linked Today, simple activity logging and dated Progress.
+- **My Biology:** Safe, provenance-preserving bloodwork and microbiome/genetics file imports, dynamic histories and educational explanations, with clinician follow-up for potentially concerning findings rather than diagnosis.
+- **Athlete:** Basic workout logging, actual performance history and relevant fueling; optional advanced adaptation later.
+- **Delivery:** Browser/PWA first. Apple Health, Health Connect and wearables remain future native/hybrid work, not functioning connections in v0.5.
+
+**Authoritative coordination and specifications:**
+- [Product-owner core-first directive](docs/architecture/CORE_FUNCTIONALITY_EXECUTION_DIRECTIVE_2026-10-26.md)
+- [Current developer task index](docs/architecture/PERSISTENT_TASK_INDEX.md)
+- [Active execution queue](docs/architecture/ACTIVE_EXECUTION_QUEUE.md)
+- [Current v0.5 requirements](docs/architecture/CURRENT_V05_REQUIREMENTS.md)
+- [v0.6 consolidated architectural handoff](docs/architecture/V06_HANDOFF.md)
+- [Owner's free-first nutrition data decisions](docs/architecture/OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md)
+- [Flagship visual + interaction contract review](docs/architecture/BRANDING_FLAGSHIP_UX_ARCHITECT_REVIEW_2026-10-26.md)
+- [Original flagship package transfer receipt](docs/agents/branding-ux/Bloom_Flagship_Developer_Transfer_Receipt_2026-10-28.md)
+- [Project decision and specialist workflow](PROJECT_COORDINATION.md)
+
+### Data-source and clinical boundaries
+
+USDA FoodData Central remains an existing nutrition source. Canadian Nutrient File 2026 is being evaluated; Open Food Facts is approved for **controlled engineering evaluation only**, not commercial activation without Legal/Integrations clearance. FatSecret and HealthyFastFood are candidate Canadian restaurant pilots, **not approved production sources**. No new paid subscription is authorized. Sources, country/formulation and missing nutrients must remain transparent, with manual logging available.
+
+Bloom is **not a medical diagnostic or prescribing system**. It may present reported measurements, observed trends and issues worth discussing with a qualified healthcare professional, but it must not make unsupported diagnoses, treatment recommendations, medical-clearance claims or medication-dose changes. Only independently reviewed escalation policies may determine urgency.
+
+### Developer workflow
+
+Work on the existing development branch `enhance/bloom-experience`, preserving source/claims/legal gates. Check whether each feature already exists before coding; finish one end-to-end working slice, validate it in the application, then update the persistent task index with commit SHA, tests, Render verification and remaining blockers. Keep **implemented**, **tested**, **deployed** and **independently accepted** distinct. Do not merge to main or enable restricted integrations without their release approvals.
+
+The approved flagship source archive includes `contracts/UX_BLUEPRINT.md`, `contracts/IMPLEMENTATION_CONTRACT.md`, `prototype/index.html`, `prototype/styles.css`, editable SVGs and original concept PNGs. The [asset-transfer receipt](docs/agents/branding-ux/Bloom_Flagship_Developer_Transfer_Receipt_2026-10-28.md) provides original source location, manifest and checksum; use `scripts/import_flagship_assets.py` for a byte-verified import where the source ZIP is available. **Instructions and receipt alone do not prove the original assets were imported or that the rendered UI was approved.** The UX Blueprint and implementation contract are equally authoritative; images alone are not implementation specs.
+
+---
+
+## Technical overview and existing implementation notes
+
 Bloom combines a five-layer precision nutrition workspace with a food and symptom journal, nutrition estimates, microbiome reports, experimental research views, and an evidence-linked meal planner. React/TypeScript, Express, PostgreSQL and a separate Python prototype service.
 
 ## Run locally
