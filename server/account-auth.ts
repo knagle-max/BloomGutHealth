@@ -3,6 +3,11 @@ import type { RequestHandler } from "express";
 export function requireActiveAccount(exists:(userId:string)=>Promise<boolean>):RequestHandler {
   return async(req,res,next)=>{
     if(!req.session.userId)return void res.status(401).json({error:"Authentication required"});
+    const expected=req.headers?.["x-bloom-actor"];
+    if(expected!==undefined&&expected!==req.session.userId){
+      res.setHeader("Cache-Control","no-store");
+      return void res.status(409).json({code:"ACCOUNT_CONTEXT_CHANGED",error:"The signed-in account changed. Reload this page and review the current account before continuing."});
+    }
     try{if(!await exists(req.session.userId))return void res.status(401).json({error:"Sign in again to continue."});next();}
     catch{res.status(503).json({error:"Account access could not be verified. Please retry."});}
   };
