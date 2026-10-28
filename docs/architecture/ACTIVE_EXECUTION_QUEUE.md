@@ -3,6 +3,8 @@
 
 > **Read this first at session start.** This is a short *next-action index*, not a replacement for `CURRENT_V05_REQUIREMENTS.md` (authoritative v0.5 scope), `V05_IMPLEMENTATION_STATUS.md` (implementation evidence), `DEVELOPER_EXECUTION_ORDER.md` (milestone order), `V06_HANDOFF.md` (future requirements) or security/legal gates. Verify code and tests before starting: an item listed here may have been completed after the last reconciliation. Do not overwrite concurrent Codex changes.
 
+> **2026-10-28 OWNER EXECUTION OVERRIDE:** `OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md` and `CORE_FUNCTIONALITY_EXECUTION_DIRECTIVE_2026-10-26.md` govern task selection. KitKat search and Tester1 reported working: verify once, don't rebuild. Deliver end-to-end Food→Today→Progress and other v0.5 core journeys. FatSecret/HealthyFastFood pilots and OFF/CNF evaluations are scoped parallel research, **not core-feature blockers**; external commercial sources remain disabled until explicit rights and data-quality approvals. Preserve manual restaurant path. No paid subscription or main merge authorization.
+
 ## Now — v0.5 only, complete vertical slices
 
 | Sequence | Slice and definition of done | Gate |
