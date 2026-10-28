@@ -1,45 +1,33 @@
-# Bloom development handoff — October27,2026
+# Bloom development handoff — October28,2026
 
-Development branch enhance/bloom-experience, [PR1](https://github.com/knagle-max/BloomGutHealth/pull/1), existing [Render review app](https://bloomguthealth.onrender.com). Workspace tea-db9toijrjlhs73850cp0/service srv-db9u7mjbc2fs73d86uv0. v0.5 remains active/incomplete, v0.6 not begun. No main merge, production data/credentials or restricted activation.
+Branch enhance/bloom-experience, existing PR1 and Render review service srv-db9u7mjbc2fs73d86uv0 in workspace tea-db9toijrjlhs73850cp0. v0.5 remains incomplete; approved v0.6 handoff is available but implementation has not started. Main, production data/credentials and restricted activation remain untouched.
 
 ## Development summary
 
-| Commit | Completed work | Evidence |
+| Commit | Completed scope | Verification |
 |---|---|---|
-|45960ea|Owned allergy restrictions across recipe suggestions/prioritization; late old-source responses rejected|Actions40459385080 SUCCESS401/liveNeon; Render reached LIVE; encrypted rendered source/refetch journey|
-|141a0ca|Separate softer taste from legacy hard avoids; encrypted reported-intolerance warnings across planning and review|Actions40460318163 SUCCESS402/liveNeon; Render reached LIVE; save/reload/correction/320px journey|
-|1651888|Saved meal→scaled exact ingredient draft→review/correct→confirmed new journal entry; original recipe unchanged|Actions40461108066 SUCCESS/liveNeon; Render reached LIVE;6 targeted tests; actual encrypted source failure/retry/owner/mobile journey; matched visual evidence|
-|b0562a2|Neutral recorded bloodwork differences despite unverified measurement comparability; optional professional questions|Actions40461705771 SUCCESS/liveNeon; Render reached LIVE;10 Precision tests; actual five-LDL source/pending/outage/320px journey; clinical comparison gate unchanged|
-|fc6c4fc|Optional encrypted manual exercise-set reader; unaware session edits preserve observations|Actions40462180578 SUCCESS/liveNeon; Renderdep-dbg4d4oae00c73fnudh0 LIVE;3 focused schema/storage/owner/receipt tests|
-|21759a4|Actual-set create/correct/reference UI in existing session forms, nullable values and explicit completion|404 local tests PASS246861ms; actual encrypted journey; Actions40463677960 SUCCESS/liveNeon; original Renderdep-dbg4k7vf3r2c73b75jp0 FAILED no port; recovered through startupfix5f7ed6f LIVEdep-dbgahpq9lscs73960ilg|
-|b8c40e9|Optional user-controlled rest timer, independent of record/status changes|Published b8c40e9: Actions40514058585 SUCCESS/liveNeon, RenderLIVEdep-dbgajc7f3r2c73ben940; browser-clock/no-write journey and types/build pass|
+|07971cf|General-health sourced overview and eligible baseline recipes without clinical priority|421 full local tests,14 focused and real encrypted App/API journey; CI40562129759 SUCCESS/liveNeon; Render reachedLIVE|
+|6ade29d|Digestive-tolerance observation goal, qualified source and canonical meal/symptom link|10 focused and actual encrypted goal-only journey; CI40562837101 SUCCESS/liveNeon; Render reachedLIVE|
+|e3bf0b7|Body/training goals open existing dated-measurement/activity editors without automatic writes or physiological claims|11 focused and two actual encrypted journeys; CI40564043351 SUCCESS/liveNeon; Render reachedLIVE|
+|95cbdc5|Optional encrypted browsing-region reader, owner/CAS/unaware-write preservation and strict older-client compatibility|9 SQL/API/unit checks, types/build; CI40565338981 SUCCESS/liveNeon; RenderLIVEdep-dbgfa23ncjis73c3t9pg|
+|5df07e1|One Profile region editor, nonbinding saved-region unit hints and protected restaurant defaults|Actual encrypted save/lost-response/late-source/owner/unfinished-draft/320px journey; full unit-editor regression/types/build; CI40567721568 SUCCESS including managed region preservation; original RenderUPDATE_FAILED, not delivered by that deploy|
+|Current audit|ID01 dynamic paths: eight routes from three loops, ten middleware/static sites; negative weekly actions before private reads|20 focused source/auth/shared-budget/retired/planning tests and types PASS; runtime unchanged; full ID01 not closed|
 
-Latest completed core batches:
-
-| Commit | Feature | Verification |
-|---|---|---|
-|a813911 +97377c8|Atomic owned report receipts and frozen file/paste recovery|Reader Actions40526566813 SUCCESS411/liveNeon; UI Actions40530990663 SUCCESS/liveNeon; both reached RenderLIVE; four actual PostgreSQL browser variants|
-|504d92a|Small positive nutrients preserved through scaling/label merge/daily totals|Actions40531474677 SUCCESS/liveNeon; RenderLIVEdep-dbgc6ivb9u1s73870t10; focused food tests and actual saved-meal parity journey|
-|8924d10|Explicit nonbinding browser-locale unit suggestions|10 unit/measurement tests and actual mixed-unit/editor journey PASS; Render reached LIVEdep-dbgca98ae00c7382gf7g; Actions40532778188 still active|
-|8dc18d3 +baedc69|Bounded planner trade-off explanation; optional recorded food time zone retained after correction/travel|415 full local tests PASS247386ms before timing slice;6 timing/review/save tests and real PostgreSQL Regina→UTC viewer journey PASS; types/build; baed RenderLIVEdep-dbgcenbbc2fs73a63i3g; Actions40534348071 pending|
-|Current local|Weekly recorded ingredient-name review with missingness and source retry|2 calendar/name tests and actual App synthetic-source browser PASS; final checks/commit/publication pending|
-
-Earlier verified activity logging, session save receipts, Today skip, lab source/date/unit lineage, calendar timing, routine feedback and visit-only reconnect recovery remain detailed in DEVELOPMENT_LOG.md. Full tests and source transfer do not imply release, clinical, Design or device acceptance.
+Earlier report receipt/retry, positive nutrient, unit, planner trade-off, source-date, meal time-zone, weekly ingredient-name, allergy/taste/intolerance, saved-meal review, recorded lab-difference, exercise-set and rest-timer work remains in DEVELOPMENT_LOG.md with exact evidence. Original217 Render no-port failure was recovered by bounded startup5f7; preserve that distinction. No synthetic journey implies hosted real-owner/device/clinical acceptance.
 
 ## Remaining work and priorities
 
-1. Startup and timer exact CI/Render verified. Gut report date/sourcecd8a281 is exact CI/Render verified. Publish/verify import receipt backend, then enable frozen file/paste retry UI.
-2. Continue the remaining original/specialist requirement trace and highest unblocked core workflow. The historical207-row status CSV is stale; no blanket release-complete claim.
-3. Exact flagship visual/interaction fidelity needs the named source archive/contracts; Viome raw-format adapter needs the reviewed versioned specification and authentic sanitized export. Independent core work continues.
-4. Keep noncritical stabilization separate; carry native device, hosted owner/tester, independent clinical/legal/design, provider rights, managed recovery and actual scoped provisioning gates.
+1. Publish the verified dynamic-boundary audit and verify its auto-deploy on this same service. RegionUI5df original deployment failed after platform launch-only logs;95reader is last verified LIVE. Backend/shared/package source was unchanged, so no code cause is asserted and no readiness/credential change is authorized by inference. Verify the descendant delivery truthfully.
+2. Continue the P0 static family/storage ownership trace and remaining approved v0.5 core work. Original207/67 ledgers contain stale conservative statuses and truncated titles; they are not evidence features are absent or completed. Trace every approved requirement to explicit engineering status/source/tests or a genuine recorded blocker. Do not blanket-close ID01/ID02/ID04.
+3. Carry external source/device/rights/clinical/legal/operational gates below without repeatedly probing unchanged blockers. Once all actionable v0.5 work is exhausted, begin approved independent v0.6 automatically, retaining version-specific backlog and evidence.
 
-## Decisions and external acceptance
+Executor interruptions were recovered; no new user decision is required for ordinary coding. NEXT_ACTIONS.md is the exact resumable checkpoint.
 
-Highest-leverage source decisions: provide the accessible flagship archive/contracts and the reviewed Viome handoff/representative sanitized export; existing UI masters and structured import remain the defaults. Native platform/entitlement scope and rights/policy decisions unlock only their corresponding gated work. USDA key replacement is resolved; do not request it again. Exact hosted product and real-device acceptance remain external checks.
+## Consolidated deferred decisions
 
-The following is a snapshot of the existing persistent catalog. Questions, options, defaults and impact are preserved below; BLOCKED_USER_INPUT.md remains authoritative when dependencies change. No question here pauses independent engineering.
+The authoritative catalog below preserves each task, exact question, options, recommendation and deferral impact. Historical execution-resource entries are not a new product-input request or a reason to pause unrelated work. No approval, credentials, physical tests or clinical evidence are fabricated.
 
-### Persistent dependency catalog
+# Bloom deferred decisions and external dependencies
 
 No noncritical question should pause other approved work. Keep safe defaults, never invent credentials/reviews, and reconsider entries only when their dependencies change.
 
@@ -190,59 +178,3 @@ Options: reviewed handoff plus representative sanitized exports; continue existi
 - Choices: Supply/version the exact archive and contracts; identify an existing accessible checkout path; explicitly approve an alternative versioned specification.
 - Recommended default: Version the exact approved source and preserve existing canonical UI while implementing independent core functionality. The Architect explicitly requires those contracts before claiming target flagship fidelity.
 - Impact of deferral: Exact flagship styling/tap-flow implementation and acceptance remain blocked; food, activity, lab and session correctness need not stop. No substitute concepts or fabricated source verification. Reconsider when the archive or approved alternative becomes available.
-
-
-## DEPLOY-STARTUP-DEADLINE — Must-Fix P0 observed Render failure
-21759a4 Actions40463677960 SUCCESS (including isolated Neon structured-set persistence), but Renderdep-dbg4k7vf3r2c73b75jp0 UPDATE_FAILED after no port opened; logs showed npmstart then portscan timeout. Runtime automatically restored readerfc6c4fc, which logged serving10000 and USDA20/ok. Not a successful UI deployment. Found critical startup awaits unbounded SharedRateLimiter.initialize before any listener/stage log; plain PG pool had no connection/query deadlines. Initialize now reuses bounded fail-closed budgetQuery, pool gets5s connection/query timeouts, startup logs safe stages and exits1 on failure before readiness. No auth bypass/early listening, config/credentials/production data change.14 focused auth/workspace/product/audit tests PASS +types/build; production bundle with silent synthetic PG handshake exits within10s, no readiness/connection or secret output PASS. Exact provider root cause not proven; this fixes the demonstrated unbounded startup path, not a claim of credential or provider outage resolution. Current Render docs Markdown+HTML returned403; relied on actual logs/source and bundled stable constraints. Publish this narrow fix first; optional rest timer is locally verified but held. Source maps generated against committed21759a4 client to avoid staging an uncommitted timer hash.
-
-
-## DEPLOY recovery / timer publication checkpoint
-Startup fix5f7ed6fb3226ba6d32ed7be110be34108153f68a reached RenderLIVEdep-dbgahpq9lscs73960ilg. This descendant delivers the previously CI-verified21759a4 set UI after its original rollout failed; do not rewrite failed217 status as success. Optional timer remains locally verified (actual App/API/encrypted/browserclock pause/resume/finish/reset with unchanged records, types/build), now eligible for separate publication. Source maps regenerated for the restored timer client; no manual redeploy, credentials, service replacement or production-data action.
-
-
-## FIX-004 / REPORT-DATE-SOURCE — Core Journey D source correctness
-Original-fix trace found undated gut imports shown as test dates (including latest-test copy) and older newly saved reports opening another default source. Shared reportDateText/dateContext now preserve entered/embedded day text, qualify import/legacyunknown provenance, and project only minimal dates into My Biology; Upload stores original date input and opens exact returned owned sample, selector keeps URL aligned.20 focused report/date/Precision +actual App/HTTP/PostgreSQL paste/undated/calendar/Regina/older-source selection/owner/320px PASS; types/build/source checks pass. Existing Neon assertions extended without new requests; exact409CI/Render pending publication. Minor source/copy correction, no gallery. Reconciled original FIX001–008 in both retained ledgers with specific code/test evidence, seven ALREADY_VERIFIED and FIX004 IMPLEMENTED_AND_TESTED; independent acceptance/raw classifier/provider-native compatibility not inferred. No blanket207-row closure.
-New concrete next P0 REPORT-IMPORT-RETRY: local actual HTTP/PostgreSQL reproduction /tmp/report-retry-red.log shows two completed samples when identical owned command and Idempotency-Key are replayed after a lost response. Current route ignores key. Fix after this date/source slice: minimal atomic receipt in existing sample/child transaction, preserve legacy clients, reader before frozen ordinary UI; no new datastore/provider.
-Startup5f7ed6f Actions40513549493 SUCCESS/liveNeon and RenderLIVEdep-dbgahpq9lscs73960ilg; timerb8c40e9 Actions40514058585 SUCCESS/liveNeon and RenderLIVEdep-dbgajc7f3r2c73ben940. SetUI21759a4 originalRenderFAILED, delivered by startup descendant; retain distinction.
-
-
-## REPORT-IMPORT-RETRY reader — Must-Fix P0 / Core Journey D
-Confirmed duplicate replay fixed for keyed API commands with a pure injected-db helper: deterministic owned ID, canonical original-source/metadata hash, existing erasure lock0, one transaction/sample/batched children/analysis, replay before fresh date fallback, changed409, rollback without failed partial rows. Optional actor header narrows current auth, prevents stale-tab cross-account writes; no auth bypass. Legacy no-key compatible, unavailable receipt adapter503 never unsafe fallback. Browser DTO strips hash/receipt/rawpath; no raw key separately stored, no new table/provider or data migration.411 local full PASS259060ms;12 focused final including actor guard/replay/conflict/owner/real constraint rollback/concurrent/functional/legacy/adapter/redaction PASS. Types/finalbuild/startup silentPG regression PASS. Existing Neon quantitative import requests receipt/checks ID with no added calls. Reader publication/managed verification next, ordinary Upload has not yet enabled frozen keys. Contract STRUCTURED_REPORT_RECEIPTS.md.
-FIX004 cd8a281 Actions40519620042 SUCCESS/liveNeon and RenderLIVEdep-dbgb4l3rjlhs73d1quvg; corrected its ledger deployment evidence. Original8 rows reconciled, wider199/59 source tasks not blanket closed.
-
-
-## Executor unavailable — recovery checkpoint 2026-10-27 16:00 UTC
-The managed execution environment disconnected (exec-server transport disconnected; environment status unavailable). No final goal patch, test, commit or push ran after that failure. This is an execution blocker, not a new user decision. Runtime coding cannot safely continue until an execution environment is available. Do not reconstruct or overwrite a recovered dirty worktree.
-
-Last published runtime commit b15dac191430d34d57d68e2dfd606792102e48b8: weekly ingredient-name review. Render LIVE dep-dbgcidqjnfac739vnbhg. Actions40535649982 pending at checkpoint. Parent baedc699f12c7956ea079d2446ee2d655f254a8a (planner8dc18d3 + optional meal timezone) Render LIVE dep-dbgcenbbc2fs73a63i3g; Actions40534348071 running. Locale8924d10 Actions40532778188 SUCCESS/liveNeon and reached RenderLIVE; nutrient504d92a Actions40531474677 SUCCESS/liveNeon/reached LIVE; report97377c8 Actions40530990663 SUCCESS/liveNeon/reached LIVE. Exact subsequent results must be checked, not assumed.
-
-Uncommitted ID02 general-health work may survive in /workspace/BloomGutHealth: shared/goal-guidance.ts, client/src/pages/MealPlanner.tsx, tests/goal-guidance.test.ts (new), scripts/qa/taste-tolerance-journey.mjs, docs/operations/CAPABILITY_EXPOSURE_MAP.json. Initial version passed14 goal/planner/allergy/taste tests, types/build and actual App/API/PGlite/encrypted-context persisted General health/source-link/320px journey (/tmp/general-goal-final-tests.log, /tmp/general-goal-browser.log). It is NOT committed or deployed. Browser test initially needed the existing Evidence & limitations disclosure opened; that fixture correction passed.
-
-Critical next correction was requested but the shell process could not be created: keep General health EDUCATIONAL ONLY. Remove \"general\" from the goalMealFit plant-pattern id list, change its test to expect no new recipe-fit result, and rewrite MealPlanner help to say General health has a sourced overview while the other existing goals inform food matching. The recovered worktree may still include the initial general-goal recipe bonus. Inspect before publishing; do not claim that final correction or its checks ran. Preserve the two Health Canada PDF source records and the specific cardiometabolic source attribution fix if tests/review support them. The new mapping introduces no automatic numerical target, deficit, supplement dose or medical-effect claim. ID02 remains partial.
-
-Primary source excerpts consulted via official-domain search: https://food-guide.canada.ca/artifacts/CFG-snapshot-EN.pdf and https://food-guide.canada.ca/sites/default/files/artifact-pdf/CanadasDietaryGuidelines.pdf (2026-10-27). Old HTML URLs failed; this is not comprehensive independent clinical review. Re-run14 focused tests, actual taste-tolerance journey, types/build and source inventories after the educational-only correction; commit/push only verified work, then exact CI/Render. If the workspace is lost, recover the source delta carefully from this description; do not claim uncommitted files were preserved remotely.
-
-All standing branch/service/safety authority and external questions remain in BLOCKED_USER_INPUT.md. v0.5 remains incomplete; no v0.6 or main merge. 415 full local tests passed before the meal-time/weekly-food/general-goal increments; do not advertise that count as a full test of later uncommitted work. See existing focused/browser evidence for subsequent committed increments. Automatic execution does not continue after the turn ends.
-
-External verification update 2026-10-27 16:04 UTC: baed Actions40534348071 SUCCESS (unit/build/live Neon steps all succeeded); b15 Actions40535649982 now in progress. This recovery commit changes documentation only. Last runtime b15 remains RenderLIVEdep-dbgcidqjnfac739vnbhg. Environment remains unavailable; no uncommitted general-goal code was published.
-
-
-## Restored executor / ID-02 General health
-Workspace recovered with dirty goal files intact. Fast-forwarded06bddb2 without discarding work. Finished the interrupted correction: no general-goal recipe-fit/clinical priority bonus. Added broad-goal baseline library eligibility after ordinary hard filters so General health alone does not empty the food library. Recognized wording gets bounded Health Canada sourced overview; specific/unknown goal behavior and all numerical/clinical gates retained. Cardiometabolic source attribution corrected.14 focused tests and actual App/API/encrypted PostgreSQL general-health-only save/reload/restriction/evidence-link/320px journey PASS. Types/build/source inventories pass; full suite running before publication. Initial failing test incorrectly expected biology-specific recommendations without a specific reason; corrected to assert no added clinical priority and test baseline library independently. No new source-approval claim or user decision. Contract GENERAL_HEALTH_GOAL.md.
-Weeklyb15dac1 Actions40535649982 SUCCESS/liveNeon; Render reachedLIVEdep-dbgcidqjnfac739vnbhg. Recovery06bddb2 RenderLIVEdep-dbgcnp3bc2fs73a6ii3g; Actions40537559312 running. Historical outage below is resolved, not an active blocker.
-
-
-## ID02 digestive tolerance observation flow
-Digestive comfort/tolerance is recognized without diagnosis, dietary restriction or clinical priority. Ordinary filtered baseline library remains available; current manual intolerance/allergy data stays separate. Qualified NIDDK patient-information source (IBS; reviewed2017) is optional background, not proof the user has that condition. General/digestive goal cards lead to existing meal/symptom notes.10 focused tests +actual App/API/encrypted PGlite digestive-only preference/source/restriction/link/320px journey PASS; types/build/source checks PASS. Test locator scoped repeated no-diagnosis text to action list; implementation unaffected. No new table/API/permission/provider/dose. Contract DIGESTIVE_GOAL.md. General07971cf2b6155982778e29bc8a623c99a9ebf5f6 pushed after421 full tests; exactCI40562129759 running at checkpoint, Render deployment verification pending.
-
-
-## ID02 body-composition / training workflows — IMPLEMENTED_AND_TESTED (scoped)
-Approved goals connect to existing dated measurement tab and Activity log. No fabricated composition/deficit/load/readiness/targets, goal-based biological priority or clinical citations; baseline food filters retained and specific muscle guidance keeps precedence. Same-page body action uses canonical tab controller rather than a nonreactive query link; real editor opens.11 goal/planner tests, actual App/API/encrypted PGlite body-only and training-only journeys including no automatic navigation writes and320px PASS; types/build/source checks PASS. Contract BODY_TRAINING_GOALS.md. Independent broader ID02 acceptance remains open. General07971cf Actions40562129759 SUCCESS/liveNeon, RenderLIVEdep-dbgf033bc2fs73b6v5h0. Digestive6ade29d pushed/RenderLIVEdep-dbgf29jbc2fs73b72grg, Actions40562837101 running.
-
-
-## ID04 food browsing region reader — IMPLEMENTED_AND_TESTED (scoped)
-Optional encrypted practical.region uses existing3-value restaurant vocabulary; no residence/legal/provider eligibility inference or default write. Existing owner lock/CAS preserves field through unaware practical forms; explicit null clears. Versioned field negotiation keeps strict old JSON readers compatible while complete-source revision/private no-store/Vary/auth remain enforced. Canonical web provider opts in; no ordinary producer yet. Saved-region unit hints remain nonbinding and never modify unit preferences.9 focused real PostgreSQL/settings/unit tests +types/build/source checks PASS. Contract PRACTICAL_REGION.md; keep reader if UI rolled back. Digestive6ade29d Actions40562837101 SUCCESS/liveNeon and RenderLIVE; body/traininge3bf0b7 pushed, Actions40564043351 active.
-
-
-## ID04 ordinary region editor — IMPLEMENTED_AND_TESTED (scoped)
-One Profile region selector uses canonical encrypted settings/CAS/field negotiation. Source retry/unknown response latest-review, saved-region unit suggestions, unchanged independent units and unfinished numeric drafts; one-time restaurant default never overwrites explicit meal region or late/frozen review. No residence, formulation, legal or provider-availability inference. Actual App/API/encrypted PostgreSQL save/lost-response/reload/late-source/per-entry override/owner/retry/320px PASS; full unit-editor regression PASS after updating generic preference-error copy locator. Types/build/smoke syntax/source checks pass. Existing Neon concurrent settings requests extended for owned-region preservation without new requests, managed result pending publication. Reader95cbdc5 Actions40565338981 SUCCESS/liveNeon and RenderLIVEdep-dbgfa23ncjis73c3t9pg verified first. Body/traininge3bf0b7 Actions40564043351 SUCCESS/liveNeon. Broader original ID04/independent acceptance not blanket closed.

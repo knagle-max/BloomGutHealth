@@ -254,14 +254,14 @@ test("AI recipe proposals cannot smuggle excluded ingredients, new food IDs, dup
 });
 test("weekly API recomputes saved plans, enforces auth and isolates saved snapshots", async () => {
   const byUser = new Map<string, PrecisionRecord[]>();
-  let currentContext = context;
+  let currentContext = context, sourceReads = 0;
   const store: any = {
-    getPrecisionContext: async () => currentContext,
-    getPrecisionRecords: async (id: string) => byUser.get(id) || [],
-    getUser: async () => ({ dietaryPreferences: prefs }),
-    getUserSamples: async () => [],
-    getMeals: async () => [],
-    getMetabolites: async () => [],
+    getPrecisionContext: async () => {sourceReads++;return currentContext;},
+    getPrecisionRecords: async (id: string) => {sourceReads++;return byUser.get(id) || [];},
+    getUser: async () => {sourceReads++;return { dietaryPreferences: prefs };},
+    getUserSamples: async () => {sourceReads++;return [];},
+    getMeals: async () => {sourceReads++;return [];},
+    getMetabolites: async () => {sourceReads++;return [];},
     insertPrecisionRecord: async (
       id: string,
       kind: string,
@@ -299,6 +299,11 @@ test("weekly API recomputes saved plans, enforces auth and isolates saved snapsh
       (await fetch(base + "/api/precision/weekly-plans")).status,
       401,
     );
+    for(const action of ["preview","save"]){
+      const denied=await fetch(base+"/api/precision/weekly-plans/"+action,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(input())});
+      assert.equal(denied.status,401);
+    }
+    assert.equal(sourceReads,0,"Family authentication denies dynamic actions before any private context read");assert.equal(byUser.size,0);
     const saved = await fetch(base + "/api/precision/weekly-plans/save", {
       method: "POST",
       headers: { "content-type": "application/json", "x-test-user": "a" },
@@ -328,6 +333,9 @@ test("weekly API recomputes saved plans, enforces auth and isolates saved snapsh
       })
     ).json();
     assert.equal(other.length, 0);
+    const readsBeforeForgery=sourceReads;
+    for(const action of ["preview","save"]){const forged=await fetch(base+"/api/precision/weekly-plans/"+action,{method:"POST",headers:{"content-type":"application/json","x-test-user":"a"},body:JSON.stringify({...input(),userId:"b"})});assert.equal(forged.status,400);}
+    assert.equal(sourceReads,readsBeforeForgery,"Forged owners are rejected before source reads");
     const tampered = await fetch(base + "/api/precision/weekly-plans/save", {
       method: "POST",
       headers: { "content-type": "application/json", "x-test-user": "a" },
