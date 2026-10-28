@@ -4,7 +4,9 @@ Use enhance/bloom-experience / PR1 / existing Render workspace tea-db9toijrjlhs7
 
 ## Current slice
 
-Private source context reader d0c572b: Actions40746423137 SUCCESS; Render dep-dbh40gvavr4c739e4mfg LIVE. Optional source note is encrypted in existing private product storage and frozen in canonical meal history, no new schema/provider/official market claim. UI optional collapsed form and review/history disclosures locally implemented; actual App/API/PGlite failure/retry/save/reload/deleted-label/owner/320px journey PASS. Complete types/build, commit/push UI and records, verify its exact Actions and automatic Render deployment. Do not manually duplicate auto-deploy.
+Private source note reader d0c572b Actions40746423137 SUCCESS/LIVE. UI8833cbc7a3d4523a61282e74703563343015a6e7 is RenderLIVE dep-dbh47rvb9u1s73eahd3g; Actions40748757222 was still running. Check exact outcome, don't conflate Render success and CI.
+
+New FoodProgress/shared recordedFoodDays connects owned saved meals to seven logged dates with same journal nutrition summary and current viewer timezone; zeros/unknown/partial and energy preference, no fabricated empty days or complete intake. Types/build/3 focused tests/API/source checks pass. Actual App/API/encrypted storage normal/failure/retry/reload/owner/320px plus existing Progress current-context regression pass. Final kJ conversion1757kJ from unchanged420kcal,320px screenshot and no page errors PASS (/tmp/food-progress-browser.log). Commit/push slice with records, verify exact Actions/Render then continue next unblocked core journey. No new schema/provider/grant.
 
 ## Next work
 

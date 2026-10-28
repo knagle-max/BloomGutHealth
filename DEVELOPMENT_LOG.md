@@ -1,3 +1,11 @@
+# Food → Progress — 2026-10-28
+
+Implemented the missing normal saved-food destination in Progress: existing owner-bound /api/meals query/cache, seven most recent logged dates grouped in current viewer timezone, same shared mealNutritionSummary used by journal. Energy/protein/carbohydrate/fat show known contributions, explicit partial/unavailable/zero; no empty-day zero, fabricated completeness, target or causal claims. Existing journal correction link and meal invalidation reused, no endpoint/store/migration/provider added.
+
+3 focused nutrition/source integration tests, TypeScript/build, API inventory101static+13dynamic, source crosswalk52IDs133files PASS. Actual App/PGlite encrypted-store label→explicit review→one420kcal/0protein meal→journal→Progress read503/retry/reload/320px/empty second owner PASS, existing Progress current/held/error/paused/source-preservation regression PASS. Initial browser Progress fixture used[] for precision/health integrations; corrected fixture to actual report builder and normal response shapes, no production change to accommodate mock. Initial Map iteration type check corrected to Array.from for existing TS target. Final browser kJ conversion1757kJ from unchanged420kcal, screenshot320px and no page errors PASS. Screenshot inspected; no overflow.
+
+Prior source-context UI8833cbc is RenderLIVE dep-dbh47rvb9u1s73eahd3g; exact Actions40748757222 still running unit/embedded PostgreSQL at last check. Reader d0c572b Actions40746423137 SUCCESS/LIVE. No real-owner/provider/device/independent acceptance claimed.
+
 # Private source context — completed UI slice, 2026-10-28
 
 Reader d0c572b exact Actions40746423137 SUCCESS, Render dep-dbh40gvavr4c739e4mfg LIVE before the form emits sourceNote. ProductPicker now offers optional collapsed country/variant/source/date context, saved as plain private text; blank omitted. Selected product and immutable meal snapshot expose it on demand, never as provider provenance or an official market claim. Manual restaurant fallback remains useful without a licensed catalogue.

@@ -1,3 +1,9 @@
+# Food continuity checkpoint — October28,2026
+
+Completed and locally verified: optional private nutrition source note across product→review→meal history; saved food→dated Progress summary with canonical totals/unknowns/zero/partial, kcal/kJ, retry, reload and owner isolation. UI8833cbc RenderLIVE dep-dbh47rvb9u1s73eahd3g, exact Actions40748757222 running. New Progress slice publication follows. Types/build/3 focused tests, source/API checks and actual App/API/encrypted storage normal/failure/mobile journeys PASS, existing precision Progress regression PASS. Screenshot: docs/review/food-progress-20261028/recorded-food-320.png. No independent real-owner/provider/Design/device acceptance claimed.
+
+NEXT_ACTIONS.md tracks exact current continuation; older checkpoints below are historical. v0.5 incomplete, continue unblocked core journeys. No new question needed.
+
 # Latest checkpoint — October 28, 2026
 
 New private nutrition source context reader d0c572b is deployed LIVE (dep-dbh40gvavr4c739e4mfg), Actions40746423137 SUCCESS. Optional country/variant/source note UI and immutable meal history disclosure implemented locally; actual App/API/encrypted storage failed-save/retry/review/single-save/reload/deleted-label/account isolation/320px journey PASS. Exact UI commit/deployment follows; NEXT_ACTIONS.md is current.

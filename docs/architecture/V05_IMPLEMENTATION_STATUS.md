@@ -180,3 +180,9 @@ Applied 7af47d5: the design catalogue may define five input methods, but ordinar
 Applied 91f16c8: one internal-only `Show development features` control replaces the earlier experimental-only wording; no second switch exists. Preference and server provisioning remain the same default-denied boundary, currently clearing no restricted services. Added typed orthogonal implementation-readiness states and tested readable labels for unfinished, pending approval, research-only, combined conditions and hard incident disablement. Labels grant no permission. Functional completion without verification does not silently shed development status. Full per-capability runtime inventory, in-situ testable internal modules and their approved data contexts remain open.
 
 217 tests, types/build and updated ordinary/internal off/on/revocation/Appearance browser checks passed. No real internal account, model, research action or provider was activated.
+
+## Core food continuity — October 28, 2026
+
+Private optional country/variant/source/date note reader d0c572b: Actions40746423137 SUCCESS, RenderLIVE. UI8833cbc: RenderLIVE dep-dbh47rvb9u1s73eahd3g, Actions40748757222 still running at checkpoint. Notes remain private user context, encrypted with existing labels and frozen in saved meal snapshot, never verified provider/market provenance. Actual App/API/storage failure/retry/review/save/deleted-label/reload/owner/320px passes.
+
+New Progress recorded-food summary uses owned meal API/cache and same journal totals, current viewer dates, seven logged days, zero/partial/unknown and canonical energy display; no missing-day zero or complete-intake claim. Local types/build/three focused tests and actual save→Progress/failed read/retry/reload/second owner/mobile plus existing precision Progress regression PASS; publication pending. External rights, source SKU and independent device/Design acceptance remain separate.

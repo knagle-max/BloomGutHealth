@@ -1,4 +1,5 @@
 import {activityTimeText} from "@shared/activity";
+import FoodProgress from "@/components/FoodProgress";
 import RoutineLabTiming from "@/components/RoutineLabTiming";
 import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-units";
 import { useExperienceRecords } from "@/lib/experience";
@@ -35,6 +36,7 @@ export default function Progress() {
           change over time is not proof of its cause.
         </p>
       </div>
+      <FoodProgress />
       <section className="bloom-panel space-y-3">
         <h2>Your dated observations</h2>
         <p>Use repeat measurements and check-ins to review what changed. A current Profile value is not a dated observation.</p>
