@@ -1,45 +1,52 @@
 # Bloom development handoff — October28,2026
 
-v0.5 remains incomplete. v0.6 has not begun. Work is on enhance/bloom-experience / PR1 and the existing Render review service only; no main merge, production data/credential changes or restricted activation. No new user decision was needed for this run.
+v0.5 remains incomplete; v0.6 has not begun. Work uses enhance/bloom-experience / PR1 and the existing Render review service only. No main merge, production data/credential changes, replacement service, paid/restricted activation or external messages. No new user decision was needed.
 
 ## Development summary
 
-- Added a signed-session consistency guard for stale tabs; all owned API fetches, late/cloned response bodies and private downloads bind to the displayed account. Private pages reset on identity adoption; delayed auth bootstrap cannot overwrite successful login.
-- Cross-tab login/logout and history lifecycle withdraw private drafts, query cache and notices before real-session recheck. Channel/storage messages contain no identity or health data. Failed rechecks keep content withdrawn; injected lifecycle tests are not real-device BFCache acceptance.
-- Added bounded local text-PDF lab intake into editable source review:5MiB/5pages/30kcharacters/20s, explicit date/unit/source-only review/save, no upload or filename identity. Scanned OCR remains outstanding. Stalled/replaced worker operations settle and dispose native workers.
-- Made legacy public demo endpoints fixed labelled fixtures, with no account reads. Removed automatic database seeding of a demo user/model predictions; existing records remain untouched.
-- Moved owner predicates into individual meal/sample reads and updates, meal deletion, parent-joined composition/analysis reads and single-statement child inserts. Identity fields cannot be reassigned; vanished correction/processing targets cannot produce false success or remembered writes. Canonical receipt transactions and bulk batching remain intact.
+-Local text-PDF lab intake into editable source review, with bounds/cancellation and explicit dates/units/source-only review/save; no upload, automatic clinical confirmation, filename identity or scanned OCR.
+-Stale-tab signed-session consistency, account-bound requests/cloned response bodies/private downloads, private page reset, stale bootstrap suppression and cross-tab/history private-state withdrawal. Browser notices contain no identity/health data; failed rechecks keep content withdrawn.
+-Profile logout pending/error/retry and15s deadline; unknown outcomes never claim confirmed sign-out. Actual503/timeout/possibly committed/idempotent retry passes.
+-Fixed labelled demo API fixtures without account reads; removed automatic seeding of users/generated predictions. Existing database records remain untouched.
+-Owner+ID SQL for meals/samples, joined report child reads and one-statement authorized child writes; immutable identity, vanished-target failure, unchanged receipt bulk transactions. Removed eight unused unowned prototype storage accessors; historical filtered account export remains.
+-New LDL/TG reported-unit pair regression preserves original source number precision/units/ranges and prevents false trends. Existing bounded planner gap/trade-off display reverified without writes or relaxing limits. Scoped original ID01/ID05/LAB02/LAB03/FIX001 evidence reconciled, no blanket release/clinical approval.
 
-| Commit | Exact Actions | Render |
-|---|---|---|
-|5d14b67 actor reader|40698344422 SUCCESS|reachedLIVE dep-dbgvlp7b9u1s739dmgng|
-|5432100 request/download client|40699601830 SUCCESS|reachedLIVE dep-dbgvpjeq1p3s73bfbr10|
-|c88e1eb local text-PDF|40701089903 SUCCESS|reachedLIVE dep-dbgvu1vb9u1s739e3r50|
-|d6ded8e static demo|40701920542 SUCCESS|reachedLIVE dep-dbh00g2vcj2c73duq43g|
-|f38bb0c session/body/cancellation|40704377832 SUCCESS|reachedLIVE dep-dbh07ji9lscs7397fqu0|
-|b701ad9 meal SQL ownership|40705908129 SUCCESS|reachedLIVE dep-dbh0c0a9lscs7397m600|
-|ae66e6b report parents/startup|40707444905 FAILED: old403-vs404 smoke expectation only|reachedLIVE dep-dbh0gamq1p3s73bgimcg|
-|693cdc5 child inserts|40709082128 FAILED same old403/404 assertion; recovered by8c99|reachedLIVE dep-dbh0l05g1s2s73ei25hg|
-|8c99ea0 strict smoke correction|40710308757 SUCCESS/full suite +managed Neon|reachedLIVE dep-dbh0ofcs728c739da83g|
-|1a2d77f inactive API retirement|40711614208 active;12 local focused/types/build pass|LIVE dep-dbh0s5cs728c739dhal0|
+## Commits and deployment
 
-Current correction changes one exact managed smoke expectation to404 for another owner's report, matching the new owner-filtered lookup. Prior production startup/persistence/report/export checks passed; authorization is not weakened. Syntax and5 direct report-owner/analysis tests pass. Full441/441 local regression PASS (280979ms); corrective8c99ea0 exact Actions40710308757 SUCCESS, including managed Neon. A subsequent inactive-method retirement is locally verified with12 existing relevant tests/types/build; final descendant CI/deployment verification follows.
+| Commit | Scope | Exact Actions | Render |
+|---|---|---|---|
+|5d14b67|Actor reader|40698344422 SUCCESS|reachedLIVE|
+|5432100|Private requests/downloads/bootstrap|40699601830 SUCCESS|reachedLIVE|
+|c88e1eb|Local text-PDF|40701089903 SUCCESS|reachedLIVE|
+|d6ded8e|Static synthetic demo|40701920542 SUCCESS|reachedLIVE|
+|f38bb0c|Session/late-body/worker withdrawal|40704377832 SUCCESS|reachedLIVE|
+|b701ad9|Meal storage ownership|40705908129 SUCCESS|reachedLIVE|
+|ae66e6b|Report parent reads/startup|40707444905 FAILED old403-vs404 smoke expectation|reachedLIVE|
+|693cdc5|Report child writes|40709082128 FAILED same old assertion|reachedLIVE|
+|8c99ea0|Strict404 smoke correction|40710308757 SUCCESS/managed Neon|reachedLIVE|
+|1a2d77f|Inactive storage API retirement|40711614208 SUCCESS|reachedLIVE|
+|7b7f6d0|Bounded logout retry|40713517121 SUCCESS/unit/build/live Neon|LIVE dep-dbh11f4s728c739dq4o0|
 
-Focused verification includes actual App/HTTP/encrypted PGlite labs/exports/meal/templates, two-tab channel and storage fallback, late bootstrap/body, production PDF worker, source dates/zeros/thresholds, malformed200/lost receipt exact retry/no duplicates, owner denial, SQL statement counts, rollback, and320px. Types/build/source inventories pass. Previous local434 run had433pass/1source-hash drift, fixed by refresh+9 focused checks and later f38 exactCI success; retain that distinction. Final full441/441 run passed after all runtime edits; types/build/source checks pass. Synthetic evidence does not establish independent clinical/legal/device or hosted real-owner acceptance.
+Final follow-up commit adds tests and consolidated records only; runtime source remains verified7b7f6d0746856be1fb31f96900b78c6895b79cad. Check its separate CI/deploy status on resumption. The two historical smoke failures correctly returned404 without loading another owner's report; one exact test expectation was corrected, not a permissive status range or an authorization rollback. Final runtime confirms recovery. Static Render logs show shared budgets ready and listener; no raw sensitive logs retained.
 
-Earlier sourced goal/region/unit/planner/weekly-food/training/privacy increments retain their detailed evidence in DEVELOPMENT_LOG. Region5df original Render failed; verified LIVE descendant8381 delivered it and passed Actions40693695657. No release completion or independent approval is inferred.
+## Tests and results
 
-Latest locally verified logout feedback: pending/duplicate-click guard,15s timeout and static unconfirmed/retry message; confirmed idempotent retry only then withdraws private views. Actual App503/timeout/unknown commit/retry/no health writes and both cross-tab regression modes PASS; types/build/source checks PASS. Minor feedback change, no new clinical/credential scope.
+Full441 local tests PASS (280979ms). Final runtime exact Actions PASS including unit/embedded PostgreSQL, build and isolated-Neon production persistence; types/source inventory pass.25 further focused checks include the newly added unit-pair case and encrypted unit confirmation; actual planner App320px/no-write/no-relaxation journey passes. Do not describe the new test as an already-run442 full suite.
 
-## Remaining priorities and resumption
+Rendered/integration checks passed for actual App/HTTP/encrypted PGlite labs/exports/meal corrections/templates/reports, malformed200/lost receipt exact retries/no duplicates, source dates/zeros/thresholds, SQL owner denial/statement counts/rollback, seed-free startup, native PDF worker in dev and production/stalled cancellation, channel+storage fallback/held+failed session reads/notices/logout, bootstrap and logout retry/timeout/no health writes. Physical BFCache lifecycle, real-owner hosted product variants and independent clinical/legal/device acceptance remain separate; synthetic cases do not substitute for those.
 
-1. Publish/verify latest logout feedback fix and inactive-API retirement exact Actions/Render. Strict404 smoke correction8c99 has already passed exactCI and managed Neon. Preserve prior failed evidence; do not relabel ae66 as green.
-2. Continue approved P0 inactive derived-record/non-HTTP/job/storage trace and remaining core v0.5 requirements. Original207/67 ledgers were updated for scoped ID01/LAB03 evidence, not blanket completion. Other actionable work is not globally blocked by the external catalog.
-3. Real report/layout/device acceptance, scanned OCR, exact Canadian SKU and source/legal/clinical/recovery gates remain separate. Carry unresolved gates into the next session. Begin approved independent v0.6 only when actionable v0.5 is exhausted.
+Earlier qualified general/digestive/body/training goals, optional browsing-region/mixed-unit/draft preservation, food search/review/save, planner/weekly food/training/privacy work retains evidence in DEVELOPMENT_LOG. Region5df original Render failed; verified LIVE descendant8381 delivered it, Actions40693695657 SUCCESS.
 
-## Consolidated deferred decisions
+## Remaining priorities and recommended resumption
 
-Exact task/questions/options/recommendations/deferral impact follow. Historical resolved execution limits are not a current product decision or a reason to pause independent work.
+1. P0: continue approved non-HTTP/background/controller/cache/tenant trace, starting actual weekly-worker/runner and capability-control source and existing negative tests. Implement only demonstrated gaps. Whole ID01 is not closed by these scoped proofs.
+2. P1: continue remaining original v0.5 core criteria and requirement reconciliation; distinguish implemented evidence from truncated/unavailable acceptance. Scanned OCR and independent real-report/layout/device acceptance remain open. Do not infer bidirectional display settings or exhaustive solver claims from the unit/planner tests.
+3. External decisions: highest-leverage groups are exact flagship archive/contracts, native platform/OS/device scope, and source/clinical/legal/operational approval evidence. Exact questions/options/recommendations/deferral impact follow; these do not globally block independent code. Decisions unlock only their scoped visual/native/provider/managed-drill work.
+4. Once actionable v0.5 is exhausted, automatically begin approved independent V06_HANDOFF work while carrying external gates. v0.6 has not started. NEXT_ACTIONS.md is the precise checkpoint.
+
+## Consolidated user decisions and external dependencies
+
+No new question is being asked now. Historical resolved execution-resource entries below are not a current product decision or a reason to pause work.
 
 # Bloom deferred decisions and external dependencies
 
