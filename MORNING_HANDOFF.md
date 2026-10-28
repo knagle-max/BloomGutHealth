@@ -4,12 +4,12 @@ v0.5 remains incomplete; v0.6 has not begun. Work uses enhance/bloom-experience 
 
 ## Development summary
 
--Local text-PDF lab intake into editable source review, with bounds/cancellation and explicit dates/units/source-only review/save; no upload, automatic clinical confirmation, filename identity or scanned OCR.
--Stale-tab signed-session consistency, account-bound requests/cloned response bodies/private downloads, private page reset, stale bootstrap suppression and cross-tab/history private-state withdrawal. Browser notices contain no identity/health data; failed rechecks keep content withdrawn.
--Profile logout pending/error/retry and15s deadline; unknown outcomes never claim confirmed sign-out. Actual503/timeout/possibly committed/idempotent retry passes.
--Fixed labelled demo API fixtures without account reads; removed automatic seeding of users/generated predictions. Existing database records remain untouched.
--Owner+ID SQL for meals/samples, joined report child reads and one-statement authorized child writes; immutable identity, vanished-target failure, unchanged receipt bulk transactions. Removed eight unused unowned prototype storage accessors; historical filtered account export remains.
--New LDL/TG reported-unit pair regression preserves original source number precision/units/ranges and prevents false trends. Existing bounded planner gap/trade-off display reverified without writes or relaxing limits. Scoped original ID01/ID05/LAB02/LAB03/FIX001 evidence reconciled, no blanket release/clinical approval.
+- Local text-PDF lab intake into editable source review, with bounds/cancellation and explicit dates/units/source-only review/save; no upload, automatic clinical confirmation, filename identity or scanned OCR.
+- Stale-tab signed-session consistency, account-bound requests/cloned response bodies/private downloads, private page reset, stale bootstrap suppression and cross-tab/history private-state withdrawal. Browser notices contain no identity/health data; failed rechecks keep content withdrawn.
+- Profile logout pending/error/retry and15s deadline; unknown outcomes never claim confirmed sign-out. Actual503/timeout/possibly committed/idempotent retry passes.
+- Fixed labelled demo API fixtures without account reads; removed automatic seeding of users/generated predictions. Existing database records remain untouched.
+- Owner+ID SQL for meals/samples, joined report child reads and one-statement authorized child writes; immutable identity, vanished-target failure, unchanged receipt bulk transactions. Removed eight unused unowned prototype storage accessors; historical filtered account export remains.
+- New LDL/TG reported-unit pair regression preserves original source number precision/units/ranges and prevents false trends. Existing bounded planner gap/trade-off display reverified without writes or relaxing limits. Scoped original ID01/ID05/LAB02/LAB03/FIX001 evidence reconciled, no blanket release/clinical approval.
 
 ## Commits and deployment
 
@@ -27,7 +27,7 @@ v0.5 remains incomplete; v0.6 has not begun. Work uses enhance/bloom-experience 
 |1a2d77f|Inactive storage API retirement|40711614208 SUCCESS|reachedLIVE|
 |7b7f6d0|Bounded logout retry|40713517121 SUCCESS/unit/build/live Neon|LIVE dep-dbh11f4s728c739dq4o0|
 
-Final follow-up commit adds tests and consolidated records only; runtime source remains verified7b7f6d0746856be1fb31f96900b78c6895b79cad. Check its separate CI/deploy status on resumption. The two historical smoke failures correctly returned404 without loading another owner's report; one exact test expectation was corrected, not a permissive status range or an authorization rollback. Final runtime confirms recovery. Static Render logs show shared budgets ready and listener; no raw sensitive logs retained.
+Final follow-up62bb6af adds tests and consolidated records only; runtime source remains verified7b7f6d0746856be1fb31f96900b78c6895b79cad. Check its separate CI/deploy status on resumption. The two historical smoke failures correctly returned404 without loading another owner's report; one exact test expectation was corrected, not a permissive status range or an authorization rollback. Final runtime confirms recovery. Static Render logs show shared budgets ready and listener; no raw sensitive logs retained.
 
 ## Tests and results
 
