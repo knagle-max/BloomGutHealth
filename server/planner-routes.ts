@@ -239,7 +239,7 @@ export function registerPlannerRoutes(
     try {
       const receipt = key ? mealSaveReceipt(req.session.userId!, key, match===undefined?p.data:{...p.data,reviewRevision:match.slice(1,-1),...(complete?{completeIngredients:true}:{})}) : undefined;
       if (receipt) {
-        const previous = await storage.getMeal(receipt.id);
+        const previous = await storage.getMeal(receipt.id,req.session.userId!);
         if (previous) {
           if (previous.userId !== req.session.userId!) throw new Error("MEAL_SAVE_CONFLICT");
           return res.json(checkMealReceipt(previous, receipt));
@@ -297,7 +297,7 @@ export function registerPlannerRoutes(
         .status(400)
         .json({ error: "Invalid meal description or context." });
     try {
-      const meal = await storage.getMeal(req.params.mealId);
+      const meal = await storage.getMeal(req.params.mealId,req.session.userId!);
       if (!meal) return res.status(404).json({ error: "Meal not found" });
       if (meal.userId !== req.session.userId)
         return res.status(403).json({ error: "Access denied" });
@@ -328,7 +328,8 @@ export function registerPlannerRoutes(
           intelligence: result.intelligence,
           nutritionalData: result.nutritionalData,
           ...nutritionTotals(result.nutritionalData),
-        });
+        },req.session.userId!);
+      if (!updatedMeal) return res.status(404).json({error:"Meal not found in your account."});
       if (p.data.ingredients?.length && storage.insertExperienceRecord) {
         try { await storage.insertExperienceRecord(req.session.userId!, {kind:"food-memory",payload:{key:memoryKey(p.data.mealText),ingredients:result.intelligence.ingredients}}); }
         catch { /* A remembered shortcut must never prevent an otherwise saved correction. */ }

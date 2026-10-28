@@ -135,7 +135,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { mealId } = req.params;
       const userId = req.session.userId!;
 
-      const existingMeal = await storage.getMeal(mealId);
+      const existingMeal = await storage.getMeal(mealId,userId);
       if (!existingMeal) {
         return res.status(404).json({ error: "Meal not found" });
       }
@@ -144,7 +144,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Access denied" });
       }
 
-      await storage.deleteMeal(mealId);
+      await storage.deleteMeal(mealId,userId);
       res.json({ success: true });
     } catch (error: any) {
       console.error("Meal deletion could not be completed.");

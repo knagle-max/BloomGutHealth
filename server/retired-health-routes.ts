@@ -12,6 +12,6 @@ export function registerRetiredHealthRoutes(app:Express,auth:RequestHandler,stor
  }
  app.post("/api/meals/:mealId/check-adherence",auth,async(req,res)=>{
   res.setHeader("Cache-Control","no-store");
-  try{const meal=await store.getMeal(req.params.mealId);if(!meal||meal.userId!==req.session.userId)return res.status(404).json({error:"Meal not found in your account."});res.status(410).json(retired);}catch{res.status(503).json({error:"Meal could not load. Please retry."});}
+  try{const meal=await store.getMeal(req.params.mealId,req.session.userId!);if(!meal||meal.userId!==req.session.userId)return res.status(404).json({error:"Meal not found in your account."});res.status(410).json(retired);}catch{res.status(503).json({error:"Meal could not load. Please retry."});}
  });
 }

@@ -1,3 +1,4 @@
+import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
 import {importStructuredReportWithReceipt} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
 import type {LabDateChange} from "../shared/lab-date-correction";
@@ -91,11 +92,11 @@ export interface IStorage extends ExperienceStore {
   getRecommendations(sampleId: string): Promise<Recommendation[]>;
   insertRecommendation(recommendation: InsertRecommendation): Promise<void>;
 
-  getMeal(id: string): Promise<Meal | undefined>;
+  getMeal(id: string,userId:string): Promise<Meal | undefined>;
   getMeals(userId: string): Promise<Meal[]>;
   insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal>;
-  updateMeal(id: string, updates: Partial<Meal>): Promise<Meal>;
-  deleteMeal(id: string): Promise<void>;
+  updateMeal(id: string, updates: MealUpdates,userId:string): Promise<Meal|undefined>;
+  deleteMeal(id: string,userId:string): Promise<void>;
 
   getPrecisionContext(userId: string): Promise<unknown>;
   putPrecisionContext(userId: string, context: PrecisionContext): Promise<void>;
@@ -436,10 +437,7 @@ export class DatabaseStorage implements IStorage {
     await db.insert(recommendations).values(recommendation);
   }
 
-  async getMeal(id: string): Promise<Meal | undefined> {
-    const [meal] = await db.select().from(meals).where(eq(meals.id, id));
-    return meal;
-  }
+  getMeal(id:string,userId:string) { return getOwnedMeal(db,id,userId); }
 
   async getMeals(userId: string): Promise<Meal[]> {
     return await db
@@ -453,18 +451,8 @@ export class DatabaseStorage implements IStorage {
     return insertMealWithReceipt(db, meal, receipt);
   }
 
-  async updateMeal(id: string, updates: Partial<Meal>): Promise<Meal> {
-    const [updatedMeal] = await db
-      .update(meals)
-      .set(updates)
-      .where(eq(meals.id, id))
-      .returning();
-    return updatedMeal;
-  }
-
-  async deleteMeal(id: string): Promise<void> {
-    await db.delete(meals).where(eq(meals.id, id));
-  }
+  updateMeal(id:string,updates:MealUpdates,userId:string) { return updateOwnedMeal(db,id,updates,userId); }
+  deleteMeal(id:string,userId:string) { return deleteOwnedMeal(db,id,userId); }
 
   private readonly experience = new ExperienceStorage(db);
   getExperienceSettings: ExperienceStore["getExperienceSettings"] = (id) => this.experience.getExperienceSettings(id);
