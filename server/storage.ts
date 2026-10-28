@@ -21,26 +21,12 @@ import {
   type InsertMicrobiomeSample,
   type BacterialComposition,
   type InsertBacterialComposition,
-  type Metabolite,
-  type InsertMetabolite,
-  type HealthImpact,
-  type InsertHealthImpact,
-  type CohortReference,
-  type InsertCohortReference,
   type MlAnalysis,
   type InsertMlAnalysis,
-  type Recommendation,
-  type InsertRecommendation,
   type Meal,
   type InsertMeal,
   users,
   microbiomeSamples,
-  bacterialComposition,
-  metabolites,
-  healthImpacts,
-  cohortReferences,
-  mlAnalyses,
-  recommendations,
   meals,
 } from "@shared/schema";
 import { db } from "./db";
@@ -80,20 +66,12 @@ export interface IStorage extends ExperienceStore {
     userId:string,
   ): Promise<void>;
 
-  getMetabolites(sampleId: string): Promise<Metabolite[]>;
-  insertMetabolite(metabolite: InsertMetabolite): Promise<void>;
 
-  getHealthImpacts(metaboliteId: string): Promise<HealthImpact[]>;
-  insertHealthImpact(impact: InsertHealthImpact): Promise<void>;
 
-  getCohortReferences(): Promise<CohortReference[]>;
-  insertCohortReference(cohort: InsertCohortReference): Promise<void>;
 
   getMlAnalyses(sampleId: string,userId:string): Promise<MlAnalysis[]>;
   insertMlAnalysis(analysis: InsertMlAnalysis,userId:string): Promise<string>;
 
-  getRecommendations(sampleId: string): Promise<Recommendation[]>;
-  insertRecommendation(recommendation: InsertRecommendation): Promise<void>;
 
   getMeal(id: string,userId:string): Promise<Meal | undefined>;
   getMeals(userId: string): Promise<Meal[]>;
@@ -120,6 +98,7 @@ export interface IStorage extends ExperienceStore {
 export class DatabaseStorage implements IStorage {
   private biology = new BiologyStorage(db);
   getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}
+  // Inactive unscoped prediction/cohort accessors are intentionally not part of this application interface.
   // Synthetic examples are served by demo-routes; construction never seeds account data.
 
   async getUser(id: string): Promise<User | undefined> {
@@ -179,52 +158,9 @@ export class DatabaseStorage implements IStorage {
 
   insertBacterialComposition(composition:InsertBacterialComposition,userId:string) { return insertOwnedComposition(db,composition,userId); }
 
-  async getMetabolites(sampleId: string): Promise<Metabolite[]> {
-    return await db
-      .select()
-      .from(metabolites)
-      .where(eq(metabolites.sampleId, sampleId));
-  }
-
-  async insertMetabolite(metabolite: InsertMetabolite): Promise<void> {
-    await db.insert(metabolites).values(metabolite);
-  }
-
-  async getHealthImpacts(metaboliteId: string): Promise<HealthImpact[]> {
-    return await db
-      .select()
-      .from(healthImpacts)
-      .where(eq(healthImpacts.metaboliteId, metaboliteId));
-  }
-
-  async insertHealthImpact(impact: InsertHealthImpact): Promise<void> {
-    await db.insert(healthImpacts).values(impact);
-  }
-
-  async getCohortReferences(): Promise<CohortReference[]> {
-    return await db.select().from(cohortReferences);
-  }
-
-  async insertCohortReference(cohort: InsertCohortReference): Promise<void> {
-    await db.insert(cohortReferences).values(cohort);
-  }
-
   getMlAnalyses(sampleId:string,userId:string) { return getOwnedAnalyses(db,sampleId,userId); }
 
   insertMlAnalysis(analysis:InsertMlAnalysis,userId:string) { return insertOwnedAnalysis(db,analysis,userId); }
-
-  async getRecommendations(sampleId: string): Promise<Recommendation[]> {
-    return await db
-      .select()
-      .from(recommendations)
-      .where(eq(recommendations.sampleId, sampleId));
-  }
-
-  async insertRecommendation(
-    recommendation: InsertRecommendation,
-  ): Promise<void> {
-    await db.insert(recommendations).values(recommendation);
-  }
 
   getMeal(id:string,userId:string) { return getOwnedMeal(db,id,userId); }
 

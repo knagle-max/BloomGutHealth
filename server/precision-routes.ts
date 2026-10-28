@@ -40,8 +40,6 @@ type Store = Pick<
   | "getMeals"
   | "getUser"
   | "getUserSamples"
-  | "getBacterialComposition"
-  | "getMetabolites"
   | "getPrecisionContext"
   | "putPrecisionContext"
   | "getPrecisionRecords"
