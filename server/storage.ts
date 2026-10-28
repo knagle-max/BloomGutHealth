@@ -1,4 +1,4 @@
-import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,type SampleUpdates } from "./report-records";
+import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
 import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
 import {importStructuredReportWithReceipt} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
@@ -77,6 +77,7 @@ export interface IStorage extends ExperienceStore {
   getBacterialComposition(sampleId: string,userId:string): Promise<BacterialComposition[]>;
   insertBacterialComposition(
     composition: InsertBacterialComposition,
+    userId:string,
   ): Promise<void>;
 
   getMetabolites(sampleId: string): Promise<Metabolite[]>;
@@ -89,7 +90,7 @@ export interface IStorage extends ExperienceStore {
   insertCohortReference(cohort: InsertCohortReference): Promise<void>;
 
   getMlAnalyses(sampleId: string,userId:string): Promise<MlAnalysis[]>;
-  insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string>;
+  insertMlAnalysis(analysis: InsertMlAnalysis,userId:string): Promise<string>;
 
   getRecommendations(sampleId: string): Promise<Recommendation[]>;
   insertRecommendation(recommendation: InsertRecommendation): Promise<void>;
@@ -176,11 +177,7 @@ export class DatabaseStorage implements IStorage {
 
   getBacterialComposition(sampleId:string,userId:string) { return getOwnedComposition(db,sampleId,userId); }
 
-  async insertBacterialComposition(
-    composition: InsertBacterialComposition,
-  ): Promise<void> {
-    await db.insert(bacterialComposition).values(composition);
-  }
+  insertBacterialComposition(composition:InsertBacterialComposition,userId:string) { return insertOwnedComposition(db,composition,userId); }
 
   async getMetabolites(sampleId: string): Promise<Metabolite[]> {
     return await db
@@ -214,10 +211,7 @@ export class DatabaseStorage implements IStorage {
 
   getMlAnalyses(sampleId:string,userId:string) { return getOwnedAnalyses(db,sampleId,userId); }
 
-  async insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string> {
-    const [result] = await db.insert(mlAnalyses).values(analysis).returning();
-    return result.id;
-  }
+  insertMlAnalysis(analysis:InsertMlAnalysis,userId:string) { return insertOwnedAnalysis(db,analysis,userId); }
 
   async getRecommendations(sampleId: string): Promise<Recommendation[]> {
     return await db

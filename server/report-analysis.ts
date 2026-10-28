@@ -17,11 +17,11 @@ export function analyzeReportedComposition(store:Store):RequestHandler{
    authorizedSampleId=sampleId;authorizedOwner=userId;
    await store.updateMicrobiomeSample(sampleId,{processingStatus:'processing'},userId);
    const result=reportedAbundanceAnalysis(sampleId,reported.data);
-   const analysisId=await store.insertMlAnalysis({sampleId,analysisType:'reported-composition',modelVersion:result.model_version,results:result,confidence:null,comparedCohorts:[]});
+   const analysisId=await store.insertMlAnalysis({sampleId,analysisType:'reported-composition',modelVersion:result.model_version,results:result,confidence:null,comparedCohorts:[]},userId);
    const existing=await store.getBacterialComposition(sampleId,userId);
    for(const bacteria of result.bacterial_composition){
     if(existing.some(row=>row.bacterialName===bacteria.bacterial_name))continue;
-    await store.insertBacterialComposition({sampleId,bacterialName:bacteria.bacterial_name,taxonomyLevel:bacteria.taxonomy_level,abundance:bacteria.abundance,genomeData:null});
+    await store.insertBacterialComposition({sampleId,bacterialName:bacteria.bacterial_name,taxonomyLevel:bacteria.taxonomy_level,abundance:bacteria.abundance,genomeData:null},userId);
    }
    await store.updateMicrobiomeSample(sampleId,{diversityIndex:result.diversity_index,processingStatus:'completed'},userId);
    res.json({success:true,analysisId,results:result});

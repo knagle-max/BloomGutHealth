@@ -71,7 +71,7 @@ export async function saveStructuredReport(
         abundance,
         taxonomyLevel: "reported",
         genomeData: null,
-      });
+      },userId);
     await store.insertMlAnalysis({
       sampleId: sample.id,
       analysisType:
@@ -89,7 +89,7 @@ export async function saveStructuredReport(
         measuredGenes: false,
         measuredMetabolites: false,
       },
-    });
+    },userId);
     await store.updateMicrobiomeSample(sample.id, {
       processingStatus: "completed",
     },userId);

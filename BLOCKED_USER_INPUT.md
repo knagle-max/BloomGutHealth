@@ -149,3 +149,7 @@ Options: reviewed handoff plus representative sanitized exports; continue existi
 - Choices: Supply/version the exact archive and contracts; identify an existing accessible checkout path; explicitly approve an alternative versioned specification.
 - Recommended default: Version the exact approved source and preserve existing canonical UI while implementing independent core functionality. The Architect explicitly requires those contracts before claiming target flagship fidelity.
 - Impact of deferral: Exact flagship styling/tap-flow implementation and acceptance remain blocked; food, activity, lab and session correctness need not stop. No substitute concepts or fabricated source verification. Reconsider when the archive or approved alternative becomes available.
+
+## 2026-10-28 autonomous checkpoint
+
+No new user decision or credential was required for account-intent/session isolation, reviewed local text-PDF intake, synthetic demo separation, meal/report SQL ownership or seed-free startup. Existing questions/options/recommendations above remain scoped external gates; they do not block remaining independent v0.5 engineering. Text-PDF support does not establish scanned-image OCR or independent real-report/device acceptance. No restricted capability was activated.

@@ -25,9 +25,10 @@ export async function importStructuredReportWithReceipt(db:any,userId:string,rep
     const source=data.structuredData as any;
     const[row]=await tx.insert(microbiomeSamples).values({...data,id,structuredData:{...source,importInfo:{...source.importInfo,saveReceipt:{version:1,requestHash}}}}).returning();return row;
    },
-   insertBacterialComposition:async row=>{pending.push(row);},
-   insertMlAnalysis:async row=>(await tx.insert(mlAnalyses).values(row).returning({id:mlAnalyses.id}))[0].id,
-   updateMicrobiomeSample:async(sampleId,updates)=>{
+   insertBacterialComposition:async(row,owner)=>{if(owner!==userId||row.sampleId!==id)throw Error('REPORT_OWNER_MISMATCH');pending.push(row);},
+   insertMlAnalysis:async(row,owner)=>{if(owner!==userId||row.sampleId!==id)throw Error('REPORT_OWNER_MISMATCH');return(await tx.insert(mlAnalyses).values(row).returning({id:mlAnalyses.id}))[0].id;},
+   updateMicrobiomeSample:async(sampleId,updates,owner)=>{
+    if(owner!==userId||sampleId!==id)throw Error('REPORT_OWNER_MISMATCH');
     if(updates.processingStatus==='completed')for(let index=0;index<pending.length;index+=500)await tx.insert(bacterialComposition).values(pending.slice(index,index+500));
     await tx.update(microbiomeSamples).set(updates).where(and(eq(microbiomeSamples.id,sampleId),eq(microbiomeSamples.userId,userId)));
    },
