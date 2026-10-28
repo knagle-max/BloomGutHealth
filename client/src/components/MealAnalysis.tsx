@@ -272,6 +272,11 @@ export default function MealAnalysis({
           </table>
         </div>
       </details>
+      {analysis.productDetails?.some(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote)&&<details>
+        <summary>Recorded source context</summary>
+        {analysis.productDetails.filter(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote).map((p,i)=><div key={i}><h3>{p.name}</h3><p className="panel-note break-words">{p.labelSnapshot!.sourceNote}</p></div>)}
+        <p className="panel-note">Your context at the time of this entry, not independently verified provider or market information.</p>
+      </details>}
       {analysis.productDetails?.some((p) => p.otherNutrients.length > 0) && (
         <details>
           <summary>Other supplement-label ingredients</summary>

@@ -103,6 +103,7 @@ export default function ProductPicker({
           name: String(d.get("name") || ""),
           ...(d.get("barcode") ? {barcode:String(d.get("barcode"))} : {}),
           brand: String(d.get("brand") || ""),
+          ...(String(d.get("sourceNote")||"").trim()?{sourceNote:String(d.get("sourceNote")).trim()}:{}),
           servingDescription: String(d.get("servingDescription") || ""),
           servingGrams: d.get("servingGrams")
             ? Number(d.get("servingGrams"))
@@ -322,6 +323,7 @@ export default function ProductPicker({
               label ingredient; not a macro target
             </p>
           ))}
+          {choice.source==="manual"&&choice.sourceNote&&<details><summary>Your source context</summary><p className="panel-note break-words">{choice.sourceNote}</p></details>}
           {choice.notes.map((n, i) => (
             <p className="panel-note" key={i}>
               {n}
@@ -403,9 +405,10 @@ export default function ProductPicker({
           }}
         >
           <p>
-            Use the amounts per serving printed on your package. Leave unlisted
-            nutrients blank; enter 0 only when the label says 0. This label
-            stays private to your account and can be reused.
+            Use the amounts per serving from your package or nutrition information
+            you are recording yourself. Leave unlisted nutrients blank; enter 0
+            only when the source says 0. This record stays private to your account
+            and can be reused.
           </p>
           <div className="precision-grid">
             <label>
@@ -464,6 +467,11 @@ export default function ProductPicker({
               </label>
             ))}
           </div>
+          <details>
+            <summary>Country, variant & source context (optional)</summary>
+            <label className="block">Source note (optional)<textarea className="bloom-input w-full" name="sourceNote" rows={2} maxLength={500} placeholder="Country, exact variant, source or date you checked"/></label>
+            <p className="panel-note">Your note is not independently verified. It is saved with this private record and meals that use it.</p>
+          </details>
           <details>
             <summary>Another supplement ingredient (optional)</summary>
             <label>

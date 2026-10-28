@@ -1,3 +1,9 @@
+# Latest checkpoint — October 28, 2026
+
+New private nutrition source context reader d0c572b is deployed LIVE (dep-dbh40gvavr4c739e4mfg), Actions40746423137 SUCCESS. Optional country/variant/source note UI and immutable meal history disclosure implemented locally; actual App/API/encrypted storage failed-save/retry/review/single-save/reload/deleted-label/account isolation/320px journey PASS. Exact UI commit/deployment follows; NEXT_ACTIONS.md is current.
+
+Owner resolved v0.5 platform scope to browser/PWA-first; native later. Preserve reported-working KitKat and Tester1. Exact flagship transfer has a verified receipt/importer but original bytes still unavailable to this environment. BLOCKED_USER_INPUT.md is the current question catalog and supersedes older native-v0.5 questions below. OFF production approval, authentic Viome files, independent device/clinical/legal and operational acceptance remain scoped external dependencies. Continue independent approved core work.
+
 # Bloom development handoff — October28,2026
 
 v0.5 remains incomplete; v0.6 has not begun. Work uses enhance/bloom-experience / PR1 and the existing Render review service only. No main merge, production data/credential changes, replacement service, paid/restricted activation or external messages. No new user decision was needed.

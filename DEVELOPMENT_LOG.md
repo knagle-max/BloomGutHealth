@@ -1,3 +1,9 @@
+# Private source context — completed UI slice, 2026-10-28
+
+Reader d0c572b exact Actions40746423137 SUCCESS, Render dep-dbh40gvavr4c739e4mfg LIVE before the form emits sourceNote. ProductPicker now offers optional collapsed country/variant/source/date context, saved as plain private text; blank omitted. Selected product and immutable meal snapshot expose it on demand, never as provider provenance or an official market claim. Manual restaurant fallback remains useful without a licensed catalogue.
+
+Actual App/API/PGlite encrypted-store journey PASS: first label save503 retains draft, retry creates one label, explicit review precedes single meal save, two servings420kcal/protein0/unknown sodium, source context survives label deletion and journal reload, second owner empty,320px/no overflow, no provider calls. Initial browser selectors corrected to actual Energy label and opening the existing parent nutrition disclosure; no production workaround. One focused production-handler/storage test PASS; types/build checkpoint logged separately. Source crosswalk refreshed, no approvals inferred. New browser script is scripts/qa/private-source-context-journey.mjs.
+
 # Bloom development log
 
 ## 2026-10-24 — autonomous handoff
