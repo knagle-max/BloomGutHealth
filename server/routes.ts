@@ -1,3 +1,4 @@
+import { registerSyntheticDemoRoutes } from "./demo-routes";
 import {registerProfileRoutes} from "./profile-routes";
 import {registerNutritionTargetRoutes} from "./nutrition-targets";
 import {registerNutritionHistoryRoutes} from "./nutrition-history";
@@ -108,27 +109,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Demo data endpoints
-  app.get("/api/demo/user", async (req, res) => {
-    try {
-      const demoUser = await storage.getDemoUser();
-      if (!demoUser) {
-        return res.status(404).json({ error: "Demo user not found" });
-      }
-      res.json({ id: demoUser.id, username: demoUser.username });
-    } catch (error: any) {
-      res.status(503).json({ error: "This request could not be completed. Please retry." });
-    }
-  });
-
-  app.get("/api/demo/samples", async (req, res) => {
-    try {
-      const samples = await storage.getDemoSamples();
-      res.json(samples.map(publicSample));
-    } catch (error: any) {
-      res.status(503).json({ error: "This request could not be completed. Please retry." });
-    }
-  });
+  // Public examples are static and cannot expose database-backed account records.
+  registerSyntheticDemoRoutes(app);
 
   // Meal tracking endpoints
   app.get(

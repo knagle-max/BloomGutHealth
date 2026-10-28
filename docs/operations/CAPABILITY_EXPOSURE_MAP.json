@@ -1643,7 +1643,7 @@
     "server/report-routes.ts": "a9718bf835e1a69d41bc780647e8e77e6639f67547f4f6cb4dd4f2c87724d302",
     "server/retired-health-routes.ts": "059728df5ac5076ef81efc7e5cfea6982bdf43771ba6a9e494495a8a6749ffbc",
     "server/review-runtime-audit.ts": "12d4d26b37e0967da4273d0c8b3d990e106695f73f6f8f39f7c925070867008f",
-    "server/routes.ts": "a5068e4b59b73b6558410ca261fcd0d5d89dbd0b37ef5ee54bb7edbff1523703",
+    "server/routes.ts": "3717b3a82c7fa934960e8c84f63c48fa1a8f7b92dc4a4c4822b33770d3fe5459",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
     "server/shared-rate-limit.ts": "ad81af484e99de7fdd1b05567928056b535fecaba768d6af45057d05929268ea",
