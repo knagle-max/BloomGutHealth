@@ -100,7 +100,7 @@ export default function ManualGenetics({
               <small className="block panel-note">
                 {variantCatalog.some((v) => v.rsid === r.rsid)
                   ? "Reviewed marker; forward-strand match required"
-                  : "Outside the diet-ranking catalogue"}
+                  : "Recorded without reviewed interpretation"}
               </small>
             </span>
             <input

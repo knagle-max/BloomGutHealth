@@ -1,3 +1,13 @@
+# Core regression and deployment checkpoint — 2026-10-28
+
+FoodProgress4ae6745 exact Actions40749476408 SUCCESS including managed persistence; RenderLIVE confirmed. Source-note UI8833cbc exact Actions40748757222 SUCCESS/LIVE. Gut6ea2495 LIVEdep-dbh4da142hec73f3fir0, Actions40750607534 follows. Existing actual encrypted activity Today→log→unknown response retry→history→correction→Today→Progress→delete PASS, owner/keyboard320/no training inference. Existing actual encrypted Athlete session save→unknown response retry→one90min calendar entry→source focus/date/owner/gates/320px PASS. No functioning importer/activity/session duplicate added. Original ledger only FOOD07/MICRO01/GEN01 scoped partial statuses reconciled.
+
+# Existing genetics journey verified — 2026-10-28
+
+Reconciled existing selected SNP and bounded 23andMe file paths rather than adding duplicate imports. Corrected stale UI diet-ranking catalogue/priority wording to reviewed educational context, consistent with current precision recommendation code. No scientific computation changed. Four existing manual-genetics tests, types/build/source map PASS. New actual App/HTTP/encrypted PGlite selected-genetics-journey verifies invalid-call correction/no write before preview+consent, one explicit save, unknown strand preserved, original source, reload, other owner empty and320px. Initial copied lab fixture sent an empty Idempotency-Key on a genetics write; server correctly rejected it. Corrected fixture to omit absent header, no production workaround; journey PASS.
+
+Original207 ledger reconciles only scoped FOOD07/MICRO01 and selected GEN01 evidence, not whole release. Direct hosted homepage probe failed at environment proxy403; Render connector reports LIVE and filtered serving-on-port log confirmed. No claimed hosted authenticated acceptance. Source-note UI8833cbc exact Actions40748757222 SUCCESS. FoodProgress4ae Actions40749476408 running managed persistence; gut6ea Actions40750607534 pending, RenderLIVE dep-dbh4da142hec73f3fir0. Preserve queued verification before next push.
+
 # Gut import local review — 2026-10-28
 
 Upload now reads JSON/CSV locally into explicit recognized-data review before any import request. Reuses current parser and ImportedReportDetails for scores/organisms/missingness; counts distinguish quantified taxa, source dates remain unchanged, no measured abundance fabricated from scores. Inputs lock to reviewed snapshot; Change report or details restores editing with draft retained, review heading receives focus. After attempting save, copy correctly describes pending/confirmed status rather than claiming nothing uploaded. Existing owned receipt/unknown-result retry and exact saved source navigation preserved.

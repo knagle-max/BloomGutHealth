@@ -513,8 +513,9 @@ export default function PrecisionNutrition() {
                     GRCh37, forward-strand text export. Unknown builds, wrong
                     coordinates, conflicting calls and unsupported strand
                     notation are rejected. Only the 29 explanation-catalogue
-                    SNPs are retained after preview and consent; dietary ranking
-                    remains limited to the seven reviewed markers.
+                    SNPs are retained after preview and consent. Supported calls
+                    provide educational context; they do not set nutrition
+                    targets or add food-ranking priority.
                   </p>
                   <label className="block">
                     DNA sample date
