@@ -603,7 +603,7 @@ try {
     `/api/microbiome/results/${functional.sampleId}`,
     "GET",
     undefined,
-    403,
+    404,
   );
   await request(`/api/precision/records/${lab.id}`, "DELETE", undefined, 404);
   const catalogue = await request("/api/biology/catalogue?q=salmon");

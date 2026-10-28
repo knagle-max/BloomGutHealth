@@ -1,35 +1,41 @@
 # Bloom development handoff — October28,2026
 
-Branch enhance/bloom-experience, existing PR1 and Render review service srv-db9u7mjbc2fs73d86uv0 in workspace tea-db9toijrjlhs73850cp0. v0.5 remains incomplete; approved v0.6 handoff is available but implementation has not started. Main, production data/credentials and restricted activation remain untouched.
+v0.5 remains incomplete. v0.6 has not begun. Work is on enhance/bloom-experience / PR1 and the existing Render review service only; no main merge, production data/credential changes or restricted activation. No new user decision was needed for this run.
 
 ## Development summary
 
-| Commit | Completed scope | Verification |
+- Added a signed-session consistency guard for stale tabs; all owned API fetches, late/cloned response bodies and private downloads bind to the displayed account. Private pages reset on identity adoption; delayed auth bootstrap cannot overwrite successful login.
+- Cross-tab login/logout and history lifecycle withdraw private drafts, query cache and notices before real-session recheck. Channel/storage messages contain no identity or health data. Failed rechecks keep content withdrawn; injected lifecycle tests are not real-device BFCache acceptance.
+- Added bounded local text-PDF lab intake into editable source review:5MiB/5pages/30kcharacters/20s, explicit date/unit/source-only review/save, no upload or filename identity. Scanned OCR remains outstanding. Stalled/replaced worker operations settle and dispose native workers.
+- Made legacy public demo endpoints fixed labelled fixtures, with no account reads. Removed automatic database seeding of a demo user/model predictions; existing records remain untouched.
+- Moved owner predicates into individual meal/sample reads and updates, meal deletion, parent-joined composition/analysis reads and single-statement child inserts. Identity fields cannot be reassigned; vanished correction/processing targets cannot produce false success or remembered writes. Canonical receipt transactions and bulk batching remain intact.
+
+| Commit | Exact Actions | Render |
 |---|---|---|
-|5d14b67 /5432100|Signed-session actor consistency; guarded API/downloads, private identity reset and bootstrap race suppression|Both exact Actions SUCCESS; both reached RenderLIVE; actual encrypted app/owner/export,429 full milestone and focused checks|
-|c88e1eb|Bounded local text-PDF editable lab intake, explicit native worker/source review|20 focused/types/build, dev and production worker/App/encrypted save +existing file regression PASS; Actions40701089903 SUCCESS; RenderLIVE dep-dbgvu1vb9u1s739e3r50|
-|d6ded8e|Fixed synthetic public demo API without account reads|6 focused/types/build/source checks; RenderLIVE dep-dbh00g2vcj2c73duq43g; Actions40701920542 SUCCESS|
-|f38bb0c|Cross-tab/history private state and notice withdrawal; late response bodies; stalled PDF cancellation|Channel/fallback/held/failed recheck/lifecycle and actual app/PDF dev+production checks pass;434full433pass/1sourcehash drift corrected by9focused; final focused/browser checks pass; RenderLIVE dep-dbh07ji9lscs7397fqu0; CI40704377832 SUCCESS|
-|07971cf|General-health sourced overview and eligible baseline recipes without clinical priority|421 full local tests,14 focused and real encrypted App/API journey; CI40562129759 SUCCESS/liveNeon; Render reachedLIVE|
-|6ade29d|Digestive-tolerance observation goal, qualified source and canonical meal/symptom link|10 focused and actual encrypted goal-only journey; CI40562837101 SUCCESS/liveNeon; Render reachedLIVE|
-|e3bf0b7|Body/training goals open existing dated-measurement/activity editors without automatic writes or physiological claims|11 focused and two actual encrypted journeys; CI40564043351 SUCCESS/liveNeon; Render reachedLIVE|
-|95cbdc5|Optional encrypted browsing-region reader, owner/CAS/unaware-write preservation and strict older-client compatibility|9 SQL/API/unit checks, types/build; CI40565338981 SUCCESS/liveNeon; RenderLIVEdep-dbgfa23ncjis73c3t9pg|
-|5df07e1|One Profile region editor, nonbinding saved-region unit hints and protected restaurant defaults|Actual encrypted save/lost-response/late-source/owner/unfinished-draft/320px journey; full unit-editor regression/types/build; CI40567721568 SUCCESS including managed region preservation; original RenderUPDATE_FAILED, delivered by LIVE descendant8381aca|
-|8381aca|ID01 dynamic paths: eight routes from three loops, ten middleware/static sites; negative weekly actions before private reads|20 focused source/auth/shared-budget/retired/planning tests and types PASS; runtime unchanged; CI40693695657 SUCCESS; RenderLIVE dep-dbgv7dtg1s2s73efl9pg, delivers regionUI5df; full ID01 not closed|
+|5d14b67 actor reader|40698344422 SUCCESS|reachedLIVE dep-dbgvlp7b9u1s739dmgng|
+|5432100 request/download client|40699601830 SUCCESS|reachedLIVE dep-dbgvpjeq1p3s73bfbr10|
+|c88e1eb local text-PDF|40701089903 SUCCESS|reachedLIVE dep-dbgvu1vb9u1s739e3r50|
+|d6ded8e static demo|40701920542 SUCCESS|reachedLIVE dep-dbh00g2vcj2c73duq43g|
+|f38bb0c session/body/cancellation|40704377832 SUCCESS|reachedLIVE dep-dbh07ji9lscs7397fqu0|
+|b701ad9 meal SQL ownership|40705908129 SUCCESS|reachedLIVE dep-dbh0c0a9lscs7397m600|
+|ae66e6b report parents/startup|40707444905 FAILED: old403-vs404 smoke expectation only|reachedLIVE dep-dbh0gamq1p3s73bgimcg|
+|693cdc5 child inserts|40709082128 active; old smoke assertion still present|LIVE dep-dbh0l05g1s2s73ei25hg|
 
-Earlier report receipt/retry, positive nutrient, unit, planner trade-off, source-date, meal time-zone, weekly ingredient-name, allergy/taste/intolerance, saved-meal review, recorded lab-difference, exercise-set and rest-timer work remains in DEVELOPMENT_LOG.md with exact evidence. Original217 Render no-port failure was recovered by bounded startup5f7; preserve that distinction. No synthetic journey implies hosted real-owner/device/clinical acceptance.
+Current correction changes one exact managed smoke expectation to404 for another owner's report, matching the new owner-filtered lookup. Prior production startup/persistence/report/export checks passed; authorization is not weakened. Syntax and5 direct report-owner/analysis tests pass. Full441/441 local regression PASS (280979ms); corrective descendant CI/deployment verification is next.
 
-## Remaining work and priorities
+Focused verification includes actual App/HTTP/encrypted PGlite labs/exports/meal/templates, two-tab channel and storage fallback, late bootstrap/body, production PDF worker, source dates/zeros/thresholds, malformed200/lost receipt exact retry/no duplicates, owner denial, SQL statement counts, rollback, and320px. Types/build/source inventories pass. Previous local434 run had433pass/1source-hash drift, fixed by refresh+9 focused checks and later f38 exactCI success; retain that distinction. Final full441/441 run passed after all runtime edits; types/build/source checks pass. Synthetic evidence does not establish independent clinical/legal/device or hosted real-owner acceptance.
 
-1. Account intent reader5d14b67 Actions40698344422 SUCCESS/LIVE; client5432100 RenderLIVE dep-dbgvpjeq1p3s73bfbr10, CI40699601830 SUCCESS. Both preserve signed-session authority. Local429 full tests/3 guard-download checks, real encrypted App/import/delete/private export and file/auth-race regressions passed. Local LAB-03 text-PDF reviewed intake now complete:20 focused tests/types/build, actual local worker/App/encrypted save in dev and production modes, blank/page bounds/late-file/cleanup/zero/source-only/manual review/320px and existing file regression pass. PDFc88e1eb RenderLIVE dep-dbgvu1vb9u1s739e3r50, CI40701089903 pending; legacy public demo static-isolation fix locally verified next; scanned OCR/independent acceptance remain open.
-2. Continue the P0 static family/storage ownership trace and remaining approved v0.5 core work. Original207/67 ledgers contain stale conservative statuses and truncated titles; they are not evidence features are absent or completed. Trace every approved requirement to explicit engineering status/source/tests or a genuine recorded blocker. Do not blanket-close ID01/ID02/ID04.
-3. Carry external source/device/rights/clinical/legal/operational gates below without repeatedly probing unchanged blockers. Once all actionable v0.5 work is exhausted, begin approved independent v0.6 automatically, retaining version-specific backlog and evidence.
+Earlier sourced goal/region/unit/planner/weekly-food/training/privacy increments retain their detailed evidence in DEVELOPMENT_LOG. Region5df original Render failed; verified LIVE descendant8381 delivered it and passed Actions40693695657. No release completion or independent approval is inferred.
 
-Executor interruptions were recovered; no new user decision is required for ordinary coding. NEXT_ACTIONS.md is the exact resumable checkpoint.
+## Remaining priorities and resumption
+
+1. Commit/push the exact404 smoke expectation correction and verify final exact Actions/full suite/isolated-Neon and Render. Preserve prior failed evidence; do not relabel ae66 as green.
+2. Continue approved P0 inactive derived-record/non-HTTP/job/storage trace and remaining core v0.5 requirements. Original207/67 ledgers were updated for scoped ID01/LAB03 evidence, not blanket completion. Other actionable work is not globally blocked by the external catalog.
+3. Real report/layout/device acceptance, scanned OCR, exact Canadian SKU and source/legal/clinical/recovery gates remain separate. Carry unresolved gates into the next session. Begin approved independent v0.6 only when actionable v0.5 is exhausted.
 
 ## Consolidated deferred decisions
 
-The authoritative catalog below preserves each task, exact question, options, recommendation and deferral impact. Historical execution-resource entries are not a new product-input request or a reason to pause unrelated work. No approval, credentials, physical tests or clinical evidence are fabricated.
+Exact task/questions/options/recommendations/deferral impact follow. Historical resolved execution limits are not a current product decision or a reason to pause independent work.
 
 # Bloom deferred decisions and external dependencies
 
@@ -183,8 +189,6 @@ Options: reviewed handoff plus representative sanitized exports; continue existi
 - Recommended default: Version the exact approved source and preserve existing canonical UI while implementing independent core functionality. The Architect explicitly requires those contracts before claiming target flagship fidelity.
 - Impact of deferral: Exact flagship styling/tap-flow implementation and acceptance remain blocked; food, activity, lab and session correctness need not stop. No substitute concepts or fabricated source verification. Reconsider when the archive or approved alternative becomes available.
 
-Latest locally verified ID01 meal-storage increment: mandatory owner+ID SQL on individual reads/updates/deletes, immutable identity, concurrent-deletion correction404 before remembered write.17 core+6 overlapping review/storage checks/types/build, actual correction-loss and encrypted saved-template App journeys PASS; publish/verify next. Other storage families/independent security acceptance remain open.
+## 2026-10-28 autonomous checkpoint
 
-Report-storage follow-up locally verified: owner+ID sample read/update, parent-joined composition/analysis reads, immutable identity, vanished-update failure and seed-free storage initialization.12 focused SQL/API/receipt/demo/startup tests/types/build; actual report paste/file/malformed200 exact-retry/owner/date/320px journey PASS. No existing records modified. Meal b701ad9 LIVE dep-dbh0c0a9lscs7397m600/exactCI active; report publication next.
-
-Latest local report-child write increment: owner+sample INSERT…SELECT, one SQL statement per allowed/denied row, receipt adapter owner/parent invariants and unchanged bulk transaction.13 focused SQL/API/rollback/demo/startup tests/types/build, actual owned report malformed200 exact-retry/date/320px browser PASS; publish/verify next. b701ad9 exactCI40705908129 SUCCESS/LIVE; ae66e6b parent LIVE dep-dbh0gamq1p3s73bgimcg/exactCI active, logs confirm budget readiness/listener. Existing user questions unchanged; no new key/permission needed.
+No new user decision or credential was required for account-intent/session isolation, reviewed local text-PDF intake, synthetic demo separation, meal/report SQL ownership or seed-free startup. Existing questions/options/recommendations above remain scoped external gates; they do not block remaining independent v0.5 engineering. Text-PDF support does not establish scanned-image OCR or independent real-report/device acceptance. No restricted capability was activated.
