@@ -1,3 +1,9 @@
+# Latest working checkpoint — genetic file privacy selection
+
+Parent405eb4d2ee07ea16f1630e2efd9af5676d13c73d: exact Actions40760466778 SUCCESS/LIVE, clean before new feature. Latest local verified v0.5 GEN01 change: per-call whole-file selection, APOE default exclusion/optional local disclosure, renewed consent on file/date/selection, changing date clears old file/review and generation/actor guards fence late reads. Existing server schema already accepts selected subsets, so no reader rollout/API/migration required.16 focused selection/manual/precision tests/types/build/map52IDs134files and updated actual encrypted App/API/owner320px source-date/subset/no fallback/prior dataset/consent/reload journey PASS. /tmp/genetic-selection-{tests,types,build,browser}.log. Commit/push source+QA+records and verify exact CI/Render, then continue next unblocked v0.5 requirement.
+
+Existing FOOD04 and FOOD12 source/browser paths reverified (/tmp/core-template-current.log,/tmp/core-reconnect-current.log): no rewrite needed. Durable offline storage remains scoped deferred. Original207trace still IN_PROGRESS, do not claim v0.5 finished or automatically start v0.6 before remaining actionable criteria are reconciled. Next inspect GEN02/GEN03/GEN05 source gates and preserve withheld sensitive clinical interpretation; complete current whole-file control first. Previous functional checkpoints and external blockers below remain valid.
+
 # Continue Bloom v0.5
 
 Use enhance/bloom-experience / PR1 / existing Render workspace tea-db9toijrjlhs73850cp0 and service srv-db9u7mjbc2fs73d86uv0. No main merge, replacement service, production data/credentials, paid/restricted activation or external messages. Continue autonomously; no routine approval questions. v0.5 remains incomplete; v0.6 not begun.

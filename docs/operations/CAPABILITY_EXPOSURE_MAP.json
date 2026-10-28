@@ -1018,7 +1018,8 @@
         ],
         "logicOrJobs": [
           "shared/precision-nutrition.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/genetic-selection.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1049,7 +1050,8 @@
         ],
         "logicOrJobs": [
           "shared/precision-nutrition.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/genetic-selection.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1077,7 +1079,8 @@
         "logicOrJobs": [
           "server/analysis-boundary.ts",
           "shared/precision-nutrition.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/genetic-selection.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1614,7 +1617,7 @@
     "client/src/pages/MealPlanner.tsx": "9686d7f3c44cd6819476523816653f0ddf7ac5e9f7f2719744b04fd9f9891aaf",
     "client/src/pages/Microbiome.tsx": "f9f3cdd9acac49607d5c12dde4aa5a4466eda08cee58be26db33a53dc215dfd9",
     "client/src/pages/NutritionHistory.tsx": "4eceb15c516cd19d9f2c2ba10f04ae24d2b50375bf6e6627a91aa7e7422f267e",
-    "client/src/pages/PrecisionNutrition.tsx": "91f37526cdd32dd45b88fba0ea7b477195e3e4c2a026210077f09224c559d3d4",
+    "client/src/pages/PrecisionNutrition.tsx": "a6be23da37144185644d972467eb888dc9bf47b95b51edcb02902acc797e5239",
     "client/src/pages/Profile.tsx": "b715044b59c18565ec13465f966bea7e9810ceabdd2b357396b4432e40de03f2",
     "client/src/pages/Progress.tsx": "07a2ae9338e8ffe8025cb22e8e2b1dabcb7fa6d0d6dfc55e51417096537e1fe2",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
@@ -1690,6 +1693,7 @@
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
+    "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
     "shared/lab-history.ts": "88ef3f57addecad3a0b3e7208ebdf394c5aa891633aa8f3af184d934da6f85cd",

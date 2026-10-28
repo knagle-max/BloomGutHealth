@@ -1,3 +1,11 @@
+# Whole-file genetic selection — v0.5 GEN01 core privacy
+
+Source review found file preview always saved all supported calls, whereas selected entry allowed choosing loci. Added per-call whole-file controls, local default APOE exclusion/optional disclosure, fresh consent for changed selection/file/date, date change clears the old native file/review, generation/actor guards on late reads. Selected-only existing-schema payload preserves original source/build/strand/date/scanned count and exact calls. Prior datasets retained; no new clinical interpretation, type/risk inference or server/data schema/grant introduced.
+
+16 focused selection/manual/precision tests, types/build/map52IDs134files PASS. Actual App/API/encrypted PGlite journey PASS: invalid manual call→review/consent/save; file5rows/4supported/default2 selected; user excludes a call, optional sensitive choice toggles clear consent; date change clears file; reselect/consent sends only one selected LCT call, no APOE/unsupported/raw text; source date/reload/prior dataset/owner320px retained. New source integration test ensures excluded calls never fall back from an older active dataset. Test initially expected undefined for missing genotype; existing contract is null, corrected exact expectation, no product workaround.
+
+FOOD04/FOOD12 current existing actual browser rechecks PASS: encrypted template scaled/corrected before separate journal save with original recipe unchanged and source read retry; queued confirmed offline request sends0until reconnect, then one row with original reviewed request. Durable across-restart retention remains deferred, no private device storage added. Existing implementations preserved, original ledger updated only within tested scope. All207 requirement trace remains unfinished; v0.6 not started.
+
 # Verified functional checkpoint and visual handoff — 2026-10-28
 
 Final runtime c60008cea3983f047c100eca396eaf7920e54268 Actions40758240795 SUCCESS; completed job log445tests/445pass/0fail, build and managed isolated-Neon persistence. RenderLIVEdep-dbh552k9v7es739ss9rg. All substantive source batches this continuation passed exact CI and reached existing RenderLIVE; QA-only545 cancelled standalone run remains honestly distinguished and is included in verified descendants.

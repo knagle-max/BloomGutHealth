@@ -1,3 +1,4 @@
+import {defaultGeneticSelection,isSensitiveGeneticCall,selectedGeneticImport} from "@shared/genetic-selection";
 import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {reportDateText,type ReportDateContext} from "@shared/report-dates";
 import {labDateText} from "@shared/lab-history";
@@ -269,6 +270,12 @@ export default function PrecisionNutrition() {
   const [geneticPreview, setGeneticPreview] = useState<ReturnType<
     typeof parse23andMe
   > | null>(null);
+  const [selectedGeneticCalls,setSelectedGeneticCalls]=useState<string[]>([]),[geneticReading,setGeneticReading]=useState(false);
+  const geneticGeneration=useRef(0),geneticInput=useRef<HTMLInputElement>(null),geneticActor=useRef(user?.id);geneticActor.current=user?.id;
+  useEffect(()=>{geneticGeneration.current++;setGeneticPreview(null);setSelectedGeneticCalls([]);setConsent(false);setGeneticReading(false);if(geneticInput.current)geneticInput.current.value="";return()=>{geneticGeneration.current++;};},[user?.id]);
+  function geneticCallRow(call:NonNullable<typeof geneticPreview>["calls"][number]){
+    return <li key={call.rsid}><label className="flex items-start gap-2"><input type="checkbox" aria-label={`Include ${isSensitiveGeneticCall(call.rsid)?"APOE ":""}${call.rsid}`} checked={selectedGeneticCalls.includes(call.rsid)} disabled={mutation.isPending||geneticReading} onChange={e=>{const checked=e.target.checked;setConsent(false);setSelectedGeneticCalls(ids=>checked?[...ids,call.rsid]:ids.filter(id=>id!==call.rsid));}}/><span>{isSensitiveGeneticCall(call.rsid)?"APOE · ":""}{call.rsid}: {call.genotype} · chromosome {call.chromosome}:{call.position}</span></label></li>;
+  }
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const erase = useMutation({
     mutationFn: async () => {
@@ -523,7 +530,8 @@ export default function PrecisionNutrition() {
                       className="bloom-input w-full"
                       type="datetime-local"
                       value={geneticDate}
-                      onChange={(e) => setGeneticDate(e.target.value)}
+                      disabled={mutation.isPending}
+                      onChange={(e) => {geneticGeneration.current++;setGeneticDate(e.target.value);setGeneticPreview(null);setSelectedGeneticCalls([]);setConsent(false);setGeneticReading(false);setLocalError("");if(geneticInput.current)geneticInput.current.value="";}}
                       required
                     />
                   </label>
@@ -533,8 +541,11 @@ export default function PrecisionNutrition() {
                       className="bloom-input w-full"
                       type="file"
                       accept=".txt"
+                      ref={geneticInput}
+                      disabled={mutation.isPending}
                       onChange={async (e) => {
-                        setGeneticPreview(null);
+                        const generation=++geneticGeneration.current,owner=user?.id;
+                        setGeneticPreview(null);setSelectedGeneticCalls([]);setConsent(false);setGeneticReading(false);
                         const file = e.target.files?.[0];
                         if (!file) return;
                         try {
@@ -542,55 +553,42 @@ export default function PrecisionNutrition() {
                             throw Error(
                               "Use an uncompressed file under 50 MB.",
                             );
-                          setGeneticPreview(
-                            parse23andMe(
-                              await file.text(),
-                              new Date(geneticDate).toISOString(),
-                            ),
-                          );
-                          setLocalError("");
+                          if(!Number.isFinite(+new Date(geneticDate)))throw Error("Choose a valid DNA sample date before reading the file.");
+                          setGeneticReading(true);
+                          const text=await file.text();
+                          if(generation!==geneticGeneration.current||owner!==geneticActor.current)return;
+                          const parsed=parse23andMe(text,new Date(geneticDate).toISOString());
+                          setGeneticPreview(parsed);setSelectedGeneticCalls(defaultGeneticSelection(parsed));setLocalError("");
                         } catch (err) {
-                          formError(err);
-                        }
+                          if(generation===geneticGeneration.current&&owner===geneticActor.current)formError(err);
+                        } finally {if(generation===geneticGeneration.current)setGeneticReading(false);}
                       }}
                     />
                   </label>
-                  {geneticPreview && (
-                    <div>
-                      <p>
-                        Scanned{" "}
-                        {geneticPreview.scannedVariants.toLocaleString()} rows.{" "}
-                        {geneticPreview.calls.length} supported calls will be
-                        saved:
-                      </p>
-                      <ul>
-                        {geneticPreview.calls.map((c) => (
-                          <li key={c.rsid}>
-                            {c.rsid}: {c.genotype} · chromosome {c.chromosome}:
-                            {c.position}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  {geneticReading&&<p role="status">Reading supported calls locally…</p>}
+                  <p className="panel-note">Choose the sample date first. Changing the date clears the file review and consent. Only selected calls are sent when you save. Previous saved datasets remain until deleted.</p>
+                  {geneticPreview&&<div className="space-y-3">
+                    <p>Scanned {geneticPreview.scannedVariants.toLocaleString()} rows. {geneticPreview.calls.length} supported calls found; {selectedGeneticCalls.length} selected for saving.</p>
+                    <ul className="space-y-2">{geneticPreview.calls.filter(call=>!isSensitiveGeneticCall(call.rsid)).map(geneticCallRow)}</ul>
+                    {geneticPreview.calls.some(call=>isSensitiveGeneticCall(call.rsid))&&<details><summary>Review sensitive APOE markers (optional)</summary><p className="panel-note">Excluded from saving by default. You may include individual source calls for private storage. Bloom does not infer an APOE type or disease risk.</p><ul className="space-y-2">{geneticPreview.calls.filter(call=>isSensitiveGeneticCall(call.rsid)).map(geneticCallRow)}</ul></details>}
+                    {!selectedGeneticCalls.length&&<p role="status">Select at least one supported call to save.</p>}
+                  </div>}
                   <label className="flex gap-2">
                     <input
                       type="checkbox"
                       checked={consent}
+                      disabled={mutation.isPending||geneticReading||!geneticPreview||!selectedGeneticCalls.length}
                       onChange={(e) => setConsent(e.target.checked)}
                     />
-                    I consent to saving these supported genetic calls to my
+                    I consent to saving these selected genetic calls to my
                     account. The full raw file is not uploaded.
                   </label>
                   <Button
-                    disabled={!consent || !geneticPreview || mutation.isPending}
-                    onClick={() =>
-                      geneticPreview &&
-                      send("/api/precision/records", {
-                        kind: "genetics",
-                        payload: geneticPreview,
-                      })
-                    }
+                    disabled={!consent || !geneticPreview || !selectedGeneticCalls.length || geneticReading || mutation.isPending}
+                    onClick={() => {
+                      if(!geneticPreview||!consent)return;
+                      try{const payload=selectedGeneticImport(geneticPreview,selectedGeneticCalls);setConsent(false);send("/api/precision/records",{kind:"genetics",payload});}catch(error){formError(error);}
+                    }}
                   >
                     Save supported calls
                   </Button>
