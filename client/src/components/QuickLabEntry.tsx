@@ -1,3 +1,4 @@
+import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {readLabTextFile} from "@shared/lab-text-file";
 import {localLabDateInstants,labMeasuredAtFromLocal,labUtcOffsetLabel} from "@shared/lab-date-correction";
 import {possibleLabReimports,labImportReceiptMatches} from "@shared/lab-reimport";
@@ -43,10 +44,11 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
       while(remaining.length){
         if(!active.current)throw Error("Your account or import form changed. No further results were sent.");
         const row=remaining[0];
-        const response=await fetch("/api/precision/labs/import",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json","Idempotency-Key":row.key},body:JSON.stringify({payload:row.payload,reviewedMatchIds:row.reviewedMatchIds})});
+        const response=await accountFetch("/api/precision/labs/import",{method:"POST",credentials:"include",headers:{"Content-Type":"application/json","Idempotency-Key":row.key},body:JSON.stringify({payload:row.payload,reviewedMatchIds:row.reviewedMatchIds})});
         const receipt=await response.json().catch(()=>null);
         if(!active.current)return;
         if(!response.ok){
+          if(response.status===409&&receipt?.code==="ACCOUNT_CONTEXT_CHANGED"){setHardConflict(true);throw Error(ACCOUNT_CONTEXT_MESSAGE);}
           if(response.status===409&&receipt?.code==="LAB_REIMPORT_REVIEW_REQUIRED"){
             setNeedsMatchReview(true);reviewFocusPending.current=true;setReviewedMatches("");
             throw Error("Review possible previously recorded results again. Recorded source matches changed; no result from this attempt was inserted.");
@@ -58,7 +60,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
         remaining.shift();if(!remaining.length)completionFocusPending.current=true;setCompleted(old=>old+1);setPreview(old=>old?{...old,rows:[...remaining]}:old);
       }
     }finally{if(active.current)await invalidatePlanningInputs();}
-  },onError:error=>{if(active.current)setError(error.message.includes("conflicts")||error.message.startsWith("Review possible")?error.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.");}});
+  },onError:error=>{if(active.current)setError(error.message===ACCOUNT_CONTEXT_MESSAGE||error.message.includes("conflicts")||error.message.startsWith("Review possible")?error.message:"We could not confirm all results were saved. Retry the remaining results; acknowledged rows will not be sent again.");}});
   useEffect(()=>{
     if(needsMatchReview&&!save.isPending&&reviewFocusPending.current){reviewHeading.current?.focus();reviewFocusPending.current=false;}
     if(!save.isPending&&!preview?.rows.length&&completionFocusPending.current){if(document.activeElement===document.body)nextImportButton.current?.focus();completionFocusPending.current=false;}

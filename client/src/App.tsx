@@ -50,7 +50,7 @@ function ProtectedRoute({ component: Component, ...rest }: any) {
     return <Redirect to="/login" />;
   }
 
-  return <Component {...rest} />;
+  return <Component key={user.id} {...rest} />;
 }
 
 function ProfileWrapper({

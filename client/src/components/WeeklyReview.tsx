@@ -1,3 +1,4 @@
+import { downloadAccountFile } from "@/lib/account-download";
 import WeeklyFoodReview from "./WeeklyFoodReview";
 import FocusFeedback from "./FocusFeedback";
 import ExperimentObservations from "./ExperimentObservations";
@@ -7,7 +8,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useExperience, useExperienceRecords, useExperienceMutation, localDate } from "@/lib/experience";
 import { Button } from "@/components/ui/button";
 import { checkinSchema, experimentSchema } from "@shared/experience";
-export function WorkspaceExport(){const[message,setMessage]=useState("");return <div className="space-y-2 workspace-export"><Button type="button" variant="outline" onClick={async()=>{try{const data=await(await apiRequest("GET","/api/experience/export")).json(),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"})),a=document.createElement("a");a.href=url;a.download="bloom-private-review.json";a.click();URL.revokeObjectURL(url);setMessage("Downloaded your private review. Share it only with people you choose.");}catch(e){setMessage((e as Error).message);}}}>Download private review</Button>{message&&<p role="status" className="panel-note">{message}</p>}</div>;}
+export function WorkspaceExport(){const[message,setMessage]=useState("");return <div className="space-y-2 workspace-export"><Button type="button" variant="outline" onClick={async()=>{try{await downloadAccountFile("/api/experience/export","bloom-private-review.json");setMessage("Downloaded your private review. Share it only with people you choose.");}catch(e){setMessage((e as Error).message);}}}>Download private review</Button>{message&&<p role="status" className="panel-note">{message}</p>}</div>;}
 export function WeeklyReviewPanel({mode}:{mode:"everyday"|"athlete"}){
  const date=localDate(),review=useQuery<any>({queryKey:["/api/experience/review",mode,date],queryFn:async()=>(await apiRequest("GET","/api/experience/review?"+new URLSearchParams({mode,date}))).json()}),records=useExperienceRecords(),save=useExperienceMutation(),checkinSave=useExperienceMutation(),[error,setError]=useState("");
  const checking=review.isPending||review.fetchStatus!=="idle",current=!checking&&!review.isError?review.data:undefined;

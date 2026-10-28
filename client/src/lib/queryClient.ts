@@ -1,3 +1,4 @@
+import { accountFetch } from "./request-actor";
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 export class ApiRequestError extends Error {constructor(readonly status:number,message:string){super(message);}}
@@ -21,7 +22,7 @@ export async function apiRequest(
   headers?: Record<string, string>,
   signal?: AbortSignal,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const res = await accountFetch(url, {
     method,
     headers: { ...(data ? { "Content-Type": "application/json" } : {}), ...headers },
     body: data ? JSON.stringify(data) : undefined,
@@ -39,7 +40,7 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey, signal }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const res = await accountFetch(queryKey.join("/") as string, {
       credentials: "include",
       signal,
     });

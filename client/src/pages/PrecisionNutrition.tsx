@@ -1,3 +1,4 @@
+import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {reportDateText,type ReportDateContext} from "@shared/report-dates";
 import {labDateText} from "@shared/lab-history";
 import LabDateCorrectionDialog from "@/components/LabDateCorrectionDialog";
@@ -271,11 +272,12 @@ export default function PrecisionNutrition() {
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const erase = useMutation({
     mutationFn: async () => {
-      const res = await fetch("/api/precision", {
+      const res = await accountFetch("/api/precision", {
         method: "DELETE",
         credentials: "include",
         headers: { "X-Bloom-Confirm": "delete-precision-data" },
       });
+      if (res.status===409 && (await res.clone().json().catch(()=>null))?.code==="ACCOUNT_CONTEXT_CHANGED") throw Error(ACCOUNT_CONTEXT_MESSAGE);
       if (!res.ok) throw Error("Precision data could not be deleted.");
     },
     onSuccess: async () => {

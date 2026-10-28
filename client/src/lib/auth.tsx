@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { bindRequestActor } from "./request-actor";
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { apiRequest, queryClient } from './queryClient';
 
 interface User {
@@ -20,21 +21,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const authReadEpoch = useRef(0);
+  const adoptUser = (next: User | null) => {
+    bindRequestActor(next?.id ?? null);
+    setUser(next);
+  };
   useEffect(() => {
     checkAuth();
+    return () => { authReadEpoch.current++; bindRequestActor(null); };
   }, []);
 
   const checkAuth = async () => {
+    const readEpoch = ++authReadEpoch.current;
     try {
       const response = await fetch('/api/auth/me', {
         credentials: 'include',
       });
       const data = await response.json();
-      setUser(data.user || null);
+      if (readEpoch !== authReadEpoch.current) return;
+      await queryClient.cancelQueries();
+      if (readEpoch !== authReadEpoch.current) return;
+      queryClient.clear();
+      adoptUser(response.ok ? data.user || null : null);
     } catch (error) {
-      setUser(null);
+      if (readEpoch === authReadEpoch.current) adoptUser(null);
     } finally {
-      setIsLoading(false);
+      if (readEpoch === authReadEpoch.current) setIsLoading(false);
     }
   };
 
@@ -43,9 +55,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await response.json();
     
     if (data.success) {
+      authReadEpoch.current++;
       await queryClient.cancelQueries();
       queryClient.clear();
-      setUser(data.user);
+      adoptUser(data.user);
+      setIsLoading(false);
     }
   };
 
@@ -54,17 +68,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await response.json();
     
     if (data.success) {
+      authReadEpoch.current++;
       await queryClient.cancelQueries();
       queryClient.clear();
-      setUser(data.user);
+      adoptUser(data.user);
+      setIsLoading(false);
     }
   };
 
   const logout = async () => {
     await apiRequest('POST', '/api/auth/logout', {});
+    authReadEpoch.current++;
     await queryClient.cancelQueries();
     queryClient.clear();
-    setUser(null);
+    adoptUser(null);
+    setIsLoading(false);
     window.location.href = '/login';
   };
 
