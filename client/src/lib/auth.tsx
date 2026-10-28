@@ -1,3 +1,6 @@
+import { clearToasts } from "@/hooks/use-toast";
+import { flushSync } from "react-dom";
+import { observeSessionChanges } from "./auth-session-events";
 import { bindRequestActor } from "./request-actor";
 import { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { apiRequest, queryClient } from './queryClient';
@@ -22,13 +25,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const authReadEpoch = useRef(0);
+  const sessionEvents = useRef<ReturnType<typeof observeSessionChanges>|null>(null);
   const adoptUser = (next: User | null) => {
     bindRequestActor(next?.id ?? null);
+    clearToasts();
     setUser(next);
   };
   useEffect(() => {
+    const withdraw = () => {
+      authReadEpoch.current++;
+      bindRequestActor(null);
+      clearToasts();
+      void queryClient.cancelQueries();
+      queryClient.clear();
+      // Native page lifecycle events must scrub private DOM before a history snapshot.
+      flushSync(() => { setUser(null); setIsLoading(true); });
+    };
+    const events=observeSessionChanges(withdraw,()=>{void checkAuth();});
+    sessionEvents.current=events;
     checkAuth();
-    return () => { authReadEpoch.current++; bindRequestActor(null); };
+    return () => { events.dispose();sessionEvents.current=null;authReadEpoch.current++;bindRequestActor(null); };
   }, []);
 
   const checkAuth = async () => {
@@ -56,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     if (data.success) {
       authReadEpoch.current++;
+      sessionEvents.current?.announce();
       await queryClient.cancelQueries();
       queryClient.clear();
       adoptUser(data.user);
@@ -69,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     
     if (data.success) {
       authReadEpoch.current++;
+      sessionEvents.current?.announce();
       await queryClient.cancelQueries();
       queryClient.clear();
       adoptUser(data.user);
@@ -79,6 +97,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     await apiRequest('POST', '/api/auth/logout', {});
     authReadEpoch.current++;
+    sessionEvents.current?.announce();
     await queryClient.cancelQueries();
     queryClient.clear();
     adoptUser(null);

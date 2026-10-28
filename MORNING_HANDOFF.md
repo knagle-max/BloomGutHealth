@@ -6,6 +6,10 @@ Branch enhance/bloom-experience, existing PR1 and Render review service srv-db9u
 
 | Commit | Completed scope | Verification |
 |---|---|---|
+|5d14b67 /5432100|Signed-session actor consistency; guarded API/downloads, private identity reset and bootstrap race suppression|Both exact Actions SUCCESS; both reached RenderLIVE; actual encrypted app/owner/export,429 full milestone and focused checks|
+|c88e1eb|Bounded local text-PDF editable lab intake, explicit native worker/source review|20 focused/types/build, dev and production worker/App/encrypted save +existing file regression PASS; Actions40701089903 SUCCESS; RenderLIVE dep-dbgvu1vb9u1s739e3r50|
+|d6ded8e|Fixed synthetic public demo API without account reads|6 focused/types/build/source checks; RenderLIVE dep-dbh00g2vcj2c73duq43g; Actions40701920542 active|
+|Current local|Cross-tab/history private state and notice withdrawal; late response bodies; stalled PDF cancellation|Channel/fallback/held/failed recheck/lifecycle and actual app/PDF dev+production checks pass;434full433pass/1sourcehash drift corrected by9focused; final checks/CI pending|
 |07971cf|General-health sourced overview and eligible baseline recipes without clinical priority|421 full local tests,14 focused and real encrypted App/API journey; CI40562129759 SUCCESS/liveNeon; Render reachedLIVE|
 |6ade29d|Digestive-tolerance observation goal, qualified source and canonical meal/symptom link|10 focused and actual encrypted goal-only journey; CI40562837101 SUCCESS/liveNeon; Render reachedLIVE|
 |e3bf0b7|Body/training goals open existing dated-measurement/activity editors without automatic writes or physiological claims|11 focused and two actual encrypted journeys; CI40564043351 SUCCESS/liveNeon; Render reachedLIVE|

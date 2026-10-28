@@ -27,3 +27,13 @@ test('late responses are discarded across account switches including A-B-A and b
   bindRequestActor('a');const stable=accountFetch('/api/precision');bindRequestActor('a');resolve(new Response('same account'));assert.equal(await(await stable).text(),'same account');
  }finally{globalThis.fetch=original;bindRequestActor(null);}
 });
+
+
+test('late body completion and cloned error bodies cannot return data after identity changes',async()=>{
+ const original=globalThis.fetch;let complete!:()=>void;
+ globalThis.fetch=(async()=>new Response(new ReadableStream({start(controller){complete=()=>{controller.enqueue(new TextEncoder().encode(JSON.stringify({private:'synthetic-only'})));controller.close();};}}),{status:409,headers:{'content-type':'application/json'}}))as typeof fetch;
+ try{
+  bindRequestActor('a');const response=await accountFetch('/api/precision');assert.ok(response instanceof Response);assert.equal(response.status,409);assert.equal(response.headers.get('content-type'),'application/json');
+  const cloned=response.clone(),body=cloned.json();bindRequestActor('b');complete();await assert.rejects(body,AccountContextChangedError);await assert.rejects(response.text(),AccountContextChangedError);
+ }finally{globalThis.fetch=original;bindRequestActor(null);}
+});

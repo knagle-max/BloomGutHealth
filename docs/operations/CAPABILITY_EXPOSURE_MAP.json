@@ -1577,7 +1577,7 @@
     "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
     "client/src/components/TodayFocus.tsx": "eea8cf364c686b11c9b8aa440233664aaa5b0454514c885be6f05937ac895a35",
     "client/src/components/TodayStatus.tsx": "181e6d13f8a025d0b102abee8ee4824a57cb5e8bb3a571e9b4ce0aeea4a00015",
-    "client/src/lib/auth.tsx": "02e16e1ad78f21081a99107c2ef30aa332e1cddce670b7f069b6cdc57aeb825f",
+    "client/src/lib/auth.tsx": "97aa11d3f219ecdc3234f81383cc7e2a245ee104047c6600c4905807fad69a07",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/meal-cache.ts": "89b4b11900ce88ff19fa74a4b6fa766c4a0fb6ee811e617c0ad1cfc235b6a557",
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",

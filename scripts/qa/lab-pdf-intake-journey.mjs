@@ -32,7 +32,7 @@ const { chromium } = createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT
 const browser = await chromium.launch({ headless: true, executablePath: process.env.BLOOM_CHROMIUM_EXECUTABLE, args: ['--no-sandbox'] });
 const page = await browser.newPage({ viewport: { width: 390, height: 1000 }, timezoneId: 'America/New_York', locale: 'en-CA' });
 page.setDefaultTimeout(12000);
-await page.addInitScript(()=>{const NativeWorker=window.Worker;window.__labWorkers=new Set();window.Worker=class extends NativeWorker{constructor(...args){super(...args);window.__labWorkers.add(this);}terminate(){window.__labWorkers.delete(this);return super.terminate();}};});
+await page.addInitScript(()=>{const NativeWorker=window.Worker;window.__labWorkers=new Set();window.Worker=class extends NativeWorker{constructor(...args){super(...args);window.__labWorkers.add(this);}postMessage(...args){if(window.__stallPdfWorker&&args[0]?.action==='GetDocRequest'){window.__pdfWorkerStalled=true;return;}return super.postMessage(...args);}terminate(){window.__labWorkers.delete(this);return super.terminate();}};});
 const errors = [], attempts = [];
 let loseReceipt = false;
 const own = () => store.getPrecisionRecords('atomic-qa');
@@ -84,6 +84,14 @@ try{
  await fileInput().setInputFiles({name:'newer.csv',mimeType:'text/csv',buffer:Buffer.from('ALT, 9, U/L')});await entry.getByRole('status').filter({hasText:'Text loaded from newer.csv'}).waitFor();
  await page.evaluate(()=>{File.prototype.arrayBuffer=window.__originalPdfRead;window.__releaseLatePdf();});
  assert.equal(await entry.getByLabel('Results',{exact:true}).inputValue(),'ALT, 9, U/L');assert.equal(await page.evaluate(()=>window.__labWorkers.size),0);
+ await page.evaluate(()=>{window.__stallPdfWorker=true;window.__pdfWorkerStalled=false;});
+ await choose(pdfFixture(['ALT, 99, U/L']));await page.waitForFunction(()=>window.__pdfWorkerStalled===true);assert.equal(await page.evaluate(()=>window.__labWorkers.size),1);
+ await fileInput().setInputFiles({name:'worker-replacement.csv',mimeType:'text/csv',buffer:Buffer.from('ALT, 9, U/L')});await entry.getByRole('status').filter({hasText:'Text loaded from worker-replacement.csv'}).waitFor();await page.waitForFunction(()=>window.__labWorkers.size===0);await page.evaluate(()=>{window.__stallPdfWorker=false;});
+ if(process.env.BLOOM_PDF_PRODUCTION!=='1'){
+  await page.evaluate(async raw=>{window.__stallPdfWorker=true;window.__pdfWorkerStalled=false;window.__codecAbort=new AbortController();const{extractLabPdfText}=await import('/src/lib/lab-pdf-reader.ts');window.__codecResult=extractLabPdfText(new Uint8Array(raw),window.__codecAbort.signal).then(()=> 'unexpected-success',error=>error.code);},Array.from(pdfFixture(['ALT, 99, U/L'])));
+  await page.waitForFunction(()=>window.__pdfWorkerStalled===true);
+  const cancelled=await page.evaluate(async()=>{window.__codecAbort.abort();return window.__codecResult;});assert.equal(cancelled,'cancelled');assert.equal(await page.evaluate(()=>window.__labWorkers.size),0);await page.evaluate(()=>{window.__stallPdfWorker=false;});
+ }
  await choose(pdfFixture([]));await entry.getByRole('alert').filter({hasText:'No readable text was found'}).waitFor();assert.equal(await entry.getByLabel('Results',{exact:true}).inputValue(),'ALT, 9, U/L');
  await choose(pdfFixture(['ALT, 0, U/L'],6));await entry.getByRole('alert').filter({hasText:'up to 5 pages'}).waitFor();assert.equal(await entry.getByLabel('Results',{exact:true}).inputValue(),'ALT, 9, U/L');
  await choose(pdfFixture(['[ ORIGINAL SOURCE ]','Test assay,<0.50,source-unit,<2.0','ALT,0.00,U/L']));
@@ -97,5 +105,5 @@ try{
  await page.waitForFunction(()=>window.__labWorkers.size===0);
  assert.equal(saved.every(row=>row.payload.sourceReport.enteredDate==='2026-10-20'),true);assert.equal(saved.every(row=>!row.payload.sourceReport.reportIdentifier),true);
  await page.setViewportSize({width:320,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);assert.deepEqual(errors,[]);
- console.log('PASS local actual PDF worker/App/source review/encrypted save: late PDF read cannot replace newer CSV; worker cleanup verified; blank and page limits retain draft; editable exact source numbers; no write before manual date/review; clinical zero/source-only threshold retained; filename never identity;320px.');
+ console.log('PASS local actual PDF worker/App/source review/encrypted save: late PDF read cannot replace newer CSV; stalled native worker replacement/cancellation settles and cleans up; blank and page limits retain draft; editable exact source numbers; no write before manual date/review; clinical zero/source-only threshold retained; filename never identity;320px.');
 }finally{await browser.close();await vite.close();api.closeAllConnections();await new Promise(resolve=>api.close(resolve));await pg.close();if(priorKey===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=priorKey;}
