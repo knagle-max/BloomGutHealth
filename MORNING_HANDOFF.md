@@ -11,6 +11,8 @@ v0.5 remains incomplete; v0.6 has not begun. Work stays on enhance/bloom-experie
 - Existing selected-SNP entry reverified through consent, encrypted save and reload; corrected stale dietary ranking wording to educational context. Existing Activity and Athlete normal/unknown-response retry/correction/date/owner paths reverified rather than duplicated.
 - Earlier bounded local text-PDF lab intake, source-preserving lab history/unit/date reviews, account/session withdrawal, guarded private downloads, owner SQL/report child writes, seed-free startup, logout retry, goals/units/planning and privacy work retains detailed evidence in DEVELOPMENT_LOG.md.
 
+Browser install metadata additionally implemented/Chromium-verified/build PASS using existing approved icons/theme; publication tracked in NEXT_ACTIONS.md. No service worker/offline/native/OS acceptance claimed. QA-only545 standalone CI40753021150 cancelled by pending replacement; changes remain in runtime descendant.
+
 ## Commits, tests and deployment
 
 |Commit|Scope|Exact Actions|Render|
@@ -19,7 +21,8 @@ v0.5 remains incomplete; v0.6 has not begun. Work stays on enhance/bloom-experie
 |8833cbc|Private source form/history|40748757222 SUCCESS|LIVE dep-dbh47rvb9u1s73eahd3g|
 |4ae6745|Dated food Progress|40749476408 SUCCESS|LIVE dep-dbh49qbbc2fs738ini7g|
 |6ea2495|Local gut import review|40750607534 SUCCESS|LIVE dep-dbh4da142hec73f3fir0|
-|f330b90|Genetics copy/core verification|40751817541 pending|LIVE dep-dbh4h0vb9u1s73eb1h6g|
+|f330b90|Genetics copy/core verification|40751817541 SUCCESS|LIVE dep-dbh4h0vb9u1s73eb1h6g|
+|ec97042|Clear deleted label selection/retry|40754180797 running|LIVE dep-dbh4o9m1egvs73bao75g|
 
 Further supported-file QA/source-map follow-up is tracked in NEXT_ACTIONS.md: actual file input, two supported calls/one discarded row, no raw/unsupported data in POST, explicit consent, older date/reload and prior dataset retention PASS. Source-note reader12 focused, Progress3 focused, gut13 focused and genetics4 focused tests passed (overlapping cases are not summed). Types/build/source checks pass; actual App/API/PGlite browser paths cover failure, retry, single save, reload, unknown/zero/unit/source retention, account separation and320px. Existing Progress precision, encrypted Activity/Athlete, first-goal-source and weekly-food-review regressions pass. These are engineering fixtures, not clinical/device/independent acceptance. Direct hosted probe was blocked by environment proxy403; RenderLIVE and filtered listener log confirmed.
 

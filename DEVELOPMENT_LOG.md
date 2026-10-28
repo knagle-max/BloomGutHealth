@@ -1,3 +1,11 @@
+# Browser/PWA baseline — 2026-10-28
+
+Existing apple touch icon was present, but no manifest/link/service worker. Added same-origin manifest.webmanifest using existing byte-preserved approved192/512Everyday PNGs and current theme246B50, Bloom identity, root start/scope and standalone display. No install banner, native claim, service worker, private offline cache, account-specific URL or permission added. Current owner PWA-first scope authorizes safe browser baseline; native question already resolved, no new user decision.
+
+Actual Chromium Page.getAppManifest returns errors[] and expected same-origin root/name/display; both served icon byte buffers equal existing originals and dimensions match192/512; zero service worker registrations. Production build PASS and manifest copied into dist/public. scripts/qa/pwa-manifest-check.mjs records browser verification; actual OS installation/device acceptance remains separate. No tests mirroring JSON members were added to the unit suite.
+
+Prior genetics f330 exact Actions40751817541 SUCCESS/LIVE. QA-only545 Actions40753021150 cancelled by replacement as intended, source/tests retained in descendant. Removal ec970421bad1e09c0fdae3f414f0216771f668e0 RenderLIVE dep-dbh4o9m1egvs73bao75g; exact Actions40754180797 active. Manifest can queue behind active removal run without superseding a substantial batch. No replacement service/configuration/production data/credential changes.
+
 # Queue consolidation — 2026-10-28
 
 To avoid delaying the observed label-removal fix behind a metadata-only batch, group QA-only5453973 with the new fix's descendant CI. Runtime/copy f33040751817541 remains running with cancel-in-progress:false; pending QA-only40753021150 may be superseded by the new push and must be recorded as such, never success. All545 source mapping/QA/ledger changes remain committed and included in the next exact full CI. This does not skip a substantive runtime batch's verification or cancel an active run. No user approval needed for this routine authorized development push.
