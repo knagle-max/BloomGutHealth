@@ -35,3 +35,12 @@ The product owner explicitly requests **complete, integrated v0.5 implementation
 8. **No asynchronous promise.** Development only proceeds when an execution session is active. Within each session, make substantive progress and leave the repository in a reproducible state.
 
 This directive modifies execution and sequencing, not scientific evidence thresholds, privacy controls, clinical restrictions, legal approval or platform constraints. If the full release cannot be finished within one execution session, explicitly list remaining items while proceeding as far as possible; do not portray the increment as v0.5 completion.
+
+## Product Owner decision register — 2026-10-28
+- **PWA-FIRST:** v0.5 browser/PWA; Apple Health/Health Connect native/hybrid later; never falsely claim connection.
+- **DESIGN-ASSETS:** Exact editable Flagship/Food Review/Bloodwork visual and UX contracts enter development repository alongside core screens; avoid standalone redesign before functional features.
+- **VIOME-OFFLINE:** Versioned genuine offline export evaluation, not unofficial authenticated endpoints.
+- **TESTER1-PRESERVE:** Owner reports Tester1 works; verify residual acceptance, do not recreate unnecessarily.
+- **KITKAT-PRESERVE:** Owner reports KitKat search works; regression only, focus on uncovered Canadian variants.
+- **FREE-FIRST-CANADA:** USDA existing; CNF 2026 evaluation; OFF controlled engineering evaluation, no production commercial enablement before Legal/Integrations ODbL/rights review, no images without independent rights; HealthyFastFood/FatSecret Canadian comparison conditional on legal testing rights and provider-specific terms. Menu-FLIP defer, Nutritionix paid defer, manual restaurant fallback mandatory. No new paid subscriptions.
+- **CORE-FIRST:** Above are bounded decisions and gates; never displace normal v0.5 journeys with speculative infrastructure. Formal consolidated specification: `docs/architecture/OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md` (commit `9c150cd`). These are approved product decisions, **not** source activation, implementation or release clearance.
