@@ -1,3 +1,4 @@
+import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,type SampleUpdates } from "./report-records";
 import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
 import {importStructuredReportWithReceipt} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
@@ -61,18 +62,19 @@ export interface IStorage extends ExperienceStore {
   updateUserProfile(id: string, profile: UpdateUserProfile, expectedRevision?:string): Promise<void>;
   updateUserPreferences?(id:string,preferences:DietaryPreferences,expectedRevision:string):Promise<void>;
 
-  getMicrobiomeSample(id: string): Promise<MicrobiomeSample | undefined>;
+  getMicrobiomeSample(id: string,userId:string): Promise<MicrobiomeSample | undefined>;
   insertMicrobiomeSample(
     sample: InsertMicrobiomeSample,
   ): Promise<MicrobiomeSample>;
   updateMicrobiomeSample(
     id: string,
-    updates: Partial<MicrobiomeSample>,
+    updates: SampleUpdates,
+    userId:string,
   ): Promise<void>;
   getUserSamples(userId: string): Promise<MicrobiomeSample[]>;
   importStructuredReport?(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string):Promise<ReportSaveResult>;
 
-  getBacterialComposition(sampleId: string): Promise<BacterialComposition[]>;
+  getBacterialComposition(sampleId: string,userId:string): Promise<BacterialComposition[]>;
   insertBacterialComposition(
     composition: InsertBacterialComposition,
   ): Promise<void>;
@@ -86,7 +88,7 @@ export interface IStorage extends ExperienceStore {
   getCohortReferences(): Promise<CohortReference[]>;
   insertCohortReference(cohort: InsertCohortReference): Promise<void>;
 
-  getMlAnalyses(sampleId: string): Promise<MlAnalysis[]>;
+  getMlAnalyses(sampleId: string,userId:string): Promise<MlAnalysis[]>;
   insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string>;
 
   getRecommendations(sampleId: string): Promise<Recommendation[]>;
@@ -112,193 +114,12 @@ export interface IStorage extends ExperienceStore {
   deleteLabEntry?(userId: string, id: string): Promise<void>;
   deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
   clearPrecisionData(userId: string): Promise<void>;
-  getDemoUser(): Promise<User | undefined>;
-  getDemoSamples(): Promise<MicrobiomeSample[]>;
 }
 
 export class DatabaseStorage implements IStorage {
   private biology = new BiologyStorage(db);
   getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}
-  private demoUserId: string = "demo-user-123";
-
-  constructor() {
-    this.seedDemoData();
-  }
-
-  private async seedDemoData() {
-    try {
-      const existingDemo = await db
-        .select()
-        .from(users)
-        .where(eq(users.id, this.demoUserId));
-      if (existingDemo.length > 0) return;
-
-      await db.insert(users).values({
-        id: this.demoUserId,
-        username: "demo_explorer",
-        password: "demo",
-        sex: "male",
-        age: 35,
-        heightCm: 175,
-        weightKg: 75,
-        activityLevel: "moderate",
-      });
-
-      const demoSampleId = "demo-sample-123";
-      await db.insert(microbiomeSamples).values({
-        id: demoSampleId,
-        userId: this.demoUserId,
-        testDate: new Date("2025-09-15"),
-        testingCompany: "BiomeFX",
-        testId: "BMX-2025-0915",
-        rawDataPath: "/demo/sample.fastq",
-        processingStatus: "completed",
-        diversityIndex: 4.2,
-      });
-
-      await db.insert(bacterialComposition).values([
-        {
-          id: "demo-bac-1",
-          sampleId: demoSampleId,
-          bacterialName: "Akkermansia muciniphila",
-          taxonomyLevel: "species",
-          abundance: 8.5,
-          genomeData: { genes: ["amuc_0010", "amuc_1435"] },
-        },
-        {
-          id: "demo-bac-2",
-          sampleId: demoSampleId,
-          bacterialName: "Faecalibacterium prausnitzii",
-          taxonomyLevel: "species",
-          abundance: 12.3,
-          genomeData: { genes: ["fpra_0234", "fpra_1890"] },
-        },
-        {
-          id: "demo-bac-3",
-          sampleId: demoSampleId,
-          bacterialName: "Bifidobacterium longum",
-          taxonomyLevel: "species",
-          abundance: 6.7,
-          genomeData: { genes: ["blon_0045", "blon_1267"] },
-        },
-        {
-          id: "demo-bac-4",
-          sampleId: demoSampleId,
-          bacterialName: "Lactobacillus plantarum",
-          taxonomyLevel: "species",
-          abundance: 4.2,
-          genomeData: { genes: ["lpla_0156", "lpla_0892"] },
-        },
-      ]);
-
-      await db.insert(metabolites).values([
-        {
-          id: "demo-met-1",
-          sampleId: demoSampleId,
-          bacterialId: "demo-bac-2",
-          metaboliteName: "Butyrate",
-          pathwayId: "KEGG:ko00650",
-          predictedConcentration: 15.8,
-          confidence: 0.92,
-          productionGenes: ["butyryl-CoA dehydrogenase", "butyrate kinase"],
-        },
-        {
-          id: "demo-met-2",
-          sampleId: demoSampleId,
-          bacterialId: "demo-bac-1",
-          metaboliteName: "Propionate",
-          pathwayId: "KEGG:ko00640",
-          predictedConcentration: 12.4,
-          confidence: 0.88,
-          productionGenes: [
-            "methylmalonyl-CoA mutase",
-            "propionyl-CoA carboxylase",
-          ],
-        },
-        {
-          id: "demo-met-3",
-          sampleId: demoSampleId,
-          bacterialId: "demo-bac-3",
-          metaboliteName: "Acetate",
-          pathwayId: "KEGG:ko00620",
-          predictedConcentration: 22.1,
-          confidence: 0.95,
-          productionGenes: ["acetate kinase", "phosphotransacetylase"],
-        },
-      ]);
-
-      await db.insert(recommendations).values([
-        {
-          id: "demo-rec-1",
-          sampleId: demoSampleId,
-          recommendationType: "dietary",
-          category: "prebiotics",
-          itemName: "Resistant Starch",
-          reasoning:
-            "Your Faecalibacterium levels are good but could be optimized. Resistant starch feeds butyrate-producing bacteria.",
-          details:
-            "Add 1-2 tablespoons of raw potato starch or cooked & cooled rice/potatoes daily",
-          priority: 1,
-          expectedImpact: 0.85,
-          targetBacteria: ["Faecalibacterium prausnitzii", "Roseburia spp."],
-          targetMetabolites: ["Butyrate"],
-        },
-        {
-          id: "demo-rec-2",
-          sampleId: demoSampleId,
-          recommendationType: "dietary",
-          category: "probiotics",
-          itemName: "Fermented Foods",
-          reasoning:
-            "To maintain your beneficial Lactobacillus and Bifidobacterium populations",
-          details: "Include kimchi, sauerkraut, or kefir 3-4 times per week",
-          priority: 2,
-          expectedImpact: 0.72,
-          targetBacteria: ["Lactobacillus plantarum", "Bifidobacterium longum"],
-          targetMetabolites: ["Acetate", "Lactate"],
-        },
-        {
-          id: "demo-rec-3",
-          sampleId: demoSampleId,
-          recommendationType: "lifestyle",
-          category: "exercise",
-          itemName: "Moderate Cardio",
-          reasoning:
-            "Exercise increases microbial diversity and promotes Akkermansia growth",
-          details: "30-45 minutes of moderate cardio 4-5 times per week",
-          priority: 3,
-          expectedImpact: 0.68,
-          targetBacteria: ["Akkermansia muciniphila"],
-          targetMetabolites: ["Propionate"],
-        },
-      ]);
-
-      await db.insert(mlAnalyses).values({
-        id: "demo-analysis-1",
-        sampleId: demoSampleId,
-        analysisType: "comprehensive",
-        modelVersion: "v2.3.1",
-        results: {
-          overall_score: 82,
-          diversity_index: 4.2,
-          health_status: "good",
-          cohort_comparisons: {
-            elite_athletes: { similarity: 0.78, percentile: 72 },
-            centenarians: { similarity: 0.81, percentile: 76 },
-            mediterranean_diet: { similarity: 0.85, percentile: 80 },
-          },
-        },
-        confidence: 0.89,
-        comparedCohorts: [
-          "elite_athletes",
-          "centenarians",
-          "mediterranean_diet",
-        ],
-      });
-    } catch (error) {
-      console.error("Demo reference data could not be initialized.");
-    }
-  }
+  // Synthetic examples are served by demo-routes; construction never seeds account data.
 
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
@@ -330,13 +151,7 @@ export class DatabaseStorage implements IStorage {
     await updatePreferencesWithRevision(db,id,preferences,expectedRevision);
   }
 
-  async getMicrobiomeSample(id: string): Promise<MicrobiomeSample | undefined> {
-    const [sample] = await db
-      .select()
-      .from(microbiomeSamples)
-      .where(eq(microbiomeSamples.id, id));
-    return sample || undefined;
-  }
+  getMicrobiomeSample(id:string,userId:string) { return getOwnedSample(db,id,userId); }
 
   importStructuredReport(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string){return importStructuredReportWithReceipt(db,userId,report,fields,filename,key);}
 
@@ -350,15 +165,7 @@ export class DatabaseStorage implements IStorage {
     return newSample;
   }
 
-  async updateMicrobiomeSample(
-    id: string,
-    updates: Partial<MicrobiomeSample>,
-  ): Promise<void> {
-    await db
-      .update(microbiomeSamples)
-      .set(updates)
-      .where(eq(microbiomeSamples.id, id));
-  }
+  updateMicrobiomeSample(id:string,updates:SampleUpdates,userId:string) { return updateOwnedSample(db,id,updates,userId); }
 
   async getUserSamples(userId: string): Promise<MicrobiomeSample[]> {
     return await db
@@ -367,14 +174,7 @@ export class DatabaseStorage implements IStorage {
       .where(eq(microbiomeSamples.userId, userId));
   }
 
-  async getBacterialComposition(
-    sampleId: string,
-  ): Promise<BacterialComposition[]> {
-    return await db
-      .select()
-      .from(bacterialComposition)
-      .where(eq(bacterialComposition.sampleId, sampleId));
-  }
+  getBacterialComposition(sampleId:string,userId:string) { return getOwnedComposition(db,sampleId,userId); }
 
   async insertBacterialComposition(
     composition: InsertBacterialComposition,
@@ -412,12 +212,7 @@ export class DatabaseStorage implements IStorage {
     await db.insert(cohortReferences).values(cohort);
   }
 
-  async getMlAnalyses(sampleId: string): Promise<MlAnalysis[]> {
-    return await db
-      .select()
-      .from(mlAnalyses)
-      .where(eq(mlAnalyses.sampleId, sampleId));
-  }
+  getMlAnalyses(sampleId:string,userId:string) { return getOwnedAnalyses(db,sampleId,userId); }
 
   async insertMlAnalysis(analysis: InsertMlAnalysis): Promise<string> {
     const [result] = await db.insert(mlAnalyses).values(analysis).returning();
@@ -538,13 +333,7 @@ export class DatabaseStorage implements IStorage {
     return this.precision.clearPrecisionData(userId);
   }
 
-  async getDemoUser(): Promise<User | undefined> {
-    return this.getUser(this.demoUserId);
-  }
 
-  async getDemoSamples(): Promise<MicrobiomeSample[]> {
-    return this.getUserSamples(this.demoUserId);
-  }
 }
 
 export const storage = new DatabaseStorage();

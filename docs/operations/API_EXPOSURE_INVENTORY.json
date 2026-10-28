@@ -26,9 +26,9 @@
     "server/precision-routes.ts": "25f098a737a31fb6ca48b91060826e9fc65f7748321661788ea9e45a005d68be",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
-    "server/report-routes.ts": "a9718bf835e1a69d41bc780647e8e77e6639f67547f4f6cb4dd4f2c87724d302",
+    "server/report-routes.ts": "00f2acad9bdd0605e51806cc7c3c132f99f6edd004d9c1d49fe48632be9eb427",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
-    "server/routes.ts": "1d4d56893eac03de71a5f0aa939119113b9bb57fb13ad6244dbf9fe59e65d903",
+    "server/routes.ts": "b51992803611c4c866d7953b2e8a1edae071b84fb83f5e051eac61780984caaf",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
   },

@@ -68,7 +68,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const { sampleId } = req.params;
         const userId = req.session.userId!;
 
-        const sample = await storage.getMicrobiomeSample(sampleId);
+        const sample = await storage.getMicrobiomeSample(sampleId,userId);
         if (!sample) {
           return res.status(404).json({ error: "Sample not found" });
         }
@@ -80,7 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const reported=abundanceSchema.safeParse((sample.structuredData as any)?.bacteria_percentages);
         const composition=reported.success?reportedAbundanceAnalysis(sampleId,reported.data):null;
         const bacterial=composition?.bacterial_composition.map((b,index)=>({id:`reported-${index}`,sampleId,bacterialName:b.bacterial_name,abundance:b.abundance,taxonomyLevel:b.taxonomy_level,genomeData:null}))||[];
-        const analyses = await storage.getMlAnalyses(sampleId);
+        const analyses = await storage.getMlAnalyses(sampleId,userId);
 
         res.json({
           sample:{...publicSample(sample),diversityIndex:composition?.diversity_index??null},

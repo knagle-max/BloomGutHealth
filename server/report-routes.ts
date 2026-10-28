@@ -92,7 +92,7 @@ export async function saveStructuredReport(
     });
     await store.updateMicrobiomeSample(sample.id, {
       processingStatus: "completed",
-    });
+    },userId);
     return {
       success: true,
       sampleId: sample.id,
@@ -108,7 +108,7 @@ export async function saveStructuredReport(
   } catch {
     if (sampleId)
       await store
-        .updateMicrobiomeSample(sampleId, { processingStatus: "failed" })
+        .updateMicrobiomeSample(sampleId, { processingStatus: "failed" },userId)
         .catch(() => {});
     throw Error(
       "The report could not be saved. Please retry; no completed import was created.",
