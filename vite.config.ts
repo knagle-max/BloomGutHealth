@@ -19,6 +19,8 @@ export default defineConfig({
         ]
       : []),
   ],
+  // Pre-optimize the lazy local PDF codec so first use does not reload an in-progress draft.
+  optimizeDeps: { include: ["pdfjs-dist"] },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

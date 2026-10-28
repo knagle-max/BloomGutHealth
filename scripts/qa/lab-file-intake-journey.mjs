@@ -59,14 +59,14 @@ try {
   await page.goto('http://127.0.0.1:5242/precision?tab=labs');
   let entry=page.locator('section[aria-labelledby="add-labs-title"]');
   await entry.getByRole('heading',{name:'Add lab results',exact:true}).waitFor();
-  const fileInput=()=>entry.getByLabel('Load report text (CSV, TSV or TXT)',{exact:true});
+  const fileInput=()=>entry.getByLabel('Load report text (PDF, CSV, TSV or TXT)',{exact:true});
   const choose=(name,text,mimeType='text/plain')=>fileInput().setInputFiles({name,mimeType,buffer:Buffer.from(text)});
   await entry.getByLabel('Results',{exact:true}).fill('ALT, 9, U/L');
   await entry.getByLabel('Test date',{exact:true}).fill('2026-10-19');
   await entry.getByLabel('Laboratory (optional)',{exact:true}).fill('Old source context');
   await entry.getByText('Report & specimen identifiers (optional)',{exact:true}).click();
   await entry.getByLabel('Report identifier (optional)',{exact:true}).fill('Do not inherit');
-  await choose('report.pdf','%PDF-1.7','application/pdf');
+  await choose('report.xlsx','unsupported workbook','application/octet-stream');
   await entry.getByRole('alert').filter({hasText:'Choose a plain CSV'}).waitFor();
   assert.equal(await entry.getByLabel('Results',{exact:true}).inputValue(),'ALT, 9, U/L');
   await choose('large.csv','x'.repeat(30001),'text/csv');

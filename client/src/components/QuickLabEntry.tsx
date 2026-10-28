@@ -1,3 +1,4 @@
+import { readLabPdfFile } from "@shared/lab-pdf-file";
 import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {readLabTextFile} from "@shared/lab-text-file";
 import {localLabDateInstants,labMeasuredAtFromLocal,labUtcOffsetLabel} from "@shared/lab-date-correction";
@@ -13,9 +14,10 @@ import { labSchema, sourceOnlyLabSchema, markerDefinitions, type Lab, type Sourc
 type Row = { line:number; payload:Lab|SourceOnlyLab; key:string; reviewedMatchIds?:string[] };
 type Preview = { sourceOnlyOffered:number; keptSourceOnly:boolean; rows:Row[]; errors:Array<{line:number;message:string}> };
 export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHistoryRow[]}) {
+  const fileReadAbort=useRef<AbortController|null>(null);
   const active=useRef(true),reviewFocusPending=useRef(false),completionFocusPending=useRef(false);
   const reviewHeading=useRef<HTMLHeadingElement>(null),nextImportButton=useRef<HTMLButtonElement>(null);
-  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
+  useEffect(()=>{active.current=true;return()=>{active.current=false;fileReadAbort.current?.abort();};},[]);
   const [needsMatchReview,setNeedsMatchReview]=useState(false),[hardConflict,setHardConflict]=useState(false);
   const fileReadEpoch=useRef(0),startedNow=useRef(false);
   const [fileReading,setFileReading]=useState(false),[loadedFile,setLoadedFile]=useState("");
@@ -95,9 +97,12 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
   };
   const loadFile=async(file:File)=>{
     if(startedNow.current)return;
+    fileReadAbort.current?.abort();const controller=new AbortController();fileReadAbort.current=controller;
     const epoch=++fileReadEpoch.current;setFileReading(true);setError("");
     try{
-      const loaded=await readLabTextFile(file);
+      const loaded=/\.pdf$/i.test(file.name)
+        ?await readLabPdfFile(file,async(bytes,signal)=>{const {extractLabPdfText}=await import("@/lib/lab-pdf-reader");if(signal.aborted)throw Error("cancelled");return extractLabPdfText(bytes,signal);},controller.signal)
+        :await readLabTextFile(file);
       if(!active.current||epoch!==fileReadEpoch.current||startedNow.current)return;
       nextImport();setMode("paste");setText(loaded.text);setLoadedFile(loaded.name);
       setDate("");setTime("");setLab("");setMethod("");setFasting("unknown");
@@ -112,7 +117,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
       <Button type="button" variant={mode==="paste"?"default":"outline"} aria-pressed={mode==="paste"} disabled={started||fileReading} onClick={()=>{setMode("paste");clear();}}>Paste several</Button>
       <Button type="button" variant={mode==="single"?"default":"outline"} aria-pressed={mode==="single"} disabled={started||fileReading} onClick={()=>{setMode("single");clear();}}>Enter one</Button>
     </div>
-    {mode==="paste"&&<div className="space-y-2"><label className="block" htmlFor={offsetId+"-file"}>Load report text (CSV, TSV or TXT)</label><input className="block w-full min-w-0 max-w-full" id={offsetId+"-file"} type="file" accept=".csv,.tsv,.txt,text/plain,text/csv,text/tab-separated-values" disabled={started} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value="";if(file)void loadFile(file);}}/><p className="panel-note">Read on this device; nothing is saved until review. Use analyte, value and optional unit/reference columns, up to 30 KB and 50 results. Loading starts a new import; enter its source date and identifiers below. PDFs and images are not interpreted.</p>{fileReading&&<p role="status">Reading source text…</p>}{loadedFile&&<p role="status" className="panel-note break-all">Text loaded from {loadedFile}. The filename is not a laboratory report identifier; review any edits before saving.</p>}</div>}
+    {mode==="paste"&&<div className="space-y-2"><label className="block" htmlFor={offsetId+"-file"}>Load report text (PDF, CSV, TSV or TXT)</label><input className="block w-full min-w-0 max-w-full" id={offsetId+"-file"} type="file" accept=".pdf,.csv,.tsv,.txt,application/pdf,text/plain,text/csv,text/tab-separated-values" disabled={started} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value="";if(file)void loadFile(file);}}/><p className="panel-note">Read on this device; nothing is saved until review. Use analyte, value and optional unit/reference columns, up to 30 KB of text and 50 results. Text PDFs: up to 5 MB and 5 pages; extraction stops after 20 seconds. Loading starts a new import; enter its source date and identifiers below. PDF text order can differ from the report; edit columns and check every source value. Scanned PDFs and images need manual entry.</p>{fileReading&&<p role="status">Reading source text…</p>}{loadedFile&&<p role="status" className="panel-note break-all">Text loaded from {loadedFile}. The filename is not a laboratory report identifier; review any edits before saving.</p>}</div>}
     <div className="precision-grid">
       <label>Test date<input className="bloom-input w-full" type="date" value={date} disabled={started||fileReading} onChange={e=>{setDate(e.target.value);setSelectedInstant("");clear();}}/></label>
       <label>Collection time (optional)<input className="bloom-input w-full" type="time" value={time} disabled={started||fileReading} onChange={e=>{setTime(e.target.value);setSelectedInstant("");clear();}}/></label>
