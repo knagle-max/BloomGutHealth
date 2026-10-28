@@ -1,3 +1,4 @@
+import{PrivateProductStorage}from"./private-product-storage";
 import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
 import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
 import {importStructuredReportWithReceipt} from "./structured-report-storage";
@@ -10,8 +11,6 @@ import { BiologyStorage } from "./biology-storage";
 import { insertMealWithReceipt, type MealSaveReceipt } from "./meal-save";
 import type { BiologicalRegistry } from "../shared/biological-model";
 import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
-import { nutritionProducts } from "../shared/schema";
-import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { LabelInput, Product } from "../shared/products";
 import {
   type User,
@@ -199,48 +198,10 @@ export class DatabaseStorage implements IStorage {
   putPrecisionContext(userId: string, context: PrecisionContext) {
     return this.precision.putPrecisionContext(userId, context);
   }
-  async getNutritionProducts(userId: string): Promise<Product[]> {
-    const rows = await db
-      .select()
-      .from(nutritionProducts)
-      .where(eq(nutritionProducts.userId, userId))
-      .orderBy(desc(nutritionProducts.createdAt))
-      .limit(200);
-    return rows.map((row) => ({
-      ...(decryptPrecision(row.encryptedPayload, userId) as LabelInput),
-      source: "manual" as const,
-      id: row.id,
-      url: null,
-      retrievedAt: row.createdAt.toISOString(),
-      notes: ["Entered from your package label; not independently verified."],
-    }));
-  }
-  async insertNutritionProduct(
-    userId: string,
-    label: LabelInput,
-  ): Promise<Product> {
-    const [row] = await db
-      .insert(nutritionProducts)
-      .values({ userId, encryptedPayload: encryptPrecision(label, userId) })
-      .returning();
-    return {
-      ...label,
-      source: "manual",
-      id: row.id,
-      url: null,
-      retrievedAt: row.createdAt.toISOString(),
-      notes: ["Entered from your package label; not independently verified."],
-    };
-  }
-  async deleteNutritionProduct(userId: string, id: string) {
-    const rows = await db
-      .delete(nutritionProducts)
-      .where(
-        and(eq(nutritionProducts.userId, userId), eq(nutritionProducts.id, id)),
-      )
-      .returning({ id: nutritionProducts.id });
-    return rows.length > 0;
-  }
+  private readonly privateProducts=new PrivateProductStorage(db);
+  getNutritionProducts(userId:string){return this.privateProducts.getNutritionProducts(userId);}
+  insertNutritionProduct(userId:string,label:LabelInput){return this.privateProducts.insertNutritionProduct(userId,label);}
+  deleteNutritionProduct(userId:string,id:string){return this.privateProducts.deleteNutritionProduct(userId,id);}
   getPrecisionRecords(userId: string) {
     return this.precision.getPrecisionRecords(userId);
   }

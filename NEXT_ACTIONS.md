@@ -1,3 +1,13 @@
+# Current continuation checkpoint — approved incoming decisions preserved
+
+HEAD fast-forwarded to incoming b2d2554 after final62bb/fb14 CI SUCCESS. Read new owner9c150cd/70456f2 decisions: v0.5 PWA-first; preserve working KitKat/Tester1; OFF evaluation only/productionfalse, CNF audit and rights-conditional restaurant pilots/no paid subscriptions. Existing exact flagship ZIP still inaccessible despite receipt/importer; BLOCKED_USER_INPUT has new hash/paths and no duplicate native question. Do not fabricate import or images.
+
+Current locally verified Core Journey A reader: shared/products optional bounded sourceNote on label input/product response; existing encrypted private label store extracted to server/private-product-storage.ts and delegated by DatabaseStorage. Same table, owner,200limit/CRUD; note is user context only, urlnull/manualsource/unverified, no provider/market authority.12 focused real Express/PGlite/source snapshot/product/startup tests/types/build/source checks PASS. Existing Neon label/search/meal/export requests now assert note preservation/owner using same request count; syntax pass, managed outcome pending. Initial local fixture lacked0003nutrition table; loaded actual migration and reran green, no product workaround.
+
+Next: finaldiff/commit/push reader plus records, exactActions+RenderLIVE BEFORE adding ordinary UI emission (old strict input rejects sourceNote). Then ProductPicker optional source context field with review disclosure; MealAnalysis immutable snapshot note disclosure so saved history retains exact context after deletion/source changes. Test actual App→private label→canonical reviewed meal→history/Today totals/reload→second owner, one failure/retry,320px, no provider calls. Extend current scripts/source tests, avoid new data store/provider. Update persistent records and continue next unblocked core slice.
+
+Native/source questions remain scoped; do not return to serial hypothetical edge-case audit before core journeys. Remaining previous validated code/runtime/CI history follows for reference.
+
 # Resume Bloom v0.5, then independent approved v0.6
 
 Use enhance/bloom-experience / existing PR1 / Render workspace tea-db9toijrjlhs73850cp0 and service srv-db9u7mjbc2fs73d86uv0. No main merge, production data/credentials, replacement service, paid/restricted activation or external messages. Preserve incoming work. v0.5 incomplete; v0.6 not begun. No new user question/credential needed.

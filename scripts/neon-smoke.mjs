@@ -258,11 +258,13 @@ try {
   console.log(
     "PASS: broad sourced meal parsing, exclusions, preserved known daily totals and local calendar boundaries",
   );
+  const personalSourceNote='Synthetic Canada variant; package checked 2026-10-28';
   const personalProduct = await request(
     "/api/products",
     "POST",
     {
       name: "Michelina's synthetic CI label",
+      sourceNote:personalSourceNote,
       brand: "CI fixture",
       servingDescription: "1 scoop (12 g)",
       servingGrams: 12,
@@ -277,8 +279,9 @@ try {
     },
     201,
   );
+  assert.equal(personalProduct.sourceNote,personalSourceNote);assert.equal(personalProduct.source,'manual');assert.equal(personalProduct.provenance,undefined);
   const barcodeMatch=await request("/api/products/search?q=0012345678905&kind=all");
-  assert.ok(barcodeMatch.products.some(p=>p.id===personalProduct.id));
+  assert.ok(barcodeMatch.products.some(p=>p.id===personalProduct.id&&p.sourceNote===personalSourceNote));
   const spellingMatch=await request("/api/products/search?q=Michelinas&kind=food");assert.ok(spellingMatch.products.some(p=>p.id===personalProduct.id));
   const productMeal = await request("/api/meals", "POST", {
     mealText: "",
@@ -294,6 +297,7 @@ try {
     ],
   });
   assert.equal(productMeal.totalCalories, 80);
+  assert.equal(productMeal.intelligence.productDetails[0].labelSnapshot.sourceNote,personalSourceNote);
   assert.equal(productMeal.intelligence.ingredients.find(i=>i.product).product.query,"Michelinas");
   const persistedProductMeal=(await request(`/api/meals/${first.id}`)).find(m=>m.id===productMeal.id);assert.equal(persistedProductMeal.totalCalories,80);assert.equal(persistedProductMeal.intelligence.ingredients.find(i=>i.product).product.query,"Michelinas");
   assert.equal(productMeal.totalCarbs, 24);
@@ -521,7 +525,7 @@ try {
   const exportedLegacy=accountExport.gutReports.analyses.find(row=>row.id===legacyExportRecord.rows[0].id);assert.ok(exportedLegacy);assert.equal(exportedLegacy.results,null);assert.equal(exportedLegacy.confidence,null);assert.equal(exportedLegacy.interpretationStatus,"historical_model_outputs_withheld");assert.equal(JSON.stringify(accountExport).includes('UNSUPPORTED_EXPORT_SENTINEL'),false);
   assert.equal(accountExport.profile.id,first.id);
   assert.ok(accountExport.journal.some(m=>m.id===meal.id));
-  assert.ok(accountExport.savedLabels.some(p=>p.id===personalProduct.id));
+  assert.ok(accountExport.savedLabels.some(p=>p.id===personalProduct.id));assert.ok(JSON.stringify(accountExport.savedLabels).includes(personalSourceNote));
   assert.deepEqual(accountExport.biology.records.find(row=>row.id===sourceOnlyLab.id).payload,sourceOnlyPayload);
   assert.deepEqual(lab.payload.sourceReport,labSourceIdentity);
   assert.deepEqual(accountExport.biology.records.find(r=>r.id===lab.id).payload.sourceReport,labSourceIdentity);
@@ -589,7 +593,7 @@ try {
   assert.equal(secondExport.profile.id,second.id);
   assert.equal(secondExport.savedLabels.length,0);
   assert.equal(secondExport.gutReports.samples.length,0);
-  assert.equal(JSON.stringify(secondExport).includes(personalProduct.id),false);
+  assert.equal(JSON.stringify(secondExport).includes(personalProduct.id),false);assert.equal(JSON.stringify(secondExport).includes(personalSourceNote),false);
   assert.equal((await request("/api/precision")).labs.length, 0);
   assert.equal((await request("/api/biology/foods/food:oats")).observations.labs.length,0);
   assert.equal((await request("/api/products/saved")).length, 0);

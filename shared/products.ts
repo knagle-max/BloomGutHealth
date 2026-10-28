@@ -14,6 +14,7 @@ export const labelInputSchema = z
     name: z.string().trim().min(1).max(120),
     barcode: z.string().refine(v=>normalizeBarcode(v)!==null,"Use a valid package barcode").transform(v=>normalizeBarcode(v)!).optional(),
     brand: z.string().trim().max(100).default(""),
+    sourceNote: z.string().trim().min(1).max(500).optional(),
     servingDescription: z.string().trim().min(1).max(120),
     servingGrams: z.number().finite().positive().max(3000).nullable(),
     perServing: z
@@ -50,6 +51,8 @@ export type Product = {
   url: string | null;
   retrievedAt: string;
   notes: string[];
+  /** Private user-entered context, never verified provider provenance. */
+  sourceNote?: string;
   otherNutrients?: { name: string; amount: number; unit: string }[];
   provenance?: {
     version: "usda-branded-v1";
@@ -92,6 +95,7 @@ export const productResponseSchema = z.object({
   perServing: z.record(z.string(),z.number().finite().nonnegative()),
   url: z.string().refine(value=>{try{return ['https:','http:'].includes(new URL(value).protocol);}catch{return false;}}).nullable(),
   retrievedAt: z.string(), notes: z.array(z.string()),
+  sourceNote: z.string().trim().min(1).max(500).optional(),
   otherNutrients: z.array(z.object({name:z.string(),amount:z.number().finite().nonnegative(),unit:z.string()})).optional(),
   provenance: z.object({version:z.literal('usda-branded-v1'),fdcId:z.number().int().positive(),gtin:z.string().nullable(),brandOwner:z.string(),marketCountry:z.string().nullable(),publishedDate:z.string().nullable(),modifiedDate:z.string().nullable(),ingredients:z.string().nullable()}).optional(),
 });

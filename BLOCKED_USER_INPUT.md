@@ -2,14 +2,12 @@
 
 No noncritical question should pause other approved work. Keep safe defaults, never invent credentials/reviews, and reconsider entries only when their dependencies change.
 
-## NATIVE-107 — native delivery scope
+## NATIVE-107 — v0.5 delivery scope RESOLVED; native milestone later
 
-- Status: BLOCKED_USER_INPUT / Architect platform decision. First inspect any newer consolidated handoff; do not ask again if it already resolves this.
-- Exact question: Does the v0.5 release require shipping native HealthKit/Health Connect clients, or is browser/PWA delivery with truthful unavailable device integration the approved release target?
-- Why needed: Real device permissions, incremental sync and hardware acceptance require a concrete native client/platform and entitlements; browser mocks cannot satisfy them.
-- Choices: (1) Confirm browser/PWA scope and retain unavailable device connections; (2) confirm a native/hybrid platform and required OS/device targets.
-- Recommended interim default: Continue the existing browser implementation and keep device access unavailable while the Architect confirms scope. This is not permission to omit native work if authoritative v0.5 acceptance requires it.
-- Deferral impact: Blocks native implementation/real hardware acceptance only; account, nutrition, evidence and browser correctness work can continue.
+- Status: RESOLVED_USER_DECISION for v0.5. Approved owner register9c150cd/70456f2 confirms browser/PWA-first; native HealthKit/Health Connect and wearables remain later authorized milestones. No native connection or hardware acceptance is claimed.
+- Prior question about whether v0.5 must ship native clients is answered; do not ask it again.
+- Future native milestone still needs actual platform/OS/device/entitlement targets when that approved phase begins. Recommended interim default: retain truthful unavailable device integration and existing manual/browser functions. That later dependency does not block v0.5 browser development.
+- Source: docs/architecture/OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md. PWA-first is not approval to fabricate connectivity or discard future native requirements.
 
 ## FOOD-501 — exact live packaged-product acceptance
 
@@ -153,3 +151,9 @@ Options: reviewed handoff plus representative sanitized exports; continue existi
 ## 2026-10-28 autonomous checkpoint
 
 No new user decision or credential was required for account-intent/session isolation, reviewed local text-PDF intake, synthetic demo separation, meal/report SQL ownership or seed-free startup. Existing questions/options/recommendations above remain scoped external gates; they do not block remaining independent v0.5 engineering. Text-PDF support does not establish scanned-image OCR or independent real-report/device acceptance. No restricted capability was activated.
+
+## 2026-10-28 approved source-transfer and free-first update
+
+New approved owner/architect commits9c150cd–b2d2554 preserved by fast-forward. KitKat search and Tester1 are owner-reported working: preserve/regress, do not recreate or repeatedly request setup. Canadian variant/formulation and independent acceptance remain scoped. OFF controlled engineering evaluation is now allowed, but production approval flag remains false pending explicit Legal+Integrations rights decisions; no paid source or image activation. CNF2026 version/licence evaluation and conditional restaurant pilots are not production approvals.
+
+Flagship transfer receipt docs/agents/branding-ux/Bloom_Flagship_Developer_Transfer_Receipt_2026-10-28.md now provides exact13-file contents,3,880,120bytes and SHA256d69ea7927eea6a57081556cd56c7f3424b12a43f1f5cc748360f2a6a85894c37; approved importer scripts/import_flagship_assets.py targets design/bloom/flagship/2026-10-26. Scoped workspace/tmp/projectless ZIP inventory found no archive, and callable tools expose no Library access or Library file ID. Receipt explicitly does not confer cross-agent Library access. Import was NOT fabricated or run with substitute artwork. Existing exact-path/source-transfer question remains; resume when original archive bytes are accessible, run importer, commit13original files/hash receipt, then read contracts/prototype before touched-screen implementation. This is a file-access technical dependency, not a renewed v0.5 native/platform decision or global stop.
