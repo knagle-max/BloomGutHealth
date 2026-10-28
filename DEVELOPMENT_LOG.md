@@ -1,3 +1,7 @@
+# Owner-provided flagship archive — bounded transfer
+
+Completed and pushed in-progress genetics selection first (371cde6c34d1a8624709fcdb3561040fae22ce1b),16 focused/types/build/actual encrypted App/API pass; CI/Render verification follows. Then ran existing scripts/import_flagship_assets.py on owner-attached original ZIP. Exact expected archive SHA d69ea7927eea6a57081556cd56c7f3424b12a43f1f5cc748360f2a6a85894c37,3,880,120bytes,13original paths accepted. Expanded original bytes verified individually; source pack/file hashes added to actual asset-manifest. Original internal MANIFEST has stale packaging metadata; preserved as-is and discrepancies recorded in separate import verification, never rewrote originals. GitHub blob verification follows asset commit/push. No app visual/runtime change, no broad redesign; resume core immediately after bounded transfer. Archive access blocker resolved, independent visual acceptance remains.
+
 # Whole-file genetic selection — v0.5 GEN01 core privacy
 
 Source review found file preview always saved all supported calls, whereas selected entry allowed choosing loci. Added per-call whole-file controls, local default APOE exclusion/optional disclosure, fresh consent for changed selection/file/date, date change clears the old native file/review, generation/actor guards on late reads. Selected-only existing-schema payload preserves original source/build/strand/date/scanned count and exact calls. Prior datasets retained; no new clinical interpretation, type/risk inference or server/data schema/grant introduced.

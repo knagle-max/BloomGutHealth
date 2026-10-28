@@ -1,3 +1,9 @@
+# Immediate bounded transfer checkpoint
+
+Functional genetics selection371cde6c34d1a8624709fcdb3561040fae22ce1b committed/pushed before asset work;16 focused/types/build/actual App/API/encrypted storage pass. Verify its exact Actions/Render.
+
+Owner supplied original flagship ZIP. Existing importer succeeded with pinned archive hash/3,880,120bytes/13members, extracted design/bloom/flagship/2026-10-26. All expanded bytes verified; separate IMPORT_VERIFICATION_2026-10-28.json and existing asset-manifest updated. Original MANIFEST stale metadata retained/documented. Commit/push source asset transfer only, verify all13 GitHub tree blob SHA/size identities against import receipt and fetch a text contract via GitHub; source-access blocker now resolved. Do not start broad redesign. Resume core functional requirement trace/implementation immediately after transfer; preserve in-progress genetic feature checks. No user question required.
+
 # Latest working checkpoint — genetic file privacy selection
 
 Parent405eb4d2ee07ea16f1630e2efd9af5676d13c73d: exact Actions40760466778 SUCCESS/LIVE, clean before new feature. Latest local verified v0.5 GEN01 change: per-call whole-file selection, APOE default exclusion/optional local disclosure, renewed consent on file/date/selection, changing date clears old file/review and generation/actor guards fence late reads. Existing server schema already accepts selected subsets, so no reader rollout/API/migration required.16 focused selection/manual/precision tests/types/build/map52IDs134files and updated actual encrypted App/API/owner320px source-date/subset/no fallback/prior dataset/consent/reload journey PASS. /tmp/genetic-selection-{tests,types,build,browser}.log. Commit/push source+QA+records and verify exact CI/Render, then continue next unblocked v0.5 requirement.

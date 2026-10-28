@@ -1,0 +1,97 @@
+{
+  "archive_name": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+  "archive_bytes": 3880120,
+  "archive_sha256": "d69ea7927eea6a57081556cd56c7f3424b12a43f1f5cc748360f2a6a85894c37",
+  "files": [
+    {
+      "path": "design/bloom/flagship/2026-10-26/MANIFEST.json",
+      "size": 1745,
+      "sha256": "7ec7a7ad6459c1f160729a004d73a39a998328c96992721a185fde8d88764981",
+      "git_blob_sha": "b2db14ea08b30f3cabe7eea89939dda63eb6ee0d"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/README.md",
+      "size": 913,
+      "sha256": "f0a158af8e8d81d80a5e6353f8f69dfd7f2f481b87959a46e0fa2ea4c3c73715",
+      "git_blob_sha": "f5f2e97ad40065914a39058386a69dd4237e4928"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/contracts/IMPLEMENTATION_CONTRACT.md",
+      "size": 8019,
+      "sha256": "a9e6a9d03630660ac383d52922a2c32cf5165f02cf41d9bb92d9892fa9c0a495",
+      "git_blob_sha": "f0cf2050022ec1680854afda288ed4c00c629011"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/contracts/UX_BLUEPRINT.md",
+      "size": 15543,
+      "sha256": "2026b0229613b30fb8005927c1643c0dfcb7eeff6c01f9bbb1b6b31c4fd4dd80",
+      "git_blob_sha": "79ce60e3dcccce0127e5df969d802f9157b1cef2"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/01-fast-food-entry.svg",
+      "size": 4566,
+      "sha256": "cab071fe94079532fb20ac1bfc087d47c774a8d48c02f193a1cdddac10cda42b",
+      "git_blob_sha": "7b5dd4f7876263ff0371ff9eda80bdc9e4ce886b"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/02-canonical-food-review.svg",
+      "size": 4758,
+      "sha256": "236363dcdb2d01ef2747f6760bcd5143e7eb184ac04eb2bd9dd5795e0cac86d3",
+      "git_blob_sha": "e58a800642447aa90f5dd3bf3e7a821a984c2b16"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/03-fast-workout-log.svg",
+      "size": 3816,
+      "sha256": "ca03f54ccc9abe79fba1a61c8d1f56d75dbb67e44d30f34353f1b58d4cde3bb1",
+      "git_blob_sha": "175fe2132a61d1598b9d895013ed168ad9ff7e0e"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/04-evidence-progress.svg",
+      "size": 3061,
+      "sha256": "c33acb4b8f2ad2a7176562c72cb4066ee192137bdb9a3a9da15105ab3279cd1e",
+      "git_blob_sha": "5262daf7fe07fb46d80e161422cecbc392fd394c"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/05-adaptation-review.svg",
+      "size": 3257,
+      "sha256": "c43e55b9608c44a413b612d5a81d341da1bc1dafe139e5ad60176d6fc883b64f",
+      "git_blob_sha": "ec660b56a2c586dbc83f35a73b2484e45c4fe706"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/prototype/index.html",
+      "size": 5400,
+      "sha256": "46bdc1ef427a44a1cf89d8c94772ff14363b47e5724288fdfe502c8d170c0f62",
+      "git_blob_sha": "50f59e7e5ad97aa604ea90e48a52147651571376"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/prototype/styles.css",
+      "size": 6737,
+      "sha256": "e38f848fb2cd66008481f761c86e7a070d6c8e32faf063dae4faef9c8acd2a70",
+      "git_blob_sha": "4d86ee70a2556e771033eacdd8f5e435dc2cc272"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/reference/concept-five-screens.png",
+      "size": 2019467,
+      "sha256": "10e189cdf4f3212e6654193e72c4407a83502415f9d7976b02a2ba15f54a8669",
+      "git_blob_sha": "6b470b69247f170fbd1eae7324ae29ddfce74e41"
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/reference/concept-three-modes.png",
+      "size": 2040465,
+      "sha256": "8d58297e75377f220b83d510d238596597289dffb51b7047c2fc558ae69a1203",
+      "git_blob_sha": "82448afa9b77d1b9930e8f0163861a4709ba79a6"
+    }
+  ],
+  "original_manifest_discrepancies": [
+    {
+      "path": "README.md",
+      "declared_bytes": 712,
+      "actual_bytes": 913,
+      "kind": "stale original manifest entry; original retained"
+    }
+  ],
+  "original_files_not_listed_by_original_manifest": [
+    "contracts/UX_BLUEPRINT.md"
+  ],
+  "scope": "Original source transfer only; no runtime integration, redesign or independent visual acceptance."
+}

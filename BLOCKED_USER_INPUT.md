@@ -140,13 +140,11 @@ Question: Which versioned repository path supplies Bloom_Integration_Viome_Gist_
 Options: reviewed handoff plus representative sanitized exports; continue existing canonical structured file/paste input; future documented partner integration after rights/security approval. Recommended: keep current structured intake working, provide versioned source/fixtures for offline adapter work. No passwords, cookies, auth headers or live login are needed. Deferral blocks truthful raw-format recognition/validation, not current structured records or other core journeys. Reconsider only when source access/fixtures change.
 
 
-## FLAGSHIP-SOURCE-2809 — exact visual/interaction blueprint
+## FLAGSHIP-SOURCE-2809 — source bytes RESOLVED, runtime acceptance separate
 
-- Status: BLOCKED_USER_INPUT for exact flagship source/fidelity; independent core fixes continue. Architect c91e41f/b387395 names a Library archive not found by the scoped checkout design search; no callable Library file-access connector is available. Existing design masters remain available.
-- Exact question: What accessible file path or attachment contains `Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip`, including `contracts/UX_BLUEPRINT.md`, `contracts/IMPLEMENTATION_CONTRACT.md` and editable prototype HTML/CSS?
-- Choices: Supply/version the exact archive and contracts; identify an existing accessible checkout path; explicitly approve an alternative versioned specification.
-- Recommended default: Version the exact approved source and preserve existing canonical UI while implementing independent core functionality. The Architect explicitly requires those contracts before claiming target flagship fidelity.
-- Impact of deferral: Exact flagship styling/tap-flow implementation and acceptance remain blocked; food, activity, lab and session correctness need not stop. No substitute concepts or fabricated source verification. Reconsider when the archive or approved alternative becomes available.
+- Source-access dependency resolved2026-10-28: owner attached the original archive. Existing checksum-verified importer accepted SHA-256 d69ea7927eea6a57081556cd56c7f3424b12a43f1f5cc748360f2a6a85894c37,3,880,120bytes,13original members.
+- Exact expanded sources are in design/bloom/flagship/2026-10-26; actual file receipt is design/bloom/flagship/IMPORT_VERIFICATION_2026-10-28.json. Original internal MANIFEST is preserved, including stale entries documented by the receipt.
+- Bounded transfer per owner: finish in-progress functional work, commit/verify original assets in GitHub, then resume core development. No broad redesign or runtime visual acceptance is implied. Source transfer is no longer a user-input blocker; applying future touched surfaces and independent Design/device acceptance remain separate work.
 
 ## 2026-10-28 autonomous checkpoint
 
@@ -164,3 +162,5 @@ Flagship transfer receipt docs/agents/branding-ux/Bloom_Flagship_Developer_Trans
 - Exact decision/evidence: Which sensitive locus interpretations, if any, have qualified scientific/clinical approval and an approved reveal/consent policy?
 - Options: keep all APOE type/disease-risk interpretation withheld; or supply an independently approved, versioned scope and reveal policy. Recommended default: withhold. Current whole-file controls exclude APOE source calls by default and allow explicit private storage choices; they never infer type or disease risk.
 - Impact: blocks only clinical interpretation activation. It does not block ordinary selected-source storage or other core development. Do not treat this as permission to build an unapproved disease predictor.
+
+Source transfer update2026-10-28 supersedes earlier archive-inaccessible notes: original bytes are now supplied and verified. Do not ask for the flagship archive again.
