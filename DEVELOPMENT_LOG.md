@@ -1,3 +1,11 @@
+# Gut import local review — 2026-10-28
+
+Upload now reads JSON/CSV locally into explicit recognized-data review before any import request. Reuses current parser and ImportedReportDetails for scores/organisms/missingness; counts distinguish quantified taxa, source dates remain unchanged, no measured abundance fabricated from scores. Inputs lock to reviewed snapshot; Change report or details restores editing with draft retained, review heading receives focus. After attempting save, copy correctly describes pending/confirmed status rather than claiming nothing uploaded. Existing owned receipt/unknown-result retry and exact saved source navigation preserved.
+
+13 focused report/parser/date/storage/receipt tests PASS; types/build/source map PASS. Actual App/HTTP/PGlite paste+file review asserts zero import requests and zero rows before confirmation, invalid JSON retained with no writes, change/review retains draft, malformed200 and lost-after-commit file responses retry exact actor/key/payload without duplicate reports, correct old report/date/history/owner and320px PASS. Screenshot exposed prior parse-error toast surviving successful review; now dismisses only that import notice, final malformed browser PASS and screenshot inspected. No new API/store/migration/provider or claimed authentic Viome acceptance. Preview is not clinical validation.
+
+FoodProgress4ae6745 is RenderLIVE dep-dbh49qbbc2fs738ini7g; Actions40749476408 pending behind8833cbc Actions40748757222. Preserve substantial-batch checks: hold next push until4ae run starts so it is not replaced in concurrency queue. Continue local independent work while queued; do not start duplicate manual deploy.
+
 # Food → Progress — 2026-10-28
 
 Implemented the missing normal saved-food destination in Progress: existing owner-bound /api/meals query/cache, seven most recent logged dates grouped in current viewer timezone, same shared mealNutritionSummary used by journal. Energy/protein/carbohydrate/fat show known contributions, explicit partial/unavailable/zero; no empty-day zero, fabricated completeness, target or causal claims. Existing journal correction link and meal invalidation reused, no endpoint/store/migration/provider added.

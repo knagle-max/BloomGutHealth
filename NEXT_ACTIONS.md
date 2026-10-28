@@ -4,9 +4,9 @@ Use enhance/bloom-experience / PR1 / existing Render workspace tea-db9toijrjlhs7
 
 ## Current slice
 
-Private source note reader d0c572b Actions40746423137 SUCCESS/LIVE. UI8833cbc7a3d4523a61282e74703563343015a6e7 is RenderLIVE dep-dbh47rvb9u1s73eahd3g; Actions40748757222 was still running. Check exact outcome, don't conflate Render success and CI.
+Private source note reader d0c572b Actions40746423137 SUCCESS/LIVE. UI8833cbc7a3d4523a61282e74703563343015a6e7 RenderLIVE dep-dbh47rvb9u1s73eahd3g; Actions40748757222 still running unit/embedded PostgreSQL. FoodProgress4ae6745aa82d94cb97c5f417f975625a2f0930d3 RenderLIVE dep-dbh49qbbc2fs738ini7g; Actions40749476408 pending. Check exact outcomes. No duplicate manual deploy. Do not push another substantial batch while4ae is pending (GitHub permits one running/one pending and may replace pending).
 
-New FoodProgress/shared recordedFoodDays connects owned saved meals to seven logged dates with same journal nutrition summary and current viewer timezone; zeros/unknown/partial and energy preference, no fabricated empty days or complete intake. Types/build/3 focused tests/API/source checks pass. Actual App/API/encrypted storage normal/failure/retry/reload/owner/320px plus existing Progress current-context regression pass. Final kJ conversion1757kJ from unchanged420kcal,320px screenshot and no page errors PASS (/tmp/food-progress-browser.log). Commit/push slice with records, verify exact Actions/Render then continue next unblocked core journey. No new schema/provider/grant.
+Completed local next slice: Upload JSON/CSV now parses into local recognized-data review before explicit Save report, reuses ImportedReportDetails and owned receipt writer. Inputs lock to reviewed source; back retains draft, heading focus; pending save copy truthful and same unknown-result retry.13 focused report tests/types/build/source checks and actual App/API/PGlite paste+file+invalid JSON+edit-back+malformed200/lost-file-save exact retry/no duplicates/date/owner/320px PASS. Final /tmp/gut-preview-final-browser.log green after focused toast fix; screenshot docs/review/gut-report-preview-20261028/review-320.png inspected. Commit this verified UI/script/map/evidence/records locally; push when4ae Actions starts, then verify exact CI/Render and continue next normal unblocked journey. No new schema/provider/grant.
 
 ## Next work
 

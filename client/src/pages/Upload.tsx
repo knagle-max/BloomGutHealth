@@ -1,3 +1,4 @@
+import ImportedReportDetails from "@/components/ImportedReportDetails";
 import {useStructuredReportSave} from "@/lib/useStructuredReportSave";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState, useRef, useEffect } from "react";
@@ -36,10 +37,15 @@ export default function Upload() {
   const [showManualEntry, setShowManualEntry] = useState(false);
   const [manualData, setManualData] = useState("");
   const [reading, setReading] = useState(false);
-  const save=useStructuredReportSave(),isUploading=reading||save.pending,frozen=isUploading||save.uncertain||!!save.saved;
+  const [attempted, setAttempted] = useState(false);
+  const [preview, setPreview] = useState<(ReturnType<typeof parseReportDocument> & {originalFilename?:string}) | null>(null);
+  const save=useStructuredReportSave(),isUploading=reading||save.pending,frozen=isUploading||save.uncertain||!!save.saved||!!preview;
   const { toast } = useToast();
+  const notice=useRef<{dismiss:()=>void}|null>(null);
   const [, setLocation] = useLocation();
   const { user } = useAuth();
+  const previewHeading=useRef<HTMLHeadingElement>(null);
+  useEffect(()=>{if(preview)previewHeading.current?.focus();},[preview]);
   const active=useRef(true),actor=useRef(user?.id);actor.current=user?.id;
   useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
 
@@ -49,7 +55,7 @@ export default function Upload() {
     try {
       let result;
       if(save.uncertain)result=await save.retry();
-      else {
+      else if(!preview) {
         const pasted=showManualEntry?manualData.trim():"",selected=showManualEntry?null:file;
         if(!selected&&!pasted)throw Error("Choose a file or paste report data.");
         if(selected&&selected.size>STRUCTURED_REPORT_MAX_BYTES)throw Error("JSON/CSV reports must be 2 MB or smaller.");
@@ -57,7 +63,12 @@ export default function Upload() {
         setReading(true);
         const text=pasted||await selected!.text(),parsed=parseReportDocument(text,pasted||selected!.name.toLowerCase().endsWith(".json")?"json":"csv");
         if(!active.current||actor.current!==owner)return;
-        result=await save.submit({report:parsed.source,originalFilename:pasted?undefined:selected?.name,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes},{kind:parsed.parsed.kind,scores:parsed.parsed.scores.length,reportedOrganisms:parsed.parsed.organisms.length,quantifiedTaxa:Object.keys(parsed.parsed.bacteria_percentages||{}).length});
+        notice.current?.dismiss();
+        setPreview({...parsed,originalFilename:pasted?undefined:selected?.name});
+        return;
+      } else {
+        setAttempted(true);
+        result=await save.submit({report:preview.source,originalFilename:preview.originalFilename,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes},{kind:preview.parsed.kind,scores:preview.parsed.scores.length,reportedOrganisms:preview.parsed.organisms.length,quantifiedTaxa:Object.keys(preview.parsed.bacteria_percentages||{}).length});
       }
       if(!result||!active.current||actor.current!==owner)return;
       acknowledged=true;
@@ -68,7 +79,7 @@ export default function Upload() {
       setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
     } catch(error) {
       if(!active.current||actor.current!==owner)return;
-      toast({title:acknowledged?"Report saved":"Import needs review",description:acknowledged?"Open the saved report using the link below.":error instanceof Error?error.message:"Check your report and try again.",variant:acknowledged?"default":"destructive"});
+      notice.current=toast({title:acknowledged?"Report saved":"Import needs review",description:acknowledged?"Open the saved report using the link below.":error instanceof Error?error.message:"Check your report and try again.",variant:acknowledged?"default":"destructive"});
     } finally {
       if(active.current&&actor.current===owner)setReading(false);
     }
@@ -190,6 +201,14 @@ export default function Upload() {
 
       </details>
       </fieldset>
+      {preview&&<section className="bloom-panel space-y-3" aria-labelledby="report-preview-title">
+        <h2 id="report-preview-title" ref={previewHeading} tabIndex={-1}>Review report before saving</h2>
+        <p>{attempted?'Review of the source prepared for this import. Save status is shown below.':'Prepared locally; nothing has been uploaded or saved yet.'}</p>
+        <p>{preview.parsed.scores.length} reported scores · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa</p>
+        <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
+        <details><summary>Recognized data & missing measurements</summary><ImportedReportDetails report={preview.parsed}/></details>
+        {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);}}>Change report or details</Button>}
+      </section>}
       {save.error&&<p role="alert">{save.error.message}</p>}
       {save.uncertain&&<p role="status">Keep this page open to retry the same import. Your original details are locked until the save is confirmed. <Link className="text-link" href={save.checkHref} target="_blank" rel="noopener">Check saved reports</Link></p>}
       {save.saved&&<p role="status">Report saved. <Link className="text-link" href={save.checkHref}>Open saved report</Link></p>}
@@ -199,7 +218,7 @@ export default function Upload() {
         disabled={(!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved}
         data-testid="button-submit-upload"
       >
-        {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":"Save report"}
+        {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":preview?"Save report":"Review report"}
       </Button>
       <details className="workspace-disclosure"><summary>Supported report formats</summary><p className="panel-note">JSON and CSV reports support up to 2 MB. JSON can contain Viome-style scores and organisms, a reconstructed report, or bacteria_percentages. CSV uses bacteria and abundance percentage columns. Scores and organism listings stay separate from measured abundance. Raw sequence classification is not implemented.</p></details>
     </main>

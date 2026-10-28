@@ -1,3 +1,9 @@
+# Gut import checkpoint — October28,2026
+
+Third completed slice: gut JSON/CSV local review before explicit save, recognized data/missing measurements via existing parser/display, change-to-edit preserves draft, focus and clear save status, original owned unknown-result retry unchanged.13 focused tests/types/build/source checks and actual normal/failure/retry/date/account/mobile paths PASS. Ready for publication after queued FoodProgress CI starts. No authentic provider file/clinical acceptance implied.
+
+FoodProgress4ae6745 RenderLIVE dep-dbh49qbbc2fs738ini7g; Actions40749476408 queued behind source-note UI8833cbc Actions40748757222 (still unit tests). Reader d0c572b CI SUCCESS. NEXT_ACTIONS.md is authoritative for exact current queue. Continue autonomously; v0.5 remains incomplete.
+
 # Food continuity checkpoint — October28,2026
 
 Completed and locally verified: optional private nutrition source note across product→review→meal history; saved food→dated Progress summary with canonical totals/unknowns/zero/partial, kcal/kJ, retry, reload and owner isolation. UI8833cbc RenderLIVE dep-dbh47rvb9u1s73eahd3g, exact Actions40748757222 running. New Progress slice publication follows. Types/build/3 focused tests, source/API checks and actual App/API/encrypted storage normal/failure/mobile journeys PASS, existing precision Progress regression PASS. Screenshot: docs/review/food-progress-20261028/recorded-food-320.png. No independent real-owner/provider/Design/device acceptance claimed.
