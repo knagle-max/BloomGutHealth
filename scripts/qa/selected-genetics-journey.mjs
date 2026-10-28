@@ -28,8 +28,7 @@ const { chromium } = createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT
 const browser = await chromium.launch({ headless: true, executablePath: process.env.BLOOM_CHROMIUM_EXECUTABLE, args: ['--no-sandbox'] });
 const page = await browser.newPage({ viewport: { width: 390, height: 1000 }, timezoneId: 'America/New_York', locale: 'en-CA' });
 page.setDefaultTimeout(12000);
-const errors = [], attempts = [];
-let loseReceipt = false;
+const errors = [], commands = [];
 const own = () => store.getPrecisionRecords('atomic-qa');
 const report = async () => {
   const records = await own();
@@ -41,12 +40,9 @@ await page.route('**/api/**', async route => {
   const request = route.request(), path = new URL(request.url()).pathname;
   if (request.method() !== 'GET' && path.startsWith('/api/precision/')) {
     const body = request.postDataJSON();
-    if (path === '/api/precision/labs/import') attempts.push({ key: request.headers()['idempotency-key'], body });
+    commands.push({path,body});
     const response = await fetch(apiBase + path, { method: request.method(), headers: { 'content-type': 'application/json', ...(request.headers()['idempotency-key']?{'idempotency-key':request.headers()['idempotency-key']}:{}) }, body: request.postData() });
     const text = await response.text();
-    if (response.ok && path === '/api/precision/labs/import') {
-      if (loseReceipt) { loseReceipt=false;return route.fulfill({status:503,json:{error:'Synthetic committed response lost'}}); }
-    }
     return route.fulfill({ status: response.status, contentType: 'application/json', body: text });
   }
   let json = [];
@@ -69,8 +65,17 @@ try {
   const records=await own();assert.equal(records.length,1);assert.equal(records[0].payload.entries[0].genotype,'AG');assert.equal(records[0].payload.strand,'unknown');assert.equal(records[0].payload.source,'Synthetic selected source');assert.equal((await store.getPrecisionRecords('other')).length,0);
   await page.reload();await form.getByLabel('Genotype rs1801133',{exact:true}).waitFor();assert.equal(await form.getByLabel('Genotype rs1801133',{exact:true}).inputValue(),'AG');assert.equal(await form.getByLabel('Genotype source',{exact:true}).inputValue(),'Synthetic selected source');
   await page.getByText('Supported calls provide educational context; they do not set nutrition targets or add food-ranking priority.',{exact:false}).waitFor();
+  const rawPanel=page.locator('section').filter({has:page.getByRole('heading',{name:'Import 23andMe raw data',exact:true})});
+  await rawPanel.getByLabel('DNA sample date',{exact:true}).fill('2026-10-02T12:30');
+  await rawPanel.getByLabel('Raw data text file',{exact:true}).setInputFiles({name:'synthetic-selected-source.txt',mimeType:'text/plain',buffer:Buffer.from('# 23andMe\n# build 37\nrs1801133 1 11856378 AG\nrs4988235 2 136608646 GG\nrs99999 3 100 TT')});
+  await rawPanel.getByText('Scanned 3 rows. 2 supported calls will be saved:',{exact:true}).waitFor();assert.equal((await own()).length,1);
+  const rawSave=rawPanel.getByRole('button',{name:'Save supported calls',exact:true});assert.equal(await rawSave.isDisabled(),true);
+  await rawPanel.getByRole('checkbox',{name:/I consent to saving these supported genetic calls/}).check();await rawSave.click();
+  await page.getByText('Active import: 2026-10-02',{exact:true}).waitFor();
+  assert.equal(commands.length,2);assert.equal(JSON.stringify(commands[1].body).includes('rs99999'),false);assert.equal(JSON.stringify(commands[1].body).includes('# 23andMe'),false);const imports=await own();assert.equal(imports.length,2);const raw=imports.find(row=>row.payload.provider==='23andMe');assert.equal(raw.payload.calls.length,2);assert.equal(raw.payload.calls.some(row=>row.rsid==='rs99999'),false);assert.equal('rawText' in raw.payload,false);assert.equal(imports.some(row=>row.payload.source==='Synthetic selected source'),true);assert.equal((await store.getPrecisionRecords('other')).length,0);
+  await page.reload();await page.getByText('Active import: 2026-10-02',{exact:true}).waitFor();
   await page.setViewportSize({width:320,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);assert.deepEqual(errors,[]);
-  console.log('PASS actual App/HTTP/encrypted PGlite selected SNP preview/no write before consent/save/reload/unknown strand/source/owner/320px; corrected educational copy.');
+  console.log('PASS actual App/HTTP/encrypted PGlite selected SNP preview/no write before consent/save/reload/unknown strand/source/owner/320px; minimized supported file import/reload/date/retained prior source; corrected educational copy.');
 
 } catch(error) { console.error({errors,alerts:await page.getByRole('alert').allTextContents(),records:(await own()).length});throw error; } finally {
   await browser.close();

@@ -1,3 +1,13 @@
+# Goal and weekly food continuity — 2026-10-28
+
+Existing first-goal-source browser PASS at latest tree: interrupted canonical writes, current exclusions/drafts, skipped unknown safety and late account-bound continuation; synthetic HTTP storage, not hosted independent acceptance. Existing weekly-food-review browser PASS: seven-day ingredients/per-meal dedup, missing detail/portion uncertainty, unavailable-source withdrawal/retry, no writes/inferred diversity score,320px. Only original ID02/FOOD07/GEN01/MICRO01 scoped partial evidence updated, no blanket release closure. Gut6ea exact Actions40750607534 SUCCESS including managed persistence; f330 Actions40751817541 queued at checkpoint.
+
+# Supported genetic file core path — 2026-10-28
+
+Extended the existing selected-genetics real App/API/encrypted PGlite journey through actual .txt selection and parser: synthetic GRCh37 three rows → two catalogue calls, no write before consent, unsupported rsID/full raw text absent from actual POST, source calendar2026-10-02 retained on reload, earlier manual dataset remains, second owner empty,320px/no page errors. Final /tmp/genetics-file-final-browser.log PASS. Removed unused copied lab-receipt fixture logic. No new importer or production behavior added. Source audit adds FoodProgress/shared summary to existing food logging/macronutrient registry entries as well as existing Progress mappings; no feature approval inferred.
+
+Verified copy/core checkpoint f330b902f26f292c7f29ecd8840288ec9c1c7c39 pushed and RenderLIVE dep-dbh4h0vb9u1s73eb1h6g; Actions40751817541 pending behind gut40750607534. Wait for f330 run to start before pushing this QA/source-map/records follow-up, preserving every substantial batch's CI.
+
 # Core regression and deployment checkpoint — 2026-10-28
 
 FoodProgress4ae6745 exact Actions40749476408 SUCCESS including managed persistence; RenderLIVE confirmed. Source-note UI8833cbc exact Actions40748757222 SUCCESS/LIVE. Gut6ea2495 LIVEdep-dbh4da142hec73f3fir0, Actions40750607534 follows. Existing actual encrypted activity Today→log→unknown response retry→history→correction→Today→Progress→delete PASS, owner/keyboard320/no training inference. Existing actual encrypted Athlete session save→unknown response retry→one90min calendar entry→source focus/date/owner/gates/320px PASS. No functioning importer/activity/session duplicate added. Original ledger only FOOD07/MICRO01/GEN01 scoped partial statuses reconciled.

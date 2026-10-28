@@ -17,9 +17,10 @@ v0.5 remains incomplete; v0.6 has not begun. Work stays on enhance/bloom-experie
 |d0c572b|Private source reader|40746423137 SUCCESS|LIVE dep-dbh40gvavr4c739e4mfg|
 |8833cbc|Private source form/history|40748757222 SUCCESS|LIVE dep-dbh47rvb9u1s73eahd3g|
 |4ae6745|Dated food Progress|40749476408 SUCCESS|LIVE dep-dbh49qbbc2fs738ini7g|
-|6ea2495|Local gut import review|40750607534 pending verification|LIVE dep-dbh4da142hec73f3fir0|
+|6ea2495|Local gut import review|40750607534 SUCCESS|LIVE dep-dbh4da142hec73f3fir0|
+|f330b90|Genetics copy/core verification|40751817541 pending|LIVE dep-dbh4h0vb9u1s73eb1h6g|
 
-Latest local genetics-copy/QA/ledger follow-up publication is tracked in NEXT_ACTIONS.md. Source-note reader12 focused, Progress3 focused, gut13 focused and genetics4 focused tests passed (overlapping cases are not summed). Types/build/source checks pass; actual App/API/PGlite browser paths cover failure, retry, single save, reload, unknown/zero/unit/source retention, account separation and320px. Existing Progress precision, encrypted Activity and encrypted Athlete regressions pass. These are engineering fixtures, not clinical/device/independent acceptance. Direct hosted probe was blocked by environment proxy403; RenderLIVE and filtered listener log confirmed.
+Further supported-file QA/source-map follow-up is tracked in NEXT_ACTIONS.md: actual file input, two supported calls/one discarded row, no raw/unsupported data in POST, explicit consent, older date/reload and prior dataset retention PASS. Source-note reader12 focused, Progress3 focused, gut13 focused and genetics4 focused tests passed (overlapping cases are not summed). Types/build/source checks pass; actual App/API/PGlite browser paths cover failure, retry, single save, reload, unknown/zero/unit/source retention, account separation and320px. Existing Progress precision, encrypted Activity/Athlete, first-goal-source and weekly-food-review regressions pass. These are engineering fixtures, not clinical/device/independent acceptance. Direct hosted probe was blocked by environment proxy403; RenderLIVE and filtered listener log confirmed.
 
 ## Outstanding decisions and acceptance
 

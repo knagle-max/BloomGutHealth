@@ -326,7 +326,8 @@
           "client/src/components/FoodEntryChooser.tsx",
           "client/src/components/CompanionHero.tsx",
           "client/src/components/SavedMeals.tsx",
-          "client/src/components/MealAnalysis.tsx"
+          "client/src/components/MealAnalysis.tsx",
+          "client/src/components/FoodProgress.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -349,7 +350,8 @@
           "shared/meal-portions.ts",
           "server/preference-source.ts",
           "server/settings-source.ts",
-          "server/meal-review-source.ts"
+          "server/meal-review-source.ts",
+          "shared/food-progress.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -377,7 +379,8 @@
           "client/src/pages/LogMeal.tsx",
           "client/src/components/ProductPicker.tsx",
           "client/src/components/FoodEntryChooser.tsx",
-          "client/src/components/CompanionHero.tsx"
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/FoodProgress.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -387,7 +390,9 @@
           "shared/products.ts",
           "server/meal-intelligence.ts",
           "server/preference-source.ts",
-          "server/meal-review-source.ts"
+          "server/meal-review-source.ts",
+          "shared/food-progress.ts",
+          "shared/nutrition-summary.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
