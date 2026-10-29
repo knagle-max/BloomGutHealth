@@ -1,0 +1,58 @@
+{
+  "phase": "after",
+  "sourceRef": "79f99180484cb74f20b9366dacd2346253ae51a1",
+  "runtimeDirty": false,
+  "sourceSelection": "Clean pinned Git worktree",
+  "backendSourceMatchesRef": true,
+  "viewportChecks": [
+    {
+      "width": 320,
+      "primaryVisible": true
+    },
+    {
+      "width": 375,
+      "primaryVisible": true
+    },
+    {
+      "width": 390,
+      "primaryVisible": true
+    },
+    {
+      "width": 430,
+      "primaryVisible": true
+    },
+    {
+      "width": 1280,
+      "primaryVisible": true
+    }
+  ],
+  "mealRows": 1,
+  "ingredients": 5,
+  "saveAttempts": 2,
+  "exactRetry": true,
+  "canonicalTotals": {
+    "calories": 903.1,
+    "protein": 6.74,
+    "carbs": 115,
+    "fat": 33.12,
+    "fiber": 7.75,
+    "sugar": 26,
+    "sodium": 32.6,
+    "potassium": 737.1,
+    "cholesterol": 0,
+    "calcium_mg": 42.8,
+    "iron_mg": 1.81,
+    "magnesium_mg": 102,
+    "zinc_mg": 1.78,
+    "vitamin_c_mg": 19.68,
+    "vitamin_d_ug": 0,
+    "vitamin_b12_ug": 0,
+    "folate_ug": 51.3,
+    "vitamin_a_ug": 306.3,
+    "vitamin_e_mg": 2.02,
+    "vitamin_k_ug": 11.49,
+    "fat_saturated_g": 2
+  },
+  "browserErrors": [],
+  "hostedRender": false
+}
