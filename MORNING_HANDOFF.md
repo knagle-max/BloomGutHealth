@@ -1,47 +1,39 @@
-# Bloom development handoff — October28,2026
+# Bloom development handoff — October29,2026
 
-v0.5 remains incomplete; v0.6 has not begun. Work stays on enhance/bloom-experience/PR1 and the existing Render review service. No main merge, production data/credential changes, replacement services, paid/restricted activation or external messages.
+v0.5 is **incomplete**; v0.6 has not begun. Continue on enhance/bloom-experience / PR1 / existing Render review service. The original flagship transfer is complete; core development resumed immediately. Exact source criteria now linked for78/139 inherited IDs without blanket completion; original EXP02/03/04 and ARC-UT05 reconciled against unchanged code and450-test CI. No broad visual redesign, main merge, production data/credential change, replacement service, paid/restricted activation or external messaging.
 
-Latest functional source **c60008cea3983f047c100eca396eaf7920e54268**: Actions40758240795 SUCCESS,445/445 tests, build and managed persistence; RenderLIVEdep-dbh552k9v7es739ss9rg. Final evidence/record-only follow-up has no production-code changes.
+## Completed in this continuation
 
-## Delivered and verified
+- **Original flagship assets:** existing pinned-checksum importer accepted the attached3,880,120-byte ZIP and13 original files. All GitHub blob hashes/sizes match; implementation contract also fetched from GitHub. Original internal manifest's stale README entry and omitted UX blueprint are documented separately; originals untouched. Source commit8933079; `design/bloom/flagship/2026-10-26/` and its import receipt.
+- **Genetic source privacy:** whole-file per-call selection, APOE excluded by default, optional explicit private storage, renewed consent after source/date/selection changes, late-file/actor guards. No APOE type/disease interpretation. Active dataset never inherits excluded/unknown calls from older sources.
+- **Recent meals:** optional Add Food shortcut loads confirmed ingredient identity, preparation, portions and restaurant context into existing review/confirm. Protects current draft; current nutrition is reviewed and a new entry is saved only explicitly. Lost-response exact retry produces one new row; earlier meal unchanged.
+- **Journal nutrition bug fixed:** meal-type-only edit previously reparsed the original description and discarded reviewed food/portion corrections (reproduced500kcal→unknown). Metadata-only writes now preserve recorded nutrition and avoid writing stale nutrition fields. Changed food descriptions/explicit ingredients still recalculate; no-op is safe even when original provider is unavailable. No automatic historical-data repair.
+- **Planning explanations:** existing full-day tradeoffs retained. Optional next-meal disclosure reports observed excluded recipe portions by nutrient/time/equipment checks. Selected limits remain unchanged, rejected candidates are not suggested, unknown logged nutrients do not become verified compliance. Failed refresh hides old explanation until retry.
+- **Journal keyboard access:** native nutrient disclosure supports Enter/Space and expansion state; named Edit/Delete controls and keyboard update/deletion/confirm preserve canonical totals. Actual keyboard/App/API/SQL/320px, types/build checks PASS; whole-app independent accessibility audit remains open.
+- **New architect intake:** latest legal clarification and low-cost passion-project mandate incorporated. One-page minimal-cost release scope prepared using existing52-feature registry and server policy; no new regulatory programme, recurring spend, registry or runtime permission. Canada/adult launch and borderline claims remain proposals requiring actual review.
 
-- Private nutrition source context: optional country/variant/source/date note stays in existing encrypted product storage, explicit selection review and immutable saved-meal snapshot. Label deletion retains original meal context. Manual notes never become verified provider/market provenance.
-- Food→Progress: seven logged dates reuse journal nutrition totals and owned meal cache, preserve zero/unknown/partial, support kcal/kJ and link to correction. Unlogged days are not zero; saved totals do not claim full-day intake.
-- Gut JSON/CSV review: recognized-data preview is local before explicit save, source dates/scores/organisms/abundance stay separate; change-to-edit retains draft, review receives focus. Existing exact receipt retry prevents duplicates after unknown outcomes.
-- Fixed observed label removal bug: deleted private source no longer remains selected. Normal and lost-reply→404 retry remove stale choice while original saved meal nutrition/source remains.11 focused tests/types/build and actual normal/failure/history/owner/mobile journeys pass; latest publication is in NEXT_ACTIONS.md.
-- Existing selected-SNP entry reverified through consent, encrypted save and reload; corrected stale dietary ranking wording to educational context. Existing Activity and Athlete normal/unknown-response retry/correction/date/owner paths reverified rather than duplicated.
-- Earlier bounded local text-PDF lab intake, source-preserving lab history/unit/date reviews, account/session withdrawal, guarded private downloads, owner SQL/report child writes, seed-free startup, logout retry, goals/units/planning and privacy work retains detailed evidence in DEVELOPMENT_LOG.md.
+Earlier verified private source notes, recorded-food Progress, explicit gut JSON/CSV review, label-deletion recovery, bounded local text-PDF intake, lab source/unit/date history, owner SQL/account lifecycle, Activity/Athlete, goals/units, evidence presentation and PWA metadata remain intact. Detailed commits/tests are in DEVELOPMENT_LOG.md; no repeated implementation was needed.
 
-Browser install metadata963774a is LIVEdep-dbh4q5i9lscs73e1kek0; Actions40754765048 SUCCESS (445/445, build, managed persistence). Chromium/build pass using existing approved icons/theme. No service worker/offline/native/OS acceptance claimed. QA-only545 standalone CI40753021150 cancelled by pending replacement; changes remain in runtime descendant.
+## Commits and verification
 
-## Commits, tests and deployment
+| Commit | Scope | Exact verification |
+|---|---|---|
+| 371cde6 | Genetic source selection | Actions40765055132 SUCCESS; included in later LIVE deployments;16 focused/types/build/actual App/API/encrypted storage journey PASS |
+| 8933079 | Original flagship transfer |13 GitHub blob/size identities match verified originals, text contract accessible; assets-only |
+| 169bb5a | Recent reuse + production deletion totals checks | Actions40791634301 SUCCESS:447tests/447pass/0fail, build and isolated-Neon production persistence; actual post-delete daily/monthly/yearly totals/coverage assertion confirmed in job logs; RenderLIVEdep-dbh8r415efls738i5nt0 |
+| 4a76c9b | Journal metadata integrity |6 focused +28 meal tests/types/build +actual UI journal→Today/Progress→delete/ownedSQL PASS; RenderLIVEdep-dbh8uhs9v7es73b1mrcg; exact Actions40792454938 FAILED stale API inventory, corrected in f7a2776 |
+| f7a2776 | Next-meal constraint explanations + inventory correction |19 focused/types/build +actual bounded-planner/App/full-day+next-meal/503 retry/no writes/320px PASS; exact Actions40793301914 SUCCESS450tests/450pass/0fail, build/isolated-Neon and deletion totals assertions; includes metadata fix/inventory correction |
+| c6cdfef | Latest architect docs, includes f7a2776 runtime | RenderLIVEdep-dbh9309bgsac73b4e6t0; no additional runtime changes |
 
-|Commit|Scope|Exact Actions|Render|
-|---|---|---|---|
-|d0c572b|Private source reader|40746423137 SUCCESS|LIVE dep-dbh40gvavr4c739e4mfg|
-|8833cbc|Private source form/history|40748757222 SUCCESS|LIVE dep-dbh47rvb9u1s73eahd3g|
-|4ae6745|Dated food Progress|40749476408 SUCCESS|LIVE dep-dbh49qbbc2fs738ini7g|
-|6ea2495|Local gut import review|40750607534 SUCCESS|LIVE dep-dbh4da142hec73f3fir0|
-|f330b90|Genetics copy/core verification|40751817541 SUCCESS|LIVE dep-dbh4h0vb9u1s73eb1h6g|
-|ec97042|Clear deleted label selection/retry|40754180797 SUCCESS|LIVE dep-dbh4o9m1egvs73bao75g|
-|963774a|Browser install metadata|40754765048 SUCCESS|LIVE dep-dbh4q5i9lscs73e1kek0|
-|c60008c|Quantified gut source preview|40758240795 SUCCESS|LIVE dep-dbh552k9v7es739ss9rg|
+API source inventory is101static/13unresolved, source crosswalk52IDs138files; authorization review stays pending. Source registry categories27general candidates/21hidden/2research/2incident; approval statuses27review-required/25not-approved, none approved. Registry labels and synthetic reviewer visibility are not public or clinical execution permission. Browser/SQL fixtures are not independent device, clinical or hosted owner acceptance.
 
-Quantified gut review and normal-profile Chrome installability QA are verified. Selective annotated comparison: docs/review/gut-import-comparison-20261028/COMPARISON.md (clean actual8833cbc/c60008c, synthetic data/zero writes). Supported-file QA/source mapping is included in verified descendants: actual file input, two supported calls/one discarded row, no raw/unsupported data in POST, explicit consent, older date/reload and prior dataset retention PASS. Completed c60008c exact managed CI confirms445tests/445pass/0fail, build and isolated-Neon persistence (includes the removal fix). Source-note reader12 focused, Progress3 focused, gut13 focused, removal11 focused and genetics4 focused tests passed (overlapping cases are not summed). Types/build/source checks pass; actual App/API/PGlite browser paths cover failure, retry, single save, reload, unknown/zero/unit/source retention, account separation and320px. Existing Progress precision, encrypted Activity/Athlete, first-goal-source and weekly-food-review regressions pass. These are engineering fixtures, not clinical/device/independent acceptance. Direct hosted probe was blocked by environment proxy403; RenderLIVE and filtered listener log confirmed.
+## Remaining priorities and deferred decisions
 
-## Outstanding decisions and acceptance
+1. f7a2776 full CI450/450/build/Neon verified; A2 dynamic row regression PASS. Publish current journal keyboard/source-trace checkpoint and PR status. Then continue original207-criterion reconciliation and demonstrated core gaps; A1–A6 audit is docs/verification/CORE_FOOD_A1_A6_2026-10-29.md. No v0.5 completion claim while actionable work remains.
+2. Finish essential Today/nutrition and remaining Bloodwork/Gut/Genetics/Athlete acceptance against current handoffs, preserving already working flows. After actionable v0.5, automatically reconcile/begin approved independent v0.6.
+3. **Hosted/source acceptance:** owner reports KitKat and Tester1 working. Preserve them; authorized tester can verify exact Canadian variant/serving and hosted save/totals. Recommended: synthetic tester acceptance; deferral leaves exact source/device acceptance open, not manual/core work. Do not recreate accounts or request secrets.
+4. **Authentic provider material:** authentic versioned/redacted Viome export and method contract versus supported reconstructed JSON/CSV. Recommended: keep supported manual imports while acquiring the authentic source; no official-format completeness claim.
+5. **Source rights:** written OFF/official Canadian menu rights, versions, territory and retention versus disabled integration/private manual fallback. Recommended: fallback until reviewed rights; no paid subscription authorized.
+6. **Restricted/operational decisions:** approved sensitive clinical output/reveal scope versus withholding; actual recovery/retention policy, role provisioning and authoritative billing evidence before those operations activate. Recommended: remain denied/withheld where unapproved; ordinary browser development continues. Latest low-cost mandate defers speculative expensive clinical/research infrastructure rather than making it a core prerequisite.
 
-The exact question/choices/default/deferral impact for every item remains in BLOCKED_USER_INPUT.md. Highest-leverage groups:
-
-1. **FLAGSHIP-SOURCE-2809:** make the original checksum-verified ZIP available to this execution environment (safe local path/upload file ID), or defer exact flagship import. Recommend original access; only reference-fidelity work waits. Receipt/importer exists, bytes do not. Do not recreate artwork.
-2. **INT-VIOME:** supply an authentic versioned/redacted export and format/method contract, or retain reconstructed JSON/percentage CSV support. Recommend keep supported manual imports while acquiring the authentic file; official-provider compatibility remains unverified.
-3. **OFF/REST-ARCH:** identify written approved source-rights/version/territory/retention conditions for OFF or official Canadian menu records, or retain disabled providers and private manual fallback. Recommend fallback until reviewed rights; source activation alone waits. No paid subscription authorized.
-4. **FOOD-501/GATE-701/ARC-REVIEW:** authorized tester/owner supplies actual hosted Canadian variant and existing Tester1 scope/device findings, or retain independent acceptance open. Owner reports KitKat/Tester1 working; preserve them and do not reset/recreate. No secrets/sessions requested.
-5. **OPS/PRIV/ADMIN:** authoritative tariff/unknown-charge evidence, scoped operator recovery/retention policy and actual reviewed role provisioning are needed before those operations activate. Defaults remain denied; core browser workflows continue.
-
-Native-v0.5 scope is resolved to browser/PWA-first; no repeat platform question. Independent specialist, physical-device/accessibility, clinical/legal and operational release gates remain separate. No routine development permission needed.
-
-## Next steps
-
-Verify final evidence-only commit checks and PR metadata, then reconcile the next original mandatory criterion against actual code/tests. Functional c60008c is already fully CI/LIVE verified. Continue the next demonstrated unblocked core journey under the current core-first directive; reconcile existing code before adding features. Acquire missing authentic files/rights/review evidence only when dependencies change. NEXT_ACTIONS.md provides exact resume commands/state; BACKLOG.md and original ledgers preserve scoped outstanding work.
+Exact task IDs, questions, options, reasons and impacts remain in BLOCKED_USER_INPUT.md. Native v0.5 scope is resolved browser/PWA-first; original flagship source access is resolved. Independent specialist, physical-device/accessibility and launch approval are separate. NEXT_ACTIONS.md contains exact resumption instructions. No routine approval needed.

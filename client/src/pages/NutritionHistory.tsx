@@ -814,26 +814,32 @@ export default function NutritionHistory() {
                 <Card key={meal.id} data-testid={`card-meal-${index}`}>
                   <CardContent className="pt-4">
                     <div className="flex items-start justify-between mb-2">
-                      <div
-                        className={`flex-1 cursor-pointer ${hasItems ? "hover-elevate" : ""}`}
+                      <button
+                        type="button"
+                        className={`flex-1 min-w-0 text-left rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${hasItems ? "hover-elevate" : ""}`}
+                        disabled={!hasItems}
+                        aria-label={`${isExpanded ? "Hide" : "Show"} nutrient details for ${meal.mealText}`}
+                        aria-expanded={hasItems ? isExpanded : undefined}
+                        aria-controls={isExpanded ? `meal-nutrition-${index}` : undefined}
                         onClick={() => hasItems && toggleMealExpansion(meal.id)}
                         data-testid={`button-expand-meal-${index}`}
                       >
-                        <p
-                          className="font-medium"
+                        <span
+                          className="block font-medium"
                           data-testid={`text-meal-description-${index}`}
                         >
                           {meal.mealText}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
+                        </span>
+                        <span className="block text-xs text-muted-foreground">
                           {format(new Date(meal.loggedAt), "h:mm a")}
                           {meal.mealType && ` • ${meal.mealType}`}
-                        </p>
-                      </div>
+                        </span>
+                      </button>
                       <div className="flex gap-1 ml-2">
                         <Button
                           size="icon"
                           variant="ghost"
+                          aria-label={`Edit meal: ${meal.mealText}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditMeal(meal);
@@ -846,6 +852,7 @@ export default function NutritionHistory() {
                         <Button
                           size="icon"
                           variant="ghost"
+                          aria-label={`Delete meal: ${meal.mealText}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteMeal(meal.id);
@@ -866,10 +873,7 @@ export default function NutritionHistory() {
                         )}
                       </div>
                     </div>
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => hasItems && toggleMealExpansion(meal.id)}
-                    >
+                    <div>
                       <div className="flex flex-wrap gap-2 mt-3">
                         <Badge
                           variant="secondary"
@@ -906,6 +910,7 @@ export default function NutritionHistory() {
 
                     {isExpanded && hasItems && (
                       <div
+                        id={`meal-nutrition-${index}`}
                         className="mt-4 pt-4 border-t space-y-3"
                         data-testid={`meal-items-${index}`}
                       >

@@ -163,4 +163,4 @@ Flagship transfer receipt docs/agents/branding-ux/Bloom_Flagship_Developer_Trans
 - Options: keep all APOE type/disease-risk interpretation withheld; or supply an independently approved, versioned scope and reveal policy. Recommended default: withhold. Current whole-file controls exclude APOE source calls by default and allow explicit private storage choices; they never infer type or disease risk.
 - Impact: blocks only clinical interpretation activation. It does not block ordinary selected-source storage or other core development. Do not treat this as permission to build an unapproved disease predictor.
 
-Source transfer update2026-10-28 supersedes earlier archive-inaccessible notes: original bytes are now supplied and verified. Do not ask for the flagship archive again.
+Source transfer update2026-10-29 supersedes earlier archive-inaccessible notes: original bytes committed8933079 and all13 original GitHub blobs/sizes verified; implementation contract fetched successfully. Do not ask for the flagship archive again.

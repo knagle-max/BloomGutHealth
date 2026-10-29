@@ -26,6 +26,8 @@ This is the **short, persistent task ledger** for iterative and overnight Codex 
 
 > **LEGAL LOW-COST OWNER MANDATE — 2026-10-28:** `V06_HANDOFF.md` §50 integrates `Bloom_Legal_Low_Cost_Passion_Project_Architect_Developer_Handoff_2026-10-28.md` LEG-HOBBY-1101–1106. Bloom is a **low-cost passion project**, with optional commercialization, **no assumed medical-device licensing/QMS programme, research institution or paid provider**. Ordinary research-supported nutrition/training/recovery suggestions can conditionally consider reliable lab/microbiome inputs; do not impose an indiscriminate ban. No diagnosis/treatment, false biological claims, privacy bypass or unapproved clinical release. Reuse existing feature registry and privacy/source review, defer speculative expensive infrastructure. New paid contract, staffing/regulatory burden, external markets or consequential public function require owner authorization. Fix real P0 harms, otherwise continue core-first Food→Today development. Requirements reviewed, not legal/device clearance or implementation.
 
+Developer source-audited proposal: [Minimal-cost release scope](MINIMAL_COST_RELEASE_SCOPE.md). Uses existing registry/policies; no runtime activation, new spend or launch clearance.
+
 ## Current high-leverage index (verify latest repo before changing status)
 
 | ID | Priority | End-to-end outcome / acceptance | Dependencies / source | Status / evidence |
