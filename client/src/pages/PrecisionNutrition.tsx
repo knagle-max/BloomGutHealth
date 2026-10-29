@@ -655,6 +655,7 @@ export default function PrecisionNutrition() {
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
                   <h2 id="biology-bloodwork-results">Latest results</h2>
+                  <Link className="text-link" href="/progress?view=biology">Review dated biology trends</Link>
                   {r.labs.length ? (
                     r.labs.map((l) => (
                       <article className="precision-observation" key={l.id}>

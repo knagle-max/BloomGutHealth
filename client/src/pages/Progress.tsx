@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs";
 import {activityTimeText} from "@shared/activity";
 import FoodProgress from "@/components/FoodProgress";
@@ -9,13 +8,15 @@ import DeviceObservations from "@/components/DeviceObservations";
 import LabUnitReview from "@/components/LabUnitReview";
 import LabTrend from "@/components/LabTrend";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, useLocation, useSearch } from "wouter";
 import { useAuth } from "@/lib/auth";
 import { useExperience } from "@/lib/experience";
 import { WeeklyReviewPanel } from "@/components/WeeklyReview";
 import type { PrecisionReport } from "@shared/precision-nutrition";
 export default function Progress() {
-  const [selectedView, setSelectedView] = useState<string>();
+  const [, navigate] = useLocation();
+  const requestedView = new URLSearchParams(useSearch()).get("view");
+  const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : undefined;
   const { user } = useAuth(),
     { mode, settings, patch, saving, loading, error: settingsError } = useExperience(),
     profile = useQuery<{heightCm:number|null;weightKg:number|null}>({queryKey:["/api/profile"],enabled:!!user}),
@@ -38,7 +39,7 @@ export default function Progress() {
           Review your recorded food, activity and biology. Choose a view to see what changed; a change does not establish its cause.
         </p>
       </div>
-      <Tabs value={selectedView ?? (mode === "athlete" ? "activity" : "nutrition")} onValueChange={setSelectedView} className="space-y-5">
+      <Tabs value={selectedView ?? (mode === "athlete" ? "activity" : "nutrition")} onValueChange={view => navigate(`/progress?view=${view}`)} className="space-y-5">
         <TabsList aria-label="Progress view" className="progress-domain-tabs">
           <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
           <TabsTrigger value="activity">{mode === "athlete" ? "Training" : "Activity"}</TabsTrigger>
