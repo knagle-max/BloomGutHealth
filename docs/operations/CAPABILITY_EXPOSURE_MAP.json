@@ -1629,7 +1629,7 @@
     "client/src/pages/LogMeal.tsx": "6c31f8f3d3d9790e2984dce1a994e3cca4fb3a83cd39cca072490199f00a15f5",
     "client/src/pages/MealPlanner.tsx": "9686d7f3c44cd6819476523816653f0ddf7ac5e9f7f2719744b04fd9f9891aaf",
     "client/src/pages/Microbiome.tsx": "f9f3cdd9acac49607d5c12dde4aa5a4466eda08cee58be26db33a53dc215dfd9",
-    "client/src/pages/NutritionHistory.tsx": "c522a6dad97fea3e7783e393bb6e8790114a216cc47776824e221027ac912c7f",
+    "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "57052277c1ed0dae3e09eaea9dbe53ab76303b4f64c44fecbd9c39f5e715ab2a",
     "client/src/pages/PrecisionNutrition.tsx": "a6be23da37144185644d972467eb888dc9bf47b95b51edcb02902acc797e5239",
     "client/src/pages/Profile.tsx": "b715044b59c18565ec13465f966bea7e9810ceabdd2b357396b4432e40de03f2",

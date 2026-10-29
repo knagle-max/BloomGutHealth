@@ -1,4 +1,6 @@
 import {recordedMealTime} from "@shared/meal-time";
+import {journalIdentity} from "@shared/journal-identity";
+import {foodMass} from "@shared/nutrition-display";
 import {refreshMealSources} from "@/lib/meal-cache";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
@@ -809,6 +811,7 @@ export default function NutritionHistory() {
               const isExpanded = expandedMeals.has(meal.id);
               const nutritionalItems = meal.nutritionalData || [];
               const hasItems = nutritionalItems.length > 0;
+              const identity = journalIdentity(meal);
 
               return (
                 <Card key={meal.id} data-testid={`card-meal-${index}`}>
@@ -818,17 +821,17 @@ export default function NutritionHistory() {
                         type="button"
                         className={`flex-1 min-w-0 text-left rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${hasItems ? "hover-elevate" : ""}`}
                         disabled={!hasItems}
-                        aria-label={`${isExpanded ? "Hide" : "Show"} nutrient details for ${meal.mealText}`}
+                        aria-label={`${isExpanded ? "Hide" : "Show"} nutrient details for ${identity.title}`}
                         aria-expanded={hasItems ? isExpanded : undefined}
                         aria-controls={isExpanded ? `meal-nutrition-${index}` : undefined}
                         onClick={() => hasItems && toggleMealExpansion(meal.id)}
                         data-testid={`button-expand-meal-${index}`}
                       >
                         <span
-                          className="block font-medium"
+                          className="block font-medium break-words"
                           data-testid={`text-meal-description-${index}`}
                         >
-                          {meal.mealText}
+                          {identity.title}
                         </span>
                         <span className="block text-xs text-muted-foreground">
                           {format(new Date(meal.loggedAt), "h:mm a")}
@@ -839,7 +842,7 @@ export default function NutritionHistory() {
                         <Button
                           size="icon"
                           variant="ghost"
-                          aria-label={`Edit meal: ${meal.mealText}`}
+                          aria-label={`Edit meal: ${identity.title}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditMeal(meal);
@@ -852,7 +855,7 @@ export default function NutritionHistory() {
                         <Button
                           size="icon"
                           variant="ghost"
-                          aria-label={`Delete meal: ${meal.mealText}`}
+                          aria-label={`Delete meal: ${identity.title}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteMeal(meal.id);
@@ -873,6 +876,14 @@ export default function NutritionHistory() {
                         )}
                       </div>
                     </div>
+                    {identity.foods !== null && <details className="mt-3 text-sm break-words" data-testid={`meal-recorded-foods-${index}`}>
+                      <summary>Recorded foods & original description</summary>
+                      <ul className="space-y-2 mt-2">{identity.foods.map((food, foodIndex) => <li key={foodIndex}>
+                        <strong>{food.name}</strong> · {food.product ? `${food.product.servings} labelled servings · ` : ''}{food.grams === null ? 'Amount unknown' : foodMass(food.grams, settings.displayUnits.foodWeight)}
+                        <p className="panel-note">{food.product ? ({manual:'Your label', 'usda-local':'USDA local', 'usda-branded':'USDA branded', off:'Open Food Facts', dsld:'DSLD'})[food.product.source] : food.catalogue ? `USDA FNDDS · ${food.catalogue.fdcId}` : 'Description-based estimate; source not selected'}{food.assumption ? ` · ${food.assumption}` : ''}</p>
+                      </li>)}</ul>
+                      <p className="panel-note mt-2">Original description: {meal.mealText}</p>
+                    </details>}
                     <div>
                       <div className="flex flex-wrap gap-2 mt-3">
                         <Badge
