@@ -301,6 +301,20 @@ export function registerPlannerRoutes(
       if (!meal) return res.status(404).json({ error: "Meal not found" });
       if (meal.userId !== req.session.userId)
         return res.status(403).json({ error: "Access denied" });
+      // A journal description may predate reviewed identity/portion corrections.
+      // Updating only metadata must not reparse that text or overwrite a newer
+      // nutrition snapshot with fields read before a concurrent correction.
+      const metadata = {
+        ...(p.data.mealType !== undefined ? {mealType:p.data.mealType} : {}),
+        ...(p.data.mealContext ? {mealContext:{...preserveMealTimeZone(meal.mealContext,p.data.mealContext,meal.loggedAt),...((meal.mealContext as any)?._saveReceipt?{_saveReceipt:(meal.mealContext as any)._saveReceipt}:{})}} : {}),
+        ...(p.data.mealContext?.eatenAt ? {loggedAt:new Date(p.data.mealContext.eatenAt)} : {}),
+      };
+      if(p.data.mealText===meal.mealText&&p.data.ingredients===undefined&&p.data.products===undefined){
+        if(!Object.keys(metadata).length)return res.json(meal);
+        const updated=await storage.updateMeal(meal.id,metadata,req.session.userId!);
+        if(!updated)return res.status(404).json({error:"Meal not found in your account."});
+        return res.json(updated);
+      }
       const result = await analyzer(
         p.data.mealText,
         p.data.aiConsent,
@@ -320,11 +334,7 @@ export function registerPlannerRoutes(
           ]
             .filter(Boolean)
             .join("; "),
-          mealType: p.data.mealType ?? meal.mealType,
-          mealContext: p.data.mealContext ? { ...preserveMealTimeZone(meal.mealContext,p.data.mealContext,meal.loggedAt), ...((meal.mealContext as any)?._saveReceipt ? { _saveReceipt: (meal.mealContext as any)._saveReceipt } : {}) } : meal.mealContext,
-          ...(p.data.mealContext?.eatenAt
-            ? { loggedAt: new Date(p.data.mealContext.eatenAt) }
-            : {}),
+          ...metadata,
           intelligence: result.intelligence,
           nutritionalData: result.nutritionalData,
           ...nutritionTotals(result.nutritionalData),

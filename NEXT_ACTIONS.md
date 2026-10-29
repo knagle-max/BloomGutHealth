@@ -1,3 +1,7 @@
+# Current functional checkpoint — journal metadata integrity
+
+Recent-meal169bb5a50c6f3cd172bba1632a3cbecda7e8cbbe pushed: RenderLIVEdep-dbh8r415efls738i5nt0; Actions40791634301 still running last check, verify exact result/new isolated-Neon delete total assertions. New FOOD-A5-METADATA fix red→green: only metadata writes for unchanged description preserve corrected product/portion/nutrition; changed text/explicit ingredients still recalc.6 focused +28 meal regressions/types/build/map and actual combined journal edit→Today/Progress→UI deletion/ownedSQL browser PASS. Commit/push this batch after diff check; verify exact CI/Render, update PR and records. v0.5 core trace remains incomplete; no v0.6 yet. Continue next demonstrated core gap/acceptance, not asset redesign.
+
 # Next functional checkpoint — recent meal review
 
 RecentMealSource implemented;447tests/types/build/source crosswalk52IDs135files and actual recent/template/replacement browser paths PASS. Commit/push this batch, verify exact CI including new isolated-Neon post-delete totals checks and Render. Then continue FOOD-A5-COMBINED UI edit/delete→Today/Progress acceptance using existing App/API/owned SQL fixtures; fix observed issues only. Audit matrix docs/verification/CORE_FOOD_A1_A6_2026-10-29.md. No broad redesign; assets already verified on GitHub. v0.5 remains incomplete.
