@@ -816,3 +816,11 @@ Final file/lost-receipt/navigation and malformed200 report exact-retry/owned/dat
 FOOD04/FOOD12 reconciliation: existing supported recipe/review/history and visit-only reconnect recovery reverified; original full-source and durable queue acceptance remain separate. No duplicate implementation. Trace of all207original IDs to final four-state outcomes remains IN_PROGRESS; do not transition versions or declare completion from these scoped rows.
 
 | FLAGSHIP-SOURCE-TRANSFER | v0.5 bounded asset intake | Import owner-attached original archive with existing verified script; commit and verify GitHub identities | IMPORTED_AND_BYTE_VERIFIED; GITHUB_PENDING | Expected archiveSHA/size and13original member bytes verified, actual source manifest updated, original internal stale manifest preserved/documented. No app/visual redesign. Resume core after transfer. |
+
+## 2026-10-29 core-first A1–A6 reconciliation
+
+Dependency: latest architect core-first/legal clarification (aa76d8a); original asset transfer complete8933079 with13 GitHub blob/size matches. Compact criterion matrix: docs/verification/CORE_FOOD_A1_A6_2026-10-29.md.
+
+- FOOD-A6-RECENT — P1, IMPLEMENTED_AND_TESTED locally; optional recent owned meal→same canonical review/confirm, no automatic consumption, preserve ingredients/source/preparation/portions/restaurant context, protect existing draft, exact receipt retry/immutable original/owner isolation/320px. Commit/CI/Render pending. Saved templates retained. Frequency ranking not claimed.
+- FOOD-A5-COMBINED — P1, IN_PROGRESS acceptance: verify actual journal edit/delete→Today and recorded-food history reconcile; existing writes/cache/source tests present. Implement only reproduced defects.
+- FOOD-A1-HOSTED — existing source lookup working per owner; exact Canadian SKU/hosted user acceptance remains independently unverified, existing external source/device blockers apply. Do not rebuild or invent records.

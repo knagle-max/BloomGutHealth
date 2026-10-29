@@ -1,5 +1,6 @@
 import {currentMealTimeZone,recordedMealTime} from "@shared/meal-time";
 import SavedMealSource from "@/components/SavedMealSource";
+import RecentMealSource from "@/components/RecentMealSource";
 import {useReconnectRetry} from "@/lib/useReconnectRetry";
 import {mealNutritionSummary} from "@shared/nutrition-summary";
 import {refreshMealSources} from "@/lib/meal-cache";
@@ -195,6 +196,7 @@ export default function LogMeal() {
         <h2 ref={chooserHeading} tabIndex={-1} className={!method?"sr-only":undefined}>{method?foodEntryMethods.find(m=>m.id===method)?.label:"How would you like to add food?"}</h2>
         {method&&<Button type="button" variant="outline" onClick={()=>changeMethod(null)}>Change method / add another item</Button>}
         {!method&&<FoodEntryChooser methods={availableMethods} photoLabel={photoPreview?.label} onSelect={next=>{setSavedMeal(null);changeMethod(next);}}/>}
+        {!method&&<RecentMealSource disabled={inputFrozen||!!description.trim()||products.length>0||catalogueEnabled||!!savedIngredients} onLoad={(text,ingredients,context)=>{if(!user||inputFrozen||description.trim()||products.length||catalogueEnabled||savedIngredients)return;setDescription(text);setSavedIngredients({owner:user.id,description:text,ingredients});setReview(null);setReviewDirty(false);setReviewRejected(false);setSavedMeal(null);setRestaurant(context?.restaurant||"");setMarket(context?.market||"Canada");setRestaurantVisited(!!context);changeMethod("describe");requestAnimationFrame(()=>document.getElementById("food-input")?.focus());}}/>}
         <p className="panel-note">Selected items and your description stay in this draft. Save only when ready.</p>
         {methodNotice&&<p role="status">{methodNotice}</p>}
         {photoVisited&&photoPreview&&<div hidden={method!=='photo'}><DevelopmentPhotoPreview feature={photoPreview}/></div>}

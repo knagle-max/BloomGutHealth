@@ -1,8 +1,12 @@
-# Immediate bounded transfer checkpoint
+# Next functional checkpoint — recent meal review
 
-Functional genetics selection371cde6c34d1a8624709fcdb3561040fae22ce1b committed/pushed before asset work;16 focused/types/build/actual App/API/encrypted storage pass. Verify its exact Actions/Render.
+RecentMealSource implemented;447tests/types/build/source crosswalk52IDs135files and actual recent/template/replacement browser paths PASS. Commit/push this batch, verify exact CI including new isolated-Neon post-delete totals checks and Render. Then continue FOOD-A5-COMBINED UI edit/delete→Today/Progress acceptance using existing App/API/owned SQL fixtures; fix observed issues only. Audit matrix docs/verification/CORE_FOOD_A1_A6_2026-10-29.md. No broad redesign; assets already verified on GitHub. v0.5 remains incomplete.
 
-Owner supplied original flagship ZIP. Existing importer succeeded with pinned archive hash/3,880,120bytes/13members, extracted design/bloom/flagship/2026-10-26. All expanded bytes verified; separate IMPORT_VERIFICATION_2026-10-28.json and existing asset-manifest updated. Original MANIFEST stale metadata retained/documented. Commit/push source asset transfer only, verify all13 GitHub tree blob SHA/size identities against import receipt and fetch a text contract via GitHub; source-access blocker now resolved. Do not start broad redesign. Resume core functional requirement trace/implementation immediately after transfer; preserve in-progress genetic feature checks. No user question required.
+# Current checkpoint — original asset transfer verified; resume core food acceptance
+
+Original flagship ZIP imported with existing pinned-checksum script and pushed in 8933079f383b475568e7162b589e28226487e3a0. All13 original GitHub blobs/sizes exactly match receipt; originals untouched, stale internal manifest metadata documented separately. No redesign. Source-access blocker resolved.
+
+Genetic selection371cde6 exact Actions40765055132 SUCCESS. Render latest LIVEdep-dbh8jruo976s73e0tad0 at aa76d8a includes371 and893 plus latest architect documentation. Fast-forwarded local branch to aa76d8a. Read latest CORE_FIRST_EXTERNAL_REVIEWS_DISPOSITION and LEGAL_WELLNESS_INTENT_RECONCILIATION: next produce compact A1–A6 implemented/gap/external-blocker matrix and fix observed core food gap; do not build parallel infrastructure or blanket-disable ordinary wellness personalization. v0.5 remains incomplete, v0.6 not yet begun.
 
 # Latest working checkpoint — genetic file privacy selection
 

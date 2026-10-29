@@ -162,7 +162,8 @@
           "client/src/pages/LogMeal.tsx",
           "client/src/components/ProductPicker.tsx",
           "client/src/components/FoodEntryChooser.tsx",
-          "client/src/components/CompanionHero.tsx"
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/RecentMealSource.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -1599,6 +1600,7 @@
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
     "client/src/components/QuickLabEntry.tsx": "fee5b418a2c8b160833b6be5318b68078cb312936e2085335aaced817b95305f",
+    "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
     "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
     "client/src/components/TodayFocus.tsx": "eea8cf364c686b11c9b8aa440233664aaa5b0454514c885be6f05937ac895a35",
     "client/src/components/TodayStatus.tsx": "181e6d13f8a025d0b102abee8ee4824a57cb5e8bb3a571e9b4ce0aeea4a00015",
@@ -1613,7 +1615,7 @@
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "08e71128cee99513e55daeff6627523899d878cffad0ac686638924d3b0cef21",
+    "client/src/pages/LogMeal.tsx": "3f290340ac3a6637f84cc8b5ae5977d3eb50097429ccf23278d6e27efb9d9fc8",
     "client/src/pages/MealPlanner.tsx": "9686d7f3c44cd6819476523816653f0ddf7ac5e9f7f2719744b04fd9f9891aaf",
     "client/src/pages/Microbiome.tsx": "f9f3cdd9acac49607d5c12dde4aa5a4466eda08cee58be26db33a53dc215dfd9",
     "client/src/pages/NutritionHistory.tsx": "4eceb15c516cd19d9f2c2ba10f04ae24d2b50375bf6e6627a91aa7e7422f267e",

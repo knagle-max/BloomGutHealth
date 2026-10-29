@@ -255,6 +255,17 @@ try {
   console.log('PASS: production history retains known/partial nutrient contributions and explicit UTC logged-day denominators');
   await request(`/api/meals/${burger.id}`, "DELETE", {});
   await request(`/api/meals/${unknown.id}`, "DELETE", {});
+  const afterDeletion=await request(`/api/nutrition/daily/${first.id}?date=2026-10-17&timezoneOffset=360`);
+  assert.deepEqual(afterDeletion.meals.map(entry=>entry.id),[updatedMeal.id]);
+  assert.ok(Math.abs(afterDeletion.totals.calories-updatedMeal.totalCalories)<0.02);
+  assert.deepEqual(afterDeletion.nutritionCoverage.calories,{knownMeals:1,completeMeals:1,totalMeals:1,partial:false});
+  for(const period of ['monthly','yearly']){
+    const history=await request(`/api/nutrition/${period}/${first.id}?year=2026${period==='monthly'?'&month=9':''}`);
+    assert.equal(history.totalMeals,1);assert.equal(history.daysWithMeals,1);
+    assert.ok(Math.abs(history.totals.calories-updatedMeal.totalCalories)<0.02);
+    assert.equal(history.nutritionCoverage.calories.partial,false);
+  }
+  console.log('PASS: production journal edits/deletions reconcile daily/monthly/yearly totals and remove deleted unknown-meal partial coverage');
   console.log(
     "PASS: broad sourced meal parsing, exclusions, preserved known daily totals and local calendar boundaries",
   );
