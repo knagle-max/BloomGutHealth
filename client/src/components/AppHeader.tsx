@@ -37,10 +37,11 @@ export default function AppHeader({
             <SheetContent side="left" className="mobile-navigation-sheet">
               <SheetHeader><SheetTitle>Explore Bloom</SheetTitle><SheetDescription>Your daily tools and health information.</SheetDescription></SheetHeader>
               <NavigationLinks onNavigate={() => setMenuOpen(false)} />
+              {onToggleDarkMode&&<Button type="button" variant="outline" className="mt-6 min-h-[44px]" data-testid="button-menu-theme-toggle" onClick={()=>{onToggleDarkMode();setMenuOpen(false);}}>Switch to {isDarkMode?'light':'dark'} mode</Button>}
             </SheetContent>
           </Sheet>
-          <Link href="/log-meal" className="header-log" aria-label="Log a meal" title="Log a meal">
-            <Plus size={16} /> Log meal
+          <Link href="/log-meal" className="header-log" aria-label="Add food" title="Add food">
+            <Plus size={16} /> Add food
           </Link>
           {onToggleDarkMode && (
             <Button

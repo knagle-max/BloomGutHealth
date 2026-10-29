@@ -6,6 +6,8 @@ export interface LoggedMeal {
   loggedAt: string;
   totalCalories: number | null;
   totalProtein: number | null;
+  totalCarbs?: number | null;
+  totalFat?: number | null;
   nutritionalData?: unknown;
 }
 
@@ -25,6 +27,8 @@ export function dailyMealSummary(meals: LoggedMeal[], now = new Date()) {
       .length,
     calories: totals.calories,
     protein: totals.protein,
+    carbs: totals.carbs,
+    fat: totals.fat,
     fiber: totals.fiber,
   };
 }

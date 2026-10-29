@@ -107,7 +107,8 @@ export default function LogMeal() {
   const { toast } = useToast();
   const actor=useRef(user?.id),mounted=useRef(false);actor.current=user?.id;
   useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
-  const reviewHeading=useRef<HTMLHeadingElement>(null);
+  const reviewHeading=useRef<HTMLHeadingElement>(null),savedHeading=useRef<HTMLHeadingElement>(null);
+  useEffect(()=>{if(savedMeal?.id){savedHeading.current?.focus();savedHeading.current?.scrollIntoView({block:"start"});}},[savedMeal?.id]);
   function draftPayload(ingredients?:Ingredient[]){
     const selected=catalogueEnabled?catalogueSelection.data:undefined;
     const catalogueItem:Ingredient|undefined=selected?{name:selected.description.slice(0,120),grams:selected.grams,preparation:selected.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:selected.fdcId}}:undefined;
@@ -122,14 +123,14 @@ export default function LogMeal() {
   const basisRef=useRef(basis);basisRef.current=basis;
   const [review,setReview]=useState<ReviewSnapshot|null>(null),[reviewDirty,setReviewDirty]=useState(false),[reviewRejected,setReviewRejected]=useState(false);
   const saveAttempt=useRef<{payload:string;revision:string;key:string;basis:string}|null>(null);
-  const reviewMeal=useMutation({mutationFn:async(v:{payload:ReviewPayload;basis:string;owner:string})=>{
+  const reviewMeal=useMutation({mutationFn:async(v:{payload:ReviewPayload;basis:string;owner:string;keepItemFocus?:boolean})=>{
     if(!mounted.current||actor.current!==v.owner)throw Error("The meal review was interrupted. Review the draft in the current account.");
     const response=await apiRequest("POST","/api/meals/review",v.payload),revision=response.headers.get("X-Bloom-Meal-Review");
     if(!revision||!/^[a-f0-9]{64}$/.test(revision))throw Error("Meal review is unavailable. Your entry has not been saved; retry the review.");
     const analysis=await response.json() as AnalysisResult;
     if(!Array.isArray(analysis.intelligence?.ingredients)||!Array.isArray(analysis.nutritionalData))throw Error("Meal review could not be read. Your entry has not been saved.");
     return{...v,analysis,revision};
-  },onSuccess:snapshot=>{if(!mounted.current||actor.current!==snapshot.owner||basisRef.current!==snapshot.basis)return;setReview(snapshot);setReviewDirty(false);setReviewRejected(false);requestAnimationFrame(()=>{reviewHeading.current?.focus();reviewHeading.current?.scrollIntoView({block:"start"});});}});
+  },onSuccess:snapshot=>{if(!mounted.current||actor.current!==snapshot.owner||basisRef.current!==snapshot.basis)return;setReview(snapshot);setReviewDirty(false);setReviewRejected(false);if(!snapshot.keepItemFocus)requestAnimationFrame(()=>{reviewHeading.current?.focus();reviewHeading.current?.scrollIntoView({block:"start"});});}});
   function confirmation(snapshot:ReviewSnapshot){return{...snapshot.payload,ingredients:snapshot.analysis.intelligence.ingredients,aiConsent:false,reviewed:true as const};}
   const save=useMutation({mutationFn:async(v:{snapshot:ReviewSnapshot;payload:ReturnType<typeof confirmation>;key:string})=>{
     if(!mounted.current||actor.current!==v.snapshot.owner)throw Error("The meal save was interrupted. Review the entry in the current account.");
@@ -143,7 +144,6 @@ export default function LogMeal() {
     if(basisRef.current!==v.snapshot.basis){toast({title:"Previous entry saved",description:"Your newer draft is still here. Check the journal before logging it."});return;}
     setSavedMeal(meal);setReview(null);setReviewDirty(false);setReviewRejected(false);setDescription("");setProducts([]);setSavedIngredients(null);
     setPhotoVisited(false);setMethodNotice("");setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);window.history.replaceState(null,"","/log-meal");setCatalogueEnabled(false);
-    toast({title:"Added to your journal",description:meal.totalCalories===null?"Your meal is saved; some nutrition remains unavailable.":"Your meal is saved. Linked nutrition totals are being refreshed."});
   },onError:error=>{if(error instanceof ApiRequestError&&error.status===409)setReviewRejected(true);},onSettled:refreshMealSources});
   const saveUnknown=save.isError&&(!(save.error instanceof ApiRequestError)||save.error.status>=500);
   const inputFrozen=save.isPending||reviewMeal.isPending||saveUnknown;
@@ -153,6 +153,9 @@ export default function LogMeal() {
   const reviewCurrent=sameReview&&!reviewDirty&&!reviewRejected&&!reviewMeal.isPending&&!reviewMeal.isError;
   const reconnect=useReconnectRetry({actorId:user?.id,attemptKey:save.variables?.key,eligible:saveUnknown&&sameReview&&saveAttempt.current?.key===save.variables?.key&&save.variables?.snapshot.owner===user?.id,retry:()=>{const attempt=save.variables;if(attempt&&mounted.current&&actor.current===attempt.snapshot.owner&&saveAttempt.current?.key===attempt.key)save.mutate(attempt);}});
   const previewNutrition=review?mealNutritionSummary([review.analysis]):null;
+  const savedNutrition=savedMeal?mealNutritionSummary([savedMeal]):null;
+  const recordedFoods=Array.isArray((savedMeal?.intelligence as MealIntelligence|undefined)?.ingredients)?(savedMeal!.intelligence as MealIntelligence).ingredients:[];
+  const nutritionOverview=(summary:ReturnType<typeof mealNutritionSummary>)=><div className="saved-nutrients">{(['calories','protein','carbs','fat'] as const).map(key=><span key={key}><strong>{summary.totals[key]===null?'—':key==='calories'?energyAmount(summary.totals[key],settings.displayUnits.energy):formatNutrientAmount(summary.totals[key])}{key!=='calories'&&'g'}</strong> {key==='calories'?settings.displayUnits.energy:key}{summary.totals[key]===null?<small>Unavailable</small>:summary.coverage[key].partial&&<small>Partial</small>}</span>)}</div>;
   function confirmReview(){if(!review||!reviewCurrent||save.isPending)return;const payload=confirmation(review),serialized=JSON.stringify(payload);if(saveAttempt.current?.payload!==serialized||saveAttempt.current.revision!==review.revision)saveAttempt.current={payload:serialized,revision:review.revision,key:crypto.randomUUID(),basis:review.basis};save.mutate({snapshot:review,payload,key:saveAttempt.current.key});}
   const recalculate = useMutation({
     mutationFn: async (ingredients: Ingredient[]) =>
@@ -189,7 +192,24 @@ export default function LogMeal() {
           Choose how to add food. Review your items together before saving.
         </p>
       </div>
-      <fieldset disabled={inputFrozen} className="space-y-3">
+      {savedMeal && (
+        <section className="bloom-panel saved-meal" role="status">
+          <h2 ref={savedHeading} tabIndex={-1} className="flex items-center gap-2">
+            <CheckCircle2 size={20} /> Your meal is saved.
+          </h2>
+          {!recalculate.isPending&&!recalculate.isError&&<><p className="my-3">{recordedFoods.length?`${recordedFoods.length} reviewed food entries recorded.`:'Your meal description is recorded.'}</p>
+          <details className="confirmation-source"><summary>Saved foods & original description</summary><ul>{recordedFoods.map((food,index)=><li key={index}>{food.name} · {food.product?`${food.product.servings} labelled servings${food.grams===null?'':` · ${foodMass(food.grams,settings.displayUnits.foodWeight)}`}`:food.grams===null?'Amount unknown':foodMass(food.grams,settings.displayUnits.foodWeight)}</li>)}</ul><p className="panel-note">Original description: {savedMeal.mealText}</p></details></>}
+          {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)&&<p className="panel-note">Recorded meal time: {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)}</p>}
+          {recalculate.isPending||recalculate.isError ? <p role="status">{recalculate.isPending?"Checking corrected nutrition…":"Correction could not be confirmed. Retry with your retained portion draft, or open the journal to check the saved entry."}</p> : savedNutrition&&nutritionOverview(savedNutrition)}
+          {!recalculate.isPending&&!recalculate.isError&&savedNutrition?.isPartial&&<p className="panel-note">Some nutrient values are unavailable. Any shown amounts are known contributions only.</p>}
+          <div className="flex flex-wrap items-center gap-3 mt-4"><Link href="/" className="hero-button">View Today</Link><Button type="button" variant="outline" disabled={recalculate.isPending||recalculate.isError} onClick={()=>{setSavedMeal(null);changeMethod(null);}}>Add another meal</Button></div>
+          <Link href="/nutrition" className="text-link mt-5">
+            View your food journal{" "}
+            <ArrowLeft size={16} className="rotate-180" />
+          </Link>
+        </section>
+      )}
+      <fieldset hidden={!!savedMeal} disabled={inputFrozen} className="space-y-3">
       <legend className="sr-only">Choose foods to log</legend>
       {params.get("template")&&<SavedMealSource id={params.get("template")!} servings={Number(params.get("servings")??1)} onLoad={(text,ingredients)=>{if(!user||inputFrozen)return;setDescription(text);setProducts([]);setCatalogueEnabled(false);setSavedIngredients({owner:user.id,description:text,ingredients});setReview(null);setReviewDirty(false);setReviewRejected(false);setSavedMeal(null);changeMethod("describe");requestAnimationFrame(()=>document.getElementById("food-input")?.focus());}}/>}
       <section className={`bloom-panel space-y-3 ${!method?"food-entry-selection":""}`}>
@@ -378,60 +398,17 @@ export default function LogMeal() {
         </fieldset>
       </form>}
       {review&&sameReview&&<section className="bloom-panel space-y-4 meal-review" aria-labelledby="meal-review-heading">
-        <h2 id="meal-review-heading" ref={reviewHeading} tabIndex={-1}>Review before saving</h2>
+        <h2 id="meal-review-heading" ref={reviewHeading} tabIndex={-1}>Review your meal</h2>
+        <Button type="button" variant="outline" disabled={inputFrozen} onClick={()=>{const input=document.getElementById('food-input');input?.scrollIntoView({block:'center'});input?.focus();}}>Back to meal details</Button>
         <p role="status">{save.isPaused?"Waiting for a connection. Keep this page open to finish saving this reviewed meal.":saveUnknown?"The save is not confirmed. Retry the same entry or check your journal.":"This meal is not in your journal yet. Review the foods, amounts and source estimates below."}</p>
-        {reviewCurrent&&previewNutrition&&<div className="saved-nutrients"><span><strong>{previewNutrition.totals.calories===null?"—":energyAmount(previewNutrition.totals.calories,settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}</span>{([['protein','protein'],['carbs','carbs'],['fat','fat']] as const).map(([key,label])=><span key={key}><strong>{previewNutrition.totals[key]===null?"—":formatNutrientAmount(previewNutrition.totals[key])}g</strong> {label}</span>)}</div>}
+        {reviewCurrent&&previewNutrition&&nutritionOverview(previewNutrition)}
         <p className="panel-note">Known contributions are estimates. Missing nutrients remain unavailable, including when only part of a meal has source data.</p>
-        <MealAnalysis analysis={review.analysis.intelligence} preview onDraftChange={setReviewDirty} onRecalculate={ingredients=>{if(!inputFrozen&&user)reviewMeal.mutate({payload:{...review.payload,ingredients,aiConsent:false},basis,owner:user.id});}} pending={reviewMeal.isPending} disabled={save.isPending||saveUnknown} current={reviewCurrent}/>
+        <MealAnalysis analysis={review.analysis.intelligence} preview onDraftChange={setReviewDirty} onRecalculate={(ingredients,options)=>{if(!inputFrozen&&user)reviewMeal.mutate({payload:{...review.payload,ingredients,aiConsent:false},basis,owner:user.id,keepItemFocus:options?.keepItemFocus});}} pending={reviewMeal.isPending} disabled={save.isPending||saveUnknown} current={reviewCurrent}/>
         {reviewDirty&&<p role="status">Update the ingredient review before saving this meal.</p>}
         {reviewRejected&&<p role="alert">The source changed. Update the review before saving.</p>}
-        <Button type="button" className="w-full h-12" disabled={!reviewCurrent||save.isPending} onClick={confirmReview} data-testid="button-save-meal">{save.isPaused?"Waiting for connection…":save.isPending?"Saving your meal…":saveUnknown?"Retry saving my meal":"Save to my journal"}</Button>
+        <Button type="button" className="w-full h-12" disabled={!reviewCurrent||save.isPending} onClick={confirmReview} data-testid="button-save-meal">{save.isPaused?"Waiting for connection…":save.isPending?"Saving your meal…":saveUnknown?"Retry saving my meal":"Save meal"}</Button>
         {saveUnknown&&!reconnect.online&&<div className="space-y-2"><label className="flex items-start gap-2"><input type="checkbox" checked={reconnect.enabled} onChange={e=>reconnect.arm(e.target.checked)}/>Retry this reviewed save when the connection returns</label><p className="panel-note">Keep this page open. This option retains the same save for this account during this visit.</p></div>}
       </section>}
-      {savedMeal && (
-        <section className="bloom-panel saved-meal" role="status">
-          <h2 className="flex items-center gap-2">
-            <CheckCircle2 size={20} /> Your meal is saved.
-          </h2>
-          <p className="my-3">{savedMeal.mealText}</p>
-          {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)&&<p className="panel-note">Recorded meal time: {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)}</p>}
-          {recalculate.isPending||recalculate.isError ? <p role="status">{recalculate.isPending?"Checking corrected nutrition…":"Correction could not be confirmed. Retry with your retained portion draft, or open the journal to check the saved entry."}</p> : savedMeal.totalCalories !== null ? (
-            <div className="saved-nutrients">
-              <span>
-                <strong>{energyAmount(savedMeal.totalCalories, settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}
-              </span>
-              <span>
-                <strong>
-                  {savedMeal.totalProtein == null
-                    ? "—"
-                    : formatNutrientAmount(savedMeal.totalProtein)}
-                  g
-                </strong>{" "}
-                protein
-              </span>
-              <span>
-                <strong>
-                  {savedMeal.totalCarbs == null
-                    ? "—"
-                    : formatNutrientAmount(savedMeal.totalCarbs)}
-                  g
-                </strong>{" "}
-                carbs
-              </span>
-              <span><strong>{savedMeal.totalFat==null?"—":formatNutrientAmount(savedMeal.totalFat)}g</strong> fat</span>
-            </div>
-          ) : (
-            <p>
-              Complete nutrition totals unavailable; the description and
-              check-in are saved.
-            </p>
-          )}
-          <Link href="/nutrition" className="text-link mt-5">
-            View your food journal{" "}
-            <ArrowLeft size={16} className="rotate-180" />
-          </Link>
-        </section>
-      )}
       {savedMeal && !recalculate.isPending && !recalculate.isError && <SaveMealButton meal={savedMeal}/>}
       {Boolean(savedMeal?.intelligence) && (
         <MealAnalysis

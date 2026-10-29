@@ -5,6 +5,7 @@ import EverydayStart from "@/components/EverydayStart";
 import { useExperience } from "@/lib/experience";
 import TodayStatus from "@/components/TodayStatus";
 import TodayFocus from "@/components/TodayFocus";
+import TodayFoodSummary from "@/components/TodayFoodSummary";
 import ResearchSummary from "@/components/ResearchSummary";
 import { useState,useRef,useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -88,6 +89,7 @@ export default function Dashboard() {
       </div>
 
       <TodayFocus now={now} mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={checkingMeals} journalError={mealError} />
+      <TodayFoodSummary summary={summary} loading={checkingMeals} error={mealError} energyUnit={settings.displayUnits.energy}/>
       <TodayStatus mealCount={summary.meals.length} partial={summary.nutritionUnavailable} loading={checkingMeals} unavailable={mealError} />
       {(checkingMeals || mealError || summary.meals.length > 0) && <>
       <details className="bloom-panel workspace-disclosure today-nutrition" open={mealError || undefined}>

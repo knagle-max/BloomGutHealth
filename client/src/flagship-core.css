@@ -1,0 +1,44 @@
+/* MKT-FLAG-UX-2026-10-26-A1: focused live Today/Food slice, not a new app shell. */
+.everyday-mode .bloom-dashboard .today-focus{background:radial-gradient(circle at 100% 0%,#477c62,transparent 55%),linear-gradient(135deg,#073e32,#185a47);color:#fff;border:0;padding:24px;border-radius:24px;}
+.everyday-mode .bloom-dashboard .today-focus h2{font-family:Georgia,serif;color:#fff;font-size:32px;letter-spacing:-.7px;}
+.everyday-mode .bloom-dashboard .today-focus .eyebrow,.everyday-mode .bloom-dashboard .today-focus .panel-note,.everyday-mode .bloom-dashboard .today-focus .text-link{color:#e1eee7;}
+.everyday-mode .bloom-dashboard .today-focus .hero-button{background:#f2e1c8;color:#173f30;min-height:48px;padding:12px 22px;border-radius:14px;}
+.everyday-mode .bloom-dashboard .today-focus-evidence{border-color:#ffffff45;}
+.flagship-nourishment{background:hsl(var(--card));border:1px solid hsl(var(--border));border-radius:22px;padding:20px;margin-bottom:18px;}
+.flagship-section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.app-shell .flagship-section-heading h2{font-family:Georgia,serif;font-size:23px;margin:0;}
+.flagship-recorded-energy{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.flagship-recorded-energy strong{font-family:Georgia,serif;font-size:36px;line-height:1.1;font-variant-numeric:tabular-nums;}
+.flagship-recorded-energy span{font-size:13px;color:hsl(var(--muted-foreground));}
+.flagship-macros{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px;}
+.flagship-macros dt{font-size:13px;color:hsl(var(--muted-foreground));}.flagship-macros dd{font-weight:650;font-size:18px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}.flagship-macros small{display:block;font-size:11px;font-weight:400;}
+.meal-page .meal-review{border-radius:24px;border-color:hsl(var(--primary)/.35);}
+.meal-page .meal-review>h2{font-family:Georgia,serif;font-size:28px;}
+.review-food-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(96px,.45fr);gap:10px 12px;padding:18px 0;margin:0!important;}
+.review-food-row>*{min-width:0;margin:0!important;}
+.review-food-heading{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;justify-content:space-between;}
+.review-food-heading strong{font-size:16px;overflow-wrap:anywhere;}.review-food-heading span{font-size:12px;padding:3px 8px;background:hsl(var(--muted));color:hsl(var(--muted-foreground));border-radius:999px;}
+.review-food-row .review-food-name{grid-column:1;}.review-food-row .review-food-amount{grid-column:2;}
+.review-food-row .review-food-change,.review-food-row .review-food-notes,.review-food-row>p{grid-column:1/-1;}
+.review-food-row>.text-link{grid-column:2;justify-self:end;min-height:44px;text-align:right;}
+.review-food-row input{min-height:44px;}.review-food-row summary{min-height:44px;display:list-item;align-content:center;cursor:pointer;}
+.review-food-row .review-food-notes summary{font-size:14px;color:hsl(var(--muted-foreground));}
+.meal-page .saved-nutrients{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+.meal-page .saved-nutrients>span{min-width:0;overflow-wrap:anywhere;}
+@media(max-width:430px){.everyday-mode .bloom-dashboard .today-focus{padding:20px;}.everyday-mode .bloom-dashboard .today-focus h2{font-size:29px;}.flagship-nourishment{padding:18px;}.meal-page .saved-nutrients{grid-template-columns:repeat(2,minmax(0,1fr));}.meal-page .meal-review{padding:18px;}}
+@media(prefers-reduced-motion:reduce){.bloom-dashboard .today-focus,.meal-page .meal-review{transition:none;animation:none;}}
+.everyday-mode .header-log{background:transparent;color:hsl(var(--primary));border:1px solid hsl(var(--border));min-height:44px;}
+html:not(.dark) .everyday-mode .bloom-dashboard,html:not(.dark) .everyday-mode .meal-page{background:#f9f8f4;}
+/* Navigation portals live outside app-shell. Snap theme colours together so
+   light-to-dark changes never animate pale text over a still-light surface. */
+.mobile-navigation-sheet{background:hsl(var(--background));color:hsl(var(--foreground));transition-property:transform,opacity;}
+.mobile-navigation-sheet[data-state=open],.mobile-navigation-sheet[data-state=closed]{animation-duration:180ms;}
+.saved-nutrients small{display:block;font-size:12px;font-weight:400;}
+/* Known foods scan compactly; expanding a row retains its actual editor state. */
+.review-food-row>summary.review-food-heading{display:flex;min-height:48px;gap:8px;cursor:pointer;list-style:none;align-items:center;}
+.review-food-row>summary.review-food-heading::-webkit-details-marker{display:none;}
+.review-food-identity{flex:1;min-width:0;}.review-food-identity strong,.review-food-identity small{display:block;}.review-food-identity small{font-size:13px;font-weight:400;color:hsl(var(--muted-foreground));}
+.review-food-heading .review-food-identity{padding:0;background:none;color:inherit;border-radius:0;}
+.review-food-heading .review-food-edit{background:none;padding:6px 0;color:hsl(var(--primary));font-weight:650;}
+.review-food-row:not([open]){display:block;}.review-food-row>summary:focus-visible{outline:2px solid hsl(var(--ring));outline-offset:4px;border-radius:8px;}
+@media(max-width:430px){.review-food-heading .review-food-status{max-width:92px;text-align:center;line-height:1.3;}}

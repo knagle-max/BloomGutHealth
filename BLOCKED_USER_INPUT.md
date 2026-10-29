@@ -164,3 +164,10 @@ Flagship transfer receipt docs/agents/branding-ux/Bloom_Flagship_Developer_Trans
 - Impact: blocks only clinical interpretation activation. It does not block ordinary selected-source storage or other core development. Do not treat this as permission to build an unapproved disease predictor.
 
 Source transfer update2026-10-29 supersedes earlier archive-inaccessible notes: original bytes committed8933079 and all13 original GitHub blobs/sizes verified; implementation contract fetched successfully. Do not ask for the flagship archive again.
+
+## FLAGSHIP-CORE-HOSTED-CAPTURE — exact hosted visual acceptance
+
+- Status: BLOCKED_TECHNICAL for direct authenticated Render screenshots, not local implementation/deployment. Earlier direct hosted access returned proxy CONNECT403; connected Render metadata works, no interactive browser connector/session is available here. Local synthetic App/API/PGlite images are explicitly labelled local.
+- Exact dependency/question: can an authorized tester capture the deployed exact-SHA Food→Today walkthrough on mobile/desktop using an existing review account, or can an approved interactive browsing environment provide that capture? Do not send passwords or recreate Tester1.
+- Options: existing authorized tester captures the matrix; approved browsing environment with existing authorized session; defer only exact hosted capture. Recommended: existing tester/owner capture after LIVE source is confirmed.
+- Impact: hosted visual/independent Branding acceptance remains unverified; code, local state matrix, CI/deployment verification and later independent UI slices continue. No new service, paid browser infrastructure or clinical/provider activation is justified by this dependency.

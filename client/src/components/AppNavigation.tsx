@@ -5,7 +5,7 @@ import { Home, UtensilsCrossed, CalendarDays, Dna, Activity, BookOpen, TrendingU
 export const navigationGroups = [
   { label: "Your day", items: [
     { path: "/", label: "Today", icon: Home },
-    { path: "/explore", label: "Explore", icon: Network },
+    { path: "/precision", label: "My biology", icon: Dna },
     { path: "/progress", label: "Progress", icon: TrendingUp },
   ] },
   { label: "More tools", items: [
@@ -14,7 +14,7 @@ export const navigationGroups = [
     { path: "/plan-day", label: "Plan my day", icon: CalendarDays },
     { path: "/meal-planner", label: "Meal plans", icon: CalendarDays },
     { path: "/saved-meals", label: "Saved meals", icon: UtensilsCrossed },
-    { path: "/precision", label: "My biology", icon: Dna },
+    { path: "/explore", label: "Explore", icon: Network },
     { path: "/microbiome", label: "Gut reports", icon: Activity },
     { path: "/insights", label: "Diet coach", icon: BookOpen },
   ] },

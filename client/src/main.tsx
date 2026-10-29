@@ -7,3 +7,5 @@ createRoot(document.getElementById("root")!).render(<App />);
 
 import "./brand-tokens.css";
 import "./brand.css";
+
+import "./flagship-core.css";

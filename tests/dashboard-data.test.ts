@@ -53,8 +53,17 @@ test("empty journal has no invented nutrition", () => {
     nutritionUnavailable: 0,
     calories: 0,
     protein: 0,
+    carbs: 0,
+    fat: 0,
     fiber: 0,
   });
+});
+
+test('Today macro overview retains recorded zero, missing and partial canonical contributions',()=>{
+  const first={...meal('a',8,null),totalProtein:0,totalCarbs:20,totalFat:null};
+  const one=dailyMealSummary([first],now);assert.equal(one.protein,0);assert.equal(one.carbs,20);assert.equal(one.fat,null);
+  const second={...meal('b',8,null),totalCalories:null,totalProtein:10,totalCarbs:null,totalFat:3};
+  const combined=dailyMealSummary([first,second],now);assert.equal(combined.protein,10);assert.equal(combined.carbs,20);assert.equal(combined.fat,3);assert.equal(combined.coverage.carbs.partial,true);assert.equal(combined.coverage.fat.partial,true);assert.equal(combined.coverage.protein.partial,false);
 });
 
 test("a logged meal with unknown nutrition cannot appear as zero intake", () => {

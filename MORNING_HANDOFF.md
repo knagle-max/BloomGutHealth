@@ -2,6 +2,14 @@
 
 v0.5 is **incomplete**; v0.6 has not begun. Continue on enhance/bloom-experience / PR1 / existing Render review service. The original flagship transfer is complete; core development resumed immediately. Exact source criteria now linked for78/139 inherited IDs without blanket completion; original EXP02/03/04 and ARC-UT05 reconciled against unchanged code and450-test CI. No broad visual redesign, main merge, production data/credential change, replacement service, paid/restricted activation or external messaging.
 
+## Active owner priority — flagship UI phase1
+
+Latest owner/architectbf0cc56/2b7f7c3 reprioritizes usable flagship UI, with further applicable surfaces following as working vertical slices. Current phase1 source is locally verified and pending publication: Today/My biology/Progress navigation, persistent Add food, source-based Today overview, compact expandable canonical food rows, same-row source focus, amount/remove/add, explicit review/save, focused confirmation and visible Today/journal/Progress. No API/store/credential/gate changes. Original transfer remains complete; this does not claim full-app redesign/fidelity.
+
+Local451/451 Node tests,17 focused cases, type/build/source checks and actual App/HTTP/PGlite five-food source change/100g preservation/2.5servings/150g edit/remove/add/zero pre-confirm writes/exact lost-ack retry/one record pass. Widths320/375/390/430/1280 light/dark, keyboard disclosure, same-item focus, compact canonical/original-description separation, stale totals withdrawal and ownership pass. Tiny-positive/partial overview, indexed source replacement, dynamic row drafts/20bound, journal keyboard edit/delete and unknown correction/review retry regressions pass. Pinned before9ea and exploratory candidate images inspected; exact committed after images and pushed CI/Render follow. Packet: docs/review/flagship-core-20261029/REVIEW.md. Independent branding, hosted screenshots and actual device/screen-reader acceptance remain separate.
+
+9ea standalone Actions40795219236 was CANCELLED by newer architect documentation; RenderLIVE2b7f7c3/dep-dbh9b7ss728c73cr5fvg includes its source. f7a2776 exact450-test CI remains verified. Do not relabel cancelled run success or claim current uncommitted UI is deployed.
+
 ## Completed in this continuation
 
 - **Original flagship assets:** existing pinned-checksum importer accepted the attached3,880,120-byte ZIP and13 original files. All GitHub blob hashes/sizes match; implementation contract also fetched from GitHub. Original internal manifest's stale README entry and omitted UX blueprint are documented separately; originals untouched. Source commit8933079; `design/bloom/flagship/2026-10-26/` and its import receipt.
