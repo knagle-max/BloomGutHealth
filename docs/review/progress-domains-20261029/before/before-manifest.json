@@ -1,0 +1,17 @@
+{
+  "sourceSha": "06bfc51338ff27d793913dfcd71496aa93903180",
+  "dirty": true,
+  "stage": "before",
+  "widths": [
+    375,
+    1440
+  ],
+  "height": 1000,
+  "theme": "light",
+  "locale": "en-CA",
+  "timezone": "America/Regina",
+  "clock": "2026-10-23T18:00:00Z",
+  "synthetic": true,
+  "fonts": "blocked",
+  "independentAcceptance": false
+}

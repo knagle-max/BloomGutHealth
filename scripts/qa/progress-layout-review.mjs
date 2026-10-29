@@ -10,7 +10,7 @@ const root=process.env.BLOOM_CAPTURE_ROOT||path.resolve(path.dirname(fileURLToPa
 const {createServer}=await import(root+'/node_modules/vite/dist/node/index.js');
 const {buildPrecisionReport,contextSchema}=await import(root+'/shared/precision-nutrition.ts');
 const {defaultPreferences}=await import(root+'/shared/meal-intelligence.ts');
-const {experienceSettingsSchema}=await import(root+'/shared/experience.ts');
+const {trainingSessionSchema,activitySchema,experienceSettingsSchema}=await import(root+'/shared/experience.ts');
 const {parseLabPaste}=await import(root+'/shared/lab-paste.ts');
 const vite=await createServer({configFile:root+'/vite.config.ts',server:{port:5187,host:'127.0.0.1',strictPort:true}});await vite.listen();
 const browser=await chromium.launch({headless:true,...(process.env.BLOOM_CHROMIUM_EXECUTABLE?{executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']}: {})});
@@ -21,6 +21,7 @@ const safety=contextSchema.parse({allergies:["Synthetic sesame allergy"],safetyR
 let profile={heightCm:182.88,weightKg:75,sex:'female',age:30,activityLevel:'moderate',dietaryPreferences:defaultPreferences};
 const imported=parseLabPaste('LDL, 120\nALT, 73, U/L','2026-10-01T12:00:00Z','Synthetic lab');
 const records=[...imported.valid,...imported.pending].map((r,i)=>({id:'lab-'+i,kind:'lab',payload:r.payload,createdAt:'2026-10-01T12:00:00Z'}));
+const routineRecords=[{id:'manual-walk',kind:'activity',payload:activitySchema.parse({title:'Synthetic walk',startedAt:'2026-10-21T18:00:00Z',minutes:25})},...['planned','completed','cancelled'].map((status,i)=>({id:'session-'+i,kind:'session',payload:trainingSessionSchema.parse({title:'Synthetic '+status,startsAt:`2026-10-${20+i}T18:00:00Z`,minutes:30,discipline:'mixed',intensity:'easy',status})}))];
 const sourceLabs=structuredClone(records),writes=[],errors=[],outcomes=[];
 page.on('pageerror',e=>errors.push(e.stack));await page.route('https://fonts.**/**',r=>r.abort());
 await page.route('**/api/**',async route=>{const req=route.request(),p=new URL(req.url()).pathname,body=req.method()==='GET'?{}:req.postDataJSON();let json=[];
@@ -33,6 +34,7 @@ else if(p==='/api/experience/settings'){
  }
  json=settings;
 }
+else if(p==='/api/experience/records')json=new URL(req.url()).searchParams.has('kind')?[]:routineRecords;
 else if(p==='/api/profile')json=profile;
 else if(p==='/api/user/synthetic-editor/profile'){profile={...profile,...body};json={success:true};}
 else if(p==='/api/preferences'){if(req.method()==='PUT')preferences=body;json=preferences;}
@@ -54,6 +56,19 @@ try{
  await page.clock.install({time:new Date('2026-10-23T18:00:00Z')});
  records.push({id:'dated-synthetic',kind:'checkin',payload:{measuredAt:'2026-10-21T18:00:00Z',weightKg:80,waistCm:91.44,bodyFatPercent:null,bloating:null,energy:6,adherencePercent:75,planId:null,notes:'Synthetic observation; changes do not establish a cause.'},createdAt:'2026-10-21T18:00:00Z'});
  const out=process.env.BLOOM_REVIEW_OUTPUT||path.join(root,'work/progress-layout-review'),stage=process.env.BLOOM_CAPTURE_STAGE||'after';await fs.mkdir(out,{recursive:true});
- for(const width of [375,1440]){await page.setViewportSize({width,height:1000});await go('/progress');await page.getByRole('heading',{name:'Bloodwork over time',exact:true}).waitFor();await page.waitForLoadState('networkidle');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.screenshot({path:path.join(out,`${stage}-progress-${width}-light.png`),fullPage:true});}
- assert.deepEqual(errors,[]);await fs.writeFile(path.join(out,stage+'-manifest.json'),JSON.stringify({sourceSha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),stage,widths:[375,1440],height:1000,theme:'light',locale:'en-CA',timezone:'America/Regina',clock:'2026-10-23T18:00:00Z',synthetic:true,fonts:'blocked',independentAcceptance:false},null,2));console.log(stage+': matched Progress layout captures passed');
+ for(const width of [320,375,390,430,1280]){await page.setViewportSize({width,height:1000});await go('/progress');await page.getByRole('heading',{name:'Recorded food over time',exact:true}).waitFor();await page.waitForLoadState('networkidle');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.screenshot({path:path.join(out,`${stage}-progress-${width}-light.png`),fullPage:true});}
+ const tabs=page.getByRole('tablist',{name:'Progress view'});
+ assert.equal(await tabs.getByRole('tab',{name:'Nutrition',exact:true}).getAttribute('aria-selected'),'true');
+ await tabs.getByRole('tab',{name:'Nutrition',exact:true}).focus();await page.keyboard.press('ArrowRight');
+ await page.getByRole('heading',{name:'Recorded activity',exact:true}).waitFor();await page.getByRole('heading',{name:'Synthetic walk',exact:true}).waitFor();
+ assert.equal(await page.getByRole('heading',{name:'Bloodwork over time',exact:true}).isVisible(),false);
+ await page.keyboard.press('ArrowRight');await page.getByRole('heading',{name:'Bloodwork over time',exact:true}).waitFor();
+ for(const width of [320,375,390,430,1280]){await page.setViewportSize({width,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.screenshot({path:path.join(out,`${stage}-biology-${width}-light.png`),fullPage:true});}
+ await page.setViewportSize({width:390,height:1000});await page.evaluate(()=>document.documentElement.classList.add('dark'));await page.screenshot({path:path.join(out,`${stage}-biology-390-dark.png`),fullPage:true});
+ await tabs.getByRole('tab',{name:'Nutrition',exact:true}).click();await page.screenshot({path:path.join(out,`${stage}-progress-390-dark.png`),fullPage:true});
+ await page.setViewportSize({width:375,height:1000});await page.evaluate(()=>document.documentElement.classList.remove('dark'));await tabs.getByRole('tab',{name:'Nutrition',exact:true}).click();
+ await page.evaluate(()=>{for(const [selector,number] of [['[role=tablist]',1],['#food-progress-heading',2]]){const target=document.querySelector(selector);target.style.position='relative';const marker=document.createElement('span');marker.textContent=String(number);marker.style.cssText='position:absolute;right:0;top:-8px;border:2px solid #172c26;background:#fff;color:#172c26;border-radius:50%;width:24px;height:24px;text-align:center;font:700 14px/20px sans-serif;z-index:50';marker.dataset.reviewAnnotation='true';target.append(marker);}});
+ await page.screenshot({path:path.join(out,`${stage}-progress-375-annotated.png`),fullPage:true});await page.locator('[data-review-annotation]').evaluateAll(nodes=>nodes.forEach(n=>n.remove()));
+ settings=experienceSettingsSchema.parse({...settings,mode:'athlete'});await go('/progress');await page.getByRole('heading',{name:'Recorded training',exact:true}).waitFor();assert.equal(await page.getByRole('tab',{name:'Training',exact:true}).getAttribute('aria-selected'),'true');for(const status of ['planned','completed','cancelled'])await page.getByRole('heading',{name:'Synthetic '+status,exact:true}).waitFor();await page.screenshot({path:path.join(out,`${stage}-training-375-light.png`),fullPage:true});
+  assert.deepEqual(errors,[]);await fs.writeFile(path.join(out,stage+'-manifest.json'),JSON.stringify({sourceSha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),stage,widths:[320,375,390,430,1280],height:1000,themes:['light','390-dark'],keyboardTabs:true,athleteStatuses:['planned','completed','cancelled'],locale:'en-CA',timezone:'America/Regina',clock:'2026-10-23T18:00:00Z',synthetic:true,fonts:'blocked',independentAcceptance:false},null,2));console.log(stage+': matched Progress layout captures passed');
 }finally{await browser.close();await vite.close();}

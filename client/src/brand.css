@@ -149,3 +149,7 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .biology-home-source { width:100%; display:flex; align-items:center; gap:16px; padding:20px; border:1px solid hsl(var(--border)); border-radius:16px; background:hsl(var(--card)); color:hsl(var(--foreground)); text-align:left; min-height:80px; }
 .biology-home-source > svg { flex-shrink:0; color:hsl(var(--primary)); }.biology-home-source > span { flex:1; min-width:0; }.biology-home-source strong { font-size:17px; }.biology-home-source small { display:block; font-size:14px; line-height:1.5; margin-top:4px; color:hsl(var(--muted-foreground)); }
 @media(max-width:390px) { .biology-home-hero { padding:20px; }.biology-home-source { padding:16px; gap:12px; } }
+
+/* Flagship Progress domain switch; keep all source editors mounted across views. */
+.progress-domain-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; height:auto; padding:4px; border-radius:16px; }
+.progress-domain-tabs [role="tab"] { min-width:0; min-height:44px; padding:8px 4px; border-radius:12px; }

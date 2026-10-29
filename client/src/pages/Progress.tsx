@@ -1,3 +1,5 @@
+import {useState} from "react";
+import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs";
 import {activityTimeText} from "@shared/activity";
 import FoodProgress from "@/components/FoodProgress";
 import RoutineLabTiming from "@/components/RoutineLabTiming";
@@ -13,6 +15,7 @@ import { useExperience } from "@/lib/experience";
 import { WeeklyReviewPanel } from "@/components/WeeklyReview";
 import type { PrecisionReport } from "@shared/precision-nutrition";
 export default function Progress() {
+  const [selectedView, setSelectedView] = useState<string>();
   const { user } = useAuth(),
     { mode, settings, patch, saving, loading, error: settingsError } = useExperience(),
     profile = useQuery<{heightCm:number|null;weightKg:number|null}>({queryKey:["/api/profile"],enabled:!!user}),
@@ -32,11 +35,31 @@ export default function Progress() {
         <p className="eyebrow">NOTICE, COMPARE, ADJUST</p>
         <h1>Progress</h1>
         <p>
-          Bring your routine, tolerance and laboratory observations together. A
-          change over time is not proof of its cause.
+          Review your recorded food, activity and biology. Choose a view to see what changed; a change does not establish its cause.
         </p>
       </div>
-      <FoodProgress />
+      <Tabs value={selectedView ?? (mode === "athlete" ? "activity" : "nutrition")} onValueChange={setSelectedView} className="space-y-5">
+        <TabsList aria-label="Progress view" className="progress-domain-tabs">
+          <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
+          <TabsTrigger value="activity">{mode === "athlete" ? "Training" : "Activity"}</TabsTrigger>
+          <TabsTrigger value="biology">Biology</TabsTrigger>
+        </TabsList>
+        <TabsContent value="nutrition" forceMount className="space-y-5 data-[state=inactive]:hidden">
+          <FoodProgress />
+        </TabsContent>
+        <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">
+      <section className="bloom-panel space-y-3"><h2>Recorded activity</h2><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
+       {routines.isError?<p role="alert">Activity history could not load.</p>:routines.fetchStatus!=="idle"||routines.isPending?<p role="status">Checking recorded activity…</p>:<>{routines.data?.some(row=>row.kind==="activity")?<ul className="space-y-3">{routines.data.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3><p>{activityTimeText(row.payload)} · {row.payload.minutes} minutes{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
+       <Link className="text-link" href="/activity">Log or correct activity</Link>
+      </section>
+      {mode === "athlete" && <section className="bloom-panel space-y-3">
+        <h2>Recorded training</h2>
+        <p className="panel-note">Latest five saved sessions, including planned and cancelled entries. Only explicitly completed sessions are labelled completed; duration does not establish recovery or performance.</p>
+        {routines.isError ? <p role="alert">Training history could not load.</p> : routines.fetchStatus !== "idle" || routines.isPending ? <p role="status">Checking recorded training…</p> : routines.data?.some(row => row.kind === "session") ? <ul className="space-y-3">{routines.data.flatMap(row => row.kind === "session" ? [row] : []).sort((a,b) => Date.parse(b.payload.startsAt)-Date.parse(a.payload.startsAt)).slice(0,5).map(row => <li key={row.id}><h3>{row.payload.title}</h3><p>{new Date(row.payload.startsAt).toLocaleString()} · {row.payload.minutes} minutes · {row.payload.status}</p></li>)}</ul> : <p>No saved training sessions yet.</p>}
+        <Link className="text-link" href="/athlete#athlete-training-calendar">Review or correct training sessions</Link>
+      </section>}
+        </TabsContent>
+        <TabsContent value="biology" forceMount className="space-y-5 data-[state=inactive]:hidden">
       <section className="bloom-panel space-y-3">
         <h2>Your dated observations</h2>
         <p>Use repeat measurements and check-ins to review what changed. A current Profile value is not a dated observation.</p>
@@ -61,10 +84,6 @@ export default function Progress() {
           <Link className="text-link" href="/weekly-review">Review goals & weekly responses</Link>
         </div>
       </section>
-      <details className="bloom-panel space-y-3"><summary>Recorded activity</summary><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
-       {routines.isError?<p role="alert">Activity history could not load.</p>:routines.fetchStatus!=="idle"||routines.isPending?<p role="status">Checking recorded activity…</p>:<>{routines.data?.some(row=>row.kind==="activity")?<ul className="space-y-3">{routines.data.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3><p>{activityTimeText(row.payload)} · {row.payload.minutes} minutes{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
-       <Link className="text-link" href="/activity">Log or correct activity</Link>
-      </details>
       <section className="bloom-panel space-y-4">
         <h2>Bloodwork over time</h2>
         <p className="panel-note">
@@ -104,6 +123,8 @@ export default function Progress() {
         </Link>
       </section>
       <DeviceObservations />
+        </TabsContent>
+      </Tabs>
       <details className="bloom-panel workspace-disclosure">
         <summary>Weekly responses, goals & experiments</summary>
         <WeeklyReviewPanel mode={mode} />
