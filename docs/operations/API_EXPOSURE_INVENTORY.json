@@ -22,7 +22,7 @@
     "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
     "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
-    "server/planner-routes.ts": "386dd8556b1304637dfd673106421ca6eff5c88ae14907402657e53f3d6a6892",
+    "server/planner-routes.ts": "e0509b74f5e11e2378094cc29d6f4d6d16342f504e796bf75302ddf13faaa776",
     "server/precision-routes.ts": "f6c1b661934c030dad6589c0d29f9859e61e48ea552d9ac58de070f2e6cf9ac7",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
@@ -588,7 +588,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 343,
+      "line": 353,
       "method": "GET",
       "path": "/api/meal-planner/progress",
       "declaredMiddleware": [

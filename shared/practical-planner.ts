@@ -10,6 +10,7 @@ import { practicalPreferencesSchema, type ExperienceRecord } from "./experience"
 import { mealNutritionSummary } from "./nutrition-summary";
 import { recipePreparation } from "./recipe-preparation";
 import { goalMealFit } from "./goal-guidance";
+export type PracticalChoiceDiagnostics={testedPortions:number;excludedForTime:number;excludedForEquipment:number;nutrientLimits:{key:string;exceeded:number;unavailable:number}[]};
 export function practicalChoices(meals:any[], preferences:DietaryPreferences, report:PrecisionReport, request:WeeklyRequest, practical:z.infer<typeof practicalPreferencesSchema>, blocked=false, slot="dinner", registry?:BiologicalRegistry) {
  const summary=mealNutritionSummary(meals), n=summary.totals;
  const mapping:Record<string,string>={calories:"calories",protein_g:"protein",fiber_g:"fiber",sodium_mg:"sodium",fat_saturated_g:"fat_saturated_g",carbohydrates_total_g:"carbs",fat_total_g:"fat"};
@@ -19,7 +20,7 @@ export function practicalChoices(meals:any[], preferences:DietaryPreferences, re
  if(blocked||recipeMenu.unknownAllergies.length) return {choices:[],note:"Review your health context, recognized allergies and daily targets before generating personalized choices."};
  const hasHeat=practical.equipment.includes("stove")||practical.equipment.includes("oven");
  const pantry=practical.pantry.map(v=>v.toLowerCase());
- const candidates=recipeMenu.recipes.filter(r=>slot==="breakfast"?r.mealType==="breakfast":slot==="snack"?r.mealType==="snack":r.mealType==="main").flatMap(recipe=>[.5,.75,1,1.25,1.5].map(portion=>{
+ const considered=recipeMenu.recipes.filter(r=>slot==="breakfast"?r.mealType==="breakfast":slot==="snack"?r.mealType==="snack":r.mealType==="main").flatMap(recipe=>[.5,.75,1,1.25,1.5].map(portion=>{
   const nutrients=recipeNutrients(recipe,portion),prep=recipePreparation(recipe), names=recipe.ingredients.map(i=>i.name.toLowerCase()).join(" ");
   const pantryMatches=pantry.filter(p=>names.includes(p));
   const biology=explainRecipeBiology(recipe.foodIngredients.map(i=>i.foodId),report,preferences,registry), biologyReasons=biology.reasons;
@@ -37,8 +38,10 @@ export function practicalChoices(meals:any[], preferences:DietaryPreferences, re
   const energyGap=Math.max(0,request.targets.calories-(n.calories??0)), proteinGap=Math.max(0,request.targets.protein-(n.protein??0));
   const score=Math.min(.1,tasteMatches(recipe.ingredients,preferences.softDislikes).length*.02)-Math.min(.15,biologyReasons.length*.04)+Math.abs((nutrients.calories??0)-Math.min(energyGap,700))/700 + Math.max(0,Math.min(proteinGap,35)-(nutrients.protein_g??0))/35-pantryMatches.length*.12-(practical.budget==="economical"&&/oat|rice|lentil|bean|egg/.test(names)?.08:0);
   const rawNeedsHeat=/chicken|salmon|egg|barley|rice|potato|lentil/.test(names);
-  return {recipe,portion,nutrients,prep,pantryMatches,biologyReasons,biologyVersion:biology.version,biologyAvailable:biology.available,biologyNote:biology.note,limitChecks,relationshipIds:biology.relationshipIds,contributions,sourceLinks:biology.sources,score,valid:!violations&&prep.minutes<=practical.minutes&&(hasHeat||!rawNeedsHeat)};
- })).filter(c=>c.valid).sort((a,b)=>a.score-b.score||tasteMatches(a.recipe.ingredients,preferences.softDislikes).length-tasteMatches(b.recipe.ingredients,preferences.softDislikes).length||a.recipe.id.localeCompare(b.recipe.id));
+  return {recipe,portion,nutrients,prep,pantryMatches,biologyReasons,biologyVersion:biology.version,biologyAvailable:biology.available,biologyNote:biology.note,limitChecks,relationshipIds:biology.relationshipIds,contributions,sourceLinks:biology.sources,score,withinTime:prep.minutes<=practical.minutes,hasEquipment:hasHeat||!rawNeedsHeat,valid:!violations&&prep.minutes<=practical.minutes&&(hasHeat||!rawNeedsHeat)};
+ }));
+ const diagnostics:PracticalChoiceDiagnostics={testedPortions:considered.length,excludedForTime:considered.filter(c=>!c.withinTime).length,excludedForEquipment:considered.filter(c=>!c.hasEquipment).length,nutrientLimits:Object.keys(limits).map(key=>({key,exceeded:considered.filter(c=>c.limitChecks.some(check=>check.key===key&&check.status==='exceeded')).length,unavailable:considered.filter(c=>c.nutrients[key]===null||c.nutrients[key]===undefined).length})).filter(check=>check.exceeded||check.unavailable)};
+ const candidates=considered.filter(c=>c.valid).sort((a,b)=>a.score-b.score||tasteMatches(a.recipe.ingredients,preferences.softDislikes).length-tasteMatches(b.recipe.ingredients,preferences.softDislikes).length||a.recipe.id.localeCompare(b.recipe.id));
  const used=new Set<string>(), choices=[];
  const composition=(c:typeof candidates[number])=>c.recipe.ingredients.map(i=>i.name.toLowerCase()).sort().join("|");
  for(const kind of ["pantry","recipe","convenient"] as const){
@@ -48,7 +51,7 @@ export function practicalChoices(meals:any[], preferences:DietaryPreferences, re
   const fits=goalMealFit([...report.context.goals,...preferences.goals],pick.recipe.ingredients.map(i=>i.name).join(" "));
   choices.push({...pick,kind,title:kind==="pantry"?(pick.prep.minutes<=20?"Quick at home":"Make at home"):kind==="recipe"?"Cook a complete meal":"Purchase & assemble option",reasons:[...pick.biologyReasons,...intoleranceWarnings(pick.recipe.ingredients,report.context.intolerances),...(pick.pantryMatches.length?[`Uses pantry items you listed: ${pick.pantryMatches.join(", ")}.`]:[]),...fits.map(f=>f.reason),pick.limitChecks.some(c=>c.status==="unverified")?"Known amounts do not show an exceeded planning constraint, but some logged nutrients are missing. Daily limit compliance is unverified. Choose one option; these alternatives are not added together.":"Portion checked against selected daily limits and the planning energy allowance using complete logged nutrient values. Choose one option; these alternatives are not added together."],shopping:pick.prep.shopping.map(i=>({...i,grams:Math.round(i.grams*pick.portion*practical.household)})),confidence:summary.isPartial?"Provisional — logged nutrition is incomplete":"Generic composition estimates; review products and portions"});
  }
- return {choices,biologyAvailable:!!registry,note:(!registry?"Reviewed biological explanations are temporarily unavailable; choices use nutrient composition and practical preferences only. ":"")+"Suggestions are alternatives for your next meal, not a full-day guarantee. Pantry availability and affordability are preference-based heuristics, not live inventory or prices. Purchase options use generic food estimates; confirm packaged or restaurant nutrition before logging."};
+ return {choices,diagnostics,biologyAvailable:!!registry,note:(!registry?"Reviewed biological explanations are temporarily unavailable; choices use nutrient composition and practical preferences only. ":"")+"Suggestions are alternatives for your next meal, not a full-day guarantee. Pantry availability and affordability are preference-based heuristics, not live inventory or prices. Purchase options use generic food estimates; confirm packaged or restaurant nutrition before logging."};
 }
 export function weeklyReview(records:ExperienceRecord[], mode:"everyday"|"athlete", endDate:string) {
  const end=Date.parse(endDate)+86400000, start=end-7*86400000, previous=start-7*86400000;
