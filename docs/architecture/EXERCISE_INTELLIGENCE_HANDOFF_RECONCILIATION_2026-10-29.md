@@ -70,3 +70,11 @@ Reviewed `Bloom_Exercise_Intelligence_Branding_UX_Handoff_v1.2_2026-10-29.md` an
 Validate parse draft → review rows → edit Set 4 only → save/reload → Everyday/Athlete projection; check raw description retained and no silent overwrite.
 
 **Triage instruction:** Inspect actual `bench press — check sets` branch and parser unit/parentheses handling at current Git HEAD; distinguish parse failure from review component failing to render child arrays. Fix the narrow root cause, not a second parser/storage subsystem. Verify actual Render deployment URL and SHA, including expanded sets screenshot. Priority P0 normal-input regression before additional feature expansion.
+
+## Owner Amendment D v1.4 — binding presentation, 2026-10-30
+
+Latest owner-pasted decision binds MKT-EXAI-2813–2815 and supplements v1.3 parsing. Supersedes repeated exercise names and visible “Marked completed” strings per child. Use one parent and derived child count/uniform reps/load range; compact status | set number | reps | load | edit rows, separate 44px status/edit targets and visible keyboard focus. NLP alone leaves completion unconfirmed; explicit user/canonical confirmation only. Planned/cancelled remain distinct existing semantics; cancellation is not relabelled skipped/performed. Needs-review indicators are separate from completion. Unknown values remain unknown; source, IDs and canonical mode projections persist.
+
+Exact source: `Ran then did 5 sets of 10 reps of bench press for 50,50,50,55,55 lbs` → Running duration unknown; Bench press five sets10 reps,50/50/50/55/55lb; pending controls. Explicitly mark1+2 → “2 of 5 completed.” Individual corrections/add/remove retain source and unaffected IDs. Current editable body-weight-unit default remains applicable only to unitless descriptions.
+
+The named original v1.4 ZIP attachment path is absent in this execution workspace (`/tmp/codex-remote-attachments` absent), and no file-source connector is available. This entry transcribes the owner's binding text; it is **not** an original asset import or SVG parity claim. Implementation proceeds from explicit text; byte-preserved SVG transfer, exact visual parity, independent Design acceptance and actual VoiceOver remain open. Existing scientific/source/rights gates unchanged.

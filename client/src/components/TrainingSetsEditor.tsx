@@ -1,10 +1,14 @@
+import {Check,Minus} from 'lucide-react';
+import {activitySetSummary,activityCompletionSummary} from '@shared/activity-capture';
 import {previousTrainingSets} from '@shared/training-set-history';
 import {Button} from '@/components/ui/button';
 import {kgToDisplay,displayToKg,type WeightUnit} from '@shared/display-units';
 import type {ActualSets,TrainingSession} from '@shared/experience';
 const shown=(value:number,unit:WeightUnit)=>Number(kgToDisplay(value,unit).toFixed(3));
 export function RecordedSets({value,unit}:{value:ActualSets;unit:WeightUnit}) {
- return <ol className="space-y-2">{value.sets.map((set,index)=><li key={index}><strong>{index+1}. {set.exercise}</strong> · {set.reps===null?'Reps not recorded':`${set.reps} reps`} · {set.loadKg===null?'Load not recorded':`${shown(set.loadKg,set.loadUnit||unit)} ${set.loadUnit||unit}`} · {set.state==='cancelled'?'Cancelled':set.state==='planned'?'Planned':set.completed?'Marked completed':'Not marked completed'}</li>)}</ol>;
+ const groups:ActualSets['sets'][]=[];
+ for(const set of value.sets){const last=groups.at(-1);if(last&&last[0].exercise===set.exercise)last.push(set);else groups.push([set]);}
+ return <div className="space-y-3">{groups.map((sets,groupIndex)=><section key={groupIndex}><h4>{sets[0].exercise}</h4><p className="panel-note">{activitySetSummary(sets,unit)} · {activityCompletionSummary(sets)}</p><ol>{sets.map((set,index)=><li key={set.id||index} className="activity-set-compact"><span className={`activity-set-toggle ${set.completed?'is-completed':''}`}><span className="activity-set-circle" aria-hidden="true">{set.completed?<Check size={15}/>:set.state==='cancelled'?<Minus size={15}/>:null}</span><span className="sr-only">{set.state==='cancelled'?'Cancelled':set.state==='planned'?'Planned':set.completed?'Completed':'Completion not confirmed'}</span></span><span>{index+1}</span><span>{set.reps===null?<span aria-label="Repetitions unknown">—</span>:`${set.reps} reps`}</span><span>{set.loadKg===null?<span aria-label="Load unknown">—</span>:`${shown(set.loadKg,set.loadUnit||unit)} ${set.loadUnit||unit}`}</span></li>)}</ol></section>)}</div>;
 }
 export default function TrainingSetsEditor({value,onChange,unit,history,before,historyReady,entryType="session"}:{value:ActualSets|undefined;onChange:(value:ActualSets)=>void;unit:WeightUnit;history?:TrainingSession[];before?:string;historyReady?:boolean;entryType?:"session"|"activity"}) {
  const sets=value?.sets||[];

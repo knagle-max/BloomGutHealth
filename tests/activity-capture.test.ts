@@ -68,3 +68,22 @@ test('body-weight unit is an editable default; correcting its unit reinterprets 
  assert.throws(()=>canonicalActivityParts(original),/Resolve reported load units/);assert.equal(unresolvedActivityLoads(original),5);
  const explicit=describeActivityParts('1 set of 10 reps of bench press for 50 lb');assert.strictEqual(defaultActivityLoadUnits(explicit,'kg'),explicit);assert.equal(explicit[0].actualSets!.sets[0].loadUnit,'lb');
 });
+
+test('compact parent facts and completion follow actual child records without inventing missing metrics',async()=>{
+ const {activitySetSummary,activityCompletionSummary}=await import('../shared/activity-capture');
+ const parts=describeActivityParts('Ran then did 5 sets of 10 reps of bench press for 50,50,50,55,55 lbs');
+ const sets=parts[1].actualSets!.sets;
+ assert.equal(activitySetSummary(sets,'kg'),'5 sets · 10 reps each · 50–55 lb');
+ assert.equal(activityCompletionSummary(sets),'0 of 5 completed');
+ const completed=sets.map((set,index)=>({...set,completed:index<2}));
+ assert.equal(activityCompletionSummary(completed),'2 of 5 completed');
+ const changed=completed.map((set,index)=>index===1?{...set,reps:9,loadKg:null}:set);
+ assert.deepEqual(changed.filter((_,index)=>index!==1),completed.filter((_,index)=>index!==1));
+ assert.deepEqual(changed.map(set=>set.id),sets.map(set=>set.id));
+ assert.equal(activitySetSummary(changed,'kg'),'5 sets');
+ assert.equal(activityCompletionSummary(changed.slice(1)),'1 of 4 completed');
+ assert.equal(activitySetSummary([{...sets[0],reps:null,loadKg:null}],'kg'),'1 set');
+ assert.equal(activitySetSummary([{...sets[0],reps:0,loadKg:0}],'kg'),'1 set · 0 reps each · 0 lb');
+ assert.equal(activitySetSummary([sets[0],{...sets[1],loadUnit:'kg'}],'kg'),'2 sets · 10 reps each');
+ assert.equal(activityCompletionSummary([{...sets[0],completed:true,state:'cancelled'}]),'0 of 1 completed');
+});

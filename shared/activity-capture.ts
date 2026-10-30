@@ -1,5 +1,5 @@
 import type {Activity,ActualSets,ActivityComponent} from './experience';
-import {displayToKg} from './display-units';
+import {kgToDisplay,displayToKg} from './display-units';
 
 /** Unresolved unitless quantities exist only in the editable draft, never canonical storage. */
 export type ActivityDraftSet = ActualSets['sets'][number] & {unconfirmedLoad?:number;defaultedLoadUnit?:true};
@@ -102,4 +102,19 @@ export function recordedActivityWeek(records:readonly {payload:Activity}[],now:D
  return {from:day(start),to:day(now),entries:rows.length,recordedDays:new Set(rows.map(row=>day(new Date(row.payload.startedAt)))).size,
   knownMinutes:known.length?known.reduce((a,b)=>a+b,0):null,missingDurations:minutes.length-known.length,
   labels:types.map(id=>id==='unclassified'?'Not classified':activityChoices.find(choice=>choice.id===id)!.label)};
+}
+
+/** Parent facts use reviewed children only; never infer completion or fill missing metrics. */
+export function activitySetSummary(sets:readonly ActivityDraftSet[],fallbackUnit:'kg'|'lb') {
+ const parts=[`${sets.length} ${sets.length===1?'set':'sets'}`];
+ if(sets.length&&sets.every(set=>set.reps!==null&&set.reps===sets[0].reps))parts.push(`${sets[0].reps} reps each`);
+ const unit=sets[0]?.loadUnit||fallbackUnit;
+ if(sets.length&&sets.every(set=>(set.loadUnit||fallbackUnit)===unit&&set.loadKg!==null&&!(set.unconfirmedLoad!==undefined&&!set.loadUnit))){
+  const amounts=sets.map(set=>Number((set.unconfirmedLoad??kgToDisplay(set.loadKg!,unit)).toFixed(3))),min=Math.min(...amounts),max=Math.max(...amounts);
+  parts.push(`${min===max?min:`${min}–${max}`} ${unit}`);
+ }
+ return parts.join(' · ');
+}
+export function activityCompletionSummary(sets:readonly ActivityDraftSet[]) {
+ return `${sets.filter(set=>set.completed&&set.state!=='planned'&&set.state!=='cancelled').length} of ${sets.length} completed`;
 }
