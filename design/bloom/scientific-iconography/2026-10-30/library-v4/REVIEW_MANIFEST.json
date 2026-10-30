@@ -937,10 +937,10 @@
     {
       "asset_id": "structures:choline.svg",
       "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/choline.svg",
-      "git_blob_sha": "a8864be5217f449d0d129fb7e170f9f79bdb3568",
+      "git_blob_sha": "1a89a2e2b15a0c93c70fb7a2687a9f1bc6ab9e25",
       "kind": "structures",
       "representation": "manually_drawn_atom_bond_graph_unverified",
-      "scientific_review": "source_concept_approved_prior_SHA_requires_recheck",
+      "scientific_review": "pending_exact_updated_SVG_check",
       "chemical_review": "pending_independent_chemist",
       "legal": "conditional_not_cleared",
       "security": "pending_full_scan",
