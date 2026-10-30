@@ -239,3 +239,6 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .training-exercise-heading h4 { font-size:18px; font-weight:600; }
 .training-set-previous { margin-left:48px; overflow-wrap:anywhere; }
 .training-sets-editor > .activity-set-row { margin-top:0; }
+
+.report-import-error { padding:12px 16px; border-left:3px solid var(--brand-error); border-radius:8px; background:hsl(var(--muted)); overflow-wrap:anywhere; }
+.report-import-error:focus { outline:2px solid var(--brand-error); outline-offset:2px; }

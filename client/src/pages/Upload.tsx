@@ -36,6 +36,8 @@ export default function Upload() {
   const [notes, setNotes] = useState("");
   const [showManualEntry, setShowManualEntry] = useState(false);
   const [manualData, setManualData] = useState("");
+  const [inputError,setInputError]=useState("");
+  const errorRef=useRef<HTMLParagraphElement>(null);
   const [reading, setReading] = useState(false);
   const [attempted, setAttempted] = useState(false);
   const [preview, setPreview] = useState<(ReturnType<typeof parseReportDocument> & {originalFilename?:string}) | null>(null);
@@ -46,11 +48,14 @@ export default function Upload() {
   const { user } = useAuth();
   const previewHeading=useRef<HTMLHeadingElement>(null);
   useEffect(()=>{if(preview)previewHeading.current?.focus();},[preview]);
+  const reportError=inputError||save.error?.message;
+  useEffect(()=>{if(reportError)errorRef.current?.focus();},[reportError]);
   const active=useRef(true),actor=useRef(user?.id);actor.current=user?.id;
   useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
 
   const handleSubmit = async () => {
     const owner=user?.id;if(!owner||isUploading||save.saved)return;
+    setInputError("");
     let acknowledged=false;
     try {
       let result;
@@ -79,7 +84,8 @@ export default function Upload() {
       setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
     } catch(error) {
       if(!active.current||actor.current!==owner)return;
-      notice.current=toast({title:acknowledged?"Report saved":"Import needs review",description:acknowledged?"Open the saved report using the link below.":error instanceof Error?error.message:"Check your report and try again.",variant:acknowledged?"default":"destructive"});
+      if(acknowledged)notice.current=toast({title:"Report saved",description:"Open the saved report using the link below."});
+      else {setInputError(error instanceof Error?error.message:"Check your report and try again.");requestAnimationFrame(()=>{if(active.current&&actor.current===owner)errorRef.current?.focus();});}
     } finally {
       if(active.current&&actor.current===owner)setReading(false);
     }
@@ -98,12 +104,13 @@ export default function Upload() {
 
       <fieldset disabled={frozen} className="min-w-0 space-y-6 border-0 p-0 m-0"><legend className="sr-only">Gut report input</legend>
       <div className="method-switch" role="group" aria-label="Report entry method">
-        <Button variant={!showManualEntry ? "default" : "outline"} aria-pressed={!showManualEntry} onClick={() => setShowManualEntry(false)}>Upload a file</Button>
-        <Button variant={showManualEntry ? "default" : "outline"} aria-pressed={showManualEntry} onClick={() => setShowManualEntry(true)} data-testid="button-toggle-manual">Paste JSON data</Button>
+        <Button variant={!showManualEntry ? "default" : "outline"} aria-pressed={!showManualEntry} onClick={() => {setShowManualEntry(false);setInputError("");}}>Upload a file</Button>
+        <Button variant={showManualEntry ? "default" : "outline"} aria-pressed={showManualEntry} onClick={() => {setShowManualEntry(true);setInputError("");}} data-testid="button-toggle-manual">Paste JSON data</Button>
       </div>
       {!showManualEntry && <FileUploadZone
         disabled={frozen}
-        onFileSelect={next=>{if(!frozen)setFile(next);}}
+        file={file}
+        onFileSelect={next=>{if(!frozen){setFile(next);setInputError("");}}}
         acceptedFormats={["JSON", "CSV"]}
         maxSizeMB={2}
       />}
@@ -115,8 +122,8 @@ export default function Upload() {
               id="manual-data"
               placeholder='{"bacteria_percentages": {"Akkermansia": 2.5, ...}}'
               value={manualData}
-              onChange={(e) => setManualData(e.target.value)}
-              className="min-h-32 font-mono text-xs resize-none"
+              onChange={(e) => {setManualData(e.target.value);setInputError("");}}
+              className="min-h-32 font-mono text-sm resize-none"
               data-testid="input-manual-data"
             />
             <p className="text-xs text-muted-foreground">
@@ -214,9 +221,9 @@ export default function Upload() {
           </section>}
           <ImportedReportDetails report={preview.parsed}/>
         </details>
-        {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);}}>Change report or details</Button>}
+        {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);setInputError("");}}>Change report or details</Button>}
       </section>}
-      {save.error&&<p role="alert">{save.error.message}</p>}
+      {reportError&&<p role="alert" tabIndex={-1} ref={errorRef} className="report-import-error">{reportError}</p>}
       {save.uncertain&&<p role="status">Keep this page open to retry the same import. Your original details are locked until the save is confirmed. <Link className="text-link" href={save.checkHref} target="_blank" rel="noopener">Check saved reports</Link></p>}
       {save.saved&&<p role="status">Report saved. <Link className="text-link" href={save.checkHref}>Open saved report</Link></p>}
       <Button
