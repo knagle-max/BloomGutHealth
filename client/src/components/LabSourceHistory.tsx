@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {groupLabHistory,labDateText,labHistoryDates,labHistoryOnDate,type AnyLabHistoryRow} from '@shared/lab-history';
+import {groupLabHistory,labDateText,labHistoryDates,labHistoryOnDate,reportedLabSections,type AnyLabHistoryRow} from '@shared/lab-history';
 import {markerDefinitions,labEnteredContext} from '@shared/precision-nutrition';
 import {Button} from './ui/button';
 import LabSourceContext from './LabSourceContext';
@@ -12,6 +12,7 @@ function MarkerHistory({name,trend}:{name:string;trend:PrecisionReport['trends']
 export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[]}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends']}){
  const [open,setOpen]=useState(false),[date,setDate]=useState('');
  const dates=labHistoryDates(labs),visible=labHistoryOnDate(labs,date),groups=groupLabHistory(visible);
+ const sectionLinks=(items:AnyLabHistoryRow[])=>{const sections=reportedLabSections(items);return sections.length>1?<nav aria-label="Reported sections" className="space-y-2"><p className="panel-note">Go to a reported section. These are source headings, not Bloom clinical categories.</p><div className="flex flex-wrap gap-2">{sections.map(section=><Button key={section.firstId} type="button" variant="outline" className="h-auto min-h-11 max-w-full whitespace-pre-wrap break-words text-left" onClick={()=>{const heading=document.getElementById(`lab-source-section-${section.firstId}`);heading?.focus();heading?.scrollIntoView({block:'start'});}}>{section.reportedSection===undefined?'Reported section not recorded':section.reportedSection} · {section.rows.length} result(s)</Button>)}</div></nav>:null;};
  const rows=(items:AnyLabHistoryRow[])=>items.map((row,index)=>{
   const raw='sourceOnly' in row,entered=labEnteredContext(row);
   const name=raw?row.reportedAnalyte:markerDefinitions.find(marker=>marker.id===row.marker)?.name||row.marker;
@@ -21,7 +22,7 @@ export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[]}:{la
   const unit=raw?row.reportedUnit??'(unit not supplied)':row.unitReview?.status==='pending'?row.unitReview.originalUnit||'(unit not supplied)':row.unit;
   const section=row.sourceInput?.reportedSection;
   return <div key={row.id}>
-   {(index===0||section!==items[index-1].sourceInput?.reportedSection)&&<h4 className="lab-source-section whitespace-pre-wrap break-words">{section===undefined?'Reported section not recorded':`Reported section: ${section}`}</h4>}
+   {(index===0||section!==items[index-1].sourceInput?.reportedSection)&&<h4 id={`lab-source-section-${row.id}`} tabIndex={-1} style={{scrollMarginTop:"6rem"}} className="lab-source-section whitespace-pre-wrap break-words">{section===undefined?'Reported section not recorded':`Reported section: ${section}`}</h4>}
    <article className="precision-observation"><div><h4>{name}</h4><p>{value} {unit} · <time dateTime={entered?.enteredDate?`${entered.enteredDate}${entered.enteredTime?`T${entered.enteredTime}`:""}`:row.measuredAt}>{entered?.enteredDate?`${labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)}${entered.enteredTime?` ${entered.enteredTime}`:" · collection time not supplied"}`:row.measuredAt}</time></p>
     {raw&&<p className="evidence-state">Source record only — no interpretation</p>}
     {raw&&row.reportedReferenceInterval!==undefined&&<p className="panel-note whitespace-pre-wrap">Reported reference text: {row.reportedReferenceInterval}</p>}
@@ -47,9 +48,10 @@ export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[]}:{la
    {groups.imports.map(group=><details key={group.key} className="border rounded-xl p-3 break-words">
     <summary>{group.source.reportIdentifier?.trim()?group.source.reportIdentifier:'Imported results'} · {group.rows.length} result(s){group.source.specimenIdentifier?.trim()?` · specimen ${group.source.specimenIdentifier}`:''}</summary>
     <p className="panel-note">Source dates: {Array.from(new Set(group.rows.map(row=>`${labEnteredContext(row)?.enteredDate?'Entered':'Recorded'} ${labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)}`))).join(' · ')}</p>
+    {sectionLinks(group.rows)}
     {rows(group.rows)}
    </details>)}
-   {!!groups.unlinked.length&&<details className="border rounded-xl p-3"><summary>Results without import identity ({groups.unlinked.length})</summary><p className="panel-note">No report or specimen association is inferred from a matching date.</p>{rows(groups.unlinked)}</details>}
+   {!!groups.unlinked.length&&<details className="border rounded-xl p-3"><summary>Results without import identity ({groups.unlinked.length})</summary><p className="panel-note">No report or specimen association is inferred from a matching date.</p>{sectionLinks(groups.unlinked)}{rows(groups.unlinked)}</details>}
    {!visible.length&&<p>{labs.length?'No current source results for this date.':'No laboratory source records yet.'}</p>}
   </div>}
  </details>;

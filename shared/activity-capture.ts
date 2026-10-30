@@ -38,7 +38,7 @@ export function describeActivity(description:string) {
  }else if(strength){const count=bounded(strength[1],100,true),reps=bounded(strength[2],1000,true),loadKg=bounded(strength[4],2000);if(count&&reps!==null&&loadKg!==null){actualSets={version:1,sets:Array.from({length:count},()=>({exercise:strength[3],reps,loadKg,completed:false}))};choice=activityChoices[5];}}
  // A named but unsupported strength phrase must lead to manual correction, not a generic success.
  if(!actualSets&&choice.id==='strength'&&/\bbench press\b/i.test(description)){namedTitle='Bench press';needsSetReview=true;actualSets={version:1,sets:[]};}
- const title=namedTitle?namedTitle.charAt(0).toUpperCase()+namedTitle.slice(1)+(needsSetReview?' — check sets':''):choice.label;
+ const title=namedTitle?namedTitle.charAt(0).toUpperCase()+namedTitle.slice(1):choice.label;
  const capture:NonNullable<Activity['capture']>={version:1,method:'describe',description,activityId:choice.id,interpretation:choice.id==='other'||needsSetReview?'unclassified':'rule-suggestion'};
  return {title,minutes:minutes&&minutes>0?minutes:null,distanceM,actualSets,capture,
   notice:needsSetReview?'Set counts or amounts could not be matched. Add or correct each set; the original description is retained.':choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};

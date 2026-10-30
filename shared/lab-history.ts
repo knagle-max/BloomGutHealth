@@ -33,3 +33,14 @@ export function recordedLabDifference(points: readonly {date:string;value:number
  if(!points.every(point=>Number.isFinite(point.value)&&Number.isFinite(Date.parse(point.date))&&point.unit===first.unit)||Date.parse(last.date)<=Date.parse(first.date))return null;
  return last.value-first.value;
 }
+
+/** Contiguous original sections only: repeated headings never merge separated source rows. */
+export function reportedLabSections<Row extends AnyLabHistoryRow>(rows: readonly Row[]) {
+ const sections: {firstId:string; reportedSection:string|undefined; rows:Row[]}[]=[];
+ for(const row of rows){
+  const heading=row.sourceInput?.reportedSection,last=sections[sections.length-1];
+  if(last&&last.reportedSection===heading)last.rows.push(row);
+  else sections.push({firstId:row.id,reportedSection:heading,rows:[row]});
+ }
+ return sections;
+}

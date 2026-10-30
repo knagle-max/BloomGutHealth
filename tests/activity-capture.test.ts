@@ -41,7 +41,7 @@ test('owner v1.3 five-set pounds list preserves order, repeated loads, unknown r
  const reloaded=activitySchema.parse(JSON.parse(JSON.stringify({...saved,...activityProjection(saved.components!.items)})));assert.equal(reloaded.minutes,null);assert.equal(reloaded.capture!.description,source);assert.equal(reloaded.components!.items[1].actualSets!.sets[3].id,sets[3].id);assert.equal(reloaded.components!.items[1].actualSets!.sets[3].reps,9);
  for(const index of [0,1,2,4])assert.deepEqual(reloaded.components!.items[1].actualSets!.sets[index],original.components!.items[1].actualSets!.sets[index]);
  for(const text of ['5 sets of 10 reps of bench press for 50,50,55 lbs','5 sets of 10 reps of bench press for 50,50,50,55,55,60 lbs','5 sets of 10 reps of bench press for -50,50,50,55,55 lbs','5 sets of 10 reps of bench press for 50,,50,55,55 lbs','5 sets of 10 reps of bench press for 50,50,50,55,99999 lbs','five sets of bench press']){
-  const result=describeActivityParts(text)[0];assert.equal(result.title,'Bench press — check sets',text);assert.equal(result.match,'unclassified');assert.deepEqual(result.actualSets!.sets,[]);
+  const result=describeActivityParts(text)[0];assert.equal(result.title,'Bench press',text);assert.equal(result.match,'unclassified');assert.deepEqual(result.actualSets!.sets,[]);
  }
  const uniform=describeActivityParts('5 sets of 10 reps of bench press at 50 lb')[0];assert.equal(uniform.actualSets!.sets.length,5);assert.equal(uniform.actualSets!.sets[4].loadUnit,'lb');
 });

@@ -1,3 +1,4 @@
+import {reportedLabSections} from '../shared/lab-history';
 import test from'node:test';import assert from'node:assert/strict';import{groupLabHistory,labDateText}from'../shared/lab-history';import{parseLabPaste}from'../shared/lab-paste';
 const base=parseLabPaste('[ Unknown exact heading ]\nLDL, 0.00, mmol/L','2026-10-01T12:00:00Z').valid[0].payload;
 test('source history groups exact import/specimen identity, preserves report order, and never invents associations for old records',()=>{
@@ -24,4 +25,11 @@ test('source date view preserves exact entered calendars, pending values, unrela
  assert.equal(groupLabHistory(labHistoryOnDate(rows,'2026-10-15')).imports.length,2);
  assert.equal(labHistoryOnDate(rows,'missing').length,0);
  assert.deepEqual(labHistoryOnDate(rows,''),rows);assert.deepEqual(rows,original);
+});
+
+test('reported section navigation retains contiguous original order, repeated headings and absent source headings',()=>{
+ const base=parseLabPaste('[ First ]\nLDL, 1, mmol/L\n[ Second ]\nALT, 2, U/L','2026-10-01T12:00:00Z').valid;
+ const rows=[{...base[0].payload,id:'a'},{...base[0].payload,id:'b'},{...base[1].payload,id:'c'},{...base[0].payload,id:'d'},{...base[0].payload,id:'e',sourceInput:undefined}];
+ const snapshot=structuredClone(rows),sections=reportedLabSections(rows);
+ assert.deepEqual(sections.map(section=>[section.firstId,section.reportedSection,section.rows.map(row=>row.id)]),[['a','[ First ]',['a','b']],['c','[ Second ]',['c']],['d','[ First ]',['d']],['e',undefined,['e']]]);assert.deepEqual(rows,snapshot);assert.deepEqual(reportedLabSections([]),[]);
 });
