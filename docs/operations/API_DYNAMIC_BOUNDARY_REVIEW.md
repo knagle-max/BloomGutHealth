@@ -15,3 +15,11 @@ Result: the three finite loops declare eight concrete paths; the other ten flags
 20 focused source/auth/shared-budget/retired/weekly tests pass, including strengthened negative actions and all private planning adapter counters. Types pass. An environment restart interrupted an earlier test process; its partial log was not treated as a pass and the complete suite was rerun. Runtime/build source is unchanged by this test/evidence-only increment;5df CI/build/live Neon succeeded. Render5df was still updating with only a launch stage observed at the checkpoint; no code-cause or successful deployment is inferred.
 
 Render terminal update: original5df deploydep-dbgfhcg473hc739j0ld0 UPDATE_FAILED at2026-10-27T19:35:50Z. Reader95cbdc5 remains last verified LIVE. No backend/shared/package source change exists between them. Only platform launch logs were observed; cause unproven. A normal subsequent verified audit commit will auto-deploy on the already authorized branch; verify that descendant rather than claiming5df reached LIVE.
+
+## Registered-router admission matrix — 2026-10-30
+
+New `tests/api-auth-boundary.test.ts` mounts actual registerRoutes against an isolated dead-loopback database setting, traps ordinary/specialized database and storage access, and sends94 source path/method candidates (including the reviewed finite weekly/retired loops) in three identity states. Anonymous/deleted sessions return401; mismatched actor/session returns409; no source work occurs. Public static synthetic demo endpoints remain200/no-store. This test does not use production data or a processing destination.
+
+The test reproduced an exposed Node GET /api/ml/health handler (anonymous503 rather than admission401). Existing active-account middleware now guards that internal processing proxy. Python service /health and Render app/static delivery remain separate. No provider or personal data response contract changed.
+
+Scope: candidates are source declarations, potentially including inactive routes covered by family mounts. Denial does not prove each route is installed. Positive two-account per-row/query/export/job tests and independent deployed proxy/security review remain separate; no full ID01 completion or feature activation is inferred. Full regression outcome is recorded in DEVELOPMENT_LOG at publication.

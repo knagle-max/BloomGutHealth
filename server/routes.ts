@@ -99,7 +99,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   );
 
   // Health check for ML service
-  app.get("/api/ml/health", async (req, res) => {
+  app.get("/api/ml/health", requireAuth, async (req, res) => {
     try {
       const mlResponse = await mlServiceFetch("/health");
       if (!mlResponse.ok) throw Error("Processing service unavailable.");

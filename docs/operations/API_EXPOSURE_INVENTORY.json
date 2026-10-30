@@ -28,7 +28,7 @@
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
     "server/report-routes.ts": "be9fadf1f5156e96a728da70cd2f46a9b9311df235d07aa47c1f75aac8cc3d45",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
-    "server/routes.ts": "b51992803611c4c866d7953b2e8a1edae071b84fb83f5e051eac61780984caaf",
+    "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
   },
@@ -882,7 +882,9 @@
       "line": 102,
       "method": "GET",
       "path": "/api/ml/health",
-      "declaredMiddleware": [],
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
       "review": "REVIEW_REQUIRED"
     },
     {
