@@ -54,6 +54,9 @@ const go=async p=>{await page.goto('http://127.0.0.1:5187'+p);await page.getByRo
 const near=(actual,expected,tolerance=0.00002)=>assert.ok(Math.abs(Number(actual)-expected)<tolerance,`${actual} differs from ${expected}`);
 const input=key=>page.locator(`input[name="${key}"]`);
 try{
+ await go("/health-insights");await page.waitForURL("**/progress");
+ await go("/insights");await page.getByRole("heading",{name:"Give your diet a direction."}).waitFor();await page.getByRole("link",{name:"Recorded progress",exact:true}).click();await page.waitForURL("**/progress");
+
  await page.clock.install({time:new Date('2026-10-23T18:00:00Z')});
  records.push({id:'dated-synthetic',kind:'checkin',payload:{measuredAt:'2026-10-21T18:00:00Z',weightKg:80,waistCm:91.44,bodyFatPercent:null,bloating:null,energy:6,adherencePercent:75,planId:null,notes:'Synthetic observation; changes do not establish a cause.'},createdAt:'2026-10-21T18:00:00Z'});
  const out=process.env.BLOOM_REVIEW_OUTPUT||path.join(root,'work/progress-layout-review'),stage=process.env.BLOOM_CAPTURE_STAGE||'after';await fs.mkdir(out,{recursive:true});

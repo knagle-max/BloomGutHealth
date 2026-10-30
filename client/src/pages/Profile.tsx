@@ -270,8 +270,8 @@ export default function Profile({
         <Link className="text-link" href="/meal-planner">
           Meal planner
         </Link>
-        <Link className="text-link" href="/health-insights">
-          Health Insights
+        <Link className="text-link" href="/progress">
+          Recorded progress
         </Link>
         {onToggleDarkMode && (
           <Button variant="outline" onClick={onToggleDarkMode}>

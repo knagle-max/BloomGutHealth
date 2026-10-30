@@ -54,7 +54,7 @@ export default function Microbiome() {
         </p>
         <div className="flex flex-wrap gap-3">
           {(!currentSamples||sorted.length>0)&&<Link className="text-link" href="/upload">Upload or enter a report</Link>}
-          <details className="workspace-disclosure"><summary>Related tools</summary><div className="flex flex-wrap gap-3 pt-3"><Link className="text-link" href="/health-insights">Health Insights</Link><Link className="text-link" href="/meal-planner">Goal-based meals</Link></div></details>
+          <details className="workspace-disclosure"><summary>Related tools</summary><div className="flex flex-wrap gap-3 pt-3"><Link className="text-link" href="/progress">Recorded progress</Link><Link className="text-link" href="/meal-planner">Goal-based meals</Link></div></details>
         </div>
       </div>
       {samples.isError ? (

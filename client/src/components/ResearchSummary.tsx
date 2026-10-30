@@ -78,8 +78,8 @@ export default function ResearchSummary() {
       )}
       <div className="flex flex-wrap gap-4 mt-4">
         <Link className="text-link" href="/precision">Genetics, bloodwork & precision nutrition</Link>
-        <Link className="text-link" href="/health-insights">
-          Health, SCFAs, adherence & trends
+        <Link className="text-link" href="/progress">
+          Recorded progress
         </Link>
         <Link className="text-link" href="/meal-planner">
           Personalized meals

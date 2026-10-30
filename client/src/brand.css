@@ -294,3 +294,8 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .microbial-profile-disclosures details {border-top:1px solid hsl(var(--border));padding:12px 0;}
 .microbial-profile-disclosures summary {min-height:44px;cursor:pointer;align-content:center;}
 @media(max-width:639px){.microbial-profile-sheet {top:auto;max-height:85dvh;border-radius:24px 24px 0 0;padding:48px 16px 24px;width:100%;}.microbial-profile-handle {position:absolute;top:10px;left:calc(50% - 28px);width:56px;height:4px;border-radius:4px;background:hsl(var(--border));}}
+.experiment-periods {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.experiment-periods>div {border:1px solid hsl(var(--border));border-radius:12px;padding:12px;overflow-wrap:anywhere;}
+.experiment-periods dt {font-weight:600;margin-bottom:8px;}
+.experiment-periods dd {margin-top:4px;}
+@media(max-width:420px){.experiment-periods {grid-template-columns:1fr;}}

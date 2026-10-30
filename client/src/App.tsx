@@ -161,7 +161,7 @@ function AppContent() {
             {() => <ProtectedRoute component={Demo} />}
           </Route>
           <Route path="/health-insights">
-            {() => <Redirect to="/insights" />}
+            {() => <Redirect to="/progress" />}
           </Route>
           <Route path="/precision">
             {() => <ProtectedRoute component={PrecisionNutrition} />}

@@ -446,8 +446,8 @@ export default function ScienceCoach() {
         <Link className="text-link" href="/meal-planner">
           Goal-based meal planner
         </Link>
-        <Link className="text-link" href="/health-insights">
-          Health Insights, adherence & trends
+        <Link className="text-link" href="/progress">
+          Recorded progress
         </Link>
         <Link className="text-link" href="/profile">
           Saved dietary preferences

@@ -330,8 +330,8 @@ export default function MealPlanner() {
           <Link className="text-link" href="/insights">
             Evidence coach
           </Link>
-          <Link className="text-link" href="/health-insights">
-            Health, adherence & model trends
+          <Link className="text-link" href="/progress">
+            Recorded progress
           </Link>
           <Link className="text-link" href="/profile">
             Profile

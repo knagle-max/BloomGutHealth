@@ -4,6 +4,9 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
+- Current supporting-route slice: legacy Health Insights now actual Progress; no Diet coach self-loop. MKT-018 explicit phase medians/counts/dates and current-source gated observation editor; actual registered-handler zero/unknown/correction/save/reload/pending/paused/error/retry/reflow and both-mode weekly tests PASS,8 focused/types/build. Finish commit/push/managed verification. Six MKT engineering rows reconciled from evidence; not global completion. NEXT: remaining UI/scientific-card trace and new MKT-ASSET-3104 runtime reference audit (original source/design-only vs actual runtime; no indiscriminate imports/deletions).
+
+
 - Microbial profiles implemented locally against newly merged original contract;20 identities/exact source/zero/unknown/keyboard/Back/source-withdrawal and five-width app light/dark plus13 focused/types/build/guards PASS. Full466/466 PASS193848ms. Finish verification, commit/push and managed metadata. Then reconcile remaining full v0.5 requirement matrix with actual source/evidence; keep claim-level Biology blockers separate, do not invent science. Connections2e52bbe and original sources merged/pushed74aa3be.
 
 
