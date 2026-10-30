@@ -2,14 +2,25 @@ import type {Activity,ActualSets,ActivityComponent} from './experience';
 import {displayToKg} from './display-units';
 
 /** Unresolved unitless quantities exist only in the editable draft, never canonical storage. */
-export type ActivityDraftSet = ActualSets['sets'][number] & {unconfirmedLoad?:number};
+export type ActivityDraftSet = ActualSets['sets'][number] & {unconfirmedLoad?:number;defaultedLoadUnit?:true};
 export type ActivityDraftSets = {version:1;sets:ActivityDraftSet[]};
 export type ActivityDraftComponent = Omit<ActivityComponent,'actualSets'> & {actualSets?:ActivityDraftSets};
 export function confirmDraftLoadUnit(set:ActivityDraftSet,unit:'kg'|'lb'):ActivityDraftSet {
- const {unconfirmedLoad,...confirmed}=set;
+ const {unconfirmedLoad,defaultedLoadUnit,...confirmed}=set;
  return {...confirmed,loadUnit:unit,...(unconfirmedLoad!==undefined?{loadKg:displayToKg(unconfirmedLoad,unit)}:{})};
 }
-export const unresolvedActivityLoads=(items:readonly ActivityDraftComponent[])=>items.reduce((total,item)=>total+(item.actualSets?.sets.filter(set=>set.unconfirmedLoad!==undefined).length||0),0);
+export const unresolvedActivityLoads=(items:readonly ActivityDraftComponent[])=>items.reduce((total,item)=>total+(item.actualSets?.sets.filter(set=>set.unconfirmedLoad!==undefined&&!set.loadUnit).length||0),0);
+
+/** A saved body-weight unit supplies an editable default, not a unit reported in text. */
+export function defaultActivityLoadUnits(items:ActivityDraftComponent[],unit:'kg'|'lb'):ActivityDraftComponent[] {
+ if(!unresolvedActivityLoads(items))return items;
+ return items.map(item=>({...item,...(item.actualSets?{actualSets:{version:1 as const,sets:item.actualSets.sets.map(set=>set.unconfirmedLoad!==undefined&&!set.loadUnit?{...set,loadUnit:unit,loadKg:displayToKg(set.unconfirmedLoad,unit),defaultedLoadUnit:true as const}:set)}}:{})}));
+}
+/** Remove browser-only source quantities only after their unit is resolved/defaulted. */
+export function canonicalActivityParts(items:readonly ActivityDraftComponent[]):ActivityComponent[] {
+ if(unresolvedActivityLoads(items))throw Error('Resolve reported load units before saving.');
+ return items.map(item=>({...item,...(item.actualSets?{actualSets:{version:1 as const,sets:item.actualSets.sets.map(set=>{const {unconfirmedLoad,defaultedLoadUnit,...canonical}=set;return {...canonical,...(unconfirmedLoad!==undefined?{loadKg:displayToKg(unconfirmedLoad,canonical.loadUnit!)}:{})};})}}:{})}));
+}
 
 /** App-authored menu labels, not a licensed MET or physiological taxonomy. */
 export const activityChoices = [

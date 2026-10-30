@@ -1,5 +1,5 @@
 import {activityTimeText} from '@shared/activity';
-import {activityChoices,describeActivityParts,activityParts,activityProjection,activityAmountText,unresolvedActivityLoads,type ActivityDraftComponent} from '@shared/activity-capture';
+import {activityChoices,describeActivityParts,activityParts,activityProjection,activityAmountText,unresolvedActivityLoads,defaultActivityLoadUnits,canonicalActivityParts,type ActivityDraftComponent} from '@shared/activity-capture';
 import {useEffect,useRef,useState} from 'react';
 import {Link} from 'wouter';
 import {useAuth} from '@/lib/auth';
@@ -16,10 +16,11 @@ const fresh=():Draft=>({when:localStamp(),effort:'',notes:''});
 type Row=Extract<ExperienceRecord,{kind:'activity'}>;
 type Attempt={payload:Activity;id?:string;key:string};
 function ActivityWorkspace(){
- const {settings}=useExperience(),records=useExperienceRecords('activity');
+ const {settings,ready:settingsReady}=useExperience(),records=useExperienceRecords('activity');
  const [method,setMethod]=useState<'describe'|'select'|'repeat'>('select'),[description,setDescription]=useState(''),[composerOpen,setComposerOpen]=useState(true);
  const [parts,setParts]=useState<ActivityDraftComponent[]>([]),[capture,setCapture]=useState<Activity['capture']>(),[reviewKey,setReviewKey]=useState(0);
  const [draft,setDraft]=useState(fresh),[editing,setEditing]=useState<Row|null>(null),[held,setHeld]=useState<Attempt|null>(null),[pending,setPending]=useState(false),[definite,setDefinite]=useState(false),[error,setError]=useState(''),[message,setMessage]=useState(''),[removeId,setRemoveId]=useState<string|null>(null);
+ useEffect(()=>{if(settingsReady)setParts(items=>defaultActivityLoadUnits(items,settings.displayUnits.bodyWeight));},[settingsReady,settings.displayUnits.bodyWeight]);
  const active=useRef(true),busy=useRef(false);
  useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
  const ready=records.fetchStatus==='idle'&&!records.isError&&!records.isStale&&!!records.data;
@@ -28,7 +29,7 @@ function ActivityWorkspace(){
  const change=(key:keyof Draft,value:string)=>setDraft(current=>({...current,[key]:value}));
  const focusReview=()=>requestAnimationFrame(()=>document.getElementById('activity-review-heading')?.focus());
  function reset(){setDraft(fresh());setParts([]);setCapture(undefined);setDescription('');setComposerOpen(true);setReviewKey(value=>value+1);}
- function review(items:ActivityDraftComponent[],source:NonNullable<Activity['capture']>){setParts(items);setCapture(source);setComposerOpen(false);setError('');setMessage('');setReviewKey(value=>value+1);focusReview();}
+ function review(items:ActivityDraftComponent[],source:NonNullable<Activity['capture']>){setParts(settingsReady?defaultActivityLoadUnits(items,settings.displayUnits.bodyWeight):items);setCapture(source);setComposerOpen(false);setError('');setMessage('');setReviewKey(value=>value+1);focusReview();}
  function describe(){try{review(describeActivityParts(description),{version:1,method:'describe',description,activityId:'other',interpretation:'rule-suggestion'});}catch(e){setError((e as Error).message);}}
  function select(id:typeof activityChoices[number]['id']){const choice=activityChoices.find(choice=>choice.id===id)!;review([{id:crypto.randomUUID(),title:choice.label,activityId:id,match:id==='other'?'unclassified':'reported',minutes:null,distanceM:null,...(id==='strength'?{actualSets:{version:1 as const,sets:[]}}:{})}],{version:1,method:'select',description:choice.label,activityId:id,interpretation:'user-selected'});}
  function repeat(row:Row){const items=activityParts(row.payload).map(part=>({...part,id:crypto.randomUUID(),...(part.actualSets?{actualSets:{version:1 as const,sets:part.actualSets.sets.map(set=>({...set,id:crypto.randomUUID(),completed:false,state:'described' as const}))}}:{})}));setDraft(fresh());review(items,{version:1,method:'repeat',description:row.payload.capture?.description||row.payload.title,activityId:row.payload.capture?.activityId||'other',interpretation:'user-selected'});}
@@ -43,8 +44,9 @@ function ActivityWorkspace(){
   finally{busy.current=false;if(active.current){setPending(false);refreshExperience();}}
  }
  function submit(e:React.FormEvent){e.preventDefault();if(locked||unreviewed||!parts.length||!capture)return;setError('');if(unresolvedActivityLoads(parts)){setError('Confirm a unit for each reported load, or clear that load before saving.');return;}try{
+  const canonical=canonicalActivityParts(parts);
   const unchangedTime=editing&&draft.when===localStamp(new Date(editing.payload.startedAt));
-  const payload=activitySchema.parse({...activityProjection(parts),components:{version:1,items:parts},capture:{...capture,activityId:parts.length===1?parts[0].activityId:'other'},startedAt:unchangedTime?editing.payload.startedAt:new Date(draft.when).toISOString(),timeZone:unchangedTime?editing.payload.timeZone:zone(),effort:draft.effort||null,source:'manual',notes:draft.notes});
+  const payload=activitySchema.parse({...activityProjection(canonical),components:{version:1,items:canonical},capture:{...capture,activityId:parts.length===1?parts[0].activityId:'other'},startedAt:unchangedTime?editing.payload.startedAt:new Date(draft.when).toISOString(),timeZone:unchangedTime?editing.payload.timeZone:zone(),effort:draft.effort||null,source:'manual',notes:draft.notes});
   void save({payload,key:crypto.randomUUID(),...(editing?{id:editing.id}:{})});
  }catch{setError('Check activity names, date, amounts and set identities. Leave unknown quantities blank.');}}
  function edit(row:Row){setEditing(row);setDraft({when:localStamp(new Date(row.payload.startedAt)),effort:row.payload.effort||'',notes:row.payload.notes});review(activityParts(row.payload),row.payload.capture||{version:1,method:'select',description:row.payload.title,activityId:'other',interpretation:'user-selected'});}

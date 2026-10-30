@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {describeActivity,describeActivityParts,activityProjection,activityAmountText,confirmDraftLoadUnit,unresolvedActivityLoads} from '../shared/activity-capture';
+import {describeActivity,describeActivityParts,activityProjection,activityAmountText,confirmDraftLoadUnit,unresolvedActivityLoads,defaultActivityLoadUnits,canonicalActivityParts} from '../shared/activity-capture';
 import {activitySchema,activityComponentsSchema} from '../shared/experience';
 
 test('local activity review parses only explicit bounded reported amounts; ambiguous choices and unknown metrics remain missing',()=>{
@@ -59,4 +59,12 @@ test('unitless parenthesized loads stay visible draft facts until explicitly res
  const zero=describeActivityParts('1 set of 0 reps of bench press (0)')[0].actualSets!.sets[0];assert.equal(zero.unconfirmedLoad,0);assert.equal(confirmDraftLoadUnit(zero,'lb').loadKg,0);
  for(const phrase of ['5 sets of 10 reps of bench press (50,50,55)','5 sets of 10 reps of bench press (50)','5 sets of 10 reps of bench press (50,-50,55,55,60)'])assert.deepEqual(describeActivityParts(phrase)[0].actualSets!.sets,[]);
  const explicit=describeActivityParts('2 sets of 10 reps of bench press (50,55) lbs')[0].actualSets!.sets;assert.equal(explicit[1].loadUnit,'lb');assert.equal(explicit[1].unconfirmedLoad,undefined);
+});
+
+test('body-weight unit is an editable default; correcting its unit reinterprets reported numbers without changing sibling overrides',()=>{
+ const original=describeActivityParts('Ran 45 min then did 5 sets of 10 reps of bench press (50,50,55,55,60)');
+ for(const unit of ['kg','lb'] as const){const draft=defaultActivityLoadUnits(structuredClone(original),unit),sets=draft[1].actualSets!.sets;assert.equal(unresolvedActivityLoads(draft),0);assert.ok(sets.every(set=>set.defaultedLoadUnit&&set.loadUnit===unit));assert.deepEqual(sets.map(set=>set.unconfirmedLoad),[50,50,55,55,60]);sets[3]={...sets[3],reps:9,unconfirmedLoad:60};sets[0]=confirmDraftLoadUnit(sets[0],unit==='kg'?'lb':'kg');assert.equal(sets[0].loadKg,unit==='kg'?50*0.45359237:50);assert.equal(sets[1].loadUnit,unit);
+ const canonical=canonicalActivityParts(draft),saved=activitySchema.parse({...activityProjection(canonical),components:{version:1,items:canonical},startedAt:'2026-10-30T12:00:00Z'});assert.equal(saved.minutes,45);assert.deepEqual(saved.components!.items[1].actualSets!.sets.map(set=>set.id),original[1].actualSets!.sets.map(set=>set.id));assert.equal(saved.components!.items[1].actualSets!.sets[3].loadKg,unit==='kg'?60:60*0.45359237);assert.equal(JSON.stringify(saved).includes('defaultedLoadUnit'),false);assert.equal(JSON.stringify(saved).includes('unconfirmedLoad'),false);assert.strictEqual(defaultActivityLoadUnits(draft,unit==='kg'?'lb':'kg'),draft,'Later preference refresh does not silently overwrite a visible draft');}
+ assert.throws(()=>canonicalActivityParts(original),/Resolve reported load units/);assert.equal(unresolvedActivityLoads(original),5);
+ const explicit=describeActivityParts('1 set of 10 reps of bench press for 50 lb');assert.strictEqual(defaultActivityLoadUnits(explicit,'kg'),explicit);assert.equal(explicit[0].actualSets!.sets[0].loadUnit,'lb');
 });

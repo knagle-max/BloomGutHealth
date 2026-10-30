@@ -1,5 +1,7 @@
 # Unitless parenthesized Exercise regression — local synthetic evidence
 
+Historicale320e0c behavior. Owner later directed use of saved body-weight unit as an editable default; see ../exercise-load-unit-default-20261030/README.md. Parser-stage unknown units remain raw source facts; normal UI now defaults without extra confirmation.
+
 Requirement: architect d166612, exact owner input `Ran 45 min then did 5 sets of 10 reps of bench press (50,50,55,55,60)`.
 
 Before: actual App and HTTP handlers, with four browser source files pinned to d166612: shared/activity-capture.ts, ActivityLog.tsx, ActivityReview.tsx, ActivitySetEditor.tsx. Existing backend/other UI remains candidate source. This is an explicitly scoped source-family override, **not** a clean entire-repository historical build. Running45min and named bench Check sets with zero child rows reproduced; no activity created.
