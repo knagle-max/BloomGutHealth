@@ -7,6 +7,7 @@ export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd}:
  const append=()=>onChange({version:1,sets:[...value.sets,{id:crypto.randomUUID(),exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});
  return <div className="space-y-3">
   <p className="panel-note">Source-described values are starting values, not verified performance. Edit each set; completion is never inferred.</p>
+  {!value.sets.length&&<p role="status">No sets recorded. Add each reported set; leave unknown amounts blank. Check the original description when counts or amounts could not be matched.</p>}
   {value.sets.map((set,index)=>{const shownUnit=set.loadUnit||unit;return <fieldset key={set.id} data-set-id={set.id} className="activity-set-row"><legend>Set {index+1}</legend>
    {set.exercise.toLowerCase()!==exercise.toLowerCase()&&<p className="panel-note">Recorded exercise: {set.exercise}</p>}
    <div className="activity-set-fields">

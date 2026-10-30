@@ -1,4 +1,5 @@
 import type {Activity,ActualSets,ActivityComponent} from './experience';
+import {displayToKg} from './display-units';
 
 /** App-authored menu labels, not a licensed MET or physiological taxonomy. */
 export const activityChoices = [
@@ -24,11 +25,23 @@ export function describeActivity(description:string) {
  const distanceM=distance?bounded(String(Number(distance[1])*(/^k/i.test(distance[2])?1000:1)),1000000):null;
  const reordered=description.trim().match(/^(?:did\s+)?(\d+)\s+sets?\s+of\s+(.{1,120}?)\s+at\s+(\d+(?:\.\d+)?)\s*kg\s+for\s+(\d+)\s+reps?[.!]?$/i);
  const strength=reordered?[reordered[0],reordered[1],reordered[4],reordered[2],reordered[3]]:description.trim().match(/^(\d+)\s*(?:sets?\s+of|[x×])\s*(\d+)\s+(.{1,120}?)\s+at\s+(\d+(?:\.\d+)?)\s*kg[.!]?$/i);
- let actualSets:ActualSets|undefined;
- if(strength){const count=bounded(strength[1],100,true),reps=bounded(strength[2],1000,true),loadKg=bounded(strength[4],2000);if(count&&reps!==null&&loadKg!==null){actualSets={version:1,sets:Array.from({length:count},()=>({exercise:strength[3],reps,loadKg,completed:false}))};choice=activityChoices[5];}}
- const capture:NonNullable<Activity['capture']>={version:1,method:'describe',description,activityId:choice.id,interpretation:choice.id==='other'?'unclassified':'rule-suggestion'};
- return {title:choice.label,minutes:minutes&&minutes>0?minutes:null,distanceM,actualSets,capture,
-  notice:choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};
+ const listed=description.trim().match(/^(?:did\s+)?(\d+)\s+sets?\s+of\s+(\d+)\s+reps?\s+of\s+(.{1,120}?)\s+(?:for|at)\s+(.+?)\s*(kg|kgs|kilograms?|lb|lbs|pounds?)[.!]?$/i);
+ let actualSets:ActualSets|undefined,needsSetReview=false,namedTitle:string|undefined;
+ if(listed){
+  const count=bounded(listed[1],100,true),reps=bounded(listed[2],1000,true),unit=/^(lb|pound)/i.test(listed[5])?'lb' as const:'kg' as const;
+  const amounts=listed[4].split(',').map(value=>value.trim());
+  const loads=amounts.map(value=>/^\d+(?:\.\d+)?$/.test(value)?bounded(String(displayToKg(Number(value),unit)),2000):null);
+  namedTitle=listed[3].trim();choice=activityChoices[5];
+  if(count&&reps!==null&&loads.every(load=>load!==null)&&(loads.length===count||loads.length===1&&amounts.length===1)){
+   actualSets={version:1,sets:Array.from({length:count},(_,index)=>({exercise:namedTitle!,reps,loadKg:loads.length===1?loads[0]:loads[index],loadUnit:unit,completed:false}))};
+  }else{needsSetReview=true;actualSets={version:1,sets:[]};}
+ }else if(strength){const count=bounded(strength[1],100,true),reps=bounded(strength[2],1000,true),loadKg=bounded(strength[4],2000);if(count&&reps!==null&&loadKg!==null){actualSets={version:1,sets:Array.from({length:count},()=>({exercise:strength[3],reps,loadKg,completed:false}))};choice=activityChoices[5];}}
+ // A named but unsupported strength phrase must lead to manual correction, not a generic success.
+ if(!actualSets&&choice.id==='strength'&&/\bbench press\b/i.test(description)){namedTitle='Bench press';needsSetReview=true;actualSets={version:1,sets:[]};}
+ const title=namedTitle?namedTitle.charAt(0).toUpperCase()+namedTitle.slice(1)+(needsSetReview?' — check sets':''):choice.label;
+ const capture:NonNullable<Activity['capture']>={version:1,method:'describe',description,activityId:choice.id,interpretation:choice.id==='other'||needsSetReview?'unclassified':'rule-suggestion'};
+ return {title,minutes:minutes&&minutes>0?minutes:null,distanceM,actualSets,capture,
+  notice:needsSetReview?'Set counts or amounts could not be matched. Add or correct each set; the original description is retained.':choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};
 }
 
 export function activityAmountText(activity:Pick<Activity,'minutes'|'distanceM'|'components'>){
@@ -45,7 +58,7 @@ export function describeActivityParts(description:string,id=()=>crypto.randomUUI
  const chunks=description.split(/,\s*(?:then\s+)(?:did\s+)?|\s+then\s+(?:did\s+)?/i).map(value=>value.trim()).filter(Boolean);
  if(!chunks.length||chunks.length>20)throw Error('Review one to twenty activities at a time.');
  return chunks.map(chunk=>{const parsed=describeActivity(chunk),sets=parsed.actualSets;
-  return {id:id(),title:sets?.sets[0]?.exercise?sets.sets[0].exercise.charAt(0).toUpperCase()+sets.sets[0].exercise.slice(1):parsed.title,activityId:parsed.capture.activityId,match:parsed.capture.interpretation==='unclassified'?'unclassified':'suggested',minutes:parsed.minutes,distanceM:parsed.distanceM,...(sets?{actualSets:{version:1 as const,sets:sets.sets.map(set=>({...set,id:id(),loadUnit:'kg' as const}))}}:{})};
+  return {id:id(),title:sets?.sets[0]?.exercise?sets.sets[0].exercise.charAt(0).toUpperCase()+sets.sets[0].exercise.slice(1):parsed.title,activityId:parsed.capture.activityId,match:parsed.capture.interpretation==='unclassified'?'unclassified':'suggested',minutes:parsed.minutes,distanceM:parsed.distanceM,...(sets?{actualSets:{version:1 as const,sets:sets.sets.map(set=>({...set,id:id(),loadUnit:set.loadUnit||'kg' as const}))}}:{})};
  });
 }
 /** Compatibility projections; the child observations remain the source of truth. */

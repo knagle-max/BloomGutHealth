@@ -11,7 +11,7 @@ test('local activity review parses only explicit bounded reported amounts; ambig
  assert.equal(describeActivity('Played ball').capture.interpretation,'unclassified');
  const strength=describeActivity('3 sets of 8 bench press at 60 kg');assert.equal(strength.minutes,null);assert.equal(strength.actualSets?.sets.length,3);assert.equal(strength.actualSets?.sets[0].loadKg,60);assert.equal(strength.actualSets?.sets[0].completed,false);
  assert.equal(describeActivity('3 x 8 bench at 60 kg').capture.activityId,'strength');assert.equal(describeActivity('3 x 8 bench at 60 kg').actualSets?.sets[0].exercise,'bench');
- assert.equal(describeActivity('3000 sets of 8 bench press at 60 kg').actualSets,undefined);
+ assert.deepEqual(describeActivity('3000 sets of 8 bench press at 60 kg').actualSets?.sets,[]);
  const activity=activitySchema.parse({title:strength.title,startedAt:'2026-10-30T12:00:00Z',minutes:null,actualSets:strength.actualSets,capture:strength.capture});assert.equal(activity.effort,null);assert.equal('calories' in activity,false);assert.equal('heartRate' in activity,false);assert.equal(activityAmountText(activity),'Duration not recorded');assert.equal(activityAmountText({...activity,distanceM:0}),'Duration not recorded · 0 km reported');
  assert.equal(activitySchema.safeParse({...activity,capture:{...activity.capture,clinicalReadiness:100}}).success,false);
 });
@@ -29,4 +29,19 @@ test('v1.2 compound review keeps parents, individual set identities, unknown dur
  const duplicate=structuredClone(parts);duplicate[1].actualSets!.sets[1].id=duplicate[1].actualSets!.sets[0].id;assert.equal(activityComponentsSchema.safeParse({version:1,items:duplicate}).success,false);
  const planned=structuredClone(parts);planned[1].actualSets!.sets[0].state='planned';planned[1].actualSets!.sets[0].completed=true;assert.equal(activityComponentsSchema.safeParse({version:1,items:planned}).success,false);
  const partial=structuredClone(parts);partial[1].actualSets!.sets[0].reps=null;partial[1].actualSets!.sets[0].loadKg=null;assert.equal(activityComponentsSchema.safeParse({version:1,items:partial}).success,true);
+});
+
+test('owner v1.3 five-set pounds list preserves order, repeated loads, unknown run duration and independent stable rows',()=>{
+ const source='Ran then did 5 sets of 10 reps of bench press for 50,50,50,55,55 lbs';
+ const parts=describeActivityParts(source);assert.equal(parts.length,2);assert.equal(parts[0].title,'Running');assert.equal(parts[0].minutes,null);assert.equal(parts[0].distanceM,null);
+ const bench=parts[1],sets=bench.actualSets!.sets;assert.equal(bench.title,'Bench press');assert.equal(sets.length,5);assert.deepEqual(sets.map(set=>set.reps),[10,10,10,10,10]);assert.deepEqual(sets.map(set=>set.loadUnit),['lb','lb','lb','lb','lb']);
+ assert.deepEqual(sets.map(set=>Number((set.loadKg!/0.45359237).toFixed(3))),[50,50,50,55,55]);assert.ok(sets.every(set=>!set.completed));assert.equal(new Set(sets.map(set=>set.id)).size,5);
+ const saved=activitySchema.parse({startedAt:'2026-10-30T12:00:00Z',capture:{version:1,method:'describe',description:source,activityId:'other',interpretation:'rule-suggestion'},components:{version:1,items:parts},...activityProjection(parts)});
+ const original=structuredClone(saved);saved.components!.items[1].actualSets!.sets[3]={...sets[3],reps:9,loadKg:60*0.45359237};
+ const reloaded=activitySchema.parse(JSON.parse(JSON.stringify({...saved,...activityProjection(saved.components!.items)})));assert.equal(reloaded.minutes,null);assert.equal(reloaded.capture!.description,source);assert.equal(reloaded.components!.items[1].actualSets!.sets[3].id,sets[3].id);assert.equal(reloaded.components!.items[1].actualSets!.sets[3].reps,9);
+ for(const index of [0,1,2,4])assert.deepEqual(reloaded.components!.items[1].actualSets!.sets[index],original.components!.items[1].actualSets!.sets[index]);
+ for(const text of ['5 sets of 10 reps of bench press for 50,50,55 lbs','5 sets of 10 reps of bench press for 50,50,50,55,55,60 lbs','5 sets of 10 reps of bench press for -50,50,50,55,55 lbs','5 sets of 10 reps of bench press for 50,,50,55,55 lbs','5 sets of 10 reps of bench press for 50,50,50,55,99999 lbs','five sets of bench press']){
+  const result=describeActivityParts(text)[0];assert.equal(result.title,'Bench press — check sets',text);assert.equal(result.match,'unclassified');assert.deepEqual(result.actualSets!.sets,[]);
+ }
+ const uniform=describeActivityParts('5 sets of 10 reps of bench press at 50 lb')[0];assert.equal(uniform.actualSets!.sets.length,5);assert.equal(uniform.actualSets!.sets[4].loadUnit,'lb');
 });

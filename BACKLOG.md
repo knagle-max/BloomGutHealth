@@ -860,3 +860,15 @@ FLAGSHIP-CORE-TESTABILITY checkpoint: local implementation/tests complete;451 fu
 |FLAGSHIP-ATHLETE-PREVIOUS-SET|v0.5|P1; existing encrypted owned session/set reader|Each set displays same-name/same-ordinal completed prior actual data with source date/unit; incomplete/planned/cancelled/future/self excluded, no autofill, draft date changes cutoff, stale/paused/error source withdraws references|IMPLEMENTED_AND_TESTED local; independent acceptance open|6 focused tests/types/build/source guards; actual App/API/encryptedPGlite lost-ack/save/correct/reload/previous/date/self/pause/owner/320px PASS. Commit: this change; exact managed CI/Render pending|
 
 Seven-day activity summary f719b69 exact Actions40997342496 SUCCESS, RenderLIVE verified. Updated owner objective: finish actionable v0.5 first, then automatically reconcile/begin approved independent v0.6 work; unresolved v0.5 user-input gates carry forward. No version-complete claim while actionable requirements remain.
+
+## 2026-10-30 — owner-observed Exercise five-set input / v0.5 P0
+
+Architect17af0e1/1bd3963 received during previous-set publication; merged normally in1af9a53, no reset/force. Highest-priority correctness repair supersedes next Biology UI task.
+
+|ID|Version|Priority / dependency|Acceptance|Status|Evidence|
+|---|---|---|---|---|---|
+|EXAI-PARSER-FIVE-SET|v0.5|P0; existing canonical child records/shared Review|Exact run+bench input→Running unknown + named Bench5×10 with50/50/50/55/55lb; Set4-only9×60lb persists across reload/modes; count mismatch directs manual correction, no invented amounts|IMPLEMENTED_AND_TESTED local; managed publication pending|6 focused parser/schema/HTTP/encrypted tests/types/build/source guards; actual browser parser→UI→owned encrypted save→reload→both modes/stable IDs/original source overrides/keyboard mismatch fallback/320/390 light-dark PASS. Broader suite running; commit this batch|
+|EXAI-V13-ORIGINAL-ASSET|v0.5|P1; actual original source transfer|Import original ZIP+manifest and compare original exercise-review-per-set.svg against actual hosted build|BLOCKED_TECHNICAL|v1.3 named in handoff but absent from both uploaded attachments/repo/available connected file tools. v1.2 originals preserved; no regeneration or fabricated transfer. Does not block exact parser repair|
+|EXAI-V13-HOSTED-ACCEPTANCE|v0.5|P1; hosted authenticated access/independent reviewers|Hosted screenshot plus Branding/UT/VoiceOver/physical/200% acceptance pinned to SHA|BLOCKED_TECHNICAL for hosted capture; independent review open|Managed environment policy does not allow direct preview host; no authenticated browser tool available. Local synthetic packet docs/review/exercise-five-set-20261030 is explicitly separate|
+
+EXAI-PARSER-FIVE-SET final local milestone: full460/460 Node tests PASS178095ms, types/build/source guards PASS. Exact owner-input real encrypted browser PASS; original vs corrected selective packet saved. Publish this batch, then verify exact managed CI and existing Render preview; no original-v1.3 transfer or independent acceptance inferred.
