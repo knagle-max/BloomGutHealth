@@ -34,6 +34,7 @@ export default function DeviceObservations() {
  return <section className="bloom-panel space-y-3" aria-labelledby="device-observation-title">
    <h2 id="device-observation-title">Device observations</h2>
    <p className="panel-note">Imported source measurements are displayed individually. Overlapping records are not combined into daily totals. A device connection is not currently available in this browser.</p>
+   <a className="text-link inline-flex min-h-11 items-center" href="/profile#connections">Connections & stored source controls</a>
    <label className="block">Measurement
      <select className="bloom-input" value={kind} onChange={e=>{setKind(e.target.value);setPage(0);}}>
        <option value="all">All measurements</option>

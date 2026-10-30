@@ -4,6 +4,9 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
+- Connections hub implemented/tested locally; verify commit/push and managed CI next. Gut7d58a45 exact managed CI41080306472 SUCCESS. Render latest metadata now shows incoming Architect3ef48885 LIVE; fetch/normal merge preserves source. NEXT: inspect new approved microbial design audit handoff and reconcile app-wide route matrix against actual remaining requirements before v0.6. Do not redo completed UI.
+
+
 - Current Gut reports UI: source/quantified data hierarchy, optional research/metadata disclosures and real known-empty/no-test path.8focused/type/build/source guards, current-context/zero/paused/error/retry/5width light-dark, cohort reference/withheld-output and actual HTTP/PGlite import/date/owner journeys PASS. Packet gut-report-ui-20261030; commit/push then CI/Render next.
 - NEXT UI: Connections overview under canonical Profile using existing GET /api/health-sources; expose truthful not-connected/stored-consent distinction and unknown sync/OS permissions, manual paths, relocate existing source data controls rather than duplicate. Native/browser split is already RESOLVED_USER_DECISION for v0.5 (PWA-first); native clients are later milestones. Preserve no-fake-connectivity and permission gates. Then reconcile remaining route/requirement work before v0.6.
 

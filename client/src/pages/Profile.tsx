@@ -1,5 +1,5 @@
 import CompanionHero from '@/components/CompanionHero';
-import {UserRound, Ruler, Utensils, Shield, ChevronRight} from 'lucide-react';
+import {UserRound, Ruler, Utensils, Shield, Cable, ChevronRight} from 'lucide-react';
 import FoodRegionSettings from "@/components/FoodRegionSettings";
 import {measurementUnitSuggestion} from "@shared/measurement-suggestions";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
@@ -9,6 +9,7 @@ import AccountDataExport from "@/components/AccountDataExport";
 import { useExperience } from "@/lib/experience";
 import { formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
 import type { DisplayUnits } from "@shared/experience";
+import ConnectionsOverview from "@/components/ConnectionsOverview";
 import ExperienceDataControls from "@/components/ExperienceDataControls";
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -126,7 +127,7 @@ export default function Profile({
     const focus=target instanceof HTMLDetailsElement?target.querySelector<HTMLElement>('summary'):target.querySelector<HTMLElement>('h2')||target;
     if(focus){if(!focus.matches('summary,button,a,input,select,textarea'))focus.tabIndex=-1;focus.focus({preventScroll:true});}target.scrollIntoView({block:'start'});
   };
-  useEffect(()=>{const openHash=()=>{const id=window.location.hash.slice(1);if(['measurement-units','nutrition-profile','food-preferences','privacy'].includes(id))requestAnimationFrame(()=>openSection(id));};openHash();window.addEventListener('hashchange',openHash);return()=>window.removeEventListener('hashchange',openHash);},[]);
+  useEffect(()=>{const openHash=()=>{const id=window.location.hash.slice(1);if(['measurement-units','nutrition-profile','food-preferences','privacy','connections'].includes(id))requestAnimationFrame(()=>openSection(id));};openHash();window.addEventListener('hashchange',openHash);return()=>window.removeEventListener('hashchange',openHash);},[]);
   return (
     <main className="science-page profile-workspace space-y-5">
       <div className="science-heading">
@@ -138,6 +139,7 @@ export default function Profile({
         {id:'nutrition-profile',title:'Your profile',note:'Measurements and everyday activity',Icon:UserRound},
         {id:'measurement-units',title:'Display units',note:'Choose kg, lb and other units independently',Icon:Ruler},
         {id:'food-preferences',title:'Food preferences',note:'Review your saved preferences and restrictions',Icon:Utensils},
+        {id:'connections',title:'Connections',note:'Device availability and stored source records',Icon:Cable},
         {id:'privacy',title:'Privacy & data',note:'Export records or manage account data',Icon:Shield},
       ].map(({id,title,note,Icon})=><button type="button" key={id} onClick={()=>openSection(id)}><Icon size={22} aria-hidden="true"/><span><strong>{title}</strong><small>{note}</small></span><ChevronRight size={18} aria-hidden="true"/></button>)}</nav>
       <form
@@ -254,6 +256,7 @@ export default function Profile({
               {unitsError&&<p role="alert">Saved preferences could not be checked or updated: {unitsError}</p>}
             </fieldset></div></details>
       <section id="food-preferences" className="profile-preference-section"><DietaryPreferenceSummary /></section>
+      <details id="connections" className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Connections</strong><span>Device availability and stored source records</span></summary><div className="pt-4"><ConnectionsOverview/></div></details>
       <details className="bloom-panel profile-section workspace-disclosure" id="privacy" onToggle={e=>{if(e.target===e.currentTarget&&!e.currentTarget.open)e.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(details=>details.open=false);}}><summary><strong role="heading" aria-level={2}>Privacy & data controls</strong><span>Review exports and account deletion</span></summary><div className="space-y-3 pt-4">
         <h2>Manage your account records</h2>
         <p>Download account records here. Separate deletion controls for training and biology remain available below.</p>

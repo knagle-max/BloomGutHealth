@@ -19,6 +19,10 @@ test("health source routes enforce authentication, export account scope and expl
  const send=(path:string,method="GET",user="a",confirm?:string)=>fetch(base+"/api/health-sources"+path,{method,headers:{"x-test-user":user,...(confirm?{"x-bloom-confirm":confirm}:{})}});
  try {
    assert.equal((await send("/export","GET","")).status,401);
+   assert.equal((await send("", "GET", "")).status,401);
+   const status=await send("");assert.equal(status.headers.get("cache-control"),"no-store");
+   const availability=await status.json();assert.deepEqual(availability.connections.map((s:any)=>[s.provider,s.state,s.consentRecorded]),[["apple_health","not_connected",true],["health_connect","not_connected",false]]);
+   assert.ok(availability.connections.every((s:any)=>!s.lastSyncAt));
    const observations=await (await send("/observations")).json();
    assert.equal(observations.returned,1);
    assert.equal(observations.observations[0].marker,"a");
