@@ -9,7 +9,7 @@ export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd}:
  const change=(id:string,patch:Partial<ActivityDraftSet>)=>onChange({version:1,sets:value.sets.map(set=>set.id===id?{...set,...patch}:set)});
  const unresolved=value.sets.filter(set=>set.unconfirmedLoad!==undefined&&!set.loadUnit).length;
  const defaulted=value.sets.filter(set=>set.defaultedLoadUnit);
- const append=()=>onChange({version:1,sets:[...value.sets,{id:crypto.randomUUID(),exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});
+ const append=()=>{const id=crypto.randomUUID();setEditing(previous=>new Set([...Array.from(previous),id]));onChange({version:1,sets:[...value.sets,{id,exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});requestAnimationFrame(()=>document.getElementById(`set-editor-${id}`)?.querySelector('input')?.focus());};
  return <div className="space-y-3">
   <p className="panel-note">Source-described values are starting values, not verified performance. Edit each set; completion is never inferred.</p>
   {!value.sets.length&&<p role="status">No sets recorded. Add each reported set; leave unknown amounts blank. Check the original description when counts or amounts could not be matched.</p>}
@@ -22,7 +22,7 @@ export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd}:
      <span className="activity-set-number">{number}</span><span>{set.reps===null?'—':set.reps}<small> reps</small></span><span>{amount===null?'—':amount}<small>{amount===null?'':unconfirmed?' ?':` ${shownUnit}`}</small>{unconfirmed&&<span className="activity-set-review" aria-label="Load unit needs review">!</span>}</span>
      <button type="button" className="activity-set-edit" aria-label={`${description}, edit set`} aria-expanded={open} aria-controls={`set-editor-${set.id}`} onClick={()=>setEditing(previous=>{const next=new Set(previous);if(open)next.delete(set.id!);else next.add(set.id!);return next;})}>{open?<ChevronUp size={16} aria-hidden="true"/>:<ChevronDown size={16} aria-hidden="true"/>}<span className="sr-only">Edit</span></button>
     </div>
-    <fieldset id={`set-editor-${set.id}`} hidden={!open} className="activity-set-detail"><legend>Edit set {number}</legend>
+    <fieldset id={`set-editor-${set.id}`} hidden={!open} className="activity-set-detail" onInvalidCapture={event=>{const target=event.target as HTMLInputElement;setEditing(previous=>new Set([...Array.from(previous),set.id!]));requestAnimationFrame(()=>target.focus());}}><legend>Edit set {number}</legend>
    {set.exercise.toLowerCase()!==exercise.toLowerCase()&&<p className="panel-note">Recorded exercise: {set.exercise}</p>}
    <div className={unconfirmed?"activity-set-fields activity-set-needs-unit":"activity-set-fields"}>
     <label>Reps<input aria-label={`Reps for set ${index+1}`} className="bloom-input w-full" type="number" min={0} max={1000} step={1} value={set.reps??''} onChange={e=>change(set.id!,{reps:e.target.value===''?null:Number(e.target.value)})}/></label>

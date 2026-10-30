@@ -224,3 +224,6 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 .activity-row-status[data-needs-review] { border:1px solid #946300; color:#805600; border-radius:8px; padding:4px; }
 .dark .activity-set-review,.dark .activity-row-status[data-needs-review] { color:#f2c66d; border-color:#f2c66d; }
+
+.weekly-review-workspace .science-heading h1 { font-family:Georgia,serif; font-weight:500; }
+.weekly-review-workspace .workspace-disclosure > summary { min-height:44px; align-content:center; }

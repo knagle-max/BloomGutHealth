@@ -1613,7 +1613,7 @@
   "sourceHashes": {
     "client/src/App.tsx": "6932b9e8cd78bc33a5ad41c9a344a18a7ed3e7528570e4bff3b206992b2e1320",
     "client/src/components/ActivityReview.tsx": "de0ed84ca4206c385ba13c013226110a34456aec94e5b9a6efe1df44f7c8b5df",
-    "client/src/components/ActivitySetEditor.tsx": "4406bcaefb18eef5b4578f25cfdb1e6869c845a503485ab449fa0dbc20e71e0b",
+    "client/src/components/ActivitySetEditor.tsx": "80a461adc7ce82174ce7c2c85bf1161d4af74f87ecf6c504fcda3bc99568b521",
     "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
