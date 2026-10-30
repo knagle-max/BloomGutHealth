@@ -1615,7 +1615,7 @@
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
     "client/src/components/AthleteProfileForm.tsx": "7c747a28affa3f21ae202db7df428210748ed8723be023ecdff30a4111d5e443",
-    "client/src/components/BiologyHome.tsx": "4cc8efb92a99d2720f8325b7578c7d253da59c2695bc83ca01070f40df018363",
+    "client/src/components/BiologyHome.tsx": "b405b2a0e02bfafa9a0b0fdbe2685970deff675c9c2edcaca407758198470654",
     "client/src/components/CompanionHero.tsx": "1eeb9520a1cec08d8fb22a515414f868bb857ca61c193002a824151a87164ef9",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "aae960f39fd5e1d86ebdec46502ac20e9390b8344389cf005ed953e33456f217",

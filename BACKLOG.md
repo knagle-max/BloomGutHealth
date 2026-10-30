@@ -872,3 +872,9 @@ Architect17af0e1/1bd3963 received during previous-set publication; merged normal
 |EXAI-V13-HOSTED-ACCEPTANCE|v0.5|P1; hosted authenticated access/independent reviewers|Hosted screenshot plus Branding/UT/VoiceOver/physical/200% acceptance pinned to SHA|BLOCKED_TECHNICAL for hosted capture; independent review open|Managed environment policy does not allow direct preview host; no authenticated browser tool available. Local synthetic packet docs/review/exercise-five-set-20261030 is explicitly separate|
 
 EXAI-PARSER-FIVE-SET final local milestone: full460/460 Node tests PASS178095ms, types/build/source guards PASS. Exact owner-input real encrypted browser PASS; original vs corrected selective packet saved. Publish this batch, then verify exact managed CI and existing Render preview; no original-v1.3 transfer or independent acceptance inferred.
+
+|ID|Version|Priority / dependency|Acceptance|Status|Evidence|
+|---|---|---|---|---|---|
+|BIOLOGY-OVERVIEW-SOURCE-COUNT|v0.5|P1 source truth; existing report projection|Count all active source results (confirmed history + pending + source-only); raw-only history never says no bloodwork. Keep provisional/source-only labels and original source navigation, no clinical promotion|IMPLEMENTED_AND_TESTED local|Actual precision handlers/App empty/raw-only/provisional/mixed4results from1latest-marker scenario, both modes, keyboard source access/paused withdrawal/320/390/no writes PASS; types/build/source guards PASS. Commit this batch; managed verification pending|
+
+EXAI-PARSER-FIVE-SET2d45f8b925e91ca711992cb3f25bd326536766bb pushed; exact Renderdep-dbi140rm8hqs73allls0 LIVE, Actions40998831842 IN_PROGRESS. Includes previous-set013e850 and preserved architect merge1af9a53. No main/production/new infrastructure change.
