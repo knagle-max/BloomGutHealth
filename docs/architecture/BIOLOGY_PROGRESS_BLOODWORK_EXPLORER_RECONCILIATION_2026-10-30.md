@@ -1,0 +1,30 @@
+# Bloom — Architect reconciliation: Biology / Progress consolidation and expandable bloodwork explorer
+Date: 2026-10-30 | Status: APPROVED WITH SCIENTIFIC CONDITIONS, not implemented/deployed/accepted.
+
+## Reviewed source handoffs
+- UX/User Testing: `Bloom_User_Testing_Biology_Progress_Consolidation_2026-10-30.md`, UT-BIOPROG-2901–2907.
+- Nutrition & Biology: `Bloom_Biology_Progress_Explorer_Review_2026-10-30.md`, BIO-BIOPROG-3001–3004.
+- Existing earlier Branding & UX bloodwork visual handoff and source grouping amendment (2026-10-25) remain applicable pending new specific visual contract; do not silently claim newer Branding design signoff.
+
+## Decision: one canonical user journey, no duplicate biomarker data
+My Biology → Bloodwork owns import, source/date/unit review, edits and corrections. **Progress → Biology owns the single bloodwork trend explorer**, with dynamically grouped categories → marker rows → expanded current `LabTrend`/historical chart and contextual education. My Biology → Progress should replace/demote its duplicate `Repeatable biomarkers` list with a concise direct link to the canonical explorer, supporting individual marker deep links and return-to-source. Preserve independent body check-in editing. Reuse `PrecisionNutrition.tsx`, `Progress.tsx`, `LabTrend.tsx`, current canonical active lab observations, scientific definitions, normalized unit and immutable source revision services; no parallel trend engine or second source registry.
+
+## UX requirements (UT-BIOPROG-2901–2907)
+- Initial navigational group candidates: Heart & cholesterol, Blood sugar & insulin, Liver & biliary, Kidney & electrolytes, Complete blood count, Iron & blood nutrients, Hormones & thyroid, Inflammation & immunity, Bone & micronutrients, **Other / needs identification**. Category labels are navigation, not diagnoses; use reviewed versioned marker/alias taxonomy, allow multi-context placement without duplicated underlying observations, preserve lab-original section headings/order independently.
+- Default collapsed, expand category then specific marker; read dynamic counts of actual available markers/with history, not fictitious completeness. All supported and source-only/unknown markers accessible; no hard-coded 92-marker or six-date limit.
+- Expanded detail includes `What this measures`, `Latest result`, `Recorded direction`, `What this might mean`, `Research on influences` and optional `Evidence & original report`. For unavailable approved interpretation, show actual result and `Interpretation not yet reviewed`, never invented science.
+- Charts: real date/value/unit, accessible text alternative and source drilldown, touch/keyboard/VoiceOver at 320px, 200% zoom, light/dark/reduced motion; no invented intervals, artificially alarming axes or categorical moralized red/green trend.
+- Keep report source/date/unit/specimen/method/lab/ref range visible or discoverable and editable, with links returning to the current canonical observation. Keep material clinically relevant warnings near results, not repetitive blanket disclaimers.
+- Editing/deleting/reimporting, date/unit correction and source revision must invalidate affected projections; account switches, partial failures and disabled sources cannot reveal stale or cross-account values.
+
+## Biology conditions (BIO-BIOPROG-3001–3004)
+- Source-linked, versioned marker-specific interpretation dossiers: what is measured, specimen/method, known confounders, reference interval **versus** risk threshold **versus** therapeutic target, applicable human evidence, uncertainty, reviewer/date. Prioritize common markers; do not block UI waiting for complete curated coverage.
+- Distinguish **numeric movement** (show when analyte, specimen and units compatible) from **analytically comparable change** (method/assay/variation) and **clinical meaning** (needs individualized review). Never suppress numerical direction only due to missing fasting or some clinical details when numeric values are compatible. Do not assert meaningful improvement from direction alone.
+- LDL 3.58→3.10 mmol/L can show numeric decrease without implying risk resolved or causality; ferritin 20→35 and TSH changes are not universally good; ALT from differing labs needs comparison caveats. Never use an all-marker health score as a substitute for source-specific findings.
+- No AI-authored reference intervals, disease diagnosis, unapproved triage/urgency, medication advice or treatment target. Clinician-discussion guidance and any high-consequence escalation require the existing independently reviewed clinical/legal rules. An apparently improving other marker must not hide a concerning observation.
+- Original results, units, same-day separate occurrences, lab-specific values/ranges and immutable revision lineage are preserved. Synthetic 92 × six dataset only tests scale, not validated test-count limit.
+
+## Execution and acceptance
+**P1 usability/UI:** as Biology/Progress slice of owner-approved full flagship UI, implement category/marker expandable explorer and deep links using existing code first. Test real logged-in source edit → Progress refetch, back navigation and current date/source. Maintain existing Food/Exercise/Today active priority; repair real P0 misinterpretation, access or source corruption promptly. **P1 science:** add reviewed interpretation dossiers progressively. Verify real 320/375/390px, keyboard and screen-reader; 92-marker synthetic, unknown markers, same-day occurrences, LDL/ferritin/TSH/ALT and date/unit/reimport regression. Report exact code SHA, tests, live Render visuals and separately Branding/UX, Biology and User Testing acceptance. Proposed >=90% usability completion is not an observed metric.
+
+**Status:** specialist proposals reconciled; no production implementation, signoff or new UI design approval inferred.
