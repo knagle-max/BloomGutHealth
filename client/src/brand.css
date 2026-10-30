@@ -268,3 +268,9 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 .lab-point-inner { position:absolute; inset:0 22px; }
 .lab-plot-dates { padding-inline:22px; }
+
+.gut-reports-workspace .science-heading h1 { font-family:Georgia,serif; font-weight:500; }
+.gut-report-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:16px 0; }
+.gut-report-facts dt { color:hsl(var(--muted-foreground)); font-size:14px; }
+.gut-report-facts dd { font-size:28px; line-height:1.25; font-weight:600; overflow-wrap:anywhere; }
+.gut-report-exploration > p,.gut-report-exploration > nav { margin-top:12px; }

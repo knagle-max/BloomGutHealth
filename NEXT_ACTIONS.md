@@ -4,6 +4,10 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
+- Current Gut reports UI: source/quantified data hierarchy, optional research/metadata disclosures and real known-empty/no-test path.8focused/type/build/source guards, current-context/zero/paused/error/retry/5width light-dark, cohort reference/withheld-output and actual HTTP/PGlite import/date/owner journeys PASS. Packet gut-report-ui-20261030; commit/push then CI/Render next.
+- NEXT UI: Connections overview under canonical Profile using existing GET /api/health-sources; expose truthful not-connected/stored-consent distinction and unknown sync/OS permissions, manual paths, relocate existing source data controls rather than duplicate. Native/browser split is already RESOLVED_USER_DECISION for v0.5 (PWA-first); native clients are later milestones. Preserve no-fake-connectivity and permission gates. Then reconcile remaining route/requirement work before v0.6.
+
+
 - Current LabTrend/source UI:44px native point buttons/readable axes/native selector/exact source focus and source/date-correction link; owned row resolver with reactive same-page query/Back/reload/missing-ID behavior. No clinical/value/unit/date/comparability changes. Full466/466 PASS175764ms,16focused/types/build/source guards and actual rendered canonical/both-mode/5width light-dark plus encrypted5-LDL/source-history/overview/Progress regressions PASS. Packet lab-point-source-ui-20261030; scoped source hashes/crops, not hosted/VoiceOver/independent approval. Commit/push then exact CI/Render next.
 - NEXT independent UI: Gut reports source-first/empty/loading/error and progressive advanced research controls. Preserve actual supplied reports/taxa/scores and current source withdrawal; no invented microbiome activity/food effects, no new provider/store. Use existing gut-report-current-context and report-date/import journeys. Then continue remaining full UI/criterion reconciliation before v0.6.
 

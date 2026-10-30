@@ -1,3 +1,4 @@
+import CompanionHero from '@/components/CompanionHero';
 import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
 import { useState } from "react";
@@ -37,23 +38,16 @@ export default function Microbiome() {
   const currentComparison=comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId)&&comparison.fetchStatus==="idle"&&!comparison.isError&&comparison.data?.sample?.id===comparisonId?comparison.data:undefined;
   const currentPrediction=prediction.fetchStatus==="idle"&&!prediction.isError?prediction.data:undefined;
   return (
-    <main className="science-page space-y-5">
+    <main className="science-page gut-reports-workspace space-y-5">
       <div className="science-heading">
         <p className="eyebrow">REPORTS & RESEARCH</p>
         <h1>Gut reports</h1>
         <p>
-          Understand what your report contains and what it means for everyday food choices.
+          Review your source values and what is missing. A gut report is optional.
         </p>
         <div className="flex flex-wrap gap-3">
-          <Link className="text-link" href="/upload">
-            Upload or enter a report
-          </Link>
-          <Link className="text-link" href="/health-insights">
-            Health Insights
-          </Link>
-          <Link className="text-link" href="/meal-planner">
-            Goal-based meals
-          </Link>
+          {(!currentSamples||sorted.length>0)&&<Link className="text-link" href="/upload">Upload or enter a report</Link>}
+          <details className="workspace-disclosure"><summary>Related tools</summary><div className="flex flex-wrap gap-3 pt-3"><Link className="text-link" href="/health-insights">Health Insights</Link><Link className="text-link" href="/meal-planner">Goal-based meals</Link></div></details>
         </div>
       </div>
       {samples.isError ? (
@@ -91,31 +85,12 @@ export default function Microbiome() {
               </p>
             </>
           ) : (
-            <p>
-              No reports yet. You can explore diet mechanisms and research
-              before testing.
-            </p>
+            <CompanionHero headingId="gut-report-empty-title" title="No gut report saved" eyebrow="OPTIONAL INFORMATION" reason="You can use your food journal and everyday goals without a test. A gut report is optional." actions={<Link className="hero-button" href="/upload">Add a report</Link>}><Link className="text-link" href="/nutrition">Review your food journal</Link></CompanionHero>
           )}
         </section>
       )}
-      <nav aria-label="Microbiome sections" className="precision-tabs">
-        {[
-          ["results", "Latest results"],
-          ["bacteria", "Bacteria"],
-          ["molecules", "Molecules"],
-          ["diet", "Diet insights"],
-          ["cohorts", "Cohorts"],
-        ].map(([id, label]) => (
-          <Button
-            key={id}
-            variant={tab === id ? "default" : "outline"}
-            aria-pressed={tab === id}
-            onClick={() => setTab(id)}
-          >
-            {label}
-          </Button>
-        ))}
-      </nav>
+      {!!sorted.length&&<nav aria-label="Microbiome sections" className="precision-tabs">{[["results","Latest results"],["bacteria","Bacteria"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav>}
+      <details className="workspace-disclosure gut-report-exploration"><summary>Explore food patterns & research</summary><p className="panel-note">Food-journal observations and research context are separate from measurements in your report.</p><nav aria-label="Related food and research views" className="precision-tabs">{[["diet","Diet insights"],["molecules","Molecules"],["cohorts","Cohorts"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav></details>
       {currentId && (results.isPending||results.fetchStatus!=="idle") && (
         <p role="status">Loading composition…</p>
       )}
@@ -134,24 +109,10 @@ export default function Microbiome() {
             {reportDateText(currentResults.sample)} ·{" "}
             {currentResults.sample.processingStatus}
           </p>
-          <p>{currentResults.sample.notes}</p>
-          <p>Reported taxa: {currentResults.bacterial_composition.length}</p>
-          <p>
-            Diversity index:{" "}
-            {currentResults.sample.diversityIndex ?? "Not computed"}
-          </p>
-          <p className="panel-note">Unsupported historical molecule estimates and recommendations are withheld. This does not mean no records were stored.</p>
-          <p className="panel-note">
-            Diversity is method-dependent and is not a universal health score.
-          </p>
-          {currentResults.analyses.map((a: any) => (
-            <p className="panel-note" key={a.id}>
-              {a.analysisType} · {a.modelVersion} ·{" "}
-              {a.analysisType === "reported-composition"
-                ? "Descriptive summary of supplied relative abundance; no biological prediction."
-                : "Historical analysis record; unsupported outputs are withheld."}
-            </p>
-          ))}
+          <p className="break-words whitespace-pre-wrap">{currentResults.sample.notes}</p>
+          <dl className="gut-report-facts"><div><dt>Quantified taxa</dt><dd>{currentResults.bacterial_composition.length}</dd></div><div><dt>Saved diversity index</dt><dd>{currentResults.sample.diversityIndex??"Not recorded"}</dd></div></dl>
+          <p className="panel-note">Saved values are not independently verified. Diversity is method-dependent and is not a universal health score.</p>
+          <details><summary>Methods & historical analysis limits</summary><p className="panel-note">Unsupported historical molecule estimates and recommendations are withheld. This does not mean no records were stored.</p>{currentResults.analyses.map((analysis:any)=><p className="panel-note" key={analysis.id}>{analysis.analysisType} · {analysis.modelVersion} · {analysis.analysisType==='reported-composition'?'Descriptive summary of supplied relative abundance; no biological prediction.':'Historical analysis record; unsupported outputs are withheld.'}</p>)}</details>
         </section>
       )}
       {tab === "results" &&

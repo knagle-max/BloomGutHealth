@@ -8,7 +8,7 @@ import {createServer} from 'vite';
 import {experienceSettingsSchema} from '../../shared/experience.ts';
 import {reportedAbundanceAnalysis,historicalAnalysisMetadata} from '../../server/analysis-boundary.ts';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
-const out=path.join(root,'docs/review/reported-cohort-20261024');await mkdir(out,{recursive:true});
+const out=process.env.BLOOM_REVIEW_OUTPUT||path.join(root,'docs/review/reported-cohort-20261024');await mkdir(out,{recursive:true});
 const baseline=execFileSync('git',['show','67cce8f:client/src/pages/Microbiome.tsx'],{cwd:root,encoding:'utf8'});
 const {chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');
 let browser;
@@ -34,8 +34,8 @@ try{
   });
   try{
    await page.goto('http://127.0.0.1:5202/microbiome');await page.getByRole('heading',{name:'Selected report',exact:true}).waitFor();
-   if(!before){await page.getByText('Unsupported historical molecule estimates and recommendations are withheld.',{exact:false}).waitFor();assert.equal(await page.getByText(/Stored molecule estimates:/).count(),0);await page.getByText('Descriptive summary of supplied relative abundance; no biological prediction.',{exact:false}).waitFor();}
-   const nav=page.getByRole('navigation',{name:'Microbiome sections'});await nav.getByRole('button',{name:'Cohorts',exact:true}).click();
+   if(!before){await page.getByText('Methods & historical analysis limits',{exact:true}).click();await page.getByText('Unsupported historical molecule estimates and recommendations are withheld.',{exact:false}).waitFor();assert.equal(await page.getByText(/Stored molecule estimates:/).count(),0);await page.getByText('Descriptive summary of supplied relative abundance; no biological prediction.',{exact:false}).waitFor();}
+   if(!before)await page.getByText('Explore food patterns & research',{exact:true}).click();const nav=page.getByRole('navigation',{name:before?'Microbiome sections':'Related food and research views'});await nav.getByRole('button',{name:'Cohorts',exact:true}).click();
    if(before){await page.getByText('Original experimental cohort comparison',{exact:true}).click();await page.getByRole('button',{name:'Run experimental report model',exact:true}).waitFor();}
    else{await page.getByRole('heading',{name:'Research populations',exact:true}).waitFor();assert.equal(await page.getByText('Original experimental cohort comparison',{exact:true}).count(),0);assert.equal(await page.getByRole('checkbox').count(),0);assert.equal(await page.getByRole('button',{name:'Run experimental report model',exact:true}).count(),0);assert.ok(await page.getByRole('link',{name:'Primary study',exact:true}).count()>0);}
    await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo(0,0);});await page.screenshot({path:path.join(out,before?'before-mobile.png':'after-mobile.png'),fullPage:true});
@@ -43,7 +43,7 @@ try{
     const swatch=await nav.getByRole('button',{name:'Cohorts',exact:true}).evaluate(node=>({color:getComputedStyle(node).color,background:getComputedStyle(node).backgroundColor}));console.log('Selected cohort navigation colors',swatch);
     await page.getByRole('heading',{name:'Research populations',exact:true}).evaluate(node=>{node.style.outline='2px solid #bd843b';node.textContent='1 · '+node.textContent;});await page.getByText('General research summaries. Personal cohort comparisons are unavailable without validated reference data.',{exact:true}).evaluate(node=>{node.style.outline='2px solid #bd843b';node.textContent='2 · '+node.textContent;});await page.screenshot({path:path.join(out,'after-mobile-annotated.png'),fullPage:true});
     for(const width of [320,375,390,1280]){await page.setViewportSize({width,height:width===320?500:900});for(const dark of [false,true]){await page.evaluate(value=>document.documentElement.classList.toggle('dark',value),dark);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`Reflow ${width}/${dark}`);}}
-    await nav.getByRole('button',{name:'Bacteria',exact:true}).click();const row=page.getByRole('row').filter({hasText:'Roseburia'});await row.waitFor();assert.match(await row.innerText(),/0\.00%/);
+    await page.getByRole('navigation',{name:'Microbiome sections'}).getByRole('button',{name:'Bacteria',exact:true}).click();const row=page.getByRole('row').filter({hasText:'Roseburia'});await row.waitFor();assert.match(await row.innerText(),/0\.00%/);
     await nav.getByRole('button',{name:'Cohorts',exact:true}).click();const study=page.getByRole('link',{name:'Primary study',exact:true}).last();await study.focus();assert.equal(await study.evaluate(node=>node===document.activeElement),true);
     outage=true;await page.reload();await page.getByRole('alert').filter({hasText:'Results could not load.'}).waitFor();outage=false;await page.getByRole('button',{name:'Retry',exact:true}).click();await page.getByRole('heading',{name:'Selected report',exact:true}).waitFor();
    }
