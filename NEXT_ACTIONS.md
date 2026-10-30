@@ -4,6 +4,9 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
+- Current food composition correction: old deacd75 reproduced paused cached log CTA1 vs0; current source/identity/grams/error/paused guards and explicit retry tested in actual catalogue routes plus existing personal-context journey.20focused/types/build PASS. Finish commit/push and managed status. MKT-014/016/017 engineering trace now reconciled; remaining release trace is not complete. NEXT: inspect remaining highest-priority approved security/source/identity requirements against current tests, then act on actual gaps; do not invent UI or enter v0.6 before actionable v0.5 is finished. Latest source auditdeacd75 pushed.
+
+
 - Latest runtime99f103005b42b4c9bb08f6151d7113004cabe466 Renderdep-dbie2n740ujc739bvfl0 LIVE; exact Actions next. Microbial156c001 exact Actions41106107661 SUCCESS. Local asset audit + actual six-route/two-mode original asset/theme trace PASS; doc/output in docs/operations/ASSET_RUNTIME_AUDIT*. Finish commit/push. Current UI route table reconciled; next criterion-by-criterion remaining approved v0.5 trace, beginning MKT-014/016/017 and source/safety semantics (do not bulk mark old165Remaining or rebuild already delivered UI). Hosted/independent/claim blockers remain separate.
 
 
