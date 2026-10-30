@@ -1,3 +1,4 @@
+import {localDate} from "@/lib/experience";
 import {athleteBlockerMessage,type AthleteBlockerReason} from "@shared/athlete-eligibility";
 import { Button } from "@/components/ui/button";
 import { Link } from 'wouter';
@@ -27,6 +28,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
     retrying: boolean;
 }) {
     const ready = !checking && !unavailable, calendar = athleteCalendarSummary(ready ? records : [], date), session = calendar.session;
+    const activities=ready&&calendar.validDate?records.filter(row=>row.kind==="activity"&&localDate(new Date(row.payload.startedAt))===date):undefined;
     const readableDate = calendar.validDate ? new Date(date + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'the selected date';
     const upcoming = session?.payload.status === 'planned' && Date.parse(session.payload.startsAt) >= Date.now();
     const title = !calendar.validDate ? 'Choose a plan date' : checking ? 'Your training calendar' : unavailable || calendar.unconfirmed && !session ? 'Review your saved calendar' : session ? upcoming ? 'Your next saved session' : 'Review your saved session' : 'Build your training day';
@@ -35,6 +37,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
     const act = () => !calendar.validDate ? openSource('athlete-plan-date') : !ready || calendar.unconfirmed && !session ? openSource('athlete-training-calendar') : session ? openSource('athlete-session-' + session.id) : openSource('athlete-add-session', 'input[name="title"]');
     const blockers:readonly AthleteBlockerReason[]=day?.blockers??(day?.blocked?["data_stale"]:[]);
     const cards = [
+        {title:'Activity journal',detail:!calendar.validDate?'Choose a valid date':checking?'Checking source…':unavailable?'Current source unavailable':activities?.length?`${activities.length} reported ${activities.length===1?'entry':'entries'}`:'Not recorded',Icon:Activity,href:'/activity'},
         { title: 'Training calendar', detail: checking ? 'Checking source…' : unavailable ? 'Current source unavailable' : `${calendar.planned} planned · ${calendar.completed} completed`, Icon: CalendarDays, onClick: () => openSource('athlete-training-calendar') },
         { title: 'Fueling & meals', detail: !day ? 'Current context not checked' : day.blocked ? blockers.includes('target_conflict')?'Energy and macro targets conflict':'Review the listed eligibility items' : day.partial ? 'Food estimates are incomplete' : 'Review your reference targets', Icon: Utensils, href: '/athlete/fueling?date=' + encodeURIComponent(date) },
         { title: 'Recovery check-in', detail: 'Your dated weekly observations', Icon: Moon, href: '/athlete/recovery' },
@@ -47,6 +50,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
    {day?.partial && <p className="panel-note">Some logged nutrients are missing. Review matches before using remaining-fuel suggestions.</p>}
    <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p></details>
   </CompanionHero>
+  <p><Link className="text-link" href="/activity">Add activity · describe, select or repeat</Link></p>
   <nav className="athlete-home-links" aria-label="Your training sources">{cards.map(({ title, detail, Icon, href, onClick }) => {
             const content = <><Icon size={20} aria-hidden="true"/><span><strong>{title}</strong><small>{detail}</small></span><ChevronRight size={18} aria-hidden="true"/></>;
             return href ? <Link className="workspace-shortcut" key={title} href={href}>{content}</Link> : <button type="button" className="workspace-shortcut" key={title} onClick={onClick}>{content}</button>;

@@ -1,3 +1,4 @@
+import {activityProjection} from "../shared/activity-capture";
 import {createHash} from "node:crypto";
 import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
@@ -64,7 +65,8 @@ export class ExperienceStorage {
  createActivity(userId:string,input:Activity,key:string):Promise<ExperienceRecord>{return this.createTimedRecord(userId,"activity",input,key);}
  createSession(userId:string,input:TrainingSession,key:string):Promise<ExperienceRecord>{return this.createTimedRecord(userId,"session",input,key);}
  private async createTimedRecord(userId:string,kind:"activity"|"session",input:Activity|TrainingSession,key:string):Promise<ExperienceRecord>{
-  const payload=kind==="activity"?activitySchema.parse(input):trainingSessionSchema.parse(input);
+  let payload=kind==="activity"?activitySchema.parse(input):trainingSessionSchema.parse(input);
+  if(kind==="activity"&&(payload as Activity).components)payload=activitySchema.parse({...payload,...activityProjection((payload as Activity).components!.items)});
   if(!/^[a-f0-9-]{36}$/i.test(key))throw Error("INVALID_SAVE_KEY");
   const id=kind+"_"+createHash("sha256").update(JSON.stringify([`manual-${kind}-v1`,userId,key])).digest("hex");
   return this.db.transaction(async tx=>{
@@ -110,6 +112,16 @@ export class ExperienceStorage {
    const previous=decryptPrecision(existing.encryptedPayload,userId);
    // Older session editors must not erase newer manual set observations.
    let payload=preserveFocusFeedback(entry,previous);
+   if(entry.kind==="activity"){
+    const current=activitySchema.parse(previous);
+    if(current.components&&entry.payload.components===undefined&&(entry.payload.minutes!==current.minutes||entry.payload.title!==current.title||(entry.payload.distanceM!==undefined&&entry.payload.distanceM!==current.distanceM)||(entry.payload.actualSets!==undefined&&JSON.stringify(entry.payload.actualSets)!==JSON.stringify(current.actualSets))))throw Error("ACTIVITY_COMPONENT_REVIEW_REQUIRED");
+    payload={...entry.payload,
+     ...(entry.payload.components===undefined&&current.components?{components:current.components}:{}),
+     ...(entry.payload.distanceM===undefined&&current.distanceM!==undefined?{distanceM:current.distanceM}:{}),
+     ...(entry.payload.actualSets===undefined&&current.actualSets!==undefined?{actualSets:current.actualSets}:{}),
+     ...(current.capture?{capture:{...(entry.payload.capture||current.capture),description:current.capture.description,method:current.capture.method,...(entry.payload.capture?.reviewedDescription===undefined&&current.capture.reviewedDescription!==undefined?{reviewedDescription:current.capture.reviewedDescription}:{})}}:{})};
+   }
+   if(entry.kind==="activity"&&(payload as Activity).components)payload=activitySchema.parse({...payload,...activityProjection((payload as Activity).components!.items)});
    if(entry.kind==="session"&&entry.payload.actualSets===undefined){
     const current=trainingSessionSchema.parse(previous);
     if(current.actualSets!==undefined)payload={...entry.payload,actualSets:current.actualSets};

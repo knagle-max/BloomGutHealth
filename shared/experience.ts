@@ -60,14 +60,6 @@ export const settingsPatchSchema = z.object({
   mode: z.enum(["everyday", "athlete"]).optional(), athlete: athleteProfileSchema.optional(), practical: practicalPreferencesSchema.optional(),
 }).strict().refine(v => Object.keys(v).length > 0).refine(v=>!v.athleteReviewFor||!!v.athlete,"Review acknowledgement requires the corresponding Athlete inputs");
 export type ExperienceSettingsPatch=z.infer<typeof settingsPatchSchema>;
-export const activitySchema=z.object({
- title:z.string().trim().min(1).max(120),startedAt:z.string().datetime({offset:true}),
- minutes:z.number().int().min(1).max(1440),effort:z.enum(["easy","moderate","hard"]).nullable().default(null),
- source:z.literal("manual").default("manual"),
- timeZone:z.string().min(1).max(100).refine(value=>{try{new Intl.DateTimeFormat("en",{timeZone:value});return true;}catch{return false;}},"Choose a recognized time zone").nullable().default(null),
- notes:optionalText,
-}).strict();
-export type Activity=z.infer<typeof activitySchema>;
 /** Optional manual observations; absence is not a completed or zero-load workout. */
 export const actualSetsSchema = z.object({
   version: z.literal(1),
@@ -76,9 +68,36 @@ export const actualSetsSchema = z.object({
     reps: z.number().int().min(0).max(1000).nullable(),
     loadKg: z.number().finite().min(0).max(2000).nullable(),
     completed: z.boolean(),
+    id:z.string().uuid().optional(),loadUnit:z.enum(['kg','lb']).optional(),
+    state:z.enum(['described','planned','cancelled']).optional(),side:z.enum(['left','right','both']).nullable().optional(),
   }).strict()).max(100),
 }).strict();
 export type ActualSets = z.infer<typeof actualSetsSchema>;
+export const activityComponentSchema=z.object({
+ id:z.string().uuid(),title:z.string().trim().min(1).max(120),
+ activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),
+ match:z.enum(['suggested','reported','unclassified']),minutes:z.number().int().min(1).max(1440).nullable(),
+ distanceM:z.number().finite().nonnegative().max(1000000).nullable(),actualSets:actualSetsSchema.optional(),
+}).strict().refine(part=>!part.actualSets||part.actualSets.sets.every(set=>!!set.id),'Each activity set needs a stable identity');
+export const activityComponentsSchema=z.object({version:z.literal(1),items:z.array(activityComponentSchema).min(1).max(20)}).strict().superRefine((value,ctx)=>{
+ const ids=value.items.flatMap(part=>[part.id,...(part.actualSets?.sets.map(set=>set.id!)||[])]);
+ if(new Set(ids).size!==ids.length)ctx.addIssue({code:'custom',message:'Activity and set identities must be unique'});
+ const sets=value.items.flatMap(part=>part.actualSets?.sets||[]);
+ if(sets.length>100||sets.some(set=>set.completed&&(set.state==='planned'||set.state==='cancelled')))ctx.addIssue({code:'custom',message:'Review set count and explicit completion states'});
+});
+export type ActivityComponent=z.infer<typeof activityComponentSchema>;
+export const activitySchema=z.object({
+ title:z.string().trim().min(1).max(120),startedAt:z.string().datetime({offset:true}),
+ minutes:z.number().int().min(1).max(1440).nullable(),effort:z.enum(["easy","moderate","hard"]).nullable().default(null),
+ source:z.literal("manual").default("manual"),
+ timeZone:z.string().min(1).max(100).refine(value=>{try{new Intl.DateTimeFormat("en",{timeZone:value});return true;}catch{return false;}},"Choose a recognized time zone").nullable().default(null),
+ notes:optionalText,
+ distanceM:z.number().finite().nonnegative().max(1000000).nullable().optional(),
+ actualSets:actualSetsSchema.optional(),
+ components:activityComponentsSchema.optional(),
+ capture:z.object({version:z.literal(1),method:z.enum(['describe','select','repeat']),description:z.string().min(1).max(2000).refine(value=>value.trim().length>0),activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),interpretation:z.enum(['rule-suggestion','user-selected','unclassified']),reviewedDescription:z.string().max(2000).optional()}).strict().optional(),
+}).strict();
+export type Activity=z.infer<typeof activitySchema>;
 export const trainingSessionSchema = z.object({
   title: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
   minutes: z.number().int().min(1).max(600), intensity: z.enum(["easy", "moderate", "hard", "competition"]),

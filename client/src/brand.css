@@ -155,3 +155,19 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .progress-domain-tabs [role="tab"] { min-width:0; min-height:44px; padding:8px 4px; border-radius:12px; }
 
 .lab-source-section { padding:12px 0 8px; margin-top:8px; border-top:1px solid hsl(var(--border)); color:hsl(var(--foreground)); font-weight:600; }
+
+/* Exercise Intelligence v1.2: Food Review parity with real parent/child observations. */
+.activity-source-description { padding:12px; background:hsl(var(--muted)); border-radius:16px; }
+.activity-review-row { border-top:1px solid hsl(var(--border)); padding:16px 0; min-width:0; }
+.activity-review-row > summary { display:flex; align-items:center; gap:12px; min-height:44px; }
+.activity-review-row > summary > span:first-child { flex:1; min-width:0; overflow-wrap:anywhere; }
+.activity-review-row strong,.activity-review-row small { display:block; }
+.activity-review-row small,.activity-row-status { color:hsl(var(--muted-foreground)); font-size:13px; }
+.activity-set-row { padding:12px 0; border-top:1px solid hsl(var(--border)); min-width:0; }
+.activity-set-fields { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) 70px; gap:8px; }
+.activity-set-fields label { min-width:0; font-size:13px; }
+.activity-summary { padding:16px; background:hsl(var(--muted)); border-radius:16px; }
+.activity-summary-values { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:12px 0; }
+.activity-summary-values strong { display:block; font-size:26px; font-weight:650; }
+.activity-summary-values span { display:block; font-size:13px; color:hsl(var(--muted-foreground)); }
+.activity-review-row > summary > span:last-child { display:inline-flex; align-items:center; min-height:44px; padding:6px 10px; border:1px solid hsl(var(--border)); border-radius:14px; color:hsl(var(--primary)); }

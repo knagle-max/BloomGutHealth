@@ -547,7 +547,12 @@
           "client/src/pages/AthleteWorkspace.tsx",
           "client/src/components/CompanionHero.tsx",
           "client/src/components/AthleteHome.tsx",
-          "client/src/components/AthleteProfileForm.tsx"
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/pages/ActivityLog.tsx",
+          "client/src/pages/Progress.tsx",
+          "client/src/components/TrainingSetsEditor.tsx",
+          "client/src/components/ActivityReview.tsx",
+          "client/src/components/ActivitySetEditor.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -557,12 +562,16 @@
           "shared/athlete-calendar.ts",
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/activity-capture.ts",
+          "shared/activity.ts",
+          "shared/experience.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/experience-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -581,7 +590,12 @@
           "client/src/components/TodayStatus.tsx",
           "client/src/components/CompanionHero.tsx",
           "client/src/components/AthleteHome.tsx",
-          "client/src/components/AthleteProfileForm.tsx"
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/pages/ActivityLog.tsx",
+          "client/src/pages/Progress.tsx",
+          "client/src/components/TrainingSetsEditor.tsx",
+          "client/src/components/ActivityReview.tsx",
+          "client/src/components/ActivitySetEditor.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -591,12 +605,16 @@
           "shared/athlete-calendar.ts",
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/activity-capture.ts",
+          "shared/activity.ts",
+          "shared/experience.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/experience-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -1587,8 +1605,10 @@
   ],
   "sourceHashes": {
     "client/src/App.tsx": "6932b9e8cd78bc33a5ad41c9a344a18a7ed3e7528570e4bff3b206992b2e1320",
+    "client/src/components/ActivityReview.tsx": "12c26078c6e1fc059d9d1016afa7d8b076408b320e0db943299d90ad811fb4df",
+    "client/src/components/ActivitySetEditor.tsx": "e4a41a33dad8bc0ea8d079a44abfd4186adec574cc361a331aca789322cd3e02",
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
-    "client/src/components/AthleteHome.tsx": "ccf7f894573b9a678a602af8e6dc21bb3c04ca12d2bcca18466d3861fdc2d884",
+    "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
     "client/src/components/AthleteProfileForm.tsx": "7c747a28affa3f21ae202db7df428210748ed8723be023ecdff30a4111d5e443",
     "client/src/components/BiologyHome.tsx": "4cc8efb92a99d2720f8325b7578c7d253da59c2695bc83ca01070f40df018363",
     "client/src/components/CompanionHero.tsx": "1eeb9520a1cec08d8fb22a515414f868bb857ca61c193002a824151a87164ef9",
@@ -1612,7 +1632,8 @@
     "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
     "client/src/components/TodayFocus.tsx": "5fda80b4f8b53a871e261c82f4cd4bac46e74b81dff8045be0201bd11b5fef87",
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
-    "client/src/components/TodayStatus.tsx": "181e6d13f8a025d0b102abee8ee4824a57cb5e8bb3a571e9b4ce0aeea4a00015",
+    "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
+    "client/src/components/TrainingSetsEditor.tsx": "ae5f89e362cc86fb72704be308e371adbe7e2ec56704bb991a63c5bd73ab9abd",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
@@ -1621,6 +1642,7 @@
     "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
     "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
+    "client/src/pages/ActivityLog.tsx": "eb1ce5804fb3970b085462a0e71c151774b94ccac8dd80a9ebdd1c815daa8f3b",
     "client/src/pages/AthleteWorkspace.tsx": "b277acfb6a60c9b038a7c9240d9929ce562e7f17113f53e10848ce30296c9370",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
@@ -1633,7 +1655,7 @@
     "client/src/pages/PlanDay.tsx": "57052277c1ed0dae3e09eaea9dbe53ab76303b4f64c44fecbd9c39f5e715ab2a",
     "client/src/pages/PrecisionNutrition.tsx": "c033211ae525bde413bd26619f919a6d4a72a992bb03f64fa1e1b58a6596c9c9",
     "client/src/pages/Profile.tsx": "b715044b59c18565ec13465f966bea7e9810ceabdd2b357396b4432e40de03f2",
-    "client/src/pages/Progress.tsx": "8832b4fa90df31ef0d780c5bb495808810c1b7c4115469968cf505e9cf8c6d56",
+    "client/src/pages/Progress.tsx": "96cfe081d6602f66cd4dd28818087ffec386e5a28e17cf1dea19181707ad3528",
     "client/src/pages/ScienceCoach.tsx": "deaa44dd3300f79a5a440a005dc7188a7bd4275cc4dcc71fe796b8da4ce04482",
     "client/src/pages/Upload.tsx": "962ea3ee6417162b7de29b46145152b9d6c58d32784b6d3374bbc2cded16ca05",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
@@ -1648,7 +1670,8 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "92f3d63d458130586b704c07f999703d876310d678e2a9ca0863d36a45cc55d7",
+    "server/experience-routes.ts": "f97799d765d882b6ac51c91835a6948a6c7238ab671871a59872644500271930",
+    "server/experience-storage.ts": "b87c9f1664d34e313cf8c99771ceee15432ae8f19d187dc8108af8a50f823864",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -1693,6 +1716,8 @@
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
+    "shared/activity-capture.ts": "80777c741be0b4c7bdcc0fceae0bfed016d886fc5d90a65337680f6744f69b3f",
+    "shared/activity.ts": "cb671b73a9ee131e86a75f05fafab0178ecffb78646fd7eba0865094dab49d5b",
     "shared/application-schema.ts": "ee592917ca958174e6bc339dd5388737672e416cb93cd4ddca6308a0424f87c8",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
     "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
@@ -1703,7 +1728,7 @@
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
-    "shared/experience.ts": "3bbe724c1b06fdee4b3d5ec329e8b1242491cf2888e3d2c20148ea4a3e548fc3",
+    "shared/experience.ts": "36ea4218851094817448356087df09727ed2254547e0500795f5fb53c39ac7b4",
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",

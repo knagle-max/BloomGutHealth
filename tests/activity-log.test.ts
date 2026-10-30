@@ -1,3 +1,4 @@
+import {describeActivityParts,activityProjection} from '../shared/activity-capture';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import express from 'express';
@@ -6,6 +7,7 @@ import {drizzle} from 'drizzle-orm/pglite';
 import {readFileSync} from 'node:fs';
 import {randomBytes,randomUUID} from 'node:crypto';
 import {ExperienceStorage} from '../server/experience-storage';
+import {activitySchema} from '../shared/experience';
 import {registerExperienceRoutes} from '../server/experience-routes';
 test('manual activity saves replay once, reject changed receipts, stay owned and support ordinary correction/export/deletion',async()=>{
  const prior=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');const pg=new PGlite();await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");await pg.exec(readFileSync(new URL('../migrations/0004_experience.sql',import.meta.url),'utf8'));
@@ -20,6 +22,22 @@ test('manual activity saves replay once, reject changed receipts, stay owned and
   assert.equal((await request('/activities','POST',{...payload,minutes:30},key)).status,409);assert.deepEqual((await request('/records?kind=activity','GET',undefined,undefined,'b')).body,[]);assert.deepEqual((await store.getExperienceRecords('a','session')),[],'Everyday activity does not become a training session');
   const correction=await request('/records/'+created.body.id,'PUT',{kind:'activity',payload:{...payload,minutes:30}});assert.equal(correction.status,200);assert.equal(correction.body.payload.startedAt,payload.startedAt);assert.equal(correction.body.payload.timeZone,payload.timeZone);assert.equal(correction.body.payload.minutes,30);
   assert.equal((await request('/export')).body.records[0].payload.minutes,30);assert.equal((await request('/records/'+created.body.id,'DELETE')).status,204);assert.deepEqual((await request('/records?kind=activity')).body,[]);
+  const rich=activitySchema.parse({...payload,title:'Bench press',minutes:null,distanceM:null,actualSets:{version:1,sets:[{exercise:'Bench press',reps:8,loadKg:60,completed:true}]},capture:{version:1,method:'describe',description:'3 sets of 8 bench press at 60 kg',activityId:'strength',interpretation:'rule-suggestion'}});
+  const extended=await request('/activities','POST',rich,randomUUID());assert.equal(extended.status,201);assert.equal(extended.body.payload.minutes,null);const encrypted=await pg.query('SELECT encrypted_payload FROM experience_records WHERE id=$1',[extended.body.id]);assert.doesNotMatch(JSON.stringify(encrypted.rows),/bench press|sets of/);
+  const legacyEdit=await request('/records/'+extended.body.id,'PUT',{kind:'activity',payload:{...payload,title:'Corrected strength',minutes:null}});assert.equal(legacyEdit.status,200);assert.deepEqual(legacyEdit.body.payload.actualSets,rich.actualSets);assert.deepEqual(legacyEdit.body.payload.capture,rich.capture);assert.equal(legacyEdit.body.payload.distanceM,null);
+  const attemptedRewrite=await request('/records/'+extended.body.id,'PUT',{kind:'activity',payload:{...rich,capture:{...rich.capture,description:'rewritten source',method:'repeat'}}});assert.equal(attemptedRewrite.body.payload.capture.description,rich.capture.description);assert.equal(attemptedRewrite.body.payload.capture.method,'describe');
+  assert.equal((await request('/records/'+extended.body.id,'PUT',{kind:'activity',payload:rich},undefined,'b')).status,404);
+  const clear=await request('/records/'+extended.body.id,'PUT',{kind:'activity',payload:{...rich,actualSets:{version:1,sets:[]}}});assert.deepEqual(clear.body.payload.actualSets.sets,[]);assert.equal((await request('/export')).body.records[0].payload.capture.description,rich.capture.description);
+  await request('/records/'+extended.body.id,'DELETE');assert.deepEqual(await store.getExperienceRecords('a','activity'),[]);
+  const items=describeActivityParts('Walked 30 minutes, then did 3 sets of bench press at 60 kg for 8 reps');
+  const composite=activitySchema.parse({...payload,...activityProjection(items),components:{version:1,items},capture:{version:1,method:'describe',description:'Walked 30 minutes, then did 3 sets of bench press at 60 kg for 8 reps',activityId:'other',interpretation:'rule-suggestion'}});
+  const compositeKey=randomUUID(),createdCompound=await request('/activities','POST',{...composite,minutes:99},compositeKey);assert.equal(createdCompound.status,201);assert.equal(createdCompound.body.payload.minutes,30,'Server derives root totals from children');assert.equal((await request('/activities','POST',{...composite,minutes:99},compositeKey)).body.id,createdCompound.body.id);
+  const compoundId=createdCompound.body.id,sourceIds=items[1].actualSets!.sets.map(set=>set.id);
+  const unaware=await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{title:composite.title,minutes:composite.minutes,startedAt:composite.startedAt,notes:'Metadata-only correction'}});assert.equal(unaware.status,200);assert.deepEqual(unaware.body.payload.components.items,items);
+  assert.equal((await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{...payload,title:composite.title,minutes:31}})).status,409);
+  const corrected=structuredClone(items);corrected[1].actualSets!.sets[1].loadKg=55;corrected[1].actualSets!.sets[1].reps=6;
+  const updatedCompound=await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{...composite,components:{version:1,items:corrected}}});assert.equal(updatedCompound.status,200);assert.deepEqual(updatedCompound.body.payload.components.items[0],items[0]);assert.deepEqual(updatedCompound.body.payload.components.items[1].actualSets.sets.map((set:any)=>set.id),sourceIds);assert.equal(updatedCompound.body.payload.actualSets.sets[1].loadKg,55);
+  assert.equal((await request('/records/'+compoundId,'PUT',{kind:'activity',payload:composite},undefined,'b')).status,404);await request('/records/'+compoundId,'DELETE');
   const adapter=store.createActivity;(store as any).createActivity=undefined;assert.equal((await request('/activities','POST',payload,randomUUID())).status,503);store.createActivity=adapter;
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();if(prior===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=prior;}
 });

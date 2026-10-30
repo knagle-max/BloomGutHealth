@@ -1,3 +1,4 @@
+import {activityAmountText} from "@shared/activity-capture";
 import {useRef, useState} from 'react';
 import {Link} from 'wouter';
 import {Utensils,Activity,Moon} from 'lucide-react';
@@ -22,12 +23,13 @@ export default function TodayStatus({mealCount,partial,loading,unavailable}:{mea
   const content=<><span className="today-status-label"><Icon size={16} aria-hidden="true"/>{label}</span><strong>{value}</strong><span className="today-status-source">{source}</span></>;
   return label==='Move'?<button key={label} type="button" className="today-status-item text-left" aria-controls="today-movement-source" aria-expanded={movementOpen} onClick={()=>{if(movement.current){movement.current.open=true;movement.current.querySelector('summary')?.focus();}}}>{content}</button>:<Link key={label} href={href} className="today-status-item">{content}</Link>;
  })}</nav>
+ <Link className="text-link min-h-[44px] inline-flex items-center" href="/activity">Add activity</Link>
  <details ref={movement} id="today-movement-source" className="today-status-context" aria-label="Today’s movement records" onToggle={e=>setMovementOpen(e.currentTarget.open)}>
   <summary>Today’s movement records</summary>
   <p>Manual activity and training calendar · {new Date().toLocaleDateString()}. Shared recorded history, independent of experience mode. Planned and cancelled sessions do not count as completed movement.</p>
   <h3>Manual activity</h3>
-  {activityChecking?<p role="status">Checking current manual activity…</p>:activities.isError?<p role="alert">Manual activity could not load. <button type="button" className="text-link" onClick={()=>activities.refetch()}>Retry manual activity</button></p>:currentActivities?.length?<ul className="space-y-3">{currentActivities.map((row,index)=><li key={index}><strong>{row.title}</strong><p>{new Date(row.startedAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · {row.minutes} minutes{row.effort?` · ${row.effort}`:''} · Manual entry</p></li>)}</ul>:<p>No manual activity recorded for this date.</p>}
-  <p><Link className="text-link" href="/activity">Log activity</Link></p><h3>Training sessions</h3>
+  {activityChecking?<p role="status">Checking current manual activity…</p>:activities.isError?<p role="alert">Manual activity could not load. <button type="button" className="text-link" onClick={()=>activities.refetch()}>Retry manual activity</button></p>:currentActivities?.length?<ul className="space-y-3">{currentActivities.map((row,index)=><li key={index}><strong>{row.title}</strong>{row.components&&row.components.items.length>1&&<p>{row.components.items.map(part=>part.title).join(" + ")}</p>}<p>{new Date(row.startedAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · {activityAmountText(row)}{row.effort?` · ${row.effort}`:''} · Manual entry</p></li>)}</ul>:<p>No manual activity recorded for this date.</p>}
+  <p><Link className="hero-button" href="/activity">Log activity</Link></p><h3>Training sessions</h3>
   {sessions.fetchStatus!=='idle'||sessions.isPending||sessions.isStale&&!sessions.isError?<p role="status">Checking current movement records…</p>:sessions.isError?<p role="alert">Movement records could not load. <button type="button" className="text-link" onClick={()=>sessions.refetch()}>Retry movement records</button></p>:<>
    {currentSessions?.length?<ul className="space-y-3">{currentSessions.map((row,index)=><li key={index}><strong>{row.title}</strong><p>{new Date(row.startsAt).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})} · {row.minutes} minutes · {row.status}</p></li>)}</ul>:<p>No session recorded for this date.</p>}
   </>}
