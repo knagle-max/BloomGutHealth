@@ -1652,7 +1652,7 @@
     "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
     "client/src/pages/ActivityLog.tsx": "18f747d69ec1b7daf58d0901981424ca0f7adf3de9fc5a5d15d79d52664b453c",
-    "client/src/pages/AthleteWorkspace.tsx": "f9b1e71f3826b90aeb812999c1f41b40e2e543255f044b41982ebc07ac8d58e6",
+    "client/src/pages/AthleteWorkspace.tsx": "747160b8c9124679ea4dd484639a3fd0166f754046ab420415f44170f851c1df",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
     "client/src/pages/Explore.tsx": "d533b72900a84cad9263dfdceb2d31fa05f2296ed2c6014420b478cedeceb9fd",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",

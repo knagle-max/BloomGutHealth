@@ -924,3 +924,9 @@ Full UI rollout remains IN_PROGRESS. Next preferences/planning/Explore and remai
 |V05-UI-FOOD-PREFERENCES-DISCOVERY|v0.5|P1 full UI rollout: clear hard-restriction vs taste/practical vs goal groups; intent-first title, one canonical save, secondary workspace links; Explore portion search leads|IMPLEMENTED_AND_TESTED local; publication pending|13 focused/types/build/source guards and actual App/API/encryptedPGlite save/reload/priority/clear/allergy preservation, PostgreSQL two-tab409/draft, food-source fail/retry and5width light-dark distinct draft/UI checks PASS. Packet docs/review/v05-food-preference-ui-20261030. Commit this batch|
 
 V05-UI Profile/bloodwork/Progress/theme1dcfadc0c71087824ef7774cc397efeebd5039c6 exact Actions41005171970 SUCCESS including managed persistence; Renderdep-dbi24eg473hc73ej1ua0 LIVE. All changes remain on existing development branch/preview; full UI independent acceptance and remaining visual pass open.
+
+|ID|Version|Priority / acceptance|Status|Tests / evidence / commit|
+|---|---|---|---|---|
+|V05-UI-ATHLETE-CALENDAR|v0.5|P1 source-backed session cards: explicit planned/completed/cancelled status, semantic date/time, clear duration/intensity/discipline and separate correction/actions|IMPLEMENTED_AND_TESTED local; publication pending|6 focused helper/encrypted-reader/source tests/types/build; actual App/API/encryptedPGlite set save/lost-response/retry/correction/reference/mode source/timer/no-write +3status calendar5width light-dark/owner PASS. Minor contextual card hierarchy, no repetitive gallery. Commit this batch|
+
+Food UI9d9c22a65b9cbfec805adeb3205ff09a7a3165c9 exact Renderdep-dbi28svb9u1s73dkg0f0 LIVE; Actions41006009725 in progress. No complete UI/release or independent acceptance claim.
