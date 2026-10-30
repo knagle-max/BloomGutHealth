@@ -1613,7 +1613,7 @@
   "sourceHashes": {
     "client/src/App.tsx": "6932b9e8cd78bc33a5ad41c9a344a18a7ed3e7528570e4bff3b206992b2e1320",
     "client/src/components/ActivityReview.tsx": "1d9961c3aecfd62e036daa6953ec6064d938653ca219138093bd3caea4e99e05",
-    "client/src/components/ActivitySetEditor.tsx": "80a461adc7ce82174ce7c2c85bf1161d4af74f87ecf6c504fcda3bc99568b521",
+    "client/src/components/ActivitySetEditor.tsx": "dad0265562cf01dbb3cc75374c4a1e56052b25b9177bd7564a8033b438953f30",
     "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
@@ -1642,7 +1642,7 @@
     "client/src/components/TodayFocus.tsx": "bb84c71351c90d8db92ea052cf7da234b0b1dfe9a75eaf37e5af322cd2134b7d",
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
-    "client/src/components/TrainingSetsEditor.tsx": "ae40d5041a72d7dcec524536524c66de118f733c8ae8c182c897cf1ca67bf8af",
+    "client/src/components/TrainingSetsEditor.tsx": "631adcb1576b3c8c1207101ce640694cd3198dbba2cfc332ccd1052ddb69fcdd",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",

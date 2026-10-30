@@ -234,3 +234,8 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 @media(min-width:700px) { .progress-observation-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); } }
 
 .precision-observation[tabindex="-1"]:focus { outline:2px solid currentColor; outline-offset:3px; }
+
+.training-exercise-heading { margin:8px 0; }
+.training-exercise-heading h4 { font-size:18px; font-weight:600; }
+.training-set-previous { margin-left:48px; overflow-wrap:anywhere; }
+.training-sets-editor > .activity-set-row { margin-top:0; }
