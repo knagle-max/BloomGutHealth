@@ -699,7 +699,7 @@ export default function PrecisionNutrition() {
                       {r.sourceOnlyLabs?.length||r.pendingLabs?.length?"No results ready for interpretation; review the recorded source rows below.":"No bloodwork recorded. Genetics and microbiome data are optional too."}
                     </p>
                   )}
-                  <LabSourceHistory onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                  <LabSourceHistory trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
 
                 </section>
                 <section className="bloom-panel">

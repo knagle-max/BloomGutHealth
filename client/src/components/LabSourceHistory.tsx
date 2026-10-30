@@ -3,13 +3,20 @@ import {groupLabHistory,labDateText,labHistoryDates,labHistoryOnDate,type AnyLab
 import {markerDefinitions,labEnteredContext} from '@shared/precision-nutrition';
 import {Button} from './ui/button';
 import LabSourceContext from './LabSourceContext';
-export default function LabSourceHistory({labs,onDelete,onCorrect}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void}){
+import LabTrend from './LabTrend';
+import type {PrecisionReport} from '@shared/precision-nutrition';
+function MarkerHistory({name,trend}:{name:string;trend:PrecisionReport['trends'][number]}){
+ const [open,setOpen]=useState(false);
+ return <details className="mt-3 min-w-0" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}><summary>Recorded history for {name}</summary>{open&&<><p className="panel-note">This chart includes all available dated measurements for this marker, beyond any selected report date. Each point retains its own source; comparison limits appear below.</p><LabTrend trend={trend}/></>}</details>;
+}
+export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[]}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends']}){
  const [open,setOpen]=useState(false),[date,setDate]=useState('');
  const dates=labHistoryDates(labs),visible=labHistoryOnDate(labs,date),groups=groupLabHistory(visible);
  const rows=(items:AnyLabHistoryRow[])=>items.map((row,index)=>{
   const raw='sourceOnly' in row,entered=labEnteredContext(row);
   const name=raw?row.reportedAnalyte:markerDefinitions.find(marker=>marker.id===row.marker)?.name||row.marker;
   const pending=!raw&&row.unitReview?.status==='pending';
+  const trend=!raw&&!pending?trends.find(trend=>trend.marker===row.marker&&trend.points.some(point=>point.id===row.id)):undefined;
   const value=raw?row.reportedValue:row.unitReview?.status==='pending'?row.unitReview.originalValue:row.value;
   const unit=raw?row.reportedUnit??'(unit not supplied)':row.unitReview?.status==='pending'?row.unitReview.originalUnit||'(unit not supplied)':row.unit;
   const section=row.sourceInput?.reportedSection;
@@ -19,6 +26,7 @@ export default function LabSourceHistory({labs,onDelete,onCorrect}:{labs:AnyLabH
     {raw&&<p className="evidence-state">Source record only — no interpretation</p>}
     {raw&&row.reportedReferenceInterval!==undefined&&<p className="panel-note whitespace-pre-wrap">Reported reference text: {row.reportedReferenceInterval}</p>}
     {pending&&<p className="evidence-state">Unit provisional — confirm against the report before interpretation.</p>}
+    {trend&&<MarkerHistory name={name} trend={trend}/>}
     <details><summary>Source details for {name}</summary><LabSourceContext source={row.sourceInput} report={row.sourceReport} correction={row.dateCorrection}/><p>Stored timestamp: {row.measuredAt}</p><p>{row.laboratory} · {row.method} · fasting {row.fasting}</p></details>
    </div>{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
   </div>;
