@@ -354,6 +354,8 @@ export default function PrecisionNutrition() {
   useEffect(()=>setLabSourceToOpen(null),[user?.id]);
   const r = result.data;
   const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
+  const requestedObservation=new URLSearchParams(window.location.search).get("observation"),focusedObservation=useRef("");
+  useEffect(()=>{const key=`${user?.id}:${requestedObservation}`;if(tab!=="progress"||!requestedObservation||!currentResult||focusedObservation.current===key||!r?.checkins.some(row=>row.id===requestedObservation))return;const target=document.getElementById(`precision-observation-${requestedObservation}`);if(target){target.focus();target.scrollIntoView({block:"start"});focusedObservation.current=key;}},[requestedObservation,tab,currentResult,r?.checkins,user?.id]);
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
   function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#biology-bloodwork-results"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
@@ -1319,8 +1321,9 @@ export default function PrecisionNutrition() {
                       </Button>
                     </details>
                   ))}
+                  {requestedObservation&&!r.checkins.some(row=>row.id===requestedObservation)&&<p role="alert">The requested check-in is not available in your current records.</p>}
                   {r.checkins.map((c) => (
-                    <article className="precision-observation" key={c.id}>
+                    <article className="precision-observation" id={`precision-observation-${c.id}`} tabIndex={-1} key={c.id}>
                       <div>
                         <h3>{new Date(c.measuredAt).toLocaleDateString()}</h3>
                         <p>

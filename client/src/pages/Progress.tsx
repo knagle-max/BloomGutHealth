@@ -70,17 +70,21 @@ export default function Progress() {
         {checkingReport && <p role="status">Checking current dated observations…</p>}
         {report.isError && <p role="alert">Dated observations could not be checked. Your records are not treated as empty.</p>}
         {currentReport && (currentReport.checkins.length ? <ol className="space-y-3">
-          {[...currentReport.checkins].sort((a,b)=>+new Date(b.measuredAt)-+new Date(a.measuredAt)).slice(0,5).map(c=><li className="precision-observation block" key={c.id}>
-            <h3>{new Date(c.measuredAt).toLocaleDateString()}</h3>
-            <p>{[
-              c.weightKg == null ? null : `Weight: ${Number(kgToDisplay(c.weightKg,settings.displayUnits.bodyWeight).toFixed(2))} ${settings.displayUnits.bodyWeight}`,
-              c.waistCm == null ? null : `Waist: ${Number(quantityFromCanonical("circumference",c.waistCm,settings.displayUnits.circumference).toFixed(2))} ${settings.displayUnits.circumference}`,
-              c.bodyFatPercent == null ? null : `Body fat: ${c.bodyFatPercent}%`,
-              c.energy == null ? null : `Energy: ${c.energy}/10`,
-              c.adherencePercent == null ? null : `Adherence: ${c.adherencePercent}%`,
-            ].filter(Boolean).join(" · ") || "No body measurements or goal ratings recorded in this check-in."}</p>
-            {c.notes && <p className="panel-note">{c.notes}</p>}
-          </li>)}
+          {[...currentReport.checkins].sort((a,b)=>+new Date(b.measuredAt)-+new Date(a.measuredAt)).slice(0,5).map(c=>{
+            const readings=[
+              {label:"Weight",value:c.weightKg == null ? null : `${Number(kgToDisplay(c.weightKg,settings.displayUnits.bodyWeight).toFixed(2))} ${settings.displayUnits.bodyWeight}`},
+              {label:"Waist",value:c.waistCm == null ? null : `${Number(quantityFromCanonical("circumference",c.waistCm,settings.displayUnits.circumference).toFixed(2))} ${settings.displayUnits.circumference}`},
+              {label:"Body fat",value:c.bodyFatPercent == null ? null : `${c.bodyFatPercent}%`},
+              {label:"Energy",value:c.energy == null ? null : `${c.energy}/10`},
+              {label:"Adherence",value:c.adherencePercent == null ? null : `${c.adherencePercent}%`},
+            ].filter(reading=>reading.value!==null);
+            return <li className="precision-observation block progress-dated-observation" key={c.id}>
+              <h3><time dateTime={c.measuredAt}>{new Date(c.measuredAt).toLocaleDateString()}</time></h3>
+              {readings.length?<dl className="progress-observation-metrics">{readings.map(reading=><div key={reading.label}><dt>{reading.label}</dt><dd>{reading.value}</dd></div>)}</dl>:<p>No body measurements or goal ratings recorded in this check-in.</p>}
+              {c.notes && <p className="panel-note">{c.notes}</p>}
+              <Link className="text-link" href={`/precision?tab=progress&observation=${encodeURIComponent(c.id)}`}>View recorded check-in</Link>
+            </li>;
+          })}
         </ol> : <p>No dated body observations yet. Record a measurement to establish a baseline; an empty history is not a measurement of zero.</p>)}
         <p className="panel-note">Latest five self-reported check-ins. Missing values remain unrecorded. Different methods, illness, training or medication changes can affect comparisons.</p>
         <div className="flex flex-wrap gap-3">

@@ -211,19 +211,26 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 /* Amendment D: compact children; completion and editing are separate targets. */
 .activity-set-compact { display:grid; grid-template-columns:44px 24px minmax(0,1fr) minmax(0,1fr) 44px; align-items:center; gap:4px; font-variant-numeric:tabular-nums; }
-.activity-set-compact small { font-size:12px; color:var(--bloom-muted-text); }
+.activity-set-compact small { font-size:12px; color:hsl(var(--muted-foreground)); }
 .activity-set-number { font-weight:600; }
 .activity-set-toggle,.activity-set-edit { min-width:44px; min-height:44px; display:flex; align-items:center; justify-content:center; border-radius:8px; }
 .activity-set-circle { width:22px; height:22px; border:1.5px solid currentColor; border-radius:50%; display:flex; align-items:center; justify-content:center; }
-.activity-set-toggle.is-completed .activity-set-circle { background:#24634c; border-color:#24634c; color:white; }
+.activity-set-toggle.is-completed .activity-set-circle { background:#246B50; border-color:#246B50; color:white; }
 .activity-set-toggle:disabled { opacity:.6; }
 .activity-set-toggle:focus-visible,.activity-set-edit:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
-.activity-set-review { display:inline-flex; border:1px solid #946300; color:#946300; border-radius:50%; width:18px; height:18px; align-items:center; justify-content:center; margin-left:4px; }
+.activity-set-review { display:inline-flex; border:1px solid var(--brand-warning); color:var(--brand-warning); border-radius:50%; width:18px; height:18px; align-items:center; justify-content:center; margin-left:4px; }
 .activity-set-detail { padding-top:12px; min-width:0; }
 .activity-set-detail[hidden] { display:none; }
 
-.activity-row-status[data-needs-review] { border:1px solid #946300; color:#805600; border-radius:8px; padding:4px; }
+.activity-row-status[data-needs-review] { border:1px solid var(--brand-warning); color:var(--brand-warning); border-radius:8px; padding:4px; }
 .dark .activity-set-review,.dark .activity-row-status[data-needs-review] { color:#f2c66d; border-color:#f2c66d; }
 
 .weekly-review-workspace .science-heading h1 { font-family:Georgia,serif; font-weight:500; }
 .weekly-review-workspace .workspace-disclosure > summary { min-height:44px; align-content:center; }
+
+.progress-observation-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:12px 0; }
+.progress-observation-metrics dt { color:hsl(var(--muted-foreground)); font-size:13px; }
+.progress-observation-metrics dd { font-size:20px; font-weight:600; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+@media(min-width:700px) { .progress-observation-metrics { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+
+.precision-observation[tabindex="-1"]:focus { outline:2px solid currentColor; outline-offset:3px; }
