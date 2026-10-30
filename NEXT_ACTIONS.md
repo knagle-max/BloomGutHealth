@@ -4,7 +4,7 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
-- Current Progress supporting UI increment: structured, labelled dated body metrics with semantic source dates and unchanged conversion/missingness; keyboard link opens/focuses the exact existing owned check-in in Biology, reload preserves source selection, missing/foreign ID gives unavailable message without a lookup or mutation. Actual Progress browser matrix/domains/URL/keyboard/5width light plus390dark/no writes passes;26 focused source/units/measurement/precision tests/types/build/source guards PASS. Minor source/data hierarchy refinement, no redundant gallery. Compact set palette corrected to approved evergreen and existing semantic warning/muted tokens, exact compact browser reverified and after evidence refreshed.
+- 0059c04326373e4cfb6f8d07632d0bc4c30bb3ed, Renderdep-dbi9mirm8hqs73av34t0 LIVE; Actions41063431555 IN_PROGRESS at checkpoint: Progress supporting UI increment: structured, labelled dated body metrics with semantic source dates and unchanged conversion/missingness; keyboard link opens/focuses the exact existing owned check-in in Biology, reload preserves source selection, missing/foreign ID gives unavailable message without a lookup or mutation. Actual Progress browser matrix/domains/URL/keyboard/5width light plus390dark/no writes passes;26 focused source/units/measurement/precision tests/types/build/source guards PASS. Minor source/data hierarchy refinement, no redundant gallery. Compact set palette corrected to approved evergreen and existing semantic warning/muted tokens, exact compact browser reverified and after evidence refreshed.
 - d60f63a4eb5292f452d9b204c632b223cbfc51c5: nested collapsed-parent validation recovery, actual exact encrypted browser PASS; Actions41062483612 SUCCESS, Renderdep-dbi9jcjncjis73aounng LIVE. Same canonical set/source semantics, no new store.
 
 
@@ -30,3 +30,7 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 4. Only after actionable v0.5 is finished, reconcile approved V06_HANDOFF and begin dependency-aware v0.6. Independent review/native/credentials/rights blockers carry separately; no repeated questions or unsafe activation.
 
 Browser tooling: BLOOM_PLAYWRIGHT_MODULE=/opt/codex/cua_node/lib/node_modules/playwright; BLOOM_CHROMIUM_EXECUTABLE=/usr/bin/chromium. Run browser scripts sequentially (shared Vite cache). Source checks: api-exposure-inventory --check; capability-crosswalk --write/--check (52IDs151files; review REQUIRED). Actual authenticated hosted capture remains blocked by network403/browser session availability, not by lack of routine authorization. Never print secrets.
+
+## Session boundary
+
+Verified engineering progress is committed/pushed; no pending source edits. Continue the remaining v0.5 UI matrix and criterion-by-criterion reconciliation on resume; version remains incomplete and v0.6 transition is not yet justified. Original v1.4 asset access, exact SVG parity, actual VoiceOver and independent Design/hosted/device acceptance remain separately blocked/open as recorded. These are not approval requirements for routine independent implementation. Do not repeat completed screenshots/tests or ask to continue after each milestone.
