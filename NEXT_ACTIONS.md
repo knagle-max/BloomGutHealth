@@ -4,6 +4,9 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
+- Latest runtime99f103005b42b4c9bb08f6151d7113004cabe466 Renderdep-dbie2n740ujc739bvfl0 LIVE; exact Actions next. Microbial156c001 exact Actions41106107661 SUCCESS. Local asset audit + actual six-route/two-mode original asset/theme trace PASS; doc/output in docs/operations/ASSET_RUNTIME_AUDIT*. Finish commit/push. Current UI route table reconciled; next criterion-by-criterion remaining approved v0.5 trace, beginning MKT-014/016/017 and source/safety semantics (do not bulk mark old165Remaining or rebuild already delivered UI). Hosted/independent/claim blockers remain separate.
+
+
 - Current supporting-route slice: legacy Health Insights now actual Progress; no Diet coach self-loop. MKT-018 explicit phase medians/counts/dates and current-source gated observation editor; actual registered-handler zero/unknown/correction/save/reload/pending/paused/error/retry/reflow and both-mode weekly tests PASS,8 focused/types/build. Finish commit/push/managed verification. Six MKT engineering rows reconciled from evidence; not global completion. NEXT: remaining UI/scientific-card trace and new MKT-ASSET-3104 runtime reference audit (original source/design-only vs actual runtime; no indiscriminate imports/deletions).
 
 
