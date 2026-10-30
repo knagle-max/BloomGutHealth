@@ -18,6 +18,14 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
 /** Prefer explicitly entered calendar text; do not reconstruct missing legacy entry context. */
 export function labDateText(timestamp:string,source?:Lab['sourceReport'],correction?:Lab['dateCorrection']){return correction?.enteredDate||source?.enteredDate||timestamp.slice(0,10);}
 
+/** Filter a source view only; a shared calendar date never establishes a panel. */
+export function labHistoryDates(rows: readonly AnyLabHistoryRow[]) {
+ return Array.from(new Set(rows.map(row=>labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)))).sort().reverse();
+}
+export function labHistoryOnDate<Row extends AnyLabHistoryRow>(rows: readonly Row[], date: string) {
+ return rows.filter(row=>!date||labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)===date);
+}
+
 /** Arithmetic over recorded canonical points, independent of clinical comparability. */
 export function recordedLabDifference(points: readonly {date:string;value:number;unit:string}[]) {
  if(points.length<2||new Set(points.map(point=>Date.parse(point.date))).size!==points.length)return null;

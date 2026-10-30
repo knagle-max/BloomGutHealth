@@ -153,3 +153,5 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 /* Flagship Progress domain switch; keep all source editors mounted across views. */
 .progress-domain-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; height:auto; padding:4px; border-radius:16px; }
 .progress-domain-tabs [role="tab"] { min-width:0; min-height:44px; padding:8px 4px; border-radius:12px; }
+
+.lab-source-section { padding:12px 0 8px; margin-top:8px; border-top:1px solid hsl(var(--border)); color:hsl(var(--foreground)); font-weight:600; }

@@ -1,0 +1,9 @@
+# Biology source report dates — review candidate
+
+Original flagship UX_BLUEPRINT§5, IMPLEMENTATION_CONTRACT Biology, current v0.5 scope. Existing source-history UI now offers a Report date selector before source groups and visible original-section headers. All dates is the default. A selected date changes only the view; matching calendars never merge reports/specimens, confirm provisional units, or add clinical interpretation. Reset restores all source rows. A removed date remains visibly empty until reset.
+
+Before is clean91b077f source, captured by the actual App with synthetic canonical report fixture:8 source groups,18 results including provisional and legacy-unlinked records,390×1000/light/America-Regina/2026-10-26 clock. After uses the same fixture/viewport/state with the added selector. Callouts1–2 mark the new selector and date provenance note; unmarked originals retained. This is local synthetic browser evidence, not hosted authenticated or independent Design acceptance. Wider320/390/1280 light/dark reflow checked separately.
+
+Validation: helper/registry5 focused checks pass; actual App report history0/1/2/6/8 groups, date01→4of18 across separate report/unlinked groups, reset→all, zero/provisional/source order/specimen/keyboard/single-row delete pass. Existing actual App/API/encryptedPGlite source-only import/retry/date correction/conflict/delete journey passes; unknown assays stay uninterpreted and unrelated clinical source remains intact. Types/build/audit0 pass. Full suite/CI and deployment tracked in persistent ledger.
+
+No provider, model, schema, source-row mutation or clinical claim introduced. Existing report grouping and source detail disclosures retained; original report section names remain verbatim. Full Biology landing/domain and marker-detail design is still open. Review actual build for fidelity, physical-device/VoiceOver and200%zoom acceptance. Revert this UI/helper commit to undo; no data migration.

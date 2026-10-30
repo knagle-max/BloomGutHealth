@@ -9,3 +9,19 @@ test('source history groups exact import/specimen identity, preserves report ord
 test('date labels prefer explicitly entered text without reconstructing legacy timezone or changing timestamps',()=>{
  const timestamp='2026-10-14T22:00:00Z';assert.equal(labDateText(timestamp,{importId:'fb001025-1025-4025-8025-000000000001',enteredDate:'2026-10-15'}),'2026-10-15');assert.equal(labDateText(timestamp),'2026-10-14');assert.equal(timestamp,'2026-10-14T22:00:00Z');
 });
+
+test('source date view preserves exact entered calendars, pending values, unrelated specimen identities and input order',async()=>{
+ const {labHistoryDates,labHistoryOnDate}=await import('../shared/lab-history');
+ const report={importId:'fb001025-1025-4025-8025-000000000001',enteredDate:'2026-10-15'};
+ const a={...base,id:'a',measuredAt:'2026-10-14T22:00:00Z',sourceReport:report};
+ const b={...a,id:'b',sourceReport:{...report,importId:'fb001025-1025-4025-8025-000000000002'}};
+ const legacy={...base,id:'legacy',measuredAt:'2026-10-14T22:00:00Z'};
+ const pending={...parseLabPaste('LDL, 120','2026-10-15T12:00:00Z').pending[0].payload,id:'pending'};
+ const raw={...parseLabPaste('Unknown assay, detected, custom-unit','2026-10-15T12:00:00Z').sourceOnly[0].payload,id:'raw'};
+ const rows=[a,legacy,b,pending,raw],original=structuredClone(rows);
+ assert.deepEqual(labHistoryDates(rows),['2026-10-15','2026-10-14']);
+ assert.deepEqual(labHistoryOnDate(rows,'2026-10-15').map(row=>row.id),['a','b','pending','raw']);
+ assert.equal(groupLabHistory(labHistoryOnDate(rows,'2026-10-15')).imports.length,2);
+ assert.equal(labHistoryOnDate(rows,'missing').length,0);
+ assert.deepEqual(labHistoryOnDate(rows,''),rows);assert.deepEqual(rows,original);
+});
