@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {describeActivity,describeActivityParts,activityProjection,activityAmountText} from '../shared/activity-capture';
+import {describeActivity,describeActivityParts,activityProjection,activityAmountText,confirmDraftLoadUnit,unresolvedActivityLoads} from '../shared/activity-capture';
 import {activitySchema,activityComponentsSchema} from '../shared/experience';
 
 test('local activity review parses only explicit bounded reported amounts; ambiguous choices and unknown metrics remain missing',()=>{
@@ -44,4 +44,19 @@ test('owner v1.3 five-set pounds list preserves order, repeated loads, unknown r
   const result=describeActivityParts(text)[0];assert.equal(result.title,'Bench press',text);assert.equal(result.match,'unclassified');assert.deepEqual(result.actualSets!.sets,[]);
  }
  const uniform=describeActivityParts('5 sets of 10 reps of bench press at 50 lb')[0];assert.equal(uniform.actualSets!.sets.length,5);assert.equal(uniform.actualSets!.sets[4].loadUnit,'lb');
+});
+
+test('unitless parenthesized loads stay visible draft facts until explicitly resolved, never assumed kg or lb',()=>{
+ const text='Ran 45 min then did 5 sets of 10 reps of bench press (50,50,55,55,60)',parts=describeActivityParts(text);
+ assert.equal(parts[0].title,'Running');assert.equal(parts[0].minutes,45);assert.equal(parts[1].title,'Bench press');const sets=parts[1].actualSets!.sets;
+ assert.equal(sets.length,5);assert.deepEqual(sets.map(set=>set.reps),[10,10,10,10,10]);assert.deepEqual(sets.map(set=>set.unconfirmedLoad),[50,50,55,55,60]);assert.ok(sets.every(set=>set.loadKg===null&&set.loadUnit===undefined&&!set.completed));assert.equal(parts[1].minutes,null);assert.equal(unresolvedActivityLoads(parts),5);
+ const payload=()=>({...activityProjection(parts),components:{version:1,items:parts},startedAt:'2026-10-30T12:00:00Z'});
+ assert.equal(activitySchema.safeParse(payload()).success,false,'Strict canonical API schema cannot save unresolved draft quantities');
+ const ids=sets.map(set=>set.id);sets[3]={...sets[3],reps:9,unconfirmedLoad:60};sets[0]=confirmDraftLoadUnit(sets[0],'kg');assert.equal(sets[0].loadKg,50);assert.equal(unresolvedActivityLoads(parts),4);assert.equal('unconfirmedLoad' in sets[0],false);
+ parts[1].actualSets!.sets=sets.map(set=>set.unconfirmedLoad!==undefined?confirmDraftLoadUnit(set,'lb'):set);
+ const saved=activitySchema.parse(payload()),reloaded=activitySchema.parse(JSON.parse(JSON.stringify(saved))),actual=reloaded.components!.items[1].actualSets!.sets;
+ assert.equal(unresolvedActivityLoads(parts),0);assert.deepEqual(actual.map(set=>set.id),ids);assert.deepEqual(actual.map(set=>set.reps),[10,10,10,9,10]);assert.equal(actual[0].loadKg,50);assert.equal(actual[0].loadUnit,'kg');assert.deepEqual(actual.slice(1).map(set=>Number((set.loadKg!/0.45359237).toFixed(3))),[50,55,60,60]);assert.ok(actual.every(set=>!set.completed));assert.equal(reloaded.minutes,45);
+ const zero=describeActivityParts('1 set of 0 reps of bench press (0)')[0].actualSets!.sets[0];assert.equal(zero.unconfirmedLoad,0);assert.equal(confirmDraftLoadUnit(zero,'lb').loadKg,0);
+ for(const phrase of ['5 sets of 10 reps of bench press (50,50,55)','5 sets of 10 reps of bench press (50)','5 sets of 10 reps of bench press (50,-50,55,55,60)'])assert.deepEqual(describeActivityParts(phrase)[0].actualSets!.sets,[]);
+ const explicit=describeActivityParts('2 sets of 10 reps of bench press (50,55) lbs')[0].actualSets!.sets;assert.equal(explicit[1].loadUnit,'lb');assert.equal(explicit[1].unconfirmedLoad,undefined);
 });

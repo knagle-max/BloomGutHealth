@@ -2,15 +2,14 @@ import type {ReactNode} from "react";
 import {useState} from 'react';
 import {Button} from './ui/button';
 import ActivitySetEditor from './ActivitySetEditor';
-import {activityChoices} from '@shared/activity-capture';
-import type {ActivityComponent} from '@shared/experience';
+import {activityChoices,type ActivityDraftComponent} from '@shared/activity-capture';
 import type {WeightUnit} from '@shared/display-units';
 
-export default function ActivityReview({items,onChange,unit,details}:{items:ActivityComponent[];onChange:(items:ActivityComponent[])=>void;unit:WeightUnit;details?:ReactNode}){
+export default function ActivityReview({items,onChange,unit,details}:{items:ActivityDraftComponent[];onChange:(items:ActivityDraftComponent[])=>void;unit:WeightUnit;details?:ReactNode}){
  const [expanded,setExpanded]=useState(()=>new Set(items.filter(part=>!!part.actualSets).map(part=>part.id)));
  const sets=items.flatMap(part=>part.actualSets?.sets||[]),known=items.flatMap(part=>part.minutes===null?[]:[part.minutes]);
  const described=sets.filter(set=>set.state!=='planned'&&set.state!=='cancelled');
- const update=(id:string,patch:Partial<ActivityComponent>)=>onChange(items.map(part=>part.id===id?{...part,...patch}:part));
+ const update=(id:string,patch:Partial<ActivityDraftComponent>)=>onChange(items.map(part=>part.id===id?{...part,...patch}:part));
  return <div className="space-y-4">
   {items.map((part,index)=><details key={part.id} data-activity-id={part.id} className="activity-review-row" open={expanded.has(part.id)} onToggle={e=>{if(e.target!==e.currentTarget)return;const open=e.currentTarget.open;setExpanded(previous=>{const next=new Set(previous);if(open)next.add(part.id);else next.delete(part.id);return next;});}}>
    <summary><span><strong>{part.title||'Activity to review'}{part.match==='unclassified'&&part.actualSets&&!part.actualSets.sets.length?' — check sets':''}</strong><small>{part.actualSets?part.match==='unclassified'&&!part.actualSets.sets.length?'Check sets':`${part.actualSets.sets.length} sets`:part.minutes===null?'Duration not recorded':`${part.minutes} min`}</small></span><span className="activity-row-status">{part.match==='suggested'?'Suggested match':part.match==='unclassified'?'Needs review':'Reported'}</span><span>{expanded.has(part.id)?'Close':'Change'}</span></summary>

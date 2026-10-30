@@ -885,3 +885,11 @@ EXAI-PARSER-FIVE-SET2d45f8b925e91ca711992cb3f25bd326536766bb pushed; exact Rende
 |EXAI-CHECK-SETS-NAME|v0.5|P0 integrity follow-through|Keep fallback status as UI text, never append Check sets into canonical exercise name when adding manual rows|IMPLEMENTED_AND_TESTED local|Exact five-set actual encrypted browser rerun PASS incl fallback keyboard add/name, saved IDs/quantities across both modes;9 focused tests/types/build PASS. Commit this batch|
 
 Five-set2d45f8b exact Actions40998831842 SUCCESS including managed production persistence; Renderdep-dbi140rm8hqs73allls0 LIVE. Biology overview1fdf63691ec4247778164b5705c2c01d5b3559f3 exact Renderdep-dbi1580473hc73ei2st0 LIVE, Actions40999064450 pending. Full v0.5 trace/flagship and external acceptance remain incomplete; no transition claimed yet.
+
+## 2026-10-30 — latest owner unitless-set regression / v0.5 P0
+
+|ID|Version|Priority / dependency|Acceptance|Status|Evidence / commit|
+|---|---|---|---|---|---|
+|EXAI-PARSER-UNITLESS-LIST|v0.5|P0 architectd166612; existing shared Review/canonical set store|Exact run45+bench parenthesized5×10/load50/50/55/55/60→five visible stable draft rows, units unknown; explicit list/per-set resolution, Set4-only correction and source preserved across save/reload/both modes; unknown/zero/blank truthful|IMPLEMENTED_AND_TESTED local; publication pending|Full462/462 PASS195570ms; final7 focused/types/build/source guards; actual App/API/encryptedPGlite/UI no premature save/API bypass400/set4/Back/source override/mixed-unit list confirmation/reload/both-mode/owner/zero/blank/320390light-dark PASS. Earlier explicit-lb fixture PASS. Selective local packet docs/review/exercise-unitless-20261030. Commit this batch|
+
+Previous efc3c4d exact Actions40999632680 SUCCESS verified on resume, including managed persistence. Incomingd166612 preserved by normal fast-forward; no previous work reset. Original-v1.3 transfer/hosted/device/VoiceOver/200%/independent acceptance remains separate; no new prompt or approval pause.
