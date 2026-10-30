@@ -1,7 +1,8 @@
 import CompanionHero from '@/components/CompanionHero';
 import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
-import { useState } from "react";
+import MicrobialProfile, { type ReportedTaxon, reportedPercentage } from "@/components/MicrobialProfile";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -10,6 +11,8 @@ import { cohortResearch } from "@shared/meal-intelligence";
 import { evidenceSources } from "@shared/science-coach";
 export default function Microbiome() {
   const { user } = useAuth();
+  const [selectedTaxon,setSelectedTaxon]=useState<{id:string;sample:string;owner:string}|null>(null);
+  const taxonTrigger=useRef<HTMLButtonElement|null>(null);
   const [sampleId, setSampleId] = useState(() => new URLSearchParams(window.location.search).get("sample") || "");
   const [comparisonId, setComparisonId] = useState("");
   const [tab, setTab] = useState("results");
@@ -37,6 +40,10 @@ export default function Microbiome() {
   const currentResults=currentId&&results.fetchStatus==="idle"&&!results.isError&&results.data?.sample?.id===currentId?results.data:undefined;
   const currentComparison=comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId)&&comparison.fetchStatus==="idle"&&!comparison.isError&&comparison.data?.sample?.id===comparisonId?comparison.data:undefined;
   const currentPrediction=prediction.fetchStatus==="idle"&&!prediction.isError?prediction.data:undefined;
+  const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?currentResults.bacterial_composition.find((b:ReportedTaxon)=>b.id===selectedTaxon.id)||null:null;
+  const closeProfile=()=>{setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
+  useEffect(()=>{const closeOnBack=()=>{setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
+  useEffect(()=>{if(selectedTaxon&&!activeTaxon){setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}}},[selectedTaxon,activeTaxon]);
   return (
     <main className="science-page gut-reports-workspace space-y-5">
       <div className="science-heading">
@@ -122,7 +129,7 @@ export default function Microbiome() {
         )}
       {tab === "bacteria" && (
         <section className="bloom-panel">
-          <h2>Bacterial composition & change</h2>
+          <h2>Microbial composition & change</h2>
           {currentId && (
             <label>
               Compare another report
@@ -144,7 +151,7 @@ export default function Microbiome() {
             </label>
           )}
           <p className="panel-note">
-            Source values are shown side by side. Assay compatibility has not been established, so no change or health interpretation is calculated. Relative percentages are not absolute bacterial counts.
+            Source values are shown side by side. Assay compatibility has not been established, so no change or health interpretation is calculated. Relative percentages are not absolute organism counts.
           </p>
           {comparisonId&&(comparison.isError||comparison.fetchStatus==="paused") && (
             <p role="alert">
@@ -169,15 +176,15 @@ export default function Microbiome() {
                         (v: any) => v.bacterialName === b.bacterialName && !!b.taxonomyLevel && v.taxonomyLevel === b.taxonomyLevel,
                       );
                     return (
-                      <tr key={b.id}>
+                      <tr key={b.id} className="microbial-composition-row" onClick={e=>{taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
                         <td className="p-2">
-                          {b.bacterialName} ({b.taxonomyLevel})
+                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-label={`${b.bacterialName}, ${reportedPercentage(b.abundance)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><span><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
                         </td>
-                        <td className="p-2">{b.abundance.toFixed(2)}%</td>
+                        <td className="p-2">{typeof b.abundance==="number"&&Number.isFinite(b.abundance)?`${b.abundance.toFixed(2)}%`:"Not reported"}</td>
                         {comparisonId && (
                           <td className="p-2">
                             {!currentComparison?"Comparison not checked":previous
-                              ? `${previous.abundance.toFixed(2)}% (reported)`
+                              ? typeof previous.abundance==="number"&&Number.isFinite(previous.abundance)?`${previous.abundance.toFixed(2)}% (reported)`:"Not reported"
                               : "No matched taxon"}
                           </td>
                         )}
@@ -345,6 +352,7 @@ export default function Microbiome() {
           ))}
         </section>
       )}
+      <MicrobialProfile taxon={activeTaxon} sample={currentResults?.sample} onClose={closeProfile} onRestoreFocus={()=>taxonTrigger.current?.isConnected&&taxonTrigger.current.focus({preventScroll:true})}/>
     </main>
   );
 }

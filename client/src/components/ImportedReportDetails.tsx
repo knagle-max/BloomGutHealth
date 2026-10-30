@@ -140,30 +140,17 @@ export default function ImportedReportDetails({
             </span>
           </div>
           <p className="panel-note">
-            “Often helpful” describes general research context. It does not mean
-            more is always better or that a missing organism needs
-            supplementation. Strain identifiers are preserved, but the
-            explanations apply at species/group level.
+            General educational context does not assign a beneficial or harmful grade to an organism. Strain identifiers are preserved; species-level explanations cannot establish strain effects or personal treatment needs.
           </p>
           <div className="report-card-grid">
             {report.organisms
               .filter((o) => match(o.name))
               .map((o, i) => {
                 const help = explainOrganism(o.name);
-                const cautious = /Can cause illness|Unconfirmed/.test(
-                  help.label,
-                );
                 return (
                   <article className="report-card" key={i}>
                     <h4>{o.name}</h4>
-                    <span
-                      className={
-                        "report-badge" +
-                        (cautious ? " report-badge-caution" : "")
-                      }
-                    >
-                      {help.label}
-                    </span>
+                    <span className="report-badge">General context · not a personal assessment</span>
                     <p>{help.meaning}</p>
                     <div className="report-source-facts">
                       <p>

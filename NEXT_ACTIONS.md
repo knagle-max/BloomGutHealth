@@ -4,6 +4,9 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Latest source and verification
 
+- Microbial profiles implemented locally against newly merged original contract;20 identities/exact source/zero/unknown/keyboard/Back/source-withdrawal and five-width app light/dark plus13 focused/types/build/guards PASS. Full466/466 PASS193848ms. Finish verification, commit/push and managed metadata. Then reconcile remaining full v0.5 requirement matrix with actual source/evidence; keep claim-level Biology blockers separate, do not invent science. Connections2e52bbe and original sources merged/pushed74aa3be.
+
+
 - Connections hub implemented/tested locally; verify commit/push and managed CI next. Gut7d58a45 exact managed CI41080306472 SUCCESS. Render latest metadata now shows incoming Architect3ef48885 LIVE; fetch/normal merge preserves source. NEXT: inspect new approved microbial design audit handoff and reconcile app-wide route matrix against actual remaining requirements before v0.6. Do not redo completed UI.
 
 

@@ -274,3 +274,23 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .gut-report-facts dt { color:hsl(var(--muted-foreground)); font-size:14px; }
 .gut-report-facts dd { font-size:28px; line-height:1.25; font-weight:600; overflow-wrap:anywhere; }
 .gut-report-exploration > p,.gut-report-exploration > nav { margin-top:12px; }
+
+/* Original microbial profile sheet: compact source observation, research on demand. */
+.microbial-composition-row { cursor:pointer; }
+.microbial-composition-row:focus-within { outline:2px solid hsl(var(--ring)); outline-offset:-2px; }
+.microbial-composition-trigger { display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;width:100%;text-align:left;overflow-wrap:anywhere; }
+.microbial-composition-trigger small {display:block;color:hsl(var(--muted-foreground));font-style:normal;}
+.microbial-profile-overlay {position:fixed;inset:0;background:rgb(13 32 24 / .45);z-index:60;}
+.microbial-profile-sheet {position:fixed;z-index:61;right:0;top:0;bottom:0;width:min(100%,480px);overflow-y:auto;overscroll-behavior:contain;background:hsl(var(--background));color:hsl(var(--foreground));padding:56px 24px 24px;border:1px solid hsl(var(--border));box-shadow:0 8px 40px rgb(0 0 0 / .16);font-size:16px;overflow-wrap:anywhere;}
+.microbial-profile-title {font-family:var(--font-serif);font-size:clamp(24px,5vw,30px);line-height:1.2;margin:12px 0;}
+.microbial-profile-close {position:sticky;float:right;top:12px;margin-top:-44px;z-index:2;background:hsl(var(--background));min-width:44px;min-height:44px;display:grid;place-items:center;border-radius:50%;}
+.microbial-profile-close:focus-visible,.microbial-composition-trigger:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:2px;}
+.microbial-observation {background:hsl(var(--muted));border-radius:16px;padding:16px;margin:24px 0;}
+.microbial-observation dl {display:grid;gap:12px;margin-top:12px;font-size:14px;}
+.microbial-observation dt {color:hsl(var(--muted-foreground));}
+.microbial-profile-sheet h3,.microbial-profile-disclosures summary {font-weight:600;}
+.microbial-organism-intro {padding-bottom:16px;}
+.microbial-organism-intro p,.microbial-profile-disclosures p {margin-top:12px;}
+.microbial-profile-disclosures details {border-top:1px solid hsl(var(--border));padding:12px 0;}
+.microbial-profile-disclosures summary {min-height:44px;cursor:pointer;align-content:center;}
+@media(max-width:639px){.microbial-profile-sheet {top:auto;max-height:85dvh;border-radius:24px 24px 0 0;padding:48px 16px 24px;width:100%;}.microbial-profile-handle {position:absolute;top:10px;left:calc(50% - 28px);width:56px;height:4px;border-radius:4px;background:hsl(var(--border));}}

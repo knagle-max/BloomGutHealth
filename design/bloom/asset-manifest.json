@@ -1251,6 +1251,30 @@
       "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
       "sha256": "8d58297e75377f220b83d510d238596597289dffb51b7047c2fc558ae69a1203",
       "bytes": 2040465
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/ARCHITECT_HANDOFF.md",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "269ddc5787d69e7d1f1e02f80707babe48fe3c1280851138f85061a90e4f21fb",
+      "bytes": 2523
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/UX_CONTRACT.md",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "380b14578023e667008ed0614372df3eeac0d994406709ed65bfe88477ba2592",
+      "bytes": 3572
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/microbial-profile-sheet.svg",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "b3eec42fae2f44a589ac41a84ed0ac00b0d1d943554ba74bbeb85ee88ea6798f",
+      "bytes": 2692
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/ASSET_USAGE_AUDIT.md",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "b6fad384979eb93c1cc0716d1df14c8fe6eba3105a2d80cf97ac3f82f97f96e3",
+      "bytes": 5373
     }
   ],
   "policy": "Design only. Codex owns merging and integration. Avoid adding duplicate components. Latest whole-app redesign is master; earlier kits provide specialized states.",
@@ -1260,6 +1284,12 @@
       "pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
       "receipt": "design/bloom/flagship/IMPORT_VERIFICATION_2026-10-28.json",
       "status": "Original archive and all13 expanded bytes verified; all13 GitHub blob hashes and sizes match at8933079f383b475568e7162b589e28226487e3a0; implementation contract fetched successfully from GitHub; no runtime integration."
+    },
+    {
+      "date": "2026-10-30",
+      "pack": "microbial-profiles/2026-10-30",
+      "receipt": "3ef48885ba95ab34a93f81e7ee36f333196a0ed2 merged without source edits at74aa3be",
+      "status": "Four original GitHub source files merged; hashes recorded. Runtime/claim/independent acceptance tracked separately."
     }
   ]
 }
