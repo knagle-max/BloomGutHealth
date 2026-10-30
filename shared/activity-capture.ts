@@ -44,27 +44,46 @@ export function describeActivity(description:string) {
  const distances=Array.from(description.matchAll(/(?:^|\s)(\d+(?:\.\d+)?)\s*(km|kilomet(?:er|re)s?|met(?:er|re)s?)\b/gi));
  const distance=distances.length===1&&matches.length<=1?distances[0]:undefined;
  const distanceM=distance?bounded(String(Number(distance[1])*(/^k/i.test(distance[2])?1000:1)),1000000):null;
- const reordered=description.trim().match(/^(?:did\s+)?(\d+)\s+sets?\s+of\s+(.{1,120}?)\s+at\s+(\d+(?:\.\d+)?)\s*kg\s+for\s+(\d+)\s+reps?[.!]?$/i);
- const strength=reordered?[reordered[0],reordered[1],reordered[4],reordered[2],reordered[3]]:description.trim().match(/^(\d+)\s*(?:sets?\s+of|[x×])\s*(\d+)\s+(.{1,120}?)\s+at\s+(\d+(?:\.\d+)?)\s*kg[.!]?$/i);
- const suffixed=description.trim().match(/^(?:did\s+)?(\d+)\s+sets?\s+of\s+(\d+)\s+reps?\s+of\s+(.{1,120}?)\s+(?:for|at)\s+(.+?)\s*(kg|kgs|kilograms?|lb|lbs|pounds?)[.!]?$/i);
- const parenthesized=description.trim().match(/^(?:did\s+)?(\d+)\s+sets?\s+of\s+(\d+)\s+reps?\s+of\s+(.{1,120}?)\s*\(([^()]+)\)\s*(kg|kgs|kilograms?|lb|lbs|pounds?)?[.!]?$/i);
- const listed=suffixed||parenthesized;
+ const text=description.trim(),loadUnits='kg|kgs|kilograms?|lb|lbs|pounds?';
+ // Parse quantities independently of the exercise vocabulary. Identity stays source text.
+ const head=text.match(/^(?:did\s+)?(\d+)\s*(?:sets?\s+of|[x×])\s*(.+?)[.!]?$/i);
+ const repFirst=head?.[2].match(/^(\d+)\s+(?:reps?\s+(?:of\s+)?)?(.+)$/i);
+ const nameFirst=head?.[2].match(/^(.+?)\s+(?:for\s+)?(\d+)\s+reps?\s+(.+)$/i);
+ let countText=head?.[1],repText=repFirst?.[1]||nameFirst?.[2],body=repFirst?.[2]||(nameFirst?`${nameFirst[1]} ${nameFirst[3]}`:undefined);
+ // Existing name/load-before-repetitions phrasing remains supported by the same load parser.
+ const reordered=head&&!repFirst&&!nameFirst?head[2].match(/^(.+?)\s+(?:for|at)\s+(.+?)\s+for\s+(\d+)\s+reps?$/i):null;
+ if(reordered){repText=reordered[3];body=`${reordered[1]} at ${reordered[2]}`;}
+ const parentheses=body?.match(new RegExp(`^(.+?)\\s*\\(([^()]+)\\)\\s*(${loadUnits})?$`,'i'));
+ const plain=body?.match(new RegExp(`^(.+?)\\s+(?:for|at)\\s+(.+?)\\s*(${loadUnits})?$`,'i'));
+ const inside=parentheses?.[2].trim().match(new RegExp(`^(.*?)\\s*(${loadUnits})$`,'i'));
+ const canonicalUnit=(value:string|undefined)=>value?/^(lb|pound)/i.test(value)?'lb' as const:'kg' as const:undefined;
+ const outsideUnit=canonicalUnit(parentheses?.[3]||plain?.[3]),insideUnit=canonicalUnit(inside?.[2]),unit=outsideUnit||insideUnit;
  let actualSets:ActivityDraftSets|undefined,needsSetReview=false,namedTitle:string|undefined;
- if(listed){
-  const count=bounded(listed[1],100,true),reps=bounded(listed[2],1000,true),unit=listed[5]?/^(lb|pound)/i.test(listed[5])?'lb' as const:'kg' as const:undefined;
-  const amounts=listed[4].split(',').map(value=>value.trim());
-  const loads=amounts.map(value=>/^\d+(?:\.\d+)?$/.test(value)?bounded(String(unit?displayToKg(Number(value),unit):Number(value)),unit?2000:2000/0.45359237):null);
-  namedTitle=listed[3].trim();choice=activityChoices[5];
-  if(count&&reps!==null&&loads.every(load=>load!==null)&&(loads.length===count||!!suffixed&&loads.length===1&&amounts.length===1)){
-   actualSets={version:1,sets:Array.from({length:count},(_,index)=>({exercise:namedTitle!,reps,loadKg:unit?(loads.length===1?loads[0]:loads[index]):null,...(unit?{loadUnit:unit}:{unconfirmedLoad:loads.length===1?loads[0]!:loads[index]!}),completed:false}))};
+ if(head&&repText&&body){
+  const name=(parentheses?.[1]||plain?.[1]||body.split(/[()]/)[0]).replace(/\s+reps?$/i,'').trim();
+  const count=bounded(countText,100,true),reps=bounded(repText,1000,true);
+  const raw=parentheses?(inside?.[1]??parentheses[2]):plain?.[2];
+  const amounts=raw?.split(',').map(value=>value.trim());
+  const loads=amounts?.map(value=>/^\d+(?:\.\d+)?$/.test(value)?bounded(String(unit?displayToKg(Number(value),unit):Number(value)),unit?2000:2000/0.45359237):null);
+  // Parentheses are an ordered list, never a silently repeated single value.
+  const validLoads=loads?loads.every(load=>load!==null)&&(loads.length===count||!!plain&&loads.length===1):!/[()\d]/.test(body);
+  namedTitle=name.length<=120?name:undefined;choice=activityChoices[5];
+  if(name.length>0&&name.length<=120&&count&&reps!==null&&validLoads&&!(outsideUnit&&insideUnit&&outsideUnit!==insideUnit)){
+   actualSets={version:1,sets:Array.from({length:count},(_,index)=>({exercise:name,reps,loadKg:loads&&unit?(loads.length===1?loads[0]:loads[index]):null,...(unit?{loadUnit:unit}:loads?{unconfirmedLoad:loads.length===1?loads[0]!:loads[index]!}:{}),completed:false}))};
   }else{needsSetReview=true;actualSets={version:1,sets:[]};}
- }else if(strength){const count=bounded(strength[1],100,true),reps=bounded(strength[2],1000,true),loadKg=bounded(strength[4],2000);if(count&&reps!==null&&loadKg!==null){actualSets={version:1,sets:Array.from({length:count},()=>({exercise:strength[3],reps,loadKg,completed:false}))};choice=activityChoices[5];}}
- // A named but unsupported strength phrase must lead to manual correction, not a generic success.
- if(!actualSets&&choice.id==='strength'&&/\bbench press\b/i.test(description)){namedTitle='Bench press';needsSetReview=true;actualSets={version:1,sets:[]};}
+ }
+ // Unsupported counts still retain the written exercise label and a manual review path.
+ if(!actualSets&&choice.id==='strength'){
+  const unsupported=text.match(/^(?:did\s+)?\S+\s+sets?\s+of\s+(.{1,120})$/i);
+  if(unsupported){namedTitle=unsupported[1].trim();needsSetReview=true;actualSets={version:1,sets:[]};}
+ }
+ const sourceLabel=choice.id==='other'?text.replace(/(?:^|\s)(?:for\s+|in\s+)?\d+(?:\.\d+)?\s*(?:minutes?|mins?|km|kilomet(?:er|re)s?|met(?:er|re)s?)\b/gi,' ').replace(/^(?:did|went)\s+/i,'').replace(/\s+(?:for|in)$/i,'').replace(/[.!]$/,'').trim():undefined;
+ const reportedLabel=!!sourceLabel&&sourceLabel.length<=120;
+ if(reportedLabel)namedTitle=sourceLabel;
  const title=namedTitle?namedTitle.charAt(0).toUpperCase()+namedTitle.slice(1):choice.label;
  const capture:NonNullable<Activity['capture']>={version:1,method:'describe',description,activityId:choice.id,interpretation:choice.id==='other'||needsSetReview?'unclassified':'rule-suggestion'};
- return {title,minutes:minutes&&minutes>0?minutes:null,distanceM,actualSets,capture,
-  notice:needsSetReview?'Set counts or amounts could not be matched. Add or correct each set; the original description is retained.':choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};
+ return {title,minutes:minutes&&minutes>0?minutes:null,distanceM,actualSets,capture,reportedLabel,
+  notice:reportedLabel?'The reported activity name is retained; a specific classification has not been assumed.':needsSetReview?'Set counts or amounts could not be matched. Add or correct each set; the original description is retained.':choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};
 }
 
 export function activityAmountText(activity:Pick<Activity,'minutes'|'distanceM'|'components'>){
@@ -78,10 +97,14 @@ export function activityParts(activity:Activity,id=()=>crypto.randomUUID()):Acti
  return [{id:id(),title:activity.title,activityId:activity.capture?.activityId||'other',match:activity.capture?.interpretation==='rule-suggestion'?'suggested':activity.capture?.interpretation==='unclassified'?'unclassified':'reported',minutes:activity.minutes,distanceM:activity.distanceM??null,...(activity.actualSets?{actualSets:{version:1 as const,sets:activity.actualSets.sets.map(set=>({...set,id:set.id||id()}))}}:{})}];
 }
 export function describeActivityParts(description:string,id=()=>crypto.randomUUID()):ActivityDraftComponent[]{
- const chunks=description.split(/,\s*(?:then\s+)(?:did\s+)?|\s+then\s+(?:did\s+)?/i).map(value=>value.trim()).filter(Boolean);
+ const chunks:string[]=[];let depth=0,start=0;
+ const separators=/(?:,\s*|\s+)then\s+(?:did\s+)?|;\s*(?:then\s+)?(?:did\s+)?|(?:\s+and\s+|,\s*)(?:did\s+)?(?=\d+\s*(?:sets?\s+of|[x×]))/gi;
+ const levels:number[]=[];for(let index=0;index<description.length;index++){levels[index]=depth;if(description[index]==='(')depth++;else if(description[index]===')')depth=Math.max(0,depth-1);}
+ for(const match of Array.from(description.matchAll(separators))){if(levels[match.index!]!==0)continue;const chunk=description.slice(start,match.index).trim();if(chunk)chunks.push(chunk);start=match.index!+match[0].length;}
+ const last=description.slice(start).trim();if(last)chunks.push(last);
  if(!chunks.length||chunks.length>20)throw Error('Review one to twenty activities at a time.');
  return chunks.map(chunk=>{const parsed=describeActivity(chunk),sets=parsed.actualSets;
-  return {id:id(),title:sets?.sets[0]?.exercise?sets.sets[0].exercise.charAt(0).toUpperCase()+sets.sets[0].exercise.slice(1):parsed.title,activityId:parsed.capture.activityId,match:parsed.capture.interpretation==='unclassified'?'unclassified':'suggested',minutes:parsed.minutes,distanceM:parsed.distanceM,...(sets?{actualSets:{version:1 as const,sets:sets.sets.map(set=>({...set,id:id(),...(set.unconfirmedLoad!==undefined?{}:{loadUnit:set.loadUnit||'kg' as const})}))}}:{})};
+  return {id:id(),title:sets?.sets[0]?.exercise?sets.sets[0].exercise.charAt(0).toUpperCase()+sets.sets[0].exercise.slice(1):parsed.title,activityId:parsed.capture.activityId,match:parsed.reportedLabel?'reported':parsed.capture.interpretation==='unclassified'?'unclassified':'suggested',minutes:parsed.minutes,distanceM:parsed.distanceM,...(sets?{actualSets:{version:1 as const,sets:sets.sets.map(set=>({...set,id:id(),...(set.loadUnit?{loadUnit:set.loadUnit}:{})}))}}:{})};
  });
 }
 /** Compatibility projections; the child observations remain the source of truth. */

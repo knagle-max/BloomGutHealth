@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useLayoutEffect,useRef,useState} from 'react';
 import {Check,Minus,ChevronDown,ChevronUp} from 'lucide-react';
 import {Button} from './ui/button';
 import {kgToDisplay,displayToKg,type WeightUnit} from '@shared/display-units';
@@ -19,10 +19,12 @@ export function SetCompletionRow({set,number,unit,open,editorId,onToggle,onCompl
 
 export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd}:{exercise:string;value:ActivityDraftSets;onChange:(value:ActivityDraftSets)=>void;unit:WeightUnit;canAdd:boolean}){
  const [editing,setEditing]=useState<Set<string>>(()=>new Set());
+ const focusAfterRender=useRef<(()=>void)|null>(null);
+ useLayoutEffect(()=>{const focus=focusAfterRender.current;focusAfterRender.current=null;focus?.();},[editing,value]);
  const change=(id:string,patch:Partial<ActivityDraftSet>)=>onChange({version:1,sets:value.sets.map(set=>set.id===id?{...set,...patch}:set)});
  const unresolved=value.sets.filter(set=>set.unconfirmedLoad!==undefined&&!set.loadUnit).length;
  const defaulted=value.sets.filter(set=>set.defaultedLoadUnit);
- const append=()=>{const id=crypto.randomUUID();setEditing(previous=>new Set([...Array.from(previous),id]));onChange({version:1,sets:[...value.sets,{id,exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});requestAnimationFrame(()=>document.getElementById(`set-editor-${id}`)?.querySelector('input')?.focus());};
+ const append=()=>{const id=crypto.randomUUID();focusAfterRender.current=()=>document.getElementById(`set-editor-${id}`)?.querySelector('input')?.focus();setEditing(previous=>new Set([...Array.from(previous),id]));onChange({version:1,sets:[...value.sets,{id,exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});};
  return <div className="space-y-3">
   <p className="panel-note">Source-described values are starting values, not verified performance. Edit each set; completion is never inferred.</p>
   {!value.sets.length&&<p role="status">No sets recorded. Add each reported set; leave unknown amounts blank. Check the original description when counts or amounts could not be matched.</p>}
@@ -32,11 +34,11 @@ export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd}:
    return <div key={set.id} data-set-id={set.id} className="activity-set-row">
     <SetCompletionRow set={set} number={number} unit={unit} open={open} editorId={`set-editor-${set.id}`} onCompletion={()=>change(set.id!,{completed:!set.completed})} onToggle={()=>setEditing(previous=>{const next=new Set(previous);if(open)next.delete(set.id!);else next.add(set.id!);return next;})}/>
 
-    <fieldset id={`set-editor-${set.id}`} hidden={!open} className="activity-set-detail" onInvalidCapture={event=>{const target=event.target as HTMLInputElement;setEditing(previous=>new Set([...Array.from(previous),set.id!]));requestAnimationFrame(()=>target.focus());}}><legend>Edit set {number}</legend>
+    <fieldset id={`set-editor-${set.id}`} hidden={!open} className="activity-set-detail" onInvalidCapture={event=>{const target=event.target as HTMLInputElement;focusAfterRender.current=()=>target.focus();setEditing(previous=>new Set([...Array.from(previous),set.id!]));}}><legend>Edit set {number}</legend>
    {set.exercise.toLowerCase()!==exercise.toLowerCase()&&<p className="panel-note">Recorded exercise: {set.exercise}</p>}
    <div className={unconfirmed?"activity-set-fields activity-set-needs-unit":"activity-set-fields"}>
     <label>Reps<input aria-label={`Reps for set ${index+1}`} className="bloom-input w-full" type="number" min={0} max={1000} step={1} value={set.reps??''} onChange={e=>change(set.id!,{reps:e.target.value===''?null:Number(e.target.value)})}/></label>
-    <label>Load<input aria-label={`Load for set ${index+1}`} className="bloom-input w-full" type="number" min={0} max={unconfirmed?kgToDisplay(2000,"lb"):kgToDisplay(2000,shownUnit)} step="any" value={draftLoad?set.unconfirmedLoad:set.loadKg===null?'':Number(kgToDisplay(set.loadKg,shownUnit).toFixed(3))} onChange={e=>{if(draftLoad&&e.target.value!=='')change(set.id!,{unconfirmedLoad:Number(e.target.value)});else if(draftLoad)onChange({version:1,sets:value.sets.map(old=>{if(old.id!==set.id)return old;const {unconfirmedLoad,defaultedLoadUnit,...rest}=old;return {...rest,loadKg:null};})});else change(set.id!,{loadKg:e.target.value===''?null:displayToKg(Number(e.target.value),shownUnit)});}}/></label>
+    <label>Load<input aria-label={`Load for set ${index+1}`} className="bloom-input w-full" type="number" min={0} max={unconfirmed?kgToDisplay(2000,"lb"):kgToDisplay(2000,shownUnit)} step="any" value={draftLoad?set.unconfirmedLoad:set.loadKg===null?'':Number(kgToDisplay(set.loadKg,shownUnit).toFixed(3))} onChange={e=>{if(draftLoad&&e.target.value!=='')change(set.id!,{unconfirmedLoad:Number(e.target.value)});else if(draftLoad)onChange({version:1,sets:value.sets.map(old=>{if(old.id!==set.id)return old;const {unconfirmedLoad,defaultedLoadUnit,...rest}=old;return {...rest,loadKg:null};})});else change(set.id!,{loadKg:e.target.value===''?null:displayToKg(Number(e.target.value),shownUnit),...(e.target.value!==''?{loadUnit:shownUnit}:{})});}}/></label>
     <label className={unconfirmed?"col-span-2":undefined}>Unit<select aria-label={`Load unit for set ${index+1}`} className="bloom-input w-full" required={unconfirmed} value={unconfirmed?"":shownUnit} onChange={e=>{if(e.target.value)onChange({version:1,sets:value.sets.map(old=>old.id===set.id?confirmDraftLoadUnit(old,e.target.value as WeightUnit):old)});}}>{unconfirmed&&<option value="">Unit unknown — choose kg or lb</option>}<option value="kg">kg</option><option value="lb">lb</option></select></label>
    </div>
    <p className="panel-note">{set.reps===null?'Reps not recorded. ':''}{unconfirmed?'Reported load — unit needs confirmation. ':set.loadKg===null?'Load not recorded. ':''}{set.state==='cancelled'?'Cancelled':set.state==='planned'?'Planned':set.completed?'Completion confirmed':'Completion not confirmed'}</p>

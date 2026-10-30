@@ -87,3 +87,40 @@ test('compact parent facts and completion follow actual child records without in
  assert.equal(activitySetSummary([sets[0],{...sets[1],loadUnit:'kg'}],'kg'),'2 sets · 10 reps each');
  assert.equal(activityCompletionSummary([{...sets[0],completed:true,state:'cancelled'}]),'0 of 1 completed');
 });
+
+test('exercise grammar keeps reported labels and ordered loads independently of taxonomy and repetition-word placement',()=>{
+ const fixtures=[
+  {text:'Ran then did 5 sets of 10 reps of bench press for 50,50,50,55,55 lbs',title:'Bench press',reps:10,loads:[50,50,50,55,55],unit:'lb',first:'Running',minutes:null},
+  {text:'45 min Skating then 7 sets of 15 shoulder raises (15,15,15,20,20,20,25 lbs)',title:'Shoulder raises',reps:15,loads:[15,15,15,20,20,20,25],unit:'lb',first:'Skating',minutes:45},
+  {text:'Rowed 30 minutes and 3 sets of 12 band pull-aparts (10,10,15 kg)',title:'Band pull-aparts',reps:12,loads:[10,10,15],unit:'kg',first:'Rowed',minutes:30},
+  {text:'20 min ice skating; 2 sets of cable rotations for 8 reps (5,7.5 kg)',title:'Cable rotations',reps:8,loads:[5,7.5],unit:'kg',first:'Ice skating',minutes:20},
+  {text:'3 sets of 9 overhead extensions reps (8,8,10) lb',title:'Overhead extensions',reps:9,loads:[8,8,10],unit:'lb'},
+  {text:'3 sets of rope pulls at 12 kg for 6 reps',title:'Rope pulls',reps:6,loads:[12,12,12],unit:'kg'},
+  {text:'Ran 45 min then did 5 sets of 10 reps of bench press (50,50,55,55,60)',title:'Bench press',reps:10,loads:[50,50,55,55,60],first:'Running',minutes:45},
+ ] as const;
+ for(const fixture of fixtures){
+  const draft=describeActivityParts(fixture.text),part=draft.at(-1)!,sets=part.actualSets!.sets;
+  assert.equal(part.title,fixture.title,fixture.text);assert.equal(sets.length,fixture.loads.length,fixture.text);assert.equal(part.minutes,null);assert.equal(part.distanceM,null);assert.equal(new Set(sets.map(set=>set.id)).size,sets.length);assert.ok(sets.every(set=>set.reps===fixture.reps&&!set.completed));
+  if('first' in fixture){assert.equal(draft[0].title,fixture.first);assert.equal(draft[0].minutes,fixture.minutes);if(fixture.first!=='Running'){assert.equal(draft[0].activityId,'other');assert.equal(draft[0].match,'reported','A source label is not a fabricated taxonomy match');}}
+  const explicit='unit' in fixture?fixture.unit:undefined;
+  assert.deepEqual(sets.map(set=>explicit?Number((set.loadKg!/(explicit==='lb'?0.45359237:1)).toFixed(3)):set.unconfirmedLoad),fixture.loads);
+  if(!explicit)assert.ok(sets.every(set=>!set.loadUnit&&set.loadKg===null));
+  const canonical=canonicalActivityParts(defaultActivityLoadUnits(draft,'lb'));
+  const saved=activitySchema.parse({...activityProjection(canonical),components:{version:1,items:canonical},startedAt:'2026-10-30T12:00:00Z',capture:{version:1,method:'describe',description:fixture.text,activityId:'other',interpretation:'unclassified'}});
+  assert.deepEqual(activitySchema.parse(JSON.parse(JSON.stringify(saved))),saved);
+  assert.equal(saved.capture!.description,fixture.text);assert.deepEqual(saved.components!.items.at(-1)!.actualSets!.sets.map(set=>set.id),sets.map(set=>set.id));
+ }
+});
+
+test('seven-set correction and malformed/unknown inputs keep source, identities and missingness without partial list success',()=>{
+ const text='45 min Skating then 7 sets of 15 shoulder raises (15,15,15,20,20,20,25 lbs)',parts=describeActivityParts(text),original=structuredClone(parts);
+ parts[1].actualSets!.sets[3]={...parts[1].actualSets!.sets[3],reps:12,loadKg:17.5*0.45359237};
+ const saved=activitySchema.parse({...activityProjection(parts),components:{version:1,items:parts},startedAt:'2026-10-30T12:00:00Z'}),sets=saved.components!.items[1].actualSets!.sets;
+ assert.equal(saved.minutes,45);assert.deepEqual(saved.components!.items[0],original[0]);assert.deepEqual(sets.map(set=>set.id),original[1].actualSets!.sets.map(set=>set.id));assert.equal(sets[3].reps,12);assert.equal(sets[3].loadKg,17.5*0.45359237);for(const index of [0,1,2,4,5,6])assert.deepEqual(sets[index],original[1].actualSets!.sets[index]);
+ for(const source of ['7 sets of 15 shoulder raises (15,15,20 lbs)','7 sets of 15 shoulder raises (15,15,15,-20,20,20,25 lbs)','101 sets of 15 shoulder raises (15 lbs)','7 sets of 1001 shoulder raises (15,15,15,20,20,20,25 lbs)','7 sets of 15 shoulder raises (15,15,15,20,20,20,25 kg) lb','7 sets of 15 shoulder raises (15,15,15,20,20,20,25 stones)','7 sets of 15 shoulder raises (15,15,15,20,20,20,25 lbs']){
+  const result=describeActivityParts(source)[0];assert.equal(result.title,'Shoulder raises',source);assert.equal(result.match,'unclassified',source);assert.deepEqual(result.actualSets?.sets,[],source);
+ }
+ const unknown=describeActivityParts('Skating')[0];assert.equal(unknown.title,'Skating');assert.equal(unknown.minutes,null);assert.equal(unknown.distanceM,null);assert.equal(unknown.actualSets,undefined);
+ const missing=describeActivityParts('2 sets of 8 cable rotations')[0];assert.ok(missing.actualSets!.sets.every(set=>set.reps===8&&set.loadKg===null&&!set.loadUnit&&!set.completed));
+ const cleanAndPress=describeActivityParts('2 sets of 8 clean and press (10,15 kg)');assert.equal(cleanAndPress.length,1);assert.equal(cleanAndPress[0].title,'Clean and press');
+});

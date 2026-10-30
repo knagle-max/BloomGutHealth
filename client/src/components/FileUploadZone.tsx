@@ -9,8 +9,8 @@ interface FileUploadZoneProps {
   disabled?: boolean;
 }
 
-export default function FileUploadZone({ 
-  file, onFileSelect, 
+export default function FileUploadZone({
+  file, onFileSelect,
   acceptedFormats = ['PDF', 'CSV', 'TXT', 'JSON'],
   maxSizeMB = 10, disabled = false
 }: FileUploadZoneProps) {
@@ -33,7 +33,7 @@ export default function FileUploadZone({
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
-    
+
     const files = e.dataTransfer.files;
     if (files && files[0]) {
       handleFile(files[0]);
@@ -63,8 +63,8 @@ export default function FileUploadZone({
       onDragOver={handleDrag}
       onDrop={handleDrop}
       className={`relative rounded-xl border-2 border-dashed p-8 transition-all ${
-        isDragging 
-          ? 'border-primary bg-primary/5' 
+        isDragging
+          ? 'border-primary bg-primary/5'
           : file
           ? 'border-primary bg-primary/5'
           : 'border-muted bg-muted/20'
@@ -82,8 +82,8 @@ export default function FileUploadZone({
         accept={acceptedFormats.map(f => `.${f.toLowerCase()}`).join(',')}
         data-testid="input-file"
       />
-      <label 
-        htmlFor={inputId} 
+      <label
+        htmlFor={inputId}
         className="flex flex-col items-center gap-3 cursor-pointer peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-primary"
       >
         {file ? (

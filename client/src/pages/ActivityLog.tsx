@@ -1,6 +1,6 @@
 import {activityTimeText} from '@shared/activity';
 import {activityChoices,describeActivityParts,activityParts,activityProjection,activityAmountText,unresolvedActivityLoads,defaultActivityLoadUnits,canonicalActivityParts,type ActivityDraftComponent} from '@shared/activity-capture';
-import {useEffect,useRef,useState} from 'react';
+import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {Link} from 'wouter';
 import {useAuth} from '@/lib/auth';
 import {apiRequest,ApiRequestError} from '@/lib/queryClient';
@@ -27,9 +27,10 @@ function ActivityWorkspace(){
  const rows=ready?records.data!.flatMap(row=>row.kind==='activity'?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)):[];
  const locked=pending||!!held,unreviewed=method==='describe'&&composerOpen&&!editing&&description!==(capture?.description||'');
  const change=(key:keyof Draft,value:string)=>setDraft(current=>({...current,[key]:value}));
- const focusReview=()=>requestAnimationFrame(()=>document.getElementById('activity-review-heading')?.focus());
- function reset(){setDraft(fresh());setParts([]);setCapture(undefined);setDescription('');setComposerOpen(true);setReviewKey(value=>value+1);}
- function review(items:ActivityDraftComponent[],source:NonNullable<Activity['capture']>){setParts(settingsReady?defaultActivityLoadUnits(items,settings.displayUnits.bodyWeight):items);setCapture(source);setComposerOpen(false);setError('');setMessage('');setReviewKey(value=>value+1);focusReview();}
+ const focusReviewRequested=useRef(false);
+ useLayoutEffect(()=>{if(focusReviewRequested.current){focusReviewRequested.current=false;document.getElementById('activity-review-heading')?.focus();}},[reviewKey]);
+ function reset(){focusReviewRequested.current=false;setDraft(fresh());setParts([]);setCapture(undefined);setDescription('');setComposerOpen(true);setReviewKey(value=>value+1);}
+ function review(items:ActivityDraftComponent[],source:NonNullable<Activity['capture']>){focusReviewRequested.current=true;setParts(settingsReady?defaultActivityLoadUnits(items,settings.displayUnits.bodyWeight):items);setCapture(source);setComposerOpen(false);setError('');setMessage('');setReviewKey(value=>value+1);}
  function describe(){try{review(describeActivityParts(description),{version:1,method:'describe',description,activityId:'other',interpretation:'rule-suggestion'});}catch(e){setError((e as Error).message);}}
  function select(id:typeof activityChoices[number]['id']){const choice=activityChoices.find(choice=>choice.id===id)!;review([{id:crypto.randomUUID(),title:choice.label,activityId:id,match:id==='other'?'unclassified':'reported',minutes:null,distanceM:null,...(id==='strength'?{actualSets:{version:1 as const,sets:[]}}:{})}],{version:1,method:'select',description:choice.label,activityId:id,interpretation:'user-selected'});}
  function repeat(row:Row){const items=activityParts(row.payload).map(part=>({...part,id:crypto.randomUUID(),...(part.actualSets?{actualSets:{version:1 as const,sets:part.actualSets.sets.map(set=>({...set,id:crypto.randomUUID(),completed:false,state:'described' as const}))}}:{})}));setDraft(fresh());review(items,{version:1,method:'repeat',description:row.payload.capture?.description||row.payload.title,activityId:row.payload.capture?.activityId||'other',interpretation:'user-selected'});}

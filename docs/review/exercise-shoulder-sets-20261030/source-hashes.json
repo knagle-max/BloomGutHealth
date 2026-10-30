@@ -1,0 +1,8 @@
+{
+  "shared/activity-capture.ts": "db0040742375dca8d19fbcfd6b9d3144bb1dd3c01b96fa14f567ef74d7c9d5d5",
+  "client/src/pages/ActivityLog.tsx": "4bc7d9b665bffa63313d56a5d055ec5662aca85af2b41ef106cb95e8fc3834b0",
+  "client/src/components/ActivityReview.tsx": "1d9961c3aecfd62e036daa6953ec6064d938653ca219138093bd3caea4e99e05",
+  "client/src/components/ActivitySetEditor.tsx": "b625697a762606bfc4f3cbbf47e16f82ba9c393aabae3d2d399d1b82e6735eec",
+  "scripts/qa/exercise-shoulder-sets-journey.mjs": "a0902323047dd73d4422a3c179de44aa178f24d121a9f3037af714382bd165ff",
+  "scripts/qa/set-app-theme.mjs": "5be5280d6aa9d2f2e7a9a019938dd29fce06b9088d222bea8521b9ecdf5a9a09"
+}
