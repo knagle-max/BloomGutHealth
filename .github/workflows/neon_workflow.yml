@@ -54,9 +54,10 @@ jobs:
           NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
           NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
           NEON_BRANCH: preview/pr-${{ github.event.number }}
+        # Pin:8.14.0 requests unpublished @neon/config1.9.6 and fails before app checks.
         run: |
-          npx --yes neon@latest --no-analytics link -y --project-id "$NEON_PROJECT_ID" --branch "$NEON_BRANCH" --no-env-pull
-          npx --yes neon@latest --no-analytics deploy
+          npx --yes neon@8.13.0 --no-analytics link -y --project-id "$NEON_PROJECT_ID" --branch "$NEON_BRANCH" --no-env-pull
+          npx --yes neon@8.13.0 --no-analytics deploy
       - name: Apply app schema to preview database only
         env:
           BLOOM_SMOKE_ISOLATED: "true"
