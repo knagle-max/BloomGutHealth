@@ -198,3 +198,9 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .food-progress-values { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 12px; padding-top:16px; }.food-progress-values>div { min-width:0; overflow-wrap:anywhere; }.food-progress-values>div:first-child { grid-column:1/-1; }.food-progress-values dt { font-size:14px; color:hsl(var(--muted-foreground)); }.food-progress-values dd { font-size:18px; font-weight:600; margin-top:4px; }.food-progress-values>div:first-child dd { font-size:28px; line-height:1.2; letter-spacing:-.02em; }
 .activity-week-summary { border:1px solid hsl(var(--border)); }.activity-week-days strong { font-size:22px; }.activity-week-duration { font-size:20px!important; line-height:1.5; }
 @media(max-width:700px){.food-progress-days { grid-template-columns:minmax(0,1fr); }.food-progress-day { padding:16px; }}
+
+/* Shared food-preference editor: restrictions stay distinct from softer choices. */
+.preference-group { display:grid; gap:16px; padding:24px 0; border-top:1px solid hsl(var(--border)); }.preference-group h3 { font-size:22px; line-height:1.3; }.preference-group>label>.bloom-input { display:block; width:100%; }.preference-group fieldset>div { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px 16px; }.preference-group fieldset label { min-width:0; overflow-wrap:anywhere; }
+.app-shell :is(.meal-planner-workspace,.planning-workspace,.biology-explorer)>.science-heading h1 { font-family:var(--font-serif); font-weight:500; font-size:clamp(28px,4vw,36px); line-height:1.2; letter-spacing:-.02em; }
+.explore-related-workspaces>summary,.planning-related-workspaces>summary { color:hsl(var(--muted-foreground)); cursor:pointer; }.explore-related-workspaces .explore-tools,.planning-related-workspaces>div { margin-top:12px; }
+@media(max-width:600px){.preference-group fieldset>div { grid-template-columns:repeat(2,minmax(0,1fr)); }}

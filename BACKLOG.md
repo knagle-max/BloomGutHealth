@@ -918,3 +918,9 @@ Use docs/architecture/V05_UI_ROLLOUT.md for the visible route matrix; prioritize
 |V05-UI-PROGRESS-THEME|v0.5|P1 measured figure hierarchy/responsive logged-day cards; shared approved warm-paper/short-title system|IMPLEMENTED_AND_TESTED local; publication pending|Progress domains/source states/URL/history/5width light-dark/no-write; profile text contrast>=4.5 PASS; full463/463 PASS208204ms, finaltypes/build/API101+13/map52IDs151files PASS. Packet docs/review/v05-ui-rollout-20261030. Commit this batch|
 
 Full UI rollout remains IN_PROGRESS. Next preferences/planning/Explore and remaining Athlete/observation presentation; independent/physical/hosted/scientific acceptance remains separate.
+
+|ID|Version|Priority / acceptance|Status|Tests / evidence / commit|
+|---|---|---|---|---|
+|V05-UI-FOOD-PREFERENCES-DISCOVERY|v0.5|P1 full UI rollout: clear hard-restriction vs taste/practical vs goal groups; intent-first title, one canonical save, secondary workspace links; Explore portion search leads|IMPLEMENTED_AND_TESTED local; publication pending|13 focused/types/build/source guards and actual App/API/encryptedPGlite save/reload/priority/clear/allergy preservation, PostgreSQL two-tab409/draft, food-source fail/retry and5width light-dark distinct draft/UI checks PASS. Packet docs/review/v05-food-preference-ui-20261030. Commit this batch|
+
+V05-UI Profile/bloodwork/Progress/theme1dcfadc0c71087824ef7774cc397efeebd5039c6 exact Actions41005171970 SUCCESS including managed persistence; Renderdep-dbi24eg473hc73ej1ua0 LIVE. All changes remain on existing development branch/preview; full UI independent acceptance and remaining visual pass open.

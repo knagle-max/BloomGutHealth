@@ -84,7 +84,7 @@ export function DietaryPreferenceEditor() {
     );
   return (
     <form
-      className="bloom-panel space-y-4"
+      className="bloom-panel preference-editor space-y-4"
       onSubmit={(e) => {
         e.preventDefault();
         if(!currentSource||sourceChanged||save.isPending||(!preferences.goals.length&&!extraGoals.trim()))return;
@@ -96,6 +96,7 @@ export function DietaryPreferenceEditor() {
       <h2>Your food preferences & goals</h2>
       {!currentSource&&<p role="status">Checking current saved preferences before saving…</p>}
       {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved food preferences changed while you were editing. Your draft is still here. Load the latest saved preferences to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentSource} onClick={()=>setDirty(false)}>Load latest saved preferences</Button></div>}
+      <section className="preference-group" aria-labelledby="preference-restrictions"><div><p className="eyebrow">KEEP OUT</p><h3 id="preference-restrictions">Diet & ingredient restrictions</h3></div>
       <label className="block">
         Foods to avoid (comma separated)
         <input
@@ -109,11 +110,6 @@ export function DietaryPreferenceEditor() {
       <p className="panel-note">
         These remain hard avoids, including your previously saved dislikes. Use category exclusions below for whole food groups. Record allergies separately in My Biology.
       </p>
-      <label className="block">
-        Foods you’d prefer less often (comma separated)
-        <input className="bloom-input w-full" value={softDislikes} maxLength={1800} onChange={e => setSoftDislikes(e.target.value)} placeholder="Mushrooms, olives" />
-      </label>
-      <p className="panel-note">Taste preferences influence ordering. These foods can still appear; use Foods to avoid to exclude them.</p>
       <label className="block">
         Dietary pattern
         <select
@@ -169,6 +165,56 @@ export function DietaryPreferenceEditor() {
         </p>
       </fieldset>
       <label className="block">
+        <input
+          type="checkbox"
+          checked={preferences.sensitiveGut}
+          onChange={(e) =>
+            setPreferences({ ...preferences, sensitiveGut: e.target.checked })
+          }
+        />{" "}
+        Sensitive gut: omit initial legume, allium and fermented-food recipes
+      </label>
+      <Link className="text-link" href="/precision?tab=overview&edit=goals">Review allergies & health restrictions in My Biology</Link></section>
+      <section className="preference-group" aria-labelledby="preference-everyday"><div><p className="eyebrow">MAKE IT PRACTICAL</p><h3 id="preference-everyday">Taste, time & everyday preferences</h3></div>
+      <label className="block">
+        Foods you’d prefer less often (comma separated)
+        <input className="bloom-input w-full" value={softDislikes} maxLength={1800} onChange={e => setSoftDislikes(e.target.value)} placeholder="Mushrooms, olives" />
+      </label>
+      <p className="panel-note">Taste preferences influence ordering. These foods can still appear; use Foods to avoid to exclude them.</p>
+      <label className="block">
+        Maximum cooking minutes
+        <input
+          className="bloom-input"
+          type="number"
+          min="5"
+          max="180"
+          value={preferences.cookingMinutes}
+          onChange={(e) =>
+            setPreferences({
+              ...preferences,
+              cookingMinutes: Number(e.target.value),
+            })
+          }
+        />
+      </label>
+      <label className="block">
+        Preferred cuisines / context
+        <input
+          className="bloom-input w-full"
+          maxLength={300}
+          value={preferences.cuisines}
+          onChange={(e) =>
+            setPreferences({ ...preferences, cuisines: e.target.value })
+          }
+        />
+      </label>
+      <p className="panel-note">
+        Cuisine context is used for optional AI recipe ideas. Ingredient,
+        pattern and time restrictions are checked independently of the AI.
+      </p>
+      </section>
+      <section className="preference-group" aria-labelledby="preference-goals"><div><p className="eyebrow">YOUR DIRECTION</p><h3 id="preference-goals">Goals to plan around</h3></div>
+      <label className="block">
         Additional goals (comma separated)
         <input
           className="bloom-input w-full"
@@ -205,47 +251,7 @@ export function DietaryPreferenceEditor() {
           ))}
         </div>
       </fieldset>
-      <label className="block">
-        <input
-          type="checkbox"
-          checked={preferences.sensitiveGut}
-          onChange={(e) =>
-            setPreferences({ ...preferences, sensitiveGut: e.target.checked })
-          }
-        />{" "}
-        Sensitive gut: omit initial legume, allium and fermented-food recipes
-      </label>
-      <label className="block">
-        Maximum cooking minutes
-        <input
-          className="bloom-input"
-          type="number"
-          min="5"
-          max="180"
-          value={preferences.cookingMinutes}
-          onChange={(e) =>
-            setPreferences({
-              ...preferences,
-              cookingMinutes: Number(e.target.value),
-            })
-          }
-        />
-      </label>
-      <label className="block">
-        Preferred cuisines / context
-        <input
-          className="bloom-input w-full"
-          maxLength={300}
-          value={preferences.cuisines}
-          onChange={(e) =>
-            setPreferences({ ...preferences, cuisines: e.target.value })
-          }
-        />
-      </label>
-      <p className="panel-note">
-        Cuisine context is used for optional AI recipe ideas. Ingredient,
-        pattern and time restrictions are checked independently of the AI.
-      </p>
+      </section>
       <Button
         disabled={
           !currentSource || sourceChanged || save.isPending || (!preferences.goals.length && !extraGoals.trim())
@@ -313,14 +319,14 @@ export default function MealPlanner() {
     },
   });
   return (
-    <main className="science-page space-y-5">
+    <main className="science-page meal-planner-workspace space-y-5">
       <div className="science-heading">
-        <p className="eyebrow">PERSONALIZED MEAL PLANNING</p>
-        <h1>Meal plans</h1>
+        <p className="eyebrow">{editingPreferences?"YOUR SHARED PREFERENCES":"PERSONALIZED MEAL PLANNING"}</p>
+        <h1>{editingPreferences?"Food preferences":"Meal plans"}</h1>
         <p>
-          Find your next meal, plan your week, or explore recipes that fit your preferences.
+          {editingPreferences?"Set what to leave out, what you enjoy and what you want help planning around.":"Find your next meal, plan your week, or explore recipes that fit your preferences."}
         </p>
-        <div className="flex flex-wrap gap-3">
+        <details className="planning-related-workspaces"><summary>Related workspaces</summary>        <div className="flex flex-wrap gap-3">
           <Link className="text-link" href="/insights">
             Evidence coach
           </Link>
@@ -330,7 +336,7 @@ export default function MealPlanner() {
           <Link className="text-link" href="/profile">
             Profile
           </Link>
-        </div>
+        </div></details>
       </div>
       <Button variant="outline" onClick={() => setEditing(!editingPreferences)}>
         {editingPreferences ? "Close preferences" : "Edit saved preferences"}

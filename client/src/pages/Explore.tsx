@@ -175,11 +175,11 @@ export default function Explore() {
         <p className="eyebrow">UNDERSTAND YOUR FOOD</p>
         <h1>Explore</h1>
         <p>
-          Follow the connections. See what is known, what is inferred, and what
-          actually changes your food priorities.
+          Find a food and review its composition. Explore related biology and evidence when you want more detail.
         </p>
       </div>
-      <div className="explore-tools">
+      <FoodCompositionExplorer onSelect={()=>{setFoodId("");setSelected("");window.history.replaceState(null,"","/explore");}} />
+      <details className="explore-related-workspaces workspace-disclosure"><summary>Related workspaces</summary>      <div className="explore-tools">
         {[
           ["/precision", "My biology & bloodwork"],
           ["/microbiome", "Gut reports"],
@@ -192,7 +192,7 @@ export default function Explore() {
           </Link>
         ))}
       </div>
-      <FoodCompositionExplorer onSelect={()=>{setFoodId("");setSelected("");window.history.replaceState(null,"","/explore");}} />
+      </details>
       {registry.isLoading && (
         <p role="status">Loading the reviewed relationship model…</p>
       )}
