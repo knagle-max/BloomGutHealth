@@ -242,3 +242,9 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 .report-import-error { padding:12px 16px; border-left:3px solid var(--brand-error); border-radius:8px; background:hsl(var(--muted)); overflow-wrap:anywhere; }
 .report-import-error:focus { outline:2px solid var(--brand-error); outline-offset:2px; }
+
+.auth-page h1 { font-family:Georgia,serif; font-weight:500; }
+.auth-page :is(input,button,a) { min-height:44px; }
+.auth-page a { display:inline-flex; align-items:center; justify-content:center; }
+.auth-error { padding:12px 16px; border-left:3px solid var(--brand-error); border-radius:8px; background:hsl(var(--muted)); overflow-wrap:anywhere; }
+.auth-error:focus { outline:2px solid var(--brand-error); outline-offset:2px; }

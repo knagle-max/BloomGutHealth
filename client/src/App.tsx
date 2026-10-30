@@ -32,19 +32,18 @@ import NotFound from "@/pages/not-found";
 
 const ScienceCoach = lazy(() => import("@/pages/ScienceCoach"));
 
+function CheckingAccount(){return <main className="auth-page min-h-screen flex items-center justify-center"><p role="status">Checking your account…</p></main>;}
+function PublicAuthRoute({component:Component}:{component:typeof Login}){
+  const {user,isLoading}=useAuth();
+  // Unmount credential drafts while another tab or restored page rechecks identity.
+  if(isLoading)return <CheckingAccount/>;
+  return user?<Redirect to="/"/>:<Component/>;
+}
+
 function ProtectedRoute({ component: Component, ...rest }: any) {
   const { user, isLoading } = useAuth();
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  if (isLoading) return <CheckingAccount/>;
 
   if (!user) {
     return <Redirect to="/login" />;
@@ -132,8 +131,8 @@ function AppContent() {
         }
       >
         <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
+          <Route path="/login">{()=> <PublicAuthRoute component={Login}/>}</Route>
+          <Route path="/signup">{()=> <PublicAuthRoute component={Signup}/>}</Route>
           <Route path="/">
             {() => <ProtectedRoute component={HomeExperience} />}
           </Route>
