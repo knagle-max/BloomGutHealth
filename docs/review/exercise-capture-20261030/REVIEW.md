@@ -21,3 +21,5 @@ Broad456/456 tests PASS during implementation; final7focused parser/API/encrypti
 Established Today/My Biology/Progress navigation controls over the reference Activity tab; no extra home route.44px controls and optional status/side disclosures add height beyond the compact illustration; date is shared and irrelevant missing metrics stay collapsed. Old v1.0 hero/checkmark is superseded, not a parallel review. Curated muscle/MET/voice/device enhancements remain gated. Original source assets are references, not deployed static mock screens.
 
 Reversal must retain expanded decoders/projections and preservation once these records exist. Disable new UI emission or use a component-aware fallback; never deploy pre-extension decoders or coerce unknown duration to zero. No data migration, new provider or infrastructure.
+
+Final clean runtime capture: c18cf230d08cff4cf7e0962761abe6384538d258, uiSourceDirty=false/backendSourceDirty=false, one existing synthetic owner row, zero consumption attempts, no browser errors. Exact Renderdep-dbi0mjp42hec73f4fegg LIVE. Actions40996150980 in progress at publication check; no managed-success claim until terminal result.

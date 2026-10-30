@@ -1,4 +1,5 @@
 import {activityAmountText} from "@shared/activity-capture";
+import ActivityWeekSummary from "@/components/ActivityWeekSummary";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs";
 import {activityTimeText} from "@shared/activity";
 import FoodProgress from "@/components/FoodProgress";
@@ -51,6 +52,7 @@ export default function Progress() {
         </TabsContent>
         <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">
       <section className="bloom-panel space-y-3"><h2>Recorded activity</h2><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
+       {!routines.isPending&&routines.fetchStatus==="idle"&&!routines.isStale&&!routines.isError&&routines.data&&<ActivityWeekSummary records={routines.data.flatMap(row=>row.kind==="activity"?[row]:[])}/>}
        {routines.isError?<p role="alert">Activity history could not load.</p>:routines.fetchStatus!=="idle"||routines.isPending?<p role="status">Checking recorded activity…</p>:<>{routines.data?.some(row=>row.kind==="activity")?<ul className="space-y-3">{routines.data.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3>{row.payload.components&&row.payload.components.items.length>1&&<p>{row.payload.components.items.map(part=>part.title).join(" + ")}</p>}<p>{activityTimeText(row.payload)} · {activityAmountText(row.payload)}{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
        <Link className="text-link" href="/activity">Log or correct activity</Link>
       </section>

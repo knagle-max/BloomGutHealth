@@ -54,3 +54,16 @@ export function activityProjection(items:readonly ActivityComponent[]){
  const sets=items.flatMap(part=>part.actualSets?.sets||[]);
  return {title:items.length===1?items[0].title:`${items.length} activities`,minutes:minutes.length?minutes.reduce((a,b)=>a+b,0):null,distanceM:distance.length?distance.reduce((a,b)=>a+b,0):null,actualSets:{version:1 as const,sets}};
 }
+
+/** Calendar-window observations only; missing days are never zero movement. */
+export function recordedActivityWeek(records:readonly {payload:Activity}[],now:Date){
+ const start=new Date(+now);start.setHours(0,0,0,0);start.setDate(start.getDate()-6);
+ const day=(date:Date)=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+ const rows=records.filter(row=>{const at=Date.parse(row.payload.startedAt);return at>=+start&&at<=+now;});
+ const minutes=rows.flatMap(row=>row.payload.components?row.payload.components.items.map(part=>part.minutes):[row.payload.minutes]);
+ const known=minutes.filter((value):value is number=>value!==null);
+ const types=Array.from(new Set(rows.flatMap(row=>row.payload.components?row.payload.components.items.map(part=>part.activityId):[row.payload.capture?.activityId||'unclassified'])));
+ return {from:day(start),to:day(now),entries:rows.length,recordedDays:new Set(rows.map(row=>day(new Date(row.payload.startedAt)))).size,
+  knownMinutes:known.length?known.reduce((a,b)=>a+b,0):null,missingDurations:minutes.length-known.length,
+  labels:types.map(id=>id==='unclassified'?'Not classified':activityChoices.find(choice=>choice.id===id)!.label)};
+}
