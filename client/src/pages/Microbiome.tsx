@@ -1,7 +1,8 @@
 import CompanionHero from '@/components/CompanionHero';
 import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
-import MicrobialProfile, { type ReportedTaxon, reportedPercentage } from "@/components/MicrobialProfile";
+import MicrobialProfile from "@/components/MicrobialProfile";
+import { type ReportedTaxon, reportedTaxa, reportedTaxonAmount } from "@shared/reported-taxa";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -12,6 +13,7 @@ import { evidenceSources } from "@shared/science-coach";
 export default function Microbiome() {
   const { user } = useAuth();
   const [selectedTaxon,setSelectedTaxon]=useState<{id:string;sample:string;owner:string}|null>(null);
+  const profileClosing=useRef(false);
   const taxonTrigger=useRef<HTMLButtonElement|null>(null);
   const [sampleId, setSampleId] = useState(() => new URLSearchParams(window.location.search).get("sample") || "");
   const [comparisonId, setComparisonId] = useState("");
@@ -40,9 +42,11 @@ export default function Microbiome() {
   const currentResults=currentId&&results.fetchStatus==="idle"&&!results.isError&&results.data?.sample?.id===currentId?results.data:undefined;
   const currentComparison=comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId)&&comparison.fetchStatus==="idle"&&!comparison.isError&&comparison.data?.sample?.id===comparisonId?comparison.data:undefined;
   const currentPrediction=prediction.fetchStatus==="idle"&&!prediction.isError?prediction.data:undefined;
-  const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?currentResults.bacterial_composition.find((b:ReportedTaxon)=>b.id===selectedTaxon.id)||null:null;
-  const closeProfile=()=>{setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
-  useEffect(()=>{const closeOnBack=()=>{setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
+  const taxa=currentResults?reportedTaxa(currentResults.sample,currentResults.bacterial_composition):[];
+  const comparisonTaxa=currentComparison?reportedTaxa(currentComparison.sample,currentComparison.bacterial_composition):[];
+  const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?taxa.find(b=>b.id===selectedTaxon.id)||null:null;
+  const closeProfile=()=>{if(profileClosing.current)return;profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
+  useEffect(()=>{const closeOnBack=()=>{profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
   useEffect(()=>{if(selectedTaxon&&!activeTaxon){setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}}},[selectedTaxon,activeTaxon]);
   return (
     <main className="science-page gut-reports-workspace space-y-5">
@@ -117,7 +121,7 @@ export default function Microbiome() {
             {currentResults.sample.processingStatus}
           </p>
           <p className="break-words whitespace-pre-wrap">{currentResults.sample.notes}</p>
-          <dl className="gut-report-facts"><div><dt>Quantified taxa</dt><dd>{currentResults.bacterial_composition.length}</dd></div><div><dt>Saved diversity index</dt><dd>{currentResults.sample.diversityIndex??"Not recorded"}</dd></div></dl>
+          <dl className="gut-report-facts"><div><dt>Quantified taxa</dt><dd>{currentResults.bacterial_composition.filter((b:ReportedTaxon)=>typeof b.abundance==="number"&&Number.isFinite(b.abundance)).length}</dd></div><div><dt>Saved diversity index</dt><dd>{currentResults.sample.diversityIndex??"Not recorded"}</dd></div></dl>
           <p className="panel-note">Saved values are not independently verified. Diversity is method-dependent and is not a universal health score.</p>
           <details><summary>Methods & historical analysis limits</summary><p className="panel-note">Unsupported historical molecule estimates and recommendations are withheld. This does not mean no records were stored.</p>{currentResults.analyses.map((analysis:any)=><p className="panel-note" key={analysis.id}>{analysis.analysisType} · {analysis.modelVersion} · {analysis.analysisType==='reported-composition'?'Descriptive summary of supplied relative abundance; no biological prediction.':'Historical analysis record; unsupported outputs are withheld.'}</p>)}</details>
         </section>
@@ -159,32 +163,32 @@ export default function Microbiome() {
               <Button onClick={() => comparison.refetch()}>Retry</Button>
             </p>
           )}
-          {currentResults?.bacterial_composition?.length ? (
+          {taxa.length ? (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr>
                     <th className="text-left p-2">Taxon</th>
-                    <th className="text-left p-2">Abundance</th>
+                    <th className="text-left p-2">Reported amount</th>
                     {comparisonId && <th className="text-left p-2">Other reported abundance</th>}
                   </tr>
                 </thead>
                 <tbody>
-                  {currentResults.bacterial_composition.map((b: any) => {
+                  {taxa.map(b => {
                     const previous =
-                      currentComparison?.bacterial_composition?.find(
+                      comparisonTaxa.find(
                         (v: any) => v.bacterialName === b.bacterialName && !!b.taxonomyLevel && v.taxonomyLevel === b.taxonomyLevel,
                       );
                     return (
-                      <tr key={b.id} className="microbial-composition-row" onClick={e=>{taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
+                      <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
                         <td className="p-2">
-                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-label={`${b.bacterialName}, ${reportedPercentage(b.abundance)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><span><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
+                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><span><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
                         </td>
-                        <td className="p-2">{typeof b.abundance==="number"&&Number.isFinite(b.abundance)?`${b.abundance.toFixed(2)}%`:"Not reported"}</td>
+                        <td className="p-2">{typeof b.abundance==="number"&&Number.isFinite(b.abundance)?`${b.abundance.toFixed(2)}%`:reportedTaxonAmount(b)}</td>
                         {comparisonId && (
                           <td className="p-2">
                             {!currentComparison?"Comparison not checked":previous
-                              ? typeof previous.abundance==="number"&&Number.isFinite(previous.abundance)?`${previous.abundance.toFixed(2)}% (reported)`:"Not reported"
+                              ? typeof previous.abundance==="number"&&Number.isFinite(previous.abundance)?`${previous.abundance.toFixed(2)}% (reported)`:reportedTaxonAmount(previous)
                               : "No matched taxon"}
                           </td>
                         )}
@@ -195,7 +199,7 @@ export default function Microbiome() {
               </table>
             </div>
           ) : (
-            <p>{currentResults?"No reported abundance data yet.":"Reported abundance has not been checked for this selection."}</p>
+            <p>{currentResults?"No organism observations reported yet.":"Organism observations have not been checked for this selection."}</p>
           )}
         </section>
       )}

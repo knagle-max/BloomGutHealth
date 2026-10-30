@@ -3,10 +3,8 @@ import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { reportDateText } from "@shared/report-dates";
 
-export type ReportedTaxon = { id: string; bacterialName: string; taxonomyLevel?: string | null; abundance?: number | null };
-export function reportedPercentage(value: unknown) {
-  return typeof value === "number" && Number.isFinite(value) ? `${value}%` : "Not reported";
-}
+import { type ReportedTaxon, reportedTaxonAmount } from "@shared/reported-taxa";
+
 const sections = ["What research has found", "Nutrients & molecules", "Diet studies", "Your report: what it does and doesn't show", "Studies & limitations"];
 export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocus }: {
   taxon: ReportedTaxon | null; sample: any; onClose: () => void; onRestoreFocus: () => void;
@@ -17,7 +15,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
   return <Dialog.Root open={!!taxon} onOpenChange={open => { if (!open) onClose(); }}>
     <Dialog.Portal>
       <Dialog.Overlay className="microbial-profile-overlay" />
-      <Dialog.Content className="microbial-profile-sheet" onCloseAutoFocus={e => { e.preventDefault(); onRestoreFocus(); }}>
+      <Dialog.Content className="microbial-profile-sheet" onKeyDownCapture={e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();onClose();}}} onCloseAutoFocus={e => { e.preventDefault(); onRestoreFocus(); }}>
         <div className="microbial-profile-handle" aria-hidden="true" />
         <Dialog.Close className="microbial-profile-close" aria-label="Close organism profile"><X aria-hidden="true" size={22}/></Dialog.Close>
         <p className="eyebrow">ORGANISM PROFILE · RESEARCH</p>
@@ -27,11 +25,15 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
           <section className="microbial-observation" aria-label="Reported observation">
             <h3>Your reported observation</h3>
             <dl>
-              <div><dt>Relative abundance</dt><dd>{reportedPercentage(taxon.abundance)}</dd></div>
+              <div><dt>Source-reported amount</dt><dd>{reportedTaxonAmount(taxon)}</dd></div>
+              {typeof taxon.abundance==="number"&&taxon.reportedAbundance&&<div><dt>Original organism-list amount</dt><dd>{taxon.reportedAbundance}</dd></div>}
+              <div><dt>Source-reported status</dt><dd>{taxon.reportedStatus || "Not reported"}</dd></div>
               <div><dt>Taxonomic resolution</dt><dd>{taxon.taxonomyLevel || "Not reported"}</dd></div>
               <div><dt>Report date</dt><dd>{reportDateText(sample)}</dd></div>
               <div><dt>Source</dt><dd>{sample?.testingCompany || sample?.structuredData?.sourceLabel || "Not reported"}</dd></div>
               <div><dt>Sample / report ID</dt><dd>{sample?.id || "Not reported"}</dd></div>
+              {taxon.reportedOrganismSourceId&&<div><dt>Organism-list source entry</dt><dd>{taxon.reportedOrganismSourceId}</dd></div>}
+              {taxon.reportedNotes&&<div><dt>Original organism note</dt><dd>{taxon.reportedNotes}</dd></div>}
               <div><dt>Assay method</dt><dd>Not reported in this composition record</dd></div>
               <div><dt>Data origin</dt><dd>{typeof origin === "string" && origin ? origin : "User-supplied report; not independently verified. Synthetic status not reported."}</dd></div>
             </dl>
