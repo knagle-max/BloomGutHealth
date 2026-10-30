@@ -1,0 +1,295 @@
+{
+  "review_state": "design_concept_only",
+  "molecules": [
+    {
+      "slug": "butyrate",
+      "name": "Butyrate",
+      "pubchem_cid": "104775",
+      "formula": "C₄H₇O₂⁻",
+      "svg": "molecules/butyrate.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "butyric-acid",
+      "name": "Butyric acid",
+      "pubchem_cid": "264",
+      "formula": "C₄H₈O₂",
+      "svg": "molecules/butyric-acid.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "acetate",
+      "name": "Acetate",
+      "pubchem_cid": "175",
+      "formula": "C₂H₃O₂⁻",
+      "svg": "molecules/acetate.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "propionate",
+      "name": "Propionate",
+      "pubchem_cid": "104745",
+      "formula": "C₃H₅O₂⁻",
+      "svg": "molecules/propionate.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "lactate",
+      "name": "Lactate (unspecified)",
+      "pubchem_cid": "91435",
+      "formula": "C₃H₅O₃⁻",
+      "svg": "molecules/lactate.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "succinate",
+      "name": "Succinate",
+      "pubchem_cid": "160419",
+      "formula": "C₄H₄O₄²⁻",
+      "svg": "molecules/succinate.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "hydrogen-sulfide",
+      "name": "Hydrogen sulfide",
+      "pubchem_cid": "402",
+      "formula": "H₂S",
+      "svg": "molecules/hydrogen-sulfide.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "choline",
+      "name": "Choline",
+      "pubchem_cid": "305",
+      "formula": "C₅H₁₄NO⁺",
+      "svg": "molecules/choline.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "trimethylamine",
+      "name": "Trimethylamine",
+      "pubchem_cid": "1146",
+      "formula": "C₃H₉N",
+      "svg": "molecules/trimethylamine.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "tmao",
+      "name": "Trimethylamine N-oxide",
+      "pubchem_cid": "1145",
+      "formula": "C₃H₉NO",
+      "svg": "molecules/tmao.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "indole",
+      "name": "Indole",
+      "pubchem_cid": "798",
+      "formula": "C₈H₇N",
+      "svg": "molecules/indole.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "glucose",
+      "name": "D-glucose",
+      "pubchem_cid": "5793",
+      "formula": "C₆H₁₂O₆",
+      "svg": "molecules/glucose.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "acetic-acid",
+      "name": "Acetic acid",
+      "pubchem_cid": "176",
+      "formula": "C₂H₄O₂",
+      "svg": "molecules/acetic-acid.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "propionic-acid",
+      "name": "Propionic acid",
+      "pubchem_cid": "1032",
+      "formula": "C₃H₆O₂",
+      "svg": "molecules/propionic-acid.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "lactic-acid",
+      "name": "Lactic acid (unspecified)",
+      "pubchem_cid": "612",
+      "formula": "C₃H₆O₃",
+      "svg": "molecules/lactic-acid.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "succinic-acid",
+      "name": "Succinic acid",
+      "pubchem_cid": "1110",
+      "formula": "C₄H₆O₄",
+      "svg": "molecules/succinic-acid.svg",
+      "chemical_diagram": false,
+      "chemistry_signoff": "pending",
+      "legal": "pending",
+      "distribution": "disabled"
+    }
+  ],
+  "pathways": [
+    {
+      "slug": "resistant-starch",
+      "title": "Resistant starch degradation",
+      "svg": "pathways/resistant-starch.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "bifid-shunt",
+      "title": "Bifidobacterial bifid shunt",
+      "svg": "pathways/bifid-shunt.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "cross-feeding",
+      "title": "Lactate/acetate cross-feeding",
+      "svg": "pathways/cross-feeding.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "butyrate-production",
+      "title": "Butyrate production",
+      "svg": "pathways/butyrate-production.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "acetate",
+      "title": "Acetate production",
+      "svg": "pathways/acetate.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "succinate-propionate",
+      "title": "Succinate to propionate",
+      "svg": "pathways/succinate-propionate.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "mucin-glycans",
+      "title": "Mucin-glycan use",
+      "svg": "pathways/mucin-glycans.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "sulfur-reduction",
+      "title": "Sulfur reduction",
+      "svg": "pathways/sulfur-reduction.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "taurine",
+      "title": "Taurine-linked sulfide",
+      "svg": "pathways/taurine.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "methanogenesis",
+      "title": "Methanogenesis",
+      "svg": "pathways/methanogenesis.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "tryptophan",
+      "title": "Tryptophan to indole",
+      "svg": "pathways/tryptophan.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "choline-tma",
+      "title": "Choline to TMA",
+      "svg": "pathways/choline-tma.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "tma-tmao",
+      "title": "TMA to TMAO",
+      "svg": "pathways/tma-tmao.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "host-butyrate",
+      "title": "Host utilization of butyrate",
+      "svg": "pathways/host-butyrate.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "scfa-receptors",
+      "title": "SCFA receptor interactions",
+      "svg": "pathways/scfa-receptors.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    },
+    {
+      "slug": "hdac",
+      "title": "Butyrate and HDAC",
+      "svg": "pathways/hdac.svg",
+      "evidence_edge_review": "pending",
+      "distribution": "disabled"
+    }
+  ]
+}
