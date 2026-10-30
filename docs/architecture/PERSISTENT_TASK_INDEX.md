@@ -28,6 +28,8 @@ This is the **short, persistent task ledger** for iterative and overnight Codex 
 
 Developer source-audited proposal: [Minimal-cost release scope](MINIMAL_COST_RELEASE_SCOPE.md). Uses existing registry/policies; no runtime activation, new spend or launch clearance.
 
+> **EXERCISE INTELLIGENCE — 2026-10-29:** [Architect reconciliation](EXERCISE_INTELLIGENCE_HANDOFF_RECONCILIATION_2026-10-29.md), commit `9a481c2`, integrates ML-ACT-1001–1008, UT-EXAI-2701–2708, MKT-EXAI-2801–2808. Owner wants Food-like **describe/select/repeat → taxonomy match → editable review → save** for exercise with one canonical Everyday/Athlete activity, no AI/wearable dependency, no invented metrics or duplicate calories. This is the Exercise slice of owner-prioritized full flagship UI (Food→Today phase first); exact Branding editable ZIP remains Library-only until verified imported. Codex: audit current activities before change; implement bounded P1 journey with P0 provenance, attribution, cross-mode data integrity; MET/muscle enhancements conditional on scientific/licensing approval; record code/tests/Render/Branding status.
+
 ## Current high-leverage index (verify latest repo before changing status)
 
 | ID | Priority | End-to-end outcome / acceptance | Dependencies / source | Status / evidence |
