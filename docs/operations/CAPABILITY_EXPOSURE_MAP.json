@@ -566,7 +566,8 @@
           "server/settings-source.ts",
           "shared/activity-capture.ts",
           "shared/activity.ts",
-          "shared/experience.ts"
+          "shared/experience.ts",
+          "shared/training-set-history.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -610,7 +611,8 @@
           "server/settings-source.ts",
           "shared/activity-capture.ts",
           "shared/activity.ts",
-          "shared/experience.ts"
+          "shared/experience.ts",
+          "shared/training-set-history.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1636,7 +1638,7 @@
     "client/src/components/TodayFocus.tsx": "5fda80b4f8b53a871e261c82f4cd4bac46e74b81dff8045be0201bd11b5fef87",
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
-    "client/src/components/TrainingSetsEditor.tsx": "ae5f89e362cc86fb72704be308e371adbe7e2ec56704bb991a63c5bd73ab9abd",
+    "client/src/components/TrainingSetsEditor.tsx": "75d0fce8556d436bb6bb9d22d61176cc19eb505c303afe02b58b6d76ae501d7c",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
@@ -1646,7 +1648,7 @@
     "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
     "client/src/pages/ActivityLog.tsx": "eb1ce5804fb3970b085462a0e71c151774b94ccac8dd80a9ebdd1c815daa8f3b",
-    "client/src/pages/AthleteWorkspace.tsx": "b277acfb6a60c9b038a7c9240d9929ce562e7f17113f53e10848ce30296c9370",
+    "client/src/pages/AthleteWorkspace.tsx": "f9b1e71f3826b90aeb812999c1f41b40e2e543255f044b41982ebc07ac8d58e6",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
     "client/src/pages/Explore.tsx": "70d88dab585f285f12aa42d7647ce35256c340c247c5c9e797490e00a0e60c18",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
@@ -1754,6 +1756,7 @@
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/structured-report.ts": "76ad047940f80246876a41050b4db992a4c9036524b4cad2f4d44208c33575fd",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
+    "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",
     "shared/weekly-planner.ts": "3ca8ebd1ae45e6159646cd5a7c0e92b1f15fdbb76be8fc9298eae49a721b9719"
   }
 }
