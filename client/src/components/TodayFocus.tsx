@@ -9,9 +9,9 @@ import { localDate,useExperienceRecords } from "@/lib/experience";
 export default function TodayFocus({ now,mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { now?:Date;mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
   const {user}=useAuth(),[skipped,setSkipped]=useState<string|null>(null),pendingFocus=useRef(false),current=now||new Date();
   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
-    goal = report.fetchStatus === "idle" && !report.isError ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
+    goal = report.fetchStatus === "idle" && !report.isError && !report.isStale ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
   const sessions = useExperienceRecords("session");
-  const action = todayContextAction({ now:current,mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
+  const action = todayContextAction({ now:current,mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError && !sessions.isStale ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });
   const actionKey=JSON.stringify([user?.id,localDate(current),action]),paused=!loading&&!journalError&&skipped===actionKey;
   useEffect(()=>{if(pendingFocus.current){pendingFocus.current=false;document.getElementById('today-action-title')?.focus();}},[skipped,paused]);
   const sessionAction = action.href === '/athlete/fueling';
