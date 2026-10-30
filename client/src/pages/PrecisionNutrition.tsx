@@ -1,3 +1,4 @@
+import BloodworkSourceOverview from '@/components/BloodworkSourceOverview';
 import {defaultGeneticSelection,isSensitiveGeneticCall,selectedGeneticImport} from "@shared/genetic-selection";
 import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {reportDateText,type ReportDateContext} from "@shared/report-dates";
@@ -349,10 +350,12 @@ export default function PrecisionNutrition() {
       e instanceof Error ? e.message : "Check the information entered.",
     );
 
+  const [labSourceToOpen,setLabSourceToOpen]=useState<{rowId:string}|null>(null);
+  useEffect(()=>setLabSourceToOpen(null),[user?.id]);
   const r = result.data;
   const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
-  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?"#biology-bloodwork-results":'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
+  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#biology-bloodwork-results"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
       <div
         className="precision-tabs"
@@ -651,6 +654,7 @@ export default function PrecisionNutrition() {
             )}
             {tab === "labs" && (
               <>
+                <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={rowId=>setLabSourceToOpen({rowId})}/>
                 <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
@@ -699,7 +703,7 @@ export default function PrecisionNutrition() {
                       {r.sourceOnlyLabs?.length||r.pendingLabs?.length?"No results ready for interpretation; review the recorded source rows below.":"No bloodwork recorded. Genetics and microbiome data are optional too."}
                     </p>
                   )}
-                  <LabSourceHistory trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                  <LabSourceHistory focusRequest={labSourceToOpen} trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
 
                 </section>
                 <section className="bloom-panel">

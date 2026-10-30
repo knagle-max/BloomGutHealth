@@ -906,3 +906,15 @@ Original unitless P0e320e0c0b0eb7e3f568356db20858a79fb154892 previewLIVEdep-dbi1
 |ARC-LAB-01-TRACE|v0.5|P1 original full criterion audit|Reconcile existing partial import/source-unit guesses/review/correction/audit/downstream exclusions against actual current code/tests|ALREADY_VERIFIED engineering scope|Full207 and source-requirement CSVs updated for ARC-LAB-01 only; actual parser/UI/route/encrypted store reviewed, existing lab-review/API/canonical-pair tests covered by full462 and exact managede320 CI SUCCESS. Independent specialist/clinical gates retained|
 
 Owner-defaultcaf48f96df31188b5307ff70d7f1e7ed611a7810 pushed; exact previewdep-dbi1oj0473hc73einsdg LIVE. Unitlesse320 exact Actions41002189994 SUCCESS. No v0.5/version-complete or independent acceptance claim.
+
+## Owner priority — full v0.5 UI/UX rollout (2026-10-30)
+
+Use docs/architecture/V05_UI_ROLLOUT.md for the visible route matrix; prioritize it over unrelated trace bookkeeping/v0.6. Reuse existing Today/Food/Activity rather than rebuilding verified workflows.
+
+|ID|Version|Priority / acceptance|Status|Tests / evidence / commit|
+|---|---|---|---|---|
+|V05-UI-PROFILE|v0.5|P0 coherent settings landing; independent unit editor and one profile submit; working shortcuts/deep links/keyboard/drafts/privacy|IMPLEMENTED_AND_TESTED local; publication pending|Profile matrix5width/light-dark/contrast/hash/password, existing source-conflict/lost-response, unit conversion/no duplicates and export/delete journeys PASS. Commit this batch|
+|V05-UI-BLOODWORK-SOURCES|v0.5|P0 source-first report/section cards and exact saved-row drilldown; no taxonomy or source mutation|IMPLEMENTED_AND_TESTED local; publication pending|8imports+unlinked/9cards, raw/pending counts, keyboard/home destination/date-reset/focus/5width light-dark/no-write PASS. Commit this batch|
+|V05-UI-PROGRESS-THEME|v0.5|P1 measured figure hierarchy/responsive logged-day cards; shared approved warm-paper/short-title system|IMPLEMENTED_AND_TESTED local; publication pending|Progress domains/source states/URL/history/5width light-dark/no-write; profile text contrast>=4.5 PASS; full463/463 PASS208204ms, finaltypes/build/API101+13/map52IDs151files PASS. Packet docs/review/v05-ui-rollout-20261030. Commit this batch|
+
+Full UI rollout remains IN_PROGRESS. Next preferences/planning/Explore and remaining Athlete/observation presentation; independent/physical/hosted/scientific acceptance remains separate.

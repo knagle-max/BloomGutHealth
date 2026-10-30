@@ -172,3 +172,29 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .activity-summary-values strong { display:block; font-size:26px; font-weight:650; }
 .activity-summary-values span { display:block; font-size:13px; color:hsl(var(--muted-foreground)); }
 .activity-review-row > summary > span:last-child { display:inline-flex; align-items:center; min-height:44px; padding:6px 10px; border:1px solid hsl(var(--border)); border-radius:14px; color:hsl(var(--primary)); }
+
+/* App-wide settings source: task-first navigation and independent editing scopes. */
+.profile-home-hero { background:hsl(var(--primary)); color:hsl(var(--primary-foreground)); border-color:hsl(var(--primary)); }
+.profile-home-hero .eyebrow,.profile-home-hero .today-focus-reason { color:inherit; }
+.app-shell .profile-home-hero .hero-button { background:hsl(var(--card)); color:hsl(var(--primary)); }
+.profile-shortcuts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.profile-shortcuts button { display:flex; align-items:center; gap:12px; text-align:left; padding:18px; min-height:88px; border:1px solid hsl(var(--border)); background:hsl(var(--card)); color:hsl(var(--foreground)); border-radius:16px; }
+.profile-shortcuts button>svg { flex-shrink:0; color:hsl(var(--primary)); }.profile-shortcuts button>svg:last-child { margin-left:auto; }
+.profile-shortcuts span { min-width:0; }.profile-shortcuts strong { display:block; font-size:16px; }.profile-shortcuts small { display:block; font-size:14px; line-height:1.5; margin-top:4px; color:hsl(var(--muted-foreground)); }
+.profile-basics-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }.profile-basics-grid label,.profile-basics-grid>div { min-width:0; }.profile-basics-grid .bloom-input { display:block; width:100%; min-width:0; }
+.profile-workspace :is(#nutrition-profile,#measurement-units,#food-preferences,#privacy) { scroll-margin-top:90px; }
+.profile-section>summary { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:4px; cursor:pointer; }.profile-section>summary strong { font-size:18px; }.profile-section>summary span { font-size:14px; color:hsl(var(--muted-foreground)); }.profile-section>summary:after { content:'Show details'; color:hsl(var(--primary)); font-size:14px; }.profile-section[open]>summary:after { content:'Hide details'; }
+@media(max-width:600px) { .profile-shortcuts { grid-template-columns:minmax(0,1fr); }.profile-shortcuts button { padding:16px; }.profile-basics-grid { grid-template-columns:minmax(0,1fr); } }
+
+/* Bloodwork: original report/section navigation before summary interpretations. */
+.bloodwork-source-overview { scroll-margin-top:90px; }.bloodwork-report-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.bloodwork-report-card { min-width:0; background:hsl(var(--card)); border:1px solid hsl(var(--border)); border-radius:20px; padding:20px; }.bloodwork-report-heading { display:flex; gap:12px; align-items:flex-start; }.bloodwork-report-heading>svg { flex-shrink:0; color:hsl(var(--primary)); margin-top:3px; }.bloodwork-report-heading h3 { overflow-wrap:anywhere; font-size:18px; }.bloodwork-report-heading p { margin:4px 0 12px; font-size:14px; color:hsl(var(--muted-foreground)); }
+.bloodwork-section-links { display:grid; gap:8px; margin-top:16px; }.bloodwork-section-links button { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-height:72px; padding:12px; background:hsl(var(--muted)); border:1px solid hsl(var(--border)); text-align:left; color:hsl(var(--foreground)); }.bloodwork-section-links button>span { min-width:0; }.bloodwork-section-links strong { display:block; white-space:pre-wrap; overflow-wrap:anywhere; font-size:16px; }.bloodwork-section-links small { display:block; margin-top:4px; font-size:14px; color:hsl(var(--muted-foreground)); }.bloodwork-section-links svg { flex-shrink:0; color:hsl(var(--primary)); }
+@media(max-width:700px){.bloodwork-report-grid { grid-template-columns:minmax(0,1fr); }.bloodwork-report-card { padding:16px; }}
+
+/* Flagship Progress: readable observed figures, with gaps and provenance retained. */
+.app-shell :is(.profile-workspace,.progress-workspace,.precision-page)>.science-heading h1 { font-family:var(--font-serif); font-weight:500; font-size:clamp(28px,4vw,36px); line-height:1.2; letter-spacing:-.02em; }
+.food-progress-days { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }.food-progress-day { border:1px solid hsl(var(--border)); border-radius:18px; padding:20px; min-width:0; }.food-progress-day-heading { padding-bottom:12px; border-bottom:1px solid hsl(var(--border)); }.food-progress-day-heading h3 { font-size:18px; }.food-progress-day-heading p { color:hsl(var(--muted-foreground)); font-size:14px; margin:4px 0 0; }
+.food-progress-values { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 12px; padding-top:16px; }.food-progress-values>div { min-width:0; overflow-wrap:anywhere; }.food-progress-values>div:first-child { grid-column:1/-1; }.food-progress-values dt { font-size:14px; color:hsl(var(--muted-foreground)); }.food-progress-values dd { font-size:18px; font-weight:600; margin-top:4px; }.food-progress-values>div:first-child dd { font-size:28px; line-height:1.2; letter-spacing:-.02em; }
+.activity-week-summary { border:1px solid hsl(var(--border)); }.activity-week-days strong { font-size:22px; }.activity-week-duration { font-size:20px!important; line-height:1.5; }
+@media(max-width:700px){.food-progress-days { grid-template-columns:minmax(0,1fr); }.food-progress-day { padding:16px; }}

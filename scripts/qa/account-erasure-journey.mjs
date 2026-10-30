@@ -9,7 +9,7 @@ if(p==='/api/auth/me')json={user:deleted?null:{id:'synthetic-erasure',username:'
 else if(p==='/api/preferences')json={exclusions:[],dislikes:[],goals:[],dietaryPattern:'omnivore'};
 else if(p==='/api/precision')json={context:{allergies:[]},goals:[]};else if(p==='/api/health-sources')json={connections:[]};else if(p==='/api/profile')json={};else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
 else if(p==='/api/account'&&req.method()==='DELETE'){calls++;const body=req.postDataJSON();assert.equal(body.confirmation,'DELETE ACCOUNT');assert.deepEqual(Object.keys(body).sort(),['confirmation','password']);if(body.password!=='synthetic-correct')return route.fulfill({status:401,json:{error:'The current password could not be verified. No records were deleted.'}});deleted=true;json={deleted:true,scope:'active-application-records'};}
-await route.fulfill({json});});await page.goto('http://127.0.0.1:'+port+'/profile');await page.getByRole('heading',{name:'Privacy & data controls'}).waitFor();return page;}
+await route.fulfill({json});});await page.goto('http://127.0.0.1:'+port+'/profile#privacy');await page.getByRole('heading',{name:'Privacy & data controls'}).waitFor();return page;}
 try{
 if(before){const page=await pageFor(5191);await page.locator('#privacy').evaluate(el=>window.scrollTo(0,el.getBoundingClientRect().top+scrollY-100));await page.screenshot({path:path.join(out,'before-mobile.png')});await page.close();await before.close();before=null;}
 current=await createServer({server:{host:'127.0.0.1',port:5190,strictPort:true}});await current.listen();

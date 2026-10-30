@@ -17,10 +17,10 @@ export default function FoodProgress() {
     <p className="panel-note">Latest seven logged days, grouped in your current timezone. These are totals from saved meals, not a complete measure of daily intake. Days without entries are not shown as zero.</p>
     {checking && <p role="status">Checking recorded food…</p>}
     {history.isError && <p role="alert">Recorded food could not load. <button type="button" className="text-link" onClick={() => history.refetch()}>Retry recorded food</button></p>}
-    {days && (days.length ? <ol className="space-y-3">{days.map(day => <li key={day.day} className="precision-observation block space-y-1">
-      <h3><time dateTime={day.day}>{new Date(`${day.day}T12:00:00`).toLocaleDateString()}</time></h3>
-      <p>{day.meals} saved {day.meals === 1 ? 'meal' : 'meals'}</p>
-      <dl className="grid grid-cols-2 gap-2">{([
+    {days && (days.length ? <ol className="food-progress-days">{days.map(day => <li key={day.day} className="precision-observation block food-progress-day">
+      <div className="food-progress-day-heading"><h3><time dateTime={day.day}>{new Date(`${day.day}T12:00:00`).toLocaleDateString()}</time></h3>
+      <p>{day.meals} saved {day.meals === 1 ? 'meal' : 'meals'}</p></div>
+      <dl className="food-progress-values">{([
         ['calories', 'Energy', settings.displayUnits.energy], ['protein', 'Protein', 'g'],
         ['carbs', 'Carbohydrate', 'g'], ['fat', 'Fat', 'g'],
       ] as const).map(([key, label, unit]) => <div key={key}><dt>{label}</dt><dd>

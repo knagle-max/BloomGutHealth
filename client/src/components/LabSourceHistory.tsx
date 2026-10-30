@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect,useRef,useState} from 'react';
 import {groupLabHistory,labDateText,labHistoryDates,labHistoryOnDate,reportedLabSections,type AnyLabHistoryRow} from '@shared/lab-history';
 import {markerDefinitions,labEnteredContext} from '@shared/precision-nutrition';
 import {Button} from './ui/button';
@@ -9,8 +9,11 @@ function MarkerHistory({name,trend}:{name:string;trend:PrecisionReport['trends']
  const [open,setOpen]=useState(false);
  return <details className="mt-3 min-w-0" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}><summary>Recorded history for {name}</summary>{open&&<><p className="panel-note">This chart includes all available dated measurements for this marker, beyond any selected report date. Each point retains its own source; comparison limits appear below.</p><LabTrend trend={trend}/></>}</details>;
 }
-export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[]}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends']}){
+export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[],focusRequest}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends'];focusRequest?:{rowId:string}|null}){
  const [open,setOpen]=useState(false),[date,setDate]=useState('');
+ const root=useRef<HTMLDetailsElement>(null),handled=useRef<typeof focusRequest>(undefined);
+ useEffect(()=>{if(focusRequest){setDate('');setOpen(true);if(root.current)root.current.open=true;}},[focusRequest]);
+ useEffect(()=>{if(!open||date||!focusRequest||handled.current===focusRequest)return;const heading=document.getElementById(`lab-source-section-${focusRequest.rowId}`);if(!heading||!root.current?.contains(heading))return;let parent=heading.parentElement;while(parent&&parent!==root.current){if(parent instanceof HTMLDetailsElement)parent.open=true;parent=parent.parentElement;}handled.current=focusRequest;heading.focus({preventScroll:true});heading.scrollIntoView({block:'start'});},[focusRequest,open,date]);
  const dates=labHistoryDates(labs),visible=labHistoryOnDate(labs,date),groups=groupLabHistory(visible);
  const sectionLinks=(items:AnyLabHistoryRow[])=>{const sections=reportedLabSections(items);return sections.length>1?<nav aria-label="Reported sections" className="space-y-2"><p className="panel-note">Go to a reported section. These are source headings, not Bloom clinical categories.</p><div className="flex flex-wrap gap-2">{sections.map(section=><Button key={section.firstId} type="button" variant="outline" className="h-auto min-h-11 max-w-full whitespace-pre-wrap break-words text-left" onClick={()=>{const heading=document.getElementById(`lab-source-section-${section.firstId}`);heading?.focus();heading?.scrollIntoView({block:'start'});}}>{section.reportedSection===undefined?'Reported section not recorded':section.reportedSection} · {section.rows.length} result(s)</Button>)}</div></nav>:null;};
  const rows=(items:AnyLabHistoryRow[])=>items.map((row,index)=>{
@@ -32,7 +35,7 @@ export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[]}:{la
    </div>{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
   </div>;
  });
- return <details id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>
+ return <details ref={root} id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>
   <summary>Reports & source history ({labs.length} results)</summary>
   {open&&<div className="space-y-4 mt-3">
    <label className="block space-y-2">Report date
