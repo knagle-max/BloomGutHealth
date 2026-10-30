@@ -1,0 +1,7 @@
+{
+  "client/src/components/LabTrend.tsx": "b4f81da1f8517e99f3443d1992038960be473faf79bce19573df2fd2a65df314",
+  "client/src/components/EvidenceInsight.tsx": "509aea6b0a7ca5b52d90292b777967611a051125b2e4ffad2b307e73445c7a66",
+  "client/src/components/LabSourceHistory.tsx": "cc0ce284382e0a63379167d6f2432b332f621da468fc8aef32a9d117361967d0",
+  "client/src/pages/PrecisionNutrition.tsx": "f07b3153a71fd275a2e6d758fd1c595d4dd2831f0542412dd776644f32b66c90",
+  "scripts/qa/lab-source-context-journey.mjs": "c32e47801c9222f768b9e953a81ba6f9f4bfc53e1f4f62bb08f8e0923a0a56d8"
+}

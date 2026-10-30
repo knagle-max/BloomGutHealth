@@ -20,7 +20,7 @@ import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, useRef } from "react";
-import { Link } from "wouter";
+import { Link,useSearch } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -196,6 +196,7 @@ function ContextEditor({
   );
 }
 export default function PrecisionNutrition() {
+  const search=useSearch();
   const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
   const {user}=useAuth();
   const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null}>({queryKey:["/api/profile"],enabled:!!user});
@@ -216,10 +217,11 @@ export default function PrecisionNutrition() {
     patch({displayUnits:{...settings.displayUnits,[key]:value}});
   }
   const [tab, setTab] = useState(() => {
-    const requested = new URLSearchParams(window.location.search).get("tab");
+    const requested = new URLSearchParams(search).get("tab");
     return requested && ["overview", "genetics", "labs", "recommendations", "progress"].includes(requested) ? requested : "overview";
   }),
     [sampleId, setSampleId] = useState("");
+  useEffect(()=>{const requested=new URLSearchParams(search).get("tab");if(requested&&["overview","genetics","labs","recommendations","progress"].includes(requested))setTab(requested);},[search]);
   const [status, setStatus] = useState(""),
     [localError, setLocalError] = useState("");
   const result = useQuery<Report>({
@@ -235,7 +237,7 @@ export default function PrecisionNutrition() {
   });
   const [context, setContext] = useState(contextSchema.parse({}));
   const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
-  const editGoals=new URLSearchParams(window.location.search).get("edit")==="goals";
+  const editGoals=new URLSearchParams(search).get("edit")==="goals";
   useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,result.fetchStatus,result.isError,context]);
   useEffect(() => {
     if (result.data) setContext(result.data.context);
@@ -350,12 +352,14 @@ export default function PrecisionNutrition() {
       e instanceof Error ? e.message : "Check the information entered.",
     );
 
-  const [labSourceToOpen,setLabSourceToOpen]=useState<{rowId:string}|null>(null);
+  const [labSourceToOpen,setLabSourceToOpen]=useState<{rowId:string;target?:'row'}|null>(null);
   useEffect(()=>setLabSourceToOpen(null),[user?.id]);
   const r = result.data;
   const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
-  const requestedObservation=new URLSearchParams(window.location.search).get("observation"),focusedObservation=useRef("");
+  const requestedObservation=new URLSearchParams(search).get("observation"),focusedObservation=useRef("");
   useEffect(()=>{const key=`${user?.id}:${requestedObservation}`;if(tab!=="progress"||!requestedObservation||!currentResult||focusedObservation.current===key||!r?.checkins.some(row=>row.id===requestedObservation))return;const target=document.getElementById(`precision-observation-${requestedObservation}`);if(target){target.focus();target.scrollIntoView({block:"start"});focusedObservation.current=key;}},[requestedObservation,tab,currentResult,r?.checkins,user?.id]);
+  const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
+  useEffect(()=>{const key=`${user?.id}:${requestedLabResult}`;if(tab!=="labs"||!requestedLabResult||!currentResult||focusedLabResult.current===key||![...(r?.labHistory||[]),...(r?.pendingLabs||[]),...(r?.sourceOnlyLabs||[])].some(row=>row.id===requestedLabResult))return;focusedLabResult.current=key;setLabSourceToOpen({rowId:requestedLabResult,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
   function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#biology-bloodwork-results"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
@@ -656,6 +660,7 @@ export default function PrecisionNutrition() {
             )}
             {tab === "labs" && (
               <>
+                {requestedLabResult&&![...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs].some(row=>row.id===requestedLabResult)&&<p role="alert">The requested laboratory result is not available in your current records.</p>}
                 <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={rowId=>setLabSourceToOpen({rowId})}/>
                 <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
