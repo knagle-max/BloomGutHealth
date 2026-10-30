@@ -9,7 +9,7 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 - Packet: docs/review/exercise-compact-amendment-d-20261030. Paired before uses f5f7eb8 ActivityReview/ActivitySetEditor only with current App/API/styles, explicitly not whole historical build; local synthetic screenshots, accessible-tree snapshot, annotations. Actual VoiceOver NOT RUN; independent Design/hosted/device approval OPEN.
 - Original v1.4 ZIP supplied in conversation is inaccessible: supplied path and /tmp/codex-remote-attachments absent. BLOCKED_TECHNICAL original transfer/exact SVG parity only. Binding pasted owner text attached to exercise reconciliation and MKT-EXAI-2813–2815. Do not fabricate original bytes or ask again for routine approval. Preserve v1.3 parsing and scientific/source/rights gates.
 
-- Current follow-up: new-set Reps focus, hidden-invalid-child disclosure/focus without save; Weekly Review new-focus form on demand (existing focus cards remain visible). Exact compact journey and actual-handler weekly source/drafts/save/both modes/5width light-dark PASS;8focused/type/build/source guards PASS. No repeated full suite for minor UI-only follow-up; managed CI next.
+- e5a99aaa3f0c852e5cae988258a17e0a5c9c7b85 (Renderdep-dbi9i24s728c73a7v70g LIVE, Actions41062089988 PENDING): new-set Reps focus, hidden-invalid-child AND collapsed-parent disclosure/focus without save; Weekly Review new-focus form on demand (existing focus cards remain visible). Exact compact journey and actual-handler weekly source/drafts/save/both modes/5width light-dark PASS;8focused/type/build/source guards PASS. No repeated full suite for minor UI-only follow-up; managed CI next.
 
 ## Earlier UI batches already pushed — do not redo
 
@@ -20,7 +20,7 @@ Goal: complete approved v0.5, then approved v0.6; user prioritizes **full UI/UX 
 
 ## Continue next
 
-1. Finish current disclosure/focus follow-up publication and verify exact SHA Actions/existing Render metadata; compact base baa4e4a full464 already passed. Do not imply CI or deployment is approval.
+1. Verify exact latest SHA Actions/existing Render metadata after nested-parent validation recovery publication; compact base baa4e4a full464 already passed. Do not imply CI or deployment is approval.
 2. Continue docs/architecture/V05_UI_ROLLOUT.md route matrix against original flagship/app-wide source: remaining supporting-route/first-use/error/mobile flows, Biology/dated observations and Athlete fidelity where actual approved content exists. Preserve shipped food/search/save, source history, units/privacy and exact exercise journeys; no decorative placeholders or invented clinical content.
 3. Full approved v0.5 requirement trace statuses must remain IMPLEMENTED_AND_TESTED/ALREADY_VERIFIED/BLOCKED_USER_INPUT/BLOCKED_TECHNICAL, criterion by criterion from actual evidence. Do not bulk mark complete from CI or divert current UI priority into unrelated audits.
 4. Only after actionable v0.5 is finished, reconcile approved V06_HANDOFF and begin dependency-aware v0.6. Independent review/native/credentials/rights blockers carry separately; no repeated questions or unsafe activation.

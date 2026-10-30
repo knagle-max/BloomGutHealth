@@ -10,7 +10,7 @@ export default function ActivityReview({items,onChange,unit,details}:{items:Acti
  const sets=items.flatMap(part=>part.actualSets?.sets||[]),known=items.flatMap(part=>part.minutes===null?[]:[part.minutes]);
  const described=sets.filter(set=>set.state!=='planned'&&set.state!=='cancelled');
  const update=(id:string,patch:Partial<ActivityDraftComponent>)=>onChange(items.map(part=>part.id===id?{...part,...patch}:part));
- return <div className="space-y-4">
+ return <div className="space-y-4" onInvalidCapture={event=>{for(let node=(event.target as HTMLElement).parentElement;node&&node!==event.currentTarget;node=node.parentElement){if(node instanceof HTMLDetailsElement)node.open=true;}}}>
   {items.map((part,index)=><details key={part.id} data-activity-id={part.id} className="activity-review-row" open={expanded.has(part.id)} onToggle={e=>{if(e.target!==e.currentTarget)return;const open=e.currentTarget.open;setExpanded(previous=>{const next=new Set(previous);if(open)next.add(part.id);else next.delete(part.id);return next;});}}>
    <summary><span><strong>{part.title||'Activity to review'}{part.match==='unclassified'&&part.actualSets&&!part.actualSets.sets.length?' — check sets':''}</strong><small>{part.actualSets?part.match==='unclassified'&&!part.actualSets.sets.length?'Check sets':activitySetSummary(part.actualSets.sets,unit):part.minutes===null?'Duration not recorded':`${part.minutes} min`}</small></span><span className="activity-row-status" data-needs-review={part.match==='unclassified'||undefined}>{part.match==='suggested'?'Suggested match':part.match==='unclassified'?'Needs review':'Reported'}</span><span>{expanded.has(part.id)?'Close':'Change'}</span></summary>
    <div className="space-y-3 pt-3">

@@ -1,6 +1,10 @@
 # v0.5 implementation reconciliation — 2026-10-23
 
-## Current completion snapshot (this commit)
+## Latest engineering checkpoint — 2026-10-30
+
+v0.5 remains incomplete; user prioritizes full flagship UI/UX rollout. Profile/source-first bloodwork/Progress1dcfadc, preferences/search-first9d9c22a and Athlete calendarf5f7eb8 are pushed, managed CI SUCCESS and existing preview LIVE. Amendment D compact set completionbaa4e4a is pushed/preview LIVE (dep-dbi9gni9lscs73fmpcsg); local full464/464 PASS202902ms, exact App/HTTP/encryptedPGlite save/reload/modes and rich/unitless regressions pass. Actions41061697837 pending at checkpoint. Follow-upe5a99aa preserves keyboard/invalid-child focus and discloses optional weekly focus setup; actual-handler weekly both-mode/draft/source/retry/5width light-dark checks pass. See NEXT_ACTIONS and V05_UI_ROLLOUT for current publication/remaining UI work. Original v1.4 ZIP/SVG inaccessible; exact SVG parity, actual VoiceOver and independent Design/hosted/device acceptance remain open, separate from local automation. No science/rights activation or version-complete claim.
+
+## Historical completion snapshot — 2026-10-23
 
 **v0.5 is not complete.** “Implemented” below means engineering exists and has automated/synthetic evidence; it does not imply independent acceptance or public-launch approval.
 
