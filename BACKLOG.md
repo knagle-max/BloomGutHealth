@@ -1,6 +1,6 @@
 # Bloom autonomous development backlog
 
-Branch: `enhance/bloom-experience`, existing PR1/Render review service. Latest functional commit c60008cea3983f047c100eca396eaf7920e54268: Actions40758240795 SUCCESS (445tests/445pass, build, isolated-Neon persistence), RenderLIVEdep-dbh552k9v7es739ss9rg. v0.5 remains incomplete; v0.6 not begun. NEXT_ACTIONS.md is current; older appended records are historical.
+Branch: `enhance/bloom-experience`, existing PR1/Render preview. Latest functional commit `efc3c4d0cee6de8d64fccdab432d75109f51ad9b` is previewLIVEdep-dbi186rm8hqs73alp120, exact Actions40999632680 pending. Five-set parser2d45f8b exact Actions40998831842 SUCCESS (full460 local milestone plus managed persistence), previewLIVE; Biology count1fdf636 previewLIVE/Actions40999064450 in progress. v0.5 remains incomplete; v0.6 not begun. Latest owner directive: finish actionable v0.5, then automatically reconcile/begin approved independent v0.6; external v0.5 blockers carry forward. NEXT_ACTIONS.md is current; older appended records are historical.
 
 ## Current core continuity batch
 
