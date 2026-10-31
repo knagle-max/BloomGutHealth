@@ -1,0 +1,113 @@
+{
+  "schema": "bloom.science_change.presentation.v1",
+  "route": "Biology/Science Explorer/Changes",
+  "existing_systems": [
+    "living evidence claims",
+    "review and version history",
+    "knowledge graph",
+    "assay identity records"
+  ],
+  "components": [
+    {
+      "name": "ScienceChangeSummary",
+      "fields": [
+        "claimId",
+        "updateType",
+        "oldExplanation",
+        "newEvidence",
+        "changedInterpretation",
+        "remainingUnknown",
+        "reviewStatus",
+        "reviewedAt",
+        "sourceIds"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "ready",
+        "offline",
+        "withdrawn"
+      ]
+    },
+    {
+      "name": "EvidenceComparison",
+      "fields": [
+        "population",
+        "model",
+        "intervention",
+        "dose",
+        "duration",
+        "comparator",
+        "endpoint",
+        "uncertainty",
+        "directness",
+        "publicationId"
+      ],
+      "states": [
+        "available",
+        "incomparable",
+        "conflicting",
+        "unreviewed"
+      ]
+    },
+    {
+      "name": "HistoricalExplanation",
+      "fields": [
+        "priorClaimVersion",
+        "updatedClaimVersion",
+        "revisionReason",
+        "revisionDate",
+        "citations",
+        "withdrawalStatus"
+      ],
+      "states": [
+        "loading",
+        "ready",
+        "no-history",
+        "error"
+      ]
+    },
+    {
+      "name": "PersonalAssayRelevance",
+      "fields": [
+        "taxonomicRank",
+        "analyte",
+        "assayMethod",
+        "observedAt",
+        "sourceId",
+        "measurementStatus"
+      ],
+      "states": [
+        "no-report",
+        "species-only",
+        "strain-tested",
+        "gene-tested",
+        "toxin-tested",
+        "unresolved"
+      ]
+    }
+  ],
+  "updates": [
+    "new-discovery",
+    "replicated-finding",
+    "conflicting-evidence",
+    "confidence-reduced",
+    "explanation-updated"
+  ],
+  "rules": [
+    "no raw publication automatically activated",
+    "no inferred personal toxin detection",
+    "no food recommendation triggered by education review",
+    "no clinical scoring",
+    "cite precise study endpoints",
+    "keep historic explanations retrievable",
+    "quiet opt-in notification default"
+  ],
+  "design_tokens": {
+    "forest": "#153B2C",
+    "evergreen": "#246B50",
+    "ivory": "#F7F7F0",
+    "sage": "#E8F0E8",
+    "border": "#DEE8DC"
+  }
+}
