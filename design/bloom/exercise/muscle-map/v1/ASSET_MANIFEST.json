@@ -1,0 +1,332 @@
+{
+  "schema": "bloom.exercise.muscle-region-assets/1.0",
+  "version": "1.0.0",
+  "status": "design-source",
+  "disclaimer": "Educational muscle region maps. Highlighting is mapped knowledge, not measured muscle activation.",
+  "placement": "Athlete mode only; Everyday retains its complete editable sets without displaying muscle inference.",
+  "assets": [
+    {
+      "id": "chest",
+      "label": "Chest",
+      "view": "front",
+      "regions": [
+        "chest"
+      ],
+      "svg": "svg/chest.svg",
+      "png_1x": "png/128/chest.png",
+      "png_2x": "png/256/chest.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "back",
+      "label": "Back",
+      "view": "back",
+      "regions": [
+        "upperback",
+        "lats"
+      ],
+      "svg": "svg/back.svg",
+      "png_1x": "png/128/back.png",
+      "png_2x": "png/256/back.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "shoulders",
+      "label": "Shoulders",
+      "view": "front",
+      "regions": [
+        "shoulders"
+      ],
+      "svg": "svg/shoulders.svg",
+      "png_1x": "png/128/shoulders.png",
+      "png_2x": "png/256/shoulders.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "arms",
+      "label": "Arms",
+      "view": "front",
+      "regions": [
+        "upperarms",
+        "forearms"
+      ],
+      "svg": "svg/arms.svg",
+      "png_1x": "png/128/arms.png",
+      "png_2x": "png/256/arms.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "core",
+      "label": "Core",
+      "view": "front",
+      "regions": [
+        "abs",
+        "obliques"
+      ],
+      "svg": "svg/core.svg",
+      "png_1x": "png/128/core.png",
+      "png_2x": "png/256/core.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "glutes",
+      "label": "Glutes",
+      "view": "back",
+      "regions": [
+        "glutes"
+      ],
+      "svg": "svg/glutes.svg",
+      "png_1x": "png/128/glutes.png",
+      "png_2x": "png/256/glutes.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "quadriceps",
+      "label": "Quadriceps",
+      "view": "front",
+      "regions": [
+        "quads"
+      ],
+      "svg": "svg/quadriceps.svg",
+      "png_1x": "png/128/quadriceps.png",
+      "png_2x": "png/256/quadriceps.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "hamstrings",
+      "label": "Hamstrings",
+      "view": "back",
+      "regions": [
+        "hamstrings"
+      ],
+      "svg": "svg/hamstrings.svg",
+      "png_1x": "png/128/hamstrings.png",
+      "png_2x": "png/256/hamstrings.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "calves",
+      "label": "Calves",
+      "view": "back",
+      "regions": [
+        "calves"
+      ],
+      "svg": "svg/calves.svg",
+      "png_1x": "png/128/calves.png",
+      "png_2x": "png/256/calves.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "full-body",
+      "label": "Full body",
+      "view": "front",
+      "regions": [
+        "chest",
+        "shoulders",
+        "upperarms",
+        "abs",
+        "quads",
+        "calves"
+      ],
+      "svg": "svg/full-body.svg",
+      "png_1x": "png/128/full-body.png",
+      "png_2x": "png/256/full-body.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "biceps",
+      "label": "Biceps",
+      "view": "front",
+      "regions": [
+        "upperarms"
+      ],
+      "svg": "svg/biceps.svg",
+      "png_1x": "png/128/biceps.png",
+      "png_2x": "png/256/biceps.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "triceps",
+      "label": "Triceps",
+      "view": "back",
+      "regions": [
+        "upperarms"
+      ],
+      "svg": "svg/triceps.svg",
+      "png_1x": "png/128/triceps.png",
+      "png_2x": "png/256/triceps.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "latissimus-dorsi",
+      "label": "Latissimus dorsi",
+      "view": "back",
+      "regions": [
+        "lats"
+      ],
+      "svg": "svg/latissimus-dorsi.svg",
+      "png_1x": "png/128/latissimus-dorsi.png",
+      "png_2x": "png/256/latissimus-dorsi.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "trapezius",
+      "label": "Trapezius",
+      "view": "back",
+      "regions": [
+        "traps"
+      ],
+      "svg": "svg/trapezius.svg",
+      "png_1x": "png/128/trapezius.png",
+      "png_2x": "png/256/trapezius.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "abdominals",
+      "label": "Abdominals",
+      "view": "front",
+      "regions": [
+        "abs"
+      ],
+      "svg": "svg/abdominals.svg",
+      "png_1x": "png/128/abdominals.png",
+      "png_2x": "png/256/abdominals.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "obliques",
+      "label": "Obliques",
+      "view": "front",
+      "regions": [
+        "obliques"
+      ],
+      "svg": "svg/obliques.svg",
+      "png_1x": "png/128/obliques.png",
+      "png_2x": "png/256/obliques.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "forearms",
+      "label": "Forearms",
+      "view": "front",
+      "regions": [
+        "forearms"
+      ],
+      "svg": "svg/forearms.svg",
+      "png_1x": "png/128/forearms.png",
+      "png_2x": "png/256/forearms.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "hip-flexors",
+      "label": "Hip flexors",
+      "view": "front",
+      "regions": [
+        "hipflexors"
+      ],
+      "svg": "svg/hip-flexors.svg",
+      "png_1x": "png/128/hip-flexors.png",
+      "png_2x": "png/256/hip-flexors.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "adductors",
+      "label": "Adductors",
+      "view": "front",
+      "regions": [
+        "adductors"
+      ],
+      "svg": "svg/adductors.svg",
+      "png_1x": "png/128/adductors.png",
+      "png_2x": "png/256/adductors.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "lower-back",
+      "label": "Lower back",
+      "view": "back",
+      "regions": [
+        "lowerback"
+      ],
+      "svg": "svg/lower-back.svg",
+      "png_1x": "png/128/lower-back.png",
+      "png_2x": "png/256/lower-back.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    },
+    {
+      "id": "tibialis-anterior",
+      "label": "Tibialis anterior",
+      "view": "front",
+      "regions": [
+        "shins"
+      ],
+      "svg": "svg/tibialis-anterior.svg",
+      "png_1x": "png/128/tibialis-anterior.png",
+      "png_2x": "png/256/tibialis-anterior.png",
+      "transparent": true,
+      "biology_mapping_review": "pending",
+      "rights": "pending",
+      "production_distribution": "disabled"
+    }
+  ]
+}
