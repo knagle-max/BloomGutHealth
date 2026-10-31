@@ -1,0 +1,9 @@
+# Task-first Today — BLOOM-TODAY-01
+
+One primary action now leads the first viewport. A short reason follows it; full source guidance and citations remain under Why this?. The journal has one empty message, nutrition metrics and deeper options are disclosed, and starting preferences are optional. Missing-intake/energy, errors and non-diagnostic limitations remain explicit. No new prioritization engine, biological prediction or Skip/Replace persistence is claimed.
+
+Adjust goals opens and focuses the existing My biology context editor. The synthetic browser journey verifies no automatic save, one explicit canonical goal update, then a changed sourced Today explanation via shared state. Unsupported goal text was observed to fall back to general guidance, without invented mapping; the supported update fixture uses Improve cholesterol.
+
+Matched empty baselines reuse actual 320/375/390 renders from f2f56c3 (Dashboard/TodayFocus unchanged through 861b04a). After captures use the same viewport/theme/empty-journal fixture. The annotated 375 image has two callouts: primary action and optional Why this?. Originals retained. Supplemental dark/desktop renders are synthetic, not independent acceptance.
+
+237 full tests, TypeScript/build, four focused action-priority assertions, the new actual-render journey and existing session/goal/partial/error/Explore regression passed. The browser found saved-goal text could push an action below navigation at 320x500; action-first ordering corrected it while keeping the full explanation and caution. Checks include 44px target, first-viewport action, keyboard logging, collapsed setup/depth, unknown energy, errors, goal editor focus/save, effective zoom viewport and page-end clearance. Physical Safari/VoiceOver and hosted acceptance remain unverified; no human task-success metric is invented.

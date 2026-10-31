@@ -1,0 +1,1077 @@
+{
+  "version": 2,
+  "scope": "Static string and array /api declarations on app/router receivers in top-level server/*.ts; dynamic paths and unscoped middleware flagged separately",
+  "limitations": [
+    "USE rows are middleware mounts, not endpoints",
+    "Unresolved declarations are source sites, not enumerated endpoint counts; templates/bindings are never evaluated",
+    "Nonliteral USE may be global middleware or a dynamic mount; call arguments/inline bodies are omitted from summaries",
+    "Receiver aliases, chained/indirect registration, Python, UI, jobs, tools, export fields and caches are not enumerated",
+    "In-handler auth, execution guards, family mounts and output filtering require manual review",
+    "REVIEW_REQUIRED is an inventory disposition, not a change to release approval or public access"
+  ],
+  "sourceHashes": {
+    "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
+    "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
+    "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
+    "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
+    "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
+    "server/experience-routes.ts": "f97799d765d882b6ac51c91835a6948a6c7238ab671871a59872644500271930",
+    "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
+    "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
+    "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
+    "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
+    "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
+    "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
+    "server/planner-routes.ts": "e0509b74f5e11e2378094cc29d6f4d6d16342f504e796bf75302ddf13faaa776",
+    "server/precision-routes.ts": "f6c1b661934c030dad6589c0d29f9859e61e48ea552d9ac58de070f2e6cf9ac7",
+    "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
+    "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
+    "server/report-routes.ts": "be9fadf1f5156e96a728da70cd2f46a9b9311df235d07aa47c1f75aac8cc3d45",
+    "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
+    "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
+    "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
+    "server/vite.ts": "dbbaa9a66df697394820ff0d93e25ca989d82eb9a708a24da904404cb0c14afd"
+  },
+  "entries": [
+    {
+      "file": "server/account-routes.ts",
+      "line": 5,
+      "method": "GET",
+      "path": "/api/account/export",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/account-routes.ts",
+      "line": 17,
+      "method": "DELETE",
+      "path": "/api/account",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/auth-routes.ts",
+      "line": 40,
+      "method": "POST",
+      "path": "/api/auth/logout",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/auth-routes.ts",
+      "line": 47,
+      "method": "GET",
+      "path": "/api/auth/me",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 17,
+      "method": "USE",
+      "path": "/api/biology",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 21,
+      "method": "GET",
+      "path": "/api/biology/catalogue",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 26,
+      "method": "GET",
+      "path": "/api/biology/catalogue/:id",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 34,
+      "method": "GET",
+      "path": "/api/biology/evidence-audit",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 38,
+      "method": "GET",
+      "path": "/api/biology/model-readiness",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 39,
+      "method": "GET",
+      "path": "/api/biology/registry",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 51,
+      "method": "GET",
+      "path": "/api/biology/foods/:id",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/capability-access.ts",
+      "line": 37,
+      "method": "USE",
+      "path": "/api/capabilities",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/capability-access.ts",
+      "line": 38,
+      "method": "GET",
+      "path": "/api/capabilities",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/capability-access.ts",
+      "line": 47,
+      "method": "PATCH",
+      "path": "/api/capabilities/experimental",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/demo-routes.ts",
+      "line": 4,
+      "method": "GET",
+      "path": "/api/demo/user",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/demo-routes.ts",
+      "line": 8,
+      "method": "GET",
+      "path": "/api/demo/samples",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 26,
+      "method": "USE",
+      "path": "/api/experience",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 33,
+      "method": "GET",
+      "path": "/api/experience/settings",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 34,
+      "method": "PATCH",
+      "path": "/api/experience/settings",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 35,
+      "method": "GET",
+      "path": "/api/experience/records",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 36,
+      "method": "GET",
+      "path": "/api/experience/checkins/:id/feedback",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 44,
+      "method": "POST",
+      "path": "/api/experience/checkins/:id/feedback",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 58,
+      "method": "POST",
+      "path": "/api/experience/sessions",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 66,
+      "method": "POST",
+      "path": "/api/experience/activities",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 74,
+      "method": "POST",
+      "path": "/api/experience/records",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 75,
+      "method": "PUT",
+      "path": "/api/experience/records/:id",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 76,
+      "method": "DELETE",
+      "path": "/api/experience/records/:id",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 77,
+      "method": "GET",
+      "path": "/api/experience/export",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 78,
+      "method": "DELETE",
+      "path": "/api/experience",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 79,
+      "method": "POST",
+      "path": "/api/experience/athlete-day",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 86,
+      "method": "POST",
+      "path": "/api/experience/day-choices",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 87,
+      "method": "GET",
+      "path": "/api/experience/review",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 88,
+      "method": "POST",
+      "path": "/api/experience/templates/from-meal",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 89,
+      "method": "POST",
+      "path": "/api/experience/templates/:id/log",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/experience-routes.ts",
+      "line": 120,
+      "method": "POST",
+      "path": "/api/experience/scan",
+      "declaredMiddleware": [
+        "limit",
+        "requireRestrictedCapability(\"bloom.food.photo_ai\")"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/feature-administration.ts",
+      "line": 36,
+      "method": "USE",
+      "path": "/api/admin",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/feature-administration.ts",
+      "line": 40,
+      "method": "GET",
+      "path": "/api/admin/features",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/feature-administration.ts",
+      "line": 44,
+      "method": "POST",
+      "path": "/api/admin/features/:featureId/control",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/feature-administration.ts",
+      "line": 45,
+      "method": "USE",
+      "path": "/api/admin",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/feature-control-http.ts",
+      "line": 67,
+      "method": "POST",
+      "path": "/api/admin/features/:featureId/control/step-up",
+      "declaredMiddleware": [
+        "authenticate"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/feature-control-http.ts",
+      "line": 68,
+      "method": "POST",
+      "path": "/api/admin/features/:featureId/control",
+      "declaredMiddleware": [
+        "authenticate"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/health-source-routes.ts",
+      "line": 7,
+      "method": "USE",
+      "path": "/api/health-sources",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/health-source-routes.ts",
+      "line": 10,
+      "method": "GET",
+      "path": "/api/health-sources",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/health-source-routes.ts",
+      "line": 25,
+      "method": "GET",
+      "path": "/api/health-sources/observations",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/health-source-routes.ts",
+      "line": 53,
+      "method": "GET",
+      "path": "/api/health-sources/export",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/health-source-routes.ts",
+      "line": 69,
+      "method": "DELETE",
+      "path": "/api/health-sources/:provider",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/health-source-routes.ts",
+      "line": 79,
+      "method": "DELETE",
+      "path": "/api/health-sources",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/nutrition-history.ts",
+      "line": 32,
+      "method": "GET",
+      "path": "/api/nutrition/monthly/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/nutrition-history.ts",
+      "line": 33,
+      "method": "GET",
+      "path": "/api/nutrition/yearly/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/nutrition-targets.ts",
+      "line": 22,
+      "method": "GET",
+      "path": "/api/nutrition/targets/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 66,
+      "method": "GET",
+      "path": "/api/analysis/status",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 107,
+      "method": "GET",
+      "path": "/api/preferences",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 118,
+      "method": "PUT",
+      "path": "/api/preferences",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 136,
+      "method": "POST",
+      "path": "/api/meal-planner/prioritize",
+      "declaredMiddleware": [
+        "requireAuth",
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 173,
+      "method": "GET",
+      "path": "/api/meal-planner",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 222,
+      "method": "POST",
+      "path": "/api/meals/analyze",
+      "declaredMiddleware": [
+        "requireAuth",
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 223,
+      "method": "POST",
+      "path": "/api/meals/review",
+      "declaredMiddleware": [
+        "requireAuth",
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 291,
+      "method": "POST",
+      "path": "/api/meals",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 292,
+      "method": "POST",
+      "path": "/api/meals/confirm",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 293,
+      "method": "PUT",
+      "path": "/api/meals/:mealId",
+      "declaredMiddleware": [
+        "requireAuth",
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/planner-routes.ts",
+      "line": 353,
+      "method": "GET",
+      "path": "/api/meal-planner/progress",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 62,
+      "method": "USE",
+      "path": "/api/precision",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 180,
+      "method": "GET",
+      "path": "/api/precision/evidence-network",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 183,
+      "method": "GET",
+      "path": "/api/precision/weekly-plans",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 196,
+      "method": "GET",
+      "path": "/api/precision/planning-recipes",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 288,
+      "method": "POST",
+      "path": "/api/precision/today-plan",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 318,
+      "method": "POST",
+      "path": "/api/precision/metabolite-research",
+      "declaredMiddleware": [
+        "requireRestrictedCapability(\"bloom.microbiome.flux\")"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 373,
+      "method": "POST",
+      "path": "/api/precision/recipe-ideas",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 479,
+      "method": "GET",
+      "path": "/api/precision",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 496,
+      "method": "PUT",
+      "path": "/api/precision/context",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 507,
+      "method": "POST",
+      "path": "/api/precision/labs/import",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 524,
+      "method": "POST",
+      "path": "/api/precision/records",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 560,
+      "method": "POST",
+      "path": "/api/precision/labs/:id/confirm-unit",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 584,
+      "method": "POST",
+      "path": "/api/precision/plans",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 624,
+      "method": "POST",
+      "path": "/api/precision/labs/:id/correct-date",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 638,
+      "method": "DELETE",
+      "path": "/api/precision/labs/:id/entry",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 651,
+      "method": "DELETE",
+      "path": "/api/precision/records/:id",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 662,
+      "method": "DELETE",
+      "path": "/api/precision",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/products.ts",
+      "line": 629,
+      "method": "USE",
+      "path": "/api/products",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/products.ts",
+      "line": 633,
+      "method": "GET",
+      "path": "/api/products/search",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/products.ts",
+      "line": 655,
+      "method": "GET",
+      "path": "/api/products/saved",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/products.ts",
+      "line": 662,
+      "method": "GET",
+      "path": "/api/products/:source/:id",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/products.ts",
+      "line": 677,
+      "method": "POST",
+      "path": "/api/products",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/products.ts",
+      "line": 702,
+      "method": "DELETE",
+      "path": "/api/products/:id",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/profile-routes.ts",
+      "line": 6,
+      "method": "GET",
+      "path": "/api/profile",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/profile-routes.ts",
+      "line": 11,
+      "method": "PATCH",
+      "path": "/api/user/:userId/profile",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/report-routes.ts",
+      "line": 135,
+      "method": "GET",
+      "path": "/api/microbiome/cohorts",
+      "declaredMiddleware": [
+        "auth",
+        "noCache"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/report-routes.ts",
+      "line": 138,
+      "method": "POST",
+      "path": "/api/microbiome/import",
+      "declaredMiddleware": [
+        "auth",
+        "noCache",
+        "sameActor"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/report-routes.ts",
+      "line": 196,
+      "method": "POST",
+      "path": "/api/microbiome/upload",
+      "declaredMiddleware": [
+        "auth",
+        "noCache",
+        "sameActor"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/retired-health-routes.ts",
+      "line": 13,
+      "method": "POST",
+      "path": "/api/meals/:mealId/check-adherence",
+      "declaredMiddleware": [
+        "auth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 60,
+      "method": "POST",
+      "path": "/api/microbiome/analyze/:sampleId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 63,
+      "method": "GET",
+      "path": "/api/microbiome/results/:sampleId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 102,
+      "method": "GET",
+      "path": "/api/ml/health",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 116,
+      "method": "GET",
+      "path": "/api/meals",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 116,
+      "method": "GET",
+      "path": "/api/meals/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 133,
+      "method": "DELETE",
+      "path": "/api/meals/:mealId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 157,
+      "method": "GET",
+      "path": "/api/nutrition/daily/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 209,
+      "method": "GET",
+      "path": "/api/microbiome/samples/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/routes.ts",
+      "line": 224,
+      "method": "GET",
+      "path": "/api/microbiome/diet-prediction/:userId",
+      "declaredMiddleware": [
+        "requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/science-coach.ts",
+      "line": 125,
+      "method": "GET",
+      "path": "/api/science/status",
+      "declaredMiddleware": [
+        "dependencies.requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/science-coach.ts",
+      "line": 131,
+      "method": "POST",
+      "path": "/api/science/plan",
+      "declaredMiddleware": [
+        "dependencies.requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    }
+  ],
+  "unresolvedDeclarations": [
+    {
+      "file": "server/auth-routes.ts",
+      "line": 16,
+      "method": "POST",
+      "pathExpression": "`/api/auth/${action}`",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 22,
+      "method": "USE",
+      "pathExpression": "securityHeaders",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 25,
+      "method": "USE",
+      "pathExpression": "sameOriginWrites",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 26,
+      "method": "USE",
+      "pathExpression": "express.json(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 27,
+      "method": "USE",
+      "pathExpression": "express.urlencoded(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 36,
+      "method": "USE",
+      "pathExpression": "session(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 55,
+      "method": "USE",
+      "pathExpression": "[inline middleware]",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 70,
+      "method": "USE",
+      "pathExpression": "budgets.middleware(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/index.ts",
+      "line": 75,
+      "method": "USE",
+      "pathExpression": "[inline middleware]",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/precision-routes.ts",
+      "line": 423,
+      "method": "POST",
+      "pathExpression": "`/api/precision/weekly-plans/${action}`",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/retired-health-routes.ts",
+      "line": 7,
+      "method": "GET",
+      "pathExpression": "`/api/health/${kind}/:userId`",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/vite.ts",
+      "line": 43,
+      "method": "USE",
+      "pathExpression": "vite.middlewares",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/vite.ts",
+      "line": 79,
+      "method": "USE",
+      "pathExpression": "express.static(arguments omitted)",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    }
+  ]
+}

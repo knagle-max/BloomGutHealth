@@ -1,0 +1,56 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import express from 'express';
+import {PGlite} from '@electric-sql/pglite';
+import {drizzle} from 'drizzle-orm/pglite';
+import {eq} from 'drizzle-orm';
+import {readFileSync} from 'node:fs';
+import {randomBytes} from 'node:crypto';
+import {checkinSchema,focusFeedbackSchema,focusFeedbackResponses,experienceEntrySchema} from '../shared/experience';
+import {experienceRecords} from '../shared/schema';
+import {encryptPrecision,decryptPrecision} from '../server/precision-crypto';
+import {checkinFeedbackView} from '../server/checkin-feedback-source';
+import {ExperienceStorage} from '../server/experience-storage';
+import {registerExperienceRoutes} from '../server/experience-routes';
+const base=checkinSchema.parse({date:'2026-10-20',mode:'everyday',energy:5,hunger:5,digestion:5,sleepHours:7,adherence:3,focus:'Regular breakfast'});
+const feedback=focusFeedbackSchema.parse({version:1,response:'helped',focus:base.focus,date:base.date,mode:base.mode,recordedAt:'2026-10-21T12:00:00Z',receiptHash:'a'.repeat(64),previousRevision:'b'.repeat(64)});
+test('subjective focus feedback is strict, context-preserving and absent rather than inferred for legacy check-ins',()=>{
+ assert.equal(base.focusFeedback,undefined);const legacy=checkinFeedbackView('a','entry',base);assert.equal(legacy.feedback,null);
+ for(const response of focusFeedbackResponses)assert.equal(focusFeedbackSchema.parse({...feedback,response}).response,response);
+ assert.equal(focusFeedbackSchema.safeParse({...feedback,response:'cured'}).success,false);
+ assert.equal(focusFeedbackSchema.safeParse({...feedback,benefitPercent:100}).success,false);
+ const current=checkinFeedbackView('a','entry',{...base,focusFeedback:feedback});assert.equal(current.feedback?.response,'helped');assert.doesNotMatch(JSON.stringify(current),/receiptHash|previousRevision/);
+ assert.equal(current.revision,checkinFeedbackView('a','entry',{...base,energy:8,focusFeedback:feedback}).revision,'Focus response source excludes unrelated numeric ratings');
+ for(const change of [{focus:'Another focus'},{mode:'athlete'},{date:'2026-10-21'}])assert.notEqual(current.revision,checkinFeedbackView('a','entry',{...base,...change,focusFeedback:feedback}).revision);
+ assert.notEqual(current.revision,checkinFeedbackView('b','entry',{...base,focusFeedback:feedback}).revision);
+ assert.notEqual(current.revision,checkinFeedbackView('a','other',{...base,focusFeedback:feedback}).revision);
+ assert.notEqual(current.revision,legacy.revision);
+ assert.equal(checkinFeedbackView('a','entry',{...base,focusFeedback:{...feedback,response:null}}).feedback?.response,null,'Explicit cleared response is not a negative outcome');
+});
+test('owned encrypted reader preserves response snapshots through unaware updates, rejects metadata injection and exports original subjective context',async()=>{
+ const prior=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');const pg=new PGlite();await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");await pg.exec(readFileSync(new URL('../migrations/0004_experience.sql',import.meta.url),'utf8'));
+ const db=drizzle(pg),store=new ExperienceStorage(db as any),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerExperienceRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store as any,{}as any);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const origin=`http://127.0.0.1:${(server.address()as any).port}/api/experience`;
+ const request=async(path:string,method='GET',body?:unknown,user='a')=>{const response=await fetch(origin+path,{method,headers:{'content-type':'application/json',...(user?{'x-user':user}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})});return{status:response.status,body:await response.json().catch(()=>null)as any,cache:response.headers.get('cache-control')};};
+ try{
+  const created=await request('/records','POST',{kind:'checkin',payload:base});assert.equal(created.status,201);const id=created.body.id;
+  const otherKind=await store.insertExperienceRecord('a',experienceEntrySchema.parse({kind:'session',payload:{title:'Owned session',startsAt:'2026-10-21T12:00:00Z',minutes:60,intensity:'easy',discipline:'endurance'}}));assert.equal((await request(`/checkins/${otherKind.id}/feedback`)).status,404);
+  const initial=await request(`/checkins/${id}/feedback`);assert.equal(initial.status,200);assert.equal(initial.body.feedback,null);assert.equal(initial.cache,'no-store');
+  assert.equal((await request(`/checkins/${id}/feedback`,'GET',undefined,'')).status,401);assert.equal((await request(`/checkins/${id}/feedback`,'GET',undefined,'b')).status,404);
+  await db.update(experienceRecords).set({encryptedPayload:encryptPrecision({...base,focusFeedback:feedback},'a')}).where(eq(experienceRecords.id,id));
+  const current=await request(`/checkins/${id}/feedback`);assert.equal(current.body.feedback.focus,'Regular breakfast');assert.notEqual(current.body.revision,initial.body.revision);assert.doesNotMatch(JSON.stringify(current.body),/receiptHash|previousRevision/);
+  for(const method of ['POST','PUT'])assert.equal((await request(method==='POST'?'/records':'/records/'+id,method,{kind:'checkin',payload:{...base,focusFeedback:feedback}})).status,400);
+  await assert.rejects(()=>store.insertExperienceRecord('a',{kind:'checkin',payload:{...base,focusFeedback:feedback}}),/ACTION_REQUIRED/);
+  const unaware=await request('/records','POST',{kind:'checkin',payload:{...base,energy:6,focus:'Different routine'}});assert.equal(unaware.status,201);assert.equal(unaware.body.id,id);assert.equal(unaware.body.payload.focusFeedback.focus,'Regular breakfast');assert.equal(unaware.body.payload.focus,'Different routine');
+  const moved=await request('/records/'+id,'PUT',{kind:'checkin',payload:{...base,date:'2026-10-21',mode:'athlete',focus:'Training routine'}});assert.equal(moved.status,200);assert.equal(moved.body.payload.focusFeedback.date,base.date);assert.equal(moved.body.payload.focusFeedback.mode,'everyday');assert.equal(moved.body.payload.date,'2026-10-21');
+  assert.equal((await request('/records/'+id,'PUT',{kind:'checkin',payload:base},'b')).status,404);
+  const exported=await request('/export');assert.deepEqual(exported.body.records.find((row:any)=>row.id===id).payload.focusFeedback,feedback);
+  const raw=await pg.query('SELECT encrypted_payload FROM experience_records');assert.doesNotMatch(JSON.stringify(raw.rows),/Regular breakfast|helped/);
+  const capability=store.getCheckinFeedback;(store as any).getCheckinFeedback=undefined;assert.equal((await request(`/checkins/${id}/feedback`)).status,503);store.getCheckinFeedback=capability;
+  await db.update(experienceRecords).set({encryptedPayload:encryptPrecision({...base,focusFeedback:{...feedback,response:'cured'}},'a')}).where(eq(experienceRecords.id,id));
+  assert.equal((await request('/records','POST',{kind:'checkin',payload:base})).status,503,'Unclassifiable stored response cannot be silently erased by an unaware update');
+  const invalid=await request(`/checkins/${id}/feedback`);assert.equal(invalid.status,503);assert.doesNotMatch(JSON.stringify(invalid.body),/cured/);
+  const [retained]=await db.select().from(experienceRecords).where(eq(experienceRecords.id,id));assert.equal((decryptPrecision(retained.encryptedPayload,'a')as any).focusFeedback.response,'cured');
+  await request('/records/'+id,'DELETE');assert.equal((await request(`/checkins/${id}/feedback`)).status,404);assert.equal((await store.getExperienceRecords('b')).length,0);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();if(prior===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=prior;}
+});

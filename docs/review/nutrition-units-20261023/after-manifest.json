@@ -1,0 +1,116 @@
+{
+  "stage": "after",
+  "capturedAt": "2026-10-23T19:42:59.984Z",
+  "browser": "154.0.8037.57",
+  "os": "linux",
+  "devicePixelRatio": 1,
+  "fonts": "External fonts blocked; system fallback",
+  "sha": "a7a984b042f0212f53c018deba88293b12367fcd",
+  "dirty": false,
+  "fixtureTime": "2026-10-23T18:00:00Z",
+  "locale": "en-CA",
+  "timezone": "America/Regina",
+  "synthetic": true,
+  "providerCalls": "Intercepted; none external",
+  "captures": [
+    {
+      "filename": "after-today-390-light.png",
+      "route": "/",
+      "width": 390,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-nutrition-390-light.png",
+      "route": "/nutrition",
+      "width": 390,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-explore-portion-390-light.png",
+      "route": "/explore",
+      "width": 390,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-today-390-dark.png",
+      "route": "/",
+      "width": 390,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "filename": "after-nutrition-390-dark.png",
+      "route": "/nutrition",
+      "width": 390,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "filename": "after-explore-portion-390-dark.png",
+      "route": "/explore",
+      "width": 390,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "filename": "after-today-1440-light.png",
+      "route": "/",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-nutrition-1440-light.png",
+      "route": "/nutrition",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-explore-portion-1440-light.png",
+      "route": "/explore",
+      "width": 1440,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-today-1440-dark.png",
+      "route": "/",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "filename": "after-nutrition-1440-dark.png",
+      "route": "/nutrition",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "filename": "after-explore-portion-1440-dark.png",
+      "route": "/explore",
+      "width": 1440,
+      "height": 1000,
+      "theme": "dark"
+    },
+    {
+      "filename": "after-today-partial-390-light.png",
+      "route": "/",
+      "width": 390,
+      "height": 1000,
+      "theme": "light"
+    },
+    {
+      "filename": "after-today-unavailable-390-light.png",
+      "route": "/",
+      "width": 390,
+      "height": 1000,
+      "theme": "light"
+    }
+  ],
+  "errors": []
+}

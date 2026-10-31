@@ -22,6 +22,8 @@ export default function MealTypeSelector({ selected, onChange }: MealTypeSelecto
         const isSelected = selected === meal.id;
         return (
           <button
+            type="button"
+            aria-pressed={isSelected}
             key={meal.id}
             onClick={() => onChange(meal.id)}
             className={`flex items-center gap-2 px-4 h-10 rounded-full whitespace-nowrap transition-all ${

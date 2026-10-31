@@ -1,0 +1,154 @@
+{
+  "archive": "bloom_brand_delivery_v1(1).zip",
+  "archiveSha256": "324a5e0d5412c1ffc0cb167e1871ac41f8998504243031166294906dfa87c648",
+  "assets": [
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-athlete-192.png",
+      "sha256": "5b43e1c95e8f843f5c8e70268e4a82f787bccb6e0a5c471aa5868c5e6d14f9e5",
+      "size": 7298,
+      "destination": "client/public/brand/bloom-icon-athlete-192.png",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-athlete.svg",
+      "sha256": "3b2c1c41f26eb5aaca86b7c7a0c1e3b8bdceebcd8266981faedb7dad19bc3c91",
+      "size": 554,
+      "destination": "client/public/brand/bloom-icon-athlete.svg",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-everyday-192.png",
+      "sha256": "8ed678af784665275d64e270a4bd5fec6af74ef94fa1b04fef5e0aa7d9dce1b5",
+      "size": 7381,
+      "destination": "client/public/brand/bloom-icon-everyday-192.png",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-athlete-512.png",
+      "sha256": "c24f3846c353c32420e662f2c7c31f0e72c597a23b0d79bbf6bfe49b5acfabf4",
+      "size": 21465,
+      "destination": "client/public/brand/bloom-icon-athlete-512.png",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-monochrome.svg",
+      "sha256": "ef595815d8e3ca420eaf15935b278ad8e9adb25ebd4d4153e05cfb0475d2ee83",
+      "size": 557,
+      "destination": "client/public/brand/bloom-icon-monochrome.svg",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-wordmark-light.svg",
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "size": 630,
+      "destination": "client/public/brand/bloom-wordmark-light.svg",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-wordmark-dark.svg",
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "size": 630,
+      "destination": "client/public/brand/bloom-wordmark-dark.svg",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/empty-journal-illustration.svg",
+      "sha256": "18570404425ddeaa88d33ffe65fd420758ef0d9aeb36e3c8e1a94c0a000bc164",
+      "size": 516,
+      "destination": "client/public/brand/empty-journal-illustration.svg",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-everyday-512.png",
+      "sha256": "abe8c8c27d15e26385475d0978a025b6ceb40f57f457dbda5a59a85ecb7c6f77",
+      "size": 21454,
+      "destination": "client/public/brand/bloom-icon-everyday-512.png",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-athlete-64.png",
+      "sha256": "58939223c75d35eac8b29e8cebbb892b79ff4badd111eafbb287cb754600b415",
+      "size": 2378,
+      "destination": "client/public/brand/bloom-icon-athlete-64.png",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-everyday-64.png",
+      "sha256": "033dedf4fe1609fda3d3cb7a00abfc5034ad0c7fe0c0bcf70cdd2be196b321eb",
+      "size": 2332,
+      "destination": "client/public/brand/bloom-icon-everyday-64.png",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/bloom-icon-everyday.svg",
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "size": 555,
+      "destination": "client/public/brand/bloom-icon-everyday.svg",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/assets/design-tokens.json",
+      "sha256": "484dcd8ea45d242d4b3cbf7268a09bebc98552e045a83aa8e7825cb57918e33e",
+      "size": 1300,
+      "destination": "client/public/brand/design-tokens.json",
+      "disposition": "production asset or canonical token source",
+      "byteIdentical": true
+    },
+    {
+      "archivePath": "bloom_brand_delivery/specs/SCREEN_BLUEPRINTS.md",
+      "sha256": "3f8d493d9f0ad8d6479f898c76130848865379ea667e92ee90af135727af542d",
+      "size": 3457,
+      "destination": null,
+      "disposition": "private specification reference, excluded from public branch",
+      "byteIdentical": null,
+      "reviewPackagePath": "sources/brand-source/SCREEN_BLUEPRINTS.md"
+    },
+    {
+      "archivePath": "bloom_brand_delivery/specs/HANDOFF.md",
+      "sha256": "e62edc9bd64523611d980e3f836592e2fd10c3ff18b330d47f423130b0a08996",
+      "size": 6641,
+      "destination": null,
+      "disposition": "private specification reference, excluded from public branch",
+      "byteIdentical": null,
+      "reviewPackagePath": "sources/brand-source/HANDOFF.md"
+    },
+    {
+      "archivePath": "bloom_brand_delivery/specs/CONTENT_AND_SCIENCE.md",
+      "sha256": "2d7f6d3cff55d304b654f4cedda7f49897934cdce876abf593f53ed3fea3d071",
+      "size": 2506,
+      "destination": null,
+      "disposition": "private specification reference, excluded from public branch",
+      "byteIdentical": null,
+      "reviewPackagePath": "sources/brand-source/CONTENT_AND_SCIENCE.md"
+    },
+    {
+      "archivePath": "bloom_brand_delivery/README.md",
+      "sha256": "1384e00f323e70f300dfd4f49bc743b59a2f8f7df91bc8153ea4460d084f94b7",
+      "size": 2839,
+      "destination": null,
+      "disposition": "private specification reference, excluded from public branch",
+      "byteIdentical": null,
+      "reviewPackagePath": "sources/brand-source/README.md"
+    },
+    {
+      "archivePath": "bloom_brand_delivery/previews/brand-concept-reference.png",
+      "sha256": "fc29dad9473cdaf17d7c82281f06fd523df6498e47511b690300bcd1d73c4463",
+      "size": 1697994,
+      "destination": null,
+      "disposition": "design-only reference; never production artwork or baseline screenshot",
+      "byteIdentical": null
+    }
+  ]
+}

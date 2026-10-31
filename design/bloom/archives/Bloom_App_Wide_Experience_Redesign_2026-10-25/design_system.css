@@ -1,0 +1,11 @@
+/* Bloom app-wide DESIGN REFERENCE — not installed code */
+:root { --bloom-space-1:4px; --bloom-space-2:8px; --bloom-space-3:12px; --bloom-space-4:16px; --bloom-space-5:20px; --bloom-space-6:24px; --bloom-space-8:32px; --bloom-radius-card:16px; --bloom-radius-control:10px; --bloom-type-body:16px; --bloom-type-support:14px; --bloom-everyday:#246B50; --bloom-athlete:#2563A6; --bloom-coach:#62558D; }
+.bloom-page { width:min(100% - 32px,1160px); margin-inline:auto; padding-block:24px 96px; }
+.bloom-content-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); gap:16px; }
+.bloom-card { min-width:0; overflow-wrap:anywhere; padding:20px; border-radius:var(--bloom-radius-card); }
+.bloom-card > * + * {margin-block-start:12px;}
+.bloom-action { min-height:44px; white-space:normal; overflow-wrap:anywhere; }
+.bloom-primary-hero { display:grid; gap:16px; padding:24px; border-radius:20px; }
+.bloom-bottom-space {padding-bottom:calc(96px + env(safe-area-inset-bottom));}
+@media(max-width:390px){.bloom-page{width:calc(100% - 32px)} .bloom-card{padding:16px}.bloom-primary-hero{padding:20px}}
+/* Never use CSS alone as authorization for restricted features. */

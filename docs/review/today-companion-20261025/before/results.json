@@ -1,0 +1,131 @@
+{
+  "synthetic": true,
+  "phase": "before",
+  "baseline": "aa22265c415f3ee702b06f93f70314bacd29856c",
+  "checks": [
+    {
+      "width": 320,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "error",
+      "primaryInViewport": true
+    }
+  ],
+  "errors": [],
+  "nativeSafari": false,
+  "voiceOver": false,
+  "plannedRestContract": false
+}

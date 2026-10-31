@@ -4,3 +4,17 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+__pycache__/
+*.pyc
+bloom-desktop.png
+bloom-mobile.png
+bloom-coach-*.png
+
+# Local service credentials
+.env
+.env.*
+!.env.example
+.neon
+
+# Local synthetic QA scratch output; curated evidence lives under docs/review.
+/work/

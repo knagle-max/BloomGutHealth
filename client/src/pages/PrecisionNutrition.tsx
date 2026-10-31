@@ -1,0 +1,1406 @@
+import BloodworkSourceOverview from '@/components/BloodworkSourceOverview';
+import {defaultGeneticSelection,isSensitiveGeneticCall,selectedGeneticImport} from "@shared/genetic-selection";
+import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
+import {reportDateText,type ReportDateContext} from "@shared/report-dates";
+import {labDateText} from "@shared/lab-history";
+import LabDateCorrectionDialog from "@/components/LabDateCorrectionDialog";
+import type {AnyLabHistoryRow} from "@shared/lab-history";
+import LabSourceHistory from "@/components/LabSourceHistory";
+import BiologyHome from "@/components/BiologyHome";
+import {invalidatePlanningInputs,resetPlanningInputs} from "@/lib/planning-cache";
+import { formatMassEntry, parseMassEntry, parseCircumferenceEntry, switchMassUnit, switchCircumferenceUnit, type MassEntry, type CircumferenceEntry } from "@shared/measurement-entry";
+import { kgToDisplay, quantityFromCanonical } from "@shared/display-units";
+import LabUnitReview from "@/components/LabUnitReview";
+import { useExperience } from "@/lib/experience";
+import { useAuth } from "@/lib/auth";
+import TodayPlanner from "@/components/TodayPlanner";
+import QuickLabEntry from "@/components/QuickLabEntry";
+import LabSourceContext from "@/components/LabSourceContext";
+import { recipePreparation } from "@shared/recipe-preparation";
+import GenotypeExplanations from "@/components/GenotypeExplanations";
+import ManualGenetics from "@/components/ManualGenetics";
+import { useEffect, useState, useRef } from "react";
+import { Link,useSearch } from "wouter";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { Button } from "@/components/ui/button";
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter } from "@/components/ui/alert-dialog";
+import {
+  Dna,
+  FlaskConical,
+  Leaf,
+  ChartNoAxesCombined,
+  ShieldCheck,
+} from "lucide-react";
+import {
+  contextSchema,
+  labEnteredContext,
+  markerDefinitions,
+  parse23andMe,
+  variantCatalog,
+  type PrecisionContext,
+  type PrecisionReport,
+  type PrecisionRecord,
+} from "@shared/precision-nutrition";
+import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
+
+type Report = PrecisionReport & {
+  availableReports: {dateContext?:ReportDateContext; id: string; date: string; name: string }[];
+  intake: {
+    days: number;
+    mealsLogged: number;
+    nutrients: {
+      key: string;
+      name: string;
+      unit: string;
+      knownTotal: number;
+      mealsWithEstimate: number;
+      completeMeals: number;
+    }[];
+    note: string;
+  };
+  journalSymptoms: {
+    mealId: string;
+    date: string;
+    symptoms: Record<string, number | null>;
+  }[];
+};
+const list = (value: FormDataEntryValue | null) =>
+  String(value || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+const number = (data: FormData, key: string) => {
+  const value = String(data.get(key) || "").trim();
+  return value === "" ? null : Number(value);
+};
+const date = (data: FormData, key: string) =>
+  new Date(String(data.get(key))).toISOString();
+const localNow = () => {
+  const d = new Date();
+  return new Date(+d - d.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
+};
+const display = (value: number) => Number(value.toFixed(2)).toLocaleString();
+function ContextEditor({
+  context,
+  onSave,
+  pending,
+}: {
+  context: PrecisionContext;
+  onSave: (data: PrecisionContext) => void;
+  pending: boolean;
+}) {
+  return (
+    <form
+      className="bloom-panel space-y-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
+        onSave(
+          contextSchema.parse({
+            goals: list(data.get("goals")),
+            medications: list(data.get("medications")),
+            currentSupplements: list(data.get("currentSupplements")),
+            conditions: list(data.get("conditions")),
+            allergies: list(data.get("allergies")),
+            intolerances: list(data.get("intolerances")),
+            ageGroup: data.get("ageGroup"),
+            pregnancy: data.get("pregnancy"),
+            safetyReviewed: data.get("safetyReviewed") === "on",
+          }),
+        );
+      }}
+    >
+      <h2>Your goals & health context</h2>
+      <p className="panel-note">
+        Goals are open-ended. Unsupported goals stay visible without invented
+        pathway claims. All information belongs to your account.
+      </p>
+      <label className="block">
+        Goals (comma separated)
+        <input
+          className="bloom-input w-full"
+          name="goals"
+          defaultValue={context.goals.join(", ")}
+          placeholder="Lower ApoB, improve glucose, support butyrate"
+          maxLength={2000}
+        />
+      </label>
+      {(
+        [
+          ["medications", "Medications"],
+          ["currentSupplements", "Current supplements, including doses"],
+          ["conditions", "Medical conditions"],
+          ["allergies", "Food allergies / medical food restrictions"],
+          ["intolerances", "Reported food intolerances"],
+        ] as const
+      ).map(([name, label]) => (
+        <label className="block" key={name}>
+          {label} (comma separated)
+          <input
+            className="bloom-input w-full"
+            name={name}
+            defaultValue={(context[name] || []).join(", ")}
+            maxLength={3000}
+          />
+        </label>
+      ))}
+      <p className="panel-note">Reported intolerances prompt ingredient warnings, not automatic exclusions or a diagnosis. Allergies remain separate hard restrictions. For foods you want excluded regardless, use Foods to avoid in shared food preferences.</p>
+      <div className="precision-grid">
+        <label>
+          Age group
+          <select
+            className="bloom-input w-full"
+            name="ageGroup"
+            defaultValue={context.ageGroup}
+          >
+            <option value="unknown">Not confirmed</option>
+            <option value="adult">18 or older</option>
+            <option value="under18">Under 18</option>
+          </select>
+        </label>
+        <label>
+          Pregnant / breastfeeding or planning pregnancy
+          <select
+            className="bloom-input w-full"
+            name="pregnancy"
+            defaultValue={context.pregnancy}
+          >
+            <option value="unknown">Not confirmed</option>
+            <option value="no">No / not applicable</option>
+            <option value="yes">Yes</option>
+          </select>
+        </label>
+      </div>
+      <label className="flex items-start gap-2">
+        <input
+          type="checkbox"
+          name="safetyReviewed"
+          defaultChecked={context.safetyReviewed}
+        />
+        I have reviewed the medications, supplements, conditions and allergies
+        above, including empty lists.
+      </label>
+      <p className="panel-note">
+        Recorded history flags the need for review. Bloom does not provide a
+        comprehensive drug interaction checker or certify meals as
+        allergen-safe. Use dietary category exclusions too, and verify
+        ingredients and preparation.
+      </p>
+      <Button type="submit" disabled={pending}>
+        Save health context
+      </Button>
+    </form>
+  );
+}
+export default function PrecisionNutrition() {
+  const search=useSearch();
+  const {mode,settings,patch,saving:unitsSaving,error:unitsError}=useExperience();
+  const {user}=useAuth();
+  const savedProfile=useQuery<{weightKg:number|null; heightCm:number|null}>({queryKey:["/api/profile"],enabled:!!user});
+  const [weightEntry,setWeightEntry]=useState<MassEntry>({unit:settings.displayUnits.bodyWeight,value:""});
+  const [waistEntry,setWaistEntry]=useState<CircumferenceEntry>({unit:settings.displayUnits.circumference,value:""});
+  const [draftError,setDraftError]=useState("");
+  const parsedWeight=parseMassEntry(weightEntry), parsedWaist=parseCircumferenceEntry(waistEntry);
+  const unfinished=[parsedWeight,parsedWaist].some(v=>v.kind==="incomplete"||v.kind==="invalid");
+  useEffect(()=>{
+    setWeightEntry(old=>{const next=switchMassUnit(old,settings.displayUnits.bodyWeight);return "unit" in next?next:old;});
+    setWaistEntry(old=>{const next=switchCircumferenceUnit(old,settings.displayUnits.circumference);return "unit" in next?next:old;});
+  },[settings.displayUnits.bodyWeight,settings.displayUnits.circumference]);
+  function changeCheckinUnit(key:"bodyWeight"|"circumference"|"height",value:string){
+    const converted=key==="bodyWeight"?switchMassUnit(weightEntry,value as MassEntry["unit"]):
+      key==="circumference"?switchCircumferenceUnit(waistEntry,value as CircumferenceEntry["unit"]):null;
+    if(converted&&!("unit" in converted)){setDraftError("Finish or clear the measurement before switching units.");return;}
+    setDraftError("");
+    patch({displayUnits:{...settings.displayUnits,[key]:value}});
+  }
+  const [tab, setTab] = useState(() => {
+    const requested = new URLSearchParams(search).get("tab");
+    return requested && ["overview", "genetics", "labs", "recommendations", "progress"].includes(requested) ? requested : "overview";
+  }),
+    [sampleId, setSampleId] = useState("");
+  useEffect(()=>{const requested=new URLSearchParams(search).get("tab");if(requested&&["overview","genetics","labs","recommendations","progress"].includes(requested))setTab(requested);},[search]);
+  const [status, setStatus] = useState(""),
+    [localError, setLocalError] = useState("");
+  const result = useQuery<Report>({
+    queryKey: ["/api/precision", sampleId],
+    queryFn: async () =>
+      (
+        await apiRequest(
+          "GET",
+          "/api/precision" +
+            (sampleId ? "?sampleId=" + encodeURIComponent(sampleId) : ""),
+        )
+      ).json(),
+  });
+  const [context, setContext] = useState(contextSchema.parse({}));
+  const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
+  const editGoals=new URLSearchParams(search).get("edit")==="goals";
+  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,result.fetchStatus,result.isError,context]);
+  useEffect(() => {
+    if (result.data) setContext(result.data.context);
+  }, [result.data]);
+  const mutation = useMutation({
+    mutationFn: async ({
+      url,
+      method = "POST",
+      body,
+    }: {
+      url: string;
+      method?: string;
+      body?: unknown;
+    }) => {
+      const response = await apiRequest(method, url, body);
+      return response.status === 204 ? null : response.json();
+    },
+    onSuccess: () => {
+      setStatus(
+        "Saved. Review current recommendations and tracking after they reload.",
+      );
+      setLocalError("");
+      return invalidatePlanningInputs();
+    },
+  });
+  const send = (url: string, body: unknown, method = "POST") => {
+    setStatus("");
+    setLocalError("");
+    mutation.mutate({ url, body, method });
+  };
+  const [consent, setConsent] = useState(false),
+    [geneticDate, setGeneticDate] = useState(localNow());
+  const [geneticPreview, setGeneticPreview] = useState<ReturnType<
+    typeof parse23andMe
+  > | null>(null);
+  const [selectedGeneticCalls,setSelectedGeneticCalls]=useState<string[]>([]),[geneticReading,setGeneticReading]=useState(false);
+  const geneticGeneration=useRef(0),geneticInput=useRef<HTMLInputElement>(null),geneticActor=useRef(user?.id);geneticActor.current=user?.id;
+  useEffect(()=>{geneticGeneration.current++;setGeneticPreview(null);setSelectedGeneticCalls([]);setConsent(false);setGeneticReading(false);if(geneticInput.current)geneticInput.current.value="";return()=>{geneticGeneration.current++;};},[user?.id]);
+  function geneticCallRow(call:NonNullable<typeof geneticPreview>["calls"][number]){
+    return <li key={call.rsid}><label className="flex items-start gap-2"><input type="checkbox" aria-label={`Include ${isSensitiveGeneticCall(call.rsid)?"APOE ":""}${call.rsid}`} checked={selectedGeneticCalls.includes(call.rsid)} disabled={mutation.isPending||geneticReading} onChange={e=>{const checked=e.target.checked;setConsent(false);setSelectedGeneticCalls(ids=>checked?[...ids,call.rsid]:ids.filter(id=>id!==call.rsid));}}/><span>{isSensitiveGeneticCall(call.rsid)?"APOE · ":""}{call.rsid}: {call.genotype} · chromosome {call.chromosome}:{call.position}</span></label></li>;
+  }
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const erase = useMutation({
+    mutationFn: async () => {
+      const res = await accountFetch("/api/precision", {
+        method: "DELETE",
+        credentials: "include",
+        headers: { "X-Bloom-Confirm": "delete-precision-data" },
+      });
+      if (res.status===409 && (await res.clone().json().catch(()=>null))?.code==="ACCOUNT_CONTEXT_CHANGED") throw Error(ACCOUNT_CONTEXT_MESSAGE);
+      if (!res.ok) throw Error("Precision data could not be deleted.");
+    },
+    onSuccess: async () => {
+      await resetPlanningInputs();
+      setGeneticPreview(null);
+      setDeleteConfirm(false);
+      setStatus(
+        "Precision inputs, health context and saved precision plans deleted. Your existing meal journal and microbiome reports are retained.",
+      );
+    },
+  });
+  const [labToCorrect,setLabToCorrect]=useState<{actor:string;source:AnyLabHistoryRow}|null>(null);
+  const [labToDelete, setLabToDelete] = useState<string | null>(null);
+  const deleteLab = useMutation({
+    mutationFn: (id: string) => apiRequest("DELETE", "/api/precision/labs/" + encodeURIComponent(id) + "/entry", undefined, { "X-Bloom-Confirm": "delete-lab-entry-and-revisions" }),
+    onSuccess: async () => {
+      setLabToDelete(null);
+      setStatus("Result and its source/unit revisions deleted. Current recommendations will reload.");
+      await invalidatePlanningInputs();
+    },
+    onError: async () => { await invalidatePlanningInputs(); },
+  });
+  const remove = (record: PrecisionRecord) => {
+    if (record.kind === "lab") {
+      deleteLab.reset();
+      setLabToDelete(record.id);
+      return;
+    }
+    send(
+      "/api/precision/records/" + encodeURIComponent(record.id),
+      undefined,
+      "DELETE",
+    );
+  };
+  const sources = (ids: readonly string[]) => (
+    <details className="mt-3">
+      <summary>Evidence & limitations</summary>
+      <ul className="space-y-3 mt-3">
+        {ids.map((id) => {
+          const s = result.data?.sources.find((s) => s.id === id);
+          return s ? (
+            <li key={id}>
+              <a
+                className="text-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                href={s.url}
+              >
+                {s.title}
+              </a>
+              <p className="panel-note">
+                {s.type} · {s.limitation}
+              </p>
+            </li>
+          ) : null;
+        })}
+      </ul>
+    </details>
+  );
+  const formError = (e: unknown) =>
+    setLocalError(
+      e instanceof Error ? e.message : "Check the information entered.",
+    );
+
+  const [labSourceToOpen,setLabSourceToOpen]=useState<{rowId:string;target?:'row'}|null>(null);
+  useEffect(()=>setLabSourceToOpen(null),[user?.id]);
+  const r = result.data;
+  const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
+  const requestedObservation=new URLSearchParams(search).get("observation"),focusedObservation=useRef("");
+  useEffect(()=>{const key=`${user?.id}:${requestedObservation}`;if(tab!=="progress"||!requestedObservation||!currentResult||focusedObservation.current===key||!r?.checkins.some(row=>row.id===requestedObservation))return;const target=document.getElementById(`precision-observation-${requestedObservation}`);if(target){target.focus();target.scrollIntoView({block:"start"});focusedObservation.current=key;}},[requestedObservation,tab,currentResult,r?.checkins,user?.id]);
+  const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
+  useEffect(()=>{const key=`${user?.id}:${requestedLabResult}`;if(tab!=="labs"||!requestedLabResult||!currentResult||focusedLabResult.current===key||![...(r?.labHistory||[]),...(r?.pendingLabs||[]),...(r?.sourceOnlyLabs||[])].some(row=>row.id===requestedLabResult))return;focusedLabResult.current=key;setLabSourceToOpen({rowId:requestedLabResult,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
+  const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
+  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#biology-bloodwork-results"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
+  const tabNavigation=(
+      <div
+        className="precision-tabs"
+        role="group"
+        aria-label="Precision nutrition sections"
+      >
+        {[
+          ["overview", "Overview", ShieldCheck],
+          ["genetics", "Genetics", Dna],
+          ["labs", "Lab results", FlaskConical],
+          ["recommendations", "Food & supplements", Leaf],
+          ["progress", "Progress", ChartNoAxesCombined],
+        ].map(([id, label, Icon]) => (
+          <Button
+            key={String(id)}
+            variant={tab === id ? "default" : "outline"}
+            aria-pressed={tab === id}
+            onClick={() => setTab(String(id))}
+          >
+            {typeof Icon !== "string" && <Icon size={16} />} {String(label)}
+          </Button>
+        ))}
+      </div>
+  );
+  return (
+    <main className="science-page precision-page">
+      {labToCorrect&&labToCorrect.actor===user?.id&&<LabDateCorrectionDialog key={labToCorrect.actor+":"+labToCorrect.source.id} source={labToCorrect.source} onClose={()=>setLabToCorrect(null)}/>}
+      <AlertDialog open={labToDelete !== null} onOpenChange={open => { if (!open && !deleteLab.isPending) setLabToDelete(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete this laboratory result?</AlertDialogTitle>
+            <AlertDialogDescription>This deletes this result and its original source and unit revisions. Other results in the same report are retained. Saved precision plans using clinical inputs will be cleared. This cannot be undone.</AlertDialogDescription>
+          </AlertDialogHeader>
+          {deleteLab.isError && <p role="alert">{deleteLab.error.message} If the response was lost, retrying this same deletion is safe. If sources changed, cancel and review the reloaded result.</p>}
+          <AlertDialogFooter>
+            <Button variant="outline" disabled={deleteLab.isPending} onClick={() => setLabToDelete(null)}>Cancel</Button>
+            <Button variant="destructive" disabled={deleteLab.isPending} onClick={() => labToDelete && deleteLab.mutate(labToDelete)}>{deleteLab.isPending ? "Deleting…" : "Delete result and revisions"}</Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <div className="flex flex-wrap gap-3 justify-between items-start">
+        <div className="science-heading">
+          {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
+          <h1>My biology</h1>
+          <p className="science-intro">
+            {tab==="overview"?"Understand your recorded data.":"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
+          </p>
+        </div>
+        {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
+      </div>
+      {tab==="overview"?<details className="biology-more-tools"><summary>Explore biology tools</summary>{tabNavigation}</details>:tabNavigation}
+      <div aria-live="polite">
+        {status && (
+          <p className="bloom-panel" role="status">
+            {status}
+          </p>
+        )}
+        {(localError || mutation.error || erase.error) && (
+          <p role="alert" className="bloom-panel">
+            {localError || mutation.error?.message || erase.error?.message}
+          </p>
+        )}
+      </div>
+      {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
+      {(result.isError||result.fetchStatus==="paused")&&(
+        <section className="bloom-panel">
+          <h2>Biology inputs could not be checked</h2>
+          <p role="alert">Previously loaded observations and actions are withheld until their source can be checked. Your draft stays on this page.</p>
+          <Button disabled={result.isFetching} onClick={()=>result.refetch()}>Retry biology inputs</Button>
+          {sampleId&&<Button onClick={()=>setSampleId("")}>Use latest report</Button>}
+        </section>
+      )}
+      {r&&(
+        <div hidden={!currentResult}>
+          <fieldset disabled={!currentResult} className="min-w-0 border-0 p-0 m-0" aria-label="Current biology inputs">
+            {tab === "overview" && (
+              <>
+                <BiologyHome report={r} onOpen={openSource}/>
+                <details ref={goalsDisclosure} className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
+                <summary>Your goals & health context</summary>
+                <ContextEditor
+                  key={JSON.stringify(r.context)}
+                  context={context}
+                  pending={mutation.isPending}
+                  onSave={(data) => send("/api/precision/context", data, "PUT")}
+                />
+                </details>
+                <section className="bloom-panel">
+                  <h2>Goal coverage</h2>
+                  {r.goals.length ? (
+                    r.goals.map((g) => (
+                      <article
+                        className="precision-observation block"
+                        key={g.goal}
+                      >
+                        <h3>
+                          {g.goal} · {g.mapping}
+                        </h3>
+                        <ul>
+                          {g.actions.map((action, i) => (
+                            <li key={i}>{action}</li>
+                          ))}
+                        </ul>
+                        <p className="panel-note">{g.tracking}</p>
+                        {(g.id==="general"||g.id==="digestive")&&<Link className="text-link" href="/nutrition">Review meals and symptom notes</Link>}
+                        {g.id==="body"&&<Button variant="outline" onClick={()=>openSource("progress")}>Record a dated body measurement</Button>}
+                        {g.id==="training"&&<Link className="text-link" href="/activity">Review or log activity</Link>}
+                        {g.sourceIds.length>0&&sources(g.sourceIds)}
+                      </article>
+                    ))
+                  ) : (
+                    <p>
+                      Add your own goals above; saved meal-planner goals also
+                      inform recommendations.
+                    </p>
+                  )}
+                  <Link className="text-link" href="/insights">
+                    Explore molecule pathways & research populations
+                  </Link>
+                </section>
+                <DietaryPreferenceSummary context={context} />
+                <details className="bloom-panel">
+                  <summary>Data control</summary>
+                  <p>
+                    Genetic files are parsed on your device. Only the supported
+                    calls and import metadata are sent after consent. Precision
+                    inputs and plans are encrypted in storage and are never sent
+                    to an AI provider by these features.
+                  </p>
+                  <label className="flex gap-2">
+                    <input
+                      type="checkbox"
+                      checked={deleteConfirm}
+                      onChange={(e) => setDeleteConfirm(e.target.checked)}
+                    />
+                    Delete all my precision inputs, health context and saved
+                    precision plans
+                  </label>
+                  <Button
+                    className="mt-3"
+                    variant="destructive"
+                    disabled={!deleteConfirm || erase.isPending}
+                    onClick={() => erase.mutate()}
+                  >
+                    Delete precision data
+                  </Button>
+                </details>
+              </>
+            )}
+            {tab === "genetics" && (
+              <>
+                <ManualGenetics
+                  key={r.genetics.import?.id || "none"}
+                  genetics={r.genetics}
+                  onSaved={() =>
+                    setStatus(
+                      "Selected SNPs saved as your active genetic dataset. Unreviewed or unconfirmed entries remain recorded without interpretation.",
+                    )
+                  }
+                />
+                <section className="bloom-panel space-y-4">
+                  <h2>Import 23andMe raw data</h2>
+                  <p>
+                    {r.genetics.coverage}. Supported format: uncompressed
+                    GRCh37, forward-strand text export. Unknown builds, wrong
+                    coordinates, conflicting calls and unsupported strand
+                    notation are rejected. Only the 29 explanation-catalogue
+                    SNPs are retained after preview and consent. Supported calls
+                    provide educational context; they do not set nutrition
+                    targets or add food-ranking priority.
+                  </p>
+                  <label className="block">
+                    DNA sample date
+                    <input
+                      className="bloom-input w-full"
+                      type="datetime-local"
+                      value={geneticDate}
+                      disabled={mutation.isPending}
+                      onChange={(e) => {geneticGeneration.current++;setGeneticDate(e.target.value);setGeneticPreview(null);setSelectedGeneticCalls([]);setConsent(false);setGeneticReading(false);setLocalError("");if(geneticInput.current)geneticInput.current.value="";}}
+                      required
+                    />
+                  </label>
+                  <label className="block">
+                    Raw data text file
+                    <input
+                      className="bloom-input w-full"
+                      type="file"
+                      accept=".txt"
+                      ref={geneticInput}
+                      disabled={mutation.isPending}
+                      onChange={async (e) => {
+                        const generation=++geneticGeneration.current,owner=user?.id;
+                        setGeneticPreview(null);setSelectedGeneticCalls([]);setConsent(false);setGeneticReading(false);
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          if (file.size > 50 * 1024 * 1024)
+                            throw Error(
+                              "Use an uncompressed file under 50 MB.",
+                            );
+                          if(!Number.isFinite(+new Date(geneticDate)))throw Error("Choose a valid DNA sample date before reading the file.");
+                          setGeneticReading(true);
+                          const text=await file.text();
+                          if(generation!==geneticGeneration.current||owner!==geneticActor.current)return;
+                          const parsed=parse23andMe(text,new Date(geneticDate).toISOString());
+                          setGeneticPreview(parsed);setSelectedGeneticCalls(defaultGeneticSelection(parsed));setLocalError("");
+                        } catch (err) {
+                          if(generation===geneticGeneration.current&&owner===geneticActor.current)formError(err);
+                        } finally {if(generation===geneticGeneration.current)setGeneticReading(false);}
+                      }}
+                    />
+                  </label>
+                  {geneticReading&&<p role="status">Reading supported calls locally…</p>}
+                  <p className="panel-note">Choose the sample date first. Changing the date clears the file review and consent. Only selected calls are sent when you save. Previous saved datasets remain until deleted.</p>
+                  {geneticPreview&&<div className="space-y-3">
+                    <p>Scanned {geneticPreview.scannedVariants.toLocaleString()} rows. {geneticPreview.calls.length} supported calls found; {selectedGeneticCalls.length} selected for saving.</p>
+                    <ul className="space-y-2">{geneticPreview.calls.filter(call=>!isSensitiveGeneticCall(call.rsid)).map(geneticCallRow)}</ul>
+                    {geneticPreview.calls.some(call=>isSensitiveGeneticCall(call.rsid))&&<details><summary>Review sensitive APOE markers (optional)</summary><p className="panel-note">Excluded from saving by default. You may include individual source calls for private storage. Bloom does not infer an APOE type or disease risk.</p><ul className="space-y-2">{geneticPreview.calls.filter(call=>isSensitiveGeneticCall(call.rsid)).map(geneticCallRow)}</ul></details>}
+                    {!selectedGeneticCalls.length&&<p role="status">Select at least one supported call to save.</p>}
+                  </div>}
+                  <label className="flex gap-2">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      disabled={mutation.isPending||geneticReading||!geneticPreview||!selectedGeneticCalls.length}
+                      onChange={(e) => setConsent(e.target.checked)}
+                    />
+                    I consent to saving these selected genetic calls to my
+                    account. The full raw file is not uploaded.
+                  </label>
+                  <Button
+                    disabled={!consent || !geneticPreview || !selectedGeneticCalls.length || geneticReading || mutation.isPending}
+                    onClick={() => {
+                      if(!geneticPreview||!consent)return;
+                      try{const payload=selectedGeneticImport(geneticPreview,selectedGeneticCalls);setConsent(false);send("/api/precision/records",{kind:"genetics",payload});}catch(error){formError(error);}
+                    }}
+                  >
+                    Save supported calls
+                  </Button>
+                  {sources(["raw-format"])}
+                </section>
+                {r.genetics.import && (
+                  <section className="bloom-panel">
+                    <p>
+                      Active import:{" "}
+                      {r.genetics.import.collectedAt.slice(0, 10)}
+                    </p>
+                    <Button
+                      variant="outline"
+                      onClick={() =>
+                        remove({
+                          id: r.genetics.import!.id,
+                          kind: "genetics",
+                          payload: null,
+                          createdAt: r.genetics.import!.collectedAt,
+                        })
+                      }
+                    >
+                      Delete active genetic import
+                    </Button>
+                    <p className="panel-note">
+                      Deleting an input also removes derived precision plans.
+                      Earlier imports, if any, remain available until deleted
+                      with all precision data.
+                    </p>
+                  </section>
+                )}
+                <GenotypeExplanations entries={r.genetics.explanations || []} />
+                <details>
+                  <summary>Reviewed marker pathway context</summary>
+                  {r.genetics.findings.map((f) => (
+                    <article className="bloom-panel" key={f.rsid}>
+                      <p className="eyebrow">{f.status}</p>
+                      <h2>
+                        {f.gene} · {f.rsid}
+                      </h2>
+                      <p>
+                        Forward-strand call:{" "}
+                        <strong>{f.genotype || "Not available"}</strong> ·{" "}
+                        {f.pathway}
+                      </p>
+                      <p>{f.interpretation}</p>
+                      <p>{f.actionability}</p>
+                      <p className="panel-note">{f.limitation}</p>
+                      {sources(f.sources)}
+                    </article>
+                  ))}
+                </details>
+                <p className="panel-note">
+                  Consumer calls need appropriate confirmation before clinical
+                  decisions. Unreported variants are not assumed to be absent.
+                  No polygenic risk score, rare-disease or diagnostic
+                  interpretation is performed.
+                </p>
+              </>
+            )}
+            {tab === "labs" && (
+              <>
+                {requestedLabResult&&![...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs].some(row=>row.id===requestedLabResult)&&<p role="alert">The requested laboratory result is not available in your current records.</p>}
+                <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={rowId=>setLabSourceToOpen({rowId})}/>
+                <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
+                <LabUnitReview labs={r.pendingLabs || []} />
+                <section className="bloom-panel">
+                  <h2 id="biology-bloodwork-results">Latest results</h2>
+                  <Link className="text-link" href="/progress?view=biology">Review dated biology trends</Link>
+                  {r.labs.length ? (
+                    r.labs.map((l) => (
+                      <article className="precision-observation" key={l.id}>
+                        <div>
+                          <h3>
+                            {
+                              markerDefinitions.find((m) => m.id === l.marker)!
+                                .name
+                            }
+                          </h3>
+                          <p>
+                            {l.value} {l.unit} · {l.flag}
+                            {l.stale
+                              ? " · Older than six months; excluded from current ranking"
+                              : ""}
+                          </p>
+                          <p className="panel-note">
+                            {labEnteredContext(l)?.enteredDate?`${labEnteredContext(l)!.enteredDate}${labEnteredContext(l)!.enteredTime?` ${labEnteredContext(l)!.enteredTime}`:" · collection time not supplied"}`:new Date(l.measuredAt).toLocaleString()} ·{" "}
+                            {l.laboratory} · {l.method} · fasting {l.fasting}
+                          </p>
+                          <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport} correction={l.dateCorrection}/></details>
+                        </div>
+                        <Button variant="outline" onClick={()=>user&&setLabToCorrect({actor:user.id,source:l})}>Correct result date</Button>
+                        <Button
+                          variant="outline"
+                          onClick={() =>
+                            remove({
+                              id: l.id,
+                              kind: "lab",
+                              payload: l,
+                              createdAt: l.measuredAt,
+                            })
+                          }
+                        >
+                          Delete result
+                        </Button>
+                      </article>
+                    ))
+                  ) : (
+                    <p>
+                      {r.sourceOnlyLabs?.length||r.pendingLabs?.length?"No results ready for interpretation; review the recorded source rows below.":"No bloodwork recorded. Genetics and microbiome data are optional too."}
+                    </p>
+                  )}
+                  <LabSourceHistory focusRequest={labSourceToOpen} trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+
+                </section>
+                <section className="bloom-panel">
+                  <h2>Microbiome evidence</h2>
+                  <p>{r.microbiome.note}</p>
+                  {r.microbiome.geneticPathwayLinks.map((l) => (
+                    <p key={l.rsid}>
+                      <strong>
+                        {l.rsid} · {l.pathway}
+                      </strong>
+                      <br />
+                      {l.link}
+                      <br />
+                      <span className="panel-note">{l.evidence}</span>
+                    </p>
+                  ))}
+                  <label className="block">
+                    Structured microbiome report
+                    <select
+                      className="bloom-input w-full"
+                      value={sampleId}
+                      onChange={(e) => setSampleId(e.target.value)}
+                    >
+                      <option value="">Latest supported report</option>
+                      {r.availableReports.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name} · {reportDateText({testDate:s.date,dateContext:s.dateContext})}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  {r.microbiome.report ? (
+                    <>
+                      <p>
+                        Report <span className="break-all">{r.microbiome.report.id}</span> ·{" "}
+                        {reportDateText({testDate:r.microbiome.report.date,dateContext:r.microbiome.report.dateContext})}
+                      </p>
+                      {r.microbiome.report.taxa.map((t) => (
+                        <p key={t.name}>
+                          {t.name}: {t.abundance}% — reported abundance
+                        </p>
+                      ))}
+                      {r.microbiome.report.predictions.map((p, i) => (
+                        <p key={i}>
+                          {p.name}: {p.value ?? "unavailable"} — experimental
+                          model index, not a measured concentration
+                        </p>
+                      ))}
+                    </>
+                  ) : (
+                    <p>No supported structured abundance report linked yet.</p>
+                  )}
+                  <Link className="text-link" href="/upload">
+                    Import microbiome report
+                  </Link>
+                </section>
+                <form
+                  className="bloom-panel space-y-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    try {
+                      const d = new FormData(e.currentTarget);
+                      send("/api/precision/records", {
+                        kind: "metabolite",
+                        payload: {
+                          name: d.get("name"),
+                          value: number(d, "value"),
+                          unit: d.get("unit"),
+                          specimen: d.get("specimen"),
+                          measuredAt: date(d, "measuredAt"),
+                          laboratory: String(
+                            d.get("laboratory") || "Not supplied",
+                          ),
+                          method: String(d.get("method") || "Not supplied"),
+                        },
+                      });
+                    } catch (err) {
+                      formError(err);
+                    }
+                  }}
+                >
+                  <h2>Add a measured metabolite</h2>
+                  <p className="panel-note">
+                    Only use an actual laboratory measurement. Predicted values
+                    belong in the model results above.
+                  </p>
+                  <div className="precision-grid">
+                    <label>
+                      Molecule
+                      <select className="bloom-input w-full" name="name">
+                        {[
+                          "butyrate",
+                          "acetate",
+                          "propionate",
+                          "lactate",
+                          "urolithin_a",
+                          "isoalloLCA",
+                        ].map((n) => (
+                          <option key={n}>{n}</option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      Value
+                      <input
+                        className="bloom-input w-full"
+                        name="value"
+                        type="number"
+                        min="0"
+                        step="any"
+                        required
+                      />
+                    </label>
+                    <label>
+                      Unit as reported
+                      <input
+                        className="bloom-input w-full"
+                        name="unit"
+                        required
+                        maxLength={200}
+                      />
+                    </label>
+                    <label>
+                      Specimen
+                      <select className="bloom-input w-full" name="specimen">
+                        <option>stool</option>
+                        <option>blood</option>
+                        <option>urine</option>
+                      </select>
+                    </label>
+                    <label>
+                      Measured at
+                      <input
+                        className="bloom-input w-full"
+                        name="measuredAt"
+                        type="datetime-local"
+                        defaultValue={localNow()}
+                        required
+                      />
+                    </label>
+                    <label>
+                      Laboratory
+                      <input
+                        className="bloom-input w-full"
+                        name="laboratory"
+                        required
+                        maxLength={200}
+                      />
+                    </label>
+                    <label>
+                      Method
+                      <input
+                        className="bloom-input w-full"
+                        name="method"
+                        required
+                        maxLength={200}
+                      />
+                    </label>
+                  </div>
+                  <Button disabled={mutation.isPending}>
+                    Save measured metabolite
+                  </Button>
+                </form>
+                <section className="bloom-panel">
+                  <h2>Entered metabolite measurements</h2>
+                  {r.microbiome.measuredMetabolites.length ? (
+                    r.microbiome.measuredMetabolites.map((m) => (
+                      <div className="precision-observation" key={m.id}>
+                        <p>
+                          {m.name}: {m.value} {m.unit} · {m.specimen} ·{" "}
+                          {m.measuredAt.slice(0, 10)}
+                          <br />
+                          <span className="panel-note">
+                            {m.provenance} · {m.laboratory} · {m.method}
+                          </span>
+                        </p>
+                        <Button
+                          variant="outline"
+                          onClick={() =>
+                            remove({
+                              id: m.id,
+                              kind: "metabolite",
+                              payload: m,
+                              createdAt: m.measuredAt,
+                            })
+                          }
+                        >
+                          Delete measurement
+                        </Button>
+                      </div>
+                    ))
+                  ) : (
+                    <p>
+                      No measured metabolites recorded. Taxa cannot fill in
+                      these values.
+                    </p>
+                  )}
+                </section>
+              </>
+            )}
+            {tab === "recommendations" && (
+              <>
+                <section className="bloom-panel">
+                  <h2>How your priorities are determined</h2>
+                  <p>{r.rankingNote}</p>
+                  <p className="panel-note">
+                    {r.personalReasons.join(" · ") ||
+                      "No current cardiometabolic laboratory flags. Saved goals and eligible pathway evidence can still inform meal choices."}
+                  </p>
+                  {r.reviewFlags.map((f, i) => (
+                    <p key={i}>{f}</p>
+                  ))}
+                  {r.safetyBlocks.map((f, i) => (
+                    <p className="panel-note" key={i}>
+                      {f}
+                    </p>
+                  ))}
+                  <Link className="text-link" href="/meal-planner">
+                    Edit dietary restrictions and preferences
+                  </Link>
+                </section>
+                <section className="bloom-panel">
+                  <h2>Ranked foods</h2>
+                  {r.foods.length ? (
+                    r.foods.map((f, i) => (
+                      <details className="precision-observation" key={f.id}>
+                        <summary>
+                          {i + 1}. {f.name} · ranked for your saved priorities
+                        </summary>
+                        <p>{f.nutrients.join(" · ")}</p>
+                        <ul>
+                          {f.reasons.map((reason, i) => (
+                            <li key={i}>{reason}</li>
+                          ))}
+                        </ul>
+                        <p className="panel-note">
+                          {f.expectedBenefit} {f.portion}
+                        </p>
+                        {f.pathways.map((p) => (
+                          <p key={p.id}>
+                            {p.substrate} → {p.organisms.join(", ")} →{" "}
+                            {p.molecules.join(", ")} (potential pathway)
+                          </p>
+                        ))}
+                        {sources(f.sourceIds)}
+                      </details>
+                    ))
+                  ) : (
+                    <p>
+                      Confirm your adult health context and add supported goals
+                      or recent measurements.
+                    </p>
+                  )}
+                </section>
+                {mode === "athlete" ? <Link className="hero-button" href="/athlete/fueling">Open athlete fueling & targets</Link> : <TodayPlanner />}
+                <section className="bloom-panel">
+                  <h2>Complete meals for your priorities</h2>
+                  <p className="panel-note">
+                    Meals are ordered by matching evidence and your saved
+                    priorities. Recent lab findings carry more weight than
+                    general goals or common genetic variants. Ranking is not a
+                    benefit percentage.
+                  </p>
+                  {r.recommendations.map((meal, i) => {
+                    const prep = recipePreparation(meal);
+                    return (
+                      <article
+                        className="precision-observation block"
+                        key={meal.id}
+                      >
+                        <h3>
+                          {i + 1}. {meal.name}
+                        </h3>
+                        <p>
+                          About {prep.minutes} minutes; additional chilling time
+                          where listed.
+                        </p>
+                        <details>
+                          <summary>Ingredients, recipe & evidence</summary>
+                          <h4>Shopping & ingredients</h4>
+                          <ul>
+                            {prep.shopping.map((i) => (
+                              <li key={i.name}>
+                                {i.estimated ? "Approximately " : ""}
+                                {i.grams} g {i.name}
+                              </li>
+                            ))}
+                          </ul>
+                          <p className="panel-note">
+                            Prepared portions for nutrition:{" "}
+                            {prep.shopping
+                              .map((i) => i.nutritionBasis)
+                              .join("; ")}
+                            .
+                          </p>
+                          <ol>
+                            {prep.instructions.map((s, i) => (
+                              <li key={i}>{s}</li>
+                            ))}
+                            {meal.steps
+                              .filter(
+                                (s) =>
+                                  !/^Use safely|^Use the named|^Serve cooked|^Combine with cooked/i.test(
+                                    s,
+                                  ),
+                              )
+                              .map((s, i) => (
+                                <li key={"assembly" + i}>{s}</li>
+                              ))}
+                          </ol>
+                          <p className="panel-note">{prep.note}</p>
+                          <a
+                            className="text-link"
+                            href={prep.source}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Cooking safety guidance
+                          </a>
+                          <p>{meal.rationale}</p>
+                          {sources(meal.sourceIds)}
+                        </details>
+                        <details>
+                          <summary>Why this meal suits you</summary>
+                          <ul>
+                            {meal.reasons.map((reason, i) => (
+                              <li key={i}>{reason}</li>
+                            ))}
+                          </ul>
+                          <p>{meal.nutrientContributions.join(" · ")}</p>
+                          {meal.tolerance && <p>{meal.tolerance}</p>}
+                          <p className="panel-note">
+                            {meal.expectedBenefit} These nutrient contributions
+                            are qualitative; use the rest-of-day planner for
+                            estimated quantities.
+                          </p>
+                          {meal.reportedTaxa.length > 0 && (
+                            <p>
+                              Reported taxa overlapping this research pathway:{" "}
+                              {meal.reportedTaxa.map((t) => t.name).join(", ")}.
+                              Presence alone does not establish function or
+                              improve ranking.
+                            </p>
+                          )}
+                        </details>
+                        <Link
+                          className="text-link"
+                          href={"/log-meal?recipe=" + meal.id}
+                        >
+                          Use this meal in my journal
+                        </Link>
+                      </article>
+                    );
+                  })}
+                </section>
+                <section className="bloom-panel">
+                  <h2>Supplement assessments</h2>
+                  {r.supplements.length ? (
+                    r.supplements.map((s) => (
+                      <article
+                        className="precision-observation block"
+                        key={s.id}
+                      >
+                        <h3>{s.name}</h3>
+                        <p>{s.reason}</p>
+                        <p>
+                          <strong>{s.status}</strong> · No dose prescribed
+                        </p>
+                        <ul>
+                          {s.checks.map((c, i) => (
+                            <li key={i}>{c}</li>
+                          ))}
+                        </ul>
+                        {sources(s.sources)}
+                      </article>
+                    ))
+                  ) : (
+                    <p>
+                      No supplement need established from the current supported
+                      inputs. A variant alone never creates a supplement
+                      recommendation.
+                    </p>
+                  )}
+                </section>
+                <form
+                  className="bloom-panel space-y-3"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    send("/api/precision/plans", {
+                      name: String(new FormData(e.currentTarget).get("name")),
+                      ...(sampleId ? { sampleId } : {}),
+                    });
+                  }}
+                >
+                  <h2>Save a plan to evaluate</h2>
+                  <label className="block">
+                    Plan name
+                    <input
+                      className="bloom-input w-full"
+                      name="name"
+                      required
+                      maxLength={100}
+                      placeholder="My first nutrition plan"
+                    />
+                  </label>
+                  <Button
+                    disabled={mutation.isPending || !r.recommendations.length}
+                  >
+                    Save evidence-linked plan
+                  </Button>
+                  <p className="panel-note">
+                    This saves the current ranking, evidence version and
+                    supporting record references. It does not automatically log
+                    meals or claim the plan is a clinical prescription.
+                  </p>
+                </form>
+              </>
+            )}
+            {tab === "progress" && (
+              <>
+                <section className="bloom-panel space-y-3">
+                  <h2>Body measurement units</h2>
+                  <p className="panel-note">These preferences are shared with Profile, Athlete and the separate Progress dashboard. Existing readings retain their original stored units.</p>
+                  <div className="precision-grid">
+                    <label>Body weight unit
+                      <select aria-label="Biology progress weight unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.bodyWeight} onChange={e=>changeCheckinUnit("bodyWeight",e.target.value)}>
+                        <option value="kg">kg</option><option value="lb">lb</option>
+                      </select>
+                    </label>
+                    <label>Waist/circumference unit
+                      <select aria-label="Biology progress waist unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.circumference} onChange={e=>changeCheckinUnit("circumference",e.target.value)}>
+                        <option value="cm">cm</option><option value="in">inches</option>
+                      </select>
+                    </label>
+                    <label>Height unit
+                      <select aria-label="Biology progress height unit" className="bloom-input w-full" disabled={unitsSaving} value={settings.displayUnits.height} onChange={e=>changeCheckinUnit("height",e.target.value)}>
+                        <option value="cm">cm</option><option value="m">m</option><option value="ft-in">feet + inches</option>
+                      </select>
+                    </label>
+                  </div>
+                  {unitsSaving&&<p role="status">Saving unit preferences…</p>}
+                  {unitsError&&<p role="alert">{unitsError}</p>}
+                  {draftError&&<p role="alert">{draftError}</p>}
+                  <p className="panel-note">Change units once here. Completed drafts convert after the preference saves; unfinished drafts retain their labelled entry units. Original laboratory units are never changed.</p>
+                  <Link href="/profile#measurement-units" className="text-link">Central unit preferences & current profile measurements</Link>
+                </section>
+                <form
+                  className="bloom-panel space-y-4"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    try {
+                      if(unfinished)throw Error("Finish or clear the weight and waist entries before saving.");
+                      const d = new FormData(e.currentTarget);
+                      send("/api/precision/records", {
+                        kind: "checkin",
+                        payload: {
+                          measuredAt: date(d, "measuredAt"),
+                          weightKg: parsedWeight.kind==="valid"?parsedWeight.canonical:null,
+                          bodyFatPercent: number(d, "bodyFatPercent"),
+                          waistCm: parsedWaist.kind==="valid"?parsedWaist.canonical:null,
+                          bloating: number(d, "bloating"),
+                          energy: number(d, "energy"),
+                          adherencePercent: number(d, "adherencePercent"),
+                          planId: d.get("planId") || null,
+                          notes: String(d.get("notes") || ""),
+                        },
+                      });
+                    } catch (err) {
+                      formError(err);
+                    }
+                  }}
+                >
+                  <h2>Record your response</h2>
+                  <div className="space-y-2">
+                    <p className="panel-note">You can optionally reuse the current weight from your saved Profile. Check that it matches your actual measurement for this date before saving; Bloom does not assume a Profile value was measured today.</p>
+                    <Button type="button" variant="outline"
+                      disabled={!currentProfile||currentProfile.weightKg==null}
+                      onClick={()=>{
+                        const kg=currentProfile?.weightKg;
+                        if(kg!=null&&Number.isFinite(kg)&&kg>0){
+                          setWeightEntry(formatMassEntry(kg,weightEntry.unit));
+                          setStatus("Profile weight filled in. Confirm today's actual measurement before saving.");
+                        }
+                      }}>Use saved Profile weight</Button>
+                    {savedProfile.isError&&<p role="alert">Profile weight unavailable. Enter this check-in manually.</p>}
+                    {savedProfile.fetchStatus!=="idle"&&<p role="status">Checking the latest Profile weight…</p>}
+                    {currentProfile&&currentProfile.weightKg==null&&<p className="panel-note">No weight saved in Profile yet.</p>}
+                  </div>
+                  <label className="block">
+                    Related plan
+                    <select className="bloom-input w-full" name="planId">
+                      <option value="">General check-in</option>
+                      {r.plans.map((p) => (
+                        <option value={p.id} key={p.id}>
+                          {(p.payload as any).name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="precision-grid">
+                    <label>
+                      Measured at
+                      <input
+                        name="measuredAt"
+                        className="bloom-input w-full"
+                        type="datetime-local"
+                        defaultValue={localNow()}
+                        required
+                      />
+                    </label>
+                    {[
+                      ["weightKg", `Weight (${weightEntry.unit})`, weightEntry.unit==="lb"?1102:500],
+                      ["bodyFatPercent", "Body fat (%)", 75],
+                      ["waistCm", `Waist (${waistEntry.unit})`, waistEntry.unit==="in"?118.11:300],
+                      ["bloating", "Bloating (0–10)", 10],
+                      ["energy", "Energy (0–10)", 10],
+                      ["adherencePercent", "Self-reported adherence (%)", 100],
+                    ].map(([name, label, max]) => (
+                      <label key={name}>
+                        {label}
+                        <input
+                          name={String(name)}
+                          className="bloom-input w-full"
+                          type={name==="weightKg"||name==="waistCm"?"text":"number"}
+                          inputMode="decimal"
+                          {...(name==="weightKg"?{value:weightEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWeightEntry({...weightEntry,value:e.target.value});}}:name==="waistCm"?{value:waistEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWaistEntry({...waistEntry,value:e.target.value});}}:{})}
+                          min={
+                            name === "weightKg" ||
+                            name === "bodyFatPercent" ||
+                            name === "waistCm"
+                              ? 0.1
+                              : 0
+                          }
+                          max={max}
+                          step={
+                            name === "bloating" || name === "energy" ? 1 : "any"
+                          }
+                        />
+                      </label>
+                    ))}
+                  </div>
+                  <label className="block">
+                    Notes
+                    <textarea
+                      className="bloom-input w-full"
+                      name="notes"
+                      maxLength={2000}
+                    />
+                  </label>
+                  <p className="panel-note">
+                    Leave unmeasured fields blank. Zero is a recorded value, not
+                    a substitute for missing information.
+                  </p>
+                  {unfinished&&<p role="alert">Finish or clear the weight and waist entries before saving.</p>}
+                  <Button disabled={mutation.isPending||unfinished||unitsSaving}>Save check-in</Button>
+                </form>
+                <section className="bloom-panel">
+                  <h2>Repeatable biomarkers</h2>
+                  {r.trends.length ? (
+                    r.trends.map((t) => (
+                      <article
+                        className="precision-observation block"
+                        key={t.marker}
+                      >
+                        <h3>{t.name}</h3>
+                        <p>
+                          {t.points
+                            .map(
+                              (p) =>
+                                `${labDateText(p.date,p.sourceReport,p.dateCorrection)}: ${display(p.value)} ${p.unit}`,
+                            )
+                            .join(" → ")}
+                        </p>
+                        {t.change !== null && (
+                          <p>
+                            Observed first-to-latest change: {display(t.change)}{" "}
+                            {t.points[0].unit}
+                          </p>
+                        )}
+                        <p className="panel-note">{t.note}</p>
+                      </article>
+                    ))
+                  ) : (
+                    <p>
+                      Add baseline and repeat laboratory results to assess
+                      observed changes.
+                    </p>
+                  )}
+                </section>
+                <section className="bloom-panel">
+                  <h2>Saved plans & observations</h2>
+                  {r.plans.map((p) => (
+                    <details className="precision-observation block" key={p.id}>
+                      <summary>
+                        {(p.payload as any).name} ·{" "}
+                        {new Date(p.createdAt).toLocaleDateString()}
+                      </summary>
+                      <p>Evidence version: {(p.payload as any).version}</p>
+                      {(p.payload as any).historicalOutput?.withheld ? <p>{(p.payload as any).type === "weekly-plan" ? "Historical genotype-influenced meal suggestions are withheld. Original targets and recorded context remain available; rebuild in Meal plans before using current choices." : "Historical genotype-influenced food recommendations are withheld. Recorded goals and observations remain available; review current recommendations using current inputs."}</p> : <p className="panel-note">Recorded recommendations describe the plan at save time. Current health, preferences and sources have not been rechecked.</p>}
+                      <p>
+                        {r.checkins.filter((c) => c.planId === p.id).length}{" "}
+                        linked check-ins
+                      </p>
+                      <ul>
+                        {((p.payload as any).recommendations || []).map(
+                          (m: any) => (
+                            <li key={m.id}>{m.name}</li>
+                          ),
+                        )}
+                      </ul>
+                      <Button variant="outline" onClick={() => remove(p)}>
+                        Delete plan
+                      </Button>
+                    </details>
+                  ))}
+                  {requestedObservation&&!r.checkins.some(row=>row.id===requestedObservation)&&<p role="alert">The requested check-in is not available in your current records.</p>}
+                  {r.checkins.map((c) => (
+                    <article className="precision-observation" id={`precision-observation-${c.id}`} tabIndex={-1} key={c.id}>
+                      <div>
+                        <h3>{new Date(c.measuredAt).toLocaleDateString()}</h3>
+                        <p>
+                          {[
+                            ["Weight", c.weightKg===null?null:Number(kgToDisplay(c.weightKg,settings.displayUnits.bodyWeight).toFixed(2)), settings.displayUnits.bodyWeight],
+                            ["Body fat", c.bodyFatPercent, "%"],
+                            ["Waist", c.waistCm===null?null:Number(quantityFromCanonical("circumference",c.waistCm,settings.displayUnits.circumference).toFixed(2)), settings.displayUnits.circumference],
+                            ["Bloating", c.bloating, "/10"],
+                            ["Energy", c.energy, "/10"],
+                            ["Adherence", c.adherencePercent, "%"],
+                          ]
+                            .filter(([, value]) => value !== null)
+                            .map(
+                              ([name, value, unit]) =>
+                                `${name}: ${value}${unit}`,
+                            )
+                            .join(" · ")}
+                        </p>
+                        <p>{c.notes}</p>
+                      </div>
+                      <Button
+                        variant="outline"
+                        onClick={() =>
+                          remove({
+                            id: c.id,
+                            kind: "checkin",
+                            payload: c,
+                            createdAt: c.measuredAt,
+                          })
+                        }
+                      >
+                        Delete check-in
+                      </Button>
+                    </article>
+                  ))}
+                  {!r.plans.length && !r.checkins.length && (
+                    <p>
+                      Save a plan and record observations to start tracking.
+                    </p>
+                  )}
+                  <p className="panel-note">
+                    Change over time does not establish that food, a supplement,
+                    a variant or a microbe caused it. Review medication,
+                    exercise, illness and measurement changes too.
+                  </p>
+                </section>
+                <section className="bloom-panel">
+                  <h2>Recorded nutrition · past {r.intake.days} days</h2>
+                  <p>
+                    {r.intake.mealsLogged} meals logged ·{" "}
+                    {r.journalSymptoms.length} meal symptom records
+                  </p>
+                  <p className="panel-note">{r.intake.note}</p>
+                  <details>
+                    <summary>Available macro & micronutrient estimates</summary>
+                    {r.intake.nutrients.map((n) => (
+                      <p key={n.key}>
+                        {n.name}: {display(n.knownTotal)} {n.unit} known total ·{" "}
+                        {n.completeMeals}/{r.intake.mealsLogged} meals with
+                        complete estimates
+                      </p>
+                    ))}
+                  </details>
+                  <Link className="text-link" href="/nutrition">
+                    Open full food journal
+                  </Link>
+                </section>
+              </>
+            )}
+          </fieldset>
+        </div>
+      )}
+    </main>
+  );
+}

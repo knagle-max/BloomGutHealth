@@ -1,0 +1,30 @@
+import { abundanceSchema } from "../shared/report-import";
+const limitation="Relative organism percentages do not establish gene activity, metabolite concentrations, personal health scores, supplement doses or a biologically optimal range.";
+/** Defense in depth: even an older processing service cannot reintroduce prototype effects. */
+export function reportedAbundanceAnalysis(sampleId:string,reported:unknown){
+ const percentages=abundanceSchema.parse(reported);
+ const positive=Object.values(percentages).filter(v=>v>0),total=positive.reduce((a,b)=>a+b,0);
+ const diversity=total>0?Math.max(0,-positive.reduce((n,v)=>n+(v/total)*Math.log(v/total),0)):null;
+ return {sample_id:sampleId,status:"completed",model_version:"reported-abundance-v3",interpretation_status:"reported_composition_only",confidence:null,diversity_index:diversity,
+  bacterial_composition:Object.entries(percentages).map(([bacterial_name,abundance])=>({bacterial_name,abundance,taxonomy_level:"reported taxon",genome_data:{gene_count:null,metabolic_pathways:[]}})),
+  metabolites:[] as any[],health_impacts:[],recommendations:[] as any[],cohort_comparisons:{},limitations:[limitation,"Shannon diversity describes the supplied relative composition; a higher value does not establish better health."]};
+}
+/** Retain historical metadata without returning unsupported numerical effect payloads. */
+export function historicalAnalysisMetadata(analyses:any[]){return analyses.map(a=>({id:a.id,sampleId:a.sampleId,analysisType:a.analysisType,modelVersion:a.modelVersion,createdAt:a.createdAt??a.analyzedAt??null,confidence:null,results:null,interpretationStatus:"historical_model_outputs_withheld",limitation}));}
+
+/** Historical original file paths are server metadata, never browser API fields. */
+export function publicSample<T extends { rawDataPath?: unknown }>(sample:T) {
+  const {rawDataPath: _privatePath, ...visible}=sample;
+  const data=(visible as {structuredData?:any}).structuredData;
+  if(data&&typeof data==='object'&&data.importInfo&&typeof data.importInfo==='object'&&Object.hasOwn(data.importInfo,'saveReceipt')){
+    const{saveReceipt:_internal,...info}=data.importInfo;
+    return {...visible,structuredData:{...data,importInfo:info}};
+  }
+  return visible;
+}
+
+/** Generated legacy concentrations/effects/advice are not original observations.
+ * Export their existence/lineage without a second path to incident-disabled outputs. */
+export function historicalDerivedMetadata(records:{id:string;sampleId?:string;metaboliteId?:string;createdAt?:Date|null}[],recordType:'metabolite-prediction'|'health-impact'|'recommendation') {
+ return records.map(record=>({id:record.id,sampleId:record.sampleId??null,metaboliteId:record.metaboliteId??null,createdAt:record.createdAt??null,recordType,interpretationStatus:'historical_model_outputs_withheld',limitation}));
+}

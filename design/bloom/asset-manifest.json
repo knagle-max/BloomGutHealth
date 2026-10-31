@@ -1,0 +1,1295 @@
+{
+  "created": "2026-10-25",
+  "status": "staging source archive; NOT verified in GitHub",
+  "packs": [
+    {
+      "name": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "bbb6674083cfd066c189230732294905960536cf6790bb4e7c98f475aa709d03",
+      "bytes": 11431
+    },
+    {
+      "name": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "ee3dfd294cf23e4036edf1ba6b00eb9ff72f6951ca747e1a463b25576bf9b8a9",
+      "bytes": 17714
+    },
+    {
+      "name": "Bloom_Asset_Audit_Addendum_2026-10-23.zip",
+      "sha256": "9dc5c18749b7468543d1b033f2a2343cbc04587e11c4a63bcbe1fd55843b6b05",
+      "bytes": 4988
+    },
+    {
+      "name": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "f87269c0e15bb5048cf02f158b51664c46b8c4eed7efbed0978226bdf238fccc",
+      "bytes": 6952
+    },
+    {
+      "name": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "851e4bdbb212cf5cd8ef7c0470571288237d793f93873c0fa500ef50d848aded",
+      "bytes": 9058
+    },
+    {
+      "name": "Bloom_Coherent_Experience_2026-10-24.zip",
+      "sha256": "c532c447d2d97da0f9f12bcab71c2adac45c2aee8add3ac8c71d5c32984b16df",
+      "bytes": 5200
+    },
+    {
+      "name": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "1e6bc67fcd8f6a2b972e2a28b8152a182490ec771f52c637b74750d84e7819f8",
+      "bytes": 7750
+    },
+    {
+      "name": "Bloom_Layout_Copy_Correction_2026-10-24.zip",
+      "sha256": "3f618cc3fecbeaf2f087b0d408e4def06f421ef69ce079a2b9dcc42a6239ec1a",
+      "bytes": 6282
+    },
+    {
+      "name": "Bloom_Mobile_Screenshot_Fix_2026-10-24.zip",
+      "sha256": "63d145e49f3c0fe6ca6b5da65c95d78aa503a24e0ebb1401e852a7ba2fb8211e",
+      "bytes": 3803
+    },
+    {
+      "name": "Bloom_Photo_Logging_Branding_UX_2026-10-23.zip",
+      "sha256": "7e7879a12a189ccdd72888d83da924a095f1838f55c7628db7825af96f8d79d3",
+      "bytes": 7054
+    },
+    {
+      "name": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "aa290a2f6a986c3586f6868b1d5f214bbf476129c14522b251a56030e44045cc",
+      "bytes": 8659
+    },
+    {
+      "name": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "4ad0f4e809c93fa9f125c3c23fe6a7e4c794ad2539b6e7a0d7ebe8f55717f00e",
+      "bytes": 15061
+    },
+    {
+      "name": "Bloom_Scientific_Depth_UX_Kit_2026-10-25.zip",
+      "sha256": "e94dd1b3fbd6ae758ac78ab850406bdd4c02fdcec5e6e2704eff054b7d578518",
+      "bytes": 6044
+    },
+    {
+      "name": "Bloom_Today_Experience_Redesign_2026-10-25.zip",
+      "sha256": "767cd99a4629abcee7cde45387e2e06cfd03b493d6462df9c60a6144f01ef7d9",
+      "bytes": 7399
+    },
+    {
+      "name": "Bloom_Today_P0_Polish_2026-10-25.zip",
+      "sha256": "158c812d99b9683ff4169c515f578e1ecac44f2303499280e1aa697245d43ada",
+      "bytes": 6546
+    },
+    {
+      "name": "Bloom_UT_Simplicity_UX_Review_2026-10-23.zip",
+      "sha256": "5a02aa35824fdfa685475aba08ce4442bbf4214f694f186afa176f4bcc4ca52a",
+      "bytes": 5873
+    },
+    {
+      "name": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "78045dd1430f562cfd1b9693ffe1767d3dbeb0e34623610239f289490d8ddda1",
+      "bytes": 11971
+    },
+    {
+      "name": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "a4aa28a805c4089eee44ebe33f0c0d0951de3d05e055f8ffa6112a47aca4a9a4",
+      "bytes": 9633
+    },
+    {
+      "name": "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip",
+      "sha256": "fd4ffdef8a61d5c466b69c469255af6072217e94d1cfddcae621e91c82a19629",
+      "bytes": 7856
+    },
+    {
+      "name": "Bloom_Visual_Phases23_Addendum_2026-10-24.zip",
+      "sha256": "f0cb9c949e6eb796294e0a29674dcff8a68277a38dc5b5430706df63016d7cfd",
+      "bytes": 5792
+    },
+    {
+      "name": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "593f567c42238ee93c015494c5fede3d8bbadc8f2f167d9f9b53f59ffb6f26a4",
+      "bytes": 14090
+    },
+    {
+      "name": "Bloom_v06_Branding_UX_Research_Package_2026-10-23.zip",
+      "sha256": "c2ff76e1ae5e048876779fb74655997fda7222336a79582eb7d4f785f3ef2ae5",
+      "bytes": 6371
+    },
+    {
+      "name": "bloom_brand_delivery_v1.zip",
+      "sha256": "324a5e0d5412c1ffc0cb167e1871ac41f8998504243031166294906dfa87c648",
+      "bytes": 1624239
+    },
+    {
+      "name": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "d69ea7927eea6a57081556cd56c7f3424b12a43f1f5cc748360f2a6a85894c37",
+      "bytes": 3880120
+    }
+  ],
+  "files": [
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/icon-photo.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "385f4a6f4720e9caebc390f56ee646b78a1ce45cea57517f3825762cf1c637a8",
+      "bytes": 392
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/add-food-mobile-dark.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "36c231c29b8cb7023ecf2ebdb939c5c4480983cf4e99d71e852209e696bfe63e",
+      "bytes": 4581
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/add-food-desktop-dark.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "7f37b7f5c2441f7c50ac95ad95451e41dc26870b7dd3631d18e27e7082e1e72e",
+      "bytes": 4592
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/icon-restaurants.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "fb425aad75822b8b7eace849b5bdc76f986a01488b32f47b227aa78a2382b02b",
+      "bytes": 356
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/AddFoodEntry.tsx",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "48a1bf0490aeb3e4115985ef4825b58cde9352483ae1c60e27ed7d601df41c25",
+      "bytes": 2518
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/add-food-entry.css",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "c841144f151434a95b9851d0cfcd4c76901340340e45cc56284584aa416ad564",
+      "bytes": 2088
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/add-food-mobile-light.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "c9d4f2f2af7b910439e63df549f2796d5748a8dff0d672e92c85e55b83046f82",
+      "bytes": 4581
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/add-food-desktop-light.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "5e88ece372090a5c83a733ec452ea7a8de5a81f0579875fc2a46a50a058395ca",
+      "bytes": 4592
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/icon-describe.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "e2c09d82740c7ee3f38317d2a67d3371c990d027a29255ab055bfd84166b0e85",
+      "bytes": 339
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/icon-foods.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "193ff7c1a21d665e024f95c4124f018b928c05c91fd6310b19cc2410d29b82fb",
+      "bytes": 343
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "e49feac09128f3b3d1c0e87a1aff9be719e43e83359e78cb828d4ca7299424cf",
+      "bytes": 6140
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Add_Food_Five_Ways_Kit_2026-10-23/icon-barcode.svg",
+      "source_pack": "Bloom_Add_Food_Five_Ways_Kit_2026-10-23.zip",
+      "sha256": "b228019746b696b854202b213f732e5e4038ed46ba2c010289f34879672848eb",
+      "bytes": 336
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/ARCHITECT_HANDOFF.md",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "c500c91e2a5d009f741f659868e73d7c13bd4821a119838e3e5571067bf8cdff",
+      "bytes": 7380
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/SCREEN_INVENTORY.csv",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "f3a98757166cf6e1796e587402d70a1230c31f098d0e20f6fb0c807c39e4c699",
+      "bytes": 1413
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/add_food.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "da3112cec7c33bad9f28afd97254f43140da600db95474a2c673c999faa8c365",
+      "bytes": 3115
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/athlete_home.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "2698045b97bedee39b8b3d014d565bb7aa1d7e670ad9fa97b59283e9026d014c",
+      "bytes": 3099
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/athlete_plan.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "24af5dc952c013199d7dfe7d11f1e1be18a99b0f976bb2b6562002fe172323c9",
+      "bytes": 3107
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/coach_home.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "41a7531e58c96affe7f97dfd9a4b07e69639a397aa6a728e93b5fb1a46ec37fb",
+      "bytes": 3120
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/connections.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "66f106b95c08dc1f730a00d25224eee08904f35bd9e508d6ab50cfecf9291ce6",
+      "bytes": 3110
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/design_system.css",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "63aa04a03961677d94b03a34eff140477a4aed6f697d85b541484fa2b9c19620",
+      "bytes": 1194
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/explore_science.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "5747f2425968df6e3a90f1027489ac57512bad61078c08af52f38c5dbdc4dbd3",
+      "bytes": 3109
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/food_review.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "fae6ee35ed5b3711eb67394baa7b7a1d9961cc144810a9682db5cf3d5e89c812",
+      "bytes": 3125
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/goals.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "89d0591ea3c9d6ea59671c03737eac337e95b60e97bba75c40b2dd371b496890",
+      "bytes": 3099
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/my_biology.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "87e6bbc441ce257ad311eea7e90cf0f7164f7457d6e52224623dbc384a7ae086",
+      "bytes": 3094
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/progress.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "0bd01080fadd9bbc808e87fd196901d7e469c445fc15341be8e3b4e77ed24c11",
+      "bytes": 3107
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/research.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "838f6641dc12318746dc6c3d101b79b4cf9572e9e3a4d98d9985188b9beff39d",
+      "bytes": 3120
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/settings.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "b7813645f4762f94f32cfab26c46d82afd3deeb14a632c45f0fb5e08d9515a02",
+      "bytes": 3094
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/today.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "72eb9113700380c8666f537bbacc4955af7e18ea6b2971669a17b51dfc65ba1d",
+      "bytes": 3072
+    },
+    {
+      "path": "design/bloom/archives/Bloom_App_Wide_Experience_Redesign_2026-10-25/workout_review.svg",
+      "source_pack": "Bloom_App_Wide_Experience_Redesign_2026-10-25.zip",
+      "sha256": "433144232d84a99b10ad2b23f07baa1f21f85abed6117e02a509b346f344d339",
+      "bytes": 3111
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Asset_Audit_Addendum_2026-10-23/Bloom_Asset_Completeness_2026-10-23/BRANDED_FOOD_SEARCH_FALLBACK.svg",
+      "source_pack": "Bloom_Asset_Audit_Addendum_2026-10-23.zip",
+      "sha256": "4d34c00e6e064cf63c4be5e5e4976dbcdb53bf7b17ef18ca1283972e38ac85b0",
+      "bytes": 2622
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Asset_Audit_Addendum_2026-10-23/Bloom_Asset_Completeness_2026-10-23/RESEARCH_PARTICIPATION_CONCEPT.svg",
+      "source_pack": "Bloom_Asset_Audit_Addendum_2026-10-23.zip",
+      "sha256": "c27c5c2a81f82f53f20311e0b53924d64b103e5e7ceaaa4dbd9be1d22dc5fd7e",
+      "bytes": 3014
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Asset_Audit_Addendum_2026-10-23/Bloom_Asset_Completeness_2026-10-23/ASSET_AUDIT_AND_SIGNOFF.md",
+      "source_pack": "Bloom_Asset_Audit_Addendum_2026-10-23.zip",
+      "sha256": "5f6ef56bd33ebf72f4d5db2954d0979eb6e28471422e1f612b5b85c17f559df2",
+      "bytes": 5025
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/recover-dark.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "18279a5904f38fc0f0e14f6ea4097f4a93a1fa9456775af566d8bcb9d1fc600e",
+      "bytes": 1284
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/train-icon.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "3b5a641b7472442247bf82abebdb8e45086fc6e3838b9a67ed2d147fa13081b7",
+      "bytes": 301
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/modify-icon.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "3360c5fc270e2bb3db012babe4d927269558a42ff3ba87d22c45f410132a23a0",
+      "bytes": 323
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/modify-light.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "faf5c984d0a158ce7fd7d1617d1c713c65460beaf0e79093f2cb040399f334c3",
+      "bytes": 1246
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/recover-icon.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "4cdd050538743395673c0fb8f29c46c955b96cddecb95ff93337fe7ad21362b7",
+      "bytes": 349
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/train-dark.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "78b9787c76487ae6596c2e436962f32bb7caf4fbef639c4e613edd303ac286f8",
+      "bytes": 1198
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/recover-light.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "4f00f778d9c80332d62476e90da414f30d12c05f9d3e9cb965d5a5a1f25d37dd",
+      "bytes": 1284
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/modify-dark.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "4ec6506c7bb1fb61e6a99062d9399311d352c194ff75347991461a6092496033",
+      "bytes": 1246
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/train-light.svg",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "aa7eae0d7c67934f9f31e52489c6bf7f7bb917a01ab7175a72a7e3d30054e359",
+      "bytes": 1198
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Athlete_Training_States_Assets_2026-10-23/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_Athlete_Training_States_Assets_2026-10-23.zip",
+      "sha256": "f527a68573fa1c3cf4e9db0cf4ad665cba12e12f93aa02cb69e4ae74612cd94a",
+      "bytes": 3328
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "132416c8a9edbec36d9ecac0c9962db315c934c944a232c430d21a7a52439d26",
+      "bytes": 13081
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/coach-share.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "08b26f39c66f9b5f6b6062798dd57b88fcfebb91ff4c0a111caff73180764d4a",
+      "bytes": 278
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/evidence-update.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "4438b95ee62f8ef64718efe3a90ce0018a5217150ab2273c83e3d35e9dfba95c",
+      "bytes": 261
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/observed.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "a88d50c6ac79566ea7fd52748bfabfa4f8bdd12088618c2fd053fe663c706117",
+      "bytes": 251
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/pathway.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "7f92e0335933cc13288b77b13e3817c0d2fed0c34203afe120cc9886cb5a955c",
+      "bytes": 362
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/privacy.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "a83303d5954e56cd4270a52be71e351dcf8575dc715a9f99da09fb62e1e0ce4d",
+      "bytes": 287
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/research.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "d69543de1f85f8ac50b3f8c28b6cda71c6dc730aa03aeaa4182597dce77517ce",
+      "bytes": 288
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/simulated.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "87caf1e66b1ec45947ae1b585c3dc6b7df6a5bd37cf5238b64faa278ff005ec4",
+      "bytes": 282
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Biology_AI_UX_Pack_2026-10-23/Bloom_UX_Biology_AI_2026-10-23/assets/unknown.svg",
+      "source_pack": "Bloom_Biology_AI_UX_Pack_2026-10-23.zip",
+      "sha256": "3dab43fb54d7cb69b09ea65621214fd86cb67814b8627e4e474b2268e2c024fb",
+      "bytes": 287
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Coherent_Experience_2026-10-24/Bloom_Coherent_Experience_2026-10-24/three_destinations.svg",
+      "source_pack": "Bloom_Coherent_Experience_2026-10-24.zip",
+      "sha256": "7c3f769c10ec6bc24811c6baf7e70fe04dcc10bcd7766935b9d7801b3480839d",
+      "bytes": 1848
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Coherent_Experience_2026-10-24/Bloom_Coherent_Experience_2026-10-24/single_journey.svg",
+      "source_pack": "Bloom_Coherent_Experience_2026-10-24.zip",
+      "sha256": "e763c87b7cb6a2a3ac83be891a44e45b69caf64f75bd93188477ce1012bab55c",
+      "bytes": 2613
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Coherent_Experience_2026-10-24/Bloom_Coherent_Experience_2026-10-24/concise_today_mobile.svg",
+      "source_pack": "Bloom_Coherent_Experience_2026-10-24.zip",
+      "sha256": "15a1c7dbefc2431f47afd067f769de7c66eabc6e5cc6ceccc1ec436962cdb210",
+      "bytes": 2659
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Coherent_Experience_2026-10-24/Bloom_Coherent_Experience_2026-10-24/HANDOFF.md",
+      "source_pack": "Bloom_Coherent_Experience_2026-10-24.zip",
+      "sha256": "ec8ee55faf1295e4a423b185048e55d42844f0a2f5679542d353174c8a5989ed",
+      "bytes": 4788
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Concise_UI_Kit_2026-10-24/BRANDING_UX_HANDOFF.md",
+      "source_pack": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "89491885a2cc7a3c3b823c4c217a239c83e5d5da930e27c778af208fefb0a8fb",
+      "bytes": 8716
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Concise_UI_Kit_2026-10-24/concise_components.html",
+      "source_pack": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "346a37b0fdc50f8d75dbf9d3726be6421dc067d8f9493f5a87ba4488ceef0923",
+      "bytes": 1679
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Concise_UI_Kit_2026-10-24/before_after_density.svg",
+      "source_pack": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "65e47575170502e3539f695146157abcc842f0dbc6271dc6f4bb983e43cac805",
+      "bytes": 1532
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Concise_UI_Kit_2026-10-24/styles.css",
+      "source_pack": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "59a7ca6afda89aecf4487bde72dfc960a7c77770b1bb0dc0160fde2a4d16dc7b",
+      "bytes": 1327
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Concise_UI_Kit_2026-10-24/insight_compact_mobile.svg",
+      "source_pack": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "6afa337965a5d446565d4523bac5d18a7d8d4405efc41b3323868bc52947e8b7",
+      "bytes": 1799
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Concise_UI_Kit_2026-10-24/today_compact_mobile.svg",
+      "source_pack": "Bloom_Concise_UI_Kit_2026-10-24.zip",
+      "sha256": "6522d00be4df7b056d4810212e1044ecdff599baf0a7fa37f61dec3d827ff370",
+      "bytes": 1755
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Layout_Copy_Correction_2026-10-24/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_Layout_Copy_Correction_2026-10-24.zip",
+      "sha256": "19cd82c9fc34371d4f3ce8aa6730c7c0104040ae041fdd46ae7a9a3eb3bcd35a",
+      "bytes": 8294
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Layout_Copy_Correction_2026-10-24/spacing_reference.css",
+      "source_pack": "Bloom_Layout_Copy_Correction_2026-10-24.zip",
+      "sha256": "861ce88e159aea00b4d2fb5db5ef510f8208aa38e4629145a59721300c7f3753",
+      "bytes": 1054
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Layout_Copy_Correction_2026-10-24/component_spacing_reference.svg",
+      "source_pack": "Bloom_Layout_Copy_Correction_2026-10-24.zip",
+      "sha256": "fa6ecef41e4896f1740afc3ee6550fd2d5a647bb2d05c76c21a8e66247039450",
+      "bytes": 1127
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Layout_Copy_Correction_2026-10-24/before_after_mobile.svg",
+      "source_pack": "Bloom_Layout_Copy_Correction_2026-10-24.zip",
+      "sha256": "c1aaa55b77147c525a52816b6f615f8b9915f4ca51e7c6a95b8345baac31eb2b",
+      "bytes": 3357
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Mobile_Screenshot_Fix_2026-10-24/Bloom_Mobile_Screenshot_Fix_2026-10-24/HANDOFF.md",
+      "source_pack": "Bloom_Mobile_Screenshot_Fix_2026-10-24.zip",
+      "sha256": "71f603b5c992d36ae6cc53a5e125ac0981ce028953e387df3c11d895edc931af",
+      "bytes": 4993
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Mobile_Screenshot_Fix_2026-10-24/Bloom_Mobile_Screenshot_Fix_2026-10-24/empty_journal_compact.svg",
+      "source_pack": "Bloom_Mobile_Screenshot_Fix_2026-10-24.zip",
+      "sha256": "3c8e857379644b692ec2de3575fd552e17dfb48f9be33051eb01c8b2f1474f64",
+      "bytes": 2184
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Photo_Logging_Branding_UX_2026-10-23/Bloom_Photo_Logging_UX_2026-10-23/BRANDING_UX_SIGNOFF.md",
+      "source_pack": "Bloom_Photo_Logging_Branding_UX_2026-10-23.zip",
+      "sha256": "de579d22c1c2474659d30ed986ed05e26f3963c3bf5872ad3afa5e4fc1a8a510",
+      "bytes": 9006
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Photo_Logging_Branding_UX_2026-10-23/Bloom_Photo_Logging_UX_2026-10-23/photo-status-icon.svg",
+      "source_pack": "Bloom_Photo_Logging_Branding_UX_2026-10-23.zip",
+      "sha256": "b4aa7c1f4efcf37fc8a65928efe170d785a18cde404ddefb55ab9ffb6af46417",
+      "bytes": 389
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Photo_Logging_Branding_UX_2026-10-23/Bloom_Photo_Logging_UX_2026-10-23/PHOTO_FALLBACK_WIREFRAME.svg",
+      "source_pack": "Bloom_Photo_Logging_Branding_UX_2026-10-23.zip",
+      "sha256": "955a290fdcb3289b2b854190acb6328c2f54ee4d0d3a0eadd59f965fd6fe3fd3",
+      "bytes": 2463
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Photo_Logging_Branding_UX_2026-10-23/Bloom_Photo_Logging_UX_2026-10-23/PHOTO_REVIEW_WIREFRAME.svg",
+      "source_pack": "Bloom_Photo_Logging_Branding_UX_2026-10-23.zip",
+      "sha256": "8e78c52e29da827cf2718523926f3b5e6d607dcb391c1b0c64c3d3a13e3b696b",
+      "bytes": 2669
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/icon-restaurant.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "7390ef4f7ee6b7ff3f4d12b8e1390af6ea62aa14c91e96717c825f26a59323da",
+      "bytes": 210
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/icon-source.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "bdd584ed98c83987ff1a2449deb9f3343dd04b88d9aa162694326f0a0adc0683",
+      "bytes": 206
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/BRANDING_UX_RESTAURANT_HANDOFF.md",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "f84dfa80e4cd78595ec06cb83536042ad0db9d9f82fe94dd7e42b16c7f6b2493",
+      "bytes": 7392
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/01-restaurant-discovery-mobile.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "10ca3b4028af6b5826b173da235e1e7f461bf13e4b9c4c6e998ee5992027b7ac",
+      "bytes": 3022
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/02-menu-item-review-mobile.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "92d80dc33d4ffb6d662c03fb74788df91f6ae8fe0fc7f860cf29660679ef4907",
+      "bytes": 3368
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/03-unavailable-recovery-mobile.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "307120b8d1178212b917712d8b0354b968aec16701f89713db1a41b85db9f322",
+      "bytes": 2929
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/04-restaurant-flow-desktop.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "e2770fc10baa37d8817e15748eb4120df6492f4970cbbeee2755a651cad683b9",
+      "bytes": 2469
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/icon-menu.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "b7b1cac3135829dd2c4ef173f434ae40917d9e13fcebbe2501c9538619519cb5",
+      "bytes": 204
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/icon-edit.svg",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "64b888c3d9ee136efedd34815da8f06cf11464ccacc4c250ef500cca188740ea",
+      "bytes": 204
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restaurant_UX_Kit_2026-10-23/restaurant-tokens.json",
+      "source_pack": "Bloom_Restaurant_UX_Kit_2026-10-23.zip",
+      "sha256": "8c6909ef649f274d360e69c47ea4d3f24d2b9998f0e298bd0396db2324823e7e",
+      "bytes": 364
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "be215dc2b9842c4d6f6b3298cba3a095acf6d6264ae5317f3d30b00d6502dd82",
+      "bytes": 17275
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/blocked_desktop.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "b42c5f6134b3de2e14fc3690bfe2f08c8bcc3dccc1c895394a427105662ccc1b",
+      "bytes": 1640
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/design-tokens.extension.json",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "593c4b7845568eb1d513b75248df2aa5e1f3cac878c334aebe07289a0ce6a59a",
+      "bytes": 1682
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/development_toggle_graphite.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "a5f7336a10943b021a7ce449f99f3d21f706056c72a73ed47f47e888370fe881",
+      "bytes": 2543
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/disabled_incident_badge.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "5c295ae8d0b7746f1cb147cfe95081fee67387dec47f4ac1949d8eb83938edb0",
+      "bytes": 409
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/general_release_badge.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "e458dcd51e37c6f9faa85399dc6c5f62f4b0ae862b768b7bd4444ade94b37b68",
+      "bytes": 403
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/hidden_pending_approval_badge.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "e97d659e94bb15aa7589d4930dfecf895c30063bd6718d2b8c0db5948d3b071e",
+      "bytes": 401
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/integrated_preview_off.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "fcd2ae49f96ed916d4c325e3aea418457682cc530659a22fe18977865f794c4b",
+      "bytes": 1722
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/integrated_preview_on.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "d09d56ebc30118538a405682ae2c726d3b2491fd04b97772b25a835ca4808fc0",
+      "bytes": 2370
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/internal_research_only_badge.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "dfa17155e89a44b2184c4f71e424822df094efff4beaf827d1484a6e09ffe9a1",
+      "bytes": 389
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/preview_desktop.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "e2d48530f8014b2d724d30534d5c31100df47223d88cf870d5cbcaef748edacd",
+      "bytes": 1915
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B/registry_desktop.svg",
+      "source_pack": "Bloom_Restricted_Feature_UX_Kit_2026-10-24_Amended_B.zip",
+      "sha256": "1d4bb65455a44d8c268dd9c9ff16228a7fde2bea6de8337b1eed8e951493717d",
+      "bytes": 2908
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Scientific_Depth_UX_Kit_2026-10-25/HANDOFF.md",
+      "source_pack": "Bloom_Scientific_Depth_UX_Kit_2026-10-25.zip",
+      "sha256": "a57304997c9372204f6998bedf43b9b2007d8ce66e099553885392c734bfeea6",
+      "bytes": 8053
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Scientific_Depth_UX_Kit_2026-10-25/action_evidence_ladder.svg",
+      "source_pack": "Bloom_Scientific_Depth_UX_Kit_2026-10-25.zip",
+      "sha256": "31ad7fab507c60bde93fb54a154eb201fb97a3bf95caafb77e36bdc6d5a416c3",
+      "bytes": 1829
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Scientific_Depth_UX_Kit_2026-10-25/pathway_explorer.svg",
+      "source_pack": "Bloom_Scientific_Depth_UX_Kit_2026-10-25.zip",
+      "sha256": "85f2b74bb6c7f5f3c9565fd6571000e9e9a967ee87f137aeff6bd20188aeaf5f",
+      "bytes": 1838
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Scientific_Depth_UX_Kit_2026-10-25/research_boundary.svg",
+      "source_pack": "Bloom_Scientific_Depth_UX_Kit_2026-10-25.zip",
+      "sha256": "3c0b8b49b221df555d4c19972e999fdd958e81c1187e53193b16d9ce53d5c9ed",
+      "bytes": 1851
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_Experience_Redesign_2026-10-25/today_companion_mobile.svg",
+      "source_pack": "Bloom_Today_Experience_Redesign_2026-10-25.zip",
+      "sha256": "9e9c8681da906ab54e12cbb2d7cff87886be8894b49e28e9d4f51f107b2ddf47",
+      "bytes": 2542
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_Experience_Redesign_2026-10-25/today_companion_desktop.svg",
+      "source_pack": "Bloom_Today_Experience_Redesign_2026-10-25.zip",
+      "sha256": "b92b068fae2bd00d4e17f796025bdc6bb7e4dd53083124019f1a695c3c81499d",
+      "bytes": 2527
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_Experience_Redesign_2026-10-25/prototype.html",
+      "source_pack": "Bloom_Today_Experience_Redesign_2026-10-25.zip",
+      "sha256": "2e15ba5844a79cc14893ff9bcd7466723e6bd8f7618f16915d8293720fc857a3",
+      "bytes": 6416
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_Experience_Redesign_2026-10-25/HANDOFF.md",
+      "source_pack": "Bloom_Today_Experience_Redesign_2026-10-25.zip",
+      "sha256": "d798b2ce5ce82203f95cae6b8b294cafc2ed38fc4015118fcdf54aef79508a56",
+      "bytes": 5776
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_P0_Polish_2026-10-25/Bloom_Today_P0_Polish_2026-10-25/today_rest_mobile.svg",
+      "source_pack": "Bloom_Today_P0_Polish_2026-10-25.zip",
+      "sha256": "e94b873cbddd378c29aa5f67482b0861656e4056aec28317914b4061f114678a",
+      "bytes": 2728
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_P0_Polish_2026-10-25/Bloom_Today_P0_Polish_2026-10-25/today_partial_mobile.svg",
+      "source_pack": "Bloom_Today_P0_Polish_2026-10-25.zip",
+      "sha256": "d27ac3afeeb851b65d4312e123b999e4e13d1492d08360ead3cf8b04330868c8",
+      "bytes": 2762
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_P0_Polish_2026-10-25/Bloom_Today_P0_Polish_2026-10-25/QA_MATRIX.csv",
+      "source_pack": "Bloom_Today_P0_Polish_2026-10-25.zip",
+      "sha256": "5f09e37348c0dbc829b28018e0c64952bd65ed45ec033f8387b371e746661553",
+      "bytes": 587
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_P0_Polish_2026-10-25/Bloom_Today_P0_Polish_2026-10-25/HANDOFF.md",
+      "source_pack": "Bloom_Today_P0_Polish_2026-10-25.zip",
+      "sha256": "bf28cf3f4b2cf05f1122dbd801a33a7f99827c169bc6dd52d1777c525a51c21e",
+      "bytes": 5090
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Today_P0_Polish_2026-10-25/Bloom_Today_P0_Polish_2026-10-25/today_default_mobile.svg",
+      "source_pack": "Bloom_Today_P0_Polish_2026-10-25.zip",
+      "sha256": "8c413f89eebbc561a9dbc9995a283e9d5eb308690b166312bbf785206e21c1be",
+      "bytes": 2715
+    },
+    {
+      "path": "design/bloom/archives/Bloom_UT_Simplicity_UX_Review_2026-10-23/evidence_disclosure_mobile.svg",
+      "source_pack": "Bloom_UT_Simplicity_UX_Review_2026-10-23.zip",
+      "sha256": "3363a54747c4d51f99d31407fbb69a1495399ce83f65637a86f23f27ec4807d4",
+      "bytes": 1990
+    },
+    {
+      "path": "design/bloom/archives/Bloom_UT_Simplicity_UX_Review_2026-10-23/BRANDING_UX_REVIEW.md",
+      "source_pack": "Bloom_UT_Simplicity_UX_Review_2026-10-23.zip",
+      "sha256": "29ca5162fd10bd0af364ffaa3b580e8a31a09f7f2be0dbbe00da2e88fb12826d",
+      "bytes": 7464
+    },
+    {
+      "path": "design/bloom/archives/Bloom_UT_Simplicity_UX_Review_2026-10-23/my_biology_index_mobile.svg",
+      "source_pack": "Bloom_UT_Simplicity_UX_Review_2026-10-23.zip",
+      "sha256": "122dc88271e81732a085f0cfa88395d1dba2f37292f791d1d5b746e9ee3b1a13",
+      "bytes": 2371
+    },
+    {
+      "path": "design/bloom/archives/Bloom_UT_Simplicity_UX_Review_2026-10-23/connected_sources_mobile.svg",
+      "source_pack": "Bloom_UT_Simplicity_UX_Review_2026-10-23.zip",
+      "sha256": "ea896832e673e224a84225b3520532ac4bb77b4b680cc24fc821583ac4f2ec2f",
+      "bytes": 2390
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/components/ScenarioComparison.tsx",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "1a9fe011a9c9dd9e93f9654483ce89b73638afe79cad016b6628a500cce05742",
+      "bytes": 3143
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/components/ScenarioComparison.css",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "05d7a92add678a1d1ade549f8f61943349b3c6a3c791668b9c31d224194afcfd",
+      "bytes": 1770
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/examples/EXAMPLE_DATA.ts",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "5a944e19f6d6af40563d2a34bc679d93c8d467dba11f206b04045b14c1de395c",
+      "bytes": 1266
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/assets/model-abstention-mobile.svg",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "7b447fa060c9e906f84456f97ba7cae7353d6581a2dd253d9f5ec78a2a30da33",
+      "bytes": 2129
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/assets/scenario-comparison-mobile.svg",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "5d6bb78d8f0fb0a775f600aea9c8c07f06a41d8ab29b6131f2a96ad8df16f888",
+      "bytes": 2098
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/assets/scenario-comparison-desktop.svg",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "8cca267c097ba338a10e752befc61cdfbaecb871d74a61469fb8519095dda12d",
+      "bytes": 2106
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/assets/plan-change-mobile.svg",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "51b461768b92c58b06a42b7c3926dfe0936030f9e5c2f6e029f01e8efbec8060",
+      "bytes": 2098
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/Bloom_V06_Digital_Twin_UX_Kit_2026-10-23/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip",
+      "sha256": "76e156c84cecf9f662a948ed55b45854575a248d773341778a3c17ab8bd98a5c",
+      "bytes": 7983
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "6a5289b4fc73dc51fb5de9f88288a4a4b4aecef0738000f25ac81d822d3936c8",
+      "bytes": 3913
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/components/training-guidance.css",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "2218d76d0710a6ff51e96fd476d2d04b7070e1263a733ddd9cfb10b1c73c8039",
+      "bytes": 3655
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/components/TrainingGuidance.tsx",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "029507f856bb2bbc7ec0c796120b06b77198af5dd1c510258f03951e1881a87c",
+      "bytes": 4445
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/moon.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "2c6af8d4f24e2060631c7af3ee66bad5c4a2e1ebf9f569aeb9690bf39195074f",
+      "bytes": 251
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/edit.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "c59cc0cde88c2bc5a64ab3276baeac94291faad6d8a20985c2cc78396af7d198",
+      "bytes": 234
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/calendar.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "9628db9d291eb7306d407c8e1ad5397b2dabb414474e98c95c02e71cf32b2ac3",
+      "bytes": 282
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/run.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "998f21520dea04f2558cd7ecbc354bc333940773967f7cc9b61a11f39cf35040",
+      "bytes": 290
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/check.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "5d0b2de8858fb2fef19ad23483ab841fed640ba356f9fc907834c0384acd60a1",
+      "bytes": 223
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/weight.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "97f1ff9085aebb41c10e249b584839d61ef52823a2a324b51c73bce7123e8141",
+      "bytes": 255
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/chevron.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "6a02a7a47837acf51ea36abc2c9c4b17e23c33fd0c29d236b39cb9b8343e74d2",
+      "bytes": 223
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/heart.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "0700ae85fafced8669cbbded47560e8148921a3dd821a5b3da94b0aedb3c31e3",
+      "bytes": 304
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/effort.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "53c92c1c55c9597225fee8f2c6c309cb8de3f40f5b7ae871e1dc8a0847fa9e13",
+      "bytes": 243
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/rest.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "6e7cbd046ae1c9d3abf4c5d75f1220c65a3b7d4b22f3b4ec0fdd83cffb605480",
+      "bytes": 272
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/icons/info.svg",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "44eb786979ab66530211650797916050eabf49a5bffaf2b2972189c5d5143d63",
+      "bytes": 256
+    },
+    {
+      "path": "design/bloom/archives/Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23/examples/Usage.example.tsx",
+      "source_pack": "Bloom_V06_TRAIN_02_Editable_Component_Package_2026-10-23.zip",
+      "sha256": "03365c5f777bb01c63e3872a223434d5ab1f42a4e7de1a3f2fc128a2608820a9",
+      "bytes": 1877
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Intelligence_UX_Kit_2026-10-24/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip",
+      "sha256": "fce2569b640e58cf850b38acc98a1f569859bfb2ab2fecb89d938047624138a0",
+      "bytes": 7131
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Intelligence_UX_Kit_2026-10-24/interactive_prototype.html",
+      "source_pack": "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip",
+      "sha256": "bc10590ef52ade678ad381b5d979f11ea35af5bb4e17bc60b496ad5ab1b73c42",
+      "bytes": 4126
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Intelligence_UX_Kit_2026-10-24/visual_statuses.svg",
+      "source_pack": "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip",
+      "sha256": "1b0c0b213910be4722c80f4d8062064c6d7058adb634bae1349237e1e493748d",
+      "bytes": 2567
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Intelligence_UX_Kit_2026-10-24/visual_states_athlete.svg",
+      "source_pack": "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip",
+      "sha256": "1ba0a384cc7e7e2716e414ca81fbc0e4e927589ebae593f73eb1c85ed824ece0",
+      "bytes": 1113
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Intelligence_UX_Kit_2026-10-24/visual-motivation.css",
+      "source_pack": "Bloom_Visual_Intelligence_UX_Kit_2026-10-24.zip",
+      "sha256": "b2483eeb7abb8b92beba191417115d9988886649588b5cfac838a1237298039e",
+      "bytes": 1489
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Phases23_Addendum_2026-10-24/Bloom_Visual_Phases23_Addendum_2026-10-24/phase3_motivation.svg",
+      "source_pack": "Bloom_Visual_Phases23_Addendum_2026-10-24.zip",
+      "sha256": "e332c2729fbaf18ca60b134fe2671a4dc379ee33a754b0d31cb7abc0464204bd",
+      "bytes": 1728
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Phases23_Addendum_2026-10-24/Bloom_Visual_Phases23_Addendum_2026-10-24/HANDOFF.md",
+      "source_pack": "Bloom_Visual_Phases23_Addendum_2026-10-24.zip",
+      "sha256": "188e878f0577efa24d29ab76d465fb3995beed2b917a21f1ec9734174e4585ef",
+      "bytes": 4656
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Phases23_Addendum_2026-10-24/Bloom_Visual_Phases23_Addendum_2026-10-24/phase2_progress.svg",
+      "source_pack": "Bloom_Visual_Phases23_Addendum_2026-10-24.zip",
+      "sha256": "e75c3829366d61bcaf4d050dcc4b3497daf99dd7aab665993683605cc1ee5eee",
+      "bytes": 1727
+    },
+    {
+      "path": "design/bloom/archives/Bloom_Visual_Phases23_Addendum_2026-10-24/Bloom_Visual_Phases23_Addendum_2026-10-24/prototype.html",
+      "source_pack": "Bloom_Visual_Phases23_Addendum_2026-10-24.zip",
+      "sha256": "2a4ea8896e0255515c0c464924ae43c4503a2606108a756a7be215d904adb7b3",
+      "bytes": 2155
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/PREVIEW.html",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "81fde04e1755d73853b497a450a592a3bee632ae93c4e0aac29c77a36bd11d77",
+      "bytes": 4515
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/DESIGN_HANDOFF.md",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "ce7426baccb28fb0129bd22b35801f3d17237760d260099af79740cffc03bae0",
+      "bytes": 5222
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/examples/ExampleUsage.tsx",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "f8c801c092bf512485cf69c1a156407d0d3a0d5efc205ee474d18f4fcffe8f90",
+      "bytes": 1843
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/assets/assay.svg",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "533349a73c22aaeab375049af1f183680ab480626357efa474c2ea6264adad66",
+      "bytes": 268
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/assets/unknown.svg",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "52ff1929020b6331c393a4bbc39827a1baeac1ad4e8ff78a346dd4aac7906298",
+      "bytes": 292
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/assets/simulation.svg",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "9cbac782bd72c7854e97bec93cf255a6f045101acd2fe1e6a80a74ba289880ba",
+      "bytes": 245
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/assets/measured.svg",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "cfb08a9f8a6a49d477faad6a9688d0ce484099aefad182e3d3c820fe33d8e97d",
+      "bytes": 257
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/assets/source.svg",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "2c13d381d9b38eea1ac14450e569cf47734b44a10da545a700ebc1542d700f72",
+      "bytes": 257
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/assets/trend.svg",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "fb6d35498df60088d88e5c6d5248c98c9f935a855e041155dc5a208834c6f2c3",
+      "bytes": 237
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/components/ScientificInsight.tsx",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "bb097b624d4aea6748217f6107442b9f8acfeb4e08469cf98e496bd01e756b55",
+      "bytes": 6161
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23/Bloom_v05_Scientific_Insights_UI_Kit/styles/scientific-insights.css",
+      "source_pack": "Bloom_v05_Scientific_Insights_UI_Kit_2026-10-23.zip",
+      "sha256": "8a430d7002b7437c8f6ee970da83d75d60f5b92a1f6e278027d0519761a70124",
+      "bytes": 2885
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v06_Branding_UX_Research_Package_2026-10-23/athlete_mobile_wireframe.svg",
+      "source_pack": "Bloom_v06_Branding_UX_Research_Package_2026-10-23.zip",
+      "sha256": "5f27011f85b5c82666cdf964e5ec70d497e7ba674ce02734822fc5a3037c06a8",
+      "bytes": 2318
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v06_Branding_UX_Research_Package_2026-10-23/everyday_mobile_wireframe.svg",
+      "source_pack": "Bloom_v06_Branding_UX_Research_Package_2026-10-23.zip",
+      "sha256": "72c4d8b8a2000365b5ffb312fb9d773c4d8456a819cb9848d201568cb578f81d",
+      "bytes": 2319
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v06_Branding_UX_Research_Package_2026-10-23/V06_BRANDING_UX_HANDOFF.md",
+      "source_pack": "Bloom_v06_Branding_UX_Research_Package_2026-10-23.zip",
+      "sha256": "a413c22f87c557f3638b61c5376595864df31fdb33040af03d96c5ec79770544",
+      "bytes": 7830
+    },
+    {
+      "path": "design/bloom/archives/Bloom_v06_Branding_UX_Research_Package_2026-10-23/coach_mobile_wireframe.svg",
+      "source_pack": "Bloom_v06_Branding_UX_Research_Package_2026-10-23.zip",
+      "sha256": "3210a6b06998e49d38f3aa021051231be0cf4627abcde3377ae8af1f5c23b814",
+      "bytes": 2316
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-athlete-192.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "5b43e1c95e8f843f5c8e70268e4a82f787bccb6e0a5c471aa5868c5e6d14f9e5",
+      "bytes": 7298
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-athlete.svg",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "3b2c1c41f26eb5aaca86b7c7a0c1e3b8bdceebcd8266981faedb7dad19bc3c91",
+      "bytes": 554
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-everyday-192.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "8ed678af784665275d64e270a4bd5fec6af74ef94fa1b04fef5e0aa7d9dce1b5",
+      "bytes": 7381
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-athlete-512.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "c24f3846c353c32420e662f2c7c31f0e72c597a23b0d79bbf6bfe49b5acfabf4",
+      "bytes": 21465
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-monochrome.svg",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "ef595815d8e3ca420eaf15935b278ad8e9adb25ebd4d4153e05cfb0475d2ee83",
+      "bytes": 557
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-wordmark-light.svg",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-wordmark-dark.svg",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/empty-journal-illustration.svg",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "18570404425ddeaa88d33ffe65fd420758ef0d9aeb36e3c8e1a94c0a000bc164",
+      "bytes": 516
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-everyday-512.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "abe8c8c27d15e26385475d0978a025b6ceb40f57f457dbda5a59a85ecb7c6f77",
+      "bytes": 21454
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-athlete-64.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "58939223c75d35eac8b29e8cebbb892b79ff4badd111eafbb287cb754600b415",
+      "bytes": 2378
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-everyday-64.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "033dedf4fe1609fda3d3cb7a00abfc5034ad0c7fe0c0bcf70cdd2be196b321eb",
+      "bytes": 2332
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/bloom-icon-everyday.svg",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/assets/design-tokens.json",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "484dcd8ea45d242d4b3cbf7268a09bebc98552e045a83aa8e7825cb57918e33e",
+      "bytes": 1300
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/specs/SCREEN_BLUEPRINTS.md",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "3f8d493d9f0ad8d6479f898c76130848865379ea667e92ee90af135727af542d",
+      "bytes": 3457
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/specs/HANDOFF.md",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "e62edc9bd64523611d980e3f836592e2fd10c3ff18b330d47f423130b0a08996",
+      "bytes": 6641
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/specs/CONTENT_AND_SCIENCE.md",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "2d7f6d3cff55d304b654f4cedda7f49897934cdce876abf593f53ed3fea3d071",
+      "bytes": 2506
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/README.md",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "1384e00f323e70f300dfd4f49bc743b59a2f8f7df91bc8153ea4460d084f94b7",
+      "bytes": 2839
+    },
+    {
+      "path": "design/bloom/archives/bloom_brand_delivery_v1/bloom_brand_delivery/previews/brand-concept-reference.png",
+      "source_pack": "bloom_brand_delivery_v1.zip",
+      "sha256": "fc29dad9473cdaf17d7c82281f06fd523df6498e47511b690300bcd1d73c4463",
+      "bytes": 1697994
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/MANIFEST.json",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "7ec7a7ad6459c1f160729a004d73a39a998328c96992721a185fde8d88764981",
+      "bytes": 1745
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/README.md",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "f0a158af8e8d81d80a5e6353f8f69dfd7f2f481b87959a46e0fa2ea4c3c73715",
+      "bytes": 913
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/contracts/IMPLEMENTATION_CONTRACT.md",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "a9e6a9d03630660ac383d52922a2c32cf5165f02cf41d9bb92d9892fa9c0a495",
+      "bytes": 8019
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/contracts/UX_BLUEPRINT.md",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "2026b0229613b30fb8005927c1643c0dfcb7eeff6c01f9bbb1b6b31c4fd4dd80",
+      "bytes": 15543
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/01-fast-food-entry.svg",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "cab071fe94079532fb20ac1bfc087d47c774a8d48c02f193a1cdddac10cda42b",
+      "bytes": 4566
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/02-canonical-food-review.svg",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "236363dcdb2d01ef2747f6760bcd5143e7eb184ac04eb2bd9dd5795e0cac86d3",
+      "bytes": 4758
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/03-fast-workout-log.svg",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "ca03f54ccc9abe79fba1a61c8d1f56d75dbb67e44d30f34353f1b58d4cde3bb1",
+      "bytes": 3816
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/04-evidence-progress.svg",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "c33acb4b8f2ad2a7176562c72cb4066ee192137bdb9a3a9da15105ab3279cd1e",
+      "bytes": 3061
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/existing-editable/05-adaptation-review.svg",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "c43e55b9608c44a413b612d5a81d341da1bc1dafe139e5ad60176d6fc883b64f",
+      "bytes": 3257
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/prototype/index.html",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "46bdc1ef427a44a1cf89d8c94772ff14363b47e5724288fdfe502c8d170c0f62",
+      "bytes": 5400
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/prototype/styles.css",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "e38f848fb2cd66008481f761c86e7a070d6c8e32faf063dae4faef9c8acd2a70",
+      "bytes": 6737
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/reference/concept-five-screens.png",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "10e189cdf4f3212e6654193e72c4407a83502415f9d7976b02a2ba15f54a8669",
+      "bytes": 2019467
+    },
+    {
+      "path": "design/bloom/flagship/2026-10-26/reference/concept-three-modes.png",
+      "source_pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "sha256": "8d58297e75377f220b83d510d238596597289dffb51b7047c2fc558ae69a1203",
+      "bytes": 2040465
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/ARCHITECT_HANDOFF.md",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "269ddc5787d69e7d1f1e02f80707babe48fe3c1280851138f85061a90e4f21fb",
+      "bytes": 2523
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/UX_CONTRACT.md",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "380b14578023e667008ed0614372df3eeac0d994406709ed65bfe88477ba2592",
+      "bytes": 3572
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/microbial-profile-sheet.svg",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "b3eec42fae2f44a589ac41a84ed0ac00b0d1d943554ba74bbeb85ee88ea6798f",
+      "bytes": 2692
+    },
+    {
+      "path": "design/bloom/microbial-profiles/2026-10-30/ASSET_USAGE_AUDIT.md",
+      "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
+      "sha256": "b6fad384979eb93c1cc0716d1df14c8fe6eba3105a2d80cf97ac3f82f97f96e3",
+      "bytes": 5373
+    }
+  ],
+  "policy": "Design only. Codex owns merging and integration. Avoid adding duplicate components. Latest whole-app redesign is master; earlier kits provide specialized states.",
+  "verification_updates": [
+    {
+      "date": "2026-10-28",
+      "pack": "Bloom_Flagship_Visual_Direction_Design_Assets_2026-10-26.zip",
+      "receipt": "design/bloom/flagship/IMPORT_VERIFICATION_2026-10-28.json",
+      "status": "Original archive and all13 expanded bytes verified; all13 GitHub blob hashes and sizes match at8933079f383b475568e7162b589e28226487e3a0; implementation contract fetched successfully from GitHub; no runtime integration."
+    },
+    {
+      "date": "2026-10-30",
+      "pack": "microbial-profiles/2026-10-30",
+      "receipt": "3ef48885ba95ab34a93f81e7ee36f333196a0ed2 merged without source edits at74aa3be",
+      "status": "Four original GitHub source files merged; hashes recorded. Runtime/claim/independent acceptance tracked separately."
+    }
+  ]
+}

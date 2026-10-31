@@ -1,406 +1,362 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Activity, TrendingUp, Beaker, Upload as UploadIcon, Sparkles } from 'lucide-react';
-import { format } from 'date-fns';
-import { useLocation } from 'wouter';
-
+import CompanionHero from '@/components/CompanionHero';
+import {reportDateText} from "@shared/report-dates";
+import ImportedReportDetails from "@/components/ImportedReportDetails";
+import MicrobialProfile from "@/components/MicrobialProfile";
+import { type ReportedTaxon, reportedTaxa, reportedTaxonAmount } from "@shared/reported-taxa";
+import { useEffect, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
+import { useAuth } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import { cohortResearch } from "@shared/meal-intelligence";
+import { evidenceSources } from "@shared/science-coach";
 export default function Microbiome() {
-  const [, navigate] = useLocation();
-  
-  const { data: demoUser } = useQuery<{ id: string; username: string }>({
-    queryKey: ['/api/demo/user'],
+  const { user } = useAuth();
+  const [selectedTaxon,setSelectedTaxon]=useState<{id:string;sample:string;owner:string}|null>(null);
+  const profileClosing=useRef(false);
+  const taxonTrigger=useRef<HTMLButtonElement|null>(null);
+  const [sampleId, setSampleId] = useState(() => new URLSearchParams(window.location.search).get("sample") || "");
+  const [comparisonId, setComparisonId] = useState("");
+  const [tab, setTab] = useState("results");
+  const samples = useQuery<any[]>({
+    queryKey: ["/api/microbiome/samples", user?.id],
+    enabled: !!user,
   });
-
-  const userId = demoUser?.id || 'demo-user-123';
-
-  const { data: samples, isLoading: samplesLoading } = useQuery<any[]>({
-    queryKey: ['/api/microbiome/samples', userId],
+  const currentSamples=samples.fetchStatus==="idle"&&!samples.isError?samples.data:undefined;
+  const sorted = [...(currentSamples || [])].sort(
+    (a, b) => +new Date(b.testDate) - +new Date(a.testDate),
+  );
+  const currentId = sampleId ? sorted.find(sample=>sample.id===sampleId)?.id : sorted[0]?.id;
+  const results = useQuery<any>({
+    queryKey: ["/api/microbiome/results", currentId],
+    enabled: !!currentId,
   });
-
-  const { data: dietPrediction, isLoading: predictionLoading } = useQuery<any>({
-    queryKey: ['/api/microbiome/diet-prediction', userId],
+  const comparison = useQuery<any>({
+    queryKey: ["/api/microbiome/results", comparisonId],
+    enabled: !!comparisonId&&comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId),
   });
-
-  const hasSamples = samples && samples.length > 0;
-  const latestSample = hasSamples ? samples[0] : null;
-
-  if (samplesLoading || predictionLoading) {
-    return (
-      <div className="container max-w-4xl mx-auto px-4 py-6 pb-20">
-        <div className="space-y-4">
-          <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">Loading microbiome data...</p>
-            </CardContent>
-          </Card>
+  const prediction = useQuery<any>({
+    queryKey: ["/api/microbiome/diet-prediction", user?.id],
+    enabled: !!user && tab === "diet",
+  });
+  const currentResults=currentId&&results.fetchStatus==="idle"&&!results.isError&&results.data?.sample?.id===currentId?results.data:undefined;
+  const currentComparison=comparisonId!==currentId&&sorted.some(sample=>sample.id===comparisonId)&&comparison.fetchStatus==="idle"&&!comparison.isError&&comparison.data?.sample?.id===comparisonId?comparison.data:undefined;
+  const currentPrediction=prediction.fetchStatus==="idle"&&!prediction.isError?prediction.data:undefined;
+  const taxa=currentResults?reportedTaxa(currentResults.sample,currentResults.bacterial_composition):[];
+  const comparisonTaxa=currentComparison?reportedTaxa(currentComparison.sample,currentComparison.bacterial_composition):[];
+  const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?taxa.find(b=>b.id===selectedTaxon.id)||null:null;
+  const closeProfile=()=>{if(profileClosing.current)return;profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
+  useEffect(()=>{const closeOnBack=()=>{profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
+  useEffect(()=>{if(selectedTaxon&&!activeTaxon){setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}}},[selectedTaxon,activeTaxon]);
+  return (
+    <main className="science-page gut-reports-workspace space-y-5">
+      <div className="science-heading">
+        <p className="eyebrow">REPORTS & RESEARCH</p>
+        <h1>Gut reports</h1>
+        <p>
+          Review your source values and what is missing. A gut report is optional.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          {(!currentSamples||sorted.length>0)&&<Link className="text-link" href="/upload">Upload or enter a report</Link>}
+          <details className="workspace-disclosure"><summary>Related tools</summary><div className="flex flex-wrap gap-3 pt-3"><Link className="text-link" href="/progress">Recorded progress</Link><Link className="text-link" href="/meal-planner">Goal-based meals</Link></div></details>
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="container max-w-4xl mx-auto px-4 py-6 pb-20">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2 flex items-center gap-2">
-          <Activity className="h-6 w-6" />
-          Your Microbiome
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          {hasSamples 
-            ? 'Analysis of your gut bacteria and their health impacts'
-            : 'Predictions based on your dietary patterns'}
+      {samples.isError ? (
+        <p role="alert">
+          Reports could not load.{" "}
+          <Button onClick={() => samples.refetch()}>Retry</Button>
         </p>
-      </div>
-
-      {!hasSamples && (
-        <Card className="mb-6 border-primary/20" data-testid="card-no-test-data">
-          <CardContent className="py-6">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-lg bg-primary/10">
-                <Sparkles className="h-6 w-6 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold mb-1">AI-Powered Predictions</h3>
-                <p className="text-sm text-muted-foreground mb-3">
-                  We're analyzing your dietary patterns to predict your likely microbiome composition. 
-                  For precise results, upload a microbiome test.
-                </p>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => navigate('/upload')}
-                  data-testid="button-upload-test"
+      ) : samples.isPending||samples.fetchStatus!=="idle" ? (
+        <p role="status">Loading reports…</p>
+      ) : (
+        <section className="bloom-panel">
+          <h2>Report history</h2>
+          {sorted.length ? (
+            <>
+              <label>
+                Select report
+                <select
+                  className="bloom-input w-full"
+                  value={currentId}
+                  onChange={(e) => {const id=e.target.value;setSampleId(id);const url=new URL(window.location.href);url.searchParams.set("sample",id);window.history.replaceState(null,"",url.pathname+url.search);}}
                 >
-                  <UploadIcon className="w-4 h-4 mr-2" />
-                  Upload Test Results
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+                  {sorted.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {reportDateText(s)} ·{" "}
+                      {s.testingCompany || "Report"} · {s.processingStatus}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <p className="panel-note">
+                Reported data is supplied by you or a lab file and is not
+                independently verified. Older analyses may contain demo values.
+                Taxonomy, genes and measured metabolites are different data
+                types.
+              </p>
+            </>
+          ) : (
+            <CompanionHero headingId="gut-report-empty-title" title="No gut report saved" eyebrow="OPTIONAL INFORMATION" reason="You can use your food journal and everyday goals without a test. A gut report is optional." actions={<Link className="hero-button" href="/upload">Add a report</Link>}><Link className="text-link" href="/nutrition">Review your food journal</Link></CompanionHero>
+          )}
+        </section>
       )}
-
-      <Tabs defaultValue={hasSamples ? 'latest' : 'predicted'} className="space-y-6">
-        {hasSamples && (
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="latest" data-testid="tab-latest">Latest Results</TabsTrigger>
-            <TabsTrigger value="bacteria" data-testid="tab-bacteria">Bacteria</TabsTrigger>
-            <TabsTrigger value="insights" data-testid="tab-insights">Diet Insights</TabsTrigger>
-            <TabsTrigger value="history" data-testid="tab-history">History</TabsTrigger>
-          </TabsList>
+      {!!sorted.length&&<nav aria-label="Microbiome sections" className="precision-tabs">{[["results","Latest results"],["bacteria","Bacteria"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav>}
+      <details className="workspace-disclosure gut-report-exploration"><summary>Explore food patterns & research</summary><p className="panel-note">Food-journal observations and research context are separate from measurements in your report.</p><nav aria-label="Related food and research views" className="precision-tabs">{[["diet","Diet insights"],["molecules","Molecules"],["cohorts","Cohorts"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav></details>
+      {currentId && (results.isPending||results.fetchStatus!=="idle") && (
+        <p role="status">Loading composition…</p>
+      )}
+      {currentId&&(results.isError||results.fetchStatus==="paused") && (
+        <p role="alert">
+          Results could not load.{" "}
+          <Button onClick={() => results.refetch()}>Retry</Button>
+        </p>
+      )}
+      {sampleId && currentSamples && !currentId && <p role="alert">The requested report is not available in this account. Select another saved report.</p>}
+      {tab === "results" && currentResults && (
+        <section className="bloom-panel">
+          <h2>Selected report</h2>
+          <p>
+            {currentResults.sample.testingCompany} ·{" "}
+            {reportDateText(currentResults.sample)} ·{" "}
+            {currentResults.sample.processingStatus}
+          </p>
+          <p className="break-words whitespace-pre-wrap">{currentResults.sample.notes}</p>
+          <dl className="gut-report-facts"><div><dt>Quantified taxa</dt><dd>{currentResults.bacterial_composition.filter((b:ReportedTaxon)=>typeof b.abundance==="number"&&Number.isFinite(b.abundance)).length}</dd></div><div><dt>Saved diversity index</dt><dd>{currentResults.sample.diversityIndex??"Not recorded"}</dd></div></dl>
+          <p className="panel-note">Saved values are not independently verified. Diversity is method-dependent and is not a universal health score.</p>
+          <details><summary>Methods & historical analysis limits</summary><p className="panel-note">Unsupported historical molecule estimates and recommendations are withheld. This does not mean no records were stored.</p>{currentResults.analyses.map((analysis:any)=><p className="panel-note" key={analysis.id}>{analysis.analysisType} · {analysis.modelVersion} · {analysis.analysisType==='reported-composition'?'Descriptive summary of supplied relative abundance; no biological prediction.':'Historical analysis record; unsupported outputs are withheld.'}</p>)}</details>
+        </section>
+      )}
+      {tab === "results" &&
+        currentResults?.sample?.structuredData?.schemaVersion ===
+          "bloom-report-v2" && (
+          <ImportedReportDetails report={currentResults.sample.structuredData} />
         )}
-
-        {!hasSamples && (
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="predicted" data-testid="tab-predicted">Predicted Profile</TabsTrigger>
-            <TabsTrigger value="insights" data-testid="tab-insights">Diet Insights</TabsTrigger>
-          </TabsList>
-        )}
-
-        {hasSamples ? (
-          <>
-            <TabsContent value="latest" className="space-y-4">
-              {latestSample && (
-                <Card data-testid="card-latest-sample">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <span>Test Results</span>
-                      <Badge variant="secondary">
-                        {format(new Date(latestSample.testDate), 'MMM d, yyyy')}
-                      </Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm text-muted-foreground">Diversity Index</p>
-                        <p className="text-2xl font-bold">{latestSample.diversityIndex?.toFixed(2) || 'N/A'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm text-muted-foreground">Status</p>
-                        <Badge variant={latestSample.processingStatus === 'completed' ? 'default' : 'secondary'}>
-                          {latestSample.processingStatus}
-                        </Badge>
-                      </div>
-                    </div>
-                    {latestSample.testingCompany && (
-                      <p className="text-sm text-muted-foreground mt-4">
-                        Source: {latestSample.testingCompany}
+      {tab === "bacteria" && (
+        <section className="bloom-panel">
+          <h2>Microbial composition & change</h2>
+          {currentId && (
+            <label>
+              Compare another report
+              <select
+                className="bloom-input w-full"
+                value={comparisonId}
+                onChange={(e) => setComparisonId(e.target.value)}
+              >
+                <option value="">No comparison</option>
+                {sorted
+                  .filter((s) => s.id !== currentId)
+                  .map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {reportDateText(s)} ·{" "}
+                      {s.testingCompany}
+                    </option>
+                  ))}
+              </select>
+            </label>
+          )}
+          <p className="panel-note">
+            Source values are shown side by side. Assay compatibility has not been established, so no change or health interpretation is calculated. Relative percentages are not absolute organism counts.
+          </p>
+          {comparisonId&&(comparison.isError||comparison.fetchStatus==="paused") && (
+            <p role="alert">
+              Comparison unavailable.{" "}
+              <Button onClick={() => comparison.refetch()}>Retry</Button>
+            </p>
+          )}
+          {taxa.length ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr>
+                    <th className="text-left p-2">Taxon</th>
+                    <th className="text-left p-2">Reported amount</th>
+                    {comparisonId && <th className="text-left p-2">Other reported abundance</th>}
+                  </tr>
+                </thead>
+                <tbody>
+                  {taxa.map(b => {
+                    const previous =
+                      comparisonTaxa.find(
+                        (v: any) => v.bacterialName === b.bacterialName && !!b.taxonomyLevel && v.taxonomyLevel === b.taxonomyLevel,
+                      );
+                    return (
+                      <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
+                        <td className="p-2">
+                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><span><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
+                        </td>
+                        <td className="p-2">{typeof b.abundance==="number"&&Number.isFinite(b.abundance)?`${b.abundance.toFixed(2)}%`:reportedTaxonAmount(b)}</td>
+                        {comparisonId && (
+                          <td className="p-2">
+                            {!currentComparison?"Comparison not checked":previous
+                              ? typeof previous.abundance==="number"&&Number.isFinite(previous.abundance)?`${previous.abundance.toFixed(2)}% (reported)`:reportedTaxonAmount(previous)
+                              : "No matched taxon"}
+                          </td>
+                        )}
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <p>{currentResults?"No organism observations reported yet.":"Organism observations have not been checked for this selection."}</p>
+          )}
+        </section>
+      )}
+      {tab === "molecules" && (
+        <section className="bloom-panel">
+          <h2>Molecule & pathway hypotheses</h2>
+          <p className="panel-note">
+            Historical prototype molecule values and guessed gene functions are withheld.
+            Organism percentages cannot establish your metabolite production or health effects.
+          </p>
+            <p>
+              Personal metabolite output has not been established. Explore{" "}
+              <Link className="underline" href="/insights">
+                sourced microbial pathways
+              </Link>
+              .
+            </p>
+        </section>
+      )}
+      {tab === "diet" && (
+        <section className="bloom-panel space-y-5 diet-exploration">
+          <div>
+            <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
+            <h2>Food patterns & next steps</h2>
+            <p>
+              Explore what your logged meals contribute and choose a practical
+              next step. Food records do not identify which bacteria live in
+              your gut.
+            </p>
+          </div>
+          {prediction.isPending||prediction.fetchStatus!=="idle" ? (
+            <p role="status">Checking your recorded meals…</p>
+          ) : prediction.isError ? (
+            <div role="alert">
+              <p>Food patterns could not load.</p>
+              <Button onClick={() => prediction.refetch()}>Retry</Button>
+            </div>
+          ) : (
+            <>
+              <div className="report-context">
+                <h3>
+                  {currentPrediction?.mealsAnalyzed ?? "Not checked"} meals logged in the last{" "}
+                  {currentPrediction?.days ?? "unconfirmed"} days
+                </h3>
+                <p>{currentPrediction?.message}</p>
+              </div>
+              <div className="report-card-grid">
+                {currentPrediction?.observations?.map((o: any) => (
+                  <article className="report-card" key={o.key}>
+                    <p className="eyebrow">{o.name}</p>
+                    <p className="diet-known-total">
+                      {o.knownTotal === null
+                        ? "Unknown"
+                        : Number(o.knownTotal.toFixed(1)).toLocaleString()}{" "}
+                      <span>{o.knownTotal === null ? "" : o.unit}</span>
+                    </p>
+                    <p>Known contribution across these recorded meals</p>
+                    <p className="report-meta">
+                      {o.knownMeals}/{o.totalMeals} meals have an estimate ·{" "}
+                      {o.completeMeals}/{o.totalMeals} have a complete{" "}
+                      {o.name.toLowerCase()} estimate.
+                    </p>
+                    {o.partial && (
+                      <p className="panel-note">
+                        Partial total: missing portions or nutrients are not
+                        counted as zero.
                       </p>
                     )}
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
+                  </article>
+                ))}
+              </div>
+            </>
+          )}
+          <div className="report-card-grid">
+            <article className="report-card">
+              <h3>Make the next meal useful</h3>
+              <p>
+                Choose a meal that fits what is left of today’s nutrient
+                targets, your food preferences and your saved goals.
+              </p>
+              <Link className="text-link" href="/meal-planner">
+                Plan the rest of today →
+              </Link>
+            </article>
+            <article className="report-card">
+              <h3>Support fermentation through food</h3>
+              <p>
+                Oats, beans, lentils and vegetables provide different substrates
+                for gut microbes. Increase fiber gradually as tolerated; no
+                single food guarantees a specific organism or metabolite
+                response.
+              </p>
+              <Link className="text-link" href="/insights">
+                Explore food → microbe → molecule evidence →
+              </Link>
+            </article>
+          </div>
+          <details className="report-context">
+            <summary>What we can—and cannot—learn here</summary>
+            <p>
+              {currentPrediction?.note ||
+                "Food logs do not measure bacterial abundance or metabolite production."}
+            </p>
+            <p>
+              The previous illustrative diet rules could label organisms from
+              protein or fiber averages. Those labels are no longer shown as
+              personal microbiome findings. Use an actual report for reported
+              organisms, and the meal planner for nutrient-based suggestions.
+            </p>
+          </details>
+        </section>
+      )}
+      {tab === "cohorts" && (
+        <section className="bloom-panel space-y-4">
+          <h2>Research populations</h2>
+          <p className="panel-note">General research summaries. Personal cohort comparisons are unavailable without validated reference data.</p>
+          {cohortResearch.map((c) => (
+            <article key={c.id}>
+              <h3>{c.name}</h3>
+              <p>{c.finding}</p>
+              <p className="panel-note">
+                {c.comparison} {c.foodStatus}
+              </p>
+              <a
+                className="underline"
+                href={evidenceSources.find((s) => s.id === c.sourceId)?.url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Primary study
+              </a>
+            </article>
+          ))}
 
-            <TabsContent value="bacteria" className="space-y-4">
-              {dietPrediction?.predictedBacteria && dietPrediction.predictedBacteria.length > 0 ? (
-                <>
-                  <Card className="border-primary/20 bg-primary/5">
-                    <CardContent className="py-4">
-                      <p className="text-sm">
-                        <span className="font-semibold">Diet-Based Composition</span> — Based on {dietPrediction.mealsAnalyzed || 0} meals analyzed. 
-                        This shows the likely bacterial species influenced by your current dietary patterns.
-                      </p>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Predicted Bacterial Abundance</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {dietPrediction.predictedBacteria.map((bacteria: any, idx: number) => {
-                        const likelihoodMap: Record<string, number> = {
-                          'Very High': 90,
-                          'High': 75,
-                          'Moderate': 50,
-                          'Low': 25,
-                        };
-                        const abundance = likelihoodMap[bacteria.likelihood] || 50;
-                        
-                        return (
-                          <div key={idx} className="space-y-2">
-                            <div className="flex items-center justify-between">
-                              <div className="flex-1">
-                                <p className="font-medium text-sm">{bacteria.name}</p>
-                                <p className="text-xs text-muted-foreground">{bacteria.description}</p>
-                              </div>
-                              <Badge variant="outline" className="ml-2">{bacteria.likelihood}</Badge>
-                            </div>
-                            
-                            <div className="space-y-1">
-                              <div className="h-2 bg-muted rounded-full overflow-hidden">
-                                <div 
-                                  className="h-full bg-primary rounded-full transition-all duration-500"
-                                  style={{ width: `${abundance}%` }}
-                                />
-                              </div>
-                              <div className="flex justify-between text-xs text-muted-foreground">
-                                <span>Relative abundance</span>
-                                <span>{abundance}%</span>
-                              </div>
-                            </div>
-
-                            {bacteria.dietaryDriver && (
-                              <div className="mt-2 p-2 rounded bg-muted/30 text-xs">
-                                <span className="font-medium">Driver: </span>
-                                {bacteria.dietaryDriver}
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-base">How to Read This Data</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2 text-sm text-muted-foreground">
-                      <p>
-                        <strong className="text-foreground">Relative abundance</strong> shows the predicted prevalence of each bacterial species based on your dietary patterns.
-                      </p>
-                      <p>
-                        <strong className="text-foreground">Very High/High</strong> likelihood indicates strong dietary signals promoting these bacteria.
-                      </p>
-                      <p>
-                        Upload a microbiome test for precise abundance measurements and additional insights.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </>
-              ) : (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Bacterial Composition</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Log at least 3 meals to see predicted bacterial composition based on your diet, or upload a microbiome test for precise measurements.
-                    </p>
-                    <Button onClick={() => navigate('/nutrition')}>
-                      Log Meals
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
-
-            <TabsContent value="insights" className="space-y-4">
-              {dietPrediction?.predictedBacteria && dietPrediction.predictedBacteria.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Beaker className="h-5 w-5" />
-                      Diet-Based Bacterial Predictions
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Based on {dietPrediction.mealsAnalyzed || 0} meals analyzed
-                    </p>
-                    <div className="space-y-3">
-                      {dietPrediction.predictedBacteria.map((bacteria: any, idx: number) => (
-                        <div key={idx} className="p-4 rounded-lg border space-y-3">
-                          <div className="flex items-start justify-between">
-                            <div className="flex-1">
-                              <p className="font-semibold">{bacteria.name}</p>
-                              <p className="text-sm text-muted-foreground mt-1">{bacteria.description}</p>
-                            </div>
-                            <Badge variant="outline" className="ml-2">{bacteria.likelihood}</Badge>
-                          </div>
-                          {bacteria.dietaryDriver && (
-                            <div className="p-2 rounded bg-muted/30">
-                              <p className="text-xs font-medium text-muted-foreground mb-1">📊 Dietary Driver</p>
-                              <p className="text-sm">{bacteria.dietaryDriver}</p>
-                            </div>
-                          )}
-                          {bacteria.impact && (
-                            <div className="p-2 rounded bg-primary/5">
-                              <p className="text-xs font-medium text-muted-foreground mb-1">🔬 Health Impact Chain</p>
-                              <p className="text-sm font-medium">{bacteria.impact}</p>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-              
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5" />
-                    Diet-Microbiome Insights
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {dietPrediction?.insights ? (
-                    <div className="space-y-3">
-                      {dietPrediction.insights.map((insight: any, idx: number) => (
-                        <div key={idx} className="p-3 rounded-lg border">
-                          <h4 className="font-medium mb-1">{insight.title}</h4>
-                          <p className="text-sm text-muted-foreground">{insight.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">
-                      Log more meals to see personalized insights
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="history" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Test History</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {samples?.map((sample: any) => (
-                      <div key={sample.id} className="flex items-center justify-between p-3 rounded-lg border">
-                        <div>
-                          <p className="font-medium">{format(new Date(sample.testDate), 'MMM d, yyyy')}</p>
-                          <p className="text-sm text-muted-foreground">{sample.testingCompany || 'Unknown source'}</p>
-                        </div>
-                        <Badge variant="secondary">{sample.processingStatus}</Badge>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </>
-        ) : (
-          <>
-            <TabsContent value="predicted" className="space-y-4">
-              <Card data-testid="card-predicted-profile">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Beaker className="h-5 w-5" />
-                    Predicted Microbiome Profile
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {dietPrediction ? (
-                    <div className="space-y-4">
-                      <p className="text-sm text-muted-foreground">
-                        Based on {dietPrediction.mealsAnalyzed || 0} meals analyzed
-                      </p>
-                      <div className="space-y-3">
-                        {dietPrediction.predictedBacteria?.map((bacteria: any, idx: number) => (
-                          <div key={idx} className="p-4 rounded-lg border space-y-3">
-                            <div className="flex items-start justify-between">
-                              <div className="flex-1">
-                                <p className="font-semibold">{bacteria.name}</p>
-                                <p className="text-sm text-muted-foreground mt-1">{bacteria.description}</p>
-                              </div>
-                              <Badge variant="outline" className="ml-2">{bacteria.likelihood}</Badge>
-                            </div>
-                            {bacteria.dietaryDriver && (
-                              <div className="p-2 rounded bg-muted/30">
-                                <p className="text-xs font-medium text-muted-foreground mb-1">📊 Dietary Driver</p>
-                                <p className="text-sm">{bacteria.dietaryDriver}</p>
-                              </div>
-                            )}
-                            {bacteria.impact && (
-                              <div className="p-2 rounded bg-primary/5">
-                                <p className="text-xs font-medium text-muted-foreground mb-1">🔬 Health Impact Chain</p>
-                                <p className="text-sm font-medium">{bacteria.impact}</p>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">
-                      Log more meals to generate predictions
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="insights" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5" />
-                    Diet-Microbiome Insights
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {dietPrediction?.insights ? (
-                    <div className="space-y-3">
-                      {dietPrediction.insights.map((insight: any, idx: number) => (
-                        <div key={idx} className="p-3 rounded-lg border">
-                          <h4 className="font-medium mb-1">{insight.title}</h4>
-                          <p className="text-sm text-muted-foreground">{insight.description}</p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">
-                      Log more meals to see personalized insights
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </>
-        )}
-      </Tabs>
-    </div>
+        </section>
+      )}
+      {currentResults?.recommendations?.length > 0 && (
+        <section className="bloom-panel">
+          <h2>Stored report recommendations</h2>
+          <p className="panel-note">
+            Legacy experimental recommendations; check their evidence and your
+            preferences before use.
+          </p>
+          {currentResults.recommendations.map((r: any) => (
+            <details key={r.id}>
+              <summary>{r.itemName}</summary>
+              <p>{r.reasoning}</p>
+              <p>{r.details}</p>
+              <p>
+                Target bacteria: {r.targetBacteria?.join(", ")} · Molecules:{" "}
+                {r.targetMetabolites?.join(", ")}
+              </p>
+            </details>
+          ))}
+        </section>
+      )}
+      <MicrobialProfile taxon={activeTaxon} sample={currentResults?.sample} onClose={closeProfile} onRestoreFocus={()=>taxonTrigger.current?.isConnected&&taxonTrigger.current.focus({preventScroll:true})}/>
+    </main>
   );
 }

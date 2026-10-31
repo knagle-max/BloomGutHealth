@@ -1,0 +1,100 @@
+name: Neon PR database and live app checks
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: neon-pr-${{ github.event.number }}
+  cancel-in-progress: false
+
+jobs:
+  validate_neon:
+    name: Create Neon branch and verify Bloom
+    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out the pull request
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check production dependency advisories
+        run: npm audit --omit=dev --audit-level=high
+      - name: Python service authentication and evidence contracts
+        run: |
+          python3 -m venv /tmp/bloom-service-tests
+          /tmp/bloom-service-tests/bin/pip install -r requirements-test.txt
+          /tmp/bloom-service-tests/bin/python -m unittest discover -s tests -p 'test_*.py'
+      - name: Set preview branch expiry
+        run: echo "EXPIRES_AT=$(date -u --date '+14 days' +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV"
+      - name: Create isolated schema-only Neon branch
+        id: neon
+        uses: neondatabase/create-branch-action@fb620d43d4c565abaf088b848a4e28e5c4ea4d9c # v6
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          branch_name: preview/pr-${{ github.event.number }}
+          parent_branch: production
+          branch_type: schema-only
+          expires_at: ${{ env.EXPIRES_AT }}
+      - name: Apply Neon service configuration and pull environment
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+          NEON_BRANCH: preview/pr-${{ github.event.number }}
+        # Pin:8.14.0 requests unpublished @neon/config1.9.6 and fails before app checks.
+        run: |
+          npx --yes neon@8.13.0 --no-analytics link -y --project-id "$NEON_PROJECT_ID" --branch "$NEON_BRANCH" --no-env-pull
+          npx --yes neon@8.13.0 --no-analytics deploy
+      - name: Apply app schema to preview database only
+        env:
+          BLOOM_SMOKE_ISOLATED: "true"
+          DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
+          DATABASE_URL_UNPOOLED: ${{ steps.neon.outputs.db_url }}
+        run: |
+          node scripts/prepare-preview-schema.mjs
+          node scripts/push-preview-schema.mjs
+          npm run db:seed:knowledge
+      - name: Type check and API source inventory
+        run: |
+          npm run check
+          node --import tsx scripts/api-exposure-inventory.ts --check
+          node --import tsx scripts/capability-crosswalk.ts --check
+      - name: Unit and embedded PostgreSQL tests
+        run: npm test
+      - name: Production build
+        run: npm run build
+      - name: Start production app and verify live Neon persistence
+        env:
+          DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
+          DATABASE_URL_UNPOOLED: ${{ steps.neon.outputs.db_url }}
+          BLOOM_SMOKE_ISOLATED: "true"
+        run: |
+          npm run test:neon
+          node --import tsx scripts/spend-ledger-smoke.ts
+          node --import tsx scripts/feature-control-smoke.ts
+
+  delete_neon_branch:
+    name: Delete Neon PR database
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Delete this pull request's preview branch
+        uses: neondatabase/delete-branch-action@4468d825d5a88ef4012f1705a82f02ec3072f776 # v3
+        with:
+          project_id: ${{ vars.NEON_PROJECT_ID }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          branch: preview/pr-${{ github.event.number }}

@@ -1,0 +1,28 @@
+# Bloom — Mandatory modularity audits at v0.5 and v0.6 completion
+Date: 2026-10-31 | Status: Architect-approved **milestone exit criteria**, not completed audits.
+Source baseline: `MODULARITY_FOCUSED_AUDIT_2026-10-31.md` and `scripts/qa/check-architecture-boundaries.mjs`.
+Architecture decision: **Preserve the modular monolith.** No microservices, wholesale rewrites, or speculative domain reorganization.
+
+## Required checkpoints
+**Gate M-05 — v0.5 engineering completion:** After all actionable approved v0.5 feature slices are implemented and tested, and **before v0.5 is represented as architecturally complete / ready for its release decision**, rerun a focused modularity audit on the exact final v0.5 commit and its preview deployment. Do not block routine continuation for external independent-beta/legal reviews that are not yet available; record those as separate acceptance blockers.
+
+**Gate M-06 — v0.6 engineering completion:** After v0.6 approved scope is implemented and tested, and **before v0.6 is represented as architecturally complete / ready for its release decision**, repeat the same audit against the final v0.6 commit, compare its findings with the signed v0.5 baseline, and check new Eat–Move–Recover and adaptive intelligence boundary changes. Do not wait until v0.6 ends to fix a discovered active P0 privacy, safety, permission, or data-correctness issue.
+
+## Identical core audit checklist at both milestones
+1. Build/import dependency graph on checked-out exact SHA; scan **all source modules**, static circular imports and runtime-initialization-sensitive cycles; identify real shared→server/client, client→server, server→client violations. Run `node scripts/qa/check-architecture-boundaries.mjs`, validate findings manually, retain counts/output and effective exclusions. Add targeted checks in CI when baseline is stable.
+2. Confirm canonical ownership and source representations: Nutrition food/recipe/portions and unknown nutrients; Activity canonical sets, performance, and Athlete; Biology original reports and corrections; Progress projections; Goals; Evidence/Recommendations; health ingestion and existing consent/identity stores. Flag parallel caches/stores only when they can change results or lose source truth.
+3. Check shared math for meal/day nutrient aggregation, raw vs cooked/serving conversion, estimated vs known, expenditure and wearable workout dedupe, hard-set counting, goal progress, and future planner balance. Cross-view Food, Today, Progress and Athlete fixture parity.
+4. Test server-side authorization at route, storage, job, export and source-revision boundaries: tenant isolation, user-owned IDs, permission revocation and account/source deletion; no unauthenticated disabled capability through direct API.
+5. Run **capability-off** negative smoke with AI disabled/unconfigured, no microbiome report, optional research disabled, Coach sharing disabled, no wearable integrations and no provider credentials; prove Food manual/search fallback, Today, Progress, Athlete and ordinary planning remain usable. For v0.6, specifically disable Eat–Move–Recover adaptive intelligence, passive statistical discovery, biological models and optional external data in isolation; core functions still pass.
+6. Inspect provider adapters and import boundaries for idempotent replay, source ownership, consent, conflicts, missing data, rate/failure behavior and secret isolation. Do not build or activate connectors just to satisfy this audit.
+7. Inspect coupling among Nutrition, Athlete, Biology, Progress, Goals, Evidence/Recommendations and Eat–Move–Recover. Distinguish justified read-only cross-domain composition from direct hidden domain writes, duplicate clinical inference engines or hard dependency on optional services.
+
+## Result and remediation contract
+For each audit item publish **Pass / At risk / Violation / Unverified** (explicitly distinguish no evidence from pass), affected file(s), precise consequence, severity, smallest practical fix, regression test and reproducible evidence. Compare v0.6 changes with v0.5 closure to detect boundary regression. Findings live in milestone documents `docs/architecture/MODULARITY_AUDIT_V05_EXIT.md` and `docs/architecture/MODULARITY_AUDIT_V06_EXIT.md` created by Codex at execution time, with exact SHA, scanner output reference, tests, CI and Render environment. Mark completed/tested/deployed/independently accepted separately.
+- **P0 violation:** user isolation, unauthorized feature exposure, data corruption/loss, unsafe outputs, broken core task — fix promptly and rerun affected tests.
+- **Material P1:** architecture boundary, circular initialization or duplicate calculation causing inconsistent results — minimal fix before milestone engineering exit, unless the owner explicitly accepts a bounded exception.
+- **Minor P2:** harmless layering or maintainability concerns — document with follow-up owner and return to core-first work; not a reason to block release or refactor.
+No speculative replatforming, microservices or new data infrastructure. Do not automatically mark these audits done from a commit or test-count summary.
+
+## Task-index and execution rules
+Keep both M-05 and M-06 as **READY/NOT_STARTED** until their respective milestone exit; when reached, run and record actual evidence. An interim architectural audit after substantial cross-domain changes is allowed, but does not substitute for the exact-final-commit milestone audit. The milestones are sequential only with respect to their own release acceptance; ongoing approved development may continue across independent tasks.

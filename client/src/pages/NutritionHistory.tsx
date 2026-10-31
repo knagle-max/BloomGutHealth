@@ -1,17 +1,39 @@
-import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Utensils, TrendingUp, Calendar, Loader2, Plus, ChevronDown, ChevronUp, Pencil, Trash2, Sparkles } from 'lucide-react';
-import { format } from 'date-fns';
-import { useToast } from '@/hooks/use-toast';
-import { apiRequest, queryClient } from '@/lib/queryClient';
-import MealTypeSelector, { MealType } from '@/components/MealTypeSelector';
-import { useAuth } from '@/lib/auth';
+import {recordedMealTime} from "@shared/meal-time";
+import {journalIdentity} from "@shared/journal-identity";
+import {foodMass} from "@shared/nutrition-display";
+import {refreshMealSources} from "@/lib/meal-cache";
+import { useExperience } from "@/lib/experience";
+import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
+import { SaveMealButton } from "@/components/SavedMeals";
+import MealAnalysis from "@/components/MealAnalysis";
+import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
+import { explainFoods } from "@shared/meal-intelligence";
+import { type MealIntelligence } from "@shared/meal-intelligence";
+import { useRef, useState } from "react";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Utensils,
+  TrendingUp,
+  Calendar,
+  Loader2,
+  Plus,
+  ChevronDown,
+  ChevronUp,
+  Pencil,
+  Trash2,
+  Sparkles,
+} from "lucide-react";
+import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import MealTypeSelector, { MealType } from "@/components/MealTypeSelector";
+import { useAuth } from "@/lib/auth";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,116 +45,41 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-interface BacteriaImpact {
-  bacteria: string;
-  impact: string;
-  reason: string;
-}
 
-function analyzeFoodItemBacteria(item: any): BacteriaImpact[] {
-  const impacts: BacteriaImpact[] = [];
-  const fiber = item.fiber_g || 0;
-  const protein = item.protein_g || 0;
-  const sugar = item.sugar_g || 0;
-  const calories = item.calories || 0;
-
-  if (fiber >= 3) {
-    impacts.push({
-      bacteria: 'Faecalibacterium prausnitzii',
-      impact: 'Produces butyrate → Reduces inflammation → Improves gut barrier',
-      reason: `High fiber (${fiber}g) feeds beneficial bacteria`
-    });
-  } else if (fiber >= 1.5) {
-    impacts.push({
-      bacteria: 'Bifidobacterium',
-      impact: 'Produces lactate & acetate → Lowers pH → Protects against pathogens',
-      reason: `Moderate fiber (${fiber}g) supports good bacteria`
-    });
-  }
-
-  if (protein >= 10) {
-    impacts.push({
-      bacteria: 'Akkermansia muciniphila',
-      impact: 'Strengthens mucus layer → Improves metabolic health → Reduces obesity risk',
-      reason: `High protein (${protein}g) supports mucus-degrading bacteria`
-    });
-  }
-
-  if (sugar >= 5) {
-    impacts.push({
-      bacteria: 'E. coli (opportunistic)',
-      impact: 'May increase endotoxins → Inflammation → Metabolic stress',
-      reason: `High sugar (${sugar}g) feeds opportunistic bacteria`
-    });
-  }
-
-  if (fiber < 1 && calories > 100) {
-    impacts.push({
-      bacteria: 'Bacteroides',
-      impact: 'Protein fermentation → Mixed metabolites → Neutral to negative',
-      reason: 'Low fiber content shifts bacterial balance'
-    });
-  }
-
-  return impacts.length > 0 ? impacts : [{
-    bacteria: 'General microbiome',
-    impact: 'Standard nutrient absorption → Energy production',
-    reason: 'Balanced nutritional profile'
-  }];
-}
-
-function analyzeMealImpact(nutritionalItems: any[]): { summary: string; keyBacteria: string[] } {
-  const totalFiber = nutritionalItems.reduce((sum, item) => sum + (item.fiber_g || 0), 0);
-  const totalProtein = nutritionalItems.reduce((sum, item) => sum + (item.protein_g || 0), 0);
-  const totalSugar = nutritionalItems.reduce((sum, item) => sum + (item.sugar_g || 0), 0);
-  
-  let summary = '';
-  const keyBacteria: string[] = [];
-
-  if (totalFiber >= 8) {
-    summary = 'Excellent fiber content promotes beneficial bacteria producing anti-inflammatory compounds and strengthening gut barrier.';
-    keyBacteria.push('Faecalibacterium', 'Bifidobacterium');
-  } else if (totalFiber >= 4) {
-    summary = 'Good fiber levels support healthy bacterial diversity and short-chain fatty acid production.';
-    keyBacteria.push('Bifidobacterium');
-  } else if (totalSugar > 15) {
-    summary = 'High sugar content may promote opportunistic bacteria. Consider balancing with more fiber-rich foods.';
-    keyBacteria.push('E. coli');
-  } else if (totalProtein >= 25) {
-    summary = 'High protein supports mucus-layer bacteria and metabolic health. Consider adding fiber for optimal balance.';
-    keyBacteria.push('Akkermansia');
-  } else {
-    summary = 'Balanced meal with moderate bacterial impact. Consider adding more fiber-rich foods for enhanced gut health.';
-    keyBacteria.push('General microbiome');
-  }
-
-  return { summary, keyBacteria };
-}
-
-function HistoricalTrends({ userId, targets }: { userId: string; targets: any }) {
+function HistoricalTrends({
+  userId,
+  targets,
+}: {
+  userId: string;
+  targets: any;
+}) {
+  const { settings } = useExperience();
+  const energyUnit = settings.displayUnits.energy;
+  const currentTargets = targets || {};
   const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getUTCMonth();
+  const currentYear = currentDate.getUTCFullYear();
 
-  const { data: monthlyData } = useQuery<any>({
-    queryKey: [`/api/nutrition/monthly/${userId}?year=${currentYear}&month=${currentMonth}`],
+  const { data: monthlyData, isError: monthlyError } = useQuery<any>({
+    queryKey: [
+      `/api/nutrition/monthly/${userId}?year=${currentYear}&month=${currentMonth}`,
+    ],
     enabled: !!userId,
   });
 
-  const { data: yearlyData } = useQuery<any>({
+  const { data: yearlyData, isError: yearlyError } = useQuery<any>({
     queryKey: [`/api/nutrition/yearly/${userId}?year=${currentYear}`],
     enabled: !!userId,
   });
 
-  if (!monthlyData && !yearlyData) {
-    return null;
-  }
+  if (!monthlyData && !yearlyData && !monthlyError && !yearlyError) return null;
 
-  const getStatusColor = (current: number, target: number) => {
-    const percentage = (current / target) * 100;
-    if (percentage >= 90 && percentage <= 110) return 'text-green-600 dark:text-green-400';
-    if (percentage >= 70 && percentage <= 130) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
+  // Recorded partial days are not an adequacy assessment against today's targets.
+  const historyAmount = (period: any, key: string, unit: string) => {
+    const value=period.dailyAverages?.[key];
+    if(typeof value!=="number"||!Number.isFinite(value))return "Unavailable";
+    const text=key==="calories"?`${energyAmount(value,energyUnit)} ${energyUnit}`:`${value} ${unit}`;
+    return text+(period.nutritionCoverage?.[key]?.partial?" · partial":"");
   };
 
   return (
@@ -141,72 +88,114 @@ function HistoricalTrends({ userId, targets }: { userId: string; targets: any })
         <Calendar className="h-5 w-5" />
         Historical Trends
       </h2>
+      <p className="text-sm text-muted-foreground">Known recorded contributions per UTC day with a meal. Unlogged meals and missing nutrients are not measured zeros; these averages do not establish total intake or adequacy.</p>
+      {(monthlyError||yearlyError)&&<p role="alert">Some nutrition history could not load. Missing reports are not empty records; your daily journal remains available.</p>}
 
       {monthlyData?.dailyAverages && (
         <Card data-testid="card-monthly-averages">
           <CardHeader>
             <CardTitle className="text-base">
-              {new Date(currentYear, currentMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })} - Daily Averages
+              {new Date(currentYear, currentMonth).toLocaleDateString("en-US", {
+                month: "long",
+                year: "numeric",
+              })}{" "}
+              - Recorded Daily Averages
             </CardTitle>
             <p className="text-xs text-muted-foreground">
-              Based on {monthlyData.daysWithMeals} days of logged meals
+              Based on {monthlyData.daysWithMeals} UTC days with logged meals
             </p>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Avg Calories/Day</span>
-                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.calories, targets.calories)}`}>
-                    {monthlyData.dailyAverages.calories}
+                  <span className="text-xs text-muted-foreground">
+                    Avg energy/day
+                  </span>
+                  <span
+                    className="text-sm font-semibold text-foreground"
+                  >
+                    {historyAmount(monthlyData, "calories", energyUnit)}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Target: {targets.calories}</p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
+                </p>
               </div>
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Avg Protein/Day</span>
-                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.protein, targets.protein)}`}>
-                    {monthlyData.dailyAverages.protein}g
+                  <span className="text-xs text-muted-foreground">
+                    Avg Protein/Day
+                  </span>
+                  <span
+                    className="text-sm font-semibold text-foreground"
+                  >
+                    {historyAmount(monthlyData, "protein", "g")}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Target: {targets.protein}g</p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"protein","g")}
+                </p>
               </div>
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Avg Carbs/Day</span>
-                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.carbs, targets.carbs)}`}>
-                    {monthlyData.dailyAverages.carbs}g
+                  <span className="text-xs text-muted-foreground">
+                    Avg Carbs/Day
+                  </span>
+                  <span
+                    className="text-sm font-semibold text-foreground"
+                  >
+                    {historyAmount(monthlyData, "carbs", "g")}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Target: {targets.carbs}g</p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"carbs","g")}
+                </p>
               </div>
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Avg Fat/Day</span>
-                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.fat, targets.fat)}`}>
-                    {monthlyData.dailyAverages.fat}g
+                  <span className="text-xs text-muted-foreground">
+                    Avg Fat/Day
+                  </span>
+                  <span
+                    className="text-sm font-semibold text-foreground"
+                  >
+                    {historyAmount(monthlyData, "fat", "g")}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Target: {targets.fat}g</p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"fat","g")}
+                </p>
               </div>
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Avg Fiber/Day</span>
-                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.fiber, targets.fiber)}`}>
-                    {monthlyData.dailyAverages.fiber}g
+                  <span className="text-xs text-muted-foreground">
+                    Avg Fiber/Day
+                  </span>
+                  <span
+                    className="text-sm font-semibold text-foreground"
+                  >
+                    {historyAmount(monthlyData, "fiber", "g")}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Target: {targets.fiber}g</p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"fiber","g")}
+                </p>
               </div>
               <div>
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-xs text-muted-foreground">Avg Sugar/Day</span>
-                  <span className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.sugar, targets.sugar)}`}>
-                    {monthlyData.dailyAverages.sugar}g
+                  <span className="text-xs text-muted-foreground">
+                    Avg Sugar/Day
+                  </span>
+                  <span
+                    className="text-sm font-semibold text-foreground"
+                  >
+                    {historyAmount(monthlyData, "sugar", "g")}
                   </span>
                 </div>
-                <p className="text-xs text-muted-foreground">Target: {targets.sugar}g</p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"sugar","g")}
+                </p>
               </div>
             </div>
           </CardContent>
@@ -216,26 +205,41 @@ function HistoricalTrends({ userId, targets }: { userId: string; targets: any })
       {yearlyData?.dailyAverages && yearlyData.monthlyBreakdown?.length > 0 && (
         <Card data-testid="card-yearly-overview">
           <CardHeader>
-            <CardTitle className="text-base">{currentYear} - Annual Overview</CardTitle>
+            <CardTitle className="text-base">
+              {currentYear} - Annual Overview
+            </CardTitle>
             <p className="text-xs text-muted-foreground">
-              {yearlyData.daysWithMeals} days tracked • {yearlyData.totalMeals} meals logged
+              {yearlyData.daysWithMeals} days tracked • {yearlyData.totalMeals}{" "}
+              meals logged
             </p>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-3 pb-3 border-b">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-3 border-b">
               <div>
-                <p className="text-xs text-muted-foreground">Yearly Avg Calories</p>
-                <p className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.calories, targets.calories)}`}>
-                  {yearlyData.dailyAverages.calories}/day
+                <p className="text-xs text-muted-foreground">
+                  Yearly average energy
                 </p>
-                <p className="text-xs text-muted-foreground">Target: {targets.calories}</p>
+                <p
+                  className="text-lg font-semibold text-foreground"
+                >
+                  {historyAmount(yearlyData, "calories", energyUnit)}/logged day
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"calories",energyUnit)}
+                </p>
               </div>
               <div>
-                <p className="text-xs text-muted-foreground">Yearly Avg Protein</p>
-                <p className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.protein, targets.protein)}`}>
-                  {yearlyData.dailyAverages.protein}g/day
+                <p className="text-xs text-muted-foreground">
+                  Yearly Avg Protein
                 </p>
-                <p className="text-xs text-muted-foreground">Target: {targets.protein}g</p>
+                <p
+                  className="text-lg font-semibold text-foreground"
+                >
+                  {historyAmount(yearlyData, "protein", "g")}/logged day
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {targets?.basis?.kind === "example-reference" ? "Example reference" : targets?.basis?.kind === "profile-estimate" ? "Current estimate" : "Current target"}: {historyAmount({dailyAverages:currentTargets},"protein","g")}
+                </p>
               </div>
             </div>
 
@@ -243,15 +247,22 @@ function HistoricalTrends({ userId, targets }: { userId: string; targets: any })
               <h4 className="text-sm font-semibold mb-2">Monthly Breakdown</h4>
               <div className="space-y-2">
                 {yearlyData.monthlyBreakdown.map((month: any) => (
-                  <div key={month.month} className="flex items-center justify-between text-sm">
+                  <div
+                    key={month.month}
+                    className="flex flex-wrap items-center justify-between gap-2 text-sm"
+                  >
                     <span className="font-medium">{month.monthName}</span>
-                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
                       <span>{month.mealsLogged} meals</span>
-                      <span className={getStatusColor(month.avgCalories, targets.calories)}>
-                        {month.avgCalories} cal/day
+                      <span
+                        className="text-foreground"
+                      >
+                        {historyAmount({dailyAverages:{calories:month.avgCalories},nutritionCoverage:month.nutritionCoverage}, "calories", energyUnit)}/logged day
                       </span>
-                      <span className={getStatusColor(month.avgProtein, targets.protein)}>
-                        {month.avgProtein}g protein/day
+                      <span
+                        className="text-foreground"
+                      >
+                        {historyAmount({dailyAverages:{protein:month.avgProtein},nutritionCoverage:month.nutritionCoverage}, "protein", "g protein")}/logged day
                       </span>
                     </div>
                   </div>
@@ -266,124 +277,122 @@ function HistoricalTrends({ userId, targets }: { userId: string; targets: any })
 }
 
 export default function NutritionHistory() {
+  const { settings } = useExperience();
+  const energyUnit = settings.displayUnits.energy;
+  const [historyLimit, setHistoryLimit] = useState(20);
+  const [reviewingMealId, setReviewingMealId] = useState<string | null>(null);
   const [showLogForm, setShowLogForm] = useState(false);
   const [editingMealId, setEditingMealId] = useState<string | null>(null);
-  const [mealType, setMealType] = useState<MealType>('breakfast');
-  const [foodDescription, setFoodDescription] = useState('');
+  const [mealType, setMealType] = useState<MealType>("breakfast");
+  const [foodDescription, setFoodDescription] = useState("");
   const [expandedMeals, setExpandedMeals] = useState<Set<string>>(new Set());
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [mealToDelete, setMealToDelete] = useState<string | null>(null);
   const { toast } = useToast();
   const { user } = useAuth();
 
-  const userId = user?.id || '';
+  const userId = user?.id || "";
 
-  const { data: dailyData, isLoading: dailyLoading} = useQuery<any>({
-    queryKey: ['/api/nutrition/daily', userId],
+  const today = new Date();
+  const localDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const timezoneOffset = today.getTimezoneOffset();
+  const { data: cachedDaily, fetchStatus: dailyFetch, isStale: dailyStale, isLoading: dailyLoading, isError: dailyError, refetch: retryDaily } = useQuery<any>({
+    queryKey: ["/api/nutrition/daily", userId, localDate, timezoneOffset],
+    queryFn: async () =>
+      (
+        await apiRequest(
+          "GET",
+          `/api/nutrition/daily/${userId}?date=${localDate}&timezoneOffset=${timezoneOffset}`,
+        )
+      ).json(),
     enabled: !!userId,
   });
 
-  const { data: targets, isLoading: targetsLoading } = useQuery<any>({
-    queryKey: ['/api/nutrition/targets', userId],
+  const { data: cachedTargets, fetchStatus: targetsFetch, isStale: targetsStale, isLoading: targetsLoading, isError: targetsError, refetch: retryTargets } = useQuery<any>({
+    queryKey: ["/api/nutrition/targets", userId],
     enabled: !!userId,
   });
 
-  const { data: allMeals, isLoading: mealsLoading } = useQuery<any[]>({
-    queryKey: ['/api/meals', userId],
+  const { data: cachedMeals, fetchStatus: mealsFetch, isStale: mealsStale, isLoading: mealsLoading, isError: mealsError, refetch: retryMeals } = useQuery<any[]>({
+    queryKey: ["/api/meals", userId],
     enabled: !!userId,
   });
 
+  const dailyChecking=dailyFetch!=="idle"||dailyStale&&!dailyError;
+  const targetsChecking=targetsFetch!=="idle"||targetsStale&&!targetsError;
+  const mealsChecking=mealsFetch!=="idle"||mealsStale&&!mealsError;
+  const dailyData=!dailyChecking&&!dailyError?cachedDaily:undefined;
+  const targets=!targetsChecking&&!targetsError?cachedTargets:undefined;
+  const allMeals=!mealsChecking&&!mealsError?cachedMeals:undefined;
+
+  const saveAttempt=useRef<{signature:string;key:string}|null>(null);
   const logMealMutation = useMutation({
     mutationFn: async (data: any) => {
-      const response = await apiRequest('POST', '/api/meals', data);
+      const signature=JSON.stringify([userId,data]);
+      if(saveAttempt.current?.signature!==signature)saveAttempt.current={signature,key:crypto.randomUUID()};
+      const response = await apiRequest("POST", "/api/meals", data,{"Idempotency-Key":saveAttempt.current.key});
       return await response.json();
     },
     onSuccess: async (newMeal: any) => {
-      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
-      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
-      queryClient.invalidateQueries({ queryKey: [`/api/health/adherence/${userId}?days=7`] });
-      
-      try {
-        const adherenceResponse = await fetch(`/api/meals/${newMeal.id}/check-adherence`, {
-          method: 'POST',
-        });
-        const adherenceData = await adherenceResponse.json();
-        
-        if (adherenceData.matches && adherenceData.matches.length > 0) {
-          const matchedFoods = adherenceData.matches.map((m: any) => m.food).join(', ');
-          toast({
-            title: '🎯 Great choice!',
-            description: `This meal matches your recommendations: ${matchedFoods.substring(0, 80)}${matchedFoods.length > 80 ? '...' : ''}`,
-          });
-        } else {
-          toast({
-            title: 'Meal logged successfully!',
-            description: 'Your food has been analyzed with nutritional breakdown.',
-          });
-        }
-      } catch (error) {
-        toast({
-          title: 'Meal logged successfully!',
-          description: 'Your food has been analyzed with nutritional breakdown.',
-        });
-      }
-      
-      setFoodDescription('');
+      saveAttempt.current=null;
+
+      toast({
+        title: "Meal added to your journal",
+        description: newMeal.totalCalories===null?"Your meal is saved; some nutrition needs review.":"Your meal is saved. Linked nutrition totals are being refreshed.",
+      });
+
+      setFoodDescription("");
       setShowLogForm(false);
     },
+    onSettled: refreshMealSources,
     onError: (error: any) => {
       toast({
-        title: 'Error logging meal',
-        description: error.message || 'Please try again',
-        variant: 'destructive',
+        title: "Error logging meal",
+        description: error.message || "Please try again",
+        variant: "destructive",
       });
     },
   });
 
   const updateMealMutation = useMutation({
     mutationFn: async ({ mealId, data }: { mealId: string; data: any }) => {
-      const response = await apiRequest('PUT', `/api/meals/${mealId}`, data);
+      const response = await apiRequest("PUT", `/api/meals/${mealId}`, data);
       return await response.json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
-      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
-      
-      toast({
-        title: 'Meal updated successfully!',
-      });
-      
-      setFoodDescription('');
+    onSuccess: (meal) => {
+      if (unmatchedFoods(meal.intelligence).length || meal.intelligence?.status === "unavailable") setReviewingMealId(meal.id);
+      toast(nutritionUpdateFeedback(meal.intelligence));
+
+      setFoodDescription("");
       setShowLogForm(false);
       setEditingMealId(null);
     },
+    onSettled: refreshMealSources,
     onError: (error: any) => {
       toast({
-        title: 'Error updating meal',
-        description: error.message || 'Please try again',
-        variant: 'destructive',
+        title: "Error updating meal",
+        description: error.message || "Please try again",
+        variant: "destructive",
       });
     },
   });
 
   const deleteMealMutation = useMutation({
     mutationFn: async (mealId: string) => {
-      const response = await apiRequest('DELETE', `/api/meals/${mealId}`, {});
+      const response = await apiRequest("DELETE", `/api/meals/${mealId}`, {});
       return await response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/meals', userId] });
-      queryClient.invalidateQueries({ queryKey: ['/api/nutrition/daily', userId] });
-      
       toast({
-        title: 'Meal deleted successfully!',
+        title: "Meal deleted successfully!",
       });
     },
+    onSettled: refreshMealSources,
     onError: (error: any) => {
       toast({
-        title: 'Error deleting meal',
-        description: error.message || 'Please try again',
-        variant: 'destructive',
+        title: "Error deleting meal",
+        description: error.message || "Please try again",
+        variant: "destructive",
       });
     },
   });
@@ -399,7 +408,6 @@ export default function NutritionHistory() {
       });
     } else {
       logMealMutation.mutate({
-        userId,
         mealText: foodDescription,
         mealType,
       });
@@ -409,7 +417,7 @@ export default function NutritionHistory() {
   const handleEditMeal = (meal: any) => {
     setEditingMealId(meal.id);
     setFoodDescription(meal.mealText);
-    setMealType(meal.mealType || 'breakfast');
+    setMealType(meal.mealType || "breakfast");
     setShowLogForm(true);
   };
 
@@ -427,7 +435,7 @@ export default function NutritionHistory() {
   };
 
   const toggleMealExpansion = (mealId: string) => {
-    setExpandedMeals(prev => {
+    setExpandedMeals((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(mealId)) {
         newSet.delete(mealId);
@@ -446,59 +454,54 @@ export default function NutritionHistory() {
     );
   }
 
-  const meals = dailyData?.meals || [];
+  const journalSource = !mealsError && allMeals
+    ? allMeals
+    : !dailyError ? dailyData?.meals || [] : [];
+  const journalMeals = [...journalSource].sort(
+    (a, b) => +new Date(b.loggedAt) - +new Date(a.loggedAt),
+  );
+  const meals = journalMeals.slice(0, historyLimit);
   const totals = dailyData?.totals || {
-    calories: 0,
-    protein: 0,
-    carbs: 0,
-    fat: 0,
-    fiber: 0,
-    sugar: 0,
-    sodium: 0,
-    potassium: 0,
+    calories: null,
+    protein: null,
+    carbs: null,
+    fat: null,
+    fiber: null,
+    sugar: null,
+    sodium: null,
+    potassium: null,
   };
-  const nutrientTargets = targets || {
-    calories: 2000,
-    protein: 120,
-    carbs: 225,
-    fat: 67,
-    fiber: 30,
-    sugar: 50,
-    sodium: 2300,
-    potassium: 3500,
-  };
+  const nutrientTargets = targets || {};
 
-  const calculatePercentage = (current: number, target: number) => {
-    if (!target) return 0;
+  const summaryValueKnown = (key: string) => typeof totals[key] === "number" && Number.isFinite(totals[key]) && totals[key] >= 0;
+  const summaryCanCompare = (key: string) => summaryValueKnown(key) && typeof nutrientTargets[key] === "number" && Number.isFinite(nutrientTargets[key]) && nutrientTargets[key] > 0;
+  const retrySummary = () => { void Promise.allSettled([retryDaily(), retryTargets()]); };
+  const summaryAmount = (key: string, unit: string) => summaryValueKnown(key) ? `${formatNutrientAmount(totals[key])} ${unit}` : "Unavailable";
+  const showAmount = (value: number | null | undefined) =>
+    formatNutrientAmount(value);
+  const calculatePercentage = (current: number | null, target: number) => {
+    if (!target || current == null) return 0;
     return Math.min((current / target) * 100, 100);
   };
 
-  const getStatusColor = (percentage: number) => {
-    if (percentage >= 90 && percentage <= 110) return 'text-green-600 dark:text-green-400';
-    if (percentage >= 70 && percentage <= 130) return 'text-yellow-600 dark:text-yellow-400';
-    return 'text-red-600 dark:text-red-400';
-  };
+  const getStatusColor = (_percentage: number) => "text-foreground";
 
   return (
-    <div className="max-w-[448px] mx-auto pb-24 px-4 pt-4">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Utensils className="h-6 w-6 text-primary" />
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold">Nutrition History</h1>
-            <p className="text-sm text-muted-foreground">Track your daily intake</p>
-          </div>
-        </div>
+    <main className="science-page journal-page">
+      <div className="science-heading">
+        <p className="eyebrow">YOUR DAILY RECORD</p>
+        <h1>Food journal</h1>
+        <p>Your meals and nutrient totals, together in one place.</p>
       </div>
-
       {showLogForm && (
         <Card className="mb-6" data-testid="card-log-meal-form">
           <CardHeader>
-            <CardTitle>{editingMealId ? 'Edit Meal' : 'Log Your Meal'}</CardTitle>
+            <CardTitle>
+              {editingMealId ? "Edit Meal" : "Log Your Meal"}
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent>
+          <fieldset className="min-w-0 space-y-4" disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}>
             <MealTypeSelector selected={mealType} onChange={setMealType} />
 
             <div className="space-y-2">
@@ -514,26 +517,32 @@ export default function NutritionHistory() {
             </div>
 
             <div className="flex gap-2">
-              <Button 
-                onClick={handleSubmit} 
-                className="flex-1" 
-                disabled={!foodDescription.trim() || logMealMutation.isPending || updateMealMutation.isPending}
+              <Button
+                onClick={handleSubmit}
+                className="flex-1"
+                disabled={
+                  !foodDescription.trim() ||
+                  logMealMutation.isPending ||
+                  updateMealMutation.isPending
+                }
                 data-testid="button-save-meal"
               >
-                {(logMealMutation.isPending || updateMealMutation.isPending) ? (
+                {logMealMutation.isPending || updateMealMutation.isPending ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Analyzing...
                   </>
+                ) : editingMealId ? (
+                  "Update Meal"
                 ) : (
-                  editingMealId ? 'Update Meal' : 'Save Meal'
+                  "Save Meal"
                 )}
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={() => {
                   setShowLogForm(false);
-                  setFoodDescription('');
+                  setFoodDescription("");
                   setEditingMealId(null);
                 }}
                 data-testid="button-cancel-log-meal"
@@ -541,11 +550,26 @@ export default function NutritionHistory() {
                 Cancel
               </Button>
             </div>
+          </fieldset>
           </CardContent>
         </Card>
       )}
 
-      <HistoricalTrends userId={userId} targets={nutrientTargets} />
+      {!dailyError && dailyData?.isPartial && (
+        <p className="bloom-panel text-sm" role="status">
+          Partial daily totals: known nutrition is included. Some meals or
+          nutrients are missing; unavailable values are not counted as zero.
+        </p>
+      )}
+      <div className="journal-workspace">
+      {mealsChecking&&<p role="status">Checking current journal history. Only current available entries for today are shown.</p>}
+      {mealsError && (
+        <div role="alert" className="bloom-panel space-y-3">
+          <p>The full journal could not load. Available entries for today are shown; this is not your complete history.</p>
+          <Button variant="outline" onClick={() => {void retryMeals();}}>Retry journal</Button>
+        </div>
+      )}
+
 
       <Card className="mb-6" data-testid="card-daily-summary">
         <CardHeader>
@@ -553,90 +577,204 @@ export default function NutritionHistory() {
             <Calendar className="h-5 w-5" />
             Today's Summary
           </CardTitle>
+          {targets?.basis?.note && !targetsError && <p className="text-sm text-muted-foreground">{targets.basis.note} <a className="text-primary underline" href="/profile#measurement-units">Review profile inputs</a></p>}
         </CardHeader>
-        <CardContent className="space-y-4">
+        {dailyError || !dailyData ? (
+          <CardContent className="space-y-3">
+            {dailyChecking?<p role="status">Checking current recorded totals…</p>:<p role="alert">Today's totals could not load. Your saved journal remains available.</p>}
+            <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
+          </CardContent>
+        ) : targetsError || !targets ? (
+          <CardContent className="space-y-3">
+          {targetsChecking?<p role="status">Checking current planning targets. Recorded totals are shown without target comparisons.</p>:<p role="alert">Planning targets could not load. Recorded totals are shown without target comparisons.</p>}
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              ["calories", "Energy", energyUnit], ["protein", "Protein", "g"],
+              ["carbs", "Carbs", "g"], ["fat", "Fat", "g"], ["fiber", "Fiber", "g"],
+              ["sugar", "Sugar", "g"], ["sodium", "Sodium", "mg"], ["potassium", "Potassium", "mg"],
+            ].map(([key, label, unit]) => (
+              <div key={key}>
+                <dt>{label}</dt>
+                <dd>
+                  {key === "calories"
+                    ? summaryValueKnown(key) ? `${energyAmount(totals[key], energyUnit)} ${unit}` : "Unavailable"
+                    : summaryAmount(key, unit)}
+                  {dailyData.nutritionCoverage?.[key]?.partial ? " · partial" : ""}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <Button variant="outline" onClick={retrySummary}>Retry summary</Button>
+        </CardContent>
+        ) : (<CardContent className="space-y-4">
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Calories</span>
+              <span className="text-sm font-medium">Energy ({energyUnit})</span>
               <div className="flex items-center gap-2">
-                <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}>
-                  {Math.round(totals.calories || 0)} / {nutrientTargets.calories || 2000}
+                <span
+                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
+                >
+                  {energyAmount(totals.calories, energyUnit)}
+                  {dailyData?.nutritionCoverage?.calories?.partial
+                    ? " (partial)"
+                    : ""}{" "}
+                  / {energyAmount(nutrientTargets.calories, energyUnit)} {energyUnit}
                 </span>
-                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))} data-testid="badge-calories-percentage">
-                  {Math.round(calculatePercentage(totals.calories, nutrientTargets.calories))}%
-                </Badge>
+                {summaryCanCompare("calories") && (<Badge
+                  variant="outline"
+                  className={getStatusColor(
+                    calculatePercentage(
+                      totals.calories,
+                      nutrientTargets.calories,
+                    ),
+                  )}
+                  data-testid="badge-calories-percentage"
+                >
+                  {Math.round(
+                    calculatePercentage(
+                      totals.calories,
+                      nutrientTargets.calories,
+                    ),
+                  )}
+                  %
+                </Badge>)}
               </div>
             </div>
-            <Progress value={calculatePercentage(totals.calories, nutrientTargets.calories)} className="h-2" />
+            {summaryCanCompare("calories") && (<Progress
+              value={calculatePercentage(
+                totals.calories,
+                nutrientTargets.calories,
+              )}
+              className="h-2"
+            />)}
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Protein</span>
               <div className="flex items-center gap-2">
-                <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}>
-                  {Math.round(totals.protein || 0)}g / {nutrientTargets.protein || 120}g
+                <span
+                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
+                >
+                  {summaryAmount("protein", "g")} /{" "}
+                  {showAmount(nutrientTargets.protein)}g
                 </span>
-                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}>
-                  {Math.round(calculatePercentage(totals.protein, nutrientTargets.protein))}%
-                </Badge>
+                {summaryCanCompare("protein") && (<Badge
+                  variant="outline"
+                  className={getStatusColor(
+                    calculatePercentage(
+                      totals.protein,
+                      nutrientTargets.protein,
+                    ),
+                  )}
+                >
+                  {Math.round(
+                    calculatePercentage(
+                      totals.protein,
+                      nutrientTargets.protein,
+                    ),
+                  )}
+                  %
+                </Badge>)}
               </div>
             </div>
-            <Progress value={calculatePercentage(totals.protein, nutrientTargets.protein)} className="h-2" />
+            {summaryCanCompare("protein") && (<Progress
+              value={calculatePercentage(
+                totals.protein,
+                nutrientTargets.protein,
+              )}
+              className="h-2"
+            />)}
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Carbs</span>
               <div className="flex items-center gap-2">
-                <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}>
-                  {Math.round(totals.carbs || 0)}g / {nutrientTargets.carbs || 225}g
+                <span
+                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
+                >
+                  {summaryAmount("carbs", "g")} / {showAmount(nutrientTargets.carbs)}g
                 </span>
-                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}>
-                  {Math.round(calculatePercentage(totals.carbs, nutrientTargets.carbs))}%
-                </Badge>
+                {summaryCanCompare("carbs") && (<Badge
+                  variant="outline"
+                  className={getStatusColor(
+                    calculatePercentage(totals.carbs, nutrientTargets.carbs),
+                  )}
+                >
+                  {Math.round(
+                    calculatePercentage(totals.carbs, nutrientTargets.carbs),
+                  )}
+                  %
+                </Badge>)}
               </div>
             </div>
-            <Progress value={calculatePercentage(totals.carbs, nutrientTargets.carbs)} className="h-2" />
+            {summaryCanCompare("carbs") && (<Progress
+              value={calculatePercentage(totals.carbs, nutrientTargets.carbs)}
+              className="h-2"
+            />)}
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Fat</span>
               <div className="flex items-center gap-2">
-                <span className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}>
-                  {Math.round(totals.fat || 0)}g / {nutrientTargets.fat || 67}g
+                <span
+                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
+                >
+                  {summaryAmount("fat", "g")} / {showAmount(nutrientTargets.fat)}g
                 </span>
-                <Badge variant="outline" className={getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}>
-                  {Math.round(calculatePercentage(totals.fat, nutrientTargets.fat))}%
-                </Badge>
+                {summaryCanCompare("fat") && (<Badge
+                  variant="outline"
+                  className={getStatusColor(
+                    calculatePercentage(totals.fat, nutrientTargets.fat),
+                  )}
+                >
+                  {Math.round(
+                    calculatePercentage(totals.fat, nutrientTargets.fat),
+                  )}
+                  %
+                </Badge>)}
               </div>
             </div>
-            <Progress value={calculatePercentage(totals.fat, nutrientTargets.fat)} className="h-2" />
+            {summaryCanCompare("fat") && (<Progress
+              value={calculatePercentage(totals.fat, nutrientTargets.fat)}
+              className="h-2"
+            />)}
           </div>
 
           <div className="pt-4 border-t">
-            <h3 className="text-sm font-semibold mb-3">Micronutrients</h3>
+            <h3 className="text-sm font-semibold mb-3">Fiber, sugars & minerals</h3>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <p className="text-xs text-muted-foreground">Fiber</p>
-                <p className="text-sm font-medium">{Math.round(totals.fiber || 0)}g / {nutrientTargets.fiber}g</p>
+                <p className="text-sm font-medium">
+                  {summaryAmount("fiber", "g")} / {nutrientTargets.fiber}g
+                </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Sugar</p>
-                <p className="text-sm font-medium">{Math.round(totals.sugar || 0)}g / {nutrientTargets.sugar}g</p>
+                <p className="text-sm font-medium">
+                  {summaryAmount("sugar", "g")} / {nutrientTargets.sugar}g
+                </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Sodium</p>
-                <p className="text-sm font-medium">{Math.round(totals.sodium || 0)}mg / {nutrientTargets.sodium}mg</p>
+                <p className="text-sm font-medium">
+                  {summaryAmount("sodium", "mg")} / {nutrientTargets.sodium}
+                  mg
+                </p>
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Potassium</p>
-                <p className="text-sm font-medium">{Math.round(totals.potassium || 0)}mg / {nutrientTargets.potassium}mg</p>
+                <p className="text-sm font-medium">
+                  {summaryAmount("potassium", "mg")} / {nutrientTargets.potassium}
+                  mg
+                </p>
               </div>
             </div>
           </div>
-        </CardContent>
+        </CardContent>)}
       </Card>
 
       <div className="mb-6">
@@ -646,9 +784,10 @@ export default function NutritionHistory() {
             Recent Meals
           </h2>
           {!showLogForm && (
-            <Button 
-              onClick={() => setShowLogForm(true)} 
+            <Button
+              onClick={() => setShowLogForm(true)}
               size="sm"
+              disabled={deleteMealMutation.isPending}
               data-testid="button-show-log-meal"
             >
               <Plus className="h-4 w-4 mr-1" />
@@ -656,12 +795,14 @@ export default function NutritionHistory() {
             </Button>
           )}
         </div>
-        
+
         {meals.length === 0 ? (
           <Card>
             <CardContent className="py-8 text-center">
-              <p className="text-muted-foreground">No meals logged today</p>
-              <p className="text-sm text-muted-foreground mt-1">Start tracking your nutrition!</p>
+              <p className="text-muted-foreground">{allMeals||dailyData?"No meals in the available journal.":"Current journal entries are unavailable."}</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                You can add a meal while keeping missing records distinct from zero intake.
+              </p>
             </CardContent>
           </Card>
         ) : (
@@ -670,30 +811,43 @@ export default function NutritionHistory() {
               const isExpanded = expandedMeals.has(meal.id);
               const nutritionalItems = meal.nutritionalData || [];
               const hasItems = nutritionalItems.length > 0;
+              const identity = journalIdentity(meal);
 
               return (
                 <Card key={meal.id} data-testid={`card-meal-${index}`}>
                   <CardContent className="pt-4">
                     <div className="flex items-start justify-between mb-2">
-                      <div 
-                        className={`flex-1 cursor-pointer ${hasItems ? 'hover-elevate' : ''}`}
+                      <button
+                        type="button"
+                        className={`flex-1 min-w-0 text-left rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${hasItems ? "hover-elevate" : ""}`}
+                        disabled={!hasItems}
+                        aria-label={`${isExpanded ? "Hide" : "Show"} nutrient details for ${identity.title}`}
+                        aria-expanded={hasItems ? isExpanded : undefined}
+                        aria-controls={isExpanded ? `meal-nutrition-${index}` : undefined}
                         onClick={() => hasItems && toggleMealExpansion(meal.id)}
                         data-testid={`button-expand-meal-${index}`}
                       >
-                        <p className="font-medium" data-testid={`text-meal-description-${index}`}>{meal.mealText}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {format(new Date(meal.loggedAt), 'h:mm a')}
+                        <span
+                          className="block font-medium break-words"
+                          data-testid={`text-meal-description-${index}`}
+                        >
+                          {identity.title}
+                        </span>
+                        <span className="block text-xs text-muted-foreground">
+                          {format(new Date(meal.loggedAt), "h:mm a")}
                           {meal.mealType && ` • ${meal.mealType}`}
-                        </p>
-                      </div>
+                        </span>
+                      </button>
                       <div className="flex gap-1 ml-2">
                         <Button
                           size="icon"
                           variant="ghost"
+                          aria-label={`Edit meal: ${identity.title}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditMeal(meal);
                           }}
+                          disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}
                           data-testid={`button-edit-meal-${index}`}
                         >
                           <Pencil className="w-4 h-4" />
@@ -701,10 +855,12 @@ export default function NutritionHistory() {
                         <Button
                           size="icon"
                           variant="ghost"
+                          aria-label={`Delete meal: ${identity.title}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleDeleteMeal(meal.id);
                           }}
+                          disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}
                           data-testid={`button-delete-meal-${index}`}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -720,134 +876,264 @@ export default function NutritionHistory() {
                         )}
                       </div>
                     </div>
-                    <div 
-                      className="cursor-pointer"
-                      onClick={() => hasItems && toggleMealExpansion(meal.id)}
-                    >
-                      <div className="flex gap-2 mt-3">
-                        <Badge variant="secondary" data-testid={`badge-meal-calories-${index}`}>
-                          {Math.round(meal.totalCalories || 0)} cal
+                    {identity.foods !== null && <details className="mt-3 text-sm break-words" data-testid={`meal-recorded-foods-${index}`}>
+                      <summary>Recorded foods & original description</summary>
+                      <ul className="space-y-2 mt-2">{identity.foods.map((food, foodIndex) => <li key={foodIndex}>
+                        <strong>{food.name}</strong> · {food.product ? `${food.product.servings} labelled servings · ` : ''}{food.grams === null ? 'Amount unknown' : foodMass(food.grams, settings.displayUnits.foodWeight)}
+                        <p className="panel-note">{food.product ? ({manual:'Your label', 'usda-local':'USDA local', 'usda-branded':'USDA branded', off:'Open Food Facts', dsld:'DSLD'})[food.product.source] : food.catalogue ? `USDA FNDDS · ${food.catalogue.fdcId}` : 'Description-based estimate; source not selected'}{food.assumption ? ` · ${food.assumption}` : ''}</p>
+                      </li>)}</ul>
+                      <p className="panel-note mt-2">Original description: {meal.mealText}</p>
+                    </details>}
+                    <div>
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        <Badge
+                          variant="secondary"
+                          data-testid={`badge-meal-calories-${index}`}
+                        >
+                          {meal.totalCalories == null
+                            ? "Unavailable"
+                            : energyAmount(meal.totalCalories, energyUnit)}{" "}
+                          {energyUnit}
                         </Badge>
                         <Badge variant="secondary">
-                          P: {Math.round(meal.totalProtein || 0)}g
+                          P:{" "}
+                          {meal.totalProtein == null
+                            ? "—"
+                            : formatNutrientAmount(meal.totalProtein)}
+                          g
                         </Badge>
                         <Badge variant="secondary">
-                          C: {Math.round(meal.totalCarbs || 0)}g
+                          C:{" "}
+                          {meal.totalCarbs == null
+                            ? "—"
+                            : formatNutrientAmount(meal.totalCarbs)}
+                          g
                         </Badge>
                         <Badge variant="secondary">
-                          F: {Math.round(meal.totalFat || 0)}g
+                          F:{" "}
+                          {meal.totalFat == null
+                            ? "—"
+                            : formatNutrientAmount(meal.totalFat)}
+                          g
                         </Badge>
                       </div>
                     </div>
 
                     {isExpanded && hasItems && (
-                      <div className="mt-4 pt-4 border-t space-y-3" data-testid={`meal-items-${index}`}>
-                        {(() => {
-                          const mealImpact = analyzeMealImpact(nutritionalItems);
-                          return (
-                            <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 mb-4">
-                              <div className="flex items-start gap-2">
-                                <Sparkles className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                                <div>
-                                  <p className="text-xs font-semibold text-primary mb-1">Microbiome Impact</p>
-                                  <p className="text-xs text-foreground">{mealImpact.summary}</p>
-                                  {mealImpact.keyBacteria.length > 0 && (
-                                    <div className="flex flex-wrap gap-1 mt-2">
-                                      {mealImpact.keyBacteria.map((bacteria, idx) => (
-                                        <Badge key={idx} variant="secondary" className="text-xs">
-                                          {bacteria}
-                                        </Badge>
-                                      ))}
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })()}
-                        
-                        <h4 className="text-sm font-semibold text-muted-foreground">Individual Items</h4>
+                      <div
+                        id={`meal-nutrition-${index}`}
+                        className="mt-4 pt-4 border-t space-y-3"
+                        data-testid={`meal-items-${index}`}
+                      >
+                        <p className="text-xs text-muted-foreground">
+                          Gut pathways are hypotheses, not measured bacterial
+                          abundance. Explore cited dietary pathways in the Diet
+                          coach.
+                        </p>
+
+                        <h4 className="text-sm font-semibold text-muted-foreground">
+                          Individual Items
+                        </h4>
                         {nutritionalItems.map((item: any, itemIdx: number) => {
-                          const bacteriaImpacts = analyzeFoodItemBacteria(item);
                           return (
-                            <div key={itemIdx} className="bg-muted/50 rounded-lg p-3 space-y-2">
-                              <p className="font-medium text-sm capitalize">{item.name}</p>
-                              
+                            <div
+                              key={itemIdx}
+                              className="bg-muted/50 rounded-lg p-3 space-y-2"
+                            >
+                              <p className="font-medium text-sm capitalize">
+                                {item.name}
+                              </p>
+
+                              <details className="text-sm my-2">
+                                <summary>Potential gut pathways</summary>
+                                {explainFoods(item.name || "").pathways
+                                  .length ? (
+                                  explainFoods(item.name || "").pathways.map(
+                                    (p) => (
+                                      <div key={p.id}>
+                                        <p>
+                                          {p.substrate} →{" "}
+                                          {p.molecules.join(", ")}
+                                        </p>
+                                        <p>{p.organisms.join("; ")}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                          {p.relationship}
+                                        </p>
+                                      </div>
+                                    ),
+                                  )
+                                ) : (
+                                  <p>
+                                    No supported ingredient-specific pathway in
+                                    this catalogue.
+                                  </p>
+                                )}
+                                {explainFoods(item.name || "").sources.map(
+                                  (source) => (
+                                    <a
+                                      className="underline block"
+                                      key={source.id}
+                                      href={source.url}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                    >
+                                      {source.authors}, {source.year}
+                                    </a>
+                                  ),
+                                )}
+                              </details>
                               <div className="grid grid-cols-2 gap-2 text-xs">
                                 <div className="flex justify-between">
-                                  <span className="text-muted-foreground">Calories</span>
-                                  <Badge variant="outline" className="h-5">{item.calories}</Badge>
+                                  <span className="text-muted-foreground">
+                                    Energy ({energyUnit})
+                                  </span>
+                                  <Badge variant="outline" className="h-5">
+                                    {energyAmount(item.calories, energyUnit)} {energyUnit}
+                                  </Badge>
                                 </div>
                                 <div className="flex justify-between">
-                                  <span className="text-muted-foreground">Protein</span>
-                                  <Badge variant="outline" className="h-5">{item.protein_g}g</Badge>
+                                  <span className="text-muted-foreground">
+                                    Protein
+                                  </span>
+                                  <Badge variant="outline" className="h-5">
+                                    {item.protein_g}g
+                                  </Badge>
                                 </div>
                                 <div className="flex justify-between">
-                                  <span className="text-muted-foreground">Carbs</span>
-                                  <Badge variant="outline" className="h-5">{item.carbohydrates_total_g}g</Badge>
+                                  <span className="text-muted-foreground">
+                                    Carbs
+                                  </span>
+                                  <Badge variant="outline" className="h-5">
+                                    {item.carbohydrates_total_g}g
+                                  </Badge>
                                 </div>
                                 <div className="flex justify-between">
-                                  <span className="text-muted-foreground">Fat</span>
-                                  <Badge variant="outline" className="h-5">{item.fat_total_g}g</Badge>
+                                  <span className="text-muted-foreground">
+                                    Fat
+                                  </span>
+                                  <Badge variant="outline" className="h-5">
+                                    {item.fat_total_g}g
+                                  </Badge>
                                 </div>
                               </div>
 
-                              {(item.fiber_g > 0 || item.sugar_g > 0 || item.sodium_mg > 0 || item.potassium_mg > 0) && (
+                              {(item.fiber_g > 0 ||
+                                item.sugar_g > 0 ||
+                                item.sodium_mg > 0 ||
+                                item.potassium_mg > 0) && (
                                 <div className="pt-2 border-t border-border/50">
-                                  <p className="text-xs text-muted-foreground mb-2">Micronutrients</p>
+                                  <p className="text-xs text-muted-foreground mb-2">
+                                    Micronutrients
+                                  </p>
                                   <div className="grid grid-cols-2 gap-2 text-xs">
                                     {item.fiber_g > 0 && (
                                       <div className="flex justify-between">
-                                        <span className="text-muted-foreground">Fiber</span>
+                                        <span className="text-muted-foreground">
+                                          Fiber
+                                        </span>
                                         <span>{item.fiber_g}g</span>
                                       </div>
                                     )}
                                     {item.sugar_g > 0 && (
                                       <div className="flex justify-between">
-                                        <span className="text-muted-foreground">Sugar</span>
+                                        <span className="text-muted-foreground">
+                                          Sugar
+                                        </span>
                                         <span>{item.sugar_g}g</span>
                                       </div>
                                     )}
                                     {item.sodium_mg > 0 && (
                                       <div className="flex justify-between">
-                                        <span className="text-muted-foreground">Sodium</span>
+                                        <span className="text-muted-foreground">
+                                          Sodium
+                                        </span>
                                         <span>{item.sodium_mg}mg</span>
                                       </div>
                                     )}
                                     {item.potassium_mg > 0 && (
                                       <div className="flex justify-between">
-                                        <span className="text-muted-foreground">Potassium</span>
+                                        <span className="text-muted-foreground">
+                                          Potassium
+                                        </span>
                                         <span>{item.potassium_mg}mg</span>
                                       </div>
                                     )}
                                     {item.cholesterol_mg > 0 && (
                                       <div className="flex justify-between">
-                                        <span className="text-muted-foreground">Cholesterol</span>
+                                        <span className="text-muted-foreground">
+                                          Cholesterol
+                                        </span>
                                         <span>{item.cholesterol_mg}mg</span>
                                       </div>
                                     )}
                                   </div>
                                 </div>
                               )}
-
-                              {bacteriaImpacts.length > 0 && (
-                                <div className="pt-2 border-t border-border/50 space-y-2">
-                                  <p className="text-xs font-medium text-muted-foreground">🔬 Bacterial Impact</p>
-                                  {bacteriaImpacts.map((impact, impactIdx) => (
-                                    <div key={impactIdx} className="bg-background/80 rounded p-2 space-y-1">
-                                      <div className="flex items-center justify-between gap-2">
-                                        <p className="text-xs font-medium">{impact.bacteria}</p>
-                                      </div>
-                                      <p className="text-xs text-muted-foreground italic">{impact.reason}</p>
-                                      <p className="text-xs font-medium text-foreground">{impact.impact}</p>
-                                    </div>
-                                  ))}
-                                </div>
-                              )}
                             </div>
                           );
                         })}
                       </div>
+                    )}
+                    {meal.mealContext && (
+                      <details className="mt-3 text-sm">
+                        <summary>Meal context & symptoms</summary>
+                        {recordedMealTime(meal.loggedAt,meal.mealContext)&&<p>Recorded meal time: {recordedMealTime(meal.loggedAt,meal.mealContext)}</p>}
+                        <p>
+                          Portion:{" "}
+                          {(meal.mealContext as any).portion || "Not recorded"}
+                        </p>
+                        {Object.entries(
+                          (meal.mealContext as any).symptoms || {},
+                        ).map(([key, value]) => (
+                          <p key={key}>
+                            {key}:{" "}
+                            {value == null ? "Not recorded" : `${value}/10`}
+                          </p>
+                        ))}
+                      </details>
+                    )}
+                    <Button
+                      className="mt-3"
+                      variant="outline"
+                      disabled={updateMealMutation.isPending}
+                      onClick={() =>
+                        updateMealMutation.mutate({
+                          mealId: meal.id,
+                          data: {
+                            mealText: meal.mealText,
+                            ...(meal.intelligence?.portionModelVersion ===
+                            "2026-10-18.2"
+                              ? { ingredients: meal.intelligence.ingredients }
+                              : {}),
+                          },
+                        })
+                      }
+                    >
+                      Recalculate nutrition
+                    </Button>
+                    <SaveMealButton meal={meal}/>
+                    {meal.intelligence && (
+                      <details className="mt-3"
+                        open={reviewingMealId === meal.id}
+                        onToggle={(event) => {
+                          const open = event.currentTarget.open;
+                          setReviewingMealId((current) => open ? meal.id : current === meal.id ? null : current);
+                        }}>
+                        <summary>Nutrition & gut pathway explanation</summary>
+                        {reviewingMealId === meal.id && <MealAnalysis
+                          key={
+                            (meal.intelligence as MealIntelligence).analyzedAt
+                          }
+                          analysis={meal.intelligence as MealIntelligence}
+                          pending={updateMealMutation.isPending}
+                          onRecalculate={(ingredients) =>
+                            updateMealMutation.mutate({
+                              mealId: meal.id,
+                              data: { mealText: meal.mealText, ingredients },
+                            })
+                          }
+                        />}
+                      </details>
                     )}
                   </CardContent>
                 </Card>
@@ -857,14 +1143,19 @@ export default function NutritionHistory() {
         )}
       </div>
 
-      {allMeals && allMeals.length > meals.length && (
-        <Card>
-          <CardContent className="py-4">
-            <p className="text-sm text-center text-muted-foreground">
-              {allMeals.length - meals.length} more meal{allMeals.length - meals.length !== 1 ? 's' : ''} in history
-            </p>
-          </CardContent>
-        </Card>
+      </div>
+      <details className="bloom-panel workspace-disclosure mb-6">
+        <summary>Nutrition history & trends</summary>
+        <HistoricalTrends userId={userId} targets={targetsError ? null : targets} />
+      </details>
+      {journalMeals.length > historyLimit && (
+        <Button
+          variant="outline"
+          onClick={() => setHistoryLimit(historyLimit + 20)}
+        >
+          Show more journal entries ({journalMeals.length - historyLimit}{" "}
+          remaining)
+        </Button>
       )}
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
@@ -872,15 +1163,18 @@ export default function NutritionHistory() {
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Meal</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this meal? This action cannot be undone.
+              Are you sure you want to delete this meal? This action cannot be
+              undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete}>Delete</AlertDialogAction>
+            <AlertDialogAction onClick={confirmDelete}>
+              Delete
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </main>
   );
 }

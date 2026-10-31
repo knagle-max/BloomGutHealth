@@ -1,0 +1,61 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import express from 'express';
+import { PGlite } from '@electric-sql/pglite';
+import { drizzle } from 'drizzle-orm/pglite';
+import { randomBytes } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { PrecisionStorage } from '../server/precision-storage';
+import { registerPrecisionRoutes } from '../server/precision-routes';
+import { parseLabPaste } from '../shared/lab-paste';
+
+test('atomic source-match import requires fresh owned review, preserves receipts and never merges or falls back to legacy writes', async () => {
+ const previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');
+ const pg=new PGlite();await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY,dietary_preferences jsonb);INSERT INTO users(id) VALUES('a'),('b');");
+ await pg.exec(readFileSync(new URL('../migrations/0002_precision_nutrition.sql',import.meta.url),'utf8'));
+ const store=new PrecisionStorage(drizzle(pg)as any),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});
+ registerPrecisionRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store as any);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}/api/precision`;
+ const known=parseLabPaste('ALT, 0, U/L','2026-10-15T12:00:00Z').valid[0].payload;
+ const post=async(payload:unknown=known,matches:string[]=[],key='atomic-source-001',user='a')=>{
+  const response=await fetch(base+'/labs/import',{method:'POST',headers:{'content-type':'application/json',...(key?{'idempotency-key':key}:{}),...(user?{'x-user':user}:{})},body:JSON.stringify({payload,reviewedMatchIds:matches})});
+  return{status:response.status,body:await response.json().catch(()=>null)as any,cache:response.headers.get('cache-control')};
+ };
+ try{
+  assert.equal((await post(known,[],'','')).status,401);
+  assert.equal((await post(known,[],'')).status,400);
+  assert.equal((await post(known,['same','same'])).status,400);
+  assert.equal((await post({...known,unexpected:'field'})).status,400);
+  const concurrent=await Promise.all([post(known,[],'concurrent-source-a'),post(known,[],'concurrent-source-b')]);
+  assert.deepEqual(concurrent.map(row=>row.status).sort(),[201,409]);
+  const winner=concurrent.find(row=>row.status===201)!.body,rejected=concurrent.find(row=>row.status===409)!;
+  assert.equal(rejected.body.code,'LAB_REIMPORT_REVIEW_REQUIRED');assert.deepEqual(rejected.body.matchedIds,[winner.id]);assert.equal(rejected.cache,'no-store');
+  assert.equal((await store.getPrecisionRecords('a')).length,1,'A stale preview cannot silently insert a second row');
+  assert.equal((await post(known,[winner.id],'foreign-reviewed-001','b')).status,409,'Foreign IDs cannot act as a review token');
+  const foreign=await post(known,[],'foreign-separate-001','b');assert.equal(foreign.status,201);assert.notEqual(foreign.body.id,winner.id);
+  const reviewed=await post(known,[winner.id],'intentional-separate');assert.equal(reviewed.status,201);assert.notEqual(reviewed.body.id,winner.id);
+  assert.equal((await store.getPrecisionRecords('a')).length,2,'Explicit separate results are retained, never merged');
+  assert.equal((await post(known,[],'intentional-separate')).body.id,reviewed.body.id,'Receipt replay precedes match review after a committed response loss');
+  assert.equal((await post({...known,value:1},[],'intentional-separate')).body.code,'LAB_SAVE_CONFLICT');
+  await store.deleteLabEntry('a',winner.id);
+  const removedReview=await post(known,[winner.id,reviewed.body.id],'deleted-match-review');assert.equal(removedReview.status,409);assert.deepEqual(removedReview.body.matchedIds,[reviewed.body.id]);
+  const capability=store.insertReviewedLab;(store as any).insertReviewedLab=undefined;
+  assert.equal((await post(known,[reviewed.body.id],'unavailable-review')).status,503);
+  assert.equal((await store.getPrecisionRecords('a')).length,1,'Unavailable atomic adapter must not use a legacy save');
+  store.insertReviewedLab=capability;
+  const identity={importId:'fb001025-1025-4025-8025-000000000001'};
+  const identified={...known,sourceReport:identity};
+  assert.equal((await post(identified,[reviewed.body.id],'source-group-first')).status,201);
+  const sameImport=await post(identified,[reviewed.body.id],'source-group-next');assert.equal(sameImport.status,201,'Same import receipts do not masquerade as another report');
+  const raw=parseLabPaste('Unknown assay, <0.50, original-unit','2026-10-15T12:00:00Z').sourceOnly[0].payload;
+  const firstRaw=await post(raw,[],'raw-review-first');assert.equal(firstRaw.status,201);
+  const rawConflict=await post(raw,[],'raw-review-second');assert.equal(rawConflict.status,409);assert.deepEqual(rawConflict.body.matchedIds,[firstRaw.body.id]);
+  assert.equal((await post(raw,[firstRaw.body.id],'raw-review-second')).status,201);
+  assert.equal((await post({...raw,reportedValue:'0.50',sourceInput:{...raw.sourceInput,number:'0.50'}},[],'raw-threshold-distinct')).status,201,'Thresholds are not coerced into numeric equality');
+  const pending=parseLabPaste('LDL, 120','2026-10-15T12:00:00Z').pending[0].payload;
+  const original=await store.insertPrecisionRecord('a','lab',pending),confirmed=await store.insertPrecisionRecord('a','lab',{...pending,unit:'mg/dL',unitReview:{...pending.unitReview!,status:'confirmed',confirmedAt:'2026-10-16T12:00:00Z',supersedes:original.id}});
+  const currentMatch=await post(pending,[],'pending-original-match');assert.deepEqual(currentMatch.body.matchedIds,[confirmed.id],'Only active unit successors are review candidates; original source unit remains unknown');
+  const legacy=await fetch(base+'/records',{method:'POST',headers:{'content-type':'application/json','x-user':'a'},body:JSON.stringify({kind:'lab',payload:known})});assert.equal(legacy.status,201,'Existing row API is preserved during boundary-first rollout');
+  assert.equal((await store.getPrecisionRecords('b')).length,1);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
+});

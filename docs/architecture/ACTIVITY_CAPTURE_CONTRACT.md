@@ -1,0 +1,39 @@
+# Canonical activity components v1 — Exercise UX v1.2
+
+Owner architect9a481c2/ceac54e, b2a6e8c/82d1fa5 and imported original v1.2 Amendments A/B. Existing `kind:activity`, account-owned encrypted experience_records, create receipt route and owned PUT/export/delete remain authoritative. One root event, not one database row per recognized activity/set. No automatic session/calendar duplication.
+
+## Data
+
+Existing numeric minutes remain supported; null is explicitly unknown. Optional distanceM is reported canonical metres, not inferred. Optional components v1 contains1–20 stable-UUID activity parents with title, app menu identity, reported/suggested/unclassified match status, nullable minutes/distance, and optional actualSets. Across a record: at most100 child sets and unique parent/set IDs. Children reuse actualSets v1, with stable UUID, reps/loadKg nullable, explicit completed, optional kg/lb display/source unit, side and described/planned/cancelled state. Planned/cancelled cannot also be completed. Unknown is not zero; no set completion is inferred from text.
+
+Root title/minutes/distance/flat actualSets are compatibility projections **computed by the server from canonical children**, not a second independent truth. Partially known duration is labelled as known contributions with missing activity duration(s); source views expose names and child rows. No energy/food credit or physiological score. Legacy omission is not a measurement or completion.
+
+Capture v1 preserves exact first typed description and capture method under all updates. A separate optional reviewedDescription allows visible text edits without losing original source; reviewed rows do not silently reparse. Root source remains manual. Common labels/word rules are app-authored, not a licensed/reviewed MET or medical taxonomy. Parser only proposes explicit bounded minutes/km/metres and reported strength patterns, including the exact compound v1.2 example; missing/ambiguous quantities stay unknown. All routes converge to the same editable review and explicit save. Repeat uses fresh root receipt/child IDs/date and resets effort/completion; separate deliberate workouts stay separate.
+
+## Persistence and safety
+
+Existing create receipts and account advisory locks apply. New record writes and all children are one encrypted transaction. Updates preserve omitted optional observations and original capture. Unaware editors may change compatible metadata; attempts to change legacy scalar type/duration/observations of a component record without component review return409 instead of overwriting children. Component-aware updates recompute projections; ordinary owned PUT behavior remains. Cross-user references do not confer access; only an owned root record is read/written/exported/deleted. No raw description in logs or external parser call.
+
+No migration/table/provider introduced. **After extended records exist, rollback must retain compatible decoders/projections/preservation.** Disable new capture UI or use component-aware manual fallback; never deploy old decoders or fill absent duration with zero. Original asset imports alone do not activate runtime.
+
+## Verification / open gates
+
+Parser/schema/API/encrypted storage tests cover compound data, set2-only edit, parent preservation, stable IDs, duplicate/planned-completed rejection, partial fields, root projection, old editor conflict, owner/export/delete and safe create retries. Actual browser exercises actual mode settings, review/Back/source, save/reload/mode, per-set units/status/side/remove/add/duplicate and Today/Progress. Physical-device/VoiceOver/200%zoom, hosted authenticated and independent Branding/User Testing acceptance remain separate. MET/muscle/voice/device and advanced physiology remain gated; no claim that all crosswalk IDs are accepted.
+
+## Amendment C v1.3 — exact five-set pounds-list repair
+
+`Ran then did 5 sets of 10 reps of bench press for 50,50,50,55,55 lbs` proposes Running (all amounts unknown) and named Bench press with five stable child sets, each10reported reps. The terminal lb/lbs/pounds unit applies to every positional load; repeated comma values remain distinct. Canonical kilograms use the existing exact pound conversion and child loadUnit remains lb. One uniform reported load may apply across an explicit set count; a multi-value list must have exactly that count. Decimal points are supported; commas are list delimiters, not stripped thousands separators. Invalid/mismatched/overflow values do not create a partial successful list. Named unsupported bench input opens `Bench press — check sets` with zero inferred rows, Needs review, and direct manual Add set. The exact text remains retained. Existing v1.2 kg patterns remain supported.
+
+Actual parser/schema roundtrip and encrypted HTTP/browser save/reload/both-mode checks verify Set4-only9×60lb while all other IDs/quantities remain, source edits preserve overrides, completion/time/energy remain unknown. No database change. Original v1.3 asset transfer/hosted comparison and independent acceptance are separately outstanding.
+
+## Unitless parenthesized series — architect d166612
+
+The exact `Ran 45 min then did 5 sets of 10 reps of bench press (50,50,55,55,60)` creates run45min plus five bench draft rows10reps, preserving positional loads and stable IDs. `ActivityDraftSet.unconfirmedLoad` is browser-draft-only: canonical loadKg=null and loadUnit absent until direct confirmation. No kg/lb is inferred from this conversation or generic mass preference. Both modes use the same shared editor; per-set selectors and Confirm remaining load units operate on unresolved rows only. Confirmation converts once via existing canonical mass conversion and removes the draft-only property. Editing values first, Back, and source-text edits retain the draft. Clearing a load leaves it optional/unknown rather than requiring a meaningless unit. Zero remains a supplied quantity.
+
+Canonical schema/storage is unchanged and strict: direct API attempts with unconfirmedLoad fail400; UI also guards saving while reported numerical loads have unresolved units. Parenthesized series must match explicit count; malformed/negative/overflow/mismatched series retain named manual correction without silently expanding/truncating. Explicit suffixes still apply to the whole list. Original exact source description survives confirmation and save; no completed state, bench duration, HR/pace/energy inferred. No new store/parser subsystem/provider or migration. Existing canonical readers remain compatible; UI can be reverted while retaining already saved canonical values.
+
+## Owner steering — use body-weight unit as editable default (2026-10-30)
+
+Supersedes the earlier requirement to force unit confirmation on every unitless list: when saved settings are current, shared Review defaults unresolved source numbers to settings.displayUnits.bodyWeight. The note explicitly identifies this as the body-weight-unit default, not a unit found in the description. Explicit textual units always win. Each set and the remaining defaults can be corrected; a default-unit correction keeps the typed number (50→50lb), rather than converting an assumed50kg→110lb. Already resolved overrides and existing saved observations retain their canonical meaning. Later preference refresh does not silently rewrite an open draft.
+
+Browser-only defaultedLoadUnit/unconfirmedLoad markers preserve raw numbers until submission; canonicalActivityParts strips both and converts using the selected unit before strict schema validation. None is persisted. If settings are unavailable, unresolved units still require direct choice; clearing an optional load remains allowed. Original raw description, child IDs and known/unknown duration remain unchanged. No schema or runtime rights change.

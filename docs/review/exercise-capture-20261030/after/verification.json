@@ -1,0 +1,20 @@
+{
+  "sourceSha": "c18cf230d08cff4cf7e0962761abe6384538d258",
+  "uiSourceDirty": false,
+  "baselineMechanism": "Working candidate",
+  "backendSourceDirty": false,
+  "synthetic": true,
+  "hosted": false,
+  "ownerRows": 1,
+  "attempts": 0,
+  "errors": [],
+  "viewport": [
+    320,
+    390,
+    1280
+  ],
+  "clock": "2026-10-27T18:00:00Z",
+  "timezone": "America/Regina",
+  "assets": "design/bloom/exercise-intelligence/2026-10-29",
+  "settledAnimations": true
+}

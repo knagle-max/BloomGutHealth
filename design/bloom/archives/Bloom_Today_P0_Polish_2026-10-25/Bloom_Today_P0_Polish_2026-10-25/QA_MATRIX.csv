@@ -1,0 +1,8 @@
+Screen,Viewport,Theme,Fixture,Must verify
+Today,320px,Everyday light,empty,Single CTA no heading collision nav does not cover content
+Today,375px,Everyday dark,partial nutrition,Incomplete not full target
+Today,390px,Athlete dark,rest day,Rest neutral non punitive
+Today,390px,Everyday light,device delayed,Sync pending not inactive
+Today,desktop,Everyday light,multiple goals,One primary step and change route
+Today,320px zoom 200%,Everyday light,long labels,No text clipping or horizontal spill
+Today,mobile screenreader,Everyday,expanded explanation,Source and limitations accessible

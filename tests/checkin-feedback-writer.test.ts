@@ -1,0 +1,47 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import express from 'express';
+import {PGlite} from '@electric-sql/pglite';
+import {drizzle} from 'drizzle-orm/pglite';
+import {readFileSync} from 'node:fs';
+import {randomBytes} from 'node:crypto';
+import {checkinSchema} from '../shared/experience';
+import {ExperienceStorage} from '../server/experience-storage';
+import {registerExperienceRoutes} from '../server/experience-routes';
+test('feedback actions preserve current ratings, serialize competing responses, replay receipts and reject stale ownership/context',async()=>{
+ const prior=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');
+ const pg=new PGlite();await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");await pg.exec(readFileSync(new URL('../migrations/0004_experience.sql',import.meta.url),'utf8'));
+ const store=new ExperienceStorage(drizzle(pg)as any),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerExperienceRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store as any,{}as any);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const origin=`http://127.0.0.1:${(server.address()as any).port}/api/experience`;
+ const base=checkinSchema.parse({date:'2026-10-20',mode:'everyday',energy:5,hunger:5,digestion:5,sleepHours:7,adherence:3,focus:'Regular breakfast'});
+ const entry=await store.insertExperienceRecord('a',{kind:'checkin',payload:base}),path=`/checkins/${entry.id}/feedback`;
+ const request=async(method:string,body?:unknown,key?:string,user='a',target=path)=>{const r=await fetch(origin+target,{method,headers:{'content-type':'application/json',...(user?{'x-user':user}:{}),...(key?{'Idempotency-Key':key}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})});return{status:r.status,body:await r.json().catch(()=>null)as any};};
+ try{
+  const initial=(await request('GET')).body,first={response:'helped',sourceRevision:initial.revision};
+  assert.equal((await request('POST',first)).status,400);
+  assert.equal((await request('POST',{...first,focus:'Forged'},'receipt-000')).status,400);
+  assert.equal((await request('POST',first,'receipt-000','')).status,401);
+  assert.equal((await request('POST',first,'receipt-000','b')).status,404);
+  assert.equal((await request('POST',first,'receipt-000','a','/checkins/missing/feedback')).status,404);
+  assert.equal((await request('POST',{response:null,sourceRevision:initial.revision},'receipt-000')).status,400);
+  await store.updateExperienceRecord('a',entry.id,{kind:'checkin',payload:{...base,energy:9,notes:'Keep these new notes'}});
+  const results=await Promise.all([request('POST',first,'receipt-001'),request('POST',{...first,response:'disliked'},'receipt-002')]);
+  assert.deepEqual(results.map(r=>r.status).sort(),[200,409]);const winning=results[0].status===200?{body:first,key:'receipt-001'}:{body:{...first,response:'disliked'},key:'receipt-002'};
+  const saved=(await store.getExperienceRecords('a','checkin'))[0];assert.equal(saved.kind,'checkin');if(saved.kind!=='checkin')throw Error('Wrong kind');assert.equal(saved.payload.energy,9);assert.equal(saved.payload.notes,'Keep these new notes');
+  const timestamp=saved.updatedAt;
+  const replay=await request('POST',winning.body,winning.key);assert.equal(replay.status,200);assert.equal((await store.getExperienceRecords('a','checkin'))[0].updatedAt,timestamp);
+  assert.equal((await request('POST',{...winning.body,response:'liked'},winning.key)).status,409);
+  const current=(await request('GET')).body;
+  const newer=await request('POST',{response:'no-benefit',sourceRevision:current.revision},'receipt-003');assert.equal(newer.status,200);
+  assert.equal((await request('POST',winning.body,winning.key)).status,409,'An old retry must not replace a newer response');
+  await store.updateExperienceRecord('a',entry.id,{kind:'checkin',payload:{...base,focus:'New stated focus'}});
+  assert.equal((await request('POST',{response:'liked',sourceRevision:newer.body.revision},'receipt-004')).status,409);
+  const changed=(await request('GET')).body;assert.equal(changed.feedback.focus,base.focus);assert.equal(changed.source.focus,'New stated focus');
+  const clearBody={response:null,sourceRevision:changed.revision},cleared=await request('POST',clearBody,'receipt-005');assert.equal(cleared.status,200);assert.equal(cleared.body.feedback.response,null);assert.equal(cleared.body.feedback.focus,base.focus);
+  assert.equal((await request('POST',clearBody,'receipt-005')).status,200);
+  assert.equal((await request('POST',{response:null,sourceRevision:cleared.body.revision},'receipt-006')).status,400);
+  const adapter=store.putCheckinFeedback;(store as any).putCheckinFeedback=undefined;assert.equal((await request('POST',{response:'liked',sourceRevision:cleared.body.revision},'receipt-007')).status,503);store.putCheckinFeedback=adapter;
+  await store.deleteExperienceRecord('a',entry.id);assert.equal((await request('POST',clearBody,'receipt-005')).status,404);
+  const empty=await store.insertExperienceRecord('a',{kind:'checkin',payload:{...base,focus:''}}),view=await store.getCheckinFeedback('a',empty.id);assert.equal((await request('POST',{response:'liked',sourceRevision:view!.revision},'receipt-008','a',`/checkins/${empty.id}/feedback`)).status,400);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();if(prior===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=prior;}
+});

@@ -1,0 +1,11 @@
+# Shared workspace request admission
+
+The main server's existing `SharedRateLimiter` now admits all POST/PUT/PATCH/DELETE paths under `/api/experience`, including the root and Express-accepted case/trailing-slash variants. Authenticated identity comes from the session, never a body/header actor ID. Ordinary reads acquire no new write budget; exports retain their existing resource budget.
+
+The existing30-per-minute workspace allowance is enforced across replicas under a distinct HMAC-keyed workspace scope, with the existing source ceiling and database clock/atomic upsert. Costly overlapping paths must also pass their preexisting resource scope; no prior ceiling is widened. The route-local counter remains supplementary, not a shared-store fallback. A shared failure denies before route/schema/storage work. API admission failures are no-store and include Retry-After.
+
+A budget query has a five-second default deadline. Timeout denies admission, and a late database result cannot resume the handler. This bounds the admission wait; it does not claim to cancel a late SQL counter update or establish a monetary charge. Invalid internal deadline configuration fails closed. Startup schema initialization and cleanup are separate operations; no new table/migration, price, tariff, grant or production credential is introduced.
+
+Tests use two Express replicas and embedded PostgreSQL:35 simultaneous accepted-path variants admit30, return five429s, ignore forged actor inputs, and store no raw actor IDs. Store outage variants deny before handlers; ordinary reads/adjacent paths remain unaffected; existing resource exhaustion still blocks overlapping costly actions. A stalled fake store and late success prove bounded denial without resumed work. Auth/deletion, USDA and controller HTTP regressions pass.
+
+The isolated Neon smoke uses a fresh synthetic account to exhaust invalid workspace attempts, checks the shared Retry-After response and verifies private export remains available, then restores the original synthetic session before erasure tests. No real user data or credentials are used or printed. Independent live multi-host load/false-positive assessment and monetary/recovery policies remain separate external acceptance.

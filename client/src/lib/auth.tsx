@@ -1,5 +1,9 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { apiRequest } from './queryClient';
+import { clearToasts } from "@/hooks/use-toast";
+import { flushSync } from "react-dom";
+import { observeSessionChanges } from "./auth-session-events";
+import { bindRequestActor } from "./request-actor";
+import { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
+import { apiRequest, queryClient } from './queryClient';
 
 interface User {
   id: string;
@@ -20,21 +24,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const authReadEpoch = useRef(0);
+  const sessionEvents = useRef<ReturnType<typeof observeSessionChanges>|null>(null);
+  const adoptUser = (next: User | null) => {
+    bindRequestActor(next?.id ?? null);
+    clearToasts();
+    setUser(next);
+  };
   useEffect(() => {
+    const withdraw = () => {
+      authReadEpoch.current++;
+      bindRequestActor(null);
+      clearToasts();
+      void queryClient.cancelQueries();
+      queryClient.clear();
+      // Native page lifecycle events must scrub private DOM before a history snapshot.
+      flushSync(() => { setUser(null); setIsLoading(true); });
+    };
+    const events=observeSessionChanges(withdraw,()=>{void checkAuth();});
+    sessionEvents.current=events;
     checkAuth();
+    return () => { events.dispose();sessionEvents.current=null;authReadEpoch.current++;bindRequestActor(null); };
   }, []);
 
   const checkAuth = async () => {
+    const readEpoch = ++authReadEpoch.current;
     try {
       const response = await fetch('/api/auth/me', {
         credentials: 'include',
       });
       const data = await response.json();
-      setUser(data.user || null);
+      if (readEpoch !== authReadEpoch.current) return;
+      await queryClient.cancelQueries();
+      if (readEpoch !== authReadEpoch.current) return;
+      queryClient.clear();
+      adoptUser(response.ok ? data.user || null : null);
     } catch (error) {
-      setUser(null);
+      if (readEpoch === authReadEpoch.current) adoptUser(null);
     } finally {
-      setIsLoading(false);
+      if (readEpoch === authReadEpoch.current) setIsLoading(false);
     }
   };
 
@@ -43,7 +71,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await response.json();
     
     if (data.success) {
-      setUser(data.user);
+      authReadEpoch.current++;
+      sessionEvents.current?.announce();
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      adoptUser(data.user);
+      setIsLoading(false);
     }
   };
 
@@ -52,13 +85,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const data = await response.json();
     
     if (data.success) {
-      setUser(data.user);
+      authReadEpoch.current++;
+      sessionEvents.current?.announce();
+      await queryClient.cancelQueries();
+      queryClient.clear();
+      adoptUser(data.user);
+      setIsLoading(false);
     }
   };
 
   const logout = async () => {
-    await apiRequest('POST', '/api/auth/logout', {});
-    setUser(null);
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),15000);
+    try{await apiRequest('POST', '/api/auth/logout', {},undefined,controller.signal);}
+    finally{clearTimeout(timeout);}
+    authReadEpoch.current++;
+    sessionEvents.current?.announce();
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    adoptUser(null);
+    setIsLoading(false);
     window.location.href = '/login';
   };
 

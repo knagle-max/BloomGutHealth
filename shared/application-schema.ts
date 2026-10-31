@@ -1,0 +1,25 @@
+// Application tables reconciled by Drizzle. Migration-owned control tables
+// remain available in schema.ts for typed queries and are managed by SQL.
+export {
+  users,
+  microbiomeSamples,
+  bacterialComposition,
+  metabolites,
+  healthImpacts,
+  cohortReferences,
+  mlAnalyses,
+  metaboliteImpactKnowledge,
+  recommendations,
+  meals,
+  precisionProfiles,
+  precisionRecords,
+  nutritionProducts,
+  experienceSettings,
+  experienceRecords,
+  requestBudgets,
+  healthSourceConsents,
+  healthObservations,
+  capabilityPreferences,
+  aiSpendRequests,
+  providerCircuits,
+} from "./schema";
