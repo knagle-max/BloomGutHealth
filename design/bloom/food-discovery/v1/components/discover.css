@@ -1,0 +1,18 @@
+/* Bloom Discover reusable presentation tokens — visual-only, no data logic */
+:root{--bloom-forest:#173F32;--bloom-sage:#699779;--bloom-ivory:#FAF9F4;--bloom-border:#DCE6DB;--bloom-ink:#17392E;--bloom-muted:#5B7364}
+.bloom-discover{background:var(--bloom-ivory);color:var(--bloom-ink);font-family:system-ui,sans-serif;max-width:1100px;margin:auto;padding:24px}
+.bloom-discover h1,.bloom-discover h2{font-family:Georgia,serif}
+.bloom-discover-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}
+.bloom-discover-card{background:#fff;border:1px solid var(--bloom-border);border-radius:22px;padding:22px;min-width:0}
+.bloom-garden-art{display:block;width:100%;max-height:340px;object-fit:contain}
+.bloom-variety-total{font-family:Georgia,serif;font-size:clamp(2.4rem,5vw,4.4rem);line-height:1}
+.bloom-chip-row{display:flex;gap:8px;flex-wrap:wrap}
+.bloom-food-chip{display:flex;align-items:center;gap:8px;padding:7px 11px;border-radius:14px;background:#EEF3EC}
+.bloom-food-chip img{width:36px;height:36px}
+.bloom-discover-action{display:inline-flex;min-height:44px;align-items:center;padding:9px 16px;border-radius:999px;background:var(--bloom-forest);color:#fff;text-decoration:none}
+.bloom-discover-muted{color:var(--bloom-muted)}
+.bloom-garden-motion{animation:bloom-rise .65s ease-out both}
+@keyframes bloom-rise{from{opacity:.6;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:680px){.bloom-discover{padding:16px}.bloom-discover-grid{grid-template-columns:1fr}.bloom-discover-card{padding:16px}}
+@media(prefers-reduced-motion:reduce){.bloom-garden-motion{animation:none}}
+@media(prefers-color-scheme:dark){.bloom-discover{--bloom-ivory:#13241D;--bloom-ink:#EAF3EC;--bloom-muted:#B8C9BB;--bloom-border:#3D5B48}.bloom-discover-card{background:#1E3528}.bloom-food-chip{background:#274432}}
