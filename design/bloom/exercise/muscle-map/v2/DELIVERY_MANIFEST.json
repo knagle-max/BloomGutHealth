@@ -1,0 +1,22 @@
+{
+  "version": "2.0.0",
+  "status": "high_detail_raster_source_in_conversation_zip_not_yet_committed",
+  "canonical_branch": "design/biology-visuals-2026-10-30",
+  "supersedes": "design/bloom/exercise/muscle-map/v1/svg",
+  "style": "premium anatomical illustration, cream/evergreen/sage, muscle fibre detail, subtle body contours",
+  "categories": [
+    "chest",
+    "back",
+    "shoulders",
+    "arms",
+    "core",
+    "glutes",
+    "quadriceps",
+    "hamstrings",
+    "calves",
+    "full-body"
+  ],
+  "artwork_files_not_on_branch": true,
+  "source_bundle": "Bloom_Anatomy_Illustration_Library_v2.zip",
+  "production_use": "pending asset import and legal provenance"
+}
