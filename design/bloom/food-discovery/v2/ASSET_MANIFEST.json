@@ -1,0 +1,324 @@
+{
+  "schema": "bloom.food_discovery.v2",
+  "revision": "2.0.0",
+  "status": "image_files_packaged_locally_not_uploaded_to_git",
+  "garden": [
+    {
+      "id": "01-seedling",
+      "webp": "assets/garden/01-seedling.webp",
+      "png": "assets/garden/01-seedling.png",
+      "committed_to_branch": false
+    },
+    {
+      "id": "02-growing",
+      "webp": "assets/garden/02-growing.webp",
+      "png": "assets/garden/02-growing.png",
+      "committed_to_branch": false
+    },
+    {
+      "id": "03-abundant",
+      "webp": "assets/garden/03-abundant.webp",
+      "png": "assets/garden/03-abundant.png",
+      "committed_to_branch": false
+    },
+    {
+      "id": "04-flourishing",
+      "webp": "assets/garden/04-flourishing.webp",
+      "png": "assets/garden/04-flourishing.png",
+      "committed_to_branch": false
+    }
+  ],
+  "foods": [
+    {
+      "id": "apple",
+      "webp": "assets/foods/webp/apple.webp",
+      "png": "assets/foods/png/apple.png",
+      "transparent_png": "assets/foods/transparent/apple.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "pear",
+      "webp": "assets/foods/webp/pear.webp",
+      "png": "assets/foods/png/pear.png",
+      "transparent_png": "assets/foods/transparent/pear.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "blueberries",
+      "webp": "assets/foods/webp/blueberries.webp",
+      "png": "assets/foods/png/blueberries.png",
+      "transparent_png": "assets/foods/transparent/blueberries.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "strawberries",
+      "webp": "assets/foods/webp/strawberries.webp",
+      "png": "assets/foods/png/strawberries.png",
+      "transparent_png": "assets/foods/transparent/strawberries.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "purple-cabbage",
+      "webp": "assets/foods/webp/purple-cabbage.webp",
+      "png": "assets/foods/png/purple-cabbage.png",
+      "transparent_png": "assets/foods/transparent/purple-cabbage.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "broccoli",
+      "webp": "assets/foods/webp/broccoli.webp",
+      "png": "assets/foods/png/broccoli.png",
+      "transparent_png": "assets/foods/transparent/broccoli.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "carrot",
+      "webp": "assets/foods/webp/carrot.webp",
+      "png": "assets/foods/png/carrot.png",
+      "transparent_png": "assets/foods/transparent/carrot.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "beetroot",
+      "webp": "assets/foods/webp/beetroot.webp",
+      "png": "assets/foods/png/beetroot.png",
+      "transparent_png": "assets/foods/transparent/beetroot.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "spinach",
+      "webp": "assets/foods/webp/spinach.webp",
+      "png": "assets/foods/png/spinach.png",
+      "transparent_png": "assets/foods/transparent/spinach.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "tomato",
+      "webp": "assets/foods/webp/tomato.webp",
+      "png": "assets/foods/png/tomato.png",
+      "transparent_png": "assets/foods/transparent/tomato.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "red-bell-pepper",
+      "webp": "assets/foods/webp/red-bell-pepper.webp",
+      "png": "assets/foods/png/red-bell-pepper.png",
+      "transparent_png": "assets/foods/transparent/red-bell-pepper.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "avocado",
+      "webp": "assets/foods/webp/avocado.webp",
+      "png": "assets/foods/png/avocado.png",
+      "transparent_png": "assets/foods/transparent/avocado.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "cucumber",
+      "webp": "assets/foods/webp/cucumber.webp",
+      "png": "assets/foods/png/cucumber.png",
+      "transparent_png": "assets/foods/transparent/cucumber.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "mushroom",
+      "webp": "assets/foods/webp/mushroom.webp",
+      "png": "assets/foods/png/mushroom.png",
+      "transparent_png": "assets/foods/transparent/mushroom.png",
+      "identity_verified": false,
+      "food_class": "fungus",
+      "committed_to_branch": false
+    },
+    {
+      "id": "sweet-potato",
+      "webp": "assets/foods/webp/sweet-potato.webp",
+      "png": "assets/foods/png/sweet-potato.png",
+      "transparent_png": "assets/foods/transparent/sweet-potato.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "garlic",
+      "webp": "assets/foods/webp/garlic.webp",
+      "png": "assets/foods/png/garlic.png",
+      "transparent_png": "assets/foods/transparent/garlic.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "oats",
+      "webp": "assets/foods/webp/oats.webp",
+      "png": "assets/foods/png/oats.png",
+      "transparent_png": "assets/foods/transparent/oats.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "brown-rice",
+      "webp": "assets/foods/webp/brown-rice.webp",
+      "png": "assets/foods/png/brown-rice.png",
+      "transparent_png": "assets/foods/transparent/brown-rice.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "mixed-grains",
+      "webp": "assets/foods/webp/mixed-grains.webp",
+      "png": "assets/foods/png/mixed-grains.png",
+      "transparent_png": "assets/foods/transparent/mixed-grains.png",
+      "identity_verified": false,
+      "food_class": "composite_or_processed",
+      "committed_to_branch": false
+    },
+    {
+      "id": "red-lentils",
+      "webp": "assets/foods/webp/red-lentils.webp",
+      "png": "assets/foods/png/red-lentils.png",
+      "transparent_png": "assets/foods/transparent/red-lentils.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "chickpeas",
+      "webp": "assets/foods/webp/chickpeas.webp",
+      "png": "assets/foods/png/chickpeas.png",
+      "transparent_png": "assets/foods/transparent/chickpeas.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "black-beans",
+      "webp": "assets/foods/webp/black-beans.webp",
+      "png": "assets/foods/png/black-beans.png",
+      "transparent_png": "assets/foods/transparent/black-beans.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "kidney-beans",
+      "webp": "assets/foods/webp/kidney-beans.webp",
+      "png": "assets/foods/png/kidney-beans.png",
+      "transparent_png": "assets/foods/transparent/kidney-beans.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "walnuts",
+      "webp": "assets/foods/webp/walnuts.webp",
+      "png": "assets/foods/png/walnuts.png",
+      "transparent_png": "assets/foods/transparent/walnuts.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "almonds",
+      "webp": "assets/foods/webp/almonds.webp",
+      "png": "assets/foods/png/almonds.png",
+      "transparent_png": "assets/foods/transparent/almonds.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "pumpkin-seeds",
+      "webp": "assets/foods/webp/pumpkin-seeds.webp",
+      "png": "assets/foods/png/pumpkin-seeds.png",
+      "transparent_png": "assets/foods/transparent/pumpkin-seeds.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "flaxseeds",
+      "webp": "assets/foods/webp/flaxseeds.webp",
+      "png": "assets/foods/png/flaxseeds.png",
+      "transparent_png": "assets/foods/transparent/flaxseeds.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "chia-seeds",
+      "webp": "assets/foods/webp/chia-seeds.webp",
+      "png": "assets/foods/png/chia-seeds.png",
+      "transparent_png": "assets/foods/transparent/chia-seeds.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "olive-oil",
+      "webp": "assets/foods/webp/olive-oil.webp",
+      "png": "assets/foods/png/olive-oil.png",
+      "transparent_png": "assets/foods/transparent/olive-oil.png",
+      "identity_verified": false,
+      "food_class": "composite_or_processed",
+      "committed_to_branch": false
+    },
+    {
+      "id": "basil",
+      "webp": "assets/foods/webp/basil.webp",
+      "png": "assets/foods/png/basil.png",
+      "transparent_png": "assets/foods/transparent/basil.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "parsley",
+      "webp": "assets/foods/webp/parsley.webp",
+      "png": "assets/foods/png/parsley.png",
+      "transparent_png": "assets/foods/transparent/parsley.png",
+      "identity_verified": false,
+      "food_class": "botanical",
+      "committed_to_branch": false
+    },
+    {
+      "id": "rosemary-lemon",
+      "webp": "assets/foods/webp/rosemary-lemon.webp",
+      "png": "assets/foods/png/rosemary-lemon.png",
+      "transparent_png": "assets/foods/transparent/rosemary-lemon.png",
+      "identity_verified": false,
+      "food_class": "composite_or_processed",
+      "committed_to_branch": false
+    }
+  ],
+  "source_archive": "Bloom_Food_Discovery_Production_Assets_v2.zip",
+  "binary_upload_status": "blocked_by_connector_file_byte_transfer",
+  "warning": "Manifest paths are intended post-upload paths; do not use as deployed asset URLs until verified."
+}
