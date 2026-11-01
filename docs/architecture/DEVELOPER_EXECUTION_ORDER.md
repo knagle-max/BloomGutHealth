@@ -102,3 +102,13 @@ Four specialist reviews (BIO-TWIN-601–608, ML-TWIN-701–706, UT-TWIN-1001–1
 ## Digital twin specialist intake (2026-10-23)
 
 BIO-TWIN-601–608, ML-TWIN-701–706, UT-TWIN-1001–1007 and MKT-TWIN-1101–1106 are consolidated in `V06_HANDOFF.md` §28 as TWIN-ARCH-01–08. **No v0.5 interruption or universal twin dashboard.** Reuse DATA-AI and LEARN contracts. After the initial functional v0.6 planner, offer **Compare approaches** (evidence-based qualitative choices) and source-aware **Personal progress**. Personalized quantitative forecasts require independent context-specific validation, calibrated uncertainty, simple-baseline comparison and safety/permission gates. Host–microbe flux stays P2 research. Branding’s `Bloom_V06_Digital_Twin_UX_Kit_2026-10-23.zip` is presentational only, not validated model logic. Reserve “digital twin” for scientifically validated context-specific simulation.
+
+## 2026-11-01 Architect integration checkpoint
+
+Architecture owns specialist intake, duplicate/contradiction resolution and this ordered handoff; Codex owns implementation and verification. This checkpoint clarifies existing scope, not an instruction to stop active engineering.
+
+**Current v0.5 immediate dependency:** reproduce and resolve the canonical bloom-report-v2 structured report reimport field-loss documented in NEXT_ACTIONS.md, while retaining exact reported zero/unknown/qualitative data, original source metadata and ownership. Follow with source/capability isolation regression, then criterion-by-criterion v0.5 acceptance reconciliation and remaining demonstrated UI/source gaps. Do not recycle old superseded biology findings or treat 207 historical backlog rows as 207 proven live defects.
+
+**Biology intake mapping:** BIO-2026-101/102 evidence provenance/claims review = P0 only before new personal effects, ongoing P1 coverage; BIO-104/105/106/108 existing outcome/nutrition/Athlete/N-of-1 expansion = staged P1 and independent science validation; BIO-103 incremental typed reaction model = v0.6 P1 after minimal contracts/planner; BIO-107 microbial flux = research P2, no launch prerequisite. Negative/conflicting findings and abstention are required for any released personalized rule.
+
+**Sequence preserved:** finish actionable v0.5 first, then existing v0.6 contract → baseline useful planner → training → longitudinal outcomes → cautiously evidence-gated biology → research governance → optional Coach and advanced ML. v0.5 browser/PWA-first native decision is settled; preserve no-fake-sync rule. Independent device, brand, science, security, licensing and managed recovery acceptance remain distinct gates, never blanket reasons to stop unrelated safe branch work. Avoid paid infrastructure and duplicate prediction systems.
