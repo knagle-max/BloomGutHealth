@@ -1,0 +1,83 @@
+{
+  "schema": "bloom.r2y.ux.v1",
+  "route": "Biology/Science Explorer/Research-to-You",
+  "widgets": [
+    {
+      "id": "ResearchEntry",
+      "inputs": [
+        "url",
+        "publicationId?",
+        "reviewStatus"
+      ],
+      "states": [
+        "empty",
+        "resolving",
+        "resolved-reviewed",
+        "unreviewed",
+        "not-found",
+        "offline",
+        "rights-restricted"
+      ],
+      "rule": "Article URL is discovery input; primary publication and date validated through canonical registry."
+    },
+    {
+      "id": "ResearchStory",
+      "sections": [
+        "whatChanged",
+        "mechanism",
+        "possibleInfluences",
+        "personalData",
+        "unknowns"
+      ],
+      "states": [
+        "ready",
+        "partial-evidence",
+        "source-withdrawn",
+        "loading",
+        "error"
+      ],
+      "rule": "Five-part story with sources and model on first view."
+    },
+    {
+      "id": "Pathway",
+      "inputs": [
+        "entityIds",
+        "edgeEvidence",
+        "compartment",
+        "hostOrMicrobe"
+      ],
+      "states": [
+        "host-only",
+        "microbial",
+        "unresolved",
+        "text-fallback"
+      ],
+      "rule": "No invented microbial edges or transitive dietary links."
+    },
+    {
+      "id": "PersonalDataContext",
+      "inputs": [
+        "canonicalLabIds",
+        "foodLogCoverage",
+        "microbiomeAssays",
+        "geneticAssays"
+      ],
+      "states": [
+        "none",
+        "observed",
+        "partial",
+        "incomparable",
+        "source-unavailable"
+      ],
+      "rule": "Observed assay does not measure untested mechanism."
+    }
+  ],
+  "hardGates": [
+    "science-review",
+    "source-rights",
+    "personalization-approval",
+    "user-research",
+    "developer-integration"
+  ],
+  "designStatus": "interactive standalone prototype; not application implementation"
+}
