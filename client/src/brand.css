@@ -299,3 +299,16 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .experiment-periods dt {font-weight:600;margin-bottom:8px;}
 .experiment-periods dd {margin-top:4px;}
 @media(max-width:420px){.experiment-periods {grid-template-columns:1fr;}}
+.lab-explorer-category>summary {display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;justify-content:space-between;min-height:44px;cursor:pointer;}
+.lab-explorer-category>summary strong {font-size:18px;font-family:var(--font-serif);}
+.lab-explorer-category>summary span {font-size:13px;color:hsl(var(--muted-foreground));}
+.lab-explorer-markers {margin-top:16px;}
+.lab-explorer-marker+.lab-explorer-marker {border-top:1px solid hsl(var(--border));}
+.lab-explorer-marker-toggle {display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;width:100%;min-height:56px;padding:12px 0;overflow-wrap:anywhere;}
+.lab-explorer-marker-toggle small {display:block;font-size:13px;color:hsl(var(--muted-foreground));}
+.lab-explorer-marker-toggle:focus-visible,.lab-explorer-category>summary:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:3px;}
+.lab-explorer-detail {padding:8px 0 20px;}
+.lab-explorer-detail h4 {font-weight:600;}
+.lab-explorer-detail .evidence-insight {margin:0;}
+.lab-explorer-detail summary {min-height:44px;align-content:center;cursor:pointer;}
+.lab-explorer-detail summary:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:3px;}

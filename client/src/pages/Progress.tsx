@@ -7,8 +7,8 @@ import RoutineLabTiming from "@/components/RoutineLabTiming";
 import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-units";
 import { useExperienceRecords } from "@/lib/experience";
 import DeviceObservations from "@/components/DeviceObservations";
-import { useEffect, useRef } from "react";
-import LabTrend from "@/components/LabTrend";
+
+import LabExplorer from "@/components/LabExplorer";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useSearch } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -18,7 +18,7 @@ import type { PrecisionReport } from "@shared/precision-nutrition";
 export default function Progress() {
   const [, navigate] = useLocation();
   const params = new URLSearchParams(useSearch());
-  const requestedView = params.get("view"), requestedMarker=params.get("marker");
+  const requestedView = params.get("view"), requestedMarker=params.get("marker"),requestedGroup=params.get("group");
   const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : requestedMarker ? "biology" : undefined;
   const { user } = useAuth(),
     { mode, settings, patch, saving, loading, error: settingsError } = useExperience(),
@@ -33,16 +33,7 @@ export default function Progress() {
   const currentProfile=profile.fetchStatus==="idle"&&!profile.isError?profile.data:undefined;
   const currentHydration=sessions.fetchStatus==="idle"&&!sessions.isError?sessions.data:undefined;
   const checkingReport=report.isPending||report.fetchStatus!=="idle";
-  const focusedMarker=useRef<string|null>(null);
   const activeView=selectedView ?? (mode === "athlete" ? "activity" : "nutrition");
-  useEffect(()=>{
-    if(!requestedMarker||activeView!=="biology"){focusedMarker.current=null;return;}
-    if(!currentReport)return;
-    if(!currentReport.trends.some(t=>t.marker===requestedMarker)){focusedMarker.current=null;return;}
-    const request=`${user?.id}:${requestedMarker}`;if(focusedMarker.current===request)return;
-    const frame=requestAnimationFrame(()=>{const container=document.getElementById(`lab-marker-${encodeURIComponent(requestedMarker)}`),heading=container?.querySelector<HTMLElement>('h3');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});container!.scrollIntoView({block:'start'});focusedMarker.current=request;}});
-    return()=>cancelAnimationFrame(frame);
-  },[user?.id,requestedMarker,activeView,currentReport]);
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
@@ -116,8 +107,7 @@ export default function Progress() {
         {(report.isError||report.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={report.isFetching} onClick={()=>report.refetch()}>Retry Progress observations</button>}
         {currentReport&&!!currentReport.pendingLabs?.length&&<p className="panel-note">{currentReport.pendingLabs.length} result(s) need unit confirmation and are excluded from confirmed trends. <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Review source units in Bloodwork</Link></p>}
         {currentReport&&!!currentReport.sourceOnlyLabs?.length&&<p className="panel-note">{currentReport.sourceOnlyLabs.length} source result(s) await marker identification. They remain available in Bloodwork and are excluded from confirmed trends.</p>}
-        {currentReport&&requestedMarker&&!currentReport.trends.some(t=>t.marker===requestedMarker)&&<p role="alert">The requested marker is not available in your current confirmed laboratory history. <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Open source review</Link></p>}
-        {currentReport?.trends.map(t=><div key={t.marker} id={`lab-marker-${encodeURIComponent(t.marker)}`} data-lab-marker={t.marker} className="scroll-mt-24"><LabTrend trend={t}/></div>)}
+        <LabExplorer key={user?.id} owner={user?.id||""} report={currentReport} marker={requestedMarker} group={requestedGroup} onSelect={(group,marker)=>{const next=new URLSearchParams(params);next.set("view","biology");if(group)next.set("group",group);else next.delete("group");if(marker)next.set("marker",marker);else next.delete("marker");navigate("/progress?"+next.toString());}}/>
         {currentReport && !currentReport.trends.length && (
           <p>
             {(currentReport.pendingLabs?.length||currentReport.sourceOnlyLabs?.length)?"No confirmed numeric trends are available. Source records awaiting identification or unit review remain in Bloodwork.":"No dated laboratory results yet. Add a report's values to establish a baseline."}

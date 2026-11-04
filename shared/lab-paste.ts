@@ -131,3 +131,8 @@ export function parseLabPaste(
   });
   return { valid, errors, pending, sourceOnly };
 }
+
+/** Reuse the parser's existing aliases for local navigation search, not diagnosis. */
+export function labMarkerSearchTerms(marker:string):string[]{
+ return [marker,...markerDefinitions.filter(m=>m.id===marker).map(m=>m.name),...Object.entries(aliases).filter(([,id])=>id===marker).map(([name])=>name)];
+}
