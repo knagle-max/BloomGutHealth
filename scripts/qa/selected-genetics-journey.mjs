@@ -32,7 +32,7 @@ const errors = [], commands = [];
 const own = () => store.getPrecisionRecords('atomic-qa');
 const report = async () => {
   const records = await own();
-  return { ...buildPrecisionReport(records, context, defaultPreferences, null), records, availableReports: [], intake: { days: 28, mealsLogged: 0, nutrients: [] } };
+  return { ...buildPrecisionReport(records, context, defaultPreferences, null), records, availableReports: [], journalSymptoms:[], intake: { days: 28, mealsLogged: 0, nutrients: [] } };
 };
 page.on('pageerror', error => errors.push(error.message));
 await page.route('https://fonts.**/**', route => route.abort());
@@ -56,14 +56,25 @@ try {
   const form=page.getByRole('region',{name:'Enter individual SNPs'});
   await form.getByLabel('Genotype rs1801133',{exact:true}).fill('ZZ');await form.getByRole('button',{name:'Preview selected SNPs',exact:true}).click();await form.getByRole('alert').waitFor();assert.equal((await own()).length,0);await form.getByLabel('Genotype rs1801133',{exact:true}).fill('AG');
   await form.getByLabel('Genotype source',{exact:true}).fill('Synthetic selected source');
+  await form.getByText('Source build, assay & quality (optional)',{exact:true}).click();
+  await form.getByLabel('Genome build (as reported)',{exact:true}).fill('GRCh38 / synthetic source revision 2');
+  await form.getByLabel('Assay / platform (as reported)',{exact:true}).fill('Synthetic array v3');
+  await form.getByLabel('Source quality note (optional)',{exact:true}).fill('Source says call quality unavailable');
   await form.getByRole('button',{name:'Preview selected SNPs',exact:true}).click();
   await form.getByText('1 selected SNPs. Only the rows below will be saved.',{exact:true}).waitFor();
   assert.equal((await own()).length,0);
   const save=form.getByRole('button',{name:'Save selected SNPs',exact:true});assert.equal(await save.isDisabled(),true);
-  await form.getByRole('checkbox',{name:/I consent to saving these selected genetic entries/}).check();await save.click();
+  const manualConsent=form.getByRole('checkbox',{name:/I consent to saving these selected genetic entries/});await manualConsent.check();
+  await form.getByLabel('Source quality note (optional)',{exact:true}).fill('Source says call quality unavailable; unverified');
+  assert.equal(await save.count(),0,'A changed source fact withdraws the preview and consent');
+  await form.getByRole('button',{name:'Preview selected SNPs',exact:true}).click();assert.equal(await manualConsent.isChecked(),false);await form.getByText('Source context · self-reported, not verified',{exact:true}).waitFor();
+  await manualConsent.check();await save.click();
   await page.getByText('Selected SNPs saved as your active genetic dataset. Unreviewed or unconfirmed entries remain recorded without interpretation.',{exact:true}).waitFor();
   const records=await own();assert.equal(records.length,1);assert.equal(records[0].payload.entries[0].genotype,'AG');assert.equal(records[0].payload.strand,'unknown');assert.equal(records[0].payload.source,'Synthetic selected source');assert.equal((await store.getPrecisionRecords('other')).length,0);
+  assert.deepEqual(records[0].payload.sourceContext,{genomeBuild:'GRCh38 / synthetic source revision 2',assay:'Synthetic array v3',qualityNote:'Source says call quality unavailable; unverified'});
+  assert.equal((await report()).genetics.manual.entries.some(entry=>entry.reviewed),false);
   await page.reload();await form.getByLabel('Genotype rs1801133',{exact:true}).waitFor();assert.equal(await form.getByLabel('Genotype rs1801133',{exact:true}).inputValue(),'AG');assert.equal(await form.getByLabel('Genotype source',{exact:true}).inputValue(),'Synthetic selected source');
+  await form.getByText('Source build, assay & quality (optional)',{exact:true}).click();assert.equal(await form.getByLabel('Genome build (as reported)',{exact:true}).inputValue(),'GRCh38 / synthetic source revision 2');assert.equal(await form.getByLabel('Assay / platform (as reported)',{exact:true}).inputValue(),'Synthetic array v3');assert.equal(await form.getByLabel('Source quality note (optional)',{exact:true}).inputValue(),'Source says call quality unavailable; unverified');
   await page.getByText('Supported calls provide educational context; they do not set nutrition targets or add food-ranking priority.',{exact:false}).waitFor();
   const rawPanel=page.locator('section').filter({has:page.getByRole('heading',{name:'Import 23andMe raw data',exact:true})});
   await rawPanel.getByLabel('DNA sample date',{exact:true}).fill('2026-10-02T12:30');
@@ -77,7 +88,7 @@ try {
   assert.equal(commands.length,2);assert.equal(JSON.stringify(commands[1].body).includes('rs99999'),false);assert.equal(JSON.stringify(commands[1].body).includes('# 23andMe'),false);const imports=await own();assert.equal(imports.length,2);const raw=imports.find(row=>row.payload.provider==='23andMe');assert.equal(raw.payload.calls.length,1);assert.equal(raw.payload.calls[0].rsid,'rs4988235');assert.equal(raw.payload.scannedVariants,5);assert.equal(JSON.stringify(commands[1].body).includes('rs429358'),false);assert.equal(JSON.stringify(commands[1].body).includes('rs7412'),false);assert.equal(raw.payload.calls.some(row=>row.rsid==='rs99999'),false);assert.equal('rawText' in raw.payload,false);assert.equal(imports.some(row=>row.payload.source==='Synthetic selected source'),true);assert.equal((await store.getPrecisionRecords('other')).length,0);
   await page.reload();await page.getByText('Active import: 2026-10-03',{exact:true}).waitFor();
   await page.setViewportSize({width:320,height:1000});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);assert.deepEqual(errors,[]);
-  console.log('PASS actual App/HTTP/encrypted PGlite selected SNP preview/no write before consent/save/reload/unknown strand/source/owner/320px; selected file calls/sensitive defaults/fresh consent/date change/minimized POST/reload/prior source; corrected educational copy.');
+  console.log('PASS actual App/HTTP/encrypted PGlite selected SNP preview/no write before consent/save/reload/unknown strand/source/owner/320px; selected file calls/sensitive defaults/fresh consent/date change/minimized POST/reload/prior source; literal build/assay/quality save/reload and changed-fact consent withdrawal without interpretation; corrected educational copy.');
 
 } catch(error) { console.error({errors,alerts:await page.getByRole('alert').allTextContents(),records:(await own()).length});throw error; } finally {
   await browser.close();

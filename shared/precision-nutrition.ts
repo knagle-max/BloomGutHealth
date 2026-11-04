@@ -341,11 +341,19 @@ export const manualGeneticEntrySchema = z
       ),
   })
   .strict();
+/** Literal, optional source context; none of these statements verify a call or
+ * broaden the reviewed catalogue, coordinate parser or clinical eligibility. */
+export const manualGeneticSourceContextSchema = z.object({
+  genomeBuild: z.string().trim().min(1).max(100).optional(),
+  assay: z.string().trim().min(1).max(200).optional(),
+  qualityNote: z.string().trim().min(1).max(500).optional(),
+}).strict();
 export const manualGeneticImportSchema = z
   .object({
     consent: z.literal(true),
     provider: z.literal("manual"),
     source: z.string().trim().min(1).max(200),
+    sourceContext: manualGeneticSourceContextSchema.optional(),
     strand: z.enum(["forward", "unknown"]),
     collectedAt: isoDate,
     entries: z.array(manualGeneticEntrySchema).min(1).max(200),
@@ -1174,7 +1182,7 @@ export function buildPrecisionReport(
                 : geneticData.scannedVariants,
             build:
               geneticData.provider === "manual"
-                ? "Not supplied (manual entry)"
+                ? geneticData.sourceContext?.genomeBuild || "Not supplied (manual entry)"
                 : geneticData.build,
             provider: geneticData.provider,
           }
@@ -1183,6 +1191,7 @@ export function buildPrecisionReport(
         geneticData?.provider === "manual"
           ? {
               source: geneticData.source,
+              sourceContext: geneticData.sourceContext,
               strand: geneticData.strand,
               entries: classifyManualGenetics(geneticData),
             }

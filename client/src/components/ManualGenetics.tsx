@@ -56,6 +56,9 @@ export default function ManualGenetics({
   const [source, setSource] = useState(genetics.manual?.source || ""),
     [forward, setForward] = useState(false),
     [consent, setConsent] = useState(false);
+  const [genomeBuild,setGenomeBuild]=useState(genetics.manual?.sourceContext?.genomeBuild||"");
+  const [assay,setAssay]=useState(genetics.manual?.sourceContext?.assay||"");
+  const [qualityNote,setQualityNote]=useState(genetics.manual?.sourceContext?.qualityNote||"");
   const [collectedAt, setDate] = useState(
     () =>
       genetics.import?.collectedAt.slice(0, 10) ||
@@ -248,6 +251,13 @@ export default function ManualGenetics({
           placeholder="e.g. 23andMe raw-data browser"
         />
       </label>
+      <details className="workspace-disclosure">
+        <summary>Source build, assay &amp; quality (optional)</summary>
+        <p className="panel-note">Copy only what your source reports; leave unknown details blank. These notes are self-reported context and do not verify a call, resolve strand ambiguity or establish clinical suitability.</p>
+        <label className="block">Genome build (as reported)<input className="bloom-input w-full" value={genomeBuild} maxLength={100} onChange={e=>{changed();setGenomeBuild(e.target.value);}}/></label>
+        <label className="block">Assay / platform (as reported)<input className="bloom-input w-full" value={assay} maxLength={200} onChange={e=>{changed();setAssay(e.target.value);}}/></label>
+        <label className="block">Source quality note (optional)<textarea aria-label="Source quality note (optional)" className="bloom-input w-full" value={qualityNote} maxLength={500} onChange={e=>{changed();setQualityNote(e.target.value);}}/></label>
+      </details>
       <label className="block">
         Sample / source date
         <input
@@ -285,6 +295,9 @@ export default function ManualGenetics({
                 provider: "manual",
                 consent: true,
                 source,
+                ...([genomeBuild,assay,qualityNote].some(value=>value.trim())?{sourceContext:{
+                  ...(genomeBuild.trim()?{genomeBuild}:{}),...(assay.trim()?{assay}:{}),...(qualityNote.trim()?{qualityNote}:{}),
+                }}:{}),
                 strand: forward ? "forward" : "unknown",
                 collectedAt: new Date(collectedAt + "T00:00:00Z").toISOString(),
                 entries: rows.filter((r) => r.genotype.trim()),
@@ -306,6 +319,11 @@ export default function ManualGenetics({
             {preview.entries.length} selected SNPs. Only the rows below will be
             saved.
           </p>
+          {preview.sourceContext&&<div className="report-context"><p>Source context · self-reported, not verified</p><dl>
+            <dt>Genome build</dt><dd>{preview.sourceContext.genomeBuild||"Not supplied"}</dd>
+            <dt>Assay / platform</dt><dd>{preview.sourceContext.assay||"Not supplied"}</dd>
+            <dt>Quality note</dt><dd>{preview.sourceContext.qualityNote||"Not supplied"}</dd>
+          </dl></div>}
           <ul className="space-y-2">
             {classifyManualGenetics(preview).map((e) => (
               <li key={e.rsid}>

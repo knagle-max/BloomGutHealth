@@ -200,3 +200,17 @@ test("manual records use the authenticated precision API, preserve provenance an
     await new Promise<void>((r) => server.close(() => r()));
   }
 });
+
+test("literal manual build/assay/quality context survives without changing unknown-strand eligibility",()=>{
+  const original=payload("unknown"),sourceContext={genomeBuild:"GRCh38 / source revision 2",assay:"Synthetic array v3",qualityNote:"Source says call quality unavailable"};
+  const next=manualGeneticImportSchema.parse({...original,sourceContext});
+  const project=(data:typeof next)=>buildPrecisionReport([{id:"manual-context",kind:"genetics",payload:data,createdAt:date}],contextSchema.parse({}),defaultPreferences,null).genetics;
+  const before=project(original),after=project(next);
+  assert.deepEqual(after.manual?.sourceContext,sourceContext);
+  assert.equal(after.import?.build,sourceContext.genomeBuild);
+  assert.deepEqual(after.findings,before.findings);assert.deepEqual(after.explanations,before.explanations);
+  assert.equal(after.manual?.entries.some(entry=>entry.reviewed),false);
+  assert.equal(before.manual?.sourceContext,undefined);assert.equal(before.import?.build,"Not supplied (manual entry)");
+  for(const bad of[{genomeBuild:""},{assay:"x".repeat(201)},{qualityNote:"x".repeat(501)},{verified:true},{genomeBuild:38}])assert.equal(manualGeneticImportSchema.safeParse({...original,sourceContext:bad}).success,false);
+  assert.equal("sourceContext" in original,false);
+});
