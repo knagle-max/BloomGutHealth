@@ -186,3 +186,26 @@ Source transfer update2026-10-29 supersedes earlier archive-inaccessible notes: 
 
 ## Microbial individual claim profiles — BIO-TAXON-2901–2905 (2026-10-30)
 BLOCKED_USER_INPUT for new curated scientific content only. Owner/dependency: Biology/Architect. Existing organism catalogue contains broad education and links, but lacks individually approved claim population/method/strain/evidence-type/null-findings/limitations/version/withdrawal records required by the new handoff. Needed: provide reviewed per-claim records and allowed assay/resolution overlays; recommend retain explicit unavailable research state until supplied. All20 reported identities remain interactive with immutable source observation. No new clinical claim, treatment, universal grade or personal target is enabled. Independent Design/VoiceOver/device/hosted acceptance remains separate; not a block to other approved work.
+
+## R6-VERBATIM-CRITERIA — full original acceptance text unavailable
+
+- Status: BLOCKED_USER_INPUT for certifying unavailable portions of the original67-core/specialist acceptance criteria; not a general engineering stop. Current approved consolidated handoffs remain usable for explicit scope.
+- Observed: V05_FULL_BACKLOG_STATUS.csv and BACKLOG_RECONCILIATION.csv contain truncated core titles; SOURCE_REQUIREMENT_INDEX.csv retains blank Requirement_source/Requirement_text for many specialist IDs. The historical implementation return names ARCHITECT_REVISION6_AMENDMENT_C.md in a private review package, but that file was not found in the current checkout, available attachments, accessible Git history or connected default-branch search (2026-11-04). The supplied five visual ZIPs resolve visual-source needs, not these missing original acceptance tails. Do not repeatedly search unchanged locations or infer absent text.
+- Exact question: Where is the complete versioned original v0.4/v0.5 Revision6 acceptance source, or which Chief Architect document explicitly replaces the unavailable per-ID text?
+- Options: (1) Supply/link the original full criteria and specialist annexes; (2) Chief Architect explicitly designates the current consolidated per-ID scope as the complete replacement, identifying exclusions/supersessions.
+- Recommendation: Preserve/recover the full source when available; until then verify explicit current contracts individually, keep truncated titles unchanged and disclose the known-scope limit. Do not invent new features from a title or mark unavailable acceptance satisfied from test totals.
+- Dependencies: Full original207-row certification and any feature whose missing tail changes data/content/safety scope. Does not block current source guards, core UI verification, existing explicit approved work, or independent v0.6 work after actionable v0.5 completion. Independent specialist/rights/device gates remain separate.
+
+## FOOD-08 — preparation-specific biological food metadata
+
+- Status: BLOCKED_USER_INPUT for new GI/fermentable substrate/processing-effect metadata or personal claims. Existing composition and explicit raw/cooked source records remain usable.
+- Exact question: Which versioned food-by-preparation GI, fermentable-substrate and processing records are Biology-approved for display/use, with source, quantity basis/units, method/population, limitations, uncertainty/nulls, rights and release/review status?
+- Options: Supply a reviewed versioned dataset/claim set; or retain unknown/unavailable fields and existing composition-only guidance. Recommendation: retain unknown until the records are supplied/reviewed; never derive GI or substrate quantities from a food name, a brand match or a diagram.
+- Dependencies: The additional FOOD-08 metadata/biological-action surface only. Does not block canonical Food/Today totals, pantry/source correction or independent v0.6 foundations. Individual microbial claim-dossier and clinical-source gates remain separate.
+
+## PHOTO-SOURCE-ACTIVATION — existing staged v0.6 gate
+
+- Status: BLOCKED_USER_INPUT for real external image inference activation; not a blocker to current manual/barcode/dictation review or starting independent v0.6 when actionable v0.5 is complete.
+- Authority: DEVELOPER_EXECUTION_ORDER.md photo sequencing and V06_HANDOFF.md section24 put recognition after the unified planner and require provider/rights/privacy, explicit consent, metered execution and correction/portion benchmarks. These approvals are not supplied by a visual mockup or synthetic preview flag.
+- Exact question at that phase: Which provider/model, allowed data use, rights/privacy review and bounded execution/cost/benchmark evidence are approved for the intended photo-assisted workflow?
+- Options: Install a separately reviewed provider/executor with the required evidence; or retain manual/barcode/text alternatives and truthful photo unavailability. Recommendation: retain the safe alternatives until phase and activation gates pass. Do not solicit production keys in chat or invent image accuracy or physical camera/VoiceOver acceptance.

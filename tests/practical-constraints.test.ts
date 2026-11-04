@@ -24,3 +24,11 @@ test('preparation and equipment exclusions are observable; absent logged nutriti
  assert.ok(ordinary.choices.length>0);assert.ok(ordinary.choices.every(c=>c.limitChecks.some(check=>check.status==='unverified')));
  assert.equal(practicalChoices([],preferences,report,request,practical,true).diagnostics,undefined);
 });
+
+test('pantry suggestions do not turn peas into chickpeas or count repeated names as extra stock',()=>{
+ const bounds=weeklyRequestSchema.parse({days:1,targets:{calories:2200,protein:150,fiber:30,fiberMaximum:60,sodium:3000,saturatedFat:30}});
+ const choices=(pantry:string[])=>practicalChoices([],preferences,report,bounds,practicalPreferencesSchema.parse({minutes:90,pantry})).choices;
+ const peas=choices(['pea']);assert.ok(peas.length);assert.ok(peas.every(choice=>choice.pantryMatches.length===0),'A substring is not an available pantry ingredient');
+ const chickpeas=choices(['CHICKPEA','chickpeas','CHICKPEAS']);assert.ok(chickpeas.some(choice=>choice.pantryMatches.includes('chickpea')),'A whole ingredient plural remains supported');assert.ok(chickpeas.every(choice=>choice.pantryMatches.length<=1),'One food is not extra stock because singular and plural names were listed');
+ const repeated=choices(['rice',' RICE ','rice','ＲＩＣＥ']);assert.ok(repeated.some(choice=>choice.pantryMatches.length===1));assert.ok(repeated.every(choice=>new Set(choice.pantryMatches).size===choice.pantryMatches.length),'Repeated names must not multiply the pantry ranking bonus');
+});

@@ -10,6 +10,12 @@ import { practicalPreferencesSchema, type ExperienceRecord } from "./experience"
 import { mealNutritionSummary } from "./nutrition-summary";
 import { recipePreparation } from "./recipe-preparation";
 import { goalMealFit } from "./goal-guidance";
+// Pantry terms describe listed food names, not allergy categories or substrings.
+const pantryWords=(text:string)=>text.normalize('NFKC').toLowerCase().split(new RegExp('[^\\p{L}\\p{N}]+','u')).filter(Boolean);
+const pantryTermPresent=(term:string,names:readonly string[])=>{
+ const needle=term.split(' ');
+ return names.some(name=>{const words=pantryWords(name);return words.some((_,index)=>index+needle.length<=words.length&&needle.every((word,offset)=>{const candidate=words[index+offset];return candidate===word||candidate===word+'s'||word===candidate+'s';}));});
+};
 export type PracticalChoiceDiagnostics={testedPortions:number;excludedForTime:number;excludedForEquipment:number;nutrientLimits:{key:string;exceeded:number;unavailable:number}[]};
 export function practicalChoices(meals:any[], preferences:DietaryPreferences, report:PrecisionReport, request:WeeklyRequest, practical:z.infer<typeof practicalPreferencesSchema>, blocked=false, slot="dinner", registry?:BiologicalRegistry) {
  const summary=mealNutritionSummary(meals), n=summary.totals;
@@ -19,10 +25,11 @@ export function practicalChoices(meals:any[], preferences:DietaryPreferences, re
  const recipeMenu=eligiblePlanningRecipes(preferences,report.context.allergies,request.customRecipes);
  if(blocked||recipeMenu.unknownAllergies.length) return {choices:[],note:"Review your health context, recognized allergies and daily targets before generating personalized choices."};
  const hasHeat=practical.equipment.includes("stove")||practical.equipment.includes("oven");
- const pantry=practical.pantry.map(v=>v.toLowerCase());
+ const pantry=Array.from(new Set(practical.pantry.map(v=>pantryWords(v).join(' ')).filter(Boolean)));
  const considered=recipeMenu.recipes.filter(r=>slot==="breakfast"?r.mealType==="breakfast":slot==="snack"?r.mealType==="snack":r.mealType==="main").flatMap(recipe=>[.5,.75,1,1.25,1.5].map(portion=>{
   const nutrients=recipeNutrients(recipe,portion),prep=recipePreparation(recipe), names=recipe.ingredients.map(i=>i.name.toLowerCase()).join(" ");
-  const pantryMatches=pantry.filter(p=>names.includes(p));
+  const matchedFoods=new Set<string>();
+  const pantryMatches=pantry.filter(term=>{const food=recipe.ingredients.find(i=>pantryTermPresent(term,[i.name]));if(!food)return false;const identity=pantryWords(food.name).join(' ');if(matchedFoods.has(identity))return false;matchedFoods.add(identity);return true;});
   const biology=explainRecipeBiology(recipe.foodIngredients.map(i=>i.foodId),report,preferences,registry), biologyReasons=biology.reasons;
   const targetRanges:Record<string,TargetRange>={calories:{target:request.targets.calories},protein_g:{min:request.targets.protein},fiber_g:{min:request.targets.fiber,max:request.targets.fiberMaximum},sodium_mg:{max:request.targets.sodium},fat_saturated_g:{max:request.targets.saturatedFat},...request.nutrientTargets};
   const appKey=(key:string)=>({protein:"protein_g",fiber:"fiber_g",sodium:"sodium_mg",carbs:"carbohydrates_total_g",fat:"fat_total_g"}[key]||key);
