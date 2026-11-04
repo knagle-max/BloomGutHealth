@@ -1758,7 +1758,7 @@
     "shared/schema-management.ts": "081b56a9e8e9d3a1841d43ed06132baca06b1983c278d8cc3105aab44ad68548",
     "shared/schema.ts": "28b577b3707bdbedd6af44181cf97a64deedcd47b2d46b7a3c01f33fe5289854",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
-    "shared/structured-report.ts": "76ad047940f80246876a41050b4db992a4c9036524b4cad2f4d44208c33575fd",
+    "shared/structured-report.ts": "087a48270bb2af85da291518b1c69813c2f8746b85e1ca01d3e098a0303a7819",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
     "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",
     "shared/weekly-planner.ts": "3ca8ebd1ae45e6159646cd5a7c0e92b1f15fdbb76be8fc9298eae49a721b9719"

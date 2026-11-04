@@ -89,6 +89,8 @@ export function parseStructuredReport(input: unknown): StructuredReport {
         ].some((k) => k in nested)
       ? nested
       : input;
+  // Our exported format carries source strings, not new permission/evidence authority.
+  const canonical = source.schemaVersion === "bloom-report-v2";
   const metadata = object(input.metadata)
     ? input.metadata
     : object(source.metadata)
@@ -127,7 +129,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
         );
       const name = text(row.name ?? row.score_name ?? row.scoreName, 150);
       if (!name) throw Error(`Score record ${index + 1} needs a name.`);
-      const value = row.score ?? row.value ?? row.scoreValue;
+      const value = canonical ? row.score ?? row.reportedValue : row.score ?? row.value ?? row.scoreValue;
       if (
         value !== undefined &&
         value !== null &&
@@ -149,9 +151,9 @@ export function parseStructuredReport(input: unknown): StructuredReport {
         name,
         category: text(row.category, 150),
         score: finite(value) ? value : null,
-        reportedValue: typeof value === "string" ? text(value, 150) : null,
+        reportedValue: canonical ? text(row.reportedValue,150) : typeof value === "string" ? text(value, 150) : null,
         scale,
-        reportedCategory: text(row.viome_category ?? row.status, 150),
+        reportedCategory: text(canonical ? row.reportedCategory : row.viome_category ?? row.status, 150),
         notes: text(row.notes),
       });
     }
@@ -184,7 +186,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
         throw Error(
           `Organism record ${index + 1} needs an organism/name field.`,
         );
-      const value = row.quantitative_abundance ?? row.abundance;
+      const value = canonical ? row.reportedAbundance : row.quantitative_abundance ?? row.abundance;
       let reportedAbundance: string | null = null;
       if (typeof value === "string") reportedAbundance = text(value, 200);
       else if (finite(value))
@@ -197,7 +199,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
         );
       organisms.push({
         name,
-        reportedStatus: text(row.reported_status ?? row.status, 200),
+        reportedStatus: text(canonical ? row.reportedStatus : row.reported_status ?? row.status, 200),
         reportedAbundance,
         notes: text(row.notes),
       });
@@ -216,24 +218,24 @@ export function parseStructuredReport(input: unknown): StructuredReport {
       "Quantitative bacterial abundance percentages are unavailable; organism detection and functional scores are not percentages.",
       "Diversity and quantitative microbiome modelling are unavailable from this report.",
     );
-  const originalMissing = source.missing_data ?? metadata.missing_data;
+  const originalMissing = canonical ? source.sourceMissingData : source.missing_data ?? metadata.missing_data;
   return {
     schemaVersion: "bloom-report-v2",
     kind: scores.length || organisms.length ? "functional-report" : "abundance",
     sourceLabel:
       text(
-        source.testing_company ?? metadata.testingCompany ?? metadata.provider,
+        canonical ? source.sourceLabel : source.testing_company ?? metadata.testingCompany ?? metadata.provider,
         100,
       ) ||
       (scores.length || organisms.length
         ? "Viome-style report"
         : "Abundance report"),
     dataOrigin: text(
-      source.data_origin ?? metadata.data_origin ?? metadata.source,
+      canonical ? source.dataOrigin : source.data_origin ?? metadata.data_origin ?? metadata.source,
       500,
     ),
-    testPeriod: text(source.test_period ?? metadata.test_period, 150),
-    scoreInterpretationWarning: text(source.score_interpretation_warning, 1000),
+    testPeriod: text(canonical ? source.testPeriod : source.test_period ?? metadata.test_period, 150),
+    scoreInterpretationWarning: text(canonical ? source.scoreInterpretationWarning : source.score_interpretation_warning, 1000),
     scores,
     organisms,
     ...(percentages ? { bacteria_percentages: percentages } : {}),
@@ -251,7 +253,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
       measuredMetabolites: false,
       measuredGenes: false,
     },
-    sourceReport: input,
+    sourceReport: canonical && object(source.sourceReport) ? source.sourceReport : input,
   };
 }
 export function parseReportDocument(textInput: string, format: "json" | "csv") {
