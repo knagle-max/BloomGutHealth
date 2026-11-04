@@ -10,7 +10,7 @@ export default function ExperimentObservations({record,sourceCurrent}:{record:Ex
   const followupCount=payload.observations.filter(o=>o.date>=payload.startsOn&&o.date<=payload.endsOn).length;
   return <details className="space-y-3"><summary>Measurements & comparison</summary>
     {!sourceCurrent&&<p role="status">Current focus measurements could not be checked. Saved comparisons are unavailable; your observation draft is retained.</p>}
-    {sourceCurrent&&<><p><strong>{review.status==="insufficient-data"?"Insufficient data":`Observed median change: ${Number(review.change!.toFixed(3))} ${review.unit}`}</strong></p>
+    {sourceCurrent&&<><p><strong>{review.status==="insufficient-data"?"Insufficient data":`Observed median change: ${new Intl.NumberFormat(undefined,{maximumSignificantDigits:6}).format(review.change!)} ${review.unit}`}</strong></p>
     <p className="panel-note">{review.note} {review.caveat}</p>
     </>}
     {payload.design&&<>

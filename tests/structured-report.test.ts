@@ -184,6 +184,11 @@ test("manual and file imports use the same account-scoped path without a Python 
         .status,
       401,
     );
+    for(const name of["synthetic.fastq","synthetic.fasta","synthetic.fastq.gz"]){
+      const raw=new FormData();raw.append("file",new Blob(["@synthetic\nACGT\n+\n!!!!"]),name);
+      const denied=await fetch(base+"/api/microbiome/upload",{method:"POST",headers:{"x-user":"u"},body:raw});
+      assert.equal(denied.status,400);assert.equal(samples.length,0);assert.equal(bacteria.length,0);assert.equal(analyses.length,0);
+    }
     const result = await post("/api/microbiome/import", {
       report: syntheticReport,
     });
