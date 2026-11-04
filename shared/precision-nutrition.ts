@@ -784,6 +784,12 @@ export function buildPrecisionReport(
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
   const sourceOnlyLabs=activeLabRows(entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
     ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt)));
+  const labRowsById=new Map(allLabs.map(row=>[row.id,row]));
+  const supersededIds=(row:typeof allLabs[number])=>{
+    const ids=new Set<string>(),pending=[row.dateCorrection?.supersedes,row.unitReview?.supersedes];
+    while(pending.length){const id=pending.pop();if(!id||id===row.id||ids.has(id))continue;const previous=labRowsById.get(id);if(!previous||previous.marker!==row.marker)continue;ids.add(id);pending.push(previous.dateCorrection?.supersedes,previous.unitReview?.supersedes);}
+    return Array.from(ids);
+  };
   const {pendingLabs,labs}=activeLabObservations(allLabs);
   const latest = markerDefinitions.flatMap((m) => {
     const l = labs.find((l) => l.marker === m.id);
@@ -1123,6 +1129,7 @@ export function buildPrecisionReport(
         name: m.name,
         points: series.map((l) => ({
           id: l.id,
+          supersededIds: supersededIds(l),
           date: l.measuredAt,
           sourceInput: l.sourceInput,
           sourceReport: l.sourceReport,

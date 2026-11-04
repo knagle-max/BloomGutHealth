@@ -13,3 +13,11 @@ test('navigation keeps 92 source labels across six dates with shared multi-conte
  }
  rows.push({id:'hcy',kind:'lab',payload:{...lab,marker:'homocysteine',unit:'umol/L'}});const r=report(rows),entries=labExplorerEntries(r);assert.equal(entries.length,93);assert.equal(entries.reduce((n,e)=>n+e.recordCount,0),553);assert.equal(entries.filter(e=>e.sourceOnly.length===6).length,92);const hcy=entries.find(e=>e.id==='homocysteine')!;assert.deepEqual(hcy.categories,['nutrients','heart']);assert.equal(hcy.recordCount,1);assert.equal(new Set(entries.map(e=>e.id)).size,93);assert.ok(entries.every(e=>e.categories.every(c=>labCategories.some(g=>g.id===c))));
 });
+
+test('canonical history projects only explicit same-marker source revision ancestry',()=>{
+ const audit=(supersedes:string)=>({version:1,supersedes,previousMeasuredAt:lab.measuredAt,enteredDate:'2026-10-01',correctedAt:'2026-11-04T12:00:00Z',reason:'Synthetic source correction',requestFingerprint:'a'.repeat(64)});
+ const rows=[{id:'original',kind:'lab',payload:lab},{id:'revision',kind:'lab',payload:{...lab,dateCorrection:audit('original')}},{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('revision')}}];
+ const points=report(rows).trends.find(t=>t.marker==='alt')!.points;assert.equal(points.length,1);assert.deepEqual(points[0].supersededIds,['revision','original']);assert.equal(points[0].sourceValue,0);
+ assert.deepEqual(report([{id:'foreign-marker',kind:'lab',payload:{...lab,marker:'ast'}},{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('foreign-marker')}}]).trends.find(t=>t.marker==='alt')!.points[0].supersededIds,[]);
+ assert.deepEqual(report([{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('absent')}}]).trends[0].points[0].supersededIds,[]);
+});

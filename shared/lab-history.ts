@@ -31,7 +31,7 @@ export function recordedLabDifference(points: readonly {date:string;value:number
  if(points.length<2||new Set(points.map(point=>Date.parse(point.date))).size!==points.length)return null;
  const first=points[0],last=points[points.length-1];
  if(!points.every(point=>Number.isFinite(point.value)&&Number.isFinite(Date.parse(point.date))&&point.unit===first.unit)||Date.parse(last.date)<=Date.parse(first.date))return null;
- return last.value-first.value;
+ const difference=last.value-first.value;return Number.isFinite(difference)?difference:null;
 }
 
 /** Contiguous original sections only: repeated headings never merge separated source rows. */
@@ -44,3 +44,24 @@ export function reportedLabSections<Row extends AnyLabHistoryRow>(rows: readonly
  }
  return sections;
 }
+
+export type LabPointSelection={point:string;first:string;second:string};
+/** Resolve only explicit immutable source revisions; ambiguous or missing ownership stays unavailable. */
+export function resolveRecordedLabPoint<T extends {id:string;supersededIds?:readonly string[]}>(points:readonly T[],id:string){
+ const matches=id?points.filter(p=>p.id===id||p.supersededIds?.includes(id)):[];
+ return matches.length===1?matches[0]:undefined;
+}
+/** Explicit pair of current records from one marker. Selection is not clinical
+ * comparability; arithmetic reuses the canonical recorded-difference rules. */
+export function compareRecordedLabResults<T extends {id:string;date:string;value:number;unit:string;supersededIds?:readonly string[]}>(points:readonly T[],firstId:string,secondId:string){
+ const first=resolveRecordedLabPoint(points,firstId),second=resolveRecordedLabPoint(points,secondId),base={first,second};
+ if(!firstId||!secondId)return{...base,status:'choose-two' as const,difference:null};
+ if(!first||!second)return{...base,status:'unavailable' as const,difference:null};
+ if(first.id===second.id)return{...base,status:'same-record' as const,difference:null};
+ if(Date.parse(first.date)===Date.parse(second.date))return{...base,status:'same-time' as const,difference:null};
+ if(Date.parse(second.date)<Date.parse(first.date))return{...base,status:'reverse-time' as const,difference:null};
+ const difference=recordedLabDifference([first,second]);
+ return{...base,status:difference===null?'incompatible' as const:'recorded-difference' as const,difference};
+}
+/** Significant digits retain tiny nonzero arithmetic instead of displaying zero. */
+export function formatRecordedLabNumber(value:number){return Number.isFinite(value)?new Intl.NumberFormat(undefined,{maximumSignificantDigits:6}).format(value===0?0:value):'Not available';}

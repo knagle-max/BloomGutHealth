@@ -312,3 +312,6 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-explorer-detail .evidence-insight {margin:0;}
 .lab-explorer-detail summary {min-height:44px;align-content:center;cursor:pointer;}
 .lab-explorer-detail summary:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:3px;}
+.lab-timeline-reveal {padding:12px;border-radius:12px;background:hsl(var(--muted));overflow-wrap:anywhere;}
+.lab-result-comparison {border-top:1px solid hsl(var(--border));padding-top:8px;}
+.lab-result-comparison summary {min-height:44px;align-content:center;cursor:pointer;font-weight:600;}
