@@ -1,3 +1,4 @@
+import {readLabImageFile} from "@shared/lab-image-file";
 import { readLabPdfFile } from "@shared/lab-pdf-file";
 import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {readLabTextFile} from "@shared/lab-text-file";
@@ -14,10 +15,12 @@ import { labSchema, sourceOnlyLabSchema, markerDefinitions, type Lab, type Sourc
 type Row = { line:number; payload:Lab|SourceOnlyLab; key:string; reviewedMatchIds?:string[] };
 type Preview = { sourceOnlyOffered:number; keptSourceOnly:boolean; rows:Row[]; errors:Array<{line:number;message:string}> };
 export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHistoryRow[]}) {
-  const fileReadAbort=useRef<AbortController|null>(null);
+  const fileReadAbort=useRef<AbortController|null>(null),imagePreviewRef=useRef<string|null>(null);
+  const[imagePreview,setImagePreview]=useState<string|null>(null);
+  const clearImagePreview=()=>{if(imagePreviewRef.current)URL.revokeObjectURL(imagePreviewRef.current);imagePreviewRef.current=null;setImagePreview(null);};
   const active=useRef(true),reviewFocusPending=useRef(false),completionFocusPending=useRef(false);
   const reviewHeading=useRef<HTMLHeadingElement>(null),nextImportButton=useRef<HTMLButtonElement>(null);
-  useEffect(()=>{active.current=true;return()=>{active.current=false;fileReadAbort.current?.abort();};},[]);
+  useEffect(()=>{active.current=true;return()=>{active.current=false;fileReadAbort.current?.abort();if(imagePreviewRef.current)URL.revokeObjectURL(imagePreviewRef.current);};},[]);
   const [needsMatchReview,setNeedsMatchReview]=useState(false),[hardConflict,setHardConflict]=useState(false);
   const fileReadEpoch=useRef(0),startedNow=useRef(false);
   const [fileReading,setFileReading]=useState(false),[loadedFile,setLoadedFile]=useState("");
@@ -91,20 +94,23 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
     setPreview({sourceOnlyOffered,keptSourceOnly:keepSourceOnly,rows:rows.map(r=>({...r,key:crypto.randomUUID()})),errors});setError("");setReviewedMatches("");
   }catch(error){setError(error instanceof Error&&/^(?:This local time|This collection time|Review the collection time|No laboratory result rows|Paste up to 50 results)/.test(error.message)?error.message:"Check the test date, source number, units and reference interval. Use complete numbers and a real calendar date.");}};
   const nextImport=(corrections=false)=>{
-    if(!corrections){setLoadedFile("");setSelectedInstant("");setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
+    if(!corrections){clearImagePreview();setLoadedFile("");setSelectedInstant("");setImportId(crypto.randomUUID());setReportIdentifier("");setSpecimenIdentifier("");}
     setText(corrections?labPasteCorrections(text,preview?.errors.map(e=>e.line)||[]):"");
     setValue("");setLow("");setHigh("");setNotes("");setPreview(null);setCompleted(0);setError("");startedNow.current=false;setStarted(false);setNeedsMatchReview(false);setHardConflict(false);setReviewedMatches("");
   };
-  const loadFile=async(file:File)=>{
+  const loadFile=async(file:File,asImage=false)=>{
     if(startedNow.current)return;
     fileReadAbort.current?.abort();const controller=new AbortController();fileReadAbort.current=controller;
     const epoch=++fileReadEpoch.current;setFileReading(true);setError("");
     try{
-      const loaded=/\.pdf$/i.test(file.name)
+      const loaded=asImage
+        ?await readLabImageFile(file,async(bytes,kind,signal)=>{const {extractLabImageText}=await import("@/lib/lab-image-reader");if(signal.aborted)throw Error("cancelled");return extractLabImageText(bytes,kind,signal);},controller.signal)
+        :/\.pdf$/i.test(file.name)
         ?await readLabPdfFile(file,async(bytes,signal)=>{const {extractLabPdfText}=await import("@/lib/lab-pdf-reader");if(signal.aborted)throw Error("cancelled");return extractLabPdfText(bytes,signal);},controller.signal)
         :await readLabTextFile(file);
       if(!active.current||epoch!==fileReadEpoch.current||startedNow.current)return;
       nextImport();setMode("paste");setText(loaded.text);setLoadedFile(loaded.name);
+      if(asImage){const preview=URL.createObjectURL(file);imagePreviewRef.current=preview;setImagePreview(preview);}
       setDate("");setTime("");setLab("");setMethod("");setFasting("unknown");
     }catch(error){if(active.current&&epoch===fileReadEpoch.current)setError(error instanceof Error?error.message:"The source file could not be read.");}
     finally{if(active.current&&epoch===fileReadEpoch.current)setFileReading(false);}
@@ -117,7 +123,7 @@ export default function QuickLabEntry({existingLabs=[]}:{existingLabs?:AnyLabHis
       <Button type="button" variant={mode==="paste"?"default":"outline"} aria-pressed={mode==="paste"} disabled={started||fileReading} onClick={()=>{setMode("paste");clear();}}>Paste several</Button>
       <Button type="button" variant={mode==="single"?"default":"outline"} aria-pressed={mode==="single"} disabled={started||fileReading} onClick={()=>{setMode("single");clear();}}>Enter one</Button>
     </div>
-    {mode==="paste"&&<div className="space-y-2"><label className="block" htmlFor={offsetId+"-file"}>Load report text (PDF, CSV, TSV or TXT)</label><input className="block w-full min-w-0 max-w-full" id={offsetId+"-file"} type="file" accept=".pdf,.csv,.tsv,.txt,application/pdf,text/plain,text/csv,text/tab-separated-values" disabled={started} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value="";if(file)void loadFile(file);}}/><p className="panel-note">Read on this device; nothing is saved until review. Use analyte, value and optional unit/reference columns, up to 30 KB of text and 50 results. Text PDFs: up to 5 MB and 5 pages; extraction stops after 20 seconds. Loading starts a new import; enter its source date and identifiers below. PDF text order can differ from the report; edit columns and check every source value. Scanned PDFs and images need manual entry.</p>{fileReading&&<p role="status">Reading source text…</p>}{loadedFile&&<p role="status" className="panel-note break-all">Text loaded from {loadedFile}. The filename is not a laboratory report identifier; review any edits before saving.</p>}</div>}
+    {mode==="paste"&&<div className="space-y-2"><label className="block" htmlFor={offsetId+"-file"}>Load report text (PDF, CSV, TSV or TXT)</label><input className="block w-full min-h-11 min-w-0 max-w-full" id={offsetId+"-file"} type="file" accept=".pdf,.csv,.tsv,.txt,application/pdf,text/plain,text/csv,text/tab-separated-values" disabled={started} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value="";if(file)void loadFile(file);}}/><p className="panel-note">Read on this device; nothing is saved until review. Check every value and column against the report, then enter its date below.</p><details className="workspace-disclosure"><summary>Supported files &amp; limits</summary><p className="panel-note">Use analyte, value and optional unit/reference columns, up to 30 KB of text and 50 results. Text PDFs: up to 5 MB and 5 pages; extraction stops after 20 seconds. Loading starts a new import; enter its source date and identifiers below. PDF text order can differ from the report; edit columns and check every source value. For scanned PDFs, use a PNG/JPEG image below or enter values manually.</p></details>{fileReading&&<div className="flex flex-wrap items-center gap-3"><p role="status">Reading source text…</p><Button type="button" variant="outline" onClick={()=>fileReadAbort.current?.abort()}>Cancel reading</Button></div>}{loadedFile&&<p role="status" className="panel-note break-all">Text loaded from {loadedFile}. The filename is not a laboratory report identifier; review any edits before saving.</p>}<details className="workspace-disclosure"><summary>Read text from a report image</summary><div className="space-y-3 pt-3"><p className="panel-note">For English text in a PNG/JPEG. Read on this device; the image is not uploaded or saved. Images: up to 5 MB and 16 megapixels; reading stops after 60 seconds.</p><label className="block" htmlFor={offsetId+"-image"}>PNG/JPEG report image</label><input className="block w-full min-h-11 min-w-0 max-w-full" id={offsetId+"-image"} type="file" accept=".png,.jpg,.jpeg,image/png,image/jpeg" disabled={started} onChange={event=>{const file=event.currentTarget.files?.[0];event.currentTarget.value="";if(file)void loadFile(file,true);}}/><p className="report-context">Image reading can misread decimals, symbols, units and column order. Compare every result with the original and edit the text below before previewing or saving. Only your reviewed transcription is saved; keep the original report.</p>{imagePreview&&<details className="workspace-disclosure"><summary>Compare with selected image</summary><p className="panel-note">Scroll the original image to check numbers and units.</p><div className="max-h-96 max-w-full overflow-auto rounded border" role="region" aria-label="Original report image for comparison" tabIndex={0}><img src={imagePreview} alt="Selected report image; compare its values with the editable transcription." className="max-w-none"/></div></details>}</div></details></div>}
     <div className="precision-grid">
       <label>Test date<input className="bloom-input w-full" type="date" value={date} disabled={started||fileReading} onChange={e=>{setDate(e.target.value);setSelectedInstant("");clear();}}/></label>
       <label>Collection time (optional)<input className="bloom-input w-full" type="time" value={time} disabled={started||fileReading} onChange={e=>{setTime(e.target.value);setSelectedInstant("");clear();}}/></label>

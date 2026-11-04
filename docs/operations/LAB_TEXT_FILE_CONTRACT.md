@@ -1,6 +1,6 @@
 # Local laboratory source-text loading
 
-The lab text editor can read one `.csv`, `.tsv` or `.txt` file on the device. It is a convenience for the existing source-text protocol, not a new laboratory connector, uploaded-file store, OCR system or verified specimen identity. No data is saved until the ordinary preview/review and atomic import action. PDF, images and spreadsheets are explicitly unavailable.
+The lab text editor can read one `.csv`, `.tsv` or `.txt` file on the device. It is a convenience for the existing source-text protocol, not a new laboratory connector, uploaded-file store, OCR system or verified specimen identity. No data is saved until the ordinary preview/review and atomic import action. This contract covers plain text. Separate bounded text-PDF and English PNG/JPEG readers now feed the same editable review; see LAB_IMAGE_FILE_CONTRACT.md. Spreadsheets remain unsupported; scanned PDFs require a PNG/JPEG export or manual entry.
 
 A file must be nonempty, at most30,000 bytes and decoded characters, and valid plain UTF-8 without binary/control/replacement data. PDF signatures are rejected even under a text extension. Unsupported/oversized/read-error files leave the previous draft intact; contents are never truncated. The existing50-result parse limit remains explicit. Header-only files report no results rather than implying success.
 

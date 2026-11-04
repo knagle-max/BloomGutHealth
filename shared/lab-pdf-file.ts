@@ -8,7 +8,7 @@ const messages: Record<Failure,string> = {
  size:'Choose a nonempty PDF up to 5 MB. Split larger reports before loading.',
  pages:'Use a PDF of up to 5 pages. Split larger reports before loading.',
  text:'The PDF contains too much text. Use a shorter export, up to 30,000 characters.',
- empty:'No readable text was found. Scanned reports and images need manual entry or a CSV/TXT export.',
+ empty:'No readable text was found. Use the PNG/JPEG image reader, manual entry or a CSV/TXT export.',
  cancelled:'PDF reading was cancelled. Your current source draft was retained.',
  timeout:'PDF reading took too long. Try a smaller text report or enter results manually.',
  unreadable:'This PDF could not be read. Use an unprotected text PDF, a CSV/TXT export or manual entry. Your current source draft was retained.',

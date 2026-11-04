@@ -742,7 +742,13 @@
           "shared/precision-nutrition.ts",
           "server/planning-context.ts",
           "shared/lab-history.ts",
-          "shared/lab-reimport.ts"
+          "shared/lab-reimport.ts",
+          "shared/lab-text-file.ts",
+          "shared/lab-pdf-file.ts",
+          "client/src/lib/lab-pdf-reader.ts",
+          "shared/lab-image-file.ts",
+          "client/src/lib/lab-image-reader.ts",
+          "client/src/lib/lab-image-worker.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -756,7 +762,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Existing manual/pasted source review and unit confirmation only; no autonomous external laboratory connector or clinical acceptance.",
+      "observation": "Existing supported manual/source-text review, local text PDF and bounded local English PNG/JPEG transcription into the same editable review/unit/atomic-import path. Original image stays on-device and is not stored; no external laboratory connector, autonomous clinical confirmation, paid inference or source/clinical approval. Image-model asset hashes/licences are separately inventoried; all authorization review remains required.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1367,7 +1373,13 @@
           "shared/precision-nutrition.ts",
           "server/planning-context.ts",
           "shared/lab-history.ts",
-          "shared/lab-reimport.ts"
+          "shared/lab-reimport.ts",
+          "shared/lab-text-file.ts",
+          "shared/lab-pdf-file.ts",
+          "client/src/lib/lab-pdf-reader.ts",
+          "shared/lab-image-file.ts",
+          "client/src/lib/lab-image-reader.ts",
+          "client/src/lib/lab-image-worker.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1381,7 +1393,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Existing manual/pasted source review and unit confirmation only; no autonomous external laboratory connector or clinical acceptance.",
+      "observation": "Existing supported manual/source-text review, local text PDF and bounded local English PNG/JPEG transcription into the same editable review/unit/atomic-import path. Original image stays on-device and is not stored; no external laboratory connector, autonomous clinical confirmation, paid inference or source/clinical approval. Image-model asset hashes/licences are separately inventoried; all authorization review remains required.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1636,7 +1648,7 @@
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
-    "client/src/components/QuickLabEntry.tsx": "fee5b418a2c8b160833b6be5318b68078cb312936e2085335aaced817b95305f",
+    "client/src/components/QuickLabEntry.tsx": "094154aaa388d1eb959d8d06d1ac0f2962ae63f46c2c8cf040e210cd7425c984",
     "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
     "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
     "client/src/components/TodayFocus.tsx": "bb84c71351c90d8db92ea052cf7da234b0b1dfe9a75eaf37e5af322cd2134b7d",
@@ -1646,6 +1658,9 @@
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
+    "client/src/lib/lab-image-reader.ts": "61755e9cb13a980b2522b12475891baa7316e7b35c8e7e2517087c55c1ebb4f1",
+    "client/src/lib/lab-image-worker.ts": "76a621faecfeea685c734adfd59531c72cc956d0fb32a1f0cd83509c066b2838",
+    "client/src/lib/lab-pdf-reader.ts": "f567e7ffbb7b5200e530ced63bb3ba547ea0f3de9fe4dc33a1988bb1a35c105f",
     "client/src/lib/meal-cache.ts": "89b4b11900ce88ff19fa74a4b6fa766c4a0fb6ee811e617c0ad1cfc235b6a557",
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",
     "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
@@ -1745,8 +1760,11 @@
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
     "shared/lab-history.ts": "a4d9ca4c0dc41e5386d87c499a0866a5e018952d2cf0608ddc9f3975878994c6",
+    "shared/lab-image-file.ts": "63b696d30e906fbacba155218bfc0b86506fcbd30e3089e9af476d59a838860f",
     "shared/lab-paste.ts": "b670c889c86cc28345ac6469964827b3fce52ecfe178bc4c410b511e2c7f5256",
+    "shared/lab-pdf-file.ts": "87dd2c7403af24db72724da3306f6f812d733aa935c8d2b2b4c68ac353e92180",
     "shared/lab-reimport.ts": "04b613fe84fc4a3fbfb4077ffe5b8b1f962ff9dc4d60147082baa148ffd72468",
+    "shared/lab-text-file.ts": "98dbba4f3b7300bd92571cdab259dacaeaa03844fd6807ed347d4a89befded22",
     "shared/meal-intelligence.ts": "c51fb9d29d2e1178b2a9a826fb3a79d919574d8ddd19c187850aa50092af167e",
     "shared/meal-portions.ts": "c7ca2439c969026acfcd6f195e7bd06ddcdd9f90f1668741a734d5a7e2dc0c0e",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
