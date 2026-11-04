@@ -30,3 +30,17 @@ export function reportedTaxonAmount(taxon:ReportedTaxon):string{
  if(typeof taxon.abundance==='number'&&Number.isFinite(taxon.abundance))return `${taxon.abundance}%`;
  return typeof taxon.reportedAbundance==='string'&&taxon.reportedAbundance.trim()?taxon.reportedAbundance:'Not reported';
 }
+
+export type ReportedTaxonMatch={status:'matched';taxon:ReportedTaxon}|{status:'ambiguous'|'unmatched'|'unknown-resolution'};
+/** Side-by-side source lookup only, never assay compatibility or biological change.
+ * Require one exact source spelling/rank in each report; do not select the first
+ * duplicate, normalize strain names or treat unreported rank as species. */
+export function matchReportedTaxon(row:ReportedTaxon,current:readonly ReportedTaxon[],other:readonly ReportedTaxon[]):ReportedTaxonMatch{
+ const rank=row.taxonomyLevel;
+ if(!rank||!['domain','kingdom','phylum','class','order','family','genus','species','subspecies','strain'].includes(rank))return{status:'unknown-resolution'};
+ const same=(candidate:ReportedTaxon)=>candidate.bacterialName===row.bacterialName&&candidate.taxonomyLevel===rank;
+ const own=current.filter(same),matches=other.filter(same);
+ if(own.length>1||matches.length>1)return{status:'ambiguous'};
+ if(own.length!==1||own[0].id!==row.id||matches.length!==1)return{status:'unmatched'};
+ return{status:'matched',taxon:matches[0]};
+}

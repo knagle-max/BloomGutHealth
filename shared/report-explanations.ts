@@ -476,9 +476,11 @@ export function reportedStatusMeaning(
   status: string | null,
   hasAmount: boolean,
 ) {
-  if (/not detected|not listed/i.test(status || ""))
+  // Recognize explicit source tokens without rewriting the retained source label.
+  const label=(status||"").replace(/[_-]+/g," ");
+  if (/not detected|not listed/i.test(label))
     return "Not detected or not listed does not prove complete absence; it depends on the sample, method and reporting threshold.";
-  if (!hasAmount && /high|low|elevated|reduced/i.test(status || ""))
+  if (!hasAmount && /high|low|elevated|reduced/i.test(label))
     return "This is a qualitative source label. Without a numeric amount and an appropriate reference, Bloom cannot quantify an excess or shortage.";
   return "This preserves what the source says. A listed or detected name does not establish its amount, current activity or an effect on your health.";
 }

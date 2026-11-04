@@ -2,7 +2,7 @@ import CompanionHero from '@/components/CompanionHero';
 import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
 import MicrobialProfile from "@/components/MicrobialProfile";
-import { type ReportedTaxon, reportedTaxa, reportedTaxonAmount } from "@shared/reported-taxa";
+import { type ReportedTaxon, reportedTaxa, reportedTaxonAmount, matchReportedTaxon } from "@shared/reported-taxa";
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
@@ -170,26 +170,23 @@ export default function Microbiome() {
                   <tr>
                     <th className="text-left p-2">Taxon</th>
                     <th className="text-left p-2">Reported amount</th>
-                    {comparisonId && <th className="text-left p-2">Other reported abundance</th>}
+                    {comparisonId && <th className="text-left p-2">Other reported amount</th>}
                   </tr>
                 </thead>
                 <tbody>
                   {taxa.map(b => {
-                    const previous =
-                      comparisonTaxa.find(
-                        (v: any) => v.bacterialName === b.bacterialName && !!b.taxonomyLevel && v.taxonomyLevel === b.taxonomyLevel,
-                      );
+                    const previous = matchReportedTaxon(b,taxa,comparisonTaxa);
                     return (
                       <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
                         <td className="p-2">
                           <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><span><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
                         </td>
-                        <td className="p-2">{typeof b.abundance==="number"&&Number.isFinite(b.abundance)?`${b.abundance.toFixed(2)}%`:reportedTaxonAmount(b)}</td>
+                        <td className="p-2">{reportedTaxonAmount(b)}</td>
                         {comparisonId && (
                           <td className="p-2">
-                            {!currentComparison?"Comparison not checked":previous
-                              ? typeof previous.abundance==="number"&&Number.isFinite(previous.abundance)?`${previous.abundance.toFixed(2)}% (reported)`:reportedTaxonAmount(previous)
-                              : "No matched taxon"}
+                            {!currentComparison?"Comparison not checked":previous.status==='matched'
+                              ? `${reportedTaxonAmount(previous.taxon)} (reported)`
+                              : previous.status==='ambiguous'?"Multiple source matches — not compared":previous.status==='unknown-resolution'?"Resolution not reported — not matched":"No matched taxon"}
                           </td>
                         )}
                       </tr>

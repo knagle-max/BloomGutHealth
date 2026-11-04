@@ -81,6 +81,10 @@ test("qualitative labels and nondetection are not converted into deficiency, ver
     reportedStatusMeaning("not detected or not listed", false),
     /does not prove complete absence/,
   );
+  for(const label of["not_detected","NOT-DETECTED","not_listed"]){
+    assert.match(reportedStatusMeaning(label,false),/does not prove complete absence/);
+    assert.match(reportedStatusMeaning(label,true),/does not prove complete absence/);
+  }
   assert.match(
     reportedStatusMeaning("reported elevated", false),
     /qualitative/,

@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import{parseStructuredReport}from'../shared/structured-report';import{reportedTaxa,reportedTaxonAmount}from'../shared/reported-taxa';
+import{parseStructuredReport}from'../shared/structured-report';import{reportedTaxa,reportedTaxonAmount,matchReportedTaxon}from'../shared/reported-taxa';
 test('functional source organisms remain clickable observations without invented percent or taxonomy',()=>{
  const structuredData=parseStructuredReport({organisms:[{name:'Methanobrevibacter smithii',abundance:{value:8,unit:'reads'},status:'Detected'},'Escherichia coli',{name:'Unknown organism',reportedAbundance:null}]});
  const sample={id:'source-1',structuredData},before=JSON.stringify(sample),taxa=reportedTaxa(sample,[]);
@@ -19,4 +19,16 @@ test('assay context uses verbatim supported source keys and retains conflicts/un
  const report=parseStructuredReport(source),facts=microbiomeSourceFacts(report);
  assert.deepEqual(facts.filter(f=>f.kind==='assay').map(f=>f.value),['Shotgun metagenomics','16S']);assert.ok(facts.some(f=>f.sourcePath==='sourceReport.data.vendor_method'&&f.value==='Original method v2'));assert.ok(facts.some(f=>f.value==='Source says failed'));assert.ok(!facts.some(f=>f.value==='Unrelated calculation'));
  assert.deepEqual(microbiomeSourceFacts(parseStructuredReport(JSON.parse(JSON.stringify(report)))),facts);assert.deepEqual(microbiomeSourceFacts(parseStructuredReport({organisms:['Unknown organism'],assay_type:0,assay_method:{name:'Not supported text'}})),[]);
+});
+
+test('side-by-side source matching requires unique exact names and known rank without rounding nonzero amounts',()=>{
+ const row={id:'a',bacterialName:'Source organism',taxonomyLevel:'species',abundance:0.00000123};
+ const previous={...row,id:'b',abundance:0};const source=JSON.stringify([row,previous]);
+ assert.equal(reportedTaxonAmount(row),'0.00000123%');assert.equal(reportedTaxonAmount(previous),'0%');assert.equal(reportedTaxonAmount({...row,abundance:null}),'Not reported');
+ assert.deepEqual(matchReportedTaxon(row,[row],[previous]),{status:'matched',taxon:previous});
+ assert.deepEqual(matchReportedTaxon(row,[row],[previous,{...previous,id:'c'}]),{status:'ambiguous'});
+ assert.deepEqual(matchReportedTaxon(row,[row,{...row,id:'d'}],[previous]),{status:'ambiguous'});
+ for(const taxonomyLevel of[null,'','unknown','Not supplied'])assert.deepEqual(matchReportedTaxon({...row,taxonomyLevel},[{...row,taxonomyLevel}],[{...previous,taxonomyLevel}]),{status:'unknown-resolution'});
+ for(const other of[{...previous,bacterialName:'source organism'},{...previous,bacterialName:'Source organism strain A'},{...previous,taxonomyLevel:'genus'}])assert.deepEqual(matchReportedTaxon(row,[row],[other]),{status:'unmatched'});
+ assert.deepEqual(matchReportedTaxon(row,[],[previous]),{status:'unmatched'});assert.equal(JSON.stringify([row,previous]),source);
 });
