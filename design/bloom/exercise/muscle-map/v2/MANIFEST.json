@@ -1,0 +1,129 @@
+{
+  "version": "2.0.0",
+  "source": "User-selected original Bloom anatomy image references",
+  "role": "high-fidelity illustration replacements for deprecated flat v1 SVGs",
+  "rights_status": "requires product rights verification",
+  "muscle_mapping_status": "requires curated exercise-to-muscle mapping",
+  "assets": [
+    {
+      "id": "chest",
+      "tile": "chest-tile.png",
+      "illustration": "chest-art.png",
+      "illustration_512": "chest-art-512.png",
+      "native_resolution": [
+        239,
+        221
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "back",
+      "tile": "back-tile.png",
+      "illustration": "back-art.png",
+      "illustration_512": "back-art-512.png",
+      "native_resolution": [
+        239,
+        221
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "shoulders",
+      "tile": "shoulders-tile.png",
+      "illustration": "shoulders-art.png",
+      "illustration_512": "shoulders-art-512.png",
+      "native_resolution": [
+        241,
+        221
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "arms",
+      "tile": "arms-tile.png",
+      "illustration": "arms-art.png",
+      "illustration_512": "arms-art-512.png",
+      "native_resolution": [
+        248,
+        221
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "core",
+      "tile": "core-tile.png",
+      "illustration": "core-art.png",
+      "illustration_512": "core-art-512.png",
+      "native_resolution": [
+        256,
+        221
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "glutes",
+      "tile": "glutes-tile.png",
+      "illustration": "glutes-art.png",
+      "illustration_512": "glutes-art-512.png",
+      "native_resolution": [
+        239,
+        236
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "quadriceps",
+      "tile": "quadriceps-tile.png",
+      "illustration": "quadriceps-art.png",
+      "illustration_512": "quadriceps-art-512.png",
+      "native_resolution": [
+        239,
+        236
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "hamstrings",
+      "tile": "hamstrings-tile.png",
+      "illustration": "hamstrings-art.png",
+      "illustration_512": "hamstrings-art-512.png",
+      "native_resolution": [
+        241,
+        236
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "calves",
+      "tile": "calves-tile.png",
+      "illustration": "calves-art.png",
+      "illustration_512": "calves-art-512.png",
+      "native_resolution": [
+        248,
+        236
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    },
+    {
+      "id": "full-body",
+      "tile": "full-body-tile.png",
+      "illustration": "full-body-art.png",
+      "illustration_512": "full-body-art-512.png",
+      "native_resolution": [
+        256,
+        236
+      ],
+      "transparent": false,
+      "rendering": "high detail cropped original art with pale backdrop; no vector conversion"
+    }
+  ]
+}

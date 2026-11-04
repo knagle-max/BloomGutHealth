@@ -1,6 +1,6 @@
 {
   "version": "2.0.0",
-  "status": "high_detail_raster_source_in_conversation_zip_not_yet_committed",
+  "status": "original_raster_assets_imported_and_byte_verified",
   "canonical_branch": "design/biology-visuals-2026-10-30",
   "supersedes": "design/bloom/exercise/muscle-map/v1/svg",
   "style": "premium anatomical illustration, cream/evergreen/sage, muscle fibre detail, subtle body contours",
@@ -16,7 +16,313 @@
     "calves",
     "full-body"
   ],
-  "artwork_files_not_on_branch": true,
+  "artwork_files_not_on_branch": false,
   "source_bundle": "Bloom_Anatomy_Illustration_Library_v2.zip",
-  "production_use": "pending asset import and legal provenance"
+  "production_use": "Design-source import only; application integration, product rights/provenance and professional muscle mapping remain separate pending gates.",
+  "source_bundle_sha256": "9807b4a3f45cc43c5ce62a6a8da86ead831a9af893ffcbffa34821034145d03d",
+  "import_note": "Original library bundle (not repo-ready ZIP). Packaging directory removed; all internal relative paths preserved under this directory. Original MANIFEST.json and README.md extracted unchanged. PNGs not re-encoded.",
+  "image_count": 32,
+  "source_manifest": "design/bloom/exercise/muscle-map/v2/MANIFEST.json",
+  "files": [
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/MANIFEST.json",
+      "path": "design/bloom/exercise/muscle-map/v2/MANIFEST.json",
+      "bytes": 3774,
+      "sha256": "0a9f1f0e67d534342b6da2343c2cc8af5850984201cb8e7e3d795655bb7df69a"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/README.md",
+      "path": "design/bloom/exercise/muscle-map/v2/README.md",
+      "bytes": 1492,
+      "sha256": "79493a3699098050b4230471427b34724095531cdc14c6655cfcdf89e1b4b276"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/anatomy-back-labeled.png",
+      "path": "design/bloom/exercise/muscle-map/v2/anatomy-back-labeled.png",
+      "bytes": 899762,
+      "sha256": "c6b575283c66cdce112044147c3a9e5cc8c18a18bf3796b17d7e9fe2ba62de60",
+      "width": 1122,
+      "height": 1402,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/anatomy-front-labeled.png",
+      "path": "design/bloom/exercise/muscle-map/v2/anatomy-front-labeled.png",
+      "bytes": 938467,
+      "sha256": "56486aedbf15fba1fe8d170d5232e6eabb40edb980c5a0caf3e70980f5aca1ed",
+      "width": 1122,
+      "height": 1402,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/arms-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/arms-art-512.png",
+      "bytes": 119036,
+      "sha256": "d7bb6cc9120407b7381fed7770912642fe01cfbc18a61b7d207bcd7ee5bc241c",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/arms-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/arms-art.png",
+      "bytes": 37677,
+      "sha256": "7c5f01d425286626e2e1ed0572ad75e1647cc4cff1b9a3cbedf2ff7fc7a4dc9a",
+      "width": 248,
+      "height": 221,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/arms-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/arms-tile.png",
+      "bytes": 50615,
+      "sha256": "dd64849758140c9559e4bdc960787c03223afe3860e4569967ac18f1ebf47e9c",
+      "width": 264,
+      "height": 302,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/back-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/back-art-512.png",
+      "bytes": 130640,
+      "sha256": "38027a0e90b79c81a03f3b8d09f7d24f670ed1bb9dd256bef6d690d4c185f893",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/back-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/back-art.png",
+      "bytes": 39354,
+      "sha256": "dae7fb18e89063c30a3471d69023511d82b390a93c4e398006fbf789638854b2",
+      "width": 239,
+      "height": 221,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/back-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/back-tile.png",
+      "bytes": 52056,
+      "sha256": "35f56780ed8b15fc9bf9f52e46ff8fc2351000b11b38388dc90580e481f60545",
+      "width": 255,
+      "height": 302,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/calves-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/calves-art-512.png",
+      "bytes": 84262,
+      "sha256": "b23677301e586715b38774aabe50202efa1956166791d3e6768822604b7024c0",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/calves-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/calves-art.png",
+      "bytes": 29629,
+      "sha256": "b082d2ed4ede9966252767870d6d8043f46b02016192a7552389b64ac564251d",
+      "width": 248,
+      "height": 236,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/calves-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/calves-tile.png",
+      "bytes": 43876,
+      "sha256": "c480653881556e1a01a8f0a0278b3722bef23235dba0677c174bccb8fbff590b",
+      "width": 264,
+      "height": 317,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/chest-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/chest-art-512.png",
+      "bytes": 112694,
+      "sha256": "eb85307881c5d8ed21ae8d3d7b61962557a34c6f2dbc2ff60ee54849fea80bfd",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/chest-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/chest-art.png",
+      "bytes": 35476,
+      "sha256": "7c0b67b8ea58cc83cc28232a42a16e7b23af2c6cc762769e123b13bb67627211",
+      "width": 239,
+      "height": 221,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/chest-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/chest-tile.png",
+      "bytes": 48819,
+      "sha256": "0e1fb071d3b2e0f7a6392e584f4002aa62662de771994e6d05936c01e4579951",
+      "width": 255,
+      "height": 302,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/core-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/core-art-512.png",
+      "bytes": 109140,
+      "sha256": "8afcf9203f2f55c887660482e61371a7b26960f1402fd34b22142ac2d1a697a9",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/core-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/core-art.png",
+      "bytes": 35807,
+      "sha256": "9bbe30fddcede669a7f7baa91dc884ceaf29408e47e266017ad749483a9fd61c",
+      "width": 256,
+      "height": 221,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/core-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/core-tile.png",
+      "bytes": 49067,
+      "sha256": "39be411dd9a70715643edb8a4c61982769d864e798edbfc3b19132ccf7611fac",
+      "width": 272,
+      "height": 302,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/full-body-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/full-body-art-512.png",
+      "bytes": 119103,
+      "sha256": "079495f51d21b07c2b2cf2ee45d1fec9ec65c887e0e3d42c310b3b0701c4bfdd",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/full-body-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/full-body-art.png",
+      "bytes": 41012,
+      "sha256": "bec40fabd5dba840f61caf6cb6b8dc7247419af1bdd190b86dc25a2aa9fd0d54",
+      "width": 256,
+      "height": 236,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/full-body-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/full-body-tile.png",
+      "bytes": 56422,
+      "sha256": "fd6e545baeee9596be03bc0b416d2ed30b476377128bebff5330869b864ed150",
+      "width": 272,
+      "height": 317,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/glutes-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/glutes-art-512.png",
+      "bytes": 87529,
+      "sha256": "a1dab94a7ed20114b14bc5e83fd696509e456d4bdce08c02b238f667b21dfdd2",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/glutes-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/glutes-art.png",
+      "bytes": 30202,
+      "sha256": "95ffa26f71ac352d684ff11a494027396b0de79fc23c65b2152c9a77af212354",
+      "width": 239,
+      "height": 236,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/glutes-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/glutes-tile.png",
+      "bytes": 43856,
+      "sha256": "9fb4f68cdbe11094fae47d396111091e08432fc1e0ffc5b5934f4007f0aec7b6",
+      "width": 255,
+      "height": 317,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/hamstrings-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/hamstrings-art-512.png",
+      "bytes": 95050,
+      "sha256": "6e683555766d4d25896eb5f5d02b2579fee6efd499a0c6b6d3e1809b00915dd2",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/hamstrings-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/hamstrings-art.png",
+      "bytes": 31383,
+      "sha256": "22a5f69de5f0455d17a05a1f4c0468b0a5eab4083aa126849328da67fe0b3a15",
+      "width": 241,
+      "height": 236,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/hamstrings-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/hamstrings-tile.png",
+      "bytes": 47406,
+      "sha256": "340556fb4404e7ced713fd9aefcf312913cc1646ee7406eeea1d56db9c09f2af",
+      "width": 257,
+      "height": 317,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/quadriceps-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/quadriceps-art-512.png",
+      "bytes": 94591,
+      "sha256": "676c9ce4c522860d5786af9f8f22d6262d63f388e5e346c02d6b4b21fe06562f",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/quadriceps-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/quadriceps-art.png",
+      "bytes": 31424,
+      "sha256": "75983505273edd6121ae4de959db47a45309b282590ab170c51013d9416b282f",
+      "width": 239,
+      "height": 236,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/quadriceps-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/quadriceps-tile.png",
+      "bytes": 44470,
+      "sha256": "78efce05537535d5d51c5ed4be396f00871a256174435c0c0991b58ca6c7d58b",
+      "width": 255,
+      "height": 317,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/shoulders-art-512.png",
+      "path": "design/bloom/exercise/muscle-map/v2/shoulders-art-512.png",
+      "bytes": 106724,
+      "sha256": "87f03a733260dc9dcc3ad3570510f9da1b3a0d36de5ea7ca09ae7757854a97a1",
+      "width": 512,
+      "height": 512,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/shoulders-art.png",
+      "path": "design/bloom/exercise/muscle-map/v2/shoulders-art.png",
+      "bytes": 34147,
+      "sha256": "49889c2291c8b4453caebe1cb45da440976ff1e4dd449d9be35ca4b64be43cb0",
+      "width": 241,
+      "height": 221,
+      "mode": "RGB"
+    },
+    {
+      "archive_path": "Bloom_Anatomy_Illustration_Library_v2/shoulders-tile.png",
+      "path": "design/bloom/exercise/muscle-map/v2/shoulders-tile.png",
+      "bytes": 49985,
+      "sha256": "3d4feb04371cbae7475c8bc51e7eafc7f67e274d3bf007e24f6266dd715e9700",
+      "width": 257,
+      "height": 302,
+      "mode": "RGB"
+    }
+  ]
 }
