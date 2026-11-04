@@ -7,7 +7,7 @@ import RoutineLabTiming from "@/components/RoutineLabTiming";
 import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-units";
 import { useExperienceRecords } from "@/lib/experience";
 import DeviceObservations from "@/components/DeviceObservations";
-import LabUnitReview from "@/components/LabUnitReview";
+import { useEffect, useRef } from "react";
 import LabTrend from "@/components/LabTrend";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useSearch } from "wouter";
@@ -17,8 +17,9 @@ import { WeeklyReviewPanel } from "@/components/WeeklyReview";
 import type { PrecisionReport } from "@shared/precision-nutrition";
 export default function Progress() {
   const [, navigate] = useLocation();
-  const requestedView = new URLSearchParams(useSearch()).get("view");
-  const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : undefined;
+  const params = new URLSearchParams(useSearch());
+  const requestedView = params.get("view"), requestedMarker=params.get("marker");
+  const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : requestedMarker ? "biology" : undefined;
   const { user } = useAuth(),
     { mode, settings, patch, saving, loading, error: settingsError } = useExperience(),
     profile = useQuery<{heightCm:number|null;weightKg:number|null}>({queryKey:["/api/profile"],enabled:!!user}),
@@ -28,10 +29,20 @@ export default function Progress() {
       queryKey: ["/api/precision"],
       enabled: !!user,
     });
-  const currentReport=report.fetchStatus==="idle"&&!report.isError?report.data:undefined;
+  const currentReport=report.fetchStatus==="idle"&&!report.isError&&!report.isStale?report.data:undefined;
   const currentProfile=profile.fetchStatus==="idle"&&!profile.isError?profile.data:undefined;
   const currentHydration=sessions.fetchStatus==="idle"&&!sessions.isError?sessions.data:undefined;
   const checkingReport=report.isPending||report.fetchStatus!=="idle";
+  const focusedMarker=useRef<string|null>(null);
+  const activeView=selectedView ?? (mode === "athlete" ? "activity" : "nutrition");
+  useEffect(()=>{
+    if(!requestedMarker||activeView!=="biology"){focusedMarker.current=null;return;}
+    if(!currentReport)return;
+    if(!currentReport.trends.some(t=>t.marker===requestedMarker)){focusedMarker.current=null;return;}
+    const request=`${user?.id}:${requestedMarker}`;if(focusedMarker.current===request)return;
+    const frame=requestAnimationFrame(()=>{const container=document.getElementById(`lab-marker-${encodeURIComponent(requestedMarker)}`),heading=container?.querySelector<HTMLElement>('h3');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});container!.scrollIntoView({block:'start'});focusedMarker.current=request;}});
+    return()=>cancelAnimationFrame(frame);
+  },[user?.id,requestedMarker,activeView,currentReport]);
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
@@ -41,7 +52,7 @@ export default function Progress() {
           Review your recorded food, activity and biology. Choose a view to see what changed; a change does not establish its cause.
         </p>
       </div>
-      <Tabs value={selectedView ?? (mode === "athlete" ? "activity" : "nutrition")} onValueChange={view => navigate(`/progress?view=${view}`)} className="space-y-5">
+      <Tabs value={activeView} onValueChange={view => navigate(`/progress?view=${view}`)} className="space-y-5">
         <TabsList aria-label="Progress view" className="progress-domain-tabs">
           <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
           <TabsTrigger value="activity">{mode === "athlete" ? "Training" : "Activity"}</TabsTrigger>
@@ -97,17 +108,19 @@ export default function Progress() {
         <p className="panel-note">
           Dated points show what was recorded. Assessing a clinical change needs compatible units, dates, laboratory methods and relevant fasting conditions. Entered results are not independently verified.
         </p>
+        <p><Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Review bloodwork sources</Link></p>
         {checkingReport && (
           <p role="status">Checking current laboratory history…</p>
         )}
         {report.isError && <p role="alert">Laboratory history could not be checked. Previously loaded results are not shown as current.</p>}
         {(report.isError||report.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={report.isFetching} onClick={()=>report.refetch()}>Retry Progress observations</button>}
-        <div hidden={!currentReport}><fieldset disabled={!currentReport}><LabUnitReview labs={report.data?.pendingLabs||[]} /></fieldset></div>
-        {currentReport?.trends.map(t=><LabTrend key={t.marker} trend={t}/>)}
+        {currentReport&&!!currentReport.pendingLabs?.length&&<p className="panel-note">{currentReport.pendingLabs.length} result(s) need unit confirmation and are excluded from confirmed trends. <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Review source units in Bloodwork</Link></p>}
+        {currentReport&&!!currentReport.sourceOnlyLabs?.length&&<p className="panel-note">{currentReport.sourceOnlyLabs.length} source result(s) await marker identification. They remain available in Bloodwork and are excluded from confirmed trends.</p>}
+        {currentReport&&requestedMarker&&!currentReport.trends.some(t=>t.marker===requestedMarker)&&<p role="alert">The requested marker is not available in your current confirmed laboratory history. <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Open source review</Link></p>}
+        {currentReport?.trends.map(t=><div key={t.marker} id={`lab-marker-${encodeURIComponent(t.marker)}`} data-lab-marker={t.marker} className="scroll-mt-24"><LabTrend trend={t}/></div>)}
         {currentReport && !currentReport.trends.length && (
           <p>
-            No dated laboratory results yet. Add a report's values to establish
-            a baseline.
+            {(currentReport.pendingLabs?.length||currentReport.sourceOnlyLabs?.length)?"No confirmed numeric trends are available. Source records awaiting identification or unit review remain in Bloodwork.":"No dated laboratory results yet. Add a report's values to establish a baseline."}
           </p>
         )}
         {currentReport&&!loading&&routines.fetchStatus==="idle"&&!routines.isError&&routines.data?<RoutineLabTiming key={`${user?.id}:${mode}`} trends={currentReport.trends} records={routines.data} mode={mode}/>:<p role={routines.isError?"alert":"status"} className="panel-note">{routines.isError?'Routine trial dates could not be checked.':'Checking source data before comparing routine dates…'}</p>}

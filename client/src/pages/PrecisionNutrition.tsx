@@ -1268,37 +1268,10 @@ export default function PrecisionNutrition() {
                   <Button disabled={mutation.isPending||unfinished||unitsSaving}>Save check-in</Button>
                 </form>
                 <section className="bloom-panel">
-                  <h2>Repeatable biomarkers</h2>
-                  {r.trends.length ? (
-                    r.trends.map((t) => (
-                      <article
-                        className="precision-observation block"
-                        key={t.marker}
-                      >
-                        <h3>{t.name}</h3>
-                        <p>
-                          {t.points
-                            .map(
-                              (p) =>
-                                `${labDateText(p.date,p.sourceReport,p.dateCorrection)}: ${display(p.value)} ${p.unit}`,
-                            )
-                            .join(" → ")}
-                        </p>
-                        {t.change !== null && (
-                          <p>
-                            Observed first-to-latest change: {display(t.change)}{" "}
-                            {t.points[0].unit}
-                          </p>
-                        )}
-                        <p className="panel-note">{t.note}</p>
-                      </article>
-                    ))
-                  ) : (
-                    <p>
-                      Add baseline and repeat laboratory results to assess
-                      observed changes.
-                    </p>
-                  )}
+                  <h2>Bloodwork trends</h2>
+                  <p>Review dated results and their original sources in the single Biology explorer in Progress.</p>
+                  <Link className="text-link inline-flex min-h-11 items-center" href="/progress?view=biology">Open bloodwork trends</Link>
+                  {r.trends.length>0&&<details><summary>Choose a recorded marker · {r.trends.length}</summary><ul>{r.trends.map(t=><li key={t.marker}><Link className="text-link inline-flex min-h-11 items-center" href={`/progress?view=biology&marker=${encodeURIComponent(t.marker)}`}>{t.name}</Link></li>)}</ul></details>}
                 </section>
                 <section className="bloom-panel">
                   <h2>Saved plans & observations</h2>
