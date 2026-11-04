@@ -1,6 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { microbiomeSourceFacts } from "@shared/structured-report";
 import { reportDateText } from "@shared/report-dates";
 
 import { type ReportedTaxon, reportedTaxonAmount } from "@shared/reported-taxa";
@@ -11,6 +12,8 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
 }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   useEffect(() => setExpanded(null), [taxon?.id]);
+  const facts=microbiomeSourceFacts(sample?.structuredData||{});
+  const sourceValues=(kind:"assay"|"method"|"taxonomy"|"qc")=>facts.filter(f=>f.kind===kind).map(f=><span className="block" key={f.sourcePath}>{f.value}<small className="block text-muted-foreground">{f.sourcePath}</small></span>);
   const origin = sample?.structuredData?.dataOrigin;
   return <Dialog.Root open={!!taxon} onOpenChange={open => { if (!open) onClose(); }}>
     <Dialog.Portal>
@@ -34,7 +37,10 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
               <div><dt>Sample / report ID</dt><dd>{sample?.id || "Not reported"}</dd></div>
               {taxon.reportedOrganismSourceId&&<div><dt>Organism-list source entry</dt><dd>{taxon.reportedOrganismSourceId}</dd></div>}
               {taxon.reportedNotes&&<div><dt>Original organism note</dt><dd>{taxon.reportedNotes}</dd></div>}
-              <div><dt>Assay method</dt><dd>Not reported in this composition record</dd></div>
+              <div><dt>Assay type</dt><dd>{facts.some(f=>f.kind==="assay")?sourceValues("assay"):"Not reported"}</dd></div>
+              <div><dt>Assay method</dt><dd>{facts.some(f=>f.kind==="method")?sourceValues("method"):"Not reported in this composition record"}</dd></div>
+              {facts.some(f=>f.kind==="taxonomy")&&<div><dt>Source taxonomy version</dt><dd>{sourceValues("taxonomy")}</dd></div>}
+              {facts.some(f=>f.kind==="qc")&&<div><dt>Source QC text · not independently verified</dt><dd>{sourceValues("qc")}</dd></div>}
               <div><dt>Data origin</dt><dd>{typeof origin === "string" && origin ? origin : "User-supplied report; not independently verified. Synthetic status not reported."}</dd></div>
             </dl>
           </section>

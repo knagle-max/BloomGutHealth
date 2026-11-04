@@ -61,6 +61,39 @@ export function validateReportComplexity(input: unknown) {
     }
   }
 }
+/** Same source-envelope selection for parsing and read-only provenance. */
+function structuredSourceObject(input: Dict): Dict {
+  const nested = object(input.data) ? input.data : undefined;
+  return object(input.report)
+    ? input.report
+    : nested &&
+        [
+          "scores",
+          "organisms",
+          "healthScores",
+          "functionalScores",
+          "microorganisms",
+          "bacteria_percentages",
+        ].some((k) => k in nested)
+      ? nested
+      : input;
+}
+export type MicrobiomeSourceFact = { kind: "assay" | "method" | "taxonomy" | "qc"; value: string; sourcePath: string };
+/** Verbatim supplied source text only. No method/strain inference or QC grading. */
+export function microbiomeSourceFacts(report: Pick<StructuredReport,"sourceReport">): MicrobiomeSourceFact[] {
+  const original=report.sourceReport;if(!object(original))return [];
+  const source=structuredSourceObject(original);
+  const prefix=source===original?"sourceReport":source===original.report?"sourceReport.report":"sourceReport.data";
+  const locations:[string,Dict][]=[[prefix,source]];
+  if(object(original.metadata))locations.push(["sourceReport.metadata",original.metadata]);
+  if(source!==original&&object(source.metadata))locations.push([prefix+".metadata",source.metadata]);
+  const keys:Record<MicrobiomeSourceFact["kind"],string[]>={assay:["assay_type","assayType"],method:["assay_method","assayMethod","sequencing_method","sequencingMethod","vendor_method","vendorMethod"],taxonomy:["taxonomy_version","taxonomyVersion"],qc:["qc_status","qcStatus","qc_notes","qcNotes","quality_control_notes","qualityControlNotes"]};
+  const facts:MicrobiomeSourceFact[]=[];
+  for(const [path,record]of locations)for(const kind of Object.keys(keys)as MicrobiomeSourceFact["kind"][])for(const key of keys[kind]){
+    const value=Object.hasOwn(record,key)?record[key]:undefined;if(typeof value==="string"&&value.trim())facts.push({kind,value,sourcePath:path+"."+key});
+  }
+  return facts;
+}
 export function parseStructuredReport(input: unknown): StructuredReport {
   validateReportComplexity(input);
   if (!object(input))
@@ -75,20 +108,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
   }
   if (bytes > STRUCTURED_REPORT_MAX_BYTES)
     throw Error("Structured JSON reports must be 2 MB or smaller.");
-  const nested = object(input.data) ? input.data : undefined;
-  const source = object(input.report)
-    ? input.report
-    : nested &&
-        [
-          "scores",
-          "organisms",
-          "healthScores",
-          "functionalScores",
-          "microorganisms",
-          "bacteria_percentages",
-        ].some((k) => k in nested)
-      ? nested
-      : input;
+  const source = structuredSourceObject(input);
   // Our exported format carries source strings, not new permission/evidence authority.
   const canonical = source.schemaVersion === "bloom-report-v2";
   const metadata = object(input.metadata)

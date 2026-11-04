@@ -12,3 +12,11 @@ test('only exact original identities join numeric rows; strain spelling/read cou
  const row={id:'canonical',bacterialName:'Escherichia coli',taxonomyLevel:'species',abundance:1.23456789};const taxa=reportedTaxa(sample,[row]);assert.equal(taxa.length,5);assert.equal(taxa[0],row);assert.equal(reportedTaxonAmount(taxa[0]),'1.23456789%');assert.equal(reportedTaxonAmount(taxa[1]),'Not reported');assert.equal(taxa[2].bacterialName,'Escherichia coli strain A');
  const unique=reportedTaxa({id:'b',structuredData:parseStructuredReport({organisms:[{name:row.bacterialName,abundance:'8 reads',status:'Reported only'}]})},[row]);assert.equal(unique.length,1);assert.equal(unique[0].reportedAbundance,'8 reads');assert.equal(unique[0].reportedStatus,'Reported only');assert.equal(row.abundance,1.23456789);assert.equal('reportedStatus'in row,false);assert.deepEqual(reportedTaxa({id:'legacy',structuredData:{organisms:['Legacy unknown shape']}},[row]),[row]);
 });
+
+test('assay context uses verbatim supported source keys and retains conflicts/unknown rather than guessing',async()=>{
+ const{microbiomeSourceFacts}=await import('../shared/structured-report');
+ const source={metadata:{assay_type:'16S',qc_status:'Source says failed'},data:{organisms:['Reported name'],assay_type:'Shotgun metagenomics',vendor_method:'Original method v2',taxonomy_version:'Source taxonomy 2026',method:'Unrelated calculation',qc_notes:'Original QC note'}};
+ const report=parseStructuredReport(source),facts=microbiomeSourceFacts(report);
+ assert.deepEqual(facts.filter(f=>f.kind==='assay').map(f=>f.value),['Shotgun metagenomics','16S']);assert.ok(facts.some(f=>f.sourcePath==='sourceReport.data.vendor_method'&&f.value==='Original method v2'));assert.ok(facts.some(f=>f.value==='Source says failed'));assert.ok(!facts.some(f=>f.value==='Unrelated calculation'));
+ assert.deepEqual(microbiomeSourceFacts(parseStructuredReport(JSON.parse(JSON.stringify(report)))),facts);assert.deepEqual(microbiomeSourceFacts(parseStructuredReport({organisms:['Unknown organism'],assay_type:0,assay_method:{name:'Not supported text'}})),[]);
+});
