@@ -66,6 +66,7 @@ function mergeNutrition(
   b: ReturnType<typeof lookupSnapshotNutrition>,
   bCount: number,
   totalCount: number,
+  roundAmounts = true,
 ) {
   return {
     foodMatches: [...a.foodMatches, ...b.foodMatches],
@@ -73,23 +74,21 @@ function mergeNutrition(
       ...a.warnings.filter((w) => !w.startsWith("Some ingredients")),
       ...b.warnings,
     ],
-    nutrients: a.nutrients.map((n, index) => ({
-      ...n,
-      amount:
-        n.amount === null && b.nutrients[index].amount === null
-          ? null
-          : roundNutrientEstimate((n.amount ?? 0) + (b.nutrients[index].amount ?? 0)),
-      coverage: totalCount
-        ? (n.coverage * aCount + b.nutrients[index].coverage * bCount) /
-          totalCount
-        : 0,
-    })),
+    nutrients: a.nutrients.map((n, index) => {
+      const other=b.nutrients[index];
+      const amount=n.amount===null&&other.amount===null?null:(n.amount??0)+(other.amount??0);
+      return {
+        ...n,
+        amount:amount===null?null:roundAmounts?roundNutrientEstimate(amount):amount,
+        coverage:totalCount?(n.coverage*aCount+other.coverage*bCount)/totalCount:0,
+      };
+    }),
   };
 }
-export function lookupLocalNutrition(ingredients: Ingredient[]) {
+export function lookupLocalNutrition(ingredients: Ingredient[], roundAmounts = true) {
   const local = ingredients.filter((i) => !i.product);
   const plain = local.filter(i=>!i.catalogue);
-  const small = lookupSnapshotNutrition(plain);
+  const small = lookupSnapshotNutrition(plain, roundAmounts);
   const unmatched = local.filter(
     (i) =>
       !small.foodMatches.some(
@@ -99,9 +98,10 @@ export function lookupLocalNutrition(ingredients: Ingredient[]) {
   return mergeNutrition(
     small,
     plain.length,
-    lookupCatalogueNutrition(unmatched),
+    lookupCatalogueNutrition(unmatched, roundAmounts),
     unmatched.length,
     ingredients.length,
+    roundAmounts,
   );
 }
 export const parseSchema = z.object({
@@ -200,6 +200,7 @@ export async function lookupDatabaseNutrition(
   ingredients: Ingredient[],
   request: JsonRequest = requestJson,
   key = process.env.USDA_FDC_API_KEY,
+  roundAmounts = true,
 ) {
   if (!key)
     return {
@@ -260,7 +261,7 @@ export async function lookupDatabaseNutrition(
     }
   }
   return {
-    nutrients: scaleDatabaseNutrients(foods, ingredients.length),
+    nutrients: scaleDatabaseNutrients(foods, ingredients.length, roundAmounts),
     foodMatches,
     warnings,
   };
@@ -301,7 +302,7 @@ export async function analyzeMeal(
   requireMealIngredientLimit(parsed.ingredients.length);
   const explanation = explainFoods(parsed.ingredients.map(i=>i.name).join(", "));
   let productDetails: MealIntelligence["productDetails"];
-  let snapshot = lookupLocalNutrition(parsed.ingredients);
+  let snapshot = lookupLocalNutrition(parsed.ingredients, false);
   if (parsed.ingredients.some((i) => i.product) && productContext) {
     const products = await lookupProductNutrition(
       parsed.ingredients,
@@ -316,6 +317,7 @@ export async function analyzeMeal(
       products,
       parsed.ingredients.length,
       parsed.ingredients.length,
+      false,
     );
   }
   const useSnapshot =
@@ -330,17 +332,22 @@ export async function analyzeMeal(
           (m) => m.ingredient === i.name && m.grams === i.grams,
         ),
     );
-    const live = await lookupDatabaseNutrition(unmatched);
+    const live = await lookupDatabaseNutrition(unmatched, requestJson, process.env.USDA_FDC_API_KEY, false);
     database = mergeNutrition(
       snapshot,
       parsed.ingredients.length,
       live,
       unmatched.length,
       parsed.ingredients.length,
+      false,
     );
   }
 
+  // Preserve source precision through every provider subtotal; round the complete
+  // canonical meal projection once, before persistence and all consumer views.
+  database = {...database,nutrients:database.nutrients.map(n=>({...n,amount:n.amount===null?null:roundNutrientEstimate(n.amount)}))};
   const intelligence: MealIntelligence = {
+    nutritionCalculationVersion: "2026-11-04",
     portionModelVersion: "2026-10-18.2",
     productDetails,
     ...parsed,
@@ -391,7 +398,7 @@ export async function analyzeMeal(
       if (
         Array.isArray(data) &&
         data.length &&
-        data.every((i) => i && typeof i.calories === "number")
+        data.every((i) => i && typeof i.calories === "number" && Number.isFinite(i.calories) && i.calories >= 0)
       ) {
         // Never mix partial USDA totals with a different provider's meal totals.
         intelligence.status = "provider-estimate";
@@ -402,14 +409,14 @@ export async function analyzeMeal(
         intelligence.nutrients = nutrientDefinitions.map(
           ([key, name, unit]) => {
             const known = data.filter(
-              (i) => typeof i[key] === "number" && Number.isFinite(i[key]),
+              (i) => typeof i[key] === "number" && Number.isFinite(i[key]) && i[key] >= 0,
             );
             return {
               key,
               name,
               unit,
               amount: known.length
-                ? known.reduce((n, i) => n + i[key], 0)
+                ? roundNutrientEstimate(known.reduce((n, i) => n + i[key], 0))
                 : null,
               coverage: known.length / data.length,
             };
@@ -431,8 +438,8 @@ export async function analyzeMeal(
 export function nutritionTotals(data: any[]) {
   const total = (key: string) =>
     data.length &&
-    data.every((i) => typeof i[key] === "number" && Number.isFinite(i[key]))
-      ? data.reduce((n, i) => n + i[key], 0)
+    data.every((i) => typeof i[key] === "number" && Number.isFinite(i[key]) && i[key] >= 0)
+      ? roundNutrientEstimate(data.reduce((n, i) => n + i[key], 0))
       : null;
   return {
     totalCalories: total("calories"),

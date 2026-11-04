@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import express from 'express';
-import {registerNutritionHistoryRoutes} from '../server/nutrition-history';
+import {registerNutritionHistoryRoutes,recordedNutritionPeriod} from '../server/nutrition-history';
 test('historical nutrition never converts missing meal values into zero or ignores sourced intelligence',async()=>{
  const app=express();app.use((req,_res,next)=>{req.session={userId:req.header('x-user')} as any;next();});
  const meals=[{loggedAt:'2026-10-01T12:00:00Z',totalCalories:null,totalProtein:0,totalCarbs:null,totalFat:null,intelligence:{nutrients:[{key:'fiber_g',amount:4,coverage:0.5}]},nutritionalData:[]}];
@@ -32,4 +32,9 @@ test('history periods validate strict dates, use explicit UTC boundaries, preser
   const leap=await(await fetch(base+'/monthly/synthetic-a?year=2024&month=1')).json();assert.equal(leap.totalDays,29);
   fail=true;const broken=await fetch(base+'/yearly/synthetic-a?year=2026');assert.equal(broken.status,503);assert.ok(!(await broken.text()).includes('PRIVATE_SQL_SENTINEL'));
  }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
+});
+
+test('historical daily averages retain tiny measured contributions and decimal ties without changing unknown or zero',()=>{
+ const period=recordedNutritionPeriod([{loggedAt:'2026-10-01T12:00:00Z',totalCalories:.285,totalProtein:0,intelligence:{nutrients:[{key:'vitamin_b12_ug',amount:.00015,coverage:1}]}},{loggedAt:'2026-10-02T12:00:00Z',totalCalories:.285,totalProtein:0}]);
+ assert.equal(period.dailyAverages.calories,.29);assert.equal(period.dailyAverages.protein,0);assert.equal(period.dailyAverages.vitamin_b12_ug,.000075);assert.equal(period.dailyAverages.sodium,null);
 });

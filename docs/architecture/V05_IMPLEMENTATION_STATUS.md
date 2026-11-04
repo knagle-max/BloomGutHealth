@@ -1,8 +1,12 @@
 # v0.5 implementation reconciliation — 2026-10-23
 
-## Latest engineering checkpoint — 2026-10-30
+## Latest engineering checkpoint — 2026-11-04
 
-v0.5 remains incomplete; user prioritizes full flagship UI/UX rollout. Profile/source-first bloodwork/Progress1dcfadc, preferences/search-first9d9c22a and Athlete calendarf5f7eb8 are pushed, managed CI SUCCESS and existing preview LIVE. Amendment D compact set completionbaa4e4a is pushed/preview LIVE (dep-dbi9gni9lscs73fmpcsg); local full464/464 PASS202902ms, exact App/HTTP/encryptedPGlite save/reload/modes and rich/unitless regressions pass. Actions41061697837 pending at checkpoint. Follow-upe5a99aa preserves keyboard/invalid-child focus and discloses optional weekly focus setup; actual-handler weekly both-mode/draft/source/retry/5width light-dark checks pass. See NEXT_ACTIONS and V05_UI_ROLLOUT for current publication/remaining UI work. Original v1.4 ZIP/SVG inaccessible; exact SVG parity, actual VoiceOver and independent Design/hosted/device acceptance remain open, separate from local automation. No science/rights activation or version-complete claim.
+v0.5 remains incomplete; v0.6 has not begun. NEXT_ACTIONS.md owns the executable checkpoint. Original AmendmentD v1.4 source access is **resolved** in6e78f37 (payload hashes match; original manifest self-hash mismatch preserved), superseding the older source-access blocker below. Anatomy32PNG assets are separately verified/pushed atc448678 on the requested design branch; not merged or activated in the app.
+
+Grouped bloodwork894b9fd, canonical Progress navigation2c2f172 and source-linked Timeline/selected comparisonfe32662 are implemented with original-source/owner/currentness guards, raw unknown records and exact-ID deep links. Timeline full479/type/build/browser PASS; exact Actions41882165325 SUCCESS, Renderdep-dbln35u7bikc73982530 LIVE. QA-only32829f2 is subsequently LIVEdep-dbln4ilg1s2s73d5286g. Actual VoiceOver, physical devices/Safari/200%, hosted authenticated capture and independent Design/taxonomy/science acceptance remain distinct and pending.
+
+Current Food rechecks pass source replacement/manual private context/zero-vs-unknown/recent/metadata edit/delete/Today/Progress; synthetic source mechanics do not establish real Canadian package/menu coverage. A new51-case offline reference matrix found real mixed-source rounding and tiny historical-average defects; implementation passed full483/483 tests, types/build/source guards and actual meal parity/edit/delete regression journeys; publication is pending. Historical CNF2007b references are explicitly labelled and do not close current CNF2026 evaluation. No production provider, clinical capability or research claims activated.
 
 ## Historical completion snapshot — 2026-10-23
 

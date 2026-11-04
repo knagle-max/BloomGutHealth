@@ -1,3 +1,4 @@
+import {roundNutrientEstimate} from '../shared/nutrition-precision';
 import type {Express,RequestHandler} from 'express';
 import {z} from 'zod';
 import {mealNutritionSummary} from '../shared/nutrition-summary';
@@ -7,7 +8,7 @@ const month=z.string().regex(/^(?:0?[0-9]|1[01])$/).transform(Number).optional()
 export function recordedNutritionPeriod(meals:any[]){
  const daysWithMeals=new Set(meals.map(meal=>new Date(meal.loggedAt).toISOString().slice(0,10))).size;
  const summary=mealNutritionSummary(meals);
- return {totalMeals:meals.length,daysWithMeals,totals:summary.totals,nutritionCoverage:summary.coverage,isPartial:summary.isPartial,dailyAverages:daysWithMeals?Object.fromEntries(Object.entries(summary.totals).map(([key,value])=>[key,value===null?null:Math.round(value/daysWithMeals*100)/100])):null};
+ return {totalMeals:meals.length,daysWithMeals,totals:summary.totals,nutritionCoverage:summary.coverage,isPartial:summary.isPartial,dailyAverages:daysWithMeals?Object.fromEntries(Object.entries(summary.totals).map(([key,value])=>[key,value===null?null:roundNutrientEstimate(value/daysWithMeals)])):null};
 }
 export function registerNutritionHistoryRoutes(app:Express,requireAuth:RequestHandler,store:{getMeals(userId:string):Promise<any[]>}){
  const handler=(period:'monthly'|'yearly'):RequestHandler=>async(req,res)=>{

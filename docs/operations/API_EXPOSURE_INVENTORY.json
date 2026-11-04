@@ -20,7 +20,7 @@
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
-    "server/nutrition-history.ts": "3ce11fe66fe6136ad79274de5a65d8752942b5d5a78ba3de85c5380a34d6da53",
+    "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "e0509b74f5e11e2378094cc29d6f4d6d16342f504e796bf75302ddf13faaa776",
     "server/precision-routes.ts": "f6c1b661934c030dad6589c0d29f9859e61e48ea552d9ac58de070f2e6cf9ac7",
@@ -454,7 +454,7 @@
     },
     {
       "file": "server/nutrition-history.ts",
-      "line": 32,
+      "line": 33,
       "method": "GET",
       "path": "/api/nutrition/monthly/:userId",
       "declaredMiddleware": [
@@ -464,7 +464,7 @@
     },
     {
       "file": "server/nutrition-history.ts",
-      "line": 33,
+      "line": 34,
       "method": "GET",
       "path": "/api/nutrition/yearly/:userId",
       "declaredMiddleware": [

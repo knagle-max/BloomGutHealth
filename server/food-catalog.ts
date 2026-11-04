@@ -244,7 +244,7 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
       : `${reason}. Generic USDA match; brand, fat content and preparation may differ.`.slice(0,300),
   };
 }
-export function lookupCatalogueNutrition(ingredients: Ingredient[]) {
+export function lookupCatalogueNutrition(ingredients: Ingredient[], roundAmounts = true) {
   const foodMatches: MealIntelligence["foodMatches"] = [],
     foods: Array<{
       grams: number;
@@ -277,7 +277,7 @@ export function lookupCatalogueNutrition(ingredients: Ingredient[]) {
   }
   return {
     foodMatches,
-    nutrients: scaleDatabaseNutrients(foods, ingredients.length),
+    nutrients: scaleDatabaseNutrients(foods, ingredients.length, roundAmounts),
     warnings: [
       "Generic USDA FNDDS 2021–2023 matches and household portions are estimates. Review food, preparation, product label and amount eaten.",
     ],

@@ -1,0 +1,1841 @@
+{
+  "version": "bloom-food-reference-2026-11-04-v1",
+  "observedAt": "2026-11-04",
+  "scope": "Offline engineering references only; no provider activation, live catalogue coverage or independent nutrition review. CNF cases use historical 2007b values, not 2026.",
+  "catalogueSHA256": "def783de1ae7812527e9c1b4804ce20f0b1b09a6df8bd83d5ad8f653c9dec846",
+  "sources": [
+    {
+      "id": "usda-2709660",
+      "kind": "catalogue",
+      "name": "Carrots, raw",
+      "fdcId": 2709660,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2709660/nutrients",
+      "reported": {
+        "calories": 44.0,
+        "protein_g": 0.87,
+        "carbohydrates_total_g": 9.68,
+        "fat_total_g": 0.24,
+        "fiber_g": 2.9,
+        "sugar_g": 4.75,
+        "sodium_mg": 75.0
+      }
+    },
+    {
+      "id": "usda-2709663",
+      "kind": "catalogue",
+      "name": "Carrots, cooked, from restaurant",
+      "fdcId": 2709663,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2709663/nutrients",
+      "reported": {
+        "calories": 86.0,
+        "protein_g": 0.94,
+        "carbohydrates_total_g": 10.2,
+        "fat_total_g": 4.67,
+        "fiber_g": 3.1,
+        "sugar_g": 4.69,
+        "sodium_mg": 292
+      }
+    },
+    {
+      "id": "usda-2709614",
+      "kind": "catalogue",
+      "name": "Spinach, raw",
+      "fdcId": 2709614,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2709614/nutrients",
+      "reported": {
+        "calories": 27.0,
+        "protein_g": 2.85,
+        "carbohydrates_total_g": 2.41,
+        "fat_total_g": 0.62,
+        "fiber_g": 1.6,
+        "sugar_g": 0.42,
+        "sodium_mg": 111
+      }
+    },
+    {
+      "id": "usda-2710791",
+      "kind": "catalogue",
+      "name": "Spinach, cooked, as ingredient",
+      "fdcId": 2710791,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2710791/nutrients",
+      "reported": {
+        "calories": 33.0,
+        "protein_g": 3.42,
+        "carbohydrates_total_g": 3.11,
+        "fat_total_g": 0.71,
+        "fiber_g": 1.9,
+        "sugar_g": 0.49,
+        "sodium_mg": 126
+      }
+    },
+    {
+      "id": "usda-2708404",
+      "kind": "catalogue",
+      "name": "Rice, white, cooked, made with oil",
+      "fdcId": 2708404,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2708404/nutrients",
+      "reported": {
+        "calories": 151,
+        "protein_g": 2.6,
+        "carbohydrates_total_g": 27.2,
+        "fat_total_g": 3.12,
+        "fiber_g": 0.4,
+        "sugar_g": 0.05,
+        "sodium_mg": 238
+      }
+    },
+    {
+      "id": "usda-2708405",
+      "kind": "catalogue",
+      "name": "Rice, white, cooked, made with butter",
+      "fdcId": 2708405,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2708405/nutrients",
+      "reported": {
+        "calories": 147,
+        "protein_g": 2.62,
+        "carbohydrates_total_g": 27.2,
+        "fat_total_g": 2.61,
+        "fiber_g": 0.4,
+        "sugar_g": 0.06,
+        "sodium_mg": 253
+      }
+    },
+    {
+      "id": "usda-2708409",
+      "kind": "catalogue",
+      "name": "Rice, brown, cooked, NS as to fat",
+      "fdcId": 2708409,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2708409/nutrients",
+      "reported": {
+        "calories": 123,
+        "protein_g": 2.44,
+        "carbohydrates_total_g": 25.8,
+        "fat_total_g": 1.11,
+        "fiber_g": 1.0,
+        "sugar_g": 0.22,
+        "sodium_mg": 201
+      }
+    },
+    {
+      "id": "usda-2707152",
+      "kind": "catalogue",
+      "name": "Egg, whole, raw",
+      "fdcId": 2707152,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2707152/nutrients",
+      "reported": {
+        "calories": 143,
+        "protein_g": 12.4,
+        "carbohydrates_total_g": 0.96,
+        "fat_total_g": 9.96,
+        "fiber_g": 0.0,
+        "sugar_g": 0.2,
+        "sodium_mg": 129
+      }
+    },
+    {
+      "id": "usda-2707154",
+      "kind": "catalogue",
+      "name": "Egg, whole, boiled or poached",
+      "fdcId": 2707154,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2707154/nutrients",
+      "reported": {
+        "calories": 143,
+        "protein_g": 12.4,
+        "carbohydrates_total_g": 0.96,
+        "fat_total_g": 9.96,
+        "fiber_g": 0.0,
+        "sugar_g": 0.2,
+        "sodium_mg": 129
+      }
+    },
+    {
+      "id": "usda-2709215",
+      "kind": "catalogue",
+      "name": "Apple, raw",
+      "fdcId": 2709215,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2709215/nutrients",
+      "reported": {
+        "calories": 61.0,
+        "protein_g": 0.17,
+        "carbohydrates_total_g": 14.8,
+        "fat_total_g": 0.15,
+        "fiber_g": 2.1,
+        "sugar_g": 12.1,
+        "sodium_mg": 0.0
+      }
+    },
+    {
+      "id": "usda-2709224",
+      "kind": "catalogue",
+      "name": "Banana, raw",
+      "fdcId": 2709224,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2709224/nutrients",
+      "reported": {
+        "calories": 97.0,
+        "protein_g": 0.74,
+        "carbohydrates_total_g": 22.7,
+        "fat_total_g": 0.28,
+        "fiber_g": 1.7,
+        "sugar_g": 15.8,
+        "sodium_mg": 0.0
+      }
+    },
+    {
+      "id": "usda-2707425",
+      "kind": "catalogue",
+      "name": "Lentils, from dried, no added fat",
+      "fdcId": 2707425,
+      "basisGrams": 100,
+      "serving": "100 g",
+      "version": "FNDDS 2021–2023",
+      "url": "https://fdc.nal.usda.gov/food-details/2707425/nutrients",
+      "reported": {
+        "calories": 115,
+        "protein_g": 8.97,
+        "carbohydrates_total_g": 20.0,
+        "fat_total_g": 0.38,
+        "fiber_g": 7.9,
+        "sugar_g": 1.79,
+        "sodium_mg": 233
+      }
+    },
+    {
+      "id": "cnf-2007b-chickpea-flour",
+      "kind": "private-reference",
+      "name": "Chickpea flour",
+      "basisGrams": 49,
+      "serving": "125 mL",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 188,
+        "protein_g": 11,
+        "carbohydrates_total_g": 28,
+        "fat_total_g": 3,
+        "fiber_g": 5.2,
+        "sugar_g": 5,
+        "sodium_mg": 31
+      }
+    },
+    {
+      "id": "cnf-2007b-oat-bran-dry",
+      "kind": "private-reference",
+      "name": "Oat bran, dry",
+      "basisGrams": 50,
+      "serving": "125 mL",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 122,
+        "protein_g": 9,
+        "carbohydrates_total_g": 33,
+        "fat_total_g": 3,
+        "fiber_g": 5.2,
+        "sugar_g": 1,
+        "sodium_mg": 2
+      }
+    },
+    {
+      "id": "cnf-2007b-oat-bran-cooked",
+      "kind": "private-reference",
+      "name": "Oat bran, cooked",
+      "basisGrams": 179,
+      "serving": "175 mL",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 73,
+        "protein_g": 3,
+        "carbohydrates_total_g": 12,
+        "fat_total_g": 1,
+        "fiber_g": 3.4,
+        "sugar_g": "tr",
+        "sodium_mg": 1
+      }
+    },
+    {
+      "id": "cnf-2007b-quinoa-cooked",
+      "kind": "private-reference",
+      "name": "Quinoa, cooked",
+      "basisGrams": 73,
+      "serving": "125 mL",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 70,
+        "protein_g": 2,
+        "carbohydrates_total_g": 13,
+        "fat_total_g": 1,
+        "fiber_g": 1.3,
+        "sugar_g": "N/A",
+        "sodium_mg": 4
+      }
+    },
+    {
+      "id": "cnf-2007b-bannock",
+      "kind": "private-reference",
+      "name": "Bannock",
+      "basisGrams": 37,
+      "serving": "1 medium",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 84,
+        "protein_g": 2,
+        "carbohydrates_total_g": 19,
+        "fat_total_g": "tr",
+        "fiber_g": 0.5,
+        "sugar_g": "N/A",
+        "sodium_mg": "N/A"
+      }
+    },
+    {
+      "id": "cnf-2007b-brown-rice",
+      "kind": "private-reference",
+      "name": "Rice, brown, long-grain, cooked",
+      "basisGrams": 103,
+      "serving": "125 mL",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 115,
+        "protein_g": 3,
+        "carbohydrates_total_g": 24,
+        "fat_total_g": 1,
+        "fiber_g": 1.5,
+        "sugar_g": "tr",
+        "sodium_mg": 5
+      }
+    },
+    {
+      "id": "cnf-2007b-macaroni-cooked",
+      "kind": "private-reference",
+      "name": "Macaroni, cooked",
+      "basisGrams": 148,
+      "serving": "250 mL",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 209,
+        "protein_g": 7,
+        "carbohydrates_total_g": 42,
+        "fat_total_g": 1,
+        "fiber_g": 1.8,
+        "sugar_g": 1,
+        "sodium_mg": 1
+      }
+    },
+    {
+      "id": "cnf-2007b-white-bread",
+      "kind": "private-reference",
+      "name": "Bread, white, commercial",
+      "basisGrams": 35,
+      "serving": "1 slice",
+      "version": "CNF 2007b / NVSCF 2008; historical reference, not CNF 2026",
+      "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/nutrient-data/nutrient-value-some-common-foods-2008.html",
+      "reported": {
+        "calories": 93,
+        "protein_g": 3,
+        "carbohydrates_total_g": 18,
+        "fat_total_g": 1,
+        "fiber_g": 0.8,
+        "sugar_g": 2,
+        "sodium_mg": 238
+      }
+    },
+    {
+      "id": "ca-kitkat-single",
+      "kind": "private-reference",
+      "name": "KITKAT 4-Finger Wafer Bar 45g",
+      "basisGrams": 45,
+      "serving": "1 bar (45 g)",
+      "version": "Canadian manufacturer web facts observed 2026-11-04; package confirmation required",
+      "url": "https://www.madewithnestle.ca/kit-kat/4-finger-wafer-bar.html",
+      "reported": {
+        "calories": 230,
+        "protein_g": 3,
+        "carbohydrates_total_g": 29,
+        "fat_total_g": 12,
+        "fiber_g": 1,
+        "sugar_g": 23,
+        "sodium_mg": 35
+      }
+    },
+    {
+      "id": "ca-kitkat-fourpack",
+      "kind": "private-reference",
+      "name": "KIT KAT Milk Chocolate 4-Pack",
+      "basisGrams": 45,
+      "serving": "1 bar (45 g)",
+      "version": "Canadian manufacturer web facts observed 2026-11-04; package confirmation required",
+      "url": "https://www.madewithnestle.ca/kit-kat/kit-kat-4-x-45-g.html",
+      "reported": {
+        "calories": 230,
+        "protein_g": 3,
+        "carbohydrates_total_g": 29,
+        "fat_total_g": 12,
+        "fiber_g": 0,
+        "sugar_g": 22,
+        "sodium_mg": 35
+      }
+    },
+    {
+      "id": "ca-michelinas-macaroni",
+      "kind": "private-reference",
+      "name": "Michelina’s Original Macaroni & Cheese",
+      "basisGrams": 255,
+      "serving": "1 package (255 g)",
+      "version": "Canadian manufacturer web facts observed 2026-11-04; package confirmation required",
+      "url": "https://www.michelinas.ca/en/products/original/macaroni-cheese",
+      "reported": {
+        "calories": 310,
+        "protein_g": 11,
+        "carbohydrates_total_g": 35,
+        "fat_total_g": 14,
+        "fiber_g": null,
+        "sugar_g": null,
+        "sodium_mg": 970
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "usda-2709660-basis",
+      "items": [
+        {
+          "source": "usda-2709660",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 44.0,
+        "protein_g": 0.87,
+        "carbohydrates_total_g": 9.68,
+        "fat_total_g": 0.24,
+        "fiber_g": 2.9,
+        "sugar_g": 4.75,
+        "sodium_mg": 75.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709660-half",
+      "items": [
+        {
+          "source": "usda-2709660",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 22.0,
+        "protein_g": 0.44,
+        "carbohydrates_total_g": 4.84,
+        "fat_total_g": 0.12,
+        "fiber_g": 1.45,
+        "sugar_g": 2.38,
+        "sodium_mg": 37.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709663-basis",
+      "items": [
+        {
+          "source": "usda-2709663",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 86.0,
+        "protein_g": 0.94,
+        "carbohydrates_total_g": 10.2,
+        "fat_total_g": 4.67,
+        "fiber_g": 3.1,
+        "sugar_g": 4.69,
+        "sodium_mg": 292.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709663-half",
+      "items": [
+        {
+          "source": "usda-2709663",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 43.0,
+        "protein_g": 0.47,
+        "carbohydrates_total_g": 5.1,
+        "fat_total_g": 2.34,
+        "fiber_g": 1.55,
+        "sugar_g": 2.35,
+        "sodium_mg": 146.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709614-basis",
+      "items": [
+        {
+          "source": "usda-2709614",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 27.0,
+        "protein_g": 2.85,
+        "carbohydrates_total_g": 2.41,
+        "fat_total_g": 0.62,
+        "fiber_g": 1.6,
+        "sugar_g": 0.42,
+        "sodium_mg": 111.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709614-half",
+      "items": [
+        {
+          "source": "usda-2709614",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 13.5,
+        "protein_g": 1.43,
+        "carbohydrates_total_g": 1.21,
+        "fat_total_g": 0.31,
+        "fiber_g": 0.8,
+        "sugar_g": 0.21,
+        "sodium_mg": 55.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2710791-basis",
+      "items": [
+        {
+          "source": "usda-2710791",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 33.0,
+        "protein_g": 3.42,
+        "carbohydrates_total_g": 3.11,
+        "fat_total_g": 0.71,
+        "fiber_g": 1.9,
+        "sugar_g": 0.49,
+        "sodium_mg": 126.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2710791-half",
+      "items": [
+        {
+          "source": "usda-2710791",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 16.5,
+        "protein_g": 1.71,
+        "carbohydrates_total_g": 1.56,
+        "fat_total_g": 0.36,
+        "fiber_g": 0.95,
+        "sugar_g": 0.25,
+        "sodium_mg": 63.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2708404-basis",
+      "items": [
+        {
+          "source": "usda-2708404",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 151.0,
+        "protein_g": 2.6,
+        "carbohydrates_total_g": 27.2,
+        "fat_total_g": 3.12,
+        "fiber_g": 0.4,
+        "sugar_g": 0.05,
+        "sodium_mg": 238.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2708404-half",
+      "items": [
+        {
+          "source": "usda-2708404",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 75.5,
+        "protein_g": 1.3,
+        "carbohydrates_total_g": 13.6,
+        "fat_total_g": 1.56,
+        "fiber_g": 0.2,
+        "sugar_g": 0.03,
+        "sodium_mg": 119.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2708405-basis",
+      "items": [
+        {
+          "source": "usda-2708405",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 147.0,
+        "protein_g": 2.62,
+        "carbohydrates_total_g": 27.2,
+        "fat_total_g": 2.61,
+        "fiber_g": 0.4,
+        "sugar_g": 0.06,
+        "sodium_mg": 253.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2708405-half",
+      "items": [
+        {
+          "source": "usda-2708405",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 73.5,
+        "protein_g": 1.31,
+        "carbohydrates_total_g": 13.6,
+        "fat_total_g": 1.31,
+        "fiber_g": 0.2,
+        "sugar_g": 0.03,
+        "sodium_mg": 126.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2708409-basis",
+      "items": [
+        {
+          "source": "usda-2708409",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 123.0,
+        "protein_g": 2.44,
+        "carbohydrates_total_g": 25.8,
+        "fat_total_g": 1.11,
+        "fiber_g": 1.0,
+        "sugar_g": 0.22,
+        "sodium_mg": 201.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2708409-half",
+      "items": [
+        {
+          "source": "usda-2708409",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 61.5,
+        "protein_g": 1.22,
+        "carbohydrates_total_g": 12.9,
+        "fat_total_g": 0.56,
+        "fiber_g": 0.5,
+        "sugar_g": 0.11,
+        "sodium_mg": 100.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2707152-basis",
+      "items": [
+        {
+          "source": "usda-2707152",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 143.0,
+        "protein_g": 12.4,
+        "carbohydrates_total_g": 0.96,
+        "fat_total_g": 9.96,
+        "fiber_g": 0.0,
+        "sugar_g": 0.2,
+        "sodium_mg": 129.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2707152-half",
+      "items": [
+        {
+          "source": "usda-2707152",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 71.5,
+        "protein_g": 6.2,
+        "carbohydrates_total_g": 0.48,
+        "fat_total_g": 4.98,
+        "fiber_g": 0.0,
+        "sugar_g": 0.1,
+        "sodium_mg": 64.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2707154-basis",
+      "items": [
+        {
+          "source": "usda-2707154",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 143.0,
+        "protein_g": 12.4,
+        "carbohydrates_total_g": 0.96,
+        "fat_total_g": 9.96,
+        "fiber_g": 0.0,
+        "sugar_g": 0.2,
+        "sodium_mg": 129.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2707154-half",
+      "items": [
+        {
+          "source": "usda-2707154",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 71.5,
+        "protein_g": 6.2,
+        "carbohydrates_total_g": 0.48,
+        "fat_total_g": 4.98,
+        "fiber_g": 0.0,
+        "sugar_g": 0.1,
+        "sodium_mg": 64.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709215-basis",
+      "items": [
+        {
+          "source": "usda-2709215",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 61.0,
+        "protein_g": 0.17,
+        "carbohydrates_total_g": 14.8,
+        "fat_total_g": 0.15,
+        "fiber_g": 2.1,
+        "sugar_g": 12.1,
+        "sodium_mg": 0.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709215-half",
+      "items": [
+        {
+          "source": "usda-2709215",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 30.5,
+        "protein_g": 0.09,
+        "carbohydrates_total_g": 7.4,
+        "fat_total_g": 0.08,
+        "fiber_g": 1.05,
+        "sugar_g": 6.05,
+        "sodium_mg": 0.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709224-basis",
+      "items": [
+        {
+          "source": "usda-2709224",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 97.0,
+        "protein_g": 0.74,
+        "carbohydrates_total_g": 22.7,
+        "fat_total_g": 0.28,
+        "fiber_g": 1.7,
+        "sugar_g": 15.8,
+        "sodium_mg": 0.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2709224-half",
+      "items": [
+        {
+          "source": "usda-2709224",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 48.5,
+        "protein_g": 0.37,
+        "carbohydrates_total_g": 11.35,
+        "fat_total_g": 0.14,
+        "fiber_g": 0.85,
+        "sugar_g": 7.9,
+        "sodium_mg": 0.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2707425-basis",
+      "items": [
+        {
+          "source": "usda-2707425",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 115.0,
+        "protein_g": 8.97,
+        "carbohydrates_total_g": 20.0,
+        "fat_total_g": 0.38,
+        "fiber_g": 7.9,
+        "sugar_g": 1.79,
+        "sodium_mg": 233.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "usda-2707425-half",
+      "items": [
+        {
+          "source": "usda-2707425",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 57.5,
+        "protein_g": 4.49,
+        "carbohydrates_total_g": 10.0,
+        "fat_total_g": 0.19,
+        "fiber_g": 3.95,
+        "sugar_g": 0.9,
+        "sodium_mg": 116.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-chickpea-flour-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-chickpea-flour",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 188.0,
+        "protein_g": 11.0,
+        "carbohydrates_total_g": 28.0,
+        "fat_total_g": 3.0,
+        "fiber_g": 5.2,
+        "sugar_g": 5.0,
+        "sodium_mg": 31.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-chickpea-flour-half",
+      "items": [
+        {
+          "source": "cnf-2007b-chickpea-flour",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 94.0,
+        "protein_g": 5.5,
+        "carbohydrates_total_g": 14.0,
+        "fat_total_g": 1.5,
+        "fiber_g": 2.6,
+        "sugar_g": 2.5,
+        "sodium_mg": 15.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-oat-bran-dry-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-oat-bran-dry",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 122.0,
+        "protein_g": 9.0,
+        "carbohydrates_total_g": 33.0,
+        "fat_total_g": 3.0,
+        "fiber_g": 5.2,
+        "sugar_g": 1.0,
+        "sodium_mg": 2.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-oat-bran-dry-half",
+      "items": [
+        {
+          "source": "cnf-2007b-oat-bran-dry",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 61.0,
+        "protein_g": 4.5,
+        "carbohydrates_total_g": 16.5,
+        "fat_total_g": 1.5,
+        "fiber_g": 2.6,
+        "sugar_g": 0.5,
+        "sodium_mg": 1.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-oat-bran-cooked-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-oat-bran-cooked",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 73.0,
+        "protein_g": 3.0,
+        "carbohydrates_total_g": 12.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 3.4,
+        "sugar_g": null,
+        "sodium_mg": 1.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-oat-bran-cooked-half",
+      "items": [
+        {
+          "source": "cnf-2007b-oat-bran-cooked",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 36.5,
+        "protein_g": 1.5,
+        "carbohydrates_total_g": 6.0,
+        "fat_total_g": 0.5,
+        "fiber_g": 1.7,
+        "sugar_g": null,
+        "sodium_mg": 0.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-quinoa-cooked-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-quinoa-cooked",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 70.0,
+        "protein_g": 2.0,
+        "carbohydrates_total_g": 13.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.3,
+        "sugar_g": null,
+        "sodium_mg": 4.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-quinoa-cooked-half",
+      "items": [
+        {
+          "source": "cnf-2007b-quinoa-cooked",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 35.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 6.5,
+        "fat_total_g": 0.5,
+        "fiber_g": 0.65,
+        "sugar_g": null,
+        "sodium_mg": 2.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-bannock-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-bannock",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 84.0,
+        "protein_g": 2.0,
+        "carbohydrates_total_g": 19.0,
+        "fat_total_g": null,
+        "fiber_g": 0.5,
+        "sugar_g": null,
+        "sodium_mg": null
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 0.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 0.0
+      }
+    },
+    {
+      "id": "cnf-2007b-bannock-half",
+      "items": [
+        {
+          "source": "cnf-2007b-bannock",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 42.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 9.5,
+        "fat_total_g": null,
+        "fiber_g": 0.25,
+        "sugar_g": null,
+        "sodium_mg": null
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 0.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 0.0
+      }
+    },
+    {
+      "id": "cnf-2007b-brown-rice-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-brown-rice",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 115.0,
+        "protein_g": 3.0,
+        "carbohydrates_total_g": 24.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.5,
+        "sugar_g": null,
+        "sodium_mg": 5.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-brown-rice-half",
+      "items": [
+        {
+          "source": "cnf-2007b-brown-rice",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 57.5,
+        "protein_g": 1.5,
+        "carbohydrates_total_g": 12.0,
+        "fat_total_g": 0.5,
+        "fiber_g": 0.75,
+        "sugar_g": null,
+        "sodium_mg": 2.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-macaroni-cooked-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-macaroni-cooked",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 209.0,
+        "protein_g": 7.0,
+        "carbohydrates_total_g": 42.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.8,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-macaroni-cooked-half",
+      "items": [
+        {
+          "source": "cnf-2007b-macaroni-cooked",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 104.5,
+        "protein_g": 3.5,
+        "carbohydrates_total_g": 21.0,
+        "fat_total_g": 0.5,
+        "fiber_g": 0.9,
+        "sugar_g": 0.5,
+        "sodium_mg": 0.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-white-bread-basis",
+      "items": [
+        {
+          "source": "cnf-2007b-white-bread",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 93.0,
+        "protein_g": 3.0,
+        "carbohydrates_total_g": 18.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 0.8,
+        "sugar_g": 2.0,
+        "sodium_mg": 238.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "cnf-2007b-white-bread-half",
+      "items": [
+        {
+          "source": "cnf-2007b-white-bread",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 46.5,
+        "protein_g": 1.5,
+        "carbohydrates_total_g": 9.0,
+        "fat_total_g": 0.5,
+        "fiber_g": 0.4,
+        "sugar_g": 1.0,
+        "sodium_mg": 119.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "ca-kitkat-single-basis",
+      "items": [
+        {
+          "source": "ca-kitkat-single",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 230.0,
+        "protein_g": 3.0,
+        "carbohydrates_total_g": 29.0,
+        "fat_total_g": 12.0,
+        "fiber_g": 1.0,
+        "sugar_g": 23.0,
+        "sodium_mg": 35.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "ca-kitkat-single-half",
+      "items": [
+        {
+          "source": "ca-kitkat-single",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 115.0,
+        "protein_g": 1.5,
+        "carbohydrates_total_g": 14.5,
+        "fat_total_g": 6.0,
+        "fiber_g": 0.5,
+        "sugar_g": 11.5,
+        "sodium_mg": 17.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "ca-kitkat-fourpack-basis",
+      "items": [
+        {
+          "source": "ca-kitkat-fourpack",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 230.0,
+        "protein_g": 3.0,
+        "carbohydrates_total_g": 29.0,
+        "fat_total_g": 12.0,
+        "fiber_g": 0.0,
+        "sugar_g": 22.0,
+        "sodium_mg": 35.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "ca-kitkat-fourpack-half",
+      "items": [
+        {
+          "source": "ca-kitkat-fourpack",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 115.0,
+        "protein_g": 1.5,
+        "carbohydrates_total_g": 14.5,
+        "fat_total_g": 6.0,
+        "fiber_g": 0.0,
+        "sugar_g": 11.0,
+        "sodium_mg": 17.5
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "ca-michelinas-macaroni-basis",
+      "items": [
+        {
+          "source": "ca-michelinas-macaroni",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 310.0,
+        "protein_g": 11.0,
+        "carbohydrates_total_g": 35.0,
+        "fat_total_g": 14.0,
+        "fiber_g": null,
+        "sugar_g": null,
+        "sodium_mg": 970.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 0.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "ca-michelinas-macaroni-half",
+      "items": [
+        {
+          "source": "ca-michelinas-macaroni",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 155.0,
+        "protein_g": 5.5,
+        "carbohydrates_total_g": 17.5,
+        "fat_total_g": 7.0,
+        "fiber_g": null,
+        "sugar_g": null,
+        "sodium_mg": 485.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 0.0,
+        "sugar_g": 0.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "mixed-known-and-trace",
+      "items": [
+        {
+          "source": "ca-kitkat-single",
+          "servings": 1
+        },
+        {
+          "source": "cnf-2007b-bannock",
+          "servings": 1
+        }
+      ],
+      "expected": {
+        "calories": 314.0,
+        "protein_g": 5.0,
+        "carbohydrates_total_g": 48.0,
+        "fat_total_g": 12.0,
+        "fiber_g": 1.5,
+        "sugar_g": 23.0,
+        "sodium_mg": 35.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 0.5,
+        "fiber_g": 1.0,
+        "sugar_g": 0.5,
+        "sodium_mg": 0.5
+      }
+    },
+    {
+      "id": "mixed-raw-cooked-explicit",
+      "items": [
+        {
+          "source": "usda-2709614",
+          "servings": 1.25
+        },
+        {
+          "source": "usda-2710791",
+          "servings": 0.75
+        }
+      ],
+      "expected": {
+        "calories": 58.5,
+        "protein_g": 6.13,
+        "carbohydrates_total_g": 5.35,
+        "fat_total_g": 1.31,
+        "fiber_g": 3.43,
+        "sugar_g": 0.89,
+        "sodium_mg": 233.25
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "distinct-canadian-source-revisions",
+      "items": [
+        {
+          "source": "ca-kitkat-single",
+          "servings": 1.5
+        },
+        {
+          "source": "ca-kitkat-fourpack",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 460.0,
+        "protein_g": 6.0,
+        "carbohydrates_total_g": 58.0,
+        "fat_total_g": 24.0,
+        "fiber_g": 1.5,
+        "sugar_g": 45.5,
+        "sodium_mg": 70.0
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 1.0,
+        "sugar_g": 1.0,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "recipe-cnf-usda-manufacturer",
+      "items": [
+        {
+          "source": "cnf-2007b-quinoa-cooked",
+          "servings": 2
+        },
+        {
+          "source": "usda-2707425",
+          "servings": 0.75
+        },
+        {
+          "source": "ca-michelinas-macaroni",
+          "servings": 0.5
+        }
+      ],
+      "expected": {
+        "calories": 381.25,
+        "protein_g": 16.23,
+        "carbohydrates_total_g": 58.5,
+        "fat_total_g": 9.29,
+        "fiber_g": 8.53,
+        "sugar_g": 1.34,
+        "sodium_mg": 667.75
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 0.6666666666666666,
+        "sugar_g": 0.3333333333333333,
+        "sodium_mg": 1.0
+      }
+    },
+    {
+      "id": "fractional-mixed-source-round-once",
+      "items": [
+        {
+          "source": "cnf-2007b-quinoa-cooked",
+          "servings": 0.333
+        },
+        {
+          "source": "usda-2707425",
+          "servings": 0.75
+        },
+        {
+          "source": "ca-michelinas-macaroni",
+          "servings": 0.333
+        }
+      ],
+      "expected": {
+        "calories": 212.79,
+        "protein_g": 11.06,
+        "carbohydrates_total_g": 30.98,
+        "fat_total_g": 5.28,
+        "fiber_g": 6.36,
+        "sugar_g": 1.34,
+        "sodium_mg": 499.09
+      },
+      "coverage": {
+        "calories": 1.0,
+        "protein_g": 1.0,
+        "carbohydrates_total_g": 1.0,
+        "fat_total_g": 1.0,
+        "fiber_g": 0.6666666666666666,
+        "sugar_g": 0.3333333333333333,
+        "sodium_mg": 1.0
+      }
+    }
+  ]
+}

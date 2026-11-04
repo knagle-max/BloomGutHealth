@@ -25,7 +25,7 @@ const normalized = (s: string) =>
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 // Only explicit prepared-food names match. "Chicken", "rice" and "a bowl of oats" are deliberately ambiguous.
-export function lookupSnapshotNutrition(ingredients: Ingredient[]) {
+export function lookupSnapshotNutrition(ingredients: Ingredient[], roundAmounts = true) {
   const matches: MealIntelligence["foodMatches"] = [];
   const scaled: Array<{
     grams: number;
@@ -55,7 +55,7 @@ export function lookupSnapshotNutrition(ingredients: Ingredient[]) {
     });
   }
   return {
-    nutrients: scaleDatabaseNutrients(scaled, ingredients.length),
+    nutrients: scaleDatabaseNutrients(scaled, ingredients.length, roundAmounts),
     foodMatches: matches,
     warnings: [
       "Sourced USDA SR Legacy records, retrieved 2026-10-17/18. Portions and generic food substitutions may be estimated; review assumptions. Products, marinades and added salt can differ.",

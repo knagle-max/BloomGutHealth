@@ -87,6 +87,7 @@ export interface FoodMatch {
   needsConfirmation: boolean;
 }
 export interface MealIntelligence {
+  nutritionCalculationVersion?: "2026-11-04";
   portionModelVersion?: "2026-10-18" | "2026-10-18.2";
   parserNotice?: string;
   status: "database-estimate" | "provider-estimate" | "unavailable";
@@ -200,6 +201,7 @@ export function scaleDatabaseNutrients(
     foodNutrients: Array<{ nutrient: { id: number }; amount?: number }>;
   }>,
   ingredientCount: number,
+  roundAmounts = true,
 ): Nutrient[] {
   return nutrientDefinitions.map(([key, name, unit, id]) => {
     let amount = 0,
@@ -220,7 +222,7 @@ export function scaleDatabaseNutrients(
       key,
       name,
       unit,
-      amount: coverage ? roundNutrientEstimate(amount) : null,
+      amount: coverage ? (roundAmounts ? roundNutrientEstimate(amount) : amount) : null,
       coverage: ingredientCount ? coverage / ingredientCount : 0,
     };
   });
