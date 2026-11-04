@@ -29,6 +29,9 @@ export default function Progress() {
       queryKey: ["/api/precision"],
       enabled: !!user,
     });
+  const checkingRoutines=routines.isPending||routines.fetchStatus!=="idle"||routines.isStale;
+  const currentRoutines=!checkingRoutines&&!routines.isError?routines.data:undefined;
+  const canRetryRoutines=routines.isError||routines.fetchStatus==="paused"||routines.isStale&&routines.fetchStatus==="idle";
   const currentReport=report.fetchStatus==="idle"&&!report.isError&&!report.isStale?report.data:undefined;
   const currentProfile=profile.fetchStatus==="idle"&&!profile.isError?profile.data:undefined;
   const currentHydration=sessions.fetchStatus==="idle"&&!sessions.isError?sessions.data:undefined;
@@ -54,14 +57,15 @@ export default function Progress() {
         </TabsContent>
         <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">
       <section className="bloom-panel space-y-3"><h2>Recorded activity</h2><p className="panel-note">Latest five manual entries. Recorded duration does not estimate calories burned or a training target.</p>
-       {!routines.isPending&&routines.fetchStatus==="idle"&&!routines.isStale&&!routines.isError&&routines.data&&<ActivityWeekSummary records={routines.data.flatMap(row=>row.kind==="activity"?[row]:[])}/>}
-       {routines.isError?<p role="alert">Activity history could not load.</p>:routines.fetchStatus!=="idle"||routines.isPending?<p role="status">Checking recorded activity…</p>:<>{routines.data?.some(row=>row.kind==="activity")?<ul className="space-y-3">{routines.data.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3>{row.payload.components&&row.payload.components.items.length>1&&<p>{row.payload.components.items.map(part=>part.title).join(" + ")}</p>}<p>{activityTimeText(row.payload)} · {activityAmountText(row.payload)}{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
+       {currentRoutines&&<ActivityWeekSummary records={currentRoutines.flatMap(row=>row.kind==="activity"?[row]:[])}/>}
+       {routines.isError?<p role="alert">Activity history could not load.</p>:checkingRoutines?<p role="status">Checking recorded activity…</p>:<>{currentRoutines?.some(row=>row.kind==="activity")?<ul className="space-y-3">{currentRoutines.flatMap(row=>row.kind==="activity"?[row]:[]).sort((a,b)=>Date.parse(b.payload.startedAt)-Date.parse(a.payload.startedAt)).slice(0,5).map(row=><li key={row.id}><h3>{row.payload.title}</h3>{row.payload.components&&row.payload.components.items.length>1&&<p>{row.payload.components.items.map(part=>part.title).join(" + ")}</p>}<p>{activityTimeText(row.payload)} · {activityAmountText(row.payload)}{row.payload.effort?` · ${row.payload.effort}`:""}</p></li>)}</ul>:<p>No manual activity entries yet.</p>}</>}
+       {canRetryRoutines&&<button type="button" className="text-link min-h-11" disabled={routines.isFetching} onClick={()=>routines.refetch()}>Retry activity and training history</button>}
        <Link className="text-link" href="/activity">Log or correct activity</Link>
       </section>
       {mode === "athlete" && <section className="bloom-panel space-y-3">
         <h2>Recorded training</h2>
         <p className="panel-note">Latest five saved sessions, including planned and cancelled entries. Only explicitly completed sessions are labelled completed; duration does not establish recovery or performance.</p>
-        {routines.isError ? <p role="alert">Training history could not load.</p> : routines.fetchStatus !== "idle" || routines.isPending ? <p role="status">Checking recorded training…</p> : routines.data?.some(row => row.kind === "session") ? <ul className="space-y-3">{routines.data.flatMap(row => row.kind === "session" ? [row] : []).sort((a,b) => Date.parse(b.payload.startsAt)-Date.parse(a.payload.startsAt)).slice(0,5).map(row => <li key={row.id}><h3>{row.payload.title}</h3><p>{new Date(row.payload.startsAt).toLocaleString()} · {row.payload.minutes} minutes · {row.payload.status}</p></li>)}</ul> : <p>No saved training sessions yet.</p>}
+        {routines.isError ? <p role="alert">Training history could not load.</p> : checkingRoutines ? <p role="status">Checking recorded training…</p> : currentRoutines?.some(row => row.kind === "session") ? <ul className="space-y-3">{currentRoutines.flatMap(row => row.kind === "session" ? [row] : []).sort((a,b) => Date.parse(b.payload.startsAt)-Date.parse(a.payload.startsAt)).slice(0,5).map(row => <li key={row.id}><h3>{row.payload.title}</h3><p>{new Date(row.payload.startsAt).toLocaleString()} · {row.payload.minutes} minutes · {row.payload.status}</p></li>)}</ul> : <p>No saved training sessions yet.</p>}
         <Link className="text-link" href="/athlete#athlete-training-calendar">Review or correct training sessions</Link>
       </section>}
         </TabsContent>
@@ -113,8 +117,8 @@ export default function Progress() {
             {(currentReport.pendingLabs?.length||currentReport.sourceOnlyLabs?.length)?"No confirmed numeric trends are available. Source records awaiting identification or unit review remain in Bloodwork.":"No dated laboratory results yet. Add a report's values to establish a baseline."}
           </p>
         )}
-        {currentReport&&!loading&&routines.fetchStatus==="idle"&&!routines.isError&&routines.data?<RoutineLabTiming key={`${user?.id}:${mode}`} trends={currentReport.trends} records={routines.data} mode={mode}/>:<p role={routines.isError?"alert":"status"} className="panel-note">{routines.isError?'Routine trial dates could not be checked.':'Checking source data before comparing routine dates…'}</p>}
-        {(routines.isError||routines.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={routines.isFetching} onClick={()=>routines.refetch()}>Retry routine dates</button>}
+        {currentReport&&!loading&&currentRoutines?<RoutineLabTiming key={`${user?.id}:${mode}`} trends={currentReport.trends} records={currentRoutines} mode={mode}/>:<p role={routines.isError?"alert":"status"} className="panel-note">{routines.isError?'Routine trial dates could not be checked.':'Checking source data before comparing routine dates…'}</p>}
+        {canRetryRoutines&&<button type="button" className="text-link min-h-11" disabled={routines.isFetching} onClick={()=>routines.refetch()}>Retry routine dates</button>}
         <Link className="text-link" href="/precision?tab=labs">
           Add or review laboratory results
         </Link>

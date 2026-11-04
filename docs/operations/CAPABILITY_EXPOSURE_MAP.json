@@ -1664,7 +1664,7 @@
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
     "client/src/pages/PrecisionNutrition.tsx": "41bcdbdbd40c5a9caca6aa8cdab1be26d25bad2fa54da66c9d2ba1d17eff8be5",
     "client/src/pages/Profile.tsx": "01dd1de4b47126cf54b19898d190c07b19bb6d1bd4b3b1773c8d6b6c4d609e08",
-    "client/src/pages/Progress.tsx": "0bbaeea3e0951563f6f84d2e506ac39570977e323eb8dca631a5e0941f1e4c15",
+    "client/src/pages/Progress.tsx": "a664e44d30856ed6cb0cc493c8d17f445cb9bd88e654944aa0c4a7e89c585ab8",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
     "client/src/pages/Upload.tsx": "9ea2ed53a017eb36d617999227bd234b8ef76dcac0d83cd71d936858dbb5c12a",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
