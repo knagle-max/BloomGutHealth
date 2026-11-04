@@ -1,0 +1,36 @@
+{
+  "archive": "Bloom_Exercise_Intelligence_UX_Amendment_D_v1.4_2026-10-29.zip",
+  "archiveSha256": "0fedc8a704275982a32b9536dd17ce41fcc5a5b93fd115754ee18ed7a570c4b0",
+  "files": [
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.png",
+      "sha256": "2857a03dd28baff7c03dcf28d81bca31b7a51771bc6e4aebf43d74593de86501",
+      "bytes": 113163,
+      "sourceManifestExpected": "2857a03dd28baff7c03dcf28d81bca31b7a51771bc6e4aebf43d74593de86501",
+      "sourceManifestMatches": true
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.svg",
+      "sha256": "3d8393ba0eb8d57e16cda4ade1e8ec193ac57e6b257705516cff37f0007dd0eb",
+      "bytes": 5437,
+      "sourceManifestExpected": "3d8393ba0eb8d57e16cda4ade1e8ec193ac57e6b257705516cff37f0007dd0eb",
+      "sourceManifestMatches": true
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/MANIFEST.json",
+      "sha256": "b273bb4cef795e73a2d9eada158b083dbb6ca627b8938edc3d2d5189caea4b88",
+      "bytes": 404,
+      "sourceManifestExpected": "6181dd727736a9c478184bd2ab343cd8c33b4438997020323c17b27832c2aae4",
+      "sourceManifestMatches": false
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/UX_AMENDMENT_D.md",
+      "sha256": "6cf937b57c0cd1e8d94f2b9097ed58ff32f11ed756970825868f7311d3e0107f",
+      "bytes": 3412,
+      "sourceManifestExpected": "6cf937b57c0cd1e8d94f2b9097ed58ff32f11ed756970825868f7311d3e0107f",
+      "sourceManifestMatches": true
+    }
+  ],
+  "limits": "Original source transfer only; app fidelity, VoiceOver and independent Design approval remain separate.",
+  "sourceManifestNote": "PNG, SVG and amendment hashes match. The original MANIFEST.json self-reference does not match its actual bytes; original file retained unchanged and actual checksum recorded here."
+}

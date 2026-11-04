@@ -180,7 +180,7 @@ Source transfer update2026-10-29 supersedes earlier archive-inaccessible notes: 
 
 ## EXAI-V14-ORIGINAL-SOURCE / 2026-10-30
 
-- BLOCKED_TECHNICAL: attached Amendment D v1.4 ZIP is named in conversation, but its exact supplied path and `/tmp/codex-remote-attachments` directory are absent in the current execution workspace; no supported connected original-file source is available. Do not fabricate transfer, hashes or SVG parity.
+- Source access RESOLVED 2026-11-04 by owner reattachment. Original4files now byte-preserved under design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4; receipt IMPORT_VERIFICATION.json records ZIP/all-file hashes. PNG/SVG/text match the supplied manifest; its own self-hash does not match and is preserved/flagged, not silently repaired. Actual independent SVG fidelity/VoiceOver/hosted acceptance remains separate. Earlier missing-path observation is historical, no longer a source-transfer blocker.
 - Needed: restore the existing original attachment to a readable execution path or approved connected source. Recommended: restore that original; no replacement design decision or routine execution approval needed.
 - Only original-byte transfer and exact SVG parity depend on this. Owner-pasted binding hierarchy/completion requirements remain actionable and are being implemented. Actual Apple VoiceOver/device testing and independent Design signoff require their respective test environment/reviewer; Chromium keyboard/accessibility-tree checks are explicitly different evidence.
 

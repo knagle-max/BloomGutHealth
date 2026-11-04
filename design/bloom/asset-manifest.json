@@ -1275,6 +1275,30 @@
       "source_pack": "GitHub original microbial-profiles design delivery 2026-10-30",
       "sha256": "b6fad384979eb93c1cc0716d1df14c8fe6eba3105a2d80cf97ac3f82f97f96e3",
       "bytes": 5373
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.png",
+      "source_pack": "Bloom_Exercise_Intelligence_UX_Amendment_D_v1.4_2026-10-29.zip",
+      "sha256": "2857a03dd28baff7c03dcf28d81bca31b7a51771bc6e4aebf43d74593de86501",
+      "bytes": 113163
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.svg",
+      "source_pack": "Bloom_Exercise_Intelligence_UX_Amendment_D_v1.4_2026-10-29.zip",
+      "sha256": "3d8393ba0eb8d57e16cda4ade1e8ec193ac57e6b257705516cff37f0007dd0eb",
+      "bytes": 5437
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/MANIFEST.json",
+      "source_pack": "Bloom_Exercise_Intelligence_UX_Amendment_D_v1.4_2026-10-29.zip",
+      "sha256": "b273bb4cef795e73a2d9eada158b083dbb6ca627b8938edc3d2d5189caea4b88",
+      "bytes": 404
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/UX_AMENDMENT_D.md",
+      "source_pack": "Bloom_Exercise_Intelligence_UX_Amendment_D_v1.4_2026-10-29.zip",
+      "sha256": "6cf937b57c0cd1e8d94f2b9097ed58ff32f11ed756970825868f7311d3e0107f",
+      "bytes": 3412
     }
   ],
   "policy": "Design only. Codex owns merging and integration. Avoid adding duplicate components. Latest whole-app redesign is master; earlier kits provide specialized states.",
@@ -1290,6 +1314,12 @@
       "pack": "microbial-profiles/2026-10-30",
       "receipt": "3ef48885ba95ab34a93f81e7ee36f333196a0ed2 merged without source edits at74aa3be",
       "status": "Four original GitHub source files merged; hashes recorded. Runtime/claim/independent acceptance tracked separately."
+    },
+    {
+      "date": "2026-11-04",
+      "pack": "Bloom_Exercise_Intelligence_UX_Amendment_D_v1.4_2026-10-29.zip",
+      "receipt": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/IMPORT_VERIFICATION.json",
+      "status": "Four original file bytes verified against ZIP; three payload hashes match original manifest, original manifest self-hash mismatch recorded without alteration. No independent implementation approval."
     }
   ]
 }
