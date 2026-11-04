@@ -451,10 +451,13 @@ export function assessFood(
       labs: report.labs
         .filter((l) => ranked?.matchedRecordIds.includes(l.id))
         .map((l) => ({
+          id: l.id,
           marker: l.marker,
           value: l.value,
+          reportedNumber: l.sourceInput?.number || String(l.value),
           unit: l.unit,
           date: l.measuredAt,
+          sourceDate: l.dateCorrection?.enteredDate || l.sourceReport?.enteredDate || null,
           flag: l.flag,
           provenance:
             "User-entered laboratory report; not independently verified",

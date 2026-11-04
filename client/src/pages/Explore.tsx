@@ -56,7 +56,9 @@ export default function Explore() {
         )
       ).json(),
   });
-  const currentAssessment = assessment.fetchStatus === "idle" && !assessment.isError ? assessment.data : undefined;
+  const checkingAssessment=assessment.isPending||assessment.fetchStatus!=="idle"||assessment.isStale;
+  const canRetryAssessment=assessment.isError||assessment.fetchStatus==="paused"||assessment.isStale&&assessment.fetchStatus==="idle";
+  const currentAssessment = !checkingAssessment && !assessment.isError ? assessment.data : undefined;
   const r = registry.data,
     node = r?.entities.find((n) => n.id === selected),
     connected =
@@ -106,7 +108,7 @@ export default function Explore() {
         <p>{e.claim}</p>
         <div className="relationship-badges">
           <span>{evidenceName[e.evidence]}</span>
-          <span>{e.confidence.replaceAll("-", " ")}</span>
+          <span>Evidence context: {e.confidence.replaceAll("-", " ")}</span>
           <span>Research relationship · not a personal measurement</span>
         </div>
         <p className="panel-note">
@@ -203,16 +205,16 @@ export default function Explore() {
             <section className="bloom-panel space-y-4">
               <p className="eyebrow">YOUR FOOD PRIORITY</p>
               <h2>Why this food matters to you</h2>
-              {(assessment.isPending || assessment.fetchStatus !== "idle") && (
+              {!assessment.isError && checkingAssessment && (
                 <p role="status">Checking your saved context…</p>
               )}
               {assessment.error && (
                 <div>
                   <p role="alert">{assessment.error.message}</p>
                   <p className="panel-note">Current personal food context is unavailable. General research remains available below.</p>
-                  <Button type="button" variant="outline" disabled={assessment.isFetching} onClick={() => assessment.refetch()}>Retry food context</Button>
                 </div>
               )}
+              {canRetryAssessment&&<Button type="button" variant="outline" disabled={assessment.isFetching} onClick={()=>assessment.refetch()}>Retry food context</Button>}
               {currentAssessment && (
                 <>
                   <h3>
@@ -237,17 +239,22 @@ export default function Explore() {
                     Quantities depend on the serving.
                   </p>
                   <p className="panel-note">Independent scientific review is pending. These are food-priority suggestions, not validated personal biological effects.</p>
-                  <div className="evidence-context" aria-label="How to read this food insight">
-                    <p><strong>Personal relevance:</strong> {currentAssessment.relationshipEffects.some((e: any) => e.affectsRecommendation) ? "A saved-context rule contributes to this food priority. This does not predict your response." : "No reviewed relationship is changing this food priority."}</p>
-                    <p><strong>General evidence:</strong> The research connections below describe studies and mechanisms, not measurements of your biology.</p>
-                    <p><strong>Unknown:</strong> Personal enzyme activity, microbial output and treatment effects are not determined.</p>
-                  </div>
+                  <details className="workspace-disclosure evidence-context">
+                    <summary>Evidence, data &amp; uncertainty</summary>
+                    <dl className="space-y-2 pt-3">
+                      <div><dt className="font-medium">Research evidence</dt><dd>Study types and limits appear in each connection below. Independent scientific review is pending; general research is not a measurement of your biology.</dd></div>
+                      <div><dt className="font-medium">Your source data</dt><dd>{currentAssessment.interpretation?.observationProvenance||"Source quality has not been checked."}</dd></div>
+                      <div><dt className="font-medium">Predicted response</dt><dd>{currentAssessment.interpretation?.personalEffectsPredicted===false?"No personal biological response is predicted.":"Prediction validation is unavailable."} Personal enzyme activity, microbial output and treatment effects are not determined.</dd></div>
+                      <div><dt className="font-medium">Personal applicability</dt><dd>{currentAssessment.relationshipEffects.some((e:any)=>e.affectsRecommendation)?"A saved-context rule contributes to this food priority; individual benefit remains unverified.":"No reviewed relationship is changing this food priority; individual benefit remains unknown."}</dd></div>
+                    </dl>
+                  </details>
                   <details><summary>Saved observations used for context</summary>
                   {!currentAssessment.observations.labs.length && !currentAssessment.observations.genetics.length && <p>No relevant laboratory or genetic observation is recorded for this food.</p>}
                   {currentAssessment.observations.labs.map((l: any) => (
-                    <p className="report-context" key={l.marker}>
-                      {l.marker.toUpperCase()}: {l.value} {l.unit} · {l.flag} ·{" "}
-                      {l.date.slice(0, 10)}. {l.provenance}.
+                    <p className="report-context" key={l.id||`${l.marker}:${l.date}`}>
+                      {l.marker.toUpperCase()}: {l.reportedNumber??l.value} {l.unit} · {l.flag} ·{" "}
+                      {l.sourceDate||l.date}. {l.provenance}.{" "}
+                      {typeof l.id==="string"&&l.id&&<Link className="text-link" href={`/precision?tab=labs&labResult=${encodeURIComponent(l.id)}`}>Review {l.marker.toUpperCase()} source</Link>}
                     </p>
                   ))}
                   {currentAssessment.observations.genetics.map((g: any) => (

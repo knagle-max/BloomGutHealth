@@ -72,6 +72,9 @@ test("food explanations report actual rule participation, distinguish observatio
   const report = buildPrecisionReport([highLdl], context, prefs, null),
     oats = assessFood(registry, "food:oats", report, prefs)!;
   assert.equal(oats.observations.labs[0].marker, "ldl");
+  const sourceReport=buildPrecisionReport([{...highLdl,payload:{...highLdl.payload,sourceInput:{text:"LDL, 4.000, mmol/L",number:"4.000",suppliedUnit:"mmol/L",capture:"manual-report"},sourceReport:{importId:"fbb41905-3c01-4dc9-8318-97e19f6a2260",enteredDate:date.slice(0,10)}}}],context,prefs,null);
+  const sourceFact=assessFood(registry,"food:oats",sourceReport,prefs)!.observations.labs[0];
+  assert.equal(sourceFact.id,"private-lab");assert.equal(sourceFact.reportedNumber,"4.000");assert.equal(sourceFact.sourceDate,date.slice(0,10));assert.equal(sourceFact.date,date);
   assert.ok(
     oats.relationshipEffects.find((e) => e.id === "food:oats:cardio")
       ?.affectsRecommendation,
