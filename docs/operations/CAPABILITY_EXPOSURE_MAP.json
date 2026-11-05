@@ -1073,7 +1073,8 @@
           "client/src/components/CompanionHero.tsx",
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/ManualGenetics.tsx",
-          "client/src/components/GenotypeExplanations.tsx"
+          "client/src/components/GenotypeExplanations.tsx",
+          "client/src/components/GeneticsCatalogue.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1083,7 +1084,8 @@
           "server/planning-context.ts",
           "shared/genetic-selection.ts",
           "shared/manual-genetics.ts",
-          "shared/genotype-explanations.ts"
+          "shared/genotype-explanations.ts",
+          "shared/genetics-catalogue.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1096,7 +1098,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility.",
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1109,7 +1111,8 @@
           "client/src/components/CompanionHero.tsx",
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/ManualGenetics.tsx",
-          "client/src/components/GenotypeExplanations.tsx"
+          "client/src/components/GenotypeExplanations.tsx",
+          "client/src/components/GeneticsCatalogue.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1119,7 +1122,8 @@
           "server/planning-context.ts",
           "shared/genetic-selection.ts",
           "shared/manual-genetics.ts",
-          "shared/genotype-explanations.ts"
+          "shared/genotype-explanations.ts",
+          "shared/genetics-catalogue.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1132,7 +1136,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility.",
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1671,6 +1675,7 @@
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
+    "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
     "client/src/components/GenotypeExplanations.tsx": "e053fa6b96ba7c97c591117660dfc26636b3e1eae7149fcb8136521c2e284e53",
     "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
     "client/src/components/LabExplorer.tsx": "65aab0bc1d75bd8c3c6684ebf1410dd4f7845d4f3281187a086712aa7666a1e1",
@@ -1714,7 +1719,7 @@
     "client/src/pages/Microbiome.tsx": "3057d03cc2eb9f9284d95c879fed30f41e33d5b3b6ea3d5b98249f49899423a3",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
-    "client/src/pages/PrecisionNutrition.tsx": "41bcdbdbd40c5a9caca6aa8cdab1be26d25bad2fa54da66c9d2ba1d17eff8be5",
+    "client/src/pages/PrecisionNutrition.tsx": "bbb67cef418b8222d270d44b936fc440b7487224daf9953109e24ce116f56275",
     "client/src/pages/Profile.tsx": "01dd1de4b47126cf54b19898d190c07b19bb6d1bd4b3b1773c8d6b6c4d609e08",
     "client/src/pages/Progress.tsx": "a664e44d30856ed6cb0cc493c8d17f445cb9bd88e654944aa0c4a7e89c585ab8",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
@@ -1794,6 +1799,7 @@
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
+    "shared/genetics-catalogue.ts": "f3f9b94531388e7ee128bff01dc3859f773b3ce6ad008dc35f19872f25bd9574",
     "shared/genotype-explanations.ts": "796d888aa99193861823e70fe90f8150d5abf2909e0e20f67a975812b047e339",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",

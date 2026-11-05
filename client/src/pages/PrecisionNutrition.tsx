@@ -18,6 +18,7 @@ import QuickLabEntry from "@/components/QuickLabEntry";
 import LabSourceContext from "@/components/LabSourceContext";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
+import GeneticsCatalogue from "@/components/GeneticsCatalogue";
 import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, useRef } from "react";
 import { Link,useSearch } from "wouter";
@@ -513,7 +514,8 @@ export default function PrecisionNutrition() {
             )}
             {tab === "genetics" && (
               <>
-                <ManualGenetics
+                <GeneticsCatalogue key={user?.id} explanations={r.genetics.explanations || []} />
+                <div id="genetics-source-entry" className="scroll-mt-20" tabIndex={-1}><ManualGenetics
                   key={r.genetics.import?.id || "none"}
                   genetics={r.genetics}
                   onSaved={() =>
@@ -521,7 +523,7 @@ export default function PrecisionNutrition() {
                       "Selected SNPs saved as your active genetic dataset. Unreviewed or unconfirmed entries remain recorded without interpretation.",
                     )
                   }
-                />
+                /></div>
                 <section className="bloom-panel space-y-4">
                   <h2>Import 23andMe raw data</h2>
                   <p>
