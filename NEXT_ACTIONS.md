@@ -1,3 +1,7 @@
+## Latest verified work — genetics bibliography
+
+17 new citation-backed, review-pending candidates bring the catalogue to55; minimum150 remains95 short.547 tests/20 focused/types/build/browser pass. Publish this bounded extension; verify exact CI/Render. Do not treat candidate registration as scientific review, assay coverage or a personal recommendation. Continue remaining v0.5 source/acceptance work; private Library access is a technical dependency, not an owner product decision.
+
 # Current execution checkpoint — 2026-11-05
 
 Finish actionable approved v0.5 first, then immediately start approved independent v0.6. Branch `enhance/bloom-experience` / PR1 / existing Render preview only. No main merge, production writes, new paid services or invented specialist/device acceptance. No subagents. Public scientific images have no activation/approval flags; all80source assets verified. Separate anatomy PNG import remains asset-only.

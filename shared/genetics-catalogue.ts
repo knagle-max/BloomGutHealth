@@ -1,7 +1,9 @@
+import {z} from "zod";
+import bibliography from "./data/genetics-candidate-bibliography";
 import { genotypeAnnotations, type GenotypeExplanation } from "./genotype-explanations";
 import reference from "./data/genotype-reference.json";
 
-export const GENETICS_CATALOGUE_VERSION = "genetics-catalogue-2026-11-05.1";
+export const GENETICS_CATALOGUE_VERSION = "genetics-catalogue-2026-11-05.2";
 export const geneticsDomains = [
   { id: "liver", title: "Hepatic fat / MASLD" },
   { id: "lipids", title: "LDL, ApoB & lipoproteins" },
@@ -37,7 +39,8 @@ export type GeneticsCandidate = {
   identity: CandidateIdentity;
   content: { status: "existing-education"; explanationRsid: string } | { status: "review-pending" };
   sensitivity: "genetic" | "sensitive";
-  requirementSource: "existing-catalogue" | "architect-2026-11-04";
+  requirementSource: "existing-catalogue" | "architect-2026-11-04" | "bibliographic-source-2026-11-05";
+  bibliography?:Array<{pmid:string;title:string;scope:string;checkedOn:string;review:"pending"}>;
   assayRequirement: string;
 };
 
@@ -87,9 +90,19 @@ const geneTopics: Array<[string, GeneticsDomain[]]> = [
   ["FADS2", ["pufa"]], ["ELOVL2", ["pufa"]], ["GC", ["vitamin-d"]],
   ["DHCR7", ["vitamin-d"]], ["ACTN3", ["exercise"]], ["AMPD1", ["exercise"]],
 ];
+const bibliographySchema=z.object({version:z.literal("genetics-bibliography-2026-11-05.1"),sourceCheck:z.string().min(1),publications:z.array(z.object({pmid:z.string().regex(/^\d{6,9}$/),title:z.string().min(1).max(350),scope:z.string().min(1).max(350),checkedOn:z.literal("2026-11-05"),review:z.literal("pending")}).strict()).min(1).max(250),candidates:z.array(z.object({rsid:z.string().regex(/^rs\d+$/),gene:z.string().min(1).max(40),label:z.string().min(1).max(100),domains:z.array(z.enum(geneticsDomains.map(d=>d.id)as[GeneticsDomain,...GeneticsDomain[]])).min(1).max(4),pmids:z.array(z.string().regex(/^\d{6,9}$/)).min(1).max(4)}).strict()).min(1).max(250)}).strict();
+const checkedBibliography=bibliographySchema.parse(bibliography);
+const publicationMap=new Map(checkedBibliography.publications.map(p=>[p.pmid,p]));
+if(publicationMap.size!==checkedBibliography.publications.length||new Set(checkedBibliography.candidates.map(c=>c.rsid)).size!==checkedBibliography.candidates.length)throw Error("Duplicate genetics bibliography identity");
+const sourceCandidates:GeneticsCandidate[]=checkedBibliography.candidates.map(c=>({
+ id:`snv:${c.rsid}`,gene:c.gene,label:`${c.label} · ${c.rsid}`,domains:c.domains,identity:{kind:"snv",rsid:c.rsid,placement:null},content:{status:"review-pending"},sensitivity:"genetic",requirementSource:"bibliographic-source-2026-11-05",
+ assayRequirement:"Bibliographic candidate only. Reference build, alleles, strand, source assay and evidence interpretation are not curated here. The current raw importer does not retain this candidate. No personal rule is enabled.",
+ bibliography:c.pmids.map(pmid=>{const source=publicationMap.get(pmid);if(!source)throw Error("Unknown genetics bibliography reference");return source;}),
+}));
 export const geneticsCatalogue: readonly GeneticsCandidate[] = [
   ...existing, ...namedCandidates,
-  ...geneTopics.map(([gene, domains]) => pending(gene, `${gene} · gene research topic`, domains, { kind: "gene" }, "Gene-only topic: no specific variant, allele or measured result is registered. Evidence review pending.")),
+  ...geneTopics.map(([gene, domains]) => pending(gene, `${gene} · gene research topic`, domains, { kind: "gene" }, "Gene-only topic: no specific variant, allele or measured result is registered for this topic. Separate sourced variant entries may exist; no result is implied. Evidence review pending.")),
+  ...sourceCandidates,
 ];
 export function searchGeneticsCatalogue(query: string, domain: GeneticsDomain | "all" = "all") {
   const normalized = query.trim().toLowerCase();

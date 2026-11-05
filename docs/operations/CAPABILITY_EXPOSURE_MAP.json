@@ -1170,7 +1170,8 @@
           "shared/genotype-explanations.ts",
           "shared/genetics-catalogue.ts",
           "shared/genetic-call-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/data/genetics-candidate-bibliography.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1210,7 +1211,8 @@
           "shared/genotype-explanations.ts",
           "shared/genetics-catalogue.ts",
           "shared/genetic-call-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/data/genetics-candidate-bibliography.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1777,7 +1779,7 @@
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
-    "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
+    "client/src/components/GeneticsCatalogue.tsx": "7fd3fde4d336f035b408b471fbbd287c7c7c61addea8de59fffd17398e880732",
     "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
     "client/src/components/ImportedReportDetails.tsx": "589138363f2470f5f847a12a8dd3802a9fcc42f5cff59acbedd189e916bdfd49",
     "client/src/components/IngredientMassEntry.tsx": "948b603a10b9e215fe404a5092e2b11a0e7f695d4474847d710d35127d9d6da0",
@@ -1905,6 +1907,7 @@
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/catalogue-mass-handoff.ts": "9e762fd498ce23d370f05d22ead54aa6e50cd41881d6fd8b17f2f8e3206a3cac",
     "shared/checkin-entry-source.ts": "540ba0ee7e0c9a27e7ee6b14ad934a71c0b65cf99254771c471d5a054e884d48",
+    "shared/data/genetics-candidate-bibliography.ts": "6f173fc6952934d2b51e20078ed02eaa7406b3569a0116c1399bfaeb8b2985a1",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
     "shared/experience.ts": "aca0465bbccde2ae35d0aceb34116f13eea9e69319f2d9268824e747b955c68c",
@@ -1914,7 +1917,7 @@
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
     "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
-    "shared/genetics-catalogue.ts": "f3f9b94531388e7ee128bff01dc3859f773b3ce6ad008dc35f19872f25bd9574",
+    "shared/genetics-catalogue.ts": "633b2d7610c4f6af3fa9bcb74f5e46e5661559684c22f50c039786a17fc35f68",
     "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
