@@ -13,3 +13,8 @@ export function normalizeUnphasedGenotype(original: string) {
 export function geneticCallSourceMatches(source: GeneticCallSource | undefined, genotype: string) {
   return !source || normalizeUnphasedGenotype(source.original) === genotype;
 }
+/** Call only while capturing a new token, never to backfill an old record. */
+export function captureGeneticCall(original: string) {
+  const sourceCall = geneticCallSourceSchema.parse({ original: original.trim(), normalization: GENETIC_CALL_NORMALIZATION });
+  return { genotype: normalizeUnphasedGenotype(sourceCall.original), sourceCall };
+}

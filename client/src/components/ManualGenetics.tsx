@@ -1,5 +1,5 @@
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
-import type {GeneticCallSource} from "@shared/genetic-call-source";
+import {captureGeneticCall,type GeneticCallSource} from "@shared/genetic-call-source";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -91,7 +91,9 @@ export default function ManualGenetics({
   }
   function field(index: number, value: string) {
     changed();
-    setRows(rows.map((r, i) => (i === index && r.genotype !== value ? { ...r, genotype: value, sourceCall:undefined } : r)));
+    let sourceCall:GeneticCallSource|undefined;
+    try { sourceCall=captureGeneticCall(value).sourceCall; } catch { /* incomplete draft; normal preview validation remains authoritative */ }
+    setRows(rows.map((r, i) => (i === index && r.genotype !== value ? { ...r, genotype: value, sourceCall } : r)));
   }
   function renderRows(group: Row[], offset: number) {
     return (
@@ -333,6 +335,7 @@ export default function ManualGenetics({
                 <strong>
                   {e.canonicalGene || e.gene} · {e.rsid}: {e.genotype}
                 </strong>
+                {e.sourceCall&&<p className="panel-note">Original call token: {e.sourceCall.original} · normalized unphased call: {e.genotype}. No strand or build conversion.</p>}
                 <p>
                   {e.reviewed
                     ? e.genotype === "--"

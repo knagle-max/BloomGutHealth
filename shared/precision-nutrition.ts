@@ -1,5 +1,5 @@
 import type {ReportDateContext} from "./report-dates";
-import {geneticCallSourceSchema,geneticCallSourceMatches,normalizeUnphasedGenotype} from "./genetic-call-source";
+import {geneticCallSourceSchema,geneticCallSourceMatches,normalizeUnphasedGenotype,captureGeneticCall} from "./genetic-call-source";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
@@ -418,17 +418,21 @@ export function parse23andMe(text: string, collectedAt: string) {
   let scannedVariants = 0;
   for (const line of text.split(/\r?\n/)) {
     if (!line.trim() || line.startsWith("#")) continue;
-    const [rsid, chromosome, position, genotype] = line.trim().split(/\s+/);
+    const columns = line.trim().split(/\s+/);
+    if(columns.length!==4)throw new Error("23andMe raw-data rows must have four columns: rsID, chromosome, position and call.");
+    const [rsid, chromosome, position, genotype] = columns;
     if (!/^(?:rs\d+|i\d+)$/.test(rsid || ""))
       throw new Error("Malformed raw-data row.");
     scannedVariants++;
-    if (genotypeAnnotations.some((v) => v.rsid === rsid))
+    if (genotypeAnnotations.some((v) => v.rsid === rsid)) {
+      if(!/^(?:[ACGTacgt]{2}|--)$/.test(genotype))throw new Error("Supported SNP rows require two DNA letters or -- for no call. Complex calls are not inferred.");
       calls.push({
         rsid: rsid as any,
         chromosome,
         position: Number(position),
-        genotype: (genotype || "").toUpperCase().split("").sort().join(""),
+        ...captureGeneticCall(genotype),
       });
+    }
   }
   return geneticImportSchema.parse({
     consent: true,

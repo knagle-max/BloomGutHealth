@@ -1,4 +1,5 @@
 import { manualGeneticEntrySchema } from "./precision-nutrition";
+import { captureGeneticCall } from "./genetic-call-source";
 // Names are entry shortcuts, not a claim that all these variants are actionable.
 export const additionalEntryShortcuts = [
   ["MTHFR", "rs1801131"],
@@ -46,7 +47,7 @@ export function parseGenotypeTable(text: string) {
     const parsed = manualGeneticEntrySchema.safeParse({
       gene: match[1].replace(/[\s,;\t]+$/, ""),
       rsid: match[2],
-      genotype: match[3],
+      ...captureGeneticCall(match[3]),
     });
     if (!parsed.success)
       throw Error(`Row ${i + 1}: check the gene label, rsID and genotype.`);

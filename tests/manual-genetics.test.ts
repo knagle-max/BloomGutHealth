@@ -53,10 +53,10 @@ test("selected SNP parser reads the complete example, headers and delimiters wit
   assert.equal(parseGenotypeTable(table).length, 24);
   assert.deepEqual(
     parseGenotypeTable("Gene,SNP,Your genotype\nMTHFR,rs1801133,g/a"),
-    [{ gene: "MTHFR", rsid: "rs1801133", genotype: "AG" }],
+    [{ gene: "MTHFR", rsid: "rs1801133", genotype: "AG", sourceCall:{original:"g/a",normalization:GENETIC_CALL_NORMALIZATION} }],
   );
   assert.deepEqual(parseGenotypeTable("rs1801133 --"), [
-    { gene: "", rsid: "rs1801133", genotype: "--" },
+    { gene: "", rsid: "rs1801133", genotype: "--", sourceCall:{original:"--",normalization:GENETIC_CALL_NORMALIZATION} },
   ]);
   for (const bad of [
     "",

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { GENETIC_CALL_NORMALIZATION, geneticCallSourceSchema } from "../shared/genetic-call-source";
+import { GENETIC_CALL_NORMALIZATION, geneticCallSourceSchema, captureGeneticCall } from "../shared/genetic-call-source";
 import { manualGeneticEntrySchema, geneticImportSchema, parse23andMe, buildPrecisionReport, contextSchema } from "../shared/precision-nutrition";
 import { defaultPreferences } from "../shared/meal-intelligence";
 
@@ -37,7 +37,7 @@ test("legacy records remain readable without inventing original spelling, and me
 });
 test("raw reader preserves optional source metadata without accepting coordinate, allele or transformation conflicts", () => {
   const legacy = parse23andMe("# 23andMe\n# build 37\nrs1801133 1 11856378 AG", "2026-10-01T00:00:00Z");
-  assert.equal("sourceCall" in legacy.calls[0], false, "reader-first release does not yet produce metadata");
+  assert.deepEqual(legacy.calls[0].sourceCall,{original:"AG",normalization:GENETIC_CALL_NORMALIZATION});
   const next = { ...legacy, calls: [{ ...legacy.calls[0], sourceCall: { original: "ga", normalization: GENETIC_CALL_NORMALIZATION } }] };
   assert.deepEqual(geneticImportSchema.parse(next), next);
   for (const call of [
@@ -45,4 +45,15 @@ test("raw reader preserves optional source metadata without accepting coordinate
     { ...next.calls[0], sourceCall: { original: "TT", normalization: GENETIC_CALL_NORMALIZATION } },
     { ...next.calls[0], genotype: "TT", sourceCall: { original: "TT", normalization: GENETIC_CALL_NORMALIZATION } },
   ]) assert.equal(geneticImportSchema.safeParse({ ...next, calls: [call] }).success, false);
+});
+test("new source capture retains spelling/order without expanding raw format, build or complex assay support",()=>{
+  const raw=(row:string,header="# 23andMe\n# build 37")=>parse23andMe(header+"\n"+row,"2026-10-01T00:00:00Z");
+  assert.deepEqual(raw("rs1801133 1 11856378 ga").calls[0],{rsid:"rs1801133",chromosome:"1",position:11856378,...captureGeneticCall("ga")});
+  for(const row of ["rs1801133 AG","rs1801133 1 11856378 A G","rs1801133 1 11856378 I/D","rs1801133 1 11856378 g/a","rs1801133 1 11856378 AG\nrs1801133 1 11856378 GG"])
+    assert.throws(()=>raw(row));
+  for(const header of ["# 23andMe\n# build 38","# 23andMe\n# build 37\n# minus strand","# unknown provider\n# build 37"])
+    assert.throws(()=>raw("rs1801133 1 11856378 AG",header));
+  const result=raw("rs1801133 1 11856378 --\ni123 1 100 I");
+  assert.equal(result.scannedVariants,2);assert.equal(result.calls.length,1);
+  assert.deepEqual(result.calls[0].sourceCall,{original:"--",normalization:GENETIC_CALL_NORMALIZATION});
 });
