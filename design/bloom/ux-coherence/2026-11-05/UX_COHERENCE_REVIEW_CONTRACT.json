@@ -1,0 +1,28 @@
+{
+  "schema": "bloom.ux_coherence.review.v1",
+  "date": "2026-11-05",
+  "reviewer": "Branding & UX",
+  "status": "corrective_standard_not_runtime_certification",
+  "rules": [
+    "UX-COH-01 attention budget",
+    "UX-COH-02 progressive disclosure",
+    "UX-COH-03 action-before-library",
+    "UX-COH-04 composition",
+    "UX-COH-05 plain-language",
+    "UX-COH-06 exact-build acceptance"
+  ],
+  "releaseCandidateSha": "3aee24de97079de5faf7d7bb1ee147523f242a93",
+  "releaseAuditStatus": "NOT_TESTED",
+  "surfaces": [
+    "Today",
+    "Food",
+    "Athlete",
+    "My Biology",
+    "Genetics",
+    "Explore",
+    "Progress",
+    "Profile"
+  ],
+  "approval": "REVISE",
+  "needsOwnerDecision": false
+}
