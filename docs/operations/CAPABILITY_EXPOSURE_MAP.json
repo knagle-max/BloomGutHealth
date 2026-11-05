@@ -1659,7 +1659,7 @@
     "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
-    "client/src/components/AthleteProfileForm.tsx": "7c747a28affa3f21ae202db7df428210748ed8723be023ecdff30a4111d5e443",
+    "client/src/components/AthleteProfileForm.tsx": "30a74c4b74824935cf022b6702633f8d00b8e41d8cdb87bfefb022c507a8fc5a",
     "client/src/components/BiologyHome.tsx": "b405b2a0e02bfafa9a0b0fdbe2685970deff675c9c2edcaca407758198470654",
     "client/src/components/BloodworkSourceOverview.tsx": "837679800dcd738e8ad6f5bbe2e064203f50724325e284484f0408596e6be1e9",
     "client/src/components/CompanionHero.tsx": "1eeb9520a1cec08d8fb22a515414f868bb857ca61c193002a824151a87164ef9",
