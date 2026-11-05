@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
 import { parseGenotypeTable } from "../shared/manual-genetics";
+import { GENETIC_CALL_NORMALIZATION } from "../shared/genetic-call-source";
 import {
   manualGeneticImportSchema,
   classifyManualGenetics,
@@ -181,12 +182,16 @@ test("manual records use the authenticated precision API, preserve provenance an
     });
   try {
     assert.equal((await post("")).status, 401);
-    assert.equal((await post("a")).status, 201);
+    const withOriginal = payload();
+    withOriginal.entries[0].sourceCall = {original:"a/g",normalization:GENETIC_CALL_NORMALIZATION};
+    assert.equal((await post("a", withOriginal)).status, 201);
     const a = await (
       await fetch(base, { headers: { "x-test-user": "a" } })
     ).json();
     assert.equal(a.genetics.manual.entries.length, 24);
     assert.equal(a.genetics.manual.source, "Synthetic example table");
+    assert.deepEqual(a.genetics.manual.entries[0].sourceCall,withOriginal.entries[0].sourceCall);
+    assert.deepEqual(a.genetics.explanations[0].sourceCall,withOriginal.entries[0].sourceCall);
     const b = await (
       await fetch(base, { headers: { "x-test-user": "b" } })
     ).json();

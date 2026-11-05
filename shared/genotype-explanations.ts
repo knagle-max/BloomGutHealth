@@ -1,6 +1,7 @@
 import { z } from "zod";
 import catalogue from "./data/genotype-explanations.json";
 import reference from "./data/genotype-reference.json";
+import type { GeneticCallSource } from "./genetic-call-source";
 
 // Reference compatibility is distinct from membership in a study's two-allele
 // contrast. Neither check verifies the assay, build or orientation of a source.
@@ -56,7 +57,7 @@ export const genotypeAnnotations = z
   .parse(catalogue.variants);
 export const GENOTYPE_EXPLANATION_VERSION = catalogue.version;
 export function explainGenotypes(
-  entries: Array<{ rsid: string; gene?: string; genotype: string }>,
+  entries: Array<{ rsid: string; gene?: string; genotype: string; sourceCall?: GeneticCallSource }>,
   orientationConfirmed: boolean,
 ) {
   return entries.map((entry) => {
@@ -89,6 +90,7 @@ export function explainGenotypes(
       submittedGene: entry.gene || "",
       gene: annotation?.gene || "Gene identity not curated",
       genotype,
+      sourceCall: entry.sourceCall || null,
       referenceCompatibility,
       status,
       personalMeaning,

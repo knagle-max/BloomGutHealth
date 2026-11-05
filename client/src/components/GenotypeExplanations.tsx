@@ -82,8 +82,9 @@ export default function GenotypeExplanations({
               {e.topic && ` · ${e.topic}`}
             </h3>
             <p className="text-sm">
-              {e.rsid} · Your reported result: <strong>{e.genotype}</strong>
+              {e.rsid} · Stored unphased call: <strong>{e.genotype}</strong>
             </p>
+            <p className="panel-note">{e.sourceCall ? <>Original call token: <strong>{e.sourceCall.original}</strong>. Case, separators and unphased letter order were normalized; no strand flip or genome-build conversion was performed. A pipe does not establish phase.</> : "Original call text was not retained for this source; it cannot be reconstructed from the stored unphased call."}</p>
           </div>
           {e.geneRole && (
             <div>

@@ -1,4 +1,5 @@
 import type {ReportDateContext} from "./report-dates";
+import {geneticCallSourceSchema,geneticCallSourceMatches,normalizeUnphasedGenotype} from "./genetic-call-source";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
@@ -275,9 +276,12 @@ const callSchema = z
     chromosome: z.string(),
     position: z.number().int(),
     genotype: z.string().regex(/^(?:[ACGT]{2}|--)$/),
+    sourceCall: geneticCallSourceSchema.optional(),
   })
   .strict()
   .superRefine((call, ctx) => {
+    if (!geneticCallSourceMatches(call.sourceCall, call.genotype))
+      ctx.addIssue({code:"custom",message:"Original call does not match the declared unphased normalization"});
     const v = genotypeReference.variants.find((v) => v.rsid === call.rsid)!
       .mappings[0];
     if (
@@ -323,14 +327,7 @@ export const manualGeneticEntrySchema = z
     genotype: z
       .string()
       .trim()
-      .transform((v) =>
-        v
-          .toUpperCase()
-          .replace(/[\s/|]/g, "")
-          .split("")
-          .sort()
-          .join(""),
-      )
+      .transform(normalizeUnphasedGenotype)
       .pipe(
         z
           .string()
@@ -339,8 +336,13 @@ export const manualGeneticEntrySchema = z
             "Enter two DNA letters, or -- for no call",
           ),
       ),
+    sourceCall: geneticCallSourceSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((call, ctx) => {
+    if (!geneticCallSourceMatches(call.sourceCall, call.genotype))
+      ctx.addIssue({code:"custom",message:"Original call does not match the declared unphased normalization"});
+  });
 /** Literal, optional source context; none of these statements verify a call or
  * broaden the reviewed catalogue, coordinate parser or clinical eligibility. */
 export const manualGeneticSourceContextSchema = z.object({

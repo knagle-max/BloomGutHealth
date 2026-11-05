@@ -1085,7 +1085,8 @@
           "shared/genetic-selection.ts",
           "shared/manual-genetics.ts",
           "shared/genotype-explanations.ts",
-          "shared/genetics-catalogue.ts"
+          "shared/genetics-catalogue.ts",
+          "shared/genetic-call-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1123,7 +1124,8 @@
           "shared/genetic-selection.ts",
           "shared/manual-genetics.ts",
           "shared/genotype-explanations.ts",
-          "shared/genetics-catalogue.ts"
+          "shared/genetics-catalogue.ts",
+          "shared/genetic-call-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1676,14 +1678,14 @@
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
     "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
-    "client/src/components/GenotypeExplanations.tsx": "e053fa6b96ba7c97c591117660dfc26636b3e1eae7149fcb8136521c2e284e53",
+    "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
     "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
     "client/src/components/LabExplorer.tsx": "65aab0bc1d75bd8c3c6684ebf1410dd4f7845d4f3281187a086712aa7666a1e1",
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
     "client/src/components/LabSourceHistory.tsx": "cc0ce284382e0a63379167d6f2432b332f621da468fc8aef32a9d117361967d0",
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
-    "client/src/components/ManualGenetics.tsx": "7c2d06791b78c01a45a0e45f3f289252155bdae594c332293224c0d85ea78b82",
+    "client/src/components/ManualGenetics.tsx": "601842ef2873cd0121aeeade72d1253a428385b534d7bffb72be6bc61f50f39c",
     "client/src/components/MealAnalysis.tsx": "d5c3b9b180dc32f7b48aad8df04853e35cf424462e27141acc4b7321b13b73be",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
@@ -1798,9 +1800,10 @@
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
+    "shared/genetic-call-source.ts": "a676c8c188b4ffecf411d177ab92a1f114582c17df947cb81e085d721df87948",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
     "shared/genetics-catalogue.ts": "f3f9b94531388e7ee128bff01dc3859f773b3ce6ad008dc35f19872f25bd9574",
-    "shared/genotype-explanations.ts": "796d888aa99193861823e70fe90f8150d5abf2909e0e20f67a975812b047e339",
+    "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
     "shared/lab-explorer.ts": "2e40ded4a56e73fe6445eefeaf14a2a16d413c7474e75dad0bb2237f6fad9449",
@@ -1815,7 +1818,7 @@
     "shared/meal-portions.ts": "c7ca2439c969026acfcd6f195e7bd06ddcdd9f90f1668741a734d5a7e2dc0c0e",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "509f5107fa8306d04c7792f3ec2c36c5a04950deffdd87b025c4914a1d936407",
-    "shared/precision-nutrition.ts": "f8b19d57c7c63b461ca950a94182970943c2c0f65fd86c484059d6d2f89db55e",
+    "shared/precision-nutrition.ts": "8c6b5257d74be7722fed249663e44e93fc2125227a3d04b7dc2acab940fd56dd",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",

@@ -1,4 +1,5 @@
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
+import type {GeneticCallSource} from "@shared/genetic-call-source";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -13,7 +14,7 @@ import {
   additionalEntryShortcuts,
   parseGenotypeTable,
 } from "@shared/manual-genetics";
-type Row = { gene: string; rsid: string; genotype: string };
+type Row = { gene: string; rsid: string; genotype: string; sourceCall?: GeneticCallSource };
 const templates: Row[] = [
   ...variantCatalog.map((v) => ({ gene: v.gene, rsid: v.rsid, genotype: "" })),
   ...additionalEntryShortcuts.map(([gene, rsid]) => ({
@@ -29,13 +30,14 @@ export default function ManualGenetics({
   genetics: PrecisionReport["genetics"];
   onSaved: () => void;
 }) {
-  const existing =
+  const existing: Row[] =
     genetics.manual?.entries ||
     (genetics.explanations?.length
       ? genetics.explanations.map((e) => ({
           gene: e.gene,
           rsid: e.rsid,
           genotype: e.genotype,
+          ...(e.sourceCall ? {sourceCall:e.sourceCall}:{}),
         }))
       : genetics.findings
           .filter((f) => f.genotype)
@@ -45,12 +47,13 @@ export default function ManualGenetics({
       ...t,
       gene: existing.find((e) => e.rsid === t.rsid)?.gene || t.gene,
       genotype: existing.find((e) => e.rsid === t.rsid)?.genotype || "",
+      ...(existing.find(e=>e.rsid===t.rsid)?.sourceCall ? {sourceCall:existing.find(e=>e.rsid===t.rsid)!.sourceCall}:{}),
     }));
     return [
       ...combined,
       ...existing
         .filter((e) => !templates.some((t) => t.rsid === e.rsid))
-        .map(({ gene, rsid, genotype }) => ({ gene, rsid, genotype })),
+        .map(({ gene, rsid, genotype, sourceCall }) => ({ gene, rsid, genotype, ...(sourceCall ? {sourceCall}:{}) })),
     ];
   });
   const [source, setSource] = useState(genetics.manual?.source || ""),
@@ -88,7 +91,7 @@ export default function ManualGenetics({
   }
   function field(index: number, value: string) {
     changed();
-    setRows(rows.map((r, i) => (i === index ? { ...r, genotype: value } : r)));
+    setRows(rows.map((r, i) => (i === index && r.genotype !== value ? { ...r, genotype: value, sourceCall:undefined } : r)));
   }
   function renderRows(group: Row[], offset: number) {
     return (
