@@ -19,8 +19,8 @@ export default defineConfig({
         ]
       : []),
   ],
-  // Pre-optimize lazy local source-text codecs so first use does not reload an in-progress draft.
-  optimizeDeps: { include: ["pdfjs-dist", "tesseract.js"] },
+  // Pre-optimize lazy codecs/navigation hooks so first use cannot reload an active draft.
+  optimizeDeps: { include: ["pdfjs-dist", "tesseract.js", "wouter/use-browser-location"] },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

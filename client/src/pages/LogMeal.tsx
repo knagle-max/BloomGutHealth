@@ -1,3 +1,5 @@
+import {useHistoryState} from "wouter/use-browser-location";
+import {readCatalogueMassHandoff} from "@shared/catalogue-mass-handoff";
 import IngredientMassEntry from "@/components/IngredientMassEntry";
 import {currentMealTimeZone,recordedMealTime} from "@shared/meal-time";
 import SavedMealSource from "@/components/SavedMealSource";
@@ -37,13 +39,15 @@ import type { Meal } from "@shared/schema";
 
 export default function LogMeal() {
   const { settings, ready: settingsReady } = useExperience();
-  const {user}=useAuth();
+  const {user}=useAuth();const incomingMassState=useHistoryState();
+  useEffect(()=>{if(incomingMassState?.kind==="bloom-catalogue-mass-v1"&&incomingMassState.owner!==user?.id)window.history.replaceState(null,"",window.location.href);},[incomingMassState,user?.id]);
   const params = new URLSearchParams(window.location.search);
   const requestedType = params.get("type");
   const productQuery = (params.get("productQuery") || "").slice(0,120);
   const catalogueId=params.get("fdcId"),catalogueGrams=Number(params.get("grams"));
   const [catalogueEnabled,setCatalogueEnabled]=useState(!!catalogueId);
   const catalogueSelection=useQuery<{fdcId:number;description:string;grams:number}>({queryKey:["/api/biology/catalogue",catalogueId,catalogueGrams],enabled:catalogueEnabled&&/^\d+$/.test(catalogueId||"")&&catalogueGrams>0&&catalogueGrams<=3000,queryFn:async()=>(await apiRequest("GET",`/api/biology/catalogue/${catalogueId}?grams=${catalogueGrams}`)).json()});
+  const incomingMassEntry=catalogueSelection.data?readCatalogueMassHandoff(incomingMassState,user?.id,catalogueSelection.data.fdcId,catalogueSelection.data.grams):undefined;
   const [mealType, setMealType] = useState<MealType>(
     ["breakfast", "lunch", "dinner", "snack"].includes(requestedType || "")
       ? (requestedType as MealType)
@@ -112,7 +116,7 @@ export default function LogMeal() {
   useEffect(()=>{if(savedMeal?.id){savedHeading.current?.focus();savedHeading.current?.scrollIntoView({block:"start"});}},[savedMeal?.id]);
   function draftPayload(ingredients?:Ingredient[]){
     const selected=catalogueEnabled?catalogueSelection.data:undefined;
-    const catalogueItem:Ingredient|undefined=selected?{name:selected.description.slice(0,120),grams:selected.grams,preparation:selected.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:selected.fdcId}}:undefined;
+    const catalogueItem:Ingredient|undefined=selected?{...(incomingMassEntry?{massEntry:incomingMassEntry}:{}),name:selected.description.slice(0,120),grams:selected.grams,preparation:selected.description.slice(0,120),assumption:"User-selected USDA record and portion",catalogue:{source:"usda-fndds",fdcId:selected.fdcId}}:undefined;
     const loaded=savedIngredients&&savedIngredients.owner===user?.id&&savedIngredients.description===description&&!catalogueEnabled?savedIngredients.ingredients:undefined;
     const complete=ingredients||(loaded?[...loaded,...products]:catalogueItem?[catalogueItem,...products]:undefined);
     return {mealText:selected?`${selected.grams} g ${selected.description}`:description.trim(),products,...(complete?{ingredients:complete}:{}),mealType,aiConsent,mealContext:{eatenAt:new Date(eatenAt).toISOString(),timeZone:mealTimeZone,portion,symptoms,...((restaurant.trim()||restaurantVisited)?{restaurantContext:{restaurant:restaurant.trim(),market:market.trim(),source:"user-entered-context" as const}}:{})}};
@@ -120,7 +124,7 @@ export default function LogMeal() {
   type ReviewPayload=ReturnType<typeof draftPayload>;
   type AnalysisResult={intelligence:MealIntelligence;nutritionalData:unknown[]};
   type ReviewSnapshot={payload:ReviewPayload;analysis:AnalysisResult;revision:string;basis:string;owner:string};
-  const basis=JSON.stringify([user?.id,description,savedIngredients,products,catalogueEnabled,catalogueSelection.data?.fdcId,catalogueSelection.data?.grams,mealType,eatenAt,portion,symptoms,restaurant,market,restaurantVisited,aiConsent]);
+  const basis=JSON.stringify([user?.id,description,savedIngredients,products,catalogueEnabled,catalogueSelection.data?.fdcId,catalogueSelection.data?.grams,incomingMassEntry,mealType,eatenAt,portion,symptoms,restaurant,market,restaurantVisited,aiConsent]);
   const basisRef=useRef(basis);basisRef.current=basis;
   const [review,setReview]=useState<ReviewSnapshot|null>(null),[reviewDirty,setReviewDirty]=useState(false),[reviewRejected,setReviewRejected]=useState(false);
   const saveAttempt=useRef<{payload:string;revision:string;key:string;basis:string}|null>(null);

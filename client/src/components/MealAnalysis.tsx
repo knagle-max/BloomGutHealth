@@ -1,3 +1,4 @@
+import {captureIngredientMassEntry} from "@shared/ingredient-mass-capture";
 import IngredientMassEntry from "./IngredientMassEntry";
 import { useExperience } from "@/lib/experience";
 import { nutrientDisplay, foodMass, formatNutrientAmount } from "@shared/nutrition-display";
@@ -135,7 +136,7 @@ export default function MealAnalysis({
                     <input
                       className="bloom-input w-full"
                       type="number"
-                      min="0.1"
+                      min="0"
                       max="3000"
                       step="any"
                       aria-label={`Grams ${index + 1}`}
@@ -146,7 +147,7 @@ export default function MealAnalysis({
                             i === index
                               ? {
                                   ...v,
-                                  massEntry:undefined,
+                                  massEntry:captureIngredientMassEntry(e.target.value,"g",e.target.value?Number(e.target.value):null),
                                   grams: e.target.value
                                     ? Number(e.target.value)
                                     : null,

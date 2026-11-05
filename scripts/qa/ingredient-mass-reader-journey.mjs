@@ -56,9 +56,9 @@ const openSource=async()=>{const card=page.getByTestId('card-meal-0');await card
 try{
  await go('/nutrition');let row=await openSource();await row.getByText('Entered 4.000 oz.',{exact:false}).waitFor();
  foodUnit='g';await page.reload();row=await openSource();await row.getByText('Entered 4.000 oz.',{exact:false}).waitFor();
- await row.getByRole('spinbutton',{name:'Grams 1',exact:true}).fill('200');await row.getByText('Original portion text and unit were not retained.',{exact:false}).waitFor();
+ await row.getByRole('spinbutton',{name:'Grams 1',exact:true}).fill('200');await row.getByText('Entered 200 g.',{exact:false}).waitFor();
  for(const width of[320,390,768,1440]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
  meal.intelligence.ingredients[0].massEntry=undefined;await page.reload();row=await openSource();await row.getByText('Original portion text and unit were not retained.',{exact:false}).waitFor();
  alternateAccount=true;await page.reload();assert.equal(await page.getByText('Entered 4.000 oz.',{exact:false}).count(),0);assert.equal(await page.getByText('Portion entry source',{exact:true}).count(),0);
- assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);console.log('PASS actual App ingredient reader: original4.000oz survives display-unit change/reload; legacy unknown; local gram edit clears stale original;320–1440 reflow/other-owner fixture/no writes. Actual review-confirm/owned SQL/receipt persistence separately tested.');
+ assert.deepEqual(writes,[]);assert.deepEqual(errors,[]);console.log('PASS actual App ingredient reader: original4.000oz survives display-unit change/reload; legacy unknown; local gram edit replaces stale original with actual new input;320–1440 reflow/other-owner fixture/no writes. Actual review-confirm/owned SQL/receipt persistence separately tested.');
 }catch(error){console.error({errors,text:await page.locator('body').innerText()});throw error;}finally{await browser.close();await vite.close();}

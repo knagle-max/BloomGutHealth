@@ -193,7 +193,8 @@
           "shared/measurement-entry.ts",
           "shared/nutrition-display.ts",
           "shared/food-intelligence.ts",
-          "shared/ingredient-mass-entry.ts"
+          "shared/ingredient-mass-entry.ts",
+          "shared/ingredient-mass-capture.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -204,7 +205,8 @@
         "cache": [
           "client/src/lib/auth.tsx",
           "client/src/lib/queryClient.ts",
-          "server/products.ts"
+          "server/products.ts",
+          "shared/catalogue-mass-handoff.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -376,7 +378,8 @@
           "shared/measurement-entry.ts",
           "shared/nutrition-display.ts",
           "shared/food-intelligence.ts",
-          "shared/ingredient-mass-entry.ts"
+          "shared/ingredient-mass-entry.ts",
+          "shared/ingredient-mass-capture.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -390,7 +393,8 @@
           "client/src/lib/queryClient.ts",
           "server/products.ts",
           "client/src/lib/planning-cache.ts",
-          "client/src/lib/meal-cache.ts"
+          "client/src/lib/meal-cache.ts",
+          "shared/catalogue-mass-handoff.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit. Journal planning references distinguish explicit examples from estimates using complete actual adult profile inputs; no demographic defaults or clinical clearance.",
@@ -424,7 +428,8 @@
           "shared/measurement-entry.ts",
           "shared/nutrition-display.ts",
           "shared/food-intelligence.ts",
-          "shared/ingredient-mass-entry.ts"
+          "shared/ingredient-mass-entry.ts",
+          "shared/ingredient-mass-capture.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -435,7 +440,8 @@
         "cache": [
           "client/src/lib/auth.tsx",
           "client/src/lib/queryClient.ts",
-          "server/products.ts"
+          "server/products.ts",
+          "shared/catalogue-mass-handoff.ts"
         ]
       },
       "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
@@ -1767,9 +1773,9 @@
     "client/src/components/ExperimentObservations.tsx": "8bbb5344ad94e5ca3afc4bf355407c7510630d0029d7ba27c91c930a03e3033f",
     "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
-    "client/src/components/FoodCompositionExplorer.tsx": "aa5b49972e56a87664babf4d83807f71500a94d30369aec567293fbd866fcb86",
+    "client/src/components/FoodCompositionExplorer.tsx": "8c36d11a61e445e6bb82cecd214b8a9e4db78b2493995b955ec6390d8ea5f768",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
-    "client/src/components/FoodMassInput.tsx": "aaad814f2895ccd882abe6b56aeae88e5ce72ff05fae6bc72896c7a2ffa02a8d",
+    "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
     "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
     "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
@@ -1782,7 +1788,7 @@
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "ceba01eda8b6143ccd3f9dede8f200eba5ecb984471bb66ec0f42c5fc1f3ffa9",
-    "client/src/components/MealAnalysis.tsx": "4e2aece894a57f4d1842833c3a99160f8eb470aade9b3ef2bf75c9a9912ba15d",
+    "client/src/components/MealAnalysis.tsx": "3a8594735302dff18b42d1add564da44e18682f7ebdf3151c3f5d6107697b918",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
@@ -1815,7 +1821,7 @@
     "client/src/pages/Explore.tsx": "4f00b3872fa98bc22a449a336ab68e6d7828d5d3e576c4fb88a12d769c6043ca",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "c2907a59f4b983c8956cde3040f73b10619462aa5a8beb783fd483e987cc0b36",
+    "client/src/pages/LogMeal.tsx": "8f6401ebf40bc0b03e4bf65a1deaea90067ca8ef9d509fe93a31429b53ef0d83",
     "client/src/pages/MealPlanner.tsx": "9833fd2dff5a6868daf49f69745b96d75d4701aae151e3d438ff7e7b9f22c988",
     "client/src/pages/Microbiome.tsx": "3057d03cc2eb9f9284d95c879fed30f41e33d5b3b6ea3d5b98249f49899423a3",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
@@ -1897,6 +1903,7 @@
     "shared/barcodes.ts": "6602a438f1cfe8addfd21e335c8126dee4c74270cb36c19b8683771fcd760f70",
     "shared/biological-model.ts": "c2c424b0249946fa02dfa0bf54845162d5aee9fc9ac748058b3a80c0bcb38625",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
+    "shared/catalogue-mass-handoff.ts": "9e762fd498ce23d370f05d22ead54aa6e50cd41881d6fd8b17f2f8e3206a3cac",
     "shared/checkin-entry-source.ts": "540ba0ee7e0c9a27e7ee6b14ad934a71c0b65cf99254771c471d5a054e884d48",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
@@ -1911,6 +1918,7 @@
     "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
+    "shared/ingredient-mass-capture.ts": "0fcd4bf37628fb2b4a57537982cdeeb738d14203991e360eec0730e654628ded",
     "shared/ingredient-mass-entry.ts": "85523bb5d76e0e8b42c90f6c5c0701bd47793b9f9b4917deefafaf6c0279e78c",
     "shared/lab-explorer.ts": "2e40ded4a56e73fe6445eefeaf14a2a16d413c7474e75dad0bb2237f6fad9449",
     "shared/lab-history.ts": "a4d9ca4c0dc41e5386d87c499a0866a5e018952d2cf0608ddc9f3975878994c6",
