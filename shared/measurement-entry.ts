@@ -12,7 +12,7 @@ export type CircumferenceEntry=CircumferenceToken&{conversionBasis?:ConversionBa
 export type ParseResult = { kind: "empty" } | { kind: "incomplete" } | { kind: "invalid"; reason: string } | { kind: "valid"; canonical: number };
 const decimal = /^(?:\d+(?:\.\d*)?|\.\d+)$/;
 function numberDraft(raw:string):number | "empty" | "incomplete" | "invalid" {
- if(typeof raw!=="string"||raw.length>128)return "invalid";
+ if(typeof raw!=="string"||raw.length>128||/[\r\n]/.test(raw))return "invalid";
  const s=raw.trim();
  if(!s)return "empty";
  if(s==="."||s==="-"||s.endsWith("."))return "incomplete";
@@ -100,4 +100,30 @@ export function switchCircumferenceUnit(entry:CircumferenceEntry,target:Circumfe
  if(parsed.kind==="empty")return {unit:target,value:""};
  if(parsed.kind!=="valid")return parsed;
  const rendered=waistToken(parsed.canonical,target);return{...rendered,conversionBasis:{canonical:parsed.canonical,rendered,original:originalCircumferenceEntry(entry)}};
+}
+
+export type FoodMassEntry={unit:"g"|"oz";value:string;conversionBasis?:ConversionBasis<{unit:"g"|"oz";value:string}>};
+type FoodMassToken=Pick<FoodMassEntry,"unit"|"value">;
+function rawFoodMass(entry:FoodMassToken):ParseResult{
+ if(!["g","oz"].includes(entry.unit))return{kind:"invalid",reason:"Unsupported food mass unit"};
+ const value=numberDraft(entry.value);
+ if(typeof value!=="number")return value==="invalid"?{kind:"invalid",reason:"Enter a positive food mass"}:{kind:value};
+ const grams=entry.unit==="oz"?value*28.349523125:value;
+ return grams>0&&grams<=3000?{kind:"valid",canonical:grams}:{kind:"invalid",reason:"Food mass is outside the supported range"};
+}
+function foodMassToken(grams:number,unit:FoodMassToken["unit"]):FoodMassToken{return{unit,value:entryNumber(unit==="oz"?grams/28.349523125:grams,8)}};
+function foodMassBasis(entry:FoodMassEntry){const b=entry.conversionBasis;return b&&b.rendered&&["g","oz"].includes(entry.unit)&&Number.isFinite(b.canonical)&&b.canonical>0&&b.canonical<=3000&&sameMass(entry,b.rendered)&&sameMass(entry,foodMassToken(b.canonical,entry.unit))&&originalMatches(b.original,b.canonical,rawFoodMass)?b:null;}
+export function parseFoodMassEntry(entry:FoodMassEntry):ParseResult{const b=foodMassBasis(entry);return b?{kind:"valid",canonical:b.canonical}:rawFoodMass(entry);}
+export function originalFoodMassEntry(entry:FoodMassEntry):FoodMassToken|null{const b=foodMassBasis(entry);return b?(b.original?{...b.original}:null):rawFoodMass(entry).kind==="valid"?{unit:entry.unit,value:entry.value}:null;}
+export function formatFoodMassEntry(grams:number|null,unit:FoodMassToken["unit"]):FoodMassEntry{
+ if(grams===null)return{unit,value:""};
+ if(!Number.isFinite(grams)||grams<=0)throw Error("Invalid canonical food mass");
+ const rendered=foodMassToken(grams,unit);return{...rendered,conversionBasis:{canonical:grams,rendered,original:null}};
+}
+export function switchFoodMassUnit(entry:FoodMassEntry,target:FoodMassToken["unit"]):FoodMassEntry|ParseResult{
+ if(entry.unit===target)return entry;
+ const parsed=parseFoodMassEntry(entry);
+ if(parsed.kind!=="valid")return parsed.kind==="empty"?formatFoodMassEntry(null,target):parsed;
+ const original=originalFoodMassEntry(entry);if(original?.unit===target)return original;
+ const next=formatFoodMassEntry(parsed.canonical,target);next.conversionBasis!.original=original;return next;
 }

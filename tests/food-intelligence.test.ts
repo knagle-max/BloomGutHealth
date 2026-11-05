@@ -136,3 +136,11 @@ test("an MTHFR call alone does not change food or recipe priorities or create a 
  assert.deepEqual(priorities(measuredWithGenotype.foods),priorities(measured.foods));
  assert.deepEqual(priorities(measuredWithGenotype.recommendations),priorities(measured.recommendations));
 });
+
+test("composition source explanations never round a positive nutrient to zero or imply a measured-zero percentage",()=>{
+ for(const amount of[0.00003,0.003,0.04,0.11]){
+  const row=explainNutrientContribution({protein_g:amount},{protein_g:{min:100}}).find(row=>row.key==="protein_g")!;
+  assert.equal(row.amount,amount);assert.ok(Number(row.explanation.split(" ")[0])>0);assert.match(row.explanation,/<1%/);
+ }
+ const zero=explainNutrientContribution({protein_g:0},{protein_g:{min:100}}).find(row=>row.key==="protein_g")!;assert.match(zero.explanation,/^0 g/);assert.match(zero.explanation,/0%/);
+});

@@ -75,3 +75,7 @@ test("a private label's small known amount survives the merged meal estimate and
  assert.equal(history.totals.vitamin_b12_ug,0.00015);assert.equal(history.totals.sodium,0);assert.equal(history.totals.vitamin_d_ug,null);
  assert.equal(label.perServing.vitamin_b12_ug,0.0003);
 });
+
+test("food mass presentation retains known tiny positives while true zero and unknown remain distinct",()=>{
+ for(const unit of["g","oz"]as const){for(const grams of[1e-12,0.00003,0.004])assert.ok(Number(foodMass(grams,unit).split(" ")[0])>0);assert.equal(foodMass(0,unit),`0 ${unit}`);assert.equal(foodMass(null,unit),"Amount unknown");}
+});

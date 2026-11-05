@@ -14,7 +14,7 @@ import {registerProfileRoutes} from "../server/profile-routes";
 const ddl="CREATE TABLE users(id varchar PRIMARY KEY,username text NOT NULL,password text NOT NULL,sex text,age integer,height_cm real,weight_kg real,activity_level text,dietary_preferences jsonb);INSERT INTO users VALUES('a','a','private-password','female',30,170,65,'moderate',NULL),('b','b','private-password','female',30,170,65,'moderate',NULL)";
 const fields={height:{unit:"ft-in",primary:"5",inches:"9.000"},weight:{unit:"lb",value:"150.000"}} as const;
 test("Profile original entries are optional, bounded and strict; unsupported or invalid source tokens never persist",()=>{
- const valid={version:1,expectedRevision:"none",fields};assert.equal(profileMeasurementWriteSchema.safeParse(valid).success,true);
+ const valid={version:1,expectedRevision:"none",fields};assert.equal(profileMeasurementWriteSchema.safeParse({...valid,fields:{weight:{unit:"kg",value:" 70.000\t"},height:{unit:"ft-in",primary:" 5 ",inches:" "}}}).success,true);assert.equal(profileMeasurementWriteSchema.safeParse(valid).success,true);
  for(const invalid of[{...valid,filename:"private"},{...valid,fields:{weight:{unit:"lb",value:"NaN"}}},{...valid,fields:{height:{unit:"ft-in",primary:"5",inches:"12"}}},{...valid,fields:{weight:{unit:"kg",value:"1".repeat(129)}}}])assert.equal(profileMeasurementWriteSchema.safeParse(invalid).success,false);
 });
 test("Profile source metadata updates atomically with REAL canonical values, owner isolation, revisions, encryption, legacy invalidation and missing-storage compatibility",async()=>{

@@ -1,6 +1,7 @@
+import {formatNutrientAmount} from "./nutrition-display";
 import { nutrientDefinitions } from "./meal-intelligence";
 
-export const FOOD_INTELLIGENCE_VERSION = "food-composition-2026-10-18.2";
+export const FOOD_INTELLIGENCE_VERSION = "food-composition-2026-11-05.1";
 export type TargetRange = { target?: number | null; min?: number | null; max?: number | null };
 export type NutrientIntakeCoverage = Record<string, { partial: boolean } | undefined>;
 const known = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value) && value >= 0;
@@ -32,11 +33,12 @@ export function explainNutrientContribution(
     const exceedsMaximum = maximum !== null && amount !== null
       ? amount + (knownBefore ? before : 0) > maximum ? true : complete ? false : null
       : null;
-    const formatted = amount === null ? "Unknown" : Number(amount.toFixed(1)).toLocaleString("en-US");
+    const formatted = amount === null ? "Unknown" : formatNutrientAmount(amount);
+    const percentText=(value:number)=>value===0&&amount!==null&&amount>0?"<1%":`${value}%`;
     const comparesIntake = minimum !== null || maximum !== null || target !== null;
     return { key, name, unit, amount, percentOfMinimum, percentOfMaximum, percentOfTarget,
       remainingMinimum, targetRemaining, provisionalRemainingMinimum, provisionalRemainingTarget, intakeStatus, exceedsMaximum,
-      explanation: amount === null ? `${name} is unavailable; it is not counted as zero.` : `${formatted} ${unit} ${name.toLowerCase()}${percentOfMinimum !== null ? ` · ${percentOfMinimum}% of your selected daily minimum` : ""}${percentOfTarget !== null ? ` · ${percentOfTarget}% of your selected daily target` : ""}${percentOfMaximum !== null ? ` · ${percentOfMaximum}% of your selected daily limit` : ""}${exceedsMaximum ? knownBefore ? " · would exceed that limit with known logged intake" : " · this portion alone exceeds that limit" : ""}${comparesIntake && !complete ? " · logged intake is incomplete or unavailable; any remaining amount is provisional, and being below a daily limit is not confirmed" : ""}.`,
+      explanation: amount === null ? `${name} is unavailable; it is not counted as zero.` : `${formatted} ${unit} ${name.toLowerCase()}${percentOfMinimum !== null ? ` · ${percentText(percentOfMinimum)} of your selected daily minimum` : ""}${percentOfTarget !== null ? ` · ${percentText(percentOfTarget)} of your selected daily target` : ""}${percentOfMaximum !== null ? ` · ${percentText(percentOfMaximum)} of your selected daily limit` : ""}${exceedsMaximum ? knownBefore ? " · would exceed that limit with known logged intake" : " · this portion alone exceeds that limit" : ""}${comparesIntake && !complete ? " · logged intake is incomplete or unavailable; any remaining amount is provisional, and being below a daily limit is not confirmed" : ""}.`,
       basis: "composition" as const };
   });
 }

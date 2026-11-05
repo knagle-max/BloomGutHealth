@@ -63,3 +63,9 @@ test("new manual capture keeps first lexical tokens across conversions, preserve
  assert.deepEqual(captureCheckinEntrySource({unit:"kg",value:"71.000"},{unit:"in",value:""},{})?.fields.weight,{unit:"kg",value:"71.000"});
  assert.throws(()=>captureCheckinEntrySource(mass,waist,{energy:"PrivateCanary"}));
 });
+
+test("numeric source capture preserves harmless surrounding spaces and tabs while multiline tokens remain invalid",()=>{
+ const source=captureCheckinEntrySource({unit:"kg",value:" 70.000\t"},{unit:"in",value:" 36.00 "},{});
+ assert.equal(source?.fields.weight?.value," 70.000\t");assert.equal(checkinSchema.safeParse({...canonical,weightKg:70,entrySource:source}).success,true);
+ assert.throws(()=>captureCheckinEntrySource({unit:"kg",value:"70"},{unit:"cm",value:""},{energy:"7\n"}));
+});

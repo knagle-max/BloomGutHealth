@@ -24,7 +24,8 @@ export function energyAmount(kcal: number | null | undefined, unit: NutritionDis
 
 export function foodMass(grams: number | null | undefined, unit: NutritionDisplayUnits["foodWeight"]): string {
   if (grams == null || !Number.isFinite(grams) || grams < 0) return "Amount unknown";
-  return `${Number(quantityFromCanonical("foodWeight", grams, unit).toFixed(unit === "oz" ? 2 : 1))} ${unit}`;
+  const converted=quantityFromCanonical("foodWeight",grams,unit),rounded=Number(converted.toFixed(unit==="oz"?2:1));
+  return `${rounded===0&&converted>0?formatNutrientAmount(converted):rounded} ${unit}`;
 }
 
 export function foodMassDraft(raw: string, unit: NutritionDisplayUnits["foodWeight"]): number | null {

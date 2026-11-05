@@ -1,3 +1,4 @@
+import {parseFoodMassEntry,formatFoodMassEntry,switchFoodMassUnit,originalFoodMassEntry,type FoodMassEntry} from "../shared/measurement-entry";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {parseHeightEntry,parseMassEntry,formatMassEntry,formatHeightEntry,switchHeightUnit,switchMassUnit,parseCircumferenceEntry,switchCircumferenceUnit,originalMassEntry,originalHeightEntry,originalCircumferenceEntry,type MassEntry,type HeightEntry,type CircumferenceEntry} from "../shared/measurement-entry";
@@ -99,4 +100,16 @@ test("unit switching converts entered quantities without treating the same numbe
  }
  assert.deepEqual(switchMassUnit({unit:"lb",value:""},"kg"),{unit:"kg",value:""});
  assert.deepEqual(switchHeightUnit({unit:"cm",primary:"",inches:""},"ft-in"),{unit:"ft-in",primary:"",inches:""});
+});
+
+test("food mass switches preserve exact grams and first lexical precision, including maximum and tiny positive values",()=>{
+ for(const initial of[{unit:"oz",value:"4.000"},{unit:"g",value:"3000.000"},{unit:"g",value:"0.000000000001"}]as const){
+  let entry:FoodMassEntry=initial;const original=parseFoodMassEntry(entry);assert.equal(original.kind,"valid");
+  for(let i=0;i<1000;i++){const next=switchFoodMassUnit(entry,i%2?"g":"oz");assert.ok("unit"in next);entry=next;assert.deepEqual(parseFoodMassEntry(entry),original);}
+  assert.deepEqual(originalFoodMassEntry(entry),initial);
+ }
+ assert.equal(originalFoodMassEntry(formatFoodMassEntry(100,"oz")),null);
+ for(const raw of["4.",".","-1","0","1e3","3001","1".repeat(129)])assert.notEqual(parseFoodMassEntry({unit:"g",value:raw}).kind,"valid");
+ assert.equal("unit"in switchFoodMassUnit({unit:"oz",value:"4."},"g"),false);
+ const maximum=switchFoodMassUnit({unit:"g",value:"3000"},"oz");assert.ok("unit"in maximum);assert.equal(parseFoodMassEntry(maximum).canonical,3000);
 });

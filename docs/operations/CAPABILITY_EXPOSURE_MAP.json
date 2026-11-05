@@ -21,7 +21,8 @@
           "server/profile-source.ts",
           "server/profile-measurement-source.ts",
           "server/profile-errors.ts",
-          "shared/profile-measurement-source.ts"
+          "shared/profile-measurement-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -62,7 +63,8 @@
           "shared/today-focus.ts",
           "server/planning-context.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -100,7 +102,8 @@
           "shared/today-focus.ts",
           "server/planning-context.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -144,7 +147,8 @@
           "shared/athlete-calendar.ts",
           "shared/athlete-review.ts",
           "server/settings-source.ts",
-          "client/src/lib/dashboard-data.ts"
+          "client/src/lib/dashboard-data.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -169,7 +173,9 @@
           "client/src/components/ProductPicker.tsx",
           "client/src/components/FoodEntryChooser.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/RecentMealSource.tsx"
+          "client/src/components/RecentMealSource.tsx",
+          "client/src/components/FoodCompositionExplorer.tsx",
+          "client/src/components/FoodMassInput.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -182,7 +188,10 @@
           "shared/barcodes.ts",
           "server/food-catalog.ts",
           "server/preference-source.ts",
-          "server/meal-review-source.ts"
+          "server/meal-review-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/nutrition-display.ts",
+          "shared/food-intelligence.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -334,7 +343,9 @@
           "client/src/components/CompanionHero.tsx",
           "client/src/components/SavedMeals.tsx",
           "client/src/components/MealAnalysis.tsx",
-          "client/src/components/FoodProgress.tsx"
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/FoodCompositionExplorer.tsx",
+          "client/src/components/FoodMassInput.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -358,7 +369,10 @@
           "server/preference-source.ts",
           "server/settings-source.ts",
           "server/meal-review-source.ts",
-          "shared/food-progress.ts"
+          "shared/food-progress.ts",
+          "shared/measurement-entry.ts",
+          "shared/nutrition-display.ts",
+          "shared/food-intelligence.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -387,7 +401,9 @@
           "client/src/components/ProductPicker.tsx",
           "client/src/components/FoodEntryChooser.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/FoodProgress.tsx"
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/FoodCompositionExplorer.tsx",
+          "client/src/components/FoodMassInput.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -399,7 +415,10 @@
           "server/preference-source.ts",
           "server/meal-review-source.ts",
           "shared/food-progress.ts",
-          "shared/nutrition-summary.ts"
+          "shared/nutrition-summary.ts",
+          "shared/measurement-entry.ts",
+          "shared/nutrition-display.ts",
+          "shared/food-intelligence.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -474,7 +493,8 @@
           "shared/weekly-planner.ts",
           "server/planning-context.ts",
           "server/preference-source.ts",
-          "server/meal-review-source.ts"
+          "server/meal-review-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -524,7 +544,8 @@
           "server/planning-context.ts",
           "server/preference-source.ts",
           "server/meal-review-source.ts",
-          "shared/practical-planner.ts"
+          "shared/practical-planner.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -575,7 +596,8 @@
           "shared/activity-capture.ts",
           "shared/activity.ts",
           "shared/experience.ts",
-          "shared/training-set-history.ts"
+          "shared/training-set-history.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -625,7 +647,8 @@
           "shared/activity-capture.ts",
           "shared/activity.ts",
           "shared/experience.ts",
-          "shared/training-set-history.ts"
+          "shared/training-set-history.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -663,7 +686,8 @@
           "shared/athlete.ts",
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -699,7 +723,8 @@
           "shared/athlete.ts",
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -856,7 +881,8 @@
           "shared/precision-nutrition.ts",
           "server/planning-context.ts",
           "shared/checkin-entry-source.ts",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1131,7 +1157,8 @@
           "shared/manual-genetics.ts",
           "shared/genotype-explanations.ts",
           "shared/genetics-catalogue.ts",
-          "shared/genetic-call-source.ts"
+          "shared/genetic-call-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1170,7 +1197,8 @@
           "shared/manual-genetics.ts",
           "shared/genotype-explanations.ts",
           "shared/genetics-catalogue.ts",
-          "shared/genetic-call-source.ts"
+          "shared/genetic-call-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1300,7 +1328,8 @@
           "server/weekly-worker.ts",
           "server/planning-context.ts",
           "server/preference-source.ts",
-          "server/meal-review-source.ts"
+          "server/meal-review-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1492,7 +1521,8 @@
         "logicOrJobs": [
           "server/account-export.ts",
           "server/account-erasure.ts",
-          "server/shared-rate-limit.ts"
+          "server/shared-rate-limit.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1521,7 +1551,8 @@
         "logicOrJobs": [
           "server/account-export.ts",
           "server/account-erasure.ts",
-          "server/shared-rate-limit.ts"
+          "server/shared-rate-limit.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1558,7 +1589,8 @@
           "shared/athlete.ts",
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1729,7 +1761,9 @@
     "client/src/components/ExperimentObservations.tsx": "8bbb5344ad94e5ca3afc4bf355407c7510630d0029d7ba27c91c930a03e3033f",
     "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
+    "client/src/components/FoodCompositionExplorer.tsx": "aa5b49972e56a87664babf4d83807f71500a94d30369aec567293fbd866fcb86",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
+    "client/src/components/FoodMassInput.tsx": "aaad814f2895ccd882abe6b56aeae88e5ce72ff05fae6bc72896c7a2ffa02a8d",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
     "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
     "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
@@ -1780,7 +1814,7 @@
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
     "client/src/pages/PrecisionNutrition.tsx": "1b2b9c885f6046009fe63669f0ac841b5a18e84f56e014e8a2dfdfbb3d574a7d",
-    "client/src/pages/Profile.tsx": "7cc319464b062f1f04da37f5c9d42fdefd08150874b93250a6b585396d65655b",
+    "client/src/pages/Profile.tsx": "5fdaca88e89d00efb9ed9936c634152400f06981120b95b65807549834afea22",
     "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
     "client/src/pages/Upload.tsx": "76a07de1f55c483f3538b6d017fd0a1bb392c8786d768accbe0ca602933d22fa",
@@ -1862,6 +1896,7 @@
     "shared/experience.ts": "aca0465bbccde2ae35d0aceb34116f13eea9e69319f2d9268824e747b955c68c",
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
+    "shared/food-intelligence.ts": "4ad0deb199cd8a6e52b6bb844fd6679000659f766c64a304d25f6a680b6fb3d9",
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
     "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
@@ -1879,13 +1914,15 @@
     "shared/manual-genetics.ts": "b64377f85b8f2a9696bd35b14a96a854a191d7a81e970e9eef0b4ec66a7d2cd2",
     "shared/meal-intelligence.ts": "c51fb9d29d2e1178b2a9a826fb3a79d919574d8ddd19c187850aa50092af167e",
     "shared/meal-portions.ts": "c7ca2439c969026acfcd6f195e7bd06ddcdd9f90f1668741a734d5a7e2dc0c0e",
-    "shared/numeric-entry-token.ts": "712ee6658aff404f8fb7f3f01ec0805825e25cd6690767b8fa53d4a207371705",
+    "shared/measurement-entry.ts": "399bedf83d62bcc171436529139ba7e02153b03de595f5b9605aac7ef7eb4910",
+    "shared/numeric-entry-token.ts": "e8e72128b93502fb623f08e10d951864ea2151e3a72efb498844cc4803e37159",
+    "shared/nutrition-display.ts": "ca164c626fa377a3ee16698b3811f0475f603210b0419d8b8061f7b98b641303",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "509f5107fa8306d04c7792f3ec2c36c5a04950deffdd87b025c4914a1d936407",
     "shared/precision-nutrition.ts": "8afbc2ed9b8eeeb239efcb742c52e3ec3e33b04c83416400a5511deea9a3cefa",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
-    "shared/profile-measurement-source.ts": "140fef6c3f55d29a6e11cfc1992f9836c7eed557c5aa7c45881ee91c1a772bc7",
+    "shared/profile-measurement-source.ts": "7aad632c9c98bf5670eea4277155a98507350e5a6983f6d917c05aed3a994a4e",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
     "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
     "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
