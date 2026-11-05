@@ -1,4 +1,5 @@
 import { abundanceSchema } from "./report-import";
+import {hasViomeFindingsMarker,parseViomeFindings} from "./viome-findings";
 export const STRUCTURED_REPORT_MAX_BYTES = 2 * 1024 * 1024;
 type Dict = Record<string, unknown>;
 const object = (value: unknown): value is Dict =>
@@ -129,6 +130,20 @@ export function parseStructuredReport(input: unknown): StructuredReport {
   if (bytes > STRUCTURED_REPORT_MAX_BYTES)
     throw Error("Structured JSON reports must be 2 MB or smaller.");
   const source = structuredSourceObject(input);
+  const nativeSource=hasViomeFindingsMarker(source)?source:hasViomeFindingsMarker(source.sourceReport)?source.sourceReport:null;
+  if(nativeSource){
+    const findings=parseViomeFindings(nativeSource);
+    // Reuse canonical parsing; only reconstructed, allowlisted biological rows
+    // enter this branch. No raw document, metadata bag or text excerpt survives.
+    const parsed=parseStructuredReport({
+      testing_company:"Viome",data_origin:"User-supplied qualitative Viome findings; not independently verified",
+      score_interpretation_warning:"Provider categories and reported presence are not numeric scores, abundance, gene function or measured metabolite activity.",
+      organisms:findings.organisms.map(row=>({name:row.name,reported_status:row.reportedStatus,notes:`Provider group: ${row.reportedGroup}; de-identified source page ${row.position.page}, column ${row.position.column}, row ${row.position.row}.`})),
+      scores:findings.assessments.map(row=>({name:row.name,status:row.reportedCategory,notes:row.description})),
+      foods:findings.foods.map(row=>({name:row.name,reportedCategory:row.reportedCategory,sourcePage:row.position.page,sourceColumn:row.position.column})),
+    });
+    return{...parsed,sourceReport:{...findings}};
+  }
   // Our exported format carries source strings, not new permission/evidence authority.
   const canonical = source.schemaVersion === "bloom-report-v2";
   const metadata = object(input.metadata)
@@ -290,7 +305,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
         100,
       ) ||
       (scores.length || organisms.length || foods.length
-        ? "Viome-style report"
+        ? "Provider not supplied"
         : "Abundance report"),
     dataOrigin: text(
       canonical ? source.dataOrigin : source.data_origin ?? metadata.data_origin ?? metadata.source,
@@ -364,6 +379,7 @@ export function parseReportDocument(textInput: string, format: "json" | "csv") {
   return { source, parsed: parseStructuredReport(source) };
 }
 export function embeddedReportTestDate(value: unknown) {
+  if(hasViomeFindingsMarker(value))return parseViomeFindings(value).biologicalDates.collectedOn;
   const source = object(value) ? value : {};
   const payload = object(source.report)
     ? source.report

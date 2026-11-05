@@ -26,7 +26,7 @@
     "server/precision-routes.ts": "f6c1b661934c030dad6589c0d29f9859e61e48ea552d9ac58de070f2e6cf9ac7",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "80ea61e3bde9de36e9721a9df3b353f8859b13a8e66c5eb23c75aeb833d0c1f5",
-    "server/report-routes.ts": "be9fadf1f5156e96a728da70cd2f46a9b9311df235d07aa47c1f75aac8cc3d45",
+    "server/report-routes.ts": "12ce4e3d6438eec855a3ce38ff5ec72e2e4d2887fe805130b9bf812ab3f6e4f6",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
@@ -822,7 +822,7 @@
     },
     {
       "file": "server/report-routes.ts",
-      "line": 135,
+      "line": 137,
       "method": "GET",
       "path": "/api/microbiome/cohorts",
       "declaredMiddleware": [
@@ -833,7 +833,7 @@
     },
     {
       "file": "server/report-routes.ts",
-      "line": 138,
+      "line": 140,
       "method": "POST",
       "path": "/api/microbiome/import",
       "declaredMiddleware": [
@@ -845,7 +845,7 @@
     },
     {
       "file": "server/report-routes.ts",
-      "line": 196,
+      "line": 202,
       "method": "POST",
       "path": "/api/microbiome/upload",
       "declaredMiddleware": [

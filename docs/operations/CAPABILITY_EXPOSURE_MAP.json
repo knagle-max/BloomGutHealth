@@ -999,7 +999,8 @@
           "shared/structured-report.ts",
           "server/analysis-boundary.ts",
           "server/report-analysis.ts",
-          "shared/scientific-visuals.ts"
+          "shared/scientific-visuals.ts",
+          "shared/viome-findings.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1011,7 +1012,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Provider-reported source scores may be displayed as report data; inferred gene activity/concentrations remain withheld. No functional-model approval. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Canonical optional provider food rows and qualitative categories are historical source display only; no added allergy, exclusion, score calibration, measured metabolite, food rank or native PDF/privacy certification.",
+      "observation": "Provider-reported source scores may be displayed as report data; inferred gene activity/concentrations remain withheld. No functional-model approval. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Canonical optional provider food rows and qualitative categories are historical source display only; no added allergy, exclusion, score calibration, measured metabolite, food rank or native PDF/privacy certification. Reviewed Viome findings have a strict field allowlist and reject extra identifiers/filename metadata before storage or request hashing; this is not native-PDF extraction or full PII-value exclusion certification.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1682,7 +1683,7 @@
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
     "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
     "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
-    "client/src/components/ImportedReportDetails.tsx": "ec59c90601b4dd6202433af23bccc1932bd7f4ee0c48e9dfc87c1f9d54f7f363",
+    "client/src/components/ImportedReportDetails.tsx": "589138363f2470f5f847a12a8dd3802a9fcc42f5cff59acbedd189e916bdfd49",
     "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
     "client/src/components/LabExplorer.tsx": "65aab0bc1d75bd8c3c6684ebf1410dd4f7845d4f3281187a086712aa7666a1e1",
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
@@ -1730,7 +1731,7 @@
     "client/src/pages/Profile.tsx": "01dd1de4b47126cf54b19898d190c07b19bb6d1bd4b3b1773c8d6b6c4d609e08",
     "client/src/pages/Progress.tsx": "a664e44d30856ed6cb0cc493c8d17f445cb9bd88e654944aa0c4a7e89c585ab8",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
-    "client/src/pages/Upload.tsx": "1a8b06d0bbc39feabd2cb7bf761aad1a8fb187b6f97136f52a5be32a3069da0b",
+    "client/src/pages/Upload.tsx": "76a07de1f55c483f3538b6d017fd0a1bb392c8786d768accbe0ca602933d22fa",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
     "server/account-export.ts": "ef01ac7e1c4762476277e4d7a6fc4881c95f20ccb3d65767a8281a27022029c2",
@@ -1776,7 +1777,7 @@
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
     "server/recipe-ranking.ts": "99f74c8711694fc4779d8dbf8232a4d32d47a716186ae9d2e7c6dffa9e2c9595",
     "server/report-analysis.ts": "be7fe43839066ec596f770da4992905ec06f685595cc64ea720b648bb5d76025",
-    "server/report-routes.ts": "be9fadf1f5156e96a728da70cd2f46a9b9311df235d07aa47c1f75aac8cc3d45",
+    "server/report-routes.ts": "12ce4e3d6438eec855a3ce38ff5ec72e2e4d2887fe805130b9bf812ab3f6e4f6",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
     "server/review-runtime-audit.ts": "12d4d26b37e0967da4273d0c8b3d990e106695f73f6f8f39f7c925070867008f",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
@@ -1831,9 +1832,10 @@
     "shared/schema.ts": "d65c1490e8a806688c38a195fdc7cea871d1f48fd1db0c5d3c5a12a22700d552",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/scientific-visuals.ts": "e2c078f7815fd49e90cdb243cc76042cc056f281b269596506bb9e750778b9d8",
-    "shared/structured-report.ts": "befb52170397116933141b22975927f070130392c638926a2366fb8f981e3c79",
+    "shared/structured-report.ts": "ac049703f4db1a857c9bd0c81b4382dd3c9cbd1321b4f66e18ecfcf1871f28df",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
     "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",
+    "shared/viome-findings.ts": "1cf3bc29f0832dd777c5df0aa6e1726a82bae2227851d550f33570dff743b692",
     "shared/weekly-planner.ts": "3ca8ebd1ae45e6159646cd5a7c0e92b1f15fdbb76be8fc9298eae49a721b9719"
   }
 }

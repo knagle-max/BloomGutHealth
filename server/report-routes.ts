@@ -2,6 +2,7 @@ import type { Express, RequestHandler } from "express";
 import multer from "multer";
 import { basename, extname } from "node:path";
 import { z } from "zod";
+import {assertViomeImportMetadata,hasViomeFindingsMarker} from "../shared/viome-findings";
 import type { IStorage } from "./storage";
 import {
   parseStructuredReport,
@@ -40,6 +41,7 @@ export async function saveStructuredReport(
   fields: z.infer<typeof fieldsSchema>,
   filename: string | null = null,
 ): Promise<ReportSaveResult> {
+  assertViomeImportMetadata(report.sourceReport,fields,filename);
   const resolved = resolveReportDate(fields.testDate, report);
   let sampleId: string | undefined;
   try {
@@ -152,6 +154,10 @@ export function registerReportRoutes(
           bacteria_percentages: fields.data.bacteria_percentages,
         },
       );
+      if(hasViomeFindingsMarker(report.sourceReport)){
+        const{report:_reviewed,...extras}=fields.data;
+        assertViomeImportMetadata(report.sourceReport,extras,null);
+      }
       resolveReportDate(fields.data.testDate, report);
     } catch (error) {
       return res.status(400).json({ error: (error as Error).message });
@@ -240,6 +246,7 @@ export function registerReportRoutes(
               new TextDecoder("utf-8", { fatal: true }).decode(file.buffer),
               extension === ".json" ? "json" : "csv",
             ).parsed;
+            if(hasViomeFindingsMarker(parsed.sourceReport))throw Error("Original attachments are not accepted for de-identified Viome findings. Use the reviewed findings workflow.");
             resolveReportDate(fields.data.testDate, parsed);
           } catch (error) {
             return res.status(400).json({ error: (error as Error).message });

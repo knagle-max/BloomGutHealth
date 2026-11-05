@@ -4,10 +4,12 @@ import {z} from 'zod';
 import {microbiomeSamples,bacterialComposition,mlAnalyses} from '../shared/schema';
 import {reportImportIdentity,ReportSaveConflict,type StructuredReport,type ReportImportFields,type ReportSaveResult} from '../shared/structured-report';
 import {saveStructuredReport} from './report-routes';
+import {assertViomeImportMetadata} from '../shared/viome-findings';
 const stable=(value:unknown):unknown=>Array.isArray(value)?value.map(stable):value&&typeof value==='object'?Object.fromEntries(Object.entries(value).filter(([,entry])=>entry!==undefined).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([key,entry])=>[key,stable(entry)])):value;
 /** One atomic owned sample and children. Receipt metadata is erased with it. */
 export async function importStructuredReportWithReceipt(db:any,userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string):Promise<ReportSaveResult>{
  if(!userId||!z.string().uuid().safeParse(key).success)throw Error('INVALID_REPORT_KEY');
+ assertViomeImportMetadata(report.sourceReport,fields,filename);
  const id='report_'+createHash('sha256').update(reportImportIdentity(userId,key)).digest('hex'),requestHash=createHash('sha256').update(JSON.stringify(stable({userId,source:report.sourceReport,fields,filename}))).digest('hex');
  return db.transaction(async(tx:any)=>{
   // Matches the existing account-erasure lock so an import cannot survive erasure.

@@ -164,7 +164,7 @@ export default function ImportedReportDetails({
                     <div className="report-source-facts">
                       <p>
                         <strong>Source status:</strong>{" "}
-                        {o.reportedStatus || "not supplied"}
+                        {o.reportedStatus==="reported_present"?"Reported":o.reportedStatus==="not_reported"?"Not reported":o.reportedStatus || "not supplied"}
                       </p>
                       <p>
                         <strong>Reported amount:</strong>{" "}

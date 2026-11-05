@@ -1,8 +1,9 @@
 import ImportedReportDetails from "@/components/ImportedReportDetails";
 import {useStructuredReportSave} from "@/lib/useStructuredReportSave";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
+import {hasViomeFindingsMarker,parseViomeFindings,ViomeFindingsError} from "@shared/viome-findings";
 import { queryClient } from "@/lib/queryClient";
 import FileUploadZone from "@/components/FileUploadZone";
 import { Label } from "@/components/ui/label";
@@ -47,11 +48,13 @@ export default function Upload() {
   const [, setLocation] = useLocation();
   const { user } = useAuth();
   const previewHeading=useRef<HTMLHeadingElement>(null);
+  const viome=useMemo(()=>preview&&hasViomeFindingsMarker(preview.parsed.sourceReport)?parseViomeFindings(preview.parsed.sourceReport):null,[preview]);
   useEffect(()=>{if(preview)previewHeading.current?.focus();},[preview]);
   const reportError=inputError||save.error?.message;
   useEffect(()=>{if(reportError)errorRef.current?.focus();},[reportError]);
   const active=useRef(true),actor=useRef(user?.id);actor.current=user?.id;
   useEffect(()=>{active.current=true;return()=>{active.current=false;};},[]);
+  const clearViomeInput=()=>{setFile(null);setManualData("");setTestingCompany("");setTestId("");setNotes("");setTestDate(undefined);};
 
   const handleSubmit = async () => {
     const owner=user?.id;if(!owner||isUploading||save.saved)return;
@@ -69,11 +72,14 @@ export default function Upload() {
         const text=pasted||await selected!.text(),parsed=parseReportDocument(text,pasted||selected!.name.toLowerCase().endsWith(".json")?"json":"csv");
         if(!active.current||actor.current!==owner)return;
         notice.current?.dismiss();
-        setPreview({...parsed,originalFilename:pasted?undefined:selected?.name});
+        if(hasViomeFindingsMarker(parsed.parsed.sourceReport)){
+          setPreview({source:parsed.parsed.sourceReport,parsed:parsed.parsed});clearViomeInput();
+        }else setPreview({...parsed,originalFilename:pasted?undefined:selected?.name});
         return;
       } else {
         setAttempted(true);
-        result=await save.submit({report:preview.source,originalFilename:preview.originalFilename,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes},{kind:preview.parsed.kind,scores:preview.parsed.scores.length,reportedOrganisms:preview.parsed.organisms.length,quantifiedTaxa:Object.keys(preview.parsed.bacteria_percentages||{}).length});
+        const command=hasViomeFindingsMarker(preview.parsed.sourceReport)?{report:preview.parsed.sourceReport}:{report:preview.source,originalFilename:preview.originalFilename,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes};
+        result=await save.submit(command,{kind:preview.parsed.kind,scores:preview.parsed.scores.length,reportedOrganisms:preview.parsed.organisms.length,quantifiedTaxa:Object.keys(preview.parsed.bacteria_percentages||{}).length});
       }
       if(!result||!active.current||actor.current!==owner)return;
       acknowledged=true;
@@ -84,6 +90,7 @@ export default function Upload() {
       setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
     } catch(error) {
       if(!active.current||actor.current!==owner)return;
+      if(error instanceof ViomeFindingsError)clearViomeInput();
       if(acknowledged)notice.current=toast({title:"Report saved",description:"Open the saved report using the link below."});
       else {setInputError(error instanceof Error?error.message:"Check your report and try again.");requestAnimationFrame(()=>{if(active.current&&actor.current===owner)errorRef.current?.focus();});}
     } finally {
@@ -212,6 +219,7 @@ export default function Upload() {
         <h2 id="report-preview-title" ref={previewHeading} tabIndex={-1}>Review report before saving</h2>
         <p>{attempted?'Review of the source prepared for this import. Save status is shown below.':'Prepared locally; nothing has been uploaded or saved yet.'}</p>
         <p>{preview.parsed.scores.length} provider assessments · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa{preview.parsed.foods?.length?` · ${preview.parsed.foods.length} provider food suggestions`:""}</p>
+        {viome&&<div className="report-context"><p>This record keeps the reviewed finding fields. Optional identifiers, notes and the original filename are omitted.</p><p>Collection: {viome.biologicalDates.collectedOn||"not supplied"} · received: {viome.biologicalDates.receivedOn||"not supplied"} · reported: {viome.biologicalDates.reportedOn||"not supplied"}.</p><p className="panel-note">Collection dates remain separate from received and reported dates. Raw-document and general-purpose text fields are not accepted.</p></div>}
         <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
         <details><summary>Recognized data & missing measurements</summary>
           {preview.parsed.bacteria_percentages&&<section aria-label="Reported relative abundance" className="space-y-2">
@@ -229,7 +237,7 @@ export default function Upload() {
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={(!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved}
+        disabled={(!preview&&!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved}
         data-testid="button-submit-upload"
       >
         {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":preview?"Save report":"Review report"}

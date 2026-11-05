@@ -1,4 +1,4 @@
-import { useId,useRef,useState } from 'react';
+import { useEffect,useId,useRef,useState } from 'react';
 import { Upload, FileText } from 'lucide-react';
 
 interface FileUploadZoneProps {
@@ -17,6 +17,7 @@ export default function FileUploadZone({
   const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const inputId=useId(),inputRef=useRef<HTMLInputElement>(null);
+  useEffect(()=>{if(file===null&&inputRef.current)inputRef.current.value="";},[file]);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();

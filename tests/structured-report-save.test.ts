@@ -11,6 +11,7 @@ import {parseStructuredReport,type StructuredReport,type ReportImportFields} fro
 import {registerReportRoutes} from '../server/report-routes';
 import {importStructuredReportWithReceipt} from '../server/structured-report-storage';
 import {publicSample} from '../server/analysis-boundary';
+import {VIOME_FINDINGS_VERSION} from '../shared/viome-findings';
 const body={report:{bacteria_percentages:{Bifidobacterium:60,Roseburia:40}},notes:'Original source'};
 test('owned canonical import preserves provider food rows atomically through retry and read without creating quantitative taxa',async()=>{
  const{pg,db,store}=await fixture();
@@ -31,6 +32,31 @@ async function fixture(){
  const store:any={insertMicrobiomeSample:async(data:any)=>(await db.insert(microbiomeSamples).values(data).returning())[0],updateMicrobiomeSample:(id:string,updates:any,owner:string)=>updateOwnedSample(db as any,id,updates,owner),insertBacterialComposition:(data:any,owner:string)=>insertOwnedComposition(db as any,data,owner),insertMlAnalysis:(data:any,owner:string)=>insertOwnedAnalysis(db as any,data,owner),importStructuredReport:(owner:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,key)};
  return{pg,db,store};
 }
+test('actual owned HTTP/SQL findings import rejects identifying extras before hashing or storage and preserves only allowlisted source',async()=>{
+ const{pg,db,store}=await fixture(),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerReportRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}`;
+ const source={schemaVersion:VIOME_FINDINGS_VERSION,provider:'Viome',documentKind:'active-gut-microbes',specimenType:'fecal',method:'qualitative RNA',biologicalDates:{collectedOn:'2026-09-01'},reviewConfirmed:true,organisms:[{name:'Bacteroides fragilis YCH46',reportedGroup:'Bacteria',reportedStatus:'reported_present',position:{page:2,column:1,row:1}}],assessments:[],foods:[]};
+ const send=async(body:unknown,key=randomUUID(),user='a')=>{const response=await fetch(base+'/api/microbiome/import',{method:'POST',headers:{'content-type':'application/json','x-user':user,'Idempotency-Key':key},body:JSON.stringify(body)});return{status:response.status,body:await response.json()as any};};
+ try{
+  for(const extra of[{testId:'PrivateCanaryValue'},{notes:'PrivateCanaryValue'},{originalFilename:'PrivateCanaryValue.pdf'},{testingCompany:'Viome'},{testDate:'2026-09-01'}]){
+   const result=await send({report:source,...extra});assert.equal(result.status,400);assert.equal(JSON.stringify(result.body).includes('PrivateCanaryValue'),false);
+  }
+  assert.equal((await send({report:{...source,PrivateCanaryKey:'PrivateCanaryValue'}})).status,400);
+  assert.equal((await db.select().from(microbiomeSamples)).length,0);
+  const parsed=parseStructuredReport(source);
+  await assert.rejects(()=>store.importStructuredReport('a',parsed,{notes:'PrivateCanaryValue'},null,randomUUID()));
+  await assert.rejects(()=>store.importStructuredReport('a',parsed,{},'PrivateCanaryValue.pdf',randomUUID()));
+  const form=new FormData();form.set('file',new Blob([JSON.stringify(source)],{type:'application/json'}),'PrivateCanaryValue.json');
+  const uploaded=await fetch(base+'/api/microbiome/upload',{method:'POST',headers:{'x-user':'a'},body:form});assert.equal(uploaded.status,400);assert.equal((await uploaded.text()).includes('PrivateCanaryValue'),false);
+  assert.equal((await db.select().from(microbiomeSamples)).length,0);
+  const key=randomUUID(),wrapper={...parsed,sourceLabel:'PrivateCanaryValue',rawText:'PrivateCanaryValue',bacteria_percentages:{'PrivateCanaryValue':100}};
+  const first=await send({report:wrapper},key),again=await send({report:parsed},key);assert.equal(first.status,200);assert.deepEqual(again,first);
+  const rows=await db.select().from(microbiomeSamples);assert.equal(rows.length,1);assert.equal(rows[0].testId,null);assert.equal(rows[0].notes,null);assert.equal(rows[0].rawDataPath,null);
+  assert.equal(JSON.stringify(rows).includes('PrivateCanaryValue'),false);assert.deepEqual((rows[0].structuredData as any).sourceReport,source);
+  assert.equal((await db.select().from(bacterialComposition)).length,0);assert.equal((await db.select().from(mlAnalyses)).length,1);
+  assert.equal((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,'b'))).length,0);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();}
+});
 test('owned import receipts recover a lost response without duplicate reports/children; changed commands conflict and legacy callers remain compatible',async()=>{
  const{pg,db,store}=await fixture(),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerReportRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store);const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}`;
  const send=async(data:unknown,key?:string,user='a',actor?:string)=>{const response=await fetch(base+'/api/microbiome/import',{method:'POST',headers:{'content-type':'application/json',...(key?{'Idempotency-Key':key}:{}),...(user?{'x-user':user}:{}),...(actor?{'X-Bloom-Report-Actor':actor}:{})},body:JSON.stringify(data)});return{status:response.status,body:await response.json().catch(()=>null)as any};};
