@@ -1,3 +1,4 @@
+import {ingredientMassEntrySchema,ingredientMassEntryMatches} from "./ingredient-mass-entry";
 import {recognizedMealTimeZone} from "./meal-time";
 import { roundNutrientEstimate } from "./nutrition-precision";
 import { tasteMatches } from "./food-preference-policy";
@@ -61,14 +62,17 @@ export const mealContextSchema = z
       .optional(),
   })
   .strict();
-export const ingredientSchema = z.object({
+// Unrefined fields are only for composing the external AI parser, which omits provenance.
+export const ingredientFieldsSchema = z.object({
   name: z.string().min(1).max(120),
   grams: z.number().positive().max(3000).nullable(),
   preparation: z.string().max(120),
   assumption: z.string().max(300),
+  massEntry:ingredientMassEntrySchema.optional(),
   product: productRefSchema.optional(),
   catalogue: z.object({source:z.literal("usda-fndds"),fdcId:z.number().int().positive().max(Number.MAX_SAFE_INTEGER)}).strict().optional(),
 });
+export const ingredientSchema=ingredientFieldsSchema.refine(value=>ingredientMassEntryMatches(value.massEntry,value.grams),"Original portion entry must match canonical mass");
 export type Ingredient = z.infer<typeof ingredientSchema>;
 export interface Nutrient {
   key: string;

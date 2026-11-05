@@ -1,3 +1,4 @@
+import IngredientMassEntry from "./IngredientMassEntry";
 import { useExperience } from "@/lib/experience";
 import { nutrientDisplay, foodMass, formatNutrientAmount } from "@shared/nutrition-display";
 import FoodRelationshipLinks from "./FoodRelationshipLinks";
@@ -80,6 +81,7 @@ export default function MealAnalysis({
         {ingredients.map((item, index) => (
           <FoodRow className={`border-t py-3 space-y-2${preview?' review-food-row':''}`} key={rows[index].key} data-draft-row={rows[index].key} role="group" aria-label={`Ingredient ${index+1}`} open={preview?expandedRows.has(rows[index].key):undefined} onToggle={event=>{if(!preview||event.target!==event.currentTarget)return;const open=(event.currentTarget as HTMLDetailsElement).open,key=rows[index].key;setExpandedRows(previous=>{if(previous.has(key)===open)return previous;const next=new Set(previous);if(open)next.add(key);else next.delete(key);return next;});}}>
             {preview&&<summary className="review-food-heading"><span className="review-food-identity"><strong>{item.name||'New ingredient'}</strong><small>{item.product?`${item.product.servings} labelled servings${item.grams===null?'':` · ${foodMass(item.grams,units.foodWeight)}`}`:item.grams===null?'Amount unknown':foodMass(item.grams,units.foodWeight)}</small></span><span className="review-food-status">{hasEdits?'Draft':missing.some(m=>m.name===item.name)?'Needs review':item.product?.source==='manual'?'Your label':item.product||item.catalogue?'Selected source':'Estimated match'}</span><span className="review-food-edit">Change</span></summary>}
+            <IngredientMassEntry source={item.massEntry}/>
             {onRecalculate ? (
               <>
                 <label className="block review-food-name">
@@ -121,6 +123,7 @@ export default function MealAnalysis({
                         const servings=Number(e.target.value);
                         setEdits(ingredients.map((v,i)=>i===index?{...v,
                           grams:v.grams!==null&&v.product!.servings>0&&Number.isFinite(servings)&&servings>0?v.grams*servings/v.product!.servings:null,
+                          massEntry:undefined,
                           product:{...v.product!,servings},
                         }:v));
                       }}
@@ -143,6 +146,7 @@ export default function MealAnalysis({
                             i === index
                               ? {
                                   ...v,
+                                  massEntry:undefined,
                                   grams: e.target.value
                                     ? Number(e.target.value)
                                     : null,

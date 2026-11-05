@@ -1,3 +1,4 @@
+import IngredientMassEntry from "@/components/IngredientMassEntry";
 import {currentMealTimeZone,recordedMealTime} from "@shared/meal-time";
 import SavedMealSource from "@/components/SavedMealSource";
 import RecentMealSource from "@/components/RecentMealSource";
@@ -198,7 +199,7 @@ export default function LogMeal() {
             <CheckCircle2 size={20} /> Your meal is saved.
           </h2>
           {!recalculate.isPending&&!recalculate.isError&&<><p className="my-3">{recordedFoods.length?`${recordedFoods.length} reviewed food entries recorded.`:'Your meal description is recorded.'}</p>
-          <details className="confirmation-source"><summary>Saved foods & original description</summary><ul>{recordedFoods.map((food,index)=><li key={index}>{food.name} · {food.product?`${food.product.servings} labelled servings${food.grams===null?'':` · ${foodMass(food.grams,settings.displayUnits.foodWeight)}`}`:food.grams===null?'Amount unknown':foodMass(food.grams,settings.displayUnits.foodWeight)}</li>)}</ul><p className="panel-note">Original description: {savedMeal.mealText}</p></details></>}
+          <details className="confirmation-source"><summary>Saved foods & original description</summary><ul>{recordedFoods.map((food,index)=><li key={index}>{food.name} · {food.product?`${food.product.servings} labelled servings${food.grams===null?'':` · ${foodMass(food.grams,settings.displayUnits.foodWeight)}`}`:food.grams===null?'Amount unknown':foodMass(food.grams,settings.displayUnits.foodWeight)}<IngredientMassEntry source={food.massEntry}/></li>)}</ul><p className="panel-note">Original description: {savedMeal.mealText}</p></details></>}
           {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)&&<p className="panel-note">Recorded meal time: {recordedMealTime(savedMeal.loggedAt,savedMeal.mealContext)}</p>}
           {recalculate.isPending||recalculate.isError ? <p role="status">{recalculate.isPending?"Checking corrected nutrition…":"Correction could not be confirmed. Retry with your retained portion draft, or open the journal to check the saved entry."}</p> : savedNutrition&&nutritionOverview(savedNutrition)}
           {!recalculate.isPending&&!recalculate.isError&&savedNutrition?.isPartial&&<p className="panel-note">Some nutrient values are unavailable. Any shown amounts are known contributions only.</p>}

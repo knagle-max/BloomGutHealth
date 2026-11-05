@@ -175,7 +175,8 @@
           "client/src/components/CompanionHero.tsx",
           "client/src/components/RecentMealSource.tsx",
           "client/src/components/FoodCompositionExplorer.tsx",
-          "client/src/components/FoodMassInput.tsx"
+          "client/src/components/FoodMassInput.tsx",
+          "client/src/components/IngredientMassEntry.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -191,7 +192,8 @@
           "server/meal-review-source.ts",
           "shared/measurement-entry.ts",
           "shared/nutrition-display.ts",
-          "shared/food-intelligence.ts"
+          "shared/food-intelligence.ts",
+          "shared/ingredient-mass-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -345,7 +347,8 @@
           "client/src/components/MealAnalysis.tsx",
           "client/src/components/FoodProgress.tsx",
           "client/src/components/FoodCompositionExplorer.tsx",
-          "client/src/components/FoodMassInput.tsx"
+          "client/src/components/FoodMassInput.tsx",
+          "client/src/components/IngredientMassEntry.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -372,7 +375,8 @@
           "shared/food-progress.ts",
           "shared/measurement-entry.ts",
           "shared/nutrition-display.ts",
-          "shared/food-intelligence.ts"
+          "shared/food-intelligence.ts",
+          "shared/ingredient-mass-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -403,7 +407,8 @@
           "client/src/components/CompanionHero.tsx",
           "client/src/components/FoodProgress.tsx",
           "client/src/components/FoodCompositionExplorer.tsx",
-          "client/src/components/FoodMassInput.tsx"
+          "client/src/components/FoodMassInput.tsx",
+          "client/src/components/IngredientMassEntry.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -418,7 +423,8 @@
           "shared/nutrition-summary.ts",
           "shared/measurement-entry.ts",
           "shared/nutrition-display.ts",
-          "shared/food-intelligence.ts"
+          "shared/food-intelligence.ts",
+          "shared/ingredient-mass-entry.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1768,6 +1774,7 @@
     "client/src/components/GeneticsCatalogue.tsx": "35a5f154197279496a659bafacceef787aa0d5a8ab2926ecb2535dd5ba4269ff",
     "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
     "client/src/components/ImportedReportDetails.tsx": "589138363f2470f5f847a12a8dd3802a9fcc42f5cff59acbedd189e916bdfd49",
+    "client/src/components/IngredientMassEntry.tsx": "948b603a10b9e215fe404a5092e2b11a0e7f695d4474847d710d35127d9d6da0",
     "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
     "client/src/components/LabExplorer.tsx": "65aab0bc1d75bd8c3c6684ebf1410dd4f7845d4f3281187a086712aa7666a1e1",
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
@@ -1775,7 +1782,7 @@
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "ceba01eda8b6143ccd3f9dede8f200eba5ecb984471bb66ec0f42c5fc1f3ffa9",
-    "client/src/components/MealAnalysis.tsx": "d5c3b9b180dc32f7b48aad8df04853e35cf424462e27141acc4b7321b13b73be",
+    "client/src/components/MealAnalysis.tsx": "4e2aece894a57f4d1842833c3a99160f8eb470aade9b3ef2bf75c9a9912ba15d",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
@@ -1808,7 +1815,7 @@
     "client/src/pages/Explore.tsx": "4f00b3872fa98bc22a449a336ab68e6d7828d5d3e576c4fb88a12d769c6043ca",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "6c31f8f3d3d9790e2984dce1a994e3cca4fb3a83cd39cca072490199f00a15f5",
+    "client/src/pages/LogMeal.tsx": "c2907a59f4b983c8956cde3040f73b10619462aa5a8beb783fd483e987cc0b36",
     "client/src/pages/MealPlanner.tsx": "9833fd2dff5a6868daf49f69745b96d75d4701aae151e3d438ff7e7b9f22c988",
     "client/src/pages/Microbiome.tsx": "3057d03cc2eb9f9284d95c879fed30f41e33d5b3b6ea3d5b98249f49899423a3",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
@@ -1842,7 +1849,7 @@
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
-    "server/meal-intelligence.ts": "396bf3ffc5c8fc884fceff1e1d07aa55a651b3944dd8614bcda4be18b294f538",
+    "server/meal-intelligence.ts": "40cff03f0f08645fdb6fd059b47cdbdf229c6576fc6c96350c184a5cdb39771b",
     "server/meal-review-source.ts": "75a206547ffcfd627c75041d52fa641378ae22bb47c8429fa2ea50478530bb2e",
     "server/meal-save.ts": "4ed54debee262c7e3e3e5823387869c77ebe21b5b8718f01c107286d2d0538d5",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
@@ -1904,6 +1911,7 @@
     "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
+    "shared/ingredient-mass-entry.ts": "85523bb5d76e0e8b42c90f6c5c0701bd47793b9f9b4917deefafaf6c0279e78c",
     "shared/lab-explorer.ts": "2e40ded4a56e73fe6445eefeaf14a2a16d413c7474e75dad0bb2237f6fad9449",
     "shared/lab-history.ts": "a4d9ca4c0dc41e5386d87c499a0866a5e018952d2cf0608ddc9f3975878994c6",
     "shared/lab-image-file.ts": "63b696d30e906fbacba155218bfc0b86506fcbd30e3089e9af476d59a838860f",
@@ -1912,7 +1920,7 @@
     "shared/lab-reimport.ts": "04b613fe84fc4a3fbfb4077ffe5b8b1f962ff9dc4d60147082baa148ffd72468",
     "shared/lab-text-file.ts": "98dbba4f3b7300bd92571cdab259dacaeaa03844fd6807ed347d4a89befded22",
     "shared/manual-genetics.ts": "b64377f85b8f2a9696bd35b14a96a854a191d7a81e970e9eef0b4ec66a7d2cd2",
-    "shared/meal-intelligence.ts": "c51fb9d29d2e1178b2a9a826fb3a79d919574d8ddd19c187850aa50092af167e",
+    "shared/meal-intelligence.ts": "b79a54f8d2c7ec3353abf2b3181d867151778a514b8d435e6e3c0343a72e1da3",
     "shared/meal-portions.ts": "c7ca2439c969026acfcd6f195e7bd06ddcdd9f90f1668741a734d5a7e2dc0c0e",
     "shared/measurement-entry.ts": "399bedf83d62bcc171436529139ba7e02153b03de595f5b9605aac7ef7eb4910",
     "shared/numeric-entry-token.ts": "e8e72128b93502fb623f08e10d951864ea2151e3a72efb498844cc4803e37159",

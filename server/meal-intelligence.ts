@@ -18,7 +18,7 @@ import { zodTextFormat } from "openai/helpers/zod";
 import { z } from "zod";
 import { lookupSnapshotNutrition } from "../shared/food-snapshot";
 import {
-  ingredientSchema,
+  ingredientFieldsSchema,
   MAX_MEAL_INGREDIENTS,
   requireMealIngredientLimit,
   parseExplicitIngredients,
@@ -106,7 +106,7 @@ export function lookupLocalNutrition(ingredients: Ingredient[], roundAmounts = t
 }
 export const parseSchema = z.object({
   ingredients: z
-    .array(ingredientSchema.omit({ product: true, catalogue: true }))
+    .array(ingredientFieldsSchema.omit({ product: true, catalogue: true,massEntry:true }))
     .min(1)
     .max(MAX_MEAL_INGREDIENTS),
   clarificationQuestions: z.array(z.string().max(300)).max(8),
