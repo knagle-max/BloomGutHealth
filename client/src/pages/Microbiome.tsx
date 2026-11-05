@@ -20,6 +20,8 @@ export default function Microbiome() {
   const [sampleId, setSampleId] = useState(() => new URLSearchParams(window.location.search).get("sample") || "");
   const [comparisonId, setComparisonId] = useState("");
   const [tab, setTab] = useState("results");
+  const [taxonSearch,setTaxonSearch]=useState<{owner:string;sample:string;text:string}|null>(null);
+  const taxonSearchInput=useRef<HTMLInputElement|null>(null);
   const samples = useQuery<any[]>({
     queryKey: ["/api/microbiome/samples", user?.id],
     enabled: !!user,
@@ -46,6 +48,8 @@ export default function Microbiome() {
   const currentPrediction=prediction.fetchStatus==="idle"&&!prediction.isError?prediction.data:undefined;
   const taxa=currentResults?reportedTaxa(currentResults.sample,currentResults.bacterial_composition):[];
   const comparisonTaxa=currentComparison?reportedTaxa(currentComparison.sample,currentComparison.bacterial_composition):[];
+  const taxonQuery=taxonSearch&&taxonSearch.owner===user?.id&&taxonSearch.sample===currentId?taxonSearch.text:"";
+  const visibleTaxa=taxonQuery.trim()?taxa.filter(taxon=>taxon.bacterialName.toLowerCase().includes(taxonQuery.trim().toLowerCase())):taxa;
   const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?taxa.find(b=>b.id===selectedTaxon.id)||null:null;
   const closeProfile=()=>{if(profileClosing.current)return;profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
   useEffect(()=>{const closeOnBack=()=>{profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
@@ -80,7 +84,7 @@ export default function Microbiome() {
                 <select
                   className="bloom-input w-full"
                   value={currentId}
-                  onChange={(e) => {const id=e.target.value;setSampleId(id);const url=new URL(window.location.href);url.searchParams.set("sample",id);window.history.replaceState(null,"",url.pathname+url.search);}}
+                  onChange={(e) => {const id=e.target.value;setTaxonSearch(null);setSampleId(id);const url=new URL(window.location.href);url.searchParams.set("sample",id);window.history.replaceState(null,"",url.pathname+url.search);}}
                 >
                   {sorted.map((s) => (
                     <option key={s.id} value={s.id}>
@@ -166,6 +170,10 @@ export default function Microbiome() {
               <Button onClick={() => comparison.refetch()}>Retry</Button>
             </p>
           )}
+          {taxa.length>0&&<div className="space-y-2 my-4">
+            <div className="flex flex-wrap items-end gap-3"><label className="flex-1 min-w-0">Find an organism<input ref={taxonSearchInput} type="search" className="bloom-input w-full min-h-[44px]" value={taxonQuery} maxLength={200} placeholder="Search source names" onChange={e=>setTaxonSearch({owner:user!.id,sample:currentId,text:e.target.value})}/></label>{taxonQuery&&<Button type="button" variant="outline" onClick={()=>{setTaxonSearch(null);taxonSearchInput.current?.focus();}}>Clear search</Button>}</div>
+            <p className="panel-note" role="status">{visibleTaxa.length} of {taxa.length} source observations shown{!visibleTaxa.length?". No matching source names; clear the search to see all observations.":"."}</p>
+          </div>}
           {taxa.length ? (
             <div className="overflow-x-auto microbial-composition-table" role="region" aria-label="Microbial composition and comparison; scroll for additional source values" tabIndex={0}>
               <table className="w-full text-sm">
@@ -177,7 +185,7 @@ export default function Microbiome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {taxa.map(b => {
+                  {visibleTaxa.map(b => {
                     const previous = matchReportedTaxon(b,taxa,comparisonTaxa);
                     return (
                       <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
