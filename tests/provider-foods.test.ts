@@ -23,6 +23,7 @@ test("synthetic qualitative22/299 source rows retain categories without fabricat
 test("food-only, missing categories and repeated names remain distinct source facts without allergy or planning authority",()=>{
   const source={food_recommendations:[{name:"Synthetic fish",category:"Avoid",notes:"Provider wording",sourcePage:9},{name:"Synthetic fish",category:"Enjoy",sourcePage:10},{name:"Synthetic unnamed category",quantity:0}]};
   const parsed=parseStructuredReport({data:source});
+  assert.equal(parsed.sourceLabel,"Provider not supplied","A food/category shape never identifies a vendor");
   assert.equal(parsed.foods?.length,3);
   assert.equal(parsed.foods![0].name,parsed.foods![1].name);
   assert.notEqual(parsed.foods![0].reportedCategory,parsed.foods![1].reportedCategory);
