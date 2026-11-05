@@ -315,3 +315,14 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-timeline-reveal {padding:12px;border-radius:12px;background:hsl(var(--muted));overflow-wrap:anywhere;}
 .lab-result-comparison {border-top:1px solid hsl(var(--border));padding-top:8px;}
 .lab-result-comparison summary {min-height:44px;align-content:center;cursor:pointer;font-weight:600;}
+
+/* Neutral first-party imagery never identifies species, strain or a sample. */
+.microbial-composition-name {flex:1;min-width:0;}
+.organism-visual {display:inline-grid;place-items:center;flex-shrink:0;overflow:hidden;border-radius:12px;border:1px solid hsl(var(--border));background:#F4F7F1;color:#246B50;}
+.organism-visual-thumbnail {width:36px;height:36px;flex-basis:36px;}
+.organism-visual-portrait {width:180px;height:180px;}
+.organism-visual img {display:block;width:100%;height:100%;object-fit:contain;}
+.organism-visual-inline {display:grid;width:100%;height:100%;place-items:center;font-size:24px;line-height:1;}
+.organism-visual-portrait .organism-visual-inline {font-size:96px;}
+.organism-portrait {display:flex;flex-direction:column;align-items:center;gap:8px;margin:20px 0;}
+.organism-portrait figcaption {max-width:260px;text-align:center;}

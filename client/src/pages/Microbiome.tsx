@@ -1,3 +1,5 @@
+import OrganismPortrait from "@/components/OrganismPortrait";
+import {MICROORGANISM_SYMBOL_LABEL} from "@shared/scientific-visuals";
 import CompanionHero from '@/components/CompanionHero';
 import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
@@ -134,6 +136,7 @@ export default function Microbiome() {
       {tab === "bacteria" && (
         <section className="bloom-panel">
           <h2>Microbial composition & change</h2>
+          <p className="panel-note">{MICROORGANISM_SYMBOL_LABEL}.</p>
           {currentId && (
             <label>
               Compare another report
@@ -179,7 +182,7 @@ export default function Microbiome() {
                     return (
                       <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
                         <td className="p-2">
-                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><span><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
+                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-description={MICROORGANISM_SYMBOL_LABEL} aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><OrganismPortrait size="thumbnail"/><span className="microbial-composition-name"><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
                         </td>
                         <td className="p-2">{reportedTaxonAmount(b)}</td>
                         {comparisonId && (

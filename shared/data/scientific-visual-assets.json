@@ -1,0 +1,30 @@
+{
+  "registryVersion": "scientific-visuals-2026-11-05.1",
+  "assets": [
+    {
+      "id": "bloom-neutral-microorganism-v1",
+      "version": 1,
+      "src": "/science/neutral-microorganism-v1.svg",
+      "sha256": "fd72226b4a848bcb2f3ab8c8973d1d89903318ed6459ad55e1ac595b95c6b904",
+      "depiction": "generic-symbol",
+      "taxonomyId": null,
+      "moleculeId": null,
+      "lifecycle": "active-neutral",
+      "source": "Original first-party Bloom UI geometry; no organism morphology or chemical structure claimed",
+      "attribution": "Bloom neutral UI symbol",
+      "license": "First-party project source; no third-party scientific-image licence asserted",
+      "territory": "No external territory or scientific-image rights claim",
+      "review": {
+        "direction": "SCI-VIS-01 neutral fallback authorized by Architect2766092",
+        "biology": "Not a species depiction; no morphology approval claimed",
+        "chemistry": "Not a molecule diagram",
+        "design": "Independent exact-build fidelity pending",
+        "legal": "First-party neutral UI scope; independent general release review separate",
+        "security": "Static SVG whitelist and fingerprint checked in tests"
+      },
+      "fallback": "inline-neutral",
+      "withdrawal": "Do not request the asset when disabled/withdrawn; keep the same labeled inline-neutral slot",
+      "cache": "Versioned first-party URL plus SHA; no taxon/sample/user identifier in image requests"
+    }
+  ]
+}
