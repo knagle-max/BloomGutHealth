@@ -165,6 +165,11 @@ export const experimentSchema = z.object({
       ctx.addIssue({code:"custom",message:"Use one observation per day within the baseline or intervention period"});
   }
 });
+export const experimentVersionSchema=z.object({
+ id:z.string().min(1),recordId:z.string().min(1),sourceCreatedAt:z.string().datetime(),sourceUpdatedAt:z.string().datetime(),supersededAt:z.string().datetime(),payload:experimentSchema,
+}).strict();
+export const experimentHistorySchema=z.object({status:z.enum(["available","not-provisioned"]),versions:z.array(experimentVersionSchema)}).strict();
+export type ExperimentHistory=z.infer<typeof experimentHistorySchema>;
 export const competitionSchema = z.object({
   name: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
   minutes: z.number().int().min(1).max(600), travel: optionalText, access: optionalText,

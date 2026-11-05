@@ -871,14 +871,18 @@
       "implementation": "MIXED_REQUIRES_REVIEW",
       "surfaces": {
         "ui": [
-          "client/src/components/ExperimentObservations.tsx"
+          "client/src/components/ExperimentObservations.tsx",
+          "client/src/components/ExperimentSourceHistory.tsx",
+          "client/src/components/WeeklyReview.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
         ],
         "logicOrJobs": [
           "shared/experiment-review.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "server/experience-storage.ts",
+          "shared/experience.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -890,7 +894,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Descriptive recorded experiments/uncertainty only; no causal-effect or adaptive treatment inference approval.",
+      "observation": "Owned self-reported routine observations, encrypted previous saved versions, review/export and parent-scoped deletion only. Missing history storage is explicitly unavailable, not an empty archive; older deployments retain existing edit behavior. No clinical, research, causal-effect or adaptive treatment approval.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1644,7 +1648,8 @@
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "4e77899c809c47784ba116934b1d32e52954f824d4281cab964c3543745bd11c",
     "client/src/components/EverydayStart.tsx": "36427e2ab2fe8446e5f8f1722af1fb6243cdd706aada0546c460c68d1be6ac9a",
-    "client/src/components/ExperimentObservations.tsx": "f6a4508f074cf7ab0d2bd8abadee18235abc8b47f00c8bdffde2be63640dc79f",
+    "client/src/components/ExperimentObservations.tsx": "8bbb5344ad94e5ca3afc4bf355407c7510630d0029d7ba27c91c930a03e3033f",
+    "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
@@ -1665,6 +1670,7 @@
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
     "client/src/components/TrainingSetsEditor.tsx": "c07fb2a9f9777369186b6046fb65095b0056ba8460dafaf9292d8352802a9e7b",
+    "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
@@ -1694,7 +1700,7 @@
     "client/src/pages/Upload.tsx": "9ea2ed53a017eb36d617999227bd234b8ef76dcac0d83cd71d936858dbb5c12a",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
-    "server/account-export.ts": "dada9d1f09825dfdc28d43855ffb5a750ae40e5a2b85d7799601ef18106b5879",
+    "server/account-export.ts": "ef01ac7e1c4762476277e4d7a6fc4881c95f20ccb3d65767a8281a27022029c2",
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/ai-configuration.ts": "b6bb5b437c7a279470c821d5dfb59f321f39ce59d275faeb38da3fa7999878d5",
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
@@ -1704,8 +1710,8 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "b933ed0ccc12f28b8eff547dcb0d622181e40a18efaea4c648a0f63404cb5a7c",
-    "server/experience-storage.ts": "b87c9f1664d34e313cf8c99771ceee15432ae8f19d187dc8108af8a50f823864",
+    "server/experience-routes.ts": "b61f96088934591fd5127a212d38a27125fb42d8480dc6b8b4e19a89b7f108b7",
+    "server/experience-storage.ts": "f398ce7f94923a7097e2bb2914d98af7910a05e4b9ce6a5697e31b8f54a2b6e9",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -1745,14 +1751,14 @@
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
     "server/shared-rate-limit.ts": "ad81af484e99de7fdd1b05567928056b535fecaba768d6af45057d05929268ea",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "e4436b35ff3211e4053edfcd5ed06232b5b91d07f22c8d8aeb8558f7218bb4fa",
+    "server/storage.ts": "e270e04953c9d9d6642cb64898aa02bd38b0ccad22e0f3fcfc839313ed38ad35",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",
     "server/weekly-worker.ts": "1c0431bf9d3761ca5d00acf0cdb0fee8766bee100790b66a07eb1fdc56ba7ad7",
     "shared/activity-capture.ts": "db0040742375dca8d19fbcfd6b9d3144bb1dd3c01b96fa14f567ef74d7c9d5d5",
     "shared/activity.ts": "cb671b73a9ee131e86a75f05fafab0178ecffb78646fd7eba0865094dab49d5b",
-    "shared/application-schema.ts": "ee592917ca958174e6bc339dd5388737672e416cb93cd4ddca6308a0424f87c8",
+    "shared/application-schema.ts": "00124efca291faa6e3227a329e071da6e30d4517eea06e3f888663462cf5e1f8",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
     "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
     "shared/athlete-review.ts": "a0625e796a40e7ef639809c11dcd7ca60568ea23eafcdbfbe2df1b2165a92ea1",
@@ -1762,7 +1768,7 @@
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
-    "shared/experience.ts": "36ea4218851094817448356087df09727ed2254547e0500795f5fb53c39ac7b4",
+    "shared/experience.ts": "8522e3454c43834bce03087af9462d97c83016519ae323c83fbc7459e5315c13",
     "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
@@ -1785,8 +1791,8 @@
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
-    "shared/schema-management.ts": "081b56a9e8e9d3a1841d43ed06132baca06b1983c278d8cc3105aab44ad68548",
-    "shared/schema.ts": "28b577b3707bdbedd6af44181cf97a64deedcd47b2d46b7a3c01f33fe5289854",
+    "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
+    "shared/schema.ts": "d65c1490e8a806688c38a195fdc7cea871d1f48fd1db0c5d3c5a12a22700d552",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/structured-report.ts": "bbbabd39b5c620d44822edc4619fa8fc53d7921db5ecdda014c461657236c094",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",

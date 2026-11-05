@@ -13,7 +13,7 @@ async function protectedSnapshot(){
  const client=await pool.connect();try{
  await client.query('BEGIN ISOLATION LEVEL REPEATABLE READ READ ONLY');
  const tables={};
- for(const name of ['feature_control_states','feature_control_audit','biology_versions','biology_entities','biology_sources','biology_relationships','biology_relationship_sources']){
+ for(const name of ['feature_control_states','feature_control_audit','experience_records','experiment_versions','biology_versions','biology_entities','biology_sources','biology_relationships','biology_relationship_sources']){
   const rows=(await client.query(`SELECT row_to_json(t)::text AS value FROM public.${name} t ORDER BY row_to_json(t)::text LIMIT 100001`)).rows;
   assert.ok(rows.length<=100000,'Protected snapshot is too large for the CI guard');
   tables[name]=createHash('sha256').update(JSON.stringify(rows)).digest('hex');

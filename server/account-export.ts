@@ -1,7 +1,7 @@
 import {historicalPlanRecord} from "./plan-history";
 import {historicalAnalysisMetadata,historicalDerivedMetadata} from "./analysis-boundary";
 import { eq, sql } from "drizzle-orm";
-import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords, nutritionProducts, experienceSettings, experienceRecords, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
+import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords, nutritionProducts, experienceSettings, experienceRecords,experimentVersions, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
 import { decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 
@@ -46,6 +46,9 @@ export class AccountExportStorage {
       const [settings] = await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
       stage="experience-records";
       const experience = checked(await tx.select().from(experienceRecords).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
+      stage="experience-history";
+      const historyTable=await tx.execute<{history_table:string|null}>(sql`SELECT to_regclass('experiment_versions')::text AS history_table`);
+      const history=historyTable.rows[0]?.history_table?checked(await tx.select({id:experimentVersions.id,recordId:experimentVersions.recordId,encryptedPayload:experimentVersions.encryptedPayload,sourceCreatedAt:experimentVersions.sourceCreatedAt,sourceUpdatedAt:experimentVersions.sourceUpdatedAt,supersededAt:experimentVersions.supersededAt}).from(experimentVersions).innerJoin(experienceRecords,eq(experimentVersions.recordId,experienceRecords.id)).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})):null;
       const healthTables=await tx.execute<{consent_table:string|null;observation_table:string|null;preview_table:string|null}>(sql`SELECT to_regclass('health_source_consents')::text AS consent_table, to_regclass('health_observations')::text AS observation_table,to_regclass('capability_preferences')::text AS preview_table`);
       const healthStorage=healthTables.rows[0];
       stage="health-consents";
@@ -56,7 +59,7 @@ export class AccountExportStorage {
       return {experimentalPreference:preview[0]||null,format:"bloom-account-records-v2",derivedOutputPolicy:{historicalGeneratedRecords:"metadata-only",genomeFunctionalProfiles:"withheld",originalSourceObservations:"preserved"},exportedAt:new Date().toISOString(),profile,journal,
         gutReports:{samples,bacteria:bacteria.map(record=>({...record,genomeData:null,interpretationStatus:"stored_taxonomy_only"})),metabolites:historicalDerivedMetadata(compounds,"metabolite-prediction"),healthImpacts:historicalDerivedMetadata(impacts,"health-impact"),analyses:historicalAnalysisMetadata(analyses),recommendations:historicalDerivedMetadata(advice,"recommendation")},
         biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision},
-        savedLabels:labels,experience:{settings:settings?{payload:decryptPrecision(settings.encryptedPayload,userId),updatedAt:settings.updatedAt}:null,records:experience},healthSources:{storage:{consents:healthStorage.consent_table?"provisioned":"not-provisioned",observations:healthStorage.observation_table?"provisioned":"not-provisioned"},consents,observations},
+        savedLabels:labels,experience:{settings:settings?{payload:decryptPrecision(settings.encryptedPayload,userId),updatedAt:settings.updatedAt}:null,records:experience,history:{status:history===null?"not-provisioned":"available",versions:history}},healthSources:{storage:{consents:healthStorage.consent_table?"provisioned":"not-provisioned",observations:healthStorage.observation_table?"provisioned":"not-provisioned"},consents,observations},
         limits:["Optional health-source sections are null with storage status not-provisioned when those tables are absent in an older deployment; this is distinct from a provisioned empty collection.","Sensitive health information. Store privately and share only with people you choose.","Original observations and units are preserved. Unsupported historical model concentrations, functional profiles, health effects, scores and advice are withheld; metadata records identify their existence. This does not delete stored history or validate a medical interpretation.","Includes the account-owned application records listed here. Excludes passwords, sessions, encryption keys, internal file paths, operational logs and request receipts, database backups and records held independently by external providers.","Downloading does not delete records, revoke permissions or stop future processing. Active-account erasure is a separate action; backup/vendor lifecycle handling is not included in this download."]};
     }); } catch(error) {
       const candidate=(error as any)?.cause?.code || (error as any)?.code;

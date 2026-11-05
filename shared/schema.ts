@@ -357,6 +357,15 @@ export const experienceRecords = pgTable("experience_records", {
   createdAt: timestamp("created_at").notNull().defaultNow(), updatedAt: timestamp("updated_at").notNull().defaultNow(),
 }, table => [index("experience_records_user_kind_idx").on(table.userId, table.kind)]);
 
+// Prior saved routine sources. Ownership follows the parent; deletion cascades.
+export const experimentVersions=pgTable("experiment_versions",{
+ id:varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+ recordId:varchar("record_id").notNull().references(()=>experienceRecords.id,{onDelete:"cascade"}),
+ encryptedPayload:jsonb("encrypted_payload").notNull(),
+ sourceCreatedAt:timestamp("source_created_at").notNull(),sourceUpdatedAt:timestamp("source_updated_at").notNull(),
+ supersededAt:timestamp("superseded_at").notNull().defaultNow(),
+},t=>[index("experiment_versions_record_idx").on(t.recordId,t.supersededAt)]);
+
 // Public reference knowledge. Personal observations are never stored in these tables.
 export const biologyVersions = pgTable("biology_versions", {version:text("version").primaryKey(),fingerprint:text("fingerprint").notNull(),summary:text("summary").notNull(),createdAt:timestamp("created_at").defaultNow().notNull()});
 export const biologyEntities=pgTable("biology_entities",{version:text("version").notNull().references(()=>biologyVersions.version),id:text("id").notNull(),kind:text("kind").notNull(),label:text("label").notNull(),summary:text("summary").notNull(),metadata:jsonb("metadata").notNull()},t=>[primaryKey({columns:[t.version,t.id]})]);

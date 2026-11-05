@@ -4,8 +4,8 @@ import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFe
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
-import { experienceSettings, experienceRecords } from "../shared/schema";
-import { activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { experienceSettings, experienceRecords,experimentVersions } from "../shared/schema";
+import { experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -36,6 +36,20 @@ export class ExperienceStorage {
  async getExperienceRecords(userId:string, kind?:ExperienceEntry["kind"]) {
   const rows=await this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):eq(experienceRecords.userId,userId)).orderBy(desc(experienceRecords.updatedAt)).limit(2000);
   return rows.map(r=>decode(r,userId));
+ }
+ async exportExperience(userId:string){return this.db.transaction(async tx=>{
+  await tx.execute(sql`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY`);
+  await tx.execute(sql`SET LOCAL statement_timeout = '20s'`);
+  const source=new ExperienceStorage(tx as unknown as Database);
+  return{settings:await source.getExperienceSettings(userId),records:await source.getExperienceRecords(userId),history:await source.getExperimentHistory(userId)};
+ });}
+ async getExperimentHistory(userId:string,recordId?:string):Promise<ExperimentHistory|null>{
+  if(recordId){const[parent]=await this.db.select({id:experienceRecords.id}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,recordId),eq(experienceRecords.kind,"experiment")));if(!parent)return null;}
+  const table=await this.db.select({exists:sql<boolean>`to_regclass('experiment_versions') IS NOT NULL`}).from(sql`(SELECT 1) AS history_storage`);
+  if(!table[0]?.exists)return{status:"not-provisioned",versions:[]};
+  const rows=await this.db.select({id:experimentVersions.id,recordId:experimentVersions.recordId,encryptedPayload:experimentVersions.encryptedPayload,sourceCreatedAt:experimentVersions.sourceCreatedAt,sourceUpdatedAt:experimentVersions.sourceUpdatedAt,supersededAt:experimentVersions.supersededAt}).from(experimentVersions).innerJoin(experienceRecords,eq(experimentVersions.recordId,experienceRecords.id)).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,"experiment"),...(recordId?[eq(experienceRecords.id,recordId)]:[]))).orderBy(desc(experimentVersions.supersededAt),desc(experimentVersions.id)).limit(50001);
+  if(rows.length>50000||Buffer.byteLength(JSON.stringify(rows),"utf8")>20*1024*1024)throw Error("EXPERIMENT_HISTORY_TOO_LARGE");
+  return{status:"available",versions:rows.map(({encryptedPayload,...row})=>({...row,sourceCreatedAt:row.sourceCreatedAt.toISOString(),sourceUpdatedAt:row.sourceUpdatedAt.toISOString(),supersededAt:row.supersededAt.toISOString(),payload:experimentSchema.parse(decryptPrecision(encryptedPayload,userId))}))};
  }
  async getCheckinFeedback(userId:string,id:string):Promise<CheckinFeedbackView|null>{
   const [row]=await this.db.select({id:experienceRecords.id,encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin")));
@@ -107,7 +121,7 @@ export class ExperienceStorage {
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
-   const [existing]=await tx.select({encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind)));
+   const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).for("update");
    if(!existing)return null;
    const previous=decryptPrecision(existing.encryptedPayload,userId);
    // Older session editors must not erase newer manual set observations.
@@ -125,6 +139,14 @@ export class ExperienceStorage {
    if(entry.kind==="session"&&entry.payload.actualSets===undefined){
     const current=trainingSessionSchema.parse(previous);
     if(current.actualSets!==undefined)payload={...entry.payload,actualSets:current.actualSets};
+   }
+   if(entry.kind==="experiment"){
+    const before=experimentSchema.parse(previous);
+    if(JSON.stringify(before)===JSON.stringify(payload))return decode(existing,userId);
+    const historyStorage=await tx.execute<{ready:boolean}>(sql`SELECT to_regclass('experiment_versions') IS NOT NULL AS ready`);
+    // Additive rollout: an older deployment keeps its existing edit behavior;
+    // readers/export explicitly report history not-provisioned, never empty.
+    if(historyStorage.rows[0]?.ready)await tx.insert(experimentVersions).values({recordId:id,encryptedPayload:existing.encryptedPayload,sourceCreatedAt:existing.createdAt,sourceUpdatedAt:existing.updatedAt});
    }
    const [row]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).returning();
    return row?decode(row,userId):null;
@@ -149,6 +171,8 @@ export interface ExperienceStore {
  createSession?(userId:string,payload:TrainingSession,key:string):Promise<ExperienceRecord>;
  createActivity?(userId:string,payload:Activity,key:string):Promise<ExperienceRecord>;
  getCheckinFeedback?(userId:string,id:string):Promise<CheckinFeedbackView|null>;
+ exportExperience?(userId:string):Promise<{settings:ExperienceSettings;records:ExperienceRecord[];history:ExperimentHistory|null}>;
+ getExperimentHistory?(userId:string,recordId?:string):Promise<ExperimentHistory|null>;
  getExperienceRecords(userId:string,kind?:ExperienceEntry["kind"]):Promise<ExperienceRecord[]>;
  insertExperienceRecord(userId:string,entry:ExperienceEntry):Promise<ExperienceRecord>;
  updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry):Promise<ExperienceRecord|null>;

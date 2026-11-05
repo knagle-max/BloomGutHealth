@@ -586,6 +586,21 @@ try {
   const encryptedExperience=await pool.query("SELECT encrypted_payload::text AS payload FROM experience_records WHERE user_id=$1",[first.id]);
   assert.equal(encryptedExperience.rows.length,2);assert.ok(encryptedExperience.rows.every(r=>!r.payload.includes("Synthetic")));
   console.log("PASS: encrypted athlete settings, session fueling and saved-meal persistence on live Neon");
+  const beforeRoutineCookie=cookie;
+  try{
+    await addUser();const routineCookie=cookie;
+    const routinePayload={mode:"everyday",title:"Synthetic versioned source",startsOn:"2026-10-10",endsOn:"2026-10-17",action:"One familiar routine",outcome:"Source comfort",design:{baselineStartsOn:"2026-10-01",baselineEndsOn:"2026-10-07",metricUnit:"source units",measurementMethod:"Same original method",expectedDirection:"observe",confoundersToTrack:"Sleep"},observations:[{date:"2026-10-01",value:0,adherence:null,confounders:"Original synthetic note"}]};
+    const routine=await request("/api/experience/records","POST",{kind:"experiment",payload:routinePayload},201),correctedRoutine={...routine.payload,observations:[{...routine.payload.observations[0],value:0.00000123,adherence:0}]};
+    await request(`/api/experience/records/${routine.id}`,"PUT",{kind:"experiment",payload:correctedRoutine});
+    await request(`/api/experience/records/${routine.id}`,"PUT",{kind:"experiment",payload:correctedRoutine});
+    const sourceHistory=await request(`/api/experience/records/${routine.id}/history`);assert.equal(sourceHistory.status,"available");assert.equal(sourceHistory.versions.length,1);assert.deepEqual(sourceHistory.versions[0].payload,routine.payload);
+    const originalCipher=await pool.query("SELECT encrypted_payload::text AS payload FROM experiment_versions WHERE record_id=$1",[routine.id]);assert.equal(originalCipher.rows.length,1);assert.ok(!originalCipher.rows[0].payload.includes("Original synthetic note"));
+    await assert.rejects(()=>pool.query("UPDATE experiment_versions SET source_updated_at=now() WHERE record_id=$1",[routine.id]),error=>error.code==="55000");
+    const exportedRoutine=await request("/api/experience/export");assert.equal(exportedRoutine.history.versions[0].payload.observations[0].value,0);assert.equal(exportedRoutine.records[0].payload.observations[0].value,0.00000123);assert.match(exportedRoutine.note,/do not establish cause/);
+    cookie=beforeRoutineCookie;await request(`/api/experience/records/${routine.id}/history`,"GET",undefined,404);cookie=routineCookie;
+    await request(`/api/experience/records/${routine.id}`,"DELETE",undefined,204);await request(`/api/experience/records/${routine.id}/history`,"GET",undefined,404);assert.equal((await pool.query("SELECT count(*)::int AS n FROM experiment_versions WHERE record_id=$1",[routine.id])).rows[0].n,0);
+    console.log("PASS: live Neon routine correction retains encrypted original0 vs current tiny value, exact retry adds no fictional version, immutable history/owned exports and deletion cascade");
+  }finally{cookie=beforeRoutineCookie;}
   const biologicalRegistry=await request("/api/biology/registry");
   assert.equal(biologicalRegistry.version,"biology-2026-10-18.1");
   assert.ok(biologicalRegistry.relationships.some(r=>r.id==="viscosity:ldl"));

@@ -1,4 +1,4 @@
-// Application tables reconciled by Drizzle. Migration-owned control tables
+// Application tables reconciled by Drizzle. Migration-owned audit/reference tables
 // remain available in schema.ts for typed queries and are managed by SQL.
 export {
   users,
