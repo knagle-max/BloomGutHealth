@@ -1,0 +1,115 @@
+{
+  "schema": "bloom.genetics_expansion.ui.v1",
+  "route": "My Biology/Genetics",
+  "project_phase": "v0.5",
+  "source_handoffs": [
+    "Biology GEN-AUD-01, GEN-AUD-02, GEN-EXP-01, GEN-DATA-01, GEN-UX-01",
+    "User Testing UT-GEN-4201–4212"
+  ],
+  "components": [
+    {
+      "name": "GeneticsCoverage",
+      "props": [
+        "catalogueCandidates",
+        "reviewedExplanations",
+        "sourceObservedCalls",
+        "resolvedCalls",
+        "personalRulesApproved",
+        "catalogueVersion",
+        "lastAuditedAt"
+      ],
+      "states": [
+        "unverified",
+        "ready",
+        "missing",
+        "partially_reviewed"
+      ],
+      "rule": "No count may stand in for another; do not present roadmap totals as live coverage"
+    },
+    {
+      "name": "GeneticDomainBrowser",
+      "props": [
+        "domains[]",
+        "query",
+        "canonicalVariantIds[]",
+        "pathways[]",
+        "domainMembership[]"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "offline"
+      ],
+      "rule": "17 proposed domains; many-to-many genes and variants, no duplicate genotype calls"
+    },
+    {
+      "name": "VariantDetail",
+      "props": [
+        "variantId",
+        "variantType",
+        "originalSourceCalls[]",
+        "normalizedReference",
+        "matchStatus",
+        "scientificEvidence[]",
+        "interpretation",
+        "consent"
+      ],
+      "states": [
+        "not_measured",
+        "no_call",
+        "ambiguous_orientation",
+        "unsupported_variant_type",
+        "conflicting_source_calls",
+        "measured_but_not_interpretable",
+        "measured_and_matched",
+        "research_only"
+      ],
+      "rule": "No personal action from unapproved evidence"
+    },
+    {
+      "name": "SourceProvenance",
+      "props": [
+        "sourceFileId",
+        "originalCall",
+        "sourceBuild",
+        "orientation",
+        "verifiedTransformations[]",
+        "corrections[]",
+        "auditTrail[]"
+      ],
+      "states": [
+        "available",
+        "unresolved",
+        "conflicting",
+        "source_removed"
+      ]
+    },
+    {
+      "name": "SensitiveInterpretationGate",
+      "props": [
+        "sensitivityClass",
+        "assayComplete",
+        "phased",
+        "consentStatus",
+        "eligibleApprovedRule"
+      ],
+      "states": [
+        "withheld",
+        "consent_required",
+        "assay_incomplete",
+        "eligible",
+        "revoked"
+      ],
+      "rule": "No PGx dosage or APOE isoform inference from incomplete markers"
+    }
+  ],
+  "interaction": {
+    "navigation": "Biology → Genetics → Domain → Gene → Variant",
+    "search": "rsID, gene, domain",
+    "fallback": "Research explanation available without DNA",
+    "noNewEngine": true
+  },
+  "status": "editable prototype; no clinical signoff"
+}
