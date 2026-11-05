@@ -48,12 +48,22 @@ test('four exact existing molecules select original drafts without acid/stereo a
  assert.equal(molecularIllustration('molecule:acetate','Acetate','biomarker'),null);
  assert.equal(molecularIllustration('molecule:unknown','Unknown','molecule'),null);
 });
+test('sixteen original pathway concepts are normal public source assets without invented runtime entity mappings',()=>{
+ assert.equal(registry.pathwayIllustrations.length,16);
+ assert.ok(registry.pathwayIllustrations.every(entry=>entry.entityId===null));
+ for(const entry of registry.pathwayIllustrations){
+  const asset=entry.asset,original=readFileSync(asset.sourceArchive),delivered=readFileSync('client/public'+asset.src);
+  assert.deepEqual(delivered,original);assert.equal(asset.repair,'none');assert.equal(createHash('sha256').update(original).digest('hex'),asset.sha256);
+  assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${original.length}\0`),original])).digest('hex'),asset.sourceGitBlob);
+  assert.ok(original.toString().includes('aria-label="'+entry.sourceDescription+'"'));assertScientificArtworkSvg(delivered.toString());
+ }
+});
 test('representative artwork is normally public with SVG MIME, passive-document headers and exact source bytes',async()=>{
  const {default:express}=await import('express');const {securityHeaders}=await import('../server/security');
  const app=express();app.use(securityHeaders);app.use(express.static('client/public'));app.use('/science',(_req,res)=>res.status(404).end());
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base='http://127.0.0.1:'+(server.address() as any).port;
  try{
-  for(const asset of [...registry.organismIllustrations.flatMap(entry=>[entry.thumbnail,entry.portrait]),...registry.bloodworkIllustrations.map(entry=>entry.asset),...registry.moleculeIllustrations.map(entry=>entry.asset)]){const response=await fetch(base+asset.src+'?v='+asset.sha256);assert.equal(response.status,200,'No session, reviewer role or approval flag is required');assert.match(response.headers.get('content-type')!,/^image\/svg\+xml/);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(response.headers.get('cache-control'),'no-cache');assert.equal(response.headers.get('set-cookie'),null);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),asset.sha256);}
+  for(const asset of [...registry.organismIllustrations.flatMap(entry=>[entry.thumbnail,entry.portrait]),...registry.bloodworkIllustrations.map(entry=>entry.asset),...registry.moleculeIllustrations.map(entry=>entry.asset),...registry.pathwayIllustrations.map(entry=>entry.asset)]){const response=await fetch(base+asset.src+'?v='+asset.sha256);assert.equal(response.status,200,'No session, reviewer role or approval flag is required');assert.match(response.headers.get('content-type')!,/^image\/svg\+xml/);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(response.headers.get('cache-control'),'no-cache');assert.equal(response.headers.get('set-cookie'),null);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),asset.sha256);}
   assert.equal((await fetch(base+'/science/organisms-v4/missing.svg')).status,404);
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
 });

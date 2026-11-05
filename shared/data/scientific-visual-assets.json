@@ -1,5 +1,5 @@
 {
-  "registryVersion": "scientific-visuals-2026-11-05.4",
+  "registryVersion": "scientific-visuals-2026-11-05.5",
   "assets": [
     {
       "id": "bloom-neutral-microorganism-v1",
@@ -810,6 +810,280 @@
         "repair": "none"
       },
       "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine; PubChem CID 1146; molecular formula C\u2083H\u2089N; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    }
+  ],
+  "pathwayIllustrations": [
+    {
+      "slug": "acetate",
+      "sourceDescription": "Illustrated conceptual research pathway Acetate formation. Plant glycans through Microbial carbohydrate fermentation to Acetate. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/acetate.svg",
+        "sha256": "f630532b283c65bce2ee97d5853507907c5947bfbe4e73214be9a32f1b38ffb5",
+        "sourceGitBlob": "fec849c3af49aedfecffe5e0295be1d82e48fe4c",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/acetate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/acetate.svg",
+        "originalSha256": "f630532b283c65bce2ee97d5853507907c5947bfbe4e73214be9a32f1b38ffb5",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "bifid-shunt",
+      "sourceDescription": "Illustrated conceptual research pathway Bifidobacterial bifid shunt. Dietary oligosaccharides through Bifidobacterium phosphoketolase route to Acetate + lactate. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/bifid-shunt.svg",
+        "sha256": "fb79c5b8b27d5041e3f3509a24d7837aa74ed1163f1539839a3d6c01d3869269",
+        "sourceGitBlob": "9b70cc513bddae304124e77002b83377eb034579",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/bifid-shunt.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/bifid-shunt.svg",
+        "originalSha256": "fb79c5b8b27d5041e3f3509a24d7837aa74ed1163f1539839a3d6c01d3869269",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "butyrate-production",
+      "sourceDescription": "Illustrated conceptual research pathway Butyrate formation. Fermentable carbohydrate through Butyryl-CoA pathway in studied strains to Butyrate. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/butyrate-production.svg",
+        "sha256": "54e580d53154bd75aa8ee18882fda10f461c5c83c87c146f258d9de720b1788b",
+        "sourceGitBlob": "6487f5b2f0f92578594ac093c638537eb8198a03",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/butyrate-production.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/butyrate-production.svg",
+        "originalSha256": "54e580d53154bd75aa8ee18882fda10f461c5c83c87c146f258d9de720b1788b",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "choline-tma",
+      "sourceDescription": "Illustrated conceptual research pathway Choline metabolism. Choline through CutC/CutD in gene-carrying bacteria to Trimethylamine. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/choline-tma.svg",
+        "sha256": "2def7bb6da0b2e7683b0f67af0adc721026118542822b27d2d41e32c1817782d",
+        "sourceGitBlob": "7a8616d6b559405100622774c37d8585e380a30b",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/choline-tma.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/choline-tma.svg",
+        "originalSha256": "2def7bb6da0b2e7683b0f67af0adc721026118542822b27d2d41e32c1817782d",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "cross-feeding",
+      "sourceDescription": "Illustrated conceptual research pathway Microbial cross-feeding. Lactate + acetate through Anaerostipes strain-dependent conversion to Butyrate. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/cross-feeding.svg",
+        "sha256": "8255a006bda3000873d82c9245db0218d8c83525f06b2d266f072e01e4a6a821",
+        "sourceGitBlob": "9cb770c48581a02530d88bb43f1fe664c36e93b6",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/cross-feeding.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/cross-feeding.svg",
+        "originalSha256": "8255a006bda3000873d82c9245db0218d8c83525f06b2d266f072e01e4a6a821",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "hdac",
+      "sourceDescription": "Illustrated conceptual research pathway Butyrate and epigenetic response. Butyrate exposure through Concentration-dependent HDAC effect to Transcriptional response. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/hdac.svg",
+        "sha256": "2ce58dd06645655db11e5c40f8313bc78ea2ffaf29f9cad888177170704f38d7",
+        "sourceGitBlob": "1161c476ee92b41a5af5d06db8a7bb5180ef400c",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/hdac.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/hdac.svg",
+        "originalSha256": "2ce58dd06645655db11e5c40f8313bc78ea2ffaf29f9cad888177170704f38d7",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "host-butyrate",
+      "sourceDescription": "Illustrated conceptual research pathway Host handling of butyrate. Luminal butyrate through Transport and colonocyte oxidation to Energy metabolism. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/host-butyrate.svg",
+        "sha256": "11666ea8f94070367b70641e50943179329520d7a97554bc3ccc516c164a91cc",
+        "sourceGitBlob": "6a6787f9e6326aec2af16cfc7cdbb8d46e89f654",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/host-butyrate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/host-butyrate.svg",
+        "originalSha256": "11666ea8f94070367b70641e50943179329520d7a97554bc3ccc516c164a91cc",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "methanogenesis",
+      "sourceDescription": "Illustrated conceptual research pathway Hydrogenotrophic methanogenesis. H\u2082 + CO\u2082 through Methanobrevibacter archaeal pathway to Methane. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/methanogenesis.svg",
+        "sha256": "6ab427561658975adf6ab736e0ea3e40f12ad7fe7c050229b901d17009432b79",
+        "sourceGitBlob": "a3b285926e3003a086cd0688b1dec79e91cd644a",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/methanogenesis.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/methanogenesis.svg",
+        "originalSha256": "6ab427561658975adf6ab736e0ea3e40f12ad7fe7c050229b901d17009432b79",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "mucin-glycans",
+      "sourceDescription": "Illustrated conceptual research pathway Mucin glycan utilization. Mucin O-glycans through Akkermansia-associated glycan enzymes to Fermentation products. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/mucin-glycans.svg",
+        "sha256": "c570368ad9f1855a6fe0fccddecd8cb6c0380415654caf9878fad9c33732a4a2",
+        "sourceGitBlob": "f9eb8a4b323830d8fbf72052cf906d77536a8f86",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/mucin-glycans.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/mucin-glycans.svg",
+        "originalSha256": "c570368ad9f1855a6fe0fccddecd8cb6c0380415654caf9878fad9c33732a4a2",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "resistant-starch",
+      "sourceDescription": "Illustrated conceptual research pathway Resistant starch degradation. Resistant starch through Ruminococcus bromii / gut microbial community to Fermentable sugars. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/resistant-starch.svg",
+        "sha256": "758d37bb09b2a079d69742024e6ea9fa00876b643ab46143952520b52bd4f9a9",
+        "sourceGitBlob": "64d58a433ceb651979a8d0d5ba83ad3c1441b5ec",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/resistant-starch.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/resistant-starch.svg",
+        "originalSha256": "758d37bb09b2a079d69742024e6ea9fa00876b643ab46143952520b52bd4f9a9",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "scfa-receptors",
+      "sourceDescription": "Illustrated conceptual research pathway SCFA receptor signaling. SCFA ligands through FFAR2 / FFAR3 interactions to Context-dependent signaling. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/scfa-receptors.svg",
+        "sha256": "0c21729e2036df86674e251695e337ea21cfa4301a533876e5b33e181c8d9032",
+        "sourceGitBlob": "af83df464d1433e086a590288b490a5f68c3609f",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/scfa-receptors.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/scfa-receptors.svg",
+        "originalSha256": "0c21729e2036df86674e251695e337ea21cfa4301a533876e5b33e181c8d9032",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "succinate-propionate",
+      "sourceDescription": "Illustrated conceptual research pathway Succinate to propionate. Fermentable carbohydrate through Succinate pathway in studied organisms to Propionate. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/succinate-propionate.svg",
+        "sha256": "b92f3a8c2b730537d1772f653e302cb380019ea3404263f1f5c43438c103ea8a",
+        "sourceGitBlob": "b83569dfd4cc964dc903de79e1a73ec447bf8657",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/succinate-propionate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/succinate-propionate.svg",
+        "originalSha256": "b92f3a8c2b730537d1772f653e302cb380019ea3404263f1f5c43438c103ea8a",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "sulfur-reduction",
+      "sourceDescription": "Illustrated conceptual research pathway Microbial sulfur reduction. Sulfate / sulfite through Desulfovibrio-associated reductions to Sulfide. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/sulfur-reduction.svg",
+        "sha256": "c5f472a9371ccb67b41eccb123a743261498e981f1ffbebd71b8302f471c0c91",
+        "sourceGitBlob": "01b18dae79d6d739405f4508e62cda15ffc19cf3",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/sulfur-reduction.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/sulfur-reduction.svg",
+        "originalSha256": "c5f472a9371ccb67b41eccb123a743261498e981f1ffbebd71b8302f471c0c91",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "taurine",
+      "sourceDescription": "Illustrated conceptual research pathway Taurine-related sulfur metabolism. Taurine-bearing substrates through Bilophila-associated sulfur transformations to Sulfide. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/taurine.svg",
+        "sha256": "12d0aa10a5b618c41adce897b87a3a2105d884e7083dd263e07b0cbf1f6e90f4",
+        "sourceGitBlob": "fbb54490d7e2877765ad250ee56ff5015d6a37b7",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/taurine.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/taurine.svg",
+        "originalSha256": "12d0aa10a5b618c41adce897b87a3a2105d884e7083dd263e07b0cbf1f6e90f4",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "tma-tmao",
+      "sourceDescription": "Illustrated conceptual research pathway Host conversion of TMA. Portal TMA through Human liver FMO3 oxidation to TMAO. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/tma-tmao.svg",
+        "sha256": "82c13b5c21c37b87ce4bf9f4ac327ea80129c5e5fa134da88b29dae07355fa6e",
+        "sourceGitBlob": "3baec14cd011ba551d534ed278c312f385ccdc8e",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tma-tmao.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tma-tmao.svg",
+        "originalSha256": "82c13b5c21c37b87ce4bf9f4ac327ea80129c5e5fa134da88b29dae07355fa6e",
+        "repair": "none"
+      }
+    },
+    {
+      "slug": "tryptophan",
+      "sourceDescription": "Illustrated conceptual research pathway Tryptophan metabolism. Tryptophan through Tryptophanase in gene-carrying strains to Indole. Not measured in your sample.",
+      "depiction": "source-pathway-concept",
+      "entityId": null,
+      "independentScientificReview": "pending; source concept does not establish personal activity or efficacy",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/pathways-v4/tryptophan.svg",
+        "sha256": "0699e7e45146a7fc179f07b5498851076c564852865629aff5a78e5c7b6a39fa",
+        "sourceGitBlob": "9c298cd11e970845eeec4f2e85ddb72c217a6c62",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tryptophan.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tryptophan.svg",
+        "originalSha256": "0699e7e45146a7fc179f07b5498851076c564852865629aff5a78e5c7b6a39fa",
+        "repair": "none"
+      }
     }
   ]
 }
