@@ -62,6 +62,13 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type UpdateUserProfile = z.infer<typeof updateUserProfileSchema>;
 export type User = typeof users.$inferSelect;
 
+// Optional original Profile tokens; application-encrypted with a distinct purpose.
+export const profileMeasurementSources=pgTable("profile_measurement_sources",{
+ userId:varchar("user_id").primaryKey().references(()=>users.id,{onDelete:"cascade"}),
+ revision:uuid("revision").notNull(),
+ encryptedPayload:jsonb("encrypted_payload").notNull(),
+});
+
 export const microbiomeSamples = pgTable("microbiome_samples", {
   id: varchar("id")
     .primaryKey()

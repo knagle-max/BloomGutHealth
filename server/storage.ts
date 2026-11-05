@@ -1,3 +1,5 @@
+import {readProfileMeasurementSource} from "./profile-measurement-source";
+import type {ProfileMeasurementWrite,ProfileMeasurementSource} from "../shared/profile-measurement-source";
 import{PrivateProductStorage}from"./private-product-storage";
 import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
 import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
@@ -44,7 +46,8 @@ export interface IStorage extends ExperienceStore {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  updateUserProfile(id: string, profile: UpdateUserProfile, expectedRevision?:string): Promise<void>;
+  updateUserProfile(id: string, profile: UpdateUserProfile, expectedRevision?:string,measurementSource?:ProfileMeasurementWrite): Promise<void>;
+  getProfileMeasurementSource(id:string,values:User):Promise<ProfileMeasurementSource>;
   updateUserPreferences?(id:string,preferences:DietaryPreferences,expectedRevision:string):Promise<void>;
 
   getMicrobiomeSample(id: string,userId:string): Promise<MicrobiomeSample | undefined>;
@@ -118,12 +121,15 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  getProfileMeasurementSource(id:string,values:User){return readProfileMeasurementSource(db,id,values);}
+
   async updateUserProfile(
     id: string,
     profile: UpdateUserProfile,
     expectedRevision?:string,
+    measurementSource?:ProfileMeasurementWrite,
   ): Promise<void> {
-    await updateProfileWithRevision(db,id,profile,expectedRevision);
+    await updateProfileWithRevision(db,id,profile,expectedRevision,measurementSource);
   }
 
   async updateUserPreferences(id:string,preferences:DietaryPreferences,expectedRevision:string):Promise<void>{

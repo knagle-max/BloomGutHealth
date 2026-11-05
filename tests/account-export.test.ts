@@ -13,11 +13,12 @@ import express from "express";
 test("account snapshot includes every owned class, decrypts original payloads and isolates another account",async()=>{
  const pg=new PGlite(),previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString("base64");
  try {
- const tables=[schema.users,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.experimentVersions,schema.healthSourceConsents,schema.healthObservations,schema.capabilityPreferences];
+ const tables=[schema.users,schema.profileMeasurementSources,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.experimentVersions,schema.healthSourceConsents,schema.healthObservations,schema.capabilityPreferences];
  for(const table of tables){const c=getTableConfig(table);await pg.exec(`CREATE TABLE "${c.name}" (${c.columns.map(col=>`"${col.name}" ${col.getSQLType()}`).join(',')})`);}
  const queries:string[]=[];const db=drizzle(pg,{logger:{logQuery(query){queries.push(query);}}}),store=new AccountExportStorage(db as any);
  for(const user of ['a','b']) {
-  await db.insert(schema.users).values({id:user,username:user,password:'HASH-MUST-NOT-EXPORT'});
+  await db.insert(schema.users).values({id:user,username:user,password:'HASH-MUST-NOT-EXPORT',weightKg:65});
+  await db.insert(schema.profileMeasurementSources).values({userId:user,revision:'00000000-0000-4000-8000-000000000001',encryptedPayload:encryptPrecision({weight:{value:user==='a'?'65.000':'65.00',unit:'kg'}},JSON.stringify(['profile-measurement-source-v1',user]))});
   await db.insert(schema.capabilityPreferences).values({userId:user,enabled:true,grantFingerprint:'AUTH-GRANT-MUST-NOT-EXPORT'});
   await db.insert(schema.meals).values({id:'meal-'+user,userId:user,mealText:user+' lunch',totalCalories:0,nutritionalData:{calories:0,protein:null}});
   await db.insert(schema.microbiomeSamples).values({id:'sample-'+user,userId:user,testDate:new Date('2026-10-01Z'),rawDataPath:'/private/internal.fastq',structuredData:{originalUnit:'percent'}});
@@ -59,6 +60,7 @@ test("account snapshot includes every owned class, decrypts original payloads an
  assert.equal(a.gutReports.analyses[0].results,null);assert.equal(a.gutReports.analyses[0].confidence,null);assert.equal(a.gutReports.analyses[0].createdAt.toISOString(),'2026-10-02T12:00:00.000Z');
  assert.ok((await db.select().from(schema.metabolites)).every(row=>row.predictedConcentration!>9));
  assert.ok((await db.select().from(schema.mlAnalyses)).every(row=>(row.results as any).advice==='FORBIDDEN_ANALYSIS_SENTINEL'));
+ assert.ok(a.profileMeasurementSource.available&&b.profileMeasurementSource.available);assert.equal(a.profileMeasurementSource.fields.weight?.value,'65.000');assert.equal(b.profileMeasurementSource.fields.weight?.value,'65.00');
  assert.equal(a.experimentalPreference?.enabled,true);assert.equal(a.profile.id,'a');assert.equal(a.journal.length,1);assert.equal(a.journal[0].totalCalories,0);
  assert.deepEqual(a.journal[0].nutritionalData,{calories:0,protein:null});
  for(const rows of Object.values(a.gutReports))assert.equal(rows.length,1);

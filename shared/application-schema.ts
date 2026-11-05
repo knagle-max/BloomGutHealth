@@ -2,6 +2,7 @@
 // remain available in schema.ts for typed queries and are managed by SQL.
 export {
   users,
+  profileMeasurementSources,
   microbiomeSamples,
   bacterialComposition,
   metabolites,

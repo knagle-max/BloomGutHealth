@@ -7,7 +7,7 @@ import ExperimentalSettings from "@/components/ExperimentalSettings";
 import AccountErasure from "@/components/AccountErasure";
 import AccountDataExport from "@/components/AccountDataExport";
 import { useExperience } from "@/lib/experience";
-import { formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
+import { originalHeightEntry, originalMassEntry, formatHeightEntry, formatMassEntry, parseHeightEntry, parseMassEntry, switchHeightUnit, switchMassUnit, type HeightEntry, type MassEntry } from "@shared/measurement-entry";
 import type { DisplayUnits } from "@shared/experience";
 import ConnectionsOverview from "@/components/ConnectionsOverview";
 import ExperienceDataControls from "@/components/ExperienceDataControls";
@@ -42,7 +42,7 @@ export default function Profile({
   const [dirty,setDirty]=useState(false);
   const sourceBasis=useRef<string|null>(null);
   const sourceRevision=useRef<string|null>(null);
-  const profileBasis=(value:any)=>JSON.stringify([user?.id,value?.sex??null,value?.age??null,value?.heightCm??null,value?.weightKg??null,value?.activityLevel??null]);
+  const profileBasis=(value:any)=>JSON.stringify([user?.id,value?.sex??null,value?.age??null,value?.heightCm??null,value?.weightKg??null,value?.activityLevel??null,value?.measurementSource?.revision??null]);
   const sourceChanged=dirty&&sourceBasis.current!==null&&!!profile.data&&profileBasis(profile.data)!==sourceBasis.current;
   useEffect(()=>{sourceBasis.current=null;sourceRevision.current=null;setDirty(false);},[user?.id]);
   const [form, setForm] = useState({
@@ -74,6 +74,10 @@ export default function Profile({
         heightCm: heightParsed.kind==="valid" ? heightParsed.canonical : null,
         weightKg: massParsed.kind==="valid" ? massParsed.canonical : null,
         activityLevel: form.activityLevel,
+        ...(profile.data?.measurementSource?.available?{measurementSource:{version:1,expectedRevision:profile.data.measurementSource.revision,fields:{
+          ...(originalHeightEntry(heightEntry)?{height:originalHeightEntry(heightEntry)}:{}),
+          ...(originalMassEntry(massEntry)?{weight:originalMassEntry(massEntry)}:{}),
+        }}}:{}),
       };
       await apiRequest("PATCH", `/api/user/${user!.id}/profile`, data,sourceRevision.current?{"If-Match":`"${sourceRevision.current}"`}:undefined);
     },
@@ -154,6 +158,10 @@ export default function Profile({
         <fieldset disabled={save.isPending||loadingUnits||profile.isLoading} onChangeCapture={()=>setDirty(true)} className="space-y-4">
         <legend className="sr-only">Nutrition profile fields</legend>
         <h2>Nutrition profile</h2>
+        <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Saved measurement entry details</summary>
+          {profile.data?.measurementSource?.available?<><p className="panel-note">Original self-reported text and units are retained when entered here. Display conversions do not change them. Historical originals are not reconstructed.</p>
+            <dl>{(["height","weight"]as const).map(key=>{const original=profile.data.measurementSource.fields[key];return <div key={key}><dt>{key==="height"?"Height":"Weight"}</dt><dd>{original?(key==="height"?(original.unit==="ft-in"?`${original.primary} ft ${original.inches?`${original.inches} in`:"(inches not entered)"}`:`${original.primary} ${original.unit}`):`${original.value} ${original.unit}`):"Original entry not retained"}</dd></div>;})}</dl></>:<p className="panel-note">Original-entry storage is unavailable on this deployment. Profile saves keep canonical measurements; original text and units cannot yet be retained.</p>}
+        </details>
         {!revisionValid&&<p role="alert">Saved profile revision could not be verified. <Button type="button" variant="outline" onClick={()=>profile.refetch()}>Reload profile</Button></p>}
         {dirty&&!currentProfile&&!profile.isError&&revisionValid&&<p role="status">Checking current saved profile before saving…</p>}
         {sourceChanged&&<div role="alert" className="space-y-2"><p>Saved profile changed while you were editing. Your draft is still here. Load the latest saved profile to review before saving; this replaces your unsaved fields.</p><Button type="button" variant="outline" disabled={!currentProfile} onClick={()=>{lastHydratedProfile.current=null;setDirty(false);}}>Load latest saved profile</Button></div>}

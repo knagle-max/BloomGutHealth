@@ -1,3 +1,4 @@
+import {readProfileMeasurementSource} from "./profile-measurement-source";
 import {historicalPlanRecord} from "./plan-history";
 import {historicalAnalysisMetadata,historicalDerivedMetadata} from "./analysis-boundary";
 import { eq, sql } from "drizzle-orm";
@@ -56,7 +57,9 @@ export class AccountExportStorage {
       stage="health-observations";
       const observations = healthStorage.observation_table ? checked(await tx.select().from(healthObservations).where(eq(healthObservations.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})) : null;
       const preview=healthStorage.preview_table?await tx.select({enabled:capabilityPreferences.enabled,updatedAt:capabilityPreferences.updatedAt}).from(capabilityPreferences).where(eq(capabilityPreferences.userId,userId)):[];
-      return {experimentalPreference:preview[0]||null,format:"bloom-account-records-v2",derivedOutputPolicy:{historicalGeneratedRecords:"metadata-only",genomeFunctionalProfiles:"withheld",originalSourceObservations:"preserved"},exportedAt:new Date().toISOString(),profile,journal,
+      stage="profile-entry-source";
+      const profileMeasurementSource=await readProfileMeasurementSource(tx,userId,profile);
+      return {experimentalPreference:preview[0]||null,format:"bloom-account-records-v2",derivedOutputPolicy:{historicalGeneratedRecords:"metadata-only",genomeFunctionalProfiles:"withheld",originalSourceObservations:"preserved"},exportedAt:new Date().toISOString(),profile,profileMeasurementSource,journal,
         gutReports:{samples,bacteria:bacteria.map(record=>({...record,genomeData:null,interpretationStatus:"stored_taxonomy_only"})),metabolites:historicalDerivedMetadata(compounds,"metabolite-prediction"),healthImpacts:historicalDerivedMetadata(impacts,"health-impact"),analyses:historicalAnalysisMetadata(analyses),recommendations:historicalDerivedMetadata(advice,"recommendation")},
         biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision},
         savedLabels:labels,experience:{settings:settings?{payload:decryptPrecision(settings.encryptedPayload,userId),updatedAt:settings.updatedAt}:null,records:experience,history:{status:history===null?"not-provisioned":"available",versions:history}},healthSources:{storage:{consents:healthStorage.consent_table?"provisioned":"not-provisioned",observations:healthStorage.observation_table?"provisioned":"not-provisioned"},consents,observations},
