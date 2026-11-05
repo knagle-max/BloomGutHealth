@@ -19,3 +19,13 @@ test('schema reconciliation rejects logged errors despite zero exit, missing suc
  for(const result of [{status:0,stdout:'error: PRIVATE_DATABASE_FAILURE\nChanges applied'},{status:0,stderr:'TypeError: private'},{status:0,stdout:'Interactive prompts require a TTY'},{status:0,stdout:'All changes were aborted'},{status:1,stdout:'Changes applied'},{status:0,signal:'SIGTERM',stdout:'No changes detected'}])assert.throws(()=>assertSchemaPushResult(result),error=>error instanceof Error&&error.message==='Schema reconciliation did not complete successfully.');
  for(const stdout of ['[✓] Changes applied','[i] No changes detected'])assert.doesNotThrow(()=>assertSchemaPushResult({status:0,stdout}));
 });
+
+test('schema failure diagnostics identify actionable categories without exposing raw database output',()=>{
+ for(const [result,reason]of[
+  [{status:0,stdout:'Is profile_measurement_sources table created or renamed from another table?'},'interactive-decision'],
+  [{status:0,stdout:'error: PRIVATE_SQL_SENTINEL'},'logged-error'],
+  [{status:1,stderr:'postgres://PRIVATE_CONNECTION_SENTINEL'},'nonzero-exit'],
+  [{status:0,signal:'SIGTERM',stdout:'PRIVATE_QUERY_SENTINEL'},'terminated'],
+  [{status:0,stdout:'PRIVATE_UNKNOWN_SENTINEL'},'missing-success'],
+ ]as const)assert.throws(()=>assertSchemaPushResult(result),error=>error instanceof Error&&(error as any).reason===reason&&!/PRIVATE/.test(JSON.stringify(error))&&!/PRIVATE/.test(error.message));
+});

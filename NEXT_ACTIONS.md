@@ -13,6 +13,8 @@ Goal: finish approved v0.5 **UI/UX first**, then approved v0.6 without routine p
 
 ## Current work — finish this first
 
+- Publish Athlete session/hydration draft unit fix + isolated0016bootstrap repair;17focused/types/build/App shared-refresh/save/reset/reflow pass. Profile6bc87e2 RenderLIVE, its Actions42065787616 failed schema-reconciliation with no SQLSTATE; new CI must verify bootstrap fix and fixed diagnostic categories. Next source/unit gap: Athlete energy editor and legacy session/hydration original tokens; do not mark all ARC-UNIT complete. Existing Render DB binding remains unconfirmed despite live app.
+
 - Mutable Profile originals code/local migration complete: strict REAL-bound tokens, encrypted purpose separation, dual revision/atomic rollback, legacy clearing, owned export/erasure and unavailable-schema fallback. Actual App→HTTP→PGlite mixed-unit save/reload/keyboard/reflow passes. One broad schema-registration failure fixed by adding table to application-schema; final530/530 PASS198006ms. Publish verified code without applying0016 to unconfirmed Render target; follow existing EXPERIMENT-HISTORY-PREVIEW-STORAGE dependency. Next per-family unit audit found session/hydration uncontrolled draft fields can be relabeled if shared preferences change; fix preservation next.
 
 - Reader7554984 is RenderLIVE. New check-in capture passes14focused/types/build and actual save/reload/source/mode/owner/count journey; publish capture, then implement mutable Profile original-entry persistence with atomic canonical/source updates and honest unavailable-storage fallback. ARC-UNIT remains partial; no historical origins guessed. See docs/operations/CHECKIN_ENTRY_SOURCE.md.

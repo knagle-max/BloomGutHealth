@@ -24,7 +24,7 @@ test("Profile source metadata updates atomically with REAL canonical values, own
   await assert.rejects(updateProfileWithRevision(db,"a",{weightKg:70},profileRevision(await read()),{version:1,expectedRevision:"none",fields:{weight:{unit:"kg",value:"70.00"}}}),ProfileMeasurementUnavailable);
   assert.equal((await read()).weightKg,65,"failed metadata write rolls back canonical change");
   await updateProfileWithRevision(db,"a",{age:31});assert.equal((await read()).age,31);
-  await pg.exec(readFileSync(new URL("../migrations/0016_profile_measurement_sources.sql",import.meta.url),"utf8"));
+  for(let pass=0;pass<2;pass++)await pg.exec(readFileSync(new URL("../migrations/0016_profile_measurement_sources.sql",import.meta.url),"utf8"));
   await updateProfileWithRevision(db,"a",{heightCm:69*2.54,weightKg:150/2.2046226218487757},profileRevision(await read()),{version:1,expectedRevision:"none",fields});
   const saved=await read(),source=await readProfileMeasurementSource(db,"a",saved);assert.ok(source.available);assert.deepEqual(source.fields,fields);assert.notEqual(source.revision,"none");
   assert.deepEqual(await readProfileMeasurementSource(db,"b",await read("b")),{available:true,revision:"none",fields:{}});

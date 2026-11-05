@@ -556,7 +556,8 @@
           "client/src/components/TrainingSetsEditor.tsx",
           "client/src/components/ActivityReview.tsx",
           "client/src/components/ActivitySetEditor.tsx",
-          "client/src/components/ActivityWeekSummary.tsx"
+          "client/src/components/ActivityWeekSummary.tsx",
+          "client/src/lib/useDraftUnits.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -601,7 +602,8 @@
           "client/src/components/TrainingSetsEditor.tsx",
           "client/src/components/ActivityReview.tsx",
           "client/src/components/ActivitySetEditor.tsx",
-          "client/src/components/ActivityWeekSummary.tsx"
+          "client/src/components/ActivityWeekSummary.tsx",
+          "client/src/lib/useDraftUnits.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -639,7 +641,8 @@
           "client/src/pages/AthleteWorkspace.tsx",
           "client/src/components/TodayStatus.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/AthleteProfileForm.tsx"
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/lib/useDraftUnits.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -670,7 +673,8 @@
         "ui": [
           "client/src/pages/AthleteWorkspace.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/AthleteProfileForm.tsx"
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/lib/useDraftUnits.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -1520,7 +1524,8 @@
         "ui": [
           "client/src/pages/AthleteWorkspace.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/AthleteProfileForm.tsx"
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/lib/useDraftUnits.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -1736,9 +1741,10 @@
     "client/src/lib/planning-cache.ts": "c9c981e24ae83a5960aff136c1934b5c4008aab5907b9d80569984185a059421",
     "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
     "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
+    "client/src/lib/useDraftUnits.ts": "123386dddf9c88abda074a7bcf246526b0d9d6c6865ac5447fbdd06e3246fcc6",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
     "client/src/pages/ActivityLog.tsx": "4bc7d9b665bffa63313d56a5d055ec5662aca85af2b41ef106cb95e8fc3834b0",
-    "client/src/pages/AthleteWorkspace.tsx": "747160b8c9124679ea4dd484639a3fd0166f754046ab420415f44170f851c1df",
+    "client/src/pages/AthleteWorkspace.tsx": "3acc799b69ef7b954b520aa91304b926ea9040b16ed86b8606faa43815f9edac",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
     "client/src/pages/Explore.tsx": "4f00b3872fa98bc22a449a336ab68e6d7828d5d3e576c4fb88a12d769c6043ca",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",

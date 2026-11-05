@@ -28,7 +28,7 @@ async function protectedSnapshot(){
  await client.query('COMMIT');return {tables,constraints,triggers};
  }catch(error){await client.query('ROLLBACK').catch(()=>{});throw error;}finally{client.release();}
 }
-let stage='protected-baseline',sqlState='none',dependency='none';
+let stage='protected-baseline',sqlState='none',dependency='none',failure='unclassified';
 try{
  const before=await protectedSnapshot();stage='schema-reconciliation';
  const result=spawnSync(process.execPath,[fileURLToPath(new URL('../node_modules/drizzle-kit/bin.cjs',import.meta.url)),'push','--force'],{cwd:fileURLToPath(new URL('..',import.meta.url)),env:process.env,encoding:'utf8',timeout:120000,maxBuffer:5*1024*1024});
@@ -38,6 +38,7 @@ try{
  assertSchemaPushResult(result);stage='protected-verification';
  assert.deepEqual(await protectedSnapshot(),before,'Schema push must preserve control snapshots, audit rows, constraints and triggers');
  console.log('PASS: isolated schema reconciliation preserved protected control data, constraints and immutable audit guard.');
-}catch{
- console.error(`FAIL: isolated schema reconciliation; stage=${stage}; sqlstate=${sqlState}; dependency=${dependency}`);process.exitCode=1;
+}catch(error){
+ failure=["terminated","interactive-decision","logged-error","nonzero-exit","missing-success"].includes(error?.reason)?error.reason:"unclassified";
+ console.error(`FAIL: isolated schema reconciliation; stage=${stage}; reason=${failure}; sqlstate=${sqlState}; dependency=${dependency}`);process.exitCode=1;
 }finally{await pool.end().catch(()=>{});}
