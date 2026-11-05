@@ -22,6 +22,13 @@ export type ReportOrganism = {
   reportedAbundance: string | null;
   notes: string | null;
 };
+export type ReportFoodRecommendation = {
+  name: string;
+  reportedCategory: string | null;
+  notes: string | null;
+  sourcePage: number | null;
+  sourceColumn: number | null;
+};
 export type StructuredReport = {
   schemaVersion: "bloom-report-v2";
   kind: "abundance" | "functional-report";
@@ -31,6 +38,7 @@ export type StructuredReport = {
   scoreInterpretationWarning: string | null;
   scores: ReportScore[];
   organisms: ReportOrganism[];
+  foods?: ReportFoodRecommendation[];
   bacteria_percentages?: Record<string, number>;
   missingData: string[];
   sourceMissingData: string[];
@@ -74,6 +82,8 @@ function structuredSourceObject(input: Dict): Dict {
           "functionalScores",
           "microorganisms",
           "bacteria_percentages",
+          "foods",
+          "food_recommendations",
         ].some((k) => k in nested)
       ? nested
       : input;
@@ -93,6 +103,16 @@ export function microbiomeSourceFacts(report: Pick<StructuredReport,"sourceRepor
     const value=Object.hasOwn(record,key)?record[key]:undefined;if(typeof value==="string"&&value.trim())facts.push({kind,value,sourcePath:path+"."+key});
   }
   return facts;
+}
+/** Reader compatibility for sources saved before food projection existed.
+ * An explicit canonical empty array takes precedence over the original source. */
+export function reportedFoodSuggestions(report:Pick<StructuredReport,"foods"|"sourceReport">){
+  const source:Dict=report.foods!==undefined?{foods:report.foods}:object(report.sourceReport)?structuredSourceObject(report.sourceReport):{};
+  const raw=source.foods??source.food_recommendations;
+  if(raw===undefined||raw===null)return{status:"not-supplied" as const,foods:[] as ReportFoodRecommendation[]};
+  if(Array.isArray(raw)&&!raw.length)return{status:"available" as const,foods:[] as ReportFoodRecommendation[]};
+  try{return{status:"available" as const,foods:parseStructuredReport({foods:raw}).foods||[]};}
+  catch{return{status:"unreadable" as const,foods:[] as ReportFoodRecommendation[]};}
 }
 export function parseStructuredReport(input: unknown): StructuredReport {
   validateReportComplexity(input);
@@ -225,9 +245,31 @@ export function parseStructuredReport(input: unknown): StructuredReport {
       });
     }
   }
-  if (!percentages && !scores.length && !organisms.length)
+  const rawFoods = source.foods ?? source.food_recommendations;
+  const foods: ReportFoodRecommendation[] = [];
+  if (rawFoods !== undefined && rawFoods !== null) {
+    if (!Array.isArray(rawFoods) || rawFoods.length > 1000)
+      throw Error("Food suggestions must be a list of no more than 1000 source rows.");
+    for (const [index, row] of Array.from(rawFoods.entries())) {
+      if (!object(row) || typeof row.name !== "string" || !row.name.trim() || row.name.length > 200)
+        throw Error(`Food row ${index + 1} needs a source name of up to 200 characters.`);
+      const category = row.reportedCategory ?? row.category;
+      if (category !== undefined && category !== null && (typeof category !== "string" || !category.trim() || category.length > 150))
+        throw Error(`Food row ${index + 1} has an invalid provider category.`);
+      if (row.notes !== undefined && row.notes !== null && (typeof row.notes !== "string" || row.notes.length > 1000))
+        throw Error(`Food row ${index + 1} has an invalid source note.`);
+      const sourceIndex = (value: unknown, max: number) => {
+        if (value === undefined || value === null) return null;
+        if (typeof value !== "number" || !Number.isInteger(value) || value < 1 || value > max)
+          throw Error(`Food row ${index + 1} has an invalid source position.`);
+        return value;
+      };
+      foods.push({name: row.name.trim(), reportedCategory: typeof category === "string" ? category.trim() : null, notes: typeof row.notes === "string" ? row.notes : null, sourcePage: sourceIndex(row.sourcePage,1000), sourceColumn: sourceIndex(row.sourceColumn,10)});
+    }
+  }
+  if (!percentages && !scores.length && !organisms.length && !foods.length)
     throw Error(
-      "This JSON has no supported report data. Provide bacteria_percentages or a report containing nonempty scores and/or organisms. A pathway score is not a bacterial percentage.",
+      "This JSON has no supported report data. Provide bacteria_percentages or a report containing nonempty scores, organisms or provider food suggestions. A pathway score is not a bacterial percentage.",
     );
   const missingData = [
     "Measured metabolite concentrations are not supplied in a supported measurement format.",
@@ -241,13 +283,13 @@ export function parseStructuredReport(input: unknown): StructuredReport {
   const originalMissing = canonical ? source.sourceMissingData : source.missing_data ?? metadata.missing_data;
   return {
     schemaVersion: "bloom-report-v2",
-    kind: scores.length || organisms.length ? "functional-report" : "abundance",
+    kind: scores.length || organisms.length || foods.length ? "functional-report" : "abundance",
     sourceLabel:
       text(
         canonical ? source.sourceLabel : source.testing_company ?? metadata.testingCompany ?? metadata.provider,
         100,
       ) ||
-      (scores.length || organisms.length
+      (scores.length || organisms.length || foods.length
         ? "Viome-style report"
         : "Abundance report"),
     dataOrigin: text(
@@ -258,6 +300,7 @@ export function parseStructuredReport(input: unknown): StructuredReport {
     scoreInterpretationWarning: text(canonical ? source.scoreInterpretationWarning : source.score_interpretation_warning, 1000),
     scores,
     organisms,
+    ...(rawFoods !== undefined && rawFoods !== null ? {foods} : {}),
     ...(percentages ? { bacteria_percentages: percentages } : {}),
     missingData,
     sourceMissingData: Array.isArray(originalMissing)

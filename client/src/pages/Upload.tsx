@@ -80,7 +80,7 @@ export default function Upload() {
       await invalidatePlanningInputs();
       await queryClient.invalidateQueries({queryKey:["/api/microbiome/samples"]});
       if(!active.current||actor.current!==owner)return;
-      toast({title:"Report saved",description:`${result.preview.scores} scores, ${result.preview.reportedOrganisms} reported organisms and ${result.preview.quantifiedTaxa} quantified taxa saved. Missing measurements remain unavailable.`});
+      toast({title:"Report saved",description:`${result.preview.scores} provider assessments, ${result.preview.reportedOrganisms} reported organisms and ${result.preview.quantifiedTaxa} quantified taxa saved.${preview?.parsed.foods?.length?` ${preview.parsed.foods.length} provider food suggestions retained.`:""} Missing measurements remain unavailable.`});
       setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
     } catch(error) {
       if(!active.current||actor.current!==owner)return;
@@ -211,7 +211,7 @@ export default function Upload() {
       {preview&&<section className="bloom-panel space-y-3" aria-labelledby="report-preview-title">
         <h2 id="report-preview-title" ref={previewHeading} tabIndex={-1}>Review report before saving</h2>
         <p>{attempted?'Review of the source prepared for this import. Save status is shown below.':'Prepared locally; nothing has been uploaded or saved yet.'}</p>
-        <p>{preview.parsed.scores.length} reported scores · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa</p>
+        <p>{preview.parsed.scores.length} provider assessments · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa{preview.parsed.foods?.length?` · ${preview.parsed.foods.length} provider food suggestions`:""}</p>
         <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
         <details><summary>Recognized data & missing measurements</summary>
           {preview.parsed.bacteria_percentages&&<section aria-label="Reported relative abundance" className="space-y-2">

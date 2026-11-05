@@ -12,6 +12,20 @@ import {registerReportRoutes} from '../server/report-routes';
 import {importStructuredReportWithReceipt} from '../server/structured-report-storage';
 import {publicSample} from '../server/analysis-boundary';
 const body={report:{bacteria_percentages:{Bifidobacterium:60,Roseburia:40}},notes:'Original source'};
+test('owned canonical import preserves provider food rows atomically through retry and read without creating quantitative taxa',async()=>{
+ const{pg,db,store}=await fixture();
+ try{
+  const report=parseStructuredReport({testing_company:'Synthetic provider',scores:[{name:'Synthetic category',status:'Attention'}],foods:Array.from({length:299},(_,i)=>({name:`Synthetic food ${i+1}`,reportedCategory:i<240?'Enjoy':i<268?'Superfood':i<290?'Minimize':'Avoid',sourcePage:8+Math.floor(i/60)}))});
+  const key=randomUUID(),first=await store.importStructuredReport('a',report,{},null,key),replay=await store.importStructuredReport('a',report,{},null,key);
+  assert.deepEqual(replay,first);const rows=await db.select().from(microbiomeSamples);assert.equal(rows.length,1);
+  const visible=publicSample(rows[0]);assert.equal((visible.structuredData as any).foods.length,299);assert.deepEqual(parseStructuredReport(visible.structuredData).foods,report.foods);
+  assert.equal((await db.select().from(bacterialComposition)).length,0);assert.equal((await db.select().from(mlAnalyses)).length,1);
+  assert.equal((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,'b'))).length,0);
+  const changed=parseStructuredReport({...report,sourceReport:{...report.sourceReport,foods:[{name:'Different source',reportedCategory:'Avoid'}]}});
+  await assert.rejects(()=>store.importStructuredReport('a',changed,{},null,key));
+  assert.equal((await db.select().from(microbiomeSamples)).length,1);
+ }finally{await pg.close();}
+});
 async function fixture(){
  const pg=new PGlite();await pg.exec(`CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');CREATE TABLE microbiome_samples(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),user_id varchar NOT NULL REFERENCES users(id),test_date timestamp NOT NULL,testing_company text,test_id text,raw_data_path text,structured_data jsonb,notes text,processing_status text NOT NULL DEFAULT 'pending',diversity_index real,uploaded_at timestamp NOT NULL DEFAULT now());CREATE TABLE bacterial_composition(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),sample_id varchar NOT NULL REFERENCES microbiome_samples(id),bacterial_name text NOT NULL,taxonomy_level text NOT NULL,abundance real NOT NULL,genome_data jsonb);CREATE TABLE ml_analyses(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),sample_id varchar NOT NULL REFERENCES microbiome_samples(id),analysis_type text NOT NULL,model_version text NOT NULL,results jsonb NOT NULL,confidence real,explainability jsonb,compared_cohorts text[],analyzed_at timestamp NOT NULL DEFAULT now());`);const db=drizzle(pg);
  const store:any={insertMicrobiomeSample:async(data:any)=>(await db.insert(microbiomeSamples).values(data).returning())[0],updateMicrobiomeSample:(id:string,updates:any,owner:string)=>updateOwnedSample(db as any,id,updates,owner),insertBacterialComposition:(data:any,owner:string)=>insertOwnedComposition(db as any,data,owner),insertMlAnalysis:(data:any,owner:string)=>insertOwnedAnalysis(db as any,data,owner),importStructuredReport:(owner:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,key)};

@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {reportedFoodSuggestions} from "@shared/structured-report";
+import ProviderFoodSuggestions from "./ProviderFoodSuggestions";
 import type { StructuredReport } from "@shared/structured-report";
 import {
   explainOrganism,
@@ -35,8 +37,10 @@ export default function ImportedReportDetails({
   report: StructuredReport & { importInfo?: { dateSource?: string } };
 }) {
   const [query, setQuery] = useState("");
+  const foodSource=useMemo(()=>reportedFoodSuggestions(report),[report]);
+  useEffect(()=>setQuery(""),[report]);
   const match = (name: string) =>
-    name.toLowerCase().includes(query.toLowerCase());
+    name.toLowerCase().includes(query.trim().toLowerCase());
   return (
     <section
       className="bloom-panel space-y-5 report-explainer"
@@ -44,7 +48,7 @@ export default function ImportedReportDetails({
     >
       <div>
         <p className="eyebrow">UNDERSTAND YOUR REPORT</p>
-        <h2>Reported scores & organisms</h2>
+        <h2>What your provider reported</h2>
         <p>
           {report.dataOrigin ||
             "User-supplied report; not independently verified."}
@@ -55,17 +59,19 @@ export default function ImportedReportDetails({
           </p>
         )}
       </div>
-      <div className="report-context">
-        <h3>General biology, separate from your result</h3>
+      <p className="panel-note">Provider categories and scores do not measure metabolic activity or set a personal diet.</p>
+      <details className="report-context">
+        <summary>General biology & interpretation limits</summary>
         <p>
           The explanations below describe what an organism or process can do.
           They do not verify the report, diagnose a condition, or measure
           activity in your body. Species and strains can behave differently.
         </p>
         <p>
-          Pathway scores are provider-defined numbers, not concentrations or
-          percentages. Higher is not automatically better; the provider’s
-          scoring direction and version matter.
+          Provider assessments can be categories or numbers. Categories do not
+          imply a numeric score, concentration or percentage. For numeric
+          scores, higher is not automatically better; the provider’s direction
+          and version matter.
         </p>
         {report.importInfo?.dateSource === "import-date" && (
           <p>
@@ -73,9 +79,9 @@ export default function ImportedReportDetails({
             not a verified sample-collection date.
           </p>
         )}
-      </div>
+      </details>
       <label className="block">
-        Find an organism or score
+        Find an organism, assessment or food
         <input
           className="bloom-input w-full"
           value={query}
@@ -83,10 +89,12 @@ export default function ImportedReportDetails({
           placeholder="For example: butyrate or Akkermansia"
         />
       </label>
+      {!!foodSource.foods.length&&<ProviderFoodSuggestions foods={foodSource.foods} query={query} provider={report.sourceLabel}/>}
+      {foodSource.status==="unreadable"&&<p className="panel-note">Provider food rows could not be read in this report format. Your original source data is retained.</p>}
       {report.scores.length > 0 && (
         <section>
           <div className="report-section-heading">
-            <h3>Functional & pathway scores</h3>
+            <h3>Provider assessments</h3>
             <span>
               {report.scores.filter((s) => match(s.name)).length} shown of{" "}
               {report.scores.length}
@@ -102,15 +110,16 @@ export default function ImportedReportDetails({
                     <div className="report-card-top">
                       <h4>{score.name}</h4>
                       <span className="report-value">
-                        {score.score ?? score.reportedValue ?? "Unavailable"}
-                        <small>reported value</small>
+                        {score.score ?? score.reportedValue ?? score.reportedCategory ?? "Unavailable"}
+                        <small>{score.score===null&&score.reportedValue===null&&score.reportedCategory?"provider category":"reported value"}</small>
                       </span>
                     </div>
                     <p className="report-topic">{help.label}</p>
                     <p>{help.meaning}</p>
                     <p className="report-meta">
-                      Scale: {score.scale || "not supplied"} · Provider
-                      category: {score.reportedCategory || "not supplied"}
+                      {score.score===null&&score.reportedValue===null&&score.reportedCategory
+                        ? "Qualitative provider assessment · no numeric score supplied."
+                        : <>Scale: {score.scale || "not supplied"} · Provider category: {score.reportedCategory || "not supplied"}</>}
                     </p>
                     <LearnMore help={help} />
                     <details className="report-source">
@@ -181,8 +190,9 @@ export default function ImportedReportDetails({
       )}
       {query &&
         !report.scores.some((s) => match(s.name)) &&
-        !report.organisms.some((o) => match(o.name)) && (
-          <p>No matching organism or score in this report.</p>
+        !report.organisms.some((o) => match(o.name)) &&
+        !foodSource.foods.some((f)=>match(f.name)) && (
+          <p>No matching organism, assessment or food in this report.</p>
         )}
       <details className="report-context">
         <summary>Source warnings & missing measurements</summary>
