@@ -1,0 +1,16 @@
+{
+  "review_date": "2026-11-04",
+  "approval_model": "ALL_REQUIRED",
+  "global": {
+    "biology": "concept_only",
+    "legal": "not_cleared",
+    "security": "not_audited",
+    "branding": "conditional",
+    "user_testing": "not_run",
+    "architect": "pending",
+    "codex": "do_not_enable"
+  },
+  "allow_public_asset_delivery": false,
+  "mechanism": "Only permit registry entries with biology, legal, security, branding, user_testing and architect=approved, validated exact sha, valid scope and fallback; release feature flag remains off otherwise.",
+  "no_inherited_approval": true
+}
