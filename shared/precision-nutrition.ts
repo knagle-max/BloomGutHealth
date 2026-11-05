@@ -436,21 +436,282 @@ export function parse23andMe(text: string, collectedAt: string) {
     scannedVariants,
   });
 }
+/** General reference descriptions are display metadata, not interpretation rules.
+ * Source access dates are not claims of independent product/clinical approval. */
+export const LAB_MARKER_EDUCATION_VERSION="lab-reference-2026-11-05.1";
 export const markerDefinitions = [
-  { id: "ldl", name: "LDL cholesterol", units: ["mmol/L", "mg/dL"] },
-  { id: "apob", name: "ApoB", units: ["g/L", "mg/dL"] },
-  { id: "triglycerides", name: "Triglycerides", units: ["mmol/L", "mg/dL"] },
-  { id: "hdl", name: "HDL cholesterol", units: ["mmol/L", "mg/dL"] },
-  { id: "alt", name: "ALT", units: ["U/L"] },
-  { id: "ast", name: "AST", units: ["U/L"] },
-  { id: "ggt", name: "GGT", units: ["U/L"] },
-  { id: "glucose", name: "Glucose", units: ["mmol/L", "mg/dL"] },
-  { id: "hba1c", name: "HbA1c", units: ["%", "mmol/mol"] },
-  { id: "b12", name: "Vitamin B12", units: ["pmol/L", "pg/mL"] },
-  { id: "vitamin_d", name: "25-OH vitamin D", units: ["nmol/L", "ng/mL"] },
-  { id: "ferritin", name: "Ferritin", units: ["ug/L", "ng/mL"] },
-  { id: "folate", name: "Serum folate", units: ["nmol/L", "ng/mL"] },
-  { id: "homocysteine", name: "Homocysteine", units: ["umol/L"] },
+  {
+    "id": "ldl",
+    "name": "LDL cholesterol",
+    "units": [
+      "mmol/L",
+      "mg/dL"
+    ],
+    "education": {
+      "definition": "LDL cholesterol is the cholesterol carried in low-density lipoprotein particles in the blood.",
+      "context": "Reports may label LDL as calculated or directly measured. Keep that method with the result.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Cholesterol levels",
+          "url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "apob",
+    "name": "ApoB",
+    "units": [
+      "g/L",
+      "mg/dL"
+    ],
+    "education": {
+      "definition": "This blood test measures apolipoprotein B, a protein on particles that transport fats and cholesterol, including LDL.",
+      "context": "A blood protein result does not identify an APOB gene variant.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Apolipoprotein B",
+          "url": "https://medlineplus.gov/ency/article/003502.htm",
+          "accessedOn": "2026-11-05"
+        },
+        {
+          "title": "MedlinePlus: APOB protein function",
+          "url": "https://medlineplus.gov/genetics/gene/apob/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "triglycerides",
+    "name": "Triglycerides",
+    "units": [
+      "mmol/L",
+      "mg/dL"
+    ],
+    "education": {
+      "definition": "Triglycerides are fats carried in the blood and used or stored for energy. This test measures their concentration.",
+      "context": "The sample’s fasting status matters when comparing results. Keep the original collection context.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Triglycerides test",
+          "url": "https://medlineplus.gov/lab-tests/triglycerides-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "hdl",
+    "name": "HDL cholesterol",
+    "units": [
+      "mmol/L",
+      "mg/dL"
+    ],
+    "education": {
+      "definition": "HDL cholesterol is the cholesterol carried in high-density lipoprotein particles in the blood.",
+      "context": "HDL is interpreted alongside the other lipid results and the wider clinical context.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Cholesterol levels",
+          "url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alt",
+    "name": "ALT",
+    "units": [
+      "U/L"
+    ],
+    "education": {
+      "definition": "ALT is alanine aminotransferase, an enzyme found mostly in liver cells. This test measures it in the blood.",
+      "context": "Other results, medicines, activity and clinical context can affect how ALT is interpreted.",
+      "sources": [
+        {
+          "title": "MedlinePlus: ALT blood test",
+          "url": "https://medlineplus.gov/lab-tests/alt-blood-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ast",
+    "name": "AST",
+    "units": [
+      "U/L"
+    ],
+    "education": {
+      "definition": "AST is aspartate aminotransferase, an enzyme found in the liver, muscles, heart and other tissues. This test measures it in the blood.",
+      "context": "AST is not specific to the liver. Its meaning depends on the wider clinical context.",
+      "sources": [
+        {
+          "title": "MedlinePlus: AST test",
+          "url": "https://medlineplus.gov/lab-tests/ast-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ggt",
+    "name": "GGT",
+    "units": [
+      "U/L"
+    ],
+    "education": {
+      "definition": "GGT is gamma-glutamyl transferase, an enzyme found in several tissues, especially the liver. This test measures it in the blood.",
+      "context": "GGT is interpreted with other liver tests and the clinical context.",
+      "sources": [
+        {
+          "title": "MedlinePlus: GGT test",
+          "url": "https://medlineplus.gov/lab-tests/gamma-glutamyl-transferase-ggt-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "glucose",
+    "name": "Glucose",
+    "units": [
+      "mmol/L",
+      "mg/dL"
+    ],
+    "education": {
+      "definition": "A blood glucose test measures the amount of glucose, a sugar used for energy, in the sample.",
+      "context": "Fasting and random samples have different collection contexts. Keep those details when reviewing or comparing results.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Blood glucose test",
+          "url": "https://medlineplus.gov/lab-tests/blood-glucose-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "hba1c",
+    "name": "HbA1c",
+    "units": [
+      "%",
+      "mmol/mol"
+    ],
+    "education": {
+      "definition": "HbA1c measures the share of hemoglobin with glucose attached. It reflects average blood glucose over roughly two to three months.",
+      "context": "It describes a different time window from a single glucose sample. Some blood conditions and medicines can affect how it is interpreted.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Hemoglobin A1C test",
+          "url": "https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "b12",
+    "name": "Vitamin B12",
+    "units": [
+      "pmol/L",
+      "pg/mL"
+    ],
+    "education": {
+      "definition": "This blood test measures the amount of vitamin B12, also called cobalamin, circulating in the sample.",
+      "context": "Medicines and additional tests can matter when a clinician interprets the result.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Vitamin B12 level",
+          "url": "https://medlineplus.gov/ency/article/003705.htm",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "vitamin_d",
+    "name": "25-OH vitamin D",
+    "units": [
+      "nmol/L",
+      "ng/mL"
+    ],
+    "education": {
+      "definition": "This marker is 25-hydroxyvitamin D, the form commonly measured to assess vitamin D status.",
+      "context": "An active vitamin D test, also called 1,25-dihydroxyvitamin D, measures a different form. Check the original test name rather than treating the two as interchangeable.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Vitamin D test",
+          "url": "https://medlineplus.gov/lab-tests/vitamin-d-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ferritin",
+    "name": "Ferritin",
+    "units": [
+      "ug/L",
+      "ng/mL"
+    ],
+    "education": {
+      "definition": "Ferritin is a protein that stores iron. Its blood concentration helps assess the body’s iron stores.",
+      "context": "Inflammation, medicines and other conditions can also affect ferritin. Review it alongside the rest of the report.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Ferritin blood test",
+          "url": "https://medlineplus.gov/lab-tests/ferritin-blood-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "folate",
+    "name": "Serum folate",
+    "units": [
+      "nmol/L",
+      "ng/mL"
+    ],
+    "education": {
+      "definition": "Serum folate measures vitamin B9 in the liquid part of the blood. Folate supports the production of new cells.",
+      "context": "Serum folate can change with recent intake; it is different from a red-blood-cell folate measurement.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Vitamin B tests",
+          "url": "https://medlineplus.gov/lab-tests/vitamin-b-test/",
+          "accessedOn": "2026-11-05"
+        },
+        {
+          "title": "Mayo Clinic Laboratories: Vitamin B12 and folate, serum",
+          "url": "https://www.mayocliniclabs.com/test-catalog/Overview/9156",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  },
+  {
+    "id": "homocysteine",
+    "name": "Homocysteine",
+    "units": [
+      "umol/L"
+    ],
+    "education": {
+      "definition": "Homocysteine is an amino acid. This test measures its amount in the blood.",
+      "context": "Several B vitamins help process homocysteine. This result alone does not identify a gene variant or establish which nutrient, if any, is lacking.",
+      "sources": [
+        {
+          "title": "MedlinePlus: Homocysteine test",
+          "url": "https://medlineplus.gov/lab-tests/homocysteine-test/",
+          "accessedOn": "2026-11-05"
+        }
+      ]
+    }
+  }
 ] as const;
 export type MarkerId = (typeof markerDefinitions)[number]["id"];
 const markerIds = markerDefinitions.map((m) => m.id) as [
