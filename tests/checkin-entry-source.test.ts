@@ -1,3 +1,4 @@
+import {switchMassUnit,switchCircumferenceUnit,formatMassEntry,type MassEntry,type CircumferenceEntry} from "../shared/measurement-entry";
 import test from "node:test";
 import assert from "node:assert/strict";
 import express from "express";
@@ -6,7 +7,7 @@ import {randomBytes} from "node:crypto";
 import {PGlite} from "@electric-sql/pglite";
 import {drizzle} from "drizzle-orm/pglite";
 import {checkinSchema} from "../shared/precision-nutrition";
-import {checkinEntrySourceSchema} from "../shared/checkin-entry-source";
+import {checkinEntrySourceSchema,captureCheckinEntrySource} from "../shared/checkin-entry-source";
 import {PrecisionStorage} from "../server/precision-storage";
 import {registerPrecisionRoutes} from "../server/precision-routes";
 const source={version:1,capture:"manual-checkin",fields:{weight:{value:"220.000",unit:"lb"},waist:{value:"36.00",unit:"in"},bodyFatPercent:{value:"25.00",unit:"%"},bloating:{value:"0",unit:"0-10"},energy:{value:"7",unit:"0-10"},adherencePercent:{value:"0.0",unit:"%"}}};
@@ -49,4 +50,15 @@ test("actual authenticated HTTP and encrypted SQL preserve original entries on r
   const other=await(await fetch(base,{headers:{"x-user":"b"}})).json();assert.deepEqual(other.checkins,[]);
   const raw=await pg.query("SELECT encrypted_payload FROM precision_records");assert.equal(JSON.stringify(raw.rows).includes('"entrySource"'),false);assert.equal(JSON.stringify(raw.rows).includes('"220.000"'),false);
  }finally{if(server){server.closeAllConnections();await new Promise<void>(resolve=>server!.close(()=>resolve()));}await pg.close();if(previousKey===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previousKey;}
+});
+
+test("new manual capture keeps first lexical tokens across conversions, preserves zero and omits copied canonical origins",()=>{
+ const mass=switchMassUnit({unit:"lb",value:"220.000"},"kg") as MassEntry;
+ const waist=switchCircumferenceUnit({unit:"in",value:"36.00"},"cm") as CircumferenceEntry;
+ const captured=captureCheckinEntrySource(mass,waist,{bloating:"0",adherencePercent:"0.0"});
+ assert.deepEqual(captured?.fields,{weight:{value:"220.000",unit:"lb"},waist:{value:"36.00",unit:"in"},bloating:{value:"0",unit:"0-10"},adherencePercent:{value:"0.0",unit:"%"}});
+ assert.equal(checkinSchema.safeParse({...canonical,entrySource:captured}).success,true);
+ assert.equal(captureCheckinEntrySource(formatMassEntry(70,"lb"),{unit:"cm",value:""},{}),undefined);
+ assert.deepEqual(captureCheckinEntrySource({unit:"kg",value:"71.000"},{unit:"in",value:""},{})?.fields.weight,{unit:"kg",value:"71.000"});
+ assert.throws(()=>captureCheckinEntrySource(mass,waist,{energy:"PrivateCanary"}));
 });

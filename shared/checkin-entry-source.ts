@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {parseMassEntry,parseCircumferenceEntry} from "./measurement-entry";
+import {parseMassEntry,parseCircumferenceEntry,originalMassEntry,originalCircumferenceEntry,type MassEntry,type CircumferenceEntry} from "./measurement-entry";
 const token=z.string().min(1).max(128).regex(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/).refine(value=>!/[\r\n]/.test(value)&&Number.isFinite(Number(value)));
 const scalar=(unit:"%"|"0-10")=>z.object({value:token,unit:z.literal(unit)}).strict();
 export const checkinEntrySourceSchema=z.object({
@@ -22,4 +22,17 @@ export function checkinEntrySourceMatches(source:CheckinEntrySource|undefined,ca
   if(Math.abs(converted.canonical-target)>tolerance)return false;
  }
  return true;
+}
+
+/** Capture only known original tokens. A copied canonical value has no invented origin. */
+export function captureCheckinEntrySource(weight:MassEntry,waist:CircumferenceEntry,scalars:Partial<Record<"bodyFatPercent"|"bloating"|"energy"|"adherencePercent",string>>):CheckinEntrySource|undefined{
+ const fields:CheckinEntrySource["fields"]={};
+ const mass=originalMassEntry(weight),circumference=originalCircumferenceEntry(waist);
+ if(mass)fields.weight=mass;
+ if(circumference)fields.waist=circumference;
+ for(const key of["bodyFatPercent","bloating","energy","adherencePercent"]as const){
+  const value=scalars[key];
+  if(value!==undefined&&value!=="")fields[key]={value,unit:key==="bloating"||key==="energy"?"0-10":"%"};
+ }
+ return Object.keys(fields).length?checkinEntrySourceSchema.parse({version:1,capture:"manual-checkin",fields}):undefined;
 }

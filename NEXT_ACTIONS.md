@@ -13,7 +13,7 @@ Goal: finish approved v0.5 **UI/UX first**, then approved v0.6 without routine p
 
 ## Current work — finish this first
 
-- Finish/publicize unit conversion and check-in reader slice (526 baseline, final21 focused/types/build and two App journeys pass). Verify exact reader deployment before enabling new source capture. Then implement capture on existing check-in save, actual save/reload tests, and mutable Profile original-entry persistence. ARC-UNIT remains partial; old records stay unknown, no clinical/source gate changes. See docs/operations/CHECKIN_ENTRY_SOURCE.md.
+- Reader7554984 is RenderLIVE. New check-in capture passes14focused/types/build and actual save/reload/source/mode/owner/count journey; publish capture, then implement mutable Profile original-entry persistence with atomic canonical/source updates and honest unavailable-storage fallback. ARC-UNIT remains partial; no historical origins guessed. See docs/operations/CHECKIN_ENTRY_SOURCE.md.
 
 - Requirement status reconciliation:43exact unavailable-source placeholder rows (Remaining/Next up) now BLOCKED_USER_INPUT R6-VERBATIM, receipt V05_UNAVAILABLE_ORIGINAL_CRITERIA_20261105.json. Preserve all207IDs/priorities/scopes and every existing code/test/deployment/specialist field;18bounded partial placeholder rows unchanged. Counts now43ALREADY/19IMPLEMENTED/28PARTIAL/61Remaining/49BLOCKED_USER_INPUT/1BLOCKED_TECHNICAL/5Nextup/1Currentsubmission. This is not a general pause or software-completion claim. Continue explicit current criteria, starting current unit/brand source/runtime closure; do not repeatedly hunt missing source or request the five visual ZIPs again.
 

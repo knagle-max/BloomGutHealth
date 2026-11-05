@@ -1,3 +1,4 @@
+import {captureCheckinEntrySource} from "@shared/checkin-entry-source";
 import BloodworkSourceOverview from '@/components/BloodworkSourceOverview';
 import CheckinEntrySource from "@/components/CheckinEntrySource";
 import {defaultGeneticSelection,isSensitiveGeneticCall,selectedGeneticImport} from "@shared/genetic-selection";
@@ -1171,6 +1172,10 @@ export default function PrecisionNutrition() {
                         kind: "checkin",
                         payload: {
                           measuredAt: date(d, "measuredAt"),
+                          entrySource:captureCheckinEntrySource(weightEntry,waistEntry,{
+                            bodyFatPercent:String(d.get("bodyFatPercent")??""),bloating:String(d.get("bloating")??""),
+                            energy:String(d.get("energy")??""),adherencePercent:String(d.get("adherencePercent")??""),
+                          }),
                           weightKg: parsedWeight.kind==="valid"?parsedWeight.canonical:null,
                           bodyFatPercent: number(d, "bodyFatPercent"),
                           waistCm: parsedWaist.kind==="valid"?parsedWaist.canonical:null,
