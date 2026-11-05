@@ -1157,7 +1157,8 @@
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/ManualGenetics.tsx",
           "client/src/components/GenotypeExplanations.tsx",
-          "client/src/components/GeneticsCatalogue.tsx"
+          "client/src/components/GeneticsCatalogue.tsx",
+          "client/src/components/GeneticHighlights.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1171,7 +1172,8 @@
           "shared/genetics-catalogue.ts",
           "shared/genetic-call-source.ts",
           "shared/measurement-entry.ts",
-          "shared/data/genetics-candidate-bibliography.ts"
+          "shared/data/genetics-candidate-bibliography.ts",
+          "shared/genetics-relevance.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1184,7 +1186,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct.",
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1198,7 +1200,8 @@
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/ManualGenetics.tsx",
           "client/src/components/GenotypeExplanations.tsx",
-          "client/src/components/GeneticsCatalogue.tsx"
+          "client/src/components/GeneticsCatalogue.tsx",
+          "client/src/components/GeneticHighlights.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1212,7 +1215,8 @@
           "shared/genetics-catalogue.ts",
           "shared/genetic-call-source.ts",
           "shared/measurement-entry.ts",
-          "shared/data/genetics-candidate-bibliography.ts"
+          "shared/data/genetics-candidate-bibliography.ts",
+          "shared/genetics-relevance.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1225,7 +1229,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct.",
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1779,8 +1783,9 @@
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
-    "client/src/components/GeneticsCatalogue.tsx": "7fd3fde4d336f035b408b471fbbd287c7c7c61addea8de59fffd17398e880732",
-    "client/src/components/GenotypeExplanations.tsx": "b14e498c12ab6835dd8baafc9fc68f5860b8380379c12969868f54f3bcff0b07",
+    "client/src/components/GeneticHighlights.tsx": "efb1f67261a83cb6b26143a80c6359b9d1df8329527751a3fc7810c8777ed621",
+    "client/src/components/GeneticsCatalogue.tsx": "1152b4d007ac683e63289a2064a9819c19cd06b8338d10ba82d2dcc7e1fd978a",
+    "client/src/components/GenotypeExplanations.tsx": "43c3aa3e54127f5940a3349145fa60845358bc9ac19fb03b2546f185b3083e0c",
     "client/src/components/ImportedReportDetails.tsx": "589138363f2470f5f847a12a8dd3802a9fcc42f5cff59acbedd189e916bdfd49",
     "client/src/components/IngredientMassEntry.tsx": "948b603a10b9e215fe404a5092e2b11a0e7f695d4474847d710d35127d9d6da0",
     "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
@@ -1828,7 +1833,7 @@
     "client/src/pages/Microbiome.tsx": "3057d03cc2eb9f9284d95c879fed30f41e33d5b3b6ea3d5b98249f49899423a3",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
-    "client/src/pages/PrecisionNutrition.tsx": "1b2b9c885f6046009fe63669f0ac841b5a18e84f56e014e8a2dfdfbb3d574a7d",
+    "client/src/pages/PrecisionNutrition.tsx": "3e5c7202f161953b00d74c0e4a777f842148cfafe2c91a5e296b22915d337bd9",
     "client/src/pages/Profile.tsx": "5fdaca88e89d00efb9ed9936c634152400f06981120b95b65807549834afea22",
     "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
@@ -1918,6 +1923,7 @@
     "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
     "shared/genetics-catalogue.ts": "633b2d7610c4f6af3fa9bcb74f5e46e5661559684c22f50c039786a17fc35f68",
+    "shared/genetics-relevance.ts": "39033e7a4d6bdeae3d4e46d366b3f72f86f945809225bc71ec075e0809cbf4e5",
     "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
@@ -1938,7 +1944,7 @@
     "shared/nutrition-display.ts": "ca164c626fa377a3ee16698b3811f0475f603210b0419d8b8061f7b98b641303",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "509f5107fa8306d04c7792f3ec2c36c5a04950deffdd87b025c4914a1d936407",
-    "shared/precision-nutrition.ts": "8afbc2ed9b8eeeb239efcb742c52e3ec3e33b04c83416400a5511deea9a3cefa",
+    "shared/precision-nutrition.ts": "230b9c19e8594352fef21e8e9f8be2e7783c441c8529c355df52a1b6f4129464",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/profile-measurement-source.ts": "7aad632c9c98bf5670eea4277155a98507350e5a6983f6d917c05aed3a994a4e",

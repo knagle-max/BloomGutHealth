@@ -21,6 +21,7 @@ import LabSourceContext from "@/components/LabSourceContext";
 import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import GeneticsCatalogue from "@/components/GeneticsCatalogue";
+import GeneticHighlights from "@/components/GeneticHighlights";
 import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, useRef } from "react";
 import { Link,useSearch } from "wouter";
@@ -516,6 +517,7 @@ export default function PrecisionNutrition() {
             )}
             {tab === "genetics" && (
               <>
+                {r.genetics.personalHighlights&&<GeneticHighlights key={`highlights:${user?.id}:${r.genetics.import?.id}:${r.genetics.personalHighlights.registryVersion}`} projection={r.genetics.personalHighlights} hasSource={!!r.genetics.import} />}
                 <GeneticsCatalogue key={user?.id} explanations={r.genetics.explanations || []} />
                 <div id="genetics-source-entry" className="scroll-mt-20" tabIndex={-1}><ManualGenetics
                   key={r.genetics.import?.id || "none"}

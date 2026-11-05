@@ -1,6 +1,8 @@
 import type {ReportDateContext} from "./report-dates";
 import {checkinEntrySourceSchema,checkinEntrySourceMatches} from "./checkin-entry-source";
 import {geneticCallSourceSchema,geneticCallSourceMatches,normalizeUnphasedGenotype,captureGeneticCall} from "./genetic-call-source";
+import {selectGeneticHighlights,geneticHighlightClaims,GENETIC_HIGHLIGHT_REGISTRY_VERSION} from "./genetics-relevance";
+import {geneticsCatalogueCounts} from "./genetics-catalogue";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
@@ -1435,6 +1437,32 @@ export function buildPrecisionReport(
         : [],
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
+  const geneticExplanations=explainGenotypes(
+    geneticData?.provider==="manual"?geneticData.entries:geneticData?.calls||[],
+    geneticData?.provider==="23andMe"||geneticData?.strand==="forward",
+  );
+  const personalHighlights=selectGeneticHighlights({
+    claims:geneticHighlightClaims,registryVersion:GENETIC_HIGHLIGHT_REGISTRY_VERSION,
+    source:geneticData?{
+      id:genetics!.record.id,revision:String(genetics!.record.createdAt),consent:geneticData.consent,
+      calls:(geneticData.provider==="manual"?geneticData.entries:geneticData.calls).map(call=>({
+        rsid:call.rsid,genotype:call.genotype,
+        build:geneticData.provider==="23andMe"?geneticData.build:null,
+        chromosome:"chromosome" in call?call.chromosome:null,position:"position" in call?call.position:null,
+        strand:geneticData.provider==="23andMe"?"+":null,
+        // Literal manual notes and a provider name are not verified assay or
+        // population-fit evidence. Existing import contracts cannot assert it.
+        assay:null,assayVerified:false,populationFitId:null,
+        normalizationVerified:geneticData.provider==="23andMe",
+      })),
+    }:null,
+    // Exact recorded goal tokens and active canonical laboratory marker IDs
+    // provide relevance only. No inferred diagnosis, diet exposure, lab value
+    // or source-only/pending/superseded measurement enters this comparison.
+    context:{goals:context.goals,measuredContexts:latest.map(l=>l.marker)},
+    catalogued:geneticsCatalogueCounts([]).candidates,
+    matchedEducation:geneticExplanations.filter(e=>e.status==="matched").length,
+  });
   return {
     sourceOnlyLabs,
     pendingLabs,
@@ -1467,13 +1495,8 @@ export function buildPrecisionReport(
               entries: classifyManualGenetics(geneticData),
             }
           : null,
-      explanations: explainGenotypes(
-        geneticData?.provider === "manual"
-          ? geneticData.entries
-          : geneticData?.calls || [],
-        geneticData?.provider === "23andMe" ||
-          geneticData?.strand === "forward",
-      ),
+      explanations: geneticExplanations,
+      personalHighlights,
       findings,
     },
     labs: latest,

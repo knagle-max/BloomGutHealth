@@ -248,3 +248,7 @@ BLOCKED_USER_INPUT for new curated scientific content only. Owner/dependency: Bi
 **Status integrity:** Administrative/product decision blockers above are removed; **engineering, independent acceptance and restricted external activations remain actual unmet work**, not fictitiously closed. Codex owns current-head code/status verification and updates the live ledger; Architect owns decisions and crosswalk; no new owner question for already decided defaults. Nothing here authorizes real-data loss, secrets, third-party rights bypass or public/medical release.
 
 2026-11-05 developer reconciliation: canonical207-ID index now links exact43successor contracts via V05_CURRENT_ACCEPTANCE_RESOLUTION_20261105.json, with bounded existing family code/test/artifact references. Historical receipt unchanged; originalTextRecovered remains false and currentAcceptanceState remains REPLACED_CRITERION_PENDING_TEST, not fabricated original acceptance. Private Library source access follows the Architect technical-access disposition above; no new owner prompt.
+
+## Genetics November5 controlling scope
+
+The150–250 count is progressive research coverage, not a release minimum. No owner choice or new upload is needed. Named §5A reconciliation remains a technical private-Library access dependency. Real highlight activation needs reviewed exact claims and compatible verified assay evidence; an empty eligible set is correct and does not block ordinary educational browsing. See `docs/architecture/GENETICS_PERSONAL_RELEVANCE_DECISION_2026-11-05.md`.

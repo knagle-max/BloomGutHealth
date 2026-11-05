@@ -9,7 +9,7 @@ export default function GeneticsCatalogue({ explanations }: { explanations: Geno
   const [expanded, setExpanded] = useState(false);
   const counts = geneticsCatalogueCounts(explanations);
   const shown = searchGeneticsCatalogue(query, domain);
-  return <section className="bloom-panel space-y-4" aria-labelledby="genetics-catalogue-title">
+  return <section id="genetics-catalogue" tabIndex={-1} className="bloom-panel space-y-4 scroll-mt-20" aria-labelledby="genetics-catalogue-title">
     <div><p className="eyebrow">LEARN WITHOUT UPLOADING DNA</p><h2 id="genetics-catalogue-title">Explore genetics</h2>
       <p>Browse scientific topics and the limits of what a genetic result can tell you. A research entry does not mean your DNA was tested or establish a personal action.</p></div>
     <p className="panel-note">{counts.savedCalls} saved calls · {counts.matchedExplanations} matched explanations. Self-reported calls are not clinical confirmation.</p>
@@ -49,7 +49,7 @@ export default function GeneticsCatalogue({ explanations }: { explanations: Geno
     {shown.length > 8 && !expanded && <button className="text-link min-h-11 focus-visible:outline focus-visible:outline-2" type="button" onClick={() => setExpanded(true)}>Show all {shown.length} entries (8 shown)</button>}
     <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Catalogue coverage & boundaries</summary><div className="space-y-3">
       <p>{counts.candidates} unique variant / complex candidates and {counts.geneTopics} gene-only topics. {counts.existingExplanations} existing explanations; {counts.pendingCandidates} new candidates await review. New independently reviewed candidates: {counts.independentlyReviewedNewCandidates}; new personal action rules: {counts.newPersonalActionRules}.</p>
-      <p>Target: {counts.targetMinimum}–{counts.targetMaximum} candidate records. {counts.shortfall} more are needed to reach the minimum. Counts do not represent measured results or clinical approval. Coverage remains incomplete while source curation continues.</p>
+      <p>Progressive research target: {counts.targetMinimum}–{counts.targetMaximum} candidate records; {counts.shortfall} below the research target. This is not a minimum number of personal interpretations or a release quota. Counts do not represent measured results or clinical approval. Coverage remains incomplete while source curation continues.</p>
       <p>Domain membership is navigation, not evidence of a causal effect or an individual intervention. A missing, unsupported or ambiguous result never means normal or negative.</p>
       <p>Sensitive interpretations are not enabled. APOE common isoform typing would require both rs429358 and rs7412, appropriate assay support and separate explicit consent. Pharmacogenetic star alleles require validated phase/copy-number/assay-specific typing.</p>
     </div></details>

@@ -22,6 +22,7 @@ export default function GenotypeExplanations({
   return (
     <section
       id="genotype-explanations"
+      tabIndex={-1}
       className="space-y-4 scroll-mt-20"
       aria-labelledby="genotype-explanations-title"
     >

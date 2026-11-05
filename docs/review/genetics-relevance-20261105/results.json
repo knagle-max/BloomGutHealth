@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "checks": [
+    "actual App source and no-source states",
+    "separate measured/matched/reviewed/eligible counts",
+    "unsupported reference call retained, not highlighted",
+    "all source results and 17-domain explorer keyboard links",
+    "320/390px light-dark reflow",
+    "200% desktop zoom surrogate",
+    "source withdrawal reload",
+    "synthetic API-only seven-eligible/five-highlight presentation, why/source/unknown values, show all/sorts and withdrawal",
+    "no writes, no page errors"
+  ],
+  "physicalVoiceOver": "NOT_RUN",
+  "independentReview": "NOT_RUN"
+}

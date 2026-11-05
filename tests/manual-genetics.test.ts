@@ -192,10 +192,18 @@ test("manual records use the authenticated precision API, preserve provenance an
     assert.equal(a.genetics.manual.source, "Synthetic example table");
     assert.deepEqual(a.genetics.manual.entries[0].sourceCall,withOriginal.entries[0].sourceCall);
     assert.deepEqual(a.genetics.explanations[0].sourceCall,withOriginal.entries[0].sourceCall);
+    assert.equal(a.genetics.personalHighlights.counts.measured,24);
+    assert.equal(a.genetics.personalHighlights.counts.interpretable,0);
+    assert.equal(a.genetics.personalHighlights.counts.reviewedExplanations,0);
+    assert.equal(a.genetics.personalHighlights.counts.personalEligible,0);
+    assert.deepEqual(a.genetics.personalHighlights.highlights,[]);
     const b = await (
       await fetch(base, { headers: { "x-test-user": "b" } })
     ).json();
     assert.equal(b.genetics.import, null);
+    assert.equal(b.genetics.personalHighlights.counts.measured,0);
+    assert.equal(b.genetics.personalHighlights.counts.matchedEducation,0);
+    assert.deepEqual(b.genetics.personalHighlights.highlights,[]);
     assert.equal(
       (await post("a", { ...payload(), consent: false } as any)).status,
       400,
@@ -216,6 +224,7 @@ test("literal manual build/assay/quality context survives without changing unkno
   assert.deepEqual(after.findings,before.findings);assert.deepEqual(after.explanations,before.explanations);
   assert.equal(after.manual?.entries.some(entry=>entry.reviewed),false);
   assert.equal(before.manual?.sourceContext,undefined);assert.equal(before.import?.build,"Not supplied (manual entry)");
+  assert.deepEqual(after.personalHighlights,before.personalHighlights,'literal assay/build notes do not create verified highlight eligibility');
   for(const bad of[{genomeBuild:""},{assay:"x".repeat(201)},{qualityNote:"x".repeat(501)},{verified:true},{genomeBuild:38}])assert.equal(manualGeneticImportSchema.safeParse({...original,sourceContext:bad}).success,false);
   assert.equal("sourceContext" in original,false);
 });
