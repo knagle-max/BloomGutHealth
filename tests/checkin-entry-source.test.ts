@@ -24,6 +24,7 @@ test("source metadata cannot invent null observations, mismatch conversions or i
   {...source,fields:{weight:{value:"221",unit:"lb"}}},
   {...source,fields:{waist:{value:"36",unit:"cm"}}},
   {...source,fields:{energy:{value:"8",unit:"0-10"}}},
+  {...source,fields:{adherencePercent:{value:"1e-999",unit:"%"}}},
   {...source,fields:{adherencePercent:{value:"0.00000000001",unit:"%"}}},
   {...source,fields:{weight:{value:"220",unit:"unknown"}}},
   {...source,fields:{weight:{value:"220\n",unit:"lb"}}},

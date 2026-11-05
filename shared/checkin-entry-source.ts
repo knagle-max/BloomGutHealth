@@ -1,6 +1,7 @@
+import {numericEntryToken} from "./numeric-entry-token";
 import {z} from "zod";
 import {parseMassEntry,parseCircumferenceEntry,originalMassEntry,originalCircumferenceEntry,type MassEntry,type CircumferenceEntry} from "./measurement-entry";
-const token=z.string().min(1).max(128).regex(/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/).refine(value=>!/[\r\n]/.test(value)&&Number.isFinite(Number(value)));
+const token=numericEntryToken;
 const scalar=(unit:"%"|"0-10")=>z.object({value:token,unit:z.literal(unit)}).strict();
 export const checkinEntrySourceSchema=z.object({
  version:z.literal(1),capture:z.literal("manual-checkin"),fields:z.object({

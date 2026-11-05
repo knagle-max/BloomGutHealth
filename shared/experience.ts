@@ -1,3 +1,4 @@
+import {athleteReferenceEntrySourceSchema,sessionEntrySourceSchema,hydrationEntrySourceSchema,athleteEntrySourceMatches} from "./athlete-entry-source";
 import {restaurantRegions} from "./restaurant-entry";
 import { z } from "zod";
 import { ingredientSchema } from "./meal-intelligence";
@@ -8,6 +9,7 @@ export const athleteProfileSchema = z.object({
   discipline: z.enum(["endurance", "strength-power", "team", "mixed", "skill"]).default("mixed"),
   level: z.enum(["recreational", "competitive", "professional", "olympic-paralympic"]).default("recreational"),
   weightKg: z.number().finite().min(30).max(250).nullable().default(null),
+  entrySource:athleteReferenceEntrySourceSchema.optional(),
   massReference: z.object({
     source: z.enum(["manual", "profile-copy"]),
     recordedAt: z.string().datetime({offset:true}),
@@ -22,6 +24,7 @@ export const athleteProfileSchema = z.object({
   targetsConfirmed: z.boolean().default(false), teamPlanNotes: optionalText,
   reviewDate: dateKey.nullable().default(null),
 }).strict().refine(v=>(v.carbGkgMin===null&&v.carbGkgMax===null)||(v.carbGkgMin!==null&&v.carbGkgMax!==null&&v.carbGkgMin<=v.carbGkgMax), "Set both carbohydrate values with maximum at least minimum")
+ .refine(v=>athleteEntrySourceMatches(v.entrySource,v),"Original entries must match Athlete reference values")
  .refine(v=>v.massReference===null || (v.weightKg!==null && (v.massReference.source==="manual"?v.massReference.profileWeightKg===null:v.massReference.profileWeightKg!==null&&Math.abs(v.massReference.profileWeightKg-v.weightKg)<0.00001)), "Reference mass provenance must match the saved reference");
 export type AthleteProfile = z.infer<typeof athleteProfileSchema>;
 export const practicalPreferencesSchema = z.object({
@@ -110,7 +113,8 @@ export const trainingSessionSchema = z.object({
   gutComfort: z.number().int().min(0).max(10).nullable().default(null),
   performance: optionalText, notes: optionalText,
   actualSets: actualSetsSchema.optional(),
-}).strict();
+  entrySource:sessionEntrySourceSchema.optional(),
+}).strict().refine(v=>athleteEntrySourceMatches(v.entrySource,v),"Original entries must match session values");
 export type TrainingSession = z.infer<typeof trainingSessionSchema>;
 export const hydrationSchema = z.object({
   date: dateKey, minutes: z.number().min(10).max(600),
@@ -118,7 +122,8 @@ export const hydrationSchema = z.object({
   drankMl: z.number().finite().min(0).max(15000), urineMl: z.number().finite().min(0).max(5000).default(0),
   climate: z.enum(["cool", "temperate", "hot"]),
   sweatSodiumMgL: z.number().min(100).max(2500).nullable().default(null), testSource: optionalText,
-}).strict().refine(v => v.sweatSodiumMgL === null || !!v.testSource, "Record the source of measured sweat sodium");
+  entrySource:hydrationEntrySourceSchema.optional(),
+}).strict().refine(v=>athleteEntrySourceMatches(v.entrySource,v),"Original entries must match hydration values").refine(v => v.sweatSodiumMgL === null || !!v.testSource, "Record the source of measured sweat sodium");
 export const focusFeedbackResponses=["liked","disliked","intolerant","not-applicable","helped","no-benefit"] as const;
 export const focusFeedbackSchema=z.object({
  version:z.literal(1),response:z.enum(focusFeedbackResponses).nullable(),

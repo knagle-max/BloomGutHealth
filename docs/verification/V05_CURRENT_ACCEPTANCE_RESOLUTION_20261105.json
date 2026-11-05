@@ -1,0 +1,1296 @@
+{
+  "version": "v05-current-resolution-2026-11-05.1",
+  "architectSource": "docs/verification/V05_ARCHITECT_REPLACEMENT_CRITERIA_20261105.json",
+  "architectSourceSha256": "ca900a6ff06689fc6fc592cf9979adc1f5e745ed90fbd779434ed5ade6fef3ef",
+  "codeBaseline": "526335e2de2aa0394ac255965445eda728e79f73",
+  "meaning": "Deterministic one-to-one 43-ID current contract resolution; original receipt untouched. References establish bounded existing family code, not original wording, per-ID PASS, independent or hosted acceptance. Current unit reader candidate evidence is recorded separately.",
+  "count": 43,
+  "rows": [
+    {
+      "id": "BIO-LAB-201",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "BIO-LAB-202",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "BIO-LAB-203",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "BIO-LAB-204",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "BIO-LAB-205",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "BIO-LAB-206",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "BIO-LAB-207",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BIO_LAB",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; Bloom_Biology_Bloodwork_Handoff_2026-10-18.md; UT-LAB/UT-IMPORT",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Biology; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/precision-nutrition.ts",
+        "server/precision-storage.ts",
+        "client/src/components/LabExplorer.tsx",
+        "client/src/components/QuickLabEntry.tsx"
+      ],
+      "testReferences": [
+        "tests/lab-source-metadata.test.ts",
+        "tests/lab-source-grouping.test.ts",
+        "tests/planning-lab-sources.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/lab-source-history-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Immutable original sources, date/unit corrections and unknown-safe projections have current automated coverage. This does not certify independent clinical interpretation or the seven lost original wordings.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-001",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-002",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-003",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-004",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-005",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-006",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-007",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-008",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-009",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "MKT-010",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRANDING",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; BLOOM_UX_PHASE1_HANDOFF_2026-10-25.md; design/bloom/VERIFICATION.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand-tokens.css",
+        "client/src/brand.css",
+        "client/src/App.tsx"
+      ],
+      "testReferences": [
+        "tests/scientific-artwork.test.ts"
+      ],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Current source assets/components and retained actual-build evidence are linked. Pixel fidelity, all screen contracts and exact-build independent Branding acceptance remain to be assessed per current contract.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-101",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-102",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-103",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-104",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-105",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-106",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-107",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "UT-2026-108",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "USER_TESTING",
+      "replacementContract": "Bloom_User_Testing_Blocker_Resolution_Acceptance_Handoff_2026-11-05.md UT-BLOCK-4401\u20134412; UT-USABILITY/UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/App.tsx",
+        "client/src/pages/Profile.tsx",
+        "client/src/pages/Progress.tsx"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/unit-editor-regression.mjs",
+        "scripts/qa/task-first-today-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Automated developer checks are supporting evidence only. Physical phone/VoiceOver/uncoached comprehension/longitudinal independent studies are NOT_RUN; no original UT wording recovered.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "FREE-INT-02",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "FREE_INTEGRATIONS",
+      "replacementContract": "docs/architecture/OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md; Bloom_Integration_v05_Blocker_Resolution_2026-11-05.md; INT-BLOCK-20261105-01\u201306",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Integrations; Legal if activating external data",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/usda-branded.ts",
+        "server/meal-intelligence.ts",
+        "shared/barcodes.ts"
+      ],
+      "testReferences": [
+        "tests/usda-branded.test.ts",
+        "tests/barcodes.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/branded-food-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing USDA/manual/barcode fallback is linked. No new external source activation, licence, native permission or paid provider is inferred.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "FREE-INT-04",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "FREE_INTEGRATIONS",
+      "replacementContract": "docs/architecture/OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md; Bloom_Integration_v05_Blocker_Resolution_2026-11-05.md; INT-BLOCK-20261105-01\u201306",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Integrations; Legal if activating external data",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/usda-branded.ts",
+        "server/meal-intelligence.ts",
+        "shared/barcodes.ts"
+      ],
+      "testReferences": [
+        "tests/usda-branded.test.ts",
+        "tests/barcodes.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/branded-food-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing USDA/manual/barcode fallback is linked. No new external source activation, licence, native permission or paid provider is inferred.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "FREE-INT-05",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "FREE_INTEGRATIONS",
+      "replacementContract": "docs/architecture/OWNER_FREE_NUTRITION_DECISIONS_2026-10-28.md; Bloom_Integration_v05_Blocker_Resolution_2026-11-05.md; INT-BLOCK-20261105-01\u201306",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Integrations; Legal if activating external data",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/usda-branded.ts",
+        "server/meal-intelligence.ts",
+        "shared/barcodes.ts"
+      ],
+      "testReferences": [
+        "tests/usda-branded.test.ts",
+        "tests/barcodes.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/branded-food-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing USDA/manual/barcode fallback is linked. No new external source activation, licence, native permission or paid provider is inferred.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-BRAND-P0-07",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "BRAND_VISUAL_ACCEPTANCE",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md ARC-BRAND-P0-07 (material actual UI difference only)",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Branding; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "client/src/brand.css"
+      ],
+      "testReferences": [],
+      "artifactReferences": [
+        "docs/review/flagship-core-20261029/REVIEW.md"
+      ],
+      "automatedEvidenceScope": "Selective material-change evidence exists; this is not independent current-SHA Design signoff. No gallery required for invisible/minor work.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P0-01",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Next up",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_CRITICAL",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; docs/architecture/ARCHITECT_SPECIALIST_RECONCILIATION_2026-11-04.md; UT-BLOCK-4404\u20134411",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing; Security for sensitive routes",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/security.ts",
+        "server/structured-report-storage.ts",
+        "server/precision-routes.ts",
+        "shared/meal-intelligence.ts",
+        "shared/today-focus.ts"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/today-focus.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/checkin-entry-capture-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing source/owner/privacy/food/focus foundations linked. Current P0 source work, native Viome tool access and individually scoped tests/reviews remain explicit, not administratively blocked.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P0-02",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Next up",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_CRITICAL",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; docs/architecture/ARCHITECT_SPECIALIST_RECONCILIATION_2026-11-04.md; UT-BLOCK-4404\u20134411",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing; Security for sensitive routes",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/security.ts",
+        "server/structured-report-storage.ts",
+        "server/precision-routes.ts",
+        "shared/meal-intelligence.ts",
+        "shared/today-focus.ts"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/today-focus.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/checkin-entry-capture-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing source/owner/privacy/food/focus foundations linked. Current P0 source work, native Viome tool access and individually scoped tests/reviews remain explicit, not administratively blocked.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P0-03",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Next up",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_CRITICAL",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; docs/architecture/ARCHITECT_SPECIALIST_RECONCILIATION_2026-11-04.md; UT-BLOCK-4404\u20134411",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing; Security for sensitive routes",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/security.ts",
+        "server/structured-report-storage.ts",
+        "server/precision-routes.ts",
+        "shared/meal-intelligence.ts",
+        "shared/today-focus.ts"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/today-focus.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/checkin-entry-capture-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing source/owner/privacy/food/focus foundations linked. Current P0 source work, native Viome tool access and individually scoped tests/reviews remain explicit, not administratively blocked.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P0-04",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_CRITICAL",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; docs/architecture/ARCHITECT_SPECIALIST_RECONCILIATION_2026-11-04.md; UT-BLOCK-4404\u20134411",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing; Security for sensitive routes",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/security.ts",
+        "server/structured-report-storage.ts",
+        "server/precision-routes.ts",
+        "shared/meal-intelligence.ts",
+        "shared/today-focus.ts"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/today-focus.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/checkin-entry-capture-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing source/owner/privacy/food/focus foundations linked. Current P0 source work, native Viome tool access and individually scoped tests/reviews remain explicit, not administratively blocked.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P0-05",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_CRITICAL",
+      "replacementContract": "docs/architecture/CURRENT_V05_REQUIREMENTS.md; docs/architecture/ARCHITECT_SPECIALIST_RECONCILIATION_2026-11-04.md; UT-BLOCK-4404\u20134411",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing; Security for sensitive routes",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/security.ts",
+        "server/structured-report-storage.ts",
+        "server/precision-routes.ts",
+        "shared/meal-intelligence.ts",
+        "shared/today-focus.ts"
+      ],
+      "testReferences": [
+        "tests/security.test.ts",
+        "tests/today-focus.test.ts",
+        "tests/meal-intelligence.test.ts"
+      ],
+      "artifactReferences": [
+        "scripts/qa/checkin-entry-capture-journey.mjs"
+      ],
+      "automatedEvidenceScope": "Existing source/owner/privacy/food/focus foundations linked. Current P0 source work, native Viome tool access and individually scoped tests/reviews remain explicit, not administratively blocked.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P1-01",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_ENHANCEMENT",
+      "replacementContract": "docs/architecture/DEVELOPER_EXECUTION_ORDER.md; docs/architecture/V06_HANDOFF.md; UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/today-planner.ts",
+        "shared/meal-intelligence.ts"
+      ],
+      "testReferences": [
+        "tests/today-planner.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Existing foundations only. Replacement contract directs progressive approved milestone work, including v0.6. No v0.6 implementation or lost per-ID semantics claimed.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P1-02",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_ENHANCEMENT",
+      "replacementContract": "docs/architecture/DEVELOPER_EXECUTION_ORDER.md; docs/architecture/V06_HANDOFF.md; UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/today-planner.ts",
+        "shared/meal-intelligence.ts"
+      ],
+      "testReferences": [
+        "tests/today-planner.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Existing foundations only. Replacement contract directs progressive approved milestone work, including v0.6. No v0.6 implementation or lost per-ID semantics claimed.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P1-03",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_ENHANCEMENT",
+      "replacementContract": "docs/architecture/DEVELOPER_EXECUTION_ORDER.md; docs/architecture/V06_HANDOFF.md; UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/today-planner.ts",
+        "shared/meal-intelligence.ts"
+      ],
+      "testReferences": [
+        "tests/today-planner.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Existing foundations only. Replacement contract directs progressive approved milestone work, including v0.6. No v0.6 implementation or lost per-ID semantics claimed.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P1-04",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_ENHANCEMENT",
+      "replacementContract": "docs/architecture/DEVELOPER_EXECUTION_ORDER.md; docs/architecture/V06_HANDOFF.md; UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/today-planner.ts",
+        "shared/meal-intelligence.ts"
+      ],
+      "testReferences": [
+        "tests/today-planner.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Existing foundations only. Replacement contract directs progressive approved milestone work, including v0.6. No v0.6 implementation or lost per-ID semantics claimed.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P1-05",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_ENHANCEMENT",
+      "replacementContract": "docs/architecture/DEVELOPER_EXECUTION_ORDER.md; docs/architecture/V06_HANDOFF.md; UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/today-planner.ts",
+        "shared/meal-intelligence.ts"
+      ],
+      "testReferences": [
+        "tests/today-planner.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Existing foundations only. Replacement contract directs progressive approved milestone work, including v0.6. No v0.6 implementation or lost per-ID semantics claimed.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P1-06",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_ENHANCEMENT",
+      "replacementContract": "docs/architecture/DEVELOPER_EXECUTION_ORDER.md; docs/architecture/V06_HANDOFF.md; UT-PRESERVE",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; User Testing",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "shared/today-planner.ts",
+        "shared/meal-intelligence.ts"
+      ],
+      "testReferences": [
+        "tests/today-planner.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Existing foundations only. Replacement contract directs progressive approved milestone work, including v0.6. No v0.6 implementation or lost per-ID semantics claimed.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": null
+    },
+    {
+      "id": "ARC-P2-01",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_RESEARCH",
+      "replacementContract": "docs/architecture/V06_HANDOFF.md (research-only gates); docs/architecture/DEVELOPER_EXECUTION_ORDER.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; Biology",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/analysis-boundary.ts"
+      ],
+      "testReferences": [
+        "tests/scientific-contracts.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Research-only activation remains deferred to the approved v0.6 research milestone; existing source boundary is supporting evidence, not research functionality or scientific approval.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": "approved v0.6 research milestone"
+    },
+    {
+      "id": "ARC-P2-02",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_RESEARCH",
+      "replacementContract": "docs/architecture/V06_HANDOFF.md (research-only gates); docs/architecture/DEVELOPER_EXECUTION_ORDER.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; Biology",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/analysis-boundary.ts"
+      ],
+      "testReferences": [
+        "tests/scientific-contracts.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Research-only activation remains deferred to the approved v0.6 research milestone; existing source boundary is supporting evidence, not research functionality or scientific approval.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": "approved v0.6 research milestone"
+    },
+    {
+      "id": "ARC-P2-03",
+      "previousStatus": "BLOCKED_USER_INPUT",
+      "historicalBeforeBlocked": "Remaining",
+      "originalTextRecovered": false,
+      "sourceFamily": "ARCH_RESEARCH",
+      "replacementContract": "docs/architecture/V06_HANDOFF.md (research-only gates); docs/architecture/DEVELOPER_EXECUTION_ORDER.md",
+      "architectDecisionRef": "docs/architecture/BLOCKER_RESOLUTION_ARCHITECT_DIRECTIVE_2026-11-05.md",
+      "currentAcceptanceState": "REPLACED_CRITERION_PENDING_TEST",
+      "nextAcceptanceOwner": "Architect; Biology",
+      "provenance": "Architect reconstructed successor; not verbatim original",
+      "codeStatus": "EXISTING_BOUNDED_FAMILY_FOUNDATION_REQUIRES_CURRENT_ACCEPTANCE",
+      "codeReferences": [
+        "server/analysis-boundary.ts"
+      ],
+      "testReferences": [
+        "tests/scientific-contracts.test.ts"
+      ],
+      "artifactReferences": [],
+      "automatedEvidenceScope": "Research-only activation remains deferred to the approved v0.6 research milestone; existing source boundary is supporting evidence, not research functionality or scientific approval.",
+      "hostedAcceptance": "NOT_REVERIFIED_FOR_REPLACEMENT_CONTRACT",
+      "independentAcceptance": "NOT_GRANTED",
+      "nextEngineeringAction": "Verify current replacement family criteria without inventing lost per-ID wording; fix actual supported-flow defects.",
+      "deferMilestone": "approved v0.6 research milestone"
+    }
+  ]
+}
