@@ -26,7 +26,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
         <Dialog.Title className="microbial-profile-title"><i>{taxon?.bacterialName}</i></Dialog.Title>
         <Dialog.Description>Source observation, separate from general research.</Dialog.Description>
         {taxon && <>
-          <OrganismPortrait size="portrait"/>
+          <OrganismPortrait size="portrait" sourceName={taxon.bacterialName}/>
           <section className="microbial-observation" aria-label="Reported observation">
             <h3>Your reported observation</h3>
             <dl>

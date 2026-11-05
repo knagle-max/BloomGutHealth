@@ -930,7 +930,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS neutral first-party image/inline fallback only; no taxon-specific art, micrograph, chemical structure, personal effect or rights approval granted by an observation.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -966,7 +966,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Reported composition is summarized locally from owned source percentages, with no sidecar transfer or personal prediction. No validated reference dataset is installed; cohort API remains unavailable and prototype UI is removed. SCI-VIS neutral first-party image/inline fallback only; no taxon-specific art, micrograph, chemical structure, personal effect or rights approval granted by an observation.",
+      "observation": "Reported composition is summarized locally from owned source percentages, with no sidecar transfer or personal prediction. No validated reference dataset is installed; cohort API remains unavailable and prototype UI is removed. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -996,7 +996,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Provider-reported source scores may be displayed as report data; inferred gene activity/concentrations remain withheld. No functional-model approval. SCI-VIS neutral first-party image/inline fallback only; no taxon-specific art, micrograph, chemical structure, personal effect or rights approval granted by an observation.",
+      "observation": "Provider-reported source scores may be displayed as report data; inferred gene activity/concentrations remain withheld. No functional-model approval. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1668,7 +1668,7 @@
     "client/src/components/MealAnalysis.tsx": "d5c3b9b180dc32f7b48aad8df04853e35cf424462e27141acc4b7321b13b73be",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
-    "client/src/components/OrganismPortrait.tsx": "3eb74737456d33a5a46149924cd6bd23476a188ffbf0e96e9112385c857d59ea",
+    "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
     "client/src/components/QuickLabEntry.tsx": "094154aaa388d1eb959d8d06d1ac0f2962ae63f46c2c8cf040e210cd7425c984",
     "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
@@ -1697,7 +1697,7 @@
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "6c31f8f3d3d9790e2984dce1a994e3cca4fb3a83cd39cca072490199f00a15f5",
     "client/src/pages/MealPlanner.tsx": "9833fd2dff5a6868daf49f69745b96d75d4701aae151e3d438ff7e7b9f22c988",
-    "client/src/pages/Microbiome.tsx": "b75b3c4222470337c7db04dc14a6038d3945cf69b89e814f02639e60ef7d564e",
+    "client/src/pages/Microbiome.tsx": "3057d03cc2eb9f9284d95c879fed30f41e33d5b3b6ea3d5b98249f49899423a3",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
     "client/src/pages/PrecisionNutrition.tsx": "41bcdbdbd40c5a9caca6aa8cdab1be26d25bad2fa54da66c9d2ba1d17eff8be5",
@@ -1801,7 +1801,7 @@
     "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
     "shared/schema.ts": "d65c1490e8a806688c38a195fdc7cea871d1f48fd1db0c5d3c5a12a22700d552",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
-    "shared/scientific-visuals.ts": "53344f347a52fde1ab128f5b138c93e6ede4eba9b613405031ca2cbc1acd664e",
+    "shared/scientific-visuals.ts": "25f51f10cf4fd2d9d5fe41406b262c368d82a50b27f6021da941bdf53c6c234e",
     "shared/structured-report.ts": "bbbabd39b5c620d44822edc4619fa8fc53d7921db5ecdda014c461657236c094",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
     "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",

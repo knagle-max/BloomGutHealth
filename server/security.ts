@@ -34,6 +34,11 @@ export const securityHeaders: RequestHandler = (req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("Referrer-Policy", "same-origin");
+  if(req.path.startsWith("/science/")){
+    res.setHeader("Content-Security-Policy", "default-src 'none'; style-src 'none'; sandbox");
+    res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+    res.setHeader("Cache-Control", "no-cache");
+  }
   if (req.path === "/api" || req.path.startsWith("/api/")) res.setHeader("Cache-Control", "no-store");
   next();
 };
