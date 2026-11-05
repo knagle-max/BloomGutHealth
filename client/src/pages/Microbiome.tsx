@@ -167,7 +167,7 @@ export default function Microbiome() {
             </p>
           )}
           {taxa.length ? (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto microbial-composition-table" role="region" aria-label="Microbial composition and comparison; scroll for additional source values" tabIndex={0}>
               <table className="w-full text-sm">
                 <thead>
                   <tr>

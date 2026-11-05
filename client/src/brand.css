@@ -326,3 +326,5 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .organism-visual-portrait .organism-visual-inline {font-size:96px;}
 .organism-portrait {display:flex;flex-direction:column;align-items:center;gap:8px;margin:20px 0;}
 .organism-portrait figcaption {max-width:260px;text-align:center;}
+
+.microbial-composition-table:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:2px;}

@@ -14,6 +14,10 @@ try{
  }else if(baseline){for(const width of[320,390]){await page.setViewportSize({width,height:900});for(const theme of['light','dark']){await setAppTheme(page,theme);await page.getByRole('heading',{name:'Bacterial composition & change'}).scrollIntoViewIfNeeded();mkdirSync(process.env.BLOOM_REVIEW_OUTPUT,{recursive:true});await page.screenshot({path:`${process.env.BLOOM_REVIEW_OUTPUT}/before-${width}-${theme}.png`});}}console.log('BEFORE pinned Microbiome page only; current App/API/styles with identical synthetic20taxa.');}else{
  const symbolLabel='Illustrative microorganism symbol — not species-specific';
  assert.equal(await page.locator('.organism-visual-thumbnail').count(),20);const thumbnail=await page.locator('.organism-visual-thumbnail').first().boundingBox();assert.equal(thumbnail.width,36);assert.equal(thumbnail.height,36);
+ // A narrow source table must be scrollable with a keyboard, not only a swipe.
+ await page.setViewportSize({width:320,height:900});const sourceTable=page.getByRole('region',{name:'Microbial composition and comparison; scroll for additional source values',exact:true});await sourceTable.focus();assert.equal(await sourceTable.evaluate(el=>el===document.activeElement),true);
+ const scrollable=await sourceTable.evaluate(el=>el.scrollWidth>el.clientWidth);if(scrollable){for(let n=0;n<5;n++)await page.keyboard.press('ArrowRight');await page.waitForFunction(()=>document.querySelector('.microbial-composition-table').scrollLeft>0);}
+ await sourceTable.evaluate(el=>el.scrollLeft=0);await page.setViewportSize({width:375,height:900});
  const report=page.getByRole('combobox',{name:'Select report',exact:true});const selected=await report.inputValue();
  for(const [i,name]of names.entries()){
   const trigger=page.getByRole('button',{name:name+',',exact:false});await trigger.focus();await trigger.press('Enter');
