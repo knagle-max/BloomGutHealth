@@ -1,5 +1,5 @@
 {
-  "registryVersion": "scientific-visuals-2026-11-05.3",
+  "registryVersion": "scientific-visuals-2026-11-05.4",
   "assets": [
     {
       "id": "bloom-neutral-microorganism-v1",
@@ -514,6 +514,302 @@
         "originalSha256": "4cd226bd3729bf0a220702749083753c53acbd974f219790e954f83fa02c1e43",
         "repair": "none"
       }
+    }
+  ],
+  "moleculeIllustrations": [
+    {
+      "slug": "acetate",
+      "compoundName": "Acetate",
+      "sourcePubChemCid": 175,
+      "sourceFormalCharge": -1,
+      "entityId": "molecule:acetate",
+      "entityLabel": "Acetate",
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/acetate.svg",
+        "sha256": "5ffc12db31c9efce333c229d8bc864f10988d9422e46d125a012fa9be8c07c76",
+        "sourceGitBlob": "91390a2fac2649ff1af53569d4e04073debbc354",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetate.svg",
+        "originalSha256": "5ffc12db31c9efce333c229d8bc864f10988d9422e46d125a012fa9be8c07c76",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Acetate; PubChem CID 175; molecular formula C\u2082H\u2083O\u2082\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "acetic-acid",
+      "compoundName": "Acetic acid",
+      "sourcePubChemCid": 176,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/acetic-acid.svg",
+        "sha256": "286bd08ec5aa5e4bf2f6ababeaa495193d85e83236d8c96ddafa045045c70c36",
+        "sourceGitBlob": "5fc2bc11c93d9b8491d439b1c4e2f0e132f283b5",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetic-acid.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetic-acid.svg",
+        "originalSha256": "286bd08ec5aa5e4bf2f6ababeaa495193d85e83236d8c96ddafa045045c70c36",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Acetic acid; PubChem CID 176; molecular formula C\u2082H\u2084O\u2082; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "butyrate",
+      "compoundName": "Butyrate",
+      "sourcePubChemCid": 104775,
+      "sourceFormalCharge": -1,
+      "entityId": "molecule:butyrate",
+      "entityLabel": "Butyrate",
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/butyrate.svg",
+        "sha256": "f998599c1a2b7ef21510aa04d04bffe055e2bfeb32addd510764b068e9abc1d2",
+        "sourceGitBlob": "43a2c181acafd974670663035e6aa4c45d2bfdaa",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyrate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyrate.svg",
+        "originalSha256": "f998599c1a2b7ef21510aa04d04bffe055e2bfeb32addd510764b068e9abc1d2",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Butyrate; PubChem CID 104775; molecular formula C\u2084H\u2087O\u2082\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "butyric-acid",
+      "compoundName": "Butyric acid",
+      "sourcePubChemCid": 264,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/butyric-acid.svg",
+        "sha256": "89c212d6b8bff5eb840b8e7e8c1d754c899abd6ddebc8aa05f50a8138e799547",
+        "sourceGitBlob": "25c3ff281b2360fa9a3bf6e09fee1c7a2a585d9b",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyric-acid.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyric-acid.svg",
+        "originalSha256": "89c212d6b8bff5eb840b8e7e8c1d754c899abd6ddebc8aa05f50a8138e799547",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Butyric acid; PubChem CID 264; molecular formula C\u2084H\u2088O\u2082; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "choline",
+      "compoundName": "Choline cation",
+      "sourcePubChemCid": 305,
+      "sourceFormalCharge": 1,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/choline.svg",
+        "sha256": "54e73b3c602d163ff71c2ed063d03f80960120de165f8a1f45a0539570113f09",
+        "sourceGitBlob": "1a89a2e2b15a0c93c70fb7a2687a9f1bc6ab9e25",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/choline.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/choline.svg",
+        "originalSha256": "54e73b3c602d163ff71c2ed063d03f80960120de165f8a1f45a0539570113f09",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Choline cation; PubChem CID 305; molecular formula C\u2085H\u2081\u2084NO\u207a; total formal charge 1. Carbon-bound hydrogens implicit where appropriate. Terminal oxygen is a hydroxyl OH."
+    },
+    {
+      "slug": "hydrogen-sulfide",
+      "compoundName": "Hydrogen sulfide",
+      "sourcePubChemCid": 402,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/hydrogen-sulfide.svg",
+        "sha256": "660952ddc30bee4fc0faf40a33ce3ff4685c6011727923da31bcab43c3b247f4",
+        "sourceGitBlob": "d8f96c28a3ad9563197007845ed302f185ae0625",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/hydrogen-sulfide.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/hydrogen-sulfide.svg",
+        "originalSha256": "660952ddc30bee4fc0faf40a33ce3ff4685c6011727923da31bcab43c3b247f4",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Hydrogen sulfide; PubChem CID 402; molecular formula H\u2082S; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "lactate",
+      "compoundName": "Lactate \u00b7 unspecified stereo",
+      "sourcePubChemCid": 91435,
+      "sourceFormalCharge": -1,
+      "entityId": "molecule:lactate",
+      "entityLabel": "Lactate",
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/lactate.svg",
+        "sha256": "d05cd1b6a62abfcbcf4099f1086c7a9b8d4f2f683cdaf5d8dc0afc1f714f3bf4",
+        "sourceGitBlob": "4f336cef8d9d4aecf7ca5c2c50124542665df349",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactate.svg",
+        "originalSha256": "d05cd1b6a62abfcbcf4099f1086c7a9b8d4f2f683cdaf5d8dc0afc1f714f3bf4",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Lactate \u00b7 unspecified stereo; PubChem CID 91435; molecular formula C\u2083H\u2085O\u2083\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "lactic-acid",
+      "compoundName": "Lactic acid \u00b7 unspecified stereo",
+      "sourcePubChemCid": 612,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/lactic-acid.svg",
+        "sha256": "d5c21617dccc80ad17f1f5afb8d63b6ee4f41e803ca7282b4186bb2b186b9503",
+        "sourceGitBlob": "42d13380869be1c3a161a7cecf1ae6b6c769f647",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactic-acid.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactic-acid.svg",
+        "originalSha256": "d5c21617dccc80ad17f1f5afb8d63b6ee4f41e803ca7282b4186bb2b186b9503",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Lactic acid \u00b7 unspecified stereo; PubChem CID 612; molecular formula C\u2083H\u2086O\u2083; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "propionate",
+      "compoundName": "Propionate",
+      "sourcePubChemCid": 104745,
+      "sourceFormalCharge": -1,
+      "entityId": "molecule:propionate",
+      "entityLabel": "Propionate",
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/propionate.svg",
+        "sha256": "a0f34ea0eb47aa48479427b72a1391be3f991e32e30918151cbd6f18f9d746e1",
+        "sourceGitBlob": "62f7d1549acc30d44af9cf98bf401c7c2863f14d",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionate.svg",
+        "originalSha256": "a0f34ea0eb47aa48479427b72a1391be3f991e32e30918151cbd6f18f9d746e1",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Propionate; PubChem CID 104745; molecular formula C\u2083H\u2085O\u2082\u207b; total formal charge -1. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "propionic-acid",
+      "compoundName": "Propionic acid",
+      "sourcePubChemCid": 1032,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/propionic-acid.svg",
+        "sha256": "e6053115573043d6a89bcabf458c1ab105e74679c1ee3bc0fa4ae3ed81479586",
+        "sourceGitBlob": "35438a3d5e76cd1ebde4b132f4db48f7e1648c83",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionic-acid.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionic-acid.svg",
+        "originalSha256": "e6053115573043d6a89bcabf458c1ab105e74679c1ee3bc0fa4ae3ed81479586",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Propionic acid; PubChem CID 1032; molecular formula C\u2083H\u2086O\u2082; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "succinate",
+      "compoundName": "Succinate",
+      "sourcePubChemCid": 160419,
+      "sourceFormalCharge": -2,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/succinate.svg",
+        "sha256": "3f757ef760b02b9c1a1fb28482c2b22954e1e7d75fad8466cd0e69873f07ff42",
+        "sourceGitBlob": "c1b8429717ae3f4c54f3dfddf94a72708fb456ca",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinate.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinate.svg",
+        "originalSha256": "3f757ef760b02b9c1a1fb28482c2b22954e1e7d75fad8466cd0e69873f07ff42",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Succinate; PubChem CID 160419; molecular formula C\u2084H\u2084O\u2084\u00b2\u207b; total formal charge -2. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "succinic-acid",
+      "compoundName": "Succinic acid",
+      "sourcePubChemCid": 1110,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/succinic-acid.svg",
+        "sha256": "55c734f82d27b041c4164c3d5a49452aadd26fc5bf4f94dd654447fd1b912220",
+        "sourceGitBlob": "2649fdb1c6fa7af6a059043e758a78b517f2dc43",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinic-acid.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinic-acid.svg",
+        "originalSha256": "55c734f82d27b041c4164c3d5a49452aadd26fc5bf4f94dd654447fd1b912220",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Succinic acid; PubChem CID 1110; molecular formula C\u2084H\u2086O\u2084; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "tmao",
+      "compoundName": "Trimethylamine N-oxide",
+      "sourcePubChemCid": 1145,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/tmao.svg",
+        "sha256": "70a4b081eb5ebb16eeb160c77aa6824632102a97d4d904e07f73335cde32499d",
+        "sourceGitBlob": "1d41621ff8c697bcccfac37416e82e4f0dc55441",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/tmao.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/tmao.svg",
+        "originalSha256": "70a4b081eb5ebb16eeb160c77aa6824632102a97d4d904e07f73335cde32499d",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine N-oxide; PubChem CID 1145; molecular formula C\u2083H\u2089NO; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
+    },
+    {
+      "slug": "trimethylamine",
+      "compoundName": "Trimethylamine",
+      "sourcePubChemCid": 1146,
+      "sourceFormalCharge": 0,
+      "entityId": null,
+      "entityLabel": null,
+      "depiction": "source-connectivity-draft",
+      "independentChemistryReview": "pending; source drawing is not an approved chemical measurement",
+      "publicActivation": "owner-directed; no reviewer, preview, Legal or capability image-activation flag",
+      "asset": {
+        "src": "/science/structures-v4/trimethylamine.svg",
+        "sha256": "a45ed306d00e9e3e9e7efbea04a1eb978240b52a061f57bf0a052fba6504151a",
+        "sourceGitBlob": "bfcbb94de7c1d279707182e959889345b041b4c5",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/trimethylamine.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/trimethylamine.svg",
+        "originalSha256": "a45ed306d00e9e3e9e7efbea04a1eb978240b52a061f57bf0a052fba6504151a",
+        "repair": "none"
+      },
+      "sourceDescription": "2D atom-and-bond connectivity for Trimethylamine; PubChem CID 1146; molecular formula C\u2083H\u2089N; total formal charge 0. Carbon-bound hydrogens implicit where appropriate."
     }
   ]
 }

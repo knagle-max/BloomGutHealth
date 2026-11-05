@@ -119,6 +119,8 @@ body { -webkit-font-smoothing: antialiased; }
 .navigation-tools summary{font-size:12px;font-weight:600;color:hsl(var(--muted-foreground));padding:12px 10px;cursor:pointer;}.navigation-tools[open] summary{margin-bottom:6px;}
 
 @media(max-width:600px){.relationship-map{display:none;}}
+.explore-reflow{container-type:inline-size;min-width:0;}
+@container(max-width:800px){.explore-layout{grid-template-columns:minmax(0,1fr);}.explore-browser{position:static;}}
 
 .relationship-details>summary{padding:15px 0;font-weight:600;cursor:pointer;}.relationship-details>.relationship-card{margin-top:12px;}
 

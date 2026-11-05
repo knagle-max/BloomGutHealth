@@ -1,4 +1,5 @@
 import { FoodCompositionExplorer } from "@/components/FoodCompositionExplorer";
+import MolecularIllustration from "@/components/MolecularIllustration";
 import { useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
@@ -289,7 +290,7 @@ export default function Explore() {
               )}
             </section>
           )}
-          <div className="explore-layout">
+          <div className="explore-reflow"><div className="explore-layout">
             <section className="bloom-panel explore-browser">
               <h2>Find a connection</h2>
               <label>
@@ -359,6 +360,7 @@ export default function Explore() {
                     <p className="eyebrow">{kindName(node.kind)}</p>
                     <h2>{node.label}</h2>
                     <p>{node.summary}</p>
+                    <MolecularIllustration key={node.id} entityId={node.id} label={node.label} kind={node.kind}/>
                     <svg
                       className="relationship-map"
                       viewBox="0 0 600 260"
@@ -458,7 +460,7 @@ export default function Explore() {
               )}
             </div>
           </div>
-          <p className="panel-note">
+          </div><p className="panel-note">
             {r.summary} Registry {r.version}.
           </p>
         </>

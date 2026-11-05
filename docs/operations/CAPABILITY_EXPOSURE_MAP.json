@@ -1176,14 +1176,16 @@
       "surfaces": {
         "ui": [
           "client/src/pages/Explore.tsx",
-          "client/src/pages/Insights.tsx"
+          "client/src/pages/Insights.tsx",
+          "client/src/components/MolecularIllustration.tsx"
         ],
         "api": [
           "server/biology-routes.ts"
         ],
         "logicOrJobs": [
           "shared/biological-model.ts",
-          "shared/scientific-contracts.ts"
+          "shared/scientific-contracts.ts",
+          "shared/scientific-visuals.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1694,6 +1696,7 @@
     "client/src/components/MealAnalysis.tsx": "d5c3b9b180dc32f7b48aad8df04853e35cf424462e27141acc4b7321b13b73be",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
+    "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
     "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
     "client/src/components/ProviderFoodSuggestions.tsx": "ab9526c555fb23de89a3596b75019ba97af5d8a6a68be17ba508853221fa30d1",
@@ -1719,7 +1722,7 @@
     "client/src/pages/ActivityLog.tsx": "4bc7d9b665bffa63313d56a5d055ec5662aca85af2b41ef106cb95e8fc3834b0",
     "client/src/pages/AthleteWorkspace.tsx": "747160b8c9124679ea4dd484639a3fd0166f754046ab420415f44170f851c1df",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
-    "client/src/pages/Explore.tsx": "4ecdbf1ad105fab3d9b43d74170435c72a0f5ff89719bcca6090b28017c28286",
+    "client/src/pages/Explore.tsx": "4f00b3872fa98bc22a449a336ab68e6d7828d5d3e576c4fb88a12d769c6043ca",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "6c31f8f3d3d9790e2984dce1a994e3cca4fb3a83cd39cca072490199f00a15f5",
@@ -1831,7 +1834,7 @@
     "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
     "shared/schema.ts": "d65c1490e8a806688c38a195fdc7cea871d1f48fd1db0c5d3c5a12a22700d552",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
-    "shared/scientific-visuals.ts": "e2c078f7815fd49e90cdb243cc76042cc056f281b269596506bb9e750778b9d8",
+    "shared/scientific-visuals.ts": "f0f311377ea9662888bc5d366bbd57c5fb53c5534f3418c1fbdb4090de010437",
     "shared/structured-report.ts": "ac049703f4db1a857c9bd0c81b4382dd3c9cbd1321b4f66e18ecfcf1871f28df",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
     "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",

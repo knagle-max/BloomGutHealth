@@ -2,8 +2,8 @@ import registry from './data/scientific-visual-assets.json';
 
 export const MICROORGANISM_SYMBOL_LABEL='Illustrative microorganism symbol — not species-specific';
 export const SCIENTIFIC_VISUAL_VERSION=registry.registryVersion;
-/** v0.5 permits only this first-party generic symbol. No name/rank/assay can
- * grant species artwork, micrographs, chemical structures or scientific review. */
+/** Generic fallback for unknown/unavailable artwork. Identity and assay metadata
+ * never grant scientific review or imply a diagnostic/sample depiction. */
 export function neutralMicroorganismVisual(disabled=false){
  const asset=registry.assets.find(value=>value.id==='bloom-neutral-microorganism-v1');
  const available=!disabled&&asset?.depiction==='generic-symbol'&&asset.taxonomyId===null&&asset.moleculeId===null&&asset.lifecycle==='active-neutral'&&/^\/science\/[a-z0-9-]+\.svg$/.test(asset.src)&&/^[a-f0-9]{64}$/.test(asset.sha256);
@@ -25,4 +25,13 @@ export function organismIllustration(sourceName:string|undefined,size:'thumbnail
 export function labCategoryIllustration(categoryId:string){
  const entry=registry.bloodworkIllustrations.find(value=>value.categoryId===categoryId),asset=entry?.asset;
  return asset&&/^\/science\/bloodwork-v4\/[a-z-]+\.svg$/.test(asset.src)&&/^[a-f0-9]{64}$/.test(asset.sha256)?{src:`${asset.src}?v=${asset.sha256}`,label:'Illustrative category icon'}:null;
+}
+
+/** An exact existing entity selects a source drawing, never a personal chemical
+ * form, pH, concentration or stereo assignment. Acid forms are not aliases. */
+export function molecularIllustration(entityId:string,label:string,kind:string){
+ if(kind!=="molecule")return null;
+ const entry=registry.moleculeIllustrations.find(value=>value.entityId===entityId&&value.entityLabel===label),asset=entry?.asset;
+ if(!entry||!asset||!/^\/science\/structures-v4\/[a-z-]+\.svg$/.test(asset.src)||!/^[a-f0-9]{64}$/.test(asset.sha256))return null;
+ return{src:`${asset.src}?v=${asset.sha256}`,compoundName:entry.compoundName,sourcePubChemCid:entry.sourcePubChemCid,sourceFormalCharge:entry.sourceFormalCharge,label:`${entry.sourceDescription} Source draft, not your measured form or amount.`};
 }

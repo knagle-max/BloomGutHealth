@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import registry from '../shared/data/scientific-visual-assets.json';
-import {organismIllustration,labCategoryIllustration,GENERIC_MORPHOLOGY_LABEL,REPRESENTATIVE_ILLUSTRATION_LABEL} from '../shared/scientific-visuals';
+import {organismIllustration,labCategoryIllustration,molecularIllustration,GENERIC_MORPHOLOGY_LABEL,REPRESENTATIVE_ILLUSTRATION_LABEL} from '../shared/scientific-visuals';
 import {assertScientificArtworkSvg,escapeBareSvgAmpersands} from '../scripts/lib/scientific-artwork-svg.mjs';
 test('all20 public representative portraits and thumbnails preserve exact40 original blobs and honest five-generic labels',()=>{
  assert.equal(registry.organismIllustrations.length,20);assert.equal(registry.organismIllustrations.filter(entry=>entry.genericMorphology).length,5);
@@ -24,13 +24,36 @@ test('namespace-aware illustration gate rejects active, remote, malformed and na
  for(const payload of ['<script/>','<foreignObject/>','<image href="https://example.test/a"/>','<a href="x"/>','<circle onload="x"/>','<circle style="fill:red"/>','<style/>','<circle fill="url(https://example.test)"/>','<circle fill="url(#missing)"/>','<g xmlns="https://example.test"><circle/></g>','<x:circle xmlns:x="http://www.w3.org/2000/svg"/>','<circle xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="x"/>','<text font-family="Remote Font">Text</text>','<circle id="same"/><circle id="same"/>','<circle></g>'])assert.throws(()=>assertScientificArtworkSvg(svg(payload)));
  for(const value of ['<!DOCTYPE svg [<!ENTITY remote SYSTEM "https://example.test">]>'+svg(''),svg('<text>&#60;script&#62;</text>'),'<?xml-stylesheet href="https://example.test"?>'+svg(''),svg('')+svg(''),svg('<circle r="3" r="4"/>')])assert.throws(()=>assertScientificArtworkSvg(value));
  assert.equal(assertScientificArtworkSvg(svg('<defs><linearGradient id="shade"><stop stop-color="#123456"/></linearGradient></defs><circle r="3" fill="url(#shade)"/>')),true);
+ assert.equal(assertScientificArtworkSvg(svg('<text font-family="Arial" font-weight="bold" text-anchor="middle" letter-spacing="1.3">Static text</text><path d="M0 0L2 2" stroke-dasharray="4 7"/>')),true);
+ for(const attribute of ['font-family="Remote Font"','font-weight="url(https://example.test)"','text-anchor="url(#x)"','letter-spacing="url(https://example.test)"','stroke-dasharray="1;animation:x"'])assert.throws(()=>assertScientificArtworkSvg(svg(`<text ${attribute}>Text</text>`)));
+});
+
+test('four exact existing molecules select original drafts without acid/stereo aliases or public image approval flags',()=>{
+ assert.equal(registry.moleculeIllustrations.length,14);
+ assert.equal(registry.moleculeIllustrations.filter(entry=>entry.entityId!==null).length,4);
+ assert.deepEqual(registry.moleculeIllustrations.filter(entry=>entry.entityId!==null).map(entry=>[entry.entityId,entry.slug,entry.sourcePubChemCid,entry.sourceFormalCharge]).sort(),[
+  ['molecule:acetate','acetate',175,-1],['molecule:butyrate','butyrate',104775,-1],['molecule:lactate','lactate',91435,-1],['molecule:propionate','propionate',104745,-1],
+ ]);
+ for(const entry of registry.moleculeIllustrations){
+  const asset=entry.asset,original=readFileSync(asset.sourceArchive),delivered=readFileSync('client/public'+asset.src);
+  assert.deepEqual(delivered,original);assert.equal(asset.repair,'none');assert.equal(createHash('sha256').update(original).digest('hex'),asset.sha256);
+  assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${original.length}\0`),original])).digest('hex'),asset.sourceGitBlob);assertScientificArtworkSvg(delivered.toString());
+  assert.match(delivered.toString(),new RegExp('PubChem CID '+entry.sourcePubChemCid+';'));
+  assert.ok(delivered.toString().includes('aria-label="'+entry.sourceDescription+'"'));
+  if(entry.entityId&&entry.entityLabel){const visual=molecularIllustration(entry.entityId,entry.entityLabel,'molecule');assert.equal(visual?.src,asset.src+'?v='+asset.sha256);assert.match(visual!.label,/not your measured form or amount/);}
+ }
+ assert.equal(molecularIllustration('molecule:acetate','Acetic acid','molecule'),null);
+ assert.equal(molecularIllustration('molecule:acetate (cross-feeding co-substrate)','Acetate (cross-feeding co-substrate)','molecule'),null);
+ assert.equal(molecularIllustration('molecule:lactate','L-lactate','molecule'),null);
+ assert.equal(molecularIllustration('molecule:acetate','Acetate','biomarker'),null);
+ assert.equal(molecularIllustration('molecule:unknown','Unknown','molecule'),null);
 });
 test('representative artwork is normally public with SVG MIME, passive-document headers and exact source bytes',async()=>{
  const {default:express}=await import('express');const {securityHeaders}=await import('../server/security');
  const app=express();app.use(securityHeaders);app.use(express.static('client/public'));app.use('/science',(_req,res)=>res.status(404).end());
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base='http://127.0.0.1:'+(server.address() as any).port;
  try{
-  for(const asset of [...registry.organismIllustrations.flatMap(entry=>[entry.thumbnail,entry.portrait]),...registry.bloodworkIllustrations.map(entry=>entry.asset)]){const response=await fetch(base+asset.src+'?v='+asset.sha256);assert.equal(response.status,200,'No session, reviewer role or approval flag is required');assert.match(response.headers.get('content-type')!,/^image\/svg\+xml/);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(response.headers.get('cache-control'),'no-cache');assert.equal(response.headers.get('set-cookie'),null);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),asset.sha256);}
+  for(const asset of [...registry.organismIllustrations.flatMap(entry=>[entry.thumbnail,entry.portrait]),...registry.bloodworkIllustrations.map(entry=>entry.asset),...registry.moleculeIllustrations.map(entry=>entry.asset)]){const response=await fetch(base+asset.src+'?v='+asset.sha256);assert.equal(response.status,200,'No session, reviewer role or approval flag is required');assert.match(response.headers.get('content-type')!,/^image\/svg\+xml/);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(response.headers.get('cache-control'),'no-cache');assert.equal(response.headers.get('set-cookie'),null);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),asset.sha256);}
   assert.equal((await fetch(base+'/science/organisms-v4/missing.svg')).status,404);
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
 });
