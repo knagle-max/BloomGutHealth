@@ -699,7 +699,9 @@
           "client/src/pages/Progress.tsx",
           "client/src/components/LabTrend.tsx",
           "client/src/components/LabSourceContext.tsx",
-          "client/src/components/FoodProgress.tsx"
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/LabExplorer.tsx",
+          "client/src/components/LabCategoryIcon.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -709,7 +711,9 @@
           "server/planning-context.ts",
           "shared/lab-history.ts",
           "shared/food-progress.ts",
-          "shared/nutrition-summary.ts"
+          "shared/nutrition-summary.ts",
+          "shared/lab-explorer.ts",
+          "shared/scientific-visuals.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -775,7 +779,9 @@
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/LabSourceHistory.tsx",
           "client/src/components/FoodProgress.tsx",
-          "client/src/components/BloodworkSourceOverview.tsx"
+          "client/src/components/BloodworkSourceOverview.tsx",
+          "client/src/components/LabExplorer.tsx",
+          "client/src/components/LabCategoryIcon.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -785,7 +791,9 @@
           "server/planning-context.ts",
           "shared/lab-history.ts",
           "shared/food-progress.ts",
-          "shared/nutrition-summary.ts"
+          "shared/nutrition-summary.ts",
+          "shared/lab-explorer.ts",
+          "shared/scientific-visuals.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -841,7 +849,9 @@
           "client/src/pages/Progress.tsx",
           "client/src/components/LabTrend.tsx",
           "client/src/components/LabSourceContext.tsx",
-          "client/src/components/FoodProgress.tsx"
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/LabExplorer.tsx",
+          "client/src/components/LabCategoryIcon.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -851,7 +861,9 @@
           "server/planning-context.ts",
           "shared/lab-history.ts",
           "shared/food-progress.ts",
-          "shared/nutrition-summary.ts"
+          "shared/nutrition-summary.ts",
+          "shared/lab-explorer.ts",
+          "shared/scientific-visuals.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1660,6 +1672,8 @@
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
     "client/src/components/GenotypeExplanations.tsx": "83dc7a9de313705e92575ac1e3fa6e06b61ff958d3d8c817a77d9ab00e0945ad",
+    "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
+    "client/src/components/LabExplorer.tsx": "297fbd57faa4b5c04a2aec1a31a4311a3baf7a735880c009bc7c6c8867e4fd90",
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
     "client/src/components/LabSourceHistory.tsx": "cc0ce284382e0a63379167d6f2432b332f621da468fc8aef32a9d117361967d0",
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
@@ -1783,6 +1797,7 @@
     "shared/genotype-explanations.ts": "ad34312dd3fa793c0cd048768112ba1ab23b26766946b9fc34ec6267970e3a6d",
     "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
+    "shared/lab-explorer.ts": "2e40ded4a56e73fe6445eefeaf14a2a16d413c7474e75dad0bb2237f6fad9449",
     "shared/lab-history.ts": "a4d9ca4c0dc41e5386d87c499a0866a5e018952d2cf0608ddc9f3975878994c6",
     "shared/lab-image-file.ts": "63b696d30e906fbacba155218bfc0b86506fcbd30e3089e9af476d59a838860f",
     "shared/lab-paste.ts": "b670c889c86cc28345ac6469964827b3fce52ecfe178bc4c410b511e2c7f5256",
@@ -1801,7 +1816,7 @@
     "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
     "shared/schema.ts": "d65c1490e8a806688c38a195fdc7cea871d1f48fd1db0c5d3c5a12a22700d552",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
-    "shared/scientific-visuals.ts": "25f51f10cf4fd2d9d5fe41406b262c368d82a50b27f6021da941bdf53c6c234e",
+    "shared/scientific-visuals.ts": "e2c078f7815fd49e90cdb243cc76042cc056f281b269596506bb9e750778b9d8",
     "shared/structured-report.ts": "bbbabd39b5c620d44822edc4619fa8fc53d7921db5ecdda014c461657236c094",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
     "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",

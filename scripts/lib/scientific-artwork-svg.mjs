@@ -3,7 +3,7 @@ import {DOMParser} from '@xmldom/xmldom';
  * This verifies delivery safety, never morphology, rights or scientific accuracy. */
 export function assertScientificArtworkSvg(source){
  const fail=()=>{throw Error('Scientific illustration is outside the passive SVG subset');};
- if(typeof source!=='string'||source.length>100000||/[&]|<!|<\?/.test(source))fail();
+ if(typeof source!=='string'||source.length>100000||/<!|<\?|&(?!(?:amp|lt|gt|quot|apos);)/.test(source))fail();
  let invalid=false;const doc=new DOMParser({onError:()=>{invalid=true;}}).parseFromString(source,'image/svg+xml');
  if(invalid||!doc?.documentElement||doc.documentElement.localName!=='svg')fail();
  const tags=new Set(['svg','defs','g','rect','circle','ellipse','path','line','polyline','polygon','text','title','desc','radialGradient','linearGradient','stop']);
@@ -26,6 +26,7 @@ export function assertScientificArtworkSvg(source){
    else if(name==='aria-label'){if(value.length>1000)fail();}
    else if(name==='font-family'){if(!['Georgia,serif','Arial,sans-serif'].includes(value))fail();}
    else if(name==='stroke-linecap'){if(!['butt','round','square'].includes(value))fail();}
+   else if(name==='stroke-linejoin'){if(!['miter','round','bevel'].includes(value))fail();}
    else if(name==='d'){if(!/^[MmZzLlHhVvCcSsQqTtAa0-9eE+.,\s-]+$/.test(value))fail();}
    else if(name==='points'){if(!/^[0-9eE+.,\s-]+$/.test(value))fail();}
    else if(name==='transform'){if(!value||value.replace(/(?:translate|rotate|scale|matrix)\([0-9eE+.,\s-]+\)/g,'').trim())fail();}
@@ -36,3 +37,6 @@ export function assertScientificArtworkSvg(source){
  for(let child=doc.firstChild;child;child=child.nextSibling){if(child===doc.documentElement)visit(child);else if(child.nodeType!==3||child.nodeValue.trim())fail();}
  if(references.some(id=>!['linearGradient','radialGradient'].includes(ids.get(id))))fail();return true;
 }
+
+/** Deterministic syntax repair only; preserve original bytes separately. */
+export function escapeBareSvgAmpersands(source){return source.replace(/&(?!(?:amp|lt|gt|quot|apos|#[0-9]+|#x[0-9a-fA-F]+);)/g,'&amp;');}

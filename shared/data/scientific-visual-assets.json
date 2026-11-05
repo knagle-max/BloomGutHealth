@@ -1,5 +1,5 @@
 {
-  "registryVersion": "scientific-visuals-2026-11-05.2",
+  "registryVersion": "scientific-visuals-2026-11-05.3",
   "assets": [
     {
       "id": "bloom-neutral-microorganism-v1",
@@ -377,11 +377,143 @@
     "sourceBranch": "design/biology-visuals-2026-10-30",
     "sourceCommit": "d8eff880437b3d8d0fd89542f08e211090ceb2b2",
     "reviewManifestBlob": "40fb2ad119f7354d5de3d2ace70b658cb460ddfd",
-    "importedScope": "40 exact original SVGs:20 portraits and20 thumbnails; remaining72 manifest assets not imported or enabled",
+    "importedScope": "50 original SVG sources:20portraits/20thumbs unchanged at runtime;10bloodwork icons with original source archives,8 require bare-ampersand XML encoding repair only. Other62 manifest assets not imported in these slices.",
     "distribution": "public-owner-directed; no preview, legal-approval or capability flag",
     "scientificMeaning": "Representative illustration only; five generic morphology concepts; no species diagnosis, user sample, micrograph, measured function or chemical structure claim",
     "withdrawal": "Remove the affected mapping; missing-file errors retain the labeled neutral fallback; public responses require cache revalidation",
     "originAssertionSource": "Architect c3bfae4 owner-directed proportionality amendment; direct user2026-11-05 public activation override",
     "publicInstruction": "Public activation should not be gated for the images"
-  }
+  },
+  "bloodworkIllustrations": [
+    {
+      "categoryId": "bone",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/bone-micronutrients.svg",
+        "sha256": "1d81fcbe31ee0c363567449e2437e274e0edb8220c5de9298d1547577d56b2fa",
+        "sourceGitBlob": "20cb7740dfdddd6c80169079dcb1a93e15aedab0",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/bone-micronutrients.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/bone-micronutrients.svg",
+        "originalSha256": "87e26562e3cd5b0fc96d246ca0eddc75882e4dd84f4a1d2f564bf153ab3bfbce",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "blood-count",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/complete-blood-count.svg",
+        "sha256": "962d951b944f372f999e1d2eae9a72c0d333a90649140cb3805dc64931cff0a8",
+        "sourceGitBlob": "7659870b9e439f580239cf006cd87aa2dd46f649",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/complete-blood-count.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/complete-blood-count.svg",
+        "originalSha256": "962d951b944f372f999e1d2eae9a72c0d333a90649140cb3805dc64931cff0a8",
+        "repair": "none"
+      }
+    },
+    {
+      "categoryId": "sugar",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/glucose-insulin.svg",
+        "sha256": "05fca3c67ec49ea820e3994bb381b6e8937393c7f4e92f0ff81c7747249e9b57",
+        "sourceGitBlob": "800dc997dd43ee23a4e8daf1ab42e5dc73a9e60d",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/glucose-insulin.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/glucose-insulin.svg",
+        "originalSha256": "7c39d06d58af557d4303146f6dd2f6f9d11610d7a6fce000e45c8075ec19799a",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "heart",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/heart-cholesterol.svg",
+        "sha256": "896327e5867eee455926541a72cb0f30d33d9b359868d60ccc42efd6869a7795",
+        "sourceGitBlob": "13b38774727fd2a0f5c283aeadb2b1c37d7d6fac",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/heart-cholesterol.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/heart-cholesterol.svg",
+        "originalSha256": "d88325e944fb8187704a00af962e94f3a8e8a3befb6552f7efe3bdcfe8f43c83",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "hormones",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/hormones-thyroid.svg",
+        "sha256": "c98086e22a1347339f191f145226114e91ddd908caa79b12cc3adcab82a685c3",
+        "sourceGitBlob": "74a6ce9527584ba8f4180a21fc9be126fdc0d4e7",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/hormones-thyroid.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/hormones-thyroid.svg",
+        "originalSha256": "938a98c90f79ba22ea23d1e20171861c2ec257a7fa0077ebc49960d2522fcea7",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "inflammation",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/inflammation-immunity.svg",
+        "sha256": "8fbac2c7ea4a5de77fa03b7f763d68a3c5ec7f2cad16e13498f119a3fefcc863",
+        "sourceGitBlob": "b149624e2693ce4d3c9c1e09c970305d3422cd36",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/inflammation-immunity.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/inflammation-immunity.svg",
+        "originalSha256": "12c1b6713634c768658037d6c95abeec371527f113d454980cc04bac5e096c35",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "nutrients",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/iron-nutrients.svg",
+        "sha256": "d32438614487f0ebb1bef55d150ff8af5a3777ca94c239cc1092527cf57ef15a",
+        "sourceGitBlob": "26c762e451504915abb90f1e6842c2196c50fd2d",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/iron-nutrients.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/iron-nutrients.svg",
+        "originalSha256": "95e44c3f06283d96484572a1c6b027ad99fe2ccebdea33f3f7c134e5336bea3b",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "kidney",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/kidney-electrolytes.svg",
+        "sha256": "d1bf219415c3dc3a33f60ab36d5f5c269c97071ae0fb49ab26daeb40e8625426",
+        "sourceGitBlob": "eefda7e6a8c22ee0d9f863719bf1c091beb1bdf9",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/kidney-electrolytes.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/kidney-electrolytes.svg",
+        "originalSha256": "b62f16e8a4c754667e6e27dee989b7c4cf50097b6f6f10a6c71a141c4dac38c6",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "liver",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/liver-biliary.svg",
+        "sha256": "6d003dc4c16ed8cdc10ec3f7453ac09eefe92201919e5b5edb0d3b723a7282cc",
+        "sourceGitBlob": "7f4727276eb219ee602f233f006908ae447cad8d",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/liver-biliary.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/liver-biliary.svg",
+        "originalSha256": "ccd58af00d4b60c7c1cdcfab4c3bc6cea27a047e6f5d6556f11b2ddd3984b58a",
+        "repair": "xml-escape-bare-ampersands"
+      }
+    },
+    {
+      "categoryId": "other",
+      "depiction": "illustrative-category-icon",
+      "asset": {
+        "src": "/science/bloodwork-v4/other-tests.svg",
+        "sha256": "4cd226bd3729bf0a220702749083753c53acbd974f219790e954f83fa02c1e43",
+        "sourceGitBlob": "404a36622564d10a6860ce503cfd69a0b24ae78d",
+        "originalPath": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/other-tests.svg",
+        "sourceArchive": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/other-tests.svg",
+        "originalSha256": "4cd226bd3729bf0a220702749083753c53acbd974f219790e954f83fa02c1e43",
+        "repair": "none"
+      }
+    }
+  ]
 }

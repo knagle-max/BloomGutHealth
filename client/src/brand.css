@@ -328,3 +328,7 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .organism-portrait figcaption {max-width:260px;text-align:center;}
 
 .microbial-composition-table:focus-visible {outline:2px solid hsl(var(--ring));outline-offset:2px;}
+
+.lab-explorer-category-title {display:inline-flex;align-items:center;gap:10px;min-width:0;}
+.lab-category-icon {display:inline-grid;place-items:center;width:36px;height:36px;flex-shrink:0;overflow:hidden;border-radius:10px;background:hsl(var(--muted));color:hsl(var(--muted-foreground));}
+.lab-category-icon img {display:block;width:36px;height:36px;}

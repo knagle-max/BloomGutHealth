@@ -20,3 +20,9 @@ export function organismIllustration(sourceName:string|undefined,size:'thumbnail
  if(!entry||!asset||!/^\/science\/organisms-v4\/(organisms|thumbnails)\/[a-z-]+\.svg$/.test(asset.src)||!/^[a-f0-9]{64}$/.test(asset.sha256))return null;
  return{src:`${asset.src}?v=${asset.sha256}`,label:entry.genericMorphology?GENERIC_MORPHOLOGY_LABEL:REPRESENTATIVE_ILLUSTRATION_LABEL,depiction:entry.genericMorphology?'generic-morphology':'representative-concept',assetId:entry.slug};
 }
+
+/** Decoration for an existing navigation category, never a finding or diagnosis. */
+export function labCategoryIllustration(categoryId:string){
+ const entry=registry.bloodworkIllustrations.find(value=>value.categoryId===categoryId),asset=entry?.asset;
+ return asset&&/^\/science\/bloodwork-v4\/[a-z-]+\.svg$/.test(asset.src)&&/^[a-f0-9]{64}$/.test(asset.sha256)?{src:`${asset.src}?v=${asset.sha256}`,label:'Illustrative category icon'}:null;
+}

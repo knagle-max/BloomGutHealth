@@ -1,3 +1,4 @@
+import LabCategoryIcon from './LabCategoryIcon';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link} from 'wouter';
 import type {PrecisionReport} from '@shared/precision-nutrition';
@@ -21,7 +22,7 @@ export default function LabExplorer({report,owner,marker,group,onSelect,selectio
   {marker&&!selected&&<p role="alert">The requested marker is not available in your current laboratory records. <Link className="text-link" href="/precision?tab=labs">Open source review</Link></p>}
   {!matching.length&&entries.length>0&&<p>No matching marker or source label. Clear the search to review all records.</p>}
   {labCategories.map(category=>{const rows=matching.filter(e=>e.categories.includes(category.id));if(!rows.length)return null;return <details key={category.id} className="bloom-panel lab-explorer-category" open={activeGroup===category.id}>
-   <summary onClick={e=>{e.preventDefault();onSelect(activeGroup===category.id?null:category.id,null);}}><strong>{category.name}</strong><span>{rows.length} {category.id==='other'?'source labels':'markers'} · {rows.filter(e=>e.recordCount>1).length} with multiple records</span></summary>
+   <summary onClick={e=>{e.preventDefault();onSelect(activeGroup===category.id?null:category.id,null);}}><span className="lab-explorer-category-title"><LabCategoryIcon categoryId={category.id}/><strong>{category.name}</strong></span><span>{rows.length} {category.id==='other'?'source labels':'markers'} · {rows.filter(e=>e.recordCount>1).length} with multiple records</span></summary>
    <div className="lab-explorer-markers">{rows.map(entry=>{const expanded=activeGroup===category.id&&marker===entry.id;const id=expanded?`lab-marker-${encodeURIComponent(entry.id)}`:undefined;return <div key={entry.id} id={id} data-lab-marker={entry.id} className="lab-explorer-marker scroll-mt-24">
     <button type="button" data-marker-toggle="true" className="lab-explorer-marker-toggle" aria-expanded={expanded} onClick={()=>onSelect(category.id,expanded?null:entry.id)}><span><strong>{entry.name}</strong><small>{entry.recordCount} source record(s){entry.pending.length?` · ${entry.pending.length} need unit review`:''}{entry.sourceOnly.length?' · marker not identified':''}</small></span><span aria-hidden="true">{expanded?'−':'+'}</span></button>
     {expanded&&<section className="lab-explorer-detail space-y-4" aria-label={`${entry.name} recorded detail`}>

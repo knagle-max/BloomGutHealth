@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import registry from '../shared/data/scientific-visual-assets.json';
-import {organismIllustration,GENERIC_MORPHOLOGY_LABEL,REPRESENTATIVE_ILLUSTRATION_LABEL} from '../shared/scientific-visuals';
-import {assertScientificArtworkSvg} from '../scripts/lib/scientific-artwork-svg.mjs';
+import {organismIllustration,labCategoryIllustration,GENERIC_MORPHOLOGY_LABEL,REPRESENTATIVE_ILLUSTRATION_LABEL} from '../shared/scientific-visuals';
+import {assertScientificArtworkSvg,escapeBareSvgAmpersands} from '../scripts/lib/scientific-artwork-svg.mjs';
 test('all20 public representative portraits and thumbnails preserve exact40 original blobs and honest five-generic labels',()=>{
  assert.equal(registry.organismIllustrations.length,20);assert.equal(registry.organismIllustrations.filter(entry=>entry.genericMorphology).length,5);
  assert.equal(registry.illustrationProvenance.rights_basis,'owner_asserted_original_AI_assisted');
@@ -30,7 +30,23 @@ test('representative artwork is normally public with SVG MIME, passive-document 
  const app=express();app.use(securityHeaders);app.use(express.static('client/public'));app.use('/science',(_req,res)=>res.status(404).end());
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base='http://127.0.0.1:'+(server.address() as any).port;
  try{
-  for(const entry of registry.organismIllustrations)for(const size of ['thumbnail','portrait'] as const){const asset=entry[size],response=await fetch(base+asset.src+'?v='+asset.sha256);assert.equal(response.status,200,'No session, reviewer role or approval flag is required');assert.match(response.headers.get('content-type')!,/^image\/svg\+xml/);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(response.headers.get('cache-control'),'no-cache');assert.equal(response.headers.get('set-cookie'),null);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),asset.sha256);}
+  for(const asset of [...registry.organismIllustrations.flatMap(entry=>[entry.thumbnail,entry.portrait]),...registry.bloodworkIllustrations.map(entry=>entry.asset)]){const response=await fetch(base+asset.src+'?v='+asset.sha256);assert.equal(response.status,200,'No session, reviewer role or approval flag is required');assert.match(response.headers.get('content-type')!,/^image\/svg\+xml/);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(response.headers.get('cache-control'),'no-cache');assert.equal(response.headers.get('set-cookie'),null);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),asset.sha256);}
   assert.equal((await fetch(base+'/science/organisms-v4/missing.svg')).status,404);
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
+});
+
+test('all10 category icons map only existing navigation IDs and retain originals with minimal explicit XML repair',async()=>{
+ const {labCategories}=await import('../shared/lab-explorer');
+ assert.deepEqual(registry.bloodworkIllustrations.map(entry=>entry.categoryId).sort(),labCategories.map(entry=>entry.id).sort());
+ assert.equal(registry.bloodworkIllustrations.filter(entry=>entry.asset.repair==='xml-escape-bare-ampersands').length,8);
+ for(const entry of registry.bloodworkIllustrations){const asset=entry.asset,original=readFileSync(asset.sourceArchive),delivered=readFileSync('client/public'+asset.src);
+  assert.equal(createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${original.length}\0`),original])).digest('hex'),asset.sourceGitBlob);
+  assert.equal(createHash('sha256').update(original).digest('hex'),asset.originalSha256);
+  assert.deepEqual(delivered,asset.repair==='none'?original:Buffer.from(escapeBareSvgAmpersands(original.toString())));
+  assert.equal(createHash('sha256').update(delivered).digest('hex'),asset.sha256);assertScientificArtworkSvg(delivered.toString());
+  assert.equal(labCategoryIllustration(entry.categoryId)?.src,asset.src+'?v='+asset.sha256);
+ }
+ assert.equal(labCategoryIllustration('unreviewed-or-unknown-category'),null);
+ assert.throws(()=>assertScientificArtworkSvg('<svg xmlns="http://www.w3.org/2000/svg" aria-label="Heart & cholesterol"/>'));
+ assert.equal(assertScientificArtworkSvg('<svg xmlns="http://www.w3.org/2000/svg" aria-label="Heart &amp; cholesterol"/>'),true);
 });
