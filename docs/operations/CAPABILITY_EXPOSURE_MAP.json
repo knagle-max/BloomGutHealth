@@ -560,7 +560,8 @@
           "client/src/lib/useDraftUnits.ts",
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -609,7 +610,8 @@
           "client/src/lib/useDraftUnits.ts",
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -651,7 +653,8 @@
           "client/src/lib/useDraftUnits.ts",
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -686,7 +689,8 @@
           "client/src/lib/useDraftUnits.ts",
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -1544,7 +1548,8 @@
           "client/src/lib/useDraftUnits.ts",
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -1713,7 +1718,7 @@
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
     "client/src/components/AthleteEntrySource.tsx": "334328365f4f125c115c2f74d8b9667ed60b0e7c3c1f275b6d67e3a55e415bf4",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
-    "client/src/components/AthleteProfileForm.tsx": "3aa6f473248ac54fff96259d3fd8a22acbed1b6162eaf24e3695e71e6758484d",
+    "client/src/components/AthleteProfileForm.tsx": "78f8fddb566930c5d23f499da8faaed161d0d77757a3fe10325fc592deea9ac3",
     "client/src/components/BiologyHome.tsx": "b405b2a0e02bfafa9a0b0fdbe2685970deff675c9c2edcaca407758198470654",
     "client/src/components/BloodworkSourceOverview.tsx": "837679800dcd738e8ad6f5bbe2e064203f50724325e284484f0408596e6be1e9",
     "client/src/components/CheckinEntrySource.tsx": "f1db6546df547cbaf00483c4ea21150557469a68d74c5b17d584560ebc20c3f8",
@@ -1764,7 +1769,7 @@
     "client/src/lib/useDraftUnits.ts": "123386dddf9c88abda074a7bcf246526b0d9d6c6865ac5447fbdd06e3246fcc6",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
     "client/src/pages/ActivityLog.tsx": "4bc7d9b665bffa63313d56a5d055ec5662aca85af2b41ef106cb95e8fc3834b0",
-    "client/src/pages/AthleteWorkspace.tsx": "f0d95371b0a1e27eab208de85430849544bd16c2538704a4b41647c757b9eb0a",
+    "client/src/pages/AthleteWorkspace.tsx": "2eb7c35d7e2d107c4f3fa3c631a35188bf1c33996aa0e246740734020bee4ba2",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
     "client/src/pages/Explore.tsx": "4f00b3872fa98bc22a449a336ab68e6d7828d5d3e576c4fb88a12d769c6043ca",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
@@ -1792,7 +1797,7 @@
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
     "server/experience-routes.ts": "b61f96088934591fd5127a212d38a27125fb42d8480dc6b8b4e19a89b7f108b7",
-    "server/experience-storage.ts": "f919b1d10e554e01d0c8998c1f92775298e49ffed4ebdbc584f8a4d5914494e4",
+    "server/experience-storage.ts": "10a55ccf34396e0bd504c5ac0f533134a08416af93276e17b2532176abad97b0",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -1844,6 +1849,7 @@
     "shared/application-schema.ts": "9015fbb016fac2a32e0ac92c37b5f66b6ce0e31ea3fdcc29b2f9a25de27ccf13",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
     "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
+    "shared/athlete-entry-capture.ts": "3bdea9805f6dd73892145d05c2cadaa6d153589e4db8d1ea759b8f1c4dde2039",
     "shared/athlete-entry-source.ts": "1f7058cad67becfdfe056ee72a671efafd342703fa9c80c16119f6aa89ab927d",
     "shared/athlete-review.ts": "a0625e796a40e7ef639809c11dcd7ca60568ea23eafcdbfbe2df1b2165a92ea1",
     "shared/athlete.ts": "380767ce6e5245df8fa52d6b66a60c41346022e0614f72f83cf2a58bbb6707b5",

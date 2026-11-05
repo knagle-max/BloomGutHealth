@@ -1,3 +1,4 @@
+import {mergeAthleteEntrySource} from "../shared/athlete-entry-capture";
 import {activityProjection} from "../shared/activity-capture";
 import {createHash} from "node:crypto";
 import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
@@ -5,7 +6,7 @@ import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords,experimentVersions } from "../shared/schema";
-import { experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -28,7 +29,10 @@ export class ExperienceStorage {
    const next=experienceSettingsSchema.parse({...current,...values});
    // Unaware practical forms must not erase an explicitly saved browsing region.
    if(patch.practical&&patch.practical.region===undefined&&current.practical.region!==undefined)next.practical.region=current.practical.region;
-   if(patch.athlete)next.athlete=invalidateAthleteReview(current.athlete,next.athlete,athleteReviewFor);
+   if(patch.athlete){
+    next.athlete=athleteProfileSchema.parse({...next.athlete,entrySource:mergeAthleteEntrySource(current.athlete.entrySource,next.athlete.entrySource,next.athlete,next.athlete.massReference?.source==="profile-copy")});
+    next.athlete=invalidateAthleteReview(current.athlete,next.athlete,athleteReviewFor);
+   }
    await tx.insert(experienceSettings).values({userId,encryptedPayload:encryptPrecision(next,userId)}).onConflictDoUpdate({target:experienceSettings.userId,set:{encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}});
    return next;
   });
@@ -139,6 +143,10 @@ export class ExperienceStorage {
    if(entry.kind==="session"&&entry.payload.actualSets===undefined){
     const current=trainingSessionSchema.parse(previous);
     if(current.actualSets!==undefined)payload={...entry.payload,actualSets:current.actualSets};
+   }
+   if(entry.kind==="session"||entry.kind==="hydration"){
+    const schema=entry.kind==="session"?trainingSessionSchema:hydrationSchema,current=schema.parse(previous),next=schema.parse(payload);
+    payload=schema.parse({...next,entrySource:mergeAthleteEntrySource(current.entrySource,next.entrySource,next)});
    }
    if(entry.kind==="experiment"){
     const before=experimentSchema.parse(previous);
