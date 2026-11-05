@@ -2,7 +2,7 @@ import type {ReportDateContext} from "./report-dates";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
-import { explainGenotypes, genotypeAnnotations } from "./genotype-explanations";
+import { explainGenotypes, genotypeAnnotations, genotypeReferenceCompatibility } from "./genotype-explanations";
 import { z } from "zod";
 import {
   recipes,
@@ -373,7 +373,9 @@ export function classifyManualGenetics(data: ManualGeneticImport) {
         ? "Recorded only: forward-strand orientation has not been confirmed."
         : entry.genotype !== "--" &&
             !entry.genotype.split("").every((a) => variant.alleles.includes(a))
-          ? "Recorded only: these alleles do not match the reviewed forward-strand marker. Check the rsID and source; Bloom does not guess or flip the call."
+          ? genotypeReferenceCompatibility(entry.rsid, entry.genotype) === "compatible"
+            ? "Recorded only: these letters occur in the stored forward-strand reference but are outside the diet catalogue’s studied allele pair. This is a coverage gap, not proof of an import error; no diet rule is assigned."
+            : "Recorded only: these alleles do not match the stored GRCh37 forward-strand reference. Check the rsID, build, assay and source; Bloom does not guess or flip the call."
           : null;
     return {
       ...entry,

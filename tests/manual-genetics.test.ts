@@ -77,7 +77,7 @@ test("manual genetics records unknowns, mismatches and unreviewed variants witho
   assert.equal(classified.filter((c) => c.reviewed).length, 2);
   assert.match(
     classified.find((c) => c.rsid === "rs7903146")!.reason!,
-    /alleles do not match/,
+    /coverage gap, not proof of an import error/,
   );
   assert.match(
     classified.find((c) => c.rsid === "rs174550")!.reason!,

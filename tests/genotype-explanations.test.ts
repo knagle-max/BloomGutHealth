@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   genotypeAnnotations,
   explainGenotypes,
+  genotypeReferenceCompatibility,
 } from "../shared/genotype-explanations";
 import reference from "../shared/data/genotype-reference.json";
 import { additionalEntryShortcuts } from "../shared/manual-genetics";
@@ -16,6 +17,27 @@ import {
 import { defaultPreferences } from "../shared/meal-intelligence";
 const one = (rsid: string, genotype: string, forward = true) =>
   explainGenotypes([{ rsid, genotype }], forward)[0];
+test("an unstudied reference-supported allele is a coverage gap, while incompatible calls retain an explicit source warning", () => {
+  const outside = one("rs7903146", "TG");
+  assert.equal(outside.genotype, "GT");
+  assert.equal(outside.status, "outside-studied-pair");
+  assert.equal(outside.referenceCompatibility, "compatible");
+  assert.match(outside.personalMeaning, /coverage gap, not proof of an import error/);
+  const incompatible = one("rs1801133", "TT");
+  assert.equal(incompatible.referenceCompatibility, "incompatible");
+  assert.match(incompatible.personalMeaning, /Check the source rsID, build, assay and orientation/);
+  for (const e of [outside, incompatible]) {
+    assert.equal(e.resultAdvice, null);
+    assert.equal(e.comparisons.some(c => c.isYours), false);
+  }
+  assert.equal(genotypeReferenceCompatibility("rs999999", "AA"), "unknown");
+  assert.equal(genotypeReferenceCompatibility("rs7903146", "--"), "unknown");
+  // A palindromic pair cannot confirm orientation; no automatic complement.
+  for (const [rsid, call] of [["rs9939609", "AT"], ["rs1799945", "CG"]]) {
+    assert.equal(one(rsid, call, false).status, "orientation-unconfirmed");
+    assert.equal(one(rsid, call, false).resultAdvice, null);
+  }
+});
 test("all entry shortcuts have sourced educational comparisons consistent with forward references without expanding diet ranking", () => {
   assert.equal(genotypeAnnotations.length, 29);
   assert.equal(variantCatalog.length, 7);

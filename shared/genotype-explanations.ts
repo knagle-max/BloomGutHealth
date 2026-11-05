@@ -1,5 +1,16 @@
 import { z } from "zod";
 import catalogue from "./data/genotype-explanations.json";
+import reference from "./data/genotype-reference.json";
+
+// Reference compatibility is distinct from membership in a study's two-allele
+// contrast. Neither check verifies the assay, build or orientation of a source.
+export function genotypeReferenceCompatibility(rsid: string, genotype: string) {
+  const mapping = reference.variants.find((v) => v.rsid === rsid)?.mappings[0];
+  if (!mapping || !/^[ACGT]{2}$/.test(genotype)) return "unknown" as const;
+  return genotype.split("").every((a) => mapping.alleles.split("/").includes(a))
+    ? ("compatible" as const)
+    : ("incompatible" as const);
+}
 const annotationSchema = z
   .object({
     rsid: z.string().regex(/^rs\d+$/),
@@ -51,6 +62,7 @@ export function explainGenotypes(
   return entries.map((entry) => {
     const genotype = entry.genotype.toUpperCase().split("").sort().join("");
     const annotation = genotypeAnnotations.find((v) => v.rsid === entry.rsid);
+    const referenceCompatibility = genotypeReferenceCompatibility(entry.rsid, genotype);
     const status = !annotation
       ? ("not-curated" as const)
       : genotype === "--"
@@ -68,13 +80,16 @@ export function explainGenotypes(
           : status === "orientation-unconfirmed"
             ? "We need to check how your source writes the DNA letters before interpreting your result. The information below is general and is not matched to you."
             : status === "outside-studied-pair"
-              ? "Your letters do not match the versions covered by this explanation. This could be a different reporting method or a less-studied version. Check the original report; no personal diet advice is assigned."
+              ? referenceCompatibility === "compatible"
+                ? "These letters occur in Bloom’s stored GRCh37 forward-strand reference, but this explanation covers a different two-allele study contrast. This is an explanation coverage gap, not proof of an import error. Your source assay, build and orientation still need to be appropriate; no personal interpretation or diet advice is assigned."
+                : "These letters are not covered by this explanation or compatible with Bloom’s stored GRCh37 forward-strand reference. Check the source rsID, build, assay and orientation. Bloom does not guess, flip or replace your call; no personal interpretation or diet advice is assigned."
               : "No source-checked explanation is available for this SNP yet. Its gene identity, dietary effect and genotype comparisons are not inferred.";
     return {
       rsid: entry.rsid,
       submittedGene: entry.gene || "",
       gene: annotation?.gene || "Gene identity not curated",
       genotype,
+      referenceCompatibility,
       status,
       personalMeaning,
       topic: annotation?.topic || null,

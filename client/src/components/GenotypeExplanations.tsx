@@ -73,6 +73,8 @@ export default function GenotypeExplanations({
                   ? "NO READABLE RESULT"
                   : e.status === "not-curated"
                     ? "EXPLANATION NOT YET AVAILABLE"
+                    : e.status === "outside-studied-pair"
+                      ? "CALL OUTSIDE THIS EXPLANATION"
                     : "YOUR RESULT NEEDS VERIFICATION"}
             </p>
             <h3>
@@ -92,7 +94,9 @@ export default function GenotypeExplanations({
           <div className="rounded-xl bg-muted/50 p-4 space-y-2">
             <h4 className="font-semibold">
               {e.resultAdvice?.headline ||
-                "We cannot interpret your result yet"}
+                (e.status === "outside-studied-pair"
+                  ? "This explanation does not cover your call"
+                  : "We cannot interpret your result yet")}
             </h4>
             <p>{e.personalMeaning}</p>
           </div>
@@ -116,7 +120,7 @@ export default function GenotypeExplanations({
               <p className="panel-note">
                 {e.status === "matched"
                   ? "Practical options: general nutrition guidance, unless the result above supports a specific food choice. These are not proven treatments for this SNP."
-                  : "General information only: these options are not matched to your unverified or unreadable result."}{" "}
+                  : "General information only: these options are not a personal interpretation of your saved result."}{" "}
                 Choose options that fit your allergies, preferences and medical
                 care.
               </p>
