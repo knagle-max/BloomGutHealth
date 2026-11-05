@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "auditorSha256": "b0aa782eb1e551d2dc43866f1153555e713a84b35d8505730ddc14e65da19659",
-  "sourceCommit": "99f103005b42b4c9bb08f6151d7113004cabe466",
+  "sourceCommit": "f5d9d5c963634b8e2e3122127da636016698caf8",
   "scope": "All checked-out design/bloom files, client/public files, reachable local runtime imports from client entry and index.html, and current dist/public build. Type-only imports excluded; literal lazy imports are potential reachability.",
   "limits": [
     "Exact string references are candidates, not proof of rendering. Public files are shipped even when unreferenced.",
@@ -11,27 +11,27 @@
   ],
   "summary": {
     "designFileTypes": {
-      ".md": 44,
-      ".json": 9,
+      ".md": 47,
+      ".json": 11,
       ".tsx": 6,
-      ".svg": 133,
+      ".svg": 176,
       ".css": 9,
       ".csv": 2,
       ".html": 6,
       ".ts": 1,
-      ".png": 9,
+      ".png": 10,
       ".txt": 2
     },
-    "manifestPaths": 192,
-    "manifestVerified": 191,
+    "manifestPaths": 196,
+    "manifestVerified": 195,
     "manifestMissing": 1,
-    "designFiles": 221,
-    "publicFiles": 16,
-    "reachableModules": 176,
-    "possibleLazyImports": 18,
+    "designFiles": 270,
+    "publicFiles": 120,
+    "reachableModules": 192,
+    "possibleLazyImports": 19,
     "computedImports": 0,
-    "byteIdenticalPublicBuildCopies": 16,
-    "originalFilesMappedToRuntime": 13,
+    "byteIdenticalPublicBuildCopies": 120,
+    "originalFilesMappedToRuntime": 45,
     "duplicateDesignGroups": 4
   },
   "manifestVerification": [
@@ -802,133 +802,149 @@
     {
       "path": "design/bloom/microbial-profiles/2026-10-30/ASSET_USAGE_AUDIT.md",
       "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.png",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.svg",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/MANIFEST.json",
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/UX_AMENDMENT_D.md",
+      "status": "BYTE_IDENTICAL"
     }
   ],
   "builtArtifacts": [
     {
-      "path": "dist/public/assets/ActivityLog-DlOfpN_Y.js",
-      "sha256": "1ca9bb14df541ccbc896e2003abc0893c6bd38737d4f0bde951fa9340de6713c",
+      "path": "dist/public/assets/ActivityLog-DLKF18v8.js",
+      "sha256": "db105d45b1d5d2bcb2510ca62791c57b078a62b03acdbd723ae6f29774258628",
       "bytes": 18441
     },
     {
-      "path": "dist/public/assets/AthleteWorkspace-DIA03kx2.js",
-      "sha256": "653faef8526d46714f0d2e3cb5ca14dbb488d7a10ff4fc09e8ad26f6b8e313f0",
-      "bytes": 60491
+      "path": "dist/public/assets/AthleteWorkspace-2eOTpKb5.js",
+      "sha256": "a5f7fec105fa2a0a573c1a12fdbd65a02711b1ee1a013e3877eba3de9e7b80ea",
+      "bytes": 61435
     },
     {
-      "path": "dist/public/assets/Demo-O_l5kMpS.js",
-      "sha256": "d9bcfb6ba72262c9b57296e73d1744ec65448e7dcbb24eae91107860494b3da3",
+      "path": "dist/public/assets/Demo-D-A5lSkf.js",
+      "sha256": "d4482ca3635fa282fe08aed8b3b6128c9d612b11fc7742dea2548dff42f82339",
       "bytes": 4782
     },
     {
-      "path": "dist/public/assets/DietaryPreferenceSummary-CRHjN2Q1.js",
-      "sha256": "147cb54f0cf2fe6277d969a230f687625f2ac4a13b7d5f4c2443891682c2908e",
+      "path": "dist/public/assets/DietaryPreferenceSummary-B4Xy7uZK.js",
+      "sha256": "6dd58f0f6bed7765e6b3a8f337d4ae29659108e4bab5669298af716fb5b93514",
       "bytes": 2991
     },
     {
-      "path": "dist/public/assets/Explore-DhCwjzzS.js",
-      "sha256": "89cda658543996a15425917ba3cbaffa57fedf2866878e1d1b6b7939a60423fe",
-      "bytes": 16444
+      "path": "dist/public/assets/Explore-DXUlnZuA.js",
+      "sha256": "b2d11db5e96d43803c1eecb0234106ada09d185619123e649d7ee2eb4a35c421",
+      "bytes": 19085
     },
     {
-      "path": "dist/public/assets/FeatureManagement-CP-MmwoW.js",
-      "sha256": "f33c31367b74638b6aa3d1e44c26e67bea619a38614c57ca5689816f64a3f268",
+      "path": "dist/public/assets/FeatureManagement-YoCDXtLg.js",
+      "sha256": "abe9b30bc5344a19a2e8568ed479dfe6e94b3fbf3a89a0e314c4f573a1579b20",
       "bytes": 5900
     },
     {
-      "path": "dist/public/assets/ImportedReportDetails-DHVSETXA.js",
-      "sha256": "72297f7f18f074454bd00cf4f3b23150e516f5dab0553c3668d2fd4cc6e4a4aa",
-      "bytes": 26239
+      "path": "dist/public/assets/ImportedReportDetails-BwY2jhb3.js",
+      "sha256": "73f6a6dd09fdfd366720e25ba9381936842dfc6403b3de3c1827f13a64c8fc98",
+      "bytes": 29913
     },
     {
-      "path": "dist/public/assets/LabTrend-9XCoNk-l.js",
-      "sha256": "60321ccd80da8e49c60f4d7fc25f0d3c984048e08ca72987faaec3ed3d5555f4",
-      "bytes": 108026
+      "path": "dist/public/assets/LabTrend-BMaB_ziu.js",
+      "sha256": "46e125f582109cd41593b270837c6ea25eee72e617f397c20ce274c3215726f8",
+      "bytes": 123612
     },
     {
-      "path": "dist/public/assets/LogMeal-C8JlKGHe.js",
-      "sha256": "3a1ae6993a3985f6775713c8649c09b89cf1440e7e97ac5ffff5b909cc21933e",
-      "bytes": 40430
+      "path": "dist/public/assets/LogMeal-DQuomBGj.js",
+      "sha256": "987874c959ff023d27997aef22532f8dcf06355464f7090755bace6726a53768",
+      "bytes": 40431
     },
     {
-      "path": "dist/public/assets/MealAnalysis-C1us5UvG.js",
-      "sha256": "636f6770a38e1bdbfa54f18f23b8040911fe047425609a0c1d0b131f0b1f81bc",
+      "path": "dist/public/assets/MealAnalysis-vWrQM0IX.js",
+      "sha256": "578cf201b77f4b8e71c1cfefb976cd020122bc16e72f3e7cc0de4e4250e834fc",
       "bytes": 14139
     },
     {
-      "path": "dist/public/assets/MealPlanner-Cw_cegU1.js",
-      "sha256": "4f67a5239ff99fb6d5e59931a391d920addef37be7abd30f8529c72e1ba0b987",
+      "path": "dist/public/assets/MealPlanner-DIn3DBUf.js",
+      "sha256": "f0a7c1281e27c2ca344c63799352fd593b47ec7f3822d39df900ef31716ccb55",
       "bytes": 31822
     },
     {
-      "path": "dist/public/assets/MealTypeSelector-j2R3Bm9c.js",
-      "sha256": "8b2ce43dfd29662110fd3f85c641adb63e1663989351d2b88849d3f88055f2bc",
+      "path": "dist/public/assets/MealTypeSelector-D7-Ju3yX.js",
+      "sha256": "9d2fd9121b459417419481701e7daa74ac54e354b5b3982198e4b52b6d1b2bb4",
       "bytes": 1700
     },
     {
-      "path": "dist/public/assets/Microbiome-7_ghs-W-.js",
-      "sha256": "62bf410f976b4d033dc722856d3e7447ded7956e2f8d2264a19280127caf68c4",
-      "bytes": 18660
+      "path": "dist/public/assets/Microbiome-ZwBiRZOS.js",
+      "sha256": "2d52376dcc917759c44bfbaa4c387b3564433d03ef930ea1d60ccd3c12a82e10",
+      "bytes": 23723
     },
     {
-      "path": "dist/public/assets/NutritionHistory-DnycY_l_.js",
-      "sha256": "8dae4511220d27a77df081f8331264fc0d25357bb026d0f7e75772e9431ed1e2",
-      "bytes": 31768
+      "path": "dist/public/assets/NutritionHistory-B8r3TFL8.js",
+      "sha256": "fed433822bdc8469a282303b62456f8ef805987d23cb5cff9b3d4f3bc93841e9",
+      "bytes": 31767
     },
     {
-      "path": "dist/public/assets/PlanDay-D4Qo2LtN.js",
-      "sha256": "9f624f973762619f3c73740238fc9c6e61664ffec17e849c3fa07a2ceb63742b",
+      "path": "dist/public/assets/PlanDay-BB8zFm1O.js",
+      "sha256": "a38564ecf6ab04bef38f73c4d10a66caeaf3f7f0c9100cde8b052f1a61f9c785",
       "bytes": 9962
     },
     {
-      "path": "dist/public/assets/PrecisionNutrition-q9mVgE27.js",
-      "sha256": "1696c73a7a12f24ccdfc9a234cf9b7b3e74215f48d8ae865df96184a973f94c6",
-      "bytes": 99590
+      "path": "dist/public/assets/PrecisionNutrition-UPAa_BMh.js",
+      "sha256": "0c0d9e79461266564f8493557f3f8e5f3e9a79d43042c91ed1829bf843187673",
+      "bytes": 118109
     },
     {
-      "path": "dist/public/assets/ProductPicker-D4foWpVP.js",
-      "sha256": "847cc10a785d8e3642e68313ea541ea97cab4a9e9dcc6595de594c9bc0ece51b",
-      "bytes": 22023
+      "path": "dist/public/assets/ProductPicker-NwnPrwy4.js",
+      "sha256": "c9c09533963a8b704b92baeb02e334d33660e9444f5f7676a6134d48b9787537",
+      "bytes": 22024
     },
     {
-      "path": "dist/public/assets/Profile-JtIQpn-6.js",
-      "sha256": "614ff2e6d0baf9db24abbb541ca317a97536b092970018ed427db296f9832c33",
-      "bytes": 30102
+      "path": "dist/public/assets/Profile-bpGiruFk.js",
+      "sha256": "31695a05e36cc32dc928f3426e9195d6f0a8e9a0f0e95009d76e2d20635f1d07",
+      "bytes": 30103
     },
     {
-      "path": "dist/public/assets/Progress-DX8oddP3.js",
-      "sha256": "cdb1dced9c00c4ee1aa03413e9b3df8ef1a140ada753df68ceee4ceb34e47979",
-      "bytes": 25616
+      "path": "dist/public/assets/Progress-NB8Gc5W1.js",
+      "sha256": "b2d00db49d1828a184fbd69289b3b8ff3599c203a730c80192e7cc6aa91196dd",
+      "bytes": 35555
     },
     {
-      "path": "dist/public/assets/SavedMeals-Da4jRxTc.js",
-      "sha256": "f2c6354d306e85bb61dd0ba02cd0e824745aa24b7ccab88b419d57d586465a70",
+      "path": "dist/public/assets/SavedMeals-9QychMZR.js",
+      "sha256": "99a91a9b857817acafc87d8689e33eee6857dc83975d17affee014e16fd442ab",
       "bytes": 5639
     },
     {
-      "path": "dist/public/assets/ScienceCoach-C2jqb3UZ.js",
-      "sha256": "b857b8287708fcbcab2b198c4d161f9484e3ceb75e6bd089310c88553d4d2160",
+      "path": "dist/public/assets/ScienceCoach-ZVEcm8yM.js",
+      "sha256": "df94a60fa24a50b73d2e883c43c30e3fa87e2c1f8884945f332d4f6ed4e35ee2",
       "bytes": 11265
     },
     {
-      "path": "dist/public/assets/TodayPlanner-CmZ3vJiI.js",
-      "sha256": "57f831e21374c943b2d112ee4945e8c17ca7c440ea36f57b80dc1fed938d4731",
+      "path": "dist/public/assets/TodayPlanner-uW1WZ6X7.js",
+      "sha256": "b4fa07e51d1a2596736035ee6894c565614085d4f889a8dfff84e5f32248c83e",
       "bytes": 15330
     },
     {
-      "path": "dist/public/assets/TrainingSetsEditor-C0MLRD_p.js",
-      "sha256": "5d123d39f5dccf6a9b2c699a9601142642b75fcb07d19ea117434ee602791827",
+      "path": "dist/public/assets/TrainingSetsEditor-VaVW3G-a.js",
+      "sha256": "881a627c8c3a6c4d0eaa878acc6cc504b138442839e9439b0d1bd993746dfeee",
       "bytes": 16779
     },
     {
-      "path": "dist/public/assets/Upload-B88_G5n7.js",
-      "sha256": "9a88a3e59a2a37c9c09f1ebff24fd7f4ac3b159a5a346b8f8065f49e8be722cf",
-      "bytes": 76388
+      "path": "dist/public/assets/Upload-C9rPhk4u.js",
+      "sha256": "32a5facfe45f4b56b64faaebbfa7c14cb7921f6e6fafff310f04edd6b1323dea",
+      "bytes": 77604
     },
     {
-      "path": "dist/public/assets/WeeklyReview-Ccwf1_TZ.js",
-      "sha256": "72228a721a7e4740bd610af09ab284dd67e2f75f78329f53faf555f5cc40f994",
-      "bytes": 25031
+      "path": "dist/public/assets/WeeklyReview-BXigt5uv.js",
+      "sha256": "882e5a0515b8decca601cc36b16a54813204b7bcb26f9ac1637c1d7065d37862",
+      "bytes": 29543
     },
     {
       "path": "dist/public/assets/activity-C_iWsCvQ.js",
@@ -936,73 +952,83 @@
       "bytes": 123
     },
     {
-      "path": "dist/public/assets/alert-dialog-h1H-xHGK.js",
-      "sha256": "ead5756f4ff0c37ad20e3880c542e019aa1303c504d16233af26a5f62d9780d0",
-      "bytes": 4725
+      "path": "dist/public/assets/alert-dialog-CcwLmArz.js",
+      "sha256": "a7d2ed5408956402760e9f8c78ad86ca4cf1fd4bdbc3fc580526247f384d5b52",
+      "bytes": 4722
     },
     {
-      "path": "dist/public/assets/check-CMWq2njV.js",
-      "sha256": "7e617d3ce203c8e6b3d050562854e4adef5bfc1dc3fe7ff9303f7c098c13aa81",
+      "path": "dist/public/assets/check-CeTG6-HJ.js",
+      "sha256": "69a5e1f43f9197ec76428dc12806c1c3fc9061fd328d7806a4423c3403098679",
       "bytes": 293
     },
     {
-      "path": "dist/public/assets/chevron-down-DO95N1fI.js",
-      "sha256": "ff2fb4e62524584706d3274ac43956de52bb9e3bba00fc226d001f1a9430eed6",
+      "path": "dist/public/assets/chevron-down-BqAmXXOf.js",
+      "sha256": "a71680917d8076c3726be7044e6244c88f310cab8ab04165851b943211581829",
       "bytes": 296
     },
     {
-      "path": "dist/public/assets/chevron-up-Ctk6ZUrm.js",
-      "sha256": "2bb73811b66c4483f426e4dc596a84a6163907f4921cbc005e0d9a5969c0d852",
+      "path": "dist/public/assets/chevron-up-ByVsyRQX.js",
+      "sha256": "18b0ea9c61a58ab9e1438cb1c733737669d0e4b5c886f6e51c834d82c3885d6d",
       "bytes": 296
     },
     {
-      "path": "dist/public/assets/circle-check-D-CVjrpo.js",
-      "sha256": "f5302c9e18b1eeac9f459cb8aed6cc4fc7fc5c32b68112eca552f651c056859a",
+      "path": "dist/public/assets/circle-check-DkGD2ga2.js",
+      "sha256": "a1a226f81474e824bc637fa4856032fbc3d71b264b258661801ca1da53089f94",
       "bytes": 346
     },
     {
-      "path": "dist/public/assets/file-text-Bs7idU8A.js",
-      "sha256": "6ca8b40622d554d1a361ec8c2e760e3cae8a1e161f6b7121d8a886469aa0d65e",
+      "path": "dist/public/assets/file-text-BzCu5f5h.js",
+      "sha256": "1986473b54f3a9f9c7f36415eeccc37be031c71ba5232dbdbd03215bac3ea1cd",
       "bytes": 501
     },
     {
-      "path": "dist/public/assets/format-zreRMSPF.js",
-      "sha256": "e0e4ef582dafe53f7e69376da36251e0896173db7e49e0294f1103dbaacd9a5d",
+      "path": "dist/public/assets/format-CSfTFpnp.js",
+      "sha256": "ca769e8f230ddf56400364547b3a61cf665ebf7ff1fc71e365725d280b1e67ca",
       "bytes": 21110
     },
     {
-      "path": "dist/public/assets/index-4oYbt_M2.js",
-      "sha256": "e6fb82e52b961e0e6344e26a0f3c909f4eca8fde84580da8e7dae6635a58e7c0",
-      "bytes": 27092
+      "path": "dist/public/assets/index-84469jgD.js",
+      "sha256": "d3de843dea10a158cbf88fe1134fea4f1a21a33aae24d2cf975e163542720c71",
+      "bytes": 416506
     },
     {
-      "path": "dist/public/assets/index-D3Mz4UNV.js",
-      "sha256": "335a4e56147aa34489f541513c501f061512e370e38883bc01ae967bab53d410",
-      "bytes": 415763
+      "path": "dist/public/assets/index-BuJpc8VK.css",
+      "sha256": "0707108163b914a3a3568a857df1ab7198715542e09264573cb30eeaee6f8539",
+      "bytes": 163754
     },
     {
-      "path": "dist/public/assets/index-DA18BPpX.css",
-      "sha256": "c3443559e2a76d9877cf155d09c270cba33a296a4f316acfc1bea1f0d5911372",
-      "bytes": 160465
+      "path": "dist/public/assets/index-CzFnS5vd.js",
+      "sha256": "2a06328590ebaa44392889951af4efdf4ad66c0700f5577f9d4c28754dfe4c6d",
+      "bytes": 27126
     },
     {
-      "path": "dist/public/assets/index-DQN78D7H.js",
-      "sha256": "8a2e34902692012b65907e7d722ee528537aca86cd12c93e66eac8669f23ed90",
-      "bytes": 521559
-    },
-    {
-      "path": "dist/public/assets/index-DgiuoL1K.js",
-      "sha256": "11131128553e29dcae083aba7337d44c1ce5b45833353878a437eaa39428c437",
+      "path": "dist/public/assets/index-DzdCXC-W.js",
+      "sha256": "89d02254ce38f9b7750ff763d9c8002b2eb51ece906a592eb04e9daf582bf302",
       "bytes": 143
     },
     {
-      "path": "dist/public/assets/lab-pdf-reader-noew6-0e.js",
-      "sha256": "ad5721b4d92e0832cb679d92b69f2cd1939603d96bea9c52f18232584f1ec39c",
-      "bytes": 484302
+      "path": "dist/public/assets/index-LWrnzLSM.js",
+      "sha256": "aa4cd9b9d78fcdd2f53056a825fb9172051acabffe3a6c1255d27f7e93b561e9",
+      "bytes": 529848
     },
     {
-      "path": "dist/public/assets/loader-circle-DeU0UZLK.js",
-      "sha256": "367537bbdcd3a6b6575429fcaec931fa25fe969b5ef9b8d4febf4583c0f81d12",
+      "path": "dist/public/assets/lab-image-reader-CUYrKTQi.js",
+      "sha256": "1b0b5af1e015874b6db21fd903721fd0b209afd5be51e00ff6d95d4efd064061",
+      "bytes": 964
+    },
+    {
+      "path": "dist/public/assets/lab-image-worker-CDJtNCNB.js",
+      "sha256": "d735b7d41a97587d9671f2f79009ab4a92a5f77016dc8348fb3b75bfa828c864",
+      "bytes": 15996
+    },
+    {
+      "path": "dist/public/assets/lab-pdf-reader-BBw5AhCQ.js",
+      "sha256": "c6dd741ee1600f4874684460a8f0dff660a3d53cc2264b9cd81200648aef3a02",
+      "bytes": 484294
+    },
+    {
+      "path": "dist/public/assets/loader-circle-BxYnEe7P.js",
+      "sha256": "1165b8d2322cfda411c6c61700ccd05b7e2a37f169467ade0cafd915dbcf0190",
       "bytes": 312
     },
     {
@@ -1021,13 +1047,18 @@
       "bytes": 161
     },
     {
-      "path": "dist/public/assets/tabs-D8BYB7ax.js",
-      "sha256": "171261b9634681fc9544837d51299cc3982a14248929896a9d236686a8bf0042",
-      "bytes": 6459
+      "path": "dist/public/assets/scientific-visuals-BoCb8s6H.js",
+      "sha256": "917b124395c7952a466f87467248e6f9c99670e2693a31a32c22acc253d82483",
+      "bytes": 38858
     },
     {
-      "path": "dist/public/assets/textarea-CnhpP6xY.js",
-      "sha256": "cf9384d05763fd2a6dc992d17a9ba25f252006d780c702c537aa26ece346fc32",
+      "path": "dist/public/assets/tabs-C8HzUqfT.js",
+      "sha256": "1dc928ec8ab313f0c717f958b3a5e261ac7ba0fc8ded9e607922a0b781759078",
+      "bytes": 6457
+    },
+    {
+      "path": "dist/public/assets/textarea-CL0MIU68.js",
+      "sha256": "348267555a8890956e1dc3dd735ee21d002cc137e72bf7ede1fbc4b3ab0e7238",
       "bytes": 495
     },
     {
@@ -1097,7 +1128,7 @@
     },
     {
       "path": "dist/public/index.html",
-      "sha256": "df58aeda0924cbd1eea8246a33bd2b6273f8a005b9c75c09790f01776164b979",
+      "sha256": "b39107c6ad08fc85d6e388f28f5a98881144c03b8388a8e8ab84e1e89b3ea827",
       "bytes": 1103
     },
     {
@@ -1114,6 +1145,526 @@
       "path": "dist/public/manifest.webmanifest",
       "sha256": "2f3a5b722a102e0ed61f5c66fee092f0820714fd759b82712ca55294d96c424d",
       "bytes": 544
+    },
+    {
+      "path": "dist/public/ocr/v1/ASSET_MANIFEST.json",
+      "sha256": "6621ab2c95eb041195b3c7a8d7fc3d0296e283100f05500e7223c5f2919c5cf3",
+      "bytes": 8276
+    },
+    {
+      "path": "dist/public/ocr/v1/LANGUAGE-PACKAGE.json",
+      "sha256": "b603509212196b5d09e10519bf252c1e344b79704d065e0d62886846f8554c80",
+      "bytes": 530
+    },
+    {
+      "path": "dist/public/ocr/v1/LICENSE-CORE",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "bytes": 11358
+    },
+    {
+      "path": "dist/public/ocr/v1/LICENSE-TESSDATA",
+      "sha256": "c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c",
+      "bytes": 11358
+    },
+    {
+      "path": "dist/public/ocr/v1/LICENSE-TESSERACT.md",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "bytes": 11357
+    },
+    {
+      "path": "dist/public/ocr/v1/README.md",
+      "sha256": "c845f1427d4f3da3b647802185cd5bfa35eaa0ff7b6f16bf9fd5c387412050ad",
+      "bytes": 2170
+    },
+    {
+      "path": "dist/public/ocr/v1/core/tesseract-core-lstm.wasm.js",
+      "sha256": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680",
+      "bytes": 3896484
+    },
+    {
+      "path": "dist/public/ocr/v1/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+      "sha256": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3",
+      "bytes": 3905767
+    },
+    {
+      "path": "dist/public/ocr/v1/core/tesseract-core-simd-lstm.wasm.js",
+      "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38",
+      "bytes": 3899472
+    },
+    {
+      "path": "dist/public/ocr/v1/language/eng.traineddata.gz",
+      "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91",
+      "bytes": 2952873
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/bmp-js-LICENSE",
+      "sha256": "9f165f5bd2b462122cacb8c6dc32028be1abb4d8ad0322e9a332f30b2ebdb833",
+      "bytes": 1077
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/idb-keyval-LICENCE",
+      "sha256": "20c27d6339619eeb3113cb865d4e98a3f559e52964fc75caea9cb5fa72674565",
+      "bytes": 555
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/node-fetch-LICENSE.md",
+      "sha256": "84eaa985e1ef71b8c630e8aba73404c219ff425c6fdb45c62e998b58d4fbdc8e",
+      "bytes": 1079
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/opencollective-postinstall-LICENSE",
+      "sha256": "86641df2e1c0c0e655d7eb9962a28e850e80c97c62a29500f2f93ab142c3c8f2",
+      "bytes": 1072
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/regenerator-runtime-LICENSE",
+      "sha256": "51887a3d47051ac2fce1210562e5b9fe0830a8a8fabeb272c2d586eeb18a05fd",
+      "bytes": 1080
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/tesseract.js-LICENSE.md",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "bytes": 11357
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/tesseract.js-core-LICENSE",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "bytes": 11358
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/wasm-feature-detect-LICENSE",
+      "sha256": "bcf29b4fd3ec2cb5f9d40a0866da446f6da62170d2ccedf4aeca9cf9406dd20c",
+      "bytes": 11341
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/webidl-conversions-LICENSE.md",
+      "sha256": "a889cc4dbee2ae172c179856b25d75b0b7a5a136e1b97109b9b590b2ff1a879c",
+      "bytes": 1323
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/whatwg-url-LICENSE.txt",
+      "sha256": "6b7a1792144374d84dc5ed3655b8bbe2754d06f4f1f64a9fb8b9de2d6f448b85",
+      "bytes": 1088
+    },
+    {
+      "path": "dist/public/ocr/v1/third-party/zlibjs-LICENSE",
+      "sha256": "131afe3f7bdce1698beb292fb8de1a968de01bce876122a60ef5db230471c866",
+      "bytes": 1222
+    },
+    {
+      "path": "dist/public/ocr/v1/worker.min.js",
+      "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d",
+      "bytes": 111307
+    },
+    {
+      "path": "dist/public/ocr/v1/worker.min.js.LICENSE.txt",
+      "sha256": "45f54171aeaa1d10c0c1a66f374b7bba1f02472b1487fbe892eec04f840002ac",
+      "bytes": 466
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/bone-micronutrients.svg",
+      "sha256": "1d81fcbe31ee0c363567449e2437e274e0edb8220c5de9298d1547577d56b2fa",
+      "bytes": 395
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/complete-blood-count.svg",
+      "sha256": "962d951b944f372f999e1d2eae9a72c0d333a90649140cb3805dc64931cff0a8",
+      "bytes": 399
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/glucose-insulin.svg",
+      "sha256": "05fca3c67ec49ea820e3994bb381b6e8937393c7f4e92f0ff81c7747249e9b57",
+      "bytes": 348
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/heart-cholesterol.svg",
+      "sha256": "896327e5867eee455926541a72cb0f30d33d9b359868d60ccc42efd6869a7795",
+      "bytes": 375
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/hormones-thyroid.svg",
+      "sha256": "c98086e22a1347339f191f145226114e91ddd908caa79b12cc3adcab82a685c3",
+      "bytes": 344
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/inflammation-immunity.svg",
+      "sha256": "8fbac2c7ea4a5de77fa03b7f763d68a3c5ec7f2cad16e13498f119a3fefcc863",
+      "bytes": 365
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/iron-nutrients.svg",
+      "sha256": "d32438614487f0ebb1bef55d150ff8af5a3777ca94c239cc1092527cf57ef15a",
+      "bytes": 359
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/kidney-electrolytes.svg",
+      "sha256": "d1bf219415c3dc3a33f60ab36d5f5c269c97071ae0fb49ab26daeb40e8625426",
+      "bytes": 394
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/liver-biliary.svg",
+      "sha256": "6d003dc4c16ed8cdc10ec3f7453ac09eefe92201919e5b5edb0d3b723a7282cc",
+      "bytes": 349
+    },
+    {
+      "path": "dist/public/science/bloodwork-v4/other-tests.svg",
+      "sha256": "4cd226bd3729bf0a220702749083753c53acbd974f219790e954f83fa02c1e43",
+      "bytes": 315
+    },
+    {
+      "path": "dist/public/science/neutral-microorganism-v1.svg",
+      "sha256": "fd72226b4a848bcb2f3ab8c8973d1d89903318ed6459ad55e1ac595b95c6b904",
+      "bytes": 457
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/akkermansia-muciniphila.svg",
+      "sha256": "cd0aaa971d2337864d46ac272812ab323cbe62834842fea370bb52a9142244a2",
+      "bytes": 1668
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/alistipes-putredinis.svg",
+      "sha256": "7aeb2cba4db5960bec81193167f7a1224e2b1236fc35ef955017e1f28392fb7b",
+      "bytes": 1826
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/anaerostipes-hadrus.svg",
+      "sha256": "7e14b90978e870bb51449b4e9a559af2eb5272cbbc1e00f9df775c8913682bb0",
+      "bytes": 1845
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/bacteroides-uniformis.svg",
+      "sha256": "b2789c1ea4065464b1c717d8162bfacc0df830a53082397b2d98ceaa9944ece7",
+      "bytes": 1842
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/bacteroides-vulgatus.svg",
+      "sha256": "4c44b81dfc569a5189266836cf0c667873d2c36f3238143090f8061777459c99",
+      "bytes": 1661
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/bifidobacterium-adolescentis.svg",
+      "sha256": "8066ffa194efb0d0868599e20499f01cf6241a51019e61881eb1ff7e21d4f809",
+      "bytes": 2080
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/bifidobacterium-longum.svg",
+      "sha256": "51e80ccd54527ff2581e0909c13cdaa1fd2db4fff3c71960b4dd6acbc6bf71ef",
+      "bytes": 2060
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/bilophila-wadsworthia.svg",
+      "sha256": "d1154298af12c97c24a71a2af54a79e7a610a8f6be934d43e6036d8dccc0a73a",
+      "bytes": 1846
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/blautia-wexlerae.svg",
+      "sha256": "9e8caef347afeaa750650335c011560477411349f4faaa56401eecc40014dc6d",
+      "bytes": 1656
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/collinsella-aerofaciens.svg",
+      "sha256": "0f174515ee07cfc9b384834cd7cdd366068532a47186362cc9d4760be723e4c6",
+      "bytes": 2107
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/desulfovibrio-piger.svg",
+      "sha256": "6a1a96c5ceb67f17c4b0f238dfb680daf4d4002a78966fc6c2edc54218a851bd",
+      "bytes": 1884
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/escherichia-coli.svg",
+      "sha256": "bc880ffe3704742f3b96f959485db6a3b659fb57beb8184851bd3764b8bcd125",
+      "bytes": 1828
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/eubacterium-rectale.svg",
+      "sha256": "d1b1725a4fa87f01f5cea74b1acfad803e0e7fac4607f868904808eca461d6c5",
+      "bytes": 2283
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/faecalibacterium-prausnitzii.svg",
+      "sha256": "dbcccac480856c5c285ea97af151179a1708dc3f3bcf619b6b55a77d187e204e",
+      "bytes": 1868
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/klebsiella-pneumoniae.svg",
+      "sha256": "3a99d165ba6788793a11bc21cce5d032373e280d04dd09c853140e766c5c7f49",
+      "bytes": 1886
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/lactobacillus-rhamnosus.svg",
+      "sha256": "ce7a62f0614fedcb2333648da360e0d8093fb2032902de780fe9e79d8631091d",
+      "bytes": 1878
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/methanobrevibacter-smithii.svg",
+      "sha256": "f58670813c948f9f2d072294e49b4dfe8ed7abb7a8f45db7a08543d34873d9ac",
+      "bytes": 1691
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/prevotella-copri.svg",
+      "sha256": "382837907a88419eb66b0dff2fdacd40c33e85f147a04661f84ec7328ef8cbb5",
+      "bytes": 1895
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/roseburia-intestinalis.svg",
+      "sha256": "6b4fb8cb2933e4af67896dc76efbdcca07c83bc2976ea664c8c239989fc48e95",
+      "bytes": 2262
+    },
+    {
+      "path": "dist/public/science/organisms-v4/organisms/ruminococcus-bromii.svg",
+      "sha256": "a4d4861957d3bb7ac2b0f40bd194e1fc66adfc64586f03dcd4ee0ca456c181ae",
+      "bytes": 1368
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/akkermansia-muciniphila.svg",
+      "sha256": "1225dce9d102404d24bb3273a3481a031258f773ffe5321aeb26d05178500694",
+      "bytes": 608
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/alistipes-putredinis.svg",
+      "sha256": "b0650eb203d17ac41d2f95581084f671c34cfd405bf69d879ab7e85d88912e40",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/anaerostipes-hadrus.svg",
+      "sha256": "ab2421a931035b162591f894e6da67fe7cc26bb1a1c42231892d2e2b3da62d6d",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/bacteroides-uniformis.svg",
+      "sha256": "e8c60d27918cf002ad7a0418ea64f3b449c862a36535cc35138df9eb2a60b379",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/bacteroides-vulgatus.svg",
+      "sha256": "b38d4c1b46b8f057e69a8fdf5331acbc1d97300e72fe7fc0723e1e1441b3c66d",
+      "bytes": 608
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/bifidobacterium-adolescentis.svg",
+      "sha256": "a52f149c5e7efbdd211b6c4b9914efa8658f56bafe3ae7611695451393309fcb",
+      "bytes": 711
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/bifidobacterium-longum.svg",
+      "sha256": "76bdd83ec059f4169dea497d4b0caa54fcc7dbedaa7f2816513d49dbc5b79f72",
+      "bytes": 711
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/bilophila-wadsworthia.svg",
+      "sha256": "9b8fb605bd0c5bd3d8c16a9606e4aee1ac2b5f1f0246fcdfd6b7a4245ce4e0df",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/blautia-wexlerae.svg",
+      "sha256": "b38d4c1b46b8f057e69a8fdf5331acbc1d97300e72fe7fc0723e1e1441b3c66d",
+      "bytes": 608
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/collinsella-aerofaciens.svg",
+      "sha256": "60f47687ddacccf03a758b097c0f5bc4779d569764008d49b85588bcafad0a8d",
+      "bytes": 711
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/desulfovibrio-piger.svg",
+      "sha256": "7b2d176c82c99e1ad3648836f46cf6dafc1fafcac0b3afdfe1aeeda794b91c40",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/escherichia-coli.svg",
+      "sha256": "d04fd084008b54fb0cda18cde07a627d51a98f12af7a3af3fce70800c2066e5b",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/eubacterium-rectale.svg",
+      "sha256": "e9c20b9a3b186e0d5f4bef1770efa4eee7daca858893e471b2b4ea1fd05c660a",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/faecalibacterium-prausnitzii.svg",
+      "sha256": "b0650eb203d17ac41d2f95581084f671c34cfd405bf69d879ab7e85d88912e40",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/klebsiella-pneumoniae.svg",
+      "sha256": "01adc0a7d18461f18c4767889aef5aff032dc846903119d20fc788a7ae305d3e",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/lactobacillus-rhamnosus.svg",
+      "sha256": "7b2d176c82c99e1ad3648836f46cf6dafc1fafcac0b3afdfe1aeeda794b91c40",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/methanobrevibacter-smithii.svg",
+      "sha256": "6f5f0d6f9554f1d988246b321f30740d93ef8082e411ed0f42ac21d08bb12bf1",
+      "bytes": 608
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/prevotella-copri.svg",
+      "sha256": "47bea927f640bff8c2510417a00854a62bdf30ef0bdccb029f4c7127ac831305",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/roseburia-intestinalis.svg",
+      "sha256": "d04fd084008b54fb0cda18cde07a627d51a98f12af7a3af3fce70800c2066e5b",
+      "bytes": 664
+    },
+    {
+      "path": "dist/public/science/organisms-v4/thumbnails/ruminococcus-bromii.svg",
+      "sha256": "1225dce9d102404d24bb3273a3481a031258f773ffe5321aeb26d05178500694",
+      "bytes": 608
+    },
+    {
+      "path": "dist/public/science/pathways-v4/acetate.svg",
+      "sha256": "f630532b283c65bce2ee97d5853507907c5947bfbe4e73214be9a32f1b38ffb5",
+      "bytes": 2859
+    },
+    {
+      "path": "dist/public/science/pathways-v4/bifid-shunt.svg",
+      "sha256": "fb79c5b8b27d5041e3f3509a24d7837aa74ed1163f1539839a3d6c01d3869269",
+      "bytes": 2935
+    },
+    {
+      "path": "dist/public/science/pathways-v4/butyrate-production.svg",
+      "sha256": "54e580d53154bd75aa8ee18882fda10f461c5c83c87c146f258d9de720b1788b",
+      "bytes": 2905
+    },
+    {
+      "path": "dist/public/science/pathways-v4/choline-tma.svg",
+      "sha256": "2def7bb6da0b2e7683b0f67af0adc721026118542822b27d2d41e32c1817782d",
+      "bytes": 2868
+    },
+    {
+      "path": "dist/public/science/pathways-v4/cross-feeding.svg",
+      "sha256": "8255a006bda3000873d82c9245db0218d8c83525f06b2d266f072e01e4a6a821",
+      "bytes": 2903
+    },
+    {
+      "path": "dist/public/science/pathways-v4/hdac.svg",
+      "sha256": "2ce58dd06645655db11e5c40f8313bc78ea2ffaf29f9cad888177170704f38d7",
+      "bytes": 2945
+    },
+    {
+      "path": "dist/public/science/pathways-v4/host-butyrate.svg",
+      "sha256": "11666ea8f94070367b70641e50943179329520d7a97554bc3ccc516c164a91cc",
+      "bytes": 2908
+    },
+    {
+      "path": "dist/public/science/pathways-v4/methanogenesis.svg",
+      "sha256": "6ab427561658975adf6ab736e0ea3e40f12ad7fe7c050229b901d17009432b79",
+      "bytes": 2893
+    },
+    {
+      "path": "dist/public/science/pathways-v4/mucin-glycans.svg",
+      "sha256": "c570368ad9f1855a6fe0fccddecd8cb6c0380415654caf9878fad9c33732a4a2",
+      "bytes": 2924
+    },
+    {
+      "path": "dist/public/science/pathways-v4/resistant-starch.svg",
+      "sha256": "758d37bb09b2a079d69742024e6ea9fa00876b643ab46143952520b52bd4f9a9",
+      "bytes": 2932
+    },
+    {
+      "path": "dist/public/science/pathways-v4/scfa-receptors.svg",
+      "sha256": "0c21729e2036df86674e251695e337ea21cfa4301a533876e5b33e181c8d9032",
+      "bytes": 3001
+    },
+    {
+      "path": "dist/public/science/pathways-v4/succinate-propionate.svg",
+      "sha256": "b92f3a8c2b730537d1772f653e302cb380019ea3404263f1f5c43438c103ea8a",
+      "bytes": 2918
+    },
+    {
+      "path": "dist/public/science/pathways-v4/sulfur-reduction.svg",
+      "sha256": "c5f472a9371ccb67b41eccb123a743261498e981f1ffbebd71b8302f471c0c91",
+      "bytes": 2885
+    },
+    {
+      "path": "dist/public/science/pathways-v4/taurine.svg",
+      "sha256": "12d0aa10a5b618c41adce897b87a3a2105d884e7083dd263e07b0cbf1f6e90f4",
+      "bytes": 3029
+    },
+    {
+      "path": "dist/public/science/pathways-v4/tma-tmao.svg",
+      "sha256": "82c13b5c21c37b87ce4bf9f4ac327ea80129c5e5fa134da88b29dae07355fa6e",
+      "bytes": 2836
+    },
+    {
+      "path": "dist/public/science/pathways-v4/tryptophan.svg",
+      "sha256": "0699e7e45146a7fc179f07b5498851076c564852865629aff5a78e5c7b6a39fa",
+      "bytes": 2869
+    },
+    {
+      "path": "dist/public/science/structures-v4/acetate.svg",
+      "sha256": "5ffc12db31c9efce333c229d8bc864f10988d9422e46d125a012fa9be8c07c76",
+      "bytes": 2186
+    },
+    {
+      "path": "dist/public/science/structures-v4/acetic-acid.svg",
+      "sha256": "286bd08ec5aa5e4bf2f6ababeaa495193d85e83236d8c96ddafa045045c70c36",
+      "bytes": 2184
+    },
+    {
+      "path": "dist/public/science/structures-v4/butyrate.svg",
+      "sha256": "f998599c1a2b7ef21510aa04d04bffe055e2bfeb32addd510764b068e9abc1d2",
+      "bytes": 2773
+    },
+    {
+      "path": "dist/public/science/structures-v4/butyric-acid.svg",
+      "sha256": "89c212d6b8bff5eb840b8e7e8c1d754c899abd6ddebc8aa05f50a8138e799547",
+      "bytes": 2765
+    },
+    {
+      "path": "dist/public/science/structures-v4/choline.svg",
+      "sha256": "54e73b3c602d163ff71c2ed063d03f80960120de165f8a1f45a0539570113f09",
+      "bytes": 2888
+    },
+    {
+      "path": "dist/public/science/structures-v4/hydrogen-sulfide.svg",
+      "sha256": "660952ddc30bee4fc0faf40a33ce3ff4685c6011727923da31bcab43c3b247f4",
+      "bytes": 1690
+    },
+    {
+      "path": "dist/public/science/structures-v4/lactate.svg",
+      "sha256": "d05cd1b6a62abfcbcf4099f1086c7a9b8d4f2f683cdaf5d8dc0afc1f714f3bf4",
+      "bytes": 2815
+    },
+    {
+      "path": "dist/public/science/structures-v4/lactic-acid.svg",
+      "sha256": "d5c21617dccc80ad17f1f5afb8d63b6ee4f41e803ca7282b4186bb2b186b9503",
+      "bytes": 2809
+    },
+    {
+      "path": "dist/public/science/structures-v4/propionate.svg",
+      "sha256": "a0f34ea0eb47aa48479427b72a1391be3f991e32e30918151cbd6f18f9d746e1",
+      "bytes": 2484
+    },
+    {
+      "path": "dist/public/science/structures-v4/propionic-acid.svg",
+      "sha256": "e6053115573043d6a89bcabf458c1ab105e74679c1ee3bc0fa4ae3ed81479586",
+      "bytes": 2478
+    },
+    {
+      "path": "dist/public/science/structures-v4/succinate.svg",
+      "sha256": "3f757ef760b02b9c1a1fb28482c2b22954e1e7d75fad8466cd0e69873f07ff42",
+      "bytes": 3553
+    },
+    {
+      "path": "dist/public/science/structures-v4/succinic-acid.svg",
+      "sha256": "55c734f82d27b041c4164c3d5a49452aadd26fc5bf4f94dd654447fd1b912220",
+      "bytes": 3541
+    },
+    {
+      "path": "dist/public/science/structures-v4/tmao.svg",
+      "sha256": "70a4b081eb5ebb16eeb160c77aa6824632102a97d4d904e07f73335cde32499d",
+      "bytes": 2294
+    },
+    {
+      "path": "dist/public/science/structures-v4/trimethylamine.svg",
+      "sha256": "a45ed306d00e9e3e9e7efbea04a1eb978240b52a061f57bf0a052fba6504151a",
+      "bytes": 1980
     }
   ],
   "runtimePublic": [
@@ -1352,6 +1903,1380 @@
       "classification": "STATIC_REFERENCE_CANDIDATE",
       "buildCopy": "BYTE_IDENTICAL",
       "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/ASSET_MANIFEST.json",
+      "url": "/ocr/v1/ASSET_MANIFEST.json",
+      "sha256": "6621ab2c95eb041195b3c7a8d7fc3d0296e283100f05500e7223c5f2919c5cf3",
+      "bytes": 8276,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/LANGUAGE-PACKAGE.json",
+      "url": "/ocr/v1/LANGUAGE-PACKAGE.json",
+      "sha256": "b603509212196b5d09e10519bf252c1e344b79704d065e0d62886846f8554c80",
+      "bytes": 530,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/LICENSE-CORE",
+      "url": "/ocr/v1/LICENSE-CORE",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "bytes": 11358,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/LICENSE-TESSDATA",
+      "url": "/ocr/v1/LICENSE-TESSDATA",
+      "sha256": "c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c",
+      "bytes": 11358,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/LICENSE-TESSERACT.md",
+      "url": "/ocr/v1/LICENSE-TESSERACT.md",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "bytes": 11357,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/README.md",
+      "url": "/ocr/v1/README.md",
+      "sha256": "c845f1427d4f3da3b647802185cd5bfa35eaa0ff7b6f16bf9fd5c387412050ad",
+      "bytes": 2170,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/core/tesseract-core-lstm.wasm.js",
+      "url": "/ocr/v1/core/tesseract-core-lstm.wasm.js",
+      "sha256": "eef5f8b2f8e20e150680b20adaec4a60babafee3adbe8a94583c81fee46e8680",
+      "bytes": 3896484,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+      "url": "/ocr/v1/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+      "sha256": "861a536cf9ef8e63cb644d57bab39c388f37f7d6b6f60024b741c5f6b39a59b3",
+      "bytes": 3905767,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/core/tesseract-core-simd-lstm.wasm.js",
+      "url": "/ocr/v1/core/tesseract-core-simd-lstm.wasm.js",
+      "sha256": "c58b46a4c796c0b8afccf77591d5b875b6896b45d402bbce8caa6f5362447b38",
+      "bytes": 3899472,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/language/eng.traineddata.gz",
+      "url": "/ocr/v1/language/eng.traineddata.gz",
+      "sha256": "45b4cb346724ac1774f1c36f42f182b887bcdb28ebe63e6fff90ac41f3fcff91",
+      "bytes": 2952873,
+      "sourceReferences": [],
+      "engineeringReferences": [
+        "scripts/qa/lab-image-intake-journey.mjs"
+      ],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/bmp-js-LICENSE",
+      "url": "/ocr/v1/third-party/bmp-js-LICENSE",
+      "sha256": "9f165f5bd2b462122cacb8c6dc32028be1abb4d8ad0322e9a332f30b2ebdb833",
+      "bytes": 1077,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/idb-keyval-LICENCE",
+      "url": "/ocr/v1/third-party/idb-keyval-LICENCE",
+      "sha256": "20c27d6339619eeb3113cb865d4e98a3f559e52964fc75caea9cb5fa72674565",
+      "bytes": 555,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/node-fetch-LICENSE.md",
+      "url": "/ocr/v1/third-party/node-fetch-LICENSE.md",
+      "sha256": "84eaa985e1ef71b8c630e8aba73404c219ff425c6fdb45c62e998b58d4fbdc8e",
+      "bytes": 1079,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/opencollective-postinstall-LICENSE",
+      "url": "/ocr/v1/third-party/opencollective-postinstall-LICENSE",
+      "sha256": "86641df2e1c0c0e655d7eb9962a28e850e80c97c62a29500f2f93ab142c3c8f2",
+      "bytes": 1072,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/regenerator-runtime-LICENSE",
+      "url": "/ocr/v1/third-party/regenerator-runtime-LICENSE",
+      "sha256": "51887a3d47051ac2fce1210562e5b9fe0830a8a8fabeb272c2d586eeb18a05fd",
+      "bytes": 1080,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/tesseract.js-LICENSE.md",
+      "url": "/ocr/v1/third-party/tesseract.js-LICENSE.md",
+      "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+      "bytes": 11357,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/tesseract.js-core-LICENSE",
+      "url": "/ocr/v1/third-party/tesseract.js-core-LICENSE",
+      "sha256": "c6596eb7be8581c18be736c846fb9173b69eccf6ef94c5135893ec56bd92ba08",
+      "bytes": 11358,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/wasm-feature-detect-LICENSE",
+      "url": "/ocr/v1/third-party/wasm-feature-detect-LICENSE",
+      "sha256": "bcf29b4fd3ec2cb5f9d40a0866da446f6da62170d2ccedf4aeca9cf9406dd20c",
+      "bytes": 11341,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/webidl-conversions-LICENSE.md",
+      "url": "/ocr/v1/third-party/webidl-conversions-LICENSE.md",
+      "sha256": "a889cc4dbee2ae172c179856b25d75b0b7a5a136e1b97109b9b590b2ff1a879c",
+      "bytes": 1323,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/whatwg-url-LICENSE.txt",
+      "url": "/ocr/v1/third-party/whatwg-url-LICENSE.txt",
+      "sha256": "6b7a1792144374d84dc5ed3655b8bbe2754d06f4f1f64a9fb8b9de2d6f448b85",
+      "bytes": 1088,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/third-party/zlibjs-LICENSE",
+      "url": "/ocr/v1/third-party/zlibjs-LICENSE",
+      "sha256": "131afe3f7bdce1698beb292fb8de1a968de01bce876122a60ef5db230471c866",
+      "bytes": 1222,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/worker.min.js",
+      "url": "/ocr/v1/worker.min.js",
+      "sha256": "576b7df7e3393e137e51849357c9adb53fe7ac1bb69bfa06cf3d61520f182c6d",
+      "bytes": 111307,
+      "sourceReferences": [],
+      "engineeringReferences": [
+        "scripts/qa/lab-image-intake-journey.mjs"
+      ],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/ocr/v1/worker.min.js.LICENSE.txt",
+      "url": "/ocr/v1/worker.min.js.LICENSE.txt",
+      "sha256": "45f54171aeaa1d10c0c1a66f374b7bba1f02472b1487fbe892eec04f840002ac",
+      "bytes": 466,
+      "sourceReferences": [],
+      "engineeringReferences": [],
+      "classification": "PUBLIC_FILE_WITHOUT_EXACT_STATIC_REFERENCE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/bone-micronutrients.svg",
+      "url": "/science/bloodwork-v4/bone-micronutrients.svg",
+      "sha256": "1d81fcbe31ee0c363567449e2437e274e0edb8220c5de9298d1547577d56b2fa",
+      "bytes": 395,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/complete-blood-count.svg",
+      "url": "/science/bloodwork-v4/complete-blood-count.svg",
+      "sha256": "962d951b944f372f999e1d2eae9a72c0d333a90649140cb3805dc64931cff0a8",
+      "bytes": 399,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/complete-blood-count.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/glucose-insulin.svg",
+      "url": "/science/bloodwork-v4/glucose-insulin.svg",
+      "sha256": "05fca3c67ec49ea820e3994bb381b6e8937393c7f4e92f0ff81c7747249e9b57",
+      "bytes": 348,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/heart-cholesterol.svg",
+      "url": "/science/bloodwork-v4/heart-cholesterol.svg",
+      "sha256": "896327e5867eee455926541a72cb0f30d33d9b359868d60ccc42efd6869a7795",
+      "bytes": 375,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/hormones-thyroid.svg",
+      "url": "/science/bloodwork-v4/hormones-thyroid.svg",
+      "sha256": "c98086e22a1347339f191f145226114e91ddd908caa79b12cc3adcab82a685c3",
+      "bytes": 344,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/inflammation-immunity.svg",
+      "url": "/science/bloodwork-v4/inflammation-immunity.svg",
+      "sha256": "8fbac2c7ea4a5de77fa03b7f763d68a3c5ec7f2cad16e13498f119a3fefcc863",
+      "bytes": 365,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/iron-nutrients.svg",
+      "url": "/science/bloodwork-v4/iron-nutrients.svg",
+      "sha256": "d32438614487f0ebb1bef55d150ff8af5a3777ca94c239cc1092527cf57ef15a",
+      "bytes": 359,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/kidney-electrolytes.svg",
+      "url": "/science/bloodwork-v4/kidney-electrolytes.svg",
+      "sha256": "d1bf219415c3dc3a33f60ab36d5f5c269c97071ae0fb49ab26daeb40e8625426",
+      "bytes": 394,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/liver-biliary.svg",
+      "url": "/science/bloodwork-v4/liver-biliary.svg",
+      "sha256": "6d003dc4c16ed8cdc10ec3f7453ac09eefe92201919e5b5edb0d3b723a7282cc",
+      "bytes": 349,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/bloodwork-v4/other-tests.svg",
+      "url": "/science/bloodwork-v4/other-tests.svg",
+      "sha256": "4cd226bd3729bf0a220702749083753c53acbd974f219790e954f83fa02c1e43",
+      "bytes": 315,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/other-tests.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/neutral-microorganism-v1.svg",
+      "url": "/science/neutral-microorganism-v1.svg",
+      "sha256": "fd72226b4a848bcb2f3ab8c8973d1d89903318ed6459ad55e1ac595b95c6b904",
+      "bytes": 457,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/akkermansia-muciniphila.svg",
+      "url": "/science/organisms-v4/organisms/akkermansia-muciniphila.svg",
+      "sha256": "cd0aaa971d2337864d46ac272812ab323cbe62834842fea370bb52a9142244a2",
+      "bytes": 1668,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/alistipes-putredinis.svg",
+      "url": "/science/organisms-v4/organisms/alistipes-putredinis.svg",
+      "sha256": "7aeb2cba4db5960bec81193167f7a1224e2b1236fc35ef955017e1f28392fb7b",
+      "bytes": 1826,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/anaerostipes-hadrus.svg",
+      "url": "/science/organisms-v4/organisms/anaerostipes-hadrus.svg",
+      "sha256": "7e14b90978e870bb51449b4e9a559af2eb5272cbbc1e00f9df775c8913682bb0",
+      "bytes": 1845,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/bacteroides-uniformis.svg",
+      "url": "/science/organisms-v4/organisms/bacteroides-uniformis.svg",
+      "sha256": "b2789c1ea4065464b1c717d8162bfacc0df830a53082397b2d98ceaa9944ece7",
+      "bytes": 1842,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/bacteroides-vulgatus.svg",
+      "url": "/science/organisms-v4/organisms/bacteroides-vulgatus.svg",
+      "sha256": "4c44b81dfc569a5189266836cf0c667873d2c36f3238143090f8061777459c99",
+      "bytes": 1661,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/bifidobacterium-adolescentis.svg",
+      "url": "/science/organisms-v4/organisms/bifidobacterium-adolescentis.svg",
+      "sha256": "8066ffa194efb0d0868599e20499f01cf6241a51019e61881eb1ff7e21d4f809",
+      "bytes": 2080,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/bifidobacterium-longum.svg",
+      "url": "/science/organisms-v4/organisms/bifidobacterium-longum.svg",
+      "sha256": "51e80ccd54527ff2581e0909c13cdaa1fd2db4fff3c71960b4dd6acbc6bf71ef",
+      "bytes": 2060,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/bilophila-wadsworthia.svg",
+      "url": "/science/organisms-v4/organisms/bilophila-wadsworthia.svg",
+      "sha256": "d1154298af12c97c24a71a2af54a79e7a610a8f6be934d43e6036d8dccc0a73a",
+      "bytes": 1846,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/blautia-wexlerae.svg",
+      "url": "/science/organisms-v4/organisms/blautia-wexlerae.svg",
+      "sha256": "9e8caef347afeaa750650335c011560477411349f4faaa56401eecc40014dc6d",
+      "bytes": 1656,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/collinsella-aerofaciens.svg",
+      "url": "/science/organisms-v4/organisms/collinsella-aerofaciens.svg",
+      "sha256": "0f174515ee07cfc9b384834cd7cdd366068532a47186362cc9d4760be723e4c6",
+      "bytes": 2107,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/desulfovibrio-piger.svg",
+      "url": "/science/organisms-v4/organisms/desulfovibrio-piger.svg",
+      "sha256": "6a1a96c5ceb67f17c4b0f238dfb680daf4d4002a78966fc6c2edc54218a851bd",
+      "bytes": 1884,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/escherichia-coli.svg",
+      "url": "/science/organisms-v4/organisms/escherichia-coli.svg",
+      "sha256": "bc880ffe3704742f3b96f959485db6a3b659fb57beb8184851bd3764b8bcd125",
+      "bytes": 1828,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/eubacterium-rectale.svg",
+      "url": "/science/organisms-v4/organisms/eubacterium-rectale.svg",
+      "sha256": "d1b1725a4fa87f01f5cea74b1acfad803e0e7fac4607f868904808eca461d6c5",
+      "bytes": 2283,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/faecalibacterium-prausnitzii.svg",
+      "url": "/science/organisms-v4/organisms/faecalibacterium-prausnitzii.svg",
+      "sha256": "dbcccac480856c5c285ea97af151179a1708dc3f3bcf619b6b55a77d187e204e",
+      "bytes": 1868,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/klebsiella-pneumoniae.svg",
+      "url": "/science/organisms-v4/organisms/klebsiella-pneumoniae.svg",
+      "sha256": "3a99d165ba6788793a11bc21cce5d032373e280d04dd09c853140e766c5c7f49",
+      "bytes": 1886,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/lactobacillus-rhamnosus.svg",
+      "url": "/science/organisms-v4/organisms/lactobacillus-rhamnosus.svg",
+      "sha256": "ce7a62f0614fedcb2333648da360e0d8093fb2032902de780fe9e79d8631091d",
+      "bytes": 1878,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/methanobrevibacter-smithii.svg",
+      "url": "/science/organisms-v4/organisms/methanobrevibacter-smithii.svg",
+      "sha256": "f58670813c948f9f2d072294e49b4dfe8ed7abb7a8f45db7a08543d34873d9ac",
+      "bytes": 1691,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/prevotella-copri.svg",
+      "url": "/science/organisms-v4/organisms/prevotella-copri.svg",
+      "sha256": "382837907a88419eb66b0dff2fdacd40c33e85f147a04661f84ec7328ef8cbb5",
+      "bytes": 1895,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/roseburia-intestinalis.svg",
+      "url": "/science/organisms-v4/organisms/roseburia-intestinalis.svg",
+      "sha256": "6b4fb8cb2933e4af67896dc76efbdcca07c83bc2976ea664c8c239989fc48e95",
+      "bytes": 2262,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/organisms/ruminococcus-bromii.svg",
+      "url": "/science/organisms-v4/organisms/ruminococcus-bromii.svg",
+      "sha256": "a4d4861957d3bb7ac2b0f40bd194e1fc66adfc64586f03dcd4ee0ca456c181ae",
+      "bytes": 1368,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/akkermansia-muciniphila.svg",
+      "url": "/science/organisms-v4/thumbnails/akkermansia-muciniphila.svg",
+      "sha256": "1225dce9d102404d24bb3273a3481a031258f773ffe5321aeb26d05178500694",
+      "bytes": 608,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/alistipes-putredinis.svg",
+      "url": "/science/organisms-v4/thumbnails/alistipes-putredinis.svg",
+      "sha256": "b0650eb203d17ac41d2f95581084f671c34cfd405bf69d879ab7e85d88912e40",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/anaerostipes-hadrus.svg",
+      "url": "/science/organisms-v4/thumbnails/anaerostipes-hadrus.svg",
+      "sha256": "ab2421a931035b162591f894e6da67fe7cc26bb1a1c42231892d2e2b3da62d6d",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/bacteroides-uniformis.svg",
+      "url": "/science/organisms-v4/thumbnails/bacteroides-uniformis.svg",
+      "sha256": "e8c60d27918cf002ad7a0418ea64f3b449c862a36535cc35138df9eb2a60b379",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/bacteroides-vulgatus.svg",
+      "url": "/science/organisms-v4/thumbnails/bacteroides-vulgatus.svg",
+      "sha256": "b38d4c1b46b8f057e69a8fdf5331acbc1d97300e72fe7fc0723e1e1441b3c66d",
+      "bytes": 608,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/bifidobacterium-adolescentis.svg",
+      "url": "/science/organisms-v4/thumbnails/bifidobacterium-adolescentis.svg",
+      "sha256": "a52f149c5e7efbdd211b6c4b9914efa8658f56bafe3ae7611695451393309fcb",
+      "bytes": 711,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/bifidobacterium-longum.svg",
+      "url": "/science/organisms-v4/thumbnails/bifidobacterium-longum.svg",
+      "sha256": "76bdd83ec059f4169dea497d4b0caa54fcc7dbedaa7f2816513d49dbc5b79f72",
+      "bytes": 711,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/bilophila-wadsworthia.svg",
+      "url": "/science/organisms-v4/thumbnails/bilophila-wadsworthia.svg",
+      "sha256": "9b8fb605bd0c5bd3d8c16a9606e4aee1ac2b5f1f0246fcdfd6b7a4245ce4e0df",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/blautia-wexlerae.svg",
+      "url": "/science/organisms-v4/thumbnails/blautia-wexlerae.svg",
+      "sha256": "b38d4c1b46b8f057e69a8fdf5331acbc1d97300e72fe7fc0723e1e1441b3c66d",
+      "bytes": 608,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/collinsella-aerofaciens.svg",
+      "url": "/science/organisms-v4/thumbnails/collinsella-aerofaciens.svg",
+      "sha256": "60f47687ddacccf03a758b097c0f5bc4779d569764008d49b85588bcafad0a8d",
+      "bytes": 711,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/desulfovibrio-piger.svg",
+      "url": "/science/organisms-v4/thumbnails/desulfovibrio-piger.svg",
+      "sha256": "7b2d176c82c99e1ad3648836f46cf6dafc1fafcac0b3afdfe1aeeda794b91c40",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/escherichia-coli.svg",
+      "url": "/science/organisms-v4/thumbnails/escherichia-coli.svg",
+      "sha256": "d04fd084008b54fb0cda18cde07a627d51a98f12af7a3af3fce70800c2066e5b",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/eubacterium-rectale.svg",
+      "url": "/science/organisms-v4/thumbnails/eubacterium-rectale.svg",
+      "sha256": "e9c20b9a3b186e0d5f4bef1770efa4eee7daca858893e471b2b4ea1fd05c660a",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/faecalibacterium-prausnitzii.svg",
+      "url": "/science/organisms-v4/thumbnails/faecalibacterium-prausnitzii.svg",
+      "sha256": "b0650eb203d17ac41d2f95581084f671c34cfd405bf69d879ab7e85d88912e40",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/klebsiella-pneumoniae.svg",
+      "url": "/science/organisms-v4/thumbnails/klebsiella-pneumoniae.svg",
+      "sha256": "01adc0a7d18461f18c4767889aef5aff032dc846903119d20fc788a7ae305d3e",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/lactobacillus-rhamnosus.svg",
+      "url": "/science/organisms-v4/thumbnails/lactobacillus-rhamnosus.svg",
+      "sha256": "7b2d176c82c99e1ad3648836f46cf6dafc1fafcac0b3afdfe1aeeda794b91c40",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/methanobrevibacter-smithii.svg",
+      "url": "/science/organisms-v4/thumbnails/methanobrevibacter-smithii.svg",
+      "sha256": "6f5f0d6f9554f1d988246b321f30740d93ef8082e411ed0f42ac21d08bb12bf1",
+      "bytes": 608,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/prevotella-copri.svg",
+      "url": "/science/organisms-v4/thumbnails/prevotella-copri.svg",
+      "sha256": "47bea927f640bff8c2510417a00854a62bdf30ef0bdccb029f4c7127ac831305",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/roseburia-intestinalis.svg",
+      "url": "/science/organisms-v4/thumbnails/roseburia-intestinalis.svg",
+      "sha256": "d04fd084008b54fb0cda18cde07a627d51a98f12af7a3af3fce70800c2066e5b",
+      "bytes": 664,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/organisms-v4/thumbnails/ruminococcus-bromii.svg",
+      "url": "/science/organisms-v4/thumbnails/ruminococcus-bromii.svg",
+      "sha256": "1225dce9d102404d24bb3273a3481a031258f773ffe5321aeb26d05178500694",
+      "bytes": 608,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": []
+    },
+    {
+      "path": "client/public/science/pathways-v4/acetate.svg",
+      "url": "/science/pathways-v4/acetate.svg",
+      "sha256": "f630532b283c65bce2ee97d5853507907c5947bfbe4e73214be9a32f1b38ffb5",
+      "bytes": 2859,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/acetate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/bifid-shunt.svg",
+      "url": "/science/pathways-v4/bifid-shunt.svg",
+      "sha256": "fb79c5b8b27d5041e3f3509a24d7837aa74ed1163f1539839a3d6c01d3869269",
+      "bytes": 2935,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/bifid-shunt.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/butyrate-production.svg",
+      "url": "/science/pathways-v4/butyrate-production.svg",
+      "sha256": "54e580d53154bd75aa8ee18882fda10f461c5c83c87c146f258d9de720b1788b",
+      "bytes": 2905,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/butyrate-production.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/choline-tma.svg",
+      "url": "/science/pathways-v4/choline-tma.svg",
+      "sha256": "2def7bb6da0b2e7683b0f67af0adc721026118542822b27d2d41e32c1817782d",
+      "bytes": 2868,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/choline-tma.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/cross-feeding.svg",
+      "url": "/science/pathways-v4/cross-feeding.svg",
+      "sha256": "8255a006bda3000873d82c9245db0218d8c83525f06b2d266f072e01e4a6a821",
+      "bytes": 2903,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/cross-feeding.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/hdac.svg",
+      "url": "/science/pathways-v4/hdac.svg",
+      "sha256": "2ce58dd06645655db11e5c40f8313bc78ea2ffaf29f9cad888177170704f38d7",
+      "bytes": 2945,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/hdac.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/host-butyrate.svg",
+      "url": "/science/pathways-v4/host-butyrate.svg",
+      "sha256": "11666ea8f94070367b70641e50943179329520d7a97554bc3ccc516c164a91cc",
+      "bytes": 2908,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/host-butyrate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/methanogenesis.svg",
+      "url": "/science/pathways-v4/methanogenesis.svg",
+      "sha256": "6ab427561658975adf6ab736e0ea3e40f12ad7fe7c050229b901d17009432b79",
+      "bytes": 2893,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/methanogenesis.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/mucin-glycans.svg",
+      "url": "/science/pathways-v4/mucin-glycans.svg",
+      "sha256": "c570368ad9f1855a6fe0fccddecd8cb6c0380415654caf9878fad9c33732a4a2",
+      "bytes": 2924,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/mucin-glycans.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/resistant-starch.svg",
+      "url": "/science/pathways-v4/resistant-starch.svg",
+      "sha256": "758d37bb09b2a079d69742024e6ea9fa00876b643ab46143952520b52bd4f9a9",
+      "bytes": 2932,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/resistant-starch.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/scfa-receptors.svg",
+      "url": "/science/pathways-v4/scfa-receptors.svg",
+      "sha256": "0c21729e2036df86674e251695e337ea21cfa4301a533876e5b33e181c8d9032",
+      "bytes": 3001,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/scfa-receptors.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/succinate-propionate.svg",
+      "url": "/science/pathways-v4/succinate-propionate.svg",
+      "sha256": "b92f3a8c2b730537d1772f653e302cb380019ea3404263f1f5c43438c103ea8a",
+      "bytes": 2918,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/succinate-propionate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/sulfur-reduction.svg",
+      "url": "/science/pathways-v4/sulfur-reduction.svg",
+      "sha256": "c5f472a9371ccb67b41eccb123a743261498e981f1ffbebd71b8302f471c0c91",
+      "bytes": 2885,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/sulfur-reduction.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/taurine.svg",
+      "url": "/science/pathways-v4/taurine.svg",
+      "sha256": "12d0aa10a5b618c41adce897b87a3a2105d884e7083dd263e07b0cbf1f6e90f4",
+      "bytes": 3029,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/taurine.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/tma-tmao.svg",
+      "url": "/science/pathways-v4/tma-tmao.svg",
+      "sha256": "82c13b5c21c37b87ce4bf9f4ac327ea80129c5e5fa134da88b29dae07355fa6e",
+      "bytes": 2836,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tma-tmao.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/pathways-v4/tryptophan.svg",
+      "url": "/science/pathways-v4/tryptophan.svg",
+      "sha256": "0699e7e45146a7fc179f07b5498851076c564852865629aff5a78e5c7b6a39fa",
+      "bytes": 2869,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tryptophan.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/acetate.svg",
+      "url": "/science/structures-v4/acetate.svg",
+      "sha256": "5ffc12db31c9efce333c229d8bc864f10988d9422e46d125a012fa9be8c07c76",
+      "bytes": 2186,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/acetic-acid.svg",
+      "url": "/science/structures-v4/acetic-acid.svg",
+      "sha256": "286bd08ec5aa5e4bf2f6ababeaa495193d85e83236d8c96ddafa045045c70c36",
+      "bytes": 2184,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetic-acid.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/butyrate.svg",
+      "url": "/science/structures-v4/butyrate.svg",
+      "sha256": "f998599c1a2b7ef21510aa04d04bffe055e2bfeb32addd510764b068e9abc1d2",
+      "bytes": 2773,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyrate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/butyric-acid.svg",
+      "url": "/science/structures-v4/butyric-acid.svg",
+      "sha256": "89c212d6b8bff5eb840b8e7e8c1d754c899abd6ddebc8aa05f50a8138e799547",
+      "bytes": 2765,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyric-acid.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/choline.svg",
+      "url": "/science/structures-v4/choline.svg",
+      "sha256": "54e73b3c602d163ff71c2ed063d03f80960120de165f8a1f45a0539570113f09",
+      "bytes": 2888,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/choline.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/hydrogen-sulfide.svg",
+      "url": "/science/structures-v4/hydrogen-sulfide.svg",
+      "sha256": "660952ddc30bee4fc0faf40a33ce3ff4685c6011727923da31bcab43c3b247f4",
+      "bytes": 1690,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/hydrogen-sulfide.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/lactate.svg",
+      "url": "/science/structures-v4/lactate.svg",
+      "sha256": "d05cd1b6a62abfcbcf4099f1086c7a9b8d4f2f683cdaf5d8dc0afc1f714f3bf4",
+      "bytes": 2815,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/lactic-acid.svg",
+      "url": "/science/structures-v4/lactic-acid.svg",
+      "sha256": "d5c21617dccc80ad17f1f5afb8d63b6ee4f41e803ca7282b4186bb2b186b9503",
+      "bytes": 2809,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactic-acid.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/propionate.svg",
+      "url": "/science/structures-v4/propionate.svg",
+      "sha256": "a0f34ea0eb47aa48479427b72a1391be3f991e32e30918151cbd6f18f9d746e1",
+      "bytes": 2484,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/propionic-acid.svg",
+      "url": "/science/structures-v4/propionic-acid.svg",
+      "sha256": "e6053115573043d6a89bcabf458c1ab105e74679c1ee3bc0fa4ae3ed81479586",
+      "bytes": 2478,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionic-acid.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/succinate.svg",
+      "url": "/science/structures-v4/succinate.svg",
+      "sha256": "3f757ef760b02b9c1a1fb28482c2b22954e1e7d75fad8466cd0e69873f07ff42",
+      "bytes": 3553,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinate.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/succinic-acid.svg",
+      "url": "/science/structures-v4/succinic-acid.svg",
+      "sha256": "55c734f82d27b041c4164c3d5a49452aadd26fc5bf4f94dd654447fd1b912220",
+      "bytes": 3541,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinic-acid.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/tmao.svg",
+      "url": "/science/structures-v4/tmao.svg",
+      "sha256": "70a4b081eb5ebb16eeb160c77aa6824632102a97d4d904e07f73335cde32499d",
+      "bytes": 2294,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/tmao.svg"
+      ]
+    },
+    {
+      "path": "client/public/science/structures-v4/trimethylamine.svg",
+      "url": "/science/structures-v4/trimethylamine.svg",
+      "sha256": "a45ed306d00e9e3e9e7efbea04a1eb978240b52a061f57bf0a052fba6504151a",
+      "bytes": 1980,
+      "sourceReferences": [
+        "shared/data/scientific-visual-assets.json"
+      ],
+      "engineeringReferences": [],
+      "classification": "STATIC_REFERENCE_CANDIDATE",
+      "buildCopy": "BYTE_IDENTICAL",
+      "originalDesignMatches": [
+        "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/trimethylamine.svg"
+      ]
     }
   ],
   "originalAssets": [
@@ -2799,8 +4724,40 @@
     },
     {
       "path": "design/bloom/asset-manifest.json",
-      "sha256": "4a24a8826864a39d1b96f46b54bbe204490ed602fe8988f8504356d3d756c84f",
-      "bytes": 63184,
+      "sha256": "9e5514370ef90b0744aea14c703dc121dff57b2b8b3a5129e709e899f3bea63c",
+      "bytes": 64877,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/biology-progress/2026-10-30/01-grouped-bloodwork.svg",
+      "sha256": "b6ad1f7aecb76e2f3c09f894e3ef8a39257bbdcae4b8aa6e214b4c83913009d6",
+      "bytes": 2537,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/biology-progress/2026-10-30/02-molecule-journey.svg",
+      "sha256": "1f43548f18afde153d4315808dcfbadd0b525690642d3108b82d08602570175a",
+      "bytes": 2310,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/biology-progress/2026-10-30/ARCHITECT_HANDOFF.md",
+      "sha256": "ac18fc1c955e509c2fcdab4721d53de6b5856fe6899b8f371d1bc31312aea386",
+      "bytes": 2941,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/biology-progress/2026-10-30/UX_CONTRACT.md",
+      "sha256": "bd6d741260d76aeca050c1a3a75f43db60e65ecd66c2f3a69e3a7e3c6b408dba",
+      "bytes": 6745,
       "runtimeCopies": [],
       "runtimeImported": false,
       "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
@@ -3006,6 +4963,46 @@
       "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
     },
     {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/IMPORT_VERIFICATION.json",
+      "sha256": "88539c4961728801298bb86c8fdf1064dac1f835d1d5545000e37b5b9ddd825e",
+      "bytes": 1960,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/MANIFEST.json",
+      "sha256": "b273bb4cef795e73a2d9eada158b083dbb6ca627b8938edc3d2d5189caea4b88",
+      "bytes": 404,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/UX_AMENDMENT_D.md",
+      "sha256": "6cf937b57c0cd1e8d94f2b9097ed58ff32f11ed756970825868f7311d3e0107f",
+      "bytes": 3412,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.png",
+      "sha256": "2857a03dd28baff7c03dcf28d81bca31b7a51771bc6e4aebf43d74593de86501",
+      "bytes": 113163,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/exercise-intelligence/2026-10-29/amendment-d-v1.4/exercise-review-compact-sets-light.svg",
+      "sha256": "3d8393ba0eb8d57e16cda4ade1e8ec193ac57e6b257705516cff37f0007dd0eb",
+      "bytes": 5437,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
       "path": "design/bloom/flagship/2026-10-26/MANIFEST.json",
       "sha256": "7ec7a7ad6459c1f160729a004d73a39a998328c96992721a185fde8d88764981",
       "bytes": 1745,
@@ -3148,6 +5145,390 @@
       "runtimeCopies": [],
       "runtimeImported": false,
       "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/bone-micronutrients.svg",
+      "sha256": "87e26562e3cd5b0fc96d246ca0eddc75882e4dd84f4a1d2f564bf153ab3bfbce",
+      "bytes": 391,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/complete-blood-count.svg",
+      "sha256": "962d951b944f372f999e1d2eae9a72c0d333a90649140cb3805dc64931cff0a8",
+      "bytes": 399,
+      "runtimeCopies": [
+        "client/public/science/bloodwork-v4/complete-blood-count.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/glucose-insulin.svg",
+      "sha256": "7c39d06d58af557d4303146f6dd2f6f9d11610d7a6fce000e45c8075ec19799a",
+      "bytes": 344,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/heart-cholesterol.svg",
+      "sha256": "d88325e944fb8187704a00af962e94f3a8e8a3befb6552f7efe3bdcfe8f43c83",
+      "bytes": 371,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/hormones-thyroid.svg",
+      "sha256": "938a98c90f79ba22ea23d1e20171861c2ec257a7fa0077ebc49960d2522fcea7",
+      "bytes": 340,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/inflammation-immunity.svg",
+      "sha256": "12c1b6713634c768658037d6c95abeec371527f113d454980cc04bac5e096c35",
+      "bytes": 361,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/iron-nutrients.svg",
+      "sha256": "95e44c3f06283d96484572a1c6b027ad99fe2ccebdea33f3f7c134e5336bea3b",
+      "bytes": 355,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/kidney-electrolytes.svg",
+      "sha256": "b62f16e8a4c754667e6e27dee989b7c4cf50097b6f6f10a6c71a141c4dac38c6",
+      "bytes": 390,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/liver-biliary.svg",
+      "sha256": "ccd58af00d4b60c7c1cdcfab4c3bc6cea27a047e6f5d6556f11b2ddd3984b58a",
+      "bytes": 345,
+      "runtimeCopies": [],
+      "runtimeImported": false,
+      "classification": "DESIGN_SOURCE_OR_REFERENCE_ONLY"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/bloodwork/other-tests.svg",
+      "sha256": "4cd226bd3729bf0a220702749083753c53acbd974f219790e954f83fa02c1e43",
+      "bytes": 315,
+      "runtimeCopies": [
+        "client/public/science/bloodwork-v4/other-tests.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/acetate.svg",
+      "sha256": "f630532b283c65bce2ee97d5853507907c5947bfbe4e73214be9a32f1b38ffb5",
+      "bytes": 2859,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/acetate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/bifid-shunt.svg",
+      "sha256": "fb79c5b8b27d5041e3f3509a24d7837aa74ed1163f1539839a3d6c01d3869269",
+      "bytes": 2935,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/bifid-shunt.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/butyrate-production.svg",
+      "sha256": "54e580d53154bd75aa8ee18882fda10f461c5c83c87c146f258d9de720b1788b",
+      "bytes": 2905,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/butyrate-production.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/choline-tma.svg",
+      "sha256": "2def7bb6da0b2e7683b0f67af0adc721026118542822b27d2d41e32c1817782d",
+      "bytes": 2868,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/choline-tma.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/cross-feeding.svg",
+      "sha256": "8255a006bda3000873d82c9245db0218d8c83525f06b2d266f072e01e4a6a821",
+      "bytes": 2903,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/cross-feeding.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/hdac.svg",
+      "sha256": "2ce58dd06645655db11e5c40f8313bc78ea2ffaf29f9cad888177170704f38d7",
+      "bytes": 2945,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/hdac.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/host-butyrate.svg",
+      "sha256": "11666ea8f94070367b70641e50943179329520d7a97554bc3ccc516c164a91cc",
+      "bytes": 2908,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/host-butyrate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/methanogenesis.svg",
+      "sha256": "6ab427561658975adf6ab736e0ea3e40f12ad7fe7c050229b901d17009432b79",
+      "bytes": 2893,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/methanogenesis.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/mucin-glycans.svg",
+      "sha256": "c570368ad9f1855a6fe0fccddecd8cb6c0380415654caf9878fad9c33732a4a2",
+      "bytes": 2924,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/mucin-glycans.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/resistant-starch.svg",
+      "sha256": "758d37bb09b2a079d69742024e6ea9fa00876b643ab46143952520b52bd4f9a9",
+      "bytes": 2932,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/resistant-starch.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/scfa-receptors.svg",
+      "sha256": "0c21729e2036df86674e251695e337ea21cfa4301a533876e5b33e181c8d9032",
+      "bytes": 3001,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/scfa-receptors.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/succinate-propionate.svg",
+      "sha256": "b92f3a8c2b730537d1772f653e302cb380019ea3404263f1f5c43438c103ea8a",
+      "bytes": 2918,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/succinate-propionate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/sulfur-reduction.svg",
+      "sha256": "c5f472a9371ccb67b41eccb123a743261498e981f1ffbebd71b8302f471c0c91",
+      "bytes": 2885,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/sulfur-reduction.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/taurine.svg",
+      "sha256": "12d0aa10a5b618c41adce897b87a3a2105d884e7083dd263e07b0cbf1f6e90f4",
+      "bytes": 3029,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/taurine.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tma-tmao.svg",
+      "sha256": "82c13b5c21c37b87ce4bf9f4ac327ea80129c5e5fa134da88b29dae07355fa6e",
+      "bytes": 2836,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/tma-tmao.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/pathways/tryptophan.svg",
+      "sha256": "0699e7e45146a7fc179f07b5498851076c564852865629aff5a78e5c7b6a39fa",
+      "bytes": 2869,
+      "runtimeCopies": [
+        "client/public/science/pathways-v4/tryptophan.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetate.svg",
+      "sha256": "5ffc12db31c9efce333c229d8bc864f10988d9422e46d125a012fa9be8c07c76",
+      "bytes": 2186,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/acetate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/acetic-acid.svg",
+      "sha256": "286bd08ec5aa5e4bf2f6ababeaa495193d85e83236d8c96ddafa045045c70c36",
+      "bytes": 2184,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/acetic-acid.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyrate.svg",
+      "sha256": "f998599c1a2b7ef21510aa04d04bffe055e2bfeb32addd510764b068e9abc1d2",
+      "bytes": 2773,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/butyrate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/butyric-acid.svg",
+      "sha256": "89c212d6b8bff5eb840b8e7e8c1d754c899abd6ddebc8aa05f50a8138e799547",
+      "bytes": 2765,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/butyric-acid.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/choline.svg",
+      "sha256": "54e73b3c602d163ff71c2ed063d03f80960120de165f8a1f45a0539570113f09",
+      "bytes": 2888,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/choline.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/hydrogen-sulfide.svg",
+      "sha256": "660952ddc30bee4fc0faf40a33ce3ff4685c6011727923da31bcab43c3b247f4",
+      "bytes": 1690,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/hydrogen-sulfide.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactate.svg",
+      "sha256": "d05cd1b6a62abfcbcf4099f1086c7a9b8d4f2f683cdaf5d8dc0afc1f714f3bf4",
+      "bytes": 2815,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/lactate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/lactic-acid.svg",
+      "sha256": "d5c21617dccc80ad17f1f5afb8d63b6ee4f41e803ca7282b4186bb2b186b9503",
+      "bytes": 2809,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/lactic-acid.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionate.svg",
+      "sha256": "a0f34ea0eb47aa48479427b72a1391be3f991e32e30918151cbd6f18f9d746e1",
+      "bytes": 2484,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/propionate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/propionic-acid.svg",
+      "sha256": "e6053115573043d6a89bcabf458c1ab105e74679c1ee3bc0fa4ae3ed81479586",
+      "bytes": 2478,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/propionic-acid.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinate.svg",
+      "sha256": "3f757ef760b02b9c1a1fb28482c2b22954e1e7d75fad8466cd0e69873f07ff42",
+      "bytes": 3553,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/succinate.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/succinic-acid.svg",
+      "sha256": "55c734f82d27b041c4164c3d5a49452aadd26fc5bf4f94dd654447fd1b912220",
+      "bytes": 3541,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/succinic-acid.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/tmao.svg",
+      "sha256": "70a4b081eb5ebb16eeb160c77aa6824632102a97d4d904e07f73335cde32499d",
+      "bytes": 2294,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/tmao.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
+    },
+    {
+      "path": "design/bloom/scientific-iconography/2026-10-30/library-v4/structures/trimethylamine.svg",
+      "sha256": "a45ed306d00e9e3e9e7efbea04a1eb978240b52a061f57bf0a052fba6504151a",
+      "bytes": 1980,
+      "runtimeCopies": [
+        "client/public/science/structures-v4/trimethylamine.svg"
+      ],
+      "runtimeImported": false,
+      "classification": "MAPPED_TO_RUNTIME_BYTES"
     }
   ],
   "sourceImports": [
@@ -3938,6 +6319,11 @@
     },
     {
       "from": "client/src/pages/PrecisionNutrition.tsx",
+      "to": "client/src/components/GeneticsCatalogue.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/pages/PrecisionNutrition.tsx",
       "to": "client/src/components/ManualGenetics.tsx",
       "kind": "static-import"
     },
@@ -3978,6 +6364,11 @@
     },
     {
       "from": "shared/precision-nutrition.ts",
+      "to": "shared/genetic-call-source.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "shared/precision-nutrition.ts",
       "to": "shared/food-preference-policy.ts",
       "kind": "static-import"
     },
@@ -4012,6 +6403,11 @@
       "kind": "static-import"
     },
     {
+      "from": "shared/genotype-explanations.ts",
+      "to": "shared/data/genotype-reference.json",
+      "kind": "static-import"
+    },
+    {
       "from": "client/src/components/ui/alert-dialog.tsx",
       "to": "client/src/lib/utils.ts",
       "kind": "static-import"
@@ -4024,6 +6420,11 @@
     {
       "from": "client/src/components/ManualGenetics.tsx",
       "to": "client/src/lib/planning-cache.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ManualGenetics.tsx",
+      "to": "shared/genetic-call-source.ts",
       "kind": "static-import"
     },
     {
@@ -4052,8 +6453,38 @@
       "kind": "static-import"
     },
     {
+      "from": "shared/manual-genetics.ts",
+      "to": "shared/genetic-call-source.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/GeneticsCatalogue.tsx",
+      "to": "shared/genotype-explanations.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/GeneticsCatalogue.tsx",
+      "to": "shared/genetics-catalogue.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "shared/genetics-catalogue.ts",
+      "to": "shared/genotype-explanations.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "shared/genetics-catalogue.ts",
+      "to": "shared/data/genotype-reference.json",
+      "kind": "static-import"
+    },
+    {
       "from": "client/src/components/LabSourceContext.tsx",
       "to": "shared/precision-nutrition.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/QuickLabEntry.tsx",
+      "to": "shared/lab-image-file.ts",
       "kind": "static-import"
     },
     {
@@ -4108,12 +6539,22 @@
     },
     {
       "from": "client/src/components/QuickLabEntry.tsx",
+      "to": "client/src/lib/lab-image-reader.ts",
+      "kind": "possible-lazy-import"
+    },
+    {
+      "from": "client/src/components/QuickLabEntry.tsx",
       "to": "client/src/lib/lab-pdf-reader.ts",
       "kind": "possible-lazy-import"
     },
     {
       "from": "client/src/lib/lab-pdf-reader.ts",
       "to": "shared/lab-pdf-file.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/lib/lab-image-reader.ts",
+      "to": "shared/lab-image-file.ts",
       "kind": "static-import"
     },
     {
@@ -4252,6 +6693,11 @@
       "kind": "static-import"
     },
     {
+      "from": "shared/structured-report.ts",
+      "to": "shared/viome-findings.ts",
+      "kind": "static-import"
+    },
+    {
       "from": "shared/genetic-selection.ts",
       "to": "shared/precision-nutrition.ts",
       "kind": "static-import"
@@ -4259,6 +6705,16 @@
     {
       "from": "client/src/components/BloodworkSourceOverview.tsx",
       "to": "shared/lab-history.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/pages/Microbiome.tsx",
+      "to": "client/src/components/OrganismPortrait.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/pages/Microbiome.tsx",
+      "to": "shared/scientific-visuals.ts",
       "kind": "static-import"
     },
     {
@@ -4283,6 +6739,11 @@
     },
     {
       "from": "client/src/pages/Microbiome.tsx",
+      "to": "shared/reported-taxa.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/pages/Microbiome.tsx",
       "to": "client/src/lib/auth.tsx",
       "kind": "static-import"
     },
@@ -4303,7 +6764,42 @@
     },
     {
       "from": "client/src/components/MicrobialProfile.tsx",
+      "to": "client/src/components/OrganismPortrait.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/MicrobialProfile.tsx",
+      "to": "shared/structured-report.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/MicrobialProfile.tsx",
       "to": "shared/report-dates.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/MicrobialProfile.tsx",
+      "to": "shared/reported-taxa.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/OrganismPortrait.tsx",
+      "to": "shared/scientific-visuals.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "shared/scientific-visuals.ts",
+      "to": "shared/data/scientific-visual-assets.json",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ImportedReportDetails.tsx",
+      "to": "shared/structured-report.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ImportedReportDetails.tsx",
+      "to": "client/src/components/ProviderFoodSuggestions.tsx",
       "kind": "static-import"
     },
     {
@@ -4613,6 +7109,11 @@
     },
     {
       "from": "client/src/components/ExperimentObservations.tsx",
+      "to": "client/src/components/ExperimentSourceHistory.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ExperimentObservations.tsx",
       "to": "client/src/components/ui/button.tsx",
       "kind": "static-import"
     },
@@ -4629,6 +7130,26 @@
     {
       "from": "shared/experiment-review.ts",
       "to": "shared/experience.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ExperimentSourceHistory.tsx",
+      "to": "client/src/lib/auth.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ExperimentSourceHistory.tsx",
+      "to": "client/src/lib/queryClient.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ExperimentSourceHistory.tsx",
+      "to": "shared/experience.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/ExperimentSourceHistory.tsx",
+      "to": "client/src/components/ui/button.tsx",
       "kind": "static-import"
     },
     {
@@ -4804,6 +7325,11 @@
     {
       "from": "client/src/pages/Upload.tsx",
       "to": "shared/structured-report.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/pages/Upload.tsx",
+      "to": "shared/viome-findings.ts",
       "kind": "static-import"
     },
     {
@@ -5513,12 +8039,7 @@
     },
     {
       "from": "client/src/pages/Progress.tsx",
-      "to": "client/src/components/LabUnitReview.tsx",
-      "kind": "static-import"
-    },
-    {
-      "from": "client/src/pages/Progress.tsx",
-      "to": "client/src/components/LabTrend.tsx",
+      "to": "client/src/components/LabExplorer.tsx",
       "kind": "static-import"
     },
     {
@@ -5534,6 +8055,46 @@
     {
       "from": "client/src/pages/Progress.tsx",
       "to": "client/src/components/WeeklyReview.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/LabExplorer.tsx",
+      "to": "client/src/components/LabCategoryIcon.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/LabExplorer.tsx",
+      "to": "shared/precision-nutrition.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/LabExplorer.tsx",
+      "to": "shared/lab-explorer.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/LabExplorer.tsx",
+      "to": "shared/lab-history.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/LabExplorer.tsx",
+      "to": "client/src/components/LabTrend.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "shared/lab-explorer.ts",
+      "to": "shared/precision-nutrition.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "shared/lab-explorer.ts",
+      "to": "shared/lab-paste.ts",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/LabCategoryIcon.tsx",
+      "to": "shared/scientific-visuals.ts",
       "kind": "static-import"
     },
     {
@@ -5633,6 +8194,11 @@
     },
     {
       "from": "client/src/pages/Explore.tsx",
+      "to": "client/src/components/MolecularIllustration.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/pages/Explore.tsx",
       "to": "client/src/lib/auth.tsx",
       "kind": "static-import"
     },
@@ -5644,6 +8210,11 @@
     {
       "from": "client/src/pages/Explore.tsx",
       "to": "client/src/components/ui/button.tsx",
+      "kind": "static-import"
+    },
+    {
+      "from": "client/src/components/MolecularIllustration.tsx",
+      "to": "shared/scientific-visuals.ts",
       "kind": "static-import"
     },
     {

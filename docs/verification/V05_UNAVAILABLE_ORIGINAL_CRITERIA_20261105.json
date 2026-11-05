@@ -1,0 +1,406 @@
+{
+  "version": "v05-unavailable-original-criteria-2026-11-05.1",
+  "sourceCommit": "f5d9d5c963634b8e2e3122127da636016698caf8",
+  "rule": "Only exact placeholder Scope plus Remaining/Next up; retain all207 original IDs/priorities/titles and every code/test/deployment/specialist evidence field. Existing18 bounded partial rows unchanged.",
+  "blocker": "BLOCKED_USER_INPUT.md#r6-verbatim-criteria--full-original-acceptance-text-unavailable",
+  "claim": "Source-acceptance certification blocked; no software completeness, independent approval, new scope or general execution pause inferred. Do not repeat unchanged source searches or ask for visual ZIPs again.",
+  "rows": [
+    {
+      "id": "BIO-LAB-201",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "BIO-LAB-202",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "BIO-LAB-203",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "BIO-LAB-204",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "BIO-LAB-205",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "BIO-LAB-206",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "BIO-LAB-207",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-001",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-002",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-003",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-004",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-005",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-006",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-007",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-008",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-009",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "MKT-010",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-101",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-102",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-103",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-104",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-105",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-106",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-107",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "UT-2026-108",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "FREE-INT-02",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "FREE-INT-04",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "FREE-INT-05",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-BRAND-P0-07",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P0-01",
+      "previousStatus": "Next up",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P0-02",
+      "previousStatus": "Next up",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P0-03",
+      "previousStatus": "Next up",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P0-04",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P0-05",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P1-01",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P1-02",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P1-03",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P1-04",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P1-05",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P1-06",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P2-01",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P2-02",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    },
+    {
+      "id": "ARC-P2-03",
+      "previousStatus": "Remaining",
+      "status": "BLOCKED_USER_INPUT",
+      "blocker": "R6-VERBATIM-CRITERIA",
+      "scope": "See authoritative source handoff for verbatim acceptance",
+      "codeEvidencePreserved": true,
+      "testEvidencePreserved": true
+    }
+  ],
+  "countsAfter": {
+    "ALREADY_VERIFIED": 43,
+    "IMPLEMENTED_AND_TESTED": 19,
+    "PARTIAL_IMPLEMENTED_AND_TESTED": 28,
+    "Remaining": 61,
+    "BLOCKED_USER_INPUT": 49,
+    "BLOCKED_TECHNICAL": 1,
+    "Next up": 5,
+    "Current submission": 1
+  }
+}
