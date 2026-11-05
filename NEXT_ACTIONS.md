@@ -1,3 +1,7 @@
+# Binding active task — Architect November5 anti-loop and genetics correction
+
+Follow `docs/architecture/CODEX_ANTI_LOOP_EXECUTION_POLICY_2026-11-05.md`. Unit Food→review→one save→reload is complete at93de93e; do not reopen without a reproduced regression. Current nearly completed genetics overview must include source-observed educational cards now, not a blanket zero state while clinical claims wait. The later source-backed-education correction in `GENETICS_PERSONAL_RELEVANCE_DECISION_2026-11-05.md` controls. Finish this source-card journey, publish and check exact CI/Render once; then native Viome PDF-first synthetic upload→transient no-PII parse→review→save. Real-layout/private-source/independent acceptance remains separate. Do not spend the next session solely on register/governance documents.
+
 # Current execution checkpoint
 
 v0.5 first, then independent approvedv0.6 when actionablev0.5 exhausted. Branch `enhance/bloom-experience`; no main merge/production writes/paid infrastructure. Do not repeat confirmation loops or completed source hunts. Public80scientific images remain ungated. Anatomy32PNG asset-only import remains separate c448678.
