@@ -1,0 +1,9 @@
+# Original measurement entry preservation
+
+ARC-UNIT-001 remains partial. Mass, height and waist editors now keep an exact canonical conversion basis and the first typed value/unit through repeated preference switches. Actual edits replace that basis. Loaded canonical values do not invent original text; metadata is transient, bounded, validated and never permission state.
+
+Reader-first check-in contract: optional `entrySource` v1 carries only bounded numeric strings and known units for manual weight, waist, body fat, bloating, energy and adherence fields. Every supplied field must match a nonnull canonical observation. Zero ratings stay zero; tiny positive values cannot match zero. Older records stay explicitly original-unknown. The existing encrypted check-in payload and report projection preserve metadata without a new table/migration. Progress Biology and My Biology share an accessible folded source disclosure. No source values, lab units, clinical rules or dated-record counts change.
+
+This commit enables reading and validation only. New capture must follow reader deployment. Mutable Profile original-entry persistence remains a separate unimplemented gap; canonical-only historical entries cannot be reconstructed.
+
+Validation: full526 tests passed before final tighter relative matching; final21 focused tests, typecheck and production build passed after tightening. Actual App unit-editor and source-reader journeys passed (320–1440px, mixed preferences, modes, legacy/known source, reload, owner isolation). Authenticated HTTP/encrypted PGlite verifies storage/read/isolation. This is local developer evidence, not independent physical VoiceOver or hosted authenticated acceptance. No screenshot gallery for invisible precision and an optional small disclosure. Rollback producer first, then reader; existing optional JSON payload is backwards compatible.

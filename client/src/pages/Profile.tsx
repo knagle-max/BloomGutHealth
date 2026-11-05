@@ -18,6 +18,7 @@ import { apiRequest, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 import { Link } from "wouter";
+const preferenceUnitLabel=(unit:string)=>({"ft-in":"ft + in","US-fl-oz":"US fl oz",C:"°C (Celsius)",F:"°F (Fahrenheit)"} as Record<string,string>)[unit]||unit;
 interface ProfileProps {
   isDarkMode?: boolean;
   onToggleDarkMode?: () => void;
@@ -187,15 +188,15 @@ export default function Profile({
               <div className="flex gap-2">
                 <input aria-label={heightEntry.unit==="ft-in"?"Height feet":"Height"} className="bloom-input w-full"
                   inputMode="decimal" value={heightEntry.primary}
-                  onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,primary:e.target.value});}}/>
+                  onChange={e=>{setEntryError("");setHeightEntry({unit:heightEntry.unit,primary:e.target.value,inches:heightEntry.inches});}}/>
                 {heightEntry.unit==="ft-in"&&<input aria-label="Height inches" className="bloom-input w-full"
                   inputMode="decimal" value={heightEntry.inches}
-                  onChange={e=>{setEntryError("");setHeightEntry({...heightEntry,inches:e.target.value});}}/>}
+                  onChange={e=>{setEntryError("");setHeightEntry({unit:heightEntry.unit,primary:heightEntry.primary,inches:e.target.value});}}/>}
               </div>
             </div>
             <div className="space-y-2"><span className="font-medium">Body weight ({massEntry.unit})</span>
               <input aria-label="Body weight" className="bloom-input w-full" inputMode="decimal"
-                value={massEntry.value} onChange={e=>{setEntryError("");setMassEntry({...massEntry,value:e.target.value});}}/>
+                value={massEntry.value} onChange={e=>{setEntryError("");setMassEntry({unit:massEntry.unit,value:e.target.value});}}/>
             </div>
             {(incomplete||entryError)&&<p role="alert">{entryError || "Finish the height and weight entries, or clear them before saving."}</p>}
             <label className="block">
@@ -246,9 +247,9 @@ export default function Profile({
                   ["foodWeight","Food weight",["g","oz"]],
                 ] as const).map(([key,label,options])=><label className="block" key={key}>{label}
                   <select className="bloom-input w-full" aria-label={`${label} unit`} disabled={savingUnits||loadingUnits||!settingsReady} value={selectedUnits[key]} onChange={e=>changeDisplayUnit(key,e.target.value)}>
-                    {options.map(option=><option key={option} value={option}>{option}</option>)}
+                    {options.map(option=><option key={option} value={option}>{preferenceUnitLabel(option)}</option>)}
                   </select>
-                  <span className="text-xs text-muted-foreground">Suggested: {unitSuggestion.units[key]}</span>
+                  <span className="text-xs text-muted-foreground">Suggested: {preferenceUnitLabel(unitSuggestion.units[key])}</span>
                 </label>)}
               </div>
               <p className="panel-note">Unit preferences save automatically here. Completed measurement drafts convert after a successful save; unfinished drafts keep their labelled entry units.</p>

@@ -53,6 +53,10 @@ const near=(actual,expected,tolerance=0.00002)=>assert.ok(Math.abs(Number(actual
 const input=key=>page.locator(`input[name="${key}"]`);
 try{
 await go('/profile#measurement-units');await page.getByLabel('Body weight unit',{exact:true}).waitFor();
+assert.equal(await page.getByLabel('Temperature unit',{exact:true}).getByRole('option',{name:'°C (Celsius)',exact:true}).getAttribute('value'),'C');
+assert.equal(await page.getByLabel('Temperature unit',{exact:true}).getByRole('option',{name:'°F (Fahrenheit)',exact:true}).getAttribute('value'),'F');
+assert.equal(await page.getByLabel('Hydration unit',{exact:true}).getByRole('option',{name:'US fl oz',exact:true}).getAttribute('value'),'US-fl-oz');
+assert.equal(await page.getByLabel('Height unit',{exact:true}).getByRole('option',{name:'ft + in',exact:true}).getAttribute('value'),'ft-in');
 await page.getByTestId('unit-suggestion').getByText(/en-CA/).waitFor();assert.equal(writes.length,0,'Locale suggestions never write settings on load');
 assert.equal(await page.getByRole('combobox',{name:/Height unit/}).count(),1);
 assert.equal(await page.getByRole('combobox',{name:/Body weight unit|Weight unit/}).count(),1);

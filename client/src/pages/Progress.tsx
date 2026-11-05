@@ -1,3 +1,4 @@
+import CheckinEntrySource from "@/components/CheckinEntrySource";
 import {activityAmountText} from "@shared/activity-capture";
 import ActivityWeekSummary from "@/components/ActivityWeekSummary";
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@/components/ui/tabs";
@@ -88,6 +89,7 @@ export default function Progress() {
               <h3><time dateTime={c.measuredAt}>{new Date(c.measuredAt).toLocaleDateString()}</time></h3>
               {readings.length?<dl className="progress-observation-metrics">{readings.map(reading=><div key={reading.label}><dt>{reading.label}</dt><dd>{reading.value}</dd></div>)}</dl>:<p>No body measurements or goal ratings recorded in this check-in.</p>}
               {c.notes && <p className="panel-note">{c.notes}</p>}
+              <CheckinEntrySource source={c.entrySource}/>
               <Link className="text-link" href={`/precision?tab=progress&observation=${encodeURIComponent(c.id)}`}>View recorded check-in</Link>
             </li>;
           })}

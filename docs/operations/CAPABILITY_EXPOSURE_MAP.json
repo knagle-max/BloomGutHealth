@@ -701,7 +701,8 @@
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/FoodProgress.tsx",
           "client/src/components/LabExplorer.tsx",
-          "client/src/components/LabCategoryIcon.tsx"
+          "client/src/components/LabCategoryIcon.tsx",
+          "client/src/components/CheckinEntrySource.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -713,7 +714,8 @@
           "shared/food-progress.ts",
           "shared/nutrition-summary.ts",
           "shared/lab-explorer.ts",
-          "shared/scientific-visuals.ts"
+          "shared/scientific-visuals.ts",
+          "shared/checkin-entry-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -781,7 +783,8 @@
           "client/src/components/FoodProgress.tsx",
           "client/src/components/BloodworkSourceOverview.tsx",
           "client/src/components/LabExplorer.tsx",
-          "client/src/components/LabCategoryIcon.tsx"
+          "client/src/components/LabCategoryIcon.tsx",
+          "client/src/components/CheckinEntrySource.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -793,7 +796,8 @@
           "shared/food-progress.ts",
           "shared/nutrition-summary.ts",
           "shared/lab-explorer.ts",
-          "shared/scientific-visuals.ts"
+          "shared/scientific-visuals.ts",
+          "shared/checkin-entry-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -817,14 +821,16 @@
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/BiologyHome.tsx",
           "client/src/components/CompanionHero.tsx",
-          "client/src/components/LabSourceContext.tsx"
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/CheckinEntrySource.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
         ],
         "logicOrJobs": [
           "shared/precision-nutrition.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "shared/checkin-entry-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -851,7 +857,8 @@
           "client/src/components/LabSourceContext.tsx",
           "client/src/components/FoodProgress.tsx",
           "client/src/components/LabExplorer.tsx",
-          "client/src/components/LabCategoryIcon.tsx"
+          "client/src/components/LabCategoryIcon.tsx",
+          "client/src/components/CheckinEntrySource.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -863,7 +870,8 @@
           "shared/food-progress.ts",
           "shared/nutrition-summary.ts",
           "shared/lab-explorer.ts",
-          "shared/scientific-visuals.ts"
+          "shared/scientific-visuals.ts",
+          "shared/checkin-entry-source.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1671,9 +1679,10 @@
     "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
     "client/src/components/AppNavigation.tsx": "79c1ef82d81294436756faaf2228cbc35aaa4cf1cdc4d16acd51bddfb5c66902",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
-    "client/src/components/AthleteProfileForm.tsx": "30a74c4b74824935cf022b6702633f8d00b8e41d8cdb87bfefb022c507a8fc5a",
+    "client/src/components/AthleteProfileForm.tsx": "09793ea60c495f9b01fb0a4159df737e3d4ea4e2a562d8259ee18a452195eb9c",
     "client/src/components/BiologyHome.tsx": "b405b2a0e02bfafa9a0b0fdbe2685970deff675c9c2edcaca407758198470654",
     "client/src/components/BloodworkSourceOverview.tsx": "837679800dcd738e8ad6f5bbe2e064203f50724325e284484f0408596e6be1e9",
+    "client/src/components/CheckinEntrySource.tsx": "f1db6546df547cbaf00483c4ea21150557469a68d74c5b17d584560ebc20c3f8",
     "client/src/components/CompanionHero.tsx": "1eeb9520a1cec08d8fb22a515414f868bb857ca61c193002a824151a87164ef9",
     "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
     "client/src/components/DeviceObservations.tsx": "4e77899c809c47784ba116934b1d32e52954f824d4281cab964c3543745bd11c",
@@ -1730,9 +1739,9 @@
     "client/src/pages/Microbiome.tsx": "3057d03cc2eb9f9284d95c879fed30f41e33d5b3b6ea3d5b98249f49899423a3",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
-    "client/src/pages/PrecisionNutrition.tsx": "bbb67cef418b8222d270d44b936fc440b7487224daf9953109e24ce116f56275",
-    "client/src/pages/Profile.tsx": "01dd1de4b47126cf54b19898d190c07b19bb6d1bd4b3b1773c8d6b6c4d609e08",
-    "client/src/pages/Progress.tsx": "a664e44d30856ed6cb0cc493c8d17f445cb9bd88e654944aa0c4a7e89c585ab8",
+    "client/src/pages/PrecisionNutrition.tsx": "bf6aa12045c1c559950089d695a9ccb58f8f6ce7a83facab6cbcfaf99e27212b",
+    "client/src/pages/Profile.tsx": "8e32fdadced23f11151a95689682525c6a2c3d988a64b4b279727c6807864b6f",
+    "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
     "client/src/pages/Upload.tsx": "76a07de1f55c483f3538b6d017fd0a1bb392c8786d768accbe0ca602933d22fa",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
@@ -1803,6 +1812,7 @@
     "shared/barcodes.ts": "6602a438f1cfe8addfd21e335c8126dee4c74270cb36c19b8683771fcd760f70",
     "shared/biological-model.ts": "c2c424b0249946fa02dfa0bf54845162d5aee9fc9ac748058b3a80c0bcb38625",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
+    "shared/checkin-entry-source.ts": "cc2e880d067cfa0e3089631a666f2cb86e8749171af74bb113b6ad7e0ecc15c7",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
     "shared/experience.ts": "8522e3454c43834bce03087af9462d97c83016519ae323c83fbc7459e5315c13",
@@ -1827,7 +1837,7 @@
     "shared/meal-portions.ts": "c7ca2439c969026acfcd6f195e7bd06ddcdd9f90f1668741a734d5a7e2dc0c0e",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "509f5107fa8306d04c7792f3ec2c36c5a04950deffdd87b025c4914a1d936407",
-    "shared/precision-nutrition.ts": "70fd923318b5e0e00244fd99048ef8dc7e92bd6f4b4f906f860e1f5342edeff6",
+    "shared/precision-nutrition.ts": "8afbc2ed9b8eeeb239efcb742c52e3ec3e33b04c83416400a5511deea9a3cefa",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",

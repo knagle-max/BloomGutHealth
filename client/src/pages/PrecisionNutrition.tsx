@@ -1,4 +1,5 @@
 import BloodworkSourceOverview from '@/components/BloodworkSourceOverview';
+import CheckinEntrySource from "@/components/CheckinEntrySource";
 import {defaultGeneticSelection,isSensitiveGeneticCall,selectedGeneticImport} from "@shared/genetic-selection";
 import { accountFetch, ACCOUNT_CONTEXT_MESSAGE } from "@/lib/request-actor";
 import {reportDateText,type ReportDateContext} from "@shared/report-dates";
@@ -1238,7 +1239,7 @@ export default function PrecisionNutrition() {
                           className="bloom-input w-full"
                           type={name==="weightKg"||name==="waistCm"?"text":"number"}
                           inputMode="decimal"
-                          {...(name==="weightKg"?{value:weightEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWeightEntry({...weightEntry,value:e.target.value});}}:name==="waistCm"?{value:waistEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWaistEntry({...waistEntry,value:e.target.value});}}:{})}
+                          {...(name==="weightKg"?{value:weightEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWeightEntry({unit:weightEntry.unit,value:e.target.value});}}:name==="waistCm"?{value:waistEntry.value,onChange:(e:React.ChangeEvent<HTMLInputElement>)=>{setDraftError("");setWaistEntry({unit:waistEntry.unit,value:e.target.value});}}:{})}
                           min={
                             name === "weightKg" ||
                             name === "bodyFatPercent" ||
@@ -1323,6 +1324,7 @@ export default function PrecisionNutrition() {
                             .join(" · ")}
                         </p>
                         <p>{c.notes}</p>
+                        <CheckinEntrySource source={c.entrySource}/>
                       </div>
                       <Button
                         variant="outline"

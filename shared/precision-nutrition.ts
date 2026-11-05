@@ -1,4 +1,5 @@
 import type {ReportDateContext} from "./report-dates";
+import {checkinEntrySourceSchema,checkinEntrySourceMatches} from "./checkin-entry-source";
 import {geneticCallSourceSchema,geneticCallSourceMatches,normalizeUnphasedGenotype,captureGeneticCall} from "./genetic-call-source";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
@@ -919,6 +920,7 @@ export const checkinSchema = z
     adherencePercent: z.number().min(0).max(100).nullable(),
     planId: z.string().max(100).nullable(),
     notes: z.string().max(2000).default(""),
+    entrySource:checkinEntrySourceSchema.optional(),
   })
   .strict()
   .refine(
@@ -932,7 +934,7 @@ export const checkinSchema = z
         c.adherencePercent,
       ].some((v) => v !== null),
     "Record at least one observation",
-  );
+  ).refine(c=>checkinEntrySourceMatches(c.entrySource,c),"Entered source values and units must match the canonical check-in observations");
 export const precisionEntrySchema = z.discriminatedUnion("kind", [
   z
     .object({ kind: z.literal("genetics"), payload: geneticsPayloadSchema })

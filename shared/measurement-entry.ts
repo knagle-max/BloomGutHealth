@@ -1,23 +1,33 @@
 export type HeightEntryUnit = "cm" | "m" | "ft-in";
 export type MassEntryUnit = "kg" | "lb";
-export type HeightEntry = { unit: HeightEntryUnit; primary: string; inches: string };
-export type MassEntry = { unit: MassEntryUnit; value: string };
-export type CircumferenceEntry = { unit: "cm" | "in"; value: string };
+type HeightToken={unit:HeightEntryUnit;primary:string;inches:string};
+type MassToken={unit:MassEntryUnit;value:string};
+type CircumferenceToken={unit:"cm"|"in";value:string};
+type ConversionBasis<T>={canonical:number;rendered:T;original:T|null};
+// Transient editor metadata, not a second stored measurement. It preserves exact
+// meaning while a rounded display is switched; actual edits invalidate it.
+export type HeightEntry=HeightToken&{conversionBasis?:ConversionBasis<HeightToken>};
+export type MassEntry=MassToken&{conversionBasis?:ConversionBasis<MassToken>};
+export type CircumferenceEntry=CircumferenceToken&{conversionBasis?:ConversionBasis<CircumferenceToken>};
 export type ParseResult = { kind: "empty" } | { kind: "incomplete" } | { kind: "invalid"; reason: string } | { kind: "valid"; canonical: number };
 const decimal = /^(?:\d+(?:\.\d*)?|\.\d+)$/;
 function numberDraft(raw:string):number | "empty" | "incomplete" | "invalid" {
+ if(typeof raw!=="string"||raw.length>128)return "invalid";
  const s=raw.trim();
  if(!s)return "empty";
  if(s==="."||s==="-"||s.endsWith("."))return "incomplete";
  return decimal.test(s)?Number(s):"invalid";
 }
-export function parseMassEntry(entry:MassEntry):ParseResult {
+function rawMass(entry:MassToken):ParseResult {
+ if(!["kg","lb"].includes(entry.unit))return{kind:"invalid",reason:"Unsupported weight unit"};
  const value=numberDraft(entry.value);
  if(typeof value!=="number")return value==="invalid"?{kind:"invalid",reason:"Enter a positive number"}:{kind:value};
  const kg=entry.unit==="lb"?value/2.2046226218487757:value;
  return kg>0&&kg<=500?{kind:"valid",canonical:kg}:{kind:"invalid",reason:"Weight is outside the supported range"};
 }
-export function parseHeightEntry(entry:HeightEntry):ParseResult {
+function rawHeight(entry:HeightToken):ParseResult {
+ if(!["cm","m","ft-in"].includes(entry.unit))return{kind:"invalid",reason:"Unsupported height unit"};
+ if(typeof entry.primary!=="string"||typeof entry.inches!=="string")return{kind:"invalid",reason:"Enter a valid height"};
  const primary=numberDraft(entry.primary);
  if(primary==="empty"&&entry.unit==="ft-in"&&entry.inches.trim())return {kind:"incomplete"};
  if(typeof primary!=="number")return primary==="invalid"?{kind:"invalid",reason:"Enter a valid height"}:{kind:primary};
@@ -33,30 +43,52 @@ export function parseHeightEntry(entry:HeightEntry):ParseResult {
  }
  return cm>0&&cm<=250?{kind:"valid",canonical:cm}:{kind:"invalid",reason:"Height is outside the supported range"};
 }
+function entryNumber(value:number,digits:number){const rounded=Number(value.toFixed(digits));return String(rounded===0&&value!==0?value:rounded);}
+function heightToken(cm:number,unit:HeightEntryUnit):HeightToken{
+ if(unit==="cm")return {unit,primary:entryNumber(cm,4),inches:""};
+ if(unit==="m")return {unit,primary:entryNumber(cm/100,6),inches:""};
+ const total=cm/2.54;let feet=Math.floor(total/12),inches=entryNumber(total-feet*12,5);
+ if(Number(inches)>=12){feet++;inches="0";}
+ return {unit,primary:String(feet),inches};
+}
+function massToken(kg:number,unit:MassEntryUnit):MassToken{return{unit,value:entryNumber(unit==="lb"?kg*2.2046226218487757:kg,5)}};
+function waistToken(cm:number,unit:CircumferenceToken["unit"]):CircumferenceToken{return{unit,value:entryNumber(unit==="in"?cm/2.54:cm,5)}};
+const sameMass=(a:{unit:string;value:string},b:{unit:string;value:string})=>a.unit===b.unit&&a.value===b.value;
+const sameHeight=(a:HeightToken,b:HeightToken)=>a.unit===b.unit&&a.primary===b.primary&&a.inches===b.inches;
+function originalMatches<T>(original:T|null,canonical:number,parse:(value:T)=>ParseResult){if(original===null)return true;if(!original||typeof original!=="object")return false;const result=parse(original);return result.kind==="valid"&&result.canonical===canonical;}
+function massBasis(entry:MassEntry){const b=entry.conversionBasis;return b&&b.rendered&&["kg","lb"].includes(entry.unit)&&Number.isFinite(b.canonical)&&b.canonical>0&&b.canonical<=500&&sameMass(entry,b.rendered)&&sameMass(entry,massToken(b.canonical,entry.unit))&&originalMatches(b.original,b.canonical,rawMass)?b:null;}
+function heightBasis(entry:HeightEntry){const b=entry.conversionBasis;return b&&b.rendered&&["cm","m","ft-in"].includes(entry.unit)&&Number.isFinite(b.canonical)&&b.canonical>0&&b.canonical<=250&&sameHeight(entry,b.rendered)&&sameHeight(entry,heightToken(b.canonical,entry.unit))&&originalMatches(b.original,b.canonical,rawHeight)?b:null;}
+function waistBasis(entry:CircumferenceEntry){const b=entry.conversionBasis;return b&&b.rendered&&["cm","in"].includes(entry.unit)&&Number.isFinite(b.canonical)&&b.canonical>0&&b.canonical<=300&&sameMass(entry,b.rendered)&&sameMass(entry,waistToken(b.canonical,entry.unit))&&originalMatches(b.original,b.canonical,rawWaist)?b:null;}
+export function parseMassEntry(entry:MassEntry):ParseResult{const b=massBasis(entry);return b?{kind:"valid",canonical:b.canonical}:rawMass(entry);}
+export function parseHeightEntry(entry:HeightEntry):ParseResult{const b=heightBasis(entry);return b?{kind:"valid",canonical:b.canonical}:rawHeight(entry);}
+export function parseCircumferenceEntry(entry:CircumferenceEntry):ParseResult{const b=waistBasis(entry);return b?{kind:"valid",canonical:b.canonical}:rawWaist(entry);}
+export function originalMassEntry(entry:MassEntry):MassToken|null{const b=massBasis(entry);return b?(b.original?{...b.original}:null):rawMass(entry).kind==="valid"?{unit:entry.unit,value:entry.value}:null;}
+export function originalHeightEntry(entry:HeightEntry):HeightToken|null{const b=heightBasis(entry);return b?(b.original?{...b.original}:null):rawHeight(entry).kind==="valid"?{unit:entry.unit,primary:entry.primary,inches:entry.inches}:null;}
+export function originalCircumferenceEntry(entry:CircumferenceEntry):CircumferenceToken|null{const b=waistBasis(entry);return b?(b.original?{...b.original}:null):rawWaist(entry).kind==="valid"?{unit:entry.unit,value:entry.value}:null;}
 export function formatHeightEntry(cm:number|null,unit:HeightEntryUnit):HeightEntry {
  if(cm===null)return {unit,primary:"",inches:""};
  if(!Number.isFinite(cm)||cm<=0)throw Error("Invalid canonical height");
- if(unit==="cm")return {unit,primary:String(Number(cm.toFixed(4))),inches:""};
- if(unit==="m")return {unit,primary:String(Number((cm/100).toFixed(6))),inches:""};
- const total=cm/2.54,feet=Math.floor(total/12);
- return {unit,primary:String(feet),inches:String(Number((total-feet*12).toFixed(5)))};
+ const rendered=heightToken(cm,unit);return{...rendered,conversionBasis:{canonical:cm,rendered,original:null}};
 }
 export function formatMassEntry(kg:number|null,unit:MassEntryUnit):MassEntry {
  if(kg===null)return {unit,value:""};
  if(!Number.isFinite(kg)||kg<=0)throw Error("Invalid canonical mass");
- return {unit,value:String(Number((unit==="lb"?kg*2.2046226218487757:kg).toFixed(5)))};
+ const rendered=massToken(kg,unit);return{...rendered,conversionBasis:{canonical:kg,rendered,original:null}};
 }
 export function switchHeightUnit(entry:HeightEntry,target:HeightEntryUnit):HeightEntry|ParseResult {
  if(entry.unit===target)return entry;
  const parsed=parseHeightEntry(entry);
- return parsed.kind==="valid"?formatHeightEntry(parsed.canonical,target):parsed.kind==="empty"?formatHeightEntry(null,target):parsed;
+ if(parsed.kind!=="valid")return parsed.kind==="empty"?formatHeightEntry(null,target):parsed;
+ const next=formatHeightEntry(parsed.canonical,target);next.conversionBasis!.original=originalHeightEntry(entry);return next;
 }
 export function switchMassUnit(entry:MassEntry,target:MassEntryUnit):MassEntry|ParseResult {
  if(entry.unit===target)return entry;
  const parsed=parseMassEntry(entry);
- return parsed.kind==="valid"?formatMassEntry(parsed.canonical,target):parsed.kind==="empty"?formatMassEntry(null,target):parsed;
+ if(parsed.kind!=="valid")return parsed.kind==="empty"?formatMassEntry(null,target):parsed;
+ const next=formatMassEntry(parsed.canonical,target);next.conversionBasis!.original=originalMassEntry(entry);return next;
 }
-export function parseCircumferenceEntry(entry:CircumferenceEntry):ParseResult {
+function rawWaist(entry:CircumferenceToken):ParseResult {
+ if(!["cm","in"].includes(entry.unit))return{kind:"invalid",reason:"Unsupported circumference unit"};
  const value=numberDraft(entry.value);
  if(typeof value!=="number")return value==="invalid"?{kind:"invalid",reason:"Enter a positive circumference"}:{kind:value};
  const cm=entry.unit==="in"?value*2.54:value;
@@ -67,5 +99,5 @@ export function switchCircumferenceUnit(entry:CircumferenceEntry,target:Circumfe
  const parsed=parseCircumferenceEntry(entry);
  if(parsed.kind==="empty")return {unit:target,value:""};
  if(parsed.kind!=="valid")return parsed;
- return {unit:target,value:String(Number((target==="in"?parsed.canonical/2.54:parsed.canonical).toFixed(5)))};
+ const rendered=waistToken(parsed.canonical,target);return{...rendered,conversionBasis:{canonical:parsed.canonical,rendered,original:originalCircumferenceEntry(entry)}};
 }
