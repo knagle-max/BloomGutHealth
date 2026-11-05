@@ -1,4 +1,5 @@
 import {z} from "zod";
+import type {GenotypeExplanation} from "./genotype-explanations";
 
 export const GENETICS_RELEVANCE_VERSION = "genetics-relevance-2026-11-05.1";
 const token=z.string().min(1).max(120);
@@ -45,6 +46,22 @@ export type GeneticHighlightProjection={
 // claims here. Reviewed additions require an exact source/version change.
 export const GENETIC_HIGHLIGHT_REGISTRY_VERSION="genetic-highlight-claims-2026-11-05.1";
 export const geneticHighlightClaims:readonly GeneticHighlightClaim[]=[];
+
+/** Factual, owner-projected source calls with existing general gene education
+ * are not personalized biological-effect claims. Reuse the existing record
+ * and sources; never expose resultAdvice/comparison as the selected takeaway.
+ * Ambiguous/no-call/unsupported source states remain in the complete source
+ * reader, not presented as a confirmed observed genotype here. */
+export function selectObservedGeneticEducation(entries:readonly GenotypeExplanation[]){
+ const supported=entries.filter(entry=>/^[ACGT]{2}$/.test(entry.genotype)&&entry.referenceCompatibility==="compatible"&&
+  (entry.status==="matched"||entry.status==="outside-studied-pair")&&!!entry.geneRole&&!!entry.sources.length&&
+  !["rs429358","rs7412","rs1800562","rs1799945"].includes(entry.rsid));
+ const ambiguous=new Set(entries.filter((entry,index)=>entries.findIndex(e=>e.rsid===entry.rsid)!==index).map(entry=>entry.rsid));
+ const all=supported.filter(entry=>!ambiguous.has(entry.rsid)).sort((a,b)=>alphabetical(a.gene,b.gene)||alphabetical(a.rsid,b.rsid));
+ const selected:GenotypeExplanation[]=[],seen=new Set<string>();
+ for(const entry of all){const group=fads.has(entry.rsid)?"related-fads-pathway":entry.rsid;if(seen.has(group))continue;seen.add(group);selected.push(entry);if(selected.length===5)break;}
+ return{all,selected};
+}
 
 function exclusion(claim:GeneticHighlightClaim,source:GeneticHighlightSource|null):GeneticHighlightExclusion|null{
  if(!source)return "source-unavailable";

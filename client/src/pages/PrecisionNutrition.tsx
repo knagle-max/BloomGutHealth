@@ -517,7 +517,7 @@ export default function PrecisionNutrition() {
             )}
             {tab === "genetics" && (
               <>
-                {r.genetics.personalHighlights&&<GeneticHighlights key={`highlights:${user?.id}:${r.genetics.import?.id}:${r.genetics.personalHighlights.registryVersion}`} projection={r.genetics.personalHighlights} hasSource={!!r.genetics.import} />}
+                {r.genetics.personalHighlights&&<GeneticHighlights key={`highlights:${user?.id}:${r.genetics.import?.id}:${r.genetics.personalHighlights.registryVersion}`} projection={r.genetics.personalHighlights} hasSource={!!r.genetics.import} entries={r.genetics.explanations||[]} sourceDescription={r.genetics.import?`${r.genetics.import.provider==="manual"?"User-entered source":"23andMe text source"} · build: ${r.genetics.import.build}; ${r.genetics.import.provider==="23andMe"||r.genetics.manual?.strand==="forward"?"forward strand reported":"strand not confirmed"}.`:"No selected source."} />}
                 <GeneticsCatalogue key={user?.id} explanations={r.genetics.explanations || []} />
                 <div id="genetics-source-entry" className="scroll-mt-20" tabIndex={-1}><ManualGenetics
                   key={r.genetics.import?.id || "none"}

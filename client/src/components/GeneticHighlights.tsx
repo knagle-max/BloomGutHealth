@@ -1,9 +1,12 @@
 import type {GeneticHighlightProjection} from "@shared/genetics-relevance";
+import {selectObservedGeneticEducation} from "@shared/genetics-relevance";
+import type {GenotypeExplanation} from "@shared/genotype-explanations";
 import {useState} from "react";
 
 const focusTarget=(id:string)=>{requestAnimationFrame(()=>document.getElementById(id)?.focus());};
-export default function GeneticHighlights({projection,hasSource}:{projection:GeneticHighlightProjection;hasSource:boolean}){
+export default function GeneticHighlights({projection,hasSource,entries,sourceDescription}:{projection:GeneticHighlightProjection;hasSource:boolean;entries:GenotypeExplanation[];sourceDescription:string}){
  const {counts}=projection;
+ const education=selectObservedGeneticEducation(hasSource?entries:[]);
  const [all,setAll]=useState(false),[sort,setSort]=useState("relevance");
  const findings=all?[...projection.eligible]:projection.highlights;
  if(all&&sort==="gene")findings.sort((a,b)=>a.claim.gene.localeCompare(b.claim.gene)||a.claim.id.localeCompare(b.claim.id));
@@ -12,12 +15,24 @@ export default function GeneticHighlights({projection,hasSource}:{projection:Gen
   findings.sort((a,b)=>order[a.claim.evidence.credibility]-order[b.claim.evidence.credibility]||a.claim.id.localeCompare(b.claim.id));
  }
  return <section className="bloom-panel space-y-4" aria-labelledby="genetic-highlights-title">
-  <div><p className="eyebrow">YOUR GENETICS OVERVIEW</p><h2 id="genetic-highlights-title">Relevant findings for you</h2>
-   <p>Reviewed educational highlights from your saved genetic source.</p></div>
-  <p className="panel-note">{counts.measured} measured calls · {counts.personalEligible} eligible highlights</p>
-  {!counts.selected?<div className="rounded-xl bg-muted/50 p-4 space-y-2"><h3>No eligible personal highlights yet.</h3>
-   <p>{hasSource?"Your saved calls remain available below. Personal highlights require separate source, assay and claim review.":"No genetic source is selected."}</p>
-   {!hasSource&&<p>Explore genes without uploading DNA.</p>}</div>:
+  <div><p className="eyebrow">SOURCE-BACKED EDUCATION</p><h2 id="genetic-highlights-title">Your genetic findings</h2>
+   <p>Your recorded calls with general research context. The effect of a variant for you remains uncertain.</p></div>
+  <p className="panel-note">{counts.measured} measured calls · {education.selected.length} selected source cards</p>
+  <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Genetics views">
+   {hasSource&&<a className="text-link inline-flex min-h-11 items-center" href="#genotype-explanations" onClick={()=>focusTarget("genotype-explanations")}>See all saved results</a>}
+   <a className="text-link inline-flex min-h-11 items-center" href="#genetics-catalogue" onClick={()=>focusTarget("genetics-catalogue")}>Explore genes</a>
+  </nav>
+  {!!education.selected.length&&<div className="space-y-3">{education.selected.map(entry=><article key={entry.rsid} className="rounded-xl border border-border p-4 space-y-2" aria-label={`Source finding ${entry.rsid}`}>
+   <p className="eyebrow">RECORDED SOURCE CALL</p><h3>{entry.gene} · {entry.rsid}</h3><p>Recorded unphased genotype: <strong>{entry.genotype}</strong></p>
+   <p>{entry.geneRole}</p><p className="panel-note">Variant-specific personal effects: research under review. This general gene description does not establish altered function, deficiency or a personal diet change.</p>
+   <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Why this is shown</summary><p>Your selected source contains this readable call and Bloom has cited general background for this gene. Up to five source cards appear in stable gene order; related FADS calls are grouped. This selection is not a predicted personal effect or a risk ranking.</p></details>
+   <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Source & research references</summary><div className="space-y-2"><p>{sourceDescription}</p><p>Stored call: {entry.genotype}. {entry.sourceCall?`Original token: ${entry.sourceCall.original}. No strand flip was performed.`:"Original call text was not retained."}</p><p>Source status: {entry.status==="outside-studied-pair"?"Observed reference-compatible letters; the existing study comparison does not cover this call.":"Letters match an existing educational comparison; assay suitability and individual effects remain separate."} Self-entered calls are not clinical verification.</p>
+    <ul>{entry.sources.map(source=><li key={source.url}><a className="text-link inline-flex min-h-11 items-center" href={source.url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">{source.title}</a></li>)}</ul>
+   </div></details>
+  </article>)}</div>}
+  {!education.selected.length&&<div className="rounded-xl bg-muted/50 p-4 space-y-2"><p>{hasSource?"No supported source cards are selected. Review all saved calls for missing, ambiguous or sensitive source states.":"No genetic source is selected."}</p><p>Explore genes without uploading DNA.</p></div>}
+  <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Personalized interpretation</summary><div className="space-y-3">
+  {!counts.selected?<p>No personalized interpretations are enabled. Source-backed education above remains available while specific effect claims are reviewed.</p>:
    <><p role="status">Showing {all?counts.personalEligible:counts.selected} of {counts.personalEligible} eligible educational claims. {all?"Related claims are shown separately here; they do not establish independent additive effects.":"Related findings may be grouped."}</p>
     {counts.personalEligible>counts.selected&&<button className="text-link min-h-11 focus-visible:outline focus-visible:outline-2" type="button" aria-expanded={all} onClick={()=>setAll(!all)}>{all?"Show selected highlights":"See all eligible findings"}</button>}
     {all&&<label className="block">Sort eligible findings<select className="bloom-input w-full" value={sort} onChange={event=>setSort(event.target.value)}><option value="relevance">Relevant to me</option><option value="evidence">Evidence</option><option value="gene">Gene</option></select></label>}
@@ -32,10 +47,6 @@ export default function GeneticHighlights({projection,hasSource}:{projection:Gen
       <ul>{claim.evidence.citations.map(citation=><li key={citation.url}><a className="text-link inline-flex min-h-11 items-center" href={citation.url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">{citation.title}</a></li>)}</ul>
      </div></details>
     </article>)}</div></>}
-  <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Genetics views">
-   {hasSource&&<a className="text-link inline-flex min-h-11 items-center" href="#genotype-explanations" onClick={()=>focusTarget("genotype-explanations")}>See all saved results</a>}
-   <a className="text-link inline-flex min-h-11 items-center" href="#genetics-catalogue" onClick={()=>focusTarget("genetics-catalogue")}>Explore genes</a>
-  </nav>
   <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">How highlights are selected</summary><div className="space-y-2">
    <p>{counts.catalogued} catalogued candidates · {counts.matchedEducation} matched educational {counts.matchedEducation===1?"explanation":"explanations"} · {counts.reviewedExplanations} reviewed highlight claims · {counts.personalEligible} personally eligible</p>
    <p>Eligibility comes first: an observed compatible call, source placement, verified assay, consent, reviewed variant–phenotype claim and suitable population evidence. Sensitive, clinical and medication interpretations are excluded.</p>
@@ -44,6 +55,7 @@ export default function GeneticHighlights({projection,hasSource}:{projection:Gen
    <p>{counts.interpretable} observed variants qualify for reviewed personal interpretation. Matched educational comparisons and user-reported calls are counted separately; self-entered calls are not clinical confirmation.</p>
    <p>A missing highlight does not mean a normal, negative or protective result. This selection does not describe your whole genome or establish a treatment.</p>
    <p className="panel-note">Selection version {projection.version}; claim registry {projection.registryVersion}. Source changes and claim withdrawal are evaluated on each refreshed report. No personal highlight is written into a food or training plan.</p>
+  </div></details>
   </div></details>
  </section>;
 }

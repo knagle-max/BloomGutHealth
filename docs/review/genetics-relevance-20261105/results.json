@@ -2,8 +2,9 @@
   "synthetic": true,
   "checks": [
     "actual App source and no-source states",
+    "observed ordinary source cards with cited general education; no clinical approval requirement",
     "separate measured/matched/reviewed/eligible counts",
-    "unsupported reference call retained, not highlighted",
+    "reference-compatible call retained as source fact, no unsupported effect claim",
     "all source results and 17-domain explorer keyboard links",
     "320/390px light-dark reflow",
     "200% desktop zoom surrogate",

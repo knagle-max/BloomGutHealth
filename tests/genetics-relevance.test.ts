@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {geneticHighlightClaims,geneticHighlightClaimSchema,selectGeneticHighlights,type GeneticHighlightClaim,type GeneticHighlightSource} from '../shared/genetics-relevance';
+import {geneticHighlightClaims,geneticHighlightClaimSchema,selectGeneticHighlights,selectObservedGeneticEducation,type GeneticHighlightClaim,type GeneticHighlightSource} from '../shared/genetics-relevance';
+import {explainGenotypes} from '../shared/genotype-explanations';
 import {buildPrecisionReport,contextSchema,parse23andMe,precisionEntrySchema} from '../shared/precision-nutrition';
 import {defaultPreferences} from '../shared/meal-intelligence';
 
@@ -103,4 +104,13 @@ test('real report adapter preserves raw/legacy education without claiming verifi
  assert.equal(precisionEntrySchema.safeParse({kind:'genetics',payload:{...payload,highlightClaims:[claim()],assayVerified:true}}).success,false);
  assert.equal(report.genetics.personalHighlights.counts.reviewedExplanations,0);
  const erased=buildPrecisionReport([],contextSchema.parse({}),defaultPreferences,null);assert.equal(erased.genetics.personalHighlights.counts.measured,0);assert.deepEqual(erased.genetics.personalHighlights.highlights,[]);
+});
+test('source-observed education remains useful without claim approval: exact ordinary calls, uncertain study comparison, no-call/strand/sensitive/duplicate safeguards',()=>{
+ const entries=explainGenotypes([{rsid:'rs1801133',genotype:'AG'},{rsid:'rs7903146',genotype:'GT'},{rsid:'rs174547',genotype:'--'},{rsid:'rs429358',genotype:'CC'},{rsid:'rs1800562',genotype:'AA'}],true);
+ const before=JSON.stringify(entries),education=selectObservedGeneticEducation(entries);
+ assert.deepEqual(education.selected.map(e=>e.rsid),['rs1801133','rs7903146']);assert.equal(geneticHighlightClaims.length,0);
+ assert.equal(education.selected[1].status,'outside-studied-pair');assert.equal(education.selected[1].genotype,'GT');assert.ok(education.selected.every(e=>e.sources.length&&e.geneRole));
+ assert.deepEqual(selectObservedGeneticEducation(explainGenotypes([{rsid:'rs1801133',genotype:'AG'}],false)).selected,[]);
+ assert.deepEqual(selectObservedGeneticEducation([entries[0],{...entries[0],genotype:'--',status:'no-call'}]).selected,[]);
+ assert.equal(JSON.stringify(entries),before);assert.deepEqual(selectObservedGeneticEducation([]),{all:[],selected:[]});
 });
