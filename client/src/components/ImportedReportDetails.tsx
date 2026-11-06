@@ -1,3 +1,4 @@
+import MicrobiomeFoodPreferences from"./MicrobiomeFoodPreferences";
 import { useEffect, useMemo, useState } from "react";
 import {reportedFoodSuggestions} from "@shared/structured-report";
 import ProviderFoodSuggestions from "./ProviderFoodSuggestions";
@@ -90,6 +91,7 @@ export default function ImportedReportDetails({
         />
       </label>
       {!!foodSource.foods.length&&<ProviderFoodSuggestions foods={foodSource.foods} query={query} provider={report.sourceLabel}/>}
+      {!!foodSource.foods.length&&<MicrobiomeFoodPreferences/>}
       {foodSource.status==="unreadable"&&<p className="panel-note">Provider food rows could not be read in this report format. Your original source data is retained.</p>}
       {report.scores.length > 0 && (
         <section>

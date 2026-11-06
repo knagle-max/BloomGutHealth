@@ -2,7 +2,7 @@ import {hasViomeFindingsMarker,parseViomeFindings,type ViomeFindings} from "./vi
 
 export class ViomeReportContextError extends Error{
  constructor(readonly code:"unavailable"|"incompatible"|"occupied"|"changed"){
-  super(code==="unavailable"?"The selected report is no longer available in this account. Review your saved reports.":code==="incompatible"?"These reports cannot be linked safely. Keep them separate or choose a compatible report with the same collection date.":code==="occupied"?"That specimen event already has this report type. Review the existing report or keep this source separate.":"The saved biological findings changed or do not match this import. Review the source before reusing a report.");
+  super(code==="unavailable"?"The selected report is no longer available in this account. Review your saved reports.":code==="incompatible"?"These reports cannot be linked safely. Keep them separate or choose compatible reports without conflicting known collection dates.":code==="occupied"?"That specimen event already has this report type. Review the existing report or keep this source separate.":"The saved biological findings changed or do not match this import. Review the source before reusing a report.");
  }
 }
 export function viomeSource(value:unknown):ViomeFindings|null{
@@ -11,11 +11,12 @@ export function viomeSource(value:unknown):ViomeFindings|null{
  try{return parseViomeFindings(source);}catch{return null;}
 }
 /** Compatibility permits a user-confirmed relationship, not automatic identity
- * inference. Missing collection date is not a matching specimen. Unknown
+ * inference. When collection dates are absent, upload dates provide selection context,
+ * with explicit specimen confirmation still required. Upload dates never become collection dates. Unknown
  * methods remain unknown and are never copied from a companion document. */
 export function compatibleViomeCompanion(incoming:ViomeFindings,existing:ViomeFindings){
  return incoming.documentKind!==existing.documentKind&&!existing.specimenEvent&&
-  !!incoming.biologicalDates.collectedOn&&incoming.biologicalDates.collectedOn===existing.biologicalDates.collectedOn&&
+  (!incoming.biologicalDates.collectedOn||!existing.biologicalDates.collectedOn||incoming.biologicalDates.collectedOn===existing.biologicalDates.collectedOn)&&
   (incoming.method==="not-supplied"||existing.method==="not-supplied"||incoming.method===existing.method)&&
   (incoming.specimenType==="not-supplied"||existing.specimenType==="not-supplied"||incoming.specimenType===existing.specimenType);
 }
@@ -58,6 +59,6 @@ export function savedViomeCompanions(sample:ViomeSavedSource,samples:readonly Vi
  const free=(row:ViomeSavedSource)=>!viomeSource(row.structuredData)?.specimenEvent&&!samples.some(other=>other.id!==row.id&&viomeSource(other.structuredData)?.specimenEvent?.rootReportId===row.id);
  const eligible=sample.processingStatus==="completed"&&!linked.length&&!source.specimenEvent?known.filter(row=>free(row)&&compatibleViomeCompanion(source,viomeSource(row.structuredData)!)):[];
  const opposite=known.filter(row=>viomeSource(row.structuredData)!.documentKind!==source.documentKind);
- const reason=sample.processingStatus!=="completed"?"This report has not finished saving.":source.specimenEvent&&!linked.length?"The linked report is unavailable. This report keeps its own findings.":!source.biologicalDates.collectedOn?"This report has no verified collection date. It remains a separate source.":!opposite.length?"No saved report of the complementary type is available.":!eligible.length&&!linked.length?"No compatible, unpaired report is available. Both reports need the same known collection date, complementary document types and compatible specimen/method. Matching dates alone never link reports.":"";
+ const reason=sample.processingStatus!=="completed"?"This report has not finished saving.":source.specimenEvent&&!linked.length?"The linked report is unavailable. This report keeps its own findings.":!opposite.length?"No saved report of the complementary type is available.":!eligible.length&&!linked.length?"No compatible, unpaired report is available. Reports need complementary document types, compatible specimen/method and no conflicting known collection dates. When collection dates are missing, compare upload dates and confirm the specimen yourself. Dates alone never link reports.":"";
  return{source,linked,eligible,reason};
 }

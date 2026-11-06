@@ -20,7 +20,7 @@ export default function ViomeImportChoices({incoming,disabled,onDecision}:{incom
   if(rootId){onDecision(confirmed&&context.companions.some(({sample})=>sample.id===rootId)?{specimenEvent:{rootReportId:rootId,confirmed:true}}:null);return;}
   onDecision({});
  },[user?.id,samples.fetchStatus,samples.isPending,samples.isError,uncheckedSeparate,context,mode,reuseId,rootId,confirmed,onDecision]);
- const label=({sample,source}:typeof context.duplicates[number])=>`${source.documentKind==="active-gut-microbes"?"Active microbes":"Assessments & foods"} · collected ${source.biologicalDates.collectedOn||"date unknown"} · saved ${sample.uploadedAt?new Date(sample.uploadedAt).toLocaleString():"time unknown"} · Bloom reference ${sample.id.slice(-8)}`;
+ const label=({sample,source}:typeof context.duplicates[number])=>`${source.documentKind==="active-gut-microbes"?"Active microbes":"Assessments & foods"} · collected ${source.biologicalDates.collectedOn||"date unknown"} · uploaded ${sample.uploadedAt?new Date(sample.uploadedAt).toLocaleString():"time unknown"} · Bloom reference ${sample.id.slice(-8)}`;
  return <fieldset disabled={disabled} className="min-w-0 border-0 p-0 space-y-3"><legend className="font-semibold">Existing reports & specimen</legend>
   {(samples.isPending||samples.fetchStatus!=="idle")&&<p role="status">Checking your saved reports…</p>}
   {samples.isError&&<><p role="alert">Saved reports could not be checked.</p><button type="button" className="text-link min-h-11" onClick={()=>samples.refetch()}>Retry report check</button><label className="flex gap-3 min-h-11"><input type="checkbox" checked={uncheckedSeparate} onChange={e=>setUncheckedSeparate(e.target.checked)}/><span>Save as a separate source without checking existing reports.</span></label></>}
@@ -32,7 +32,8 @@ export default function ViomeImportChoices({incoming,disabled,onDecision}:{incom
    </>}
    {mode!=="reuse"&&<details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Link a companion report (optional)</summary><div className="space-y-3">
     <p>Reports stay separate. Choose a compatible saved report only if you know they came from the same specimen. Matching dates alone never link them.</p>
-    {!incoming.biologicalDates.collectedOn?<p>No collection date was supplied. Keep this source separate.</p>:!context.companions.length?<p>No compatible, unpaired companion is available.</p>:<><label className="block">Companion report<select className="bloom-input w-full" value={rootId} onChange={e=>{setRootId(e.target.value);setConfirmed(false);}}><option value="">Keep this report separate</option>{context.companions.map(item=><option key={item.sample.id} value={item.sample.id}>{label(item)}</option>)}</select></label>
+    {!incoming.biologicalDates.collectedOn&&<p>Collection date is optional and was not supplied. Use the saved report’s upload date to help choose a companion; this report will retain its own upload date. Confirm that they came from the same specimen.</p>}
+    {!context.companions.length?<p>No compatible, unpaired companion is available.</p>:<><label className="block">Companion report<select className="bloom-input w-full" value={rootId} onChange={e=>{setRootId(e.target.value);setConfirmed(false);}}><option value="">Keep this report separate</option>{context.companions.map(item=><option key={item.sample.id} value={item.sample.id}>{label(item)}</option>)}</select></label>
      {!!rootId&&<label className="flex min-h-11 gap-3"><input type="checkbox" checked={confirmed} onChange={e=>setConfirmed(e.target.checked)} /><span>I confirm these reports came from the same specimen. No provider test or sample ID will be stored.</span></label>}
     </>}
    </div></details>}

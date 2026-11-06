@@ -1,7 +1,8 @@
+import{applyMicrobiomeFoodInfluence}from"../shared/microbiome-food-influence";
 import {preserveMealTimeZone} from "../shared/meal-time";
 import {contextSchema} from "../shared/precision-nutrition";
 import {checkedFoodPreferences} from "../shared/weekly-planner";
-import {foodPreferenceMatches,intoleranceWarnings} from "../shared/food-preference-policy";
+import {foodPreferenceMatches,intoleranceWarnings,tasteMatches} from "../shared/food-preference-policy";
 import {mealReviewRevision} from "./meal-review-source";
 import {preferenceRevision,PreferenceRevisionConflict} from "./preference-source";
 import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
@@ -164,7 +165,9 @@ export function registerPlannerRoutes(
             req.body.aiConsent,
             aiExecutionContext(req.session.userId!, req.body.aiConsent),
           );
-        res.json({...prioritized,suggestions:prioritized.suggestions.map(recipe=>({...recipe,warnings:intoleranceWarnings(recipe.ingredients,context.intolerances)}))});
+        const influence=storage.getMicrobiomeFood?await storage.getMicrobiomeFood(req.session.userId!):null;
+        const ranked=applyMicrobiomeFoodInfluence(prioritized.suggestions,influence?.control,influence?.source||null,recipe=>JSON.stringify([recipe.matchedGoals.slice().sort(),tasteMatches(recipe.ingredients,preferences.softDislikes).length]));
+        res.json({...prioritized,suggestions:ranked.map(recipe=>({...recipe,warnings:intoleranceWarnings(recipe.ingredients,context.intolerances)}))});
       } catch {
         res.status(503).json({ error: "Meal prioritization unavailable." });
       }
@@ -186,10 +189,12 @@ export function registerPlannerRoutes(
         checked.preferences,
         recent.map((m) => m.mealText),
       ).filter(recipe=>!foodPreferenceMatches(recipe.ingredients,context.allergies).length);
+      const influence=storage.getMicrobiomeFood?await storage.getMicrobiomeFood(req.session.userId!):null;
+      const ranked=applyMicrobiomeFoodInfluence(suggestions,influence?.control,influence?.source||null,recipe=>JSON.stringify([recipe.matchedGoals.slice().sort(),tasteMatches(recipe.ingredients,preferences.softDislikes).length]));
       const ids = new Set(suggestions.flatMap((r) => r.pathwayIds));
       res.json({
         preferences,
-        suggestions: suggestions.map(recipe=>({...recipe,warnings:intoleranceWarnings(recipe.ingredients,context.intolerances)})),
+        suggestions: ranked.map(recipe=>({...recipe,warnings:intoleranceWarnings(recipe.ingredients,context.intolerances)})),
         pathways: pathways.filter((p) => ids.has(p.id)),
         sources: evidenceSources,
         cohorts: cohortResearch.filter((c) =>

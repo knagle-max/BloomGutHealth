@@ -51,6 +51,8 @@ type Store = Pick<
   | "correctLabDate"
   | "getGeneticSources"
   | "changeGeneticSource"
+  | "getMicrobiomeFood"
+  | "putMicrobiomeFood"
   | "getLabSources"
   | "deleteLabSource"
   | "deleteLabEntry"
@@ -502,7 +504,7 @@ export function registerPrecisionRoutes(
     }
   });
   app.put("/api/precision/context", async (req, res) => {
-    if(req.body&&Object.hasOwn(req.body,"geneticsSelection"))return res.status(400).json({error:"Manage genetic datasets using their separate source controls."});
+    if(req.body&&(Object.hasOwn(req.body,"geneticsSelection")||Object.hasOwn(req.body,"microbiomeFood")))return res.status(400).json({error:"Manage dataset selection and report food preferences using their separate controls."});
     const p = contextSchema.safeParse(req.body);
     if (!p.success)
       return res.status(400).json({ error: "Invalid health context" });
@@ -667,6 +669,14 @@ export function registerPrecisionRoutes(
   };
   app.post("/api/precision/genetics/active",(req,res)=>manageGeneticSource(req,res,"activate"));
   app.delete("/api/precision/genetics/sources/:id",(req,res)=>manageGeneticSource(req,res,"delete"));
+  app.get('/api/precision/microbiome-food',async(req,res)=>{try{if(!store.getMicrobiomeFood)return res.status(503).json({error:'Report food preferences are unavailable.'});res.json(await store.getMicrobiomeFood(req.session.userId!));}catch(e){unavailable(res,e);}});
+  app.put('/api/precision/microbiome-food',async(req,res)=>{
+   if(req.get('X-Bloom-Food-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload your report food preferences.'});
+   const parsed=z.object({control:contextSchema.shape.microbiomeFood.unwrap().omit({nonce:true}),revision:z.string().regex(/^[a-f0-9]{64}$/),confirmed:z.literal(true)}).strict().safeParse(req.body);
+   if(!parsed.success)return res.status(400).json({error:'Review the exact report food setting before saving.'});
+   if(!store.putMicrobiomeFood)return res.status(503).json({error:'Report food preferences are unavailable.'});
+   try{await store.putMicrobiomeFood(req.session.userId!,parsed.data.control,parsed.data.revision);res.json({success:true});}catch(e){if(e instanceof Error&&e.message==='MICROBIOME_FOOD_CHANGED')return res.status(409).json({error:'The setting or report changed. Reload and choose the current report.'});unavailable(res,e);}
+  });
   app.get("/api/precision/labs/sources",async(req,res)=>{try{if(!store.getLabSources)return res.status(503).json({error:"Laboratory source management is unavailable."});return res.json(await store.getLabSources(req.session.userId!));}catch(e){unavailable(res,e);}});
   app.delete("/api/precision/labs/sources/:id",async(req,res)=>{
     if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload before deleting a laboratory source.'});

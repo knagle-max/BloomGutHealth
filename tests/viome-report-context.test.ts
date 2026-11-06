@@ -4,9 +4,9 @@ import {parseViomeFindings} from '../shared/viome-findings';
 import {sameViomeBiologicalFacts,compatibleViomeCompanion,viomeImportContext,viomeSource} from '../shared/viome-report-context';
 import {syntheticViomePages} from './fixtures/viome-pdf';
 const source=(kind:'organisms'|'recommendations')=>{const parser=createViomePdfParser();syntheticViomePages(kind).forEach(parser.page);return parseViomeFindings({...parser.finish(),reviewConfirmed:true});};
-test('companion compatibility requires different document kinds, known equal collection date and explicit separate relationship; never infer sample identity',()=>{
+test('companion compatibility requires different document kinds, no conflicting known collection dates and explicit separate relationship; never infer sample identity',()=>{
  const a=source('organisms'),b=source('recommendations');assert.equal(compatibleViomeCompanion(a,b),true);assert.equal(compatibleViomeCompanion(b,a),true);assert.equal(compatibleViomeCompanion(a,a),false);
- assert.equal(compatibleViomeCompanion({...a,biologicalDates:{}},b),false);assert.equal(compatibleViomeCompanion(a,{...b,biologicalDates:{collectedOn:'2026-09-02'}}),false);
+ assert.equal(compatibleViomeCompanion({...a,biologicalDates:{}},b),true);assert.equal(compatibleViomeCompanion(a,{...b,biologicalDates:{collectedOn:'2026-09-02'}}),false);
  const context=viomeImportContext(a,[{id:'report_'+'a'.repeat(64),processingStatus:'completed',structuredData:{sourceReport:b}}]);assert.equal(context.companions.length,1);assert.equal(a.specimenEvent,undefined);assert.equal(b.specimenEvent,undefined);
  assert.equal(viomeSource({sourceReport:{...a,patientId:'not-allowed'}}),null);
 });
@@ -24,3 +24,5 @@ test('occupied events, uncompleted/untyped sources and quantitative history are 
  assert.equal(parseViomeFindings({...a,specimenEvent:{rootReportId:id,confirmed:true}}).specimenEvent?.rootReportId,id);
  for(const specimenEvent of[{rootReportId:'provider-test-id',confirmed:true},{rootReportId:id,confirmed:false},{rootReportId:id,confirmed:true,sampleId:'not-allowed'}])assert.throws(()=>parseViomeFindings({...a,specimenEvent}));
 });
+
+test('unknown collection dates use upload context without auto-linking or inventing a biological date',()=>{const a={...source('organisms'),biologicalDates:{}},b={...source('recommendations'),biologicalDates:{}};assert.equal(compatibleViomeCompanion(a,b),true);const samples=[{id:'report_'+'a'.repeat(64),processingStatus:'completed',structuredData:{sourceReport:b},uploadedAt:'2026-10-01T09:00:00Z'}];const context=viomeImportContext(a,samples);assert.equal(context.companions.length,1);assert.equal(viomeSource(samples[0].structuredData)?.specimenEvent,undefined);assert.deepEqual(a.biologicalDates,{});assert.deepEqual(b.biologicalDates,{});});

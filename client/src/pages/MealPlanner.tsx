@@ -1,3 +1,5 @@
+import MicrobiomeFoodPreferences,{MicrobiomeFoodReason}from"@/components/MicrobiomeFoodPreferences";
+import type{MicrobiomeFoodTrace}from"@shared/microbiome-food-influence";
 import {useAuth} from "@/lib/auth";
 import {useSavedPreferences,preferenceValues,preferenceHeaders} from "@/lib/preferences-source";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
@@ -276,7 +278,7 @@ export function DietaryPreferenceEditor() {
 interface Plan {
   preferences: DietaryPreferences;
   suggestions: Array<
-    Recipe & { matchedGoals: string[]; alreadyMentioned: boolean; warnings?: string[] }
+    Recipe & { matchedGoals: string[]; alreadyMentioned: boolean; warnings?: string[];microbiomeFood?:MicrobiomeFoodTrace }
   >;
   pathways: typeof pathways;
   sources: typeof evidenceSources;
@@ -341,7 +343,7 @@ export default function MealPlanner() {
       <Button variant="outline" onClick={() => setEditing(!editingPreferences)}>
         {editingPreferences ? "Close preferences" : "Edit saved preferences"}
       </Button>
-      {editingPreferences && <DietaryPreferenceEditor />}
+      {editingPreferences && <><DietaryPreferenceEditor /><MicrobiomeFoodPreferences key={`microfood:${user?.id}`}/></>}
       <Tabs defaultValue="today" className="workspace-tabs">
         <TabsList aria-label="Meal planning views"><TabsTrigger value="today">Rest of today</TabsTrigger><TabsTrigger value="week">Weekly plan</TabsTrigger><TabsTrigger value="recipes">Recipe library</TabsTrigger></TabsList>
         <TabsContent value="today" forceMount><TodayPlanner onEditPreferences={() => setEditing(true)} /></TabsContent>
@@ -412,6 +414,7 @@ export default function MealPlanner() {
                   : "An option to explore"}
               </p>
               <p>{r.rationale}</p>
+              {r.microbiomeFood&&<MicrobiomeFoodReason trace={r.microbiomeFood}/>}
               {r.warnings?.map(warning => <p key={warning} className="report-context">{warning}</p>)}
               <details>
                 <summary>Ingredients, recipe & evidence</summary>

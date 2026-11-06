@@ -19,6 +19,6 @@ export default function ProviderFoodSuggestions({foods,query,provider}:{foods:Re
     </li>)}</ul>
     {!shown.length&&<p>No food rows match this name and provider category.</p>}
     {!expanded&&shown.length>10&&<button type="button" className="text-link min-h-11 focus-visible:outline focus-visible:outline-2" onClick={()=>setExpanded(true)}>Show all {shown.length} matching food rows</button>}
-    <p className="panel-note">Names and categories stay as supplied. Repeated names remain separate source rows. These suggestions do not change food ranking, allergies, nutrient targets or exclusions.</p>
+    <p className="panel-note">Names and categories stay as supplied. Repeated names remain separate source rows. Reading these rows does not enable report influence. Optional meal ranking uses the separate account setting; allergies, nutrient targets and exclusions remain independent.</p>
   </section>;
 }

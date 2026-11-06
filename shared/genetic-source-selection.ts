@@ -9,7 +9,7 @@ export function selectedGeneticSource<T extends SourceRecord>(records:readonly T
  if(control)return control.sourceId===null?undefined:sources.find(r=>r.id===control.sourceId);
  return [...sources].sort((a,b)=>+new Date(b.createdAt)-+new Date(a.createdAt)||(a.id<b.id?1:a.id>b.id?-1:0))[0];
 }
-export function healthContextOnly<T extends{geneticsSelection?:unknown}>(context:T):Omit<T,"geneticsSelection">{const{geneticsSelection:_control,...health}=context;return health;}
+export function healthContextOnly<T extends{geneticsSelection?:unknown;microbiomeFood?:unknown}>(context:T):Omit<T,"geneticsSelection"|"microbiomeFood">{const{geneticsSelection:_control,microbiomeFood:_food,...health}=context;return health;}
 export type GeneticDatasetSummary={id:string;revision:string;provider:"manual"|"23andMe"|"unrecognized";createdAt:string;collectedAt:string|null;callCount:number|null;readable:boolean;active:boolean};
 export type GeneticSourceSnapshot={selectionRevision:string;activeId:string|null;state:"active"|"none"|"unavailable";sources:GeneticDatasetSummary[]};
 export const geneticSourceCommandSchema=z.object({action:z.enum(["activate","delete"]),sourceId:z.string().min(1).max(100).nullable(),sourceRevision:z.string().regex(/^[a-f0-9]{64}$/).nullable(),selectionRevision:z.string().regex(/^[a-f0-9]{64}$/),confirmed:z.literal(true)}).strict().superRefine((v,ctx)=>{if(v.action==="delete"&&v.sourceId===null||v.sourceId!==null&&!v.sourceRevision||v.sourceId===null&&v.sourceRevision!==null)ctx.addIssue({code:"custom",message:"Choose a saved source and its current revision"});});

@@ -902,6 +902,7 @@ export const metaboliteSchema = z
 export const contextSchema = z
   .object({
     geneticsSelection:geneticsSourceControlSchema.optional(),
+    microbiomeFood:z.object({enabled:z.boolean(),reportId:z.string().min(1).max(100).nullable(),reportRevision:z.string().regex(/^[a-f0-9]{64}$/).nullable(),ignoredFoodIds:z.array(z.string().min(1).max(100)).max(200),nonce:z.string().uuid()}).strict().optional(),
     goals: z.array(z.string().trim().min(1).max(100)).max(20).default([]),
     medications: z.array(shortText).max(40).default([]),
     currentSupplements: z.array(shortText).max(40).default([]),

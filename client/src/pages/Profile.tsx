@@ -1,3 +1,4 @@
+import MicrobiomeFoodPreferences from"@/components/MicrobiomeFoodPreferences";
 import CompanionHero from '@/components/CompanionHero';
 import {UserRound, Ruler, Utensils, Shield, Cable, ChevronRight} from 'lucide-react';
 import FoodRegionSettings from "@/components/FoodRegionSettings";
@@ -264,7 +265,7 @@ export default function Profile({
               {savingUnits&&<p role="status">Saving preferences…</p>}
               {unitsError&&<p role="alert">Saved preferences could not be checked or updated: {unitsError}</p>}
             </fieldset></div></details>
-      <section id="food-preferences" className="profile-preference-section"><DietaryPreferenceSummary /></section>
+      <section id="food-preferences" className="profile-preference-section"><DietaryPreferenceSummary /><MicrobiomeFoodPreferences key={user?.id}/></section>
       <details id="connections" className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Connections</strong><span>Device availability and stored source records</span></summary><div className="pt-4"><ConnectionsOverview/></div></details>
       <details className="bloom-panel profile-section workspace-disclosure" id="privacy" onToggle={e=>{if(e.target===e.currentTarget&&!e.currentTarget.open)e.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(details=>details.open=false);}}><summary><strong role="heading" aria-level={2}>Privacy & data controls</strong><span>Review exports and account deletion</span></summary><div className="space-y-3 pt-4">
         <h2>Manage your account records</h2>

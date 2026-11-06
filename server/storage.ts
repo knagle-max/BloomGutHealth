@@ -1,3 +1,4 @@
+import type{MicrobiomeFoodControl,MicrobiomeFoodSource}from"../shared/microbiome-food-influence";
 import type{LabSourceSummary}from"../shared/lab-history";
 import type{GeneticSourceCommand,GeneticSourceSnapshot}from"../shared/genetic-source-selection";
 import type{ViomeRelationshipCommand,ViomeRelationshipResult}from"../shared/report-management";
@@ -99,6 +100,8 @@ export interface IStorage extends ExperienceStore {
   correctLabDate?(userId:string, sourceId:string, input:LabDateChange, saveKey:string):Promise<PrecisionRecord>;
   getGeneticSources?(userId:string):Promise<GeneticSourceSnapshot>;
   changeGeneticSource?(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>;
+  getMicrobiomeFood?(userId:string):Promise<{control:MicrobiomeFoodControl;revision:string;sources:MicrobiomeFoodSource[];source:MicrobiomeFoodSource|null}>;
+  putMicrobiomeFood?(userId:string,input:MicrobiomeFoodControl,expected:string):Promise<unknown>;
   getLabSources?(userId:string):Promise<LabSourceSummary[]>;
   deleteLabSource?(userId:string,id:string,revision:string):Promise<void>;
   deleteLabEntry?(userId: string, id: string): Promise<void>;
@@ -235,6 +238,8 @@ export class DatabaseStorage implements IStorage {
   }
   getGeneticSources(userId:string){return this.precision.getGeneticSources(userId);}
   changeGeneticSource(userId:string,command:GeneticSourceCommand){return this.precision.changeGeneticSource(userId,command);}
+  getMicrobiomeFood(userId:string){return this.precision.getMicrobiomeFood(userId);}
+  putMicrobiomeFood(userId:string,input:MicrobiomeFoodControl,expected:string){return this.precision.putMicrobiomeFood(userId,input,expected);}
   getLabSources(userId:string){return this.precision.getLabSources(userId);}
   deleteLabSource(userId:string,id:string,revision:string){return this.precision.deleteLabSource(userId,id,revision);}
   deleteLabEntry(userId: string, id: string) {

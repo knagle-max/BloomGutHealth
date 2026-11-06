@@ -1,3 +1,5 @@
+import{viomeSource}from"../shared/viome-report-context";
+import type{MicrobiomeFoodSource,MicrobiomeFoodControl}from"../shared/microbiome-food-influence";
 import type{LabSourceSummary}from"../shared/lab-history";
 import{selectedGeneticSource,healthContextOnly,geneticSourceCommandSchema,GeneticSourceError,type GeneticSourceSnapshot,type GeneticSourceCommand,type GeneticsSourceControl}from"../shared/genetic-source-selection";
 import {possibleLabReimports} from "../shared/lab-reimport";
@@ -5,7 +7,7 @@ import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shared/lab-date-correction";
 import { createHash,randomUUID } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
-import { precisionProfiles, precisionRecords, users } from "../shared/schema";
+import { precisionProfiles, precisionRecords, users,microbiomeSamples } from "../shared/schema";
 import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
@@ -65,10 +67,10 @@ export class PrecisionStorage {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
-      if(context.geneticsSelection!==undefined)throw new GeneticSourceError("read-only");
+      if(context.geneticsSelection!==undefined||context.microbiomeFood!==undefined)throw new GeneticSourceError("read-only");
       const[selectionProfile]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
       const selectionContext=selectionProfile?contextSchema.parse(decryptPrecision(selectionProfile.encryptedContext,userId)):undefined;
-      let next:PrecisionContext={...context,...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{})};
+      let next:PrecisionContext={...context,...(selectionContext?.microbiomeFood?{microbiomeFood:selectionContext.microbiomeFood}:{}),...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{})};
       if(context.intolerances===undefined){
         const [existing]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
         const previous=existing?decryptPrecision(existing.encryptedContext,userId):undefined;
@@ -256,6 +258,27 @@ export class PrecisionStorage {
         await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan")));
       return {id:row.id,kind:row.kind,payload:corrected,createdAt:row.createdAt};
     });
+  }
+  private microbiomeFoodSources(rows:any[]):MicrobiomeFoodSource[]{return rows.flatMap(row=>{const data=row.processingStatus==='completed'?viomeSource(row.structuredData):null;if(!data||data.documentKind!=='health-scores-foods'||!data.foods.length)return[];const foods=data.foods.map(food=>({name:food.correctedName||food.name,reportedCategory:food.correctedCategory||food.reportedCategory,sourcePage:food.position.page,sourceColumn:food.position.column,notes:null}));const revision=createHash('sha256').update(JSON.stringify(['microbiome-food-source-v1',row.id,foods,data.biologicalDates])).digest('hex');return[{id:row.id,revision,provider:data.provider,date:data.biologicalDates.collectedOn||data.biologicalDates.reportedOn||null,foods}];});}
+  async getMicrobiomeFood(userId:string){
+   const context=contextSchema.parse(await this.getPrecisionContext(userId)||{}),control=context.microbiomeFood||{enabled:false,reportId:null,reportRevision:null,ignoredFoodIds:[],nonce:null};
+   const rows=await this.db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,userId));
+   const sources=this.microbiomeFoodSources(rows);const source=sources.find(row=>row.id===control.reportId&&row.revision===control.reportRevision)||null;
+   return{control,revision:createHash('sha256').update(JSON.stringify(['microbiome-food-setting-v1',userId,control])).digest('hex'),sources,source};
+  }
+  async putMicrobiomeFood(userId:string,input:MicrobiomeFoodControl,expected:string){
+   await this.db.transaction(async tx=>{
+    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+    const[profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));const prior=profile?contextSchema.parse(decryptPrecision(profile.encryptedContext,userId)):contextSchema.parse({});
+    const current=prior.microbiomeFood||{enabled:false,reportId:null,reportRevision:null,ignoredFoodIds:[],nonce:null};
+    const actual=createHash('sha256').update(JSON.stringify(['microbiome-food-setting-v1',userId,current])).digest('hex');
+    const same=JSON.stringify({...current,nonce:undefined})===JSON.stringify({...input,nonce:undefined});
+    if(actual!==expected&&!same)throw Error('MICROBIOME_FOOD_CHANGED');if(same)return;
+    if(input.enabled){const rows=await tx.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,userId));if(!this.microbiomeFoodSources(rows).some(row=>row.id===input.reportId&&row.revision===input.reportRevision))throw Error('MICROBIOME_FOOD_CHANGED');}
+    const encryptedContext=encryptPrecision({...prior,microbiomeFood:{...input,nonce:randomUUID()}},userId);
+    await tx.insert(precisionProfiles).values({userId,encryptedContext}).onConflictDoUpdate({target:precisionProfiles.userId,set:{encryptedContext,updatedAt:new Date()}});
+   });
+   return this.getMicrobiomeFood(userId);
   }
   async getLabSources(userId:string):Promise<LabSourceSummary[]>{return labSourceGroups(userId,await this.getPrecisionRecords(userId)).map(group=>group.summary);}
   async deleteLabSource(userId:string,id:string,revision:string):Promise<void>{
