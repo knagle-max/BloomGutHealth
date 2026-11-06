@@ -1088,7 +1088,8 @@
           "client/src/components/ProviderFoodSuggestions.tsx",
           "client/src/components/ImportedReportDetails.tsx",
           "client/src/pages/Upload.tsx",
-          "client/src/components/MicrobiomeFoodPreferences.tsx"
+          "client/src/components/MicrobiomeFoodPreferences.tsx",
+          "client/src/components/MicrobialProfile.tsx"
         ],
         "api": [
           "server/report-routes.ts"
@@ -1827,6 +1828,7 @@
     "client/src/components/MealAnalysis.tsx": "3a8594735302dff18b42d1add564da44e18682f7ebdf3151c3f5d6107697b918",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
+    "client/src/components/MicrobialProfile.tsx": "83bf9cfabba351023ee6971f9c30e81755114e3640339f91ad932459f7438eda",
     "client/src/components/MicrobiomeFoodPreferences.tsx": "65e45f76a669927daafc70587b55bc0a53223b82e7d491c4630552bc040bb49d",
     "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",

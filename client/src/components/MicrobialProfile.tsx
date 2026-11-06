@@ -22,12 +22,19 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
       <Dialog.Content className="microbial-profile-sheet" onKeyDownCapture={e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();onClose();}}} onCloseAutoFocus={e => { e.preventDefault(); onRestoreFocus(); }}>
         <div className="microbial-profile-handle" aria-hidden="true" />
         <Dialog.Close className="microbial-profile-close" aria-label="Close organism profile"><X aria-hidden="true" size={22}/></Dialog.Close>
-        <p className="eyebrow">ORGANISM PROFILE · RESEARCH</p>
+        <p className="eyebrow">YOUR REPORT · ORGANISM</p>
         <Dialog.Title className="microbial-profile-title"><i>{taxon?.bacterialName}</i></Dialog.Title>
-        <Dialog.Description>Source observation, separate from general research.</Dialog.Description>
+        <Dialog.Description>The organism name comes from your report.</Dialog.Description>
         {taxon && <>
           <OrganismPortrait size="portrait" sourceName={taxon.bacterialName}/>
-          <section className="microbial-observation" aria-label="Reported observation">
+          <p className="inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
+          <section className="microbial-organism-intro"><h3>What this organism is</h3>
+            {taxon.bacterialName.toLowerCase().trim() === "methanobrevibacter smithii" && <p>This is an archaeon, rather than a bacterium. Detection does not diagnose intestinal methanogen overgrowth.</p>}
+            <p>Research explanation not available yet.</p>
+            <p className="panel-note">A listing or percentage does not measure microbial activity.</p>
+          </section>
+          <details className="microbial-observation"><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">About your report</summary>
+          <section aria-label="Reported observation">
             <h3>Your reported observation</h3>
             <dl>
               <div><dt>Source-reported amount</dt><dd>{reportedTaxonAmount(taxon)}</dd></div>
@@ -45,12 +52,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
               {facts.some(f=>f.kind==="qc")&&<div><dt>Source QC text · not independently verified</dt><dd>{sourceValues("qc")}</dd></div>}
               <div><dt>Data origin</dt><dd>{typeof origin === "string" && origin ? origin : "User-supplied report; not independently verified. Synthetic status not reported."}</dd></div>
             </dl>
-          </section>
-          <section className="microbial-organism-intro"><h3>What this organism is</h3>
-            {taxon.bacterialName.toLowerCase().trim() === "methanobrevibacter smithii" && <p>This is an archaeon, rather than a bacterium. Detection does not diagnose intestinal methanogen overgrowth.</p>}
-            <p>Reviewed research profile not yet available</p>
-            <p className="panel-note">The source name and reported resolution identify this record. Bloom has no individually approved claim-level research profile to show here.</p>
-          </section>
+          </section></details>
           <div className="microbial-profile-disclosures">{sections.map(title => <details key={title} open={expanded === title}>
             <summary onClick={e => { e.preventDefault(); setExpanded(value => value === title ? null : title); }}>{title}</summary>
             {title === "Your report: what it does and doesn't show" ? <>
