@@ -1,0 +1,19 @@
+{
+  "viewport": {
+    "width": 320,
+    "height": 500
+  },
+  "primary": {
+    "x": 37,
+    "y": 384.6875,
+    "width": 130.578125,
+    "height": 46.5
+  },
+  "nav": {
+    "x": 0,
+    "y": 443,
+    "width": 320,
+    "height": 57
+  },
+  "primaryClearsNavigation": true
+}

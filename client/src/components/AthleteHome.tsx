@@ -17,12 +17,13 @@ function openSource(id: string, selector?: string) {
     focus?.focus({ preventScroll: true });
     element.scrollIntoView({ block: 'start' });
 }
-export default function AthleteHome({ date, records, checking, unavailable, day, dayUnavailable, onRetryDay, retrying }: {
+export default function AthleteHome({ date, records, checking, unavailable, day, dayChecking=false,dayUnavailable, onRetryDay, retrying }: {
     date: string;
     records: ExperienceRecord[];
     checking: boolean;
     unavailable: boolean;
     day?: ReturnType<typeof buildAthleteDay>;
+    dayChecking?:boolean;
     dayUnavailable: boolean;
     onRetryDay: () => void;
     retrying: boolean;
@@ -45,6 +46,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
     ];
     return <>
   <CompanionHero className="athlete-home-hero" headingId="athlete-home-action" icon="/brand/bloom-icon-athlete.svg" eyebrow="YOUR PLAN · YOUR NEXT STEP" title={title} reason={reason} actions={<><button type="button" className="hero-button" onClick={act}>{label}</button><button type="button" className="text-link" onClick={() => openSource('athlete-profile', 'input[name="sport"]')}>Adjust setup</button></>}>
+   {dayChecking&&<p role="status" className="panel-note">Checking your current athlete day…</p>}
    {dayUnavailable && <div role="alert" className="athlete-home-context-error" data-blocker-reason="source_unavailable"><p>Current fueling targets could not be checked. Numerical guidance is unavailable.</p><Button variant="outline" disabled={retrying} onClick={onRetryDay}>Retry athlete day</Button></div>}
    {day?.blocked && <p className="panel-note" data-blocker-reasons={blockers.join(" ")}>{blockers.map(reason=>athleteBlockerMessage[reason]).join(" ")} Recording sessions remains available.</p>}
    {day?.partial && <p className="panel-note">Some logged nutrients are missing. Review matches before using remaining-fuel suggestions.</p>}
