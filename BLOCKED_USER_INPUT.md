@@ -1,3 +1,9 @@
+# SUPERSEDING OWNER DISPOSITION — 2026-11-06
+
+**This is an archive of historical blockers and external activation constraints, NOT a list of active questions or stop-work gates.** Binding policies: `docs/architecture/HISTORICAL_BLOCKER_RECONCILIATION_AND_BRAND_EXECUTION_2026-11-06.md` and `CODEX_AUTONOMOUS_EXECUTION_FINAL_GATE_POLICY_2026-11-06.md`. Current top of `NEXT_ACTIONS.md` selects work, not any old `BLOCKED_USER_INPUT` marker below.
+
+Previously resolved scope/asset/genetics/Viome/sample quotas and the original 43 unavailable case descriptions are not owner reapproval demands. Existing modern replacement criteria govern engineering, while original-criteria archival equivalence remains unverified. Pending interim Branding/Biology/UT reviews, old screenshots, real-device sessions, authentic private report source acceptance, provider rights and live hosted acceptance are **final release/feature-specific acceptance statuses**, not permission to stop coding. New paid AI, licensed external menus, live DB restores/production destructive work, real admin provisioning and legally consequential clinical features stay disabled until their genuine specific authorization; manual/free/synthetic engineering proceeds. Missing optional legacy art and physical source bytes never trigger repeated transfer hunts or app-wide blocking. Verify current exact HEAD before reopening any old defect. Preserve historical entries below for audit; do not turn this file into a daily blocker task queue.
+
 # Bloom deferred decisions and external dependencies
 
 No noncritical question should pause other approved work. Keep safe defaults, never invent credentials/reviews, and reconsider entries only when their dependencies change.
