@@ -1,3 +1,4 @@
+import{accountContextGuard}from"@/lib/request-actor";
 import{useEffect,useRef,useState}from"react";
 import{useAuth}from"@/lib/auth";
 import{apiRequest,ApiRequestError,queryClient}from"@/lib/queryClient";
@@ -17,15 +18,16 @@ export default function ViomeSavedContext({sample,samples,onSelect,onReload,onCh
  const trigger=useRef<HTMLButtonElement|null>(null);
  const label=(row:ViomeSavedSource)=>{const source=viomeSource(row.structuredData);return`${source?.documentKind==="active-gut-microbes"?"Active microbes":"Assessments & foods"} · collected ${source?.biologicalDates.collectedOn||"date unknown"} · saved ${row.uploadedAt?new Date(row.uploadedAt).toLocaleString():"time unknown"} · Bloom reference ${row.id.slice(-8)}`;};
  function begin(action:"link"|"unlink",button:HTMLButtonElement,other?:ViomeSavedSource){trigger.current=button;setError("");setDraft({action,selectedRevision:sample.deletionRevision,companionId:other?.id||"",companionRevision:other?.deletionRevision,confirmed:false});}
- async function save(){const owner=user?.id;if(!owner||!draft||!draft.confirmed||pending||stale||!draft.selectedRevision||!draft.companionRevision)return;const intent=draft;setPending(true);setError("");
+ async function save(){const owner=user?.id;if(!owner||!draft||!draft.confirmed||pending||stale||!draft.selectedRevision||!draft.companionRevision)return;const intent=draft,assertOwner=accountContextGuard();const sameAccount=()=>{try{assertOwner();return true;}catch{return false;}};setPending(true);setError("");
   try{
    const response=await apiRequest('POST','/api/microbiome/reports/'+encodeURIComponent(sample.id)+'/relationship',{action:intent.action,companionId:intent.companionId,companionRevision:intent.companionRevision,confirmed:true},{'X-Bloom-Report-Actor':owner,'If-Match':'"'+intent.selectedRevision+'"'});
    const result=await response.json()as ViomeRelationshipResult;if(result?.success!==true||result.state!==(intent.action==="link"?"linked":"unlinked"))throw Error('Unconfirmed relationship');
    const current=()=>active.current&&actor.current===owner,ownedKeys=new Set([owner,...samples.map(row=>row.id)]);
    const ownedReports=(q:{queryKey:readonly unknown[]})=>String(q.queryKey[0]).startsWith('/api/microbiome')&&ownedKeys.has(String(q.queryKey[1]));
    await queryClient.cancelQueries({predicate:ownedReports});
+   if(!sameAccount()){queryClient.removeQueries({predicate:ownedReports});return;}
    if(current()){setDraft(null);onChanged(result.state);}
-   await Promise.all([queryClient.resetQueries({predicate:ownedReports}),current()?resetPlanningInputs():Promise.resolve()]);
+   await Promise.all([queryClient.resetQueries({predicate:ownedReports}),resetPlanningInputs()]);
   }catch(cause){if(active.current&&actor.current===owner)setError(cause instanceof ApiRequestError&&[404,409].includes(cause.status)?"These reports changed or are no longer compatible. Reload and review them before changing the link.":"The report link could not be confirmed. Retry the same action safely, or reload both reports.");}
   finally{if(active.current&&actor.current===owner)setPending(false);}
  }

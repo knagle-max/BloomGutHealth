@@ -1,10 +1,11 @@
+import{selectedGeneticSource,healthContextOnly,geneticSourceCommandSchema,GeneticSourceError,type GeneticSourceSnapshot,type GeneticSourceCommand,type GeneticsSourceControl}from"../shared/genetic-source-selection";
 import {possibleLabReimports} from "../shared/lab-reimport";
 import { eq, and, desc, sql, inArray } from "drizzle-orm";
 import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shared/lab-date-correction";
-import { createHash } from "node:crypto";
+import { createHash,randomUUID } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords, users } from "../shared/schema";
-import { labSchema, sourceOnlyLabSchema, contextSchema, activeLabObservations, activeLabRows, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
+import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -40,11 +41,14 @@ export class PrecisionStorage {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
-      let next=context;
+      if(context.geneticsSelection!==undefined)throw new GeneticSourceError("read-only");
+      const[selectionProfile]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      const selectionContext=selectionProfile?contextSchema.parse(decryptPrecision(selectionProfile.encryptedContext,userId)):undefined;
+      let next:PrecisionContext={...context,...(selectionContext?.geneticsSelection?{geneticsSelection:selectionContext.geneticsSelection}:{})};
       if(context.intolerances===undefined){
         const [existing]=await tx.select({encryptedContext:precisionProfiles.encryptedContext}).from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
         const previous=existing?decryptPrecision(existing.encryptedContext,userId):undefined;
-        if(previous&&typeof previous==="object"&&"intolerances" in previous&&previous.intolerances!==undefined)next={...context,intolerances:contextSchema.shape.intolerances.parse(previous.intolerances)};
+        if(previous&&typeof previous==="object"&&"intolerances" in previous&&previous.intolerances!==undefined)next={...next,intolerances:contextSchema.shape.intolerances.parse(previous.intolerances)};
       }
       const encryptedContext=encryptPrecision(next,userId);
       await tx
@@ -141,9 +145,9 @@ export class PrecisionStorage {
         if (
           !profile ||
           JSON.stringify(
-            contextSchema.parse(
+            healthContextOnly(contextSchema.parse(
               decryptPrecision(profile.encryptedContext, userId),
-            ),
+            )),
           ) !== JSON.stringify(plan.inputGuard?.context) ||
           JSON.stringify(
             currentPrefs.success ? currentPrefs.data : defaultPreferences,
@@ -152,7 +156,7 @@ export class PrecisionStorage {
           throw Error("PRECISION_INPUTS_CHANGED");
         const records = await tx
           // Only lab payloads need classification; do not transfer wide genetics/plan blobs.
-          .select({ id: precisionRecords.id, kind: precisionRecords.kind,
+          .select({ id: precisionRecords.id, kind: precisionRecords.kind,createdAt:precisionRecords.createdAt,
             labPayload: sql<unknown>`CASE WHEN ${precisionRecords.kind} = 'lab' THEN ${precisionRecords.encryptedPayload} ELSE NULL END` })
           .from(precisionRecords)
           .where(eq(precisionRecords.userId, userId))
@@ -165,7 +169,10 @@ export class PrecisionStorage {
         }
         if(unresolvedLabs.size)throw Error("PRECISION_INPUTS_CHANGED");
         const clinicalLabIds=new Set(activeLabObservations(supportedLabs).labs.map(row=>row.id));
-        const latestGenetics = records.find((r) => r.kind === "genetics");
+        const selected=selectedGeneticSource(records,contextSchema.parse(decryptPrecision(profile.encryptedContext,userId)).geneticsSelection);
+        const[selectedRow]=selected?await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,selected.id),eq(precisionRecords.kind,"genetics"))):[];
+        const validSelected=selectedRow?precisionEntrySchema.safeParse({kind:"genetics",payload:decryptPrecision(selectedRow.encryptedPayload,userId)}):null;
+        const latestGenetics=validSelected?.success?selected:undefined;
         const sourceIds = records
           .filter(
             (r) =>
@@ -187,6 +194,9 @@ export class PrecisionStorage {
         .insert(precisionRecords)
         .values({ ...(id?{id}:{}), userId, kind, encryptedPayload })
         .returning();
+      if(kind==="genetics"){
+        await this.writeGeneticControl(tx,userId,{sourceId:row.id,revision:randomUUID()});
+      }
       return { id: row.id, kind: row.kind, payload, createdAt: row.createdAt };
     });
   }
@@ -272,6 +282,8 @@ export class PrecisionStorage {
       await tx.execute(
         sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`,
       );
+      const[target]=await tx.select({kind:precisionRecords.kind}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      if(target?.kind==="genetics")throw new GeneticSourceError("read-only");
       const removed = await tx
         .delete(precisionRecords)
         .where(
@@ -293,6 +305,62 @@ export class PrecisionStorage {
             ),
           );
       return true;
+    });
+  }
+  private async writeGeneticControl(tx:any,userId:string,control:GeneticsSourceControl){
+    const[profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+    const prior=profile?contextSchema.parse(decryptPrecision(profile.encryptedContext,userId)):contextSchema.parse({});
+    const encryptedContext=encryptPrecision({...prior,geneticsSelection:control},userId);
+    await tx.insert(precisionProfiles).values({userId,encryptedContext}).onConflictDoUpdate({target:precisionProfiles.userId,set:{encryptedContext,updatedAt:new Date()}});
+  }
+  private async removeGeneticPlans(tx:any,userId:string,sourceId:string){
+    const plans=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan")));
+    const ids=plans.flatMap((row:any)=>{const payload=decryptPrecision(row.encryptedPayload,userId)as any;return payload?.type==="weekly-plan"&&Array.isArray(payload.inputGuard?.sourceRecordIds)&&payload.inputGuard.sourceRecordIds.includes(sourceId)?[row.id]:[];});
+    if(ids.length)await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan"),inArray(precisionRecords.id,ids)));
+  }
+  private geneticSourceVersion(userId:string,row:PrecisionRecord){return createHash("sha256").update(JSON.stringify(["genetic-source-v1",userId,row.id,row.kind,row.createdAt,row.payload])).digest("hex");}
+  private geneticSnapshot(userId:string,records:PrecisionRecord[],context:PrecisionContext):GeneticSourceSnapshot{
+    const selected=selectedGeneticSource(records,context.geneticsSelection);
+    const sources=records.filter(r=>r.kind==="genetics").map(row=>{
+      const parsed=precisionEntrySchema.safeParse({kind:"genetics",payload:row.payload}),data=parsed.success&&parsed.data.kind==="genetics"?parsed.data.payload:null;
+      return{id:row.id,revision:this.geneticSourceVersion(userId,row),provider:data?.provider||"unrecognized" as const,createdAt:new Date(row.createdAt).toISOString(),collectedAt:data?.collectedAt||null,callCount:data?(data.provider==="manual"?data.entries.length:data.calls.length):null,readable:!!data,active:!!data&&row.id===selected?.id};
+    });
+    const selectionRevision=createHash("sha256").update(JSON.stringify(["genetic-selection-v1",userId,context.geneticsSelection||{legacySourceId:selected?.id||null}])).digest("hex");
+    return{selectionRevision,activeId:sources.find(row=>row.active)?.id||null,state:sources.some(row=>row.active)?"active":context.geneticsSelection?.sourceId===null||!selected&&!context.geneticsSelection?.sourceId?"none":"unavailable",sources};
+  }
+  async getGeneticSources(userId:string):Promise<GeneticSourceSnapshot>{
+    if(!userId)throw new GeneticSourceError("invalid");
+    const[records,raw]=await Promise.all([this.getPrecisionRecords(userId),this.getPrecisionContext(userId)]);
+    return this.geneticSnapshot(userId,records,contextSchema.parse(raw||{}));
+  }
+  async changeGeneticSource(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>{
+    if(!userId||!geneticSourceCommandSchema.safeParse(command).success)throw new GeneticSourceError("invalid");
+    return this.db.transaction(async(tx:any)=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+      const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).orderBy(desc(precisionRecords.createdAt));
+      const records:PrecisionRecord[]=stored.map((row:any)=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
+      const[profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));const context=contextSchema.parse(profile?decryptPrecision(profile.encryptedContext,userId):{}),snapshot=this.geneticSnapshot(userId,records,context);
+      const target=command.sourceId?records.find(row=>row.kind==="genetics"&&row.id===command.sourceId):undefined;
+      // Authoritative absence in this account is a safe deletion retry; it
+      // never clears a newer active source or reveals a foreign dataset.
+      if(command.action==="delete"&&!target)return snapshot;
+      if(command.sourceId&&(!target||this.geneticSourceVersion(userId,target)!==command.sourceRevision))throw new GeneticSourceError(target?"changed":"unavailable");
+      const selected=selectedGeneticSource(records,context.geneticsSelection);
+      if(command.action==="activate"){
+        const parsed=target?precisionEntrySchema.safeParse({kind:"genetics",payload:target.payload}):null;
+        if(target&&!parsed?.success)throw new GeneticSourceError("invalid");
+        const already=(context.geneticsSelection?.sourceId===command.sourceId);
+        if(command.selectionRevision!==snapshot.selectionRevision){if(already)return snapshot;throw new GeneticSourceError("changed");}
+        if(already)return snapshot;
+        await this.writeGeneticControl(tx,userId,{sourceId:command.sourceId,revision:randomUUID()});
+      }else{
+        if(command.selectionRevision!==snapshot.selectionRevision)throw new GeneticSourceError("changed");
+        await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"genetics"),eq(precisionRecords.id,target!.id)));
+        if(selected?.id===target!.id)await this.writeGeneticControl(tx,userId,{sourceId:null,revision:randomUUID()});
+        await this.removeGeneticPlans(tx,userId,target!.id);
+      }
+      const nextRows=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).orderBy(desc(precisionRecords.createdAt));const[nextProfile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
+      return this.geneticSnapshot(userId,nextRows.map((row:any)=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt})),contextSchema.parse(nextProfile?decryptPrecision(nextProfile.encryptedContext,userId):{}));
     });
   }
   async clearPrecisionData(userId: string): Promise<void> {

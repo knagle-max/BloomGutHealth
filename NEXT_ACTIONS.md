@@ -1,10 +1,8 @@
-# Active publication — P0-VIOME-POSTSAVE-LINK-02
+# Active P0-REPORT-FOUNDATIONS-02 — Labs source provenance and deletion
 
-Anti-loop policy governs. Work only on `enhance/bloom-experience`, PR1 and the existing Render preview. No main, production data/schema writes, new paid infrastructure or actual-user deletion. First-party scientific images remain ungated; Anatomy32PNG stays on its separate asset branch.
+Genetics source lifecycle is implemented: explicit active/none selection in existing encrypted profile, owned historical source facts and scoped controls, no automatic fallback after active deletion.587/587 full tests passed; source lifecycle/browser navigation and original import regressions verified before publication. Source/selection CAS and account guards retain unrelated data; no schema migration. See docs/operations/GENETIC_SOURCE_MANAGEMENT.md.
 
-Baselinefa11d23. Saved Link/View/Unlink is IMPLEMENTED_AND_TESTED locally: both owned source versions, explicit same-stool confirmation, compatibility/occupancy, atomic latest-operation receipt in the existing report, no old-link resurrection after unlink, no finding merge, account/cache/focus safeguards.582/582 full tests PASS226535.78ms;27 targeted/types/build, actual native App/HTTP/PGlite full lifecycle and generic deletion regression PASS. Source210/52 and API104+13 guards checked. Commit/push, inspect exact CI/Render once; if pending, move on without polling or rerunning the broad suite.
-
-P0-MICROBIOME-DELETE-01 is pushed7b68ecc/mergefa11d23. Its one metadata check observed CI42259792767/Renderdep-dbn0lqe8bjmc73e8mh30 in progress. Current source-management code has stronger local582full evidence; do not claim an unverified hosted SHA.
+Next inspect Labs whole-source grouping against actual receipt/provenance; never infer a report from dates alone. Reuse canonical result/revision deletion and existing receipts. Implement demonstrated missing P0 source controls only, then move to default-Off microbiome food influence. Larger selected/category management remains P1.
 
 ## Next approved tasks
 

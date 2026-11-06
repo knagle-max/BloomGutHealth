@@ -1175,7 +1175,8 @@
           "client/src/components/ManualGenetics.tsx",
           "client/src/components/GenotypeExplanations.tsx",
           "client/src/components/GeneticsCatalogue.tsx",
-          "client/src/components/GeneticHighlights.tsx"
+          "client/src/components/GeneticHighlights.tsx",
+          "client/src/components/GeneticSourceManagement.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1190,7 +1191,9 @@
           "shared/genetic-call-source.ts",
           "shared/measurement-entry.ts",
           "shared/data/genetics-candidate-bibliography.ts",
-          "shared/genetics-relevance.ts"
+          "shared/genetics-relevance.ts",
+          "shared/genetic-source-selection.ts",
+          "server/precision-storage.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1203,7 +1206,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions.",
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions. Saved dataset selection/deletion uses explicit owned source and selection versions in the existing encrypted profile; active deletion sets no active dataset and never activates history. Historical source facts remain read-only and sensitive storage-only markers stay withheld. This does not verify an assay or authorize personal-effect claims.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1218,7 +1221,8 @@
           "client/src/components/ManualGenetics.tsx",
           "client/src/components/GenotypeExplanations.tsx",
           "client/src/components/GeneticsCatalogue.tsx",
-          "client/src/components/GeneticHighlights.tsx"
+          "client/src/components/GeneticHighlights.tsx",
+          "client/src/components/GeneticSourceManagement.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -1233,7 +1237,9 @@
           "shared/genetic-call-source.ts",
           "shared/measurement-entry.ts",
           "shared/data/genetics-candidate-bibliography.ts",
-          "shared/genetics-relevance.ts"
+          "shared/genetics-relevance.ts",
+          "shared/genetic-source-selection.ts",
+          "server/precision-storage.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1246,7 +1252,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions.",
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions. Saved dataset selection/deletion uses explicit owned source and selection versions in the existing encrypted profile; active deletion sets no active dataset and never activates history. Historical source facts remain read-only and sensitive storage-only markers stay withheld. This does not verify an assay or authorize personal-effect claims.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1802,6 +1808,7 @@
     "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
     "client/src/components/GeneticHighlights.tsx": "e66aa27a3e7949ba712440e4274662b4cfa96dcb156c788c543593ed54a9f0e2",
+    "client/src/components/GeneticSourceManagement.tsx": "688118d38d6eaa51bf9caa5411b410b2f17dbf8c1479cc66cdda58f37223b2c4",
     "client/src/components/GeneticsCatalogue.tsx": "1152b4d007ac683e63289a2064a9819c19cd06b8338d10ba82d2dcc7e1fd978a",
     "client/src/components/GenotypeExplanations.tsx": "43c3aa3e54127f5940a3349145fa60845358bc9ac19fb03b2546f185b3083e0c",
     "client/src/components/ImportedReportDetails.tsx": "589138363f2470f5f847a12a8dd3802a9fcc42f5cff59acbedd189e916bdfd49",
@@ -1812,11 +1819,11 @@
     "client/src/components/LabSourceHistory.tsx": "cc0ce284382e0a63379167d6f2432b332f621da468fc8aef32a9d117361967d0",
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
-    "client/src/components/ManualGenetics.tsx": "ceba01eda8b6143ccd3f9dede8f200eba5ecb984471bb66ec0f42c5fc1f3ffa9",
+    "client/src/components/ManualGenetics.tsx": "0c3793be49e077cfa7bfd587504dd1aec6bad9fa36c01e4b5087713b95bb29fd",
     "client/src/components/MealAnalysis.tsx": "3a8594735302dff18b42d1add564da44e18682f7ebdf3151c3f5d6107697b918",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
-    "client/src/components/MicrobiomeReportManagement.tsx": "68c013498d51a5452bf46495eab9242dfe33a06a5d61b501ee2136ac26f8e30a",
+    "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
     "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
@@ -1830,7 +1837,7 @@
     "client/src/components/TrainingSetsEditor.tsx": "c07fb2a9f9777369186b6046fb65095b0056ba8460dafaf9292d8352802a9e7b",
     "client/src/components/ViomeImportChoices.tsx": "ddbf1763aa9d944915b97301fc1b27a1a5e69aba7d3eb1aa2503549f657dcb8c",
     "client/src/components/ViomeReviewEditor.tsx": "24b890f707d69e6efcb1eadd2b4147bf410497a462d13a7d8afea21c14845418",
-    "client/src/components/ViomeSavedContext.tsx": "c73a55ca8a2ce55d63b0691697ddc90a670412a4e7713de91a923fdaf439f3ef",
+    "client/src/components/ViomeSavedContext.tsx": "17134fb50b6193f2b49fdbd57ce37ff30e3668ec0ea6d466c00d315b7eb66ca5",
     "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
@@ -1857,7 +1864,7 @@
     "client/src/pages/Microbiome.tsx": "f5f131e570960529a3eb4146037baaddf5282aa5a2f8efc1e857407698dd5266",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
-    "client/src/pages/PrecisionNutrition.tsx": "73e21d6008095a121efe898ae76df3e5024ef785c36840d42c491801d20740de",
+    "client/src/pages/PrecisionNutrition.tsx": "19ca96992ea4f6272851f9cb173308e99391b6e0a64a9512d4465db9dbf9a902",
     "client/src/pages/Profile.tsx": "5fdaca88e89d00efb9ed9936c634152400f06981120b95b65807549834afea22",
     "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
@@ -1896,8 +1903,8 @@
     "server/plan-history.ts": "e5e19e94821047a1516c64685a4cb5926e3523c127c1f30f9de61240c1d93c7f",
     "server/planner-routes.ts": "e0509b74f5e11e2378094cc29d6f4d6d16342f504e796bf75302ddf13faaa776",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
-    "server/precision-routes.ts": "b3e4ad4acce252ea252596ce0f3da45db1514eef77b7c7ac5bbd6d11b3df9307",
-    "server/precision-storage.ts": "99d84dc6c713fe5b526b80833f1a8cee0ea0533cc9dbf6aabddca9c95767dcf4",
+    "server/precision-routes.ts": "ab6be11b640a5ff03675304bc054143f1763a5a231585372f50f53940bd7dd9a",
+    "server/precision-storage.ts": "2829349998ad48a619f77e7d1a84c2b5692d9f8deadc64986e0fa9895b4b0dfb",
     "server/preference-source.ts": "439afcf8ce9081a61c84176e6537659c3788597c4a0aca24907619933ae4dc46",
     "server/private-product-storage.ts": "f42c4879f5611c7c7cbc204d3fceadc396c48e84488018326c0459245743eb2d",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
@@ -1916,9 +1923,9 @@
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
-    "server/shared-rate-limit.ts": "293ab5d58957fe7905aefbf88955c3a710c214e0b2fee6a364ff8c50702c7f31",
+    "server/shared-rate-limit.ts": "81132c14a20d005095d8cf729f6e0d141af868e19622efc2a13b3f604ea6d9e4",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "320d21623b07448e9b6584f1496c404e0ba3867c187f68b9490de9ec9f9ec9d2",
+    "server/storage.ts": "5408abb45adb764bfd9c37ffdcfcda24f39aec56c760c417a8a6d92225f22fd3",
     "server/structured-report-storage.ts": "d10a65ada488a25abaec6c3bced7cda124d0f11c1ac36af2bdad0fd11ef0858f",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
@@ -1949,6 +1956,7 @@
     "shared/food-progress.ts": "1abb64192d61e98d51b08ebcb8c6d62878a567b52421ff1f83b6b9d7b9dfe4e0",
     "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
+    "shared/genetic-source-selection.ts": "642dad6f9d7245c614ffaee9ad02aa4feac151878b22e16e06ddef35b59b5316",
     "shared/genetics-catalogue.ts": "633b2d7610c4f6af3fa9bcb74f5e46e5661559684c22f50c039786a17fc35f68",
     "shared/genetics-relevance.ts": "e28ab72713cd5ef6a6515b9c03a09d196ab1307e894fdf2ca4da2bc37d3430c5",
     "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
@@ -1971,7 +1979,7 @@
     "shared/nutrition-display.ts": "ca164c626fa377a3ee16698b3811f0475f603210b0419d8b8061f7b98b641303",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "509f5107fa8306d04c7792f3ec2c36c5a04950deffdd87b025c4914a1d936407",
-    "shared/precision-nutrition.ts": "230b9c19e8594352fef21e8e9f8be2e7783c441c8529c355df52a1b6f4129464",
+    "shared/precision-nutrition.ts": "1fda38de4e1b157016636e23d54847ecb6c28f29b37031de3f0603f755c7b052",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/profile-measurement-source.ts": "7aad632c9c98bf5670eea4277155a98507350e5a6983f6d917c05aed3a994a4e",

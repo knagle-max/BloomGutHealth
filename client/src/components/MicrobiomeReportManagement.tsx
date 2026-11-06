@@ -1,3 +1,4 @@
+import{accountContextGuard}from"@/lib/request-actor";
 import{useEffect,useRef,useState}from"react";
 import{useAuth}from"@/lib/auth";
 import{apiRequest,ApiRequestError,queryClient}from"@/lib/queryClient";
@@ -13,17 +14,18 @@ export default function MicrobiomeReportManagement({sample,samples,onDeleted,onR
  const[open,setOpen]=useState(false),[confirmed,setConfirmed]=useState(false),[pending,setPending]=useState(false),[error,setError]=useState(""),[version,setVersion]=useState<string>();
  useEffect(()=>{if(open&&sample.deletionRevision!==version){setConfirmed(false);setError("This report changed. Close this dialog and review the current report before deleting.");}},[open,sample.deletionRevision,version]);
  const openChange=(next:boolean)=>{if(pending)return;if(next){setVersion(sample.deletionRevision);setConfirmed(false);setError("");}setOpen(next);};
- async function remove(){const owner=user?.id;if(!owner||!confirmed||pending||!version||version!==sample.deletionRevision)return;setPending(true);setError("");
+ async function remove(){const owner=user?.id;if(!owner||!confirmed||pending||!version||version!==sample.deletionRevision)return;const assertOwner=accountContextGuard(),sameAccount=()=>{try{assertOwner();return true;}catch{return false;}};setPending(true);setError("");
   try{
    const response=await apiRequest('DELETE','/api/microbiome/reports/'+encodeURIComponent(sample.id),undefined,{'X-Bloom-Report-Actor':owner,'X-Bloom-Confirm':REPORT_DELETE_CONFIRM,'If-Match':'"'+version+'"'});
    const result=await response.json() as MicrobiomeDeleteResult;if(result?.success!==true||!['deleted','not-present'].includes(result.state))throw Error('Unconfirmed deletion');
    const current=()=>active.current&&actor.current===owner,ownedKeys=new Set([owner,...samples.map(row=>row.id)]);
    const ownedReports=(query:{queryKey:readonly unknown[]})=>String(query.queryKey[0]).startsWith('/api/microbiome')&&ownedKeys.has(String(query.queryKey[1]));
    await queryClient.cancelQueries({predicate:ownedReports});
+   if(!sameAccount()){queryClient.removeQueries({predicate:ownedReports});return;}
    queryClient.setQueryData<SavedReport[]>(['/api/microbiome/samples',owner],rows=>rows?.filter(row=>row.id!==sample.id));
    queryClient.removeQueries({predicate:q=>String(q.queryKey[0])==='/api/microbiome/results'&&q.queryKey[1]===sample.id});
    if(current())onDeleted();
-   await Promise.all([queryClient.resetQueries({predicate:ownedReports}),current()?resetPlanningInputs():Promise.resolve()]);
+   await Promise.all([queryClient.resetQueries({predicate:ownedReports}),resetPlanningInputs()]);
   }catch(cause){if(active.current&&actor.current===owner)setError(cause instanceof ApiRequestError&&cause.status===409?"This report changed. Reload and review it before deleting.":"Deletion could not be confirmed. Retry the same deletion safely, or reload your reports to check their current state.");}
   finally{if(active.current&&actor.current===owner)setPending(false);}
  }

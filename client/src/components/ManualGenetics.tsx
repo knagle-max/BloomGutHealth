@@ -1,6 +1,6 @@
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import {captureGeneticCall,type GeneticCallSource} from "@shared/genetic-call-source";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -26,10 +26,13 @@ const templates: Row[] = [
 export default function ManualGenetics({
   genetics,
   onSaved,
+  onDraftChange,
 }: {
   genetics: PrecisionReport["genetics"];
   onSaved: () => void;
+  onDraftChange?:(dirty:boolean)=>void;
 }) {
+  useEffect(()=>{onDraftChange?.(false);},[onDraftChange]);
   const existing: Row[] =
     genetics.manual?.entries ||
     (genetics.explanations?.length
@@ -80,11 +83,13 @@ export default function ManualGenetics({
         payload: preview,
       }),
     onSuccess: async () => {
+      onDraftChange?.(false);
       await invalidatePlanningInputs();
       onSaved();
     },
   });
   function changed() {
+    onDraftChange?.(true);
     setPreview(null);
     setError("");
     setConsent(false);
@@ -309,6 +314,7 @@ export default function ManualGenetics({
               }),
             );
             setConsent(false);
+            onDraftChange?.(true);
           } catch {
             setError(
               "Enter a source, a valid date and 1–200 unique SNPs with two DNA letters (or --). Blank rows are omitted.",

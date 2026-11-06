@@ -1,3 +1,4 @@
+import{geneticsSourceControlSchema,selectedGeneticSource,healthContextOnly}from"./genetic-source-selection";
 import type {ReportDateContext} from "./report-dates";
 import {checkinEntrySourceSchema,checkinEntrySourceMatches} from "./checkin-entry-source";
 import {geneticCallSourceSchema,geneticCallSourceMatches,normalizeUnphasedGenotype,captureGeneticCall} from "./genetic-call-source";
@@ -900,6 +901,7 @@ export const metaboliteSchema = z
   .strict();
 export const contextSchema = z
   .object({
+    geneticsSelection:geneticsSourceControlSchema.optional(),
     goals: z.array(z.string().trim().min(1).max(100)).max(20).default([]),
     medications: z.array(shortText).max(40).default([]),
     currentSupplements: z.array(shortText).max(40).default([]),
@@ -1095,11 +1097,8 @@ export function buildPrecisionReport(
   const highGlucose = active(["glucose", "hba1c"], "above reported range");
   const lowFolate = active(["folate"], "below reported range");
   const highLiver = active(["alt", "ast", "ggt"], "above reported range");
-  const genetics = entries
-    .filter((e) => e.parsed.success && e.parsed.data.kind === "genetics")
-    .sort(
-      (a, b) => +new Date(b.record.createdAt) - +new Date(a.record.createdAt),
-    )[0];
+  const selectedSource=selectedGeneticSource(records,context.geneticsSelection);
+  const genetics=selectedSource?entries.find(entry=>entry.record.id===selectedSource.id):undefined;
   const geneticData =
     genetics?.parsed.success && genetics.parsed.data.kind === "genetics"
       ? genetics.parsed.data.payload
@@ -1468,8 +1467,9 @@ export function buildPrecisionReport(
     pendingLabs,
     version: PRECISION_VERSION,
     generatedAt: new Date(now).toISOString(),
-    context,
+    context:healthContextOnly(context),
     genetics: {
+      sourceState:geneticData?"active" as const:context.geneticsSelection?.sourceId===null||!selectedSource&&!context.geneticsSelection?.sourceId?"none" as const:"unavailable" as const,
       coverage: `${variantCatalog.length} reviewed common-variant markers and ${genotypeAnnotations.length} markers with educational explanations; not whole-genome interpretation`,
       import: geneticData
         ? {

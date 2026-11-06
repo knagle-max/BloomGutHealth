@@ -1,3 +1,5 @@
+import{geneticSourceCommandSchema,GENETIC_SOURCE_CONFIRM,GeneticSourceError}from"../shared/genetic-source-selection";
+import{isSensitiveGeneticCall}from"../shared/genetic-selection";
 import {reportDateContext} from "../shared/report-dates";
 import {LabImportReviewRequired} from "./precision-storage";
 import {gutReportInventory} from "../shared/biology-source-inventory";
@@ -47,6 +49,8 @@ type Store = Pick<
   | "insertPrecisionRecord"
   | "insertReviewedLab"
   | "correctLabDate"
+  | "getGeneticSources"
+  | "changeGeneticSource"
   | "deleteLabEntry"
   | "deletePrecisionRecord"
   | "clearPrecisionData"
@@ -496,6 +500,7 @@ export function registerPrecisionRoutes(
     }
   });
   app.put("/api/precision/context", async (req, res) => {
+    if(req.body&&Object.hasOwn(req.body,"geneticsSelection"))return res.status(400).json({error:"Manage genetic datasets using their separate source controls."});
     const p = contextSchema.safeParse(req.body);
     if (!p.success)
       return res.status(400).json({ error: "Invalid health context" });
@@ -637,6 +642,29 @@ export function registerPrecisionRoutes(
       unavailable(res,e);
     }
   });
+  app.get("/api/precision/genetics/sources",async(req,res)=>{
+    if(!store.getGeneticSources)return res.status(503).json({error:"Saved genetic source management is unavailable."});
+    try{return res.json(await store.getGeneticSources(req.session.userId!));}catch(e){unavailable(res,e);}
+  });
+  app.get("/api/precision/genetics/sources/:id",async(req,res)=>{
+    try{
+      const record=(await store.getPrecisionRecords(req.session.userId!)).find(row=>row.kind==="genetics"&&row.id===req.params.id);
+      if(!record)return res.status(404).json({error:"Genetic dataset not found in your account."});
+      const parsed=precisionEntrySchema.safeParse({kind:"genetics",payload:record.payload}),data=parsed.success&&parsed.data.kind==="genetics"?parsed.data.payload:null;
+      const observations=data?(data.provider==="manual"?data.entries:data.calls).filter(call=>!isSensitiveGeneticCall(call.rsid)).map(call=>({rsid:call.rsid,gene:"gene" in call?call.gene:null,genotype:call.genotype,original:call.sourceCall?.original||null})):[];
+      return res.json({id:record.id,readable:!!data,provider:data?.provider||"unrecognized",collectedAt:data?.collectedAt||null,createdAt:new Date(record.createdAt).toISOString(),build:data?.provider==="23andMe"?data.build:data?.sourceContext?.genomeBuild||null,strand:data?.provider==="23andMe"?"forward":data?.strand||"unknown",observations,limitation:"Saved source facts only. Viewing a historical dataset does not activate it. Sensitive storage-only markers are withheld; no assay verification or personal health effect is inferred."});
+    }catch(e){unavailable(res,e);}
+  });
+  const manageGeneticSource=async(req:Parameters<RequestHandler>[0],res:Parameters<RequestHandler>[1],action:"activate"|"delete")=>{
+    if(req.get("X-Bloom-Genetics-Actor")!==req.session.userId)return res.status(409).json({error:"The signed-in account changed. Reload before managing genetic sources."});
+    const command=geneticSourceCommandSchema.safeParse(req.body);
+    if(req.get("X-Bloom-Confirm")!==GENETIC_SOURCE_CONFIRM||!command.success||command.data.action!==action||action==="delete"&&command.data.sourceId!==req.params.id)return res.status(400).json({error:"Confirm the exact saved genetic dataset and current selection before changing it."});
+    if(!store.changeGeneticSource)return res.status(503).json({error:"Atomic genetic source management is unavailable. No fallback mutation was attempted."});
+    try{return res.json(await store.changeGeneticSource(req.session.userId!,command.data));}
+    catch(error){if(error instanceof GeneticSourceError)return res.status(error.code==="unavailable"?404:error.code==="invalid"?400:409).json({error:error.code==="changed"?"The dataset or active selection changed. Reload and review the current sources.":"This genetic source action is unavailable. Review the saved dataset before continuing."});unavailable(res,error);}
+  };
+  app.post("/api/precision/genetics/active",(req,res)=>manageGeneticSource(req,res,"activate"));
+  app.delete("/api/precision/genetics/sources/:id",(req,res)=>manageGeneticSource(req,res,"delete"));
   app.delete("/api/precision/labs/:id/entry", async (req, res) => {
     if (req.headers["x-bloom-confirm"] !== "delete-lab-entry-and-revisions")
       return res.status(400).json({ error: "Explicit result and revision deletion confirmation is required." });
@@ -658,6 +686,7 @@ export function registerPrecisionRoutes(
         return res.status(404).json({ error: "Record not found" });
       res.status(204).end();
     } catch (e) {
+      if(e instanceof GeneticSourceError)return res.status(409).json({error:"Use saved genetic dataset management to confirm source deletion and active selection."});
       unavailable(res, e);
     }
   });

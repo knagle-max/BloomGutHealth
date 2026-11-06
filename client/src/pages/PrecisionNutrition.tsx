@@ -1,3 +1,4 @@
+import GeneticSourceManagement from"@/components/GeneticSourceManagement";
 import {captureCheckinEntrySource} from "@shared/checkin-entry-source";
 import BloodworkSourceOverview from '@/components/BloodworkSourceOverview';
 import CheckinEntrySource from "@/components/CheckinEntrySource";
@@ -228,6 +229,8 @@ export default function PrecisionNutrition() {
   }),
     [sampleId, setSampleId] = useState("");
   useEffect(()=>{const requested=new URLSearchParams(search).get("tab");if(requested&&["overview","genetics","labs","recommendations","progress"].includes(requested))setTab(requested);},[search]);
+  const[geneticManualDirty,setGeneticManualDirty]=useState(false);
+  const geneticSourceFocus=useRef<string|null>(null);
   const [status, setStatus] = useState(""),
     [localError, setLocalError] = useState("");
   const result = useQuery<Report>({
@@ -362,6 +365,7 @@ export default function PrecisionNutrition() {
   useEffect(()=>setLabSourceToOpen(null),[user?.id]);
   const r = result.data;
   const currentResult=result.fetchStatus==="idle"&&!result.isError&&!result.isPending;
+  useEffect(()=>{if(currentResult&&tab==="genetics"&&geneticSourceFocus.current===user?.id){const heading=document.getElementById("genetic-dataset-management-heading");if(heading){heading.focus();geneticSourceFocus.current=null;}}},[currentResult,tab,r,user?.id]);
   const requestedObservation=new URLSearchParams(search).get("observation"),focusedObservation=useRef("");
   useEffect(()=>{const key=`${user?.id}:${requestedObservation}`;if(tab!=="progress"||!requestedObservation||!currentResult||focusedObservation.current===key||!r?.checkins.some(row=>row.id===requestedObservation))return;const target=document.getElementById(`precision-observation-${requestedObservation}`);if(target){target.focus();target.scrollIntoView({block:"start"});focusedObservation.current=key;}},[requestedObservation,tab,currentResult,r?.checkins,user?.id]);
   const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
@@ -431,6 +435,7 @@ export default function PrecisionNutrition() {
           </p>
         )}
       </div>
+      {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
       {(result.isError||result.fetchStatus==="paused")&&(
         <section className="bloom-panel">
@@ -519,11 +524,13 @@ export default function PrecisionNutrition() {
             )}
             {tab === "genetics" && (
               <>
+
                 {r.genetics.personalHighlights&&<GeneticHighlights key={`highlights:${user?.id}:${r.genetics.import?.id}:${r.genetics.personalHighlights.registryVersion}`} projection={r.genetics.personalHighlights} hasSource={!!r.genetics.import} entries={r.genetics.explanations||[]} sourceDescription={r.genetics.import?`${r.genetics.import.provider==="manual"?"User-entered source":"23andMe text source"} · build: ${r.genetics.import.build}; ${r.genetics.import.provider==="23andMe"||r.genetics.manual?.strand==="forward"?"forward strand reported":"strand not confirmed"}.`:"No selected source."} />}
                 <GeneticsCatalogue key={user?.id} explanations={r.genetics.explanations || []} />
                 <div id="genetics-source-entry" className="scroll-mt-20" tabIndex={-1}><ManualGenetics
                   key={r.genetics.import?.id || "none"}
                   genetics={r.genetics}
+                  onDraftChange={setGeneticManualDirty}
                   onSaved={() =>
                     setStatus(
                       "Selected SNPs saved as your active genetic dataset. Unreviewed or unconfirmed entries remain recorded without interpretation.",
@@ -611,32 +618,6 @@ export default function PrecisionNutrition() {
                   </Button>
                   {sources(["raw-format"])}
                 </section>
-                {r.genetics.import && (
-                  <section className="bloom-panel">
-                    <p>
-                      Active import:{" "}
-                      {r.genetics.import.collectedAt.slice(0, 10)}
-                    </p>
-                    <Button
-                      variant="outline"
-                      onClick={() =>
-                        remove({
-                          id: r.genetics.import!.id,
-                          kind: "genetics",
-                          payload: null,
-                          createdAt: r.genetics.import!.collectedAt,
-                        })
-                      }
-                    >
-                      Delete active genetic import
-                    </Button>
-                    <p className="panel-note">
-                      Deleting an input also removes derived precision plans.
-                      Earlier imports, if any, remain available until deleted
-                      with all precision data.
-                    </p>
-                  </section>
-                )}
                 <GenotypeExplanations entries={r.genetics.explanations || []} />
                 <details>
                   <summary>Reviewed marker pathway context</summary>
