@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "checks": [
+    "singleSearchprimary/recentabove",
+    "manual/barcode retained",
+    "typed canonical draft preserved across method switches",
+    "searchcapabilityfallback,photo/menuoff",
+    "320390lightdark/200% desktop zoom",
+    "no writes/no page errors"
+  ],
+  "physicalPhone": "NOT_RUN",
+  "independentDesign": "NOT_GRANTED"
+}
