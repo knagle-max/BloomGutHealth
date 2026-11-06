@@ -1,7 +1,9 @@
+import{reportDeletionRevision}from"./report-records";
+import{ReportDeletionConflict}from"../shared/report-management";
 import {createHash} from 'node:crypto';
-import {and,eq,sql} from 'drizzle-orm';
+import {and,eq,ne,inArray,sql} from 'drizzle-orm';
 import {z} from 'zod';
-import {microbiomeSamples,bacterialComposition,mlAnalyses} from '../shared/schema';
+import {microbiomeSamples,bacterialComposition,mlAnalyses,metabolites,healthImpacts,recommendations} from '../shared/schema';
 import {reportImportIdentity,ReportSaveConflict,type StructuredReport,type ReportImportFields,type ReportSaveResult} from '../shared/structured-report';
 import {saveStructuredReport} from './report-routes';
 import {assertViomeImportMetadata} from '../shared/viome-findings';
@@ -61,15 +63,28 @@ export async function importStructuredReportWithReceipt(db:any,userId:string,rep
 
 /** User-requested owned deletion. Only relationship metadata is removed from
  * surviving companions; their biological findings/manual data are preserved. */
-export async function deleteOwnedViomeReport(db:any,userId:string,id:string){
+export async function deleteOwnedMicrobiomeReport(db:any,userId:string,id:string,expectedRevision?:string){
  if(!userId)throw Error('Account context is required');
  return db.transaction(async(tx:any)=>{
   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
-  const[owned]=await tx.select().from(microbiomeSamples).where(and(eq(microbiomeSamples.id,id),eq(microbiomeSamples.userId,userId)));
-  if(!owned||!viomeSource(owned.structuredData))return false;
+  const[owned]=await tx.select().from(microbiomeSamples).where(and(eq(microbiomeSamples.id,id),eq(microbiomeSamples.userId,userId))).for("update");
+  if(!owned)return false;
+  if(expectedRevision&&reportDeletionRevision(owned)!==expectedRevision)throw new ReportDeletionConflict();
   const linked=await tx.select().from(microbiomeSamples).where(and(eq(microbiomeSamples.userId,userId),sql`${microbiomeSamples.structuredData}->'sourceReport'->'specimenEvent'->>'rootReportId' = ${id}`));
   for(const row of linked){if(!viomeSource(row.structuredData))continue;const data=structuredClone(row.structuredData);delete data.sourceReport.specimenEvent;await tx.update(microbiomeSamples).set({structuredData:data}).where(and(eq(microbiomeSamples.id,row.id),eq(microbiomeSamples.userId,userId)));}
-  await tx.delete(bacterialComposition).where(eq(bacterialComposition.sampleId,id));await tx.delete(mlAnalyses).where(eq(mlAnalyses.sampleId,id));
+  const remainingOwned=tx.select({id:microbiomeSamples.id}).from(microbiomeSamples).where(and(eq(microbiomeSamples.userId,userId),ne(microbiomeSamples.id,id)));
+  const sourceBacteria=tx.select({id:bacterialComposition.id}).from(bacterialComposition).where(eq(bacterialComposition.sampleId,id));
+  const sourceAnalyses=tx.select({id:mlAnalyses.id}).from(mlAnalyses).where(eq(mlAnalyses.sampleId,id));
+  const sourceMetabolites=tx.select({id:metabolites.id}).from(metabolites).where(eq(metabolites.sampleId,id));
+  // Shared nullable references in independently retained owned reports are
+  // unlinked, never cascaded. Unexpected foreign references fail/roll back.
+  await tx.update(metabolites).set({bacterialId:null}).where(and(inArray(metabolites.sampleId,remainingOwned),inArray(metabolites.bacterialId,sourceBacteria)));
+  await tx.update(recommendations).set({analysisId:null}).where(and(inArray(recommendations.sampleId,remainingOwned),inArray(recommendations.analysisId,sourceAnalyses)));
+  await tx.delete(recommendations).where(eq(recommendations.sampleId,id));
+  await tx.delete(healthImpacts).where(inArray(healthImpacts.metaboliteId,sourceMetabolites));
+  await tx.delete(metabolites).where(eq(metabolites.sampleId,id));
+  await tx.delete(bacterialComposition).where(eq(bacterialComposition.sampleId,id));
+  await tx.delete(mlAnalyses).where(eq(mlAnalyses.sampleId,id));
   await tx.delete(microbiomeSamples).where(and(eq(microbiomeSamples.id,id),eq(microbiomeSamples.userId,userId)));return true;
  });
 }

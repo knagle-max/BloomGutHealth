@@ -1,3 +1,4 @@
+import{reportDeletionRevision}from"./report-records";
 import { abundanceSchema } from "../shared/report-import";
 const limitation="Relative organism percentages do not establish gene activity, metabolite concentrations, personal health scores, supplement doses or a biologically optimal range.";
 /** Defense in depth: even an older processing service cannot reintroduce prototype effects. */
@@ -14,7 +15,9 @@ export function historicalAnalysisMetadata(analyses:any[]){return analyses.map(a
 
 /** Historical original file paths are server metadata, never browser API fields. */
 export function publicSample<T extends { rawDataPath?: unknown }>(sample:T) {
-  const {rawDataPath: _privatePath, ...visible}=sample;
+  const {rawDataPath: _privatePath, ...rest}=sample;
+  const row=sample as Record<string,unknown>;
+  const visible={...rest,...(typeof row.id==="string"&&typeof row.userId==="string"?{deletionRevision:reportDeletionRevision(row)}:{})};
   const data=(visible as {structuredData?:any}).structuredData;
   if(data&&typeof data==='object'&&data.importInfo&&typeof data.importInfo==='object'&&Object.hasOwn(data.importInfo,'saveReceipt')){
     const{saveReceipt:_internal,...info}=data.importInfo;

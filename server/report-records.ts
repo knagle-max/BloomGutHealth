@@ -1,3 +1,4 @@
+import{createHash}from"node:crypto";
 import{and,eq,getTableColumns,sql}from'drizzle-orm';import{microbiomeSamples,bacterialComposition,mlAnalyses,type MicrobiomeSample,type InsertBacterialComposition,type InsertMlAnalysis}from'../shared/schema';import type{db}from'./db';
 type Database=Pick<typeof db,'select'|'update'|'insert'>;
 export type SampleUpdates=Partial<Omit<MicrobiomeSample,'id'|'userId'>>;
@@ -35,4 +36,10 @@ export async function insertOwnedAnalysis(database:Database,row:InsertMlAnalysis
   comparedCohorts:(row.comparedCohorts==null?sql`null::text[]`:sql`ARRAY(SELECT jsonb_array_elements_text(${JSON.stringify(row.comparedCohorts)}::jsonb))`).as('compared_cohorts'),analyzedAt:sql<Date>`now()`.as('analyzed_at'),
  }).from(microbiomeSamples).where(where)).returning({id:mlAnalyses.id});
  if(!inserted)throw Error('Report not found in your account');return inserted.id;
+}
+
+/** Opaque stored-record version, never a fingerprint of an uploaded document. */
+export function reportDeletionRevision(sample:Record<string,unknown>):string{
+ const stable=(value:any):any=>value instanceof Date?value.toISOString():Array.isArray(value)?value.map(stable):value&&typeof value==="object"?Object.fromEntries(Object.entries(value).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([k,v])=>[k,stable(v)])):value;
+ return createHash('sha256').update(JSON.stringify(stable([sample.id,sample.userId,sample.testDate,sample.uploadedAt,sample.testingCompany,sample.processingStatus,sample.structuredData,sample.notes,sample.diversityIndex]))).digest('hex');
 }

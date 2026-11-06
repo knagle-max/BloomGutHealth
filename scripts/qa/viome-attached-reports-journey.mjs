@@ -1,3 +1,4 @@
+import{reportDerivedTablesSql}from"../../tests/fixtures/report-derived-tables.ts";
 /** Private local acceptance: no PDF, hash, expected manifest, screenshots or
  * biological values are written to Git, disk, console or an external service.
  * Pass BLOOM_VIOME_ORGANISMS_PDF and BLOOM_VIOME_FOODS_PDF explicitly. */
@@ -12,7 +13,7 @@ import {eq} from 'drizzle-orm';
 import {createServer} from 'vite';
 import {microbiomeSamples} from '../../shared/schema.ts';
 import {registerReportRoutes} from '../../server/report-routes.ts';
-import {importStructuredReportWithReceipt,deleteOwnedViomeReport} from '../../server/structured-report-storage.ts';
+import {importStructuredReportWithReceipt,deleteOwnedMicrobiomeReport} from '../../server/structured-report-storage.ts';
 import {getOwnedSample,getOwnedComposition,getOwnedAnalyses} from '../../server/report-records.ts';
 import {publicSample} from '../../server/analysis-boundary.ts';
 const paths=[process.env.BLOOM_VIOME_ORGANISMS_PDF,process.env.BLOOM_VIOME_FOODS_PDF];
@@ -57,7 +58,7 @@ const pg=new PGlite();await pg.exec(`CREATE TABLE users(id varchar PRIMARY KEY);
 CREATE TABLE microbiome_samples(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),user_id varchar NOT NULL REFERENCES users(id),test_date timestamp NOT NULL,testing_company text,test_id text,raw_data_path text,structured_data jsonb,notes text,processing_status text NOT NULL DEFAULT 'pending',diversity_index real,uploaded_at timestamp NOT NULL DEFAULT now());
 CREATE TABLE bacterial_composition(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),sample_id varchar NOT NULL REFERENCES microbiome_samples(id),bacterial_name text NOT NULL,taxonomy_level text NOT NULL,abundance real NOT NULL,genome_data jsonb);
 CREATE TABLE ml_analyses(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),sample_id varchar NOT NULL REFERENCES microbiome_samples(id),analysis_type text NOT NULL,model_version text NOT NULL,results jsonb NOT NULL,confidence real,explainability jsonb,compared_cohorts text[],analyzed_at timestamp NOT NULL DEFAULT now());`);
-const db=drizzle(pg),store={importStructuredReport:(owner,report,fields,filename,id,reuse)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,id,reuse),deleteViomeReport:(owner,id)=>deleteOwnedViomeReport(db,owner,id)};
+await pg.exec(reportDerivedTablesSql);const db=drizzle(pg),store={importStructuredReport:(owner,report,fields,filename,id,reuse)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,id,reuse),deleteMicrobiomeReport:(owner,id,revision)=>deleteOwnedMicrobiomeReport(db,owner,id,revision)};
 const app=express();app.use(express.json({limit:'2mb'}));app.use((req,_res,next)=>{req.session={userId:req.get('x-local-user')};next();});const auth=(req,res,next)=>req.session.userId?next():res.sendStatus(401);registerReportRoutes(app,auth,store);
 app.get('/api/microbiome/samples/:owner',auth,async(req,res)=>{if(req.params.owner!==req.session.userId)return res.sendStatus(404);res.json((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,req.session.userId))).map(publicSample));});
 app.get('/api/microbiome/results/:id',auth,async(req,res)=>{const sample=await getOwnedSample(db,req.params.id,req.session.userId);if(!sample)return res.sendStatus(404);res.json({sample:publicSample(sample),bacterial_composition:await getOwnedComposition(db,sample.id,req.session.userId),analyses:await getOwnedAnalyses(db,sample.id,req.session.userId)});});
@@ -70,7 +71,7 @@ page.on('request',request=>{requests.push({host:new URL(request.url()).hostname,
 await page.route('**/api/**',async route=>{const req=route.request(),path=new URL(req.url()).pathname;
  if(path.startsWith('/api/microbiome/')){
   if(req.method()==='POST'){posts++;const body=req.postDataJSON();assert.ok(Object.keys(body).every(k=>['report','reuseExistingReportId'].includes(k)),'Only reviewed findings and optional internal reuse reference may leave browser.');exact(body.report,index);assert.ok(!(req.postData()||'').includes('%PDF-'),'No raw PDF request');}
-  const response=await fetch(backend+path,{method:req.method(),headers:{'content-type':'application/json','x-local-user':owner,...(req.headers()['idempotency-key']?{'Idempotency-Key':req.headers()['idempotency-key']}:{}),...(req.headers()['x-bloom-report-actor']?{'X-Bloom-Report-Actor':req.headers()['x-bloom-report-actor']}:{})},...(req.method()!=='GET'?{body:req.postData()}:{} )});return route.fulfill({status:response.status,contentType:'application/json',body:await response.text()});
+  const response=await fetch(backend+path,{method:req.method(),headers:{'content-type':'application/json','x-local-user':owner,...(req.headers()['idempotency-key']?{'Idempotency-Key':req.headers()['idempotency-key']}:{}),...(req.headers()['x-bloom-report-actor']?{'X-Bloom-Report-Actor':req.headers()['x-bloom-report-actor']}:{}),...(req.headers()['x-bloom-confirm']?{'X-Bloom-Confirm':req.headers()['x-bloom-confirm']}:{}),...(req.headers()['if-match']?{'If-Match':req.headers()['if-match']}:{})},...(req.method()!=='GET'?{body:req.postData()}:{} )});return route.fulfill({status:response.status,contentType:'application/json',body:await response.text()});
  }
  return route.fulfill({json:path==='/api/auth/me'?{user:{id:owner,username:'Local private acceptance'}}:path==='/api/experience/settings'?{mode:'everyday',onboarding:{status:'complete'}}:[]});
 });
@@ -88,7 +89,7 @@ try{
  }
  const first=(await ownRows()).find(r=>r.structuredData.sourceReport.documentKind==='active-gut-microbes');
  await upload(1);stage='reimport';await page.getByRole('radio',{name:'Use an existing report; do not create another observation.',exact:true}).check();const child=(await ownRows()).find(r=>r.id!==first.id);await page.getByRole('combobox',{name:'Existing report',exact:true}).selectOption(child.id);await save();assert.equal((await ownRows()).length,2);
- stage='delete';await page.goto('http://127.0.0.1:5274/microbiome?sample='+first.id);await page.getByText('Delete this Viome source',{exact:true}).click();await page.getByRole('checkbox',{name:'Delete this report from my account.',exact:true}).check();await page.getByRole('button',{name:'Delete confirmed report',exact:true}).click();assert.equal((await ownRows()).length,1);exact((await ownRows())[0].structuredData.sourceReport,1);
+ stage='delete';await page.goto('http://127.0.0.1:5274/microbiome?sample='+first.id);await page.getByRole('button',{name:'Delete report',exact:true}).click();await page.getByRole('checkbox',{name:'Delete this report from my account.',exact:true}).check();await page.getByRole('button',{name:'Delete confirmed report',exact:true}).click();assert.equal((await ownRows()).length,1);exact((await ownRows())[0].structuredData.sourceReport,1);
  stage='other-owner';owner='private-local-b';await page.reload();assert.equal(await page.getByRole('region',{name:'Viome source relationship',exact:true}).count(),0);assert.equal((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,owner))).length,0);
  assert.equal(posts,3);assert.deepEqual(errors,[]);assert.ok(requests.every(r=>['127.0.0.1','localhost','fonts.googleapis.com','fonts.gstatic.com'].includes(r.host)),'No external processor');
  const allLabels=expected.flatMap(e=>['organisms','assessments','foods'].flatMap(k=>e[k].map(r=>r[0])));assert.ok(!messages.some(m=>allLabels.some(n=>n.length>10&&m.includes(n))),'No source findings in browser console');

@@ -1,3 +1,4 @@
+import{microbiomeReportId,REPORT_DELETE_CONFIRM,ReportDeletionConflict}from"../shared/report-management";
 import type { Express, RequestHandler } from "express";
 import multer from "multer";
 import { basename, extname } from "node:path";
@@ -21,7 +22,7 @@ type BaseStore = Pick<
   | "insertBacterialComposition"
   | "insertMlAnalysis"
 >;
-type Store = BaseStore & Pick<IStorage,"importStructuredReport"|"deleteViomeReport">;
+type Store = BaseStore & Pick<IStorage,"importStructuredReport"|"deleteMicrobiomeReport">;
 const fieldsSchema = z.object({
   testDate: z.string().max(100).optional(),
   testingCompany: z.string().max(100).optional(),
@@ -187,10 +188,14 @@ export function registerReportRoutes(
     }
   });
   app.delete("/api/microbiome/reports/:id",auth,noCache,sameActor,async(req,res)=>{
-    if(!viomeReportIdSchema.safeParse(req.params.id).success)return res.status(404).json({error:"Report not found in your account."});
-    if(!store.deleteViomeReport)return res.status(503).json({error:"Report deletion is unavailable. Try again later."});
-    try{if(!await store.deleteViomeReport(req.session.userId!,req.params.id))return res.status(404).json({error:"Report not found in your account."});return res.json({success:true});}
-    catch{return res.status(503).json({error:"The report could not be deleted. Reload your saved reports before trying again."});}
+    if(!microbiomeReportId.safeParse(req.params.id).success)return res.status(404).json({error:"Report not found in your account."});
+    if(req.get("X-Bloom-Report-Actor")!==req.session.userId)return res.status(409).json({error:"The signed-in account changed. Reload before deleting."});
+    if(req.get("X-Bloom-Confirm")!==REPORT_DELETE_CONFIRM)return res.status(400).json({error:"Confirm deletion of this selected microbiome report."});
+    const revision=req.get("If-Match")?.match(/^"([a-f0-9]{64})"$/)?.[1];
+    if(!revision)return res.status(428).json({error:"Reload this report before confirming deletion."});
+    if(!store.deleteMicrobiomeReport)return res.status(503).json({error:"Report deletion is unavailable. Try again later."});
+    try{const deleted=await store.deleteMicrobiomeReport(req.session.userId!,req.params.id,revision);return res.json({success:true,state:deleted?"deleted":"not-present"});}
+    catch(error){if(error instanceof ReportDeletionConflict)return res.status(409).json({error:error.message});return res.status(503).json({error:"The report could not be deleted. Reload your saved reports before trying again."});}
   });
   const upload = multer({
     storage: multer.memoryStorage(),

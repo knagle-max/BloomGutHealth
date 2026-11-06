@@ -994,7 +994,8 @@
           "client/src/components/ViomeReviewEditor.tsx",
           "client/src/components/FileUploadZone.tsx",
           "client/src/components/ViomeImportChoices.tsx",
-          "client/src/components/ViomeSavedContext.tsx"
+          "client/src/components/ViomeSavedContext.tsx",
+          "client/src/components/MicrobiomeReportManagement.tsx"
         ],
         "api": [
           "server/report-routes.ts",
@@ -1018,7 +1019,9 @@
           "shared/viome-report-context.ts",
           "server/structured-report-storage.ts",
           "server/shared-rate-limit.ts",
-          "shared/biology-source-inventory.ts"
+          "shared/biology-source-inventory.ts",
+          "shared/report-management.ts",
+          "server/report-records.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1032,7 +1035,7 @@
           "client/src/lib/useStructuredReportSave.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Bounded browser-local Viome text-PDF adapter uses typed findings only, no original PDF/metadata/raw-text transmission. Synthetic layouts do not certify genuine provider fidelity or independent PII exclusion. Explicit owner-confirmed compatible companion references remain separate biological sources. Exact owned reimport reuse is read-only and creates no observations. Owned native-source deletion unlinks surviving companions; quantitative sources are retained.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Bounded browser-local Viome text-PDF adapter uses typed findings only, no original PDF/metadata/raw-text transmission. Synthetic layouts do not certify genuine provider fidelity or independent PII exclusion. Explicit owner-confirmed compatible companion references remain separate biological sources. Exact owned reimport reuse is read-only and creates no observations. Explicit owned report deletion applies to legacy/manual/quantitative/current qualitative sources, requires active actor/scope/If-Match, removes exclusively dependent legacy records transactionally and unlinks surviving companions/shared owned references. Missing-in-account retries are indistinguishable from foreign references and never claim a foreign record was deleted. Other reports/categories are retained; no new specialist authorization implied.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1813,6 +1816,7 @@
     "client/src/components/MealAnalysis.tsx": "3a8594735302dff18b42d1add564da44e18682f7ebdf3151c3f5d6107697b918",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
+    "client/src/components/MicrobiomeReportManagement.tsx": "68c013498d51a5452bf46495eab9242dfe33a06a5d61b501ee2136ac26f8e30a",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
     "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
@@ -1826,7 +1830,7 @@
     "client/src/components/TrainingSetsEditor.tsx": "c07fb2a9f9777369186b6046fb65095b0056ba8460dafaf9292d8352802a9e7b",
     "client/src/components/ViomeImportChoices.tsx": "ddbf1763aa9d944915b97301fc1b27a1a5e69aba7d3eb1aa2503549f657dcb8c",
     "client/src/components/ViomeReviewEditor.tsx": "24b890f707d69e6efcb1eadd2b4147bf410497a462d13a7d8afea21c14845418",
-    "client/src/components/ViomeSavedContext.tsx": "0085de496821193537d10a05386584e8b0376d10f5ee766ad18d2053f42900b5",
+    "client/src/components/ViomeSavedContext.tsx": "21502b6e6743ddf1d2be73e80c121290c5870d5e523ec94bab4a1cee21fbda89",
     "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
@@ -1850,7 +1854,7 @@
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "8aff553a37a52c8aa645c2688a1845b2d053d9c0ef9fc9718f1a5254dbfe6cad",
     "client/src/pages/MealPlanner.tsx": "9833fd2dff5a6868daf49f69745b96d75d4701aae151e3d438ff7e7b9f22c988",
-    "client/src/pages/Microbiome.tsx": "7ff10d0b3b3890a4cdd440a1df861d61193fd9a5c93c63bf41b0b4421bc37b8d",
+    "client/src/pages/Microbiome.tsx": "fdcf3accdfa5ac5401959010a25a41618f6f8c06b06f57d9e7210b16a3661db0",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
     "client/src/pages/PrecisionNutrition.tsx": "73e21d6008095a121efe898ae76df3e5024ef785c36840d42c491801d20740de",
@@ -1864,7 +1868,7 @@
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/ai-configuration.ts": "b6bb5b437c7a279470c821d5dfb59f321f39ce59d275faeb38da3fa7999878d5",
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
-    "server/analysis-boundary.ts": "a6623016ebe2913405a13c825ef56b76513bbc4726eda51d27d09217af560c6c",
+    "server/analysis-boundary.ts": "e5cd70d8a2168d320bf1a2f0f9c701f66b91ccedaacae0cae08d559d1b96232a",
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
@@ -1905,7 +1909,8 @@
     "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
     "server/recipe-ranking.ts": "99f74c8711694fc4779d8dbf8232a4d32d47a716186ae9d2e7c6dffa9e2c9595",
     "server/report-analysis.ts": "be7fe43839066ec596f770da4992905ec06f685595cc64ea720b648bb5d76025",
-    "server/report-routes.ts": "f7685203d53fd5b07cf2d9e0cf8dc19827540aa8564361effd8855b35c7a35a9",
+    "server/report-records.ts": "35858e44b1ec09ab16d6979b723ddf31d0e3b1eda7ad1852a5190e7372214aa1",
+    "server/report-routes.ts": "5ea2489f03bac32e5936e9107b04e088b9cb4ed97b025498b718315e49c03d1d",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
     "server/review-runtime-audit.ts": "12d4d26b37e0967da4273d0c8b3d990e106695f73f6f8f39f7c925070867008f",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
@@ -1913,8 +1918,8 @@
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
     "server/shared-rate-limit.ts": "0a26480bbc179a3d8834e26a8ce31d883e5e97bbfd74af872e00fd8dcb04a2f9",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "e3a9dbda41b302330c9225875113f1de6e4f683eee2d425a75ff79c26f456f81",
-    "server/structured-report-storage.ts": "2d15c5a4cbd8a63e0a5aff137d132a70c0e5944c4d86e90d6c8f63eeb97f8bb0",
+    "server/storage.ts": "d852769113488fcffa611ec5f23a035a6fe34977d59bcf54691963f68864a4be",
+    "server/structured-report-storage.ts": "54f2d446d61884610db1735c8235be313cbda76873269fc7aca58a1fd171b49c",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "f5ca06cbe0d9bee73c4d1ad0630df158b8acb334c1cb5dda39065c34bc90ba58",
@@ -1971,6 +1976,7 @@
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/profile-measurement-source.ts": "7aad632c9c98bf5670eea4277155a98507350e5a6983f6d917c05aed3a994a4e",
     "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
+    "shared/report-management.ts": "7ea615ff7a12e1e53ffd8b5ee83704f627fb9943fe43fc51606f973dbb707025",
     "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
     "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
