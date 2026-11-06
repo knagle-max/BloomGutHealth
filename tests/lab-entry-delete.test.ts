@@ -33,11 +33,12 @@ test('explicit logical lab deletion is atomic, owned, idempotent and cannot resu
     return { original, confirmed };
   };
   try {
-    // Demonstrate the old row-only behavior; the new API must not repeat it.
+    // The generic row-only API must not bypass logical lineage deletion.
     const legacy = await pair();
-    await store.deletePrecisionRecord('a', legacy.confirmed.id);
-    assert.equal((await report()).pendingLabs.some(row => row.id === legacy.original.id), true);
-    await store.deleteLabEntry('a', legacy.original.id);
+    await assert.rejects(store.deletePrecisionRecord('a', legacy.confirmed.id), /LAB_LOGICAL_DELETE_REQUIRED/);
+    assert.equal((await fetch(`${base}/records/${legacy.confirmed.id}`,{method:'DELETE',headers:{'x-user':'a'}})).status,409);
+    assert.equal((await report()).pendingLabs.some(row => row.id === legacy.original.id), false);
+    await store.deleteLabEntry('a', legacy.confirmed.id);
     const { original, confirmed } = await pair();
     const other = await store.insertPrecisionRecord('a', 'lab', parseLabPaste('ALT, 20, U/L', '2026-10-15T12:00:00Z').valid[0].payload);
     const foreign = await store.insertPrecisionRecord('b', 'lab', pending);
@@ -71,4 +72,25 @@ test('explicit logical lab deletion is atomic, owned, idempotent and cannot resu
     await pg.close();
     if (previous === undefined) delete process.env.PRECISION_DATA_KEY; else process.env.PRECISION_DATA_KEY = previous;
   }
+});
+
+test('whole laboratory source deletion follows import provenance, protects revisions and preserves independent sources',async()=>{
+ const prior=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');const pg=new PGlite();await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY,dietary_preferences jsonb);INSERT INTO users(id)VALUES('a'),('b');");await pg.exec(readFileSync(new URL('../migrations/0002_precision_nutrition.sql',import.meta.url),'utf8'));const store=new PrecisionStorage(drizzle(pg)as any),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerPrecisionRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store as any);const server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server.once('listening',r));const base=`http://127.0.0.1:${(server.address()as any).port}/api/precision/labs/sources`;
+ const provenance={importId:'11111111-1111-4111-8111-111111111111',enteredDate:'2026-10-15'};
+ const payload=parseLabPaste('ALT,20,U/L','2026-10-15T12:00:00Z').valid[0].payload;
+ const del=(id:string,revision:string,owner='a',confirm='delete-lab-source',actor=owner)=>fetch(base+'/'+id,{method:'DELETE',headers:{'content-type':'application/json','x-user':owner,'X-Bloom-Labs-Actor':actor,'X-Bloom-Confirm':confirm},body:JSON.stringify({revision,confirmed:true})});
+ try{
+  const one=await store.insertPrecisionRecord('a','lab',{...payload,sourceReport:provenance});const pending=parseLabPaste('LDL,120','2026-10-15T12:00:00Z').pending[0].payload;const root=await store.insertPrecisionRecord('a','lab',{...pending,sourceReport:provenance});const fixed=await store.insertPrecisionRecord('a','lab',{...pending,sourceReport:provenance,unit:'mg/dL',unitReview:{...pending.unitReview!,status:'confirmed',confirmedAt:'2026-10-16T12:00:00Z',supersedes:root.id}});
+  const independent=await store.insertPrecisionRecord('a','lab',payload);const foreign=await store.insertPrecisionRecord('b','lab',{...payload,sourceReport:provenance});const unrelated=await store.insertPrecisionRecord('a','genetics',{legacy:true});const ownPlan=await store.insertPrecisionRecord('a','plan',{type:'historical-other-plan'});
+  let sources=await store.getLabSources('a');assert.equal(sources.length,2);const group=sources.find(s=>s.scope==='report')!;assert.equal(group.results,2);assert.equal(group.records,3);
+  assert.equal((await del(group.id,group.revision,'a','')).status,400);assert.equal((await del(group.id,group.revision,'a','delete-lab-source','b')).status,409);assert.equal((await del(group.id,group.revision,'b')).status,204);assert.equal((await store.getLabSources('a')).length,2);
+  const added=await store.insertPrecisionRecord('a','lab',{...payload,value:21,sourceReport:provenance});assert.equal((await del(group.id,group.revision)).status,409);sources=await store.getLabSources('a');const fresh=sources.find(s=>s.id===group.id)!;assert.equal(fresh.records,4);assert.equal(fresh.results,3);
+  // Persist an existing historical weekly-plan shape directly: only explicit input lineage is relevant to deletion.
+  const{encryptPrecision}=await import('../server/precision-crypto');await pg.query('INSERT INTO precision_records(id,user_id,kind,encrypted_payload)VALUES($1,$2,$3,$4)',['dependent','a','plan',encryptPrecision({type:'weekly-plan',inputGuard:{sourceRecordIds:[one.id]}},'a')]);await pg.query('INSERT INTO precision_records(id,user_id,kind,encrypted_payload)VALUES($1,$2,$3,$4)',['independent-plan','a','plan',encryptPrecision({type:'weekly-plan',inputGuard:{sourceRecordIds:[independent.id]}},'a')]);
+  assert.equal((await del(fresh.id,fresh.revision)).status,204);assert.equal((await del(fresh.id,fresh.revision)).status,204);const retained=await store.getPrecisionRecords('a');assert.ok([independent.id,unrelated.id,ownPlan.id,'independent-plan'].every(id=>retained.some(r=>r.id===id)));assert.ok([one.id,root.id,fixed.id,added.id,'dependent'].every(id=>!retained.some(r=>r.id===id)));assert.equal((await store.getPrecisionRecords('b'))[0].id,foreign.id);assert.equal((await store.getLabSources('a'))[0].scope,'result');
+  // A late new import with the same explicit identity changes the revision; an old delete cannot remove it.
+  await store.insertPrecisionRecord('a','lab',{...payload,sourceReport:provenance});assert.equal((await del(fresh.id,fresh.revision)).status,409);
+  const opaque=await store.insertPrecisionRecord('a','lab',{unrecognizedLegacy:true});const opaqueGroup=(await store.getLabSources('a')).find(s=>s.results===null)!;assert.equal(opaqueGroup.scope,'result');assert.equal(opaqueGroup.records,1);assert.equal((await del(opaqueGroup.id,opaqueGroup.revision)).status,204);assert.equal((await store.getPrecisionRecords('a')).some(r=>r.id===opaque.id),false);
+  await store.insertPrecisionRecord('a','lab',{...payload,sourceReport:{...provenance,reportIdentifier:'Separate recorded source'}});assert.equal((await store.getLabSources('a')).filter(s=>s.scope==='report').length,2,'Conflicting explicit report context stays separate even with the same import ID');
+ }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));await pg.close();if(prior===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=prior;}
 });

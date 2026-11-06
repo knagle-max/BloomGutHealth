@@ -1,3 +1,4 @@
+import type{LabSourceSummary}from"../shared/lab-history";
 import{selectedGeneticSource,healthContextOnly,geneticSourceCommandSchema,GeneticSourceError,type GeneticSourceSnapshot,type GeneticSourceCommand,type GeneticsSourceControl}from"../shared/genetic-source-selection";
 import {possibleLabReimports} from "../shared/lab-reimport";
 import { eq, and, desc, sql, inArray } from "drizzle-orm";
@@ -23,6 +24,29 @@ type PrecisionDatabase = Pick<
 >;
 export class LabImportReviewRequired extends Error {
   constructor(readonly matchedIds:string[]){super("LAB_REIMPORT_REVIEW_REQUIRED");}
+}
+/** Group only persisted import identity or explicit correction edges, never calendar dates. */
+function labSourceGroups(userId:string,records:PrecisionRecord[]){
+ const rows=records.filter(row=>row.kind==="lab"),byId=new Map(rows.map(row=>[row.id,row]));
+ const links=new Map(rows.map(row=>[row.id,new Set<string>()])),imports=new Map<string,string[]>();
+ const facts=new Map<string,Lab|SourceOnlyLab>();
+ for(const row of rows){const known=labSchema.safeParse(row.payload),raw=sourceOnlyLabSchema.safeParse(row.payload);const fact=known.success?known.data:raw.success?raw.data:null;if(!fact)continue;facts.set(row.id,fact);
+  if(fact.sourceReport){const source=fact.sourceReport,key=JSON.stringify([source.importId,source.reportIdentifier??null,source.specimenIdentifier??null]);imports.set(key,[...(imports.get(key)||[]),row.id]);}
+  const parents=[fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
+  for(const parent of parents)if(parent&&byId.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+ }
+ for(const ids of Array.from(imports.values()))for(const id of ids.slice(1)){links.get(ids[0])!.add(id);links.get(id)!.add(ids[0]);}
+ const visited=new Set<string>();return rows.flatMap(row=>{if(visited.has(row.id))return[];const ids=[row.id];visited.add(row.id);for(let i=0;i<ids.length;i++)for(const next of Array.from(links.get(ids[i])!))if(!visited.has(next)){visited.add(next);ids.push(next);}ids.sort();
+  const members=ids.map(id=>byId.get(id)!),parsed=ids.flatMap(id=>facts.has(id)?[{...facts.get(id)!,id}]:[]);
+  const sourceKeys=Array.from(new Set(parsed.flatMap(fact=>fact.sourceReport?[JSON.stringify([fact.sourceReport.importId,fact.sourceReport.reportIdentifier??null,fact.sourceReport.specimenIdentifier??null])]:[]))).sort();
+  // Conflicting explicitly recorded source identities are not silently combined into a report.
+  const valid=sourceKeys.length<=1;
+  const key=sourceKeys.length===1?['import',sourceKeys[0]]:['entry',ids[0]];
+  const id=createHash('sha256').update(JSON.stringify(['lab-source-v1',userId,key])).digest('hex');
+  const revision=createHash('sha256').update(JSON.stringify(['lab-source-version-v1',userId,members])).digest('hex');
+  const summary:LabSourceSummary={id,revision,scope:sourceKeys.length===1?'report':'result',results:parsed.length===members.length?activeLabRows(parsed).length:null,records:members.length,dates:Array.from(new Set(parsed.map(fact=>fact.dateCorrection?.enteredDate||fact.sourceReport?.enteredDate||fact.measuredAt.slice(0,10)))).sort()};
+  return[{summary,members,valid}];
+ });
 }
 export class PrecisionStorage {
   constructor(private readonly db: PrecisionDatabase) {}
@@ -233,7 +257,21 @@ export class PrecisionStorage {
       return {id:row.id,kind:row.kind,payload:corrected,createdAt:row.createdAt};
     });
   }
-  // Explicit logical-entry deletion; the legacy record endpoint remains row-only.
+  async getLabSources(userId:string):Promise<LabSourceSummary[]>{return labSourceGroups(userId,await this.getPrecisionRecords(userId)).map(group=>group.summary);}
+  async deleteLabSource(userId:string,id:string,revision:string):Promise<void>{
+   await this.db.transaction(async tx=>{
+    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+    const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId));
+    const records=stored.map(row=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
+    const group=labSourceGroups(userId,records).find(group=>group.summary.id===id);
+    if(!group)return; // Same authoritative absence response for missing or foreign sources.
+    if(!group.valid||group.summary.revision!==revision)throw Error('LAB_SOURCE_CHANGED');
+    const ids=group.members.map(row=>row.id),removed=new Set(ids);
+    const plans=records.filter(row=>{const plan=row.payload as any;return row.kind==='plan'&&plan?.type==='weekly-plan'&&Array.isArray(plan.inputGuard?.sourceRecordIds)&&plan.inputGuard.sourceRecordIds.some((id:unknown)=>typeof id==='string'&&removed.has(id));}).map(row=>row.id);
+    await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),inArray(precisionRecords.id,[...ids,...plans])));
+   });
+  }
+  // Explicit logical-entry deletion; typed lab rows cannot use the generic row-only endpoint.
   async deleteLabEntry(userId: string, id: string): Promise<void> {
     await this.db.transaction(async (tx) => {
       await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
@@ -284,6 +322,11 @@ export class PrecisionStorage {
       );
       const[target]=await tx.select({kind:precisionRecords.kind}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
       if(target?.kind==="genetics")throw new GeneticSourceError("read-only");
+      if(target?.kind==="lab"){
+        const[row]=await tx.select({encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+        const payload=decryptPrecision(row.encryptedPayload,userId);
+        if(labSchema.safeParse(payload).success||sourceOnlyLabSchema.safeParse(payload).success)throw Error("LAB_LOGICAL_DELETE_REQUIRED");
+      }
       const removed = await tx
         .delete(precisionRecords)
         .where(

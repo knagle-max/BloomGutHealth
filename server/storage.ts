@@ -1,3 +1,4 @@
+import type{LabSourceSummary}from"../shared/lab-history";
 import type{GeneticSourceCommand,GeneticSourceSnapshot}from"../shared/genetic-source-selection";
 import type{ViomeRelationshipCommand,ViomeRelationshipResult}from"../shared/report-management";
 import {readProfileMeasurementSource} from "./profile-measurement-source";
@@ -98,6 +99,8 @@ export interface IStorage extends ExperienceStore {
   correctLabDate?(userId:string, sourceId:string, input:LabDateChange, saveKey:string):Promise<PrecisionRecord>;
   getGeneticSources?(userId:string):Promise<GeneticSourceSnapshot>;
   changeGeneticSource?(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>;
+  getLabSources?(userId:string):Promise<LabSourceSummary[]>;
+  deleteLabSource?(userId:string,id:string,revision:string):Promise<void>;
   deleteLabEntry?(userId: string, id: string): Promise<void>;
   deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
   clearPrecisionData(userId: string): Promise<void>;
@@ -232,6 +235,8 @@ export class DatabaseStorage implements IStorage {
   }
   getGeneticSources(userId:string){return this.precision.getGeneticSources(userId);}
   changeGeneticSource(userId:string,command:GeneticSourceCommand){return this.precision.changeGeneticSource(userId,command);}
+  getLabSources(userId:string){return this.precision.getLabSources(userId);}
+  deleteLabSource(userId:string,id:string,revision:string){return this.precision.deleteLabSource(userId,id,revision);}
   deleteLabEntry(userId: string, id: string) {
     return this.precision.deleteLabEntry(userId, id);
   }

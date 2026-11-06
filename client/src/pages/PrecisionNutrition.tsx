@@ -1,3 +1,4 @@
+import LabSourceManagement from"@/components/LabSourceManagement";
 import GeneticSourceManagement from"@/components/GeneticSourceManagement";
 import {captureCheckinEntrySource} from "@shared/checkin-entry-source";
 import BloodworkSourceOverview from '@/components/BloodworkSourceOverview';
@@ -435,6 +436,7 @@ export default function PrecisionNutrition() {
           </p>
         )}
       </div>
+      {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
       {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
       {(result.isError||result.fetchStatus==="paused")&&(

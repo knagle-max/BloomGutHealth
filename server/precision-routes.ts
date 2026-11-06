@@ -51,6 +51,8 @@ type Store = Pick<
   | "correctLabDate"
   | "getGeneticSources"
   | "changeGeneticSource"
+  | "getLabSources"
+  | "deleteLabSource"
   | "deleteLabEntry"
   | "deletePrecisionRecord"
   | "clearPrecisionData"
@@ -665,6 +667,14 @@ export function registerPrecisionRoutes(
   };
   app.post("/api/precision/genetics/active",(req,res)=>manageGeneticSource(req,res,"activate"));
   app.delete("/api/precision/genetics/sources/:id",(req,res)=>manageGeneticSource(req,res,"delete"));
+  app.get("/api/precision/labs/sources",async(req,res)=>{try{if(!store.getLabSources)return res.status(503).json({error:"Laboratory source management is unavailable."});return res.json(await store.getLabSources(req.session.userId!));}catch(e){unavailable(res,e);}});
+  app.delete("/api/precision/labs/sources/:id",async(req,res)=>{
+    if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload before deleting a laboratory source.'});
+    const command=z.object({revision:z.string().regex(/^[a-f0-9]{64}$/),confirmed:z.literal(true)}).strict().safeParse(req.body);
+    if(req.get('X-Bloom-Confirm')!=='delete-lab-source'||!command.success)return res.status(400).json({error:'Confirm the exact laboratory source before deleting.'});
+    if(!store.deleteLabSource)return res.status(503).json({error:'Atomic laboratory source deletion is unavailable. No fallback deletion was attempted.'});
+    try{await store.deleteLabSource(req.session.userId!,req.params.id,command.data.revision);return res.status(204).end();}catch(e){if(e instanceof Error&&e.message==='LAB_SOURCE_CHANGED')return res.status(409).json({error:'Laboratory sources changed. Reload and review before deleting.'});unavailable(res,e);}
+  });
   app.delete("/api/precision/labs/:id/entry", async (req, res) => {
     if (req.headers["x-bloom-confirm"] !== "delete-lab-entry-and-revisions")
       return res.status(400).json({ error: "Explicit result and revision deletion confirmation is required." });
@@ -687,6 +697,7 @@ export function registerPrecisionRoutes(
       res.status(204).end();
     } catch (e) {
       if(e instanceof GeneticSourceError)return res.status(409).json({error:"Use saved genetic dataset management to confirm source deletion and active selection."});
+      if(e instanceof Error&&e.message==="LAB_LOGICAL_DELETE_REQUIRED")return res.status(409).json({error:"Use laboratory result management to confirm deletion of the result and its revisions."});
       unavailable(res, e);
     }
   });

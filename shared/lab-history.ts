@@ -65,3 +65,6 @@ export function compareRecordedLabResults<T extends {id:string;date:string;value
 }
 /** Significant digits retain tiny nonzero arithmetic instead of displaying zero. */
 export function formatRecordedLabNumber(value:number){return Number.isFinite(value)?new Intl.NumberFormat(undefined,{maximumSignificantDigits:6}).format(value===0?0:value):'Not available';}
+
+/** Management metadata contains no biomarker values or original report identifiers. */
+export type LabSourceSummary={id:string;revision:string;scope:'report'|'result';results:number|null;records:number;dates:string[]};
