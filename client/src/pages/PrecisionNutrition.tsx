@@ -22,6 +22,7 @@ import { recipePreparation } from "@shared/recipe-preparation";
 import GenotypeExplanations from "@/components/GenotypeExplanations";
 import GeneticsCatalogue from "@/components/GeneticsCatalogue";
 import GeneticHighlights from "@/components/GeneticHighlights";
+import type {GutReportInventory} from "@shared/biology-source-inventory";
 import ManualGenetics from "@/components/ManualGenetics";
 import { useEffect, useState, useRef } from "react";
 import { Link,useSearch } from "wouter";
@@ -49,6 +50,7 @@ import {
 import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 
 type Report = PrecisionReport & {
+  gutReportInventory?:GutReportInventory;
   availableReports: {dateContext?:ReportDateContext; id: string; date: string; name: string }[];
   intake: {
     days: number;
@@ -365,7 +367,7 @@ export default function PrecisionNutrition() {
   const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
   useEffect(()=>{const key=`${user?.id}:${requestedLabResult}`;if(tab!=="labs"||!requestedLabResult||!currentResult||focusedLabResult.current===key||![...(r?.labHistory||[]),...(r?.pendingLabs||[]),...(r?.sourceOnlyLabs||[])].some(row=>row.id===requestedLabResult))return;focusedLabResult.current=key;setLabSourceToOpen({rowId:requestedLabResult,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
-  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#biology-bloodwork-results"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
+  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#add-labs-title"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
       <div
         className="precision-tabs"
@@ -443,7 +445,7 @@ export default function PrecisionNutrition() {
           <fieldset disabled={!currentResult} className="min-w-0 border-0 p-0 m-0" aria-label="Current biology inputs">
             {tab === "overview" && (
               <>
-                <BiologyHome report={r} onOpen={openSource}/>
+                <BiologyHome report={r} gutReports={r.gutReportInventory} onOpen={openSource}/>
                 <details ref={goalsDisclosure} className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
                 <summary>Your goals & health context</summary>
                 <ContextEditor

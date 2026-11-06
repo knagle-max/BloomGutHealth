@@ -64,7 +64,8 @@
           "server/planning-context.ts",
           "shared/athlete-review.ts",
           "server/settings-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/biology-source-inventory.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1016,7 +1017,8 @@
           "client/src/lib/viome-pdf-reader.ts",
           "shared/viome-report-context.ts",
           "server/structured-report-storage.ts",
-          "server/shared-rate-limit.ts"
+          "server/shared-rate-limit.ts",
+          "shared/biology-source-inventory.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1781,7 +1783,7 @@
     "client/src/components/AthleteEntrySource.tsx": "334328365f4f125c115c2f74d8b9667ed60b0e7c3c1f275b6d67e3a55e415bf4",
     "client/src/components/AthleteHome.tsx": "cab3c0d973c85de6bbb5bb4ccd524914383aeac951d94f3ce181bba16c86912c",
     "client/src/components/AthleteProfileForm.tsx": "78f8fddb566930c5d23f499da8faaed161d0d77757a3fe10325fc592deea9ac3",
-    "client/src/components/BiologyHome.tsx": "b405b2a0e02bfafa9a0b0fdbe2685970deff675c9c2edcaca407758198470654",
+    "client/src/components/BiologyHome.tsx": "43e1413941ec27c0598e48ed4de2df3f2ca2f9d1f6d3ceca5dee5444a128a338",
     "client/src/components/BloodworkSourceOverview.tsx": "837679800dcd738e8ad6f5bbe2e064203f50724325e284484f0408596e6be1e9",
     "client/src/components/CheckinEntrySource.tsx": "f1db6546df547cbaf00483c4ea21150557469a68d74c5b17d584560ebc20c3f8",
     "client/src/components/CompanionHero.tsx": "1eeb9520a1cec08d8fb22a515414f868bb857ca61c193002a824151a87164ef9",
@@ -1851,7 +1853,7 @@
     "client/src/pages/Microbiome.tsx": "7ff10d0b3b3890a4cdd440a1df861d61193fd9a5c93c63bf41b0b4421bc37b8d",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
-    "client/src/pages/PrecisionNutrition.tsx": "fcf6ee14b24c93fd17e0d7d7b51f743d59bc86479c5958b00a3bf97b92bdc3bb",
+    "client/src/pages/PrecisionNutrition.tsx": "73e21d6008095a121efe898ae76df3e5024ef785c36840d42c491801d20740de",
     "client/src/pages/Profile.tsx": "5fdaca88e89d00efb9ed9936c634152400f06981120b95b65807549834afea22",
     "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
@@ -1890,7 +1892,7 @@
     "server/plan-history.ts": "e5e19e94821047a1516c64685a4cb5926e3523c127c1f30f9de61240c1d93c7f",
     "server/planner-routes.ts": "e0509b74f5e11e2378094cc29d6f4d6d16342f504e796bf75302ddf13faaa776",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
-    "server/precision-routes.ts": "f6c1b661934c030dad6589c0d29f9859e61e48ea552d9ac58de070f2e6cf9ac7",
+    "server/precision-routes.ts": "b3e4ad4acce252ea252596ce0f3da45db1514eef77b7c7ac5bbd6d11b3df9307",
     "server/precision-storage.ts": "99d84dc6c713fe5b526b80833f1a8cee0ea0533cc9dbf6aabddca9c95767dcf4",
     "server/preference-source.ts": "439afcf8ce9081a61c84176e6537659c3788597c4a0aca24907619933ae4dc46",
     "server/private-product-storage.ts": "f42c4879f5611c7c7cbc204d3fceadc396c48e84488018326c0459245743eb2d",
@@ -1928,6 +1930,7 @@
     "shared/athlete.ts": "380767ce6e5245df8fa52d6b66a60c41346022e0614f72f83cf2a58bbb6707b5",
     "shared/barcodes.ts": "6602a438f1cfe8addfd21e335c8126dee4c74270cb36c19b8683771fcd760f70",
     "shared/biological-model.ts": "c2c424b0249946fa02dfa0bf54845162d5aee9fc9ac748058b3a80c0bcb38625",
+    "shared/biology-source-inventory.ts": "92bc100e93c34fa24e9ca9a34b188ed0e35dfaad702aec6adbd65e47b27254be",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/catalogue-mass-handoff.ts": "9e762fd498ce23d370f05d22ead54aa6e50cd41881d6fd8b17f2f8e3206a3cac",
     "shared/checkin-entry-source.ts": "540ba0ee7e0c9a27e7ee6b14ad934a71c0b65cf99254771c471d5a054e884d48",

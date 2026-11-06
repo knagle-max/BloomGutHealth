@@ -1,5 +1,6 @@
 import {reportDateContext} from "../shared/report-dates";
 import {LabImportReviewRequired} from "./precision-storage";
+import {gutReportInventory} from "../shared/biology-source-inventory";
 import {labDateChangeSchema} from "../shared/lab-date-correction";
 import {nutritionTargetReference} from "./nutrition-targets";
 import {resolvePlanningContext} from "./planning-context";
@@ -146,6 +147,7 @@ export function registerPrecisionRoutes(
     return {
       ...result,
       ageSources: resolved.ageSources,
+      gutReportInventory:gutReportInventory(samples),
       availableReports: owned.map((s) => ({
         id: s.id,
         date: s.testDate.toISOString(),

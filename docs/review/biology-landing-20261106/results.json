@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "checks": [
+    "actual App→precision HTTP qualitative-only inventory",
+    "four ordered destinations without forced hero",
+    "quantitative report/selector stay null/empty",
+    "empty/pending-units/unavailable states",
+    "existing lab drilldown focus/genetics/measurements",
+    "keyboard/320390lightdark/200% desktop zoom",
+    "no writes or hidden source error details"
+  ],
+  "physicalVoiceOver": "NOT_RUN",
+  "independentDesign": "NOT_GRANTED"
+}
