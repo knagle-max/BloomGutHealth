@@ -46,7 +46,9 @@ function labSourceGroups(userId:string,records:PrecisionRecord[]){
   const key=sourceKeys.length===1?['import',sourceKeys[0]]:['entry',ids[0]];
   const id=createHash('sha256').update(JSON.stringify(['lab-source-v1',userId,key])).digest('hex');
   const revision=createHash('sha256').update(JSON.stringify(['lab-source-version-v1',userId,members])).digest('hex');
-  const summary:LabSourceSummary={id,revision,scope:sourceKeys.length===1?'report':'result',results:parsed.length===members.length?activeLabRows(parsed).length:null,records:members.length,dates:Array.from(new Set(parsed.map(fact=>fact.dateCorrection?.enteredDate||fact.sourceReport?.enteredDate||fact.measuredAt.slice(0,10)))).sort()};
+  const detailRecordId=activeLabRows(parsed)[0]?.id;
+  const savedTimes=members.map(row=>+new Date(row.createdAt)).filter(Number.isFinite),savedAt=savedTimes.length?new Date(Math.min(...savedTimes)).toISOString():null;
+  const summary:LabSourceSummary={id,revision,manageable:valid,savedAt,...(detailRecordId?{detailRecordId}:{}),scope:sourceKeys.length===1?'report':'result',results:parsed.length===members.length?activeLabRows(parsed).length:null,records:members.length,dates:Array.from(new Set(parsed.map(fact=>fact.dateCorrection?.enteredDate||fact.sourceReport?.enteredDate||fact.measuredAt.slice(0,10)))).sort()};
   return[{summary,members,valid}];
  });
 }

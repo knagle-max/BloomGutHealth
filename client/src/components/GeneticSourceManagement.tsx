@@ -15,7 +15,7 @@ export default function GeneticSourceManagement({onChanged,hasDraft}:{hasDraft:b
  const key=['/api/precision/genetics/sources',user?.id];
  const sources=useQuery<GeneticSourceSnapshot>({queryKey:key,enabled:!!user,queryFn:async({signal})=>geneticSourceSnapshotSchema.parse(await(await apiRequest('GET','/api/precision/genetics/sources',undefined,undefined,signal)).json())});
  const current=sources.fetchStatus==='idle'&&!sources.isError?sources.data:undefined;
- const[draft,setDraft]=useState<GeneticSourceCommand|null>(null),[confirmed,setConfirmed]=useState(false),[pending,setPending]=useState(false),[error,setError]=useState(''),[viewId,setViewId]=useState<string|null>(null),[draftCaption,setDraftCaption]=useState('');
+ const[draft,setDraft]=useState<GeneticSourceCommand|null>(null),[confirmed,setConfirmed]=useState(false),[pending,setPending]=useState(false),[error,setError]=useState(''),[viewId,setViewId]=useState<string|null>(()=>new URLSearchParams(window.location.search).get("geneticSource")),[draftCaption,setDraftCaption]=useState('');
  const trigger=useRef<HTMLButtonElement|null>(null);
  const detail=useQuery<SourceDetail>({queryKey:['/api/precision/genetics/source-detail',user?.id,viewId],enabled:!!user&&!!viewId,queryFn:async({signal})=>geneticSourceDetailSchema.parse(await(await apiRequest('GET','/api/precision/genetics/sources/'+encodeURIComponent(viewId!),undefined,undefined,signal)).json())});
  const currentDetail=detail.fetchStatus==='idle'&&!detail.isError&&detail.data?.id===viewId?detail.data:undefined;

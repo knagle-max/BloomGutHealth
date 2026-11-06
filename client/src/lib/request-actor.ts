@@ -9,7 +9,8 @@ export class AccountContextChangedError extends Error {
 export function bindRequestActor(next: string | null) {
   if (next !== actor) { actor = next; epoch++; }
 }
-export function accountContextGuard(): () => void {
+export function accountContextGuard(expectedActor?: string | null): () => void {
+  if (expectedActor !== undefined && expectedActor !== actor) throw new AccountContextChangedError();
   const started = epoch;
   return () => { if (started !== epoch) throw new AccountContextChangedError(); };
 }

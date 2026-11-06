@@ -52,10 +52,11 @@ export class SharedRateLimiter {
       const costly = path.startsWith("/api/capabilities") || /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export|search)/i.test(path);
       const reportDelete=req.method==="DELETE"&&/^\/api\/microbiome\/reports\/[^/]+$/.test(path);
       const reportRelationship=req.method==="POST"&&/^\/api\/microbiome\/reports\/[^/]+\/relationship$/.test(path);
+      const biologicalReportWrite=req.method==="DELETE"&&path==="/api/biology/reports";
       const microFoodWrite=req.method==="PUT"&&path==="/api/precision/microbiome-food";
       const labSourceWrite=req.method==="DELETE"&&/^\/api\/precision\/labs\/sources\/[^/]+$/.test(path);
       const geneticSourceWrite=req.method==="POST"&&path==="/api/precision/genetics/active"||req.method==="DELETE"&&/^\/api\/precision\/genetics\/sources\/[^/]+$/.test(path);
-      const workspaceWrite=reportDelete||reportRelationship||microFoodWrite||labSourceWrite||geneticSourceWrite||(path==="/api/experience"||path.startsWith("/api/experience/"))&&["POST","PUT","PATCH","DELETE"].includes(req.method);
+      const workspaceWrite=reportDelete||reportRelationship||biologicalReportWrite||microFoodWrite||labSourceWrite||geneticSourceWrite||(path==="/api/experience"||path.startsWith("/api/experience/"))&&["POST","PUT","PATCH","DELETE"].includes(req.method);
       if (!auth && !costly && !workspaceWrite) return next();
       // Preserve existing costly-route ceilings while adding the existing
       // workspace allowance across replicas. Reads do not become writes.

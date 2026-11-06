@@ -1,3 +1,5 @@
+import{getBiologicalReports,deleteBiologicalReports}from'./biological-report-management';
+import type{BiologicalReportCategory,BiologicalReportSnapshot,BiologicalReportDelete}from'../shared/biological-report-management';
 import type{MicrobiomeFoodControl,MicrobiomeFoodSource}from"../shared/microbiome-food-influence";
 import type{LabSourceSummary}from"../shared/lab-history";
 import type{GeneticSourceCommand,GeneticSourceSnapshot}from"../shared/genetic-source-selection";
@@ -102,6 +104,8 @@ export interface IStorage extends ExperienceStore {
   changeGeneticSource?(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>;
   getMicrobiomeFood?(userId:string):Promise<{control:MicrobiomeFoodControl;revision:string;sources:MicrobiomeFoodSource[];source:MicrobiomeFoodSource|null}>;
   putMicrobiomeFood?(userId:string,input:MicrobiomeFoodControl,expected:string):Promise<unknown>;
+  getBiologicalReports?(userId:string,category:BiologicalReportCategory):Promise<BiologicalReportSnapshot>;
+  deleteBiologicalReports?(userId:string,input:BiologicalReportDelete):Promise<{success:true;state:"deleted"|"not-present"}>;
   getLabSources?(userId:string):Promise<LabSourceSummary[]>;
   deleteLabSource?(userId:string,id:string,revision:string):Promise<void>;
   deleteLabEntry?(userId: string, id: string): Promise<void>;
@@ -240,6 +244,8 @@ export class DatabaseStorage implements IStorage {
   changeGeneticSource(userId:string,command:GeneticSourceCommand){return this.precision.changeGeneticSource(userId,command);}
   getMicrobiomeFood(userId:string){return this.precision.getMicrobiomeFood(userId);}
   putMicrobiomeFood(userId:string,input:MicrobiomeFoodControl,expected:string){return this.precision.putMicrobiomeFood(userId,input,expected);}
+  getBiologicalReports(userId:string,category:BiologicalReportCategory){return getBiologicalReports(db,userId,category);}
+  deleteBiologicalReports(userId:string,input:BiologicalReportDelete){return deleteBiologicalReports(db,userId,input);}
   getLabSources(userId:string){return this.precision.getLabSources(userId);}
   deleteLabSource(userId:string,id:string,revision:string){return this.precision.deleteLabSource(userId,id,revision);}
   deleteLabEntry(userId: string, id: string) {

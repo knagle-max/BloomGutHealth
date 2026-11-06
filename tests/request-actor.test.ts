@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { accountFetch, bindRequestActor, AccountContextChangedError } from '../client/src/lib/request-actor';
+import { accountFetch, accountContextGuard, bindRequestActor, AccountContextChangedError } from '../client/src/lib/request-actor';
 
 test('tab actor narrows only owned API requests and preserves raw conflicts, headers and cancellation', async () => {
  const original=globalThis.fetch; const calls:Array<{url:string;init:RequestInit}>=[];
@@ -37,3 +37,5 @@ test('late body completion and cloned error bodies cannot return data after iden
   const cloned=response.clone(),body=cloned.json();bindRequestActor('b');complete();await assert.rejects(body,AccountContextChangedError);await assert.rejects(response.text(),AccountContextChangedError);
  }finally{globalThis.fetch=original;bindRequestActor(null);}
 });
+
+test('an owner-bound queued task cannot start under a replacement actor, even before its component rerenders',()=>{try{bindRequestActor('source-owner-a');const started=accountContextGuard('source-owner-a');bindRequestActor('source-owner-b');assert.throws(()=>accountContextGuard('source-owner-a'),AccountContextChangedError);assert.throws(started,AccountContextChangedError);const replacement=accountContextGuard('source-owner-b');replacement();bindRequestActor('source-owner-a');assert.throws(started,AccountContextChangedError,'Returning to the same actor cannot revive an older epoch');assert.throws(replacement,AccountContextChangedError);}finally{bindRequestActor(null);}});

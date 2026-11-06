@@ -421,6 +421,7 @@ export default function PrecisionNutrition() {
             {tab==="overview"?"Understand your recorded data.":"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
           </p>
         </div>
+        <Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>
         {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
       </div>
       {tab==="overview"?<details className="biology-more-tools"><summary>Explore biology tools</summary>{tabNavigation}</details>:tabNavigation}

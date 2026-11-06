@@ -12,7 +12,7 @@
   "sourceHashes": {
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
-    "server/biology-routes.ts": "9492a1839ec8539f96bb52ed17dcdb6fbbd5e9601635c81146de6abb358eb2a6",
+    "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
     "server/experience-routes.ts": "b61f96088934591fd5127a212d38a27125fb42d8480dc6b8b4e19a89b7f108b7",
@@ -71,7 +71,7 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 17,
+      "line": 18,
       "method": "USE",
       "path": "/api/biology",
       "declaredMiddleware": [
@@ -81,7 +81,23 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 21,
+      "line": 22,
+      "method": "GET",
+      "path": "/api/biology/reports",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 27,
+      "method": "DELETE",
+      "path": "/api/biology/reports",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/biology-routes.ts",
+      "line": 33,
       "method": "GET",
       "path": "/api/biology/catalogue",
       "declaredMiddleware": [],
@@ -89,7 +105,7 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 26,
+      "line": 38,
       "method": "GET",
       "path": "/api/biology/catalogue/:id",
       "declaredMiddleware": [],
@@ -97,7 +113,7 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 34,
+      "line": 46,
       "method": "GET",
       "path": "/api/biology/evidence-audit",
       "declaredMiddleware": [],
@@ -105,7 +121,7 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 38,
+      "line": 50,
       "method": "GET",
       "path": "/api/biology/model-readiness",
       "declaredMiddleware": [],
@@ -113,7 +129,7 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 39,
+      "line": 51,
       "method": "GET",
       "path": "/api/biology/registry",
       "declaredMiddleware": [],
@@ -121,7 +137,7 @@
     },
     {
       "file": "server/biology-routes.ts",
-      "line": 51,
+      "line": 63,
       "method": "GET",
       "path": "/api/biology/foods/:id",
       "declaredMiddleware": [],

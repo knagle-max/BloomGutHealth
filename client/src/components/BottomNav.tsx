@@ -41,7 +41,7 @@ export default function BottomNav() {
         <Link
           key={item.id}
           href={item.path}
-          aria-current={location === item.path ? "page" : undefined}
+          aria-current={(location === item.path||item.path==="/precision"&&location==="/biology/reports") ? "page" : undefined}
           data-testid={`nav-${item.id}`}
         >
           <item.icon size={21} />

@@ -1,3 +1,4 @@
+import{biologicalReportCategorySchema,biologicalReportDeleteSchema,BIOLOGICAL_REPORT_DELETE_CONFIRM,BiologicalReportConflict}from'../shared/biological-report-management';
 import { evidenceAudit, simulationReadiness } from "../shared/scientific-contracts";
 import type { Express, RequestHandler } from "express";
 import type { IStorage } from "./storage";
@@ -17,6 +18,17 @@ export function registerBiologyRoutes(
   app.use("/api/biology", auth, (_req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     next();
+  });
+  app.get('/api/biology/reports',async(req,res)=>{
+   const input=z.object({category:biologicalReportCategorySchema}).strict().safeParse(req.query);if(!input.success)return res.status(400).json({error:'Choose a report category.'});
+   if(!store.getBiologicalReports)return res.status(503).json({error:'Report management is unavailable.'});
+   try{res.json(await store.getBiologicalReports(req.session.userId!,input.data.category));}catch{return res.status(503).json({error:'Saved report sources could not be checked.'});}
+  });
+  app.delete('/api/biology/reports',async(req,res)=>{
+   if(req.get('X-Bloom-Report-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload your saved reports.'});
+   const input=biologicalReportDeleteSchema.safeParse(req.body);if(req.get('X-Bloom-Confirm')!==BIOLOGICAL_REPORT_DELETE_CONFIRM||!input.success)return res.status(400).json({error:'Confirm the exact report category, scope and current source versions.'});
+   if(!store.deleteBiologicalReports)return res.status(503).json({error:'Atomic report management is unavailable. No fallback deletion was attempted.'});
+   try{res.json(await store.deleteBiologicalReports(req.session.userId!,input.data));}catch(error){return res.status(error instanceof BiologicalReportConflict?409:503).json({error:error instanceof BiologicalReportConflict?error.message:'Deletion could not be confirmed. Retry the exact reviewed action or reload your sources.'});}
   });
   app.get("/api/biology/catalogue", (req, res) => {
     const input = z.object({q:z.string().trim().min(2).max(100)}).strict().safeParse(req.query);

@@ -283,7 +283,7 @@ export default function Profile({
       <details className="profile-section workspace-disclosure" id="privacy" onToggle={e=>{if(e.target===e.currentTarget&&!e.currentTarget.open)e.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(details=>details.open=false);}}><summary><strong role="heading" aria-level={2}>Privacy & export</strong><span>Review exports and account deletion</span></summary><div className="space-y-3 pt-4">
         <h2>Manage your account records</h2>
         <p>Download account records here. Separate deletion controls for training and biology remain available below.</p>
-        <a href="/precision" className="text-link">Manage biology records & exports</a>
+        <Link href="/biology/reports" className="text-link inline-flex min-h-11 items-center">Manage biological reports</Link>
         <AccountDataExport/><AccountErasure/><p className="panel-note">Backup, operational-log and vendor retention/removal remain separate from active account deletion and require operator/provider handling.</p>
       </div></details>
       <details id="advanced-settings" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Advanced</strong><span>Optional setup, training and authorized tools</span></summary><div className="space-y-4 pt-4"><ExperimentalSettings/>
