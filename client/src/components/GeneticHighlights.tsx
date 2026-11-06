@@ -15,18 +15,18 @@ export default function GeneticHighlights({projection,hasSource,entries,sourceDe
   findings.sort((a,b)=>order[a.claim.evidence.credibility]-order[b.claim.evidence.credibility]||a.claim.id.localeCompare(b.claim.id));
  }
  return <section className="bloom-panel space-y-4" aria-labelledby="genetic-highlights-title">
-  <div><p className="eyebrow">SOURCE-BACKED EDUCATION</p><h2 id="genetic-highlights-title">Your genetic findings</h2>
+  <div><p className="eyebrow">SOURCE-BACKED EDUCATION</p><h2 id="genetic-highlights-title">Your genetics</h2>
    <p>Your recorded calls with general research context. The effect of a variant for you remains uncertain.</p></div>
-  <p className="panel-note">{counts.measured} measured calls · {education.selected.length} selected source cards</p>
+  <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">About your genetic data</summary><p className="panel-note">{counts.measured} measured calls · {education.selected.length} selected source cards</p></details>
   <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Genetics views">
    {hasSource&&<a className="text-link inline-flex min-h-11 items-center" href="#genotype-explanations" onClick={()=>focusTarget("genotype-explanations")}>See all saved results</a>}
    <a className="text-link inline-flex min-h-11 items-center" href="#genetics-catalogue" onClick={()=>focusTarget("genetics-catalogue")}>Explore genes</a>
   </nav>
   {!!education.selected.length&&<div className="space-y-3">{education.selected.map(entry=><article key={entry.rsid} className="rounded-xl border border-border p-4 space-y-2" aria-label={`Source finding ${entry.rsid}`}>
-   <p className="eyebrow">RECORDED SOURCE CALL</p><h3>{entry.gene} · {entry.rsid}</h3><p>Recorded unphased genotype: <strong>{entry.genotype}</strong></p>
-   <p>{entry.geneRole}</p><p className="panel-note">Variant-specific personal effects: research under review. This general gene description does not establish altered function, deficiency or a personal diet change.</p>
-   <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Why this is shown</summary><p>Your selected source contains this readable call and Bloom has cited general background for this gene. Up to five source cards appear in stable gene order; related FADS calls are grouped. This selection is not a predicted personal effect or a risk ranking.</p></details>
-   <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Source & research references</summary><div className="space-y-2"><p>{sourceDescription}</p><p>Stored call: {entry.genotype}. {entry.sourceCall?`Original token: ${entry.sourceCall.original}. No strand flip was performed.`:"Original call text was not retained."}</p><p>Source status: {entry.status==="outside-studied-pair"?"Observed reference-compatible letters; the existing study comparison does not cover this call.":"Letters match an existing educational comparison; assay suitability and individual effects remain separate."} Self-entered calls are not clinical verification.</p>
+   <h3>{entry.topic||entry.gene}</h3><p className="panel-note">{entry.gene} · {entry.rsid} · recorded source call</p><p>Recorded unphased genotype: <strong>{entry.genotype}</strong></p>
+   <p>{entry.geneRole}</p>
+   <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Why this is shown</summary><p>Your selected source contains this readable call and Bloom has cited general background for this gene. Up to five source cards appear in stable gene order; related FADS calls are grouped. This selection is not a predicted personal effect or a risk ranking.</p>
+   <div className="space-y-2"><p className="panel-note">Variant-specific personal effects: research under review. This general gene description does not establish altered function, deficiency or a personal diet change.</p><p>{sourceDescription}</p><p>Stored call: {entry.genotype}. {entry.sourceCall?`Original token: ${entry.sourceCall.original}. No strand flip was performed.`:"Original call text was not retained."}</p><p>Source status: {entry.status==="outside-studied-pair"?"Observed reference-compatible letters; the existing study comparison does not cover this call.":"Letters match an existing educational comparison; assay suitability and individual effects remain separate."} Self-entered calls are not clinical verification.</p>
     <ul>{entry.sources.map(source=><li key={source.url}><a className="text-link inline-flex min-h-11 items-center" href={source.url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">{source.title}</a></li>)}</ul>
    </div></details>
   </article>)}</div>}
@@ -37,9 +37,9 @@ export default function GeneticHighlights({projection,hasSource,entries,sourceDe
     {counts.personalEligible>counts.selected&&<button className="text-link min-h-11 focus-visible:outline focus-visible:outline-2" type="button" aria-expanded={all} onClick={()=>setAll(!all)}>{all?"Show selected highlights":"See all eligible findings"}</button>}
     {all&&<label className="block">Sort eligible findings<select className="bloom-input w-full" value={sort} onChange={event=>setSort(event.target.value)}><option value="relevance">Relevant to me</option><option value="evidence">Evidence</option><option value="gene">Gene</option></select></label>}
     <div className="space-y-3">{findings.map(({claim,why,sourceId,sourceRevision})=><article key={`${claim.id}:${claim.version}`} className="rounded-xl border border-border p-4 space-y-3" aria-label={`${claim.gene} reviewed highlight`}>
-     <div><p className="eyebrow">REVIEWED EDUCATIONAL ASSOCIATION</p><h3>{claim.gene} · {claim.phenotype}</h3></div><p>{claim.meaning}</p>
-     <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Why this is shown</summary><ul className="list-disc pl-5 space-y-2">{why.map(reason=><li key={reason}>{reason}</li>)}</ul></details>
-     <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Evidence, source & limitations</summary><div className="space-y-2">
+     <div><p className="eyebrow">REVIEWED EDUCATIONAL ASSOCIATION</p><h3>{claim.phenotype}</h3><p className="panel-note">{claim.gene} · {claim.rsid}</p></div><p>{claim.meaning}</p>
+     <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Why this is shown</summary><ul className="list-disc pl-5 space-y-2">{why.map(reason=><li key={reason}>{reason}</li>)}</ul>
+     <div className="space-y-2">
       <p>{claim.evidence.design}. {claim.evidence.direction}</p><p>Effect size: {claim.evidence.effectSize||"Unknown / not supplied"}. Confidence interval: {claim.evidence.confidenceInterval||"Unknown / not supplied"}.</p>
       <p>Study contrast: {claim.contrast.effectAllele} compared with {claim.contrast.otherAllele}, forward strand. This describes the reviewed comparison, not a normal/protective classification.</p>
       <p>{claim.evidence.replication}</p><p>{claim.evidence.contradictions}</p><p>{claim.population.description}</p><p>{claim.evidence.limitations}</p>

@@ -1811,7 +1811,7 @@
     "client/src/components/FoodEntryChooser.tsx": "577a3c33b74c5ef890e71c5a1014c73077260fda17a837f7c98fc05f0302fcfd",
     "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
     "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
-    "client/src/components/GeneticHighlights.tsx": "e66aa27a3e7949ba712440e4274662b4cfa96dcb156c788c543593ed54a9f0e2",
+    "client/src/components/GeneticHighlights.tsx": "7c561f40c6f8f3e615a02947fcdf54bdcf05a5b1530c870b91d44ed03c2c5692",
     "client/src/components/GeneticSourceManagement.tsx": "688118d38d6eaa51bf9caa5411b410b2f17dbf8c1479cc66cdda58f37223b2c4",
     "client/src/components/GeneticsCatalogue.tsx": "1152b4d007ac683e63289a2064a9819c19cd06b8338d10ba82d2dcc7e1fd978a",
     "client/src/components/GenotypeExplanations.tsx": "43c3aa3e54127f5940a3349145fa60845358bc9ac19fb03b2546f185b3083e0c",

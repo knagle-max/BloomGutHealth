@@ -1,3 +1,4 @@
+import{pathToFileURL}from'node:url';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {createRequire} from 'node:module';
@@ -21,18 +22,18 @@ await page.route('**/api/**',async route=>{const request=route.request(),path=ne
  else if(path==='/api/preferences')json=defaultPreferences;
  else if(path==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
  await route.fulfill({json});});
-const dir=new URL('../../docs/review/genetics-relevance-20261105/',import.meta.url);await mkdir(dir,{recursive:true});
+const dir=process.env.BLOOM_REVIEW_OUTPUT?pathToFileURL(process.env.BLOOM_REVIEW_OUTPUT.replace(/\/$/,'')+'/'):new URL('../../docs/review/genetics-relevance-20261105/',import.meta.url);await mkdir(dir,{recursive:true});
 try{
  await page.goto('http://127.0.0.1:5271/precision?tab=genetics');await page.getByRole('heading',{name:'Import 23andMe raw data',exact:true}).waitFor();
  for(const[width,dark]of[[320,false],[390,false],[390,true]]){
   await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:dark?'dark':'light'});await page.evaluate(d=>document.documentElement.classList.toggle('dark',d),dark);
-  await page.evaluate(()=>window.scrollTo(0,0));await page.screenshot({path:new URL(`${before?'before':'after'}-${width}-${dark?'dark':'light'}.png`,dir).pathname});
+  await page.evaluate(()=>window.scrollTo(0,0));await page.getByRole('region',{name:before?'Your genetic findings':'Your genetics',exact:true}).screenshot({path:new URL(`${before?'before':'after'}-highlights-${width}-${dark?'dark':'light'}.png`,dir).pathname});if(process.env.BLOOM_HIGHLIGHTS_ONLY!=='1')await page.screenshot({path:new URL(`${before?'before':'after'}-${width}-${dark?'dark':'light'}.png`,dir).pathname});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  }
  if(!before){
-  const region=page.getByRole('region',{name:'Your genetic findings',exact:true});
-  await region.getByRole('article',{name:'Source finding rs1801133',exact:true}).waitFor();assert.equal(await region.getByRole('article').count(),2);assert.match(await region.getByRole('article',{name:'Source finding rs7903146',exact:true}).innerText(),/GT/);await region.getByText('Personalized interpretation',{exact:true}).click();await region.getByText('No personalized interpretations are enabled. Source-backed education above remains available while specific effect claims are reviewed.',{exact:true}).waitFor();
-  assert.match(await region.innerText(),/2 measured calls/);await region.getByText('How highlights are selected',{exact:true}).click();assert.match(await region.innerText(),/1 matched educational explanation/);
+  const region=page.getByRole('region',{name:'Your genetics',exact:true});
+  await region.getByRole('article',{name:'Source finding rs1801133',exact:true}).waitFor();const sourceCard=region.getByRole('article',{name:'Source finding rs1801133',exact:true});assert.equal(await sourceCard.locator('summary').count(),1);assert.notEqual(await sourceCard.getByRole('heading').innerText(),'MTHFR · rs1801133');await sourceCard.getByText('Why this is shown',{exact:true}).click();assert.match(await sourceCard.innerText(),/Original call text was not retained/);assert.ok(await sourceCard.getByRole('link').count()>0);assert.equal(await region.getByRole('article').count(),2);assert.match(await region.getByRole('article',{name:'Source finding rs7903146',exact:true}).innerText(),/GT/);await region.getByText('Personalized interpretation',{exact:true}).click();await region.getByText('No personalized interpretations are enabled. Source-backed education above remains available while specific effect claims are reviewed.',{exact:true}).waitFor();
+  await region.getByText('About your genetic data',{exact:true}).click();assert.match(await region.innerText(),/2 measured calls/);await region.getByText('How highlights are selected',{exact:true}).click();assert.match(await region.innerText(),/1 matched educational explanation/);
   assert.match(await region.innerText(),/0 reviewed highlight claims/);assert.match(await region.innerText(),/0 personally eligible/);
   await region.getByRole('link',{name:'See all saved results',exact:true}).click();await page.waitForFunction(()=>document.activeElement?.id==='genotype-explanations');
   await page.getByRole('article',{name:'Explanation rs7903146',exact:true}).getByText(/coverage gap/).first().waitFor();
@@ -41,7 +42,7 @@ try{
   assert.match(await region.innerText(),/Evidence credibility/);
   await region.getByRole('link',{name:'Explore genes',exact:true}).focus();await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement?.tagName),'SUMMARY');
   await page.setViewportSize({width:1280,height:1000});await page.evaluate(()=>document.documentElement.style.zoom='2');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
-  records=[];await page.reload();await region.getByText('No genetic source is selected.',{exact:true}).waitFor();assert.match(await region.innerText(),/0 measured calls/);assert.equal(await page.getByRole('article',{name:'Explanation rs1801133',exact:true}).count(),0);
+  records=[];await page.reload();await region.getByText('No genetic source is selected.',{exact:true}).waitFor();await region.getByText('About your genetic data',{exact:true}).click();assert.match(await region.innerText(),/0 measured calls/);assert.equal(await page.getByRole('article',{name:'Explanation rs1801133',exact:true}).count(),0);
   // Explicit synthetic API fixture for future approved-card presentation only.
   // These are not real scientific reviews, production claims or assay proofs.
   const claims=Array.from({length:7},(_,i)=>({id:`synthetic-ui-${i}`,version:'synthetic-only',rsid:`rs${100000+i}`,gene:`SYNTHETIC ${i}`,phenotype:'Synthetic educational fixture',meaning:'Synthetic display check; no real biological claim.',scope:'education',review:{state:'approved',reference:'synthetic-not-real-review',reviewedOn:'2026-11-05'},placement:{build:'GRCh37',chromosome:'1',position:i+1,strand:'+'},genotypes:['AG'],assays:['synthetic-assay'],contrast:{effectAllele:'A',otherAllele:'G',orientation:'forward'},population:{description:'Synthetic test population',transportability:'reviewed-general',allowedFitIds:[]},evidence:{credibility:'supported',design:'Synthetic fixture',direction:'Synthetic direction',effectSize:null,confidenceInterval:null,replication:'Synthetic only',contradictions:'Synthetic only',limitations:'Not approved science.',citations:[{title:'Synthetic source',url:'https://example.invalid/synthetic'}]},independence:{group:`synthetic-${i}`,status:'unknown',reference:null},relevance:{goals:i===6?['training']:[],measuredContexts:[]}}));
@@ -49,7 +50,7 @@ try{
   await page.reload();await region.getByText('Personalized interpretation',{exact:true}).click();const interpretations=region.locator('details').filter({has:page.getByText('Personalized interpretation',{exact:true})});await region.getByText('Showing 5 of 7 eligible educational claims. Related findings may be grouped.',{exact:true}).waitFor();
   assert.equal(await interpretations.getByRole('article').count(),5);assert.match(await interpretations.getByRole('article').first().innerText(),/SYNTHETIC 6/);
   await interpretations.getByRole('article').first().getByText('Why this is shown',{exact:true}).click();assert.match(await interpretations.getByRole('article').first().innerText(),/goal you recorded/);
-  await interpretations.getByRole('article').first().getByText('Evidence, source & limitations',{exact:true}).click();assert.match(await interpretations.getByRole('article').first().innerText(),/Effect size: Unknown/);
+assert.match(await interpretations.getByRole('article').first().innerText(),/Effect size: Unknown/);
   assert.equal(await interpretations.getByRole('article').first().getByRole('link',{name:'Synthetic source'}).getAttribute('referrerpolicy'),'no-referrer');
   await region.getByRole('button',{name:'See all eligible findings',exact:true}).click();assert.equal(await interpretations.getByRole('article').count(),7);
   await region.getByRole('combobox',{name:'Sort eligible findings',exact:true}).selectOption('gene');assert.match(await interpretations.getByRole('article').first().innerText(),/SYNTHETIC 0/);

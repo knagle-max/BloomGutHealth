@@ -1,0 +1,17 @@
+{
+  "synthetic": true,
+  "checks": [
+    "actual App source and no-source states",
+    "observed ordinary source cards with cited general education; no clinical approval requirement",
+    "separate measured/matched/reviewed/eligible counts",
+    "reference-compatible call retained as source fact, no unsupported effect claim",
+    "all source results and 17-domain explorer keyboard links",
+    "320/390px light-dark reflow",
+    "200% desktop zoom surrogate",
+    "source withdrawal reload",
+    "synthetic API-only seven-eligible/five-highlight presentation, why/source/unknown values, show all/sorts and withdrawal",
+    "no writes, no page errors"
+  ],
+  "physicalVoiceOver": "NOT_RUN",
+  "independentReview": "NOT_RUN"
+}
