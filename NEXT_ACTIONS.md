@@ -1,3 +1,7 @@
+## Binding screen-by-screen UX directive — Architect29c1a30
+
+Read `docs/architecture/SCREEN_BY_SCREEN_UX_ARCHITECT_DECISION_2026-11-05.md`. Exact Branding sourcecd4e749f04cb066feb6161bd99b2f0723a5713a5 has two source files underdesign/bloom/ux-coherence/2026-11-05; object not local at one check. Fetch exact commit/selectively read when the relevant route is touched, no owner upload request. Eight-route composition is scoped: audit actual current Today/Food/active Athlete/Biology first when touched; P1 Explore/Progress/Profile later; preserve brand/routes/source/privacy and real saves. No blanket hero/card quota or redesign sprint before core PDF value. Current genetics source-card and synthetic nativePDFvertical are implemented; finish publication rather than reopening passing journeys. Then explicit companion/reimport handling. Source proposal is not proof every route needs code changes.
+
 # Active checkpoint — Viome native PDF vertical
 
 Follow `CODEX_ANTI_LOOP_EXECUTION_POLICY_2026-11-05.md`. Branchenhance/bloom-experience; existing PR1/Render only; no main/production writes/paid infra. One active task; no repeated passing unit/source refinements, governance-only cycles or old150candidate quota.80public scientific images stay ungated; anatomy32PNG importc448678 remains separate asset-only.
