@@ -1,3 +1,4 @@
+import{applyMicrobiomeFoodInfluence,type MicrobiomeFoodControl,type MicrobiomeFoodSource}from'./microbiome-food-influence';
 import {intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { explainRecipeBiology } from "./recipe-intelligence";
 import type { BiologicalRegistry } from "./biological-model";
@@ -17,7 +18,7 @@ const pantryTermPresent=(term:string,names:readonly string[])=>{
  return names.some(name=>{const words=pantryWords(name);return words.some((_,index)=>index+needle.length<=words.length&&needle.every((word,offset)=>{const candidate=words[index+offset];return candidate===word||candidate===word+'s'||word===candidate+'s';}));});
 };
 export type PracticalChoiceDiagnostics={testedPortions:number;excludedForTime:number;excludedForEquipment:number;nutrientLimits:{key:string;exceeded:number;unavailable:number}[]};
-export function practicalChoices(meals:any[], preferences:DietaryPreferences, report:PrecisionReport, request:WeeklyRequest, practical:z.infer<typeof practicalPreferencesSchema>, blocked=false, slot="dinner", registry?:BiologicalRegistry) {
+export function practicalChoices(meals:any[], preferences:DietaryPreferences, report:PrecisionReport, request:WeeklyRequest, practical:z.infer<typeof practicalPreferencesSchema>, blocked=false, slot="dinner", registry?:BiologicalRegistry, influence?:{control?:MicrobiomeFoodControl;source:MicrobiomeFoodSource|null}) {
  const summary=mealNutritionSummary(meals), n=summary.totals;
  const mapping:Record<string,string>={calories:"calories",protein_g:"protein",fiber_g:"fiber",sodium_mg:"sodium",fat_saturated_g:"fat_saturated_g",carbohydrates_total_g:"carbs",fat_total_g:"fat"};
  const limits:Record<string,number>={calories:request.targets.calories*1.1,sodium_mg:request.targets.sodium,fiber_g:request.targets.fiberMaximum,fat_saturated_g:request.targets.saturatedFat};
@@ -49,11 +50,23 @@ export function practicalChoices(meals:any[], preferences:DietaryPreferences, re
  }));
  const diagnostics:PracticalChoiceDiagnostics={testedPortions:considered.length,excludedForTime:considered.filter(c=>!c.withinTime).length,excludedForEquipment:considered.filter(c=>!c.hasEquipment).length,nutrientLimits:Object.keys(limits).map(key=>({key,exceeded:considered.filter(c=>c.limitChecks.some(check=>check.key===key&&check.status==='exceeded')).length,unavailable:considered.filter(c=>c.nutrients[key]===null||c.nutrients[key]===undefined).length})).filter(check=>check.exceeded||check.unavailable)};
  const candidates=considered.filter(c=>c.valid).sort((a,b)=>a.score-b.score||tasteMatches(a.recipe.ingredients,preferences.softDislikes).length-tasteMatches(b.recipe.ingredients,preferences.softDislikes).length||a.recipe.id.localeCompare(b.recipe.id));
+ // Preserve every existing independent nutrition, research and taste priority.
+ // Only equal-fit candidates may use the one opted-in provider resolver before
+ // lower-priority convenience/pantry ordering. No constraints or portions change.
+ const primaryPriority=(c:typeof candidates[number])=>JSON.stringify([
+  Math.abs((c.nutrients.calories??0)-Math.min(Math.max(0,request.targets.calories-(n.calories??0)),700)),
+  Math.max(0,Math.min(Math.max(0,request.targets.protein-(n.protein??0)),35)-(c.nutrients.protein_g??0)),
+  tasteMatches(c.recipe.ingredients,preferences.softDislikes).length,
+  c.biologyReasons,
+  goalMealFit([...report.context.goals,...preferences.goals],c.recipe.ingredients.map(i=>i.name).join(" ")),
+ ]);
  const used=new Set<string>(), choices=[];
  const composition=(c:typeof candidates[number])=>c.recipe.ingredients.map(i=>i.name.toLowerCase()).sort().join("|");
  for(const kind of ["pantry","recipe","convenient"] as const){
   const eligible=candidates.filter(c=>!used.has(composition(c)));
-  const pick=(kind==="pantry"?[...eligible].sort((a,b)=>b.pantryMatches.length-a.pantryMatches.length||a.score-b.score):kind==="convenient"?[...eligible].sort((a,b)=>a.prep.minutes-b.prep.minutes||a.score-b.score):eligible)[0];
+  const baseline=(kind==="pantry"?[...eligible].sort((a,b)=>b.pantryMatches.length-a.pantryMatches.length||a.score-b.score):kind==="convenient"?[...eligible].sort((a,b)=>a.prep.minutes-b.prep.minutes||a.score-b.score):eligible);
+  const ranked=applyMicrobiomeFoodInfluence(baseline.map(choice=>({id:choice.recipe.id+":"+choice.portion,ingredients:choice.recipe.ingredients,choice})),influence?.control,influence?.source||null,row=>primaryPriority(row.choice));
+  const chosen=ranked[0],pick=chosen?{...chosen.choice,...(chosen.microbiomeFood?{microbiomeFood:chosen.microbiomeFood}:{})}:null;
   if(!pick)continue; used.add(composition(pick));
   const fits=goalMealFit([...report.context.goals,...preferences.goals],pick.recipe.ingredients.map(i=>i.name).join(" "));
   choices.push({...pick,kind,title:kind==="pantry"?(pick.prep.minutes<=20?"Quick at home":"Make at home"):kind==="recipe"?"Cook a complete meal":"Purchase & assemble option",reasons:[...pick.biologyReasons,...intoleranceWarnings(pick.recipe.ingredients,report.context.intolerances),...(pick.pantryMatches.length?[`Uses pantry items you listed: ${pick.pantryMatches.join(", ")}.`]:[]),...fits.map(f=>f.reason),pick.limitChecks.some(c=>c.status==="unverified")?"Known amounts do not show an exceeded planning constraint, but some logged nutrients are missing. Daily limit compliance is unverified. Choose one option; these alternatives are not added together.":"Portion checked against selected daily limits and the planning energy allowance using complete logged nutrient values. Choose one option; these alternatives are not added together."],shopping:pick.prep.shopping.map(i=>({...i,grams:Math.round(i.grams*pick.portion*practical.household)})),confidence:summary.isPartial?"Provisional — logged nutrition is incomplete":"Generic composition estimates; review products and portions"});

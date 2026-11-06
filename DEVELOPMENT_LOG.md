@@ -1,3 +1,9 @@
+## 2026-11-06 — Microbiome-food remaining-budget alternatives
+
+Extended the one canonical resolver to actual Plan my day choices, preserving all existing independent nutrition/evidence/taste priorities, safety/time/equipment filters and original portions/composition. Existing ingredient-specific Why/Ignore/Turn off uses the same encrypted account setting. Two selection/safety tests and14 focused/types/build pass; actual App/HTTP/encrypted native source/control equal-fit selection, source provenance, Ignore/reload, Off, deleted source and replacement account PASS. Existing practical HTTP source/error/pantry/draft/shopping/download/under-18 retraction PASS. Synthetic320/390/dark captures retained. No new consent, provider, migration, recommendation engine or independent approval.
+
+Previous report-management publication:22b849c72bd4b4507e8b4f446c9569dc135ebdc4;601/601 full PASS247944.27ms plus final11 focused/types/build. Exact one-time metadata check:CI42311475527 in_progress;Renderdep-dbn62ck9v7es739icfbg build_in_progress that SHA. No live account acceptance inferred.
+
 ## 2026-11-06 — Unified biological report management
 
 Added the single My Biology/Profile privacy Manage reports destination. All three categories use the existing canonical deletion services inside one owned transaction, with complete intent/version checks, selected/category scope, precise counts/unknowns and separate actual upload dates. Category confirmation requires exact phrase and checkbox. Historical Genetics View never activates; active removal leaves none. Invalid Labs source graphs remain visible and fail closed. No migration or production data action.
