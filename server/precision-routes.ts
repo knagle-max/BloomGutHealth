@@ -1,3 +1,4 @@
+import{reportFoodDisplay}from'../shared/microbiome-food-influence';
 import{geneticSourceCommandSchema,GENETIC_SOURCE_CONFIRM,GeneticSourceError}from"../shared/genetic-source-selection";
 import{isSensitiveGeneticCall}from"../shared/genetic-selection";
 import {reportDateContext} from "../shared/report-dates";
@@ -493,12 +494,11 @@ export function registerPrecisionRoutes(
     )
       return res.status(400).json({ error: "Invalid report selection" });
     try {
-      res.json(
-        await reportFor(
-          req.session.userId!,
-          req.query.sampleId as string | undefined,
-        ),
-      );
+      const report=await reportFor(req.session.userId!,req.query.sampleId as string|undefined);
+      // Optional provider display opinions never enter reportFor or AI inputs.
+      const [influence,user]=await Promise.all([store.getMicrobiomeFood?store.getMicrobiomeFood(req.session.userId!).catch(()=>null):null,store.getUser(req.session.userId!).catch(()=>undefined)]);
+      const preferences=preferenceSchema.safeParse(user?.dietaryPreferences);
+      res.json(reportFoodDisplay(report,user?influence?.control:undefined,influence?.source||null,(preferences.success?preferences.data:defaultPreferences).softDislikes));
     } catch (e) {
       unavailable(res, e);
     }

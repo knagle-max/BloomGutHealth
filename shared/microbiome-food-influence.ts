@@ -1,3 +1,5 @@
+import type{PrecisionReport}from'./precision-nutrition';
+import{tasteMatches}from'./food-preference-policy';
 import{snapshotFoods}from'./food-snapshot';
 import type{ReportFoodRecommendation}from'./structured-report';
 export const MICROBIOME_FOOD_INFLUENCE_VERSION='microbiome-food-influence-v1';
@@ -33,4 +35,13 @@ export function applyMicrobiomeFoodInfluence<T extends{id:string;ingredients:rea
  // Never leapfrog a different primary priority, even if an equal tier recurs later.
  const ordered:typeof scored=[];for(let start=0;start<scored.length;){let end=start+1;while(end<scored.length&&primaryTier(scored[end].row)===primaryTier(scored[start].row))end++;ordered.push(...scored.slice(start,end).sort((a,b)=>b.score-a.score||a.index-b.index));start=end;}
  return ordered.map((item,index)=>item.relevant.length?{...item.row,microbiomeFood:{version:MICROBIOME_FOOD_INFLUENCE_VERSION,reportId:source.id,reportRevision:source.revision,provider:source.provider,date:source.date,matches:item.relevant,contributed:index!==item.index&&item.score!==0,baselinePosition:item.index,position:index}}:item.row);
+}
+
+/** Display-only ordering. Do not feed provider opinions into reportFor/AI/planning context. */
+export function reportFoodDisplay<T extends PrecisionReport>(report:T,control:MicrobiomeFoodControl|undefined,source:MicrobiomeFoodSource|null,softDislikes:readonly string[]=[]){
+ const recommendations=applyMicrobiomeFoodInfluence(report.recommendations,control,source,recipe=>JSON.stringify([recipe.priority,tasteMatches(recipe.ingredients,softDislikes).length]));
+ // These existing broad food labels have no preparation assertion. Exact resolver
+ // abstention is intentional; do not substitute a cooked identity from an ID.
+ const foods=applyMicrobiomeFoodInfluence(report.foods.map(food=>({id:food.id,ingredients:[{name:food.name}],food})),control,source,row=>String(row.food.priority)).map(row=>({...row.food,...(row.microbiomeFood?{microbiomeFood:row.microbiomeFood}:{})}));
+ return{...report,recommendations,foods};
 }

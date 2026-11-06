@@ -1,3 +1,5 @@
+import{MicrobiomeFoodReason}from'@/components/MicrobiomeFoodPreferences';
+import type{MicrobiomeFoodTrace}from'@shared/microbiome-food-influence';
 import LabSourceManagement from"@/components/LabSourceManagement";
 import GeneticSourceManagement from"@/components/GeneticSourceManagement";
 import {captureCheckinEntrySource} from "@shared/checkin-entry-source";
@@ -51,7 +53,9 @@ import {
 } from "@shared/precision-nutrition";
 import DietaryPreferenceSummary from "@/components/DietaryPreferenceSummary";
 
-type Report = PrecisionReport & {
+type Report = Omit<PrecisionReport,'foods'|'recommendations'> & {
+  foods:Array<PrecisionReport['foods'][number]&{microbiomeFood?:MicrobiomeFoodTrace}>;
+  recommendations:Array<PrecisionReport['recommendations'][number]&{microbiomeFood?:MicrobiomeFoodTrace}>;
   gutReportInventory?:GutReportInventory;
   availableReports: {dateContext?:ReportDateContext; id: string; date: string; name: string }[];
   intake: {
@@ -932,7 +936,7 @@ export default function PrecisionNutrition() {
                         <summary>
                           {i + 1}. {f.name} · ranked for your saved priorities
                         </summary>
-                        <p>{f.nutrients.join(" · ")}</p>
+                        <p>{f.nutrients.join(" · ")}</p>{f.microbiomeFood&&<MicrobiomeFoodReason trace={f.microbiomeFood}/>}
                         <ul>
                           {f.reasons.map((reason, i) => (
                             <li key={i}>{reason}</li>
@@ -961,10 +965,9 @@ export default function PrecisionNutrition() {
                 <section className="bloom-panel">
                   <h2>Complete meals for your priorities</h2>
                   <p className="panel-note">
-                    Meals are ordered by matching evidence and your saved
-                    priorities. Recent lab findings carry more weight than
-                    general goals or common genetic variants. Ranking is not a
-                    benefit percentage.
+                    Meals are ordered by supported evidence, saved goals and
+                    dietary preferences. Common genetic variants do not change
+                    this order. Ranking is not a benefit percentage.
                   </p>
                   {r.recommendations.map((meal, i) => {
                     const prep = recipePreparation(meal);
@@ -980,6 +983,7 @@ export default function PrecisionNutrition() {
                           About {prep.minutes} minutes; additional chilling time
                           where listed.
                         </p>
+                        {meal.microbiomeFood&&<MicrobiomeFoodReason trace={meal.microbiomeFood}/>}
                         <details>
                           <summary>Ingredients, recipe & evidence</summary>
                           <h4>Shopping & ingredients</h4>

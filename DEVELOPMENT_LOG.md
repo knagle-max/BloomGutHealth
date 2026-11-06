@@ -1,3 +1,9 @@
+## 2026-11-06 — My Biology report-food display
+
+The same resolver now decorates only the existing authenticated Biology GET response. Independent priority/taste tiers stay ahead of source opinion; broad preparation-unknown foods abstain. Existing Why/Ignore/Off reused; optional source read failure returns baseline. Core reportFor/AI inputs/hard-constrained optimizers/historical snapshots stay provider-free. Corrected misleading copy that implied common variants affect meal rank.2 new tests +24 focused/types/build and actual Biology App/HTTP/encrypted native source/control/account/reload/withdrawal/mobile/dark PASS. Full coherent605/605 checkpoint PASS233055.54ms; no production data or independent approval.
+
+Meal-options publication:b08dc124ab968ea1dd3bd77a041c77eebb7530a5, followed by corrected route fingerprinta40ca6b1693b954b29a15eb4d117d267ce3e742e. One metadata check:CI42312085670 pending,Renderdep-dbn64vdjpl4s73e8964g queued. Do not repoll unchanged SHA.
+
 ## 2026-11-06 — Microbiome-food remaining-budget alternatives
 
 Extended the one canonical resolver to actual Plan my day choices, preserving all existing independent nutrition/evidence/taste priorities, safety/time/equipment filters and original portions/composition. Existing ingredient-specific Why/Ignore/Turn off uses the same encrypted account setting. Two selection/safety tests and14 focused/types/build pass; actual App/HTTP/encrypted native source/control equal-fit selection, source provenance, Ignore/reload, Off, deleted source and replacement account PASS. Existing practical HTTP source/error/pantry/draft/shopping/download/under-18 retraction PASS. Synthetic320/390/dark captures retained. No new consent, provider, migration, recommendation engine or independent approval.
