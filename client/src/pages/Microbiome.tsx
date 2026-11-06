@@ -21,7 +21,7 @@ export default function Microbiome() {
   const taxonTrigger=useRef<HTMLButtonElement|null>(null);
   const [sampleId, setSampleId] = useState(() => new URLSearchParams(window.location.search).get("sample") || "");
   const reportHeading=useRef<HTMLHeadingElement|null>(null);
-  const[deletionNotice,setDeletionNotice]=useState<{owner:string;text:string}|null>(null);
+  const[reportNotice,setReportNotice]=useState<{owner:string;text:string}|null>(null);
   const [comparisonId, setComparisonId] = useState("");
   const [tab, setTab] = useState("results");
   const [taxonSearch,setTaxonSearch]=useState<{owner:string;sample:string;text:string}|null>(null);
@@ -34,7 +34,7 @@ export default function Microbiome() {
   const sorted = [...(currentSamples || [])].sort(
     (a, b) => +new Date(b.testDate) - +new Date(a.testDate),
   );
-  useEffect(()=>{if(deletionNotice&&deletionNotice.owner===user?.id&&currentSamples)reportHeading.current?.focus();},[deletionNotice,currentSamples,user?.id]);
+  useEffect(()=>{if(reportNotice&&reportNotice.owner===user?.id&&currentSamples)reportHeading.current?.focus();},[reportNotice,currentSamples,user?.id]);
   const currentId = sampleId ? sorted.find(sample=>sample.id===sampleId)?.id : sorted[0]?.id;
   const results = useQuery<any>({
     queryKey: ["/api/microbiome/results", currentId],
@@ -82,7 +82,7 @@ export default function Microbiome() {
       ) : (
         <section className="bloom-panel">
           <h2 ref={reportHeading} tabIndex={-1}>Report history</h2>
-          {deletionNotice&&deletionNotice.owner===user?.id&&<p role="status">{deletionNotice.text}</p>}
+          {reportNotice&&reportNotice.owner===user?.id&&<p role="status">{reportNotice.text}</p>}
           {sorted.length ? (
             <>
               <label>
@@ -100,7 +100,8 @@ export default function Microbiome() {
                   ))}
                 </select>
               </label>
-              {currentId&&<MicrobiomeReportManagement key={`${user?.id}:${currentId}`} sample={sorted.find(sample=>sample.id===currentId)!} samples={sorted} onReload={()=>Promise.all([samples.refetch(),results.refetch()])} onDeleted={()=>{setSampleId("");setComparisonId("");setSelectedTaxon(null);setTaxonSearch(null);setDeletionNotice({owner:user!.id,text:"The selected report is no longer in your account. Remaining reports are shown below."});window.history.replaceState(window.history.state,"","/microbiome");}}/>}
+              {currentId&&<MicrobiomeReportManagement key={`${user?.id}:${currentId}:delete`} sample={sorted.find(sample=>sample.id===currentId)!} samples={sorted} onReload={()=>Promise.all([samples.refetch(),results.refetch()])} onDeleted={()=>{setSampleId("");setComparisonId("");setSelectedTaxon(null);setTaxonSearch(null);setReportNotice({owner:user!.id,text:"The selected report is no longer in your account. Remaining reports are shown below."});window.history.replaceState(window.history.state,"","/microbiome");}}/>}
+              {currentId&&<ViomeSavedContext key={`${user?.id}:${currentId}:relationship`} sample={sorted.find(sample=>sample.id===currentId)!} samples={sorted} onSelect={id=>{setSampleId(id);setComparisonId("");window.history.replaceState(window.history.state,"","/microbiome?sample="+encodeURIComponent(id));}} onChanged={state=>setReportNotice({owner:user!.id,text:state==="linked"?"Reports linked. Their findings remain separate.":"Reports unlinked. Both reports and their findings remain saved."})} onReload={()=>Promise.all([samples.refetch(),results.refetch()])} />}
               <p className="panel-note">
                 Reported data is supplied by you or a lab file and is not
                 independently verified. Older analyses may contain demo values.
@@ -144,7 +145,7 @@ export default function Microbiome() {
           "bloom-report-v2" && (
           <ImportedReportDetails report={currentResults.sample.structuredData} />
         )}
-      {tab==="results"&&currentResults&&<ViomeSavedContext key={`${user?.id}:${currentResults.sample.id}`} sample={currentResults.sample} samples={sorted} onSelect={id=>{setSampleId(id);setComparisonId("");window.history.replaceState(window.history.state,"","/microbiome?sample="+encodeURIComponent(id));}} />}
+
       {tab === "bacteria" && (
         <section className="bloom-panel">
           <h2>Microbial composition & change</h2>

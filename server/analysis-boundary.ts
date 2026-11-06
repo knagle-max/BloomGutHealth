@@ -19,8 +19,8 @@ export function publicSample<T extends { rawDataPath?: unknown }>(sample:T) {
   const row=sample as Record<string,unknown>;
   const visible={...rest,...(typeof row.id==="string"&&typeof row.userId==="string"?{deletionRevision:reportDeletionRevision(row)}:{})};
   const data=(visible as {structuredData?:any}).structuredData;
-  if(data&&typeof data==='object'&&data.importInfo&&typeof data.importInfo==='object'&&Object.hasOwn(data.importInfo,'saveReceipt')){
-    const{saveReceipt:_internal,...info}=data.importInfo;
+  if(data&&typeof data==='object'&&data.importInfo&&typeof data.importInfo==='object'&&(Object.hasOwn(data.importInfo,'saveReceipt')||Object.hasOwn(data.importInfo,'relationshipReceipt')||Object.hasOwn(data.importInfo,'relationshipRevision'))){
+    const{saveReceipt:_internal,relationshipReceipt:_relationship,relationshipRevision:_version,...info}=data.importInfo;
     return {...visible,structuredData:{...data,importInfo:info}};
   }
   return visible;

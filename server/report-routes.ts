@@ -1,4 +1,4 @@
-import{microbiomeReportId,REPORT_DELETE_CONFIRM,ReportDeletionConflict}from"../shared/report-management";
+import{microbiomeReportId,REPORT_DELETE_CONFIRM,ReportDeletionConflict,viomeRelationshipCommandSchema}from"../shared/report-management";
 import type { Express, RequestHandler } from "express";
 import multer from "multer";
 import { basename, extname } from "node:path";
@@ -22,7 +22,7 @@ type BaseStore = Pick<
   | "insertBacterialComposition"
   | "insertMlAnalysis"
 >;
-type Store = BaseStore & Pick<IStorage,"importStructuredReport"|"deleteMicrobiomeReport">;
+type Store = BaseStore & Pick<IStorage,"importStructuredReport"|"deleteMicrobiomeReport"|"changeViomeRelationship">;
 const fieldsSchema = z.object({
   testDate: z.string().max(100).optional(),
   testingCompany: z.string().max(100).optional(),
@@ -196,6 +196,15 @@ export function registerReportRoutes(
     if(!store.deleteMicrobiomeReport)return res.status(503).json({error:"Report deletion is unavailable. Try again later."});
     try{const deleted=await store.deleteMicrobiomeReport(req.session.userId!,req.params.id,revision);return res.json({success:true,state:deleted?"deleted":"not-present"});}
     catch(error){if(error instanceof ReportDeletionConflict)return res.status(409).json({error:error.message});return res.status(503).json({error:"The report could not be deleted. Reload your saved reports before trying again."});}
+  });
+  app.post("/api/microbiome/reports/:id/relationship",auth,noCache,sameActor,async(req,res)=>{
+    if(req.get("X-Bloom-Report-Actor")!==req.session.userId)return res.status(409).json({error:"The signed-in account changed. Reload before changing report links."});
+    const command=viomeRelationshipCommandSchema.safeParse(req.body),revision=req.get("If-Match")?.match(/^"([a-f0-9]{64})"$/)?.[1];
+    if(!viomeReportIdSchema.safeParse(req.params.id).success||!command.success)return res.status(400).json({error:"Choose two saved compatible reports and confirm the selected relationship action."});
+    if(!revision)return res.status(428).json({error:"Reload both reports before confirming their relationship."});
+    if(!store.changeViomeRelationship)return res.status(503).json({error:"Report linking is unavailable. Try again later."});
+    try{return res.json(await store.changeViomeRelationship(req.session.userId!,req.params.id,command.data,revision));}
+    catch(error){if(error instanceof ViomeReportContextError)return res.status(error.code==="unavailable"?404:409).json({error:error.message});return res.status(503).json({error:"The report link could not be confirmed. Retry the same action or reload both reports."});}
   });
   const upload = multer({
     storage: multer.memoryStorage(),

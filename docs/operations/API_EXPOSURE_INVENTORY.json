@@ -26,7 +26,7 @@
     "server/precision-routes.ts": "b3e4ad4acce252ea252596ce0f3da45db1514eef77b7c7ac5bbd6d11b3df9307",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "3da2b5b82a13f63ed7af86dfb02e971331e7065e3ab3ad533d03b9b137258719",
-    "server/report-routes.ts": "5ea2489f03bac32e5936e9107b04e088b9cb4ed97b025498b718315e49c03d1d",
+    "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
@@ -857,7 +857,19 @@
     },
     {
       "file": "server/report-routes.ts",
-      "line": 218,
+      "line": 200,
+      "method": "POST",
+      "path": "/api/microbiome/reports/:id/relationship",
+      "declaredMiddleware": [
+        "auth",
+        "noCache",
+        "sameActor"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/report-routes.ts",
+      "line": 227,
       "method": "POST",
       "path": "/api/microbiome/upload",
       "declaredMiddleware": [

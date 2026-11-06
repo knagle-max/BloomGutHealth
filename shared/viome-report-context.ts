@@ -32,11 +32,32 @@ export function sameViomeBiologicalFacts(a:ViomeFindings,b:ViomeFindings){
  });
  return JSON.stringify(normalize(a))===JSON.stringify(normalize(b));
 }
-export type ViomeSavedSource={id:string;processingStatus:string;structuredData:unknown;uploadedAt?:string|Date};
+export type ViomeSavedSource={id:string;processingStatus:string;structuredData:unknown;uploadedAt?:string|Date;deletionRevision?:string};
 export function viomeImportContext(incoming:ViomeFindings,samples:readonly ViomeSavedSource[]){
  const complete=samples.flatMap(sample=>{const source=sample.processingStatus==="completed"?viomeSource(sample.structuredData):null;return source?[{sample,source}]:[];});
  return{
   duplicates:complete.filter(({source})=>sameViomeBiologicalFacts(incoming,source)),
   companions:complete.filter(({sample,source})=>compatibleViomeCompanion(incoming,source)&&!complete.some(other=>other.source.specimenEvent?.rootReportId===sample.id&&other.source.documentKind===incoming.documentKind)),
  };
+}
+
+/** Surgical edit of the existing source metadata; no biological value changes. */
+export function withViomeSpecimenEvent(value:unknown,event?:ViomeFindings["specimenEvent"]){
+ if(!viomeSource(value))throw new ViomeReportContextError("unavailable");
+ const result=structuredClone(value) as any,target=result.sourceReport??result;
+ if(event)target.specimenEvent=event;else delete target.specimenEvent;
+ return result;
+}
+
+/** UI projection of owned saved sources; server independently verifies every mutation. */
+export function savedViomeCompanions(sample:ViomeSavedSource,samples:readonly ViomeSavedSource[]){
+ const source=viomeSource(sample.structuredData);
+ if(!source)return{source:null,linked:[] as ViomeSavedSource[],eligible:[] as ViomeSavedSource[],reason:"Companion linking is unavailable for this source format. You can still view or delete this report."};
+ const known=samples.filter(row=>row.id!==sample.id&&row.processingStatus==="completed"&&viomeSource(row.structuredData));
+ const linked=known.filter(row=>source.specimenEvent?.rootReportId===row.id||viomeSource(row.structuredData)?.specimenEvent?.rootReportId===sample.id);
+ const free=(row:ViomeSavedSource)=>!viomeSource(row.structuredData)?.specimenEvent&&!samples.some(other=>other.id!==row.id&&viomeSource(other.structuredData)?.specimenEvent?.rootReportId===row.id);
+ const eligible=sample.processingStatus==="completed"&&!linked.length&&!source.specimenEvent?known.filter(row=>free(row)&&compatibleViomeCompanion(source,viomeSource(row.structuredData)!)):[];
+ const opposite=known.filter(row=>viomeSource(row.structuredData)!.documentKind!==source.documentKind);
+ const reason=sample.processingStatus!=="completed"?"This report has not finished saving.":source.specimenEvent&&!linked.length?"The linked report is unavailable. This report keeps its own findings.":!source.biologicalDates.collectedOn?"This report has no verified collection date. It remains a separate source.":!opposite.length?"No saved report of the complementary type is available.":!eligible.length&&!linked.length?"No compatible, unpaired report is available. Both reports need the same known collection date, complementary document types and compatible specimen/method. Matching dates alone never link reports.":"";
+ return{source,linked,eligible,reason};
 }
