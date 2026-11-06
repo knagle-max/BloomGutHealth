@@ -1,10 +1,20 @@
+# Active checkpoint — publish VIOME-LAYOUT-P0-07, then Genetics composition
+
+Baseline4764846. New November6 attached deidentified7page and reconstructed13pagePDFs reproduced rejection, now actualApp/PDF.js→HTTP/in-memoryPGlite→reload exact independentMuPDFname/class/category/page/column PASS:94organisms,22assessments,371foods (not old299fixture). Newgeometry/parser + position-onlyuncertainty manualresolution-before-confirm/Save; noPDF/rawtext/privatehash/biologicalmanifest/screenshots inGit/logs/externalservices.26focused/types/build/syntheticnativeuncertainty/rotation +pairing/reuse/delete/account regressionsPASS. Broadcheckpoint575tests:573passed; generatedcrosswalkhash andlegacyfoodindexorderfailedthenfixed/26focusedPASS. Publishnormalbranch/checkexactCI/Renderonce; do notloopreruns.
+
+OriginalprivateS4,oldspecificallynamedlayout-faithfulsyntheticS1,description/unsupporteddateformats,independentsemanticPIISecurity/hosted/physicalVoiceOver remain separate acceptance. Sourcecountsdo notproveallproviderfidelity. Newattachment defect is notblockedontransfers; seeoperations/VIOME_NATIVE_PDF.md.
+
+Next actionableUX-GENETICS-COMPOSITION-04 per exactBrandingcd4e749:Yourgenetics/topic-firsttitles/gene-rsIDsecondary/oneWhywithallsourcefacts+citations preserved; no clinicalclaimgate onobservededucation. Then currentExplore/Progress/Profileaudits onlydemonstrateddeltas. Athlete536b170merge4764846tested/pushed; source-loaded primaryactionvisible320500, no fabricatedliveworkoutstate.
+
+## Previous controlling P0 directive (attachment defect implemented; distinct source gates remain open)
+
 # URGENT P0 — native Viome PDF layout compatibility failure (Architect 2026-11-05)
 
 **Do next, before Athlete 320px cosmetic viewport adjustment or other visual composition.** Binding decision: `docs/architecture/VIOME_LAYOUT_COMPATIBILITY_P0_DIRECTIVE_2026-11-05.md`. The user has reproduced `Some report rows could not be separated safely` on BOTH layout-faithful supplied synthetic PDFs (7-page Health Results, 13-page Health Scores & Food Recommendations). Current `shared/viome-pdf.ts` bins equal-width columns and expects category-first rows; it cannot reliably read real three-column name/category pairs, split/wrapped names, contextual headings/prose and multi-page sections.
 
 **Codex next:** obtain the two specifically named layout-faithful synthetic files via authorized task attachment if not yet in checkout, reproduce real failure, inspect PDF.js coordinates; implement one generalizable layout-aware row/paired-column extractor into existing draft/review architecture; add **exact row-by-row fixture manifests** (94 organisms and 22 assessments/299 foods are expected for these fixtures, not blindly accepted by count), uncertainty per affected row and source position, allowlist PII, user review/correct/confirm/save/reload, manual verified pairing using internal IDs. Test actual browser upload, persistence, reimport, source deletion, account isolation; report tested SHA, fixture version, exact data comparison, hosted status, separate private genuine 7+13 acceptance status. No clinical/quantitative inference and **no raw PDF/name/DOB/client/sample/test ID retention or matching**. If fixture access blocks exact S1, develop available independent geometry tests and report narrow transfer blocker, not blanket implementation completion.
 
-**Status:** P0 OPEN; not fixed or accepted by this Architect instruction. Existing successful simplified synthetic fixture runs do not satisfy it. Resume former Athlete layout task only after this functional importer defect is repaired or genuinely blocked on fixture transfer. Anti-loop policy remains in force: no extra governance-only session.
+**Historical directive status:** P0 OPEN at instruction time; November6 implementation/evidence above covers the newly attached deidentified/reconstructed files, not the two older named synthetic PDFs. Existing successful simplified synthetic fixture runs do not satisfy it. Resume former Athlete layout task only after this functional importer defect is repaired or genuinely blocked on fixture transfer. Anti-loop policy remains in force: no extra governance-only session.
 
 # Completed Athlete fix awaiting publication
 

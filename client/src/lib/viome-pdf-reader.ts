@@ -22,7 +22,7 @@ export const extractViomePdf:ViomePdfExtractor=async(bytes,signal,onPage)=>{
   let characters=0,itemCount=0;
   for(let index=1;index<=pdf.numPages;index++){
    if(signal.aborted)throw new ViomePdfError("cancelled");
-   const page=await guarded(pdf.getPage(index)),viewport=page.getViewport({scale:1}),reader=page.streamTextContent({disableNormalization:true}).getReader();currentReader=reader;
+   const page=await guarded(pdf.getPage(index)),viewport=page.getViewport({scale:1,rotation:0}),reader=page.streamTextContent({disableNormalization:true}).getReader();currentReader=reader;
    const items:ViomePdfTextItem[]=[];
    try{
     while(true){

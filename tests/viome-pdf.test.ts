@@ -13,8 +13,9 @@ test('synthetic seven/13page layouts preserve94qualitative organisms and22assess
 });
 test('unsupported, ambiguous/control/oversized/interrupted source fails closed with fixed errors and wrapping stays on the same source column',()=>{
  const pages=syntheticViomePages('organisms');pages[0].items.push({text:'VPI-5482',x:12,y:135,width:60,height:10});const parser=createViomePdfParser();pages.forEach(parser.page);assert.match(parser.finish().organisms[0].name,/VPI-5482$/);
- const cases=[{...pages[0],items:pages[0].items.map(i=>({...i,text:i.text.replace('My Active Gut Microbes','Unrecognized template')}))},{...pages[0],items:[...pages[0].items,{text:'unseparated biological rows',x:12,y:139,width:80,height:10}]},{...pages[0],items:[...pages[0].items,{text:'bad\u0000',x:12,y:140,width:60,height:10}]}];
+ const cases=[{...pages[0],items:pages[0].items.map(i=>({...i,text:i.text.replace('My Active Gut Microbes','Unrecognized template')}))},{...pages[0],items:[...pages[0].items,{text:'bad\u0000',x:12,y:140,width:60,height:10}]}];
  for(const input of cases){const p=createViomePdfParser();assert.throws(()=>{p.page(input);p.finish();},error=>error instanceof ViomePdfError&&!error.message.includes(VIOME_PDF_CANARY));}
+ const uncertain=createViomePdfParser();uncertain.page({...pages[0],items:[...pages[0].items,{text:"unseparated biological rows",x:12,y:139,width:80,height:10}]});const partial=uncertain.finish();assert.equal(partial.extraction?.status,"PARTIAL_REVIEW_REQUIRED");assert.ok(partial.extraction!.issues.length>0);assert.equal(JSON.stringify(partial).includes("unseparated biological rows"),false);
  const empty=createViomePdfParser();empty.page({page:1,width:612,height:792,items:[]});assert.throws(()=>empty.finish(),error=>error instanceof ViomePdfError&&error.code==='empty');
 });
 test('review corrections retain exact biological originals and position through canonical roundtrip',async()=>{

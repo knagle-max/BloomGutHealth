@@ -1,3 +1,4 @@
+import type {ViomePdfIssue} from "@shared/viome-pdf";
 import {useState} from "react";
 import {parseViomeFindings,type ViomeFindings} from "@shared/viome-findings";
 type Kind="organisms"|"assessments"|"foods";
@@ -28,5 +29,23 @@ export default function ViomeReviewEditor({value,onChange,onEditingChange,disabl
    {kind!=="organisms"&&<label className="block">Corrected provider category<select className="bloom-input w-full" value={edit.category} onChange={e=>setEdit({...edit,category:e.target.value})}>{(kind==="assessments"?["Improve","Attention","Maintain"]:["Enjoy","Superfood","Minimize","Avoid"]).map(category=><option key={category}>{category}</option>)}</select></label>}
    {error&&<p role="alert">{error}</p>}<div className="flex flex-wrap gap-4"><button className="text-link min-h-11" type="button" onClick={apply}>Apply row correction</button><button className="text-link min-h-11" type="button" onClick={()=>{setEdit(null);onEditingChange(false);setError("");}}>Cancel correction</button></div>
   </section>}
+ </fieldset>;
+}
+
+/** Only positions survive extraction uncertainty; raw unrecognized spans never do. */
+export function ViomeExtractionReview({issues,value,onResolve,disabled}:{issues:ViomePdfIssue[];value:ViomeFindings;onResolve:(next:ViomeFindings)=>void;disabled:boolean}){
+ const [name,setName]=useState(""),[category,setCategory]=useState(""),[error,setError]=useState("");
+ const issue=issues[0];if(!issue)return null;
+ const categories=issue.kind==="organisms"?["Bacteria","Viruses","Eukaryotes"]:issue.kind==="foods"?["Enjoy","Superfood","Minimize","Avoid"]:["Improve","Attention","Maintain"];
+ const resolve=()=>{try{
+  const row=issue.kind==="organisms"?{name:name.trim(),reportedGroup:category,reportedStatus:"reported_present",position:issue.position}:{name:name.trim(),reportedCategory:category,position:issue.position};
+  const next=parseViomeFindings({...value,[issue.kind]:[...value[issue.kind],row]});onResolve(next);setName("");setCategory("");setError("");
+ }catch{setError("Enter the biological label and an allowed provider classification from this source position. Do not enter personal identifiers.");}};
+ return <fieldset disabled={disabled} className="bloom-panel space-y-3" aria-label="Resolve uncertain extraction"><legend className="font-semibold">Extraction needs review</legend>
+ <p role="status">{issues.length} source {issues.length===1?"position needs":"positions need"} correction. Saving is blocked until each is resolved.</p>
+ <p>Check {issue.kind} on page {issue.position.page}, column {issue.position.column}, row {issue.position.row} against your PDF. Unrecognized source text was discarded; enter only the biological finding. If this is not a finding, use Change report rather than saving an incomplete import.</p>
+ <label className="block">Biological label at uncertain position<input className="bloom-input w-full" value={name} maxLength={150} onChange={e=>setName(e.target.value)}/></label>
+ <label className="block">Provider classification at uncertain position<select className="bloom-input w-full" value={category} onChange={e=>setCategory(e.target.value)}><option value="">Choose the reported classification</option>{categories.map(c=><option key={c}>{c}</option>)}</select></label>
+ {error&&<p role="alert">{error}</p>}<button type="button" className="text-link min-h-11" onClick={resolve}>Resolve source position</button>
  </fieldset>;
 }

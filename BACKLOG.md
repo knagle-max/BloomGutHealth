@@ -1,3 +1,7 @@
+# Current checkpoint — VIOME-LAYOUT-P0-07
+
+Implemented supplied deidentified report layout correction at4764846baseline:94organisms/22assessments/371foods exact independent in-memory source comparison throughactualPDF.js→Appreview→HTTP/PGlite→reload; ownedreimport/deletion/accountchecks PASS. Originalprivate, oldnamedsynthetic, providerdescription/dateformatfidelity and independentSecurity/physical acceptance remainseparate.26focused/types/build/nativeuncertainty+rotation and syntheticpairing regression PASS; broadcheckpoint575tests:573passed,2failuresfixedandcoveredby26focusedPASS (generatedcrosswalkhash andsourceordercompatibility); no blanketfullgreenclaim. PublishthenresumeUX-GENETICS-COMPOSITION-04.
+
 # Bloom autonomous development backlog
 
 Branch `enhance/bloom-experience`, existing PR1/Render only. Biology4d765cf Actions42140954861SUCCESS/RenderLIVEdep-dbmidn4s728c73a3hupg. Food488d467 pushed; current Athlete pending-source viewport fix verified, publication next. Today is task-first software compliant, not a redesign target. v0.5 active/v0.6 not started; physical/independent/genuine-source and Render0015/0016binding acceptance scoped separately. `NEXT_ACTIONS.md` is authoritative; older entries are history.
@@ -1035,7 +1039,7 @@ Amendment D verification checkpoint: full464/464 PASS202902ms; final8focused/sou
 
 2026-11-04 — GEN02 optional reported build/assay/quality context delivered through existing selected-SNP review/encrypted save/reload; no inferred quality/build or interpretation/ranking upgrade.28focused/types/build + actual consent/source/owner browser PASS, publication pending. GEN01/04/05/06 reconciled supported scope; GEN05 clinical reveal remains external. Next MICRO source/quantity/history inspection, not duplicate intake.
 
-2026-11-04 — MICRO05/07 tiny source precision, unique comparison and nondetection-token correction implemented/tested (19focused/types/build; actual source/paused/retry/duplicate/zero/tiny plus40profile observations). MICRO01–08 individually reconciled, no assay/clinical rank/network inference. New curated metabolic/cross-feeding claims remain external BIO-TAXON scope; raw pipeline gate next inspect. Publication pending.
+2026-11-04 — MICRO05/07 tiny source precision, unique comparison and nondetection-token correction implemented/tested (26focused/types/build; actual source/paused/retry/duplicate/zero/tiny plus40profile observations). MICRO01–08 individually reconciled, no assay/clinical rank/network inference. New curated metabolic/cross-feeding claims remain external BIO-TAXON scope; raw pipeline gate next inspect. Publication pending.
 
 2026-11-04 — Tiny focus/lab-label observations no longer become zero; actual routines+encrypted laboratory source journeys PASS, final15focused/types/build, full490 observation-format candidate before final caveat-copy checks. Private review export carries non-causality caveat and preserves source fields; raw sequence file formats denied before writes. EXP06 remains explicitly partial for earlier-value lineage, not full clinician-report certification. Next existing BIO evidence/registry/rule/source UI inspection, no clinical activation.
 

@@ -24,14 +24,14 @@ export function syntheticViomePages(kind:'organisms'|'recommendations'):ViomePdf
 }
 /** Small native text PDF fixture, no real patient/report bytes. Invisible header
  * and metadata canaries exercise the actual PDF.js path as well as the parser. */
-export function syntheticViomePdf(kind:'organisms'|'recommendations'){
- const pages=syntheticViomePages(kind),objects:string[]=[];
+export function syntheticViomePdf(kind:'organisms'|'recommendations',sourcePages?:ViomePdfPage[],rotation=0){
+ const pages=sourcePages||syntheticViomePages(kind),objects:string[]=[];
  const escape=(text:string)=>text.replace(/([\\()])/g,'\\$1');
  objects.push('<< /Type /Catalog /Pages 2 0 R >>');
  objects.push(`<< /Type /Pages /Kids [${pages.map((_,i)=>`${4+i*2} 0 R`).join(' ')}] /Count ${pages.length} >>`);
  objects.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
- for(const page of pages){const content=page.items.map(item=>`BT /F1 9 Tf 1 0 0 1 ${item.x} ${792-item.y} Tm (${escape(item.text)}) Tj ET`).join('\n')+`\nBT /F1 9 Tf 3 Tr 1 0 0 1 20 775 Tm (Name: ${VIOME_PDF_CANARY}) Tj ET`;
-  objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 3 0 R >> >> /Contents ${objects.length+2} 0 R >>`);
+ for(const page of pages){const content=page.items.map(item=>`BT /F1 9 Tf 1 0 0 1 ${item.x} ${page.height-item.y} Tm (${escape(item.text)}) Tj ET`).join('\n')+`\nBT /F1 9 Tf 3 Tr 1 0 0 1 20 775 Tm (Name: ${VIOME_PDF_CANARY}) Tj ET`;
+  objects.push(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${page.width} ${page.height}] /Rotate ${rotation} /Resources << /Font << /F1 3 0 R >> >> /Contents ${objects.length+2} 0 R >>`);
   objects.push(`<< /Length ${content.length} >>\nstream\n${content}\nendstream`);
  }
  objects.push(`<< /Author (${VIOME_PDF_CANARY}) /Title (${VIOME_PDF_CANARY}.pdf) >>`);

@@ -4,8 +4,8 @@ import {invalidatePlanningInputs} from "@/lib/planning-cache";
 import { useState, useRef, useEffect, useMemo,useCallback } from "react";
 import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
 import {hasViomeFindingsMarker,parseViomeFindings,ViomeFindingsError} from "@shared/viome-findings";
-import {readViomePdf,ViomePdfError} from "@shared/viome-pdf";
-import ViomeReviewEditor from "@/components/ViomeReviewEditor";
+import {readViomePdf,ViomePdfError,type ViomePdfIssue} from "@shared/viome-pdf";
+import ViomeReviewEditor,{ViomeExtractionReview} from "@/components/ViomeReviewEditor";
 import ViomeImportChoices,{type ViomeImportDecision} from "@/components/ViomeImportChoices";
 import { queryClient } from "@/lib/queryClient";
 import FileUploadZone from "@/components/FileUploadZone";
@@ -44,6 +44,7 @@ export default function Upload() {
   const errorRef=useRef<HTMLParagraphElement>(null);
   const [reading, setReading] = useState(false);
   const [pdfSource,setPdfSource]=useState(false),[pdfReviewed,setPdfReviewed]=useState(false),[pdfEditing,setPdfEditing]=useState(false);
+  const [pdfIssues,setPdfIssues]=useState<ViomePdfIssue[]>([]);
   const pdfRead=useRef<AbortController|null>(null);
   const[importDecision,setImportDecision]=useState<ViomeImportDecision|null>(null);
   const updateImportDecision=useCallback((decision:ViomeImportDecision|null)=>setImportDecision(decision),[]);
@@ -89,8 +90,9 @@ export default function Upload() {
             if(!active.current||actor.current!==owner)return;
             // Local validation/projection only. Nothing is sent until the
             // separate mandatory row-review affirmation and explicit Save.
-            const findings=parseViomeFindings({...draft,reviewConfirmed:true}),parsed=parseReportDocument(JSON.stringify(findings),"json");
-            setPreview({source:findings,parsed:parsed.parsed});setPdfSource(true);setPdfReviewed(false);clearViomeInput();
+            const{extraction,...biological}=draft;
+            const findings=parseViomeFindings({...biological,reviewConfirmed:true}),parsed=parseReportDocument(JSON.stringify(findings),"json");
+            setPreview({source:findings,parsed:parsed.parsed});setPdfSource(true);setPdfReviewed(false);setPdfIssues(extraction?.issues||[]);clearViomeInput();
           }finally{if(pdfRead.current===controller)pdfRead.current=null;}
           return;
         }
@@ -102,7 +104,7 @@ export default function Upload() {
         }else setPreview({...parsed,originalFilename:pasted?undefined:selected?.name});
         return;
       } else {
-        if(pdfSource&&(!pdfReviewed||pdfEditing))throw Error("Confirm that you reviewed the extracted biological rows before saving.");
+        if(pdfSource&&(!pdfReviewed||pdfEditing||pdfIssues.length>0))throw Error("Confirm that you reviewed the extracted biological rows before saving.");
         setAttempted(true);
         if(viome&&!importDecision)throw Error("Review the existing-report and specimen choices before saving.");
         // An exported historical link is not fresh confirmation to link a new
@@ -147,7 +149,7 @@ export default function Upload() {
       {!showManualEntry && <FileUploadZone
         disabled={frozen}
         file={file}
-        onFileSelect={next=>{if(!frozen){setFile(next);setInputError("");setPdfSource(false);setPdfReviewed(false);setPdfEditing(false);}}}
+        onFileSelect={next=>{if(!frozen){setFile(next);setInputError("");setPdfSource(false);setPdfReviewed(false);setPdfEditing(false);setPdfIssues([]);}}}
         acceptedFormats={["PDF", "JSON", "CSV"]}
         maxSizeMB={8}
         showFilename={!file||!/\.pdf$/i.test(file.name)}
@@ -251,7 +253,7 @@ export default function Upload() {
         <p>{attempted?'Review of the source prepared for this import. Save status is shown below.':'Prepared locally; nothing has been uploaded or saved yet.'}</p>
         <p>{preview.parsed.scores.length} provider assessments · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa{preview.parsed.foods?.length?` · ${preview.parsed.foods.length} provider food suggestions`:""}</p>
         {viome&&<div className="report-context"><p>This record keeps the reviewed finding fields. Optional identifiers, notes and the original filename are omitted.</p><p>Collection: {viome.biologicalDates.collectedOn||"not supplied"} · received: {viome.biologicalDates.receivedOn||"not supplied"} · reported: {viome.biologicalDates.reportedOn||"not supplied"}.</p><p className="panel-note">Collection dates remain separate from received and reported dates. Raw-document and general-purpose text fields are not accepted.</p></div>}
-        {viome&&pdfSource&&<><ViomeReviewEditor value={viome} onEditingChange={editing=>{setPdfEditing(editing);setPdfReviewed(false);}} disabled={isUploading||save.uncertain||!!save.saved} onChange={next=>{try{const parsed=parseReportDocument(JSON.stringify(next),"json");setPreview({source:next,parsed:parsed.parsed});setPdfReviewed(false);setInputError("");}catch{setInputError("Check the row correction before continuing.");}}} /><label className="flex min-h-11 items-start gap-3"><input type="checkbox" checked={pdfReviewed} disabled={isUploading||save.uncertain||!!save.saved||pdfEditing} onChange={e=>setPdfReviewed(e.target.checked)} /><span>I reviewed the biological rows and categories against my source. They contain no personal identifiers.</span></label></>}
+        {viome&&pdfSource&&<><ViomeExtractionReview issues={pdfIssues} value={viome} disabled={isUploading||save.uncertain||!!save.saved||pdfEditing} onResolve={next=>{const parsed=parseReportDocument(JSON.stringify(next),"json");setPreview({source:next,parsed:parsed.parsed});setPdfIssues(rows=>rows.slice(1));setPdfReviewed(false);}}/><ViomeReviewEditor value={viome} onEditingChange={editing=>{setPdfEditing(editing);setPdfReviewed(false);}} disabled={isUploading||save.uncertain||!!save.saved} onChange={next=>{try{const parsed=parseReportDocument(JSON.stringify(next),"json");setPreview({source:next,parsed:parsed.parsed});setPdfReviewed(false);setInputError("");}catch{setInputError("Check the row correction before continuing.");}}} /><label className="flex min-h-11 items-start gap-3"><input type="checkbox" checked={pdfReviewed} disabled={isUploading||save.uncertain||!!save.saved||pdfEditing||pdfIssues.length>0} onChange={e=>setPdfReviewed(e.target.checked)} /><span>I reviewed the biological rows and categories against my source. They contain no personal identifiers.</span></label></>}
         {viome&&<ViomeImportChoices key={user?.id} incoming={viome} disabled={isUploading||save.uncertain||!!save.saved} onDecision={updateImportDecision} />}
         <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
         <details><summary>Recognized data & missing measurements</summary>
@@ -262,7 +264,7 @@ export default function Upload() {
           </section>}
           <ImportedReportDetails report={preview.parsed}/>
         </details>
-        {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);setInputError("");setPdfSource(false);setPdfReviewed(false);setPdfEditing(false);}}>Change report or details</Button>}
+        {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);setInputError("");setPdfSource(false);setPdfReviewed(false);setPdfEditing(false);setPdfIssues([]);}}>Change report or details</Button>}
       </section>}
       {reportError&&<p role="alert" tabIndex={-1} ref={errorRef} className="report-import-error">{reportError}</p>}
       {reading&&pdfRead.current&&<Button type="button" variant="outline" onClick={()=>pdfRead.current?.abort()}>Cancel PDF reading</Button>}
@@ -271,7 +273,7 @@ export default function Upload() {
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={(!preview&&!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved || !!preview&&pdfSource&&(!pdfReviewed||pdfEditing)&&!save.uncertain || !!viome&&!importDecision&&!save.uncertain}
+        disabled={(!preview&&!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved || !!preview&&pdfSource&&(!pdfReviewed||pdfEditing||pdfIssues.length>0)&&!save.uncertain || !!viome&&!importDecision&&!save.uncertain}
         data-testid="button-submit-upload"
       >
         {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":preview?"Save report":"Review report"}
