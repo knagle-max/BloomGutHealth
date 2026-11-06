@@ -1,3 +1,7 @@
+# Historical index notice — NOT current task selector (Owner 2026-11-06)
+
+**Current control:** Top of `NEXT_ACTIONS.md` and `docs/architecture/HISTORICAL_BLOCKER_RECONCILIATION_AND_BRAND_EXECUTION_2026-11-06.md`. This index retains previous work and evidence, but old `BLOCKED_USER_INPUT`, `awaiting review`, stale `next execution order` and former specialist/Architect approval references **cannot stop routine implementation**. Check current code and latest verified commits; classify prior issues as resolved, superseded, final-gate review, feature-scoped real external activation or reproduced current bug. Codex chooses and builds the next actionable approved task without interim signoff; the Brand UX spirit remains binding with final integrated specialist review. Do not start each session by processing the backlog of historical index entries.
+
 # Bloom — Persistent Task Index and Acceptance Ledger
 **Owner:** Chief Architect (requirements) / Codex (implementation and evidence)  
 **Updated:** 2026-10-24  
