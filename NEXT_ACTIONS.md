@@ -1,3 +1,9 @@
+## Architect: visible Viome companion link AFTER upload (2026-11-05)
+
+**Binding decision:** `docs/architecture/VIOME_POST_SAVE_LINKING_DECISION_2026-11-05.md`. Current `ViomeImportChoices.tsx` only offers `Link a companion report` at pre-save import review inside a collapsed section, whereas saved `ViomeSavedContext.tsx` only displays the relationship/Open companion. Users who have already saved both same-stool reports cannot intuitively pair them.
+
+**Do not delay current immediate report deletion fix.** In the same selected Gut report/header management UX add obvious `Link companion report` for two *already saved* compatible unlinked Viome documents; explicit same-stool confirmation and owner-bound atomic server operation using existing specimen relationship, no vendor sample/test IDs. Show `View companion` and `Unlink reports` for linked sources (unlink never deletes biological rows). Explain absent/incompatible dates and mismatched document kinds instead of forcing reupload; invalidate both report/cache views, preserve independent records. Persistent synthetic link→reload→unlink→reload, access-control/concurrency, mobile keyboard tests and exact SHA required. Continue Viome PDF P0/source acceptance and later universal bulk/category management without new framework.
+
 # Current publication: Viome attachment layout fix6d9bc89; next P0 universal saved microbiome deletion
 
 NewNovember6attached sources nowPASS exactApp/PDF.js→HTTP/PGlite→reload includingeveryname/category/page/column/row:94organisms,22assessments,371foods;26focused/types/build/syntheticuncertainty+rotation andpairingregressionsPASS. Codecommitted6d9bc89; finishnormalmerge/push/exactCI/Renderonce. Newremote universaldeletion directivebelow isNEXT action, thenmicrobiomefoodopt-in P0, thenoutstandingGenetics/othercomposition. Oldnamedlayoutsynthetic andoriginalprivateacceptance remainseparate. Do notreopencompletedattachmentparser withoutnewrepro.
