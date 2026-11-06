@@ -434,6 +434,6 @@ export function resolveReportDate(
 }
 
 export type ReportImportFields={testDate?:string;testingCompany?:string;testId?:string;notes?:string};
-export type ReportSaveResult={success:true;sampleId:string;preview:{kind:StructuredReport['kind'];scores:number;reportedOrganisms:number;quantifiedTaxa:number;dateSource:ReturnType<typeof resolveReportDate>['dateSource'];missingData:string[]}};
+export type ReportSaveResult={success:true;sampleId:string;reusedExisting?:true;preview:{kind:StructuredReport['kind'];scores:number;reportedOrganisms:number;quantifiedTaxa:number;dateSource:ReturnType<typeof resolveReportDate>['dateSource'];missingData:string[]}};
 export class ReportSaveConflict extends Error {constructor(){super("This save reference belongs to different report details. Check your saved reports before starting another import.");}}
 export function reportImportIdentity(userId:string,key:string){return JSON.stringify(['structured-report-import-v1',userId,key]);}

@@ -2,7 +2,8 @@ import type { Express, RequestHandler } from "express";
 import multer from "multer";
 import { basename, extname } from "node:path";
 import { z } from "zod";
-import {assertViomeImportMetadata,hasViomeFindingsMarker} from "../shared/viome-findings";
+import {assertViomeImportMetadata,hasViomeFindingsMarker,viomeReportIdSchema} from "../shared/viome-findings";
+import {ViomeReportContextError} from "../shared/viome-report-context";
 import type { IStorage } from "./storage";
 import {
   parseStructuredReport,
@@ -20,7 +21,7 @@ type BaseStore = Pick<
   | "insertBacterialComposition"
   | "insertMlAnalysis"
 >;
-type Store = BaseStore & Pick<IStorage,"importStructuredReport">;
+type Store = BaseStore & Pick<IStorage,"importStructuredReport"|"deleteViomeReport">;
 const fieldsSchema = z.object({
   testDate: z.string().max(100).optional(),
   testingCompany: z.string().max(100).optional(),
@@ -30,6 +31,7 @@ const fieldsSchema = z.object({
 const requestSchema = fieldsSchema
   .extend({
     originalFilename: z.string().max(255).optional(),
+    reuseExistingReportId:viomeReportIdSchema.optional(),
     report: z.unknown().optional(),
     bacteria_percentages: z.unknown().optional(),
   })
@@ -125,9 +127,9 @@ export function registerReportRoutes(
 ) {
   const sameActor:RequestHandler=(req,res,next)=>{const expected=req.get("X-Bloom-Report-Actor");if(expected!==undefined&&expected!==req.session.userId)return void res.status(409).json({error:"The signed-in account changed. Reload this page and review the current account before saving."});next();};
   const keyFor=(req:Parameters<RequestHandler>[0])=>{const value=req.get("Idempotency-Key");if(value!==undefined&&!z.string().uuid().safeParse(value).success)throw Error("INVALID_REPORT_KEY");return value;};
-  const save=(owner:string,report:StructuredReport,fields:z.infer<typeof fieldsSchema>,filename:string|null,key:string|undefined)=>key!==undefined
-    ? store.importStructuredReport?store.importStructuredReport(owner,report,fields,filename,key):Promise.reject(Error("REPORT_RECEIPT_UNAVAILABLE"))
-    : saveStructuredReport(store,owner,report,fields,filename);
+  const save=(owner:string,report:StructuredReport,fields:z.infer<typeof fieldsSchema>,filename:string|null,key:string|undefined,reuseExistingReportId?:string)=>key!==undefined
+    ? store.importStructuredReport?store.importStructuredReport(owner,report,fields,filename,key,reuseExistingReportId):Promise.reject(Error("REPORT_RECEIPT_UNAVAILABLE"))
+    : reuseExistingReportId||(report.sourceReport as any)?.specimenEvent?Promise.reject(new ViomeReportContextError("incompatible")):saveStructuredReport(store,owner,report,fields,filename);
   const noCache: RequestHandler = (_req, res, next) => {
     res.setHeader("Cache-Control", "no-store");
     next();
@@ -155,10 +157,11 @@ export function registerReportRoutes(
         },
       );
       if(hasViomeFindingsMarker(report.sourceReport)){
-        const{report:_reviewed,...extras}=fields.data;
+        const{report:_reviewed,reuseExistingReportId:_reuse,...extras}=fields.data;
         assertViomeImportMetadata(report.sourceReport,extras,null);
       }
       resolveReportDate(fields.data.testDate, report);
+      if(fields.data.reuseExistingReportId&&!hasViomeFindingsMarker(report.sourceReport))throw new ViomeReportContextError("incompatible");
     } catch (error) {
       return res.status(400).json({ error: (error as Error).message });
     }
@@ -172,14 +175,22 @@ export function registerReportRoutes(
             ? basename(fields.data.originalFilename)
             : null,
           key,
+          fields.data.reuseExistingReportId,
         ),
       );
     } catch(error) {
       if(error instanceof ReportSaveConflict)return res.status(409).json({error:error.message});
+      if(error instanceof ViomeReportContextError)return res.status(error.code==="unavailable"?404:409).json({error:error.message});
       res
         .status(503)
         .json({ error: "Report could not be confirmed. Retry the same import or check your saved reports." });
     }
+  });
+  app.delete("/api/microbiome/reports/:id",auth,noCache,sameActor,async(req,res)=>{
+    if(!viomeReportIdSchema.safeParse(req.params.id).success)return res.status(404).json({error:"Report not found in your account."});
+    if(!store.deleteViomeReport)return res.status(503).json({error:"Report deletion is unavailable. Try again later."});
+    try{if(!await store.deleteViomeReport(req.session.userId!,req.params.id))return res.status(404).json({error:"Report not found in your account."});return res.json({success:true});}
+    catch{return res.status(503).json({error:"The report could not be deleted. Reload your saved reports before trying again."});}
   });
   const upload = multer({
     storage: multer.memoryStorage(),

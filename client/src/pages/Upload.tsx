@@ -1,11 +1,12 @@
 import ImportedReportDetails from "@/components/ImportedReportDetails";
 import {useStructuredReportSave} from "@/lib/useStructuredReportSave";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo,useCallback } from "react";
 import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
 import {hasViomeFindingsMarker,parseViomeFindings,ViomeFindingsError} from "@shared/viome-findings";
 import {readViomePdf,ViomePdfError} from "@shared/viome-pdf";
 import ViomeReviewEditor from "@/components/ViomeReviewEditor";
+import ViomeImportChoices,{type ViomeImportDecision} from "@/components/ViomeImportChoices";
 import { queryClient } from "@/lib/queryClient";
 import FileUploadZone from "@/components/FileUploadZone";
 import { Label } from "@/components/ui/label";
@@ -44,6 +45,8 @@ export default function Upload() {
   const [reading, setReading] = useState(false);
   const [pdfSource,setPdfSource]=useState(false),[pdfReviewed,setPdfReviewed]=useState(false),[pdfEditing,setPdfEditing]=useState(false);
   const pdfRead=useRef<AbortController|null>(null);
+  const[importDecision,setImportDecision]=useState<ViomeImportDecision|null>(null);
+  const updateImportDecision=useCallback((decision:ViomeImportDecision|null)=>setImportDecision(decision),[]);
   const [attempted, setAttempted] = useState(false);
   const [preview, setPreview] = useState<(ReturnType<typeof parseReportDocument> & {originalFilename?:string}) | null>(null);
   const save=useStructuredReportSave(),isUploading=reading||save.pending,frozen=isUploading||save.uncertain||!!save.saved||!!preview;
@@ -101,7 +104,11 @@ export default function Upload() {
       } else {
         if(pdfSource&&(!pdfReviewed||pdfEditing))throw Error("Confirm that you reviewed the extracted biological rows before saving.");
         setAttempted(true);
-        const command=hasViomeFindingsMarker(preview.parsed.sourceReport)?{report:preview.parsed.sourceReport}:{report:preview.source,originalFilename:preview.originalFilename,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes};
+        if(viome&&!importDecision)throw Error("Review the existing-report and specimen choices before saving.");
+        // An exported historical link is not fresh confirmation to link a new
+        // import. Only this review's explicit specimen choice can add it.
+        const{specimenEvent:_priorLink,...viomeFacts}=viome||{};
+        const command=viome?{report:{...viomeFacts,...(importDecision?.specimenEvent?{specimenEvent:importDecision.specimenEvent}:{})},...(importDecision?.reuseExistingReportId?{reuseExistingReportId:importDecision.reuseExistingReportId}:{})}:{report:preview.source,originalFilename:preview.originalFilename,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes};
         result=await save.submit(command,{kind:preview.parsed.kind,scores:preview.parsed.scores.length,reportedOrganisms:preview.parsed.organisms.length,quantifiedTaxa:Object.keys(preview.parsed.bacteria_percentages||{}).length});
       }
       if(!result||!active.current||actor.current!==owner)return;
@@ -109,7 +116,7 @@ export default function Upload() {
       await invalidatePlanningInputs();
       await queryClient.invalidateQueries({queryKey:["/api/microbiome/samples"]});
       if(!active.current||actor.current!==owner)return;
-      toast({title:"Report saved",description:`${result.preview.scores} provider assessments, ${result.preview.reportedOrganisms} reported organisms and ${result.preview.quantifiedTaxa} quantified taxa saved.${preview?.parsed.foods?.length?` ${preview.parsed.foods.length} provider food suggestions retained.`:""} Missing measurements remain unavailable.`});
+      toast({title:result.reusedExisting?"Existing report kept":"Report saved",description:result.reusedExisting?"Your matching saved report was kept. No duplicate biological observation was created.":`${result.preview.scores} provider assessments, ${result.preview.reportedOrganisms} reported organisms and ${result.preview.quantifiedTaxa} quantified taxa saved.${preview?.parsed.foods?.length?` ${preview.parsed.foods.length} provider food suggestions retained.`:""} Missing measurements remain unavailable.`});
       setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
     } catch(error) {
       if(!active.current||actor.current!==owner)return;
@@ -245,6 +252,7 @@ export default function Upload() {
         <p>{preview.parsed.scores.length} provider assessments · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa{preview.parsed.foods?.length?` · ${preview.parsed.foods.length} provider food suggestions`:""}</p>
         {viome&&<div className="report-context"><p>This record keeps the reviewed finding fields. Optional identifiers, notes and the original filename are omitted.</p><p>Collection: {viome.biologicalDates.collectedOn||"not supplied"} · received: {viome.biologicalDates.receivedOn||"not supplied"} · reported: {viome.biologicalDates.reportedOn||"not supplied"}.</p><p className="panel-note">Collection dates remain separate from received and reported dates. Raw-document and general-purpose text fields are not accepted.</p></div>}
         {viome&&pdfSource&&<><ViomeReviewEditor value={viome} onEditingChange={editing=>{setPdfEditing(editing);setPdfReviewed(false);}} disabled={isUploading||save.uncertain||!!save.saved} onChange={next=>{try{const parsed=parseReportDocument(JSON.stringify(next),"json");setPreview({source:next,parsed:parsed.parsed});setPdfReviewed(false);setInputError("");}catch{setInputError("Check the row correction before continuing.");}}} /><label className="flex min-h-11 items-start gap-3"><input type="checkbox" checked={pdfReviewed} disabled={isUploading||save.uncertain||!!save.saved||pdfEditing} onChange={e=>setPdfReviewed(e.target.checked)} /><span>I reviewed the biological rows and categories against my source. They contain no personal identifiers.</span></label></>}
+        {viome&&<ViomeImportChoices key={user?.id} incoming={viome} disabled={isUploading||save.uncertain||!!save.saved} onDecision={updateImportDecision} />}
         <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
         <details><summary>Recognized data & missing measurements</summary>
           {preview.parsed.bacteria_percentages&&<section aria-label="Reported relative abundance" className="space-y-2">
@@ -263,7 +271,7 @@ export default function Upload() {
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={(!preview&&!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved || !!preview&&pdfSource&&(!pdfReviewed||pdfEditing)&&!save.uncertain}
+        disabled={(!preview&&!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved || !!preview&&pdfSource&&(!pdfReviewed||pdfEditing)&&!save.uncertain || !!viome&&!importDecision&&!save.uncertain}
         data-testid="button-submit-upload"
       >
         {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":preview?"Save report":"Review report"}

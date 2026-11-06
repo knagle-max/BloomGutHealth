@@ -9,7 +9,8 @@ import {eq} from 'drizzle-orm';
 import {microbiomeSamples,bacterialComposition,mlAnalyses} from '../shared/schema';
 import {parseStructuredReport,type StructuredReport,type ReportImportFields} from '../shared/structured-report';
 import {registerReportRoutes} from '../server/report-routes';
-import {importStructuredReportWithReceipt} from '../server/structured-report-storage';
+import {importStructuredReportWithReceipt,deleteOwnedViomeReport} from '../server/structured-report-storage';
+import {ViomeReportContextError} from '../shared/viome-report-context';
 import {publicSample} from '../server/analysis-boundary';
 import {VIOME_FINDINGS_VERSION} from '../shared/viome-findings';
 import {createViomePdfParser} from '../shared/viome-pdf';
@@ -31,9 +32,41 @@ test('owned canonical import preserves provider food rows atomically through ret
 });
 async function fixture(){
  const pg=new PGlite();await pg.exec(`CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');CREATE TABLE microbiome_samples(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),user_id varchar NOT NULL REFERENCES users(id),test_date timestamp NOT NULL,testing_company text,test_id text,raw_data_path text,structured_data jsonb,notes text,processing_status text NOT NULL DEFAULT 'pending',diversity_index real,uploaded_at timestamp NOT NULL DEFAULT now());CREATE TABLE bacterial_composition(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),sample_id varchar NOT NULL REFERENCES microbiome_samples(id),bacterial_name text NOT NULL,taxonomy_level text NOT NULL,abundance real NOT NULL,genome_data jsonb);CREATE TABLE ml_analyses(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),sample_id varchar NOT NULL REFERENCES microbiome_samples(id),analysis_type text NOT NULL,model_version text NOT NULL,results jsonb NOT NULL,confidence real,explainability jsonb,compared_cohorts text[],analyzed_at timestamp NOT NULL DEFAULT now());`);const db=drizzle(pg);
- const store:any={insertMicrobiomeSample:async(data:any)=>(await db.insert(microbiomeSamples).values(data).returning())[0],updateMicrobiomeSample:(id:string,updates:any,owner:string)=>updateOwnedSample(db as any,id,updates,owner),insertBacterialComposition:(data:any,owner:string)=>insertOwnedComposition(db as any,data,owner),insertMlAnalysis:(data:any,owner:string)=>insertOwnedAnalysis(db as any,data,owner),importStructuredReport:(owner:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,key)};
+ const store:any={insertMicrobiomeSample:async(data:any)=>(await db.insert(microbiomeSamples).values(data).returning())[0],updateMicrobiomeSample:(id:string,updates:any,owner:string)=>updateOwnedSample(db as any,id,updates,owner),insertBacterialComposition:(data:any,owner:string)=>insertOwnedComposition(db as any,data,owner),insertMlAnalysis:(data:any,owner:string)=>insertOwnedAnalysis(db as any,data,owner),importStructuredReport:(owner:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string,reuse?:string)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,key,reuse),deleteViomeReport:(owner:string,id:string)=>deleteOwnedViomeReport(db,owner,id)};
  return{pg,db,store};
 }
+test('paired Viome sources and explicit reimport use owned transactional facts in either order; deleted links cannot resurrect and quantitative records survive',async()=>{
+ const{pg,db,store}=await fixture();
+ const source=(kind:'organisms'|'recommendations')=>{const parser=createViomePdfParser();syntheticViomePages(kind).forEach(parser.page);return{...parser.finish(),reviewConfirmed:true as const};};
+ const organisms=source('organisms'),health=source('recommendations');
+ const save=(value:unknown,key=randomUUID(),owner='a',reuse?:string)=>store.importStructuredReport(owner,parseStructuredReport(value),{},null,key,reuse);
+ const code=(expected:string)=>(error:unknown)=>error instanceof ViomeReportContextError&&error.code===expected;
+ try{
+  const rootKey=randomUUID(),root=await save(organisms,rootKey),linked={...health,specimenEvent:{rootReportId:root.sampleId,confirmed:true}},key=randomUUID(),child=await save(linked,key);assert.deepEqual(await save(linked,key),child);assert.equal((await db.select().from(microbiomeSamples)).length,2);
+  await assert.rejects(save(linked,randomUUID(),'b'),code('unavailable'));await assert.rejects(save({...linked,biologicalDates:{collectedOn:'2026-09-03'}}),code('incompatible'));await assert.rejects(save({...organisms,specimenEvent:linked.specimenEvent}),code('incompatible'));await assert.rejects(save(linked),code('occupied'));assert.equal((await db.select().from(microbiomeSamples)).length,2);
+  const reprint=structuredClone(health);reprint.foods[0].position.page=20;
+  const reused=await save(reprint,randomUUID(),'a',child.sampleId);assert.equal(reused.reusedExisting,true);assert.equal(reused.sampleId,child.sampleId);assert.equal((await db.select().from(microbiomeSamples)).length,2);
+  await assert.rejects(save(organisms,rootKey,'a',root.sampleId));await assert.rejects(save(health,randomUUID(),'b',child.sampleId),code('unavailable'));await assert.rejects(save({...health,foods:health.foods.slice(1)},randomUUID(),'a',child.sampleId),code('changed'));await assert.rejects(save(linked,randomUUID(),'a',child.sampleId),code('incompatible'));
+  const quant=await save({bacteria_percentages:{Roseburia:100}},randomUUID(),'b');assert.equal(await store.deleteViomeReport('b',root.sampleId),false);assert.equal(await store.deleteViomeReport('a',root.sampleId),true);assert.equal(await store.deleteViomeReport('a',root.sampleId),false);
+  const remaining=(await db.select().from(microbiomeSamples)).find(row=>row.id===child.sampleId)!;const findings=(remaining.structuredData as any).sourceReport;assert.equal(findings.specimenEvent,undefined);assert.equal(findings.foods.length,299);assert.equal(findings.assessments.length,22);assert.ok((await db.select().from(microbiomeSamples)).some(row=>row.id===quant.sampleId));assert.equal(await store.deleteViomeReport('b',quant.sampleId),false,'native-specific deletion cannot erase quantified history');
+  assert.deepEqual(await save(linked,key),child,'historical receipt retry can acknowledge the surviving source without relinking it');assert.equal(((await db.select().from(microbiomeSamples)).find(row=>row.id===child.sampleId)!.structuredData as any).sourceReport.specimenEvent,undefined);
+  await assert.rejects(save(linked),code('unavailable'));
+  const reverseRoot=await save(health),reverse=await save({...organisms,specimenEvent:{rootReportId:reverseRoot.sampleId,confirmed:true}});assert.ok(reverse.sampleId);assert.equal((await db.select().from(microbiomeSamples)).filter(row=>row.userId==='a').length,3);
+ }finally{await pg.close();}
+});
+test('HTTP reuse/deletion require active ownership/actor and exact reviewed source; legacy no-key cannot smuggle a link',async()=>{
+ const{pg,db,store}=await fixture(),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerReportRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}`;
+ const parser=createViomePdfParser();syntheticViomePages('organisms').forEach(parser.page);const source={...parser.finish(),reviewConfirmed:true};
+ const post=async(body:unknown,owner='a',key:string|undefined=randomUUID())=>{const response=await fetch(base+'/api/microbiome/import',{method:'POST',headers:{'content-type':'application/json','x-user':owner,...(key?{'Idempotency-Key':key}:{})},body:JSON.stringify(body)});return{status:response.status,body:await response.json()as any};};
+ try{
+  const saved=await post({report:source});assert.equal(saved.status,200);const reuse=await post({report:source,reuseExistingReportId:saved.body.sampleId});assert.equal(reuse.status,200);assert.equal(reuse.body.reusedExisting,true);assert.equal(reuse.body.sampleId,saved.body.sampleId);assert.equal((await db.select().from(microbiomeSamples)).length,1);
+  assert.equal((await post({report:source,reuseExistingReportId:saved.body.sampleId},'b')).status,404);assert.equal((await post({report:source,reuseExistingReportId:'provider-test-id'})).status,400);
+  assert.equal((await post({report:{...source,specimenEvent:{rootReportId:saved.body.sampleId,confirmed:true}}},'a','')).status,409);
+  const remove=(owner:string,actor?:string)=>fetch(base+'/api/microbiome/reports/'+saved.body.sampleId,{method:'DELETE',headers:{...(owner?{'x-user':owner}:{}),...(actor?{'X-Bloom-Report-Actor':actor}:{})}});
+  assert.equal((await remove('')).status,401);assert.equal((await remove('b')).status,404);assert.equal((await remove('a','b')).status,409);assert.equal((await remove('a','a')).status,200);assert.equal((await db.select().from(microbiomeSamples)).length,0);assert.equal((await db.select().from(mlAnalyses)).length,0);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();}
+});
 test('PDF-derived reviewed biological corrections use the actual owned HTTP/SQL receipt path without original bytes, identity or quantitative enrichment',async()=>{
  const{pg,db,store}=await fixture(),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerReportRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store);
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}`;

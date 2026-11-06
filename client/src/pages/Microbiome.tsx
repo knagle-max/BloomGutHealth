@@ -3,6 +3,7 @@ import {MICROORGANISM_SYMBOL_LABEL,organismIllustration} from "@shared/scientifi
 import CompanionHero from '@/components/CompanionHero';
 import {reportDateText} from "@shared/report-dates";
 import ImportedReportDetails from "@/components/ImportedReportDetails";
+import ViomeSavedContext from "@/components/ViomeSavedContext";
 import MicrobialProfile from "@/components/MicrobialProfile";
 import { type ReportedTaxon, reportedTaxa, reportedTaxonAmount, matchReportedTaxon } from "@shared/reported-taxa";
 import { useEffect, useRef, useState } from "react";
@@ -137,6 +138,7 @@ export default function Microbiome() {
           "bloom-report-v2" && (
           <ImportedReportDetails report={currentResults.sample.structuredData} />
         )}
+      {tab==="results"&&currentResults&&<ViomeSavedContext key={`${user?.id}:${currentResults.sample.id}`} sample={currentResults.sample} samples={sorted} onSelect={id=>{setSampleId(id);setComparisonId("");window.history.replaceState(window.history.state,"","/microbiome?sample="+encodeURIComponent(id));}} onDeleted={()=>{setSampleId("");setComparisonId("");setSelectedTaxon(null);window.history.replaceState(window.history.state,"","/microbiome");}} />}
       {tab === "bacteria" && (
         <section className="bloom-panel">
           <h2>Microbial composition & change</h2>

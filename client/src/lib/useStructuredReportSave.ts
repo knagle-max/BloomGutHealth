@@ -2,7 +2,7 @@ import {useEffect,useRef,useState} from 'react';
 import {useAuth} from './auth';
 import {apiRequest,ApiRequestError} from './queryClient';
 import {reportImportIdentity,type ReportImportFields,type ReportSaveResult} from '@shared/structured-report';
-type Command=ReportImportFields&{report:unknown;originalFilename?:string};
+type Command=ReportImportFields&{report:unknown;originalFilename?:string;reuseExistingReportId?:string};
 type Counts=Pick<ReportSaveResult['preview'],'kind'|'scores'|'reportedOrganisms'|'quantifiedTaxa'>;
 type Attempt={owner:string;key:string;serialized:string;counts:Counts;expectedId:string;sent:boolean;uncertainEver:boolean};
 export function useStructuredReportSave(){
@@ -33,7 +33,7 @@ export function useStructuredReportSave(){
   if(!active.current||!actor.current||completed.current)return;
   if(attempt.current)return run(attempt.current);
   if(!globalThis.crypto?.randomUUID||!crypto.subtle){setError(Error('Use a secure browser connection to save this report safely.'));return;}
-  const snapshot:Attempt={owner:actor.current,key:crypto.randomUUID(),serialized:JSON.stringify(payload),counts:{...counts},expectedId:'',sent:false,uncertainEver:false};attempt.current=snapshot;return run(snapshot);
+  const snapshot:Attempt={owner:actor.current,key:crypto.randomUUID(),serialized:JSON.stringify(payload),counts:{...counts},expectedId:payload.reuseExistingReportId||'',sent:false,uncertainEver:false};attempt.current=snapshot;return run(snapshot);
  }
  return {submit,retry:()=>attempt.current?run(attempt.current):Promise.resolve(undefined),pending,uncertain,error,saved,checkHref:saved?'/microbiome?sample='+encodeURIComponent(saved.sampleId):attempt.current?.expectedId?'/microbiome?sample='+encodeURIComponent(attempt.current.expectedId):'/microbiome'};
 }

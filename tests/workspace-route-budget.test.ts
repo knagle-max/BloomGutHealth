@@ -11,14 +11,14 @@ async function serve(limiter:SharedRateLimiter,write:()=>void){
 const send=(base:string,path:string,method='POST')=>fetch(base+path,{method,headers:{'content-type':'application/json','x-user-id':'FORGED_OTHER_OWNER'},...(['GET','HEAD'].includes(method)?{}:{body:JSON.stringify({userId:'FORGED_OTHER_OWNER'})})});
 test('all workspace mutation aliases fail closed before route work when the shared store is unavailable',async()=>{
  let reached=0,queries=0;const server=await serve(new SharedRateLimiter({query:async()=>{queries++;throw Error('PRIVATE_CONNECTION_DETAIL');}},'synthetic-workspace-secret'),()=>reached++);
- try{for(const [path,method]of[['/api/experience/records','POST'],['/API/EXPERIENCE/RECORDS/','POST'],['/api/experience/settings','PUT'],['/api/experience/records/row','PATCH'],['/api/experience/records/row','DELETE'],['/api/experience/','DELETE']]){
+ try{for(const [path,method]of[['/api/experience/records','POST'],['/API/EXPERIENCE/RECORDS/','POST'],['/api/experience/settings','PUT'],['/api/experience/records/row','PATCH'],['/api/experience/records/row','DELETE'],['/api/experience/','DELETE'],['/api/microbiome/reports/report-id','DELETE'],['/API/MICROBIOME/REPORTS/REPORT-ID/','DELETE']]){
   const response=await send(server.base,path,method);assert.equal(response.status,503);assert.equal(response.headers.get('retry-after'),'60');assert.equal(response.headers.get('cache-control'),'no-store');assert.doesNotMatch(await response.text(),/PRIVATE_|FORGED_/);
- }assert.equal(reached,0);assert.equal(queries,6);}finally{await server.close();}
+ }assert.equal(reached,0);assert.equal(queries,8);}finally{await server.close();}
 });
 test('workspace updates share the existing thirty-per-minute account allowance across replicas and path variants',async()=>{
  const pg=new PGlite(),left=new SharedRateLimiter(pg as any,'synthetic-workspace-secret'),right=new SharedRateLimiter(pg as any,'synthetic-workspace-secret');await left.initialize();let reached=0;
  const servers=await Promise.all([serve(left,()=>reached++),serve(right,()=>reached++)]);
- const variants=[['/api/experience/records','POST'],['/API/EXPERIENCE/SETTINGS/','PUT'],['/api/experience/records/item','PATCH'],['/api/experience/records/item','DELETE']];
+ const variants=[['/api/experience/records','POST'],['/API/EXPERIENCE/SETTINGS/','PUT'],['/api/experience/records/item','PATCH'],['/api/experience/records/item','DELETE'],['/api/microbiome/reports/report-id/','DELETE']];
  try{const responses=await Promise.all(Array.from({length:35},(_,i)=>send(servers[i%2].base,...variants[i%variants.length]as[string,string])));
   assert.equal(responses.filter(response=>response.status===200).length,30);assert.equal(responses.filter(response=>response.status===429).length,5);assert.equal(reached,30);
   assert.ok(responses.filter(response=>response.status===429).every(response=>response.headers.get('retry-after')==='60'));
@@ -27,7 +27,7 @@ test('workspace updates share the existing thirty-per-minute account allowance a
 });
 test('ordinary workspace reads and adjacent unrelated paths do not acquire a new write budget',async()=>{
  let queries=0,reached=0;const server=await serve(new SharedRateLimiter({query:async()=>{queries++;throw Error('No budget expected');}},'synthetic-workspace-secret'),()=>reached++);
- try{assert.equal((await send(server.base,'/api/experience/records','GET')).status,200);assert.equal((await send(server.base,'/api/experience/settings/','HEAD')).status,200);assert.equal((await send(server.base,'/api/experience-like/records','POST')).status,200);assert.equal(queries,0);assert.equal(reached,3);}finally{await server.close();}
+ try{assert.equal((await send(server.base,'/api/experience/records','GET')).status,200);assert.equal((await send(server.base,'/api/experience/settings/','HEAD')).status,200);assert.equal((await send(server.base,'/api/experience-like/records','POST')).status,200);assert.equal((await send(server.base,'/api/microbiome/reports/report-id','GET')).status,200);assert.equal(queries,0);assert.equal(reached,4);}finally{await server.close();}
 });
 
 test('costly workspace actions retain the existing resource ceiling as well as the new shared workspace allowance',async()=>{

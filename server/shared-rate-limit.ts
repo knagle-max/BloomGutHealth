@@ -50,7 +50,8 @@ export class SharedRateLimiter {
       const reauthentication=path === "/api/account" && req.method === "DELETE";
       const auth = reauthentication || path === "/api/auth/login" || path === "/api/auth/signup";
       const costly = path.startsWith("/api/capabilities") || /(?:upload|import|analy[sz]|recipe|coach|plan|transcribe|photo|export|search)/i.test(path);
-      const workspaceWrite=(path==="/api/experience"||path.startsWith("/api/experience/"))&&["POST","PUT","PATCH","DELETE"].includes(req.method);
+      const reportDelete=req.method==="DELETE"&&/^\/api\/microbiome\/reports\/[^/]+$/.test(path);
+      const workspaceWrite=reportDelete||(path==="/api/experience"||path.startsWith("/api/experience/"))&&["POST","PUT","PATCH","DELETE"].includes(req.method);
       if (!auth && !costly && !workspaceWrite) return next();
       // Preserve existing costly-route ceilings while adding the existing
       // workspace allowance across replicas. Reads do not become writes.

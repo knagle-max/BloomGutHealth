@@ -3,7 +3,7 @@ import type {ProfileMeasurementWrite,ProfileMeasurementSource} from "../shared/p
 import{PrivateProductStorage}from"./private-product-storage";
 import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
 import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
-import {importStructuredReportWithReceipt} from "./structured-report-storage";
+import {importStructuredReportWithReceipt,deleteOwnedViomeReport} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
 import type {LabDateChange} from "../shared/lab-date-correction";
 import {updatePreferencesWithRevision} from "./preference-source";
@@ -60,7 +60,8 @@ export interface IStorage extends ExperienceStore {
     userId:string,
   ): Promise<void>;
   getUserSamples(userId: string): Promise<MicrobiomeSample[]>;
-  importStructuredReport?(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string):Promise<ReportSaveResult>;
+  importStructuredReport?(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string,reuseExistingReportId?:string):Promise<ReportSaveResult>;
+  deleteViomeReport?(userId:string,id:string):Promise<boolean>;
 
   getBacterialComposition(sampleId: string,userId:string): Promise<BacterialComposition[]>;
   insertBacterialComposition(
@@ -138,7 +139,8 @@ export class DatabaseStorage implements IStorage {
 
   getMicrobiomeSample(id:string,userId:string) { return getOwnedSample(db,id,userId); }
 
-  importStructuredReport(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string){return importStructuredReportWithReceipt(db,userId,report,fields,filename,key);}
+  importStructuredReport(userId:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string,reuseExistingReportId?:string){return importStructuredReportWithReceipt(db,userId,report,fields,filename,key,reuseExistingReportId);}
+  deleteViomeReport(userId:string,id:string){return deleteOwnedViomeReport(db,userId,id);}
 
   async insertMicrobiomeSample(
     sample: InsertMicrobiomeSample,

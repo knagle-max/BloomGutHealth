@@ -1,6 +1,8 @@
 import {z} from "zod";
 
 export const VIOME_FINDINGS_VERSION="bloom-viome-findings-v1" as const;
+/** Internal Bloom record references only, never a provider/test/sample ID. */
+export const viomeReportIdSchema=z.string().regex(/^(?:report_[a-f0-9]{64}|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/i);
 const label=z.string().min(1).max(150).refine(s=>!!s.trim());
 const position=z.object({page:z.number().int().min(1).max(20),column:z.number().int().min(1).max(3),row:z.number().int().min(1).max(1000)}).strict();
 const date=z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value=>{
@@ -15,6 +17,7 @@ const schema=z.object({
   specimenType:z.enum(["fecal","not-supplied"]),method:z.enum(["qualitative RNA","not-supplied"]),
   biologicalDates:z.object({collectedOn:date.optional(),receivedOn:date.optional(),reportedOn:date.optional()}).strict(),
   reviewConfirmed:z.literal(true),
+  specimenEvent:z.object({rootReportId:viomeReportIdSchema,confirmed:z.literal(true)}).strict().optional(),
   organisms:z.array(organism).max(1000),assessments:z.array(assessment).max(500),foods:z.array(food).max(1000),
 }).strict().superRefine((value,ctx)=>{
   if(value.documentKind==="active-gut-microbes"?(!value.organisms.length||!!value.assessments.length||!!value.foods.length):(!value.assessments.length&&!value.foods.length)||!!value.organisms.length)
