@@ -1,6 +1,4 @@
 import MicrobiomeFoodPreferences from"@/components/MicrobiomeFoodPreferences";
-import CompanionHero from '@/components/CompanionHero';
-import {UserRound, Ruler, Utensils, Shield, Cable, ChevronRight} from 'lucide-react';
 import FoodRegionSettings from "@/components/FoodRegionSettings";
 import {measurementUnitSuggestion} from "@shared/measurement-suggestions";
 import {invalidatePlanningInputs} from "@/lib/planning-cache";
@@ -133,21 +131,15 @@ export default function Profile({
     const focus=target instanceof HTMLDetailsElement?target.querySelector<HTMLElement>('summary'):target.querySelector<HTMLElement>('h2')||target;
     if(focus){if(!focus.matches('summary,button,a,input,select,textarea'))focus.tabIndex=-1;focus.focus({preventScroll:true});}target.scrollIntoView({block:'start'});
   };
-  useEffect(()=>{const openHash=()=>{const id=window.location.hash.slice(1);if(['measurement-units','nutrition-profile','food-preferences','privacy','connections'].includes(id))requestAnimationFrame(()=>openSection(id));};openHash();window.addEventListener('hashchange',openHash);return()=>window.removeEventListener('hashchange',openHash);},[]);
+  useEffect(()=>{const openHash=()=>{const id=window.location.hash.slice(1);if(['measurement-units','nutrition-profile','food-preferences','privacy','connections','profile-account','profile-display-units','advanced-settings'].includes(id))requestAnimationFrame(()=>openSection(id));};openHash();window.addEventListener('hashchange',openHash);return()=>window.removeEventListener('hashchange',openHash);},[]);
   return (
     <main className="science-page profile-workspace space-y-5">
       <div className="science-heading">
         <p className="eyebrow">MAKE BLOOM YOURS</p><h1>Profile & settings</h1>
         <p>Signed in as {user?.username}</p>
       </div>
-      <CompanionHero className="profile-home-hero" eyebrow="YOUR DETAILS, YOUR CHOICES" title="Make Bloom work for you" reason="Keep your profile, food preferences and display units in one place." actions={<button type="button" className="hero-button" onClick={()=>openSection('nutrition-profile')}>Edit profile<ChevronRight size={18} aria-hidden="true"/></button>}/>
-      <nav className="profile-shortcuts" aria-label="Profile sections">{[
-        {id:'nutrition-profile',title:'Your profile',note:'Measurements and everyday activity',Icon:UserRound},
-        {id:'measurement-units',title:'Display units',note:'Choose kg, lb and other units independently',Icon:Ruler},
-        {id:'food-preferences',title:'Food preferences',note:'Review your saved preferences and restrictions',Icon:Utensils},
-        {id:'connections',title:'Connections',note:'Device availability and stored source records',Icon:Cable},
-        {id:'privacy',title:'Privacy & data',note:'Export records or manage account data',Icon:Shield},
-      ].map(({id,title,note,Icon})=><button type="button" key={id} onClick={()=>openSection(id)}><Icon size={22} aria-hidden="true"/><span><strong>{title}</strong><small>{note}</small></span><ChevronRight size={18} aria-hidden="true"/></button>)}</nav>
+      <section className="bloom-panel profile-settings-list" aria-label="Profile settings">
+      <details id="profile-account" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Account</strong><span>Profile, appearance and sign-out</span></summary><div className="space-y-4 pt-4">
       <form
         id="nutrition-profile" className="bloom-panel profile-editor space-y-4"
         onSubmit={(e) => {
@@ -241,7 +233,26 @@ export default function Profile({
         {save.isError && <p role="alert">{save.error.message}</p>}
         </fieldset>
       </form>
-      <details className="bloom-panel profile-section workspace-disclosure" id="profile-display-units"><summary><strong role="heading" aria-level={2}>Display units</strong><span>Personalize how measurements are shown</span></summary><div className="pt-4">            <fieldset className="space-y-3" id="measurement-units">
+<div className="flex flex-wrap gap-3">
+        <Link className="text-link" href="/meal-planner">
+          Meal planner
+        </Link>
+        <Link className="text-link" href="/progress">
+          Recorded progress
+        </Link>
+        {onToggleDarkMode && (
+          <Button variant="outline" onClick={onToggleDarkMode}>
+            {isDarkMode ? "Light mode" : "Dark mode"}
+          </Button>
+        )}
+        <Button variant="outline" disabled={signOut.isPending} onClick={() => signOut.mutate()}>
+          {signOut.isPending ? "Logging out…" : "Log out"}
+        </Button>
+        {signOut.error && <p role="alert" className="panel-note">Sign-out could not be confirmed. Try again.</p>}
+      </div>
+
+      </div></details>
+      <details className="profile-section workspace-disclosure" id="profile-display-units"><summary><strong role="heading" aria-level={2}>Units & preferences</strong><span>Display units and food preferences</span></summary><div className="pt-4">            <fieldset className="space-y-3" id="measurement-units">
               <legend className="font-medium">Measurement units</legend>
               <p className="panel-note">Choose units independently. Saved profile measurements remain in canonical centimetres and kilograms; laboratory source units are not changed.</p>
               <p className="panel-note" data-testid="unit-suggestion">{unitSuggestion.region?`Starting suggestions use your saved food browsing region (${unitSuggestion.region}), which does not establish residence.`:unitSuggestion.locale?`Starting suggestions use browser language ${unitSuggestion.locale}, which does not establish where you live.`:"Browser region is unavailable; metric starting suggestions are provided."} Your saved choices are kept. Change any unit independently.</p>
@@ -264,37 +275,23 @@ export default function Profile({
               <p className="panel-note">Unit preferences save automatically here. Completed measurement drafts convert after a successful save; unfinished drafts keep their labelled entry units.</p>
               {savingUnits&&<p role="status">Saving preferences…</p>}
               {unitsError&&<p role="alert">Saved preferences could not be checked or updated: {unitsError}</p>}
-            </fieldset></div></details>
+            </fieldset>
       <section id="food-preferences" className="profile-preference-section"><DietaryPreferenceSummary /><MicrobiomeFoodPreferences key={user?.id}/></section>
-      <details id="connections" className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Connections</strong><span>Device availability and stored source records</span></summary><div className="pt-4"><ConnectionsOverview/></div></details>
-      <details className="bloom-panel profile-section workspace-disclosure" id="privacy" onToggle={e=>{if(e.target===e.currentTarget&&!e.currentTarget.open)e.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(details=>details.open=false);}}><summary><strong role="heading" aria-level={2}>Privacy & data controls</strong><span>Review exports and account deletion</span></summary><div className="space-y-3 pt-4">
+            </div></details>
+
+      <details id="connections" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Connected data</strong><span>Device availability and stored source records</span></summary><div className="pt-4"><ConnectionsOverview/></div></details>
+      <details className="profile-section workspace-disclosure" id="privacy" onToggle={e=>{if(e.target===e.currentTarget&&!e.currentTarget.open)e.currentTarget.querySelectorAll<HTMLDetailsElement>('details[open]').forEach(details=>details.open=false);}}><summary><strong role="heading" aria-level={2}>Privacy & export</strong><span>Review exports and account deletion</span></summary><div className="space-y-3 pt-4">
         <h2>Manage your account records</h2>
         <p>Download account records here. Separate deletion controls for training and biology remain available below.</p>
         <a href="/precision" className="text-link">Manage biology records & exports</a>
         <AccountDataExport/><AccountErasure/><p className="panel-note">Backup, operational-log and vendor retention/removal remain separate from active account deletion and require operator/provider handling.</p>
       </div></details>
+      <details id="advanced-settings" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Advanced</strong><span>Optional setup, training and authorized tools</span></summary><div className="space-y-4 pt-4"><ExperimentalSettings/>
       <details className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Food browsing & setup</strong><span>Region and optional Everyday setup</span></summary><div className="space-y-4 pt-4"><FoodRegionSettings/><section className="space-y-3"><h2>Your data & choices</h2><p>Review the privacy and export controls below, or revisit optional Everyday setup.</p><Button variant="outline" onClick={()=>patch({onboarding:{status:"not-started"},mode:"everyday"})}>Revisit Everyday setup</Button><img src="/brand/bloom-icon-monochrome.svg" width={32} height={32} alt="" /></section>
       </div></details>
       <details className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Training data controls</strong><span>Export or remove experience records</span></summary><div className="pt-4"><ExperienceDataControls/></div></details>
-      <details className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Appearance & account</strong><span>Theme, sign-out and available tools</span></summary><div className="pt-4">      <div className="flex flex-wrap gap-3">
-        <Link className="text-link" href="/meal-planner">
-          Meal planner
-        </Link>
-        <Link className="text-link" href="/progress">
-          Recorded progress
-        </Link>
-        {onToggleDarkMode && (
-          <Button variant="outline" onClick={onToggleDarkMode}>
-            {isDarkMode ? "Light mode" : "Dark mode"}
-          </Button>
-        )}
-        <ExperimentalSettings/>
-        <Button variant="outline" disabled={signOut.isPending} onClick={() => signOut.mutate()}>
-          {signOut.isPending ? "Logging out…" : "Log out"}
-        </Button>
-        {signOut.error && <p role="alert" className="panel-note">Sign-out could not be confirmed. Try again.</p>}
-      </div>
-</div></details>
+      </div></details>
+      </section>
     </main>
   );
 }

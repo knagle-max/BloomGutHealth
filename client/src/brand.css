@@ -329,3 +329,13 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-explorer-category-title {display:inline-flex;align-items:center;gap:10px;min-width:0;}
 .lab-category-icon {display:inline-grid;place-items:center;width:36px;height:36px;flex-shrink:0;overflow:hidden;border-radius:10px;background:hsl(var(--muted));color:hsl(var(--muted-foreground));}
 .lab-category-icon img {display:block;width:36px;height:36px;}
+
+/* Native settings rows retain disclosure state and forms without repeated card introductions. */
+.profile-workspace .profile-settings-list {padding:0;overflow:hidden;}
+.profile-settings-list > details + details {border-top:1px solid hsl(var(--border));}
+.profile-settings-list > .profile-section > summary {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:16px 20px;min-height:80px;}
+.profile-settings-list > .profile-section > summary strong,.profile-settings-list > .profile-section > summary span {grid-column:1;}
+.profile-settings-list > .profile-section > summary span {font-weight:400;}
+.profile-settings-list > .profile-section > summary:after {content:'+';grid-column:2;grid-row:1 / span 2;align-self:center;font-size:22px;}
+.profile-settings-list > .profile-section[open] > summary:after {content:'−';}
+.profile-settings-list > .profile-section > div {padding:0 20px 20px;}

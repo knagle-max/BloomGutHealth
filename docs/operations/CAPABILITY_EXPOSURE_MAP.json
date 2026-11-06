@@ -1872,7 +1872,7 @@
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "8076ecfb9321f75ef2b693b8c7efe22de4ab98a0c3fe3f1833f7166cbfeb9bfc",
     "client/src/pages/PrecisionNutrition.tsx": "127e0b7cab4bd2223e6178f356471da4232c93f44d78f8f8baec27cddcc961c5",
-    "client/src/pages/Profile.tsx": "26dcf950346c12741d589ce76642fa2b517c141d2fc60077d5abe9f9149b478b",
+    "client/src/pages/Profile.tsx": "78021ea450dd4954c49797a0f7888d6d7a5b13fbfaef5b3bef77750e9ea65764",
     "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
     "client/src/pages/Upload.tsx": "bceb13cffb48c18161b96799f86a04a4db51bffd10a18ac2cd24bc0ae8a27df7",
