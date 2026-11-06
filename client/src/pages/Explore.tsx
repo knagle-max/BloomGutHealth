@@ -38,14 +38,14 @@ export default function Explore() {
     queryFn: async () =>
       (await apiRequest("GET", "/api/biology/registry")).json(),
   });
-  const [selected, setSelected] = useState(params.get("node") || "food:oats"),
+  const [selected, setSelected] = useState(params.get("node") || ""),
     [foodId, setFoodId] = useState(
-      (params.get("node") || "food:oats").startsWith("food:")
-        ? params.get("node") || "food:oats"
+      (params.get("node") || "").startsWith("food:")
+        ? params.get("node") || ""
         : "",
     ),
     [search, setSearch] = useState(""),
-    [category, setCategory] = useState("food");
+    [category, setCategory] = useState(params.get("node")?.startsWith("food:")?"food":"organism");
   const assessment = useQuery<any>({
     queryKey: ["/api/biology/foods", user?.id, foodId],
     enabled: !!foodId,
@@ -78,18 +78,20 @@ export default function Explore() {
             ? `${n.label} ${kindName(n.kind)}`
                 .toLowerCase()
                 .includes(search.toLowerCase())
-            : category === "all" || n.kind === category,
+            : category === "all" || (category==="molecular"?["molecule","nutrient","substrate","microbial-pathway","host-pathway","biological-process"].includes(n.kind):n.kind===category),
         )
         .slice(0, 35) || [];
   const select = (id: string) => {
     setSelected(id);
-    if (id.startsWith("food:")) setFoodId(id);
+    setFoodId(id.startsWith("food:")?id:"");
+    requestAnimationFrame(()=>{const title=document.getElementById("explore-topic-title");title?.focus({preventScroll:true});title?.scrollIntoView({block:"start"});});
     window.history.replaceState(
       null,
       "",
       "/explore?node=" + encodeURIComponent(id),
     );
   };
+  const browseSubject=(kind:string)=>{setCategory(kind);setSearch("");setSelected("");setFoodId("");window.history.replaceState(null,"","/explore");};
   const detail = (e: KnowledgeRelationship) => {
     const effect = currentAssessment?.relationshipEffects.find(
       (v: any) => v.id === e.id,
@@ -123,8 +125,8 @@ export default function Explore() {
           {effect?.reason ||
             "This link does not independently establish a personal recommendation."}
         </p>
-        <details>
-          <summary>Evidence, limits & competing findings</summary>
+        <div className="space-y-2">
+          <h3>Evidence, limits & competing findings</h3>
           <p>
             <strong>Human relevance:</strong> {e.humanRelevance}
           </p>
@@ -168,34 +170,19 @@ export default function Explore() {
               </div>
             );
           })}
-        </details>
+        </div>
       </article>
     );
   };
   return (
     <main className="science-page biology-explorer space-y-5">
       <div className="science-heading">
-        <p className="eyebrow">UNDERSTAND YOUR FOOD</p>
+        <p className="eyebrow">EXPLORE THE SCIENCE</p>
         <h1>Explore</h1>
         <p>
-          Find a food and review its composition. Explore related biology and evidence when you want more detail.
+          Explore organisms, genes, molecules and pathways. Start with a topic, then open its studies and sources.
         </p>
       </div>
-      <FoodCompositionExplorer onSelect={()=>{setFoodId("");setSelected("");window.history.replaceState(null,"","/explore");}} />
-      <details className="explore-related-workspaces workspace-disclosure"><summary>Related workspaces</summary>      <div className="explore-tools">
-        {[
-          ["/precision", "My biology & bloodwork"],
-          ["/microbiome", "Gut reports"],
-          ["/meal-planner", "Meal plans"],
-          ["/nutrition", "Food journal"],
-          ["/insights", "Goal coaching"],
-        ].map(([path, label]) => (
-          <Link key={path} className="text-link" href={path}>
-            {label}
-          </Link>
-        ))}
-      </div>
-      </details>
       {registry.isLoading && (
         <p role="status">Loading the reviewed relationship model…</p>
       )}
@@ -292,9 +279,9 @@ export default function Explore() {
           )}
           <div className="explore-reflow"><div className="explore-layout">
             <section className="bloom-panel explore-browser">
-              <h2>Find a connection</h2>
+              <h2>Find a science topic</h2><div className="flex flex-wrap gap-2" role="group" aria-label="Science subjects">{([["organism","Organisms"],["host-variant","Genes"],["molecular","Molecules & pathways"]]as const).map(([id,label])=><Button key={id} className="min-h-11" variant={category===id?"default":"outline"} aria-pressed={category===id} onClick={()=>browseSubject(id)}>{label}</Button>)}</div>
               <label>
-                Search foods, genes, microbes & molecules
+                Search across science subjects
                 <input
                   className="bloom-input w-full"
                   value={search}
@@ -303,17 +290,18 @@ export default function Explore() {
                   maxLength={100}
                 />
               </label>
-              <label>
-                Show
+              <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Other subjects</summary>              <label>
+                More subjects
                 <select
                   aria-label="Explore category"
                   className="bloom-input w-full"
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => browseSubject(e.target.value)}
                 >
                   {[
                     ["food", "Foods"],
-                    ["all", "All connections"],
+                    ["all", "All subjects"],
+                    ["molecular", "Molecules & pathways"],
                     ["nutrient", "Nutrients"],
                     ["organism", "Microbes & communities"],
                     ["molecule", "Metabolites"],
@@ -326,7 +314,7 @@ export default function Explore() {
                     </option>
                   ))}
                 </select>
-              </label>
+              </label></details>
               <div className="explore-node-list">
                 {results.map((n) => (
                   <button
@@ -346,22 +334,19 @@ export default function Explore() {
                   normally. <Link className="text-link" href={`/log-meal?productQuery=${encodeURIComponent(search.trim().slice(0,120))}`}>Search package labels or enter nutrition</Link>
                 </p>
               )}
-              <p className="panel-note">
-                Food explanations currently cover{" "}
-                {r.entities.filter((n) => n.kind === "food").length} reviewed
-                food families. Generic nutrition and package-label coverage are
-                separate.
-              </p>
+
             </section>
             <div className="space-y-5">
               {node ? (
                 <>
                   <section className="bloom-panel space-y-3">
                     <p className="eyebrow">{kindName(node.kind)}</p>
-                    <h2>{node.label}</h2>
-                    <p>{node.summary}</p>
+                    <h2 id="explore-topic-title" className="scroll-mt-24" tabIndex={-1}>{node.label}</h2>
+                    <h3>What it is</h3><p>{node.summary}</p>
+                    <h3>Why researchers study it</h3><p>Explore the linked studies to see the studied context, evidence and limits.</p>
+                    <h3>What we know and don’t know</h3><p>Research connections do not establish your personal biological activity or response.</p>
                     <MolecularIllustration key={node.id} entityId={node.id} label={node.label} kind={node.kind}/>
-                    <svg
+                    <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Related topics &amp; research map</summary><svg
                       className="relationship-map"
                       viewBox="0 0 600 260"
                       role="img"
@@ -437,11 +422,11 @@ export default function Explore() {
                       Lines show catalogued research relationships, not your
                       measured metabolic activity. Direction and uncertainty are
                       explained below.
-                    </p>
+                    </p></details>
                   </section>
                   <details className="relationship-details space-y-3">
                     <summary>
-                      Evidence for {connected.length} connected relationships
+                      Studies and sources ({connected.length} relationships)
                     </summary>
                     {connected.map(detail)}
                     {!connected.length && (
@@ -465,6 +450,21 @@ export default function Explore() {
           </p>
         </>
       )}
+      <details className="workspace-disclosure"><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Food composition &amp; portion lookup</summary>{r&&<p className="panel-note">Food explanations cover {r.entities.filter(n=>n.kind==="food").length} reviewed food families. Generic nutrition and package-label coverage are separate.</p>}<FoodCompositionExplorer onSelect={()=>{setFoodId("");setSelected("");window.history.replaceState(null,"","/explore");}} /></details>
+      <details className="explore-related-workspaces workspace-disclosure"><summary>Related workspaces</summary>      <div className="explore-tools">
+        {[
+          ["/precision", "My biology & bloodwork"],
+          ["/microbiome", "Gut reports"],
+          ["/meal-planner", "Meal plans"],
+          ["/nutrition", "Food journal"],
+          ["/insights", "Goal coaching"],
+        ].map(([path, label]) => (
+          <Link key={path} className="text-link" href={path}>
+            {label}
+          </Link>
+        ))}
+      </div>
+      </details>
     </main>
   );
 }

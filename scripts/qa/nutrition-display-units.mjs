@@ -65,7 +65,7 @@ try{
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${route} ${width}`);
       await capture(name,width,theme);
     }
-    await go('/explore');await page.getByLabel('Find a food').fill('oats');await page.getByRole('button',{name:'Search foods',exact:true}).click();
+    await go('/explore');await page.getByText('Food composition & portion lookup',{exact:true}).click();await page.getByLabel('Find a food').fill('oats');await page.getByRole('button',{name:'Search foods',exact:true}).click();
     await page.getByRole('button',{name:'Synthetic oats',exact:true}).click();
     const amount=page.getByLabel(stage==='after'?'Amount eaten (oz)':'Portion in grams');
     await amount.fill(stage==='after'?'4':'113.3980925');
@@ -98,10 +98,10 @@ try{
   for(const state of ['partial','unavailable']){
     journalState=state;await go('/');
     const action=page.locator(stage==='after'?'.today-focus .hero-button':'.today-next-action .hero-button');
-    if(stage==='after')await page.getByRole('link',{name:state==='partial'?'Review my meal estimates':'Log a meal',exact:true}).first().waitFor();
+    if(stage==='after'){if(state==='partial')await page.getByRole('link',{name:'Review my meal estimates',exact:true}).first().waitFor();else await page.getByRole('heading',{name:'Keep a place for your day',exact:true}).waitFor();}
     else if(state==='partial')await page.getByText('Synthetic oats lunch',{exact:true}).first().waitFor();
     else await page.getByRole('button',{name:'Try again',exact:true}).first().waitFor();
-    if(stage==='after')assert.equal(await action.getAttribute('href'),state==='partial'?'/nutrition':'/log-meal');
+    if(stage==='after'){assert.equal(await action.getAttribute('href'),'/log-meal');if(state==='partial')assert.equal(await page.getByRole('link',{name:'Review my meal estimates',exact:true}).first().getAttribute('href'),'/nutrition');}
     await capture('today-'+state,390,'light');
   }
   assert.deepEqual(errors,[]);

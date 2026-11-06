@@ -1863,7 +1863,7 @@
     "client/src/pages/ActivityLog.tsx": "4bc7d9b665bffa63313d56a5d055ec5662aca85af2b41ef106cb95e8fc3834b0",
     "client/src/pages/AthleteWorkspace.tsx": "91dbe5504241dfb32de88b1d6f3353a79dd3287fb6f56c7f957550d3a32e91f2",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
-    "client/src/pages/Explore.tsx": "4f00b3872fa98bc22a449a336ab68e6d7828d5d3e576c4fb88a12d769c6043ca",
+    "client/src/pages/Explore.tsx": "d16ca5b32e9e687de6ef876f8f52981eeebe6c6195d2a4163fb04dc6cbc5c142",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "8aff553a37a52c8aa645c2688a1845b2d053d9c0ef9fc9718f1a5254dbfe6cad",
