@@ -138,9 +138,9 @@ export function parseStructuredReport(input: unknown): StructuredReport {
     const parsed=parseStructuredReport({
       testing_company:"Viome",data_origin:"User-supplied qualitative Viome findings; not independently verified",
       score_interpretation_warning:"Provider categories and reported presence are not numeric scores, abundance, gene function or measured metabolite activity.",
-      organisms:findings.organisms.map(row=>({name:row.name,reported_status:row.reportedStatus,notes:`Provider group: ${row.reportedGroup}; de-identified source page ${row.position.page}, column ${row.position.column}, row ${row.position.row}.`})),
-      scores:findings.assessments.map(row=>({name:row.name,status:row.reportedCategory,notes:row.description})),
-      foods:findings.foods.map(row=>({name:row.name,reportedCategory:row.reportedCategory,sourcePage:row.position.page,sourceColumn:row.position.column})),
+      organisms:findings.organisms.map(row=>({name:row.correctedName||row.name,reported_status:row.reportedStatus,notes:`Provider group: ${row.reportedGroup}; de-identified source page ${row.position.page}, column ${row.position.column}, row ${row.position.row}.`})),
+      scores:findings.assessments.map(row=>({name:row.correctedName||row.name,status:row.correctedCategory||row.reportedCategory,notes:row.description})),
+      foods:findings.foods.map(row=>({name:row.correctedName||row.name,reportedCategory:row.correctedCategory||row.reportedCategory,sourcePage:row.position.page,sourceColumn:row.position.column})),
     });
     return{...parsed,sourceReport:{...findings}};
   }

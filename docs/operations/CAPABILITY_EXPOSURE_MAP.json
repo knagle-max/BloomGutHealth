@@ -989,7 +989,9 @@
         "ui": [
           "client/src/pages/Upload.tsx",
           "client/src/pages/Microbiome.tsx",
-          "client/src/components/OrganismPortrait.tsx"
+          "client/src/components/OrganismPortrait.tsx",
+          "client/src/components/ViomeReviewEditor.tsx",
+          "client/src/components/FileUploadZone.tsx"
         ],
         "api": [
           "server/report-routes.ts",
@@ -1005,7 +1007,11 @@
           "shared/scientific-visuals.ts",
           "server/profile-measurement-source.ts",
           "server/profile-errors.ts",
-          "shared/profile-measurement-source.ts"
+          "shared/profile-measurement-source.ts",
+          "shared/viome-pdf.ts",
+          "shared/viome-findings.ts",
+          "shared/structured-report.ts",
+          "client/src/lib/viome-pdf-reader.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1018,7 +1024,7 @@
           "client/src/lib/planning-cache.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Bounded browser-local Viome text-PDF adapter uses typed findings only, no original PDF/metadata/raw-text transmission. Synthetic layouts do not certify genuine provider fidelity or independent PII exclusion.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1779,6 +1785,7 @@
     "client/src/components/ExperimentObservations.tsx": "8bbb5344ad94e5ca3afc4bf355407c7510630d0029d7ba27c91c930a03e3033f",
     "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
     "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
+    "client/src/components/FileUploadZone.tsx": "c44f0da75adeaccf2fa21d3a466e1b1f8db6ded316b359b9ab22bb8552825f2d",
     "client/src/components/FoodCompositionExplorer.tsx": "8c36d11a61e445e6bb82cecd214b8a9e4db78b2493995b955ec6390d8ea5f768",
     "client/src/components/FoodEntryChooser.tsx": "998fe2745e73c8b46cf2e58d7515d8f0508aad10f4e654ab53b1ecd3f6fd3488",
     "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
@@ -1809,6 +1816,7 @@
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
     "client/src/components/TrainingSetsEditor.tsx": "c07fb2a9f9777369186b6046fb65095b0056ba8460dafaf9292d8352802a9e7b",
+    "client/src/components/ViomeReviewEditor.tsx": "34435ede3309b6a6923a4b6f97c91ff3b2afa1da1de5f798c507d7e436980295",
     "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
@@ -1821,6 +1829,7 @@
     "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
     "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
     "client/src/lib/useDraftUnits.ts": "123386dddf9c88abda074a7bcf246526b0d9d6c6865ac5447fbdd06e3246fcc6",
+    "client/src/lib/viome-pdf-reader.ts": "47fbfe95098636acda5b74bca7704dcaa3e83ce103a065fc2e66b2ed9d3e8ae3",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
     "client/src/pages/ActivityLog.tsx": "4bc7d9b665bffa63313d56a5d055ec5662aca85af2b41ef106cb95e8fc3834b0",
     "client/src/pages/AthleteWorkspace.tsx": "2eb7c35d7e2d107c4f3fa3c631a35188bf1c33996aa0e246740734020bee4ba2",
@@ -1837,7 +1846,7 @@
     "client/src/pages/Profile.tsx": "5fdaca88e89d00efb9ed9936c634152400f06981120b95b65807549834afea22",
     "client/src/pages/Progress.tsx": "949bd9ccc667bfdb661dd32074b26606492d788a9dfa68c7c4be9c84d1742da6",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
-    "client/src/pages/Upload.tsx": "76a07de1f55c483f3538b6d017fd0a1bb392c8786d768accbe0ca602933d22fa",
+    "client/src/pages/Upload.tsx": "64220bbd70ee62db1e9bc9d9ce6d9fe65af5690df792cf446b689c69546d516f",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
     "server/account-export.ts": "055352309dbdbc4afbe618da5376d0aee3230dae17352109b1bab99d88fac46b",
@@ -1953,10 +1962,11 @@
     "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
     "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
     "shared/scientific-visuals.ts": "f0f311377ea9662888bc5d366bbd57c5fb53c5534f3418c1fbdb4090de010437",
-    "shared/structured-report.ts": "ac049703f4db1a857c9bd0c81b4382dd3c9cbd1321b4f66e18ecfcf1871f28df",
+    "shared/structured-report.ts": "526d8180664db63127499c17988889baf8685ad178a5d2a22e94619d6fa95a13",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
     "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",
-    "shared/viome-findings.ts": "1cf3bc29f0832dd777c5df0aa6e1726a82bae2227851d550f33570dff743b692",
+    "shared/viome-findings.ts": "249d5b582dabd5be4dad362a9deae641029c2288cc11d8c21949e440f9aad12e",
+    "shared/viome-pdf.ts": "e8a9eae069133393ebca8bde065d949a03f79a458978af17b20a36081c13be0b",
     "shared/weekly-planner.ts": "3ca8ebd1ae45e6159646cd5a7c0e92b1f15fdbb76be8fc9298eae49a721b9719"
   }
 }

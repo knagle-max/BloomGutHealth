@@ -12,6 +12,8 @@ import {registerReportRoutes} from '../server/report-routes';
 import {importStructuredReportWithReceipt} from '../server/structured-report-storage';
 import {publicSample} from '../server/analysis-boundary';
 import {VIOME_FINDINGS_VERSION} from '../shared/viome-findings';
+import {createViomePdfParser} from '../shared/viome-pdf';
+import {syntheticViomePages,VIOME_PDF_CANARY} from './fixtures/viome-pdf';
 const body={report:{bacteria_percentages:{Bifidobacterium:60,Roseburia:40}},notes:'Original source'};
 test('owned canonical import preserves provider food rows atomically through retry and read without creating quantitative taxa',async()=>{
  const{pg,db,store}=await fixture();
@@ -32,6 +34,22 @@ async function fixture(){
  const store:any={insertMicrobiomeSample:async(data:any)=>(await db.insert(microbiomeSamples).values(data).returning())[0],updateMicrobiomeSample:(id:string,updates:any,owner:string)=>updateOwnedSample(db as any,id,updates,owner),insertBacterialComposition:(data:any,owner:string)=>insertOwnedComposition(db as any,data,owner),insertMlAnalysis:(data:any,owner:string)=>insertOwnedAnalysis(db as any,data,owner),importStructuredReport:(owner:string,report:StructuredReport,fields:ReportImportFields,filename:string|null,key:string)=>importStructuredReportWithReceipt(db,owner,report,fields,filename,key)};
  return{pg,db,store};
 }
+test('PDF-derived reviewed biological corrections use the actual owned HTTP/SQL receipt path without original bytes, identity or quantitative enrichment',async()=>{
+ const{pg,db,store}=await fixture(),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerReportRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}`;
+ const parser=createViomePdfParser();syntheticViomePages('recommendations').forEach(parser.page);const draft=parser.finish();draft.foods[298].correctedCategory='Minimize';draft.foods[298].correctedName='Synthetic corrected food';
+ const report={...draft,reviewConfirmed:true},key=randomUUID();
+ const send=async(value:unknown,user='a')=>{const result=await fetch(base+'/api/microbiome/import',{method:'POST',headers:{'content-type':'application/json','x-user':user,'Idempotency-Key':key},body:JSON.stringify(value)});return{status:result.status,body:await result.json()};};
+ try{
+  const first=await send({report}),again=await send({report});assert.equal(first.status,200);assert.deepEqual(again,first);
+  const rows=await db.select().from(microbiomeSamples);assert.equal(rows.length,1);assert.equal(rows[0].rawDataPath,null);assert.equal(rows[0].testId,null);assert.equal(rows[0].notes,null);
+  const saved=rows[0].structuredData as any,roundtrip=parseStructuredReport(saved);assert.equal(roundtrip.scores.length,22);assert.equal(roundtrip.foods!.length,299);assert.equal(roundtrip.foods![298].name,'Synthetic corrected food');assert.equal(roundtrip.foods![298].reportedCategory,'Minimize');assert.equal((roundtrip.sourceReport as any).foods[298].reportedCategory,'Avoid');assert.deepEqual((roundtrip.sourceReport as any).foods[298].position,draft.foods[298].position);
+  assert.equal(roundtrip.bacteria_percentages,undefined);assert.equal((await db.select().from(bacterialComposition)).length,0);assert.equal(JSON.stringify(rows).includes(VIOME_PDF_CANARY),false);assert.equal(JSON.stringify(rows).includes('%PDF-'),false);
+  assert.equal((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,'b'))).length,0);
+  const changed=structuredClone(report);changed.foods[298].correctedName='Changed correction';assert.equal((await send({report:changed})).status,409);assert.equal((await db.select().from(microbiomeSamples)).length,1);
+  assert.equal((await send({report:{...report,originalPdf:VIOME_PDF_CANARY}})).status,400);
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));await pg.close();}
+});
 test('actual owned HTTP/SQL findings import rejects identifying extras before hashing or storage and preserves only allowlisted source',async()=>{
  const{pg,db,store}=await fixture(),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerReportRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store);
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address()as any).port}`;

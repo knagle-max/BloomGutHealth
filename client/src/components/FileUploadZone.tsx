@@ -7,12 +7,13 @@ interface FileUploadZoneProps {
   acceptedFormats?: string[];
   maxSizeMB?: number;
   disabled?: boolean;
+  showFilename?: boolean;
 }
 
 export default function FileUploadZone({
   file, onFileSelect,
   acceptedFormats = ['PDF', 'CSV', 'TXT', 'JSON'],
-  maxSizeMB = 10, disabled = false
+  maxSizeMB = 10, disabled = false, showFilename = true
 }: FileUploadZoneProps) {
   const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
@@ -94,7 +95,7 @@ export default function FileUploadZone({
             </div>
             <div className="flex items-center gap-2 text-primary">
               <FileText className="w-5 h-5" aria-hidden="true" />
-              <span className="font-medium break-all min-w-0">{file.name}</span>
+              <span className="font-medium break-all min-w-0">{showFilename?file.name:"Selected PDF report"}</span>
             </div>
             <p className="text-sm text-muted-foreground" role="status">Selected file · not uploaded</p>
             <p className="text-sm text-muted-foreground">

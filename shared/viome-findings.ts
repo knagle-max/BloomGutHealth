@@ -6,9 +6,9 @@ const position=z.object({page:z.number().int().min(1).max(20),column:z.number().
 const date=z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(value=>{
   const parsed=new Date(value+"T00:00:00Z");return Number.isFinite(+parsed)&&parsed.toISOString().slice(0,10)===value;
 });
-const organism=z.object({name:label,reportedGroup:z.enum(["Bacteria","Viruses","Eukaryotes"]),reportedStatus:z.literal("reported_present"),position}).strict();
-const assessment=z.object({name:label,reportedCategory:z.enum(["Improve","Attention","Maintain"]),description:z.string().min(1).max(1000).optional(),position}).strict();
-const food=z.object({name:label,reportedCategory:z.enum(["Enjoy","Superfood","Minimize","Avoid"]),position}).strict();
+const organism=z.object({name:label,correctedName:label.optional(),reportedGroup:z.enum(["Bacteria","Viruses","Eukaryotes"]),reportedStatus:z.literal("reported_present"),position}).strict();
+const assessment=z.object({name:label,correctedName:label.optional(),reportedCategory:z.enum(["Improve","Attention","Maintain"]),correctedCategory:z.enum(["Improve","Attention","Maintain"]).optional(),description:z.string().min(1).max(1000).optional(),position}).strict();
+const food=z.object({name:label,correctedName:label.optional(),reportedCategory:z.enum(["Enjoy","Superfood","Minimize","Avoid"]),correctedCategory:z.enum(["Enjoy","Superfood","Minimize","Avoid"]).optional(),position}).strict();
 const schema=z.object({
   schemaVersion:z.literal(VIOME_FINDINGS_VERSION),provider:z.literal("Viome"),
   documentKind:z.enum(["active-gut-microbes","health-scores-foods"]),

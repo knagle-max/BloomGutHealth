@@ -252,3 +252,7 @@ BLOCKED_USER_INPUT for new curated scientific content only. Owner/dependency: Bi
 ## Genetics November5 controlling scope
 
 The150–250 count is progressive research coverage, not a release minimum. No owner choice or new upload is needed. Named §5A reconciliation remains a technical private-Library access dependency. Real highlight activation needs reviewed exact claims and compatible verified assay evidence; an empty eligible set is correct and does not block ordinary educational browsing. See `docs/architecture/GENETICS_PERSONAL_RELEVANCE_DECISION_2026-11-05.md`.
+
+## Native Viome PDF genuine-source/privacy acceptance
+
+Bounded synthetic native PDF vertical is implemented/tested. Genuine sanitized7page and genuine13page layout fixtures remain private-access technical dependencies (Architect source available; no accessor/transfer here), not owner product decisions or a request for originals. Full semantic PII exclusion and real infrastructure audit need independent Security before real-user PDF release; synthetic headers/metadata/invisible-text canaries are bounded evidence only. Companion linking/explicit reimport remains independent engineering, not blocked by genuine-layout acceptance. See `docs/operations/VIOME_NATIVE_PDF.md`.
