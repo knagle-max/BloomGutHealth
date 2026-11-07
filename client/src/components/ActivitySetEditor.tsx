@@ -24,7 +24,7 @@ export default function ActivitySetEditor({exercise,value,onChange,unit,canAdd}:
  const change=(id:string,patch:Partial<ActivityDraftSet>)=>onChange({version:1,sets:value.sets.map(set=>set.id===id?{...set,...patch}:set)});
  const unresolved=value.sets.filter(set=>set.unconfirmedLoad!==undefined&&!set.loadUnit).length;
  const defaulted=value.sets.filter(set=>set.defaultedLoadUnit);
- const append=()=>{const id=crypto.randomUUID();focusAfterRender.current=()=>document.getElementById(`set-editor-${id}`)?.querySelector('input[type="number"]')?.focus();setEditing(previous=>new Set([...Array.from(previous),id]));onChange({version:1,sets:[...value.sets,{id,exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});};
+ const append=()=>{const id=crypto.randomUUID();focusAfterRender.current=()=>document.getElementById(`set-editor-${id}`)?.querySelector<HTMLInputElement>('input[type="number"]')?.focus();setEditing(previous=>new Set([...Array.from(previous),id]));onChange({version:1,sets:[...value.sets,{id,exercise:exercise||'Other activity',reps:null,loadKg:null,loadUnit:unit,completed:false}]});};
  return <div className="space-y-3">
   <p className="panel-note">Source-described values are starting values, not verified performance. Edit each set; completion is never inferred.</p>
   {!value.sets.length&&<p role="status">No sets recorded. Add each reported set; leave unknown amounts blank. Check the original description when counts or amounts could not be matched.</p>}

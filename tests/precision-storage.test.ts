@@ -70,7 +70,7 @@ test("PostgreSQL migration and encrypted precision persistence enforce ownership
     );
     await assert.rejects(store.deletePrecisionRecord("a", lab.id),/LAB_LOGICAL_DELETE_REQUIRED/);
     await store.deleteLabEntry("a", lab.id);
-    assert.equal((await store.getPrecisionRecords("a")).length, 0);
+    assert.deepEqual((await store.getPrecisionRecords("a")).map(row=>row.id),[plan2.id],"Independent historical plans are retained");
     await store.insertPrecisionRecord("a", "checkin", { weightKg: 90 });
     await store.clearPrecisionData("a");
     await assert.rejects(

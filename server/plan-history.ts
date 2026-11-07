@@ -25,3 +25,12 @@ export function historicalPlanRecord<T extends {kind:string;payload:unknown}>(re
  }
  return {...record,interpretationStatus:'historical_plan_not_revalidated' as const,currentUse:'rebuild_required' as const,limitation:'Saved estimates and checks describe the recorded plan only. Rebuild against current health context, preferences and sources before using it as a current plan.'};
 }
+
+/** Explicit source lineage only. Unknown historical context is never an erasure licence. */
+export function knownPlanUsesSources(payload:unknown,sourceIds:ReadonlySet<string>):boolean{
+ if(!payload||typeof payload!=='object'||Array.isArray(payload)||!sourceIds.size)return false;
+ const plan=payload as Record<string,any>,matches=(ids:unknown)=>Array.isArray(ids)&&ids.some(id=>typeof id==='string'&&sourceIds.has(id));
+ if(plan.type==='weekly-plan')return matches(plan.inputGuard?.sourceRecordIds);
+ if(plan.type===undefined&&typeof plan.name==='string'&&typeof plan.version==='string'&&Array.isArray(plan.recommendations))return plan.recommendations.some((row:any)=>row&&typeof row==='object'&&matches(row.matchedRecordIds));
+ return false;
+}

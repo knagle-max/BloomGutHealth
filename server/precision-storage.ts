@@ -1,3 +1,4 @@
+import{knownPlanUsesSources}from'./plan-history';
 import{viomeSource}from"../shared/viome-report-context";
 import type{MicrobiomeFoodSource,MicrobiomeFoodControl}from"../shared/microbiome-food-influence";
 import type{LabSourceSummary}from"../shared/lab-history";
@@ -262,8 +263,7 @@ export class PrecisionStorage {
       const {id:_sourceId,...payload}=source;
       const corrected=applyLabDateChange(payload,sourceId,request,fingerprint,new Date().toISOString());
       const [row]=await tx.insert(precisionRecords).values({id,userId,kind:"lab",encryptedPayload:encryptPrecision(corrected,userId)}).returning();
-      if("marker" in corrected&&corrected.unitReview?.status!=="pending")
-        await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan")));
+      await this.removeSourcePlans(tx,userId,new Set([sourceId]));
       return {id:row.id,kind:row.kind,payload:corrected,createdAt:row.createdAt};
     });
   }
@@ -298,7 +298,7 @@ export class PrecisionStorage {
     if(!group)return; // Same authoritative absence response for missing or foreign sources.
     if(!group.valid||group.summary.revision!==revision)throw Error('LAB_SOURCE_CHANGED');
     const ids=group.members.map(row=>row.id),removed=new Set(ids);
-    const plans=records.filter(row=>{const plan=row.payload as any;return row.kind==='plan'&&plan?.type==='weekly-plan'&&Array.isArray(plan.inputGuard?.sourceRecordIds)&&plan.inputGuard.sourceRecordIds.some((id:unknown)=>typeof id==='string'&&removed.has(id));}).map(row=>row.id);
+    const plans=records.filter(row=>row.kind==='plan'&&knownPlanUsesSources(row.payload,removed)).map(row=>row.id);
     await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),inArray(precisionRecords.id,[...ids,...plans])));
    });
   }
@@ -332,7 +332,6 @@ export class PrecisionStorage {
         const parent=row.dateCorrection?.supersedes;
         if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
       }
-      const active = activeLabObservations(supported);
       if (!activeLabRows([...supported,...raw]).some(row => row.id === id))
         throw Error("LAB_SOURCE_CHANGED");
       const ids = [id], seen = new Set(ids);
@@ -342,8 +341,7 @@ export class PrecisionStorage {
         }
       }
       await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "lab"), inArray(precisionRecords.id, ids)));
-      if (active.labs.some(row => seen.has(row.id)))
-        await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId, userId), eq(precisionRecords.kind, "plan")));
+      await this.removeSourcePlans(tx,userId,seen);
     });
   }
   async deletePrecisionRecord(userId: string, id: string): Promise<boolean> {
@@ -366,18 +364,7 @@ export class PrecisionStorage {
          .returning({ id: precisionRecords.id, kind: precisionRecords.kind,
           labPayload:sql<unknown>`CASE WHEN ${precisionRecords.kind} = 'lab' THEN ${precisionRecords.encryptedPayload} ELSE NULL END` });
       if (!removed.length) return false;
-      let sourceOnly=false;
-      if(removed[0].kind==="lab")try{sourceOnly=sourceOnlyLabSchema.safeParse(decryptPrecision(removed[0].labPayload,userId)).success;}catch{/* Unreadable sources retain conservative plan invalidation. */}
-      // Validated raw-only facts never entered a clinical plan's input set.
-      if (removed[0].kind !== "plan" && !sourceOnly)
-        await tx
-          .delete(precisionRecords)
-          .where(
-            and(
-              eq(precisionRecords.userId, userId),
-              eq(precisionRecords.kind, "plan"),
-            ),
-          );
+      if(removed[0].kind!=="plan")await this.removeSourcePlans(tx,userId,new Set([id]));
       return true;
     });
   }
@@ -387,9 +374,9 @@ export class PrecisionStorage {
     const encryptedContext=encryptPrecision({...prior,geneticsSelection:control},userId);
     await tx.insert(precisionProfiles).values({userId,encryptedContext}).onConflictDoUpdate({target:precisionProfiles.userId,set:{encryptedContext,updatedAt:new Date()}});
   }
-  private async removeGeneticPlans(tx:any,userId:string,sourceId:string){
+  private async removeSourcePlans(tx:any,userId:string,sourceIds:ReadonlySet<string>){
     const plans=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan")));
-    const ids=plans.flatMap((row:any)=>{const payload=decryptPrecision(row.encryptedPayload,userId)as any;return payload?.type==="weekly-plan"&&Array.isArray(payload.inputGuard?.sourceRecordIds)&&payload.inputGuard.sourceRecordIds.includes(sourceId)?[row.id]:[];});
+    const ids=plans.flatMap((row:any)=>{const payload=decryptPrecision(row.encryptedPayload,userId);return knownPlanUsesSources(payload,sourceIds)?[row.id]:[];});
     if(ids.length)await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan"),inArray(precisionRecords.id,ids)));
   }
   private geneticSourceVersion(userId:string,row:PrecisionRecord){return createHash("sha256").update(JSON.stringify(["genetic-source-v1",userId,row.id,row.kind,row.createdAt,row.payload])).digest("hex");}
@@ -431,7 +418,7 @@ export class PrecisionStorage {
         if(command.selectionRevision!==snapshot.selectionRevision)throw new GeneticSourceError("changed");
         await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"genetics"),eq(precisionRecords.id,target!.id)));
         if(selected?.id===target!.id)await this.writeGeneticControl(tx,userId,{sourceId:null,revision:randomUUID()});
-        await this.removeGeneticPlans(tx,userId,target!.id);
+        await this.removeSourcePlans(tx,userId,new Set([target!.id]));
       }
       const nextRows=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).orderBy(desc(precisionRecords.createdAt));const[nextProfile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
       return this.geneticSnapshot(userId,nextRows.map((row:any)=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt})),contextSchema.parse(nextProfile?decryptPrecision(nextProfile.encryptedContext,userId):{}));

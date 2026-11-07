@@ -52,8 +52,8 @@ test('explicit logical lab deletion is atomic, owned, idempotent and cannot resu
     assert.equal((await del(confirmed.id)).status, 204);
     assert.equal((await del(confirmed.id)).status, 204, 'Lost-response retry is harmless');
     const remaining = await store.getPrecisionRecords('a');
-    assert.deepEqual(remaining.map(row => row.id), [other.id]);
-    assert.equal(remaining.some(row => row.id === plan.id), false);
+    assert.deepEqual(new Set(remaining.map(row => row.id)),new Set([other.id,plan.id]));
+    assert.equal(remaining.some(row => row.id === plan.id), true,'Unknown-lineage history remains historical instead of being blanket-erased');
     assert.equal((await report()).pendingLabs.length, 0, 'Original pending source cannot reappear');
     assert.deepEqual((await store.getPrecisionRecords('b')).map(row => row.id), [foreign.id]);
     const saved = await store.insertPrecisionRecord('a', 'plan', { type: 'synthetic-plan' });
@@ -64,7 +64,7 @@ test('explicit logical lab deletion is atomic, owned, idempotent and cannot resu
     assert.ok((await store.getPrecisionRecords('a')).some(row => row.id === saved.id), 'Nonclinical source deletion preserves plans');
     const malformed = await store.insertPrecisionRecord('a', 'lab', { unrecognized: true });
     assert.equal((await del(other.id)).status, 409);
-    assert.equal((await store.getPrecisionRecords('a')).length, 3, 'Unclassified lineage causes no partial deletion');
+    assert.equal((await store.getPrecisionRecords('a')).length, 4, 'Unclassified lineage causes no partial deletion');
     await store.deletePrecisionRecord('a', malformed.id);
   } finally {
     server.closeAllConnections();

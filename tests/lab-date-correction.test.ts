@@ -61,7 +61,7 @@ test('owned date action serializes immutable corrections, exact receipts and sou
   try {
     const original = await store.insertPrecisionRecord('a', 'lab', known);
     const other = await store.insertPrecisionRecord('a', 'lab', parseLabPaste('Ferritin, 20, ug/L', known.measuredAt).valid[0].payload);
-    const saved = await store.insertPrecisionRecord('a', 'plan', { type: 'synthetic-plan' });
+    const saved = await store.insertPrecisionRecord('a', 'plan', { name:'Source-dependent historical plan',version:'precision-history-v1',recommendations:[{matchedRecordIds:[original.id]}] });
     assert.equal((await post(original.id, request, '', '')).status, 401);
     assert.equal((await post(original.id, request, '')).status, 400);
     assert.equal((await post(original.id, request, 'date-missing-confirm', 'a', '')).status, 400);
