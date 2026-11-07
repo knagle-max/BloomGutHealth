@@ -1745,7 +1745,10 @@
           "shared/capability-state.ts",
           "server/supplemental-grant.ts",
           "server/review-runtime-audit.ts",
-          "server/index.ts"
+          "server/index.ts",
+          "shared/description-intelligence.ts",
+          "client/src/lib/description-intelligence.ts",
+          "client/src/lib/description-validation-worker.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1757,7 +1760,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Server-granted synthetic UI scope and one preference; no real tester1 provisioned, no new execution approval.",
+      "observation": "Existing preview paths plus an internal source-validation worker prototype. No packaged model, active interpretation UI, privilege, clinical approval or default model promotion is inferred; runtime and specialist authorization review remains required.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1879,6 +1882,8 @@
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
+    "client/src/lib/description-intelligence.ts": "9c09317633941005ca3b2d7d60bbebdca4ec26738904c631df4ebec69c62fec7",
+    "client/src/lib/description-validation-worker.ts": "b0e1f8c6ded2c447d59a7332bb15d216be94e3d819e632a01380cde4856ed36e",
     "client/src/lib/lab-image-reader.ts": "61755e9cb13a980b2522b12475891baa7316e7b35c8e7e2517087c55c1ebb4f1",
     "client/src/lib/lab-image-worker.ts": "76a621faecfeea685c734adfd59531c72cc956d0fb32a1f0cd83509c066b2838",
     "client/src/lib/lab-pdf-reader.ts": "f567e7ffbb7b5200e530ced63bb3ba547ea0f3de9fe4dc33a1988bb1a35c105f",
@@ -1997,6 +2002,7 @@
     "shared/catalogue-mass-handoff.ts": "9e762fd498ce23d370f05d22ead54aa6e50cd41881d6fd8b17f2f8e3206a3cac",
     "shared/checkin-entry-source.ts": "540ba0ee7e0c9a27e7ee6b14ad934a71c0b65cf99254771c471d5a054e884d48",
     "shared/data/genetics-candidate-bibliography.ts": "6f173fc6952934d2b51e20078ed02eaa7406b3569a0116c1399bfaeb8b2985a1",
+    "shared/description-intelligence.ts": "d76fd822733c8bad2f5cbc786a9d9958d93a97f3b8ee1e514bf7a7b3acbd6baf",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
     "shared/experience.ts": "fbb3ba94e3a5e9f6efc8d3dbb12f1c33eb489ee89b2cd5aae635e6ccd53908c4",

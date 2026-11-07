@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "baseCommit": "601cd02627bba025231158eeb6201ab3ea327fd4",
+  "scope": "First shared source-grounded draft contract and dedicated validation-worker prototype; not inference/model/runtime promotion",
+  "focusedTests": {
+    "pass": 11,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 591.422956
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS (normal app; prototype not wired to entry)",
+    "crosswalk": "52 IDs/241 source files PASS",
+    "apiInventory": "unchanged PASS",
+    "realBrowserWorker": "PASS source validation/cancel/source-current/displacement/unavailable/malformed; constructor/timeout faults injected at broker boundary"
+  },
+  "modelAvailable": false,
+  "promotion": "NOT_YET_JUSTIFIED",
+  "network": "Only same-origin static code requests; no API/provider/model request or canonical writes",
+  "sourceHashes": {
+    "shared/description-intelligence.ts": "d76fd822733c8bad2f5cbc786a9d9958d93a97f3b8ee1e514bf7a7b3acbd6baf",
+    "client/src/lib/description-intelligence.ts": "9c09317633941005ca3b2d7d60bbebdca4ec26738904c631df4ebec69c62fec7",
+    "client/src/lib/description-validation-worker.ts": "b0e1f8c6ded2c447d59a7332bb15d216be94e3d819e632a01380cde4856ed36e",
+    "tests/description-intelligence.test.ts": "c958cbc18fe326635dcc0e3974f67ffcba143f39eec52c9bb74de9b0ebdd9f9a",
+    "scripts/qa/description-worker-prototype.mjs": "cb6a2c77ccf3dd19548a44290af0b8b006b0887fff2c38100dda97c17e0e7046"
+  },
+  "previousPublication": {
+    "commit": "601cd02627bba025231158eeb6201ab3ea327fd4",
+    "deploy": "dep-dbnn3g8473hc739r7590",
+    "status": "live",
+    "ciRun": 42402855193,
+    "ciStatus": "success"
+  },
+  "notClaimed": [
+    "Actual model inference or SDK/weights/tokenizer packaged",
+    "Production/local UI adapters active",
+    "Supported device/model offline readiness or performance",
+    "Independent held-out quality gain",
+    "Physical iPhone/battery/memory/VoiceOver or release approval"
+  ]
+}
