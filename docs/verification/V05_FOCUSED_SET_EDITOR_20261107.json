@@ -1,0 +1,29 @@
+{
+  "scope": "Optional single-set focus in existing session/activity draft editor, not a new workout execution/state model",
+  "sourceHashes": {
+    "client/src/components/TrainingSetsEditor.tsx": "1c6c8488e35a3308270829ee416551f133e5b9a6743f95ee16ca88d9b027005e",
+    "scripts/qa/training-compact-ui-journey.mjs": "280dbd9713970ee7cf56a5864d294323e7f24d6f94f771fd72b4f3d3d676a973"
+  },
+  "focusedTests": {
+    "passed": 12,
+    "elapsedMs": 2266.589979
+  },
+  "typecheck": "PASS",
+  "productionBuild": "PASS",
+  "browserHttpEncryptedSql": [
+    "default derived five-row parent and44px independent status/edit controls retained",
+    "set2 focus retains all five source records; one visible editor, correct full exercise summary and direct reps focus",
+    "switch to set3/change value, return to2 and Show all preserve independent draft values; no request before Save",
+    "focused320390768 light/dark no page overflow;390px reps above bottom navigation",
+    "legacy focused-set deletion moves to surviving stable ID; Save/reload preserves exact surviving IDs/values",
+    "existing pending/planned session remains planned despite two explicitly checked sets; unknown stays unknown",
+    "same encrypted save/reload, previous actual source dates/units, unit conversion and independent owner checks pass",
+    "default compact five widths/lightdark/add/remove/focus/source tests retained"
+  ],
+  "validationNotes": "Initial new QA expected a varied-rep summary the existing summarizer does not publish; corrected to its existing count/load summary and scoped assertion to visible parent, retaining all source-value assertions. No canonical data/calculation altered.",
+  "packet": "docs/review/ui-overhaul-20261107/focused-sets/index.html",
+  "independentReview": "NOT_GRANTED",
+  "physicalVoiceOver": "NOT_RUN",
+  "fullActiveWorkoutLifecycle": "OPEN. This explicit draft focus does not infer active sessions, implement Start/Resume/Finish or claim persisted execution state.",
+  "v06": "Named source-observation stash remains paused and untouched"
+}
