@@ -20,10 +20,10 @@ await page.route('**/api/**',async route=>{
  const path=new URL(route.request().url()).pathname;let json=[];
  if(path==='/api/auth/me')json={user:{id:'clock-qa',username:'Synthetic clock'}};
  else if(path==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'}};
- else if(path==='/api/precision')json={goals:[],sources:[],context:{},safetyBlocks:[]};
+ else if(path==='/api/precision/wellness-context')json={goals:[],sources:[],context:{},safetyBlocks:[]};
  else if(path.startsWith('/api/experience/records'))json=[{id:'night-session',kind:'session',payload:{title:'Short night ride',startsAt:'2026-10-24T06:00:30Z',status:'planned'}}];
  else if(path.startsWith('/api/meals')){mealReads++;if(phase==='hold'){held=route;return;}if(phase==='error')return route.fulfill({status:503,json:{error:'Synthetic journal outage'}});json=rows();}
- await route.fulfill({json});
+ if(path==="/api/precision/wellness-context")json={...json,version:"wellness-context-2026-11-07.1",accountScope:"clock-qa"};await route.fulfill({json});
 });
 try{
  await page.goto('http://127.0.0.1:5243/');

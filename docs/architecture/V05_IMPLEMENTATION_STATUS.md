@@ -4,7 +4,7 @@
 
 `50f0945`: integrated620/620 tests pass, strict TS/build, new/existing actual meal and organism browser journeys pass. Household meal units/size/count, source-plan history preservation and cited research topic/profile are implemented; unknowns, canonical records and original descriptions remain preserved. See `docs/verification/V05_INTEGRATED_CHECKPOINT_20261107.json` for exact tested scope and CI/preview pending-at-check states. The source collection date remains optional for companion linking; upload context is separate. New actual whole-pizza quantity failure found during follow-through audit is repaired and focused/browser checked in its own subsequent change.
 
-v0.5 release and historical207-criterion closure are **not certified** here; current family reconciliation and final independent/operator/device acceptance remain separate. Do not reopen completed engineering merely from an old Remaining label. No production/main deployment, new paid service or private-data transfer.
+v0.5 release and historical207-criterion independent acceptance are **not certified** here. The207-ID current disposition now preserves per-ID legacy/source evidence and scoped final/operator/device dependencies without mass-PASSing lost original criteria. Independent approved v0.6 context work has begun under the owner phase0/phase1 policy; new actual v0.5 defects still take priority. Do not reopen completed engineering merely from an old Remaining label. No production/main deployment, new paid service or private-data transfer.
 
 ## Historical engineering checkpoint — 2026-11-04
 

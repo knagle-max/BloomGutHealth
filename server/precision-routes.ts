@@ -1,3 +1,4 @@
+import {buildWellnessContext} from "./wellness-context";
 import{reportFoodDisplay,microbiomeFoodPlanningGuard,microbiomeFoodPlanningGuardSchema}from'../shared/microbiome-food-influence';
 import{geneticSourceCommandSchema,GENETIC_SOURCE_CONFIRM,GeneticSourceError}from"../shared/genetic-source-selection";
 import{isSensitiveGeneticCall}from"../shared/genetic-selection";
@@ -70,6 +71,14 @@ export function registerPrecisionRoutes(
     next();
   };
   app.use("/api/precision", auth, noCache);
+  app.get("/api/precision/wellness-context",async(req,res)=>{
+    try{
+      const account=req.session.userId!;
+      const [context,user]=await Promise.all([store.getPrecisionContext(account),store.getUser(account)]);
+      if(!user)return res.status(401).json({error:"Sign in to view your saved context."});
+      res.json(buildWellnessContext(account,context,user));
+    }catch(error){unavailable(res,error);}
+  });
   async function reportFor(userId: string, sampleId?: string) {
     const [rawContext, records, user, samples] = await Promise.all([
       store.getPrecisionContext(userId),

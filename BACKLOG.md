@@ -1,12 +1,21 @@
 # Bloom autonomous development backlog
 
-Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 is active; v0.6 has not started. `NEXT_ACTIONS.md` selects work; older entries below are historical evidence. The supplied Viome report correction is pushed in6d9bc89/mergecd8ebdc. Universal Microbiome deletion7b68ecc/mergefa11d23 is pushed. Saved companion management is published (4118932); optional collection-date/upload-context correction is published (67f66db). Independent source/device/security acceptance and the unidentified Render database binding remain separately scoped.
+Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 supported engineering is at the integrated checkpoint; final source/operator/device/specialist acceptance remains open. Independent approved v0.6 foundation work is active under the owner’s phase0/phase1 policy. `NEXT_ACTIONS.md` selects work; older entries below are historical evidence. The supplied Viome report correction is pushed in6d9bc89/mergecd8ebdc. Universal Microbiome deletion7b68ecc/mergefa11d23 is pushed. Saved companion management is published (4118932); optional collection-date/upload-context correction is published (67f66db). Independent source/device/security acceptance and the unidentified Render database binding remain separately scoped.
+
+## Current v0.6 foundation / preserved v0.5 acceptance — 2026-11-07
+
+`docs/verification/V05_CURRENT_REQUIREMENT_DISPOSITIONS_20261107.json` traces all207 historical IDs to current bounded statuses with original evidence preserved; generic family tests do not certify the lost43wordings or final human/clinical acceptance. No public v0.5 release approval is claimed. Known actionable UI/source defects are delivered; new actual regressions still take precedence.
+
+|Task|Priority / dependencies|Current status / acceptance|
+|---|---|---|
+|V06-WELLNESS-CONTEXT-01 / DATA-AI/strategic Phase1|P0; existing owned context/profile/goal registry|First goals-only read-only API + Today consumer IMPLEMENTED_AND_TESTED for defined scope:13 focused context/Today/age/goal/real registered API-admission tests, strict TS/build, App/HTTP/encrypted SQL correction/reload/delete/account/mobile/dark; existing source/Today journeys. Full multimodal context/action phase remains OPEN.|
+|V06 next dependencies|P0/P1; context/source/consent → Today choices → Progress reassessment|OPEN; dependency-aware reuse/acceptance in docs/operations/V06_DEPENDENCY_BACKLOG.md; no duplicate planner/store, model promotion or real research-data transfer.|
 
 ## Current owner P0 and follow-through — 2026-11-07
 
 Integrated checkpoint50f0945:620/620 unit/integration tests PASS248767.60ms; strict TS/build and actual meal/organism source journeys pass. `docs/verification/V05_INTEGRATED_CHECKPOINT_20261107.json` keeps exact scope and pending hosted/final evidence. This does not certify every historical criterion.
 
-|Owner meal household portions / explicit whole-pizza fractions|IMPLEMENTED_AND_ENGINEERING_TESTED|Source-backed slices/sizes/servings and quantity, no gram knowledge required; original text and source/unknowns, canonical nutrition/save/reload/reuse retained. Subsequent whole-pizza audit fixes half-default-serving misinterpretation;20focused and actual App/HTTP/isolated SQL journey/types/build PASS.|
+Owner meal household portions and explicit whole-pizza fractions: IMPLEMENTED_AND_ENGINEERING_TESTED. Source-backed unit/size/quantity and original source persist through review/save/reload/reuse; the follow-through correction passes20focused and the actual browser journey.
 
 |Task|Engineering state|Evidence / next scope|
 |---|---|---|

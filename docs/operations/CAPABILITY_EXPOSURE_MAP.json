@@ -22,7 +22,9 @@
           "server/profile-measurement-source.ts",
           "server/profile-errors.ts",
           "shared/profile-measurement-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/wellness-context.ts",
+          "server/wellness-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -104,7 +106,9 @@
           "server/planning-context.ts",
           "shared/athlete-review.ts",
           "server/settings-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/wellness-context.ts",
+          "server/wellness-context.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1842,7 +1846,7 @@
     "client/src/components/QuickLabEntry.tsx": "094154aaa388d1eb959d8d06d1ac0f2962ae63f46c2c8cf040e210cd7425c984",
     "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
     "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
-    "client/src/components/TodayFocus.tsx": "bb84c71351c90d8db92ea052cf7da234b0b1dfe9a75eaf37e5af322cd2134b7d",
+    "client/src/components/TodayFocus.tsx": "759dfcd7775f421dfd65a78f3c63dc19a7cea10750342fa9fbdc93c387391863",
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
     "client/src/components/TrainingSetsEditor.tsx": "c07fb2a9f9777369186b6046fb65095b0056ba8460dafaf9292d8352802a9e7b",
@@ -1916,7 +1920,7 @@
     "server/plan-history.ts": "429883d9a3eb3a5e540bcf547cd0d2c30cd0508d376070c1bdfadef0b46b32c7",
     "server/planner-routes.ts": "1341ddba8ddf0c969e6c2e6ea518e9108f9e57d00a49d6baeebfe66594e4521f",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
-    "server/precision-routes.ts": "6ec3928aa11d34be50be73f0e53ef6e1112c9bda51470a9e2355212e4fde79a9",
+    "server/precision-routes.ts": "ac09298617af40a8ae9f11b66daea3f95430cbe008416d78db3ddf2df07554e0",
     "server/precision-storage.ts": "9dfba39a7234a4e9181352bdc99b037620c82070bfecef9129a0535439c7859f",
     "server/preference-source.ts": "439afcf8ce9081a61c84176e6537659c3788597c4a0aca24907619933ae4dc46",
     "server/private-product-storage.ts": "f42c4879f5611c7c7cbc204d3fceadc396c48e84488018326c0459245743eb2d",
@@ -1944,6 +1948,7 @@
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "eec5493ab25389816ecf6435f9a82f1949c8214af2d4bd398af295d921dc1252",
     "server/weekly-worker.ts": "da1967463b8ce42a53a73dde879b11d1b2087639392cc198baeb1fea513b01a2",
+    "server/wellness-context.ts": "7569388b8fbebb7274b2e6810ac9c643d7ed73c3255b0f8628a6a3b99f099fad",
     "shared/activity-capture.ts": "2c776d7d1593ac1826e525ae9e1200c3fa490272b950138b243d6dd85a748a41",
     "shared/activity.ts": "cb671b73a9ee131e86a75f05fafab0178ecffb78646fd7eba0865094dab49d5b",
     "shared/application-schema.ts": "9015fbb016fac2a32e0ac92c37b5f66b6ce0e31ea3fdcc29b2f9a25de27ccf13",
@@ -2011,6 +2016,7 @@
     "shared/viome-findings.ts": "29f8fa970769feb48c6de213f0d22c3bd4d337e0718d1dae542714bec56c81e8",
     "shared/viome-pdf.ts": "59edbefd28553fec08c56a3fb2727c4f947edd416f62fbf09c0cb436eaea2bd9",
     "shared/viome-report-context.ts": "65b4431affd72af8ff17135c19f3a64b96f164a0d7656be9e3b779239fe7c966",
-    "shared/weekly-planner.ts": "00638f351f2eb92a61e48873d70db4f4f2219bc3a8450b24f5387794d95fb90b"
+    "shared/weekly-planner.ts": "00638f351f2eb92a61e48873d70db4f4f2219bc3a8450b24f5387794d95fb90b",
+    "shared/wellness-context.ts": "751a13690e046e9765c44b7b5b71f5e9266138f5d50377938cf5abaa32353bb7"
   }
 }

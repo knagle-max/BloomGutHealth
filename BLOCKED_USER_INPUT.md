@@ -267,3 +267,9 @@ November 6: the two newly attached deidentified/reconstructed reports now pass a
 
 
 2026-11-06 owner clarification resolved: collection date is optional for Viome companion linking. Use actual labelled upload dates as fallback selection context; require explicit same-specimen confirmation, preserve unknown biological dates and existing source/version/owner checks. No new owner decision or missing-collection-date blocker remains.
+
+## Scoped launch operator contact — LEG-2026-016 (2026-11-07)
+
+State: BLOCKED_USER_INPUT for final public support/complaint activation only; not an engineering freeze. A real accountable operator/contact and approved handling/retention policy are not configured or verified here. Do not fabricate a monitored email, promise a response time, send a message or imply an emergency service.
+
+Exact question for the final operator handoff: Which real monitored support/safety email or owned contact URL, accountable operator, retention/escalation policy and approved acknowledgement wording should the public app use? Options: an operator-monitored minimal-data email route, or an existing approved support portal. Recommendation: the monitored minimal-data route for initial review, with sensitive records excluded from ordinary email and clear non-emergency wording. Depends on operator/Legal handling approval; independent goals/context/action engineering proceeds. Existing preview feedback and issue reporting are not represented as a staffed public clinical service.

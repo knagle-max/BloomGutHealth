@@ -3,12 +3,13 @@ import {useAuth} from "@/lib/auth";
 import CompanionHero from "./CompanionHero";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
-import type { PrecisionReport } from "@shared/precision-nutrition";
+import type {WellnessContext} from "@shared/wellness-context";
+import {apiRequest} from "@/lib/queryClient";
 import { todayContextAction } from "@shared/today-focus";
 import { localDate,useExperienceRecords } from "@/lib/experience";
 export default function TodayFocus({ now,mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { now?:Date;mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
   const {user}=useAuth(),[skipped,setSkipped]=useState<string|null>(null),pendingFocus=useRef(false),current=now||new Date();
-  const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
+  const report = useQuery<WellnessContext>({ queryKey: ["/api/precision/wellness-context",user?.id],enabled:!!user,queryFn:async()=>{const value=await(await apiRequest("GET","/api/precision/wellness-context")).json();if(value.accountScope!==user?.id||value.version!=="wellness-context-2026-11-07.1"||!Array.isArray(value.goals)||!Array.isArray(value.sources))throw Error("Your saved goal context could not be confirmed.");return value;} }),
     goal = report.fetchStatus === "idle" && !report.isError && !report.isStale ? report.data?.goals.find((g) => g.id !== "unmapped") : undefined;
   const sessions = useExperienceRecords("session");
   const action = todayContextAction({ now:current,mealCount, missingNutritionCount, loading, unavailable: journalError, goal, sessions: sessions.fetchStatus === "idle" && !sessions.isError && !sessions.isStale ? sessions.data?.flatMap(r => r.kind === "session" ? [r.payload] : []) : undefined });

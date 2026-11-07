@@ -1,6 +1,6 @@
-# Current task: verify integrated v0.5 and reconcile current remaining engineering
+# Current task: publish v0.6 goals-only context, then complete the source/action loop
 
-v0.5 remains active. Use `enhance/bloom-experience`, PR1 and the existing Render review preview; preserve `main` and other contributors. No new paid infrastructure, production DB/schema writes, private-data transfer or secret discovery. Continue after publication without routine approval prompts.
+v0.5 supported engineering checkpoint is verified; approved independent v0.6 foundation is active while scoped final acceptance remains. Use `enhance/bloom-experience`, PR1 and the existing Render review preview; preserve `main` and other contributors. No new paid infrastructure, production DB/schema writes, private-data transfer or secret discovery. Continue after publication without routine approval prompts.
 
 ## Latest completed engineering checkpoint
 
@@ -11,12 +11,13 @@ v0.5 remains active. Use `enhance/bloom-experience`, PR1 and the existing Render
 - **Published earlier:**22b849c unified selected/category report management (601full);b08dc12/a40ca6b remaining-budget report-food choices;5fbea01 Biology display (605full);bf31e50/mergecb52a5c source-bound weekly planning/save/erasure (607full). One canonical opt-in/resolver; no provider opinions enter raw reportFor/AI inputs. Upload-date companion context67f66db is implemented; missing collection dates are optional and remain unknown.
 - cb52a5c was observed LIVE on Renderdep-dbn9flqvcj2c73875rgg. CI42333181078 passed types/unit/build but live Neon smoke still expected generic typed Lab DELETE204; it correctly409s.0f4e070 smoke now asserts409 then uses confirmed logical-entry deletion. Await the new fixed-code CI; do not rerun the obsolete code job or claim hosted user acceptance.
 
-## Do next
+## Do next — approved independent v0.6 foundation
 
-1. Source-plan integrity, owner meal household portions and the cited functional-organism profile/group are now implemented and pushed at their engineering checkpoints. Check exact CI/Render once per new published checkpoint; inspect actual failures, not obsolete jobs.
-2. Integrated50f0945 checkpoint is620/620 PASS248767.60ms; strict TS/build and actual meal/organism journeys PASS. Whole-pizza fraction follow-through is separately repaired with20focused/browser checks. Reconcile remaining v0.5 criteria against current family evidence. The research topic/profile is bounded general education, with original source detail; no clinical activity or unsupported interaction edges are activated. See `docs/operations/FUNCTIONAL_ORGANISM_RESEARCH.md`.
-3. Apply the owner’s [right-first-time standard](docs/architecture/PRODUCT_ENGINEERING_RIGHT_FIRST_TIME_STANDARD_2026-11-06.md) to actually touched capture flows. Classify observed scope as PASS / USER_VISIBLE_DEFECT / LIMITED_SUPPORTED_MODE_DISCLOSED / PROVIDER_ACTIVATION_PENDING / NOT_APPLICABLE. LogMeal already has optional AI + review/confirm; audit real mixed/restaurant/unknown portions before assuming broken. Do not fabricate defects or reopen passing source/unit micro-hardening.
-4. Reconcile remaining actual v0.5 engineering with current family evidence and latest handoffs. Independent review/private fixture/device/provider activation is separate. Do not declare v0.5 complete from totals, or turn the207-ID historical ledger into a new governance project. Once actionable v0.5 engineering is finished or genuinely externally dependent, begin approved independent v0.6 immediately.
+1. Finish/publish V06-WELLNESS-CONTEXT-01: typed goals/constraint read-only context uses only current owned goal/profile sources; Today consumes it without full biological reports.13 focused context/Today/age/goal/registered-admission tests, strict types/build and actual App/HTTP/encrypted SQL correction/reload/erase/account/320390dark pass. Affected existing onboarding/Today/source/clock checks all PASS. Publish and inspect exact CI/preview once; then advance.
+2. Continue the same context with minimized canonical observation/source/purpose metadata where needed; then existing Today low-risk action choices and durable choice status/Why/feasibility. Use `docs/operations/V06_DEPENDENCY_BACKLOG.md`; goal-only remains useful. No new planner, source store or unsolicited model download/paid service.
+3. Run bounded M0 of the approved active Python molecular research track concurrently with independent practical context/action engineering; inspect actual ml_service and policy bridge, then source-reviewed typed graph/synthetic solver work. Keep compute/view/apply independent and restricted. Local Food/Exercise/Lifestyle worker/runtime evaluation also remains approved; no model/browser/device support or clinical promotion claimed.
+
+v0.5 full release and original per-ID independent acceptance are NOT_CERTIFIED. The current207-ID disposition preserves scoped external final/operator/device/source conditions; it does not mass-PASS original criteria. New actual v0.5 defects still take priority. Do not reopen passing title/unit/source work from stale legacy Remaining labels or repeat unchanged full suites. Context/source clinical or public activation never follows from this engineering transition.
 
 ## Binding execution and verification policies
 
