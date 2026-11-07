@@ -1,3 +1,14 @@
+# CURRENT P0 EXECUTION: implement complete Premium Production R4 before v0.5 main merge
+
+**Source of truth / immediate engineering assignment:** [GitHub Issue #3](https://github.com/knagle-max/BloomGutHealth/issues/3). This 2026-11-07 owner instruction supersedes other task-selection instructions below. **Codex must implement**, not merely produce more design status reports. Canonical complete R4 master specification, UX closure, editable Designer R3 and 50 additional original assets reside in shared Library's `Bloom_R4_Architect_Designer_Developer_Consolidated_Handoff_2026-11-07.zip` and `Bloom_Production_Assets_Batches_2_to_5_2026-11-07.zip`; import exact files to repo, verify manifest, then develop real UI.
+
+- **Active work ONLY:** finish v0.5 RC + complete premium design over Today, Food, Biology/Gut, Explore, Progress, Athlete, Profile; source fidelity, real snapshots, tests and independent visual/functional final acceptance.
+- **No interim design signoff bottleneck:** Today actual before/after screenshots are an early checkpoint **without STOP**; continue all other screens while Branding/Designer refine noncritical text or safe art placements.
+- **Do not develop new v0.6 features until accepted RC is merged to main.** Preserve already-done work safely and keep out of RC.
+- **Never merge or call visually complete** without actual complete app before/after screenshots, engineer+UX+Designer/UT review, applicable scientific/security/legal final gates and Product Owner approval. Routine development branch commits/preview are already authorized.
+
+---
+
 # Continue Bloom v0.5 → v0.6 — current checkpoint2026-11-07
 
 Stay on `enhance/bloom-experience`, PR1 and existing Render review preview. Routine commit/push/preview authorized; preserve main/other contributors. No paid infrastructure, production data/schema writes, secret discovery or unapproved private-data transfer. Continue after milestones; no repetitive final acknowledgments.
