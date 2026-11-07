@@ -9,6 +9,8 @@ Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 supported engi
 |Task|Priority / dependencies|Current status / acceptance|
 |---|---|---|
 |V06-WELLNESS-CONTEXT-01 / DATA-AI/strategic Phase1|P0; existing owned context/profile/goal registry|First goals-only read-only API + Today consumer IMPLEMENTED_AND_TESTED for defined scope:13 focused context/Today/age/goal/real registered API-admission tests, strict TS/build, App/HTTP/encrypted SQL correction/reload/delete/account/mobile/dark; existing source/Today journeys. Full multimodal context/action phase remains OPEN.|
+|V06-WELLNESS-CHOICE-READER / Phase2 dependency|P0; existing experience record/export and owned lifecycle source|IMPLEMENTED_AND_TESTED reader-only:19affected schema/API/encrypted SQL/export/metric-noncontribution tests, TS/build. Generic producers denied. Dedicated source-locked command, lifecycle generation, quota-safe history and actual Today choice loop OPEN; WELLNESS_CHOICE_CONTRACT.|
+|V06-ML-M0 / active research track|P0 bounded existing-source audit|IMPLEMENTED_AND_TESTED static source inspection only; no actual model or deployment acceptance. Python composition-only/legacy prototype boundaries and Node restricted adapter/source hashes recorded. Typed graph/solver/benchmark work OPEN.|
 |V06 next dependencies|P0/P1; context/source/consent → Today choices → Progress reassessment|OPEN; dependency-aware reuse/acceptance in docs/operations/V06_DEPENDENCY_BACKLOG.md; no duplicate planner/store, model promotion or real research-data transfer.|
 
 ## Current owner P0 and follow-through — 2026-11-07

@@ -1,3 +1,5 @@
+> Current source status (2026-11-07): the diagram below is a legacy conceptual/prototype description, not evidence of a deployed or validated biological prediction pipeline. The current private Python service exposes reported-composition summaries and withholds personal metabolites, health effects, cohort rankings and recommendations. Listed cohort sizes are illustrative legacy constants, not verified recruited cohorts or measured validation data. The original molecular research ambition is retained in the approved v0.6 restoration track; solver/model/source rights and benchmarks remain engineering work, with public/personal clinical activation separate. See `docs/verification/V06_M0_SCIENCE_BOUNDARY_20261107.json` and the binding November6 Python restoration decision.
+
 # Bloom ML Microservice Architecture
 
 ## Overview

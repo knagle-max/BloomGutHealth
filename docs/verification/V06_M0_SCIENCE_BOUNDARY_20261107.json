@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "baselineCommit": "4eaad72679d24cb844120a5f8ad69e151c405093",
+  "scope": "Bounded M0 actual-source inspection for approved v0.6 Track A/B; not a deployment, model benchmark, rights/clinical approval or personal-data execution.",
+  "sourceHashes": {
+    "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
+    "server/ml-service.ts": "84acf1c2d81e415939f855865b92e3e0b7b2bbe059733f36844bd9d1f1ef77ed",
+    "ml_service/services/metabolite_predictor.py": "864d2354d9607d9bcb97ef63ecea6f98734c37a568de1dc321079ac659f18edd",
+    "ml_service/services/taxonomic_profiler.py": "a02cacc1e744b91beb4dce29451f43009aa1f54018ac2d4342780a03d66d8683",
+    "ml_service/services/cohort_comparator.py": "c74bc5d116fc57f66251fe7b94e65a4084ec2942c5564c4e12361a896065f03f",
+    "ml_service/services/health_impact_analyzer.py": "135cee883e0aad14a66de5e28675a6e98c5e9394601ce3438abc05908e2c780a",
+    "ml_service/services/recommendation_engine.py": "e6f13f6541672a1c011d8d98b24149a74088efa157c00e01bd86069c383c5d1b",
+    "shared/metabolite-research.ts": "ab03c07f5f3d66d5b68d6552dfe4ecf04c57ab83d4020db05e2c8deb85346f9f",
+    "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
+    "server/precision-routes.ts": "ac09298617af40a8ae9f11b66daea3f95430cbe008416d78db3ddf2df07554e0",
+    "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
+    "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a"
+  },
+  "observed": {
+    "nodeAuthority": "Existing Node owns active-account/source/capability/consent and private service target/token boundaries; new goals context never calls Python.",
+    "pythonService": "FastAPI private service middleware enforces configured token on /api/ml; raw-file upload disabled before multipart parsing. Analyze preserves supplied quantitative composition and withholds metabolites/health impacts/cohort comparisons/recommendations.",
+    "legacyPrototype": "Legacy metabolite formula and uncalibrated confidence/optimal ranges/pathway hypotheses remain prototype code, not verified concentration/strain genes. Randomized demo generator exists but is not an accepted missing-data substitute on the current service path.",
+    "modelStatus": "No pinned MICOM/model reconstruction/solver-backed validated community flux model or licensed substrate-conversion dataset is supplied by the inspected path. Cohort sample counts in old architecture prose are not measured study evidence.",
+    "researchAdapter": "Existing scenario/readiness/external adapter is distinct from legacy ML; disconnected or incomplete prerequisites yield blockers/no numbers. It is not evidence of a deployed model.",
+    "executionGate": "Actual /api/precision/metabolite-research handler requires restricted bloom.microbiome.flux capability before its owned-source/consent/external adapter. Existing policy/effective execution remains default-denied without independently installed trusted approvals; normal experimental UI cannot grant it."
+  },
+  "next": [
+    "Keep practical context/action optimization in existing Node/Today/Plan/Athlete.",
+    "Extend one existing source graph with typed reaction/strain/substrate/compartment references and explicit source/model/rights/coverage.",
+    "Implement reproducible synthetic/reference stoichiometric solver and negative/infeasible/net consumption cases; distinguish toy/hypothesis from curated model reconstruction and human validity.",
+    "Benchmark pinned appropriately licensed real model candidates with matched inputs; do not generate a personal concentration, health score or treatment.",
+    "Keep compute/view/apply independent and default restrictive; no personal source transfer or public model promotion from UI toggle."
+  ]
+}

@@ -3,6 +3,17 @@ import {restaurantRegions} from "./restaurant-entry";
 import { z } from "zod";
 import { ingredientSchema } from "./meal-intelligence";
 export const dateKey = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v => !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v, "Use a real calendar date");
+/** A user choice is an intention, never evidence that food/exercise occurred. */
+export const wellnessChoiceSchema=z.object({
+ version:z.literal(1),valueKind:z.literal("user-choice"),intentId:z.string().uuid(),
+ date:dateKey,timezoneOffset:z.number().int().min(-840).max(840),
+ actionId:z.string().min(1).max(100),actionVersion:z.string().min(1).max(60),
+ contextRevision:z.string().regex(/^[a-f0-9]{64}$/),evidenceVersion:z.string().regex(/^[a-f0-9]{64}$/),
+ decisionRevision:z.string().regex(/^[a-f0-9]{64}$/),requestRevision:z.string().regex(/^[a-f0-9]{64}$/),
+ lifecycleId:z.string().uuid(),choice:z.enum(["try","later","not-relevant","clear"]),
+ chosenAt:z.string().datetime({offset:true}),
+}).strict();
+export type WellnessChoice=z.infer<typeof wellnessChoiceSchema>;
 const optionalText = z.string().trim().max(1000).default("");
 export const athleteProfileSchema = z.object({
   sport: z.string().trim().max(100).default(""),
@@ -50,6 +61,7 @@ export const displayUnitsSchema = z.object({
 export type DisplayUnits = z.infer<typeof displayUnitsSchema>;
 
 export const experienceSettingsSchema = z.object({
+  lifecycleId:z.string().uuid().optional(), // Server-owned generation; never an entitlement.
   mode: z.enum(["everyday", "athlete"]).default("everyday"),
   onboarding: onboardingSchema.prefault({}),
   displayUnits: displayUnitsSchema.prefault({}),
@@ -198,6 +210,7 @@ export const memorySchema = z.object({
   key: z.string().trim().min(1).max(2000), ingredients: z.array(ingredientSchema.strict()).min(1).max(20),
 }).strict();
 export const experienceEntrySchema = z.discriminatedUnion("kind", [
+  z.object({kind:z.literal("wellness-choice"),payload:wellnessChoiceSchema}).strict(),
   z.object({kind:z.literal("activity"),payload:activitySchema}).strict(),
   z.object({kind:z.literal("session"), payload:trainingSessionSchema}).strict(),
   z.object({kind:z.literal("hydration"), payload:hydrationSchema}).strict(),
