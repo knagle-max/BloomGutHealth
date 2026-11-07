@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "baseCommit": "b9600b09c87315cbf18eabfac349daca5d7002b7",
+  "scope": "First micronutrient definition/source-disclosure slice; no amount/portion/totals/target/conversion changes",
+  "definitionVersion": "2026-11-07.1",
+  "sourceMappings": "Same21 existing USDA nutrient IDs and units; CNF mappings unknown/null",
+  "focusedTests": {
+    "pass": 24,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 1824.704193
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "sourceCrosswalk": "52 IDs/237 files PASS",
+    "apiInventory": "unchanged PASS"
+  },
+  "journeys": [
+    "Actual App/review/save/isolated PostgreSQL pizza household portion edit/reuse plus generic nutrient field meaning and 44px keyboard disclosure",
+    "Actual App/API/encrypted private label/source note review/save/reload/label deletion/second owner and Progress:420kcal, explicit0 protein, unknown sodium; form/basis unconfirmed"
+  ],
+  "viewports": [
+    "320/390 light/dark portion/source review",
+    "200% portion/source review",
+    "320px private label/Progress"
+  ],
+  "sourceHashes": {
+    "shared/nutrient-definitions.ts": "2f2614aa9f0bd588a9c616647667801e71424950f751e75179adc2479f988585",
+    "client/src/components/NutrientDefinitionDisclosure.tsx": "1e85fc234dea5e6642bb779c081477f31017dd32113fa7acecb1cf847d2759dd",
+    "client/src/components/MealAnalysis.tsx": "8b1d6d977afe1b1cd0d8b90793a613a26464ddc6732cea136ab510e16935e857",
+    "tests/nutrient-definitions.test.ts": "90bbf71d40204ac23e16ad5cd5dc26760a074a23ca4a46bd9f777c64587ddcb5",
+    "scripts/qa/meal-household-portions-journey.mjs": "6da9fd1c490b1dd56d588428699488c1523106dae795a57ada5704641b2054d6",
+    "scripts/qa/private-source-context-journey.mjs": "1121c75bbabb8069226bad9daccb577d3b02ff52583d3c18f6aa0e3563cc6297"
+  },
+  "previousPublication": {
+    "commit": "b9600b09c87315cbf18eabfac349daca5d7002b7",
+    "deploy": "dep-dbnk6sm8bjmc73ab5400",
+    "status": "live",
+    "ciRun": 42386495574,
+    "ciStatus": "in_progress at check"
+  },
+  "notClaimed": [
+    "Complete M1 intake observation/form conversion",
+    "RAE/DFE/NE/IU inferred from label names",
+    "Verified zero inferred from rounded zero",
+    "Iodine/other absent analyte coverage",
+    "Canadian DRI/UL/life-stage engine",
+    "Supplement ingestion/dosing or biological status",
+    "Independent review/physical devices/full release"
+  ]
+}

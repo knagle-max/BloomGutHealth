@@ -425,7 +425,8 @@
           "client/src/components/FoodProgress.tsx",
           "client/src/components/FoodCompositionExplorer.tsx",
           "client/src/components/FoodMassInput.tsx",
-          "client/src/components/IngredientMassEntry.tsx"
+          "client/src/components/IngredientMassEntry.tsx",
+          "client/src/components/NutrientDefinitionDisclosure.tsx"
         ],
         "api": [
           "server/planner-routes.ts",
@@ -442,7 +443,8 @@
           "shared/nutrition-display.ts",
           "shared/food-intelligence.ts",
           "shared/ingredient-mass-entry.ts",
-          "shared/ingredient-mass-capture.ts"
+          "shared/ingredient-mass-capture.ts",
+          "shared/nutrient-definitions.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1849,7 +1851,7 @@
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "0c3793be49e077cfa7bfd587504dd1aec6bad9fa36c01e4b5087713b95bb29fd",
-    "client/src/components/MealAnalysis.tsx": "2f46f8eef1c6e70e64d5044537ad61b5be6a54b8bc407c2ac630ba0c24f7900e",
+    "client/src/components/MealAnalysis.tsx": "8b1d6d977afe1b1cd0d8b90793a613a26464ddc6732cea136ab510e16935e857",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/MicrobialProfile.tsx": "4307a9bad8ef6885d8076459eb40b640a9ce5087a817406c382e6df30b21d25b",
@@ -1857,6 +1859,7 @@
     "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
     "client/src/components/MovementSourceDetails.tsx": "10e1a0d75f823289d33c4acb7a06a7a8ddf468796cb29d863366c2d4b948e729",
+    "client/src/components/NutrientDefinitionDisclosure.tsx": "1e85fc234dea5e6642bb779c081477f31017dd32113fa7acecb1cf847d2759dd",
     "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
     "client/src/components/ProviderFoodSuggestions.tsx": "7af2c558458edfceb1276fb63ae737ac29eb310dbe543b033598a3855dd79438",
@@ -2024,6 +2027,7 @@
     "shared/measurement-entry.ts": "399bedf83d62bcc171436529139ba7e02153b03de595f5b9605aac7ef7eb4910",
     "shared/microbiome-food-influence.ts": "4f249edf6e69d22f4ae6fd97df83d14b835446d58a817f2f107d515f2d681320",
     "shared/numeric-entry-token.ts": "e8e72128b93502fb623f08e10d951864ea2151e3a72efb498844cc4803e37159",
+    "shared/nutrient-definitions.ts": "2f2614aa9f0bd588a9c616647667801e71424950f751e75179adc2479f988585",
     "shared/nutrition-display.ts": "ca164c626fa377a3ee16698b3811f0475f603210b0419d8b8061f7b98b641303",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "a27c14e695a6ef8fe5339357f6f2e1e9c228ebfc92ff703c1665fddc591d39a2",

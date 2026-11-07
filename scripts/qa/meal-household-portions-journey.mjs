@@ -26,6 +26,11 @@ try{
  await page.getByLabel('Describe your meal',{exact:true}).fill(description);
  await page.getByRole('button',{name:'Review meal',exact:true}).click();
  await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();
+ await page.getByText('Nutrition sources & science',{exact:true}).click();
+ const forms=page.getByText('Nutrient forms & units',{exact:true});await forms.focus();await page.keyboard.press('Enter');
+ await page.getByText('Matched USDA nutrient fields use these definitions when a value is available. The definitions do not fill a missing amount or identify every chemical form.',{exact:true}).waitFor();
+ assert.ok((await page.locator('body').innerText()).includes('not dietary folate equivalents (DFE)'));
+ assert.equal(await forms.evaluate(el=>el.getBoundingClientRect().height>=44),true);
  await openIngredientRow(page,1);
  assert.match(await page.getByLabel('Portion unit 1',{exact:true}).inputValue(),whole?/^1 large pizza/:/slice/);
  assert.equal(await page.getByLabel('Portion quantity 1',{exact:true}).inputValue(),whole?'0.5':'2');

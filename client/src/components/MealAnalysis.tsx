@@ -1,5 +1,7 @@
 import {captureIngredientMassEntry} from "@shared/ingredient-mass-capture";
 import IngredientMassEntry from "./IngredientMassEntry";
+import NutrientDefinitionDisclosure from "./NutrientDefinitionDisclosure";
+import {nutrientDefinitionSource,reviewedNutrientName} from "@shared/nutrient-definitions";
 import { useExperience } from "@/lib/experience";
 import { nutrientDisplay, foodMass, formatNutrientAmount } from "@shared/nutrition-display";
 import FoodRelationshipLinks from "./FoodRelationshipLinks";
@@ -27,6 +29,7 @@ export default function MealAnalysis({
 }) {
   const { settings } = useExperience();
   const units = settings.displayUnits;
+  const nutrientSource = nutrientDefinitionSource(analysis);
   const [rows,setRows]=useState(()=>analysis.ingredients.map(ingredient=>({key:crypto.randomUUID(),ingredient})));
   const [expandedRows,setExpandedRows]=useState(()=>new Set(rows.filter(row=>row.ingredient.grams===null||unmatchedFoods(analysis).some(item=>item.name===row.ingredient.name)).map(row=>row.key)));
   const [hasEdits,setHasEdits]=useState(false);
@@ -283,7 +286,7 @@ export default function MealAnalysis({
             <tbody>
               {analysis.nutrients.map((n) => (
                 <tr key={n.key}>
-                  <td className="p-2">{n.name}</td>
+                  <td className="p-2">{reviewedNutrientName(n.key,n.name,nutrientSource)}</td>
                   <td className="p-2">
                     {n.amount === null
                       ? "Unavailable"
@@ -302,6 +305,7 @@ export default function MealAnalysis({
           </table>
         </div>
       </details>
+      <NutrientDefinitionDisclosure analysis={analysis}/>
       {analysis.productDetails?.some(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote)&&<details>
         <summary>Recorded source context</summary>
         {analysis.productDetails.filter(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote).map((p,i)=><div key={i}><h3>{p.name}</h3><p className="panel-note break-words">{p.labelSnapshot!.sourceNote}</p></div>)}
