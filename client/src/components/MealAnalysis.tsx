@@ -7,7 +7,7 @@ import { nutrientDisplay, foodMass, formatNutrientAmount } from "@shared/nutriti
 import FoodRelationshipLinks from "./FoodRelationshipLinks";
 import ProductPicker from "./ProductPicker";
 import { unmatchedFoods } from "@shared/nutrition-review";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { MAX_MEAL_INGREDIENTS, type Ingredient } from "@shared/meal-intelligence";
 import type { MealIntelligence } from "@shared/meal-intelligence";
 export default function MealAnalysis({
@@ -18,8 +18,10 @@ export default function MealAnalysis({
   preview = false,
   disabled = false,
   onDraftChange,
+  nutritionSummary,
 }: {
   analysis: MealIntelligence;
+  nutritionSummary?: ReactNode;
   onRecalculate?: (ingredients: Ingredient[], options?:{keepItemFocus?:boolean}) => void;
   pending?: boolean;
   current?: boolean;
@@ -230,12 +232,12 @@ export default function MealAnalysis({
             {preview&&!missing.some(m=>m.name===item.name)?<details className="review-food-notes"><summary>Source & portion notes</summary><p className="panel-note">{item.assumption}</p></details>:<p className="panel-note">{item.assumption}</p>}
           </FoodRow>
         ))}
-        {onRecalculate&&<div className="space-y-2"><button type="button" className="text-link min-h-[44px]" disabled={pending||ingredients.length>=MAX_MEAL_INGREDIENTS} onClick={addIngredient}>Add missing ingredient</button><p className="panel-note">{ingredients.length} of {MAX_MEAL_INGREDIENTS} ingredient entries in this draft.</p>{!ingredients.length&&<p role="status">No ingredients in this draft. Add any foods that were missed, or delete the whole entry from your journal.</p>}</div>}
+        {onRecalculate&&<div className="flex flex-wrap items-center gap-x-3 gap-y-1"><button type="button" className="text-link min-h-[44px]" disabled={pending||ingredients.length>=MAX_MEAL_INGREDIENTS} onClick={addIngredient}>Add missing ingredient</button><p className="panel-note">{ingredients.length} {ingredients.length===1?"item":"items"} · limit {MAX_MEAL_INGREDIENTS}</p>{!ingredients.length&&<p role="status">No ingredients in this draft. Add any foods that were missed, or delete the whole entry from your journal.</p>}</div>}
         {onRecalculate && !preview && <p className="panel-note">Reviewed corrections are remembered privately for this exact meal description. Manage or forget them in Saved meals.</p>}
         {onRecalculate && (
           <button
             type="button"
-            className="hero-button"
+            className={preview&&current&&!hasEdits?"text-link min-h-11":"hero-button"}
             disabled={
               pending ||
               !ingredients.length || ingredients.length>MAX_MEAL_INGREDIENTS ||
@@ -256,6 +258,7 @@ export default function MealAnalysis({
         )}
       </details>
       </fieldset>
+      {nutritionSummary}
       <DetailContainer hidden={!current} className="space-y-4">
       {preview&&<><summary>Nutrition sources & science</summary><FoodRelationshipLinks names={analysis.ingredients.map(i=>i.name)}/><p className="panel-note">{analysis.provider} · {analysis.parser==="ai"?"AI ingredient interpretation":"Description-based interpretation"}</p></>}
       {analysis.clarificationQuestions.length > 0 && (

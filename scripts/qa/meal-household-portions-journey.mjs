@@ -26,6 +26,8 @@ try{
  await page.getByLabel('Describe your meal',{exact:true}).fill(description);
  await page.getByRole('button',{name:'Review meal',exact:true}).click();
  await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();
+ assert.equal(await page.getByRole('button',{name:'Update meal review',exact:true}).evaluate(el=>el.classList.contains('hero-button')),false,'unchanged review keeps Save meal as its primary action');
+ assert.equal(await page.locator('.meal-review').evaluate(el=>!!(el.querySelector('.review-food-row').compareDocumentPosition(el.querySelector('.saved-nutrients'))&Node.DOCUMENT_POSITION_FOLLOWING)),true,'review presents actual foods and portions before compact nutrition');
  await page.getByText('Nutrition sources & science',{exact:true}).click();
  const forms=page.getByText('Nutrient forms & units',{exact:true});await forms.focus();await page.keyboard.press('Enter');
  await page.getByText('Matched USDA nutrient fields use these definitions when a value is available. The definitions do not fill a missing amount or identify every chemical form.',{exact:true}).waitFor();
@@ -41,6 +43,8 @@ try{
  await page.getByLabel('Portion quantity 1',{exact:true}).fill('');
  assert.equal(await page.getByRole('button',{name:'Update meal review',exact:true}).isDisabled(),true);
  await page.getByLabel('Portion quantity 1',{exact:true}).fill('3');
+ assert.equal(await page.getByRole('button',{name:'Update meal review',exact:true}).evaluate(el=>el.classList.contains('hero-button')),true,'dirty ingredient review makes update the active primary step');
+ assert.equal(await page.getByRole('button',{name:'Save meal',exact:true}).isDisabled(),true);
  await select.focus();await page.keyboard.press('Tab');
  assert.equal(await page.getByLabel('Portion quantity 1',{exact:true}).evaluate(el=>el===document.activeElement),true);
  for(const width of [320,390]){
