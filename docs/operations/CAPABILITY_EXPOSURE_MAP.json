@@ -1142,7 +1142,10 @@
         "logicOrJobs": [
           "server/metabolite-research.ts",
           "server/capability-policy.ts",
-          "server/planning-context.ts"
+          "server/planning-context.ts",
+          "ml_service/research/stoichiometry.py",
+          "ml_service/research/__init__.py",
+          "shared/scientific-contracts.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1894,6 +1897,8 @@
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
     "client/src/pages/Upload.tsx": "bceb13cffb48c18161b96799f86a04a4db51bffd10a18ac2cd24bc0ae8a27df7",
     "ml_service/main.py": "2eb6d2f1c388c917d42c03ee81c50e3f8f066ab4aeb34f1c811227b6ef8ec811",
+    "ml_service/research/__init__.py": "d8b215e9b4889b5ff9ca8c58e2ab733d7d2e3a905420f2c5a25078e5018547af",
+    "ml_service/research/stoichiometry.py": "5ee0d92d183d27dd9a037220f95aaec94964766e28d893e1084644cc43b72a2c",
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
     "server/account-export.ts": "055352309dbdbc4afbe618da5376d0aee3230dae17352109b1bab99d88fac46b",
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
@@ -2018,7 +2023,7 @@
     "shared/report-management.ts": "66865c0aa48bc98d2d6e82238b66ec22bbb92f770ee58e537eb4f798d0eda4ed",
     "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
     "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
-    "shared/scientific-contracts.ts": "98c51ae93297290fb83b790c7c49cbe9052b90a9cfe39c77e36c86d9b0961950",
+    "shared/scientific-contracts.ts": "750a113cdce24ec2cd4ce464d5f0c3d7a194f7253ae2091b9fd5d7eaaf1ea5a6",
     "shared/scientific-visuals.ts": "f0f311377ea9662888bc5d366bbd57c5fb53c5534f3418c1fbdb4090de010437",
     "shared/structured-report.ts": "081443badc0ea9ec62000500e7821daf89b53981be03038b30bf559cfcf46d73",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
