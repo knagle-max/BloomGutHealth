@@ -4,6 +4,32 @@
 
 **Library root:** `/Bloom gut health/Agent Handoffs/`. Find files there by **exact filename**. If Codex's running environment cannot read shared Library originals, report an actual source-access issue and obtain them via an authorized transfer; **never fabricate a substitute** from this source map or a GitHub issue summary.
 
+## 0. Explicit specialist deliverables — READ THESE ORIGINAL DOCUMENTS, not only the final-package summary
+
+The following three **publication groups** are independently available under `/Bloom gut health/Agent Handoffs/`. The user specifically requires Codex to consume them as source files; they are not optional supplemental reading.
+
+**A. Branding updated deliverables (standalone original authoring):**
+- `Bloom_R4_Master_With_Brand_Copy_2026-11-07.zip` — the integrated R4 master and Branding voice/copy delivery with integrity manifest.
+- `Bloom_Master_Build_Spec_R4_Designer_UX_Brand_Copy_Integrated_2026-11-07.md` — the existing R4 requirements and final Designer appendix preserved with Branding section incorporated.
+- `Bloom_R4_Brand_Voice_And_Microcopy_Production_Completion_2026-11-07.md` — original voice guide, terminology rules, before/after examples and 204 keyed entries, including runtime-reserved fields.
+- `Bloom_R4_Brand_Copy_Table_2026-11-07.csv`, `bloomCopy.ts`, `bloomCopy.json` — **actual implementation materials**; import/reuse rather than manually retype or fabricate.
+  
+**B. Complete integrated Designer delivery (actual image/vector/CSS files):**
+- `Bloom_R4_Final_Integrated_Designer_Production_2026-11-07.zip` — authoritative final complete package containing finalized R4 master, 87 production SVGs, canonical CSS, Branding copy files, asset manifest and visual references.
+- `Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_2026-11-07.md` — final consolidated R4 master; **latest complete design master** takes precedence where earlier copies conflict.
+- `Bloom_R4_Designer_Final_Spec_Audit_2026-11-07.md` — final Designer integration/acceptance boundaries, asset/version mapping and source audit.
+- Historical source, to inspect where needed but **not duplicate-import**: `Bloom_R4_Consolidated_Full_Designer_Assets_2026-11-07.zip`, `Bloom_Master_Build_Spec_R4_Designer_All_Assets_Integrated_2026-11-07.md`, `Bloom_Production_Assets_Final_Batches_1_to_6_2026-11-07.zip`, `Bloom_Master_Build_Spec_R3_Designer_Final_Asset_Addendum_2026-11-07.md`.
+
+**C. Final decisions and implementation safeguards (explicit handoffs):**
+- `Bloom_UX_R4_Closure_Implementation_Contract_2026-11-07.md` — final Structural UX semantic and route decisions.
+- `Bloom_R4_Architect_Designer_Developer_Consolidated_Handoff_2026-11-07.zip` and `Bloom_Architect_R2_Premium_Production_Integrated_Execution_Handoff_2026-11-07.md` — archived integration decisions and handoff lineage.
+- `Bloom_R4_Designer_Final_Spec_Audit_2026-11-07.md` — final Designer-specific source precedence, deployment verification boundaries and styling/motion cautions.
+- This file and repository `NEXT_ACTIONS.md` record the **latest owner execution policy**: implement all seven screens without interim gates/images, then present one release candidate for owner review before `main`.
+
+**Mandatory execution rule:** Read the standalone Brand ZIP/voice/copy files **and** the integrated final Designer ZIP/master **and** UX/Architect decision files. The final ZIP's existence does not excuse skipping the separate original Brand voice/terminology document or direct TS/JSON/CSV code assets. If duplicate content conflicts, use the later final master for visual asset mappings, UX R4 for behavior and user/Architect newest directives for release sequence. Do not invent a competing design or copy. Document which original input files were actually retrieved in the implementation ledger. **No additional pre-implementation approval step** is created.
+
+---
+
 ## 1. Read and import these first (normative current source)
 1. **Integrated FINAL package:** `Bloom_R4_Final_Integrated_Designer_Production_2026-11-07.zip` — SHA256 `9076ecdedb071b20a48051de2b301c5ffd6d69b645152675ccd0fa10c08b6cc2`. Actual authored artwork/CSS/copy/spec files. Use originals, verify each manifest hash and preserve a copy under `design/visual-system/`.
 2. **FINAL master spec:** `Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_2026-11-07.md` (also **at ZIP root**), includes screen-by-screen structure, Branding/Designer/UX appended decisions and final asset mappings. Read complete document, including appended late authoritative sections; the first-page historic R3 “TO COMPLETE” statements are superseded when closed in later appendices.
