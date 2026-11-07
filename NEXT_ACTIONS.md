@@ -10,9 +10,9 @@ V0.6 paused at uncommitted recorded nutrient observations/disclosure: named Git 
 
 ## Current source state
 
-- Latest publishedb9409458813388d486f36aac17303382f6c07e0f: compatible shared paint + actual Explore200% wrap fix.48 viewport/theme states retain exact visible geometry/order/fonts; intended material text contrast8.59/6.04;8 focused/types/build/source+real Explore tests. LIVEdep-dbnnmc5g1s2s73fp0qf0; hosted CI42406156542 in_progress at check. Priorc61dd63 worker-contract CI42404425160 SUCCESS.
-- Current three-family cited organism-context increment ready to publish:12 focused/types/build + actual group/source/citation/profile flow and existing40-organism/five-width/lightdark/zoom/no-write regression pass. Exact species/family applicability and human/mouse/culture limits, no personal function or recommendations.
-- Full644/644 local source-storage checkpoint at1294fcc/merge601cd02 remains the integrated backend baseline. Today choicebcf0fc1, movement8978893, synthetic graph/solverae58bcb/private HTTPb9600b0, nutrient definitions31e9562/source snapshots1294fcc and worker contractc61dd63 published/tested. Do not reimplement or repeat unchanged full suites. Contracts/receipts under docs/operations/docs/verification.
+- UI first pass publishedd8c265ea930019daa8826413245803ed1eafb465, LIVEdep-dbno57ks728c739f11ng; hosted CI42408679883 in_progress at first check. Six-route48-state art-direction parity,17 focused/types/build/source checks. Original botanical asset bytes preserved; no anatomy asset branch merge.
+- Current source-first Biology/concise Athlete setup increment verified and ready for publication:29 focused/types/build, actual handler/UI draft/source/keyboard/save checks and controlled two-route screenshots. No full version/independent acceptance claim. See V05_UI_COMPOSITION_REFINEMENT receipt.
+- Last backend full milestone644/644 PASS at1294fcc/601cd02.7ed4ef6 cited organism contexts and prior Today/source/Python/description prototype delivered. Do not rebuild completed features or rerun unchanged full suite. Paused uncommitted v0.6 source projection remains in named stash as described above.
 
 ## Execute next
 

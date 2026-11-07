@@ -425,10 +425,10 @@ export default function PrecisionNutrition() {
             {tab==="overview"?"Understand your recorded data.":"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
           </p>
         </div>
-        <Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>
+        {(tab!=="overview"||!currentResult)&&<Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>}
         {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
       </div>
-      {tab==="overview"?<details className="biology-more-tools"><summary>Explore biology tools</summary>{tabNavigation}</details>:tabNavigation}
+      {tab!=="overview"&&tabNavigation}
       <div aria-live="polite">
         {status && (
           <p className="bloom-panel" role="status">
@@ -458,8 +458,13 @@ export default function PrecisionNutrition() {
             {tab === "overview" && (
               <>
                 <BiologyHome report={r} gutReports={r.gutReportInventory} onOpen={openSource}/>
-                <details ref={goalsDisclosure} className="workspace-disclosure biology-context" open={!context.safetyReviewed}>
+                <div className="space-y-2 mt-4">
+                  <Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>
+                  <details className="biology-more-tools"><summary>Explore biology tools</summary>{tabNavigation}</details>
+                </div>
+                <details ref={goalsDisclosure} className="workspace-disclosure biology-context">
                 <summary>Your goals & health context</summary>
+                {!context.safetyReviewed&&<p className="panel-note">Health context has not been reviewed. Personal guidance may be unavailable.</p>}
                 <ContextEditor
                   key={JSON.stringify(r.context)}
                   context={context}

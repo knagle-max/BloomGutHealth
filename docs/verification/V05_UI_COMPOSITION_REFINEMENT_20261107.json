@@ -1,0 +1,31 @@
+{
+  "scope": "Approved screen-composition implementation; safe read-only UI, not full overhaul/release completion",
+  "baseline": "d8c265ea930019daa8826413245803ed1eafb465",
+  "sourceHashes": {
+    "client/src/components/AthleteHome.tsx": "f6f3f291290d7eeb8112ce75feb323a6553d599ccd8d7c684157ca7ee54ecd6a",
+    "client/src/pages/PrecisionNutrition.tsx": "b8299ea1f3a3678543bee185e4609d1d87c9dad5cd71f8e55712e13d90100e41",
+    "scripts/qa/athlete-home-journey.mjs": "841f9db14d917784977f1c04f037ede5db5dcbdf21abed7c01a7ff9252156355",
+    "scripts/qa/biology-landing-journey.mjs": "e87b4b70f06d75aef2583751506d3637cb5fdf1e972f9f5c1e411490bf729b66",
+    "scripts/qa/biology-current-context-journey.mjs": "2dce07fe5623e6d51888a4b53c5f32504caf1945a38ab990aaf3e9f6eb007483",
+    "scripts/qa/visual-materials-parity.mjs": "15386164728c0766fb545a4d72e166d18dc84947a0c5af2bd45d153a222613b9"
+  },
+  "focusedTests": {
+    "passed": 29,
+    "elapsedMs": 4117.728145
+  },
+  "types": "PASS",
+  "build": "PASS",
+  "browserChecks": [
+    "actual Athlete handler/UI target conflict, minor, source withdrawal and numerical abstention; no writes",
+    "Athlete7 states/six widths/both themes, native setup keyboard/retained messages,320x500 primary source action and real one-session save",
+    "Biology actual precision HTTP/four destinations; qualitative-only saved report vs numeric absence; original source drilldown; keyboard; empty/pending/failure/report recovery link; both modes/reflow/zoom; no writes",
+    "Biology goal direct-edit/source pause/error/retry, original lab/measurement draft retention and source prefill; no writes",
+    "Two controlled screenshot runs:16 viewport/theme states each,200percent, no overflow; baseline overrides only the two components from exact SHA, same other code/fixtures/styles"
+  ],
+  "harnessRepairs": "Historical View bloodwork/Your genetic findings selectors updated to existing approved Bloodwork/Your genetics names; original source/ownership/failure assertions retained. One initial Athlete command lacked required after argument; corrected actual run passed.",
+  "fullSuite": "Not repeated locally for ordinary UI-only change. Full mandatory hosted CI remains.",
+  "physicalVoiceOver": "NOT_RUN",
+  "independentReview": "NOT_GRANTED",
+  "packet": "docs/review/ui-overhaul-20261107/composition/index.html",
+  "v06": "Paused stash untouched; nutrient observations still uncommitted/unpublished with200percent overflow unresolved"
+}

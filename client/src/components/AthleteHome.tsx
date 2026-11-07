@@ -48,7 +48,11 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
   <CompanionHero className="athlete-home-hero" headingId="athlete-home-action" icon="/brand/bloom-icon-athlete.svg" eyebrow="YOUR PLAN · YOUR NEXT STEP" title={title} reason={reason} actions={<><button type="button" className="hero-button" onClick={act}>{label}</button><button type="button" className="text-link" onClick={() => openSource('athlete-profile', 'input[name="sport"]')}>Adjust setup</button></>}>
    {dayChecking&&<p role="status" className="panel-note">Checking your current athlete day…</p>}
    {dayUnavailable && <div role="alert" className="athlete-home-context-error" data-blocker-reason="source_unavailable"><p>Current fueling targets could not be checked. Numerical guidance is unavailable.</p><Button variant="outline" disabled={retrying} onClick={onRetryDay}>Retry athlete day</Button></div>}
-   {day?.blocked && <p className="panel-note" data-blocker-reasons={blockers.join(" ")}>{blockers.map(reason=>athleteBlockerMessage[reason]).join(" ")} Recording sessions remains available.</p>}
+   {day?.blocked && <div className="athlete-fueling-review" data-blocker-reasons={blockers.join(" ")}>
+    <p className="panel-note">Personal fueling targets are unavailable. You can still record sessions.</p>
+    {blockers.filter(reason=>["health_context_requires_review","target_conflict","unsupported_context","data_stale","source_unavailable"].includes(reason)).map(reason=><p className="panel-note" key={reason}>{athleteBlockerMessage[reason]}</p>)}
+    {blockers.some(reason=>["profile_unreviewed","reference_mass_missing","targets_unconfirmed"].includes(reason))&&<details className="today-focus-evidence"><summary>Review fueling setup</summary><ul className="list-disc pl-5 space-y-2 py-2">{blockers.filter(reason=>["profile_unreviewed","reference_mass_missing","targets_unconfirmed"].includes(reason)).map(reason=><li key={reason}>{athleteBlockerMessage[reason]}</li>)}</ul></details>}
+   </div>}
    {day?.partial && <p className="panel-note">Some logged nutrients are missing. Review matches before using remaining-fuel suggestions.</p>}
    <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p></details>
   </CompanionHero>
