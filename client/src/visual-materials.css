@@ -1,0 +1,40 @@
+/* VIZ-L01/L03/L05 compatible paint only. Existing brand/type, DOM geometry,
+   navigation, CTA order, disclosures, chart semantics and theme choice win. */
+:root {
+  --bloom-gradient-ambient:radial-gradient(ellipse at 8% 0%,rgba(217,231,213,.50) 0%,rgba(217,231,213,0) 46%);
+  --bloom-gradient-warm:linear-gradient(135deg,#f5f3eb 0%,#edf3ec 100%);
+  --bloom-gradient-chart:linear-gradient(180deg,rgba(36,107,80,.24),rgba(36,107,80,0));
+  --bloom-gradient-athlete:linear-gradient(180deg,#182b45,#0f1b2e);
+  --bloom-gradient-athlete-chart:linear-gradient(180deg,rgba(129,190,255,.26),rgba(129,190,255,0));
+  --bloom-material-surface:rgba(255,254,250,.88);
+  --bloom-material-stroke:rgba(23,62,50,.11);
+  --bloom-material-shadow:0 10px 35px rgba(18,47,37,.07);
+}
+:root[data-experience=athlete] {
+  --bloom-gradient-ambient:radial-gradient(ellipse at 8% 0%,rgba(129,190,255,.17) 0%,rgba(129,190,255,0) 46%);
+  --bloom-material-stroke:rgba(24,43,69,.11);
+  --bloom-material-shadow:0 10px 35px rgba(15,27,46,.07);
+}
+:root.dark {
+  --bloom-gradient-ambient:radial-gradient(ellipse at 8% 0%,hsl(var(--primary)/.06) 0%,hsl(var(--primary)/0) 46%);
+  --bloom-material-surface:hsl(var(--card)/.94);
+  --bloom-material-stroke:hsl(var(--border)/.78);
+  --bloom-material-shadow:0 10px 35px rgba(0,0,0,.16);
+}
+:root.dark[data-experience=athlete] {
+  --bloom-gradient-ambient:radial-gradient(ellipse at 8% 0%,rgba(129,190,255,.07) 0%,rgba(129,190,255,0) 46%);
+}
+.app-shell .workspace-content main {
+  background-image:var(--bloom-gradient-ambient);
+  background-repeat:no-repeat;
+  background-size:100% 650px;
+}
+/* Low specificity preserves contextual/hero paint and intentional bg utilities. */
+.app-shell :where(.bloom-panel:not([class*="bg-"]),.flagship-nourishment) {
+  background-color:var(--bloom-material-surface);
+  border-color:var(--bloom-material-stroke);
+  border-radius:28px;
+  box-shadow:var(--bloom-material-shadow);
+}
+.app-shell :where(.bloom-panel,.flagship-nourishment) :where(.bloom-panel,.flagship-nourishment) {box-shadow:none;}
+/* Static materials introduce no animation, transition, blur or new asset load. */

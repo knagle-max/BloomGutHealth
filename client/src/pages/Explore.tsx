@@ -279,7 +279,7 @@ export default function Explore() {
           )}
           <div className="explore-reflow"><div className="explore-layout">
             <section className="bloom-panel explore-browser">
-              <h2>Find a science topic</h2><div className="flex flex-wrap gap-2" role="group" aria-label="Science subjects">{([["organism","Organisms"],["host-variant","Genes"],["molecular","Molecules & pathways"]]as const).map(([id,label])=><Button key={id} className="min-h-11" variant={category===id?"default":"outline"} aria-pressed={category===id} onClick={()=>browseSubject(id)}>{label}</Button>)}</div>
+              <h2>Find a science topic</h2><div className="flex flex-wrap gap-2" role="group" aria-label="Science subjects">{([["organism","Organisms"],["host-variant","Genes"],["molecular","Molecules & pathways"]]as const).map(([id,label])=><Button key={id} className="min-h-11 h-auto max-w-full whitespace-normal" variant={category===id?"default":"outline"} aria-pressed={category===id} onClick={()=>browseSubject(id)}>{label}</Button>)}</div>
               <label>
                 Search across science subjects
                 <input

@@ -9,3 +9,4 @@ import "./brand-tokens.css";
 import "./brand.css";
 
 import "./flagship-core.css";
+import "./visual-materials.css";
