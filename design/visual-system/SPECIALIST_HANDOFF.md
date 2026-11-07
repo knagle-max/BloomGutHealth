@@ -1,5 +1,6 @@
 # Bloom — Lead Visual & Graphic Design Specialist Handoff
-**Date:** 2026-11-07
+
+> **BOUNDARY UPDATE (2026-11-07):** The [Visual Lane Amendment](./VISUAL_LANE_AMENDMENT_01.md) overrides all UX/IA/flow/layout composition suggestions below. The UX Agent owns all structural decisions, including CTA location and progressive disclosure. Only paint-layer visual styling specifications here are actionable. Do not implement page layout proposals from VIZ-104/VIZ-108.\n\n**Date:** 2026-11-07
 **Specialist:** Lead Visual & Graphic Design
 **Repository:** knagle-max/BloomGutHealth
 **Target branch:** enhance/bloom-experience
