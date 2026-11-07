@@ -58,12 +58,12 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
           <div className="microbial-profile-disclosures">{sections.map(title => <details key={title} open={expanded === title}>
             <summary onClick={e => { e.preventDefault(); setExpanded(value => value === title ? null : title); }}>{title}</summary>
             {research&&title==="What research has found"?<>
-              <p>{research.source.finding}</p><p className="panel-note">Study setting: {research.source.design}. Strain details are not specified in Bloom’s source summary; compatibility with your reported organism has not been established.</p>
+              <p>{research.source.finding}</p><p className="panel-note">{research.scopeLabel}. Study setting: {research.source.design}. Strain details are not specified in Bloom’s source summary; compatibility with your reported organism has not been established.</p>
             </>:research&&title==="Nutrients & molecules"?<>
               <p>Studied substrate: {research.substrate}. A substrate is material that organisms can use.</p>
-              <p>This record does not measure starch breakdown, fermentation products or butyrate production in you. No producer–consumer interaction is inferred from the organisms listed together.</p>
+              <p>{research.measurementLimit} No producer–consumer interaction is inferred from the organisms listed together.</p>
             </>:research&&title==="Diet studies"?<>
-              <p>This source describes mechanistic experiments, not a personal food or serving recommendation. It does not establish that eating a particular food will increase this organism in you.</p>
+              <p>{research.dietLimit}</p>
             </>:research&&title==="Studies & limitations"?<>
               <p><a className="text-link" href={research.source.url} target="_blank" rel="noopener noreferrer">{research.source.title}</a></p>
               <p>{research.source.authors} · {research.source.year} · DOI: {research.source.doi}</p>

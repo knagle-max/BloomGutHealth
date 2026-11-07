@@ -9,7 +9,7 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.BL
 const page=await browser.newPage({viewport:{width:390,height:950}});page.setDefaultTimeout(12000);
 const errors=[],writes=[];let owner='research-owner';
 const samples=[{id:'research-a',testDate:'2026-11-06T12:00:00Z',processingStatus:'completed',testingCompany:'Synthetic research report',structuredData:{dataOrigin:'Synthetic fixture — not personal data'}},{id:'research-b',testDate:'2026-11-05T12:00:00Z',processingStatus:'completed',testingCompany:'Synthetic source without research'}];
-const result=id=>({sample:samples.find(s=>s.id===id),analyses:[],bacterial_composition:(id==='research-a'?['Ruminococcus bromii','Other source organism','Ruminococcus bromii strain X']:['Other source organism']).map((bacterialName,i)=>({id:id+'-'+i,bacterialName,abundance:i===0?0:null,taxonomyLevel:null}))});
+const result=id=>({sample:samples.find(s=>s.id===id),analyses:[],bacterial_composition:(id==='research-a'?['Ruminococcus bromii','Other source organism','Ruminococcus bromii strain X','Veillonella atypica','Odoribacteraceae']:['Other source organism']).map((bacterialName,i)=>({id:id+'-'+i,bacterialName,abundance:i===0?0:null,taxonomyLevel:null}))});
 page.on('pageerror',e=>errors.push(e.message));await page.route('https://fonts.**/**',r=>r.abort());
 await page.route('**/api/**',async route=>{
  const req=route.request(),p=new URL(req.url()).pathname;if(req.method()!=='GET')writes.push(p);
@@ -18,12 +18,12 @@ await page.route('**/api/**',async route=>{
 });
 try{
  await page.goto('http://127.0.0.1:5219/microbiome');await page.getByRole('button',{name:'Bacteria',exact:true}).click();
- assert.equal(await page.locator('.microbial-composition-row').count(),3);
+ assert.equal(await page.locator('.microbial-composition-row').count(),5);
  await page.getByText('Explore functions',{exact:true}).click();
  const group=page.getByRole('button',{name:'Resistant-starch research · 1 listed observation',exact:true});
  await group.focus();await page.keyboard.press('Enter');
  assert.equal(await group.getAttribute('aria-pressed'),'true');assert.equal(await page.locator('.microbial-composition-row').count(),1);
- await page.getByLabel('Find an organism',{exact:true}).fill('no match');await page.getByText('0 of 3 source observations shown',{exact:false}).waitFor();
+ await page.getByLabel('Find an organism',{exact:true}).fill('no match');await page.getByText('0 of 5 source observations shown',{exact:false}).waitFor();
  await page.getByRole('button',{name:'Clear search',exact:true}).click();
  const trigger=page.getByRole('button',{name:'Ruminococcus bromii, 0%',exact:false});await trigger.click();
  const sheet=page.getByRole('dialog');await sheet.getByText(/Researchers have studied this bacterium/).waitFor();
@@ -43,10 +43,20 @@ try{
  await page.waitForFunction(()=>document.activeElement?.getAttribute('aria-label')?.startsWith('Ruminococcus bromii, 0%'));
  assert.equal(await trigger.evaluate(el=>el===document.activeElement),true);
  await trigger.click();await page.goBack();await sheet.waitFor({state:'hidden'});
- await page.getByRole('button',{name:'See all organisms',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),3);
+ await page.getByRole('button',{name:'See all organisms',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),5);
+ for(const [groupName,organism,measurement,sourceHref]of[
+  ['Lactate research','Veillonella atypica','This record does not measure lactate consumption, propionate production or exercise performance effects in you.','https://pubmed.ncbi.nlm.nih.gov/31235964/'],
+  ['Bile-acid research','Odoribacteraceae','This record does not identify the studied isolates, their genes, or bile-acid production, consumption or host concentrations in you.','https://pubmed.ncbi.nlm.nih.gov/34325466/']]){
+  await page.getByRole('button',{name:groupName+' · 1 listed observation',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),1);
+  await page.getByRole('button',{name:organism+',',exact:false}).click();await sheet.getByText('Nutrients & molecules',{exact:true}).click();await sheet.getByText(measurement+' No producer–consumer interaction is inferred from the organisms listed together.',{exact:true}).waitFor();
+  if(organism==='Odoribacteraceae')await sheet.getByText(/family name in your report does not identify those isolates/).waitFor();
+  await sheet.getByText('Studies & limitations',{exact:true}).click();assert.equal(await sheet.locator('a').getAttribute('href'),sourceHref);
+  await page.keyboard.press('Escape');await sheet.waitFor({state:'hidden'});await page.waitForFunction(()=>!history.state?.bloomMicrobialProfile);
+  await page.getByRole('button',{name:'See all organisms',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),5);
+ }
  await page.getByLabel('Select report').selectOption('research-b');await page.getByText('1 of 1 source observations shown',{exact:false}).waitFor();
  assert.equal(await page.getByText('Explore functions',{exact:true}).count(),0);
- await page.getByLabel('Select report').selectOption('research-a');await page.getByText('3 of 3 source observations shown',{exact:false}).waitFor();
+ await page.getByLabel('Select report').selectOption('research-a');await page.getByText('5 of 5 source observations shown',{exact:false}).waitFor();
  await page.getByRole('button',{name:'Ruminococcus bromii strain X,',exact:false}).click();assert.equal(await sheet.getByText('Research explanation not available yet.',{exact:true}).count(),1);
  await page.keyboard.press('Escape');await sheet.waitFor({state:'hidden'});await page.waitForFunction(()=>!history.state?.bloomMicrobialProfile);
  await trigger.click();

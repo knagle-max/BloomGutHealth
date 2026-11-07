@@ -31,3 +31,14 @@ test("groups count actual listed observations, retaining unknowns, true zero, du
   assert.deepEqual(functionalResearchGroups(taxa.filter(t=>!groups[0].observationIds.includes(t.id))),[]);
   assert.deepEqual(functionalResearchGroups([]),[]);
 });
+test("three cited research families preserve exact-name resolution and family versus species applicability",()=>{
+ for(const [name,id,scope]of[["Ruminococcus bromii","resistant-starch-2012","Species-name study context"],["Veillonella atypica","athletes-2019","Species-name study context"],["Odoribacteraceae","centenarians-2021","Family-level background only"]]){
+  const taxon={bacterialName:name,reportedStatus:"Not detected",reportedAbundance:"Not quantified"},before=JSON.stringify(taxon),reference=functionalResearchFor(taxon)!;
+  assert.equal(reference.source.id,id);assert.equal(reference.scopeLabel,scope);assert.equal(JSON.stringify(taxon),before);
+  assert.equal(functionalResearchFor(taxon,evidenceSources.filter(s=>s.id!==id)),null);
+  assert.equal(functionalResearchFor(taxon,evidenceSources.map(s=>s.id===id?{...s,doi:"not-the-reviewed-reference"}:s)),null);
+ }
+ const lactate=functionalResearchFor({bacterialName:"Veillonella atypica"})!;assert.match(lactate.introduction,/mice/);assert.match(lactate.measurementLimit,/does not measure lactate consumption/);assert.match(lactate.dietLimit,/not establish a human food, probiotic/);
+ const bile=functionalResearchFor({bacterialName:"Odoribacteraceae"})!;assert.match(bile.introduction,/does not identify those isolates/);assert.match(bile.measurementLimit,/does not identify the studied isolates/);assert.match(bile.dietLimit,/More total secondary bile acids is not a goal/);
+ for(const bacterialName of["Veillonella","V. atypica","Veillonella atypica strain X","Odoribacter","Odoribacteraceae bacterium","Odoribacteraceae-like"]){assert.equal(functionalResearchFor({bacterialName}),null);}
+});

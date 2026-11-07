@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "baseCommit": "b9409458813388d486f36aac17303382f6c07e0f",
+  "scope": "Three existing-citation research contexts in existing Gut reports groups/profile, not personal activity or a completed molecular reconstruction",
+  "families": [
+    {
+      "name": "Ruminococcus bromii",
+      "sourceId": "resistant-starch-2012",
+      "scope": "species-name background"
+    },
+    {
+      "name": "Veillonella atypica",
+      "sourceId": "athletes-2019",
+      "scope": "species-name background; mouse versus human distinction"
+    },
+    {
+      "name": "Odoribacteraceae",
+      "sourceId": "centenarians-2021",
+      "scope": "family background only; does not identify studied isolates"
+    }
+  ],
+  "focusedTests": {
+    "pass": 12,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 3603.93414
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "sourceCrosswalk": "refreshed/check at publication",
+    "apiInventory": "unchanged",
+    "functionalBrowser": "PASS three groups, precise measurement/diet limits, citation, source/list zero/unknown/count/search, report switching/source withdrawal/Back/Escape/focus320390lightdark,no writes",
+    "profileRegression": "PASS20 numeric+20 canonical qualitative taxa,5 widths/lightdark,source precision/unknown/zero/strain/archaea/keyboard/source pause/zoom/illustration fallback,no writes"
+  },
+  "sourceHashes": {
+    "shared/functional-microbiome.ts": "dee4dc21fdc7c48c6a48b4814fac8d969ad51bb17f68194174bd8f1810cf846b",
+    "client/src/components/MicrobialProfile.tsx": "cecdf00b52980b63a1616426b4bb1028b94142f8c9f06432da72b6ec1370b441",
+    "tests/functional-microbiome.test.ts": "dba5b71b400d3129ed7af78bbb4d2f2b42a02afa11e3177eb5c7c748f74a3745",
+    "scripts/qa/functional-microbiome-journey.mjs": "83e8e79fbd2a1ceb43e6802084e25b97eec3ca60c0a983b46235813a8c51cbb6"
+  },
+  "previousPublication": {
+    "commit": "b9409458813388d486f36aac17303382f6c07e0f",
+    "deploy": "dep-dbnnmc5g1s2s73fp0qf0",
+    "status": "live",
+    "ciRun": 42406156542,
+    "ciStatus": "in_progress at check"
+  },
+  "notClaimed": [
+    "Personal strain/gene/pathway/production/consumption or concentration",
+    "Human dietary/performance/lifespan benefit or food/probiotic prescription",
+    "All family members share studied isolate capacity",
+    "Full B0/B1 model/independent biological validation",
+    "Physical/independent/release approval"
+  ]
+}
