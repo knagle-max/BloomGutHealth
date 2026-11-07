@@ -5,6 +5,8 @@ import {executeMeteredAI,aiExecutionContext,AIExecutionUnavailable,type AIExecut
 import { lookupProductNutrition, type ProductStore, type ProductService } from "./products";
 import {
   catalogueFoods,
+  catalogueHousehold,
+  reviewCatalogueHousehold,
   splitMealDescription,
   estimateCatalogueIngredient,
   lookupCatalogueNutrition,
@@ -30,11 +32,13 @@ import {
 } from "../shared/meal-intelligence";
 
 export function resolveLoggedIngredient(input: Ingredient): Ingredient {
+  input=reviewCatalogueHousehold(input);
+  if(input.household)return input;
   if(input.catalogue){
     if(input.product)throw Error("Choose either a catalogue food or a product label.");
     const food=catalogueFoods.find(f=>f.fdcId===input.catalogue!.fdcId);
     if(!food||input.grams===null||input.grams<=0||input.grams>3000)throw Error("Review the selected catalogue food and portion.");
-    return {...input,name:food.description.slice(0,120),preparation:food.description.slice(0,120),assumption:"User-selected USDA FNDDS record and gram portion; generic composition estimate."};
+    return {...input,household:catalogueHousehold(food),name:food.description.slice(0,120),preparation:food.description.slice(0,120),assumption:"User-selected USDA FNDDS record and gram portion; generic composition estimate."};
   }
   if (input.product) return input;
   if (lookupSnapshotNutrition([input]).foodMatches.length) return input;
@@ -106,7 +110,7 @@ export function lookupLocalNutrition(ingredients: Ingredient[], roundAmounts = t
 }
 export const parseSchema = z.object({
   ingredients: z
-    .array(ingredientFieldsSchema.omit({ product: true, catalogue: true,massEntry:true }))
+    .array(ingredientFieldsSchema.omit({ product: true, catalogue: true,massEntry:true,household:true }))
     .min(1)
     .max(MAX_MEAL_INGREDIENTS),
   clarificationQuestions: z.array(z.string().max(300)).max(8),
@@ -281,7 +285,7 @@ export async function analyzeMeal(
   const parsed = reviewedIngredients
     ? {
         ingredients: reviewedIngredients.map((i) =>
-          i.grams === null && !i.catalogue ? i : resolveLoggedIngredient(i),
+          i.grams === null && !i.catalogue && !i.household ? i : resolveLoggedIngredient(i),
         ),
         clarificationQuestions: [] as string[],
         parser: "rules" as const,

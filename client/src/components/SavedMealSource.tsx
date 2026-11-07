@@ -10,7 +10,7 @@ export default function SavedMealSource({id,servings,onLoad}:{id:string;servings
   const record=current?source.data?.find(record=>record.id===id&&record.kind==='meal-template'):undefined;
   const parsed=templateSchema.safeParse(record?.payload);
   const amountValid=Number.isFinite(servings)&&servings>=.1&&servings<=10;
-  const scaled=parsed.success&&amountValid?ingredientSchema.array().min(1).max(20).safeParse(parsed.data.ingredients.map(ingredient=>({...ingredient,grams:ingredient.grams===null?null:ingredient.grams*servings,...(ingredient.product?{product:{...ingredient.product,servings:ingredient.product.servings*servings}}:{})}))):undefined;
+  const scaled=parsed.success&&amountValid?ingredientSchema.array().min(1).max(20).safeParse(parsed.data.ingredients.map(ingredient=>({...ingredient,...(ingredient.household?{household:{...ingredient.household,quantity:ingredient.household.quantity===null?null:ingredient.household.quantity*servings}}:{}),grams:ingredient.grams===null?null:ingredient.grams*servings,...(ingredient.product?{product:{...ingredient.product,servings:ingredient.product.servings*servings}}:{})}))):undefined;
   return <section className="bloom-panel space-y-3" aria-labelledby="saved-source-title">
     <h2 id="saved-source-title">Review a saved meal</h2>
     {source.isError?<p role="alert">Saved meals could not load. <Button type="button" variant="outline" onClick={()=>source.refetch()}>Retry saved meal</Button></p>:!current?<p role="status">Checking your saved meal…</p>:!parsed.success?<p role="alert">This saved meal is no longer available in your account. Choose another saved meal or log something new.</p>:<>

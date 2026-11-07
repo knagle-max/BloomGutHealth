@@ -74,14 +74,14 @@ export default function MealAnalysis({
       <details open>
         <summary>Review foods & estimated portions</summary>
         <PortionGuidance>{preview&&<summary>Portion guidance & limits</summary>}<p className="panel-note">
-          Portion corrections use source grams; saved label servings retain their printed basis.
+          Choose a household portion when available, or enter grams. Portion sizes are source estimates; saved label servings retain their printed basis.
           Working estimates, not measured intake. Check the amount you ate, meat
           cut, dressing and cooking fat. Unknown brand, salt and marinade can
           change nutrients substantially.
         </p></PortionGuidance>
         {ingredients.map((item, index) => (
           <FoodRow className={`border-t py-3 space-y-2${preview?' review-food-row':''}`} key={rows[index].key} data-draft-row={rows[index].key} role="group" aria-label={`Ingredient ${index+1}`} open={preview?expandedRows.has(rows[index].key):undefined} onToggle={event=>{if(!preview||event.target!==event.currentTarget)return;const open=(event.currentTarget as HTMLDetailsElement).open,key=rows[index].key;setExpandedRows(previous=>{if(previous.has(key)===open)return previous;const next=new Set(previous);if(open)next.add(key);else next.delete(key);return next;});}}>
-            {preview&&<summary className="review-food-heading"><span className="review-food-identity"><strong>{item.name||'New ingredient'}</strong><small>{item.product?`${item.product.servings} labelled servings${item.grams===null?'':` · ${foodMass(item.grams,units.foodWeight)}`}`:item.grams===null?'Amount unknown':foodMass(item.grams,units.foodWeight)}</small></span><span className="review-food-status">{hasEdits?'Draft':missing.some(m=>m.name===item.name)?'Needs review':item.product?.source==='manual'?'Your label':item.product||item.catalogue?'Selected source':'Estimated match'}</span><span className="review-food-edit">Change</span></summary>}
+            {preview&&<summary className="review-food-heading"><span className="review-food-identity"><strong>{item.name||'New ingredient'}</strong><small>{item.product?`${item.product.servings} labelled servings${item.grams===null?'':` · ${foodMass(item.grams,units.foodWeight)}`}`:item.household?.selected?`${item.household.quantity??"?"} × ${item.household.selected.replace(/^1 /,"")}`:item.grams===null?'Amount unknown':foodMass(item.grams,units.foodWeight)}</small></span><span className="review-food-status">{hasEdits?'Draft':missing.some(m=>m.name===item.name)?'Needs review':item.product?.source==='manual'?'Your label':item.product||item.catalogue?'Selected source':'Estimated match'}</span><span className="review-food-edit">Change</span></summary>}
             <IngredientMassEntry source={item.massEntry}/>
             {onRecalculate ? (
               <>
@@ -100,6 +100,7 @@ export default function MealAnalysis({
                             ? {
                                 ...v,
                                 name: e.target.value,
+                                household:undefined,
                                 assumption:
                                   "User-edited food; review database match",
                               }
@@ -131,7 +132,25 @@ export default function MealAnalysis({
                     />
                   </label>
                 ) : (
-                  <label className="block review-food-amount">
+                  <div className={`review-food-amount space-y-2${item.household?.measures.length?" review-food-household":""}`}>
+                    {!!item.household?.measures.length&&<>
+                      <label className="block">Portion unit
+                        <select className="bloom-input w-full" aria-label={`Portion unit ${index+1}`} value={item.household.selected??"grams"} onChange={e=>{
+                          const measure=item.household!.measures.find(m=>m.label===e.target.value);
+                          const quantity=item.household!.quantity??1;
+                          setEdits(ingredients.map((v,i)=>i===index?{...v,massEntry:undefined,grams:measure?Math.round(measure.grams*quantity*100)/100:v.grams,household:{...v.household!,selected:measure?.label??null,quantity:measure?quantity:null},assumption:measure?`Estimated household portion: ${quantity} × ${measure.label} (${measure.grams} g each); source size may differ from your food.`:v.assumption}:v));
+                        }}><option value="grams">Grams</option>{item.household.measures.map(m=><option key={m.label} value={m.label}>{m.label}</option>)}</select>
+                      </label>
+                      {item.household.selected&&<>
+                        <label className="block">Amount eaten<input className="bloom-input w-full" type="number" min="0.01" step="any" aria-label={`Portion quantity ${index+1}`} value={item.household.quantity??""} onChange={e=>{
+                          const quantity=Number(e.target.value),measure=item.household!.measures.find(m=>m.label===item.household!.selected)!;
+                          setEdits(ingredients.map((v,i)=>i===index?{...v,massEntry:undefined,grams:quantity>0?Math.round(quantity*measure.grams*100)/100:null,household:{...v.household!,quantity:quantity>0?quantity:null},assumption:`Estimated household portion: ${e.target.value||"unknown"} × ${measure.label} (${measure.grams} g each); source size may differ from your food.`}:v));
+                        }}/></label>
+                        {item.household.quantity===null&&<p role="alert">Enter a positive number of portions.</p>}
+                        <p className="panel-note">{item.household.measures.find(m=>m.label===item.household!.selected)?.grams} g per source portion · estimated total {item.grams===null?"unknown":foodMass(item.grams,units.foodWeight)}. Choose the size closest to yours.</p>
+                      </>}
+                    </>}
+                  <label className={item.household?.selected?"hidden":"block"}>
                     Amount (g)
                     <input
                       className="bloom-input w-full"
@@ -160,6 +179,7 @@ export default function MealAnalysis({
                       }
                     />
                   </label>
+                  </div>
                 )}
                 <details className="review-food-change"
                   open={
@@ -219,6 +239,7 @@ export default function MealAnalysis({
               ingredients.some(
                 (i) =>
                   !i.name.trim() ||
+                  !!i.household?.selected&&(i.household.quantity===null||i.grams===null) ||
                   !!i.product&&(!Number.isFinite(i.product.servings)||i.product.servings<=0||i.product.servings>100) ||
                   (i.grams !== null && (!(i.grams > 0) || i.grams > 3000)),
               )

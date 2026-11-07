@@ -69,6 +69,12 @@ export const ingredientFieldsSchema = z.object({
   preparation: z.string().max(120),
   assumption: z.string().max(300),
   massEntry:ingredientMassEntrySchema.optional(),
+  household: z.object({
+    fdcId:z.number().int().positive(),
+    measures:z.array(z.object({label:z.string().min(1).max(160),grams:z.number().positive().max(3000)}).strict()).max(100),
+    selected:z.string().max(160).nullable(),
+    quantity:z.number().positive().max(3000).nullable(),
+  }).strict().optional(),
   product: productRefSchema.optional(),
   catalogue: z.object({source:z.literal("usda-fndds"),fdcId:z.number().int().positive().max(Number.MAX_SAFE_INTEGER)}).strict().optional(),
 });

@@ -158,6 +158,31 @@ export function findFoodCandidates(query: string, limit = 4) {
     .slice(0, limit)
     .map((r) => r.food);
 }
+function householdLabel(food:CatalogueFood,label:string){
+  if(label==="Quantity not specified")return "1 estimated serving (source default)";
+  return /^Pizza\b/i.test(food.description)?label.replace(/^1 piece\b/,"1 slice (piece)"):label;
+}
+/** Portion choices come from the matched source record, never a universal serving weight. */
+export function catalogueHousehold(food: CatalogueFood, selected: string|null = null, quantity: number|null = null): Ingredient["household"] {
+  return {fdcId:food.fdcId,measures:food.portions.filter(([label,grams])=>grams>0&&grams<=3000&&householdLabel(food,label).length<=160).slice(0,100).map(([label,grams])=>({label:householdLabel(food,label),grams})),selected,quantity};
+}
+export function reviewCatalogueHousehold(input: Ingredient): Ingredient {
+  const source=input.household;
+  if(!source)return input;
+  const food=catalogueFoods.find(f=>f.fdcId===source.fdcId&&(input.catalogue?input.catalogue.fdcId===f.fdcId:input.name===f.description.slice(0,120)));
+  if(!food||input.product)throw Error("Review the food source before choosing a portion.");
+  const household=catalogueHousehold(food)!;
+  if(source.selected!==null){
+    const measure=household.measures.find(m=>m.label===source.selected);
+    const grams=measure&&source.quantity!==null?Math.round(measure.grams*source.quantity*100)/100:null;
+    if(grams===null||grams<=0||grams>3000)throw Error("Review the selected household portion and amount.");
+    // Existing clients may correct canonical mass while retaining old metadata.
+    // Keep that explicit mass, but retract the now-incompatible household claim.
+    if(input.grams===null||Math.abs(grams-input.grams)>0.000001)return {...input,household,assumption:"User-edited mass; previous household portion no longer applies."};
+    household.selected=source.selected;household.quantity=source.quantity;
+  }
+  return {...input,household};
+}
 export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
   if (input.grams === null && /User-specified mass/.test(input.assumption))
     return input;
@@ -172,6 +197,7 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
   if (!food) return input;
   let grams = input.grams;
   let reason = input.assumption;
+  let selected: string|null=null, quantity: number|null=null;
   if (grams === null) {
     const mass = input.name.match(
       /(?:^|\s)(\d+(?:\.\d+)?)\s*(kg|g|grams?|oz|ounces?)\b/i,
@@ -189,7 +215,7 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
       const count = Number(input.name.match(/^\s*(\d+(?:\.\d+)?)/)?.[1] || 1);
       const unit = input.name
         .match(
-          /\b(cups?|tablespoons?|tbsp|teaspoons?|tsp|slices?|patt(?:y|ies)|eggs?|pieces?)\b/i,
+          /\b(cups?|tablespoons?|tbsp|teaspoons?|tsp|servings?|slices?|patt(?:y|ies)|eggs?|pieces?)\b/i,
         )?.[1]
         ?.toLowerCase();
       const normalizedUnit = unit
@@ -198,19 +224,22 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
         .replace(/ies$/, "y")
         .replace(/s$/, "");
       const unitPattern = normalizedUnit
-        ? new RegExp(`\\b${normalizedUnit}\\b`, "i")
+        ? new RegExp(`\\b${normalizedUnit === "slice" && /^Pizza\b/i.test(food.description) ? "(?:slice|piece)" : normalizedUnit}\\b`, "i")
         : null;
       const matching = unitPattern
         ? food.portions.filter(
             (p) => /^1 /i.test(p[0]) && unitPattern.test(p[0]),
           )
         : [];
-      let portion =
+      const requestedSize=input.name.match(/\b(extra-large|large|medium|small)\b/i)?.[1];
+      let portion: [string,number]|undefined =
+        (requestedSize?matching.find(p=>new RegExp(`(?:^|[ ,])${requestedSize}\\b`,"i").test(p[0])):undefined) ||
         matching.find((p) => /^1 (?:medium|regular)/i.test(p[0])) ||
         matching.find((p) =>
           new RegExp(`^1 ${normalizedUnit}\\b`, "i").test(p[0]),
         ) ||
         matching[0];
+      if(normalizedUnit==="serving"&&!portion)portion=food.portions.find(p=>p[0]==="Quantity not specified");
       if (normalizedUnit && !portion)
         return {
           ...input,
@@ -225,6 +254,8 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
         food.portions[0];
       if (!portion) return input;
       grams = portion[1] * count;
+      selected=catalogueHousehold(food)!.measures.find(m=>m.grams===portion![1]&&m.label===householdLabel(food,portion![0]))?.label??null;
+      quantity=selected?count:null;
       reason = `Estimated portion: ${count} × ${portion[0]} (${portion[1]} g each), ${Math.round(grams * 100) / 100} g total; adjust to amount eaten`;
     }
   }
@@ -237,6 +268,7 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
     };
   return {
     name: food.description.slice(0, 120),
+    household:catalogueHousehold(food,selected,quantity),
     grams: Math.round(grams! * 100) / 100,
     preparation: food.description.slice(0, 120),
     assumption: reason.includes("Generic USDA match; brand, fat content and preparation may differ.")
