@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "hosted": false,
+  "independentAcceptance": false,
+  "baselineRef": "6bcbf5b",
+  "candidateBase": "6bcbf5b377b3abaca511d655f2efbca21f086e06",
+  "candidateRuntimeChangesUncommittedAtCapture": true,
+  "runtimeHashes": {
+    "client/src/pages/Profile.tsx": "5b9771c4a199027bc885e36cff15c137536f74ae03896d82e789d82996f79b98",
+    "client/src/pages/PrecisionNutrition.tsx": "992e37acb0f3956c4be73db3cafb9b502c38b6f6b3914b97031f358242338c0e",
+    "client/src/components/BloodworkSourceOverview.tsx": "837679800dcd738e8ad6f5bbe2e064203f50724325e284484f0408596e6be1e9",
+    "client/src/components/LabSourceHistory.tsx": "9415792e529eb57d338e8d65bbd0864b7ee877d30a2a57e45ff058dfcfafc06e",
+    "client/src/components/FoodProgress.tsx": "ff8eb148c2338e33889ba6e7dfdd0fb68d352ebd08b22423b384da3028f60848",
+    "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
+    "client/src/brand.css": "75f3c2895a6894682720ab3f9a316c759f051bddd6038eb8075f42ccfd395b2d",
+    "client/src/brand-tokens.css": "5afe0a1501f19a85ad932c9f83245675ed4a4c16e0d89216943f2bb600da9a64",
+    "scripts/brand-tokens.py": "c3cd9d74fbb5361892fa8bfe1d7cf7220766e9a4395ce403bfbccde388f3b556"
+  }
+}

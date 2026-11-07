@@ -1,0 +1,11 @@
+/* Design reference only; adapt existing Bloom tokens and selectors, do not drop-in globally. */
+:root { --ux-space-1:4px;--ux-space-2:8px;--ux-space-3:12px;--ux-space-4:16px;--ux-space-6:24px;--ux-space-8:32px; }
+.ux-page-reference { padding-inline:clamp(16px, 3vw, 32px); min-width:0; }
+.ux-card-reference { padding:clamp(16px,2vw,24px); border-radius:16px; min-width:0; }
+.ux-grid-reference { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr)); }
+.ux-card-reference :where(h2,h3,p,button,a) { overflow-wrap:break-word; min-width:0; }
+.ux-body-reference{font-size:16px;line-height:1.5}.ux-secondary-reference{font-size:14px;line-height:1.5}
+.ux-tabs-reference{display:flex;gap:8px;overflow-x:auto;overscroll-behavior-inline:contain}
+.ux-tabs-reference > button{flex:0 0 auto;min-height:44px;padding:9px 14px}
+.ux-table-scroll-reference{overflow-x:auto;max-width:100%;scrollbar-gutter:stable}
+@media(max-width:600px){.ux-page-reference{padding-inline:16px}.ux-grid-reference{grid-template-columns:minmax(0,1fr)}}

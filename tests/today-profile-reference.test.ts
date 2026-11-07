@@ -1,0 +1,14 @@
+import test from 'node:test';import assert from 'node:assert/strict';import express from 'express';
+import {registerPrecisionRoutes} from '../server/precision-routes';import {contextSchema} from '../shared/precision-nutrition';import {defaultPreferences} from '../shared/meal-intelligence';
+const adult={age:30,sex:'male',heightCm:175,weightKg:75,activityLevel:'moderate',dietaryPreferences:defaultPreferences};
+test('daily automatic targets require the same complete actual adult inputs as journal references; invalid values never inherit guessed demographics',async()=>{
+ let user:any={...adult},records:any[]=[];const context=contextSchema.parse({ageGroup:'adult',pregnancy:'no',safetyReviewed:true});
+ const app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:'synthetic-owner'} as any;next();});registerPrecisionRoutes(app,(_req,_res,next)=>next(),{getUser:async()=>user,getPrecisionContext:async()=>context,getPrecisionRecords:async()=>records,getMeals:async()=>[],getUserSamples:async()=>[],getMetabolites:async()=>[]} as any);const server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server.once('listening',r));const url=`http://127.0.0.1:${(server.address() as any).port}/api/precision/today-plan`;
+ const post=async(plan?:unknown)=>{const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({date:'2026-10-25',timezoneOffset:0,hour:12,...(plan?{plan}:{})})});assert.equal(r.status,200);return await r.json();};
+ try{
+ const valid=await post();assert.equal(valid.request.targets.calories,2633);assert.equal(valid.request.targets.protein,120);assert.match(valid.targetSource,/Estimated from your profile/);
+ for(const change of [{sex:'unknown'},{activityLevel:'guess'},{weightKg:-1},{heightCm:0},{age:17},{age:'30'},{age:120,heightCm:1,weightKg:1}]){user={...adult,...change};const before=structuredClone(user),r=await post();assert.equal(r.targetSource,'Example targets — review and confirm to personalize',JSON.stringify(change));assert.equal(r.request.targets.calories,2200);assert.equal(r.request.targets.protein,100);assert.equal(r.status,'needs-context');assert.deepEqual(r.meals,[]);assert.deepEqual(user,before);}
+ user={...adult,sex:'unknown'};const explicit={...valid.request,targets:{...valid.request.targets,calories:2100},nutrientTargets:{sugar_g:{min:0,max:0}}};const confirmed=await post(explicit);assert.deepEqual(confirmed.request,explicit);assert.equal(confirmed.targetSource,'Targets confirmed in this form');
+ records=[{id:'saved-source',kind:'plan',createdAt:'2026-10-24',payload:{type:'weekly-plan',request:explicit}}];const saved=await post();assert.deepEqual(saved.request,explicit);assert.equal(saved.targetSource,'Latest saved weekly-plan targets');assert.equal(context.ageGroup,'adult');
+ }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));}
+});

@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "sourceCommit": "50f094540084a40c6b09290036d223aec3e5e39d",
+  "scope": "Integrated engineering checkpoint after source-plan integrity, household meal portions and cited functional organism discovery. Not full207-criterion or independent release acceptance.",
+  "unitIntegration": {
+    "command": "npm test",
+    "tests": 620,
+    "pass": 620,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 248767.598879
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "capabilitySourceCrosswalk": "PASS:52 IDs/220 mapped source files",
+    "staticApiInventory": "PASS:114 declarations/13 unresolved source declarations"
+  },
+  "journeys": [
+    "scripts/qa/meal-household-portions-journey.mjs",
+    "scripts/qa/meal-review-rows-journey.mjs",
+    "scripts/qa/functional-microbiome-journey.mjs",
+    "scripts/qa/microbial-profile-journey.mjs"
+  ],
+  "environment": "Local Chromium/Vite + synthetic isolated PostgreSQL/PGlite where applicable; no production writes or raw private report data",
+  "previewAtCheck": {
+    "commit": "50f094540084a40c6b09290036d223aec3e5e39d",
+    "deployId": "dep-dbna9kss728c7391id40",
+    "status": "build_in_progress"
+  },
+  "ciAtCheck": {
+    "runId": 42337303169,
+    "status": "pending"
+  },
+  "remaining": [
+    "Actual full v0.5 criterion reconciliation remains open; old Remaining labels are not proof of defects.",
+    "Independent Design/UT/Science/Security/Legal and physical devices not inferred.",
+    "Broader genuine on-device AI remains approved v0.6 work, not completed by deterministic portion parsing."
+  ]
+}

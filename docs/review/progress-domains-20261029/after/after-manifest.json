@@ -1,0 +1,29 @@
+{
+  "sourceSha": "56675b93131010e121480fc40a7cc05698ef3075",
+  "dirty": false,
+  "stage": "after",
+  "widths": [
+    320,
+    375,
+    390,
+    430,
+    1280
+  ],
+  "height": 1000,
+  "themes": [
+    "light",
+    "390-dark"
+  ],
+  "keyboardTabs": true,
+  "athleteStatuses": [
+    "planned",
+    "completed",
+    "cancelled"
+  ],
+  "locale": "en-CA",
+  "timezone": "America/Regina",
+  "clock": "2026-10-23T18:00:00Z",
+  "synthetic": true,
+  "fonts": "blocked",
+  "independentAcceptance": false
+}

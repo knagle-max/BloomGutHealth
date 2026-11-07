@@ -1,0 +1,7 @@
+import test from'node:test';import assert from'node:assert/strict';import{productResponseSchema,productSearchResponseSchema,readProductResponse}from'../shared/products';import{localProduct}from'../server/products';
+test('product response boundaries retain source identity, zero and unknown while rejecting malformed nutrition and unsafe source links',()=>{
+ const source=localProduct('2709739');const label={...source,perServing:{calories:0,protein_g:0}};const parsed=readProductResponse(productResponseSchema,label);assert.equal(parsed.id,source.id);assert.deepEqual(parsed.perServing,{calories:0,protein_g:0});assert.equal(parsed.perServing.fat_total_g,undefined);assert.deepEqual(readProductResponse(productResponseSchema,{...label,perServing:{}}).perServing,{});
+ for(const invalid of [null,[],{}, {...label,perServing:{calories:'20'}},{...label,perServing:{calories:null}},{...label,perServing:{calories:-1}},{...label,perServing:{calories:Infinity}},{...label,notes:null},{...label,source:'invented'},{...label,servingGrams:0},{...label,url:'javascript:alert(1)'}])assert.throws(()=>readProductResponse(productResponseSchema,invalid),/source response could not be verified/);
+ for(const invalid of [[],{}, {products:[]},{products:[null],warnings:[],attribution:''}])assert.throws(()=>readProductResponse(productSearchResponseSchema,invalid),/source response could not be verified/);
+ assert.deepEqual(readProductResponse(productSearchResponseSchema,{products:[],warnings:['Unavailable'],attribution:'Public source'}).products,[]);
+});

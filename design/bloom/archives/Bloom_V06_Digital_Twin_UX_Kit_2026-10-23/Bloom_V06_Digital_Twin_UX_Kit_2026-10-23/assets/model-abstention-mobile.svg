@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="410" height="648" viewBox="0 0 410 648" role="img" aria-label="Forecast unavailable design wireframe">
+<rect width="410" height="648" fill="#F6F9F7"/>
+<rect x="16" y="16" width="378" height="70" rx="16" fill="white" stroke="#D8E4DB"/>
+<text x="32" y="58" font-family="Arial" font-size="25" font-weight="bold" fill="#246B50">Bloom / Personal progress</text>
+<text x="22" y="117" font-family="Arial" font-size="23" font-weight="bold" fill="#172E26">Forecast unavailable</text>
+<text x="22" y="140" font-family="Arial" font-size="13" fill="#50665A">General guidance is still available.</text>
+<rect x="16" y="160" width="378" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="190" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">Insufficient comparable data</text>
+<text x="30" y="217" font-family="Arial" font-size="14" fill="#50665A">No reliable individual forecast is shown</text>
+<text x="30" y="261" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">Continue with basic plan →</text>
+<rect x="16" y="302" width="378" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="332" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">Information considered</text>
+<text x="30" y="359" font-family="Arial" font-size="14" fill="#50665A">Your stated goals and available records</text>
+<text x="30" y="403" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">Review inputs →</text>
+<rect x="16" y="444" width="378" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="474" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">What could help next?</text>
+<text x="30" y="501" font-family="Arial" font-size="14" fill="#50665A">Relevant repeated measurements, if useful</text>
+<text x="30" y="545" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">View measurement plan →</text>
+<text x="21" y="629" font-family="Arial" font-size="11" fill="#63776D">Synthetic layout — not a personal prediction or app screenshot</text></svg>

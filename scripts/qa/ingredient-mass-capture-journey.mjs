@@ -1,0 +1,48 @@
+import {mkdtemp} from "node:fs/promises";
+import assert from 'node:assert/strict';
+import express from 'express';
+import {createRequire} from 'node:module';
+import {createServer,preview} from 'vite';
+import {PGlite} from '@electric-sql/pglite';
+import {drizzle} from 'drizzle-orm/pglite';
+import {eq} from 'drizzle-orm';
+import {meals} from '../../shared/schema.ts';
+import {getOwnedMeal,updateOwnedMeal} from '../../server/meal-records.ts';
+import {insertMealWithReceipt} from '../../server/meal-save.ts';
+import {registerPlannerRoutes} from '../../server/planner-routes.ts';
+import {registerBiologyRoutes} from '../../server/biology-routes.ts';
+import {buildBiologicalRegistry,validateRegistry} from '../../shared/biological-model.ts';
+import {buildPrecisionReport,contextSchema} from '../../shared/precision-nutrition.ts';
+import {defaultPreferences} from '../../shared/meal-intelligence.ts';
+import {mealNutritionSummary} from '../../shared/nutrition-summary.ts';
+import {openIngredientRow} from './lib/meal-flow.mjs';
+let actor='source-a',foodUnit='oz';const writes=[],errors=[];
+const pg=new PGlite();await pg.exec('CREATE TABLE meals(id varchar PRIMARY KEY DEFAULT gen_random_uuid(),user_id varchar NOT NULL,meal_text text NOT NULL,meal_type text,logged_at timestamp NOT NULL DEFAULT now(),nutritional_data jsonb,meal_context jsonb,intelligence jsonb,total_calories real,total_protein real,total_carbs real,total_fat real)');const database=drizzle(pg),registry=validateRegistry(buildBiologicalRegistry()),report=buildPrecisionReport([],contextSchema.parse({}),defaultPreferences,null);
+const store={getUser:async id=>({id,dietaryPreferences:defaultPreferences}),getBiologicalRegistry:async()=>registry,getMeal:(id,user)=>getOwnedMeal(database,id,user),getMeals:user=>database.select().from(meals).where(eq(meals.userId,user)),getExperienceRecords:async()=>[],getNutritionProducts:async()=>[],insertMeal:(row,receipt)=>insertMealWithReceipt(database,row,receipt),updateMeal:(id,updates,user)=>updateOwnedMeal(database,id,updates,user)};
+const app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:actor};next();});registerBiologyRoutes(app,(_req,_res,next)=>next(),store,{reportFor:async()=>report});registerPlannerRoutes(app,(_req,_res,next)=>next(),store);app.get('/api/meals',async(req,res)=>res.json(await store.getMeals(req.session.userId)));
+const api=app.listen(0,'127.0.0.1');await new Promise(resolve=>api.once('listening',resolve));const apiBase=`http://127.0.0.1:${api.address().port}`;
+const production=process.env.BLOOM_QA_PRODUCTION==='1';const vite=production?await preview({preview:{host:'127.0.0.1',port:5271,strictPort:true}}):await createServer({cacheDir:await mkdtemp('/tmp/bloom-mass-handoff-vite-'),server:{host:'127.0.0.1',port:5271,strictPort:true}});if(!production)await vite.listen();const{chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:1000}});page.setDefaultTimeout(12000);page.on('pageerror',error=>errors.push(error.stack||error.message));await page.route('https://fonts.**/**',route=>route.abort());
+await page.route('**/api/**',async route=>{const req=route.request(),url=new URL(req.url()),p=url.pathname;let json=[];
+ if(req.method()!=='GET')writes.push({path:p,body:req.postDataJSON()});
+ if(p.startsWith('/api/biology')||p.startsWith('/api/meals')){const response=await fetch(apiBase+p+url.search,{method:req.method(),headers:{'content-type':'application/json',...(req.headers()['if-match']?{'If-Match':req.headers()['if-match']}:{}),...(req.headers()['idempotency-key']?{'Idempotency-Key':req.headers()['idempotency-key']}: {})},...(req.postData()?{body:req.postData()}: {})});return route.fulfill({status:response.status,body:await response.text(),contentType:'application/json',headers:{...(response.headers.get('x-bloom-meal-review')?{'X-Bloom-Meal-Review':response.headers.get('x-bloom-meal-review')}: {})}});}
+ if(p==='/api/auth/me')json={user:{id:actor,username:'Synthetic source owner'}};
+ else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'},displayUnits:{foodWeight:foodUnit}};
+ else if(p==='/api/analysis/status')json={ai:{features:{ingredientParsing:false,recipeRanking:false}},nutrition:{liveLookupConfigured:false}};
+ else if(p.startsWith('/api/nutrition/daily')){const rows=await store.getMeals(actor);json={meals:rows,totals:mealNutritionSummary(rows).totals};}
+ else if(p==='/api/precision')json=report;
+ else if(p.startsWith('/api/nutrition/targets'))json={};
+ else if(p==='/api/preferences')json=defaultPreferences;
+ await route.fulfill({json});});
+const base='http://127.0.0.1:5271',go=async path=>{await page.goto(base+path);await page.getByRole('main').waitFor();};
+try{
+ await go('/explore');const section=page.getByRole('heading',{name:'Understand a portion',exact:true}).locator('..');await section.getByLabel('Find a food',{exact:true}).fill('oats');await section.getByRole('button',{name:'Search foods',exact:true}).click();await section.locator('.explore-node-list button').first().click();await section.getByLabel('Amount eaten (oz)',{exact:true}).fill('4.000');const log=section.getByRole('link',{name:'Review & log this food',exact:true});await log.waitFor();await page.waitForFunction(()=>document.querySelector('a[href*="grams=113.3980925"]'));
+ const target=new URL(await log.getAttribute('href'),base);assert.deepEqual(Array.from(target.searchParams.keys()).sort(),['fdcId','grams']);await log.click();const handoff=await page.evaluate(()=>history.state);assert.equal(handoff.massEntry.value,'4.000');assert.equal(handoff.owner,'source-a');
+ await page.getByRole('button',{name:'Review meal',exact:true}).click();await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();let row=await openIngredientRow(page,1);await row.getByText('Portion entry source',{exact:true}).click();await row.getByText('Entered 4.000 oz.',{exact:false}).waitFor();const preview=writes.filter(write=>write.path==='/api/meals/review').at(-1).body;assert.equal(preview.ingredients[0].massEntry.value,'4.000');assert.equal(preview.ingredients[0].grams,113.3980925);
+ await page.getByRole('button',{name:'Save meal',exact:true}).click();await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();let saved=(await store.getMeals('source-a'))[0];assert.equal(saved.intelligence.ingredients[0].massEntry.value,'4.000');assert.equal(saved.intelligence.ingredients[0].grams,113.3980925);assert.equal((await store.getMeals('source-a')).length,1);
+ foodUnit='g';await go('/nutrition');const card=page.getByTestId('card-meal-0');await card.getByTestId('button-expand-meal-0').click();await card.getByText('Nutrition & gut pathway explanation',{exact:true}).click();row=card.getByRole('group',{name:'Ingredient 1',exact:true});await row.getByText('Portion entry source',{exact:true}).click();await row.getByText('Entered 4.000 oz.',{exact:false}).waitFor();
+ await row.getByRole('spinbutton',{name:'Grams 1',exact:true}).fill('200.00');await row.getByText('Entered 200.00 g.',{exact:false}).waitFor();const correctionDone=page.waitForResponse(response=>new URL(response.url()).pathname===`/api/meals/${saved.id}`&&response.request().method()==='PUT');await card.getByRole('button',{name:'Save corrected portions & recalculate',exact:true}).click();await correctionDone;saved=(await store.getMeals('source-a'))[0];assert.equal(saved.intelligence.ingredients[0].grams,200);assert.equal(saved.intelligence.ingredients[0].massEntry.value,'200.00');assert.equal(saved.intelligence.ingredients[0].massEntry.unit,'g');assert.equal((await store.getMeals('source-a')).length,1);
+ await page.reload();await card.getByTestId('button-expand-meal-0').click();await card.getByText('Nutrition & gut pathway explanation',{exact:true}).click();row=card.getByRole('group',{name:'Ingredient 1',exact:true});await row.getByText('Portion entry source',{exact:true}).click();await row.getByText('Entered 200.00 g.',{exact:false}).waitFor();
+ for(const width of[320,390,768,1440]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
+ actor='source-b';await page.evaluate(({state,path})=>history.replaceState(state,'',path),{state:handoff,path:target.pathname+target.search});await page.reload();await page.getByRole('button',{name:'Review meal',exact:true}).click();await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();assert.equal(writes.filter(write=>write.path==='/api/meals/review').at(-1).body.ingredients[0].massEntry,undefined);assert.equal(await page.evaluate(()=>history.state),null);assert.equal((await store.getMeals('source-b')).length,0);
+ assert.deepEqual(errors,[]);console.log((production?'Production build: ':'Cold dev cache: ')+'PASS actual App→HTTP→PostgreSQL: manual4.000oz navigation without source/owner query parameters, owner-bound canonical review/save, one meal, original reload under g preference,200.00g correction/reload,320–1440 and stale other-owner history cleared/no source transfer. No provider calls or real-account data.');
+}catch(error){console.error({errors,text:await page.locator('body').innerText()});throw error;}finally{await browser.close();if(production){vite.httpServer.closeAllConnections?.();await new Promise(resolve=>vite.httpServer.close(resolve));}else await vite.close();api.closeAllConnections();await new Promise(resolve=>api.close(resolve));await pg.close();}

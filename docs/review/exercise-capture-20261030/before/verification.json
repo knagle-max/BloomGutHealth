@@ -1,0 +1,17 @@
+{
+  "sourceSha": "ceac54e",
+  "synthetic": true,
+  "hosted": false,
+  "ownerRows": 1,
+  "attempts": 0,
+  "errors": [],
+  "viewport": [
+    390,
+    1280
+  ],
+  "clock": "2026-10-27T18:00:00Z",
+  "timezone": "America/Regina",
+  "uiSourceDirty": false,
+  "baselineMechanism": "Pinned ActivityLog source override; other source is candidate",
+  "backendSourceDirty": true
+}

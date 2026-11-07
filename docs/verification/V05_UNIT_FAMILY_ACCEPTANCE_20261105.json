@@ -1,0 +1,145 @@
+{
+  "requirement": "ARC-UNIT-001",
+  "version": "2026-11-05.1",
+  "softwareState": "IMPLEMENTED_AND_TESTED",
+  "releaseState": "BLOCKED_TECHNICAL",
+  "releaseDependency": "Confirm nonsecret isolated Render DB binding/approved runner before0016 provisioning; no production/default write authorized. Independent device/VoiceOver/unit-comprehension acceptance remains NOT_RUN.",
+  "canonicalPolicy": "Canonical values stay unchanged by preference edits; known original tokens retained independently. Unknown historical/copied originals are never invented. Source labels are not proof of measured intake or clinical validity.",
+  "localePolicy": "Saved explicit region/nonprecise locale suggestion only; no geolocation, forced unit bundle or inferred residence. Independent settings persisted account-scoped.",
+  "families": [
+    {
+      "family": "height",
+      "units": "cm / m / ft + in",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Profile canonical cm plus separately encrypted original tokens; exact transient conversion basis, no historical reconstruction",
+      "code": [
+        "shared/measurement-entry.ts",
+        "server/profile-measurement-source.ts",
+        "client/src/pages/Profile.tsx"
+      ],
+      "tests": [
+        "tests/measurement-entry.test.ts",
+        "tests/profile-measurement-source.test.ts"
+      ]
+    },
+    {
+      "family": "bodyWeight",
+      "units": "kg / lb",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Profile, dated check-ins, Athlete reference and pre/post fluid-loss samples stay distinct; original tokens or explicit copied/legacy unknown",
+      "code": [
+        "shared/checkin-entry-source.ts",
+        "shared/athlete-entry-capture.ts",
+        "shared/measurement-entry.ts"
+      ],
+      "tests": [
+        "tests/checkin-entry-source.test.ts",
+        "tests/athlete-entry-source.test.ts",
+        "tests/athlete-entry-capture.test.ts"
+      ]
+    },
+    {
+      "family": "circumference",
+      "units": "cm / in",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Dated check-in original text/unit and canonical cm persist in existing encrypted source; preference conversion does not rewrite observations",
+      "code": [
+        "shared/checkin-entry-source.ts",
+        "shared/measurement-entry.ts"
+      ],
+      "tests": [
+        "tests/checkin-entry-source.test.ts",
+        "tests/measurement-entry.test.ts"
+      ]
+    },
+    {
+      "family": "hydration",
+      "units": "mL / L / US fl oz",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Session and sweat-loss drafts retain reviewed units; known original fluid tokens persist, explicit zero distinct from default/unknown",
+      "code": [
+        "shared/athlete-entry-source.ts",
+        "shared/athlete-entry-capture.ts",
+        "client/src/lib/useDraftUnits.ts"
+      ],
+      "tests": [
+        "tests/session-fluid-units.test.ts",
+        "tests/athlete-entry-source.test.ts",
+        "tests/athlete-entry-capture.test.ts"
+      ]
+    },
+    {
+      "family": "temperature",
+      "units": "C / F",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Independent preference and validated conversion helpers. Current app uses categorical climate, not a shipped measured thermometer/device entry; no temperature measurement or native feature invented",
+      "code": [
+        "shared/experience.ts",
+        "shared/display-units.ts",
+        "client/src/pages/Profile.tsx"
+      ],
+      "tests": [
+        "tests/display-units.test.ts"
+      ]
+    },
+    {
+      "family": "energy",
+      "units": "kcal / kJ",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Canonical nutrition kcal convention only; labels/clinical assays retain their actual source conventions. Athlete target originals preserve entry units; integer target rule unchanged",
+      "code": [
+        "shared/nutrition-display.ts",
+        "shared/athlete-entry-source.ts",
+        "client/src/components/AthleteProfileForm.tsx"
+      ],
+      "tests": [
+        "tests/nutrition-display.test.ts",
+        "tests/athlete-entry-source.test.ts",
+        "tests/athlete-entry-capture.test.ts"
+      ]
+    },
+    {
+      "family": "foodWeight",
+      "units": "g / oz",
+      "softwareState": "IMPLEMENTED_AND_TESTED",
+      "scope": "Exact portion editor and optional original manual mass in same validated Ingredient/review/meal JSON. Owner/FDC/mass-bound history glue, no original text in URL; explicit source household portions use provided grams, no inferred density",
+      "code": [
+        "shared/measurement-entry.ts",
+        "shared/ingredient-mass-entry.ts",
+        "shared/ingredient-mass-capture.ts",
+        "shared/catalogue-mass-handoff.ts"
+      ],
+      "tests": [
+        "tests/measurement-entry.test.ts",
+        "tests/nutrition-display.test.ts",
+        "tests/ingredient-mass-entry.test.ts",
+        "tests/catalogue-mass-handoff.test.ts"
+      ]
+    }
+  ],
+  "crossFamilyTests": [
+    "tests/display-units.test.ts",
+    "tests/food-golden.test.ts",
+    "tests/athlete-review.test.ts",
+    "tests/profile-revision.test.ts"
+  ],
+  "journeys": [
+    "scripts/qa/unit-editor-regression.mjs",
+    "scripts/qa/athlete-draft-unit-journey.mjs",
+    "scripts/qa/profile-measurement-source-journey.mjs",
+    "scripts/qa/food-composition-context-journey.mjs",
+    "scripts/qa/ingredient-mass-capture-journey.mjs"
+  ],
+  "currentCandidateEvidence": {
+    "fullTests": 546,
+    "passed": 546,
+    "durationMs": 207191,
+    "focusedTests": 12,
+    "typecheck": "PASS",
+    "productionBuild": "PASS",
+    "coldCacheAppHTTPPostgreSQL": "PASS",
+    "productionBuildAppHTTPPostgreSQL": "PASS",
+    "actualPhoneVoiceOver": "NOT_RUN",
+    "independentReview": "NOT_GRANTED"
+  }
+}

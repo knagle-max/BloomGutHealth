@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "backend": "actual capability handlers; in-memory preference store and synthetic grant",
+  "image": "one synthetic local PNG; no provider connection",
+  "checks": [
+    "Ordinary absence and safe deep link",
+    "One existing Settings toggle",
+    "In-situ graphite local preview only",
+    "Cross-method canonical text and one save",
+    "OFF and role revoke unmount image/revoke object URL/cancel restricted cache",
+    "320/1440 reflow; image AI remains denied"
+  ],
+  "realReviewerProvisioned": false,
+  "modelCalls": 0,
+  "errors": []
+}

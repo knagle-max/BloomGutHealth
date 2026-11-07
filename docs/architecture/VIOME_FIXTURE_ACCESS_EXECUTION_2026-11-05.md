@@ -1,0 +1,10 @@
+# Viome PDF layout-fixture access — Architect execution decision
+Date: 2026-11-05 | Priority P0 | Status: exact-fixture acceptance pending; coding unblocked
+
+The two named layout-faithful synthetic PDFs are indexed in the Project Library, but attempts to obtain their original binary files returned: "This Project file does not have an authorized raw-byte materialization path." Indexed text is not a substitute for a PDF's font, coordinates and text fragments. Previous ChatGPT-generated simplified PDFs are not the exact failing files.
+
+**Immediate action:** Codex must continue building the layout-aware parser against reproducible positional text-item tests and independently generated surrogate PDFs through its existing PDF.js/browser pipeline. Cover variable-width three columns, adjacent category labels, wrapped names, row grouping, continuation between pages, misleading headers and explanations, ambiguity and partial-review handling. Reuse existing canonical report data, transient PDF processing, no PII storage and review/correct/save path. Do not falsely mark the two exact fixtures as passing.
+
+**Exact acceptance:** The two specifically named layout-faithful synthetic PDFs need to be attached directly to a Codex task or transferred by an authorized file-upload path into the developer workspace. Codex should record synthetic fixture SHA256 (only synthetic), independently verify each exact expected record, then execute browser upload/review/save/reload regression. The authentic private reports must stay outside the repository and require separate private acceptance.
+
+**No global stop:** Mark EXACT_LAYOUT_FIXTURE_TRANSFER_PENDING, implement what can be verified now, then continue other approved work rather than repeatedly searching for inaccessible bytes. The user has already supplied the product requirement; no further architecture or consent decision is needed. Never substitute a surrogate success for exact or authentic report acceptance.

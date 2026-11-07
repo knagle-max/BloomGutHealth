@@ -1,0 +1,99 @@
+{
+  "stage": "after",
+  "source": {
+    "sha": "fcd7940ee23a6c68b9598d11d5efaa801d755fd7",
+    "dirty": true
+  },
+  "synthetic": true,
+  "widths": [
+    390,
+    1440
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "errors": [],
+  "writes": [
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    },
+    {
+      "path": "/api/experience/athlete-day",
+      "body": {
+        "date": "2026-10-23",
+        "timezoneOffset": 360,
+        "hour": 12
+      }
+    }
+  ]
+}

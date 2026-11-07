@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "independentAcceptance": false,
+  "outcomes": [
+    "One lab entry with shared report context and two submodes",
+    "Lost-response retry reuses its key and frozen payload; acknowledged rows are not duplicated",
+    "Correct only unrecognized rows, preserving context",
+    "Manual missing-unit result stays provisional until explicit source-unit confirmation",
+    "Original value/unit provenance and canonical normalization preserved",
+    "320/375/768/1440 reflow"
+  ],
+  "errors": []
+}

@@ -1,0 +1,18 @@
+{
+  "sourceSha": "3d754b2342166aac3f241e6c8681085d1d9f8a20",
+  "dirty": false,
+  "stage": "before",
+  "widths": [
+    375,
+    1440
+  ],
+  "height": 1000,
+  "theme": "light",
+  "locale": "en-CA",
+  "timezone": "America/Regina",
+  "clock": "2026-10-23T18:00:00Z",
+  "synthetic": true,
+  "fonts": "blocked",
+  "crop": "lab-entry component; floating shell chrome hidden equally for capture only",
+  "independentAcceptance": false
+}

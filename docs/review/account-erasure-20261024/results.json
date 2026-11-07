@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "storage": "Intercepted browser fixture; database behavior tested separately",
+  "baseline": "75a598b",
+  "outcomes": [
+    "Explicit confirmation guards",
+    "Failed password leaves records and clears password draft",
+    "Keyboard submission",
+    "Successful deletion clears account view and shows scoped confirmation",
+    "320–1440px reflow"
+  ],
+  "errors": []
+}

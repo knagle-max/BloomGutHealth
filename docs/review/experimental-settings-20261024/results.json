@@ -1,0 +1,11 @@
+{
+  "synthetic": true,
+  "outcomes": [
+    "Ordinary account has no control or empty placeholder",
+    "Internal default off and reversible preference",
+    "Switch alone clears no restricted services",
+    "Revocation hides control and clears eligibility",
+    "320px and desktop reflow"
+  ],
+  "errors": []
+}

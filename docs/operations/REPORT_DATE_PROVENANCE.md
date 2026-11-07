@@ -1,0 +1,11 @@
+# Gut report dates and post-import source selection
+
+Undated reports retain the existing stored import timestamp, now visibly labelled **Imported … · test date not provided**. Entered dates and dates embedded in recognized reports are labelled by their actual source. Legacy missing provenance or entered-calendar precision stays explicitly unknown. A date-only input stays its original calendar text across time zones; it is not presented as a measured collection time.
+
+Upload sends the calendar day as YYYY-MM-DD, and the existing importInfo JSON retains the original user-provided date string. My Biology receives only minimal date provenance (source, optional input and import timestamp), not another raw report or taxon copy. Gut selectors/results, Today’s optional report card, research summary and My Biology use the shared date display. Existing stored timestamps, eligibility, biological calculations and source documents remain unchanged.
+
+Successful imports validate the returned sample ID and open that exact owned report, including an older dated report that would not otherwise sort first. Manual selection updates the link; an unavailable requested ID does not fetch another account’s source. Pending file parsing and completed callbacks are bound to the mounted actor before sending or navigating.
+
+Validation:20 focused report/date/Precision tests pass, including date-only western-zone handling, missing/invalid legacy precision, minimal projection and actual HTTP importer metadata. Actual App/HTTP/PostgreSQL paste→undated label→calendar day→persisted provenance→correct newly saved older report selection, ownership and320px pass. Types/build/source checks pass. Existing live Neon assertions now verify selected/available report date provenance without adding requests; exact CI will execute them. No new table, provider, credential, medical interpretation or screenshot gallery for this minor display correction.
+
+Original FIX001–008 are reconciled in the retained v0.5 ledgers with title-scoped code/test evidence and separate deployment/independent-acceptance status. Supported JSON/CSV imports do not require a file-forwarding sidecar; this does not claim raw-sequence classification or authentic unreviewed Viome-export compatibility.

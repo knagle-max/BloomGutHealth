@@ -1,0 +1,53 @@
+{
+  "schema": "bloom.functional_microbiome.ux.v1",
+  "sourceRefs": [
+    "BIO-FUNC-01..07",
+    "UT-FUNC-4601..4612",
+    "BIO-TAXON-2901..2905",
+    "MICRO-06"
+  ],
+  "existingSurfaces": [
+    "Microbiome.tsx",
+    "MicrobialProfile.tsx",
+    "OrganismPortrait.tsx"
+  ],
+  "newTopLevelNav": false,
+  "states": [
+    "report_available",
+    "not_reported",
+    "source_only",
+    "research_claim_reviewed",
+    "claim_unreviewed",
+    "source_withdrawn",
+    "claim_retracted"
+  ],
+  "defaultSections": [
+    "overview",
+    "research_roles",
+    "organisms"
+  ],
+  "organismFirstViewport": [
+    "identity",
+    "one_sentence_function_if_reviewed",
+    "actual_report_status",
+    "one_essential_limitation"
+  ],
+  "detail": [
+    "source_methods",
+    "full_taxonomy",
+    "study_evidence",
+    "pathway_edges",
+    "foods",
+    "history"
+  ],
+  "hardStops": [
+    "qualitative_presence_not_activity",
+    "source_provider_rating_not_metabolite",
+    "no_health_score",
+    "no_diagnosis",
+    "no_inferred_personal_crossfeeding",
+    "no_unlicensed_artwork",
+    "no_auto_food_actions"
+  ],
+  "reviewStatus": "concept_approved_implementation_not_verified"
+}

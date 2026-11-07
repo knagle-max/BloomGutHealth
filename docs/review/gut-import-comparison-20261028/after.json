@@ -1,0 +1,12 @@
+{
+  "stage": "after",
+  "sourceCommit": "c60008cea3983f047c100eca396eaf7920e54268",
+  "trackedDirty": false,
+  "viewport": {
+    "width": 390,
+    "height": 1000
+  },
+  "fixture": "Synthetic organism100% JSON; mocked auth/settings; no import write",
+  "writes": [],
+  "errors": []
+}

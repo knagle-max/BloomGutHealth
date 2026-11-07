@@ -1,0 +1,57 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 712,
+    "sha256": "99295666d55b2cc23b9a06225ecb0d2aefe17c4a817d05a53b224bc9c85bd366"
+  },
+  {
+    "path": "contracts/IMPLEMENTATION_CONTRACT.md",
+    "bytes": 8019,
+    "sha256": "a9e6a9d03630660ac383d52922a2c32cf5165f02cf41d9bb92d9892fa9c0a495"
+  },
+  {
+    "path": "existing-editable/01-fast-food-entry.svg",
+    "bytes": 4566,
+    "sha256": "cab071fe94079532fb20ac1bfc087d47c774a8d48c02f193a1cdddac10cda42b"
+  },
+  {
+    "path": "existing-editable/02-canonical-food-review.svg",
+    "bytes": 4758,
+    "sha256": "236363dcdb2d01ef2747f6760bcd5143e7eb184ac04eb2bd9dd5795e0cac86d3"
+  },
+  {
+    "path": "existing-editable/03-fast-workout-log.svg",
+    "bytes": 3816,
+    "sha256": "ca03f54ccc9abe79fba1a61c8d1f56d75dbb67e44d30f34353f1b58d4cde3bb1"
+  },
+  {
+    "path": "existing-editable/04-evidence-progress.svg",
+    "bytes": 3061,
+    "sha256": "c33acb4b8f2ad2a7176562c72cb4066ee192137bdb9a3a9da15105ab3279cd1e"
+  },
+  {
+    "path": "existing-editable/05-adaptation-review.svg",
+    "bytes": 3257,
+    "sha256": "c43e55b9608c44a413b612d5a81d341da1bc1dafe139e5ad60176d6fc883b64f"
+  },
+  {
+    "path": "prototype/index.html",
+    "bytes": 5400,
+    "sha256": "46bdc1ef427a44a1cf89d8c94772ff14363b47e5724288fdfe502c8d170c0f62"
+  },
+  {
+    "path": "prototype/styles.css",
+    "bytes": 6737,
+    "sha256": "e38f848fb2cd66008481f761c86e7a070d6c8e32faf063dae4faef9c8acd2a70"
+  },
+  {
+    "path": "reference/concept-five-screens.png",
+    "bytes": 2019467,
+    "sha256": "10e189cdf4f3212e6654193e72c4407a83502415f9d7976b02a2ba15f54a8669"
+  },
+  {
+    "path": "reference/concept-three-modes.png",
+    "bytes": 2040465,
+    "sha256": "8d58297e75377f220b83d510d238596597289dffb51b7047c2fc558ae69a1203"
+  }
+]

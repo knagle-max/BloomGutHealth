@@ -1,0 +1,224 @@
+{
+  "sourceCommit": "99f103005b42b4c9bb08f6151d7113004cabe466",
+  "scope": "Local actual App/Vite, synthetic no-data owner, six routes/two modes and actual theme toggles. Only observed asset responses recorded. Not hosted, all feature paths, independent visual acceptance or evidence that every shipped asset is rendered.",
+  "screens": [
+    {
+      "route": "/",
+      "mode": "everyday",
+      "theme": "light",
+      "visibleWordmark": "/brand/bloom-wordmark-dark.svg"
+    },
+    {
+      "route": "/",
+      "mode": "everyday",
+      "theme": "dark",
+      "visibleWordmark": "/brand/bloom-wordmark-light.svg"
+    },
+    {
+      "route": "/profile",
+      "mode": "everyday",
+      "theme": "light",
+      "visibleWordmark": "/brand/bloom-wordmark-dark.svg"
+    },
+    {
+      "route": "/profile",
+      "mode": "everyday",
+      "theme": "dark",
+      "visibleWordmark": "/brand/bloom-wordmark-light.svg"
+    },
+    {
+      "route": "/progress",
+      "mode": "everyday",
+      "theme": "light",
+      "visibleWordmark": "/brand/bloom-wordmark-dark.svg"
+    },
+    {
+      "route": "/progress",
+      "mode": "everyday",
+      "theme": "dark",
+      "visibleWordmark": "/brand/bloom-wordmark-light.svg"
+    },
+    {
+      "route": "/microbiome",
+      "mode": "everyday",
+      "theme": "light",
+      "visibleWordmark": "/brand/bloom-wordmark-dark.svg"
+    },
+    {
+      "route": "/microbiome",
+      "mode": "everyday",
+      "theme": "dark",
+      "visibleWordmark": "/brand/bloom-wordmark-light.svg"
+    },
+    {
+      "route": "/insights",
+      "mode": "everyday",
+      "theme": "light",
+      "visibleWordmark": "/brand/bloom-wordmark-dark.svg"
+    },
+    {
+      "route": "/insights",
+      "mode": "everyday",
+      "theme": "dark",
+      "visibleWordmark": "/brand/bloom-wordmark-light.svg"
+    },
+    {
+      "route": "/athlete",
+      "mode": "athlete",
+      "theme": "light",
+      "visibleWordmark": "/brand/bloom-wordmark-dark.svg"
+    },
+    {
+      "route": "/athlete",
+      "mode": "athlete",
+      "theme": "dark",
+      "visibleWordmark": "/brand/bloom-wordmark-light.svg"
+    }
+  ],
+  "observedResponses": [
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-wordmark-dark.svg",
+      "status": 200,
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-wordmark-light.svg",
+      "status": 200,
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-wordmark-dark.svg",
+      "status": 200,
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-wordmark-light.svg",
+      "status": 200,
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-icon-monochrome.svg",
+      "status": 200,
+      "sha256": "ef595815d8e3ca420eaf15935b278ad8e9adb25ebd4d4153e05cfb0475d2ee83",
+      "bytes": 557
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-wordmark-dark.svg",
+      "status": 200,
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-wordmark-light.svg",
+      "status": 200,
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-wordmark-dark.svg",
+      "status": 200,
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-wordmark-light.svg",
+      "status": 200,
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-wordmark-dark.svg",
+      "status": 200,
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-wordmark-light.svg",
+      "status": 200,
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-icon-everyday.svg",
+      "status": 200,
+      "sha256": "590fe8e72f8dae7e5ae1026f1b6833fc391f92c0a78b2b341fab8d7fd104ce1a",
+      "bytes": 555
+    },
+    {
+      "path": "/brand/bloom-wordmark-dark.svg",
+      "status": 200,
+      "sha256": "59c966667ddd4b8da66829844c9a7618c36a07433d01621cab024d0238184869",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-wordmark-light.svg",
+      "status": 200,
+      "sha256": "fc0d280c01626bc93fb78e2f9c7912969fd95910c3c79ab13ebc7022381b41fa",
+      "bytes": 630
+    },
+    {
+      "path": "/brand/bloom-icon-athlete.svg",
+      "status": 200,
+      "sha256": "3b2c1c41f26eb5aaca86b7c7a0c1e3b8bdceebcd8266981faedb7dad19bc3c91",
+      "bytes": 554
+    },
+    {
+      "path": "/brand/bloom-icon-athlete.svg",
+      "status": 200,
+      "sha256": "3b2c1c41f26eb5aaca86b7c7a0c1e3b8bdceebcd8266981faedb7dad19bc3c91",
+      "bytes": 554
+    }
+  ]
+}

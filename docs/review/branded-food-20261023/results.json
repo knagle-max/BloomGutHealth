@@ -1,0 +1,13 @@
+{
+  "synthetic": true,
+  "providerResponses": "intercepted fixtures",
+  "mealStorage": "in-memory fixture; real meal-analysis/product services",
+  "outcomes": [
+    "Branded search to confirmed serving to saved meal and daily card",
+    "Original typo query and source revision retained",
+    "All providers disabled: manual label to saved meal and totals without source calls",
+    "Private labels absent after account switch",
+    "320–1440px reflow"
+  ],
+  "errors": []
+}

@@ -1,0 +1,11 @@
+{
+  "outcomes": [
+    "Single Profile editors; unsaved values survive failed saves, repeated conversions, feet/inches validation and canonical submission.",
+    "Single Biology editors; drafts convert once after success, failed/unfinished switches preserve meaning, canonical check-ins and untouched lab provenance.",
+    "One food editor reached from read-only summaries; exclusions and allergy context stay visible, updates propagate, and dated Progress leads to the check-in subview.",
+    "320/375/768/1440 reflow, keyboard order and 200% CSS-zoom surrogate; physical devices/screen readers not claimed."
+  ],
+  "errors": [],
+  "synthetic": true,
+  "independentAcceptance": false
+}

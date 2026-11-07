@@ -1,0 +1,24 @@
+- group:
+  - strong: Bench press
+  - text: 5 sets · 10 reps each · 50–55 lb Suggested match Close
+  - group: Change activity type
+  - group: Change activity name
+  - group: Add other reported amounts (optional)
+  - paragraph: Source-described values are starting values, not verified performance. Edit each set; completion is never inferred.
+  - button "Set 1, 10 repetitions, 50 pounds, completed" [pressed]
+  - text: 1 10 reps 50 lb
+  - button "Set 1, 10 repetitions, 50 pounds, completed, edit set": Edit
+  - button "Set 2, 10 repetitions, 50 pounds, completed" [pressed]
+  - text: 2 10 reps 50 lb
+  - button "Set 2, 10 repetitions, 50 pounds, completed, edit set": Edit
+  - button "Set 3, 10 repetitions, 50 pounds, completion not confirmed"
+  - text: 3 10 reps 50 lb
+  - button "Set 3, 10 repetitions, 50 pounds, completion not confirmed, edit set": Edit
+  - button "Set 4, 10 repetitions, 55 pounds, completion not confirmed"
+  - text: 4 10 reps 55 lb
+  - button "Set 4, 10 repetitions, 55 pounds, completion not confirmed, edit set": Edit
+  - button "Set 5, 10 repetitions, 55 pounds, completion not confirmed"
+  - text: 5 10 reps 55 lb
+  - button "Set 5, 10 repetitions, 55 pounds, completion not confirmed, edit set": Edit
+  - button "Add set"
+  - button "Remove activity 2"

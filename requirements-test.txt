@@ -1,0 +1,7 @@
+# Minimal, pinned Python service contract-test environment (Python 3.12+).
+fastapi==0.142.4
+starlette==1.7.0
+pydantic==2.13.5
+numpy==2.5.3
+python-multipart==0.0.32
+httpx2==2.14.0

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="410" height="648" viewBox="0 0 410 648" role="img" aria-label="Why your plan changed design wireframe">
+<rect width="410" height="648" fill="#F6F9F7"/>
+<rect x="16" y="16" width="378" height="70" rx="16" fill="white" stroke="#D8E4DB"/>
+<text x="32" y="58" font-family="Arial" font-size="25" font-weight="bold" fill="#246B50">Bloom / Personal progress</text>
+<text x="22" y="117" font-family="Arial" font-size="23" font-weight="bold" fill="#172E26">Why your plan changed</text>
+<text x="22" y="140" font-family="Arial" font-size="13" fill="#50665A">Review before changing your routine.</text>
+<rect x="16" y="160" width="378" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="190" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">Previous plan</text>
+<text x="30" y="217" font-family="Arial" font-size="14" fill="#50665A">Saved snapshot from an earlier date</text>
+<text x="30" y="261" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">View original →</text>
+<rect x="16" y="302" width="378" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="332" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">New proposed approach</text>
+<text x="30" y="359" font-family="Arial" font-size="14" fill="#50665A">Changed after reviewed input or evidence</text>
+<text x="30" y="403" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">Compare details →</text>
+<rect x="16" y="444" width="378" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="474" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">Reason and remaining limits</text>
+<text x="30" y="501" font-family="Arial" font-size="14" fill="#50665A">What changed, what did not, and why</text>
+<text x="30" y="545" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">Review and decide →</text>
+<text x="21" y="629" font-family="Arial" font-size="11" fill="#63776D">Synthetic layout — not a personal prediction or app screenshot</text></svg>

@@ -1,0 +1,15 @@
+# Skating / seven shoulder-raise sets — P0 local regression evidence
+
+Owner exact source: `45 min Skating then 7 sets of 15 shoulder raises (15,15,15,20,20,20,25 lbs)`. Reproduced at3523400: Other activity45min plus generic Strength exercise with no children. Source enum has no Skating taxonomy; fix retains the reported name without inventing ice/inline classification or physiological estimates.
+
+Before pins shared/activity-capture.ts at3523400bdd6c87938158cf5164c5ae28e557ac6f with current App/API/styles. After uses the implementation containing this packet. Deliberate parser-source comparison, not a clean historical build. Matched source/clock/locale/account fixture/viewports320390 and actual app light/dark states. set-app-theme exercises actual header/mobile-menu controls and asserts the DOM theme class; browser color preference alone is not accepted as dark proof. Images are local synthetic Chromium, not authenticated hosted/device/VoiceOver or independent visual acceptance.
+
+Visible changes (annotated390):
+1. Source labels retained: Skating45min and Shoulder raises. No inferred shoulder subtype, MET, HR, kcal or effort.
+2. Seven independently identified compact pending set rows,15reps each and ordered15/15/15/20/20/20/25lb. Completion0of7; NLP never verifies performance.
+
+Root fix parses count/repetitions/exercise/load grammar separately from taxonomy: reps before/after identity, inside/outside terminal units, repeated values, bounded positional lists; top-level then/and-before-sets/semicolon separators keep parenthesized lists intact. Unknown activity names are reported labels, not fabricated catalogue matches. Missing loads stay null, source defaults remain editable and explicit units win. Wrong counts/units/values retain named manual-review fallback without partial child success.
+
+Verification: table-driven parser/canonical roundtrip tests include bench, shoulder, band pull-aparts, cable rotations, overhead extensions and rope pulls, unknown/negative/mismatched/conflicting-unit cases. Exact real App/HTTP/encrypted PGlite journey changes only Set4 to12reps/17.5lb; other six sets, Skating45, source/IDs survive save/reload/both modes with one canonical write. Additional missing-load row uses actual saved lb preference only when the user enters a load; untouched missing metric/unit remain unknown. Existing bench explicit completion1+2→2of5, unitless kg/lb-default and rich retry/correction/Today/Progress journeys reverified. Full466/466 PASS200282ms, final13focused/types/build/source guards. Focus recovery now occurs with React DOM commit, so deferred animation callbacks cannot steal later field input.
+
+Original v1.4 SVG access and independent VoiceOver/Design/User Testing approval remain open, not substituted by screenshots. Source commit/CI/preview tracked in NEXT_ACTIONS. Reproduce with BLOOM_PLAYWRIGHT_MODULE=/opt/codex/cua_node/lib/node_modules/playwright and BLOOM_CHROMIUM_EXECUTABLE=/usr/bin/chromium, node --import tsx scripts/qa/exercise-shoulder-sets-journey.mjs; optional BLOOM_PARSER_SOURCE_REF=3523400 captures the labelled parser baseline.

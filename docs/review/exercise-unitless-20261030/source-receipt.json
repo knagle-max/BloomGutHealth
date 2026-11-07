@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "hosted": false,
+  "independentAcceptance": false,
+  "baselineSourceRef": "d166612",
+  "baselineScope": "four browser source overrides, current backend and remaining UI",
+  "candidateBase": "d1666123f5538e35c3cc211395d60afba7be34ad",
+  "candidateHasUncommittedRuntimeChanges": true,
+  "candidateRuntimeHashes": {
+    "shared/activity-capture.ts": "eafc3c3939d37bc57b751c474152103b8729fdeda1b51f07d18d0808b8074e55",
+    "client/src/pages/ActivityLog.tsx": "d150f7be501d905e3513fd2f1511f6062511054f901c01be458cc1ba2d50111f",
+    "client/src/components/ActivityReview.tsx": "ee28cf6e79208b11eefa4a0b72c9168683cf24593b15c674f517c39f5ee746f2",
+    "client/src/components/ActivitySetEditor.tsx": "99141b2a40ec2eb7fda347eeb6df19975dd775b4fa692835402cf00af54b70ad",
+    "client/src/brand.css": "9dabd1656452c04db7e5865cd0ea00a953b051099185ec19ff78cf0a729a5c26"
+  }
+}

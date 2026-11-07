@@ -1,0 +1,23 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import{buildPrecisionReport,contextSchema,labSchema,sourceOnlyLabSchema}from'../shared/precision-nutrition';import{defaultPreferences}from'../shared/meal-intelligence';import{labExplorerEntries,normalizeLabSearch,labCategories}from'../shared/lab-explorer';
+const lab=labSchema.parse({marker:'alt',value:0,unit:'U/L',measuredAt:'2026-10-01T12:00:00Z',laboratory:'Synthetic lab',method:'unknown',fasting:'unknown',referenceLow:null,referenceHigh:null});
+const report=(rows:any[])=>buildPrecisionReport(rows,contextSchema.parse({}),defaultPreferences,null);
+test('grouped explorer shares canonical records and aliases, counts unknown labels separately and never supplies clinical content',()=>{
+ const unknown=sourceOnlyLabSchema.parse({sourceOnly:true,reportedAnalyte:'Unidentified source label',reportedValue:'0',reportedUnit:null,measuredAt:lab.measuredAt,laboratory:'Synthetic',method:'unknown',fasting:'unknown',sourceInput:{text:'Unidentified source label 0',number:'0',suppliedUnit:null,capture:'manual-report'}});
+ const r=report([{id:'alt-zero',kind:'lab',payload:lab},{id:'unknown-zero',kind:'lab',payload:unknown},{id:'unknown-next',kind:'lab',payload:{...unknown,reportedValue:'trace',sourceInput:{...unknown.sourceInput,text:'Unidentified source label trace',number:'trace'}}}]);const snapshot=JSON.stringify(r),entries=labExplorerEntries(r),alt=entries.find(e=>e.id==='alt')!,source=entries.find(e=>e.sourceOnly.length)!;
+ assert.equal(entries.length,2);assert.equal(alt.trend,r.trends[0]);assert.equal(alt.trend!.points[0].sourceValue,0);assert.equal(alt.recordCount,1);assert.ok(alt.searchKey.includes(normalizeLabSearch('alanine aminotransferase')));assert.deepEqual(alt.categories,['liver']);assert.equal(source.recordCount,2);assert.equal(source.trend,undefined);assert.equal(source.sourceOnly[0].reportedUnit,null);assert.ok(source.id.startsWith('source:'));assert.ok(!source.id.includes(source.name));assert.equal(JSON.stringify(r),snapshot);assert.equal(labExplorerEntries(report([])).length,0);
+});
+test('navigation keeps 92 source labels across six dates with shared multi-context identity and no six-date/chart limit',()=>{
+ const rows:any[]=[];for(let marker=0;marker<92;marker++)for(let day=1;day<=6;day++){
+  const payload=sourceOnlyLabSchema.parse({sourceOnly:true,reportedAnalyte:'Synthetic marker '+marker,reportedValue:String(day),reportedUnit:'source units',measuredAt:`2026-10-0${day}T12:00:00Z`,laboratory:'Synthetic',method:'unknown',fasting:'unknown',sourceInput:{text:`Synthetic marker ${marker}, ${day}, source units`,number:String(day),suppliedUnit:'source units',capture:'manual-report'}});rows.push({id:`source-${marker}-${day}`,kind:'lab',payload});
+ }
+ rows.push({id:'hcy',kind:'lab',payload:{...lab,marker:'homocysteine',unit:'umol/L'}});const r=report(rows),entries=labExplorerEntries(r);assert.equal(entries.length,93);assert.equal(entries.reduce((n,e)=>n+e.recordCount,0),553);assert.equal(entries.filter(e=>e.sourceOnly.length===6).length,92);const hcy=entries.find(e=>e.id==='homocysteine')!;assert.deepEqual(hcy.categories,['nutrients','heart']);assert.equal(hcy.recordCount,1);assert.equal(new Set(entries.map(e=>e.id)).size,93);assert.ok(entries.every(e=>e.categories.every(c=>labCategories.some(g=>g.id===c))));
+});
+
+test('canonical history projects only explicit same-marker source revision ancestry',()=>{
+ const audit=(supersedes:string)=>({version:1,supersedes,previousMeasuredAt:lab.measuredAt,enteredDate:'2026-10-01',correctedAt:'2026-11-04T12:00:00Z',reason:'Synthetic source correction',requestFingerprint:'a'.repeat(64)});
+ const rows=[{id:'original',kind:'lab',payload:lab},{id:'revision',kind:'lab',payload:{...lab,dateCorrection:audit('original')}},{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('revision')}}];
+ const points=report(rows).trends.find(t=>t.marker==='alt')!.points;assert.equal(points.length,1);assert.deepEqual(points[0].supersededIds,['revision','original']);assert.equal(points[0].sourceValue,0);
+ assert.deepEqual(report([{id:'foreign-marker',kind:'lab',payload:{...lab,marker:'ast'}},{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('foreign-marker')}}]).trends.find(t=>t.marker==='alt')!.points[0].supersededIds,[]);
+ assert.deepEqual(report([{id:'current',kind:'lab',payload:{...lab,dateCorrection:audit('absent')}}]).trends[0].points[0].supersededIds,[]);
+});
