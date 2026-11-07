@@ -1,7 +1,7 @@
 import fetch, { Headers, type RequestInit } from "node-fetch";
 
 type MlEnvironment = Record<string, string | undefined>;
-const paths = new Set(["/health", "/api/ml/analyze", "/api/ml/upload", "/api/ml/cohorts"]);
+const paths = new Set(["/health", "/api/ml/analyze", "/api/ml/upload", "/api/ml/cohorts", "/api/ml/research/synthetic"]);
 export function mlServiceTarget(path: string, environment: MlEnvironment = process.env) {
   if (!paths.has(path)) throw new Error("Unsupported processing operation.");
   let url: URL;

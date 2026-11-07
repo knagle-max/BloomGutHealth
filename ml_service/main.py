@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 import hashlib
 import hmac
@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional, Any
 import json
 import os
+import threading
 from datetime import datetime
 
 # This service is called only by Bloom's server, never directly by browsers.
@@ -55,6 +56,33 @@ class MicrobiomeAnalysisResponse(BaseModel):
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
+
+_synthetic_slots = threading.BoundedSemaphore(1)
+
+@app.post("/api/ml/research/synthetic")
+async def synthetic_research(request: Request):
+    """Private, bounded fixed fixtures only. Existing middleware authenticates
+    before reading this body; no raw source, account or free-form model input."""
+    from pydantic import ValidationError
+    from starlette.concurrency import run_in_threadpool
+    from .research.synthetic_service import SyntheticResearchRequest, execute_synthetic
+    if request.headers.get("content-type", "").split(";")[0].strip().lower() != "application/json":
+        raise HTTPException(status_code=415, detail="Use the synthetic JSON contract.")
+    body = bytearray()
+    async for chunk in request.stream():
+        if len(body) + len(chunk) > 512:
+            raise HTTPException(status_code=413, detail="Synthetic request exceeds its size limit.")
+        body.extend(chunk)
+    try:
+        command = SyntheticResearchRequest.model_validate_json(bytes(body))
+    except ValidationError:
+        raise HTTPException(status_code=422, detail="Only the fixed synthetic scenario contract is accepted.") from None
+    if not _synthetic_slots.acquire(blocking=False):
+        raise HTTPException(status_code=503, detail="Synthetic research is busy. Retry later.")
+    try:
+        return await run_in_threadpool(execute_synthetic, command)
+    finally:
+        _synthetic_slots.release()
 
 @app.post("/api/ml/analyze", response_model=MicrobiomeAnalysisResponse)
 async def analyze_microbiome(request: MicrobiomeAnalysisRequest):
