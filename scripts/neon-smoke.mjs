@@ -658,7 +658,8 @@ try {
     undefined,
     204,
   );
-  await request(`/api/precision/records/${lab.id}`, "DELETE", undefined, 204);
+  await request(`/api/precision/records/${lab.id}`, "DELETE", undefined, 409);
+  await request(`/api/precision/labs/${lab.id}/entry`, "DELETE", undefined, 204,{"X-Bloom-Confirm":"delete-lab-entry-and-revisions"});
   assert.equal((await request("/api/precision")).plans.length, 0);
   await request(`/api/meals/${meal.id}`, "DELETE", {});
   await request("/api/auth/logout", "POST", {});

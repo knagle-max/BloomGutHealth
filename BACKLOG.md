@@ -2,6 +2,14 @@
 
 Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 is active; v0.6 has not started. `NEXT_ACTIONS.md` selects work; older entries below are historical evidence. The supplied Viome report correction is pushed in6d9bc89/mergecd8ebdc. Universal Microbiome deletion7b68ecc/mergefa11d23 is pushed. Saved companion management is published (4118932); optional collection-date/upload-context correction is published (67f66db). Independent source/device/security acceptance and the unidentified Render database binding remain separately scoped.
 
+## Current owner P0 and follow-through — 2026-11-07
+
+|Task|Engineering state|Evidence / next scope|
+|---|---|---|
+|ACTIVITY-DESCRIBE-MIXED-01 / exact owner workout loss|IMPLEMENTED_AND_ENGINEERING_TESTED; publish pending|Structural source-span fallback yields4parents;10/20bodyweight reps are reported bouts, bench3×10×225lb pending. Stable edits/source, one save/lost-response retry/reload/modes/owner/320390dark PASS.610full +15finalfocused/types/build; original compact/source-unit journeys PASS. New fields optional, no migration. Final specialist/physical review pending.|
+|BLOOM-LOCAL-AI-01 / broader open-vocabulary Food/Exercise/Lifestyle interpretation|OPEN approved v0.6 work; fallback is not AI completion|One local inference interface/runtime, source validation and independently held-out/device benchmark. No model or genuine provider path active by this fix. No mandatory paid/external service or interim review block.|
+|LAB-ENTRY-PLAN-LINEAGE / P0 unrelated history preservation|OPEN; next bounded engineering defect|Code inspection during CI failure showed individual active-lab deletion still deletes all own plan rows (`deleteLabEntry`), including independent history. Reproduce with actual isolated SQL, then use explicit legacy/weekly source references across result/whole-source/generic paths; unknown lineage stays historical. Source fidelity and other records must remain.|
+
 ## Current v0.5 delivery and dependency checkpoint — 2026-11-05
 
 |Task / source IDs|Status|Delivered acceptance and evidence|Commit / dependency|

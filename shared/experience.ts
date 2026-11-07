@@ -70,7 +70,7 @@ export const actualSetsSchema = z.object({
     exercise: z.string().trim().min(1).max(120),
     reps: z.number().int().min(0).max(1000).nullable(),
     loadKg: z.number().finite().min(0).max(2000).nullable(),
-    completed: z.boolean(),
+    completed: z.boolean(),bodyweight:z.literal(true).optional(),reportedBout:z.literal(true).optional(),
     id:z.string().uuid().optional(),loadUnit:z.enum(['kg','lb']).optional(),
     state:z.enum(['described','planned','cancelled']).optional(),side:z.enum(['left','right','both']).nullable().optional(),
   }).strict()).max(100),
@@ -81,6 +81,7 @@ export const activityComponentSchema=z.object({
  activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),
  match:z.enum(['suggested','reported','unclassified']),minutes:z.number().int().min(1).max(1440).nullable(),
  distanceM:z.number().finite().nonnegative().max(1000000).nullable(),actualSets:actualSetsSchema.optional(),
+ sourceSpan:z.object({start:z.number().int().min(0).max(2000),end:z.number().int().min(1).max(2000)}).strict().refine(span=>span.end>span.start).optional(),
 }).strict().refine(part=>!part.actualSets||part.actualSets.sets.every(set=>!!set.id),'Each activity set needs a stable identity');
 export const activityComponentsSchema=z.object({version:z.literal(1),items:z.array(activityComponentSchema).min(1).max(20)}).strict().superRefine((value,ctx)=>{
  const ids=value.items.flatMap(part=>[part.id,...(part.actualSets?.sets.map(set=>set.id!)||[])]);
@@ -99,7 +100,7 @@ export const activitySchema=z.object({
  actualSets:actualSetsSchema.optional(),
  components:activityComponentsSchema.optional(),
  capture:z.object({version:z.literal(1),method:z.enum(['describe','select','repeat']),description:z.string().min(1).max(2000).refine(value=>value.trim().length>0),activityId:z.enum(['walk','run','cycle','swim','garden','strength','other']),interpretation:z.enum(['rule-suggestion','user-selected','unclassified']),reviewedDescription:z.string().max(2000).optional()}).strict().optional(),
-}).strict();
+}).strict().superRefine((activity,ctx)=>{if(activity.capture)for(const part of activity.components?.items||[])if(part.sourceSpan&&part.sourceSpan.end>activity.capture.description.length)ctx.addIssue({code:'custom',message:'Source wording must reference the recorded original description.'});});
 export type Activity=z.infer<typeof activitySchema>;
 export const trainingSessionSchema = z.object({
   title: z.string().trim().min(1).max(120), startsAt: z.string().datetime({offset:true}),
