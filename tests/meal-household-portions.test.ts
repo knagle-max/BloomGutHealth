@@ -44,3 +44,19 @@ test('source default servings are explicitly estimated; invalid or forged portio
   const unknown=estimateLoggedIngredients('2 slices of imaginary food xyz')[0];
   assert.equal(unknown.grams,null);assert.equal(unknown.household,undefined);
 });
+
+test('explicit whole-pizza counts and fractions select source whole size, while bare names retain an estimated serving',()=>{
+  for(const text of ['half a large pepperoni pizza','1/2 large pepperoni pizza']){
+    const item=estimateLoggedIngredients(text)[0];
+    assert.match(item.household!.selected!,/^1 large pizza/);
+    assert.equal(item.household?.quantity,0.5);assert.equal(item.grams,498);
+  }
+  const small=estimateLoggedIngredients('2 small pepperoni pizzas')[0];
+  assert.match(small.household!.selected!,/^1 small pizza/);assert.equal(small.grams,1032);
+  const slices=estimateLoggedIngredients('two slices of large pepperoni pizza')[0];
+  assert.match(slices.household!.selected!,/slice.*?, large pizza/);assert.equal(slices.grams,248);
+  const bare=estimateLoggedIngredients('pepperoni pizza')[0];
+  assert.match(bare.household!.selected!,/estimated serving/);assert.equal(bare.grams,248);
+  const grams=estimateLoggedIngredients('150 g pepperoni pizza')[0];
+  assert.equal(grams.grams,150);assert.equal(grams.household?.selected,null);
+});

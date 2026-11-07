@@ -217,7 +217,7 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
         .match(
           /\b(cups?|tablespoons?|tbsp|teaspoons?|tsp|servings?|slices?|patt(?:y|ies)|eggs?|pieces?)\b/i,
         )?.[1]
-        ?.toLowerCase();
+        ?.toLowerCase() || (/^Pizza\b/i.test(food.description)&&/^\s*\d+(?:\.\d+)?\s+/.test(input.name)?"pizza":undefined);
       const normalizedUnit = unit
         ?.replace(/^tbsp$/, "tablespoon")
         .replace(/^tsp$/, "teaspoon")

@@ -22,12 +22,13 @@ await page.route('**/api/**',async route=>{const req=route.request(),u=new URL(r
 try{
  hold=false;lose=false;
  await page.goto('http://127.0.0.1:5228/log-meal?method=describe');
- await page.getByLabel('Describe your meal',{exact:true}).fill('2 slices of pepperoni pizza');
+ const whole=process.env.BLOOM_PORTION_WHOLE==='1',description=whole?'half a large pepperoni pizza':'2 slices of pepperoni pizza';
+ await page.getByLabel('Describe your meal',{exact:true}).fill(description);
  await page.getByRole('button',{name:'Review meal',exact:true}).click();
  await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();
  await openIngredientRow(page,1);
- assert.match(await page.getByLabel('Portion unit 1',{exact:true}).inputValue(),/slice/);
- assert.equal(await page.getByLabel('Portion quantity 1',{exact:true}).inputValue(),'2');
+ assert.match(await page.getByLabel('Portion unit 1',{exact:true}).inputValue(),whole?/^1 large pizza/:/slice/);
+ assert.equal(await page.getByLabel('Portion quantity 1',{exact:true}).inputValue(),whole?'0.5':'2');
  const select=page.getByLabel('Portion unit 1',{exact:true});
  const large=await select.locator('option').evaluateAll(options=>options.find(o=>/slice.*?, large pizza/.test(o.value)).value);
  await select.selectOption(large);
@@ -51,7 +52,7 @@ try{
  await page.getByRole('button',{name:'Save meal',exact:true}).click();
  await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
  const saved=(await store.getMeals('correction-fixture'))[0];
- assert.equal(saved.mealText,'2 slices of pepperoni pizza');
+ assert.equal(saved.mealText,description);
  assert.equal(saved.intelligence.ingredients[0].household.quantity,3);
  assert.equal(saved.intelligence.ingredients[0].household.selected,large);
  assert.equal(saved.intelligence.ingredients[0].grams,372);

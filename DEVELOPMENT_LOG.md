@@ -1464,3 +1464,7 @@ Reproduced owner input `2 slices of pepperoni pizza` returning unknown grams bec
 ### 2026-11-07 — Existing-source functional organism education
 
 Existing Gut reports now offer an optional resistant-starch research topic and a cited Ruminococcus bromii profile using the existing source registry/pathway. No new evidence database, graph, scientific visual gate, food ranking or personal activity inference. Original names/zero/unknowns and every observation remain available; exact names only and missing source withdraws education. Seven focused tests, actual filter/source/focus/Back/report-switch/withdrawal browser and full existing organism journey; types/build/source/API guards pass. General education is engineering scope; physical and independent final acceptance remains separate.
+
+### 2026-11-07 — Integrated620-test checkpoint and whole-pizza quantity follow-through
+
+At50f0945, full620/620 PASS248767.60ms, types/build and existing/new meal and organism journeys pass; exact CI42337303169 pending and Renderdep-dbna9kss728c7391id40 building at one check. No live/user acceptance claimed. Capture audit then reproduced half a large pizza interpreted as half default serving. Source unit selection now preserves whole-pizza counts/fractions and requested size; slices, masses and bare-name estimates stay distinct.20 focused plus actual whole-case App/HTTP/isolated SQL review/save/reuse, strict types/build/source guards PASS; no redundant unchanged full rerun.

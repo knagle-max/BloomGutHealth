@@ -1902,7 +1902,7 @@
     "server/feature-control-storage.ts": "a8f0621d78dba162d419506bad4d941d409b2300689c107c915cb947f57f55bf",
     "server/feature-controller-auth.ts": "f349587780d99a77c51b9beb6088ce235b5cab7be179a8227c60df42861bfea0",
     "server/feature-step-up.ts": "8a173d439d0faea45e2ff19adcf7880b9e28ff206fdfb8804e01f29d6289c0ca",
-    "server/food-catalog.ts": "b5b599205fbd16c2892323a9cd8434dabf8cf53529bcae43ba260f23c1475010",
+    "server/food-catalog.ts": "f01b9141b0466b37faea807d70be318ec410ffd9d2c9e0c77de7a9d4e7b02002",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",

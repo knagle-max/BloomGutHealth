@@ -4,6 +4,10 @@ Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 is active; v0.
 
 ## Current owner P0 and follow-through — 2026-11-07
 
+Integrated checkpoint50f0945:620/620 unit/integration tests PASS248767.60ms; strict TS/build and actual meal/organism source journeys pass. `docs/verification/V05_INTEGRATED_CHECKPOINT_20261107.json` keeps exact scope and pending hosted/final evidence. This does not certify every historical criterion.
+
+|Owner meal household portions / explicit whole-pizza fractions|IMPLEMENTED_AND_ENGINEERING_TESTED|Source-backed slices/sizes/servings and quantity, no gram knowledge required; original text and source/unknowns, canonical nutrition/save/reload/reuse retained. Subsequent whole-pizza audit fixes half-default-serving misinterpretation;20focused and actual App/HTTP/isolated SQL journey/types/build PASS.|
+
 |Task|Engineering state|Evidence / next scope|
 |---|---|---|
 |ACTIVITY-DESCRIBE-MIXED-01 / exact owner workout loss|IMPLEMENTED_AND_ENGINEERING_TESTED; pushed0f4e070/87921dc|Structural source-span fallback yields4parents;10/20bodyweight reps are reported bouts, bench3×10×225lb pending. Stable edits/source, one save/lost-response retry/reload/modes/owner/320390dark PASS.610full +15finalfocused/types/build; original compact/source-unit journeys PASS. New fields optional, no migration. Final specialist/physical review pending.|
