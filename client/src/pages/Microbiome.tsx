@@ -1,3 +1,4 @@
+import {functionalResearchGroups} from "@shared/functional-microbiome";
 import MicrobiomeReportManagement from"@/components/MicrobiomeReportManagement";
 import OrganismPortrait from "@/components/OrganismPortrait";
 import {MICROORGANISM_SYMBOL_LABEL,organismIllustration} from "@shared/scientific-visuals";
@@ -25,6 +26,7 @@ export default function Microbiome() {
   const [comparisonId, setComparisonId] = useState("");
   const [tab, setTab] = useState("results");
   const [taxonSearch,setTaxonSearch]=useState<{owner:string;sample:string;text:string}|null>(null);
+  const [researchSelection,setResearchSelection]=useState<{owner:string;sample:string;group:string}|null>(null);
   const taxonSearchInput=useRef<HTMLInputElement|null>(null);
   const samples = useQuery<any[]>({
     queryKey: ["/api/microbiome/samples", user?.id],
@@ -54,7 +56,10 @@ export default function Microbiome() {
   const taxa=currentResults?reportedTaxa(currentResults.sample,currentResults.bacterial_composition):[];
   const comparisonTaxa=currentComparison?reportedTaxa(currentComparison.sample,currentComparison.bacterial_composition):[];
   const taxonQuery=taxonSearch&&taxonSearch.owner===user?.id&&taxonSearch.sample===currentId?taxonSearch.text:"";
-  const visibleTaxa=taxonQuery.trim()?taxa.filter(taxon=>taxon.bacterialName.toLowerCase().includes(taxonQuery.trim().toLowerCase())):taxa;
+  const researchGroups=functionalResearchGroups(taxa);
+  const activeResearch=researchSelection&&researchSelection.owner===user?.id&&researchSelection.sample===currentId?researchGroups.find(g=>g.id===researchSelection.group):undefined;
+  const groupedTaxa=activeResearch?taxa.filter(t=>activeResearch.observationIds.includes(t.id)):taxa;
+  const visibleTaxa=taxonQuery.trim()?groupedTaxa.filter(taxon=>taxon.bacterialName.toLowerCase().includes(taxonQuery.trim().toLowerCase())):groupedTaxa;
   const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?taxa.find(b=>b.id===selectedTaxon.id)||null:null;
   const closeProfile=()=>{if(profileClosing.current)return;profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
   useEffect(()=>{const closeOnBack=()=>{profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
@@ -90,7 +95,7 @@ export default function Microbiome() {
                 <select
                   className="bloom-input w-full"
                   value={currentId}
-                  onChange={(e) => {const id=e.target.value;setTaxonSearch(null);setSampleId(id);const url=new URL(window.location.href);url.searchParams.set("sample",id);window.history.replaceState(null,"",url.pathname+url.search);}}
+                  onChange={(e) => {const id=e.target.value;setTaxonSearch(null);setResearchSelection(null);setSampleId(id);const url=new URL(window.location.href);url.searchParams.set("sample",id);window.history.replaceState(null,"",url.pathname+url.search);}}
                 >
                   {sorted.map((s) => (
                     <option key={s.id} value={s.id}>
@@ -180,8 +185,14 @@ export default function Microbiome() {
             </p>
           )}
           {taxa.length>0&&<div className="space-y-2 my-4">
+            {researchGroups.length>0&&<details className="workspace-disclosure">
+              <summary>Explore functions</summary>
+              <p className="panel-note">Research topics for organisms listed in this report. Listings do not show these functions are active in you.</p>
+              <div className="flex flex-wrap gap-2 py-2">{researchGroups.map(group=><Button key={group.id} type="button" variant="outline" className="h-auto min-h-11 whitespace-normal text-left" aria-pressed={activeResearch?.id===group.id} onClick={()=>setResearchSelection({owner:user!.id,sample:currentId,group:group.id})}>{group.label} · {group.observationIds.length} listed {group.observationIds.length===1?"observation":"observations"}</Button>)}</div>
+            </details>}
+            {activeResearch&&<div className="flex flex-wrap gap-3 items-center"><p>Research topic: {activeResearch.label}</p><Button type="button" variant="outline" onClick={()=>{setResearchSelection(null);setTaxonSearch(null);taxonSearchInput.current?.focus();}}>See all organisms</Button></div>}
             <div className="flex flex-wrap items-end gap-3"><label className="flex-1 min-w-0">Find an organism<input ref={taxonSearchInput} type="search" className="bloom-input w-full min-h-[44px]" value={taxonQuery} maxLength={200} placeholder="Search source names" onChange={e=>setTaxonSearch({owner:user!.id,sample:currentId,text:e.target.value})}/></label>{taxonQuery&&<Button type="button" variant="outline" onClick={()=>{setTaxonSearch(null);taxonSearchInput.current?.focus();}}>Clear search</Button>}</div>
-            <p className="panel-note" role="status">{visibleTaxa.length} of {taxa.length} source observations shown{!visibleTaxa.length?". No matching source names; clear the search to see all observations.":"."}</p>
+            <p className="panel-note" role="status">{visibleTaxa.length} of {taxa.length} source observations shown{!visibleTaxa.length?". No matching source names; clear the search or research filter to see more observations.":"."}</p>
           </div>}
           {taxa.length ? (
             <div className="overflow-x-auto microbial-composition-table" role="region" aria-label="Microbial composition and comparison; scroll for additional source values" tabIndex={0}>

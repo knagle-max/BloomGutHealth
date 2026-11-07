@@ -1103,7 +1103,8 @@
           "shared/viome-findings.ts",
           "shared/microbiome-food-influence.ts",
           "shared/biological-report-management.ts",
-          "server/biological-report-management.ts"
+          "server/biological-report-management.ts",
+          "shared/functional-microbiome.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1831,7 +1832,7 @@
     "client/src/components/MealAnalysis.tsx": "2f46f8eef1c6e70e64d5044537ad61b5be6a54b8bc407c2ac630ba0c24f7900e",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
-    "client/src/components/MicrobialProfile.tsx": "83bf9cfabba351023ee6971f9c30e81755114e3640339f91ad932459f7438eda",
+    "client/src/components/MicrobialProfile.tsx": "4307a9bad8ef6885d8076459eb40b640a9ce5087a817406c382e6df30b21d25b",
     "client/src/components/MicrobiomeFoodPreferences.tsx": "18f4f506f25ee3593bd09a506519b923af4aea9c3f05894f0840fd769a7355c3",
     "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
@@ -1871,7 +1872,7 @@
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "20a1cd53e1a6cf2583d2bfb0d52d665d821e0e49c9eeae8d62c3e3c815fd07f6",
     "client/src/pages/MealPlanner.tsx": "5633526a79b3df24a0659f4e8fe979054c2b74db288dce4763371b3a632baeec",
-    "client/src/pages/Microbiome.tsx": "f5f131e570960529a3eb4146037baaddf5282aa5a2f8efc1e857407698dd5266",
+    "client/src/pages/Microbiome.tsx": "d95aef1771dfbeeeb65c2f23827625762f5793a4318200b1e18bb314926bde44",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "407bd5a61b00bde5114b4966099f7882095b3ec4c3548dc92d80d7e8cb2f1d36",
     "client/src/pages/PrecisionNutrition.tsx": "24c070d46a2d056a5464cd75bc1f70ed9cd177664c1022dad6be910744e99637",
@@ -1967,6 +1968,7 @@
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-intelligence.ts": "4ad0deb199cd8a6e52b6bb844fd6679000659f766c64a304d25f6a680b6fb3d9",
     "shared/food-progress.ts": "da5b8b3a59c12ebd5099904ed976835020000b562f7dd941bf531283b20a9bc9",
+    "shared/functional-microbiome.ts": "35a6d6ad44f029db6cced0a525f5ed6777be0b5bab219bb786b54393ae555184",
     "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
     "shared/genetic-source-selection.ts": "b9eebf03ba286b4b7d6af9f8312fc7ddaa6388b7f0f29c0f4136edf90c2f59d8",

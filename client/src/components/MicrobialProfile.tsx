@@ -1,3 +1,4 @@
+import {functionalResearchFor} from "@shared/functional-microbiome";
 import OrganismPortrait from "./OrganismPortrait";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
   useEffect(() => setExpanded(null), [taxon?.id]);
   const facts=microbiomeSourceFacts(sample?.structuredData||{});
   const sourceValues=(kind:"assay"|"method"|"taxonomy"|"qc")=>facts.filter(f=>f.kind===kind).map(f=><span className="block" key={f.sourcePath}>{f.value}<small className="block text-muted-foreground">{f.sourcePath}</small></span>);
+  const research=taxon?functionalResearchFor(taxon):null;
   const origin = sample?.structuredData?.dataOrigin;
   return <Dialog.Root open={!!taxon} onOpenChange={open => { if (!open) onClose(); }}>
     <Dialog.Portal>
@@ -30,7 +32,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
           <p className="inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
           <section className="microbial-organism-intro"><h3>What this organism is</h3>
             {taxon.bacterialName.toLowerCase().trim() === "methanobrevibacter smithii" && <p>This is an archaeon, rather than a bacterium. Detection does not diagnose intestinal methanogen overgrowth.</p>}
-            <p>Research explanation not available yet.</p>
+            <p>{research?research.introduction:"Research explanation not available yet."}</p>
             <p className="panel-note">A listing or percentage does not measure microbial activity.</p>
           </section>
           <details className="microbial-observation"><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">About your report</summary>
@@ -55,7 +57,19 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
           </section></details>
           <div className="microbial-profile-disclosures">{sections.map(title => <details key={title} open={expanded === title}>
             <summary onClick={e => { e.preventDefault(); setExpanded(value => value === title ? null : title); }}>{title}</summary>
-            {title === "Your report: what it does and doesn't show" ? <>
+            {research&&title==="What research has found"?<>
+              <p>{research.source.finding}</p><p className="panel-note">Study setting: {research.source.design}. Strain details are not specified in Bloom’s source summary; compatibility with your reported organism has not been established.</p>
+            </>:research&&title==="Nutrients & molecules"?<>
+              <p>Studied substrate: {research.substrate}. A substrate is material that organisms can use.</p>
+              <p>This record does not measure starch breakdown, fermentation products or butyrate production in you. No producer–consumer interaction is inferred from the organisms listed together.</p>
+            </>:research&&title==="Diet studies"?<>
+              <p>This source describes mechanistic experiments, not a personal food or serving recommendation. It does not establish that eating a particular food will increase this organism in you.</p>
+            </>:research&&title==="Studies & limitations"?<>
+              <p><a className="text-link" href={research.source.url} target="_blank" rel="noopener noreferrer">{research.source.title}</a></p>
+              <p>{research.source.authors} · {research.source.year} · DOI: {research.source.doi}</p>
+              <p>{research.source.design}</p><p>{research.source.limitation}</p>
+              <p className="panel-note">Source summary: {research.evidenceVersion} · Profile: {research.version}. This source summary does not specify study strain identifiers or sample size; individual applicability and conflicting evidence are not established here.</p>
+            </>:title === "Your report: what it does and doesn't show" ? <>
               <p>Relative abundance does not measure gene expression, butyrate, methane, toxins, infection or disease risk. Missing percentages stay unknown. There is no personal optimal percentage or treatment recommendation from this record.</p>
               {/^(escherichia coli|klebsiella pneumoniae)$/i.test(taxon.bacterialName.trim()) && <p>Species detection does not establish a virulent strain.</p>}
               <p>Assay compatibility and strain resolution have not been established. Cross-report differences are not interpreted as health changes.</p>

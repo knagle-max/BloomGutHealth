@@ -1,4 +1,4 @@
-# Current task: one source-grounded functional organism profile and group
+# Current task: verify integrated v0.5 and reconcile current remaining engineering
 
 v0.5 remains active. Use `enhance/bloom-experience`, PR1 and the existing Render review preview; preserve `main` and other contributors. No new paid infrastructure, production DB/schema writes, private-data transfer or secret discovery. Continue after publication without routine approval prompts.
 
@@ -13,8 +13,8 @@ v0.5 remains active. Use `enhance/bloom-experience`, PR1 and the existing Render
 
 ## Do next
 
-1. Publish87921dc with incoming owner policy preserved; check exact resulting CI/Render once. Investigate actual failures with targeted diagnostics.
-2. **Ordinary functional-organism education is OPEN_ENGINEERING**, not waiting for interim Biology review. Implement one route-complete existing-Gut-reports research group/profile using the existing cited registry (e.g. the existing Ruminococcus bromii/resistant-starch culture study). Preserve exact source name/observations, unknowns and all original detail; no strain compatibility, personal activity/flux, treatment, food dose or inferred cross-feeding. Group counts derive from actual listed source rows. Keep all organisms/search and existing sheet/Back/focus behavior. No second graph/store/dashboard, no94-narrative quota. Source facts and conservative cited education can ship to preview; final integrated specialist review remains pending.
+1. Source-plan integrity, owner meal household portions and the cited functional-organism profile/group are now implemented and pushed at their engineering checkpoints. Check exact CI/Render once per new published checkpoint; inspect actual failures, not obsolete jobs.
+2. Run the integrated regression checkpoint, then reconcile remaining v0.5 criteria against current family evidence. The research topic/profile is bounded general education, with original source detail; no clinical activity or unsupported interaction edges are activated. See `docs/operations/FUNCTIONAL_ORGANISM_RESEARCH.md`.
 3. Apply the owner’s [right-first-time standard](docs/architecture/PRODUCT_ENGINEERING_RIGHT_FIRST_TIME_STANDARD_2026-11-06.md) to actually touched capture flows. Classify observed scope as PASS / USER_VISIBLE_DEFECT / LIMITED_SUPPORTED_MODE_DISCLOSED / PROVIDER_ACTIVATION_PENDING / NOT_APPLICABLE. LogMeal already has optional AI + review/confirm; audit real mixed/restaurant/unknown portions before assuming broken. Do not fabricate defects or reopen passing source/unit micro-hardening.
 4. Reconcile remaining actual v0.5 engineering with current family evidence and latest handoffs. Independent review/private fixture/device/provider activation is separate. Do not declare v0.5 complete from totals, or turn the207-ID historical ledger into a new governance project. Once actionable v0.5 engineering is finished or genuinely externally dependent, begin approved independent v0.6 immediately.
 
