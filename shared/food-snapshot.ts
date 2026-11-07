@@ -1,5 +1,6 @@
 import data from "./data/planning-foods.json";
 import loggingData from "./data/logging-foods.json";
+import {captureNutrientSource,type NutrientSourceSnapshot} from "./nutrient-source-snapshot";
 import {
   type Ingredient,
   type MealIntelligence,
@@ -26,6 +27,7 @@ const normalized = (s: string) =>
     .trim();
 // Only explicit prepared-food names match. "Chicken", "rice" and "a bowl of oats" are deliberately ambiguous.
 export function lookupSnapshotNutrition(ingredients: Ingredient[], roundAmounts = true) {
+  const nutrientSourceSnapshots:NutrientSourceSnapshot[]=[];
   const matches: MealIntelligence["foodMatches"] = [];
   const scaled: Array<{
     grams: number;
@@ -39,6 +41,7 @@ export function lookupSnapshotNutrition(ingredients: Ingredient[], roundAmounts 
         normalized(f.description) === normalized(ingredient.name),
     );
     if (!food) continue;
+    nutrientSourceSnapshots.push(captureNutrientSource({sourceId:`fdc:${food.fdcId}`,sourceVersion:`${food.dataType}:${food.retrievedAt}`,sourceUrl:food.url,ingredient:ingredient.name,grams:ingredient.grams,per100g:food.per100g}));
     scaled.push({
       grams: ingredient.grams,
       foodNutrients: Object.entries(food.per100g)
@@ -55,6 +58,7 @@ export function lookupSnapshotNutrition(ingredients: Ingredient[], roundAmounts 
     });
   }
   return {
+    nutrientSourceSnapshots,
     nutrients: scaleDatabaseNutrients(scaled, ingredients.length, roundAmounts),
     foodMatches: matches,
     warnings: [

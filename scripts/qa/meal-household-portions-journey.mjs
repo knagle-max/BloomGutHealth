@@ -31,6 +31,7 @@ try{
  await page.getByText('Matched USDA nutrient fields use these definitions when a value is available. The definitions do not fill a missing amount or identify every chemical form.',{exact:true}).waitFor();
  assert.ok((await page.locator('body').innerText()).includes('not dietary folate equivalents (DFE)'));
  assert.equal(await forms.evaluate(el=>el.getBoundingClientRect().height>=44),true);
+ await page.getByRole('heading',{name:'Original generic source values',exact:true}).waitFor();assert.equal(await page.getByText('Per100g source amount',{exact:true}).count(),1);assert.equal(await page.getByRole('link',{name:/^Original food source for /}).evaluate(el=>el.getBoundingClientRect().height>=44),true);
  await openIngredientRow(page,1);
  assert.match(await page.getByLabel('Portion unit 1',{exact:true}).inputValue(),whole?/^1 large pizza/:/slice/);
  assert.equal(await page.getByLabel('Portion quantity 1',{exact:true}).inputValue(),whole?'0.5':'2');
@@ -61,6 +62,7 @@ try{
  assert.equal(saved.intelligence.ingredients[0].household.quantity,3);
  assert.equal(saved.intelligence.ingredients[0].household.selected,large);
  assert.equal(saved.intelligence.ingredients[0].grams,372);
+ assert.ok(saved.intelligence.nutrientSourceSnapshots.length>0);assert.equal(saved.intelligence.nutrientSourceSnapshots[0].reviewedGrams,372);assert.equal(saved.intelligence.nutrientSourceSnapshots[0].values.length,21);
  for(const width of [320,390]){
   await page.setViewportSize({width,height:950});
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);

@@ -97,6 +97,7 @@ export interface FoodMatch {
   needsConfirmation: boolean;
 }
 export interface MealIntelligence {
+  nutrientSourceSnapshots?:import("./nutrient-source-snapshot").NutrientSourceSnapshot[];
   nutritionCalculationVersion?: "2026-11-04";
   portionModelVersion?: "2026-10-18" | "2026-10-18.2";
   parserNotice?: string;

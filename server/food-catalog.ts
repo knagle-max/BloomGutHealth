@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
+import {captureNutrientSource,type NutrientSourceSnapshot} from "../shared/nutrient-source-snapshot";
 import {
   scaleDatabaseNutrients,
   type Ingredient,
@@ -277,6 +278,7 @@ export function estimateCatalogueIngredient(input: Ingredient): Ingredient {
   };
 }
 export function lookupCatalogueNutrition(ingredients: Ingredient[], roundAmounts = true) {
+  const nutrientSourceSnapshots:NutrientSourceSnapshot[]=[];
   const foodMatches: MealIntelligence["foodMatches"] = [],
     foods: Array<{
       grams: number;
@@ -291,6 +293,7 @@ export function lookupCatalogueNutrition(ingredients: Ingredient[], roundAmounts
         f.description.slice(0, 120) === ingredient.name,
     );
     if (!food) continue;
+    nutrientSourceSnapshots.push(captureNutrientSource({sourceId:`fdc:${food.fdcId}`,sourceVersion:"FNDDS-2021-2023",sourceUrl:`https://fdc.nal.usda.gov/food-details/${food.fdcId}/nutrients`,ingredient:ingredient.name,grams:ingredient.grams,per100g:food.per100g}));
     foodMatches.push({
       ingredient: ingredient.name,
       grams: ingredient.grams,
@@ -308,6 +311,7 @@ export function lookupCatalogueNutrition(ingredients: Ingredient[], roundAmounts
     });
   }
   return {
+    nutrientSourceSnapshots,
     foodMatches,
     nutrients: scaleDatabaseNutrients(foods, ingredients.length, roundAmounts),
     warnings: [

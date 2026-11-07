@@ -10,5 +10,5 @@ function stable(value:unknown):unknown{
 }
 export function mealReviewRevision(userId:string,result:Analysis){
  const i=result.intelligence;
- return createHash("sha256").update(JSON.stringify(stable({userId,ingredients:i.ingredients,nutrients:i.nutrients,foodMatches:i.foodMatches,productDetails:i.productDetails||[],status:i.status,pathways:i.pathways,sources:i.sources,nutritionalData:result.nutritionalData.map(({name,...facts}:any)=>facts)}))).digest("hex");
+  return createHash("sha256").update(JSON.stringify(stable({userId,ingredients:i.ingredients,nutrients:i.nutrients,nutrientSourceSnapshots:i.nutrientSourceSnapshots||[],foodMatches:i.foodMatches,productDetails:i.productDetails||[],status:i.status,pathways:i.pathways,sources:i.sources,nutritionalData:result.nutritionalData.map(({name,...facts}:any)=>facts)}))).digest("hex");
 }

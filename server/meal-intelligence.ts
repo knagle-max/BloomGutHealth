@@ -67,12 +67,13 @@ export function estimateLoggedIngredients(text: string): Ingredient[] {
 function mergeNutrition(
   a: ReturnType<typeof lookupSnapshotNutrition>,
   aCount: number,
-  b: ReturnType<typeof lookupSnapshotNutrition>,
+  b: Omit<ReturnType<typeof lookupSnapshotNutrition>,"nutrientSourceSnapshots">&Partial<Pick<ReturnType<typeof lookupSnapshotNutrition>,"nutrientSourceSnapshots">>,
   bCount: number,
   totalCount: number,
   roundAmounts = true,
 ) {
   return {
+    nutrientSourceSnapshots:[...(a.nutrientSourceSnapshots??[]),...(b.nutrientSourceSnapshots??[])],
     foodMatches: [...a.foodMatches, ...b.foodMatches],
     warnings: [
       ...a.warnings.filter((w) => !w.startsWith("Some ingredients")),
@@ -406,6 +407,9 @@ export async function analyzeMeal(
       ) {
         // Never mix partial USDA totals with a different provider's meal totals.
         intelligence.status = "provider-estimate";
+        // Partial generic sources must never appear as the source of a
+        // replacement provider's consumed totals.
+        intelligence.nutrientSourceSnapshots=[];
         intelligence.provider = "API Ninjas";
         intelligence.warnings.push(
           "Provider portions are estimates; review quantities. Partial USDA matches are shown separately and are not added to these totals.",
