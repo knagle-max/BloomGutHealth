@@ -56,3 +56,7 @@ The right architecture is proportional: not every button needs AI, and some task
 4. **All future v0.5 and v0.6 development**: apply A–E as persistent developer standard. Where later ML R&D produces scientifically borderline outputs, compute in permitted shadow, expose only to server-privileged experimental users, keep public medically constrained, without shrinking engineering ambition.
 
 **Owner expectation:** Fewer user-reported basic failures, fewer brittle parser-only rewrites, more capability-complete slices with honest fallback and functioning workflows. No engineering process can guarantee zero rework, but these tests and acceptance definitions materially reduce foreseeable misalignment.
+
+## Specific reusable local AI requirement — 2026-11-06
+
+`BLOOM-LOCAL-AI-01` (`docs/architecture/BLOOM_LOCAL_AI_01_SHARED_ON_DEVICE_INTELLIGENCE_2026-11-06.md`) is the binding v0.6 evaluation/conditional promotion contract across free-text Food, Exercise and Lifestyle. The intended complete feature is not merely a collection of separate regex fallbacks **nor** a mandatory third-party LLM. Prefer a single tested on-device schema-validated inference interface where it genuinely improves held-out interpretations, user review, device/browser performance and privacy; otherwise retain accurate baseline/manual flows and explicitly label unsupported modes. No rollout from simulator-only or synthetic-only pass; physical iPhones, battery/memory/download/latency and complete save/reload are required for iPhone support claims.
