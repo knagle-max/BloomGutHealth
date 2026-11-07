@@ -1,10 +1,11 @@
+import{MicrobiomeFoodReason,useMicrobiomeFoodSetting}from'./MicrobiomeFoodPreferences';
 import {quantityFromCanonical,quantityToCanonical} from "@shared/display-units";
 import { recipeDisplayName } from "@/lib/recipe-display";
 import { useExperience } from "@/lib/experience";
 import { energyAmount, foodMass, nutrientDisplay } from "@shared/nutrition-display";
 import { recipePreparation } from "@shared/recipe-preparation";
 import MetaboliteResearch from "./MetaboliteResearch";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { Link } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -44,12 +45,18 @@ const rounded = (v: number | null | undefined) =>
   v == null ? "Unavailable" : Math.round(v * 10) / 10;
 export default function WeeklyPlanner() {
   const { settings } = useExperience();
+  const foodSetting=useMicrobiomeFoodSetting();
   const units = settings.displayUnits;
   const [request, setRequest] = useState<WeeklyRequest>(defaults);
   const [display, setDisplay] = useState<WeeklyPlan | null>(null);
   const [message, setMessage] = useState("");
   const historicalOutput = (display as (WeeklyPlan & {historicalOutput?:{withheld:boolean;recordedMeals:number}}) | null)?.historicalOutput;
   const [historicalSavedAt, setHistoricalSavedAt] = useState<string | null>(null);
+  useEffect(()=>{
+    if(!display||historicalSavedAt)return;
+    const proof=display.inputGuard?.microbiomeFood,data=foodSetting.query.data;
+    if(proof&&(foodSetting.query.fetchStatus!=='idle'||foodSetting.query.isError||foodSetting.query.isStale||!data||proof.settingRevision!==data.revision||proof.reportId!==(data.control.enabled?data.source?.id||null:null)||proof.reportRevision!==(data.control.enabled?data.source?.revision||null:null))||!proof&&data?.control.enabled&&data.source){setDisplay(null);setMessage('Report food preferences or source changed. Rebuild and review the plan before saving.');}
+  },[display,historicalSavedAt,foodSetting.query.data,foodSetting.query.fetchStatus,foodSetting.query.isError,foodSetting.query.isStale]);
   const [aiConsent, setAIConsent] = useState(false),
     [recipeRequest, setRecipeRequest] = useState("");
   const saved = useQuery<PrecisionRecord[]>({
@@ -81,6 +88,7 @@ export default function WeeklyPlanner() {
           "POST",
           "/api/precision/weekly-plans/save",
           display!.request,
+          display!.inputGuard?.microbiomeFood?{'X-Bloom-Plan-Food-Source':JSON.stringify(display!.inputGuard.microbiomeFood),'X-Bloom-Plan-Actor':foodSetting.user!.id}:undefined,
         )
       ).json(),
     onSuccess: () => {
@@ -476,6 +484,7 @@ export default function WeeklyPlanner() {
                   ? "targets met"
                   : "review targets"}
               </summary>
+              {d.microbiomeFood&&<MicrobiomeFoodReason trace={d.microbiomeFood}/>}
               <ul className="list-disc pl-5">
                 {d.checks.map((c) => {
                   const unit = c.key === "calories" ? "kcal" : "";

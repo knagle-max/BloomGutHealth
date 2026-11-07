@@ -23,7 +23,7 @@
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "1341ddba8ddf0c969e6c2e6ea518e9108f9e57d00a49d6baeebfe66594e4521f",
-    "server/precision-routes.ts": "d4417705d7b86cf3d5079635a17a3a5b159d4d9c48a5cac60340d558da486e81",
+    "server/precision-routes.ts": "6ec3928aa11d34be50be73f0e53ef6e1112c9bda51470a9e2355212e4fde79a9",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "3da2b5b82a13f63ed7af86dfb02e971331e7065e3ab3ad533d03b9b137258719",
     "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
@@ -682,7 +682,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 490,
+      "line": 500,
       "method": "GET",
       "path": "/api/precision",
       "declaredMiddleware": [],
@@ -690,7 +690,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 506,
+      "line": 516,
       "method": "PUT",
       "path": "/api/precision/context",
       "declaredMiddleware": [],
@@ -698,7 +698,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 518,
+      "line": 528,
       "method": "POST",
       "path": "/api/precision/labs/import",
       "declaredMiddleware": [],
@@ -706,7 +706,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 535,
+      "line": 545,
       "method": "POST",
       "path": "/api/precision/records",
       "declaredMiddleware": [],
@@ -714,7 +714,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 571,
+      "line": 581,
       "method": "POST",
       "path": "/api/precision/labs/:id/confirm-unit",
       "declaredMiddleware": [],
@@ -722,7 +722,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 595,
+      "line": 605,
       "method": "POST",
       "path": "/api/precision/plans",
       "declaredMiddleware": [],
@@ -730,7 +730,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 635,
+      "line": 645,
       "method": "POST",
       "path": "/api/precision/labs/:id/correct-date",
       "declaredMiddleware": [],
@@ -738,7 +738,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 649,
+      "line": 659,
       "method": "GET",
       "path": "/api/precision/genetics/sources",
       "declaredMiddleware": [],
@@ -746,7 +746,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 653,
+      "line": 663,
       "method": "GET",
       "path": "/api/precision/genetics/sources/:id",
       "declaredMiddleware": [],
@@ -754,7 +754,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 670,
+      "line": 680,
       "method": "POST",
       "path": "/api/precision/genetics/active",
       "declaredMiddleware": [],
@@ -762,7 +762,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 671,
+      "line": 681,
       "method": "DELETE",
       "path": "/api/precision/genetics/sources/:id",
       "declaredMiddleware": [],
@@ -770,7 +770,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 672,
+      "line": 682,
       "method": "GET",
       "path": "/api/precision/microbiome-food",
       "declaredMiddleware": [],
@@ -778,7 +778,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 673,
+      "line": 683,
       "method": "PUT",
       "path": "/api/precision/microbiome-food",
       "declaredMiddleware": [],
@@ -786,7 +786,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 680,
+      "line": 690,
       "method": "GET",
       "path": "/api/precision/labs/sources",
       "declaredMiddleware": [],
@@ -794,7 +794,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 681,
+      "line": 691,
       "method": "DELETE",
       "path": "/api/precision/labs/sources/:id",
       "declaredMiddleware": [],
@@ -802,7 +802,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 688,
+      "line": 698,
       "method": "DELETE",
       "path": "/api/precision/labs/:id/entry",
       "declaredMiddleware": [],
@@ -810,7 +810,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 701,
+      "line": 711,
       "method": "DELETE",
       "path": "/api/precision/records/:id",
       "declaredMiddleware": [],
@@ -818,7 +818,7 @@
     },
     {
       "file": "server/precision-routes.ts",
-      "line": 714,
+      "line": 724,
       "method": "DELETE",
       "path": "/api/precision",
       "declaredMiddleware": [],

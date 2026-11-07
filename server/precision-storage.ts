@@ -158,6 +158,12 @@ export class PrecisionStorage {
       }
 
       if (kind === "plan" && plan?.type === "weekly-plan") {
+        if(plan.inputGuard?.microbiomeFood){
+          const expected=plan.inputGuard.microbiomeFood;
+          if(expected.reportId)await tx.select({id:microbiomeSamples.id}).from(microbiomeSamples).where(and(eq(microbiomeSamples.userId,userId),eq(microbiomeSamples.id,expected.reportId))).for('share');
+          const current=await new PrecisionStorage(tx).getMicrobiomeFood(userId);
+          if(current.revision!==expected.settingRevision||expected.reportId!==(current.control.enabled?current.source?.id||null:null)||expected.reportRevision!==(current.control.enabled?current.source?.revision||null:null))throw Error("PRECISION_INPUTS_CHANGED");
+        }
         const [profile] = await tx
           .select()
           .from(precisionProfiles)

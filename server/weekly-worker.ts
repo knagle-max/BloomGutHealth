@@ -5,6 +5,7 @@ try {
     workerData.input,
     workerData.preferences,
     workerData.report,
+    workerData.influence,
   );
   parentPort!.postMessage({ ok: true, plan });
 } catch (error) {

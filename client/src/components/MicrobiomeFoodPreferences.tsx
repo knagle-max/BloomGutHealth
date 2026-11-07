@@ -7,11 +7,11 @@ import{resetPlanningInputs}from'@/lib/planning-cache';
 import type{MicrobiomeFoodControl,MicrobiomeFoodSource,MicrobiomeFoodTrace}from'@shared/microbiome-food-influence';
 import{Button}from'./ui/button';
 type Setting={control:MicrobiomeFoodControl;revision:string;sources:MicrobiomeFoodSource[];source:MicrobiomeFoodSource|null};
-function useSetting(){const{user}=useAuth();return{user,query:useQuery<Setting>({queryKey:['/api/precision/microbiome-food',user?.id],enabled:!!user,queryFn:async({signal})=>{const data=await(await apiRequest('GET','/api/precision/microbiome-food',undefined,undefined,signal)).json();if(!data||!Array.isArray(data.sources)||!data.control||typeof data.revision!=='string')throw Error('Unconfirmed food preferences');return data;}})};}
+export function useMicrobiomeFoodSetting(){const{user}=useAuth();return{user,query:useQuery<Setting>({queryKey:['/api/precision/microbiome-food',user?.id],enabled:!!user,queryFn:async({signal})=>{const assertOwner=accountContextGuard(user!.id);const data=await(await apiRequest('GET','/api/precision/microbiome-food',undefined,undefined,signal)).json();assertOwner();if(!data||!Array.isArray(data.sources)||!data.control||typeof data.revision!=='string')throw Error('Unconfirmed food preferences');return data;}})};}
 const command=(control:MicrobiomeFoodControl)=>({enabled:control.enabled,reportId:control.reportId,reportRevision:control.reportRevision,ignoredFoodIds:control.ignoredFoodIds});
 async function save(owner:string,setting:Setting,control:MicrobiomeFoodControl){const guard=accountContextGuard();await apiRequest('PUT','/api/precision/microbiome-food',{control:command(control),revision:setting.revision,confirmed:true},{'X-Bloom-Food-Actor':owner});guard();await resetPlanningInputs();}
 export default function MicrobiomeFoodPreferences(){
- const{user,query}=useSetting();const[enabled,setEnabled]=useState(false),[id,setId]=useState(''),[dirty,setDirty]=useState(false),[basis,setBasis]=useState(''),[pending,setPending]=useState(false),[error,setError]=useState(''),[clearIgnored,setClearIgnored]=useState(false);
+ const{user,query}=useMicrobiomeFoodSetting();const[enabled,setEnabled]=useState(false),[id,setId]=useState(''),[dirty,setDirty]=useState(false),[basis,setBasis]=useState(''),[pending,setPending]=useState(false),[error,setError]=useState(''),[clearIgnored,setClearIgnored]=useState(false);
  const data=query.fetchStatus==='idle'&&!query.isError?query.data:undefined;
  useEffect(()=>{setDirty(false);setEnabled(false);setId('');setBasis('');setError('');setClearIgnored(false);},[user?.id]);
  useEffect(()=>{if(data&&!dirty){setEnabled(data.control.enabled);setId(data.control.reportId||'');setBasis(data.revision);setClearIgnored(false);}},[data,dirty]);
@@ -30,7 +30,7 @@ export default function MicrobiomeFoodPreferences(){
  </section>;
 }
 export function MicrobiomeFoodReason({trace}:{trace:MicrobiomeFoodTrace}){
- const{user,query}=useSetting();const[pending,setPending]=useState(false),[error,setError]=useState('');
+ const{user,query}=useMicrobiomeFoodSetting();const[pending,setPending]=useState(false),[error,setError]=useState('');
  const current=!query.isError&&query.fetchStatus==='idle'&&query.data?.control.enabled&&query.data.source?.id===trace.reportId&&query.data.source?.revision===trace.reportRevision;
  if(!current)return null;
  async function change(ignore:boolean){if(!user||!query.data)return;const guard=accountContextGuard();setPending(true);setError('');try{await save(user.id,query.data,{...query.data.control,...(ignore?{ignoredFoodIds:Array.from(new Set([...query.data.control.ignoredFoodIds,...trace.matches.map(match=>match.foodId)]))}:{enabled:false})});}catch{try{guard();setError('The report preference could not be confirmed. Review your saved setting.');await query.refetch();}catch{/* Account changed. */}}finally{setPending(false);}}

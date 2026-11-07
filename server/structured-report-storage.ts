@@ -1,9 +1,10 @@
+import{decryptPrecision}from'./precision-crypto';
 import{reportDeletionRevision}from"./report-records";
 import{ReportDeletionConflict,viomeRelationshipCommandSchema,type ViomeRelationshipCommand,type ViomeRelationshipResult}from"../shared/report-management";
 import {createHash,randomUUID} from 'node:crypto';
 import {and,eq,ne,inArray,asc,sql} from 'drizzle-orm';
 import {z} from 'zod';
-import {microbiomeSamples,bacterialComposition,mlAnalyses,metabolites,healthImpacts,recommendations} from '../shared/schema';
+import {microbiomeSamples,bacterialComposition,mlAnalyses,metabolites,healthImpacts,recommendations,precisionRecords} from '../shared/schema';
 import {reportImportIdentity,ReportSaveConflict,parseStructuredReport,type StructuredReport,type ReportImportFields,type ReportSaveResult} from '../shared/structured-report';
 import {saveStructuredReport} from './report-routes';
 import {assertViomeImportMetadata} from '../shared/viome-findings';
@@ -85,6 +86,14 @@ export async function deleteOwnedMicrobiomeReport(db:any,userId:string,id:string
   await tx.delete(metabolites).where(eq(metabolites.sampleId,id));
   await tx.delete(bacterialComposition).where(eq(bacterialComposition.sampleId,id));
   await tx.delete(mlAnalyses).where(eq(mlAnalyses.sampleId,id));
+  // Older report-only installations may not have the optional precision store.
+  // Where it exists, erase only plans explicitly bound to this owned food source.
+  const precisionTable=await tx.execute(sql`SELECT to_regclass('precision_records') IS NOT NULL AS available`);
+  if(precisionTable.rows?.[0]?.available){
+   const plans=await tx.select({id:precisionRecords.id,payload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,'plan')));
+   const dependent=plans.flatMap((row:any)=>{const plan=decryptPrecision(row.payload,userId)as any;return plan?.type==='weekly-plan'&&plan.inputGuard?.microbiomeFood?.reportId===id?[row.id]:[];});
+   if(dependent.length)await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),inArray(precisionRecords.id,dependent)));
+  }
   await tx.delete(microbiomeSamples).where(and(eq(microbiomeSamples.id,id),eq(microbiomeSamples.userId,userId)));return true;
  });
 }

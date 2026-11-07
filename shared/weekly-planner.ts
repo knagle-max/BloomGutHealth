@@ -1,3 +1,4 @@
+import{applyMicrobiomeFoodInfluence,microbiomeFoodPlanningGuard,type MicrobiomeFoodPlanning,type MicrobiomeFoodTrace}from'./microbiome-food-influence';
 import {intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import {foodCategory as category,foodPreferenceMatches} from "./food-preference-policy";
 import { z } from "zod";
@@ -424,6 +425,7 @@ export function buildWeeklyPlan(
   input: WeeklyRequest,
   prefs: DietaryPreferences,
   report: PrecisionReport,
+  influence?:MicrobiomeFoodPlanning,
 ) {
   const parsed = weeklyRequestSchema.parse(input),
     eligible = eligiblePlanningRecipes(
@@ -475,6 +477,7 @@ export function buildWeeklyPlan(
     goals: Array.from(new Set([...report.context.goals, ...prefs.goals])),
     biologicalEvidence: priorities,
     inputGuard: {
+      ...(influence?{microbiomeFood:microbiomeFoodPlanningGuard(influence)}:{}),
       context: report.context,
       preferences: prefs,
       sourceRecordIds: Array.from(
@@ -655,7 +658,10 @@ export function buildWeeklyPlan(
         parsed.nutrientTargets,
       ).every((c) => c.passed),
     );
-    let best = (valid.length ? valid : beam)[0];
+    const baseline=valid.length?valid:beam;
+    const ranked=valid.length?applyMicrobiomeFoodInfluence(valid.map(state=>({id:JSON.stringify(state.meals.map(meal=>[meal.recipeId,meal.portion])),ingredients:state.meals.flatMap(meal=>meal.recipe.ingredients),state})),influence?.control,influence?.source||null,row=>String(row.state.score)):[];
+    let best=ranked[0]?.state||baseline[0];
+    let microbiomeFood:MicrobiomeFoodTrace|undefined=ranked[0]?.microbiomeFood;
     const locksForDay = Object.entries(parsed.locked).filter(([key]) =>
       key.startsWith(`d${day}-`),
     );
@@ -671,6 +677,7 @@ export function buildWeeklyPlan(
         ),
       )
     ) {
+      microbiomeFood=undefined;
       best = {
         meals: feasibleBaseline.map((m) => ({
           ...m,
@@ -702,6 +709,7 @@ export function buildWeeklyPlan(
     const nutrients = totals(best.meals);
     return {
       day: day + 1,
+      ...(microbiomeFood?{microbiomeFood}:{}),
       meals: best.meals,
       nutrients,
       checks: dailyChecks(nutrients, parsed.targets, parsed.nutrientTargets),

@@ -1,3 +1,11 @@
+## 2026-11-07 — Weekly report-food ties, source-bound review/save and erasure
+
+Extended the original local worker with the one provider resolver only across equal-score feasible daily candidates. Goals/constraints/locks/portions and provider-free canonical report/AI context remain. Day-level source Why reused. Fixed the preview/save gap: source/Off changes retract a live preview; reviewed source+setting proof and actor are required for source-enabled saving, and encrypted insertion revalidates under account/source locks. Known owned source-bound plans are erased by canonical Microbiome deletion; report-only schema compatibility/independent and foreign history retained.
+
+2 new selection/storage tests and27 focused/types/build PASS. Actual App→HTTP→local worker→encrypted SQL source selection/Why/save/history/rebuild/Off/stale-proof/actor/source deletion/no-source/owner/320390dark PASS. Weekly kJ/oz/unknown-zero/canonical writes/metric preference/reflow regression PASS after correcting an obsolete harness attempt to save a historical snapshot. Full607/607 checkpoint PASS247058.20ms. Source219/API114+13; no new migration, infra, AI sharing, independent Design/physical acceptance or real-user mutation.
+
+Previous Biology5fbea01b367320f1c272c8c3564aed57c71ece40 is pushed;605/605 full PASS233055.54ms. One metadata check:CI42313041136 in_progress;Renderdep-dbn68ue7bikc738ego90 update_in_progress that SHA.
+
 ## 2026-11-06 — My Biology report-food display
 
 The same resolver now decorates only the existing authenticated Biology GET response. Independent priority/taste tiers stay ahead of source opinion; broad preparation-unknown foods abstain. Existing Why/Ignore/Off reused; optional source read failure returns baseline. Core reportFor/AI inputs/hard-constrained optimizers/historical snapshots stay provider-free. Corrected misleading copy that implied common variants affect meal rank.2 new tests +24 focused/types/build and actual Biology App/HTTP/encrypted native source/control/account/reload/withdrawal/mobile/dark PASS. Full coherent605/605 checkpoint PASS233055.54ms; no production data or independent approval.

@@ -1,4 +1,4 @@
-import{reportFoodDisplay}from'../shared/microbiome-food-influence';
+import{reportFoodDisplay,microbiomeFoodPlanningGuard,microbiomeFoodPlanningGuardSchema}from'../shared/microbiome-food-influence';
 import{geneticSourceCommandSchema,GENETIC_SOURCE_CONFIRM,GeneticSourceError}from"../shared/genetic-source-selection";
 import{isSensitiveGeneticCall}from"../shared/genetic-selection";
 import {reportDateContext} from "../shared/report-dates";
@@ -452,10 +452,20 @@ export function registerPrecisionRoutes(
         const report = await reportFor(userId);
         const user = await store.getUser(userId);
         const saved = preferenceSchema.safeParse(user?.dietaryPreferences);
+        const influence=store.getMicrobiomeFood?await store.getMicrobiomeFood(userId).catch(()=>undefined):undefined;
+        if(action==='save'){
+          const proof=req.get('X-Bloom-Plan-Food-Source');
+          if(proof){
+            let parsedProof;try{parsedProof=microbiomeFoodPlanningGuardSchema.safeParse(JSON.parse(proof));}catch{return res.status(400).json({error:'Review the current source context before saving.'});}
+            if(!parsedProof.success)return res.status(400).json({error:'Review the current source context before saving.'});
+            if(req.get('X-Bloom-Plan-Actor')!==userId||!influence||JSON.stringify(parsedProof.data)!==JSON.stringify(microbiomeFoodPlanningGuard(influence)))return res.status(409).json({error:'Report food preferences or source changed. Rebuild and review the plan before saving.'});
+          }else if(influence?.control.enabled&&influence.source)return res.status(409).json({error:'Review a current plan with its report source before saving.'});
+        }
         const plan = await runWeeklyPlanning(
           parsed.data,
           saved.success ? saved.data : defaultPreferences,
           report,
+          influence,
         );
         if (action === "save") {
           if (!plan.checksPassed)

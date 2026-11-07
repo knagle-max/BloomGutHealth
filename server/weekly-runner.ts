@@ -1,3 +1,4 @@
+import type{MicrobiomeFoodPlanning}from'../shared/microbiome-food-influence';
 import { Worker } from "node:worker_threads";
 import { fileURLToPath } from "node:url";
 import type { WeeklyRequest, WeeklyPlan } from "../shared/weekly-planner";
@@ -9,6 +10,7 @@ export async function runWeeklyPlanning(
   input: WeeklyRequest,
   preferences: DietaryPreferences,
   report: PrecisionReport,
+  influence?:MicrobiomeFoodPlanning,
 ): Promise<WeeklyPlan> {
   if (active >= 2) throw Error("PLANNING_BUSY");
   active++;
@@ -31,7 +33,7 @@ export async function runWeeklyPlanning(
     }
     return await new Promise<WeeklyPlan>((resolve, reject) => {
       const options = {
-        workerData: { input, preferences, report },
+        workerData: { input, preferences, report,influence },
         execArgv: [],
         resourceLimits: { maxOldGenerationSizeMb: 128 },
       };

@@ -1,3 +1,4 @@
+import{z}from'zod';
 import type{PrecisionReport}from'./precision-nutrition';
 import{tasteMatches}from'./food-preference-policy';
 import{snapshotFoods}from'./food-snapshot';
@@ -45,3 +46,8 @@ export function reportFoodDisplay<T extends PrecisionReport>(report:T,control:Mi
  const foods=applyMicrobiomeFoodInfluence(report.foods.map(food=>({id:food.id,ingredients:[{name:food.name}],food})),control,source,row=>String(row.food.priority)).map(row=>({...row.food,...(row.microbiomeFood?{microbiomeFood:row.microbiomeFood}:{})}));
  return{...report,recommendations,foods};
 }
+
+export type MicrobiomeFoodPlanning={control:MicrobiomeFoodControl;source:MicrobiomeFoodSource|null;revision:string};
+
+export const microbiomeFoodPlanningGuardSchema=z.object({settingRevision:z.string().regex(/^[a-f0-9]{64}$/),reportId:z.string().min(1).max(200).nullable(),reportRevision:z.string().regex(/^[a-f0-9]{64}$/).nullable()}).strict();
+export function microbiomeFoodPlanningGuard(influence:MicrobiomeFoodPlanning){return{settingRevision:influence.revision,reportId:influence.control.enabled?influence.source?.id||null:null,reportRevision:influence.control.enabled?influence.source?.revision||null:null};}
