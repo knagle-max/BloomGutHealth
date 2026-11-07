@@ -2,6 +2,12 @@
 
 Stay on `enhance/bloom-experience`, PR1 and existing Render review preview. Routine commit/push/preview authorized; preserve main/other contributors. No paid infrastructure, production data/schema writes, secret discovery or unapproved private-data transfer. Continue after milestones; no repetitive final acknowledgments.
 
+## UI overhaul — owner priority,2026-11-07
+
+Pause independent v0.6 expansion and implement approved UI/UX direction across existing screens. Start shared route art direction; retain actual workflows, canonical stores, source/unknown states and brand identity.
+
+V0.6 paused at uncommitted recorded nutrient observations/disclosure: named Git stash (message starts `Paused v0.6 recorded nutrient observations`).10 focused tests, TypeScript/build passed; actual generic review→save→SQL→history/reload passed up to final390px/dark/200% overflow assertion, which FAILED. Actor-after-save tail not reached. This work is NOT published/complete. Resume by inspecting overflow, not rerunning prior implementation. Source snapshot/record time are estimates, no adequacy engine.
+
 ## Current source state
 
 - Latest publishedb9409458813388d486f36aac17303382f6c07e0f: compatible shared paint + actual Explore200% wrap fix.48 viewport/theme states retain exact visible geometry/order/fonts; intended material text contrast8.59/6.04;8 focused/types/build/source+real Explore tests. LIVEdep-dbnnmc5g1s2s73fp0qf0; hosted CI42406156542 in_progress at check. Priorc61dd63 worker-contract CI42404425160 SUCCESS.
@@ -10,7 +16,7 @@ Stay on `enhance/bloom-experience`, PR1 and existing Render review preview. Rout
 
 ## Execute next
 
-1. Publish the current three-family cited organism-context increment, merging any incoming owner changes without resetting. Then select the next independent meaningful engineering slice below; do not stop after a commit/status report.
+1. UI overhaul is now the owner priority. Three-family cited context7ed4ef6 is already committed; do not republish/reimplement it. Publish the verified first shared visual pass, then inspect actual route-specific UI deltas against approved UX, prioritizing Food/active Athlete/Today/Biology. Keep v0.6 stash untouched until UI work is complete or owner redirects.
 2. Visual lane intake is now reconciled: proposed paint-only amendment supersedes structural illustrations. Compatible material subset and actual Explore200% bug fix are implemented/tested; preserve current hierarchy/brand/typography/CTA behavior. Remaining proposed charts/icons/structural sketches are not evidence of a new approved layout. No interim review stop.
 3. BLOOM-LOCAL-AI-01 full P0 remains open. Candidate asset access is now a recorded scoped dependency: public Hugging Face card request failed proxyCONNECT403; no weights/packages/licence verified, runtime request_changes unavailable. See LOCAL-MODEL-ASSET-ACCESS in BLOCKED_USER_INPUT for exact maintainer options. Do not repeat unchanged probes or bypass policy. Continue other work while access/pinned offline bundle is unavailable. When available, select/licence/pin a real candidate, genuine inference worker/runtime and domain adapters, explicit download/unload, independent held-out comparison and actual supported-device measurements. No physical-iPhone/model quality acceptance invented; no external prompt transfer. Current contract is source fidelity only, not proof of semantic association.
 4. M1 micronutrients: actual local generic raw source snapshots now bind review/save/SQL/replay and source-zero estimate versus unknown. Continue source-native label/live observation forms/state, immutable corrections, then verified Canadian authority/life-stage EAR/RDA/AI/UL/CDRR and confirmed taken supplements. Reuse canonical summaries/events; no new totals engine, guessed equivalent/dose or deficiency inference. Full M1–M5 open.

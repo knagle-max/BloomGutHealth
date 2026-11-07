@@ -1895,7 +1895,7 @@
     "client/src/lib/useStructuredReportSave.ts": "812af766d3fe60c15323c9d17ed565891291cbb3726978d7d1805f5f09265cbb",
     "client/src/lib/viome-pdf-reader.ts": "8a780c44790652e05c307ea931d127b09671eed34dd67972c0472faa7e7cceb7",
     "client/src/lib/wellness-choices.ts": "0f3ec9292f19dd8415d79dbf825e378cadc99e66c92f9c906cdce4576fc1e801",
-    "client/src/main.tsx": "669d3ec71aa1f8a87c84023c4ab811ef1fdd1d5a0c12efc4b860df04dec8aa91",
+    "client/src/main.tsx": "b681262614c674e2a853746e04bb5e8b65e2bd58e784ff5b9ef7c1e0ae0a0f00",
     "client/src/pages/ActivityLog.tsx": "1d6c40af714d40bbee979b86001252cc39891a14c41773208d3d528f36b19e44",
     "client/src/pages/AthleteWorkspace.tsx": "91dbe5504241dfb32de88b1d6f3353a79dd3287fb6f56c7f957550d3a32e91f2",
     "client/src/pages/Dashboard.tsx": "2bd4e867a6aa11827d094327b759a914fe60654dca0b7e4926fd007d3707595b",
