@@ -93,7 +93,9 @@
           "client/src/pages/PrecisionNutrition.tsx",
           "client/src/components/CompanionHero.tsx",
           "client/src/components/BiologyHome.tsx",
-          "client/src/components/LabSourceContext.tsx"
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/WellnessChoiceDetails.tsx",
+          "client/src/lib/wellness-choices.ts"
         ],
         "api": [
           "server/experience-routes.ts",
@@ -108,13 +110,16 @@
           "server/settings-source.ts",
           "shared/measurement-entry.ts",
           "shared/wellness-context.ts",
-          "server/wellness-context.ts"
+          "server/wellness-context.ts",
+          "shared/wellness-actions.ts",
+          "server/wellness-actions.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
           "shared/schema.ts",
-          "server/experience-storage.ts"
+          "server/experience-storage.ts",
+          "server/wellness-choice-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -1847,7 +1852,7 @@
     "client/src/components/QuickLabEntry.tsx": "094154aaa388d1eb959d8d06d1ac0f2962ae63f46c2c8cf040e210cd7425c984",
     "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
     "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
-    "client/src/components/TodayFocus.tsx": "759dfcd7775f421dfd65a78f3c63dc19a7cea10750342fa9fbdc93c387391863",
+    "client/src/components/TodayFocus.tsx": "1136da9f7e827900b1fff4967613b475dfea471534b43d156a3fab17bbdd8fdc",
     "client/src/components/TodayFoodSummary.tsx": "3428c58ec13dea4cefb64e596ff49d6f8060d9bc1057b8e697aa219cfcf5507a",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
     "client/src/components/TrainingSetsEditor.tsx": "c07fb2a9f9777369186b6046fb65095b0056ba8460dafaf9292d8352802a9e7b",
@@ -1855,6 +1860,7 @@
     "client/src/components/ViomeReviewEditor.tsx": "24b890f707d69e6efcb1eadd2b4147bf410497a462d13a7d8afea21c14845418",
     "client/src/components/ViomeSavedContext.tsx": "fdd47736eeffd78326362f135ee093cbab7ec62dec6617c53c526664fb69215d",
     "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
+    "client/src/components/WellnessChoiceDetails.tsx": "55193b53015e461448bbe8e85b6a4c173fa78a9df8c13b87b32423d514c21e0b",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
@@ -1862,12 +1868,13 @@
     "client/src/lib/lab-image-worker.ts": "76a621faecfeea685c734adfd59531c72cc956d0fb32a1f0cd83509c066b2838",
     "client/src/lib/lab-pdf-reader.ts": "f567e7ffbb7b5200e530ced63bb3ba547ea0f3de9fe4dc33a1988bb1a35c105f",
     "client/src/lib/meal-cache.ts": "89b4b11900ce88ff19fa74a4b6fa766c4a0fb6ee811e617c0ad1cfc235b6a557",
-    "client/src/lib/planning-cache.ts": "11495f7cad121f0923e901cefb2d4b379dfa25e9446f607e003fde3f31480bb3",
+    "client/src/lib/planning-cache.ts": "edadb696f635339a920ffb89247f215e203157e194d1ad3ea2de2f6f41b29f12",
     "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
     "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
     "client/src/lib/useDraftUnits.ts": "123386dddf9c88abda074a7bcf246526b0d9d6c6865ac5447fbdd06e3246fcc6",
     "client/src/lib/useStructuredReportSave.ts": "812af766d3fe60c15323c9d17ed565891291cbb3726978d7d1805f5f09265cbb",
     "client/src/lib/viome-pdf-reader.ts": "8a780c44790652e05c307ea931d127b09671eed34dd67972c0472faa7e7cceb7",
+    "client/src/lib/wellness-choices.ts": "0f3ec9292f19dd8415d79dbf825e378cadc99e66c92f9c906cdce4576fc1e801",
     "client/src/main.tsx": "0781a01105373347c8a7908507fa6155a522dae05a82e1f70a58758b98a0ecc3",
     "client/src/pages/ActivityLog.tsx": "1d6c40af714d40bbee979b86001252cc39891a14c41773208d3d528f36b19e44",
     "client/src/pages/AthleteWorkspace.tsx": "91dbe5504241dfb32de88b1d6f3353a79dd3287fb6f56c7f957550d3a32e91f2",
@@ -1876,7 +1883,7 @@
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
     "client/src/pages/LogMeal.tsx": "20a1cd53e1a6cf2583d2bfb0d52d665d821e0e49c9eeae8d62c3e3c815fd07f6",
-    "client/src/pages/MealPlanner.tsx": "5633526a79b3df24a0659f4e8fe979054c2b74db288dce4763371b3a632baeec",
+    "client/src/pages/MealPlanner.tsx": "6024f6405e22279fc7374af1fdb549976b4f4494450b7bbe0d8458c556476240",
     "client/src/pages/Microbiome.tsx": "d95aef1771dfbeeeb65c2f23827625762f5793a4318200b1e18bb314926bde44",
     "client/src/pages/NutritionHistory.tsx": "b6a8ee56b81fdd9fbc7602487d561b4f42ab648b59c4d6ce926a6b76251779e6",
     "client/src/pages/PlanDay.tsx": "407bd5a61b00bde5114b4966099f7882095b3ec4c3548dc92d80d7e8cb2f1d36",
@@ -1899,8 +1906,8 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "210b8305dbb5ba645dfee617cdb0b5cb3c3579acd1cfb273a36434c62d1bfb1a",
-    "server/experience-storage.ts": "dff879de6e73d492889bd2a4a60c859db8527ff0604fb3b9c956f5f7860b6e11",
+    "server/experience-routes.ts": "639b363ffbbc39f2a0a447aff718e643f9b8ebac9cde0c8120ac256b27d86120",
+    "server/experience-storage.ts": "6496762e5994aa010bc5cdf92bfa19da722daa3dd3b37b6c47fa587582000609",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -1943,12 +1950,14 @@
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
     "server/shared-rate-limit.ts": "7330ecb41868d6f444ac0a3f3a18cca8e9bdfc652966c0ea52c00ae94e9ba049",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "f6ec00dd1fc1f456af88cb2f3acf564f005530daba5f55372202602ea2b98dda",
+    "server/storage.ts": "11b71fade4f53263f836e1a9cae8d1f84e34ba6228f93895eccb7eea21dceedd",
     "server/structured-report-storage.ts": "42a1a776b78fdc33893a7a9417c3aa28d06ee85e53536e03388b02f9245d88c5",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
     "server/weekly-runner.ts": "eec5493ab25389816ecf6435f9a82f1949c8214af2d4bd398af295d921dc1252",
     "server/weekly-worker.ts": "da1967463b8ce42a53a73dde879b11d1b2087639392cc198baeb1fea513b01a2",
+    "server/wellness-actions.ts": "7c348c9f528a6cb5d075975c013f4909ca8b0a242f61adf493d7f8243b6c3511",
+    "server/wellness-choice-storage.ts": "a91a7d8d3c7ffa045f0468b513c3454dc15ae87acd24962392c0f465b9ff87fb",
     "server/wellness-context.ts": "7569388b8fbebb7274b2e6810ac9c643d7ed73c3255b0f8628a6a3b99f099fad",
     "shared/activity-capture.ts": "2c776d7d1593ac1826e525ae9e1200c3fa490272b950138b243d6dd85a748a41",
     "shared/activity.ts": "cb671b73a9ee131e86a75f05fafab0178ecffb78646fd7eba0865094dab49d5b",
@@ -2018,6 +2027,7 @@
     "shared/viome-pdf.ts": "59edbefd28553fec08c56a3fb2727c4f947edd416f62fbf09c0cb436eaea2bd9",
     "shared/viome-report-context.ts": "65b4431affd72af8ff17135c19f3a64b96f164a0d7656be9e3b779239fe7c966",
     "shared/weekly-planner.ts": "00638f351f2eb92a61e48873d70db4f4f2219bc3a8450b24f5387794d95fb90b",
+    "shared/wellness-actions.ts": "6a29390bb96a99d9489709925b7b2c3443261872210b6d47bd7265b06d395e00",
     "shared/wellness-context.ts": "751a13690e046e9765c44b7b5b71f5e9266138f5d50377938cf5abaa32353bb7"
   }
 }

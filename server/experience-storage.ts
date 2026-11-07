@@ -1,12 +1,15 @@
+import {WellnessChoiceStorage} from "./wellness-choice-storage";
+import {WellnessChoiceConflict} from "./wellness-actions";
+import type {WellnessDay,WellnessChoiceCommand,WellnessHistoryDelete} from "../shared/wellness-actions";
 import {mergeAthleteEntrySource} from "../shared/athlete-entry-capture";
 import {activityProjection} from "../shared/activity-capture";
-import {createHash} from "node:crypto";
+import {createHash,randomUUID} from "node:crypto";
 import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
-import { and, eq, desc, sql } from "drizzle-orm";
+import { and, eq, ne, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords,experimentVersions } from "../shared/schema";
-import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema,settingsPatchSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -20,13 +23,14 @@ export class ExperienceStorage {
  async putExperienceSettings(userId:string,patch:ExperienceSettingsPatch){return this.writeSettings(userId,patch);}
  async putExperienceSettingsIfCurrent(userId:string,patch:ExperienceSettingsPatch,revision:string){return this.writeSettings(userId,patch,revision);}
  private async writeSettings(userId:string, patch:ExperienceSettingsPatch,expectedRevision?:string) {
+  patch=settingsPatchSchema.parse(patch);
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const [r]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
    const current=experienceSettingsSchema.parse(r?decryptPrecision(r.encryptedPayload,userId):{});
    if(expectedRevision!==undefined&&settingsRevision(userId,current)!==expectedRevision)throw new SettingsRevisionConflict();
    const {athleteReviewFor,...values}=patch;
-   const next=experienceSettingsSchema.parse({...current,...values});
+   const next=experienceSettingsSchema.parse({...current,...values,lifecycleId:current.lifecycleId??randomUUID()});
    // Unaware practical forms must not erase an explicitly saved browsing region.
    if(patch.practical&&patch.practical.region===undefined&&current.practical.region!==undefined)next.practical.region=current.practical.region;
    if(patch.athlete){
@@ -38,14 +42,15 @@ export class ExperienceStorage {
   });
  }
  async getExperienceRecords(userId:string, kind?:ExperienceEntry["kind"]) {
-  const rows=await this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):eq(experienceRecords.userId,userId)).orderBy(desc(experienceRecords.updatedAt)).limit(2000);
+  const query=this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice")));
+  const rows=kind==="wellness-choice"?await query.orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(2000):await query.orderBy(desc(experienceRecords.updatedAt)).limit(2000);
   return rows.map(r=>decode(r,userId));
  }
  async exportExperience(userId:string){return this.db.transaction(async tx=>{
   await tx.execute(sql`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY`);
   await tx.execute(sql`SET LOCAL statement_timeout = '20s'`);
   const source=new ExperienceStorage(tx as unknown as Database);
-  return{settings:await source.getExperienceSettings(userId),records:await source.getExperienceRecords(userId),history:await source.getExperimentHistory(userId)};
+  return{settings:await source.getExperienceSettings(userId),records:[...await source.getExperienceRecords(userId),...await source.getExperienceRecords(userId,"wellness-choice")],history:await source.getExperimentHistory(userId)};
  });}
  async getExperimentHistory(userId:string,recordId?:string):Promise<ExperimentHistory|null>{
   if(recordId){const[parent]=await this.db.select({id:experienceRecords.id}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,recordId),eq(experienceRecords.kind,"experiment")));if(!parent)return null;}
@@ -91,7 +96,7 @@ export class ExperienceStorage {
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,kind)));
    if(existing){const record=decode(existing,userId);if(record.kind!==kind||JSON.stringify(record.payload)!==JSON.stringify(payload))throw Error(kind==="activity"?"ACTIVITY_SAVE_CONFLICT":"SESSION_SAVE_CONFLICT");return record;}
-   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(eq(experienceRecords.userId,userId));
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice")));
    if(count.count>=2000)throw Error("EXPERIENCE_LIMIT");
    const [row]=await tx.insert(experienceRecords).values({id,userId,kind,encryptedPayload:encryptPrecision(payload,userId)}).returning();
    return decode(row,userId);
@@ -103,7 +108,7 @@ export class ExperienceStorage {
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
-   const rows=await tx.select({id:experienceRecords.id,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt}).from(experienceRecords).where(eq(experienceRecords.userId,userId)).orderBy(desc(experienceRecords.createdAt));
+   const rows=await tx.select({id:experienceRecords.id,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice"))).orderBy(desc(experienceRecords.createdAt));
    // Exact-description memories are one record per key, scoped to the owner.
    if(entry.kind==="food-memory" || entry.kind==="checkin") {
     const found=rows.find(r=>{
@@ -162,8 +167,16 @@ export class ExperienceStorage {
    return row?decode(row,userId):null;
   });
  }
+ getWellnessActionView(userId:string,day:WellnessDay){return new WellnessChoiceStorage(this.db).view(userId,day);}
+ createWellnessChoice(userId:string,command:WellnessChoiceCommand){return new WellnessChoiceStorage(this.db).create(userId,command);}
+ deleteWellnessChoiceHistory(userId:string,command:WellnessHistoryDelete){return new WellnessChoiceStorage(this.db).removeHistory(userId,command);}
  async deleteExperienceRecord(userId:string,id:string) {
-  const r=await this.db.delete(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id))).returning({id:experienceRecords.id});return !!r.length;
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
+   const [row]=await tx.select({kind:experienceRecords.kind}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id)));
+   if(row?.kind==="wellness-choice")throw new WellnessChoiceConflict("dedicated-action");
+   const result=await tx.delete(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id))).returning({id:experienceRecords.id});return !!result.length;
+  });
  }
  async clearExperienceData(userId:string) {
   await this.db.transaction(async tx=>{
@@ -174,6 +187,9 @@ export class ExperienceStorage {
  }
 }
 export interface ExperienceStore {
+ getWellnessActionView?(userId:string,day:WellnessDay):Promise<import("../shared/wellness-actions").WellnessActionView>;
+ createWellnessChoice?(userId:string,command:WellnessChoiceCommand):Promise<ExperienceRecord>;
+ deleteWellnessChoiceHistory?(userId:string,command:WellnessHistoryDelete):Promise<void>;
  getExperienceSettings(userId:string):Promise<ExperienceSettings>;
  putExperienceSettings(userId:string,patch:ExperienceSettingsPatch):Promise<ExperienceSettings>;
  putExperienceSettingsIfCurrent?(userId:string,patch:ExperienceSettingsPatch,revision:string):Promise<ExperienceSettings>;

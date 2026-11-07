@@ -344,7 +344,7 @@ export default function MealPlanner() {
         {editingPreferences ? "Close preferences" : "Edit saved preferences"}
       </Button>
       {editingPreferences && <><DietaryPreferenceEditor /><MicrobiomeFoodPreferences key={`microfood:${user?.id}`}/></>}
-      <Tabs defaultValue="today" className="workspace-tabs">
+      <Tabs defaultValue={new URLSearchParams(window.location.search).get("view")==="recipes"?"recipes":"today"} className="workspace-tabs">
         <TabsList aria-label="Meal planning views"><TabsTrigger value="today">Rest of today</TabsTrigger><TabsTrigger value="week">Weekly plan</TabsTrigger><TabsTrigger value="recipes">Recipe library</TabsTrigger></TabsList>
         <TabsContent value="today" forceMount><TodayPlanner onEditPreferences={() => setEditing(true)} /></TabsContent>
         <TabsContent value="week" forceMount><WeeklyPlanner /></TabsContent>

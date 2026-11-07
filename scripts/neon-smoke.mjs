@@ -724,11 +724,12 @@ try {
   assert.equal(correctedLab.payload.value,120);assert.equal(correctedLab.payload.unit,"mg/dL");assert.equal(correctedLab.payload.dateCorrection.previousMeasuredAt,now);
   assert.equal(correctedLab.payload.sourceReport.importId,labSourceIdentity.importId);
   await request(`/api/precision/labs/${confirmedPlanSource.id}/correct-date`,"POST",dateChange,409,{...dateHeaders,"Idempotency-Key":randomUUID()});
-  assert.equal((await request("/api/precision/weekly-plans")).length,0);
+  assert.deepEqual((await request("/api/precision/weekly-plans")).map(row=>row.id),[weeklySaved.id],"Date correction removes the dependent plan and retains the earlier plan that excluded the pending lab");
   const revisedReport=await request("/api/precision");assert.deepEqual(revisedReport.labHistory.map(row=>row.id),[correctedLab.id]);assert.equal(revisedReport.pendingLabs.length,0);
-  await request("/api/precision/weekly-plans/save","POST",weeklyInput,201);
+  const correctedSourcePlan=await request("/api/precision/weekly-plans/save","POST",weeklyInput,201);
+  assert.notEqual(correctedSourcePlan.id,weeklySaved.id);
   await request(`/api/precision/labs/${correctedLab.id}/entry`,"DELETE",undefined,204,{"X-Bloom-Confirm":"delete-lab-entry-and-revisions"});
-  const deletedLabReport=await request("/api/precision");assert.equal(deletedLabReport.labHistory.length,0);assert.equal(deletedLabReport.pendingLabs.length,0);assert.equal((await request("/api/precision/weekly-plans")).length,0);
+  const deletedLabReport=await request("/api/precision");assert.equal(deletedLabReport.labHistory.length,0);assert.equal(deletedLabReport.pendingLabs.length,0);assert.deepEqual((await request("/api/precision/weekly-plans")).map(row=>row.id),[weeklySaved.id],"Deleting the lab removes its new dependent plan without erasing unrelated history");
   await request(`/api/precision/labs/${correctedLab.id}/entry`,"DELETE",undefined,204,{"X-Bloom-Confirm":"delete-lab-entry-and-revisions"});
   console.log("PASS: actual Neon immutable date correction, exact replay, stale source denial, current-source weekly save and complete date/unit lineage deletion");
   const importPayload={marker:"alt",value:12,unit:"U/L",measuredAt:now,laboratory:"Synthetic CI lab",method:"CI assay",fasting:"unknown",referenceLow:null,referenceHigh:null,notes:"",sourceReport:{...labSourceIdentity,importId:randomUUID()},sourceInput:{text:"ALT, 12, U/L",number:"12",suppliedUnit:"U/L",capture:"pasted-report"}};

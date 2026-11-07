@@ -212,6 +212,9 @@ export class DatabaseStorage implements IStorage {
   putCheckinFeedback(...args:Parameters<ExperienceStorage["putCheckinFeedback"]>){return this.experience.putCheckinFeedback(...args);}
   exportExperience = (id:string) => this.experience.exportExperience(id);
   getExperimentHistory = (id:string,recordId?:string) => this.experience.getExperimentHistory(id,recordId);
+  getWellnessActionView(...args:Parameters<ExperienceStorage["getWellnessActionView"]>){return this.experience.getWellnessActionView(...args);}
+  createWellnessChoice(...args:Parameters<ExperienceStorage["createWellnessChoice"]>){return this.experience.createWellnessChoice(...args);}
+  deleteWellnessChoiceHistory(...args:Parameters<ExperienceStorage["deleteWellnessChoiceHistory"]>){return this.experience.deleteWellnessChoiceHistory(...args);}
   getExperienceRecords: ExperienceStore["getExperienceRecords"] = (id,kind) => this.experience.getExperienceRecords(id,kind);
   insertExperienceRecord: ExperienceStore["insertExperienceRecord"] = (id,p) => this.experience.insertExperienceRecord(id,p);
   updateExperienceRecord: ExperienceStore["updateExperienceRecord"] = (id,r,p) => this.experience.updateExperienceRecord(id,r,p);

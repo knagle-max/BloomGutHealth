@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "baseCommit": "5e8334f35d710b44610488a04bc19c739635dbec",
+  "scope": "Durable Today choice writer and existing recipe/meal follow-through; not full version or independent release acceptance",
+  "unitIntegration": {
+    "command": "npm test",
+    "tests": 632,
+    "pass": 632,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 258248.986428
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "sourceCrosswalk": "52 IDs/227 source files PASS",
+    "apiInventory": "118 declarations/13 unresolved PASS",
+    "diffWhitespace": "PASS"
+  },
+  "journeys": [
+    "wellness-choice-journey.mjs",
+    "first-goal-source-journey.mjs",
+    "today-companion-journey.mjs after (capture false)",
+    "today-context-source-journey.mjs",
+    "today-clock-journey.mjs",
+    "meal-household-portions-journey.mjs"
+  ],
+  "accessibilityEngineering": [
+    "320\u00d7500 primary action clears navigation",
+    "200% text fit/no horizontal overflow",
+    "keyboard focus",
+    "320/390 light/dark"
+  ],
+  "sourceHashes": {
+    "client/src/components/TodayFocus.tsx": "1136da9f7e827900b1fff4967613b475dfea471534b43d156a3fab17bbdd8fdc",
+    "client/src/components/WellnessChoiceDetails.tsx": "55193b53015e461448bbe8e85b6a4c173fa78a9df8c13b87b32423d514c21e0b",
+    "client/src/lib/planning-cache.ts": "edadb696f635339a920ffb89247f215e203157e194d1ad3ea2de2f6f41b29f12",
+    "client/src/lib/wellness-choices.ts": "0f3ec9292f19dd8415d79dbf825e378cadc99e66c92f9c906cdce4576fc1e801",
+    "client/src/pages/MealPlanner.tsx": "6024f6405e22279fc7374af1fdb549976b4f4494450b7bbe0d8458c556476240",
+    "scripts/neon-smoke.mjs": "894665c11d11d3f4a22387c00a8335a511ed7abcede92bc46a3f79763c9d2286",
+    "scripts/qa/wellness-choice-journey.mjs": "0eb3386dfb91f3eaaa882bba871fa4dcf4e4f72cb6e8567e95c9bff1dc29cc6d",
+    "server/experience-routes.ts": "639b363ffbbc39f2a0a447aff718e643f9b8ebac9cde0c8120ac256b27d86120",
+    "server/experience-storage.ts": "6496762e5994aa010bc5cdf92bfa19da722daa3dd3b37b6c47fa587582000609",
+    "server/storage.ts": "11b71fade4f53263f836e1a9cae8d1f84e34ba6228f93895eccb7eea21dceedd",
+    "server/wellness-actions.ts": "7c348c9f528a6cb5d075975c013f4909ca8b0a242f61adf493d7f8243b6c3511",
+    "server/wellness-choice-storage.ts": "a91a7d8d3c7ffa045f0468b513c3454dc15ae87acd24962392c0f465b9ff87fb",
+    "shared/wellness-actions.ts": "6a29390bb96a99d9489709925b7b2c3443261872210b6d47bd7265b06d395e00",
+    "tests/wellness-actions.test.ts": "00ec0715a32c97f8a8badc19e608d84cdbfeeb4390285f2c5fa77990500e4485",
+    "tests/wellness-choice-reader.test.ts": "da126dc05fe5f333a4612e76b06f703abbb7cebd43144e2138660689cd6348bb"
+  },
+  "previewPrevious": {
+    "commit": "5e8334f35d710b44610488a04bc19c739635dbec",
+    "deploy": "dep-dbnih10473hc739lqje0",
+    "status": "live"
+  },
+  "ciPrevious": {
+    "run": 42377467035,
+    "typesUnitBuild": "PASS",
+    "liveSmoke": "FAILED obsolete source-independent-plan removal assertion; exact retention/dependency assertions corrected; new hosted result still required"
+  },
+  "notClaimed": [
+    "physical VoiceOver",
+    "independent final reviewers",
+    "public/clinical promotion",
+    "new writer hosted success",
+    "full v0.5/v0.6 completion"
+  ]
+}

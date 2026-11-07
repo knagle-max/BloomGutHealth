@@ -42,7 +42,7 @@ test("encrypted own-account choice reader/export survives reload, contributes no
    const response=await fetch(url+path,{method,headers:{"X-Fixture-Account":"a","content-type":"application/json"},body:JSON.stringify(body)});assert.equal(response.status,400);
   }
   const exported=await(await fetch(url+"/export",{headers:{"X-Fixture-Account":"a"}})).json();assert.equal(exported.records[0].payload.choice,"try");
-  assert.equal((await new ExperienceStorage(drizzle(pg)as any).getExperienceRecords("a")).length,1);
+  assert.equal((await new ExperienceStorage(drizzle(pg)as any).getExperienceRecords("a","wellness-choice")).length,1);
   assert.equal((await storage.getExperienceSettings("a")).lifecycleId,lifecycleId);
  }finally{server?.closeAllConnections();if(server)await new Promise<void>(r=>server!.close(()=>r()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
 });
