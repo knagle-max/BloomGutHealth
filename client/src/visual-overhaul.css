@@ -56,3 +56,16 @@
   .app-shell :is(.science-heading,.dashboard-heading,.meal-page-heading),
   .app-shell .today-focus::before {background-image:none;}
 }
+
+/* Recorded nutrition marks use the current mode accent; partial marks retain
+   their open circle/P labels and exact accessible daily values. */
+.app-shell .food-progress-plot {color:hsl(var(--primary));}
+
+.app-shell .food-progress-scale {font-size:.875rem;line-height:1.5;}
+
+@media(max-width:430px) {
+  .app-shell .food-progress-values {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+
+/* Keep full selected metric/period names readable before fields wrap. */
+.app-shell .food-progress-controls > label {flex-basis:12rem;}

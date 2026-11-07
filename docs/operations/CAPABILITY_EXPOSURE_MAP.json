@@ -1840,7 +1840,7 @@
     "client/src/components/FoodCompositionExplorer.tsx": "8c36d11a61e445e6bb82cecd214b8a9e4db78b2493995b955ec6390d8ea5f768",
     "client/src/components/FoodEntryChooser.tsx": "577a3c33b74c5ef890e71c5a1014c73077260fda17a837f7c98fc05f0302fcfd",
     "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
-    "client/src/components/FoodProgress.tsx": "bb0603c7c2df874cd5029486dbf5c04423e6580a1cc3274a1563b325cc8d9fb7",
+    "client/src/components/FoodProgress.tsx": "0003309db038db8ddacf6ff0fefad267bd0714e68049685fa2ccaacfe5597dc6",
     "client/src/components/GeneticHighlights.tsx": "7c561f40c6f8f3e615a02947fcdf54bdcf05a5b1530c870b91d44ed03c2c5692",
     "client/src/components/GeneticSourceManagement.tsx": "b93f09afc9b942c62688598652bb0d3ebbf18e98e2deddde906d9f97adb25052",
     "client/src/components/GeneticsCatalogue.tsx": "1152b4d007ac683e63289a2064a9819c19cd06b8338d10ba82d2dcc7e1fd978a",

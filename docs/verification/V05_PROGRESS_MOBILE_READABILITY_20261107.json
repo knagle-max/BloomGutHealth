@@ -1,0 +1,36 @@
+{
+  "scope": "UI overhaul: recorded nutrition chart/control readability, no new data or calculations",
+  "baseline": "4e82c1ae91608087315a55a242560981bc5c18da",
+  "sourceHashes": {
+    "client/src/components/FoodProgress.tsx": "0003309db038db8ddacf6ff0fefad267bd0714e68049685fa2ccaacfe5597dc6",
+    "client/src/visual-overhaul.css": "18cc7be364ccfa60c6e09e424163b733d2c6bd3eb86e482761006781c0c48351",
+    "scripts/qa/private-source-context-journey.mjs": "748db385644d400d949c2473430a208d9dcaa3c7c03a3bd9258eb8ed06343ad8"
+  },
+  "focusedTests": {
+    "passed": 13,
+    "elapsedMs": 562.851911
+  },
+  "typecheck": "PASS",
+  "productionBuild": "PASS",
+  "actualAppHttpSql": "PASS encrypted private product failure/retry, explicit review/single meal420kcal, source note after label deletion/reload, Progress read503/retry/reload, second owner empty and no provider requests",
+  "actualUiAssertions": [
+    "320px fields fit selected protein and longest carbohydrate text",
+    "known420kcal converts plot to1757.28kJ; canonical420 unchanged",
+    "unknown carbohydrate creates no zero point",
+    "explicit0protein retains0point",
+    "two narrow daily-summary columns",
+    "HTML scale font at least14px and28px after200percent root font setting; no document overflow",
+    "dates use one actual date for a single point, time elements remain available; all source-day data unchanged"
+  ],
+  "initialIssuesFixed": [
+    "Existing global fixed16px paragraph rule overrode rem text; dedicated scale class now explicitlyrem",
+    "Original whole-element screenshot overlaid sticky app chrome; actual page capture at scroll0 replaces it",
+    "Native controls clipped selected text; flex-basis wraps before clipping",
+    "Three narrow columns split Unavailable into several fragments; two columns on narrow phones"
+  ],
+  "fullSuite": "Not repeated locally for ordinary presentation-only work; mandatory hosted CI retained",
+  "physicalVoiceOver": "NOT_RUN",
+  "independentReview": "NOT_GRANTED",
+  "packet": "docs/review/ui-overhaul-20261107/progress/index.html",
+  "v06Stash": "f0fd36479176b1daa7b8c5525306292b10670d8f remains untouched"
+}
