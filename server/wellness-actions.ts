@@ -1,4 +1,5 @@
 import {createHash} from "node:crypto";
+import {movementSourceObservations} from "./wellness-observations";
 import {goalSources} from "../shared/goal-guidance";
 import {wellnessActions,wellnessDaySchema,type WellnessDay,type WellnessActionView} from "../shared/wellness-actions";
 import type {WellnessContext} from "../shared/wellness-context";
@@ -41,5 +42,6 @@ export function buildWellnessActionView({context,settings,day,sessions,activitie
  const order=digestive?["record-usual-meal","balanced-meal-pattern","familiar-movement"]:["balanced-meal-pattern","familiar-movement","record-usual-meal"];
  const selected=records.find(r=>actions.some(a=>a.eligible&&a.choice?.id===r.id&&(a.choice.choice==="try"||a.choice.choice==="later")));
  const primary=selected?actions.find(a=>a.choice?.id===selected.id):order.map(id=>actions.find(a=>a.action.id===id)).find(a=>a?.eligible&&a.choice?.choice!=="not-relevant");
- return{version:"wellness-actions-v1",accountScope:context.accountScope,day,contextRevision:context.revision,evidenceVersion:context.evidenceVersion,lifecycleId,asOf:now.toISOString(),dateCurrent,actions,primaryActionId:primary?.action.id??null,sources:goalSources.filter(s=>actions.some(a=>a.action.sourceIds.includes(s.id))),history};
+ return{version:"wellness-actions-v1",accountScope:context.accountScope,day,contextRevision:context.revision,evidenceVersion:context.evidenceVersion,lifecycleId,asOf:now.toISOString(),dateCurrent,actions,primaryActionId:primary?.action.id??null,sources:goalSources.filter(s=>actions.some(a=>a.action.sourceIds.includes(s.id))),history,
+  movementSources:{version:"wellness-movement-sources-v1",status:calendarKnown?"available":"unavailable",purpose:"own-account-app",observations:calendarKnown?movementSourceObservations(context.accountScope,calendar,now):[]}};
 }

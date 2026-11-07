@@ -1,3 +1,4 @@
+import {trainingSessionSchema} from '../../shared/experience.ts';
 import {reviewThenSave,openIngredientRow} from "./lib/meal-flow.mjs";
 import assert from 'node:assert/strict';import {createRequire} from 'node:module';import {randomBytes,randomUUID} from 'node:crypto';import {readFileSync} from 'node:fs';import {mkdir} from 'node:fs/promises';import {execFileSync} from 'node:child_process';import path from 'node:path';
 import express from 'express';import {createServer} from 'vite';import {PGlite} from '@electric-sql/pglite';import {drizzle} from 'drizzle-orm/pglite';import {eq} from 'drizzle-orm';
@@ -95,6 +96,22 @@ try{
   await focus().getByRole('heading',{name:'Saved choices for '+clock().date,exact:true}).waitFor();
   assert.equal((await delegates.getMeals(owner)).length,1);
   assert.equal((await experience.getExperienceRecords(owner,'activity')).length,0);
+  // Actual stored observations remain distinct from the intentions tested above.
+  const sourceAt=new Date().toISOString(),mkSet=i=>({id:randomUUID(),exercise:'Bench press',reps:10,loadKg:null,completed:i<2});
+  const movement=await experience.createActivity(owner,{title:'Mixed source',startedAt:sourceAt,minutes:15,effort:null,source:'manual',timeZone:null,notes:'',components:{version:1,items:[{id:randomUUID(),title:'Running',activityId:'run',match:'reported',minutes:null,distanceM:null},{id:randomUUID(),title:'Bench press',activityId:'strength',match:'reported',minutes:15,distanceM:null,actualSets:{version:1,sets:Array.from({length:5},(_,i)=>mkSet(i))}}]}},randomUUID());
+  const session=await experience.insertExperienceRecord(owner,{kind:'session',payload:trainingSessionSchema.parse({title:'Session source',startsAt:sourceAt,minutes:60,discipline:'mixed',intensity:'easy',status:'completed'})});
+  await refresh();await focus().getByText('Why this?',{exact:true}).click();
+  const sourceDetails=focus().getByText('Movement source details',{exact:true});await sourceDetails.focus();await page.keyboard.press('Enter');
+  await focus().getByText('2 of 5 sets confirmed completed · 3 not confirmed · 0 explicitly cancelled',{exact:true}).waitFor();
+  await focus().getByText('Duration unknown',{exact:true}).waitFor();await focus().getByText('15 reported min',{exact:true}).waitFor();await focus().getByText('60 scheduled min',{exact:true}).waitFor();
+  assert.equal(await sourceDetails.evaluate(el=>el.getBoundingClientRect().height>=44),true);
+  for(const width of [320,390]){await page.setViewportSize({width,height:950});for(const theme of ['light','dark']){await setAppTheme(page,theme);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);}}
+  await page.evaluate(()=>{document.documentElement.style.fontSize='200%';});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.evaluate(()=>{document.documentElement.style.fontSize='';});
+  await experience.deleteExperienceRecord(owner,movement.id);await refresh();
+  await focus().getByText('60 scheduled min',{exact:true}).waitFor();assert.equal(await focus().getByText('15 reported min',{exact:true}).count(),0);assert.equal(await focus().getByText('Duration unknown',{exact:true}).count(),0);
+  assert.equal((await delegates.getMeals(owner)).length,1,'Inspecting sources never creates another meal');
+  assert.equal((await experience.getExperienceRecords(owner,'session')).length,1);
+  assert.equal(await focus().getByRole('link',{name:'Review sessions',exact:true}).getAttribute('href'),'/athlete?date='+clock().date);
   assert.deepEqual(errors,[]);
   console.log('PASS: actual Today→source-scoped APIs→encrypted SQL; lifecycle bootstrap, later/try/not-relevant, exact lost-response retry, reload recovery, stale-source refusal, targeted deletion preserves later event, late actor rejection, owned choice histories and Recipe library→review→individual ingredient edit→explicit meal save/reload; intentions never auto-create food/activity;320/390 light/dark. Synthetic accounts.');
  }

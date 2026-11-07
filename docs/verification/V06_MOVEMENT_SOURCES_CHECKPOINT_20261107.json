@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "baseCommit": "ae58bcb4039348dbd45b78f4c267c5688dd5f2d7",
+  "scope": "Read-only canonical movement source facts within existing Today action view/Why; broader phase1/phase3 open",
+  "focusedTests": {
+    "pass": 12,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 13626.505504
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "crosswalk": "52 IDs/231 files PASS",
+    "apiInventory": "unchanged PASS"
+  },
+  "journeys": [
+    "Actual Today choice/recipe/review/explicit meal save/reload plus canonical mixed activity and session source disclosure, source deletion and remaining scheduled duration",
+    "today-context-source-journey.mjs PASS",
+    "today-clock-journey.mjs PASS"
+  ],
+  "browserChecks": [
+    "320/390 light/dark",
+    "200% no horizontal overflow",
+    "44px native disclosure",
+    "keyboard Enter disclosure",
+    "Disclosure retained across source invalidation; stale values withheld",
+    "Deleted source durations removed, remaining scheduled duration retained"
+  ],
+  "sourceHashes": {
+    "server/wellness-observations.ts": "ce007e27466f2183f33c0628f79f7aa683820d1e12bb57e7b432c1d357821d1b",
+    "server/wellness-actions.ts": "c1cf0c5e35c172718b9198158d0d87404a7273e23012e7fafe12a6bae2097251",
+    "shared/wellness-actions.ts": "1e3452aea5a77a74d18dc57991a3147eea0e17eb1d33a853ef839cd3b62984e6",
+    "client/src/components/MovementSourceDetails.tsx": "10e1a0d75f823289d33c4acb7a06a7a8ddf468796cb29d863366c2d4b948e729",
+    "client/src/components/TodayFocus.tsx": "1f5e74249992f7767e423974884f28972bca0be79d109d6fa5cd090a43f70b75",
+    "tests/wellness-observations.test.ts": "b7e48c549503f651aeb41b2a6691a36293fa910ad7201ecdbcc605922a06e438",
+    "tests/wellness-actions.test.ts": "181b6ab7bd3e2b4d60bdc479c1fe93eb07048ad7d478fea9226d1c7ff5c3d061",
+    "scripts/qa/wellness-choice-journey.mjs": "d664afb474055ae979e6b90cc7a4286a83cb603b72959cc37ceaacd2aa05999c"
+  },
+  "previousCI": {
+    "commit": "bcf0fc12e884003676fe7f273ea814803ad14d59",
+    "run": 42384432402,
+    "result": "success including live Neon smoke"
+  },
+  "previousPreview": {
+    "commit": "ae58bcb4039348dbd45b78f4c267c5688dd5f2d7",
+    "deploy": "dep-dbnjtttg1s2s73fkjm50",
+    "status": "live",
+    "ciRun": 42384937238,
+    "ciStatus": "in_progress at check"
+  },
+  "notClaimed": [
+    "full version completion",
+    "readiness",
+    "physiological measurement",
+    "scheduled minutes as actual duration",
+    "causal adherence",
+    "physical VoiceOver or independent Design acceptance"
+  ]
+}

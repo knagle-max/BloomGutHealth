@@ -26,9 +26,14 @@ test("low-risk actions distinguish missing context/calendar and listed activity 
   const ctx=buildWellnessContext("a",undefined,{id:"a"},now);
   const fallback=buildWellnessActionView({context:ctx,settings:await experience.getExperienceSettings("a"),day,sessions:null,activities:null,choices:[],now});
   assert.equal(fallback.primaryActionId,"record-usual-meal");assert.equal(fallback.actions.filter(a=>a.eligible).length,1);
+  assert.equal(fallback.movementSources?.status,"unavailable");assert.deepEqual(fallback.movementSources?.observations,[]);
   await experience.createActivity("a",activitySchema.parse({title:"Running — duration unknown",startedAt:now.toISOString(),minutes:null}),randomUUID());
   const recorded=await choices.view("a",day);assert.equal(recorded.actions.find((a:any)=>a.action.id==="familiar-movement").eligible,false);
   assert.equal(recorded.actions.find((a:any)=>a.action.id==="balanced-meal-pattern").eligible,true);
+  assert.equal(recorded.movementSources.status,"available");assert.equal(recorded.movementSources.observations.length,1);
+  assert.equal(recorded.movementSources.observations[0].reportedMinutes,null);assert.equal(recorded.movementSources.observations[0].sets,null);
+  assert.equal(recorded.movementSources.observations[0].valueKind,"self-reported-activity");
+  assert.equal((await choices.view("b",day)).movementSources.observations.length,0);
   assert.equal((await experience.getExperienceRecords("a","activity"))[0].payload.minutes,null);
   const preferences=preferenceSchema.parse({goals:["general health"]}),settings=await experience.getExperienceSettings("a");
   for(const context of [{...health,pregnancy:"yes"},{...health,conditions:["kidney disease"]},{...health,medications:["recorded medication"]}]){

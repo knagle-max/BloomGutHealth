@@ -20,8 +20,17 @@ export interface WellnessActionDecision {
  action:typeof wellnessActions[number];eligible:boolean;reason:string;decisionRevision:string;requestRevision:string|null;
  choice:{id:string;choice:WellnessChoice["choice"];chosenAt:string}|null;
 }
+/** Minimized owned source facts, not a second activity total or readiness score. */
+export interface WellnessMovementObservation {
+ sourceId:string;sourceKind:"activity"|"session";sourceRevision:string;componentId:string|null;
+ valueKind:"self-reported-activity"|"planned-session"|"marked-completed-session"|"cancelled-session";
+ startsAt:string;updatedAt:string;temporalStatus:"future-entry"|"elapsed-entry";
+ reportedMinutes:number|null;scheduledMinutes:number|null;
+ sets:{recorded:number;confirmedCompleted:number;notConfirmed:number;explicitlyCancelled:number}|null;
+}
 export interface WellnessActionView {
  version:"wellness-actions-v1";accountScope:string;day:WellnessDay;contextRevision:string;evidenceVersion:string;
  lifecycleId:string|null;asOf:string;dateCurrent:boolean;actions:WellnessActionDecision[];primaryActionId:string|null;
  sources:typeof goalSources;history:{id:string;intentId:string;actionId:string;date:string;choice:WellnessChoice["choice"];chosenAt:string;revision:string;timezoneOffset:number;lifecycleId:string;requestRevision:string;actionVersion:string;contextRevision:string;evidenceVersion:string}[];
+ movementSources?:{version:"wellness-movement-sources-v1";status:"available"|"unavailable";purpose:"own-account-app";observations:WellnessMovementObservation[]};
 }
