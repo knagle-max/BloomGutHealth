@@ -4,7 +4,7 @@ import registry from "./data/biology-content-r4m1-v2.json";
  * This module never interprets a user's observations or changes their source records. */
 export const biologyContentVersion = registry.schemaVersion;
 
-export type BiologyCitation = {title:string;url:string;evidenceType?:string;studyDesign?:string;reviewStatus?:string;verification?:string};
+export type BiologyCitation = {title:string;url:string;evidenceType?:string;studyDesign?:string;reviewStatus?:string;verification?:string;pmid?:string;doi?:string;scopeLimit?:string;verifiedOn?:string};
 export type LabBiography = {
   id:string;coverageStatus:string;reviewStatus:string;
   firstLayer:{whatItDoes:string;whyLowHigh:string;whyItMatters:string;whatToDiscuss:string};
@@ -12,9 +12,10 @@ export type LabBiography = {
 };
 export type OrganismBiography = {
   id:string;reportedName:string;reportedGroup:string;coverageStatus:string;reviewStatus:string;
-  rankMustBeVerified?:boolean;taxonomyRankInferredForInventoryOnly?:string;aliases?:string[];
+  presentation?:string;rankMustBeVerified?:boolean;taxonomyRankInferredForInventoryOnly?:string;aliases?:string[];
   firstLayer:{meetThisOrganism:string;whyResearchersStudyIt:string;foodMetabolicConnections:string};
   citations:BiologyCitation[];limits?:string;
+  functionalResearch?:{pathwayId:string;sourceId:string;doi:string;groupLabel:string;scopeLabel:string;measurementLimit:string;dietLimit:string};
 };
 
 const labs = new Map<string,LabBiography>(registry.labMarkerDefinitions.map(x=>[x.id,x as LabBiography]));

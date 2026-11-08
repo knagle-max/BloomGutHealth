@@ -33,7 +33,7 @@ test("all 94 available fixture organism entries resolve to their exact draft or 
 });
 test("unknown organism names do not acquire unrelated species content or invented review",()=>{
  assert.equal(organismBiography("Unrecognized example organism"),undefined);
- assert.equal(organismBiography("Anaerobutyricum soehngenii"),undefined);
+ assert.notEqual(organismBiography("Anaerobutyricum soehngenii")?.id,organismBiography("Anaerobutyricum hallii")?.id);
  assert.ok(organismBiography("Anaerobutyricum hallii"));
  assert.equal(labBiography("source:unverified-analyte"),undefined);
  assert.equal(biologyContentCoverage.independentApproval,"DRAFT_NOT_INDEPENDENTLY_APPROVED");
@@ -49,7 +49,7 @@ test('canonical previews and profiles share content while explicit taxonomic ran
  assert.equal(organismBiography('Eubacterium hallii','species')?.id,organismBiography('Anaerobutyricum hallii','species')?.id);
  for(const rank of ['genus','family','order','phylum'])assert.equal(organismBiography('Anaerobutyricum hallii',rank),undefined);
  assert.equal(organismBiography('Akkermansia muciniphila strain unverified'),undefined);
- assert.equal(organismBiography('Anaerobutyricum soehngenii'),undefined);
+ assert.notEqual(organismBiography('Anaerobutyricum soehngenii')?.id,organismBiography('Anaerobutyricum hallii')?.id);
 });
 
 test('original supplied registry is immutable and draft approval is not upgraded by editorial revision',async()=>{

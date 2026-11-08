@@ -43,7 +43,8 @@ test("reviewed organism explanations cover species/group context and preserve st
     /Identity unresolved/,
   );
   assert.equal(explainOrganism("An unknown organism").label, "Identity unresolved");
-  assert.equal(explainOrganism("Ruminococcus gnavus ATCC 29149").label,"Identity unresolved");
+  assert.equal(explainOrganism("Ruminococcus gnavus ATCC 29149").label,"Biology context");
+  assert.equal(explainOrganism("Ruminococcus gnavus unverified strain").label,"Identity unresolved");
   assert.equal(explainOrganism("Anaerobutyricum hallii","genus").label,"Identity unresolved");
   assert.equal(explainOrganism("Sutterella","species").label,"Identity unresolved");
   assert.equal(

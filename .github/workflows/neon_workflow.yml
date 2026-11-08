@@ -73,6 +73,7 @@ jobs:
           npm run check
           node --import tsx scripts/api-exposure-inventory.ts --check
           node --import tsx scripts/capability-crosswalk.ts --check
+          node --import tsx scripts/biology-content-coverage.ts --check
       - name: Unit and embedded PostgreSQL tests
         run: npm test
       - name: Production build

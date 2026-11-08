@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "biology-content-r4m1-2026-11-08.2",
+  "schemaVersion": "biology-content-r4m1-2026-11-08.3",
   "repositorySnapshot": "f5e5068468219e222aa1185578186a8e15f8e471",
   "notCodeDeployment": true,
   "scientificApproval": "DRAFT_NOT_INDEPENDENTLY_APPROVED",
@@ -668,7 +668,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-alistipes-communis",
@@ -692,7 +693,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-amedibacterium-intestinale",
@@ -716,7 +718,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-adlercreutzia-sp-8cfcbh1",
@@ -740,7 +743,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-alistipes-dispar",
@@ -764,7 +768,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-anaerobutyricum-hallii",
@@ -809,7 +814,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-akkermansia-muciniphila",
@@ -823,16 +829,20 @@
       "coverageStatus": "reviewed_draft",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "Mucin-utilizing bacterium associated with the intestinal mucus environment. Mucin use is a biological niche, not evidence that it is damaging or repairing the gut barrier in this person.",
-        "whyResearchersStudyIt": "Human observational and small intervention studies have explored associations with metabolic outcomes; preparation and strain matter.",
-        "foodMetabolicConnections": "No particular food reliably produces an individually predictable Akkermansia response; general fibre guidance does not depend on this finding."
+        "meetThisOrganism": "A gut bacterium associated with the mucus layer, where it uses components of mucin as nutrients. Mucus use is part of its ecology and does not by itself show that the intestinal lining is being damaged.",
+        "whyResearchersStudyIt": "Researchers have studied selected preparations in metabolic-health research, including a small randomized placebo-controlled pilot in overweight or obese insulin-resistant adults. Live and heat-treated preparations are distinct interventions; their results cannot be transferred to every strain or interpreted as a benefit from simple detection.",
+        "foodMetabolicConnections": "This work concerns bacterial preparations, not a food portion proven to raise a useful amount in every person. A stool listing does not measure mucus integrity, identify the trial preparation or establish a need for supplementation."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
+          "title": "Supplementation with Akkermansia muciniphila in overweight and obese human volunteers: a proof-of-concept exploratory study",
           "url": "https://pubmed.ncbi.nlm.nih.gov/31263284/",
-          "studyDesign": "human pilot intervention and mechanistic research",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "pmid": "31263284",
+          "doi": "10.1038/s41591-019-0495-2",
+          "studyDesign": "Small randomized, double-blind placebo-controlled human pilot",
+          "scopeLimit": "Specific live or pasteurized preparations and an insulin-resistant study population do not establish general efficacy from species detection.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -840,7 +850,10 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-alistipes-indistinctus",
@@ -864,7 +877,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-anaerostipes-hadrus",
@@ -878,16 +892,19 @@
       "coverageStatus": "limited",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "A human-gut anaerobe studied for producing butyrate from fermented carbohydrates and related intermediates.",
-        "whyResearchersStudyIt": "Reported metabolic capability is strain- and substrate-dependent; stool detection does not quantify butyrate output.",
-        "foodMetabolicConnections": "Cross-feeding substrates are research context, not a validated food-by-species prescription."
+        "meetThisOrganism": "An anaerobic gut bacterium studied for converting D-lactate and acetate into butyrate. This is one route by which products released by other microbes can be reused in the community’s fermentation network.",
+        "whyResearchersStudyIt": "Taxonomic and culture work expanded the species description to include this capability. Later work also shows why strain and substrate differences matter: a species label does not identify every nutrient pathway or guarantee the same fermentation output in every setting.",
+        "foodMetabolicConnections": "The cross-feeding connection explains microbial cooperation, rather than showing that a particular food will increase this organism in you. A stool listing does not measure lactate use, butyrate concentration or a personal need for a probiotic."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
-          "studyDesign": "related genus cultured isolates; SPECIES-SPECIFIC EVIDENCE NEEDS REVIEW",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "title": "Anaerostipes hadrus comb. nov., a dominant species within the human colonic microbiota; reclassification of Eubacterium hadrum",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22982042/",
+          "pmid": "22982042",
+          "studyDesign": "Taxonomic characterization and bacterial culture profiling",
+          "scopeLimit": "Selected strains produced butyrate from D-lactate and acetate; the observation does not measure function in an individual sample.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -895,7 +912,10 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 3
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-anaerostipes-rhamnosivorans",
@@ -919,7 +939,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-caecimuris",
@@ -943,7 +964,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-fragilis-638r",
@@ -957,16 +979,20 @@
       "coverageStatus": "reviewed_draft",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "Human gut bacterium capable of degrading diverse carbohydrates and interacting with other organisms in the colon.",
-        "whyResearchersStudyIt": "Strains vary: enterotoxigenic B. fragilis requires specific toxin genes; a source label 638R/YCH46 must not establish BFT production.",
-        "foodMetabolicConnections": "Carbohydrate-use biology does not establish an exact food recommendation or individual functional activity."
+        "meetThisOrganism": "A specifically named Bacteroides fragilis strain used in genome and capsule research. Capsules are surface polysaccharide structures that can differ between strains and can change which bacterial surfaces interact with the host.",
+        "whyResearchersStudyIt": "Comparisons of 638R, NCTC 9343 and YCH46 found substantial diversity in capsule-associated genetic regions. This is evidence about particular genomes and surface structures, rather than proof of a shared toxin, inflammatory effect or health benefit across the species.",
+        "foodMetabolicConnections": "The cited work is not a diet or probiotic trial. A source label does not measure capsule expression, establish the bft toxin gene or diagnose infection. Claims about another B. fragilis strain cannot simply be applied to this named record."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
-          "studyDesign": "general taxonomy context; source does NOT directly evidence B. fragilis, citation needed",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "title": "Twenty-eight divergent polysaccharide loci specifying within- and amongst-strain capsule diversity in three strains of Bacteroides fragilis",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/20829291/",
+          "pmid": "20829291",
+          "doi": "10.1099/mic.0.042978-0",
+          "studyDesign": "Comparative genome/capsule-locus analysis of 638R, NCTC 9343 and YCH46",
+          "scopeLimit": "Strain-specific capsule differences are not a test of toxin expression, infection or a human dietary treatment.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -974,7 +1000,14 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "retiredCitationUrls": [
+        "https://pubmed.ncbi.nlm.nih.gov/15466518/"
+      ],
+      "editorialRevisionNotes": "Replaced a toxin-strain applicability mismatch with a study that explicitly includes 638R. No toxin gene or personal effect is inferred.",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-bacteroides-intestinalis",
@@ -998,7 +1031,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-sp-cacc-737",
@@ -1022,7 +1056,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-sp-hf-5141",
@@ -1046,7 +1081,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-uniformis",
@@ -1060,17 +1096,31 @@
       "coverageStatus": "limited",
       "reviewStatus": "needs_species_evidence_review",
       "firstLayer": {
-        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
-        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
-        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+        "meetThisOrganism": "A human-gut-associated anaerobic bacterium studied for how particular strains interact with metabolism, immunity and the surrounding microbial community. These experiments concern specific organisms in specific host conditions, rather than a universal beneficial species.",
+        "whyResearchersStudyIt": "Research on strain CECT 7771 found changes in metabolic and immune measures in mice fed a high-fat diet. That result is useful mechanistic evidence, but it does not establish a treatment for obesity in humans or show that every B. uniformis strain has the same effect.",
+        "foodMetabolicConnections": "The study links a bacterial intervention with a defined diet and host model. A species listing does not identify CECT 7771, measure those host responses or provide a personal food or supplement recommendation."
       },
-      "citations": [],
+      "citations": [
+        {
+          "title": "Bacteroides uniformis CECT 7771 ameliorates metabolic and immunological dysfunction in mice with high-fat-diet induced obesity",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22844426/",
+          "pmid": "22844426",
+          "doi": "10.1371/journal.pone.0041079",
+          "studyDesign": "Strain-specific intervention in a diet-induced mouse model",
+          "scopeLimit": "The intervention and host metabolic outcomes in mice are not evidence of a personal response to species detection.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
       "source": {
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-bacteroides-zoogleoformans",
@@ -1094,7 +1144,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-blautia-sp-lzlj-3",
@@ -1118,7 +1169,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-butyricimonas-faecalis",
@@ -1142,7 +1194,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacillus-thuringiensis",
@@ -1166,7 +1219,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-cellulosilyticus",
@@ -1190,7 +1244,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-fragilis-ych46",
@@ -1204,16 +1259,20 @@
       "coverageStatus": "reviewed_draft",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "Human gut bacterium capable of degrading diverse carbohydrates and interacting with other organisms in the colon.",
-        "whyResearchersStudyIt": "Strains vary: enterotoxigenic B. fragilis requires specific toxin genes; a source label 638R/YCH46 must not establish BFT production.",
-        "foodMetabolicConnections": "Carbohydrate-use biology does not establish an exact food recommendation or individual functional activity."
+        "meetThisOrganism": "A named Bacteroides fragilis strain studied for changes in bacterial surface structures. Some DNA segments can switch orientation, altering which surface-associated genes are expressed and helping explain variation within a strain.",
+        "whyResearchersStudyIt": "Genome analysis of YCH46 described extensive DNA inversions involved in cell-surface adaptation. Related comparisons also show capsule diversity between named B. fragilis strains. These mechanisms do not make every strain’s interactions or clinical effects interchangeable.",
+        "foodMetabolicConnections": "This is research on bacterial genetics, not a food shown to control the organism. A stool listing does not measure the current surface state, identify toxin expression or diagnose infection. A result for a different strain or a purified molecule is not automatically a result for YCH46."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
-          "studyDesign": "general taxonomy context; source does NOT directly evidence B. fragilis, citation needed",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "title": "Genomic analysis of Bacteroides fragilis reveals extensive DNA inversions regulating cell surface adaptation",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15466707/",
+          "pmid": "15466707",
+          "doi": "10.1073/pnas.0404172101",
+          "studyDesign": "Genome analysis of B. fragilis YCH46",
+          "scopeLimit": "DNA-inversion and surface-adaptation mechanisms do not establish toxin expression or a personal health outcome.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -1221,7 +1280,14 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "retiredCitationUrls": [
+        "https://pubmed.ncbi.nlm.nih.gov/15466518/"
+      ],
+      "editorialRevisionNotes": "Replaced a species/toxin extrapolation with YCH46-specific genome evidence. Original source label and draft status are preserved.",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-bacteroides-ovatus-v975",
@@ -1245,7 +1311,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-sp-cba7301",
@@ -1269,7 +1336,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-sp-hf-5287",
@@ -1293,7 +1361,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-vulgatus-atcc-8482",
@@ -1317,7 +1386,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bifidobacterium-pseudocatenulatum",
@@ -1348,7 +1418,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-blautia-sp-sc05b48",
@@ -1372,7 +1443,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-butyricimonas-virosa",
@@ -1396,7 +1468,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-caccae",
@@ -1420,7 +1493,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-dorei-cl03t12c01",
@@ -1444,7 +1518,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-heparinolyticus",
@@ -1468,7 +1543,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-sp-a1c1",
@@ -1492,7 +1568,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-sp-hf-162",
@@ -1516,7 +1593,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bacteroides-thetaiotaomicron-vpi-5482",
@@ -1547,7 +1625,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-bacteroides-xylanisolvens",
@@ -1571,7 +1650,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-blautia-argi",
@@ -1595,7 +1675,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-bordetella-trematum",
@@ -1619,7 +1700,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-christensenella-minuta",
@@ -1650,7 +1732,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 4
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-clostridium-perfringens",
@@ -1681,7 +1764,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-dysosmobacter-welbionis",
@@ -1712,7 +1796,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-exophiala-phaeomuriformis",
@@ -1736,7 +1821,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-faecalibacterium-prausnitzii-a2-165",
@@ -1767,7 +1853,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-haemophilus-parainfluenzae-t3t1",
@@ -1791,7 +1878,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-lactobacillus-curvatus-jcm-1096-dsm-20019",
@@ -1815,7 +1903,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-latilactobacillus-sakei",
@@ -1839,7 +1928,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-longibaculum-sp-kgmb06250",
@@ -1863,7 +1953,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-odoribacter-splanchnicus-dsm-20712",
@@ -1877,16 +1968,20 @@
       "coverageStatus": "limited",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "Gut-resident anaerobe studied in fermentation and host-associated microbial communities.",
-        "whyResearchersStudyIt": "Proposed links with short-chain fatty acids and inflammatory conditions are not individually diagnostic.",
-        "foodMetabolicConnections": "Dietary response cannot be predicted from presence alone."
+        "meetThisOrganism": "A named anaerobic strain of a gut-associated species. The type-strain genome reference maps DSM 20712 to strain 1651/6 and describes fermentation products including acetate, propionate and succinate, with smaller amounts of butyrate and other acids.",
+        "whyResearchersStudyIt": "Genome and culture characterization help researchers identify the organism and its metabolic potential. They do not establish a universal anti-inflammatory effect or show that this strain is carrying out a particular bile-acid pathway in a person.",
+        "foodMetabolicConnections": "The fermentation context is more specific than simply calling it a butyrate producer. A report name does not measure these products or identify a food that will reliably increase them. No personal target amount or treatment follows from the listing."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/39647502/",
-          "studyDesign": "general consensus only; organism-specific citation missing",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "title": "Complete genome sequence of Odoribacter splanchnicus type strain (1651/6)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21677857/",
+          "pmid": "21677857",
+          "doi": "10.4056/sigs.1714269",
+          "studyDesign": "Type-strain genome and phenotypic reference",
+          "scopeLimit": "DSM 20712 = 1651/6. Culture products and genome potential do not establish activity or host benefit in a reported sample.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -1894,7 +1989,14 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "retiredCitationUrls": [
+        "https://pubmed.ncbi.nlm.nih.gov/39647502/"
+      ],
+      "editorialRevisionNotes": "Replaced a consensus-only citation with the exact type-strain reference. Describes the actual mixed fermentation products without assigning an unverified host or family-level bile-acid effect.",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-parabacteroides-distasonis-atcc-8503",
@@ -1908,16 +2010,27 @@
       "coverageStatus": "limited",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "Intestinal anaerobe studied for microbial metabolism of dietary and host-derived compounds.",
-        "whyResearchersStudyIt": "Reported effects are context- and strain-dependent; some outcomes rely on animal or experimental work.",
-        "foodMetabolicConnections": "Do not prescribe bile-acid or succinate optimization from its presence."
+        "meetThisOrganism": "A named gut bacterial strain also studied under the historical name Bacteroides distasonis. Taxonomy references identify ATCC 8503 as the type strain of Parabacteroides distasonis, allowing older genome work to be linked without changing your source spelling.",
+        "whyResearchersStudyIt": "Comparative genome research examined this strain alongside other intestinal bacteria to understand habitat and nutrient-use adaptations. Genetic potential is different from proving that a pathway is active, and this genome study does not establish a human metabolic-health benefit.",
+        "foodMetabolicConnections": "The nutrient-use context helps explain how gut bacteria occupy different niches. It does not identify a personal food response, a metabolite concentration or a reason to take a product carrying the species name."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/30351260/",
-          "studyDesign": "citation mismatch: reviewer must replace before release",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "title": "Evolution of symbiotic bacteria in the distal human intestine",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/17579514/",
+          "pmid": "17579514",
+          "studyDesign": "Comparative genome analysis including Bacteroides distasonis ATCC 8503",
+          "scopeLimit": "The historical name is mapped to P. distasonis; the paper is not a human dietary or probiotic efficacy trial.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "LPSN: Parabacteroides distasonis",
+          "url": "https://lpsn.dsmz.de/species/parabacteroides-distasonis",
+          "studyDesign": "Taxonomic name/type-strain reference",
+          "scopeLimit": "Documents the historical name and ATCC 8503 type-strain identity.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "taxonomy_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -1925,7 +2038,14 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "retiredCitationUrls": [
+        "https://pubmed.ncbi.nlm.nih.gov/30351260/"
+      ],
+      "editorialRevisionNotes": "Removed the unrelated consensus reference and narrowed the synopsis to the exact strain’s genome/taxonomy evidence. No clinical effect is transferred from another strain.",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-coprobacter-sp-2cbh44",
@@ -1949,7 +2069,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-enterocloster-bolteae",
@@ -1973,7 +2094,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-exophiala-spinifera",
@@ -1997,7 +2119,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-flavonifractor-plautii",
@@ -2021,7 +2144,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-lacticaseibacillus-rhamnosus",
@@ -2031,21 +2155,44 @@
       "taxonomyRankInferredForInventoryOnly": "species",
       "rankMustBeVerified": true,
       "matchedScientificEntity": null,
-      "aliases": [],
+      "aliases": [
+        "Lactobacillus rhamnosus"
+      ],
       "coverageStatus": "limited",
       "reviewStatus": "needs_species_evidence_review",
       "firstLayer": {
-        "meetThisOrganism": "This genus includes bacteria studied in fermented foods and probiotic preparations, but clinical effects are strain- and preparation-specific.",
-        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
-        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+        "meetThisOrganism": "A lactic-acid bacterium now named Lacticaseibacillus rhamnosus; older reports often use Lactobacillus rhamnosus. Species identity is different from identifying a particular probiotic strain, such as GG.",
+        "whyResearchersStudyIt": "Researchers study selected strains in specific clinical settings. In a large placebo-controlled trial of young children with acute gastroenteritis, strain GG did not improve the main illness-severity outcome. That result concerns the studied strain and setting, rather than every use of every related organism.",
+        "foodMetabolicConnections": "Lactic-acid fermentation explains part of its microbial ecology, but detection does not establish lasting colonization or a need for a fermented food or probiotic. A species listing cannot transfer the evidence for one manufactured strain to another."
       },
-      "citations": [],
+      "citations": [
+        {
+          "title": "LPSN: Lacticaseibacillus rhamnosus",
+          "url": "https://lpsn.dsmz.de/species/lacticaseibacillus-rhamnosus",
+          "studyDesign": "Authoritative organism or taxonomy reference",
+          "scopeLimit": "Documents the current name and historical Lactobacillus rhamnosus synonym.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "Lactobacillus rhamnosus GG versus Placebo for Acute Gastroenteritis in Children",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30462938/",
+          "pmid": "30462938",
+          "doi": "10.1056/NEJMoa1802598",
+          "studyDesign": "Multicenter randomized, double-blind placebo-controlled pediatric trial",
+          "scopeLimit": "No reduction in the primary moderate-to-severe illness outcome in this population; does not answer all probiotic questions.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
       "source": {
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-lactococcus-cremoris",
@@ -2069,7 +2216,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-limosilactobacillus-fermentum",
@@ -2093,7 +2241,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-massilistercora-timonensis",
@@ -2117,7 +2266,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-oscillibacter-sp-pea192",
@@ -2141,7 +2291,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-parabacteroides-sp-ct06",
@@ -2165,7 +2316,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-coprococcus-comes",
@@ -2196,7 +2348,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-eptesicus-fuscus-gammaherpesvirus",
@@ -2220,7 +2373,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-faecalibacillus-intestinalis",
@@ -2244,7 +2398,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-gordonibacter-urolithinfaciens",
@@ -2275,7 +2430,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-lactiplantibacillus-plantarum",
@@ -2299,7 +2455,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-lactococcus-phage-96603",
@@ -2323,7 +2480,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-loigolactobacillus-backii",
@@ -2347,7 +2505,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-mogibacterium-diversum",
@@ -2371,7 +2530,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-paprika-mild-mottle-virus",
@@ -2395,7 +2555,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-pepper-mild-mottle-virus",
@@ -2426,7 +2587,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 5
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-phocaeicola-coprophilus",
@@ -2457,7 +2619,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-roseburia-hominis-a2-183",
@@ -2488,7 +2651,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-streptococcus-pyogenes",
@@ -2519,7 +2683,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-streptococcus-sp-lpb0220",
@@ -2543,7 +2708,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-streptococcus-thermophilus-nd03",
@@ -2574,7 +2740,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-sutterella-faecalis",
@@ -2598,7 +2765,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-tomato-brown-rugose-fruit-virus",
@@ -2622,7 +2790,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-ustilaginoidea-virens",
@@ -2646,7 +2815,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-clostridium-scindens",
@@ -2670,7 +2840,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-pyrenophora-tritici-repentis",
@@ -2694,7 +2865,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-ruminococcus-bicirculans",
@@ -2718,7 +2890,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-streptococcus-salivarius",
@@ -2742,7 +2915,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-streptococcus-thermophilus-lmd-9",
@@ -2773,7 +2947,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-streptococcus-vestibularis",
@@ -2797,7 +2972,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-sutterella-wadsworthensis",
@@ -2821,7 +2997,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-turicibacter-sanguinis",
@@ -2845,7 +3022,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-veillonella-parvula",
@@ -2859,16 +3037,20 @@
       "coverageStatus": "limited",
       "reviewStatus": "scientific_draft_for_independent_review",
       "firstLayer": {
-        "meetThisOrganism": "Anaerobic bacterium occurring in oral and gut communities, studied for using lactate and producing other fermentation products.",
-        "whyResearchersStudyIt": "Its presence in stool does not establish whether it came from the oral cavity or reflects any particular disease.",
-        "foodMetabolicConnections": "No diet or exercise recommendation follows from this detection."
+        "meetThisOrganism": "An anaerobic bacterium associated with oral and intestinal communities. Its type-strain reference describes using lactate and other organic acids, producing compounds including propionate and acetate under the studied conditions.",
+        "whyResearchersStudyIt": "Culture and genome characterization explain part of its ecological role, but this is a different species from V. atypica used in athlete-related mouse research. Findings about a V. atypica strain do not establish an exercise benefit for V. parvula.",
+        "foodMetabolicConnections": "The lactate connection helps describe microbial cross-feeding, rather than providing a food or training prescription. A stool name does not establish whether the organism came from an oral community, identify its strain or measure its metabolic activity in you."
       },
       "citations": [
         {
-          "title": "Primary or reference source for specialist verification",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/31235964/",
-          "studyDesign": "related Veillonella strain studies; not direct V. parvula evidence",
-          "reviewStatus": "needs exact claim-to-source verification"
+          "title": "Complete genome sequence of Veillonella parvula type strain (Te3)",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/21304678/",
+          "pmid": "21304678",
+          "doi": "10.4056/sigs.521107",
+          "studyDesign": "Type-strain genome and phenotypic reference",
+          "scopeLimit": "Describes V. parvula rather than the V. atypica athlete-study strain; no personal performance effect is established.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
@@ -2876,7 +3058,14 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "retiredCitationUrls": [
+        "https://pubmed.ncbi.nlm.nih.gov/31235964/"
+      ],
+      "editorialRevisionNotes": "Removed the V. atypica athlete-study reference from this species card and replaced it with a V. parvula type-strain source.",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-pyricularia-grisea",
@@ -2900,7 +3089,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-ruthenibacterium-lactatiformans",
@@ -2924,7 +3114,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-streptococcus-sp-fdaargos-192",
@@ -2948,7 +3139,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-streptococcus-thermophilus-mn-zlw-002",
@@ -2979,7 +3171,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "taxon-streptococcus-virus-dt1",
@@ -3003,7 +3196,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-tobacco-mild-green-mosaic-virus",
@@ -3027,7 +3221,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-turicibacter-sp-h121",
@@ -3051,7 +3246,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     },
     {
       "id": "taxon-clostridium-innocuum",
@@ -3075,7 +3271,8 @@
         "file": "ViomeResults_94E82CFFA634.pdf",
         "page": 6
       },
-      "reviewedAt": "2026-11-08"
+      "reviewedAt": "2026-11-08",
+      "presentation": "identity-context"
     }
   ],
   "sources": {
@@ -3128,20 +3325,27 @@
       "coverageStatus": "limited",
       "reviewStatus": "existing_context_pending_claim_review",
       "firstLayer": {
-        "meetThisOrganism": "A gut resident that can turn nutrients from the microbial food web into butyrate, a fuel used by cells lining the colon.",
-        "whyResearchersStudyIt": "Often studied alongside gut-barrier and inflammation-related health. Association does not prove that adding this bacterium treats a condition.",
-        "foodMetabolicConnections": "A varied, fiber-containing diet can support fermentation generally. This record does not tell us your butyrate output or a required bacterial amount."
+        "meetThisOrganism": "Gut bacteria reported under the Faecalibacterium prausnitzii name are studied for butyrate-producing fermentation. Butyrate is a short-chain fatty acid used by cells lining the colon, although detecting a name does not measure its production.",
+        "whyResearchersStudyIt": "Human research found lower representation of this reported species alongside Roseburia hominis in people with ulcerative colitis. That association does not show that an individual is deficient, that a lower amount caused disease or that increasing a reported percentage would treat it.",
+        "foodMetabolicConnections": "The fermentation connection places these organisms within a wider microbial food web. Different strains, older identification methods and subsequent taxonomy changes complicate comparisons. This record does not establish a personal fiber dose, metabolite concentration or supplement need."
       },
       "citations": [
         {
-          "title": "Human observational study of butyrate-producing bacteria",
+          "title": "A decrease of the butyrate-producing species Roseburia hominis and Faecalibacterium prausnitzii defines dysbiosis in patients with ulcerative colitis",
           "url": "https://pubmed.ncbi.nlm.nih.gov/24021287/",
-          "reviewStatus": "Existing context citation; independent claim review pending."
+          "pmid": "24021287",
+          "doi": "10.1136/gutjnl-2013-304833",
+          "studyDesign": "Human disease/control observational microbiome study",
+          "scopeLimit": "Association is not a deficiency diagnosis; historical names and assays do not resolve every modern species or strain.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "lastRevised": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "context-roseburia-hominis",
@@ -3166,7 +3370,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-ruminococcus-gnavus",
@@ -3198,7 +3403,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-clostridium-scindens",
@@ -3223,7 +3429,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-sutterella",
@@ -3248,7 +3455,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-alistipes",
@@ -3278,7 +3486,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-bacteroides-vulgatus",
@@ -3292,25 +3501,26 @@
       "coverageStatus": "limited",
       "reviewStatus": "existing_context_pending_claim_review",
       "firstLayer": {
-        "meetThisOrganism": "A common gut resident with enzymes that help process certain carbohydrates.",
-        "whyResearchersStudyIt": "Its interactions can be helpful or unfavorable depending on strain and surroundings. Some research concerns its interaction with other microbes or inflammation.",
-        "foodMetabolicConnections": "“Reported elevated” does not establish a harmful amount, especially when no numeric abundance or reference interval is available."
+        "meetThisOrganism": "A gut-associated bacterium also named Phocaeicola vulgatus. Genome research examines how its nutrient-use machinery fits the intestinal environment and differs from that of neighboring gut bacteria.",
+        "whyResearchersStudyIt": "Comparative sequencing of selected Bacteroides-related strains identified adaptations to their ecological niches. Such work describes genetic potential and evolutionary history; it does not measure which genes are active in a person or establish that the species has one fixed health effect.",
+        "foodMetabolicConnections": "Nutrient-use systems connect the organism to a microbial food web, but the genome of a studied isolate cannot prescribe a meal for everyone carrying the name. This report does not establish the strain, its current products or a reason to increase or remove it."
       },
       "citations": [
         {
-          "title": "Study of gut Bacteroides genomes",
+          "title": "Evolution of symbiotic bacteria in the distal human intestine",
           "url": "https://pubmed.ncbi.nlm.nih.gov/17579514/",
-          "reviewStatus": "Existing context citation; independent claim review pending."
-        },
-        {
-          "title": "Experimental study of microbial carbohydrate sharing",
-          "url": "https://pubmed.ncbi.nlm.nih.gov/31925306/",
-          "reviewStatus": "Existing context citation; independent claim review pending."
+          "pmid": "17579514",
+          "studyDesign": "Comparative genome analysis of selected gut bacterial strains",
+          "scopeLimit": "Genome potential and habitat adaptation do not establish active metabolism or a personal diet response.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
         }
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "lastRevised": "2026-11-08",
+      "presentation": "research-context"
     },
     {
       "id": "context-lactobacillus-reuteri",
@@ -3342,7 +3552,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-bifidobacterium-group",
@@ -3375,7 +3586,8 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
     },
     {
       "id": "context-bacteroides-fragilis",
@@ -3400,7 +3612,827 @@
       ],
       "reviewedAt": "2026-11-08",
       "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
-      "version": "biology-content-r4m1-2026-11-08.2"
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-blautia-wexlerae",
+      "reportedName": "Blautia wexlerae",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "An anaerobic gut bacterium studied for carbohydrate fermentation. Cultured strains can release acetate, lactate and succinate, which may become ingredients for neighboring microbes rather than ending the fermentation process themselves.",
+        "whyResearchersStudyIt": "A Japanese observational study linked lower representation with obesity and type 2 diabetes. Experiments in mice and cultures explored metabolic mechanisms, but those experiments do not show that taking this organism treats either condition in humans.",
+        "foodMetabolicConnections": "The study illustrates cross-feeding: bacterial products can influence what other organisms make. It did not establish a food portion that reliably raises B. wexlerae or a target percentage for a stool report. Detection alone does not measure these exchanges."
+      },
+      "citations": [
+        {
+          "title": "Oral administration of Blautia wexlerae ameliorates obesity and type 2 diabetes via metabolic remodeling of the gut microbiota",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/35982037/",
+          "pmid": "35982037",
+          "doi": "10.1038/s41467-022-32015-7",
+          "studyDesign": "Human cross-sectional association, mouse intervention and bacterial cultures",
+          "scopeLimit": "Human association is not intervention evidence. The studied strains and mouse diet do not establish individual benefit.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-escherichia-coli",
+      "reportedName": "Escherichia coli",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "E. coli includes many strains that can live in the intestinal community without causing illness. Experimental work with a laboratory strain shows how it uses available sugars to compete for nutrients in the gut.",
+        "whyResearchersStudyIt": "Researchers distinguish ordinary carriage from disease-causing strains using traits such as toxin genes and clinical context. Mouse nutrition experiments describe one strain’s ecology; they do not establish how every E. coli strain behaves in a person.",
+        "foodMetabolicConnections": "A species name in a composition report does not identify a toxin-producing strain, diagnose infection or justify a food restriction. The studied carbon sources explain microbial competition, rather than providing a menu for feeding or eliminating this organism."
+      },
+      "citations": [
+        {
+          "title": "CDC: About Escherichia coli Infection",
+          "url": "https://www.cdc.gov/ecoli/about/index.html",
+          "studyDesign": "Authoritative organism or taxonomy reference",
+          "scopeLimit": "Most strains are harmless; species detection does not identify a pathogenic strain.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "Carbon nutrition of Escherichia coli in the mouse intestine",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15123798/",
+          "pmid": "15123798",
+          "doi": "10.1073/pnas.0307888101",
+          "studyDesign": "Culture expression analysis and mouse colonization experiments",
+          "scopeLimit": "Laboratory strain MG1655 and mouse intestinal conditions do not establish a personal diet response.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-prevotella-copri",
+      "reportedName": "Prevotella copri",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A gut-associated organism historically reported under the Prevotella copri name. Isolate studies show that different members can use different plant polysaccharides, so the same reported name can cover substantial biological diversity.",
+        "whyResearchersStudyIt": "Genomic research has described multiple distinct lineages within this complex, now also discussed under Segatella terminology. Associations with diet and health can differ across lineages, populations and study designs; a shared name is not a uniform functional or clinical category.",
+        "foodMetabolicConnections": "Plant-carbohydrate experiments help explain why dietary context matters, but they do not identify the lineage or its activity in a stool listing. This record cannot establish that a particular fiber will increase it or that a higher amount would be beneficial."
+      },
+      "citations": [
+        {
+          "title": "Distinct Polysaccharide Utilization Profiles of Human Intestinal Prevotella copri Isolates",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31726030/",
+          "pmid": "31726030",
+          "studyDesign": "Human-derived isolate genomics and growth experiments",
+          "scopeLimit": "Different isolates use different substrates; host diet information was unavailable.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "The Prevotella copri Complex Comprises Four Distinct Clades Underrepresented in Westernized Populations",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31607556/",
+          "pmid": "31607556",
+          "doi": "10.1016/j.chom.2019.08.018",
+          "studyDesign": "Comparative metagenomics with isolate sequencing",
+          "scopeLimit": "Historical four-clade description is not a current strain identification; later taxonomy further subdivides the complex.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-desulfovibrio-piger",
+      "reportedName": "Desulfovibrio piger",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "An anaerobic gut bacterium that can obtain energy through sulfate reduction, with hydrogen serving as an electron donor in studied systems. This metabolism can generate hydrogen sulfide and connects it to the chemistry of neighboring microbes.",
+        "whyResearchersStudyIt": "Experiments with defined human-derived communities in mice examined which genes and sulfur sources supported colonization. Changing free dietary sulfate did not simply determine its abundance; host-derived compounds and bacterial cross-feeding also mattered.",
+        "foodMetabolicConnections": "That finding makes a direct food-to-organism rule unreliable. A stool listing does not measure hydrogen sulfide exposure or show that a food is causing symptoms. The laboratory pathway is useful ecological context, rather than a reason to start a sulfur-restricted diet."
+      },
+      "citations": [
+        {
+          "title": "Metabolic niche of a prominent sulfate-reducing human gut bacterium",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/23898195/",
+          "pmid": "23898195",
+          "doi": "10.1073/pnas.1312524110",
+          "studyDesign": "Defined-community gnotobiotic mouse experiments and bacterial genetics",
+          "scopeLimit": "Colonization and sulfate handling in this experimental community are not personal sulfide measurements or a dietary treatment trial.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-eubacterium-rectale",
+      "reportedName": "Eubacterium rectale",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [
+        "Agathobacter rectalis"
+      ],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A gut anaerobe also classified as Agathobacter rectalis. It is studied for butyrate-producing fermentation and for proteins that bind, break down and transport starch-derived carbohydrates.",
+        "whyResearchersStudyIt": "Culture and molecular experiments describe how selected strains obtain nutrients from starch. Other community members can first release carbohydrate fragments, creating opportunities for cross-feeding rather than each bacterium acting independently.",
+        "foodMetabolicConnections": "These mechanisms connect the organism to the fermentation of dietary carbohydrates, but a species listing does not establish its current butyrate output or which substrates it is using. Food preparation, the starch itself and the rest of the microbial community can change the setting. No personal serving or ideal percentage follows from the name."
+      },
+      "citations": [
+        {
+          "title": "Molecular details of a starch utilization pathway in the human gut symbiont Eubacterium rectale",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25388295/",
+          "pmid": "25388295",
+          "doi": "10.1111/mmi.12859",
+          "studyDesign": "Bacterial culture, protein and enzyme experiments",
+          "scopeLimit": "Characterizes a studied starch-utilization system, not a human food intervention or personal butyrate output.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "LPSN: Eubacterium rectale",
+          "url": "https://lpsn.dsmz.de/species/eubacterium-rectale",
+          "studyDesign": "Authoritative organism or taxonomy reference",
+          "scopeLimit": "Lists Agathobacter rectalis as the current name; source spelling remains unchanged.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-alistipes-putredinis",
+      "reportedName": "Alistipes putredinis",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "An anaerobic bacterium found in gut-associated communities. Researchers study how selected strains change the surrounding community and intestinal succinate signaling, rather than assuming one fixed effect from the species name.",
+        "whyResearchersStudyIt": "A study of strain CCUG 45780 tested cells and mice. Healthy mice did not develop overt disease, while the strain worsened chemically induced colitis in a susceptible experimental setting. This does not show that every detection causes human bowel disease or that all Alistipes species behave alike.",
+        "foodMetabolicConnections": "The succinate connection is a measured mechanism in that study, not a measurement of your intestinal metabolites. A source listing cannot establish the strain or reproduce the mouse model. It does not provide an organism-specific food restriction or justify trying to eliminate the genus."
+      },
+      "citations": [
+        {
+          "title": "Alistipes putredinis CCUG 45780T exacerbates DSS-induced colitis in mice via modulation of gut microbiota and succinate metabolism",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/41310419/",
+          "pmid": "41310419",
+          "doi": "10.1186/s12866-025-04445-y",
+          "studyDesign": "Strain-specific culture/cell experiments and chemically induced mouse colitis",
+          "scopeLimit": "A susceptibility model and one strain do not establish disease causation in an ordinary human stool sample.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-bilophila-wadsworthia",
+      "reportedName": "Bilophila wadsworthia",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A bile-tolerant gut bacterium studied for sulfur metabolism. Selected strains can use sulfur released from taurine-containing compounds, linking their growth to bile chemistry as well as the surrounding microbial community.",
+        "whyResearchersStudyIt": "In a mouse study, a milk-fat-rich diet changed bile-acid conditions and promoted expansion of this organism. Colitis findings depended on a genetically susceptible mouse model, rather than demonstrating that the organism or dairy necessarily causes disease in people.",
+        "foodMetabolicConnections": "The research connects diet, host bile and microbes through a specific experimental pathway. It does not supply a personal dairy ban or show sulfur metabolism in a reported stool sample. A species name alone cannot identify the strain, its activity or a health outcome."
+      },
+      "citations": [
+        {
+          "title": "Dietary-fat-induced taurocholic acid promotes pathobiont expansion and colitis in Il10-/- mice",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22722865/",
+          "pmid": "22722865",
+          "doi": "10.1038/nature11225",
+          "studyDesign": "Diet/bile intervention and bacterial colonization in mice",
+          "scopeLimit": "Colitis effects relied on the studied diet and susceptible Il10-deficient mouse context; no personal human food restriction is established.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-klebsiella-pneumoniae",
+      "reportedName": "Klebsiella pneumoniae",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Klebsiella pneumoniae can be carried in the gastrointestinal tract and can also cause infections in other body sites. Carriage, an active infection and antibiotic resistance are different observations.",
+        "whyResearchersStudyIt": "Genomic work in intensive-care patients found that the gut could act as a reservoir for later infections. Those hospital findings describe a particular population and clinical setting; they do not turn a routine stool species listing into a prediction of infection.",
+        "foodMetabolicConnections": "A composition report does not establish resistance genes, a virulent strain or whether treatment is needed. The cited research concerns colonization and infection pathways, rather than a food that reliably removes the organism. Symptoms and clinical microbiology testing answer different questions from this report."
+      },
+      "citations": [
+        {
+          "title": "Gastrointestinal Carriage Is a Major Reservoir of Klebsiella pneumoniae Infection in Intensive Care Patients",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/28369261/",
+          "pmid": "28369261",
+          "doi": "10.1093/cid/cix270",
+          "studyDesign": "Prospective intensive-care carriage/infection study with genomic comparisons",
+          "scopeLimit": "Hospital patient risk and strain comparisons cannot be applied as personal risk estimates from species detection.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-bifidobacterium-longum",
+      "reportedName": "Bifidobacterium longum",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A human-associated gut bacterium whose strains carry machinery for using a range of carbohydrates. Different subspecies and strains occupy different nutritional niches, so the species name does not establish a specific milk-sugar or fiber capability.",
+        "whyResearchersStudyIt": "Genome research on strain NCC2705 helped explain adaptation to the gastrointestinal tract. A later assembly correction is part of that source history; genome potential is also different from measuring active metabolism in a person.",
+        "foodMetabolicConnections": "Carbohydrate-use systems help researchers ask how diet and microbial competition interact. They do not show that a particular supplement or food will produce a benefit for everyone carrying B. longum. Detection does not identify a commercial probiotic strain or its clinical evidence."
+      },
+      "citations": [
+        {
+          "title": "The genome sequence of Bifidobacterium longum reflects its adaptation to the human gastrointestinal tract",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/12381787/",
+          "pmid": "12381787",
+          "doi": "10.1073/pnas.212527599",
+          "studyDesign": "Genome analysis of strain NCC2705",
+          "scopeLimit": "Gene content and predicted adaptation are strain-level research, not measured activity or proof of benefit.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "Correction to the Bifidobacterium longum NCC2705 genome report",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1166602/",
+          "studyDesign": "Authoritative organism or taxonomy reference",
+          "scopeLimit": "The initial chromosome assembly was corrected; do not treat its original arrangement as definitive.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-roseburia-intestinalis",
+      "reportedName": "Roseburia intestinalis",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "An anaerobic gut bacterium studied for making butyrate while fermenting carbohydrates. Butyrate is a short-chain fatty acid that can be used by cells lining the colon and can influence host processes.",
+        "whyResearchersStudyIt": "In mice carrying defined microbial communities, researchers tested how R. intestinalis interacted with dietary plant polysaccharides. They observed changes in inflammation and atherosclerotic lesions in that experimental model, rather than proving cardiovascular protection in humans.",
+        "foodMetabolicConnections": "The study shows why a microbe’s effects can depend on the diet and neighboring organisms. A stool listing does not measure butyrate production, identify the experimental strain or show that increasing this bacterium would prevent disease. It does not establish a personalized fiber portion."
+      },
+      "citations": [
+        {
+          "title": "Interactions between Roseburia intestinalis and diet modulate atherogenesis in a murine model",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30397344/",
+          "pmid": "30397344",
+          "doi": "10.1038/s41564-018-0272-x",
+          "studyDesign": "Defined-community experiments in atherosclerosis-prone mice",
+          "scopeLimit": "Mechanistic effects in the studied mouse model are not evidence of cardiovascular prevention by this organism in humans.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-collinsella-aerofaciens",
+      "reportedName": "Collinsella aerofaciens",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A gut-associated bacterium examined in research on microbial communities and host biology. Selected-strain experiments study changes in the permeability of intestinal cell layers and inflammatory signaling, rather than assigning one health effect to the species.",
+        "whyResearchersStudyIt": "One study combined human rheumatoid-arthritis associations with epithelial-cell and mouse experiments. Selected Collinsella experiments affected intestinal permeability and inflammatory responses, but the human association does not establish that finding this organism causes arthritis.",
+        "foodMetabolicConnections": "Metabolic associations are useful research questions, rather than instructions to feed or suppress a species. This report does not show barrier permeability, inflammatory signaling or an organism-specific diet response. A species name cannot reproduce the experimental strain or establish whether the study mechanism is operating in you."
+      },
+      "citations": [
+        {
+          "title": "An expansion of rare lineage intestinal microbes characterizes rheumatoid arthritis",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/27102666/",
+          "pmid": "27102666",
+          "doi": "10.1186/s13073-016-0299-7",
+          "studyDesign": "Human observational profiling with epithelial-cell and experimental arthritis models",
+          "scopeLimit": "Human association and selected experimental mechanisms do not diagnose arthritis or establish a personal dietary intervention.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-methanobrevibacter-smithii",
+      "reportedName": "Methanobrevibacter smithii",
+      "reportedGroup": "Archaeon",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "This is an archaeon, rather than a bacterium. In studied gut systems it can use hydrogen and carbon dioxide to make methane, linking its energy supply to products released by bacterial neighbors.",
+        "whyResearchersStudyIt": "Experiments with simplified communities in germ-free mice showed that interactions with Bacteroides could change fermentation and host energy handling. These are mechanistic findings in a controlled model, not a measurement of methane production or energy harvest in an individual report.",
+        "foodMetabolicConnections": "Hydrogen cross-feeding helps explain why the surrounding community matters. A stool species listing does not diagnose intestinal methanogen overgrowth or show that a dietary change will control methane. Breath testing and clinical assessment address different questions from the organism name alone."
+      },
+      "citations": [
+        {
+          "title": "A humanized gnotobiotic mouse model of host-archaeal-bacterial mutualism",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16782812/",
+          "pmid": "16782812",
+          "doi": "10.1073/pnas.0602187103",
+          "studyDesign": "Defined bacterial/archaeal communities in germ-free mice",
+          "scopeLimit": "Simplified mouse communities do not establish human methane production, symptoms or the need for treatment.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-bifidobacterium-adolescentis",
+      "reportedName": "Bifidobacterium adolescentis",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A human gut bacterium studied for fermenting carbohydrates and sharing fermentation products with other microbes. In selected cultures it can release acetate and lactate or carbohydrate fragments that neighboring organisms can use.",
+        "whyResearchersStudyIt": "Co-culture experiments showed routes by which this activity supported butyrate production by other bacteria. One historical partner called Eubacterium hallii L2-7 is now classified as Anaerobutyricum soehngenii, so that strain should not be reassigned to A. hallii.",
+        "foodMetabolicConnections": "This is an example of community cross-feeding, rather than proof that B. adolescentis makes every final product itself. A stool name does not establish those partners, their activity or a reliable response to a particular starch or food portion."
+      },
+      "citations": [
+        {
+          "title": "Two routes of metabolic cross-feeding between Bifidobacterium adolescentis and butyrate-producing anaerobes from the human gut",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/16672507/",
+          "pmid": "16672507",
+          "doi": "10.1128/AEM.72.5.3593-3599.2006",
+          "studyDesign": "Bacterial pure cultures and co-cultures",
+          "scopeLimit": "Cross-feeding is demonstrated in selected isolates; historical E. hallii L2-7 belongs to A. soehngenii, not current A. hallii.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "Reclassification of Eubacterium hallii as Anaerobutyricum hallii and description of Anaerobutyricum soehngenii",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30351260/",
+          "pmid": "30351260",
+          "doi": "10.1099/ijsem.0.003041",
+          "studyDesign": "Taxonomic reclassification of cultured isolates",
+          "scopeLimit": "Taxonomy mapping prevents transfer of results between the two species.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Name-level literature context does not measure strain identity, gene expression, metabolite flux or a personal health effect.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-ruminococcus-bromii",
+      "reportedName": "Ruminococcus bromii",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Researchers have studied this bacterium’s ability to break down resistant starch in human-derived cultures. Resistant starch escapes digestion earlier in the gut, leaving material that some microbes can use.",
+        "whyResearchersStudyIt": "Experiments found that R. bromii could release starch-derived products that other bacteria then consumed. This helps explain its description as a keystone starch degrader: its role can change what becomes available to the wider community.",
+        "foodMetabolicConnections": "The work connects starch structure and microbial cooperation, rather than showing a guaranteed response to a particular food. A species listing does not identify the experimental strain or measure starch breakdown, fermentation products or butyrate production in you. Different starches and communities can behave differently."
+      },
+      "citations": [
+        {
+          "title": "Ruminococcus bromii is a keystone species for the degradation of resistant starch in the human colon",
+          "url": "https://www.nature.com/articles/ismej20124",
+          "pmid": "22343308",
+          "doi": "10.1038/ismej.2012.4",
+          "studyDesign": "Human-derived isolates and mixed fecal-community culture experiments",
+          "scopeLimit": "Mechanistic starch-degradation and cross-feeding context, not a personalized starch portion or proof of function in a report.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "Existing primary source checked; independent claim review pending."
+        }
+      ],
+      "functionalResearch": {
+        "pathwayId": "starch-butyrate",
+        "sourceId": "resistant-starch-2012",
+        "doi": "10.1038/ismej.2012.4",
+        "groupLabel": "Resistant-starch research",
+        "scopeLabel": "Species-name study context",
+        "measurementLimit": "This record does not measure starch breakdown, fermentation products or butyrate production in you.",
+        "dietLimit": "This source describes mechanistic experiments, not a personal food or serving recommendation. It does not establish that eating a particular food will increase this organism in you."
+      },
+      "limits": "The reported name does not establish the studied strain, pathway activity or a personal health outcome.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-veillonella-atypica",
+      "reportedName": "Veillonella atypica",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Researchers linked Veillonella-associated lactate metabolism with athlete observations and studied V. atypica in mice. Lactate can be a microbial fuel, with selected strains converting it into products such as propionate.",
+        "whyResearchersStudyIt": "The research combined human athlete observations with experiments that tested a strain and its metabolic pathway in mice. The human observations were associations; the mouse findings do not establish a performance benefit for people who have a matching species name in their report.",
+        "foodMetabolicConnections": "Exercise-derived lactate is not the same as a food recommendation. A stool listing does not measure lactate consumption or propionate production, and it cannot identify a sports-performance probiotic strain. Neither a personal serving nor an exercise prescription follows from detection."
+      },
+      "citations": [
+        {
+          "title": "Meta-omics analysis of elite athletes identifies a performance-enhancing microbe that functions via lactate metabolism",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31235964/",
+          "pmid": "31235964",
+          "doi": "10.1038/s41591-019-0485-4",
+          "studyDesign": "Human athlete observations with mouse and mechanistic experiments",
+          "scopeLimit": "Human association and mouse intervention are different evidence models; a matching species label does not establish a human performance benefit.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "Existing primary source checked; independent claim review pending."
+        }
+      ],
+      "functionalResearch": {
+        "pathwayId": "athlete-lactate",
+        "sourceId": "athletes-2019",
+        "doi": "10.1038/s41591-019-0485-4",
+        "groupLabel": "Lactate research",
+        "scopeLabel": "Species-name study context",
+        "measurementLimit": "This record does not measure lactate consumption, propionate production or exercise performance effects in you.",
+        "dietLimit": "Human athlete observations and mouse experiments do not establish a human food, probiotic or serving prescription. Exercise-derived lactate is not a dietary substrate recommendation."
+      },
+      "limits": "The reported name does not establish the studied strain, pathway activity or a personal health outcome.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-odoribacteraceae",
+      "reportedName": "Odoribacteraceae",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "family",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Some isolates in this bacterial family were studied for specific bile-acid transformations in a centenarian research programme. The family name in your report does not identify those isolates or establish that other family members share their capacity.",
+        "whyResearchersStudyIt": "Researchers connected human community observations with culture experiments on selected bacteria and particular bile-acid products. Those products have different biological effects, so describing the whole family as beneficial or harmful would erase important distinctions.",
+        "foodMetabolicConnections": "The study concerns host bile chemistry and specific microbial reactions. It does not show that a food will reproduce those reactions or extend a person’s lifespan. A family-level report cannot establish the relevant genes, substrates or concentrations, and more total secondary bile acids is not a health goal."
+      },
+      "citations": [
+        {
+          "title": "Novel bile acid biosynthetic pathways are enriched in the microbiome of centenarians",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34325466/",
+          "pmid": "34325466",
+          "doi": "10.1038/s41586-021-03832-5",
+          "studyDesign": "Human centenarian observations and selected-isolate culture experiments",
+          "scopeLimit": "Family-level names cannot identify the studied isolates or demonstrate their gene content, bile-acid activity or longevity effects.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "Existing primary source checked; independent claim review pending."
+        }
+      ],
+      "functionalResearch": {
+        "pathwayId": "longevity-bile",
+        "sourceId": "centenarians-2021",
+        "doi": "10.1038/s41586-021-03832-5",
+        "groupLabel": "Bile-acid research",
+        "scopeLabel": "Family-level background only",
+        "measurementLimit": "This record does not identify the studied isolates, their genes, or bile-acid production, consumption or host concentrations in you.",
+        "dietLimit": "A centenarian association and culture experiments do not show that a food will reproduce those pathways or extend your lifespan. More total secondary bile acids is not a goal."
+      },
+      "limits": "The reported name does not establish the studied strain, pathway activity or a personal health outcome.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-anaerobutyricum-soehngenii",
+      "reportedName": "Anaerobutyricum soehngenii",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A gut-associated anaerobic bacterium described through studies of cultured isolates. Its type strain L2-7 was historically called Eubacterium hallii, but taxonomic analysis placed it in a separate species from today’s Anaerobutyricum hallii.",
+        "whyResearchersStudyIt": "The species description includes fermentation producing butyrate and propionate. Those culture findings explain why exact strain mapping matters when reading older cross-feeding research: a historical name can otherwise attach an experiment to the wrong modern organism.",
+        "foodMetabolicConnections": "A current species listing does not identify L2-7 or establish metabolite production in a person. It also does not transfer findings from A. hallii, establish a dietary dose or prove a benefit from a product carrying a related name."
+      },
+      "citations": [
+        {
+          "title": "Reclassification of Eubacterium hallii as Anaerobutyricum hallii and description of Anaerobutyricum soehngenii",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30351260/",
+          "pmid": "30351260",
+          "doi": "10.1099/ijsem.0.003041",
+          "studyDesign": "Taxonomic reclassification of cultured isolates",
+          "reviewStatus": "Source identity checked; independent claim approval pending.",
+          "scopeLimit": "DSM 3353 belongs to A. hallii; historical L2-7 belongs to A. soehngenii. These are distinct species."
+        }
+      ],
+      "limits": "Exact name/rank context does not establish the reported assay’s resolution or a personal microbial function.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-ruminococcus-gnavus-atcc-29149",
+      "reportedName": "Ruminococcus gnavus ATCC 29149",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "strain",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A specifically named gut bacterial strain used in research on interactions with host immune cells. Scientists characterized a glucose-and-rhamnose-containing cell-wall polysaccharide, called glucorhamnan, from this strain.",
+        "whyResearchersStudyIt": "The isolated material stimulated inflammatory responses in experimental immune cells. Other work on R. gnavus capsules shows why surface structures and strain differences matter. These findings do not establish that a stool detection causes Crohn’s disease or that every related strain has the same effect.",
+        "foodMetabolicConnections": "The study examines a bacterial cell-wall product, rather than a food shown to control this organism. A report carrying the strain name still needs an appropriate identification method; its presence does not measure glucorhamnan, inflammatory signaling or a treatment need."
+      },
+      "citations": [
+        {
+          "title": "Ruminococcus gnavus, a member of the human gut microbiome associated with Crohn’s disease, produces an inflammatory polysaccharide",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31182571/",
+          "studyDesign": "Polysaccharide characterization and immune-cell experiments",
+          "scopeLimit": "The ATCC 29149-derived glucorhamnan and experimental immune response do not diagnose disease in a stool report.",
+          "pmid": "31182571",
+          "doi": "10.1073/pnas.1904099116",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "Capsular polysaccharide correlates with immune response to the human gut microbe Ruminococcus gnavus",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8157926/",
+          "studyDesign": "Comparative strain/capsule and immune-response experiments",
+          "scopeLimit": "Surface structures and immune responses vary across studied strains; no species-wide clinical effect is assigned.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Exact name/rank context does not establish the reported assay’s resolution or a personal microbial function.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-roseburia",
+      "reportedName": "Roseburia",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Roseburia is a genus label, rather than one identified species. Gut-associated members have been studied for carbohydrate fermentation and butyrate production, but a genus-only observation cannot identify the particular organism or its capabilities.",
+        "whyResearchersStudyIt": "For example, experiments with Roseburia intestinalis tested how plant polysaccharides and a defined microbial community affected butyrate-related host biology in mice. That is a specific species and experimental setting, rather than evidence that every Roseburia member produces the same human health outcome.",
+        "foodMetabolicConnections": "The genus helps organize a fermentation research topic. It does not measure butyrate in this sample or identify a food portion that will raise a useful strain. More precise source identification would be needed for species-specific context."
+      },
+      "citations": [
+        {
+          "title": "Interactions between Roseburia intestinalis and diet modulate atherogenesis in a murine model",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30397344/",
+          "pmid": "30397344",
+          "doi": "10.1038/s41564-018-0272-x",
+          "studyDesign": "Defined-community experiments in atherosclerosis-prone mice",
+          "scopeLimit": "Mechanistic effects in the studied mouse model are not evidence of cardiovascular prevention by this organism in humans.",
+          "verifiedOn": "2026-11-08",
+          "verification": "Primary indexed abstract and/or publisher passages checked; independent claim-by-claim approval pending.",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Exact name/rank context does not establish the reported assay’s resolution or a personal microbial function.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-ruminococcus",
+      "reportedName": "Ruminococcus",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [
+        "Ruminococcus spp."
+      ],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A genus-level Ruminococcus label covers less specific information than a full species name. Historically reported members have been investigated for different activities, so the label should not automatically be treated as a resistant-starch degrader.",
+        "whyResearchersStudyIt": "Research on R. bromii examined starch breakdown and release of products for other bacteria. Separate work on the historically named R. gnavus examined an immune-active cell-wall polysaccharide. These are distinct named organisms and experiments, not interchangeable functions of a whole genus.",
+        "foodMetabolicConnections": "This contrast explains why a genus-only record cannot identify a dietary substrate, butyrate output or inflammatory effect. No personal starch portion or attempt to increase or eliminate the whole group follows from this resolution."
+      },
+      "citations": [
+        {
+          "title": "Ruminococcus bromii is a keystone species for the degradation of resistant starch in the human colon",
+          "url": "https://www.nature.com/articles/ismej20124",
+          "pmid": "22343308",
+          "doi": "10.1038/ismej.2012.4",
+          "studyDesign": "Human-derived isolates and mixed fecal-community culture experiments",
+          "scopeLimit": "Mechanistic starch-degradation and cross-feeding context, not a personalized starch portion or proof of function in a report.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "Existing primary source checked; independent claim review pending."
+        },
+        {
+          "title": "Ruminococcus gnavus, a member of the human gut microbiome associated with Crohn’s disease, produces an inflammatory polysaccharide",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31182571/",
+          "studyDesign": "Polysaccharide characterization and immune-cell experiments",
+          "scopeLimit": "The ATCC 29149-derived glucorhamnan and experimental immune response do not diagnose disease in a stool report.",
+          "pmid": "31182571",
+          "doi": "10.1073/pnas.1904099116",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        }
+      ],
+      "limits": "Exact name/rank context does not establish the reported assay’s resolution or a personal microbial function.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-veillonella",
+      "reportedName": "Veillonella",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Veillonella is a genus containing multiple species associated with microbial communities, including oral and intestinal settings. Studies of selected members examine how lactate can be used as an energy source and converted into other fermentation products.",
+        "whyResearchersStudyIt": "One widely discussed study linked athlete observations with experiments on V. atypica and mice. That evidence cannot identify a V. atypica strain from a genus-only record, and it does not establish that other Veillonella species have the same performance-related effect.",
+        "foodMetabolicConnections": "The lactate connection is ecological background, not an instruction to change food or exercise to increase the genus. A report at this resolution does not measure lactate consumption, propionate production or a personal benefit."
+      },
+      "citations": [
+        {
+          "title": "Meta-omics analysis of elite athletes identifies a performance-enhancing microbe that functions via lactate metabolism",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31235964/",
+          "pmid": "31235964",
+          "doi": "10.1038/s41591-019-0485-4",
+          "studyDesign": "Human athlete observations with mouse and mechanistic experiments",
+          "scopeLimit": "Human association and mouse intervention are different evidence models; a matching species label does not establish a human performance benefit.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "Existing primary source checked; independent claim review pending."
+        }
+      ],
+      "limits": "Exact name/rank context does not establish the reported assay’s resolution or a personal microbial function.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
+    },
+    {
+      "id": "context-odoribacter",
+      "reportedName": "Odoribacter",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Odoribacter is a genus within the bacterial family Odoribacteraceae. These names describe different taxonomic levels; a genus label is not a specific species or one of the experimental isolates used in a research study.",
+        "whyResearchersStudyIt": "Researchers have studied selected Odoribacteraceae isolates for particular bile-acid transformations in a centenarian research programme. The family-level findings help frame a research question, but cannot assign those reactions to every organism reported as Odoribacter.",
+        "foodMetabolicConnections": "Bile-acid chemistry depends on the host and a wider community of microbial reactions. This report does not identify the necessary genes or measure the products. It does not show that a food will reproduce the study pathway, or that increasing secondary bile acids would improve health."
+      },
+      "citations": [
+        {
+          "title": "LPSN: Genus Odoribacter",
+          "url": "https://lpsn.dsmz.de/genus/odoribacter",
+          "studyDesign": "Taxonomic nomenclature reference",
+          "scopeLimit": "Confirms genus/family placement, not individual strain metabolism.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "editorial_source_checked_independent_review_pending"
+        },
+        {
+          "title": "Novel bile acid biosynthetic pathways are enriched in the microbiome of centenarians",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34325466/",
+          "pmid": "34325466",
+          "doi": "10.1038/s41586-021-03832-5",
+          "studyDesign": "Human centenarian observations and selected-isolate culture experiments",
+          "scopeLimit": "Family-level names cannot identify the studied isolates or demonstrate their gene content, bile-acid activity or longevity effects.",
+          "verifiedOn": "2026-11-08",
+          "reviewStatus": "Existing primary source checked; independent claim review pending."
+        }
+      ],
+      "limits": "Exact name/rank context does not establish the reported assay’s resolution or a personal microbial function.",
+      "reviewedAt": "2026-11-08",
+      "lastRevised": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.3",
+      "presentation": "research-context"
     }
   ]
 }
