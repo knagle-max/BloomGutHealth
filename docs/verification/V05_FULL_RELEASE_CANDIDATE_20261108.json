@@ -1,0 +1,374 @@
+{
+  "kind": "WHOLE_V05_RELEASE_CANDIDATE",
+  "status": "READY_FOR_SINGLE_FINAL_OWNER_RC_REVIEW_AFTER_PUBLICATION_CHECKS",
+  "applicationCommit": "d20e384b9223bef553f6a0def273f0d697028846",
+  "branch": "enhance/bloom-experience",
+  "pr": "https://github.com/knagle-max/BloomGutHealth/pull/1",
+  "preview": "https://bloomguthealth.onrender.com/",
+  "mainMerged": false,
+  "v06": {
+    "started": false,
+    "stashPreserved": "f0fd36479176b1daa7b8c5525306292b10670d8f",
+    "nextGate": "Only after full v0.5 RC owner acceptance and authorized main merge"
+  },
+  "authority": "docs/architecture/V05_SINGLE_FINAL_RC_GATE_AUTONOMOUS_EXECUTION_20261108.md",
+  "currentRequirementTrace": {
+    "path": "docs/verification/V05_CURRENT_REQUIREMENT_DISPOSITIONS_20261108.json",
+    "rows": 207,
+    "counts": {
+      "ALREADY_VERIFIED": 44,
+      "IMPLEMENTED_AND_TESTED": 38,
+      "BLOCKED_TECHNICAL": 124,
+      "BLOCKED_USER_INPUT": 1
+    },
+    "newlyResolvedHostedStorageIds": [
+      "EXP-06",
+      "ARC-UNIT-001"
+    ],
+    "noMassIndependentAcceptance": true
+  },
+  "r4M1RequirementTrace": [
+    {
+      "requirement": "Today",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Authored M1 photo/empty SVG rules, one existing next action; real chosen-meal/Adjust controls measured across states and4 widths; accessible light/dark palettes.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Food",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Immediate canonical text composer and optional methods; owned versioned Journal edits; corrected/pending drafts across selected sources; exact receipt/reload/owner/date/partial/source and Today/Progress/delete parity. Exact F-01 generic eggs and F-06 safe qualified abstention.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Biology/Gut",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Direct source-qualified marker and organism discovery; canonical substantive14-marker content and exact name/rank organism contexts. All20 original UI fixture names have cited90\u2013160-word explanations. All94 supplied drafts/limited/identity states remain available, with exact source observation and one deeper source disclosure; byte-immutable originals, sample/owner/focus/zero/unknown guards and96-case compiled responsive matrix PASS.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Explore",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Authored M1 photography with true source-error SVG/collapse; source-backed topics, studies and graphs, explicit personal-food lookup, keyboard/zoom/context withdrawal.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Progress",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Desktop ornament in reserved header column; actual recorded dates/gaps/zero/unknown foods and source totals; sole Profile unit editor retained.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Athlete",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Distinct light and dark palettes retaining blue identity; authored art/source gates; canonical planned/performed distinctions, compact individual-set confirmation/edit/IDs/units/save/reload.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Profile",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Mobile art hidden/desktop reserved ornament; native account/units/privacy/connections disclosures and actual conflict/dirty/failed-save recovery.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Shared shell and secondary states",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Existing destinations/router/shell preserved; original icons and theme-specific wordmarks;44px targets, menu/dialog title clearance, focus/Escape/Back, portal palettes and200% reflow.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Original media/copy/canonical CSS",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "87 original registered SVGs,13 original PNGs and26 exact supplied WebPs; hash/bytes/dimensions/decode/alpha/upscale declarations;204 original copy keys; one canonical CSS retains exact source prefix plus final M1-D.",
+      "independentAcceptance": "NOT_GRANTED"
+    }
+  ],
+  "m1PacketTrace": [
+    {
+      "id": "M0",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Existing router/AppShell/CSS/source/media audited; prior provisional exports retired, no duplicate active photo target",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M1",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "87 original SVG/public hashes and actual local HTTP status/MIME/byte digests PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M2",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Strict passive slot component; WebP/SVG404, offline, source/variant reset, DPR2, conceptual fallback label and no-flag/forced-color checks PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M3",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Today authored image and source-confirmed empty-journal SVG, action/source ordering and128 responsive cases PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M4",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Food/Journal/Biology/Gut/Explore prescribed media; source/form conditions and detail discovery PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M5",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Athlete navy banner; Progress/Profile desktop-only ornaments with reserved header columns PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M6",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Exact original CSS prefix plus exact final M1-D D4 in one canonical import; D3 heights;128 theme/width cases plus18 zoom cases and9 200% collision checks PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M7",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "39 exact supplied image hashes/bytes/dimensions; actual decode/alpha/upscale declarations, local126 HTTP200 MIME/digest responses; production public checker tested for39 responses and added to existing CI",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M8",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "667 unit/integration tests, full source/type/build/asset checks; source-preserving Food/sets/Profile/Biology workflows; completed finite Biology inventory and compiled94-entry/96-state journey. Final exact-head CI outcome is recorded separately.",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    }
+  ],
+  "foodRequirementTrace": [
+    {
+      "id": "UT-FOOD-UX-5301",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5302",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5303",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5304",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5305",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5306",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5307",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5308",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5309",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5310",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5311",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5312",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5313",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5314",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    }
+  ],
+  "applicationSourceTrees": {
+    "client": "bfd8c74d6f6a85a559074e7b92d199e76d3debcd",
+    "server": "9003850cbbed797c512454b8243da39dd975d9b4",
+    "shared": "306b6ad7498d819f27d55346c5ee338fd0ab8e9e",
+    "scripts": "1dd6968a2a15f4c94c778bb9c2339f1b16f88b11",
+    "package.json": "1f91cff8cb09ead09b1272f99213671c00ea9574",
+    "package-lock.json": "65ec5202121dfb3a7d2d7d5284e7a6baa9b25693",
+    ".github/workflows/neon_workflow.yml": "810401539d6fb9b745b5fab45c1090815d6c8c0b"
+  },
+  "hostedQualification": {
+    "commit": "d20e384b9223bef553f6a0def273f0d697028846",
+    "runId": 42533189930,
+    "jobId": 128892100441,
+    "step": "Verify exact isolated hosted review persistence",
+    "status": "SUCCESS",
+    "cases": [
+      "Pinned observed isolated binding/schema/service/commit and unexpired qualification before every write",
+      "Secure HttpOnly session cookies",
+      "Original Profile150.000lb write/read/new login/export",
+      "Immutable routine source correction and exact retry creates one previous version",
+      "Other-account Profile update and history denial",
+      "Private original-source exports",
+      "Account deletion and both session revocations; other account preserved",
+      "All script-owned synthetic hosted accounts erased"
+    ]
+  },
+  "ci": {
+    "runId": 42533189930,
+    "status": "SUCCESS",
+    "tests": 672,
+    "passed": 672,
+    "failed": 0,
+    "durationMs": 232573.596715,
+    "url": "https://github.com/knagle-max/BloomGutHealth/actions/runs/42533189930",
+    "scope": [
+      "Production dependency advisories",
+      "Python auth/evidence contracts",
+      "Fresh schema-only CI branch/support migrations",
+      "Type/API/capability/Biology inventories",
+      "Actual isolated hosted synthetic persistence and cleanup",
+      "672 Node/unit/embedded PostgreSQL tests",
+      "Production build and original public media",
+      "Hosted R4/M1 responsive browser",
+      "Live isolated Neon planning/source/session/persistence/security lifecycle"
+    ]
+  },
+  "deployment": {
+    "id": "dep-dbofv1dg1s2s738gu23g",
+    "commit": "d20e384b9223bef553f6a0def273f0d697028846",
+    "status": "LIVE",
+    "finishedAt": "2026-11-08T23:04:10.520974Z"
+  },
+  "isolatedReview": {
+    "serviceId": "srv-db9u7mjbc2fs73d86uv0",
+    "projectId": "fancy-smoke-82120373",
+    "branchId": "br-old-butterfly-ar8fetpm",
+    "branchName": "review/bloom-v05",
+    "endpointId": "ep-frosty-frost-arl3uo8c",
+    "databaseNameHash": "595f56395d9e8af97ce6e489db391f31709f76a6c11ba4c1533fe3f0ea3ba24d",
+    "source": "Separate empty template0 database on verified parent-schema branch; no old record copy",
+    "branchExpiresAt": null,
+    "writeTestQualificationExpiresAt": "2026-11-15T14:47:55Z",
+    "ciBranchId": "br-cool-cherry-arq9smb4",
+    "ciBranchName": "preview/pr-1",
+    "ciTeardownIndependent": true,
+    "runtimeSchemaContracts": 24,
+    "expectedColumns": 150,
+    "qualificationProbeFields": [
+      "kind",
+      "commit",
+      "expiresAt"
+    ],
+    "credentialsInEvidence": false
+  },
+  "functionalEvidence": {
+    "food": "Canonical review/save/edit/reload/reuse, household portions and honest partial intake; actual App/HTTP/PostgreSQL pizza slices flow passed320/390px",
+    "biology": "Native PDF/canonical source management, explicit companions with optional collection dates and labelled upload context, deletion/ownership/revisions; synthetic actual App/native PDF/HTTP/PostgreSQL no-collection-date journey passes",
+    "athlete": "Compact derived parent/five independent child sets;44px separate controls; completion only1/2; Set2-only edit and unit/source/stable-ID reload/owner flow passes",
+    "unitsAndProfile": "Independent locale-suggested units and canonical values; exact source tokens preserved; hosted missing table resolved",
+    "planningProgressToday": "Owned deterministic source/eligibility, canonical intake/history, compatible trends and encrypted plan source invalidation covered by integrated Node/Python/isolated Neon suites",
+    "accountPrivacySecurity": "Actual owned export/deletion/session lifecycle; password/session/origin/rate/tenant/encryption/source gates; raw auth material withheld",
+    "biologyContent": "Canonical versioned14-marker and126-taxon draft/identity contexts,94 supplied statuses/bytes preserved, strict rank/source/DOI joins,7 research pathways; no invented per-user abundance/function/clinical effect",
+    "visuals": "All seven premium R4/M1 views and shared secondary states; Everyday/Athlete light/dark,320/390/768/1440 and200% browser/keyboard checks; original media public/ungated/hash-preserved; no screenshot deliverables"
+  },
+  "residuals": {
+    "featureScopedExternalActivation": [
+      "Actual native-device entitlements/hardware and external provider/license credentials remain disabled/deferred where unsupported; manual/source entry alternatives remain",
+      "Unvalidated clinical/treatment/causal/model outputs and unreviewed scientific assertions remain gated; authored educational drafts retain original provenance/status",
+      "Real Canadian SKU/menu coverage and unredacted/private original-source acceptance are not inferred. The two supplied deidentified/reconstructed copies passed exact local compiled-app acceptance; their private findings were not uploaded to the hosted review app.",
+      "Independent human/physical VoiceOver/Safari/device/study/scientific/legal/operator acceptance and source rights are not fabricated",
+      "Backup/vendor retention/erasure, real support-contact/complaints and public audience/territory launch facts remain operator/qualified-review disclosures; active-account deletion does not promise external erasure"
+    ],
+    "previewData": "Existing accounts/records remain on prior production-named database. The isolated review uses a separate namespace; production records were not migrated or copied.",
+    "rollback": "Retain isolated database settings when rolling application source back; do not restore pre-isolation production-named environment values. No destructive SQL rollback or production mutation is authorized."
+  },
+  "finalOwnerGate": "After all exact final CI checks pass and packet is published, one owner decision on this whole v0.5 RC before main. No interim signoffs.",
+  "suppliedPdfAcceptance": {
+    "record": "docs/verification/V05_ATTACHED_REPORT_ACCEPTANCE_20261108.json",
+    "status": "PASS_LOCAL_COMPILED_PRODUCTION_ASSETS",
+    "source": "Two supplied deidentified/reconstructed attachments; not unredacted originals",
+    "comparison": "Independent MuPDF oracle, exact biological labels/categories/page/column/row positions in memory; no private findings or hashes in evidence",
+    "bundledWorker": "PASS_REAL_WORKER_NO_FAKE_WORKER",
+    "rawSourceTransferredToExternalService": false,
+    "screenshotsOrPrivateSourceArtifactsCommitted": false,
+    "countsAreSourceSpecific": true
+  },
+  "qaDriverFollowThrough": "Added compiled-preview mode to the private attachment journey. It awaits the confirmed deletion response before storage assertions and requires a bundled real PDF worker; the initial compiled failure was a harness race, not an application deletion failure.",
+  "publication": {
+    "scope": "This evidence/QA publication does not change client/server/shared runtime source from the verified application commit. Exact publication HEAD/CI/Render receipts will be recorded in PR1 after verification; do not ask the owner before those checks pass.",
+    "allowedChanges": [
+      "Final review documentation/requirement trace/checkpoints",
+      "Compiled-production private PDF QA driver"
+    ],
+    "runtimeSourceTrees": {
+      "client": "bfd8c74d6f6a85a559074e7b92d199e76d3debcd",
+      "server": "9003850cbbed797c512454b8243da39dd975d9b4",
+      "shared": "306b6ad7498d819f27d55346c5ee338fd0ab8e9e",
+      "package.json": "1f91cff8cb09ead09b1272f99213671c00ea9574",
+      "package-lock.json": "65ec5202121dfb3a7d2d7d5284e7a6baa9b25693",
+      ".github/workflows/neon_workflow.yml": "810401539d6fb9b745b5fab45c1090815d6c8c0b"
+    }
+  },
+  "traceExecutionPrecedence": "Original trace labels preserve scoped independent/source/external provenance; they do not create interim owner questions. Only this completed whole-v0.5 RC has an owner review before main. No independent acceptance or external activation is inferred."
+}

@@ -10,7 +10,7 @@ import express from 'express';
 import {PGlite} from '@electric-sql/pglite';
 import {drizzle} from 'drizzle-orm/pglite';
 import {eq} from 'drizzle-orm';
-import {createServer} from 'vite';
+import {createServer,preview} from 'vite';
 import {microbiomeSamples} from '../../shared/schema.ts';
 import {registerReportRoutes} from '../../server/report-routes.ts';
 import {importStructuredReportWithReceipt,deleteOwnedMicrobiomeReport} from '../../server/structured-report-storage.ts';
@@ -63,11 +63,13 @@ const app=express();app.use(express.json({limit:'2mb'}));app.use((req,_res,next)
 app.get('/api/microbiome/samples/:owner',auth,async(req,res)=>{if(req.params.owner!==req.session.userId)return res.sendStatus(404);res.json((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,req.session.userId))).map(publicSample));});
 app.get('/api/microbiome/results/:id',auth,async(req,res)=>{const sample=await getOwnedSample(db,req.params.id,req.session.userId);if(!sample)return res.sendStatus(404);res.json({sample:publicSample(sample),bacterial_composition:await getOwnedComposition(db,sample.id,req.session.userId),analyses:await getOwnedAnalyses(db,sample.id,req.session.userId)});});
 const server=app.listen(0,'127.0.0.1');await new Promise(resolve=>server.once('listening',resolve));const backend=`http://127.0.0.1:${server.address().port}`;
-const vite=await createServer({server:{host:'127.0.0.1',port:5274,strictPort:true}});await vite.listen();
+const built=process.env.BLOOM_VIOME_BUILT==='1';
+const vite=built?await preview({preview:{host:'127.0.0.1',port:5274,strictPort:true}}):await createServer({server:{host:'127.0.0.1',port:5274,strictPort:true}});if(!built)await vite.listen();
+const closeVite=()=>built?new Promise(resolve=>{vite.httpServer.closeAllConnections?.();vite.httpServer.close(resolve);}):vite.close();
 const{chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:1000}});page.setDefaultTimeout(20000);
-let owner='private-local-a',posts=0,index=0,stage='setup';const errors=[],messages=[],requests=[];page.on('pageerror',()=>errors.push('pageerror'));page.on('console',m=>messages.push(m.text()));
+let owner='private-local-a',posts=0,index=0,stage='setup',workerCount=0;page.on('worker',()=>workerCount++);const errors=[],messages=[],requests=[];page.on('pageerror',()=>errors.push('pageerror'));page.on('console',m=>messages.push(m.text()));
 await page.route('https://fonts.**/**',r=>r.abort());
-page.on('request',request=>{requests.push({host:new URL(request.url()).hostname,method:request.method()});});
+page.on('request',request=>{const url=new URL(request.url());requests.push({host:url.hostname,method:request.method(),pdfWorker:url.pathname.startsWith('/assets/pdf.worker')});});
 await page.route('**/api/**',async route=>{const req=route.request(),path=new URL(req.url()).pathname;
  if(path.startsWith('/api/microbiome/')){
   if(req.method()==='POST'){posts++;const body=req.postDataJSON();assert.ok(Object.keys(body).every(k=>['report','reuseExistingReportId'].includes(k)),'Only reviewed findings and optional internal reuse reference may leave browser.');exact(body.report,index);assert.ok(!(req.postData()||'').includes('%PDF-'),'No raw PDF request');}
@@ -89,11 +91,12 @@ try{
  }
  const first=(await ownRows()).find(r=>r.structuredData.sourceReport.documentKind==='active-gut-microbes');
  await upload(1);stage='reimport';await page.getByRole('radio',{name:'Use an existing report; do not create another observation.',exact:true}).check();const child=(await ownRows()).find(r=>r.id!==first.id);await page.getByRole('combobox',{name:'Existing report',exact:true}).selectOption(child.id);await save();assert.equal((await ownRows()).length,2);
- stage='delete';await page.goto('http://127.0.0.1:5274/microbiome?sample='+first.id);await page.getByRole('button',{name:'Delete report',exact:true}).click();await page.getByRole('checkbox',{name:'Delete this report from my account.',exact:true}).check();await page.getByRole('button',{name:'Delete confirmed report',exact:true}).click();assert.equal((await ownRows()).length,1);exact((await ownRows())[0].structuredData.sourceReport,1);
+ stage='delete';await page.goto('http://127.0.0.1:5274/microbiome?sample='+first.id);await page.getByRole('button',{name:'Delete report',exact:true}).click();await page.getByRole('checkbox',{name:'Delete this report from my account.',exact:true}).check();const deletion=page.waitForResponse(response=>response.request().method()==='DELETE'&&new URL(response.url()).pathname==='/api/microbiome/reports/'+first.id);await page.getByRole('button',{name:'Delete confirmed report',exact:true}).click();const deleted=await deletion;stage='delete-response-'+deleted.status();assert.equal(deleted.status(),200);stage='delete-persistence';assert.equal((await ownRows()).length,1);stage='delete-survivor-source';exact((await ownRows())[0].structuredData.sourceReport,1);
  stage='other-owner';owner='private-local-b';await page.reload();assert.equal(await page.getByRole('region',{name:'Viome source relationship',exact:true}).count(),0);assert.equal((await db.select().from(microbiomeSamples).where(eq(microbiomeSamples.userId,owner))).length,0);
+ stage='pdf-worker';if(built){assert.ok(workerCount>0&&requests.some(request=>request.pdfWorker),'Bundled PDF worker must actually start');assert.ok(!messages.some(message=>/setting up fake worker|fake worker failed/i.test(message)),'Compiled PDF parsing must not rely on a fake worker');}
  assert.equal(posts,3);assert.deepEqual(errors,[]);assert.ok(requests.every(r=>['127.0.0.1','localhost','fonts.googleapis.com','fonts.gstatic.com'].includes(r.host)),'No external processor');
  const allLabels=expected.flatMap(e=>['organisms','assessments','foods'].flatMap(k=>e[k].map(r=>r[0])));assert.ok(!messages.some(m=>allLabels.some(n=>n.length>10&&m.includes(n))),'No source findings in browser console');
- console.log(JSON.stringify({result:'PASS',source:'two attached deidentified/reconstructed reports; not original private PDFs',oracleVersion:'mupdf-row-oracle-2026-11-06.1',oracle:'independent MuPDF spans; exact names/categories/page/column/row positions, values withheld',counts:expected.map(e=>({pages:e.pages,organisms:e.organisms.length,assessments:e.assessments.length,foods:e.foods.length})),journey:'actual native PDF.js browser upload; review-before-save; row editor; HTTP/in-memory PGlite persistence/reload; idempotent reimport; owned deletion/other account;320390dark200%/keyboard',externalUpload:false,privateSourceArtifactsWritten:false,hosted:'NOT_RUN',independentSecurity:'NOT_GRANTED'}));
+ console.log(JSON.stringify({result:'PASS',source:'two attached deidentified/reconstructed reports; not original private PDFs',oracleVersion:'mupdf-row-oracle-2026-11-06.1',oracle:'independent MuPDF spans; exact names/categories/page/column/row positions, values withheld',counts:expected.map(e=>({pages:e.pages,organisms:e.organisms.length,assessments:e.assessments.length,foods:e.foods.length})),build:built?'compiled-production-assets':'development-server',bundledPdfWorker:built?'PASS':'NOT_CHECKED',journey:'actual native PDF.js browser upload; review-before-save; row editor; HTTP/in-memory PGlite persistence/reload; idempotent reimport; owned deletion/other account;320390dark200%/keyboard',externalUpload:false,privateSourceArtifactsWritten:false,hosted:'NOT_RUN',independentSecurity:'NOT_GRANTED'}));
 }catch(error){throw Error(`Attached-report journey failed at ${stage} (${error.name}); private source values and detailed browser diagnostics withheld.`);}
 
-finally{await browser.close();await vite.close();server.closeAllConnections();await new Promise(resolve=>server.close(()=>resolve()));await pg.close();}
+finally{await browser.close();await closeVite();server.closeAllConnections();await new Promise(resolve=>server.close(()=>resolve()));await pg.close();}
