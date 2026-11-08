@@ -1,3 +1,23 @@
+## Biology Specialist 2026-11-08 handoff — AUTHORITATIVE STATUS AND MISSING ORIGINAL REGISTRY
+
+**Read original Biology specialist review directly in repository:** [`docs/biology/Bloom_Biology_R4M1_Content_Quality_Audit_2026-11-08.md`](../biology/Bloom_Biology_R4M1_Content_Quality_Audit_2026-11-08.md), imported byte-for-text from the shared Library. This supersedes any older implication that Biology's current 14 marker/94-organism registry is independently signed off. Source-checked review explicitly states **CHANGES REQUIRED; content draft only; no full clinical/citation approval**.
+
+**Critical file-access status:** The handoff describes a companion **`bloom_biology_content_coverage_r4m1_2026-11-08.json`**, but that exact JSON is **NOT FOUND** in accessible shared Agent Handoffs Library listing, file search or current conversation attachment set at this review. **Do not invent it, reconstruct 94 identities from an unrelated report or label this registry imported.** Record `SOURCE_INACCESSIBLE` and request the original author/export to publish exact JSON under `/Bloom gut health/Agent Handoffs/` or commit it at `docs/biology/` by authorized means. Meanwhile independently implement safe, specification-backed code refactoring and existing source-content reuse; never pause all UI work for this missing science source.
+
+**Verified content status from Biology (denominator matters):**
+- 14/14 supported lab marker **authored drafts** with `whatItDoes`, `whyLowHigh`, `whyItMatters`, `whatToDiscuss` and source URLs. No independently claim-by-claim approved scientific text yet.
+- 94 **original fixture organism labels**, specifically 82 provider-labelled bacteria, 7 viruses and 5 eukaryotes (NOT 94 bacteria; NOT all possible runtime taxa).
+- 22 **targeted differentiated drafts**, but 6 still require substantive citation/taxonomy correction; only 16 tentative review candidates, **zero approved**.
+- 72 remaining organism identities have limited/identity-level coverage; JSON reportedly counts 78 `organismsLimitedOrUnresolved` because it also includes the 6 problematic drafted taxa. Do not claim 94 reviewed research profiles, complete organism research coverage or production PASS.
+
+**Nonnegotiable scientific remediation / examples:** enforce shared versioned evidence registry and rank-aware alias matching; lab text concrete function, typical high/low meaning only where justified, practical questions and robust references. Preserve all actual values/units/assay/status. `Anaerobutyricum hallii` requires **strain-correct taxonomy**: historical `Eubacterium hallii` type-strain lineage vs L2-7 now `Anaerobutyricum soehngenii`; do NOT transfer former L2-7 findings or `A. soehngenii` clinical outcomes to `A. hallii` by name alone (Shetty et al., 2018, PMID 30351260; Duncan et al., 2004, PMID 15466518). Biology specifically flags `Parabacteroides distasonis`, `Odoribacter splanchnicus`, `Bacteroides fragilis` and `Veillonella parvula` as having draft evidence-source/applicability issues. Beware toxin-strain, transient food microbe and nonhuman-virus extrapolations. Preserve real taxonomy rank, source and confidence. No unsupported personal treatment advice.
+
+**Implementation sequence for Codex:** (1) Verify current source/content paths and inventory checked-in provider/report fixtures; (2) prepare typed schema, renderer join, machine-readable coverage test and removal of dead-end fallback **for resolved identities only**, reusing existing `shared/report-explanations.ts`; (3) once original JSON becomes accessible, import **unchanged** under `shared/data/` or versioned data path and validate counts, IDs, alias/rank mapping, citation provenance, draft status; (4) Biology reviewer resolves citation/strain problems and documents reviewer name/date/claim-specific evidence before promotion of records to `reviewed`; (5) test list-to-detail parity, source/taxonomy matching, account/sample isolation, lab units/dates, responsive+theme at desktop/mobile. Limited-state records must still offer concise useful rank-correct context where established, not repetitive boilerplate. No fabricated approval, claims or research.
+
+**Owner release process:** no interim user gate, no screenshot deliverable; retain evidence-based scientific/clinical accuracy checks in the final integrated R4/M1 RC before `main`; no unrelated v0.6 work.
+
+---
+
 # Bloom R4/M1 — Biology Content Quality Audit & Complete Profile Remediation
 
 **Architect directive | Priority P0 user-facing quality within current R4/M1 RC | Date 2026-11-08**
