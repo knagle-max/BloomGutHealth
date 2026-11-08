@@ -27,6 +27,12 @@ Tracking: [Issue #3](https://github.com/knagle-max/BloomGutHealth/issues/3), PR 
 
 ---
 
+## Final RC checkpoint — 2026-11-08
+
+Application `06efa3f146dcc20ba2fad840e73ee2b29db441e5` is verified: CI42432060658 SUCCESS, Render LIVE `dep-dbnshia9lscs73cdr1v0`. All seven R4 views/shared shell and original source assets are integrated. The final consolidated review packet is `docs/verification/V05_R4_RELEASE_CANDIDATE_20261108.md` with machine-readable dispositions/fingerprints beside it. Original 207-ID statuses are preserved; this is not full public/clinical certification.
+
+Current decision: **final owner RC/main approval is required by the November7 policy above**. No approval or finite defect list has been received. Fix any supplied concrete defect autonomously. Do not restart asset hunts, rerun unchanged checks, treat independent review as an interim coding gate, merge main without approval, or resume unrelated v0.6 before the approved RC is merged. Direct hosted requests remain proxy403; Render live and isolated CI proofs do not establish its DB binding. v0.6 stash remains untouched.
+
 # Continue Bloom v0.5 → v0.6 — current checkpoint2026-11-08
 
 Stay on `enhance/bloom-experience`, PR1 and existing Render review preview. Routine commit/push/preview authorized; preserve main/other contributors. No paid infrastructure, production data/schema writes, secret discovery or unapproved private-data transfer. Continue after milestones; no repetitive final acknowledgments.
@@ -37,7 +43,7 @@ Pause independent v0.6 expansion and implement approved UI/UX direction across e
 
 V0.6 paused at uncommitted recorded nutrient observations/disclosure: named Git stash `f0fd36479176b1daa7b8c5525306292b10670d8f` (message starts `Paused v0.6 recorded nutrient observations`).10 focused tests, TypeScript/build passed; actual generic review→save→SQL→history/reload passed up to final390px/dark/200% overflow assertion, which FAILED. Actor-after-save tail not reached. This work is NOT published/complete. Resume by inspecting overflow, not rerunning prior implementation. Source snapshot/record time are estimates, no adequacy engine.
 
-## Current source state
+## Earlier source checkpoints — historical
 
 - UI first pass publishedd8c265ea930019daa8826413245803ed1eafb465, LIVEdep-dbno57ks728c739f11ng; hosted CI42408679883 in_progress at first check. Six-route48-state art-direction parity,17 focused/types/build/source checks. Original botanical asset bytes preserved; no anatomy asset branch merge.
 - Source-first Biology/concise Athlete setup published4e82c1ae91608087315a55a242560981bc5c18da:29 focused/types/build and actual source/draft/keyboard/save checks;16 controlled viewport/theme cases each side. Hosted CI42409141835 in_progress at first check.
@@ -49,8 +55,10 @@ V0.6 paused at uncommitted recorded nutrient observations/disclosure: named Git 
 
 ## Execute next
 
-1. R4 originals are now available, imported and manifest-verified; do not repeat Library access probes or ask for the packages again. The canonical stylesheet, original copy, editorial derivatives and original navigation icons are integrated across seven views. Complete final engineering/hosted verification of this integration, repair actual defects and assemble the single immutable RC for owner review. Main remains unchanged; v0.6 remains stashed until owner-approved RC merge. See docs/verification/R4_UI_INTEGRATION_20261108.md.
+1. Present the completed consolidated RC packet and immutable application/CI/preview evidence for the single final owner decision. Current R4 engineering/source intake is delivered and verified, not a pending code task. A main merge and dependent v0.6 work remain unauthorized until that final decision. See the Final RC checkpoint above; any actual feedback becomes the next executable repair.
 2. Latest integrated R4 source supersedes earlier paint-only restrictions. Preserve actual task hierarchy, source/unknown/consent/save semantics and canonical per-set state; no fabricated active-workout model. Original source files remain byte-identical; no new galleries or interim approval requests. Future v0.6 stash restore must manually merge the later MealAnalysis summary/recordedMeal props, keyboard source regions, capability map and improved private-source journey rather than overwrite UI fixes.
+### Deferred v0.6 queue — resume only after the approved RC/main merge
+
 3. BLOOM-LOCAL-AI-01 full P0 remains open. Candidate asset access is now a recorded scoped dependency: public Hugging Face card request failed proxyCONNECT403; no weights/packages/licence verified, runtime request_changes unavailable. See LOCAL-MODEL-ASSET-ACCESS in BLOCKED_USER_INPUT for exact maintainer options. Do not repeat unchanged probes or bypass policy. Continue other work while access/pinned offline bundle is unavailable. When available, select/licence/pin a real candidate, genuine inference worker/runtime and domain adapters, explicit download/unload, independent held-out comparison and actual supported-device measurements. No physical-iPhone/model quality acceptance invented; no external prompt transfer. Current contract is source fidelity only, not proof of semantic association.
 4. M1 micronutrients: actual local generic raw source snapshots now bind review/save/SQL/replay and source-zero estimate versus unknown. Continue source-native label/live observation forms/state, immutable corrections, then verified Canadian authority/life-stage EAR/RDA/AI/UL/CDRR and confirmed taken supplements. Reuse canonical summaries/events; no new totals engine, guessed equivalent/dose or deficiency inference. Full M1–M5 open.
 5. Practical optimizer/source context: existing Today has three cited/deterministic families and durable intent, not completed behavior. Extend minimized food/check-in/context observations and descriptive Phase3 evidence, then genuine constrained Python challenger. No duplicate planner/store or causality/readiness invention.

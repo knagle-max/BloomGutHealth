@@ -1,0 +1,151 @@
+{
+  "kind": "Consolidated v0.5 + R4 engineering release candidate for final owner review",
+  "applicationCommit": "06efa3f146dcc20ba2fad840e73ee2b29db441e5",
+  "branch": "enhance/bloom-experience",
+  "mainMerged": false,
+  "status": "FINAL_OWNER_REVIEW_REQUIRED; v0.5 public/clinical release is NOT_CERTIFIED",
+  "policy": {
+    "source": "NEXT_ACTIONS.md:24\u201325",
+    "requiredAction": "Final owner review before any main merge; no v0.6 code until approved RC is merged",
+    "automaticContinuationGrantsApproval": false
+  },
+  "preview": {
+    "url": "https://bloomguthealth.onrender.com",
+    "deploy": "dep-dbnshia9lscs73cdr1v0",
+    "commit": "06efa3f146dcc20ba2fad840e73ee2b29db441e5",
+    "status": "live",
+    "evidence": "Render connector final verification 2026-11-08"
+  },
+  "ci": {
+    "url": "https://github.com/knagle-max/BloomGutHealth/actions/runs/42432060658",
+    "status": "success",
+    "scope": [
+      "production dependency advisories",
+      "Python authentication/evidence contracts",
+      "type check/API inventory",
+      "full unit/embedded PostgreSQL regression",
+      "production build and original/built asset fingerprints",
+      "production app/live isolated Neon persistence"
+    ],
+    "doesNotEstablish": "Render database identity/schema acceptance or production data permission"
+  },
+  "legacyRequirementTrace": {
+    "file": "docs/verification/V05_CURRENT_REQUIREMENT_DISPOSITIONS_20261107.json",
+    "rows": 207,
+    "uniqueIDs": 207,
+    "counts": {
+      "ALREADY_VERIFIED": 44,
+      "IMPLEMENTED_AND_TESTED": 36,
+      "BLOCKED_TECHNICAL": 126,
+      "BLOCKED_USER_INPUT": 1
+    },
+    "interpretation": "Original per-ID evidence/dependencies preserved. Final-only review limitations are not new coding approval queues. No original/private criterion or clinical approval is inferred from modern replacement tests."
+  },
+  "r4RequirementTrace": [
+    {
+      "requirement": "Today",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "R4 heading/intro and scoped type/materials; actual dynamic next action retained; 56-case route matrix and saved-food/Today projections.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Food",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "R4 chooser and desktop-only original cutout; native method switches preserve drafts; review/save/source retry/SQL/reload/owner checks.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Biology/Gut",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Source-first overview; pending/qualitative/mixed/paused states; 40 synthetic quantified/functional taxa, source details, missing/offline fallback and keyboard focus.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Explore",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "R4 intro; source-backed topic/map/studies, explicit food lookup, context clearing, three subjects, keyboard/320390/dark/200% reflow.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Progress",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "R4 intro/type; exact dates/gaps/zero/unknown amounts retained; shared units read-only with tested link to sole Profile editor.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Athlete",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Always-navy R4 surfaces and light original wordmark; distinct planned/performed semantics; independent compact set edits/completion, stable IDs, add/remove/focus/save/reload.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Profile",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "R4 intro; existing grouped account/units/privacy/connections; native disclosure access, incomplete/failed-save draft handling and exact conversions.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Shared shell/states",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Original registered navigation SVGs with visible labels; existing three/five bottom destinations; 44px drawer/dialog close targets, title clearance, Enter/Escape/focus return; portal palette.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Original assets/copy/canonical CSS",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "125 imported source Git blobs match original bytes; 87 registered public SVGs; 13 original PNGs; 26 source-linked WebP derivatives; exact imported copy/CSS and one canonical CSS import.",
+      "independentAcceptance": "NOT_GRANTED"
+    }
+  ],
+  "sourceArtifacts": [
+    "design/visual-system/r4-final/Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_2026-11-07.md",
+    "design/visual-system/R4_IMPORT_VERIFICATION_20261108.json",
+    "docs/verification/R4_UI_INTEGRATION_20261108.md"
+  ],
+  "remainingBoundaries": [
+    {
+      "status": "BLOCKED_USER_INPUT",
+      "scope": "Final owner RC/main decision and dependent v0.6 sequencing",
+      "dependency": "Explicit latest owner policy; no merge approval received."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Direct hosted browser/static-byte verification from this workspace",
+      "dependency": "Proxy CONNECT 403. Render live status and local/browser/build proofs are separate; no repeated access probe."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Existing Render DB binding/schema acceptance and approved migration runner",
+      "dependency": "Actual binding unidentified. No secret discovery, repointing, production schema/data write or new infrastructure authorized."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Physical VoiceOver/device and independent usability/visual acceptance",
+      "dependency": "Not performed; local synthetic Chromium/keyboard/reflow checks are not physical/independent approval."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Original source/assay/clinical/legal/operator/native activation conditions",
+      "dependency": "Per-ID legacy trace and scoped external acceptance records; no fabricated clearance, contact, source rights or hardware."
+    }
+  ],
+  "v06": {
+    "status": "PAUSED_BY_LATEST_OWNER_SEQUENCE",
+    "stash": "f0fd36479176b1daa7b8c5525306292b10670d8f",
+    "source": "NEXT_ACTIONS.md:25",
+    "resume": "After explicit RC approval and authorized main merge; then follow approved dependency backlog, manually preserving later UI/source changes."
+  },
+  "comparisonTrees": {
+    "client": "ee0a32a38fd9ac9cb3d223098b87547bb4363259",
+    "server": "0c248b2820a709495113100c53125819fd2f5591",
+    "shared": "9af1d40d2478ef784d4c75ae0ba4a44aff62f00b",
+    "ml_service": "ad7378dad2373288ef84d34149edbc4980dbaa1a",
+    "scripts": "238c72d652270b6bb618ddfee47015021d689985",
+    "migrations": "965e43bc674015ae93343251491e6bd5a633fcee",
+    ".github": "8e964db8d0859882ab0d820c1ee7533a7f860ec2",
+    "package.json": "a4093f944a0e98c347cb60c99b82ab3ee539dfbf",
+    "package-lock.json": "a3007ed63763cc02ba697b258bb934d06b06f317",
+    "vite.config.ts": "5ae31a46d6771c1b054d75fe32bfee9bf8cd4ff8"
+  },
+  "packetOnlyChanges": "Subsequent review-packet commit updates documentation only; application/config/test/migration trees above remain identical to this verified application commit."
+}

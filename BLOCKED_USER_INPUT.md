@@ -1,3 +1,12 @@
+# FINAL-RC-MAIN-20261108 — final owner decision (current)
+
+- Status: BLOCKED_USER_INPUT for protected main merge and dependent v0.6 sequencing only. This is the final gate explicitly required by the newer owner policy, not an interim specialist approval or historical blocker revival.
+- Concrete review result: application06efa3f146dcc20ba2fad840e73ee2b29db441e5; CI42432060658 SUCCESS; Render LIVE dep-dbnshia9lscs73cdr1v0. Packet: docs/verification/V05_R4_RELEASE_CANDIDATE_20261108.md and JSON. All seven R4 views are transitioned; all207 legacy IDs remain traced without invented independent acceptance.
+- Exact question: Do you approve merging this consolidated RC into main?
+- Options: approve the reviewed RC for a separately authorized main merge; or provide concrete integrated defects to repair before that decision.
+- Recommendation: review the working preview and packet's genuine external limitations, then approve if acceptable or return a finite defect list. Ordinary authorized defect fixes require no renewed per-fix approval.
+- Authority/dependencies: NEXT_ACTIONS.md latest November7 owner policy, final-review bullet and “No v0.6 feature coding until the approved RC is merged to main.” Automatic continuation grants no merge approval and does not override that explicit sequence. Main remains unchanged; v0.6 stashf0fd364 is intact. Do not repeat this question or unchanged technical probes without new owner input; resume on a concrete response.
+
 # SUPERSEDING OWNER DISPOSITION — 2026-11-06
 
 **This is an archive of historical blockers and external activation constraints, NOT a list of active questions or stop-work gates.** Binding policies: `docs/architecture/HISTORICAL_BLOCKER_RECONCILIATION_AND_BRAND_EXECUTION_2026-11-06.md` and `CODEX_AUTONOMOUS_EXECUTION_FINAL_GATE_POLICY_2026-11-06.md`. Current top of `NEXT_ACTIONS.md` selects work, not any old `BLOCKED_USER_INPUT` marker below.

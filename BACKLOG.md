@@ -1,10 +1,16 @@
-## Current R4 UI implementation checkpoint — 2026-11-08
+## Consolidated R4 RC — 2026-11-08
 
-Original final source and PNGs are imported and verified; canonical skin/copy and original navigation art are integrated across seven views. Actual saved food/genetic-source/units/compact-set/Biology states pass local checks. Publish and verify the immutable integration, repair remaining concrete defects, then consolidate the single owner RC review. Source intake is resolved: do not repeat package searches. No v0.6 coding or main merge occurred. See docs/verification/R4_UI_INTEGRATION_20261108.md; this checkpoint does not close unrelated open functional backlog entries.
+Application06efa3f: seven main views/shared shell and exact original source assets IMPLEMENTED_AND_TESTED; CI42432060658 SUCCESS and Render LIVE dep-dbnshia9lscs73cdr1v0. `docs/verification/V05_R4_RELEASE_CANDIDATE_20261108.{md,json}` is the single integrated owner review packet. All207 legacy IDs retain their bounded dispositions; nine R4 implementation surfaces have explicit evidence. Full v0.5 public/clinical release remains NOT_CERTIFIED.
+
+| Task | Status / dependency | Next action |
+| --- | --- | --- |
+| Final integrated RC/main decision | BLOCKED_USER_INPUT by latest owner policy, NEXT_ACTIONS lines24–25; not an interim specialist gate | Owner reviews the concrete candidate and approves main merge or supplies finite defects. Fix actual defects autonomously. |
+| Direct hosted acceptance / Render schema binding | BLOCKED_TECHNICAL; proxy403 and unidentified binding/runner | No repeated unchanged probe, secret hunt or production mutation. Existing scoped external evidence remains open. |
+| v0.6 continuation | PAUSED by explicit no-v0.6-before-approved-main policy | Preserve stashf0fd364; resume approved dependency backlog after authorized main merge. |
 
 # Bloom autonomous development backlog
 
-Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 supported engineering is at the integrated checkpoint; final source/operator/device/specialist acceptance remains open. Independent approved v0.6 foundation work is active under the owner’s phase0/phase1 policy. `NEXT_ACTIONS.md` selects work; older entries below are historical evidence. The supplied Viome report correction is pushed in6d9bc89/mergecd8ebdc. Universal Microbiome deletion7b68ecc/mergefa11d23 is pushed. Saved companion management is published (4118932); optional collection-date/upload-context correction is published (67f66db). Independent source/device/security acceptance and the unidentified Render database binding remain separately scoped.
+Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 supported engineering is at the integrated checkpoint; final source/operator/device/specialist acceptance remains open. Earlier v0.6 foundation work is preserved; the latest November7 policy pauses further v0.6 coding until approved RC/main merge. `NEXT_ACTIONS.md` selects work; older entries below are historical evidence. The supplied Viome report correction is pushed in6d9bc89/mergecd8ebdc. Universal Microbiome deletion7b68ecc/mergefa11d23 is pushed. Saved companion management is published (4118932); optional collection-date/upload-context correction is published (67f66db). Independent source/device/security acceptance and the unidentified Render database binding remain separately scoped.
 
 ## Current v0.6 foundation / preserved v0.5 acceptance — 2026-11-07
 
