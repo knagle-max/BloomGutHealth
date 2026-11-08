@@ -788,7 +788,8 @@
           "client/src/components/FoodProgress.tsx",
           "client/src/components/LabExplorer.tsx",
           "client/src/components/LabCategoryIcon.tsx",
-          "client/src/components/CheckinEntrySource.tsx"
+          "client/src/components/CheckinEntrySource.tsx",
+          "client/src/components/LabMarkerEducation.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -802,7 +803,11 @@
           "shared/lab-explorer.ts",
           "shared/scientific-visuals.ts",
           "shared/checkin-entry-source.ts",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/biology-content-types.ts",
+          "shared/biology-labs.ts",
+          "shared/biology-lab-observation.ts",
+          "shared/biology-content.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -872,7 +877,8 @@
           "client/src/components/BloodworkSourceOverview.tsx",
           "client/src/components/LabExplorer.tsx",
           "client/src/components/LabCategoryIcon.tsx",
-          "client/src/components/CheckinEntrySource.tsx"
+          "client/src/components/CheckinEntrySource.tsx",
+          "client/src/components/LabMarkerEducation.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -886,7 +892,11 @@
           "shared/lab-explorer.ts",
           "shared/scientific-visuals.ts",
           "shared/checkin-entry-source.ts",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/biology-content-types.ts",
+          "shared/biology-labs.ts",
+          "shared/biology-lab-observation.ts",
+          "shared/biology-content.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -949,7 +959,8 @@
           "client/src/components/FoodProgress.tsx",
           "client/src/components/LabExplorer.tsx",
           "client/src/components/LabCategoryIcon.tsx",
-          "client/src/components/CheckinEntrySource.tsx"
+          "client/src/components/CheckinEntrySource.tsx",
+          "client/src/components/LabMarkerEducation.tsx"
         ],
         "api": [
           "server/precision-routes.ts"
@@ -963,7 +974,11 @@
           "shared/lab-explorer.ts",
           "shared/scientific-visuals.ts",
           "shared/checkin-entry-source.ts",
-          "shared/numeric-entry-token.ts"
+          "shared/numeric-entry-token.ts",
+          "shared/biology-content-types.ts",
+          "shared/biology-labs.ts",
+          "shared/biology-lab-observation.ts",
+          "shared/biology-content.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1129,7 +1144,8 @@
           "shared/microbiome-food-influence.ts",
           "shared/biological-report-management.ts",
           "server/biological-report-management.ts",
-          "shared/functional-microbiome.ts"
+          "shared/functional-microbiome.ts",
+          "shared/biology-content.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1860,17 +1876,18 @@
     "client/src/components/ImportedReportDetails.tsx": "01abf37dc644f3c3679471e572908a03d17cc5deb9445af04ceadf8a97c57a50",
     "client/src/components/IngredientMassEntry.tsx": "948b603a10b9e215fe404a5092e2b11a0e7f695d4474847d710d35127d9d6da0",
     "client/src/components/LabCategoryIcon.tsx": "ab0460b7da1707222e8b635ede5fcf6e79a5b8a3030a662099ca7368e21d7caf",
-    "client/src/components/LabExplorer.tsx": "65aab0bc1d75bd8c3c6684ebf1410dd4f7845d4f3281187a086712aa7666a1e1",
+    "client/src/components/LabExplorer.tsx": "27108635fe7e2a29867e2b39f4551ecd57dada3fcd6fa086844b03ea8afafbf4",
+    "client/src/components/LabMarkerEducation.tsx": "771504a80a628ead4259ebb0ce985153a539e28114ff15af7080e50cef015dc8",
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
     "client/src/components/LabSourceHistory.tsx": "4980ec3e6206947ec08fefe09d00fed5d5cc94c3a9cb413a8c7d505405b6f176",
     "client/src/components/LabSourceManagement.tsx": "f8502d68c239448f6db8f7310f20577d9fc997d8e880b7b5c2d90bda2ce21929",
-    "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
+    "client/src/components/LabTrend.tsx": "25966729c2457cb077bffed2221d1d7be3d3b16285b8b603a15c04f115d5a38c",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "0c3793be49e077cfa7bfd587504dd1aec6bad9fa36c01e4b5087713b95bb29fd",
     "client/src/components/MealAnalysis.tsx": "a508a75d536304a6047d7294b4524298f800e29772e563df8d89356f0c347e7c",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
-    "client/src/components/MicrobialProfile.tsx": "4810d535a37754231d43bb7dbaf8f4755f969cd6b697b23bd7099db7408f2b7b",
+    "client/src/components/MicrobialProfile.tsx": "b40c6ae40f3bd410a4e260f5b7aa928f5f7c69fc255e7c13d18e59d49d999fff",
     "client/src/components/MicrobiomeFoodPreferences.tsx": "18f4f506f25ee3593bd09a506519b923af4aea9c3f05894f0840fd769a7355c3",
     "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
@@ -2017,6 +2034,10 @@
     "shared/barcodes.ts": "6602a438f1cfe8addfd21e335c8126dee4c74270cb36c19b8683771fcd760f70",
     "shared/biological-model.ts": "c2c424b0249946fa02dfa0bf54845162d5aee9fc9ac748058b3a80c0bcb38625",
     "shared/biological-report-management.ts": "94e1c6dcd345af8d9b1a5fccd0766704683d7718426b6cd4fac29298f55e7364",
+    "shared/biology-content-types.ts": "058bbbd94e8b44e359b1e4bb1d8fad4bf7fcd046aeb8b025032c0054078a38d0",
+    "shared/biology-content.ts": "ef77cf5f8ab76e6b31a7c7ee87ed6e1a66da0f83e04a56a830a14fe29b526924",
+    "shared/biology-lab-observation.ts": "d5fb06bb8df5a6cb0a75a982a6d93ba565f256089b65464c70acdac7876427fa",
+    "shared/biology-labs.ts": "fbeeea4adb7a4961b3969680a4c90c6e93631aab1109fde53d5712e0b9e8376d",
     "shared/biology-source-inventory.ts": "92bc100e93c34fa24e9ca9a34b188ed0e35dfaad702aec6adbd65e47b27254be",
     "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
     "shared/catalogue-mass-handoff.ts": "9e762fd498ce23d370f05d22ead54aa6e50cd41881d6fd8b17f2f8e3206a3cac",
@@ -2030,7 +2051,7 @@
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-intelligence.ts": "4ad0deb199cd8a6e52b6bb844fd6679000659f766c64a304d25f6a680b6fb3d9",
     "shared/food-progress.ts": "da5b8b3a59c12ebd5099904ed976835020000b562f7dd941bf531283b20a9bc9",
-    "shared/functional-microbiome.ts": "dee4dc21fdc7c48c6a48b4814fac8d969ad51bb17f68194174bd8f1810cf846b",
+    "shared/functional-microbiome.ts": "cdbd9a63417fe06f8e3508761ee349da0f32cd59ddec0d77351d31a93141a73b",
     "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
     "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
     "shared/genetic-source-selection.ts": "b9eebf03ba286b4b7d6af9f8312fc7ddaa6388b7f0f29c0f4136edf90c2f59d8",
@@ -2059,7 +2080,7 @@
     "shared/nutrition-display.ts": "ca164c626fa377a3ee16698b3811f0475f603210b0419d8b8061f7b98b641303",
     "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
     "shared/practical-planner.ts": "a27c14e695a6ef8fe5339357f6f2e1e9c228ebfc92ff703c1665fddc591d39a2",
-    "shared/precision-nutrition.ts": "00e2c8047260dd2344ebbd46408e98e4b10e364cc910fb6488993f88c43377f1",
+    "shared/precision-nutrition.ts": "3cad5a39ef141c64dc15e2941171af9645b8a7fcbebb4750576b192588af63d3",
     "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
     "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
     "shared/profile-measurement-source.ts": "7aad632c9c98bf5670eea4277155a98507350e5a6983f6d917c05aed3a994a4e",

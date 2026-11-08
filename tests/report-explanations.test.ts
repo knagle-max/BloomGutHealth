@@ -19,7 +19,7 @@ test("reviewed organism explanations cover species/group context and preserve st
     "Dysosmobacter welbionis",
     "Bifidobacterium pseudocatenulatum",
     "Clostridium perfringens",
-    "Ruminococcus gnavus ATCC 29149",
+    "Ruminococcus gnavus",
     "Streptococcus pyogenes",
     "Clostridium scindens",
     "Sutterella",
@@ -27,28 +27,30 @@ test("reviewed organism explanations cover species/group context and preserve st
     "Bacteroides vulgatus",
     "Lactobacillus reuteri",
     "Bifidobacterium group",
-    "Eptesicus fuscus gammaherpesvirus",
   ];
   for (const name of names) {
     const h = explainOrganism(name);
-    assert.notEqual(h.label, "Not reviewed", name);
+    assert.notEqual(h.label, "Identity unresolved", name);
     assert.ok(h.meaning && h.why && h.takeaway && h.sources.length);
   }
   assert.equal(
     explainOrganism("Clostridium perfringens").label,
-    "Can cause illness",
+    "Biology context",
   );
-  assert.equal(explainOrganism("Sutterella").label, "Context matters");
+  assert.equal(explainOrganism("Sutterella").label, "Biology context");
   assert.match(
     explainOrganism("Eptesicus fuscus gammaherpesvirus").label,
-    /Unconfirmed/,
+    /Identity unresolved/,
   );
-  assert.equal(explainOrganism("An unknown organism").label, "Not reviewed");
+  assert.equal(explainOrganism("An unknown organism").label, "Identity unresolved");
+  assert.equal(explainOrganism("Ruminococcus gnavus ATCC 29149").label,"Identity unresolved");
+  assert.equal(explainOrganism("Anaerobutyricum hallii","genus").label,"Identity unresolved");
+  assert.equal(explainOrganism("Sutterella","species").label,"Identity unresolved");
   assert.equal(
     explainOrganism("Akkermansia muciniphila-like").label,
-    "Context matters",
+    "Identity unresolved",
   );
-  assert.equal(explainOrganism("Akkermansia unrelated").label, "Not reviewed");
+  assert.equal(explainOrganism("Akkermansia unrelated").label, "Identity unresolved");
   assert.ok(
     organismExplanations.every((e) =>
       e.sources.every((s) => s.url.startsWith("https://")),

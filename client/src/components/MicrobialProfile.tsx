@@ -15,13 +15,13 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
   taxon: ReportedTaxon | null; sample: any; onClose: () => void; onRestoreFocus: () => void;
 }) {
   const [expanded, setExpanded] = useState<string | null>(null);
-  useEffect(() => setExpanded(null), [taxon?.id]);
+  useEffect(() => setExpanded(null), [taxon?.id,taxon?.bacterialName,taxon?.taxonomyLevel,sample?.id]);
   const facts=microbiomeSourceFacts(sample?.structuredData||{});
   const sourceValues=(kind:"assay"|"method"|"taxonomy"|"qc")=>facts.filter(f=>f.kind===kind).map(f=><span className="block" key={f.sourcePath}>{f.value}<small className="block text-muted-foreground">{f.sourcePath}</small></span>);
   const research=taxon?functionalResearchFor(taxon):null;
-  const biography=taxon?organismBiography(taxon.bacterialName):undefined;
-  const existingContext=taxon?explainOrganism(taxon.bacterialName):undefined;
-  const usefulContext=existingContext?.label!=="Not reviewed"?existingContext:undefined;
+  const biography=taxon?organismBiography(taxon.bacterialName,taxon.taxonomyLevel):undefined;
+  const existingContext=taxon?explainOrganism(taxon.bacterialName,taxon.taxonomyLevel):undefined;
+  const usefulContext=existingContext?.label!=="Identity unresolved"?existingContext:undefined;
   const origin = sample?.structuredData?.dataOrigin;
   return <Dialog.Root open={!!taxon} onOpenChange={open => { if (!open) onClose(); }}>
     <Dialog.Portal>
@@ -38,8 +38,8 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
           {reportedTaxonAmount(taxon)!=="Not reported"&&<p>Source-reported amount: {reportedTaxonAmount(taxon)}</p>}
           <section className="microbial-organism-intro"><h3>What this organism is</h3>
             {taxon.bacterialName.toLowerCase().trim() === "methanobrevibacter smithii" && <p>This is an archaeon, rather than a bacterium. Detection does not diagnose intestinal methanogen overgrowth.</p>}
-            {biography?<><p>{biography.firstLayer.meetThisOrganism}</p><h3>Why researchers study it</h3><p>{biography.firstLayer.whyResearchersStudyIt}</p><h3>Food and metabolism</h3><p>{biography.firstLayer.foodMetabolicConnections}</p></>:usefulContext?<><p>{usefulContext.meaning}</p><p>{usefulContext.why}</p><p>{usefulContext.takeaway}</p></>:research?<p>{research.introduction}</p>:<p>Bloom has your source-reported organism name, but has not established a sufficiently specific biological identity or reliable species-level explanation. Your original observation remains available below.</p>}
-            {(biography?.coverageStatus!=="reviewed_draft"||!biography)&&<p className="panel-note">Specific functions may not be established for this reported identity.</p>}
+            {biography?<><p>{biography.firstLayer.meetThisOrganism}</p><h3>Why researchers study it</h3><p>{biography.firstLayer.whyResearchersStudyIt}</p><h3>Food and metabolism</h3><p>{biography.firstLayer.foodMetabolicConnections}</p></>:usefulContext?<><p>{usefulContext.meaning}</p><p>{usefulContext.why}</p><p>{usefulContext.takeaway}</p></>:research?<p>{research.introduction}</p>:<p>{existingContext?.meaning}</p>}
+
           </section>
           <details className="microbial-observation"><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Your report</summary>
           <section aria-label="Reported observation">
@@ -60,8 +60,9 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
               {facts.some(f=>f.kind==="qc")&&<div><dt>Source QC text · not independently verified</dt><dd>{sourceValues("qc")}</dd></div>}
               <div><dt>Data origin</dt><dd>{typeof origin === "string" && origin ? origin : "User-supplied report; not independently verified. Synthetic status not reported."}</dd></div>
             </dl>
+            {/^(escherichia coli|klebsiella pneumoniae)$/i.test(taxon.bacterialName.trim()) && <p>Species detection does not establish a virulent strain.</p>}
           </section></details>
-          <div className="microbial-profile-disclosures">{sections.map(title => <details key={title} open={expanded === title}>
+          <div className="microbial-profile-disclosures">{(biography||usefulContext||research?sections:[]).map(title => <details key={title} open={expanded === title}>
             <summary onClick={e => { e.preventDefault(); setExpanded(value => value === title ? null : title); }}>{title}</summary>
             {research&&title==="What research has studied"?<>
               <p>{research.source.finding}</p><p className="panel-note">{research.scopeLabel}. Study setting: {research.source.design}. Strain details are not specified in Bloom’s source summary; compatibility with your reported organism has not been established.</p>
@@ -75,10 +76,9 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
               <p>{research.source.authors} · {research.source.year} · DOI: {research.source.doi}</p>
               <p>{research.source.design}</p><p>{research.source.limitation}</p>
               <p className="panel-note">Source summary: {research.evidenceVersion} · Profile: {research.version}. This source summary does not specify study strain identifiers or sample size; individual applicability and conflicting evidence are not established here.</p>
-            </>:<>{biography&&title==="What research has studied"?<p>{biography.firstLayer.whyResearchersStudyIt}</p>:biography&&title==="Nutrients & molecules"?<p>{biography.firstLayer.meetThisOrganism}</p>:biography&&title==="Food research"?<p>{biography.firstLayer.foodMetabolicConnections}</p>:title==="Sources & limitations"?<><p>Available educational descriptions have not completed independent claim-by-claim review; check the original citations and applicable species or strain.</p>{(biography?.citations||usefulContext?.sources||[]).map(source=><p key={source.url}><a className="text-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></p>)}</>:usefulContext?<p>{title==="What research has studied"?usefulContext.why:title==="Food research"?usefulContext.takeaway:usefulContext.meaning}</p>:<p>Species-specific findings cannot be established from this report label alone.</p>}</>}
+            </>:<>{biography&&title==="What research has studied"?<p>{biography.firstLayer.whyResearchersStudyIt}</p>:biography&&title==="Nutrients & molecules"?<p>{biography.firstLayer.meetThisOrganism}</p>:biography&&title==="Food research"?<p>{biography.firstLayer.foodMetabolicConnections}</p>:title==="Sources & limitations"?<><p>Available educational descriptions have not completed independent claim-by-claim review; check the original citations and applicable species or strain.</p>{biography&&<p className="panel-note">Content status: {biography.coverageStatus.replaceAll('_',' ')}. {biography.rankMustBeVerified?'The inventory name does not independently verify the report’s taxonomic resolution.':''}</p>}{(biography?.citations||usefulContext?.sources||[]).map(source=><article key={source.url}><a className="text-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a>{'studyDesign'in source&&<p>{String(source.studyDesign||'')}</p>}{'reviewStatus'in source&&<p className="panel-note">{String(source.reviewStatus||'')}</p>}</article>)}</>:usefulContext?<p>{title==="What research has studied"?usefulContext.why:title==="Food research"?usefulContext.takeaway:usefulContext.meaning}</p>:<p>Species-specific findings cannot be established from this report label alone.</p>}</>}
 {title==="Sources & limitations"&&<>
               <p>Relative abundance does not measure gene expression, butyrate, methane, toxins, infection or disease risk. Missing percentages stay unknown. There is no personal optimal percentage or treatment recommendation from this record.</p>
-              {/^(escherichia coli|klebsiella pneumoniae)$/i.test(taxon.bacterialName.trim()) && <p>Species detection does not establish a virulent strain.</p>}
               <p>Assay compatibility and strain resolution have not been established. Cross-report differences are not interpreted as health changes.</p>
             </>}
           </details>)}</div>

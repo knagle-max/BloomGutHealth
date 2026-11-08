@@ -57,7 +57,7 @@ try{
  await page.getByLabel('Select report').selectOption('research-b');await page.getByText('1 of 1 source observations shown',{exact:false}).waitFor();
  assert.equal(await page.getByText('Explore functions',{exact:true}).count(),0);
  await page.getByLabel('Select report').selectOption('research-a');await page.getByText('5 of 5 source observations shown',{exact:false}).waitFor();
- await page.getByRole('button',{name:'Ruminococcus bromii strain X,',exact:false}).click();assert.equal(await sheet.getByText('Research explanation not available yet.',{exact:true}).count(),1);
+ await page.getByRole('button',{name:'Ruminococcus bromii strain X,',exact:false}).click();await sheet.getByText('The label “Ruminococcus bromii strain X” needs a resolved taxonomic identity before Bloom can describe its biology.',{exact:true}).waitFor();assert.equal(await sheet.getByText('Reviewed research profile not yet available.',{exact:false}).count(),0);
  await page.keyboard.press('Escape');await sheet.waitFor({state:'hidden'});await page.waitForFunction(()=>!history.state?.bloomMicrobialProfile);
  await trigger.click();
  await page.evaluate(async()=>{const {queryClient}=await import('/src/lib/queryClient.ts');queryClient.setQueryData(['/api/microbiome/results','research-a'],{sample:{id:'research-a'},bacterial_composition:[],analyses:[]});});

@@ -9,9 +9,11 @@ const references=[
 ] as const;
 /** Read-only existing citations. Exact names only; a family reference is explicitly
  * not evidence that its members/your reported organism carry a studied capacity. */
-export function functionalResearchFor(taxon:Pick<ReportedTaxon,"bacterialName">,sources:readonly EvidenceSource[]=evidenceSources){
+export function functionalResearchFor(taxon:Pick<ReportedTaxon,"bacterialName"|"taxonomyLevel">,sources:readonly EvidenceSource[]=evidenceSources){
  const reference=references.find(r=>r.name===taxon.bacterialName.trim().replace(/\s+/g," ").toLowerCase());
  if(!reference)return null;
+ const rank=taxon.taxonomyLevel?.trim().toLowerCase();
+ if(rank&&!['unknown','not reported',reference.name==='odoribacteraceae'?'family':'species'].includes(rank))return null;
  const pathway=pathways.find(p=>p.id===reference.pathwayId),source=sources.find(s=>s.id===reference.sourceId&&s.doi===reference.doi);
  if(!pathway||!source||!pathway.sourceIds.includes(source.id))return null;
  return{groupId:pathway.id,groupLabel:reference.groupLabel,version:FUNCTIONAL_PROFILE_VERSION,evidenceVersion:EVIDENCE_VERSION,source,substrate:pathway.substrate,introduction:reference.introduction,scopeLabel:reference.scopeLabel,measurementLimit:reference.measurementLimit,dietLimit:reference.dietLimit} as const;

@@ -29,7 +29,7 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
    <p className="panel-note">{points.length} dated result(s) · {unit}. Entered values are not independently verified.</p>
    <figure className="lab-measured-figure" aria-labelledby={`${id}-chart-title`}>
     <figcaption id={`${id}-chart-title`} className="panel-note">Recorded observations · plot unit {unit}</figcaption>
-    <div className="lab-measured-plot">
+    <div className="lab-measured-plot" role="region" aria-label={`${t.name} recorded plot`} tabIndex={0}>
      <div className="lab-plot-axis" aria-label={`Vertical axis in ${unit}`}><span>{formatRecordedLabNumber(max)}</span><span>{formatRecordedLabNumber(min)}</span></div>
      <div className="lab-point-canvas"><div className="lab-point-inner">
       <svg className="lab-chart" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-labelledby={`${id}-title ${id}-desc`}><title id={`${id}-title`}>{t.name} · {unit}</title><desc id={`${id}-desc`}>{points.map(p=>`${labDateText(p.date,p.sourceReport,p.dateCorrection)}: ${formatRecordedLabNumber(p.value)} ${p.unit}`).join("; ")}. {t.comparable?"Straight segments join compatible dated observations.":"Points are not connected because comparability is unconfirmed."} The vertical axis is cropped to the labelled range; missing dates are not filled. Use the point buttons or result selector to inspect original source values.</desc>

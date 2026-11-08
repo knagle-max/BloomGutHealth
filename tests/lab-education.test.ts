@@ -6,15 +6,15 @@ import {labExplorerEntries} from '../shared/lab-explorer';
 import {defaultPreferences} from '../shared/meal-intelligence';
 
 test('reference descriptions attach only to the existing14 canonical markers without changing measurement identities or units',()=>{
- assert.equal(LAB_MARKER_EDUCATION_VERSION,'lab-reference-2026-11-05.1');
+ assert.equal(LAB_MARKER_EDUCATION_VERSION,'biology-content-r4m1-2026-11-08.2');
  assert.deepEqual(markerDefinitions.map(({id,units})=>[id,[...units]]),[
   ['ldl',['mmol/L','mg/dL']],['apob',['g/L','mg/dL']],['triglycerides',['mmol/L','mg/dL']],['hdl',['mmol/L','mg/dL']],['alt',['U/L']],['ast',['U/L']],['ggt',['U/L']],['glucose',['mmol/L','mg/dL']],['hba1c',['%','mmol/mol']],['b12',['pmol/L','pg/mL']],['vitamin_d',['nmol/L','ng/mL']],['ferritin',['ug/L','ng/mL']],['folate',['nmol/L','ng/mL']],['homocysteine',['umol/L']]]);
  for(const definition of markerDefinitions){
   assert.deepEqual(Object.keys(definition.education).sort(),['context','definition','sources']);
   assert.ok(definition.education.definition&&definition.education.context&&definition.education.sources.length);
-  for(const source of definition.education.sources){const url=new URL(source.url);assert.equal(url.protocol,'https:');assert.ok(['medlineplus.gov','www.mayocliniclabs.com'].includes(url.hostname));assert.equal(url.search,'');assert.equal(source.accessedOn,'2026-11-05');}
+  for(const source of definition.education.sources){const url=new URL(source.url);assert.equal(url.protocol,'https:');assert.ok(['medlineplus.gov','ods.od.nih.gov','pubmed.ncbi.nlm.nih.gov','pmc.ncbi.nlm.nih.gov','www.ncbi.nlm.nih.gov'].includes(url.hostname));assert.equal(url.search,'');assert.equal(source.accessedOn,'2026-11-08');}
  }
- assert.match(markerDefinitions.find(entry=>entry.id==='vitamin_d')!.education.context,/different form/);
+ assert.match(markerDefinitions.find(entry=>entry.id==='vitamin_d')!.education.definition,/1,25-dihydroxy/);
  assert.match(markerDefinitions.find(entry=>entry.id==='apob')!.education.context,/does not identify an APOB gene variant/);
 });
 test('general education never identifies unsupported source assays or supplies a personal result, diagnosis or dose',()=>{

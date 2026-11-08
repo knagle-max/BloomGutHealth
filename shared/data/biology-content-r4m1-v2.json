@@ -1,0 +1,3406 @@
+{
+  "schemaVersion": "biology-content-r4m1-2026-11-08.2",
+  "repositorySnapshot": "f5e5068468219e222aa1185578186a8e15f8e471",
+  "notCodeDeployment": true,
+  "scientificApproval": "DRAFT_NOT_INDEPENDENTLY_APPROVED",
+  "labMarkerDefinitions": [
+    {
+      "id": "ldl",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "LDL particles deliver cholesterol to tissues. LDL-C measures their cholesterol cargo; it is different from counting the particles themselves.",
+        "whyLowHigh": "Higher LDL-C can reflect inherited differences, dietary patterns or medical conditions. Cholesterol carried by these particles contributes to plaque formation in artery walls.",
+        "whyItMatters": "Interpret LDL-C alongside cardiovascular history, blood pressure, smoking, triglycerides and other lipid results. A laboratory interval is different from a treatment target chosen for an individual.",
+        "whatToDiscuss": "Check whether LDL was calculated or directly measured, and whether a repeat lipid panel or a discussion of overall cardiovascular risk would help. Bring medication history, relevant family history and the original report."
+      },
+      "citations": [
+        {
+          "id": "cholesterol",
+          "title": "MedlinePlus: Cholesterol levels",
+          "url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "apob-consensus",
+          "title": "Role of apolipoprotein B in the clinical management of cardiovascular risk in adults: An Expert Clinical Consensus from the National Lipid Association",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39256087/",
+          "pmid": "39256087",
+          "doi": "10.1016/j.jacl.2024.08.013",
+          "design": "Expert consensus",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Supports particle-burden context, not universal extra testing or a personal treatment target.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Expert consensus",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "LDL cholesterol",
+      "directionalContext": {
+        "higher": "Higher LDL-C can reflect inherited differences, dietary patterns or medical conditions. Cholesterol carried by these particles contributes to plaque formation in artery walls.",
+        "lower": null
+      },
+      "limitations": [
+        "A low result alone is not evidence that LDL needs to be raised. Calculated and directly measured LDL can differ, especially when triglycerides are high."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "apob",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Apolipoprotein B is a structural protein on particles that carry cholesterol and other fats. Its concentration helps describe the burden of atherogenic particles, rather than their cholesterol cargo alone.",
+        "whyLowHigh": "A higher concentration can indicate more of these circulating particles. ApoB and LDL-C can disagree because the amount of cholesterol in each particle varies.",
+        "whyItMatters": "ApoB can add context when lipid measurements disagree, but guidelines differ on when extra testing improves decisions. This protein test does not identify an APOB gene variant.",
+        "whatToDiscuss": "Discuss the full lipid panel, metabolic conditions and cardiovascular history together. Ask what an ApoB measurement would change in your care before assuming that everyone needs the test or a particular target."
+      },
+      "citations": [
+        {
+          "id": "apob-reference",
+          "title": "MedlinePlus: Apolipoprotein B",
+          "url": "https://medlineplus.gov/ency/article/003502.htm",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "apob-consensus",
+          "title": "Role of apolipoprotein B in the clinical management of cardiovascular risk in adults: An Expert Clinical Consensus from the National Lipid Association",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39256087/",
+          "pmid": "39256087",
+          "doi": "10.1016/j.jacl.2024.08.013",
+          "design": "Expert consensus",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Supports particle-burden context, not universal extra testing or a personal treatment target.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Expert consensus",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "peer-lipids",
+          "title": "PEER simplified lipid guideline 2023 update: Prevention and management of cardiovascular disease in primary care",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/37833089/",
+          "pmid": "37833089",
+          "design": "Primary-care clinical guideline",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Recommends against routine additional ApoB testing in its primary-care framework; guidance differs on testing utility.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Primary-care clinical guideline",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "ApoB",
+      "directionalContext": {
+        "higher": "A higher concentration can indicate more of these circulating particles. ApoB and LDL-C can disagree because the amount of cholesterol in each particle varies.",
+        "lower": null
+      },
+      "limitations": [
+        "No harmful low threshold is assigned here. Expert consensus on additional testing is not uniform across primary-care guidelines."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "triglycerides",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Triglycerides are fats used to store and transport energy. This test measures their concentration in blood, which can change after eating.",
+        "whyLowHigh": "Higher values may accompany diabetes, alcohol use, inherited lipid differences, some medications, or liver, kidney and thyroid conditions. Food intake and the timing of the sample matter.",
+        "whyItMatters": "Raised triglycerides contribute to the overall lipid-risk picture; very high concentrations can also be associated with pancreatitis. A single number does not identify which contributor is responsible.",
+        "whatToDiscuss": "Check fasting instructions, recent meals and alcohol, medication changes, and related glucose and cholesterol results. Ask whether repeat testing under comparable conditions is appropriate. Bloom does not assign a treatment target from a report flag."
+      },
+      "citations": [
+        {
+          "id": "tg-reference",
+          "title": "MedlinePlus: Triglycerides test",
+          "url": "https://medlineplus.gov/lab-tests/triglycerides-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Triglycerides",
+      "directionalContext": {
+        "higher": "Higher values may accompany diabetes, alcohol use, inherited lipid differences, some medications, or liver, kidney and thyroid conditions. Food intake and the timing of the sample matter.",
+        "lower": null
+      },
+      "limitations": [
+        "A low concentration is not automatically a problem or a reason to increase fat intake. Reference intervals and fasting requirements vary by laboratory."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "hdl",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "HDL particles help carry cholesterol from tissues toward the liver. HDL-C measures the cholesterol inside those particles, rather than how well their transport functions work.",
+        "whyLowHigh": "A higher HDL-C result does not by itself establish protection against cardiovascular disease. Raising HDL-C with medication has not reliably improved clinical outcomes. Low HDL-C often occurs alongside higher triglycerides and metabolic risk factors, including smoking and inactivity.",
+        "whyItMatters": "HDL-C is part of a broader risk picture. Its association with heart health does not mean that increasing this number alone prevents heart attacks.",
+        "whatToDiscuss": "Review LDL-C, triglycerides and overall cardiovascular risk together. Discuss activity, tobacco exposure and dietary patterns in terms of cardiovascular health, rather than chasing HDL-C as an isolated target."
+      },
+      "citations": [
+        {
+          "id": "hdl-reference",
+          "title": "MedlinePlus: HDL cholesterol",
+          "url": "https://medlineplus.gov/hdlthegoodcholesterol.html",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "hdl-genetics",
+          "title": "Plasma HDL cholesterol and risk of myocardial infarction: a mendelian randomisation study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22607825/",
+          "pmid": "22607825",
+          "doi": "10.1016/S0140-6736(12)60312-2",
+          "design": "Human genetic instrumental-variable study",
+          "evidenceLevel": "human association",
+          "scopeLimit": "HDL-raising genetic mechanisms did not uniformly reduce myocardial infarction; this does not describe every HDL function.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Human genetic instrumental-variable study",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "aim-high",
+          "title": "Niacin in patients with low HDL cholesterol levels receiving intensive statin therapy",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/22085343/",
+          "pmid": "22085343",
+          "design": "Randomized controlled trial",
+          "evidenceLevel": "human intervention",
+          "scopeLimit": "No incremental clinical benefit in this statin-treated cardiovascular-disease population despite improved HDL and triglycerides; not a trial of every lifestyle intervention.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Randomized controlled trial",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "HDL cholesterol",
+      "directionalContext": {
+        "higher": "A higher HDL-C result does not by itself establish protection against cardiovascular disease. Raising HDL-C with medication has not reliably improved clinical outcomes.",
+        "lower": "Low HDL-C often occurs alongside higher triglycerides and metabolic risk factors, including smoking and inactivity."
+      },
+      "limitations": [
+        "Genetic evidence and the AIM-HIGH trial challenge a simple causal interpretation of HDL-C. Trial findings apply to the studied population, not every HDL function or lifestyle intervention."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "alt",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Alanine aminotransferase is an enzyme involved in amino-acid metabolism, found mainly in the liver. Blood ALT rises when cells release more of this enzyme.",
+        "whyLowHigh": "Higher ALT can accompany liver inflammation or injury from several causes, including viral illness, metabolic liver disease, alcohol or medicines. Intense exercise can also influence results. Low ALT is usually less central to liver assessment; uncommon low values can occur with vitamin B6 deficiency or chronic kidney disease.",
+        "whyItMatters": "ALT is an injury signal, not a direct measure of liver function or the amount of permanent damage. The cause cannot be read from the number alone.",
+        "whatToDiscuss": "Review AST and other liver tests, recent exercise, medicines and supplements, and whether repeat testing or further assessment is needed."
+      },
+      "citations": [
+        {
+          "id": "alt-reference",
+          "title": "MedlinePlus: ALT blood test",
+          "url": "https://medlineplus.gov/lab-tests/alt-blood-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "aminotransferases",
+          "title": "Clinical Methods: Aminotransferases",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK425/",
+          "pmid": "21250265",
+          "design": "Clinical biochemistry reference chapter",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Explains enzyme physiology and tissue distribution, without identifying an individual cause of elevation.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Clinical biochemistry reference chapter",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "ALT",
+      "directionalContext": {
+        "higher": "Higher ALT can accompany liver inflammation or injury from several causes, including viral illness, metabolic liver disease, alcohol or medicines. Intense exercise can also influence results.",
+        "lower": "Low ALT is usually less central to liver assessment; uncommon low values can occur with vitamin B6 deficiency or chronic kidney disease."
+      },
+      "limitations": [
+        "An isolated normal ALT does not rule out every liver condition. Symptoms, medical history and other tests change interpretation."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "ast",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Aspartate aminotransferase helps with amino-acid metabolism. It occurs in the liver, muscles, heart and other tissues, so blood AST is not specific to the liver.",
+        "whyLowHigh": "Higher AST can reflect liver injury, but muscle injury or strenuous exercise can also contribute. Medicines and other conditions may affect the measurement. Low AST is generally considered normal; there is no routine goal to raise it.",
+        "whyItMatters": "AST becomes more informative alongside ALT, other liver tests, symptoms and the circumstances of collection. Its concentration alone cannot show which tissue released the enzyme or establish the severity of disease.",
+        "whatToDiscuss": "Mention recent exercise, muscle symptoms, medicines and supplements. Ask whether the pattern across the full panel warrants repeat testing or a focused assessment."
+      },
+      "citations": [
+        {
+          "id": "ast-reference",
+          "title": "MedlinePlus: AST test",
+          "url": "https://medlineplus.gov/lab-tests/ast-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "aminotransferases",
+          "title": "Clinical Methods: Aminotransferases",
+          "url": "https://www.ncbi.nlm.nih.gov/books/NBK425/",
+          "pmid": "21250265",
+          "design": "Clinical biochemistry reference chapter",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Explains enzyme physiology and tissue distribution, without identifying an individual cause of elevation.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Clinical biochemistry reference chapter",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "AST",
+      "directionalContext": {
+        "higher": "Higher AST can reflect liver injury, but muscle injury or strenuous exercise can also contribute. Medicines and other conditions may affect the measurement.",
+        "lower": "Low AST is generally considered normal; there is no routine goal to raise it."
+      },
+      "limitations": [
+        "A ratio or isolated enzyme result does not establish an alcohol-related or other specific diagnosis."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "ggt",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Gamma-glutamyl transferase is an enzyme found largely in the liver. A blood GGT test helps assess liver and bile-duct problems, often alongside other enzymes.",
+        "whyLowHigh": "Higher GGT can occur with liver or bile-duct injury, alcohol exposure and some medicines. Smoking and other factors may influence it too.",
+        "whyItMatters": "GGT can help clarify whether an elevated alkaline phosphatase result is more likely to come from the liver than bone. It cannot identify a specific disease or prove alcohol use on its own.",
+        "whatToDiscuss": "Review the full liver panel, alcohol history, medications and symptoms with a clinician. Ask whether the collection conditions or another test would clarify an unexpected result before attributing it to one cause."
+      },
+      "citations": [
+        {
+          "id": "ggt-reference",
+          "title": "MedlinePlus: Gamma-glutamyl transferase test",
+          "url": "https://medlineplus.gov/lab-tests/gamma-glutamyl-transferase-ggt-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "GGT",
+      "directionalContext": {
+        "higher": "Higher GGT can occur with liver or bile-duct injury, alcohol exposure and some medicines. Smoking and other factors may influence it too.",
+        "lower": null
+      },
+      "limitations": [
+        "A low or normal result is not a value to raise. GGT is sensitive to several influences and is not a stand-alone diagnosis."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "glucose",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Glucose is a major fuel for cells. Insulin helps move it from blood into tissues; this test records its concentration at one point in time.",
+        "whyLowHigh": "Higher glucose can reflect diabetes, recent eating, illness, stress or certain medications. The meaning of a fasting sample differs from a random or glucose-challenge sample. Low glucose can occur with glucose-lowering medicines and other medical conditions. The result needs interpretation alongside symptoms and sample conditions.",
+        "whyItMatters": "One blood glucose measurement describes a moment, whereas HbA1c reflects a longer period. A report flag alone does not establish diabetes or its cause.",
+        "whatToDiscuss": "Confirm fasting status, medications, symptoms and sample timing. Ask whether a repeat measurement, HbA1c or another assessment is appropriate for the clinical question."
+      },
+      "citations": [
+        {
+          "id": "glucose-reference",
+          "title": "MedlinePlus: Blood glucose test",
+          "url": "https://medlineplus.gov/lab-tests/blood-glucose-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Glucose",
+      "directionalContext": {
+        "higher": "Higher glucose can reflect diabetes, recent eating, illness, stress or certain medications. The meaning of a fasting sample differs from a random or glucose-challenge sample.",
+        "lower": "Low glucose can occur with glucose-lowering medicines and other medical conditions. The result needs interpretation alongside symptoms and sample conditions."
+      },
+      "limitations": [
+        "No diagnosis, urgency classification or medication adjustment is inferred from this view."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "hba1c",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "HbA1c measures the fraction of hemoglobin with glucose attached. It reflects average blood-glucose exposure over roughly the previous two to three months, rather than one meal.",
+        "whyLowHigh": "A higher result generally indicates greater glucose exposure, but interpretation may require confirmation and an appropriate assay. A lower result does not prove that glucose is always low. Conditions that shorten red-cell survival can reduce HbA1c without the same change in glucose.",
+        "whyItMatters": "Anemia, hemoglobin variants, pregnancy and some kidney or liver conditions can make HbA1c less representative. It also does not reveal every daily glucose rise or fall.",
+        "whatToDiscuss": "Review discordant glucose and HbA1c results, relevant blood-count findings and the assay used. Ask whether another measurement better answers the clinical question."
+      },
+      "citations": [
+        {
+          "id": "hba1c-reference",
+          "title": "MedlinePlus: Hemoglobin A1c test",
+          "url": "https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "HbA1c",
+      "directionalContext": {
+        "higher": "A higher result generally indicates greater glucose exposure, but interpretation may require confirmation and an appropriate assay.",
+        "lower": "A lower result does not prove that glucose is always low. Conditions that shorten red-cell survival can reduce HbA1c without the same change in glucose."
+      },
+      "limitations": [
+        "HbA1c does not require fasting, but it is not equally reliable in every clinical setting."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "b12",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Vitamin B12 supports nerve function, red-blood-cell formation and DNA synthesis. A blood level helps assess B12 status but does not directly measure every tissue process.",
+        "whyLowHigh": "Higher results can follow supplementation or occur with liver and some blood disorders; the number alone does not establish the cause. Low B12 can reflect limited intake, reduced absorption or medication effects. Metformin and medicines that reduce stomach acid are relevant examples.",
+        "whyItMatters": "Deficiency can affect nerves as well as blood cells. A borderline concentration may need interpretation with symptoms and other tests, rather than being treated as a complete answer.",
+        "whatToDiscuss": "Review diet, supplements, medicines and absorption history. Ask whether methylmalonic acid would clarify uncertainty; reduced kidney function can also affect that test."
+      },
+      "citations": [
+        {
+          "id": "b12-reference",
+          "title": "MedlinePlus: Vitamin B12 level",
+          "url": "https://medlineplus.gov/ency/article/003705.htm",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "b12-ods",
+          "title": "NIH Office of Dietary Supplements: Vitamin B12",
+          "url": "https://ods.od.nih.gov/factsheets/VitaminB12-HealthProfessional/",
+          "design": "Nutrient evidence reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Nutrient physiology does not identify a deficiency from one isolated result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Nutrient evidence reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Vitamin B12",
+      "directionalContext": {
+        "higher": "Higher results can follow supplementation or occur with liver and some blood disorders; the number alone does not establish the cause.",
+        "lower": "Low B12 can reflect limited intake, reduced absorption or medication effects. Metformin and medicines that reduce stomach acid are relevant examples."
+      },
+      "limitations": [
+        "A blood B12 result is not a genetic test or a stand-alone diagnosis of the cause of symptoms."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "vitamin_d",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Vitamin D helps regulate calcium and supports bone and muscle health. Most status tests measure 25-hydroxyvitamin D; the active 1,25-dihydroxy form answers different clinical questions.",
+        "whyLowHigh": "High concentrations can result from excessive supplementation and may disturb calcium balance. Low status can reflect limited sun exposure or intake, impaired absorption, or liver, kidney and medication-related factors.",
+        "whyItMatters": "The assay matters: a 1,25-dihydroxy result cannot be interpreted as though it were a 25-hydroxy status test. Testing is not routinely useful for everyone, and a number alone does not establish the cause of symptoms.",
+        "whatToDiscuss": "Confirm the exact assay and review calcium, relevant medical conditions and supplement use. Ask whether follow-up is indicated before choosing a dose or pursuing a higher number."
+      },
+      "citations": [
+        {
+          "id": "vitd-reference",
+          "title": "MedlinePlus: Vitamin D test",
+          "url": "https://medlineplus.gov/lab-tests/vitamin-d-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Vitamin D",
+      "directionalContext": {
+        "higher": "High concentrations can result from excessive supplementation and may disturb calcium balance.",
+        "lower": "Low status can reflect limited sun exposure or intake, impaired absorption, or liver, kidney and medication-related factors."
+      },
+      "limitations": [
+        "Where the assay identity is absent, Bloom does not choose a vitamin D status interpretation."
+      ],
+      "assayIdentityRequired": true
+    },
+    {
+      "id": "ferritin",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Ferritin is an iron-storage protein. Its blood concentration helps assess stored iron, but it also changes with inflammation and other illness.",
+        "whyLowHigh": "High ferritin can reflect inflammation, liver disease or iron overload, among other causes. It does not automatically mean that excess iron is the explanation. Low ferritin commonly indicates depleted iron stores; blood-count results help show whether anemia is also present.",
+        "whyItMatters": "The same ferritin value can mean different things depending on inflammation, other iron tests and medical history. A source reference interval is context, not a personalized target.",
+        "whatToDiscuss": "Review the blood count, iron studies, symptoms and possible reasons for iron loss or altered absorption. Ask what further assessment is appropriate before starting iron or attempting to lower ferritin."
+      },
+      "citations": [
+        {
+          "id": "ferritin-reference",
+          "title": "MedlinePlus: Ferritin blood test",
+          "url": "https://medlineplus.gov/lab-tests/ferritin-blood-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Ferritin",
+      "directionalContext": {
+        "higher": "High ferritin can reflect inflammation, liver disease or iron overload, among other causes. It does not automatically mean that excess iron is the explanation.",
+        "lower": "Low ferritin commonly indicates depleted iron stores; blood-count results help show whether anemia is also present."
+      },
+      "limitations": [
+        "Inflammation can complicate the assessment of iron stores. No supplement recommendation is generated from ferritin alone."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "folate",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Folate supports DNA production, cell division and amino-acid metabolism, including the recycling of homocysteine. Adequate folate is important for normal red-blood-cell formation.",
+        "whyLowHigh": "A higher blood concentration can reflect recent intake or supplements; it does not by itself show that more folate would improve health. Low status can accompany inadequate intake, reduced absorption or other conditions and can contribute to megaloblastic anemia.",
+        "whyItMatters": "Serum folate reflects recent intake more than red-cell folate, which captures a longer period. Homocysteine is an indirect, nonspecific indicator because B12 status and kidney function also influence it.",
+        "whatToDiscuss": "Confirm whether serum or red-cell folate was measured, and review B12 and the blood count together. Discuss intake, supplements and absorption history before assuming a single nutrient explains symptoms."
+      },
+      "citations": [
+        {
+          "id": "folate-ods",
+          "title": "NIH Office of Dietary Supplements: Folate",
+          "url": "https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/",
+          "design": "Nutrient evidence reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "Serum and red-cell folate reflect different time windows; population guidance is not a personal prescription.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Nutrient evidence reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "b-vitamins",
+          "title": "MedlinePlus: Vitamin B test",
+          "url": "https://medlineplus.gov/lab-tests/vitamin-b-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Folate",
+      "directionalContext": {
+        "higher": "A higher blood concentration can reflect recent intake or supplements; it does not by itself show that more folate would improve health.",
+        "lower": "Low status can accompany inadequate intake, reduced absorption or other conditions and can contribute to megaloblastic anemia."
+      },
+      "limitations": [
+        "Folate, B12 and homocysteine are related but are not interchangeable tests."
+      ],
+      "assayIdentityRequired": false
+    },
+    {
+      "id": "homocysteine",
+      "type": "lab_marker",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "coverageStatus": "reviewed_draft",
+      "firstLayer": {
+        "whatItDoes": "Homocysteine forms during the processing of methionine, an amino acid. Folate, B12 and B6 help recycle or break it down.",
+        "whyLowHigh": "Higher results can accompany low B-vitamin status, reduced kidney function, hypothyroidism, medication effects and other conditions. They do not identify an MTHFR variant or prove a nutrient deficiency.",
+        "whyItMatters": "Higher concentrations are associated with vascular risk, but an association does not establish that lowering the number prevents events. Vitamin trials have not shown fewer heart attacks or deaths overall; stroke findings are more mixed.",
+        "whatToDiscuss": "Review B12, folate, kidney and thyroid results, medicines and supplement use. Ask which follow-up addresses the likely cause instead of assuming vitamins or genetic testing are the answer."
+      },
+      "citations": [
+        {
+          "id": "hcy-reference",
+          "title": "MedlinePlus: Homocysteine test",
+          "url": "https://medlineplus.gov/lab-tests/homocysteine-test/",
+          "design": "Patient-facing clinical test reference",
+          "evidenceLevel": "clinical guidance",
+          "scopeLimit": "General test context; does not establish the cause or treatment of an individual result.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Patient-facing clinical test reference",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        },
+        {
+          "id": "hcy-trials",
+          "title": "Homocysteine-lowering interventions for preventing cardiovascular events",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6483699/",
+          "pmid": "28816346",
+          "doi": "10.1002/14651858.CD006612.pub5",
+          "design": "Cochrane systematic review of randomized trials",
+          "evidenceLevel": "human intervention",
+          "scopeLimit": "No reduction in myocardial infarction or all-cause mortality; a small stroke reduction was observed. Vitamin treatment is not a general cardiovascular prescription.",
+          "verifiedOn": "2026-11-08",
+          "studyDesign": "Cochrane systematic review of randomized trials",
+          "verification": "Editorial source checked; independent claim-by-claim clinical approval remains pending."
+        }
+      ],
+      "scopeLimit": "General education; never evaluate an unverified unit, identity, assay, interval or clinical diagnosis.",
+      "reviewedAt": "2026-11-08",
+      "version": "biology-content-r4m1-2026-11-08.2",
+      "name": "Homocysteine",
+      "directionalContext": {
+        "higher": "Higher results can accompany low B-vitamin status, reduced kidney function, hypothyroidism, medication effects and other conditions. They do not identify an MTHFR variant or prove a nutrient deficiency.",
+        "lower": null
+      },
+      "limitations": [
+        "No harmful low target is assigned. A Cochrane review found a small stroke reduction, alongside no myocardial-infarction or mortality benefit; this is not a general prescription."
+      ],
+      "assayIdentityRequired": false
+    }
+  ],
+  "reportedFixtureOrganisms": [
+    {
+      "id": "taxon-abiotrophia-defectiva",
+      "reportedName": "Abiotrophia defectiva",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 1,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-alistipes-communis",
+      "reportedName": "Alistipes communis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 2,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Alistipes is a human-gut genus with varied amino-acid and fermentation metabolism. Health associations differ across studies and species; presence does not indicate a favourable or harmful amount.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-amedibacterium-intestinale",
+      "reportedName": "Amedibacterium intestinale",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 3,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-adlercreutzia-sp-8cfcbh1",
+      "reportedName": "Adlercreutzia sp. 8CFCBH1",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 4,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-alistipes-dispar",
+      "reportedName": "Alistipes dispar",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 5,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Alistipes is a human-gut genus with varied amino-acid and fermentation metabolism. Health associations differ across studies and species; presence does not indicate a favourable or harmful amount.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-anaerobutyricum-hallii",
+      "reportedName": "Anaerobutyricum hallii",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 6,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "anaerobutyricum hallii",
+      "aliases": [
+        "Eubacterium hallii"
+      ],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Human gut anaerobe associated with lactate and acetate utilization and butyrate formation in studied strains. Cross-feeding can link lactate-producing microbes to other fermentation products.",
+        "whyResearchersStudyIt": "A cultured isolate study found lactate-to-butyrate conversion; this does not establish the activity, amount or health effect in this stool sample. Historical Eubacterium hallii studies require strain mapping because L2-7 is now assigned to A. soehngenii.",
+        "foodMetabolicConnections": "Lactate and acetate are mechanistic inputs. Diet-derived resistant starch may indirectly support cross-feeding, but no personal serving or response is established."
+      },
+      "citations": [
+        {
+          "title": "Reclassification of Eubacterium hallii as Anaerobutyricum hallii and description of Anaerobutyricum soehngenii",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30351260/",
+          "pmid": "30351260",
+          "doi": "10.1099/ijsem.0.003041",
+          "studyDesign": "Taxonomic reclassification of cultured isolates",
+          "reviewStatus": "Source identity checked; independent claim approval pending.",
+          "scopeLimit": "DSM 3353 belongs to A. hallii; historical L2-7 belongs to A. soehngenii. These are distinct species."
+        },
+        {
+          "title": "Lactate-utilizing bacteria, isolated from human feces, that produce butyrate as a major fermentation product",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
+          "pmid": "15466518",
+          "doi": "10.1128/AEM.70.10.5810-5817.2004",
+          "studyDesign": "Human-derived isolate culture and co-culture experiments",
+          "reviewStatus": "Source identity checked; historical strains require taxonomy mapping.",
+          "scopeLimit": "Laboratory lactate cross-feeding does not establish the strain, activity or benefit in a reported stool sample."
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-akkermansia-muciniphila",
+      "reportedName": "Akkermansia muciniphila",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 7,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "akkermansia muciniphila",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Mucin-utilizing bacterium associated with the intestinal mucus environment. Mucin use is a biological niche, not evidence that it is damaging or repairing the gut barrier in this person.",
+        "whyResearchersStudyIt": "Human observational and small intervention studies have explored associations with metabolic outcomes; preparation and strain matter.",
+        "foodMetabolicConnections": "No particular food reliably produces an individually predictable Akkermansia response; general fibre guidance does not depend on this finding."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31263284/",
+          "studyDesign": "human pilot intervention and mechanistic research",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-alistipes-indistinctus",
+      "reportedName": "Alistipes indistinctus",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 8,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Alistipes is a human-gut genus with varied amino-acid and fermentation metabolism. Health associations differ across studies and species; presence does not indicate a favourable or harmful amount.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-anaerostipes-hadrus",
+      "reportedName": "Anaerostipes hadrus",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 9,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "anaerostipes hadrus",
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "A human-gut anaerobe studied for producing butyrate from fermented carbohydrates and related intermediates.",
+        "whyResearchersStudyIt": "Reported metabolic capability is strain- and substrate-dependent; stool detection does not quantify butyrate output.",
+        "foodMetabolicConnections": "Cross-feeding substrates are research context, not a validated food-by-species prescription."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
+          "studyDesign": "related genus cultured isolates; SPECIES-SPECIFIC EVIDENCE NEEDS REVIEW",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 3
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-anaerostipes-rhamnosivorans",
+      "reportedName": "Anaerostipes rhamnosivorans",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 10,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Anaerostipes includes studied butyrate-producing anaerobes, some using lactate and acetate. The exact pathways of an unverified species/strain cannot be assumed from this genus description.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-caecimuris",
+      "reportedName": "Bacteroides caecimuris",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 11,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-fragilis-638r",
+      "reportedName": "Bacteroides fragilis 638R",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 12,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "bacteroides fragilis",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Human gut bacterium capable of degrading diverse carbohydrates and interacting with other organisms in the colon.",
+        "whyResearchersStudyIt": "Strains vary: enterotoxigenic B. fragilis requires specific toxin genes; a source label 638R/YCH46 must not establish BFT production.",
+        "foodMetabolicConnections": "Carbohydrate-use biology does not establish an exact food recommendation or individual functional activity."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
+          "studyDesign": "general taxonomy context; source does NOT directly evidence B. fragilis, citation needed",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-intestinalis",
+      "reportedName": "Bacteroides intestinalis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 13,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-sp-cacc-737",
+      "reportedName": "Bacteroides sp. CACC 737",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 14,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-sp-hf-5141",
+      "reportedName": "Bacteroides sp. HF-5141",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 15,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-uniformis",
+      "reportedName": "Bacteroides uniformis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 16,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-zoogleoformans",
+      "reportedName": "Bacteroides zoogleoformans",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 17,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-blautia-sp-lzlj-3",
+      "reportedName": "Blautia sp. LZLJ-3",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 18,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Blautia includes gut anaerobes studied for fermentation pathways. Different species vary in substrate use and products; the exact source name is not an enzyme-activity measurement.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-butyricimonas-faecalis",
+      "reportedName": "Butyricimonas faecalis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 19,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This genus includes anaerobic gut organisms named for fermentation products; exact product capacity and host effects are not shown by a species-list result.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacillus-thuringiensis",
+      "reportedName": "Bacillus thuringiensis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 20,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-cellulosilyticus",
+      "reportedName": "Bacteroides cellulosilyticus",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 21,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-fragilis-ych46",
+      "reportedName": "Bacteroides fragilis YCH46",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 22,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "bacteroides fragilis",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Human gut bacterium capable of degrading diverse carbohydrates and interacting with other organisms in the colon.",
+        "whyResearchersStudyIt": "Strains vary: enterotoxigenic B. fragilis requires specific toxin genes; a source label 638R/YCH46 must not establish BFT production.",
+        "foodMetabolicConnections": "Carbohydrate-use biology does not establish an exact food recommendation or individual functional activity."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/15466518/",
+          "studyDesign": "general taxonomy context; source does NOT directly evidence B. fragilis, citation needed",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-ovatus-v975",
+      "reportedName": "Bacteroides ovatus V975",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 23,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-sp-cba7301",
+      "reportedName": "Bacteroides sp. CBA7301",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 24,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-sp-hf-5287",
+      "reportedName": "Bacteroides sp. HF-5287",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 25,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-vulgatus-atcc-8482",
+      "reportedName": "Bacteroides vulgatus ATCC 8482",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 26,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bifidobacterium-pseudocatenulatum",
+      "reportedName": "Bifidobacterium pseudocatenulatum",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 27,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "bifidobacterium pseudocatenulatum",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Carbohydrate-fermenting Bifidobacterium species; studied strains generate acetate and lactate that other microbes may use.",
+        "whyResearchersStudyIt": "This can contribute to cross-feeding, but Bifidobacterium is not universally beneficial at every strain and exposure.",
+        "foodMetabolicConnections": "Food-to-organism response varies; no exact dose or guaranteed colonization is established."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10612749/",
+          "studyDesign": "genus-level mechanistic context; species confirmation review",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-blautia-sp-sc05b48",
+      "reportedName": "Blautia sp. SC05B48",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 28,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Blautia includes gut anaerobes studied for fermentation pathways. Different species vary in substrate use and products; the exact source name is not an enzyme-activity measurement.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-butyricimonas-virosa",
+      "reportedName": "Butyricimonas virosa",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 29,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This genus includes anaerobic gut organisms named for fermentation products; exact product capacity and host effects are not shown by a species-list result.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-caccae",
+      "reportedName": "Bacteroides caccae",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 30,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-dorei-cl03t12c01",
+      "reportedName": "Bacteroides dorei CL03T12C01",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 31,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-heparinolyticus",
+      "reportedName": "Bacteroides heparinolyticus",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 32,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-sp-a1c1",
+      "reportedName": "Bacteroides sp. A1C1",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 33,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-sp-hf-162",
+      "reportedName": "Bacteroides sp. HF-162",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 34,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-thetaiotaomicron-vpi-5482",
+      "reportedName": "Bacteroides thetaiotaomicron VPI-5482",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 35,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "bacteroides thetaiotaomicron",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Well-studied intestinal Bacteroides species with diverse genes for processing complex glycans.",
+        "whyResearchersStudyIt": "Experimental substrate-use studies show possible functions, not the metabolic output of an individual sample.",
+        "foodMetabolicConnections": "Fibre type and food matrix matter; no precise response can be inferred from a taxon name."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC217604/",
+          "studyDesign": "genome mechanistic evidence; citation review",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bacteroides-xylanisolvens",
+      "reportedName": "Bacteroides xylanisolvens",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 36,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this gut-associated genus are studied for processing complex dietary and host glycans. The exact substrate capabilities differ by species and strain; the report does not measure their activity.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-blautia-argi",
+      "reportedName": "Blautia argi",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 37,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Blautia includes gut anaerobes studied for fermentation pathways. Different species vary in substrate use and products; the exact source name is not an enzyme-activity measurement.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-bordetella-trematum",
+      "reportedName": "Bordetella trematum",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 38,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-christensenella-minuta",
+      "reportedName": "Christensenella minuta",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 39,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "christensenella minuta",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Human-gut anaerobe observed in microbial co-occurrence research and studies of host metabolic traits.",
+        "whyResearchersStudyIt": "Associations with body composition are not proof of causation or an individual metabolic effect.",
+        "foodMetabolicConnections": "No validated food intervention establishes a personalized target for this organism."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34075098/",
+          "studyDesign": "experimental/association; study alignment pending",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 4
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-clostridium-perfringens",
+      "reportedName": "Clostridium perfringens",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 40,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "clostridium perfringens",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Spore-forming bacterium found in the environment and sometimes human intestines; particular strains can produce toxins.",
+        "whyResearchersStudyIt": "A species-name detection is neither identification of a toxin-producing strain nor diagnosis of food poisoning.",
+        "foodMetabolicConnections": "Do not use diet to attempt treatment or toxin suppression on the basis of this stool listing."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://www.cdc.gov/food-safety/about/clostridium-perfringens.html",
+          "studyDesign": "public-health source; strain specificity",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-dysosmobacter-welbionis",
+      "reportedName": "Dysosmobacter welbionis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 41,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "dysosmobacter welbionis",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Recently characterized anaerobic gut bacterium with butyrate-producing capacity in studied isolates.",
+        "whyResearchersStudyIt": "Human metabolic associations and mouse findings are interesting but do not demonstrate a personalized treatment effect.",
+        "foodMetabolicConnections": "Myo-inositol and fermentation substrates are scientific connections, not a validated dietary prescription."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/34108237/",
+          "studyDesign": "human association and mouse study",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-exophiala-phaeomuriformis",
+      "reportedName": "Exophiala phaeomuriformis",
+      "reportedGroup": "Eukaryote",
+      "sourceOrdinal": 42,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Exophiala comprises environmental black yeasts; a stool listing does not confirm colonization or infection and may reflect environmental exposure.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-faecalibacterium-prausnitzii-a2-165",
+      "reportedName": "Faecalibacterium prausnitzii A2-165",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 43,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "faecalibacterium prausnitzii",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Anaerobic human-gut bacterium widely studied for fermentative production of butyrate, an energy source for colon cells.",
+        "whyResearchersStudyIt": "Human observational findings report associations with inflammatory states; observed presence neither establishes active synthesis nor diagnoses gut health.",
+        "foodMetabolicConnections": "A varied, tolerated fibre-rich diet can support microbial fermentation generally, but there is no validated personal target for this species."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24021287/",
+          "studyDesign": "human observational association; basic fermentation",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-haemophilus-parainfluenzae-t3t1",
+      "reportedName": "Haemophilus parainfluenzae T3T1",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 44,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-lactobacillus-curvatus-jcm-1096-dsm-20019",
+      "reportedName": "Lactobacillus curvatus JCM 1096 = DSM 20019",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 45,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This lactic-acid-bacteria group includes organisms associated with foods and mucosal sites. Detection in stool does not establish durable colonization or probiotic benefit.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-latilactobacillus-sakei",
+      "reportedName": "Latilactobacillus sakei",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 46,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This genus includes lactic-acid fermenters associated with foods and environments; fecal detection can reflect transient passage.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-longibaculum-sp-kgmb06250",
+      "reportedName": "Longibaculum sp. KGMB06250",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 47,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-odoribacter-splanchnicus-dsm-20712",
+      "reportedName": "Odoribacter splanchnicus DSM 20712",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 48,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "odoribacter splanchnicus",
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Gut-resident anaerobe studied in fermentation and host-associated microbial communities.",
+        "whyResearchersStudyIt": "Proposed links with short-chain fatty acids and inflammatory conditions are not individually diagnostic.",
+        "foodMetabolicConnections": "Dietary response cannot be predicted from presence alone."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/39647502/",
+          "studyDesign": "general consensus only; organism-specific citation missing",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-parabacteroides-distasonis-atcc-8503",
+      "reportedName": "Parabacteroides distasonis ATCC 8503",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 49,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "parabacteroides distasonis",
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Intestinal anaerobe studied for microbial metabolism of dietary and host-derived compounds.",
+        "whyResearchersStudyIt": "Reported effects are context- and strain-dependent; some outcomes rely on animal or experimental work.",
+        "foodMetabolicConnections": "Do not prescribe bile-acid or succinate optimization from its presence."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/30351260/",
+          "studyDesign": "citation mismatch: reviewer must replace before release",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-coprobacter-sp-2cbh44",
+      "reportedName": "Coprobacter sp. 2CBH44",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 50,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-enterocloster-bolteae",
+      "reportedName": "Enterocloster bolteae",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 51,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Enterocloster is a human-associated anaerobic bacterial genus; biology varies by species, strain and host context.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-exophiala-spinifera",
+      "reportedName": "Exophiala spinifera",
+      "reportedGroup": "Eukaryote",
+      "sourceOrdinal": 52,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Exophiala comprises environmental black yeasts; a stool listing does not confirm colonization or infection and may reflect environmental exposure.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-flavonifractor-plautii",
+      "reportedName": "Flavonifractor plautii",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 53,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-lacticaseibacillus-rhamnosus",
+      "reportedName": "Lacticaseibacillus rhamnosus",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 54,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This genus includes bacteria studied in fermented foods and probiotic preparations, but clinical effects are strain- and preparation-specific.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-lactococcus-cremoris",
+      "reportedName": "Lactococcus cremoris",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 55,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Lactococcus includes lactic-acid fermenters widely used in dairy fermentation. A stool finding cannot confirm diet or sustained gut residence.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-limosilactobacillus-fermentum",
+      "reportedName": "Limosilactobacillus fermentum",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 56,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Limosilactobacillus is a group of lactic-acid bacteria found in fermented foods and some host-associated niches; its detection alone does not demonstrate benefit.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-massilistercora-timonensis",
+      "reportedName": "Massilistercora timonensis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 57,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-oscillibacter-sp-pea192",
+      "reportedName": "Oscillibacter sp. PEA192",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 58,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Oscillibacter is a gut-associated genus studied in community ecology. Specific metabolites and causal effects cannot be derived from an unquantified name.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-parabacteroides-sp-ct06",
+      "reportedName": "Parabacteroides sp. CT06",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 59,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Parabacteroides are intestinal anaerobes involved in varied fermentation pathways, with species-dependent metabolic products.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-coprococcus-comes",
+      "reportedName": "Coprococcus comes",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 60,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "coprococcus comes",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Human gut bacterium studied in carbohydrate fermentation and short-chain fatty acid pathways.",
+        "whyResearchersStudyIt": "Its reported presence cannot show which products are being formed or how much.",
+        "foodMetabolicConnections": "Specific fermentable substrates and species-level outcomes require direct review, rather than assuming any fibre will increase it."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4030238/",
+          "studyDesign": "metabolic pathway research; species applicability review",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-eptesicus-fuscus-gammaherpesvirus",
+      "reportedName": "Eptesicus fuscus gammaherpesvirus",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 61,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "The report identifies a viral sequence/name. Its presence does not establish that this virus infects humans or that it is actively replicating.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-faecalibacillus-intestinalis",
+      "reportedName": "Faecalibacillus intestinalis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 62,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-gordonibacter-urolithinfaciens",
+      "reportedName": "Gordonibacter urolithinfaciens",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 63,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "gordonibacter urolithinfaciens",
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Gut bacterium studied for transforming particular dietary ellagitannin-derived compounds toward urolithin intermediates.",
+        "whyResearchersStudyIt": "Microbial transformations vary across strains and the whole community; listing does not establish personal urolithin levels.",
+        "foodMetabolicConnections": "Pomegranate and other ellagitannin foods are research substrates; conversion in this person is not measured."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24909566/",
+          "studyDesign": "in-vitro conversion; source verification needed",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-lactiplantibacillus-plantarum",
+      "reportedName": "Lactiplantibacillus plantarum",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 64,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Members of this lactic-acid-bacteria genus occur in fermented foods and other environments. Source detection does not identify a proven beneficial strain or establish recent food intake.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-lactococcus-phage-96603",
+      "reportedName": "Lactococcus phage 96603",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 65,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Lactococcus includes lactic-acid fermenters widely used in dairy fermentation. A stool finding cannot confirm diet or sustained gut residence.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-loigolactobacillus-backii",
+      "reportedName": "Loigolactobacillus backii",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 66,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-mogibacterium-diversum",
+      "reportedName": "Mogibacterium diversum",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 67,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-paprika-mild-mottle-virus",
+      "reportedName": "Paprika mild mottle virus",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 68,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This is a reported plant-virus name; detection does not imply infection of human cells or allow a reliable dietary reconstruction.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-pepper-mild-mottle-virus",
+      "reportedName": "Pepper mild mottle virus",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 69,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "pepper mild mottle virus",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Plant-infecting virus often detected in human stool after consumption of contaminated plant foods; it is not a human gut bacterium.",
+        "whyResearchersStudyIt": "Detection alone does not establish infection of human cells or prove vegetable intake frequency.",
+        "foodMetabolicConnections": "Food transit is a plausible explanation; avoid reconstructing meals from this marker."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/18436611/",
+          "studyDesign": "plant-virus transit study; verify precise outcome",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 5
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-phocaeicola-coprophilus",
+      "reportedName": "Phocaeicola coprophilus",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 70,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "phocaeicola coprophilus",
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Human intestinal organism historically classified among Bacteroides relatives, within carbohydrate-fermenting gut ecosystems.",
+        "whyResearchersStudyIt": "Specific substrate and health effects require reviewed species/strain evidence; genus membership is not a functional measurement.",
+        "foodMetabolicConnections": "No validated personal dietary target follows."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi",
+          "studyDesign": "taxonomy only; limited evidence",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-roseburia-hominis-a2-183",
+      "reportedName": "Roseburia hominis A2-183",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 71,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "roseburia hominis",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Gut-resident anaerobe within a butyrate-producing group; its fermentation relies on available substrates and ecological partners.",
+        "whyResearchersStudyIt": "Associations with gut conditions have been reported, but a qualitative taxon listing does not establish health status.",
+        "foodMetabolicConnections": "Dietary fibres support fermentation communities generally; no individual target amount or treatment follows."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24021287/",
+          "studyDesign": "human associations; species confirmation required",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-pyogenes",
+      "reportedName": "Streptococcus pyogenes",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 72,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Streptococcus is a diverse genus with oral, food-associated and clinically important members; the source species matters. Its name alone cannot determine pathogenicity or gut role.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [
+        {
+          "title": "CDC: About Group A Strep Infection",
+          "url": "https://www.cdc.gov/group-a-strep/about/index.html",
+          "studyDesign": "Public-health organism reference",
+          "reviewStatus": "Existing educational reference; independent claim approval pending."
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-sp-lpb0220",
+      "reportedName": "Streptococcus sp. LPB0220",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 73,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Streptococcus is a diverse genus with oral, food-associated and clinically important members; the source species matters. Its name alone cannot determine pathogenicity or gut role.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-thermophilus-nd03",
+      "reportedName": "Streptococcus thermophilus ND03",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 74,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "streptococcus thermophilus",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Lactic-acid bacterium commonly used as a starter culture in yogurt and other fermented dairy products.",
+        "whyResearchersStudyIt": "Stool RNA detection can reflect ingestion or transit and does not prove durable colonization, probiotic efficacy or infection.",
+        "foodMetabolicConnections": "Fermented dairy is a possible source, but the assay does not reconstruct a meal history."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://www.nccih.nih.gov/health/probiotics-usefulness-and-safety",
+          "studyDesign": "general probiotics safety; species-specific literature pending",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-sutterella-faecalis",
+      "reportedName": "Sutterella faecalis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 75,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Sutterella includes intestinal bacteria studied in human-gut microbial communities. An individual organism listing does not establish inflammation or an adverse effect.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-tomato-brown-rugose-fruit-virus",
+      "reportedName": "Tomato brown rugose fruit virus",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 76,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This is a plant-pathogen virus, not evidence of a human viral infection or quantified tomato intake.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-ustilaginoidea-virens",
+      "reportedName": "Ustilaginoidea virens",
+      "reportedGroup": "Eukaryote",
+      "sourceOrdinal": 77,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Ustilaginoidea is a fungal genus associated with plants, including crop disease. Stool detection does not prove infection or origin.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-clostridium-scindens",
+      "reportedName": "[Clostridium] scindens",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 78,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Clostridium is taxonomically diverse and includes organisms with very different metabolism and safety relevance. Exact identity is essential.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-pyrenophora-tritici-repentis",
+      "reportedName": "Pyrenophora tritici-repentis",
+      "reportedGroup": "Eukaryote",
+      "sourceOrdinal": 79,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Pyrenophora includes fungi known as plant pathogens; detection in stool does not establish human infection.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-ruminococcus-bicirculans",
+      "reportedName": "Ruminococcus bicirculans",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 80,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-salivarius",
+      "reportedName": "Streptococcus salivarius",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 81,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Streptococcus is a diverse genus with oral, food-associated and clinically important members; the source species matters. Its name alone cannot determine pathogenicity or gut role.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-thermophilus-lmd-9",
+      "reportedName": "Streptococcus thermophilus LMD-9",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 82,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "streptococcus thermophilus",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Lactic-acid bacterium commonly used as a starter culture in yogurt and other fermented dairy products.",
+        "whyResearchersStudyIt": "Stool RNA detection can reflect ingestion or transit and does not prove durable colonization, probiotic efficacy or infection.",
+        "foodMetabolicConnections": "Fermented dairy is a possible source, but the assay does not reconstruct a meal history."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://www.nccih.nih.gov/health/probiotics-usefulness-and-safety",
+          "studyDesign": "general probiotics safety; species-specific literature pending",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-vestibularis",
+      "reportedName": "Streptococcus vestibularis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 83,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Streptococcus is a diverse genus with oral, food-associated and clinically important members; the source species matters. Its name alone cannot determine pathogenicity or gut role.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-sutterella-wadsworthensis",
+      "reportedName": "Sutterella wadsworthensis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 84,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Sutterella includes intestinal bacteria studied in human-gut microbial communities. An individual organism listing does not establish inflammation or an adverse effect.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-turicibacter-sanguinis",
+      "reportedName": "Turicibacter sanguinis",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 85,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-veillonella-parvula",
+      "reportedName": "Veillonella parvula",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 86,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "veillonella parvula",
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Anaerobic bacterium occurring in oral and gut communities, studied for using lactate and producing other fermentation products.",
+        "whyResearchersStudyIt": "Its presence in stool does not establish whether it came from the oral cavity or reflects any particular disease.",
+        "foodMetabolicConnections": "No diet or exercise recommendation follows from this detection."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31235964/",
+          "studyDesign": "related Veillonella strain studies; not direct V. parvula evidence",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-pyricularia-grisea",
+      "reportedName": "Pyricularia grisea",
+      "reportedGroup": "Eukaryote",
+      "sourceOrdinal": 87,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Pyricularia includes fungi associated with plants; the stool result does not identify an active human infection.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-ruthenibacterium-lactatiformans",
+      "reportedName": "Ruthenibacterium lactatiformans",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 88,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This is an anaerobic gut-associated lineage with experimental fermentation research; species-specific capacities need verification.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-sp-fdaargos-192",
+      "reportedName": "Streptococcus sp. FDAARGOS_192",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 89,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Streptococcus is a diverse genus with oral, food-associated and clinically important members; the source species matters. Its name alone cannot determine pathogenicity or gut role.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-thermophilus-mn-zlw-002",
+      "reportedName": "Streptococcus thermophilus MN-ZLW-002",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 90,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": "streptococcus thermophilus",
+      "aliases": [],
+      "coverageStatus": "reviewed_draft",
+      "reviewStatus": "scientific_draft_for_independent_review",
+      "firstLayer": {
+        "meetThisOrganism": "Lactic-acid bacterium commonly used as a starter culture in yogurt and other fermented dairy products.",
+        "whyResearchersStudyIt": "Stool RNA detection can reflect ingestion or transit and does not prove durable colonization, probiotic efficacy or infection.",
+        "foodMetabolicConnections": "Fermented dairy is a possible source, but the assay does not reconstruct a meal history."
+      },
+      "citations": [
+        {
+          "title": "Primary or reference source for specialist verification",
+          "url": "https://www.nccih.nih.gov/health/probiotics-usefulness-and-safety",
+          "studyDesign": "general probiotics safety; species-specific literature pending",
+          "reviewStatus": "needs exact claim-to-source verification"
+        }
+      ],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-streptococcus-virus-dt1",
+      "reportedName": "Streptococcus virus DT1",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 91,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Streptococcus is a diverse genus with oral, food-associated and clinically important members; the source species matters. Its name alone cannot determine pathogenicity or gut role.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-tobacco-mild-green-mosaic-virus",
+      "reportedName": "Tobacco mild green mosaic virus",
+      "reportedGroup": "Virus",
+      "sourceOrdinal": 92,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This plant-associated virus does not establish a human infection or smoking status.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-turicibacter-sp-h121",
+      "reportedName": "Turicibacter sp. H121",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 93,
+      "taxonomyRankInferredForInventoryOnly": "genus_or_unresolved",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "unresolved_identity",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "This source names a microbial lineage, but a reviewed, organism-specific metabolic function is not yet established for this identity. Its habitat and strain-level behaviour require source review.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    },
+    {
+      "id": "taxon-clostridium-innocuum",
+      "reportedName": "[Clostridium] innocuum",
+      "reportedGroup": "Bacterium",
+      "sourceOrdinal": 94,
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "matchedScientificEntity": null,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "needs_species_evidence_review",
+      "firstLayer": {
+        "meetThisOrganism": "Clostridium is taxonomically diverse and includes organisms with very different metabolism and safety relevance. Exact identity is essential.",
+        "whyResearchersStudyIt": "The reported organism is an observation, not a measured pathway, toxin, abundance or metabolite concentration.",
+        "foodMetabolicConnections": "No species-specific food effect has been verified for this reported identity."
+      },
+      "citations": [],
+      "limits": "Source-reported qualitative detection; strain, abundance, expression, flux and health effect unavailable unless separately reported.",
+      "source": {
+        "file": "ViomeResults_94E82CFFA634.pdf",
+        "page": 6
+      },
+      "reviewedAt": "2026-11-08"
+    }
+  ],
+  "sources": {
+    "labReference": "shared/precision-nutrition.ts markerDefinitions; authored review drafts",
+    "organismFixture": "Bloom_Viome_Qualitative_Report_Parsed_Sample_2026-11-04.json",
+    "existingExplanationRegistry": "shared/report-explanations.ts",
+    "existingDetailedResearchRegistry": "shared/functional-microbiome.ts: 3 exact matches, not 3 total organism profiles"
+  },
+  "qualityRules": {
+    "requiredLabSections": [
+      "whatItDoes",
+      "whyLowHigh",
+      "whyItMatters",
+      "whatToDiscuss"
+    ],
+    "requiredOrganismSections": [
+      "meetThisOrganism",
+      "whyResearchersStudyIt",
+      "foodMetabolicConnections"
+    ],
+    "prohibitPrimaryPlaceholders": [
+      "Research explanation not available yet",
+      "Interpretation not yet reviewed",
+      "Reviewed research profile not yet available",
+      "No supported claim"
+    ],
+    "useOfTaxonomicFallback": "only with correct rank and explicit no-species-inference label",
+    "primaryCitationPolicy": "do not mark review complete until claim-specific paper and study population verified"
+  },
+  "counts": {
+    "supportedLab": 14,
+    "fixtureOrganisms": 94,
+    "organismsDraftSubstantive": 22,
+    "organismsLimitedOrUnresolved": 78,
+    "coverageNotGuarantee": true
+  },
+  "editorialProvenance": {
+    "originalRegistry": "shared/data/bloom_biology_content_coverage_r4m1_2026-11-08.json",
+    "originalGitBlob": "8b21c7c330a076db9d90887a2cc725c5897cdb78",
+    "description": "Versioned editorial revision. Original supplied registry remains immutable. Scientific approval and coverage statuses are not promoted."
+  },
+  "additionalOrganismProfiles": [
+    {
+      "id": "context-faecalibacterium-prausnitzii",
+      "reportedName": "faecalibacterium prausnitzii",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A gut resident that can turn nutrients from the microbial food web into butyrate, a fuel used by cells lining the colon.",
+        "whyResearchersStudyIt": "Often studied alongside gut-barrier and inflammation-related health. Association does not prove that adding this bacterium treats a condition.",
+        "foodMetabolicConnections": "A varied, fiber-containing diet can support fermentation generally. This record does not tell us your butyrate output or a required bacterial amount."
+      },
+      "citations": [
+        {
+          "title": "Human observational study of butyrate-producing bacteria",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24021287/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-roseburia-hominis",
+      "reportedName": "roseburia hominis",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A gut bacterium known for making butyrate, which helps fuel the colon’s lining.",
+        "whyResearchersStudyIt": "Lower levels have been observed in some gut-disease studies, but this does not make absence a diagnosis or prove that more is always better.",
+        "foodMetabolicConnections": "Support a varied diet with tolerated fiber rather than trying to reach an invented Roseburia percentage."
+      },
+      "citations": [
+        {
+          "title": "Human study of Roseburia and Faecalibacterium",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/24021287/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-ruminococcus-gnavus",
+      "reportedName": "ruminococcus gnavus",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [
+        "mediterraneibacter gnavus"
+      ],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A common gut resident that can use sugars from mucus and other sources. Strains differ in how they interact with the immune system.",
+        "whyResearchersStudyIt": "Some strains or increases have been linked with inflammation in research. Its presence by itself does not diagnose inflammatory bowel disease.",
+        "foodMetabolicConnections": "No validated “eliminate this bacterium” diet follows from a listed name. Symptoms and clinical findings are more useful for care decisions."
+      },
+      "citations": [
+        {
+          "title": "Study of an inflammatory microbial polysaccharide",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31182571/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        },
+        {
+          "title": "Study of strain differences and immune responses",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/33972416/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-clostridium-scindens",
+      "reportedName": "clostridium scindens",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "Changes some primary bile acids into secondary bile acids. Bile acids help with fat digestion and also affect other gut microbes.",
+        "whyResearchersStudyIt": "This activity can help resist some infections in research, while bile-acid effects vary by molecule and context.",
+        "foodMetabolicConnections": "There is no simple “raise it” or “lower it” recommendation without actual bile-acid measurements and the clinical picture."
+      },
+      "citations": [
+        {
+          "title": "Experimental study of bile acids and colonization resistance",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/25337874/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-sutterella",
+      "reportedName": "sutterella",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A group of bacteria found in human guts. Researchers study how different species interact with the gut lining and immune defenses.",
+        "whyResearchersStudyIt": "Some species can have unfavorable effects in particular experimental settings, yet they can also be present without disease.",
+        "foodMetabolicConnections": "An “elevated” label without quantities or a validated reference range does not prove harm or identify a diet treatment."
+      },
+      "citations": [
+        {
+          "title": "Study of Sutterella and gut immune signaling",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/42324633/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-alistipes",
+      "reportedName": "alistipes",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A group of gut bacteria whose species can interact differently with metabolism and immune activity.",
+        "whyResearchersStudyIt": "Findings vary by species and setting; some experimental strains have shown anti-inflammatory effects. The genus cannot be labelled uniformly good or bad.",
+        "foodMetabolicConnections": "A genus-level entry does not support a specific food restriction or a target percentage."
+      },
+      "citations": [
+        {
+          "title": "Experimental Alistipes strain study",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/40497338/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        },
+        {
+          "title": "Mouse study of a specific Alistipes strain",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/36804134/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-bacteroides-vulgatus",
+      "reportedName": "bacteroides vulgatus",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [
+        "phocaeicola vulgatus"
+      ],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A common gut resident with enzymes that help process certain carbohydrates.",
+        "whyResearchersStudyIt": "Its interactions can be helpful or unfavorable depending on strain and surroundings. Some research concerns its interaction with other microbes or inflammation.",
+        "foodMetabolicConnections": "“Reported elevated” does not establish a harmful amount, especially when no numeric abundance or reference interval is available."
+      },
+      "citations": [
+        {
+          "title": "Study of gut Bacteroides genomes",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/17579514/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        },
+        {
+          "title": "Experimental study of microbial carbohydrate sharing",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/31925306/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-lactobacillus-reuteri",
+      "reportedName": "lactobacillus reuteri",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [
+        "limosilactobacillus reuteri"
+      ],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A lactic-acid-producing bacterium. Particular strains are used in probiotic research and products.",
+        "whyResearchersStudyIt": "A benefit studied for one strain, age group or condition does not apply automatically to every L. reuteri product.",
+        "foodMetabolicConnections": "“Not detected” does not mean you need a probiotic. Product strain, reason for use and personal safety matter."
+      },
+      "citations": [
+        {
+          "title": "NIH: A specific L. reuteri strain trial",
+          "url": "https://www.nccih.nih.gov/research/research-results/investigating-the-safety-of-the-probiotic-lactobacillus-reuteri-in-infants-with-colic",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        },
+        {
+          "title": "NIH: Probiotics and their limits",
+          "url": "https://www.nccih.nih.gov/health/probiotics-usefulness-and-safety",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-bifidobacterium-group",
+      "reportedName": "bifidobacterium group",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "genus",
+      "rankMustBeVerified": true,
+      "aliases": [
+        "bifidobacterium spp",
+        "bifidobacterium"
+      ],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "A broad group of carbohydrate-using gut bacteria. Many make acetate and lactate that participate in the gut’s microbial food web.",
+        "whyResearchersStudyIt": "Species and strains have different functions. A group-level label cannot identify a particular probiotic effect.",
+        "foodMetabolicConnections": "A qualitative “low” label is not a measured deficiency. Tolerated plant variety is a more practical starting point than chasing a bacterial target."
+      },
+      "citations": [
+        {
+          "title": "Experimental study of bifidobacterial fermentation",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/9430608/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        },
+        {
+          "title": "NIH: Probiotics and their limits",
+          "url": "https://www.nccih.nih.gov/health/probiotics-usefulness-and-safety",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    },
+    {
+      "id": "context-bacteroides-fragilis",
+      "reportedName": "bacteroides fragilis",
+      "reportedGroup": "Bacterium",
+      "taxonomyRankInferredForInventoryOnly": "species",
+      "rankMustBeVerified": true,
+      "aliases": [],
+      "coverageStatus": "limited",
+      "reviewStatus": "existing_context_pending_claim_review",
+      "firstLayer": {
+        "meetThisOrganism": "Some strains normally live in the gut; other strains carry toxin-related functions and can cause problems in specific settings.",
+        "whyResearchersStudyIt": "A species-level name cannot distinguish these strains or establish infection.",
+        "foodMetabolicConnections": "Protein or fiber intake cannot tell Bloom whether this organism is present or beneficial in you."
+      },
+      "citations": [
+        {
+          "title": "Experimental study of toxin-producing B. fragilis",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/29398651/",
+          "reviewStatus": "Existing context citation; independent claim review pending."
+        }
+      ],
+      "reviewedAt": "2026-11-08",
+      "limits": "General name-level literature context; the reported record does not establish strain, functional activity or a health outcome.",
+      "version": "biology-content-r4m1-2026-11-08.2"
+    }
+  ]
+}

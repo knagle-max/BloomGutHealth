@@ -1,3 +1,5 @@
+import {organismBiography} from '../../shared/biology-content.ts';
+import {functionalResearchFor} from '../../shared/functional-microbiome.ts';
 import {securityHeaders} from '../../server/security.ts';
 import {organismIllustration,neutralMicroorganismVisual} from '../../shared/scientific-visuals.ts';
 import {execFileSync} from 'node:child_process';import path from 'node:path';
@@ -30,11 +32,12 @@ try{
   assert.equal(await sheet.getByRole('heading',{name:'Your reported observation'}).isVisible(),false);await sheet.getByRole('heading',{name:'What this organism is'}).waitFor();assert.ok(await sheet.getByRole('heading',{name:'What this organism is'}).evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight;}));await sheet.getByText('Your report',{exact:true}).click();await sheet.getByRole('heading',{name:'Your reported observation'}).waitFor();await sheet.getByText('Synthetic fixture — not personal data',{exact:true}).waitFor();
   await sheet.getByText(i===0?'0%':'1.23456789%',{exact:true}).waitFor();
   assert.equal(await sheet.getByRole('heading',{name:'What this organism is'}).count(),1);
-  assert.deepEqual(await sheet.locator('summary').allTextContents(),['Your report','What research has studied','Nutrients & molecules','Food research','Sources & limitations']);
+  const hasResearch=!!(organismBiography(name)||functionalResearchFor({bacterialName:name}));
+  assert.deepEqual(await sheet.locator('summary').allTextContents(),hasResearch?['Your report','What research has studied','Nutrients & molecules','Food research','Sources & limitations']:['Your report']);
   if(i===17)await sheet.getByText(/archaeon, rather than/).waitFor();
-  await sheet.getByText('Sources & limitations',{exact:true}).click();
+  if(hasResearch)await sheet.getByText('Sources & limitations',{exact:true}).click();
   if(i===1||i===11)await sheet.getByText('Species detection does not establish a virulent strain.',{exact:true}).waitFor();
-  await sheet.getByText('Food research',{exact:true}).click();assert.equal(await sheet.locator('.microbial-profile-disclosures details[open]').count(),1);
+  if(hasResearch){await sheet.getByText('Food research',{exact:true}).click();assert.equal(await sheet.locator('.microbial-profile-disclosures details[open]').count(),1);}else{assert.equal(await sheet.locator('.microbial-profile-disclosures details').count(),0);assert.doesNotMatch(await sheet.innerText(),/Research explanation not available yet/);}
   await page.keyboard.press('Escape');await sheet.waitFor({state:'hidden'});await page.waitForFunction(()=>!history.state?.bloomMicrobialProfile);
   assert.equal(await trigger.evaluate(el=>el===document.activeElement),true);assert.equal(await report.inputValue(),selected);
  }

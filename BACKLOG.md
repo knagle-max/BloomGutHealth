@@ -1,3 +1,15 @@
+## 2026-11-08 — Supplied Biology registry integrated; engineering continues
+
+Reconciled owner/Architect22e72a8, preserving all10 incoming commits' source files and original registry bytes. One active versioned editorial registry supplies 14 supported lab drafts,94 supplied organism entries and existing additional context; all original draft/limited/unresolved statuses retained, no independent approval invented. Canonical preview/detail parity, explicit-rank/alias guards, short unknown profiles, source-state resets and narrow-zoom portraits implemented. New94-profile and existing20+20 source/art/focus plus functional-source App journeys PASS. Fullsuite661/662; sole stale-crosswalk hash failure refreshed and focused19 tests PASS; final CI must rerun suite. See R4_M1_BIOLOGY_REGISTRY_INTEGRATION_20261108. Full public-fixture inventory/lint and remaining source-specific organism evidence/content remain ACTIVE; no RC/main checkpoint or v0.6. Terminal Git auth unavailable; connected GitHub expected-head publication preserves remote22e history.
+
+## 2026-11-08 — Supported Biology lab explanations implemented
+
+Canonical versioned 14-marker editorial registry now supplies existing education consumers and information-first LabExplorer details; original marker IDs/units and clinical/source pipelines unchanged. Source-native interval framing abstains on invalid/absent bounds, missing units, unavailable selections and uncertain vitamin D assay. Sources include guidance differences and conflicting outcome context. 21 focused tests, TypeScript/build and actual 14-profile/92-label×6-source App journey PASS; expanded HDL 32 viewport/mode/theme/zoom combinations PASS. Fixed observed nonwrapping Progress/header actions and made the constrained plot locally keyboard-scrollable. See `docs/verification/R4_M1_BIOLOGY_LAB_CONTENT_20261108.md`. Organism content, complete fixture coverage JSON and final Biology regression remain ACTIVE; this is not an RC/main review checkpoint.
+
+## Active P0 — Complete Biology content remediation
+
+Sourcef5e5068 `BLOOM_BIOLOGY_CONTENT_QUALITY_AUDIT_AND_REMEDIATION.md`: canonical meaningful14-marker and rank-aware organism profiles, evidence verification and complete public-fixture coverage inventory/quality lint. Preserve list/detail insight parity, original records and all existing source gates. Research and implementation ACTIVE; not blocked for interim specialist review. R4/M1 application0314b28 has final CI42455953357 SUCCESS; draft integrated RC is held for this new approved content scope. No main merge or v0.6.
+
 ## Active R4/M1 follow-up — 2026-11-08
 
 | Task | Status / acceptance |

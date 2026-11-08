@@ -1,11 +1,11 @@
 import LabCategoryIcon from './LabCategoryIcon';
-import {labBiography} from '@shared/biology-content';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link} from 'wouter';
-import {markerDefinitions,type PrecisionReport} from '@shared/precision-nutrition';
+import {type PrecisionReport} from '@shared/precision-nutrition';
 import {labCategories,labExplorerEntries,normalizeLabSearch,type LabCategoryId} from '@shared/lab-explorer';
 import {labDateText} from '@shared/lab-history';
 import LabTrend from './LabTrend';
+import LabMarkerEducation from './LabMarkerEducation';
 import type {LabPointSelection} from '@shared/lab-history';
 
 export default function LabExplorer({report,owner,marker,group,onSelect,selection,onSelectionChange}:{report?:PrecisionReport;owner:string;marker:string|null;group:string|null;onSelect:(group:LabCategoryId|null,marker:string|null)=>void;selection:LabPointSelection;onSelectionChange:(patch:Partial<LabPointSelection>)=>void}){
@@ -24,14 +24,13 @@ export default function LabExplorer({report,owner,marker,group,onSelect,selectio
   {!matching.length&&entries.length>0&&<p>No matching marker or source label. Clear the search to review all records.</p>}
   {labCategories.map(category=>{const rows=matching.filter(e=>e.categories.includes(category.id));if(!rows.length)return null;return <details key={category.id} className="bloom-panel lab-explorer-category" open={activeGroup===category.id}>
    <summary onClick={e=>{e.preventDefault();onSelect(activeGroup===category.id?null:category.id,null);}}><span className="lab-explorer-category-title"><LabCategoryIcon categoryId={category.id}/><strong>{category.name}</strong></span><span>{rows.length} {category.id==='other'?'source labels':'markers'} · {rows.filter(e=>e.recordCount>1).length} with multiple records</span></summary>
-   <div className="lab-explorer-markers">{rows.map(entry=>{const expanded=activeGroup===category.id&&marker===entry.id;const education=markerDefinitions.find(definition=>definition.id===entry.id)?.education;const biography=labBiography(entry.id);const id=expanded?`lab-marker-${encodeURIComponent(entry.id)}`:undefined;return <div key={entry.id} id={id} data-lab-marker={entry.id} className="lab-explorer-marker scroll-mt-24">
+   <div className="lab-explorer-markers">{rows.map(entry=>{const expanded=activeGroup===category.id&&marker===entry.id;const id=expanded?`lab-marker-${encodeURIComponent(entry.id)}`:undefined;return <div key={entry.id} id={id} data-lab-marker={entry.id} className="lab-explorer-marker scroll-mt-24">
     <button type="button" data-marker-toggle="true" className="lab-explorer-marker-toggle" aria-expanded={expanded} onClick={()=>onSelect(category.id,expanded?null:entry.id)}><span><strong>{entry.name}</strong><small>{entry.recordCount} source record(s){entry.pending.length?` · ${entry.pending.length} need unit review`:''}{entry.sourceOnly.length?' · marker not identified':''}</small></span><span aria-hidden="true">{expanded?'−':'+'}</span></button>
     {expanded&&<section className="lab-explorer-detail space-y-4" aria-label={`${entry.name} recorded detail`}>
-     <div className="lab-marker-education space-y-2"><h4>What this measures</h4>{biography?<><p>{biography.firstLayer.whatItDoes}</p><h4>What can affect it</h4><p>{biography.firstLayer.whyLowHigh}</p><h4>Why it matters</h4><p>{biography.firstLayer.whyItMatters}</p><h4>What to know or discuss</h4><p>{biography.firstLayer.whatToDiscuss}</p><details><summary>Research sources and review status</summary><p className="panel-note">General education; not an interpretation of your individual result. Scientific text is available while independent claim-by-claim review continues.</p>{biography.citations.map(source=><p key={source.url}><a className="text-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></p>)}</details></>:education?<><p>{education.definition}</p><p>{education.context}</p><details><summary>Reference for this explanation</summary>{education.sources.map(source=><p key={source.url}><a className="text-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></p>)}</details></>:<p>This source label has not been identified as a supported marker. Its original observation remains available below.</p>}</div>
-     {entry.trend&&<LabTrend selection={selection} onSelectionChange={onSelectionChange} trend={entry.trend} latestLabel="Latest result" directionLabel="Recorded direction" sourceLabel="Evidence & original report"/>}
+     <LabMarkerEducation markerId={entry.id} points={entry.trend?.points||[]} selectedPointId={selection.point}/>
+     {entry.trend&&<LabTrend selection={selection} onSelectionChange={onSelectionChange} trend={entry.trend} latestLabel="Your results · latest recorded" directionLabel="Recorded direction" sourceLabel="Evidence & original report"/>}
      {entry.pending.map(row=><article key={row.id} className="space-y-2"><h4>Unit review needed</h4><p>{row.unitReview?.originalText||row.sourceInput?.text||'Original source row not supplied'}</p><p>{labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)} · {row.laboratory}</p><Link className="text-link inline-flex min-h-11 items-center" href={`/precision?tab=labs&labResult=${encodeURIComponent(row.id)}`}>Review original source unit</Link></article>)}
      {entry.sourceOnly.map(row=><article key={row.id} className="space-y-2"><h4>Original source observation</h4><p>{row.reportedValue} {row.reportedUnit||'Unit not reported'} · {labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)}</p><p>{row.laboratory} · {row.method||'Method not reported'}</p>{row.reportedReferenceInterval&&<p>Source reference interval: {row.reportedReferenceInterval}</p>}<p className="panel-note">Marker identity is not confirmed. No numeric trend or interpretation is calculated.</p><Link className="text-link inline-flex min-h-11 items-center" href={`/precision?tab=labs&labResult=${encodeURIComponent(row.id)}`}>Review original source record</Link></article>)}
-     
     </section>}
    </div>;})}</div>
   </details>;})}
