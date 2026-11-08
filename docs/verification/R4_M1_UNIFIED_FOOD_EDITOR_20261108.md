@@ -26,7 +26,7 @@ The additive owned composer GET and reviewed PUT reuse the existing analyzer, so
 ## Actual validation
 
 - `tests/meal-edit.test.ts` + `meal-review-source.test.ts`:6 PASS, real HTTP and isolated SQL, including concurrent correction and stale receipt after intervening edit.
-- Full unit regression:653 tests,652 PASS; one stale source-crosswalk fingerprint failure. Inventory refreshed after source review and its2 focused tests PASS. Do not represent the initial full invocation as green; publication CI is authoritative for the exact committed tree.
+- Latest complete regression:655/655 PASS in259.2 seconds, including the new owned-update and source-description tests. An earlier653-test invocation had one stale source-inventory fingerprint failure; that inventory was reviewed/refreshed, its focused checks passed, and this later complete run is green. Publication CI remains the exact committed-tree proof.
 - Actual App `unified-meal-editor-journey.mjs`: immediate text; optional search/Back draft retention; Journal Edit; independent portion review; one-row lost-response retry; original time/type/zero context; return focus/reload; description invalidation; two owners; four widths/both modes/themes and200% text.
 - Composition variants: corrected and still-dirty150g banana survive adding a selected USDA source, exactly two canonical rows, no consumption write.
 - Existing create pre-save journey: no write before review; dirty totals withdrawn; one exact receipt after committed response loss.
@@ -34,8 +34,12 @@ The additive owned composer GET and reviewed PUT reuse the existing analyzer, so
 - Existing saved-template journey: encrypted source, scaling, correction, source-read failure/retry, owner and immutable template preservation.
 - Optional method/capability journey and16 Food/Journal M1 viewport cases pass. Strict TypeScript/build, original media and source inventories checked.
 
-## Reproduced open acceptance defects — continue engineering
+## Reproduced source-matching defects — corrected in the next checkpoint
 
-F-01's exact description “2 eggs and 2 slices of toast” currently matches a creamed-egg source with290g for the eggs. F-06 “two burgers without buns, chicken skewers and salad” currently picks a Burger King cheeseburger source. These are pre-existing deterministic interpretation/source-selection defects reproduced directly against the actual analyzer; editable confirmation does not make these acceptance cases pass. Do not label Food or v0.5 complete. Next task: correct safe generic/preparation/exclusion matching or abstain where the source cannot honor the description, with independent varied fixtures and actual review/save checks. Do not invent a model, provider or scientific clearance. Other F-case human/physical/visual acceptance remains explicitly unperformed where applicable.
+F-01 previously selected a creamed-egg source with290g for two plain eggs. Unspecified animal-food queries now prefer source records explicitly describing unspecified preparation/part; unrequested creamed/deviled/Benedict/pickled recipes and egg whites/yolks cannot replace a plain whole-egg query. Explicit cooking/parts/dishes remain eligible. The exact F-01 browser→review→save→SQL/Journal reload records two source-estimated eggs at100g and two slices of toast.
+
+F-06 previously erased “without buns” before selecting a whole branded cheeseburger. Exclusions remain attached to their foods and candidate sources must explicitly support the omitted words; “with or without” is not evidence of an omission. Unrequested veggie/meatless sources cannot substitute for an unspecified burger. The exact F-06 browser→review→save→SQL/Journal reload retains three rows: the literal unresolved bunless burger (amount unknown), chicken and salad. Known contributions remain partial; no bun/whole sandwich source is added. A source explicitly specifying no dressing remains usable for salad without dressing. This is safe source matching/abstention, not unrestricted interpretation or a measured patty mass.
+
+18 focused food/source/portion tests, exact F-01/F-06 actual App/HTTP/SQL journeys, strict TypeScript, production build and655/655 full regression PASS. Publication CI/Render verification follows. Human/physical/visual acceptance remains unperformed where applicable; do not equate these engineering checks with independent usability or clinical certification.
 
 No main merge, production mutation or unrelated v0.6 code. The earlier approval pause is superseded; remaining safe engineering is ACTIVE.

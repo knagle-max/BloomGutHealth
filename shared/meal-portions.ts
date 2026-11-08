@@ -27,6 +27,9 @@ const aliases: Array<[RegExp, string, number]> = [
 ];
 const foods = [...snapshotFoods, ...loggingFoods];
 export function estimateIngredient(input: Ingredient): Ingredient {
+  // A generic substitute cannot honor an unresolved exclusion. Keep the literal
+  // food for review instead of restoring a component the person did not eat.
+  if(/\b(?:without|no|hold|skip)\b/i.test(input.name))return input;
   if (input.grams === null && /User-specified mass/i.test(input.assumption))
     return input;
   const exact = foods.find(

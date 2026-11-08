@@ -67,13 +67,30 @@ export function findFoodCandidates(query: string, limit = 4) {
   if (exact) return [exact];
   if (/^relish$/i.test(query.trim())) query = "pickle relish";
   if (/^(?:\d+\s+)?dressing$/i.test(query.trim())) query = "salad dressing";
-  const words = tokens(query);
+  const exclusion=query.match(/\bwithout\s+(.+?)(?=\s+with\b|[,;.]|$)/i);
+  const omitted=exclusion?tokens(exclusion[1]):[];
+  const words = tokens(exclusion?query.slice(0,exclusion.index):query);
   if (!words.length) return [];
   const raw = /\b(raw|uncooked)\b/i.test(query),
     fried = /\b(fried|breaded|battered)\b/i.test(query);
   return records
     .flatMap((r) => {
       if (words.some((w) => !r.words.has(w))) return [];
+      if(omitted.length){
+        const absent=new Set<string>();
+        for(const clause of Array.from(r.food.description.matchAll(/\b(?:without|no)\s+.*?(?=\s+with\b|[,;.]|$)/gi))){
+          // “With or without” is unspecified, not evidence of an omission.
+          if(/\bwith\s+or\s*$/i.test(r.food.description.slice(0,clause.index)))continue;
+          for(const word of tokens(clause[0]))absent.add(word);
+        }
+        if(omitted.some(word=>!absent.has(word)))return [];
+      }
+      // Shorter recipe names must not beat an unspecified whole-food record
+      // merely because fewer words incur a smaller lexical penalty.
+      for(const preparation of ['creamed','deviled','benedict','pickled']){
+        if(new RegExp(`\\b${preparation}\\b`,'i').test(r.food.description)&&!new RegExp(`\\b${preparation}\\b`,'i').test(query))return [];
+      }
+      if(words.includes('egg')&&!/\b(?:whites?|yolks?)\b/i.test(query)&&/\b(?:white|yolk)\b/i.test(r.food.description))return [];
       if (
         !raw &&
         /\braw\b/i.test(r.food.description) &&
@@ -84,8 +101,8 @@ export function findFoodCandidates(query: string, limit = 4) {
         return [];
       if (raw && !/\braw\b/i.test(r.food.description)) return [];
       if (
-        /\b(meatless|vegetarian|vegan)\b/i.test(r.food.description) &&
-        !/\b(meatless|vegetarian|vegan|plant.based)\b/i.test(query)
+        /\b(meatless|vegetarian|vegan|veggie|plant.based)\b/i.test(r.food.description) &&
+        !/\b(meatless|vegetarian|vegan|veggie|plant.based)\b/i.test(query)
       )
         return [];
       if (!fried && /\b(fried|breaded|battered)\b/i.test(r.food.description))
@@ -102,7 +119,10 @@ export function findFoodCandidates(query: string, limit = 4) {
       score -= Math.max(0, r.words.size - words.length) * 1.5;
       const head = tokens(r.food.description.split(",")[0]);
       if (head.length && head.every((w) => words.includes(w))) score += 5;
-      if (/\b(?:NFS|NS as to)\b/i.test(r.food.description)) score += 1;
+      if (/\b(?:NFS|NS as to)\b/i.test(r.food.description)) {
+        const unspecifiedAnimalPreparation=/\b(?:chicken|turkey|egg|eggs|beef|pork|salmon|fish|meat)\b/i.test(query)&&! /\b(?:raw|uncooked|fried|breaded|battered|boiled|poached|scrambled|baked|grilled|roasted|toasted|creamed|deviled|benedict|pickled)\b/i.test(query);
+        score += unspecifiedAnimalPreparation?6:1;
+      }
       for (const special of [
         "dessert",
         "baby",
@@ -346,7 +366,10 @@ export function splitMealDescription(text: string): Ingredient[] {
     .replace(/\b1\/4\b/g, "0.25")
     .replace(/\b(?:i (?:ate|had)|for (?:breakfast|lunch|dinner))\b/gi, "")
     .replace(/\b(?:that|which)\s+(?:was|were)\s+\w+(?=[,.;]|$)/gi, "")
-    .replace(/\bwithout\s+([^,.;]+?)(?=\s+with\b|[,.;]|$)/gi, ", no $1,")
+    // Keep exclusions attached to their food. Dropping “without buns” before
+    // matching would allow a complete sandwich to impersonate a bunless meal.
+    // A conjunction inside an exclusion remains one unresolved qualification.
+    .replace(/\bwithout\s+[^,.;]+/gi, clause=>clause.replace(/\s+and\s+/gi," & "))
     .replace(/\bthat came with\b/gi, ",")
     .replace(/\b(?:served with|alongside|with|plus)\b/gi, ",")
     .replace(/\bmac(?:aroni)? and cheese\b/gi, "macaroni & cheese");

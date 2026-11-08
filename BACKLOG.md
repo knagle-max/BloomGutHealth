@@ -5,7 +5,7 @@
 | Athlete distinct light/dark + Today readable action states | Implemented locally;24 route/width/theme cases and normal/hover/focus/active contrast pass; 56 shared Athlete cases, original wordmark bytes and strict TypeScript/build pass; publication follows. |
 | Compact Lab category navigation | Original inline geometry integrated;92 labels ×6 source records, source/owner/keyboard/offline and5-width light/dark pass. Original raster ZIP unavailable; approved inline SVG compact fallback retained. |
 | Unified Food capture/edit | Canonical composer and atomic owned review/update implemented and engineering-tested; publication pending. See R4_M1_UNIFIED_FOOD_EDITOR_20261108. Independent acceptance remains separate. |
-| Food F-01/F-06 preparation/exclusion source mismatch | NEXT reproduced actionable defect: plain eggs selects creamed source; without-bun burgers select a whole branded cheeseburger. Correct safe matching/abstention; verify varied descriptions and actual review/save. Do not mark full Food acceptance complete. |
+| Food F-01/F-06 preparation/exclusion source mismatch | Corrected safe generic/preparation/omission matching;18 focused tests and exact App/review/save/SQL/Journal reload cases pass. F-06 explicitly abstains on unspecified patty composition and retains partial known contributions. 655/655 full regression +TS/build PASS; publication verification pending; unrestricted interpretation and independent human/physical acceptance not claimed. |
 
 ## Current P0 — R4 M1 mobile/media and Biology restoration
 
