@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {randomBytes,randomUUID} from 'node:crypto';
 import {setTimeout as delay} from 'node:timers/promises';
+import {experimentSchema} from '../../shared/experience.ts';
 
 // Writes only ephemeral, script-owned synthetic accounts. Never infer isolation
 // from a CI flag: the app must attest its pinned observed endpoint/database/schema.
@@ -14,6 +15,7 @@ async function qualify(){
  assert.match(response.headers.get('content-type')||'',/application\/json/);
  const value=await response.json();assert.equal(value.kind,'isolated-review');assert.equal(value.commit,expected,'Review build differs from the tested commit; no writes permitted');assert.ok(Date.parse(value.expiresAt)>Date.now());
 }
+const input=experimentSchema.parse({mode:'everyday',title:'Synthetic hosted RC source',startsOn:'2026-11-08',endsOn:'2026-11-15',action:'One familiar routine',outcome:'Self-reported source note',design:{baselineStartsOn:'2026-11-01',baselineEndsOn:'2026-11-07',metricUnit:'source units',measurementMethod:'Same synthetic source question',expectedDirection:'observe',confoundersToTrack:'Sleep'},observations:[{date:'2026-11-08',value:0,adherence:null,confounders:'Synthetic context'}]});
 const accounts=[];
 async function request(account,path,method='GET',body,status=200,headers={}){
  if(method!=='GET')await qualify();
@@ -37,7 +39,6 @@ try {
  await request(first,`/api/user/${first.id}/profile`,'PATCH',{weightKg:150/2.2046226218487757,measurementSource:{version:1,expectedRevision:profile.measurementSource.revision,fields}},200,{'If-Match':`"${profile.profileRevision}"`});
  const savedProfile=await request(first,'/api/profile');assert.deepEqual(savedProfile.measurementSource.fields,fields);
  await request(second,`/api/user/${first.id}/profile`,'PATCH',{weightKg:70},403,{'If-Match':`"${savedProfile.profileRevision}"`});
- const input={mode:'everyday',title:'Synthetic hosted RC source',startsOn:'2026-11-08',endsOn:'2026-11-15',action:'One familiar routine',outcome:'Self-reported source note',observations:[{date:'2026-11-08',value:0,adherence:null,confounders:'Synthetic context'}]};
  const original=await request(first,'/api/experience/records','POST',{kind:'experiment',payload:input},201);
  const corrected={...original.payload,observations:[{...original.payload.observations[0],value:0.00000123,adherence:0}]};
  for(let attempt=0;attempt<2;attempt++)await request(first,`/api/experience/records/${original.id}`,'PUT',{kind:'experiment',payload:corrected});

@@ -97,7 +97,7 @@ jobs:
         env:
           BLOOM_HOSTED_RC_ISOLATED: "true"
           BLOOM_HOSTED_RC_EXPECTED_COMMIT: ${{ github.event.pull_request.head.sha }}
-        run: node scripts/qa/hosted-rc-persistence.mjs
+        run: node --import tsx scripts/qa/hosted-rc-persistence.mjs
       - name: Start production app and verify live Neon persistence
         env:
           DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
