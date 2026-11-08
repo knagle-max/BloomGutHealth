@@ -1,0 +1,52 @@
+{
+  "scope": "Full v0.5 RC work remains active; UI checkpoint is not full-RC qualification",
+  "databaseObservation": {
+    "mode": "read-only metadata and catalog; no account records or writes",
+    "project": "fancy-smoke-82120373",
+    "renderEndpoint": "ep-bitter-field-arqdkfep",
+    "branchId": "br-orange-cloud-aru4p4fw",
+    "branchName": "production",
+    "databaseNameSha256": "693fe5919fc229a2cf404ad99e03e8e9277fa4a6d34e88a0d4224d81b0b057a8",
+    "expectedColumns": 122,
+    "missingTables": [
+      "experiment_versions",
+      "profile_measurement_sources"
+    ],
+    "otherMissingColumns": [],
+    "role": "Neon tool owner; application-role audit pending deployment",
+    "isolatedPreviewBranch": "br-old-butterfly-ar8fetpm",
+    "isolatedPreviewBranchName": "preview/pr-1"
+  },
+  "implementation": [
+    "Catalog-only startup audit for required and optional storage",
+    "Isolated CI schema qualification after migrations",
+    "Reject routine corrections when prior-source history cannot be retained; unchanged saves, reads, export and explicit deletion remain available",
+    "Clear 503 ROUTINE_HISTORY_UNAVAILABLE response; original record unchanged"
+  ],
+  "verification": {
+    "typescript": "PASS",
+    "productionBuildAndOriginalMedia": "PASS",
+    "precedingLocalFullSuite": {
+      "passed": 669,
+      "total": 669,
+      "durationMs": 297335.662395,
+      "limitation": "Started before routine correction fix; final changed path verified by focused tests; exact final tree full suite is CI pending"
+    },
+    "focusedAccountStorageTests": 9,
+    "finalRoutineAndSchemaTests": 4,
+    "browser": [
+      "Synthetic Profile export acknowledgement/download/error/reflow PASS",
+      "Actual handlers plus encrypted isolated PostgreSQL routine correction/history/reload/export/ownership/deletion and keyboard/reflow PASS"
+    ],
+    "staticSourceInventories": "PASS",
+    "mainMerged": false,
+    "v06Started": false
+  },
+  "releaseStatus": "INCOMPLETE_PENDING_FULL_V05_QUALIFICATION",
+  "notClaimed": [
+    "Production migration authorization",
+    "Dataset isolation from environment flag",
+    "Qualified clinical/legal/design approval",
+    "Physical device or VoiceOver results"
+  ]
+}

@@ -1,3 +1,4 @@
+import {schemaReadinessAudit} from "./schema-readiness";
 import {reviewRuntimeAudit} from "./review-runtime-audit";
 import { productService } from "./products";
 import "./env";
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
   await budgets.initialize();
   log("Shared request budgets ready.");
   log(JSON.stringify(await reviewRuntimeAudit(pgPool, process.env)));
+  log(JSON.stringify(await schemaReadinessAudit(pgPool)));
   productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",usdaSharedRequestLimit(),60));
   app.use(budgets.middleware());
   const budgetCleanup = setInterval(() => { void budgets.prune().catch(() => {}); }, 60_000);

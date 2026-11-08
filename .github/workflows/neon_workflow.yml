@@ -68,6 +68,7 @@ jobs:
           node scripts/prepare-preview-schema.mjs
           node scripts/push-preview-schema.mjs
           npm run db:seed:knowledge
+          node --import tsx scripts/verify-preview-schema.ts
       - name: Type check and API source inventory
         run: |
           npm run check

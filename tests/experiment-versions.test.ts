@@ -1,3 +1,4 @@
+import {ExperimentHistoryUnavailable} from "../server/experience-errors";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {PGlite} from '@electric-sql/pglite';
@@ -18,7 +19,9 @@ test('routine corrections atomically retain encrypted prior sources; ownership, 
   assert.deepEqual(await new ExperienceStorage(drizzle(pg) as any).getExperimentHistory('a'),{status:'not-provisioned',versions:[]});
   const older=new ExperienceStorage(drizzle(pg) as any),legacyPayload=experimentSchema.parse({mode:'everyday',title:'Older deployment',startsOn:'2026-10-10',endsOn:'2026-10-17',action:'One familiar routine',outcome:'Source note'});
   const legacy=await older.insertExperienceRecord('a',{kind:'experiment',payload:legacyPayload});
-  await older.updateExperienceRecord('a',legacy.id,{kind:'experiment',payload:{...legacyPayload,title:'Existing edits still work'}});
+  await assert.rejects(()=>older.updateExperienceRecord('a',legacy.id,{kind:'experiment',payload:{...legacyPayload,title:'Must not overwrite without history'}}),ExperimentHistoryUnavailable);
+  assert.deepEqual((await older.getExperienceRecords('a'))[0].payload,legacyPayload);
+  assert.equal((await older.updateExperienceRecord('a',legacy.id,{kind:'experiment',payload:legacyPayload}))?.id,legacy.id,'Exact unchanged save needs no history write');
   assert.equal((await older.getExperimentHistory('a',legacy.id))?.status,'not-provisioned');await older.deleteExperienceRecord('a',legacy.id);
   for(const file of ['0015_experiment_versions.sql','0015_experiment_versions.sql'])await pg.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'));
   const store=new ExperienceStorage(drizzle(pg) as any),payload=experimentSchema.parse({mode:'everyday',title:'Synthetic original focus',startsOn:'2026-10-10',endsOn:'2026-10-17',action:'One familiar food change',outcome:'Source comfort rating',design:{baselineStartsOn:'2026-10-01',baselineEndsOn:'2026-10-07',metricUnit:'source unit',measurementMethod:'Same source question',expectedDirection:'observe',confoundersToTrack:'Sleep'},observations:[{date:'2026-10-01',value:0,adherence:null,confounders:'Original source note'}]});
@@ -47,4 +50,17 @@ test('routine corrections atomically retain encrypted prior sources; ownership, 
   await store.deleteExperienceRecord('a',original.id);assert.equal(await store.getExperimentHistory('a',original.id),null);assert.equal((await pg.query('SELECT * FROM experiment_versions')).rows.length,0);
   await store.updateExperienceRecord('b',other.id,{kind:'experiment',payload:corrected});await pg.exec("DELETE FROM users WHERE id='b'");assert.equal((await pg.query('SELECT * FROM experiment_versions')).rows.length,0,'Account deletion cascades prior source versions');
  }finally{server?.closeAllConnections();if(server)await new Promise<void>(r=>server!.close(()=>r()));await pg.close();if(key===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=key;}
+});
+
+test('routine history outage returns a safe actionable response without accepting the correction',async()=>{
+ const app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:'synthetic-owner'} as any;next();});
+ let calls=0;
+ registerExperienceRoutes(app,(_req,_res,next)=>next(),{updateExperienceRecord:async()=>{calls++;throw new ExperimentHistoryUnavailable();}} as any,{} as any);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));
+ try {
+  const payload=experimentSchema.parse({mode:'everyday',title:'Synthetic correction',startsOn:'2026-10-10',endsOn:'2026-10-17',action:'One routine',outcome:'Source note'});
+  const response=await fetch(`http://127.0.0.1:${(server.address() as any).port}/api/experience/records/synthetic-id`,{method:'PUT',headers:{'content-type':'application/json'},body:JSON.stringify({kind:'experiment',payload})});
+  assert.equal(response.status,503);assert.equal(response.headers.get('cache-control'),'no-store');
+  const body=await response.json();assert.equal(body.code,'ROUTINE_HISTORY_UNAVAILABLE');assert.match(body.error,/saved routine was not changed/);assert.equal(calls,1);
+ } finally {server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
 });

@@ -3,10 +3,10 @@
   "applicationCommit": "5fda77550533b00d75b7071afceceac9fc4f5a1c",
   "branch": "enhance/bloom-experience",
   "mainMerged": false,
-  "status": "ENGINEERING_VERIFIED_AWAITING_FINAL_OWNER_MAIN_DECISION",
+  "status": "UI_AND_WORKFLOW_CHECKPOINT_NOT_FULL_RC",
   "policy": {
-    "source": "NEXT_ACTIONS.md \u2014 Product Owner 2026-11-07: full UI first, one final RC before main",
-    "requiredAction": "One final owner decision before main merge; no unrelated v0.6 coding until approved RC merged",
+    "source": "Owner clarification 2026-11-08: continue until full v0.5 RC is ready",
+    "requiredAction": "Continue full v0.5 implementation and qualification; no main merge request based only on UI/workflow evidence; v0.6 paused",
     "automaticContinuationGrantsApproval": false
   },
   "preview": {

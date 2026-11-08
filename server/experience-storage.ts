@@ -1,3 +1,4 @@
+import {ExperimentHistoryUnavailable} from "./experience-errors";
 import {WellnessChoiceStorage} from "./wellness-choice-storage";
 import {WellnessChoiceConflict} from "./wellness-actions";
 import type {WellnessDay,WellnessChoiceCommand,WellnessHistoryDelete} from "../shared/wellness-actions";
@@ -159,9 +160,10 @@ export class ExperienceStorage {
     const before=experimentSchema.parse(previous);
     if(JSON.stringify(before)===JSON.stringify(payload))return decode(existing,userId);
     const historyStorage=await tx.execute<{ready:boolean}>(sql`SELECT to_regclass('experiment_versions') IS NOT NULL AS ready`);
-    // Additive rollout: an older deployment keeps its existing edit behavior;
-    // readers/export explicitly report history not-provisioned, never empty.
-    if(historyStorage.rows[0]?.ready)await tx.insert(experimentVersions).values({recordId:id,encryptedPayload:existing.encryptedPayload,sourceCreatedAt:existing.createdAt,sourceUpdatedAt:existing.updatedAt,supersededAt:sql`clock_timestamp()`});
+    // A correction must not erase its prior source when history is unprovisioned.
+    // No-op saves above remain safe; reads, export and explicit deletion stay available.
+    if(!historyStorage.rows[0]?.ready)throw new ExperimentHistoryUnavailable();
+    await tx.insert(experimentVersions).values({recordId:id,encryptedPayload:existing.encryptedPayload,sourceCreatedAt:existing.createdAt,sourceUpdatedAt:existing.updatedAt,supersededAt:sql`clock_timestamp()`});
    }
    const [row]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,entry.kind))).returning();
    return row?decode(row,userId):null;

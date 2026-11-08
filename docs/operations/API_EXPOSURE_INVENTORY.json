@@ -15,11 +15,11 @@
     "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
-    "server/experience-routes.ts": "639b363ffbbc39f2a0a447aff718e643f9b8ebac9cde0c8120ac256b27d86120",
+    "server/experience-routes.ts": "9209e1dd55d77015d9ff5c1d698866aeda3273c3acbeda35df47d45ed48b21e9",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
-    "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
+    "server/index.ts": "93c65477963efa0c8b512686464e0f96dde2863ac62dd92436769c19ec3b002d",
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
@@ -187,7 +187,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 28,
+      "line": 29,
       "method": "USE",
       "path": "/api/experience",
       "declaredMiddleware": [
@@ -197,7 +197,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 36,
+      "line": 37,
       "method": "GET",
       "path": "/api/experience/settings",
       "declaredMiddleware": [],
@@ -205,7 +205,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 37,
+      "line": 38,
       "method": "PATCH",
       "path": "/api/experience/settings",
       "declaredMiddleware": [
@@ -215,7 +215,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 38,
+      "line": 39,
       "method": "GET",
       "path": "/api/experience/records/:id/history",
       "declaredMiddleware": [],
@@ -223,7 +223,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 44,
+      "line": 45,
       "method": "GET",
       "path": "/api/experience/wellness-actions",
       "declaredMiddleware": [],
@@ -231,7 +231,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 50,
+      "line": 51,
       "method": "POST",
       "path": "/api/experience/wellness-choices",
       "declaredMiddleware": [
@@ -241,7 +241,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 56,
+      "line": 57,
       "method": "DELETE",
       "path": "/api/experience/wellness-choices",
       "declaredMiddleware": [
@@ -251,7 +251,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 63,
+      "line": 64,
       "method": "GET",
       "path": "/api/experience/records",
       "declaredMiddleware": [],
@@ -259,7 +259,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 64,
+      "line": 65,
       "method": "GET",
       "path": "/api/experience/checkins/:id/feedback",
       "declaredMiddleware": [],
@@ -267,7 +267,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 72,
+      "line": 73,
       "method": "POST",
       "path": "/api/experience/checkins/:id/feedback",
       "declaredMiddleware": [
@@ -277,7 +277,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 86,
+      "line": 87,
       "method": "POST",
       "path": "/api/experience/sessions",
       "declaredMiddleware": [
@@ -287,7 +287,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 94,
+      "line": 95,
       "method": "POST",
       "path": "/api/experience/activities",
       "declaredMiddleware": [
@@ -297,7 +297,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 102,
+      "line": 103,
       "method": "POST",
       "path": "/api/experience/records",
       "declaredMiddleware": [
@@ -307,7 +307,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 103,
+      "line": 104,
       "method": "PUT",
       "path": "/api/experience/records/:id",
       "declaredMiddleware": [
@@ -317,7 +317,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 104,
+      "line": 105,
       "method": "DELETE",
       "path": "/api/experience/records/:id",
       "declaredMiddleware": [
@@ -327,7 +327,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 105,
+      "line": 106,
       "method": "GET",
       "path": "/api/experience/export",
       "declaredMiddleware": [],
@@ -335,7 +335,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 106,
+      "line": 107,
       "method": "DELETE",
       "path": "/api/experience",
       "declaredMiddleware": [
@@ -345,7 +345,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 107,
+      "line": 108,
       "method": "POST",
       "path": "/api/experience/athlete-day",
       "declaredMiddleware": [
@@ -355,7 +355,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 114,
+      "line": 115,
       "method": "POST",
       "path": "/api/experience/day-choices",
       "declaredMiddleware": [
@@ -365,7 +365,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 115,
+      "line": 116,
       "method": "GET",
       "path": "/api/experience/review",
       "declaredMiddleware": [],
@@ -373,7 +373,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 116,
+      "line": 117,
       "method": "POST",
       "path": "/api/experience/templates/from-meal",
       "declaredMiddleware": [
@@ -383,7 +383,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 117,
+      "line": 118,
       "method": "POST",
       "path": "/api/experience/templates/:id/log",
       "declaredMiddleware": [],
@@ -391,7 +391,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 148,
+      "line": 149,
       "method": "POST",
       "path": "/api/experience/scan",
       "declaredMiddleware": [
@@ -1147,7 +1147,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 22,
+      "line": 23,
       "method": "USE",
       "pathExpression": "securityHeaders",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1155,7 +1155,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 25,
+      "line": 26,
       "method": "USE",
       "pathExpression": "sameOriginWrites",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1163,7 +1163,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 26,
+      "line": 27,
       "method": "USE",
       "pathExpression": "express.json(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1171,7 +1171,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 27,
+      "line": 28,
       "method": "USE",
       "pathExpression": "express.urlencoded(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1179,7 +1179,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 36,
+      "line": 37,
       "method": "USE",
       "pathExpression": "session(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1187,7 +1187,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 55,
+      "line": 56,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1195,7 +1195,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 70,
+      "line": 72,
       "method": "USE",
       "pathExpression": "budgets.middleware(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1203,7 +1203,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 75,
+      "line": 77,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
