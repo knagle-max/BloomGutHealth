@@ -1,0 +1,528 @@
+{
+  "kind": "R4_M1_INTEGRATED_ENGINEERING_RELEASE_CANDIDATE",
+  "applicationCommit": "5fda77550533b00d75b7071afceceac9fc4f5a1c",
+  "branch": "enhance/bloom-experience",
+  "mainMerged": false,
+  "status": "ENGINEERING_VERIFIED_AWAITING_FINAL_OWNER_MAIN_DECISION",
+  "policy": {
+    "source": "NEXT_ACTIONS.md \u2014 Product Owner 2026-11-07: full UI first, one final RC before main",
+    "requiredAction": "One final owner decision before main merge; no unrelated v0.6 coding until approved RC merged",
+    "automaticContinuationGrantsApproval": false
+  },
+  "preview": {
+    "url": "https://bloomguthealth.onrender.com/",
+    "status": "LIVE",
+    "applicationCommit": "5fda77550533b00d75b7071afceceac9fc4f5a1c",
+    "deployId": "dep-dbo8l5tg1s2s7388carg",
+    "finishedAt": "2026-11-08T14:45:10.838962Z"
+  },
+  "ci": {
+    "status": "SUCCESS",
+    "runId": 42491219281,
+    "runNumber": 766,
+    "url": "https://github.com/knagle-max/BloomGutHealth/actions/runs/42491219281",
+    "applicationCommit": "5fda77550533b00d75b7071afceceac9fc4f5a1c",
+    "steps": {
+      "productionDependencyAdvisories": "PASS",
+      "pythonAuthenticationEvidenceContracts": "PASS",
+      "isolatedSchemaOnlyNeonSetup": "PASS",
+      "typeAndApiSourceAndBiologyInventories": "PASS",
+      "unitEmbeddedPostgreSQL": "PASS",
+      "productionBuild": "PASS",
+      "public39MediaAndCompiledCss": "PASS",
+      "hosted72CaseBrowserWithInterceptedSyntheticApis": "PASS",
+      "liveIsolatedNeonPersistence": "PASS"
+    }
+  },
+  "legacyRequirementTrace": {
+    "path": "docs/verification/V05_CURRENT_REQUIREMENT_DISPOSITIONS_20261107.json",
+    "sha256": "0bab5ee2e378b792f9cafe809ca81e2599ba1c1dddea4299f4edddc21c59df5f",
+    "counts": {
+      "ALREADY_VERIFIED": 44,
+      "IMPLEMENTED_AND_TESTED": 36,
+      "BLOCKED_TECHNICAL": 126,
+      "BLOCKED_USER_INPUT": 1
+    },
+    "preserved": true,
+    "releaseStatus": "NOT_CERTIFIED; no blanket promotion of original/source/operator/device/clinical conditions",
+    "phasePrecedence": "Current owner R4/M1/main policy supersedes the older phase-transition prose in this preserved historical ledger"
+  },
+  "r4M1RequirementTrace": [
+    {
+      "requirement": "Today",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Authored M1 photo/empty SVG rules, one existing next action; real chosen-meal/Adjust controls measured across states and4 widths; accessible light/dark palettes.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Food",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Immediate canonical text composer and optional methods; owned versioned Journal edits; corrected/pending drafts across selected sources; exact receipt/reload/owner/date/partial/source and Today/Progress/delete parity. Exact F-01 generic eggs and F-06 safe qualified abstention.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Biology/Gut",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Direct source-qualified marker and organism discovery; canonical substantive14-marker content and exact name/rank organism contexts. All20 original UI fixture names have cited90\u2013160-word explanations. All94 supplied drafts/limited/identity states remain available, with exact source observation and one deeper source disclosure; byte-immutable originals, sample/owner/focus/zero/unknown guards and96-case compiled responsive matrix PASS.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Explore",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Authored M1 photography with true source-error SVG/collapse; source-backed topics, studies and graphs, explicit personal-food lookup, keyboard/zoom/context withdrawal.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Progress",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Desktop ornament in reserved header column; actual recorded dates/gaps/zero/unknown foods and source totals; sole Profile unit editor retained.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Athlete",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Distinct light and dark palettes retaining blue identity; authored art/source gates; canonical planned/performed distinctions, compact individual-set confirmation/edit/IDs/units/save/reload.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Profile",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Mobile art hidden/desktop reserved ornament; native account/units/privacy/connections disclosures and actual conflict/dirty/failed-save recovery.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Shared shell and secondary states",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "Existing destinations/router/shell preserved; original icons and theme-specific wordmarks;44px targets, menu/dialog title clearance, focus/Escape/Back, portal palettes and200% reflow.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "requirement": "Original media/copy/canonical CSS",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "evidence": "87 original registered SVGs,13 original PNGs and26 exact supplied WebPs; hash/bytes/dimensions/decode/alpha/upscale declarations;204 original copy keys; one canonical CSS retains exact source prefix plus final M1-D.",
+      "independentAcceptance": "NOT_GRANTED"
+    }
+  ],
+  "sourceEvidence": [
+    "docs/verification/R4_M1_IMPLEMENTATION_20261108.json",
+    "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+    "design/visual-system/r4-m1-media/DELIVERY_RECEIPT.json",
+    "design/visual-system/r4-m1-media/DECODE_VERIFICATION.json",
+    "docs/verification/R4_M1_BIOLOGY_LAB_CONTENT_20261108.md",
+    "docs/verification/R4_M1_BIOLOGY_REGISTRY_INTEGRATION_20261108.md",
+    "docs/verification/R4_M1_BIOLOGY_CONTENT_COVERAGE_20261108.md",
+    "docs/verification/biology-content-coverage.json"
+  ],
+  "engineeringVerification": {
+    "fullRegression": {
+      "passed": 667,
+      "failed": 0,
+      "elapsedMs": 268539.776923,
+      "environment": "Local controlled HTTP and isolated PostgreSQL/PGlite; final CI also uses an isolated schema-only Neon branch",
+      "applicationCommit": "295efa7798a1f0fbb5f98ef47f22751c5e73c061",
+      "latestClientScope": "Final exact-head CI passed the same application trees; local667/667 and compiled Biology journeys are complementary receipts.",
+      "finalExactHeadCI": {
+        "status": "SUCCESS",
+        "applicationCommit": "5fda77550533b00d75b7071afceceac9fc4f5a1c",
+        "runId": 42491219281
+      }
+    },
+    "typeScript": "PASS",
+    "productionBuild": "PASS",
+    "sourceInventory": {
+      "registryIds": 52,
+      "sourceFiles": 256,
+      "staticApiDeclarationsIncludingMounts": 120,
+      "unresolvedDeclarations": 13,
+      "authorizationReview": "REQUIRED",
+      "biologyAudit": "PASS520source/registry identity records,14markers,126registrycontexts,7pathways; not a species or approval count"
+    },
+    "browser": "Actual App/compiled-app responsive, source, draft, review/save/retry/reload, keyboard, theme and owner tests; exact bounded receipts in linked verification files",
+    "publicMedia": "PASS39exact public image responses +compiledCSS in final CI",
+    "hostedBrowser": "PASS72cases on hosted compiled frontend; synthetic API interception, no private reads or actual user mutations",
+    "foodArtEligibility": "PASS16responsive Food/Journal cases and actual new/edit/search/review/retry/owner journey with explicit absence assertions in active workspaces; art remains only in the empty optional chooser.",
+    "biology": {
+      "typeScript": "PASS",
+      "build": "PASS",
+      "fullLocalRegression": "667/667 PASS",
+      "focusedContentAndAuditTests": "22/22 PASS",
+      "compiledBrowser": "94 supplied entries +96 representative research/identity/strain width/theme/text-zoom cases PASS; source/sample/account/focus boundaries retained",
+      "additionalBrowser": "20 quantified+20 functional-parser source observations and exact-source functional journey PASS",
+      "publicDataOnly": true,
+      "noScreenshotArtifacts": true,
+      "independentScientificApproval": "NOT_GRANTED"
+    }
+  },
+  "remainingBoundaries": [
+    {
+      "status": "BLOCKED_USER_INPUT",
+      "scope": "Final main merge and dependent v0.6 transition",
+      "dependency": "Owner final decision on this concrete revised candidate; earlier06efa3f approval target is superseded."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Physical VoiceOver/mobile Safari/device, independent visual/usability/clinical/legal/operator acceptance",
+      "dependency": "Not performed or granted; Chromium/keyboard/CI is engineering evidence only."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Existing Render DB binding/schema acceptance",
+      "dependency": "Unidentified binding; isolated CI database proof is not Render DB proof. No credentials hunt, production mutation or infrastructure replacement."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Preferred new20-file Lab raster delivery",
+      "dependency": "Bloom_Lab_Icons_FIXED_All_10_2026-11-07.zip bytes unavailable; exact supplied inline SVG compact fallback is integrated. No fabricated/flattened artwork."
+    },
+    {
+      "status": "BLOCKED_TECHNICAL",
+      "scope": "Original per-ID scientific/source/native/provider/model activation conditions",
+      "dependency": "Preserved207-ID ledger and existing scoped evidence; no new clearance inferred."
+    },
+    {
+      "status": "LIMITED_SOURCE_CONTENT",
+      "scope": "Original organism scientific evidence/identity coverage",
+      "dependency": "Original cohort retains16 reviewed_draft/61 limited/17 unresolved_identity; no card has independent clinical approval. Name-level contexts are available, with source limits. No blanket94-profile literature completion or personal function claimed."
+    }
+  ],
+  "v06": {
+    "status": "PAUSED_BY_CURRENT_OWNER_PHASE_POLICY",
+    "stashPreserved": "f0fd36479176b1daa7b8c5525306292b10670d8f",
+    "resume": "Only after authorized approved RC/main merge; manually reconcile preserved draft with later MealAnalysis/source/UI changes."
+  },
+  "applicationTrees": {
+    "client": "bfd8c74d6f6a85a559074e7b92d199e76d3debcd",
+    "server": "6c76444da1ae05b93daa1f6c1418808ae8e22b0e",
+    "shared": "306b6ad7498d819f27d55346c5ee338fd0ab8e9e",
+    "package.json": "1f91cff8cb09ead09b1272f99213671c00ea9574",
+    "package-lock.json": "65ec5202121dfb3a7d2d7d5284e7a6baa9b25693",
+    ".github/workflows/neon_workflow.yml": "b7ac2de622c7592215f1236467c8d48b7aa96965"
+  },
+  "m1PacketTrace": [
+    {
+      "id": "M0",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Existing router/AppShell/CSS/source/media audited; prior provisional exports retired, no duplicate active photo target",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M1",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "87 original SVG/public hashes and actual local HTTP status/MIME/byte digests PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M2",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Strict passive slot component; WebP/SVG404, offline, source/variant reset, DPR2, conceptual fallback label and no-flag/forced-color checks PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M3",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Today authored image and source-confirmed empty-journal SVG, action/source ordering and128 responsive cases PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M4",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Food/Journal/Biology/Gut/Explore prescribed media; source/form conditions and detail discovery PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M5",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Athlete navy banner; Progress/Profile desktop-only ornaments with reserved header columns PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M6",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "Exact original CSS prefix plus exact final M1-D D4 in one canonical import; D3 heights;128 theme/width cases plus18 zoom cases and9 200% collision checks PASS",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M7",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "39 exact supplied image hashes/bytes/dimensions; actual decode/alpha/upscale declarations, local126 HTTP200 MIME/digest responses; production public checker tested for39 responses and added to existing CI",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "id": "M8",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringScope": "667 unit/integration tests, full source/type/build/asset checks; source-preserving Food/sets/Profile/Biology workflows; completed finite Biology inventory and compiled94-entry/96-state journey. Final exact-head CI outcome is recorded separately.",
+      "latestOverrides": "Latest source trees include distinct Athlete light/dark, immediate unified Food capture/edit, source-linked Biology content and rank-aware profiles. These supersede earlier interim visual/copy text without promoting independent approval.",
+      "independentAcceptance": "NOT_GRANTED"
+    }
+  ],
+  "foodRequirementTrace": [
+    {
+      "id": "UT-FOOD-UX-5301",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5302",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5303",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5304",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5305",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5306",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5307",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5308",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5309",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5310",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5311",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5312",
+      "status": "BLOCKED_TECHNICAL",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Independent human task timing/comprehension, physical device/VoiceOver or subjective visual judgment remains unperformed; not a safe-coding hold."
+    },
+    {
+      "id": "UT-FOOD-UX-5313",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    },
+    {
+      "id": "UT-FOOD-UX-5314",
+      "status": "IMPLEMENTED_AND_TESTED",
+      "engineeringStatus": "IMPLEMENTED_AND_TESTED",
+      "evidence": "docs/verification/R4_M1_UNIFIED_FOOD_EDITOR_20261108.md",
+      "remainingDependency": "Final independent acceptance remains separately pending; evidence is bounded to the actual tested fixtures/mechanisms."
+    }
+  ],
+  "traceValidation": {
+    "legacyUniqueIds": 207,
+    "legacyCountsMatchRows": true,
+    "r4SurfaceRows": 9,
+    "m1Packets": 9,
+    "foodRequirementIds": 14,
+    "noLegacyDispositionsPromoted": true,
+    "biologyAuditChecks": {
+      "supportedMarkers": 14,
+      "originalCohort": 94,
+      "coreUiOrganisms": 20,
+      "independentScientificApprovals": 0,
+      "unresolvedIdentitiesNotHidden": true
+    },
+    "allEvidencePathsExist": true,
+    "legacyCountsRevalidated": true,
+    "foodIdsUnique": true,
+    "original17UnresolvedPreserved": true,
+    "finalPublicationVerified": true
+  },
+  "biologyContent": {
+    "contentVersion": "biology-content-r4m1-2026-11-08.3",
+    "sourceRegistryGitBlob": "8b21c7c330a076db9d90887a2cc725c5897cdb78",
+    "sourceRegistryUnchanged": true,
+    "independentScientificApproval": "DRAFT_NOT_INDEPENDENTLY_APPROVED",
+    "originalCohort": {
+      "total": 94,
+      "reviewedDraft": 16,
+      "limited": 61,
+      "unresolvedIdentity": 17,
+      "independentlyApproved": 0
+    },
+    "counts": {
+      "totalIdentityRecords": 520,
+      "supportedMarkers": 14,
+      "registryTaxa": 126,
+      "researchContextProfiles": 56,
+      "identityContextProfiles": 70,
+      "fixtureIdentityRecords": 380,
+      "fixtureCohorts": {
+        "explicit-rank-mismatch-fixture": 3,
+        "named-or-negative-identity-fixture": 68,
+        "synthetic-or-unknown-fixture": 305,
+        "unsupported-assay-fixture": 4
+      },
+      "reviewed": 14,
+      "limited": 162,
+      "unresolvedIdentity": 344,
+      "sourceFilesScanned": 670,
+      "relevantSourceFiles": 61,
+      "researchPathways": 7
+    },
+    "countMeaning": "Unique source spelling/rank and registry inventory records, not unique species or approved research profiles. Synthetic examples and intentional mismatches are separate.",
+    "coreTwentyWordBounds": "90\u2013160 words each; all have citation-backed context",
+    "originalCohortPresentations": {
+      "researchContext": 24,
+      "identityContext": 70
+    },
+    "sourceMismatchRemediation": {
+      "status": "ENGINEERING_AND_EDITORIAL_SOURCE_CORRECTION; no independent scientific promotion",
+      "entries": {
+        "Parabacteroides distasonis ATCC 8503": "PMID17579514 + type-strain taxonomy",
+        "Odoribacter splanchnicus DSM 20712": "PMID21677857",
+        "Bacteroides fragilis 638R": "PMID20829291",
+        "Bacteroides fragilis YCH46": "PMID15466707",
+        "Veillonella parvula": "PMID21304678"
+      }
+    },
+    "unresolvedOriginalNames": [
+      {
+        "id": "taxon-abiotrophia-defectiva",
+        "sourceSpelling": "Abiotrophia defectiva",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-amedibacterium-intestinale",
+        "sourceSpelling": "Amedibacterium intestinale",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-adlercreutzia-sp-8cfcbh1",
+        "sourceSpelling": "Adlercreutzia sp. 8CFCBH1",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-bacillus-thuringiensis",
+        "sourceSpelling": "Bacillus thuringiensis",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-bordetella-trematum",
+        "sourceSpelling": "Bordetella trematum",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-haemophilus-parainfluenzae-t3t1",
+        "sourceSpelling": "Haemophilus parainfluenzae T3T1",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-longibaculum-sp-kgmb06250",
+        "sourceSpelling": "Longibaculum sp. KGMB06250",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-coprobacter-sp-2cbh44",
+        "sourceSpelling": "Coprobacter sp. 2CBH44",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-flavonifractor-plautii",
+        "sourceSpelling": "Flavonifractor plautii",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-massilistercora-timonensis",
+        "sourceSpelling": "Massilistercora timonensis",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-eptesicus-fuscus-gammaherpesvirus",
+        "sourceSpelling": "Eptesicus fuscus gammaherpesvirus",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-faecalibacillus-intestinalis",
+        "sourceSpelling": "Faecalibacillus intestinalis",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-loigolactobacillus-backii",
+        "sourceSpelling": "Loigolactobacillus backii",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-mogibacterium-diversum",
+        "sourceSpelling": "Mogibacterium diversum",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-ruminococcus-bicirculans",
+        "sourceSpelling": "Ruminococcus bicirculans",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-turicibacter-sanguinis",
+        "sourceSpelling": "Turicibacter sanguinis",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      },
+      {
+        "id": "taxon-turicibacter-sp-h121",
+        "sourceSpelling": "Turicibacter sp. H121",
+        "reason": "Original source/reviewer identity status unresolved; available identity-level context and exact source facts remain visible, no function or personal effect inferred."
+      }
+    ],
+    "dynamicExpressionsNotExpanded": 14,
+    "privateRuntimeRecordsRead": false,
+    "genericPrimaryPlaceholderCount": 0,
+    "manualScientificAndNoviceReview": "NOT_RUN",
+    "coverageArtifact": "docs/verification/biology-content-coverage.json",
+    "coverageSha256": "acef9278f0d0d6deb6cf8c9d13e755315d4502ed0fa313a0eb7049cdc95ae5c2"
+  }
+}
