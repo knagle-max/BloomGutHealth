@@ -1,3 +1,9 @@
+## CURRENT OWNER OVERRIDE — 2026-11-08 (SUPERCEDES 2026-10-23 QUEUE SNAPSHOT)
+
+This October queue is retained for historical provenance, **not an authoritative blocker list**. Read the live `NEXT_ACTIONS.md` and [`V05_SINGLE_FINAL_RC_GATE_AUTONOMOUS_EXECUTION_20261108.md`](V05_SINGLE_FINAL_RC_GATE_AUTONOMOUS_EXECUTION_20261108.md). Full v0.5 continues with continuous safe code/CI/preview work. Only owner approval is one completed **whole-v0.5** RC before main, not intermediate R4/M1 UI engineering candidacy. No interim screenshot or specialist approval. Defer external/physical/clinical/rights-specific activations individually, continue independent work. Reproduce historical open issues before prioritizing. Desktop/mobile coequal; no unrelated v0.6 development.
+
+---
+
 # Bloom — Active Codex Execution Queue
 **Updated:** 2026-10-23 | **Branch:** `enhance/bloom-experience` / PR #1 | **Owner:** Chief Architect, implementation by Codex only
 
