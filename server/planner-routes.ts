@@ -8,6 +8,7 @@ import {preferenceRevision,PreferenceRevisionConflict} from "./preference-source
 import {meteredAIFeatures,aiExecutionContext} from "./metered-ai";
 import { mlServiceTarget } from "./ml-service";
 import { mealSaveReceipt, checkMealReceipt } from "./meal-save";
+import {mealRecordRevision,mealEditReceipt,replayMealEdit,MealEditConflict} from './meal-edit';
 import { memoryKey } from "../shared/experience";
 import { registerProductRoutes } from "./products";
 import type { Express, RequestHandler } from "express";
@@ -295,6 +296,45 @@ export function registerPlannerRoutes(
     };
   app.post("/api/meals",requireAuth,handleMealSave());
   app.post("/api/meals/confirm",requireAuth,handleMealSave(true));
+  app.get('/api/meals/:mealId/composer',requireAuth,async(req,res)=>{
+    res.setHeader('Cache-Control','no-store');
+    try{
+      const meal=await storage.getMeal(req.params.mealId,req.session.userId!);
+      if(!meal||meal.userId!==req.session.userId)return res.status(404).json({error:'Meal not found in your account.'});
+      res.json({meal,revision:mealRecordRevision(meal)});
+    }catch{res.status(503).json({error:'Meal details could not load. Retry before editing.'});}
+  });
+  const editRequestSchema=saveRequestSchema.safeExtend({reviewed:z.literal(true),ingredients:z.array(ingredientSchema.strict()).min(1).max(MAX_MEAL_INGREDIENTS),expectedMealRevision:z.string().regex(/^[a-f0-9]{64}$/)});
+  app.put('/api/meals/:mealId/confirm',requireAuth,async(req,res)=>{
+    res.setHeader('Cache-Control','no-store');
+    const match=req.get('If-Match'),key=req.get('Idempotency-Key'),parsed=editRequestSchema.safeParse(req.body);
+    if(!match||!/^"[a-f0-9]{64}"$/.test(match)||!key||!z.string().uuid().safeParse(key).success||!parsed.success)return res.status(400).json({error:'Review the complete meal and its latest saved details before confirming changes.'});
+    if(!storage.updateReviewedMeal)return res.status(503).json({error:'Reviewed meal updates are unavailable. Your changes have not been saved.'});
+    try{
+      const userId=req.session.userId!,id=req.params.mealId,p=parsed.data;
+      const receipt=mealEditReceipt(userId,id,key,{...p,reviewRevision:match.slice(1,-1)});
+      const current=await storage.getMeal(id,userId);
+      if(!current||current.userId!==userId)return res.status(404).json({error:'Meal not found in your account.'});
+      const replay=replayMealEdit(current,receipt);if(replay)return res.json(replay);
+      if(mealRecordRevision(current)!==p.expectedMealRevision)throw new MealEditConflict();
+      let allowed=false;limit(req,res,()=>{allowed=true;});if(!allowed)return;
+      const result=await analyzer(p.mealText,p.aiConsent,p.ingredients,{userId,store:storage,products:[]});
+      if(mealReviewRevision(userId,result)!==match.slice(1,-1))return res.status(409).json({error:'Meal nutrition or its source changed. Review the meal again before saving.'});
+      const updated=await storage.updateReviewedMeal(id,userId,p.expectedMealRevision,{
+        mealText:[p.mealText,...(p.products||[]).map(i=>`${i.product!.servings} serving(s) ${i.name}`)].filter(Boolean).join("; "),
+        ...(p.mealType!==undefined?{mealType:p.mealType}:{}),
+        ...(p.mealContext?{mealContext:preserveMealTimeZone(current.mealContext,p.mealContext,current.loggedAt)}:{}),
+        ...(p.mealContext?.eatenAt?{loggedAt:new Date(p.mealContext.eatenAt)}:{}),
+        intelligence:result.intelligence,nutritionalData:result.nutritionalData,...nutritionTotals(result.nutritionalData),
+      },receipt);
+      if(!updated)return res.status(404).json({error:'Meal not found in your account.'});
+      res.json(updated);
+    }catch(error){
+      if(error instanceof MealEditConflict)return res.status(409).json({error:error.message});
+      if(error instanceof MealIngredientLimitError)return res.status(400).json({error:error.message});
+      res.status(503).json({error:'Meal changes could not save. Retry the same changes to check their receipt.'});
+    }
+  });
   app.put("/api/meals/:mealId", requireAuth, limit, async (req, res) => {
     const p = requestSchema.safeParse(req.body);
     if (!p.success)

@@ -39,7 +39,7 @@ const contrast=()=>page.evaluate(()=>{
 });
 try{
  for(const[name,path]of[['today','/'],['food','/log-meal'],['biology','/precision'],['explore','/explore'],['progress','/progress'],['athlete','/athlete'],...(r4?[['profile','/profile']]:[]),...(m1?[['journal','/nutrition'],['gut','/microbiome']]:[])].filter(([name])=>!process.env.BLOOM_MATERIAL_ONLY||process.env.BLOOM_MATERIAL_ONLY.split(',').includes(name))){
-  athlete=name==='athlete'||process.env.BLOOM_M1_ATHLETE_ALL==='1';await page.goto(base+path);await page.waitForLoadState('networkidle');await page.locator('main').first().waitFor();
+  athlete=name==='athlete'||process.env.BLOOM_M1_ATHLETE_ALL==='1';await page.goto(base+path);await page.waitForLoadState('networkidle');await page.locator('main').first().waitFor();if(name==='food')await page.getByText('Add food another way',{exact:true}).click();
   for(const width of (process.env.BLOOM_M1_ZOOM_ONLY==='1'?[390]:[320,390,768,1440])){await page.setViewportSize({width,height:1000});for(const theme of ['light','dark']){await setAppTheme(page,theme);await page.keyboard.press('Escape');await page.waitForTimeout(220);
    await paint(false);const before=await structure(),beforeOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);const capture=process.env.BLOOM_CAPTURE_VISUALS==='1'&&(width===390&&theme==='light'||name==='athlete'&&width===390&&theme==='dark'||name==='today'&&width===320&&theme==='light');
    if(capture)await page.screenshot({path:`${out}/${name}-${width}-${theme}-before.png`,animations:'disabled'});

@@ -1,3 +1,4 @@
+import {foodMethodControl,foodSourceText} from './lib/meal-flow.mjs';
 import {setAppTheme} from './set-app-theme.mjs';
 import {openIngredientRow} from './lib/meal-flow.mjs';
 import{reviewThenSave}from'./lib/meal-flow.mjs';
@@ -23,7 +24,7 @@ try{
  hold=false;lose=false;
  await page.goto('http://127.0.0.1:5228/log-meal?method=describe');
  const whole=process.env.BLOOM_PORTION_WHOLE==='1',description=whole?'half a large pepperoni pizza':'2 slices of pepperoni pizza';
- await page.getByLabel('Describe your meal',{exact:true}).fill(description);
+ await page.getByLabel('What did you eat?',{exact:true}).fill(description);
  await page.getByRole('button',{name:'Review meal',exact:true}).click();
  await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();
  assert.equal(await page.getByRole('button',{name:'Update meal review',exact:true}).evaluate(el=>el.classList.contains('hero-button')),false,'unchanged review keeps Save meal as its primary action');
@@ -72,7 +73,7 @@ try{
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
  }
  await page.reload();
- await page.getByText('Review a recent meal',{exact:true}).click();
+ await foodSourceText(page,'Review a recent meal');
  await page.getByRole('button',{name:'Review this recent meal',exact:true}).click();
  await page.getByRole('button',{name:'Review meal',exact:true}).click();
  await page.getByRole('heading',{name:'Review your meal',exact:true}).waitFor();

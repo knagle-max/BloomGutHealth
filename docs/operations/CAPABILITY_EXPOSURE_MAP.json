@@ -407,7 +407,9 @@
           "server/storage.ts",
           "shared/schema.ts",
           "server/meal-save.ts",
-          "server/private-product-storage.ts"
+          "server/private-product-storage.ts",
+          "server/meal-edit.ts",
+          "server/meal-records.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
@@ -418,7 +420,7 @@
           "shared/catalogue-mass-handoff.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit. Journal planning references distinguish explicit examples from estimates using complete actual adult profile inputs; no demographic defaults or clinical clearance.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit. Journal planning references distinguish explicit examples from estimates using complete actual adult profile inputs; no demographic defaults or clinical clearance. Unified owned meal edits reuse the reviewed canonical composer; atomic original-record revision and latest-command receipt protect stale/concurrent/dropped-response updates without creating a second meal.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1865,7 +1867,7 @@
     "client/src/components/LabTrend.tsx": "463e79f2c0953107cee3c2d00a969f99b6aa14fec6b0bc66d777e15afd260170",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "0c3793be49e077cfa7bfd587504dd1aec6bad9fa36c01e4b5087713b95bb29fd",
-    "client/src/components/MealAnalysis.tsx": "52323f7f47ecbed8e8192e273a7ae105bbc1cbfc08e69062911ecc523ca20e10",
+    "client/src/components/MealAnalysis.tsx": "a508a75d536304a6047d7294b4524298f800e29772e563df8d89356f0c347e7c",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/MicrobialProfile.tsx": "4810d535a37754231d43bb7dbaf8f4755f969cd6b697b23bd7099db7408f2b7b",
@@ -1917,10 +1919,10 @@
     "client/src/pages/Explore.tsx": "0278cb63020e12416299f6839423325bf6940f359976c2593b30e49c79e0a504",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
-    "client/src/pages/LogMeal.tsx": "1cbc9c1ac44ffca92cf5ffb9a7a631de24b0b0037cff4149265a0c6b0c296793",
+    "client/src/pages/LogMeal.tsx": "68e3550b42f7d1d4c369dfe87eac75a0a8b5b0e9e49d3cf52e61ccd256bb7184",
     "client/src/pages/MealPlanner.tsx": "6024f6405e22279fc7374af1fdb549976b4f4494450b7bbe0d8458c556476240",
     "client/src/pages/Microbiome.tsx": "bafd7f422894fc50892947c2336051096ae4d9d94590166fb38cbc93a277dd75",
-    "client/src/pages/NutritionHistory.tsx": "8b5876878b0f50f6d54352398b370f4795452c4fe348c470598fbd44ebad0813",
+    "client/src/pages/NutritionHistory.tsx": "f8cb0a4983db09ac317779826a945b44e275532afe04cfbb9183ea24b1915b42",
     "client/src/pages/PlanDay.tsx": "407bd5a61b00bde5114b4966099f7882095b3ec4c3548dc92d80d7e8cb2f1d36",
     "client/src/pages/PrecisionNutrition.tsx": "fb5eda073dcb9ddbcc772ed4c6a185fc988d980910a8261cd8d884134fbba81b",
     "client/src/pages/Profile.tsx": "f148560f61659b72efffedb648efc368202ffb56d97ce97e41e2a10840cf3ce9",
@@ -1956,7 +1958,9 @@
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "b3112e96635397055d99d79b345ba6763504afba6c10ad509ef26f6c870c0d28",
+    "server/meal-edit.ts": "f0605274f6be77993ab305f9d24e3866b5d633c5c1155e1743fabed7fd51b25c",
     "server/meal-intelligence.ts": "c63120f85b841a097299adf464942a2184471eb4bd3b4457d66000f692c49126",
+    "server/meal-records.ts": "b8bdc2a1dd925bdd07424938b795041af238b4c3fb8b73f0b667e9f7e19c5ff7",
     "server/meal-review-source.ts": "66d59b27ee3ef8f5370f6d4d6a4c4088286acdb4329edb525618ba3dc0286240",
     "server/meal-save.ts": "4ed54debee262c7e3e3e5823387869c77ebe21b5b8718f01c107286d2d0538d5",
     "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
@@ -1965,7 +1969,7 @@
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/plan-history.ts": "429883d9a3eb3a5e540bcf547cd0d2c30cd0508d376070c1bdfadef0b46b32c7",
-    "server/planner-routes.ts": "1341ddba8ddf0c969e6c2e6ea518e9108f9e57d00a49d6baeebfe66594e4521f",
+    "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
     "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
     "server/precision-routes.ts": "ac09298617af40a8ae9f11b66daea3f95430cbe008416d78db3ddf2df07554e0",
     "server/precision-storage.ts": "9dfba39a7234a4e9181352bdc99b037620c82070bfecef9129a0535439c7859f",
@@ -1989,7 +1993,7 @@
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
     "server/shared-rate-limit.ts": "7330ecb41868d6f444ac0a3f3a18cca8e9bdfc652966c0ea52c00ae94e9ba049",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "11b71fade4f53263f836e1a9cae8d1f84e34ba6228f93895eccb7eea21dceedd",
+    "server/storage.ts": "7228cc587b97dac8b4974cb8f0d39292542aad47d6a0e849c1934059c84025bf",
     "server/structured-report-storage.ts": "42a1a776b78fdc33893a7a9417c3aa28d06ee85e53536e03388b02f9245d88c5",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/synthetic-molecular.ts": "ba91a96f5fd960dc240725c4c0749231792ce0306077d39ca06af157c7603dc5",

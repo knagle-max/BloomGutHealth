@@ -1,4 +1,17 @@
 // Both historical and current web flows, while retaining the real review API boundary.
+export async function openFoodMethods(page){
+ if(new URL(page.url()).pathname!=='/log-meal')return;
+ await page.locator('main.meal-page').waitFor();
+ const summary=page.getByText('Add food another way',{exact:true});
+ if(await summary.count()&&!await summary.evaluate(el=>el.parentElement.open))await summary.click();
+}
+export async function foodMethodControl(page,options,action='click'){
+ await openFoodMethods(page);return page.getByRole('button',options)[action]();
+}
+export async function foodSourceText(page,text){
+ await openFoodMethods(page);const summary=page.getByText(text,{exact:true});await summary.waitFor();
+ if(!await summary.evaluate(el=>el.parentElement.open))await summary.click();
+}
 export async function reviewThenSave(page){
  const review=page.getByRole('button',{name:'Review meal',exact:true});
  if(await review.count()){

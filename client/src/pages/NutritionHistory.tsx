@@ -1,3 +1,4 @@
+import {useLocation} from "wouter";
 import EditorialMedia from "@/components/EditorialMedia";
 import {recordedMealTime} from "@shared/meal-time";
 import {journalIdentity} from "@shared/journal-identity";
@@ -7,22 +8,18 @@ import { useExperience } from "@/lib/experience";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
 import MealAnalysis from "@/components/MealAnalysis";
-import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
 import { explainFoods } from "@shared/meal-intelligence";
 import { type MealIntelligence } from "@shared/meal-intelligence";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import {
   Utensils,
   TrendingUp,
   Calendar,
-  Loader2,
   Plus,
   ChevronDown,
   ChevronUp,
@@ -33,7 +30,6 @@ import {
 import { format } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import MealTypeSelector, { MealType } from "@/components/MealTypeSelector";
 import { useAuth } from "@/lib/auth";
 import {
   AlertDialog,
@@ -278,14 +274,11 @@ function HistoricalTrends({
 }
 
 export default function NutritionHistory() {
+  const [,navigate]=useLocation();
   const { settings } = useExperience();
   const energyUnit = settings.displayUnits.energy;
   const [historyLimit, setHistoryLimit] = useState(20);
   const [reviewingMealId, setReviewingMealId] = useState<string | null>(null);
-  const [showLogForm, setShowLogForm] = useState(false);
-  const [editingMealId, setEditingMealId] = useState<string | null>(null);
-  const [mealType, setMealType] = useState<MealType>("breakfast");
-  const [foodDescription, setFoodDescription] = useState("");
   const [expandedMeals, setExpandedMeals] = useState<Set<string>>(new Set());
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [mealToDelete, setMealToDelete] = useState<string | null>(null);
@@ -325,58 +318,9 @@ export default function NutritionHistory() {
   const dailyData=!dailyChecking&&!dailyError?cachedDaily:undefined;
   const targets=!targetsChecking&&!targetsError?cachedTargets:undefined;
   const allMeals=!mealsChecking&&!mealsError?cachedMeals:undefined;
+  const returnedFocus=useRef<string|null>(null);
+  useEffect(()=>{const target=new URLSearchParams(window.location.search).get("meal");if(!target||!allMeals?.some(meal=>meal.id===target)||returnedFocus.current===target)return;const frame=requestAnimationFrame(()=>{const card=document.getElementById(`journal-meal-${target}`),edit=card?.querySelector<HTMLButtonElement>('button[data-edit-meal]');if(edit){edit.focus();edit.scrollIntoView({block:"center"});returnedFocus.current=target;}});return()=>cancelAnimationFrame(frame);},[allMeals]);
 
-  const saveAttempt=useRef<{signature:string;key:string}|null>(null);
-  const logMealMutation = useMutation({
-    mutationFn: async (data: any) => {
-      const signature=JSON.stringify([userId,data]);
-      if(saveAttempt.current?.signature!==signature)saveAttempt.current={signature,key:crypto.randomUUID()};
-      const response = await apiRequest("POST", "/api/meals", data,{"Idempotency-Key":saveAttempt.current.key});
-      return await response.json();
-    },
-    onSuccess: async (newMeal: any) => {
-      saveAttempt.current=null;
-
-      toast({
-        title: "Meal added to your journal",
-        description: newMeal.totalCalories===null?"Your meal is saved; some nutrition needs review.":"Your meal is saved. Linked nutrition totals are being refreshed.",
-      });
-
-      setFoodDescription("");
-      setShowLogForm(false);
-    },
-    onSettled: refreshMealSources,
-    onError: (error: any) => {
-      toast({
-        title: "Error logging meal",
-        description: error.message || "Please try again",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const updateMealMutation = useMutation({
-    mutationFn: async ({ mealId, data }: { mealId: string; data: any }) => {
-      const response = await apiRequest("PUT", `/api/meals/${mealId}`, data);
-      return await response.json();
-    },
-    onSuccess: (meal) => {
-      if (unmatchedFoods(meal.intelligence).length || meal.intelligence?.status === "unavailable") setReviewingMealId(meal.id);
-      toast(nutritionUpdateFeedback(meal.intelligence));
-
-      setFoodDescription("");
-      setShowLogForm(false);
-      setEditingMealId(null);
-    },
-    onSettled: refreshMealSources,
-    onError: (error: any) => {
-      toast({
-        title: "Error updating meal",
-        description: error.message || "Please try again",
-        variant: "destructive",
-      });
-    },
-  });
 
   const deleteMealMutation = useMutation({
     mutationFn: async (mealId: string) => {
@@ -398,28 +342,8 @@ export default function NutritionHistory() {
     },
   });
 
-  const handleSubmit = () => {
-    if (editingMealId) {
-      updateMealMutation.mutate({
-        mealId: editingMealId,
-        data: {
-          mealText: foodDescription,
-          mealType,
-        },
-      });
-    } else {
-      logMealMutation.mutate({
-        mealText: foodDescription,
-        mealType,
-      });
-    }
-  };
-
   const handleEditMeal = (meal: any) => {
-    setEditingMealId(meal.id);
-    setFoodDescription(meal.mealText);
-    setMealType(meal.mealType || "breakfast");
-    setShowLogForm(true);
+    navigate(`/log-meal?edit=${encodeURIComponent(meal.id)}`);
   };
 
   const handleDeleteMeal = (mealId: string) => {
@@ -494,68 +418,7 @@ export default function NutritionHistory() {
         <h1>Food journal</h1>
         <p>Your meals and nutrient totals, together in one place.</p>
       </div>
-      {!showLogForm&&<EditorialMedia slot="food" sizes="(max-width:767px) 100vw, 1000px" />}
-      {showLogForm && (
-        <Card className="mb-6" data-testid="card-log-meal-form">
-          <CardHeader>
-            <CardTitle>
-              {editingMealId ? "Edit Meal" : "Log Your Meal"}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-          <fieldset className="min-w-0 space-y-4" disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}>
-            <MealTypeSelector selected={mealType} onChange={setMealType} />
-
-            <div className="space-y-2">
-              <Label htmlFor="food-input">What did you eat?</Label>
-              <Textarea
-                id="food-input"
-                placeholder="E.g., Grilled salmon with quinoa and steamed broccoli..."
-                value={foodDescription}
-                onChange={(e) => setFoodDescription(e.target.value)}
-                className="min-h-24 resize-none"
-                data-testid="input-food-description"
-              />
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                onClick={handleSubmit}
-                className="flex-1"
-                disabled={
-                  !foodDescription.trim() ||
-                  logMealMutation.isPending ||
-                  updateMealMutation.isPending
-                }
-                data-testid="button-save-meal"
-              >
-                {logMealMutation.isPending || updateMealMutation.isPending ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Analyzing...
-                  </>
-                ) : editingMealId ? (
-                  "Update Meal"
-                ) : (
-                  "Save Meal"
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setShowLogForm(false);
-                  setFoodDescription("");
-                  setEditingMealId(null);
-                }}
-                data-testid="button-cancel-log-meal"
-              >
-                Cancel
-              </Button>
-            </div>
-          </fieldset>
-          </CardContent>
-        </Card>
-      )}
+      <EditorialMedia slot="food" sizes="(max-width:767px) 100vw, 1000px" />
 
       {!dailyError && dailyData?.isPartial && (
         <p className="bloom-panel text-sm" role="status">
@@ -785,9 +648,9 @@ export default function NutritionHistory() {
             <TrendingUp className="h-5 w-5" />
             Recent Meals
           </h2>
-          {!showLogForm && (
+          {(
             <Button
-              onClick={() => setShowLogForm(true)}
+              onClick={() => navigate("/log-meal")}
               size="sm"
               disabled={deleteMealMutation.isPending}
               data-testid="button-show-log-meal"
@@ -816,7 +679,7 @@ export default function NutritionHistory() {
               const identity = journalIdentity(meal);
 
               return (
-                <Card key={meal.id} data-testid={`card-meal-${index}`}>
+                <Card id={`journal-meal-${meal.id}`} key={meal.id} data-testid={`card-meal-${index}`}>
                   <CardContent className="pt-4">
                     <div className="flex items-start justify-between mb-2">
                       <button
@@ -844,12 +707,12 @@ export default function NutritionHistory() {
                         <Button
                           size="icon"
                           variant="ghost"
-                          aria-label={`Edit meal: ${identity.title}`}
+                          data-edit-meal="true" aria-label={`Edit meal: ${identity.title}`}
                           onClick={(e) => {
                             e.stopPropagation();
                             handleEditMeal(meal);
                           }}
-                          disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}
+                          disabled={deleteMealMutation.isPending}
                           data-testid={`button-edit-meal-${index}`}
                         >
                           <Pencil className="w-4 h-4" />
@@ -862,7 +725,7 @@ export default function NutritionHistory() {
                             e.stopPropagation();
                             handleDeleteMeal(meal.id);
                           }}
-                          disabled={logMealMutation.isPending||updateMealMutation.isPending||deleteMealMutation.isPending}
+                          disabled={deleteMealMutation.isPending}
                           data-testid={`button-delete-meal-${index}`}
                         >
                           <Trash2 className="w-4 h-4" />
@@ -1094,25 +957,7 @@ export default function NutritionHistory() {
                         ))}
                       </details>
                     )}
-                    <Button
-                      className="mt-3 h-auto min-h-11 max-w-full whitespace-normal"
-                      variant="outline"
-                      disabled={updateMealMutation.isPending}
-                      onClick={() =>
-                        updateMealMutation.mutate({
-                          mealId: meal.id,
-                          data: {
-                            mealText: meal.mealText,
-                            ...(meal.intelligence?.portionModelVersion ===
-                            "2026-10-18.2"
-                              ? { ingredients: meal.intelligence.ingredients }
-                              : {}),
-                          },
-                        })
-                      }
-                    >
-                      Recalculate nutrition
-                    </Button>
+                    <Button className="mt-3 h-auto min-h-11 max-w-full whitespace-normal" variant="outline" onClick={()=>handleEditMeal(meal)}>Review foods & amounts</Button>
                     <SaveMealButton meal={meal}/>
                     {meal.intelligence && (
                       <details className="mt-3"
@@ -1127,13 +972,6 @@ export default function NutritionHistory() {
                             (meal.intelligence as MealIntelligence).analyzedAt
                           }
                           analysis={meal.intelligence as MealIntelligence}
-                          pending={updateMealMutation.isPending}
-                          onRecalculate={(ingredients) =>
-                            updateMealMutation.mutate({
-                              mealId: meal.id,
-                              data: { mealText: meal.mealText, ingredients },
-                            })
-                          }
                         />}
                       </details>
                     )}

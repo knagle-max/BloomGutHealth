@@ -9,6 +9,7 @@ import type {ProfileMeasurementWrite,ProfileMeasurementSource} from "../shared/p
 import{PrivateProductStorage}from"./private-product-storage";
 import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
 import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
+import {updateMealWithReview,type MealEditReceipt} from './meal-edit';
 import {importStructuredReportWithReceipt,deleteOwnedMicrobiomeReport,changeOwnedViomeRelationship} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
 import type {LabDateChange} from "../shared/lab-date-correction";
@@ -87,6 +88,7 @@ export interface IStorage extends ExperienceStore {
   getMeals(userId: string): Promise<Meal[]>;
   insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal>;
   updateMeal(id: string, updates: MealUpdates,userId:string): Promise<Meal|undefined>;
+  updateReviewedMeal?(id:string,userId:string,revision:string,updates:MealUpdates,receipt:MealEditReceipt):Promise<Meal|undefined>;
   deleteMeal(id: string,userId:string): Promise<void>;
 
   getPrecisionContext(userId: string): Promise<unknown>;
@@ -200,6 +202,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   updateMeal(id:string,updates:MealUpdates,userId:string) { return updateOwnedMeal(db,id,updates,userId); }
+  updateReviewedMeal(id:string,userId:string,revision:string,updates:MealUpdates,receipt:MealEditReceipt) {return updateMealWithReview(db,id,userId,revision,updates,receipt);}
   deleteMeal(id:string,userId:string) { return deleteOwnedMeal(db,id,userId); }
 
   private readonly experience = new ExperienceStorage(db);

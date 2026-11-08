@@ -27,7 +27,7 @@ export default function MealAnalysis({
   current?: boolean;
   preview?: boolean;
   disabled?: boolean;
-  onDraftChange?: (dirty:boolean)=>void;
+  onDraftChange?: (dirty:boolean,ingredients?:Ingredient[])=>void;
 }) {
   const { settings } = useExperience();
   const units = settings.displayUnits;
@@ -38,12 +38,12 @@ export default function MealAnalysis({
   const ingredients=rows.map(row=>row.ingredient);
   // Confirmed corrections preserve request order. Keep row views/search drafts while adopting canonical source values.
   useEffect(()=>{setRows(previous=>analysis.ingredients.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(false);onDraftChange?.(false);},[analysis]);
-  const setEdits=(next:Ingredient[])=>{setRows(previous=>next.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(true);onDraftChange?.(true);};
+  const setEdits=(next:Ingredient[])=>{setRows(previous=>next.map((ingredient,index)=>({key:previous[index]?.key||crypto.randomUUID(),ingredient})));setHasEdits(true);onDraftChange?.(true,next);};
   const addIngredient=()=>{
     const key=crypto.randomUUID();
     setRows(previous=>previous.length>=MAX_MEAL_INGREDIENTS?previous:[...previous,{key,ingredient:{name:"",grams:null,preparation:"As described",assumption:"User-added food; review the source and amount."}}]);
     setExpandedRows(previous=>{const next=new Set(previous);next.add(key);return next;});
-    setHasEdits(true);onDraftChange?.(true);
+    setHasEdits(true);onDraftChange?.(true,[...ingredients,{name:"",grams:null,preparation:"As described",assumption:"User-added food; review the source and amount."}]);
     requestAnimationFrame(()=>document.querySelector<HTMLInputElement>(`[data-draft-row="${key}"] input[aria-label^="Food "]`)?.focus());
   };
   const missing = unmatchedFoods(analysis);
@@ -86,7 +86,7 @@ export default function MealAnalysis({
         </p></PortionGuidance>
         {ingredients.map((item, index) => (
           <FoodRow className={`border-t py-3 space-y-2${preview?' review-food-row':''}`} key={rows[index].key} data-draft-row={rows[index].key} role="group" aria-label={`Ingredient ${index+1}`} open={preview?expandedRows.has(rows[index].key):undefined} onToggle={event=>{if(!preview||event.target!==event.currentTarget)return;const open=(event.currentTarget as HTMLDetailsElement).open,key=rows[index].key;setExpandedRows(previous=>{if(previous.has(key)===open)return previous;const next=new Set(previous);if(open)next.add(key);else next.delete(key);return next;});}}>
-            {preview&&<summary className="review-food-heading"><span className="review-food-identity"><strong>{item.name||'New ingredient'}</strong><small>{item.product?`${item.product.servings} labelled servings${item.grams===null?'':` · ${foodMass(item.grams,units.foodWeight)}`}`:item.household?.selected?`${item.household.quantity??"?"} × ${item.household.selected.replace(/^1 /,"")}`:item.grams===null?'Amount unknown':foodMass(item.grams,units.foodWeight)}</small></span><span className="review-food-status">{hasEdits?'Draft':missing.some(m=>m.name===item.name)?'Needs review':item.product?.source==='manual'?'Your label':item.product||item.catalogue?'Selected source':'Estimated match'}</span><span className="review-food-edit">Change</span></summary>}
+            {preview&&<summary className="review-food-heading"><span className="review-food-identity"><strong>{item.name||'New ingredient'}</strong><small>{item.product?`${item.product.servings} labelled servings${item.grams===null?'':` · ${foodMass(item.grams,units.foodWeight)}`}`:item.household?.selected?`${item.household.quantity??"?"} × ${item.household.selected.replace(/^1 /,"")}`:item.grams===null?'Amount unknown':foodMass(item.grams,units.foodWeight)}</small></span><span className="review-food-status">{hasEdits?'Draft':missing.some(m=>m.name===item.name)?'Needs review':item.product?.source==='manual'?'Your label':item.product||item.catalogue?'Selected source':'Estimated match'}</span><span className="review-food-edit">Change amount</span></summary>}
             <IngredientMassEntry source={item.massEntry}/>
             {onRecalculate ? (
               <>
@@ -218,7 +218,7 @@ export default function MealAnalysis({
                   className="text-link"
                   aria-label={`Remove ${item.name}`}
                   disabled={pending}
-                  onClick={() => {const key=rows[index].key;setRows(previous=>previous.filter(row=>row.key!==key));setExpandedRows(previous=>{const next=new Set(previous);next.delete(key);return next;});setHasEdits(true);onDraftChange?.(true);}}
+                  onClick={() => {const key=rows[index].key;setRows(previous=>previous.filter(row=>row.key!==key));setExpandedRows(previous=>{const next=new Set(previous);next.delete(key);return next;});setHasEdits(true);onDraftChange?.(true,ingredients.filter((_,position)=>position!==index));}}
                 >
                   Remove
                 </button>

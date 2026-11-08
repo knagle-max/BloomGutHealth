@@ -22,7 +22,7 @@ await page.route('**/api/**',async route=>{const req=route.request(),u=new URL(r
  await route.fulfill({json});});
 
 try{
- hold=false;lose=false;await page.goto('http://127.0.0.1:5225/log-meal?method=describe');const description='100 g banana, 20 g oats';await page.getByLabel('Describe your meal',{exact:true}).fill(description);await reviewThenSave(page);await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
+ hold=false;lose=false;await page.goto('http://127.0.0.1:5225/log-meal?method=describe');const description='100 g banana, 20 g oats';await page.getByLabel('What did you eat?',{exact:true}).fill(description);await reviewThenSave(page);await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
  const original=(await store.getMeals('correction-fixture'))[0],untouched=structuredClone(original.intelligence.ingredients[1]);assert.equal(original.intelligence.ingredients.length,2);
  await page.getByText('Change food',{exact:true}).first().click();const query=page.getByRole('textbox',{name:'Product name / barcode',exact:true});await query.fill('Replacement bar');await page.getByRole('button',{name:'Search products',exact:true}).click();await page.getByRole('button',{name:/Replacement bar.*Your saved label/}).click();
  const count=page.getByRole('spinbutton',{name:/^Servings eaten/});await count.waitFor();assert.equal(Number(await count.inputValue()),2.5,'Changing food identity must keep existing100g rather than defaulting to one40g serving');await page.getByRole('button',{name:'Use product & update meal',exact:true}).click();await page.getByLabel('Label servings eaten',{exact:true}).waitFor();
