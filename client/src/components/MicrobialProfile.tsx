@@ -1,4 +1,6 @@
 import {functionalResearchFor} from "@shared/functional-microbiome";
+import {organismBiography} from "@shared/biology-content";
+import {explainOrganism} from "@shared/report-explanations";
 import OrganismPortrait from "./OrganismPortrait";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
@@ -17,6 +19,9 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
   const facts=microbiomeSourceFacts(sample?.structuredData||{});
   const sourceValues=(kind:"assay"|"method"|"taxonomy"|"qc")=>facts.filter(f=>f.kind===kind).map(f=><span className="block" key={f.sourcePath}>{f.value}<small className="block text-muted-foreground">{f.sourcePath}</small></span>);
   const research=taxon?functionalResearchFor(taxon):null;
+  const biography=taxon?organismBiography(taxon.bacterialName):undefined;
+  const existingContext=taxon?explainOrganism(taxon.bacterialName):undefined;
+  const usefulContext=existingContext?.label!=="Not reviewed"?existingContext:undefined;
   const origin = sample?.structuredData?.dataOrigin;
   return <Dialog.Root open={!!taxon} onOpenChange={open => { if (!open) onClose(); }}>
     <Dialog.Portal>
@@ -30,11 +35,11 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
         {taxon && <>
           <OrganismPortrait size="portrait" sourceName={taxon.bacterialName}/>
           <p className="inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
-          <p>{reportedTaxonAmount(taxon)} · Reported observation</p>
+          {reportedTaxonAmount(taxon)!=="Not reported"&&<p>Source-reported amount: {reportedTaxonAmount(taxon)}</p>}
           <section className="microbial-organism-intro"><h3>What this organism is</h3>
             {taxon.bacterialName.toLowerCase().trim() === "methanobrevibacter smithii" && <p>This is an archaeon, rather than a bacterium. Detection does not diagnose intestinal methanogen overgrowth.</p>}
-            <p>{research?research.introduction:"Research explanation not available yet."}</p>
-            <p className="panel-note">A listing or percentage does not measure microbial activity.</p>
+            {biography?<><p>{biography.firstLayer.meetThisOrganism}</p><h3>Why researchers study it</h3><p>{biography.firstLayer.whyResearchersStudyIt}</p><h3>Food and metabolism</h3><p>{biography.firstLayer.foodMetabolicConnections}</p></>:usefulContext?<><p>{usefulContext.meaning}</p><p>{usefulContext.why}</p><p>{usefulContext.takeaway}</p></>:research?<p>{research.introduction}</p>:<p>Bloom has your source-reported organism name, but has not established a sufficiently specific biological identity or reliable species-level explanation. Your original observation remains available below.</p>}
+            {(biography?.coverageStatus!=="reviewed_draft"||!biography)&&<p className="panel-note">Specific functions may not be established for this reported identity.</p>}
           </section>
           <details className="microbial-observation"><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Your report</summary>
           <section aria-label="Reported observation">
@@ -70,7 +75,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
               <p>{research.source.authors} · {research.source.year} · DOI: {research.source.doi}</p>
               <p>{research.source.design}</p><p>{research.source.limitation}</p>
               <p className="panel-note">Source summary: {research.evidenceVersion} · Profile: {research.version}. This source summary does not specify study strain identifiers or sample size; individual applicability and conflicting evidence are not established here.</p>
-            </>:<p>Reviewed research profile not yet available. No supported claim, nutrient transformation, diet effect or personal action is inferred from this observation.</p>}
+            </>:<>{biography&&title==="What research has studied"?<p>{biography.firstLayer.whyResearchersStudyIt}</p>:biography&&title==="Nutrients & molecules"?<p>{biography.firstLayer.meetThisOrganism}</p>:biography&&title==="Food research"?<p>{biography.firstLayer.foodMetabolicConnections}</p>:title==="Sources & limitations"?<><p>Available educational descriptions have not completed independent claim-by-claim review; check the original citations and applicable species or strain.</p>{(biography?.citations||usefulContext?.sources||[]).map(source=><p key={source.url}><a className="text-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></p>)}</>:usefulContext?<p>{title==="What research has studied"?usefulContext.why:title==="Food research"?usefulContext.takeaway:usefulContext.meaning}</p>:<p>Species-specific findings cannot be established from this report label alone.</p>}</>}
 {title==="Sources & limitations"&&<>
               <p>Relative abundance does not measure gene expression, butyrate, methane, toxins, infection or disease risk. Missing percentages stay unknown. There is no personal optimal percentage or treatment recommendation from this record.</p>
               {/^(escherichia coli|klebsiella pneumoniae)$/i.test(taxon.bacterialName.trim()) && <p>Species detection does not establish a virulent strain.</p>}
