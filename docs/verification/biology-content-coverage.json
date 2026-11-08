@@ -12663,7 +12663,7 @@
           "spelling": "Anaerobutyricum hallii",
           "rank": null,
           "file": "scripts/qa/biology-content-journey.mjs",
-          "line": 31,
+          "line": 32,
           "method": "explicit profile lookup fixture"
         },
         {
@@ -24181,7 +24181,7 @@
   },
   "sourceHashes": {
     "scripts/qa/biological-report-management-journey.mjs": "9868064c019894f8329ce1ce361a5a617853147fde2b08ddd0dbf5238286c3cb",
-    "scripts/qa/biology-content-journey.mjs": "20dc92b87f70f72ae3b5d2fa67f76ccc19337bab3f93bca22b95d60ffd7bc76e",
+    "scripts/qa/biology-content-journey.mjs": "45664e92ae397ab8328ec277af45090844be5def803226f2d4ab4ff7b1b6caf1",
     "scripts/qa/biology-source-count-journey.mjs": "d3aa899bfa49e6a860a8595c232f92b5c3e92e9b7a1b281807da8fca2e83da35",
     "scripts/qa/bloodwork-source-overview-journey.mjs": "364a627533daadcc5c4928ac8097ce5f95acad1484ad22c67b4559dc9c8bb612",
     "scripts/qa/functional-microbiome-journey.mjs": "582a7dac8b8417380cf645d0510cb8e2eb518c6aa3873ba17119268e9bc03e9d",

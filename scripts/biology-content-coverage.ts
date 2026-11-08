@@ -7,7 +7,7 @@ import{pathways,evidenceSources}from'../shared/science-coach';import{syntheticVi
 const target=new URL('../docs/verification/biology-content-coverage.json',import.meta.url),root=new URL('../',import.meta.url);
 const mode=process.argv[2];if(!['--write','--check'].includes(mode))throw Error('Use --write or --check. Developer-only public-source audit.');
 const hash=(text:string)=>createHash('sha256').update(text).digest('hex');
-const files=execFileSync('rg',['--files','tests','scripts/qa','shared','client/src'],{encoding:'utf8'}).trim().split('\n').filter(file=>/\.(?:ts|tsx|mjs)$/.test(file)&&file!=='tests/biology-content-audit.test.ts').sort();
+const files=execFileSync('git',['ls-files','--','tests','scripts/qa','shared','client/src'],{encoding:'utf8'}).trim().split('\n').filter(file=>/\.(?:ts|tsx|mjs)$/.test(file)&&file!=='tests/biology-content-audit.test.ts').sort();
 const mentions:BiologyFixtureMention[]=[],unexpanded:unknown[]=[],sourceHashes:Record<string,string>={};
 for(const file of files){const text=await readFile(new URL(file,root),'utf8');const initialCount=mentions.length;const result=inventoryBiologyFixture(file,text);mentions.push(...result.mentions);unexpanded.push(...result.unexpanded);
  // Literal pasted-report examples run through the existing parser; no identity,
