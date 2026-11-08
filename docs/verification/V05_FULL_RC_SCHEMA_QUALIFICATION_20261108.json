@@ -7,13 +7,13 @@
     "branchId": "br-orange-cloud-aru4p4fw",
     "branchName": "production",
     "databaseNameSha256": "693fe5919fc229a2cf404ad99e03e8e9277fa4a6d34e88a0d4224d81b0b057a8",
-    "expectedColumns": 122,
+    "expectedColumns": 150,
     "missingTables": [
       "experiment_versions",
       "profile_measurement_sources"
     ],
     "otherMissingColumns": [],
-    "role": "Neon tool owner; application-role audit pending deployment",
+    "role": "Neon tool owner; deployed application-role audit on 6852c349 independently confirms the two absent support tables",
     "isolatedPreviewBranch": "br-old-butterfly-ar8fetpm",
     "isolatedPreviewBranchName": "preview/pr-1"
   },
@@ -21,7 +21,9 @@
     "Catalog-only startup audit for required and optional storage",
     "Isolated CI schema qualification after migrations",
     "Reject routine corrections when prior-source history cannot be retained; unchanged saves, reads, export and explicit deletion remain available",
-    "Clear 503 ROUTINE_HISTORY_UNAVAILABLE response; original record unchanged"
+    "Clear 503 ROUTINE_HISTORY_UNAVAILABLE response; original record unchanged",
+    "Read-only Biology registry and immutable history use actual required privileges, not blanket CRUD requirements",
+    "CI pre-start schema qualification is distinct from mandatory full runtime qualification after real session bootstrap"
   ],
   "verification": {
     "typescript": "PASS",
@@ -36,11 +38,17 @@
     "finalRoutineAndSchemaTests": 4,
     "browser": [
       "Synthetic Profile export acknowledgement/download/error/reflow PASS",
-      "Actual handlers plus encrypted isolated PostgreSQL routine correction/history/reload/export/ownership/deletion and keyboard/reflow PASS"
+      "Actual handlers plus encrypted isolated PostgreSQL routine correction/history/reload/export/ownership/deletion and keyboard/reflow PASS",
+      "Actual missing-history browser save preserves source and typed draft; applying isolated migration then retrying saves once PASS"
     ],
     "staticSourceInventories": "PASS",
     "mainMerged": false,
-    "v06Started": false
+    "v06Started": false,
+    "ciBootstrapCorrection": {
+      "runId": 42494394452,
+      "status": "FAILED_PRE_START_SESSION_REQUIREMENT",
+      "resolution": "6852c349 separates pre-start schema check from runtime session check; migration step now passes in run42494603568"
+    }
   },
   "releaseStatus": "INCOMPLETE_PENDING_FULL_V05_QUALIFICATION",
   "notClaimed": [
@@ -48,5 +56,22 @@
     "Dataset isolation from environment flag",
     "Qualified clinical/legal/design approval",
     "Physical device or VoiceOver results"
-  ]
+  ],
+  "migrationPlan": {
+    "status": "OWNER_AUTHORIZATION_PENDING_PRODUCTION_NAMED_BINDING",
+    "targetEndpoint": "ep-bitter-field-arqdkfep",
+    "targetBranch": "br-orange-cloud-aru4p4fw",
+    "files": [
+      {
+        "path": "migrations/0015_experiment_versions.sql",
+        "sha256": "8e6ed52431d688648d3a1d28ec3c787e65dd8b5e2aca652151d4f68fdfcbd24e"
+      },
+      {
+        "path": "migrations/0016_profile_measurement_sources.sql",
+        "sha256": "6ff7abc39aa1a0a5e876cbbfa0a4466e45b0917b9a2bbfa28107c42ced79954c"
+      }
+    ],
+    "scope": "Existing additive source tables/index/immutable-history triggers; no existing record rewrite, main merge or public release",
+    "isolationEvidence": "Both migrations exercised on isolated CI branch and PostgreSQL regression tests; production-named binding is not claimed isolated"
+  }
 }

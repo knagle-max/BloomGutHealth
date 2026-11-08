@@ -25,8 +25,11 @@ test('catalog audit detects absent core storage, missing columns and optional st
   assert.equal(incomplete.status,'incomplete');
   assert.deepEqual('storage' in incomplete&&incomplete.storage.find(t=>t.table==='meals')?.missingColumns,['nutritional_data']);
   await db.exec('CREATE ROLE restricted; GRANT USAGE ON SCHEMA public TO restricted; GRANT SELECT ON ALL TABLES IN SCHEMA public TO restricted; SET ROLE restricted');
+  await db.exec('RESET ROLE; GRANT INSERT ON experiment_versions TO restricted; SET ROLE restricted');
   const restricted=await schemaReadinessAudit(pool);
   assert.equal(restricted.status,'incomplete');
+  assert.ok('storage' in restricted&&restricted.storage.find(t=>t.table==='biology_entities')?.status==='available','Reference registry requires read access, not runtime mutation rights');
+  assert.ok('storage' in restricted&&restricted.storage.find(t=>t.table==='experiment_versions')?.status==='available','Immutable prior sources require SELECT/INSERT only; UPDATE/DELETE must not be required');
   assert.ok('storage' in restricted&&restricted.storage.find(t=>t.table==='users')?.status==='insufficient-access');
  } finally {await db.close();}
 });
