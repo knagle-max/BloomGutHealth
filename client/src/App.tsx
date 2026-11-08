@@ -113,7 +113,7 @@ function AppContent() {
   const showNav = !isAuthPage && user;
 
   return (
-    <div className={showNav ? `app-shell ${mode === "athlete" ? "athlete-mode" : "everyday-mode"} min-h-screen bg-background` : "min-h-screen bg-background"}>
+    <div data-bloom-visual={showNav ? "premium" : undefined} className={showNav ? `app-shell ${mode === "athlete" ? "athlete-mode" : "everyday-mode"} min-h-screen bg-background` : "min-h-screen bg-background"}>
       {showNav && <a href="#workspace-content" className="skip-link">Skip to content</a>}
       {showNav && (
         <AppHeader

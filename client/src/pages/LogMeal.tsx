@@ -1,3 +1,5 @@
+import EditorialArt from "@/components/EditorialArt";
+import { bloomCopy } from "@/content/bloomCopy";
 import {useHistoryState} from "wouter/use-browser-location";
 import {readCatalogueMassHandoff} from "@shared/catalogue-mass-handoff";
 import IngredientMassEntry from "@/components/IngredientMassEntry";
@@ -192,9 +194,10 @@ export default function LogMeal() {
           <Utensils size={24} />
         </span>
 
-        <h1>Add Food</h1>
+        {!method && !savedMeal && <EditorialArt name="bloom-oatmeal-bowl-primary" />}
+        <h1>{bloomCopy.food.h1}</h1>
         <p className="muted">
-          Choose how to add food. Review your items together before saving.
+          {bloomCopy.food.takeaway}
         </p>
       </div>
       {savedMeal && (

@@ -1,0 +1,26 @@
+{
+  "Bloom_Master_Build_Spec_R4_Designer_UX_Brand_Copy_Integrated_2026-11-07.md": {
+    "bytes": 254873,
+    "sha256": "d03fdbf82e73867b2a3f9386e32965362b3baa17d4dd966dd454adefbe3be949"
+  },
+  "Bloom_R4_Brand_Voice_And_Microcopy_Production_Completion_2026-11-07.md": {
+    "bytes": 24860,
+    "sha256": "12fb30686bb407fb71295d656ccd2cf8cb6b64146bfc70dd769219ecbf4300a0"
+  },
+  "bloomCopy.ts": {
+    "bytes": 11658,
+    "sha256": "7b75614c0cc61e67cda4a6e6b7664564c664fb41d91c05f97c28a262ff3cb0cb"
+  },
+  "bloomCopy.json": {
+    "bytes": 11459,
+    "sha256": "1a955733f63c6e3f328ca07378438c39a1c616a4e3efdb0be680ee6de995bf61"
+  },
+  "Bloom_R4_Brand_Copy_Table_2026-11-07.csv": {
+    "bytes": 33281,
+    "sha256": "ab72ca3fef0100b03ec020328c008abe5ebf818f5559d809df31fd3902231eb2"
+  },
+  "Bloom_R4_Brand_Integration_README.md": {
+    "bytes": 717,
+    "sha256": "4fce61283dc177883e8c4ac2f19a100c416a2b68b4d1728e3270c17d505004a0"
+  }
+}

@@ -4,7 +4,7 @@ const vite=await createServer({server:{host:'127.0.0.1',port:5275,strictPort:tru
 await page.route('**/api/**',async route=>{const req=route.request(),path=new URL(req.url()).pathname;if(req.method()!=='GET')writes.push(path);await route.fulfill({json:path==='/api/auth/me'?{user:{id:'synthetic-food-composition',username:'Synthetic entry review'}}:path==='/api/experience/settings'?{mode:'everyday',onboarding:{status:'complete'}}:path==='/api/capabilities'?{eligible:false,experimentalEnabled:false,foodEntry:{barcode:true,search:searchAllowed,describe:true,photo:false,restaurant:false},developmentFeatures:[]}:[]});});
 const dir=new URL('../../docs/review/food-entry-composition-20261106/',import.meta.url);if(capture)await mkdir(dir,{recursive:true});
 try{
- await page.goto('http://127.0.0.1:5275/log-meal');await page.getByRole('heading',{name:'Add Food',exact:true}).waitFor();
+ await page.goto('http://127.0.0.1:5275/log-meal');await page.getByRole('heading',{name:'Make room for the meals that matter.',exact:true}).waitFor();
  for(const[width,dark]of[[320,false],[390,false],[390,true]]){await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:dark?'dark':'light'});await page.evaluate(d=>document.documentElement.classList.toggle('dark',d),dark);await page.evaluate(()=>window.scrollTo(0,0));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));if(capture)await page.screenshot({path:new URL(`${before?'before':'after'}-${width}-${dark?'dark':'light'}.png`,dir).pathname});}
  if(!before){
   const primary=page.locator('.food-entry-hero').getByRole('button',{name:'Search foods',exact:true});await primary.waitFor();assert.equal(await page.locator('.food-entry-hero .hero-button').count(),1);

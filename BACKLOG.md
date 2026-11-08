@@ -1,3 +1,7 @@
+## Current R4 UI implementation checkpoint — 2026-11-08
+
+Original final source and PNGs are imported and verified; canonical skin/copy and original navigation art are integrated across seven views. Actual saved food/genetic-source/units/compact-set/Biology states pass local checks. Publish and verify the immutable integration, repair remaining concrete defects, then consolidate the single owner RC review. Source intake is resolved: do not repeat package searches. No v0.6 coding or main merge occurred. See docs/verification/R4_UI_INTEGRATION_20261108.md; this checkpoint does not close unrelated open functional backlog entries.
+
 # Bloom autonomous development backlog
 
 Branch `enhance/bloom-experience`, existing PR1/Render only. v0.5 supported engineering is at the integrated checkpoint; final source/operator/device/specialist acceptance remains open. Independent approved v0.6 foundation work is active under the owner’s phase0/phase1 policy. `NEXT_ACTIONS.md` selects work; older entries below are historical evidence. The supplied Viome report correction is pushed in6d9bc89/mergecd8ebdc. Universal Microbiome deletion7b68ecc/mergefa11d23 is pushed. Saved companion management is published (4118932); optional collection-date/upload-context correction is published (67f66db). Independent source/device/security acceptance and the unidentified Render database binding remain separately scoped.

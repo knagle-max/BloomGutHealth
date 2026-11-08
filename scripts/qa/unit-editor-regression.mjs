@@ -48,7 +48,7 @@ else if(p==='/api/health-sources')json={connections:[]};
 else if(p==='/api/health-sources/observations')json={observations:[],returned:0,total:0,hasMore:false};
 else if(p==='/api/experience/review')json={entries:0,metrics:[],from:'2026-10-16',to:'2026-10-23',next:'Record a check-in',note:'Synthetic fixture'};
 await route.fulfill({json});});
-const go=async p=>{await page.goto('http://127.0.0.1:5187'+p);await page.getByRole('main').waitFor();};
+const go=async p=>{await page.goto('http://127.0.0.1:5187'+p);await page.getByRole('main').waitFor();if(p==='/athlete'){const setup=page.locator('#athlete-profile');await setup.waitFor();if(!await setup.evaluate(el=>el.open))await setup.locator('summary').click();}};
 const near=(actual,expected,tolerance=0.00002)=>assert.ok(Math.abs(Number(actual)-expected)<tolerance,`${actual} differs from ${expected}`);
 const input=key=>page.locator(`input[name="${key}"]`);
 try{
@@ -60,7 +60,7 @@ assert.equal(await page.getByLabel('Height unit',{exact:true}).getByRole('option
 await page.getByTestId('unit-suggestion').getByText(/en-CA/).waitFor();assert.equal(writes.length,0,'Locale suggestions never write settings on load');
 assert.equal(await page.getByRole('combobox',{name:/Height unit/}).count(),1);
 assert.equal(await page.getByRole('combobox',{name:/Body weight unit|Weight unit/}).count(),1);
-await page.getByLabel('Body weight',{exact:true}).fill('80');await page.getByLabel('Height',{exact:true}).fill('180.34');
+await page.locator('#profile-account > summary').click();await page.getByLabel('Body weight',{exact:true}).fill('80');await page.getByLabel('Height',{exact:true}).fill('180.34');
 failNextUnits=true;await page.getByLabel('Body weight unit',{exact:true}).selectOption('lb');await page.getByRole('alert').filter({hasText:'Saved preferences could not be checked or updated'}).waitFor();
 assert.equal(await page.getByLabel('Body weight',{exact:true}).inputValue(),'80');assert.equal(await page.getByLabel('Body weight unit',{exact:true}).inputValue(),'kg');
 await page.getByLabel('Body weight unit',{exact:true}).selectOption('lb');await page.waitForFunction(()=>document.querySelector('input[aria-label="Body weight"]').value==='176.36981');
@@ -97,5 +97,6 @@ outcomes.push('Independent Athlete reference mass, explicit preview/cancel/confi
 for(const width of [320,375,768,1440]){await page.setViewportSize({width,height:1000});for(const route of ['/profile','/progress','/precision']){await go(route);if(route==='/precision')await page.getByRole('button',{name:/^Measurements/}).click();assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${route} ${width}`);}}
 await page.setViewportSize({width:1440,height:1000});await page.evaluate(()=>document.documentElement.style.zoom='2');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.getByLabel('Biology progress weight unit',{exact:true}).focus();assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Biology progress weight unit');await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute('aria-label')),'Biology progress waist unit');
 outcomes.push('320/375/768/1440 reflow, keyboard order and 200% CSS-zoom surrogate; physical devices/screen readers not claimed.');
+await page.evaluate(()=>document.documentElement.style.zoom='');await go('/progress');assert.equal(await page.getByLabel(/^Progress .* unit$/).count(),0);await page.getByText('Current Profile snapshot & shared display units',{exact:true}).click();await page.getByRole('link',{name:'Edit measurements and display units in Profile',exact:true}).click();await page.getByLabel('Body weight unit',{exact:true}).waitFor();assert.equal(new URL(page.url()).hash,'#measurement-units');outcomes.push('Progress is read-only for shared units; its Profile link opens the sole shared unit editor.');
 assert.deepEqual(errors,[]);const output=process.env.BLOOM_REVIEW_OUTPUT||path.join(root,'work/unit-editor-regression');await fs.mkdir(output,{recursive:true});await fs.writeFile(path.join(output,'results.json'),JSON.stringify({outcomes,errors,synthetic:true,independentAcceptance:false},null,2));console.log(JSON.stringify({outcomes,errors},null,2));
 }catch(e){console.error(JSON.stringify({errors,text:await page.locator("body").innerText()},null,2));throw e;}finally{await browser.close();await vite.close();}

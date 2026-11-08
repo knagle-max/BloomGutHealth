@@ -39,7 +39,7 @@ try{
 await fs.mkdir(out,{recursive:true});
 for(const width of [390,1440])for(const theme of ['light','dark'])for(const section of ['overview','fueling']){
 await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:theme});await page.goto('http://127.0.0.1:5190/athlete/'+section);await page.waitForLoadState('networkidle');await page.evaluate(t=>{document.documentElement.classList.toggle('dark',t==='dark');document.documentElement.dataset.experience='athlete';},theme);
-await page.getByRole('heading',{name:section==='overview'?'Your training day':'Fueling & hydration',exact:true}).waitFor();
+await page.getByRole('heading',{name:section==='overview'?'Make space for how you move.':'Fueling & hydration',exact:true}).waitFor();
 if(section==='fueling')await page.locator('details').filter({has:page.locator('summary').filter({hasText:'Ingredients, preparation & target contributions'})}).evaluateAll(ds=>ds.forEach(d=>d.open=true));
 if(section==='overview'&&await page.getByText('Reference targets & recorded effort',{exact:true}).count())await page.getByText('Reference targets & recorded effort',{exact:true}).click();
 const text=await page.locator('main').innerText();

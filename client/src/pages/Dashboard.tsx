@@ -1,3 +1,5 @@
+import EditorialArt from "@/components/EditorialArt";
+import { bloomCopy } from "@/content/bloomCopy";
 import {reportDateText} from "@shared/report-dates";
 import {useLocalClock} from "@/lib/use-local-clock";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
@@ -77,11 +79,11 @@ export default function Dashboard() {
     <main className="bloom-dashboard">
       <div className="dashboard-heading">
         <div>
-          <p className="eyebrow">A DAY AT YOUR PACE</p>
-          <h1>
-            Today
-          </h1>
+          <p className="eyebrow">{bloomCopy.today.eyebrow}</p>
+          <h1>{bloomCopy.today.h1}</h1>
+          <p className="panel-note">{bloomCopy.today.takeaway}</p>
         </div>
+        <EditorialArt name="bloom-three-leaf-sprig" />
         <span className="date-pill">
           <CalendarDays size={16} />
           {date}

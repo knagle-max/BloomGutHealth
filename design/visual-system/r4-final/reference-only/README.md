@@ -1,0 +1,1 @@
+DESIGN REFERENCES ONLY. Use screen composition references to judge visual quality. Do NOT import older embedded CSS from this archive; canonical runtime CSS is assets/styles/bloom-visual-scoped.css. Do not use reference images as user-specific data or actual application screenshots.

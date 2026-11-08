@@ -1,0 +1,3 @@
+# Bloom R4 updated developer handoff
+
+The integrated master is append-only and preserves the Designer final assets Appendix V. `bloomCopy.ts` is a proposed production-ready seven-route copy constants file. The copy is not independently signed by a Branding Agent. `bloomCopy.json` and CSV provide cross-agent review formats. Follow current runtime action/data, account and persistence rules over generic copy. The final asset ZIP remains the existing separately published `Bloom_Production_Assets_Final_Batches_1_to_6_2026-11-07.zip` and is NOT duplicated in this copy-only delivery. Developer should implement without blanket holds, verify rendered experience, and request Branding review without claiming approval.

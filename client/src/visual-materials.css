@@ -24,17 +24,17 @@
 :root.dark[data-experience=athlete] {
   --bloom-gradient-ambient:radial-gradient(ellipse at 8% 0%,rgba(129,190,255,.07) 0%,rgba(129,190,255,0) 46%);
 }
-.app-shell .workspace-content main {
+.app-shell:not([data-bloom-visual="premium"]) .workspace-content main {
   background-image:var(--bloom-gradient-ambient);
   background-repeat:no-repeat;
   background-size:100% 650px;
 }
 /* Low specificity preserves contextual/hero paint and intentional bg utilities. */
-.app-shell :where(.bloom-panel:not([class*="bg-"]),.flagship-nourishment) {
+.app-shell:not([data-bloom-visual="premium"]) :where(.bloom-panel:not([class*="bg-"]),.flagship-nourishment) {
   background-color:var(--bloom-material-surface);
   border-color:var(--bloom-material-stroke);
   border-radius:28px;
   box-shadow:var(--bloom-material-shadow);
 }
-.app-shell :where(.bloom-panel,.flagship-nourishment) :where(.bloom-panel,.flagship-nourishment) {box-shadow:none;}
+.app-shell:not([data-bloom-visual="premium"]) :where(.bloom-panel,.flagship-nourishment) :where(.bloom-panel,.flagship-nourishment) {box-shadow:none;}
 /* Static materials introduce no animation, transition, blur or new asset load. */

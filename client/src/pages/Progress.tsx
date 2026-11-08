@@ -1,3 +1,4 @@
+import { bloomCopy } from "@/content/bloomCopy";
 import CheckinEntrySource from "@/components/CheckinEntrySource";
 import {activityAmountText} from "@shared/activity-capture";
 import ActivityWeekSummary from "@/components/ActivityWeekSummary";
@@ -22,7 +23,7 @@ export default function Progress() {
   const requestedView = params.get("view"), requestedMarker=params.get("marker"),requestedGroup=params.get("group");
   const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : requestedMarker ? "biology" : undefined;
   const { user } = useAuth(),
-    { mode, settings, patch, saving, loading, error: settingsError } = useExperience(),
+    { mode, settings, loading } = useExperience(),
     profile = useQuery<{heightCm:number|null;weightKg:number|null}>({queryKey:["/api/profile"],enabled:!!user}),
     sessions = useExperienceRecords("hydration"),
     routines=useExperienceRecords(),
@@ -41,10 +42,10 @@ export default function Progress() {
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
-        <p className="eyebrow">NOTICE, COMPARE, ADJUST</p>
-        <h1>Progress</h1>
+        <p className="eyebrow">{bloomCopy.progress.eyebrow}</p>
+        <h1>{bloomCopy.progress.h1}</h1>
         <p>
-          Review your recorded food, activity and biology. Choose a view to see what changed; a change does not establish its cause.
+          {bloomCopy.progress.takeaway}
         </p>
       </div>
       <Tabs value={activeView} onValueChange={view => navigate(`/progress?view=${view}`)} className="space-y-5">
@@ -151,25 +152,6 @@ export default function Progress() {
       <section className="bloom-panel space-y-3" aria-labelledby="progress-measurements">
         <h2 id="progress-measurements">Body measurements & units</h2>
         <p className="panel-note">Your unit choices are shared across Profile, Progress and Athlete. Changing a unit changes the display, not the original record. No measurement is invented from a missing record.</p>
-        <div className="grid grid-cols-2 gap-3">
-          <label className="block">Height unit
-            <select aria-label="Progress height unit" className="bloom-input w-full" value={settings.displayUnits.height} disabled={saving||loading} onChange={e=>patch({displayUnits:{...settings.displayUnits,height:e.target.value as "cm"|"m"|"ft-in"}})}>
-              <option value="cm">cm</option><option value="m">metres</option><option value="ft-in">feet + inches</option>
-            </select>
-          </label>
-          <label className="block">Body weight unit
-            <select aria-label="Progress body weight unit" className="bloom-input w-full" value={settings.displayUnits.bodyWeight} disabled={saving||loading} onChange={e=>patch({displayUnits:{...settings.displayUnits,bodyWeight:e.target.value as "kg"|"lb"}})}>
-              <option value="kg">kg</option><option value="lb">lb</option>
-            </select>
-          </label>
-          <label className="block">Hydration unit
-            <select aria-label="Progress hydration unit" className="bloom-input w-full" value={settings.displayUnits.hydration} disabled={saving||loading} onChange={e=>patch({displayUnits:{...settings.displayUnits,hydration:e.target.value as "mL"|"L"|"US-fl-oz"}})}>
-              <option value="mL">mL</option><option value="L">L</option><option value="US-fl-oz">US fl oz</option>
-            </select>
-          </label>
-        </div>
-        {saving&&<p role="status">Saving units…</p>}
-        {settingsError&&<p role="alert">Could not save units: {settingsError}</p>}
         {(profile.isPending||profile.fetchStatus!=="idle")&&<p role="status">Loading saved profile measurements…</p>}
         {profile.isError&&<p role="alert">Saved profile measurements could not load. <button type="button" className="text-link" onClick={()=>profile.refetch()}>Retry Profile measurements</button></p>}
         {currentProfile&&<dl className="grid grid-cols-2 gap-3">
@@ -183,7 +165,7 @@ export default function Progress() {
         {sessions.fetchStatus!=="idle"&&<p role="status">Checking current hydration observations…</p>}
         {sessions.isError&&<p role="alert">Hydration observations could not load. <button type="button" className="text-link" onClick={()=>sessions.refetch()}>Retry hydration observations</button></p>}
         {currentHydration&&<p className="panel-note">Athlete hydration observations recorded: {currentHydration.length}. These retain their original session dates and are not substituted for your current profile weight.</p>}
-        <Link className="text-link" href="/profile#measurement-units">Edit your saved body measurements in Profile</Link>
+        <Link className="text-link" href="/profile#measurement-units">Edit measurements and display units in Profile</Link>
       </section>
       </details>
     </main>

@@ -1,0 +1,11 @@
+@layer bloom-legacy, bloom-premium;
+@import '../index.css' layer(bloom-legacy);
+@import '../workspace.css' layer(bloom-legacy);
+@import '../brand-tokens.css' layer(bloom-legacy);
+@import '../brand.css' layer(bloom-legacy);
+@import '../flagship-core.css' layer(bloom-legacy);
+@import '../visual-materials.css' layer(bloom-legacy);
+@import '../visual-overhaul.css' layer(bloom-legacy);
+@import './bloom-visual-scoped.css' layer(bloom-premium);
+
+@import "./r4-integration.css" layer(bloom-premium);

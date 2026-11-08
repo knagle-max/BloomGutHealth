@@ -1,19 +1,19 @@
 /* First UI overhaul pass: approved existing UX slots, original botanical art.
    Decorative backgrounds encode no personal result; no new score or data. */
-.app-shell {
+.app-shell:not([data-bloom-visual="premium"]) {
   --bloom-route-ink:#173e32;
   --bloom-route-hairline:rgba(23,62,50,.13);
 }
-:root.dark .app-shell {
+:root.dark .app-shell:not([data-bloom-visual="premium"]) {
   --bloom-route-ink:hsl(var(--foreground));
   --bloom-route-hairline:hsl(var(--border));
 }
 /* Give the existing first action a distinct material, without moving controls. */
-.app-shell .today-focus {
+.app-shell:not([data-bloom-visual="premium"]) .today-focus {
   isolation:isolate;
   box-shadow:0 16px 40px rgba(18,47,37,.09);
 }
-.app-shell .today-focus::before {
+.app-shell:not([data-bloom-visual="premium"]) .today-focus::before {
   content:"";
   position:absolute;
   z-index:-1;
@@ -22,16 +22,16 @@
   opacity:.15;
   pointer-events:none;
 }
-.app-shell .athlete-home-hero {
+.app-shell:not([data-bloom-visual="premium"]) .athlete-home-hero {
   background:radial-gradient(ellipse at 100% 0%,#244d77,transparent 72%),var(--bloom-gradient-athlete);
   border-color:#345574;
   color:#f1f6ff;
 }
-.app-shell .athlete-home-hero::before {opacity:.12;}
-.app-shell .athlete-home-hero :is(.eyebrow,.panel-note,.text-link) {color:#f1f6ff;}
-.app-shell .athlete-home-hero .hero-button {background:#f1f6ff;color:#182b45;}
+.app-shell:not([data-bloom-visual="premium"]) .athlete-home-hero::before {opacity:.12;}
+.app-shell:not([data-bloom-visual="premium"]) .athlete-home-hero :is(.eyebrow,.panel-note,.text-link) {color:#f1f6ff;}
+.app-shell:not([data-bloom-visual="premium"]) .athlete-home-hero .hero-button {background:#f1f6ff;color:#182b45;}
 /* Route headings retain their exact size, typography, padding and reading order. */
-.app-shell :is(.science-heading,.dashboard-heading,.meal-page-heading) {
+.app-shell:not([data-bloom-visual="premium"]) :is(.science-heading,.dashboard-heading,.meal-page-heading) {
   background-image:url('/brand/visual-system/leaf-orbit.svg');
   background-repeat:no-repeat;
   background-position:right center;
@@ -39,24 +39,24 @@
 }
 /* Keep visual motifs away from dense small-screen titles and large text. */
 @media(max-width:600px) {
-  .app-shell :is(.science-heading,.dashboard-heading,.meal-page-heading) {background-image:none;}
-  .app-shell .today-focus::before {background-size:180px 180px;opacity:.10;}
+  .app-shell:not([data-bloom-visual="premium"]) :is(.science-heading,.dashboard-heading,.meal-page-heading) {background-image:none;}
+  .app-shell:not([data-bloom-visual="premium"]) .today-focus::before {background-size:180px 180px;opacity:.10;}
 }
 /* A consistent precise number treatment in the existing measurement slots. */
-.app-shell :is(.flagship-macros dd,.saved-nutrients dd,.athlete-session-facts dd) {
+.app-shell:not([data-bloom-visual="premium"]) :is(.flagship-macros dd,.saved-nutrients dd,.athlete-session-facts dd) {
   font-variant-numeric:tabular-nums;
 }
 /* Existing entry controls become tactile, with no hit-target/layout changes. */
-.app-shell :is(.food-entry-method,.athlete-home-links .workspace-shortcut) {
+.app-shell:not([data-bloom-visual="premium"]) :is(.food-entry-method,.athlete-home-links .workspace-shortcut) {
   border-color:var(--bloom-route-hairline);
   background-image:linear-gradient(125deg,hsl(var(--card)),hsl(var(--muted)/.38));
   box-shadow:0 3px 12px rgba(18,47,37,.035);
 }
 @media(forced-colors:active) {
-  .app-shell :is(.science-heading,.dashboard-heading,.meal-page-heading),
-  .app-shell .today-focus::before {background-image:none;}
+  .app-shell:not([data-bloom-visual="premium"]) :is(.science-heading,.dashboard-heading,.meal-page-heading),
+  .app-shell:not([data-bloom-visual="premium"]) .today-focus::before {background-image:none;}
 }
 
 /* Recorded nutrition marks use the current mode accent; partial marks retain
    their open circle/P labels and exact accessible daily values. */
-.app-shell .food-progress-plot {color:hsl(var(--primary));}
+.app-shell:not([data-bloom-visual="premium"]) .food-progress-plot {color:hsl(var(--primary));}

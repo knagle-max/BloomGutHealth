@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
-    "build": "node scripts/verify-scientific-artwork.mjs && vite build && esbuild server/index.ts server/weekly-worker.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && node scripts/verify-scientific-artwork.mjs --built",
+    "build": "node scripts/verify-r4-assets.mjs && node scripts/verify-scientific-artwork.mjs && vite build && esbuild server/index.ts server/weekly-worker.ts --platform=node --packages=external --bundle --format=esm --outdir=dist && node scripts/verify-scientific-artwork.mjs --built && node scripts/verify-r4-assets.mjs --built",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",
     "test": "node --import tsx --test tests/*.test.ts",

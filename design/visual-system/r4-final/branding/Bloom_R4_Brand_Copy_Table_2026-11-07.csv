@@ -1,0 +1,205 @@
+route,component,state,key,string,max_chars,status
+today,eyebrow,default/contextual,today.eyebrow,A day at your pace,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,h1,default/contextual,today.h1,A little more clarity for today.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,takeaway,default/contextual,today.takeaway,Begin with what matters to you. Your next step can be simple.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,focusLabel,default/contextual,today.focusLabel,A useful next step,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,primaryFallback,default/contextual,today.primaryFallback,Add food,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,secondary,default/contextual,today.secondary,Explore your options,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,journalTitle,default/contextual,today.journalTitle,Today so far,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,journalEmpty,default/contextual,today.journalEmpty,No meals saved today. You can begin whenever it suits you.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,empty,empty,today.empty,Start with a meal or a goal. Reports and devices are optional.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,partial,partial,today.partial,Some saved meals have missing nutrient details. Known amounts are shown; unknown amounts remain unavailable.,108,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,loading,loading,today.loading,Checking today’s saved information…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,error,error,today.error,Your saved day could not load. You can try again.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,retry,default/contextual,today.retry,Try again,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,reviewUnsaved,reviewUnsaved,today.reviewUnsaved,Review your choice before confirming it.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,saving,saving,today.saving,Saving your choice…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,saved,saved,today.saved,Your choice is saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,saveUncertain,saveUncertain,today.saveUncertain,We could not confirm that your choice was saved. Check before trying again.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,researchLimit,default/contextual,today.researchLimit,Background research helps explain ideas; it does not measure your response.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,source,default/contextual,today.source,Based on the records currently available to Bloom.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,conflict,conflict,today.conflict,Your saved information has changed. Review the latest version before continuing.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,stale,stale,today.stale,Some connected information may be out of date. See its last recorded date.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,paused,default/contextual,today.paused,Suggestion paused for this visit.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,chosen,default/contextual,today.chosen,Your selected option is ready.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,athlete,default/contextual,today.athlete,Training plans can help shape your next step when they are available.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,why,default/contextual,today.why,Why this step?,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,eyebrow,default/contextual,food.eyebrow,YOUR FOOD JOURNAL,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,h1,default/contextual,food.h1,Make room for the meals that matter.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,takeaway,default/contextual,food.takeaway,"Record what you ate, then check the details before saving.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,primary,default/contextual,food.primary,Add a meal,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,secondary,default/contextual,food.secondary,Review food journal,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,section,default/contextual,food.section,Your recorded food,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,empty,empty,food.empty,No meals saved for this period. That does not mean you ate nothing.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,partial,partial,food.partial,Some nutrient amounts are unknown. Available totals include only known recorded contributions.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,loading,loading,food.loading,Checking your saved meals…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,error,error,food.error,Your food journal could not load. Try again to see your saved entries.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,retry,default/contextual,food.retry,Retry journal,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,reviewUnsaved,reviewUnsaved,food.reviewUnsaved,"Review the foods, portions and uncertain details before saving.",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,saving,saving,food.saving,Saving your meal…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,saved,saved,food.saved,Your meal has been saved to your journal.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,saveUncertain,saveUncertain,food.saveUncertain,We could not confirm this meal was saved. Check your journal before submitting it again.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,source,default/contextual,food.source,Amounts come from the foods and sources recorded in this journal.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,researchLimit,default/contextual,food.researchLimit,"Food research offers context, not a measured personal effect.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,conflict,conflict,food.conflict,This meal changed while you were editing. Review the latest version before saving.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,unavailable,default/contextual,food.unavailable,Nutrient amount unavailable,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,missingDays,default/contextual,food.missingDays,Unlogged days are not plotted as zero.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,edit,default/contextual,food.edit,Review or correct this meal,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,unknownPortion,default/contextual,food.unknownPortion,Portion needs review,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,allergy,default/contextual,food.allergy,Check ingredients and allergy information before saving.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,noMatch,default/contextual,food.noMatch,No matching foods found. Try another description or add details manually.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+food,confirmedEntries,default/contextual,food.confirmedEntries,Saved food entries,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,eyebrow,default/contextual,biology.eyebrow,YOUR BIOLOGY,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,h1,default/contextual,biology.h1,Understand the information you have.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,takeaway,default/contextual,biology.takeaway,"See what your records report, what they cannot tell you, and what deserves a closer look.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,primary,default/contextual,biology.primary,Review your reports,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,secondary,default/contextual,biology.secondary,Explore the science,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,section,default/contextual,biology.section,Your recorded observations,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,empty,empty,biology.empty,No reports saved here yet. You can still use Bloom without one.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,partial,partial,biology.partial,Some report fields are missing or cannot be compared. Only supported observations are shown.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,loading,loading,biology.loading,Checking saved reports…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,error,error,biology.error,Your saved reports could not load. Try again to review them.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,retry,default/contextual,biology.retry,Retry reports,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,reviewUnsaved,reviewUnsaved,biology.reviewUnsaved,"Review the source, date and matching details before importing.",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,saving,saving,biology.saving,Saving reviewed report details…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,saved,saved,biology.saved,Your reviewed report details are saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,saveUncertain,saveUncertain,biology.saveUncertain,We could not confirm this report was saved. Check your reports before retrying.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,source,default/contextual,biology.source,Reported by the selected source on its recorded date.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,researchLimit,default/contextual,biology.researchLimit,Research about organisms and pathways is not a measurement of your own pathway activity.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,conflict,conflict,biology.conflict,A source record changed. Review the revised report before continuing.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,stale,stale,biology.stale,"This result reflects its collection date, not necessarily today.",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,methods,default/contextual,biology.methods,How this result was reported,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,incompatible,default/contextual,biology.incompatible,These observations use different methods or definitions and are not shown as one trend.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,notMeasured,default/contextual,biology.notMeasured,Not measured in this report,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,providerScore,default/contextual,biology.providerScore,"This is a source-reported score, not a direct abundance measurement.",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+biology,revoked,revoked,biology.revoked,This source is no longer connected.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,eyebrow,default/contextual,explore.eyebrow,EXPLORE THE WHY,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,h1,default/contextual,explore.h1,Follow your curiosity.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,takeaway,default/contextual,explore.takeaway,"Explore foods, organisms and molecules through research, with uncertainty kept in view.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,primary,default/contextual,explore.primary,Explore a topic,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,secondary,default/contextual,explore.secondary,See your biology,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,section,default/contextual,explore.section,Research to explore,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,empty,empty,explore.empty,No topics matched this search. Try a broader term.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,partial,partial,explore.partial,Some research details are unavailable. The available references are shown.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,loading,loading,explore.loading,Looking through research topics…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,error,error,explore.error,Research topics could not load. Try again.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,retry,default/contextual,explore.retry,Retry search,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,reviewUnsaved,reviewUnsaved,explore.reviewUnsaved,Review your selection before adding it to your saved topics.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,saving,saving,explore.saving,Saving your selection…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,saved,saved,explore.saved,Your selection is saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,saveUncertain,saveUncertain,explore.saveUncertain,We could not confirm this selection was saved. Check your saved topics.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,source,default/contextual,explore.source,Based on the research sources linked in this section.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,researchLimit,default/contextual,explore.researchLimit,"Findings from studies are not a personal measurement, diagnosis or guaranteed effect.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,conflict,conflict,explore.conflict,This saved selection has changed. Review it before continuing.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,noResults,default/contextual,explore.noResults,No results for those terms,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,evidence,default/contextual,explore.evidence,What the evidence says,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,limits,default/contextual,explore.limits,What we do not know,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,personality,default/contextual,explore.personality,"Research context, not a personal finding",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+explore,methods,default/contextual,explore.methods,Study details and limitations,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,eyebrow,default/contextual,progress.eyebrow,YOUR PROGRESS,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,h1,default/contextual,progress.h1,See change in context.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,takeaway,default/contextual,progress.takeaway,"Look at what you recorded over time, with gaps and differences clearly marked.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,primary,default/contextual,progress.primary,Review your trends,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,secondary,default/contextual,progress.secondary,Add a record,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,section,default/contextual,progress.section,Your recorded timeline,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,empty,empty,progress.empty,No records are available for this selection yet.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,partial,partial,progress.partial,Some records are incomplete. Missing values are not treated as zero.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,loading,loading,progress.loading,Checking recorded history…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,error,error,progress.error,Your recorded history could not load. Try again.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,retry,default/contextual,progress.retry,Retry history,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,reviewUnsaved,reviewUnsaved,progress.reviewUnsaved,"Review the date, source and units before saving this measurement.",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,saving,saving,progress.saving,Saving your measurement…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,saved,saved,progress.saved,Your measurement has been saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,saveUncertain,saveUncertain,progress.saveUncertain,We could not confirm this measurement was saved. Check your history before retrying.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,source,default/contextual,progress.source,Shown from the recorded source and date for each observation.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,researchLimit,default/contextual,progress.researchLimit,"Changes over time do not, on their own, show what caused them.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,conflict,conflict,progress.conflict,This observation has changed. Review the latest record before saving.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,onePoint,default/contextual,progress.onePoint,One recorded date is not enough to show a trend.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,incompatible,default/contextual,progress.incompatible,These results cannot be compared reliably across source or method.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,missing,default/contextual,progress.missing,Measurement unavailable,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,correction,default/contextual,progress.correction,This data looks wrong,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,units,default/contextual,progress.units,Change display units in Profile,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+progress,compare,default/contextual,progress.compare,Compare recorded dates,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,eyebrow,default/contextual,athlete.eyebrow,YOUR TRAINING DAY,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,h1,default/contextual,athlete.h1,Make space for how you move.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,takeaway,default/contextual,athlete.takeaway,"Keep plans, completed sessions and fueling records clear and separate.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,primary,default/contextual,athlete.primary,Record a session,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,secondary,default/contextual,athlete.secondary,Review fueling,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,section,default/contextual,athlete.section,Your training records,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,empty,empty,athlete.empty,No training sessions saved for this period.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,partial,partial,athlete.partial,Some session details are missing. Recorded details are shown without filling gaps.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,loading,loading,athlete.loading,Checking your training records…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,error,error,athlete.error,Your training records could not load. Try again.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,retry,default/contextual,athlete.retry,Retry training records,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,reviewUnsaved,reviewUnsaved,athlete.reviewUnsaved,Review your session details before saving.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,saving,saving,athlete.saving,Saving your session…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,saved,saved,athlete.saved,Your session has been saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,saveUncertain,saveUncertain,athlete.saveUncertain,We could not confirm the session was saved. Check your records before retrying.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,source,default/contextual,athlete.source,From the training records you saved or connected.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,researchLimit,default/contextual,athlete.researchLimit,General training research does not establish your personal readiness or response.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,conflict,conflict,athlete.conflict,This session changed while you were editing. Review the latest entry.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,planned,default/contextual,athlete.planned,Planned session,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,completed,default/contextual,athlete.completed,Completed session,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,cancelled,default/contextual,athlete.cancelled,Cancelled session,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,syncPending,syncPending,athlete.syncPending,A connected activity source has not finished syncing.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,noReadiness,default/contextual,athlete.noReadiness,No validated readiness estimate is available.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+athlete,hydration,default/contextual,athlete.hydration,Record hydration,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,eyebrow,default/contextual,profile.eyebrow,MAKE BLOOM YOURS,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,h1,default/contextual,profile.h1,"Your information, your choices.",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,takeaway,default/contextual,profile.takeaway,"Manage what Bloom remembers, how information appears, and which sources you allow.",100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,primary,default/contextual,profile.primary,Review your settings,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,secondary,default/contextual,profile.secondary,Manage your data,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,section,default/contextual,profile.section,Your settings and sources,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,empty,empty,profile.empty,No connected sources are listed. You can still add information manually.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,partial,partial,profile.partial,Some settings or source details are unavailable. Review before changing them.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,loading,loading,profile.loading,Checking your settings…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,error,error,profile.error,Your settings could not load. Try again.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,retry,default/contextual,profile.retry,Retry settings,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,reviewUnsaved,reviewUnsaved,profile.reviewUnsaved,You have changes that are not saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,saving,saving,profile.saving,Saving your settings…,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,saved,saved,profile.saved,Your settings have been saved.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,saveUncertain,saveUncertain,profile.saveUncertain,We could not confirm these settings were saved. Check before trying again.,90,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,source,default/contextual,profile.source,Source access and last update are shown for each connection.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,researchLimit,default/contextual,profile.researchLimit,Adding information does not guarantee a specific recommendation or outcome.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,conflict,conflict,profile.conflict,Your settings changed elsewhere. Review the latest version before saving.,100,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,revoked,revoked,profile.revoked,This source is no longer connected.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,syncPending,syncPending,profile.syncPending,This source is waiting to finish syncing.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,stale,stale,profile.stale,The latest available record may be out of date.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,privacy,default/contextual,profile.privacy,"Privacy, access and export",70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,delete,default/contextual,profile.delete,Review deletion options,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,consent,default/contextual,profile.consent,Manage permissions,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+profile,units,default/contextual,profile.units,Display units,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,offline,default/contextual,shared.offline,You appear to be offline. Saved information may still be available.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,retry,default/contextual,shared.retry,Try again,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,close,default/contextual,shared.close,Close,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,back,default/contextual,shared.back,Back,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,more,default/contextual,shared.more,Learn more,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,expand,default/contextual,shared.expand,Show details,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,collapse,default/contextual,shared.collapse,Hide details,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,review,default/contextual,shared.review,Review details,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,source,default/contextual,shared.source,Where this information came from,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,unknown,default/contextual,shared.unknown,Not available,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,notRecorded,default/contextual,shared.notRecorded,Not recorded,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,notConnected,default/contextual,shared.notConnected,Not connected,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,stale,stale,shared.stale,Last updated on {date},70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,saved,saved,shared.saved,Saved,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,unsaved,default/contextual,shared.unsaved,Unsaved changes,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,error,error,shared.error,Something could not load. Try again.,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,noData,default/contextual,shared.noData,No saved records available,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,methods,default/contextual,shared.methods,Sources and methods,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,research,default/contextual,shared.research,Research context,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,edit,default/contextual,shared.edit,Edit,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,skip,default/contextual,shared.skip,Not now,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,confirm,default/contextual,shared.confirm,Confirm,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+shared,cancel,default/contextual,shared.cancel,Cancel,70,PROPOSED PRODUCTION / UX MEANING CHECKED; BRANDING SIGNOFF NOT VERIFIED
+today,focusTitle,dynamic,today.focusTitle,EXISTING RUNTIME: todayContextAction / selected wellness choice; never replace with generic static headline,runtime,DO NOT REPLACE WITH STATIC COPY
+today,focusReason,dynamic,today.focusReason,EXISTING RUNTIME: action.reason and evidence/limits,runtime,DO NOT REPLACE WITH STATIC COPY
+today,focusCTA,dynamic,today.focusCTA,EXISTING RUNTIME: selected action.linkLabel or appropriate action; preserve context,runtime,DO NOT REPLACE WITH STATIC COPY
+food,nutrientValues,dynamic,food.nutrientValues,EXISTING RUNTIME: recordedFoodPeriod and nutrientDisplay; never replace missing with zero,runtime,DO NOT REPLACE WITH STATIC COPY
+food,receiptId,dynamic,food.receiptId,EXISTING RUNTIME: server save receipt only,runtime,DO NOT REPLACE WITH STATIC COPY
+biology,observationLabel,dynamic,biology.observationLabel,EXISTING RUNTIME: provider report term with source and method,runtime,DO NOT REPLACE WITH STATIC COPY
+biology,collectionDate,dynamic,biology.collectionDate,EXISTING RUNTIME: original collection date and revisions,runtime,DO NOT REPLACE WITH STATIC COPY
+explore,citation,dynamic,explore.citation,EXISTING RUNTIME: article/study title URL plus evidence class,runtime,DO NOT REPLACE WITH STATIC COPY
+progress,trend,dynamic,progress.trend,EXISTING RUNTIME: only validated comparable dated observations; no fabricated narrative,runtime,DO NOT REPLACE WITH STATIC COPY
+athlete,trainingStatus,dynamic,athlete.trainingStatus,"EXISTING RUNTIME: planned/completed/cancelled, never inferred",runtime,DO NOT REPLACE WITH STATIC COPY
+profile,permissions,dynamic,profile.permissions,EXISTING RUNTIME: actual scope and current authorization status,runtime,DO NOT REPLACE WITH STATIC COPY

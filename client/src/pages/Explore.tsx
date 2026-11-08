@@ -1,3 +1,4 @@
+import { bloomCopy } from "@/content/bloomCopy";
 import { FoodCompositionExplorer } from "@/components/FoodCompositionExplorer";
 import MolecularIllustration from "@/components/MolecularIllustration";
 import { useState } from "react";
@@ -177,10 +178,10 @@ export default function Explore() {
   return (
     <main className="science-page biology-explorer space-y-5">
       <div className="science-heading">
-        <p className="eyebrow">EXPLORE THE SCIENCE</p>
-        <h1>Explore</h1>
+        <p className="eyebrow">{bloomCopy.explore.eyebrow}</p>
+        <h1>{bloomCopy.explore.h1}</h1>
         <p>
-          Explore organisms, genes, molecules and pathways. Start with a topic, then open its studies and sources.
+          {bloomCopy.explore.takeaway}
         </p>
       </div>
       {registry.isLoading && (

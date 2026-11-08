@@ -1,3 +1,4 @@
+import { bloomCopy } from "@/content/bloomCopy";
 import MicrobiomeFoodPreferences from"@/components/MicrobiomeFoodPreferences";
 import FoodRegionSettings from "@/components/FoodRegionSettings";
 import {measurementUnitSuggestion} from "@shared/measurement-suggestions";
@@ -135,8 +136,9 @@ export default function Profile({
   return (
     <main className="science-page profile-workspace space-y-5">
       <div className="science-heading">
-        <p className="eyebrow">MAKE BLOOM YOURS</p><h1>Profile & settings</h1>
-        <p>Signed in as {user?.username}</p>
+        <p className="eyebrow">{bloomCopy.profile.eyebrow}</p><h1>{bloomCopy.profile.h1}</h1>
+        <p>{bloomCopy.profile.takeaway}</p>
+        <p className="panel-note">Signed in as {user?.username}</p>
       </div>
       <section className="bloom-panel profile-settings-list" aria-label="Profile settings">
       <details id="profile-account" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Account</strong><span>Profile, appearance and sign-out</span></summary><div className="space-y-4 pt-4">

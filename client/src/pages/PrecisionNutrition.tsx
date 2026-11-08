@@ -1,3 +1,4 @@
+import { bloomCopy } from "@/content/bloomCopy";
 import{MicrobiomeFoodReason}from'@/components/MicrobiomeFoodPreferences';
 import type{MicrobiomeFoodTrace}from'@shared/microbiome-food-influence';
 import LabSourceManagement from"@/components/LabSourceManagement";
@@ -420,9 +421,9 @@ export default function PrecisionNutrition() {
       <div className="flex flex-wrap gap-3 justify-between items-start">
         <div className="science-heading">
           {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
-          <h1>My biology</h1>
+          <h1>{bloomCopy.biology.h1}</h1>
           <p className="science-intro">
-            {tab==="overview"?"Understand your recorded data.":"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
+            {tab==="overview"?bloomCopy.biology.takeaway:"Genetics, laboratory results, microbiome reports and everyday meals, with sources you can inspect."}
           </p>
         </div>
         {(tab!=="overview"||!currentResult)&&<Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>}

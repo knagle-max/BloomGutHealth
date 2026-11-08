@@ -1,3 +1,4 @@
+import PremiumIcon from "@/components/PremiumIcon";
 import { useExperience } from "@/lib/experience";
 import {
   Home,
@@ -44,7 +45,7 @@ export default function BottomNav() {
           aria-current={(location === item.path||item.path==="/precision"&&location==="/biology/reports") ? "page" : undefined}
           data-testid={`nav-${item.id}`}
         >
-          <item.icon size={21} />
+          <PremiumIcon route={item.path} size={21} fallback={<item.icon size={21} aria-hidden="true" />} />
           <span>{item.label}</span>
         </Link>
       ))}
