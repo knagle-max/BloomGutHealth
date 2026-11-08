@@ -10,6 +10,7 @@ Implemented:
 - All 13 original PNGs preserved. Twenty-six source-linked WebP derivatives provide two sizes without cropping, retouching or upscaling. Two decorative cutouts occupy desktop introduction slots; hidden at narrow widths and in forced colors, absent from active food capture/review. No conceptual microbiology raster is presented as a personal observation.
 - Existing component and portal HSL tokens derive from the exact authored palette, including navy Athlete in both themes. Source CSS and optional historical art examples are unchanged; missing example URLs are never activated.
 - Progress retains converted read-only measurements and links to the sole shared unit editor in Profile. No duplicate settings mutation controls.
+- Runtime asset browser check PASS: served original asset bytes match local fingerprints and exactly one correctly labeled wordmark is visible across six routes/two modes/both themes. Athlete uses the original light wordmark on its always-navy header, including light theme.
 - Shared dialog/drawer close targets are 44px with title clearance. Native keyboard close/focus restoration and separate compact-set completion/edit targets retained.
 
 Local evidence (synthetic fixtures or isolated encrypted SQL; no production data):
@@ -20,6 +21,7 @@ Local evidence (synthetic fixtures or isolated encrypted SQL; no production data
 - Actual genetic-source view/confirmation/activation/deactivation/stale rejection, delete with lost-response retry, keyboard focus and owner isolation PASS.
 - Profile/units regression PASS: failed save retains values, conversions preserve canonical amounts, incomplete drafts retain labeled units, Profile/Athlete reference values remain independent, dated observations retain source units, Progress links to the sole Profile unit editor. Existing grouped Account/setup disclosures are opened through their native controls.
 - Compact Athlete sets PASS: five source-derived children, separate 44px targets, only sets 1/2 completed, independent set 2 edits/unit changes, stable IDs, add/remove/focus, encrypted save/reload, planned status preserved; five widths and both themes.
+- Food chooser PASS: search/manual/recent prominence, barcode retained, drafts survive method switches, capability fallback, unavailable methods absent and no writes. Explore actual App/science/food HTTP PASS: three subject choices, global search, source studies/map, no automatic personal food, context cleared on subject changes, keyboard/44px/320390/dark/200% reflow.
 - Biology source-count states PASS: empty/qualitative/pending/mixed, both modes, 320/390, keyboard source navigation and paused-query withdrawal; no writes or clinical promotion.
 - Full regression run: 648/649 passed; the sole failure was a stale source-crosswalk fingerprint during integration. Refreshed after source review; focused crosswalk rerun 2/2 PASS. Final CI will provide the immutable-commit full-run result. Source map: 52 IDs / 247 source files; API inventory unchanged.
 

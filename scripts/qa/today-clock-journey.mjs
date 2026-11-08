@@ -61,7 +61,7 @@ try{
  assert.equal(await page.getByRole('heading',{name:'New-day breakfast',exact:true}).count(),0);
  assert.ok(mealReads<=beforeHidden+2,'Resume/day change coalesces fresh source checks rather than starting an interval');
  await page.evaluate(()=>{history.pushState({},'','/qa/clock-paused');dispatchEvent(new PopStateEvent('popstate'));});
- await page.getByRole('heading',{name:'Today',exact:true}).waitFor({state:'detached'});
+ await page.getByRole('heading',{name:'A little more clarity for today.',exact:true}).waitFor({state:'detached'});
  const beforeUnmount=mealReads;await page.clock.runFor(120000);assert.equal(mealReads,beforeUnmount);
  assert.deepEqual(errors,[]);
  console.log('PASS actual Today clock: local midnight/date/history source refresh, stale totals withheld, planned-session expiry, no minute polling, focus failure/retry, hidden overnight resume and timer cleanup; synthetic fixtures.');

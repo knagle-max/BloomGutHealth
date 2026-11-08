@@ -80,3 +80,6 @@ body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon-fallback { display:no
 @media(forced-colors:active) { body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon { forced-color-adjust:none;background:CanvasText; } }
 
 .app-shell[data-bloom-visual="premium"] .food-progress-plot { color:var(--bv-chart); }
+/* Athlete's authored surface remains navy even with the light theme selected. */
+html[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-ink { display:none; }
+html[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-reversed { display:block; }
