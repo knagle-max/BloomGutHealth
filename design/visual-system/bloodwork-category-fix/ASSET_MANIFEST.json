@@ -1,0 +1,61 @@
+{
+  "package": "Bloom R4 M1 bloodwork category visual repair",
+  "sourceArchive": "Bloom_R4_M1_Bloodwork_Category_Visual_Fix_2026-11-07(1).zip",
+  "archiveSha256": "474d6ee3d40be3bb8e896f7d4697110b32cef49474cc5a49124695227b3c9554",
+  "sourceArchivePayloadHashesPass": "13/13",
+  "svgAssets": [
+    {
+      "source": "assets/icons/lab-other.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-other.svg",
+      "sha256": "3b31c90093d2fdfff0357122a3205b5854f3a7ccea7db1f0d8c48ebbcf09b7d1"
+    },
+    {
+      "source": "assets/icons/lab-sugar.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-sugar.svg",
+      "sha256": "735bb6a01e8ba4192e99f1b2ddb00dcbcf5b3548a70a17f34cbe3e56f0c4d324"
+    },
+    {
+      "source": "assets/icons/lab-kidney.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-kidney.svg",
+      "sha256": "31f3d120b98c3ff152c5d61405928269a4a94bd90f1df0faa7f3432ff71ba0ee"
+    },
+    {
+      "source": "assets/icons/lab-bone.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-bone.svg",
+      "sha256": "2e67a86e7e80ed29099b29a5520bcdca3b9f1912f80a6c318cb78306f402d4f1"
+    },
+    {
+      "source": "assets/icons/lab-hormones.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-hormones.svg",
+      "sha256": "9e560e1e02af7f1d999c1a105878a68c3fbe232d58cde10feeb8c76e00bbc825"
+    },
+    {
+      "source": "assets/icons/lab-blood-count.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-blood-count.svg",
+      "sha256": "662cefcea4f0f2197b623a26f0299e3453e14c6ae05b642e6b79bc3d8e31cec0"
+    },
+    {
+      "source": "assets/icons/lab-inflammation.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-inflammation.svg",
+      "sha256": "395f5cb112069318aa268c5b7081ed5b936a90b67688a359b00648bd32766634"
+    },
+    {
+      "source": "assets/icons/lab-nutrients.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-nutrients.svg",
+      "sha256": "7c6871a063a87def540839aa917c362bdb22d9b4fae1c08a933fcd02dea7307b"
+    },
+    {
+      "source": "assets/icons/lab-liver.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-liver.svg",
+      "sha256": "585e2a808b5e0bbe31e244b4a2ca0113e4d036af19d61844d13f594b7420200b"
+    },
+    {
+      "source": "assets/icons/lab-heart.svg",
+      "target": "client/public/brand/visual-v2/lab-categories/lab-heart.svg",
+      "sha256": "16784e1fee3b699cfb442e6c47f1076dc9023f01615217ada6803db2adbb11c3"
+    }
+  ],
+  "implementation": "design/visual-system/bloodwork-category-fix/LabCategoryIcon.designer.tsx",
+  "cssSource": "design/visual-system/bloodwork-category-fix/lab-categories-premium.designer.css",
+  "note": "SVG files are original byte-preserved artwork. Inline TSX and scoped CSS are staged readable integration references adapted from original package; not asserted byte-identical to handoff source. Original ZIP remains user-provided source."
+}
