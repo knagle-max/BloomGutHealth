@@ -147,5 +147,7 @@
     "package-lock.json": "a3007ed63763cc02ba697b258bb934d06b06f317",
     "vite.config.ts": "5ae31a46d6771c1b054d75fe32bfee9bf8cd4ff8"
   },
-  "packetOnlyChanges": "Subsequent review-packet commit updates documentation only; application/config/test/migration trees above remain identical to this verified application commit."
+  "packetOnlyChanges": "Subsequent review-packet commit updates documentation only; application/config/test/migration trees above remain identical to this verified application commit.",
+  "currentReleaseCandidate": false,
+  "supersededBy": "Owner R4 M1 pre-signoff request; see R4_M1_IMPLEMENTATION_20261108.json"
 }

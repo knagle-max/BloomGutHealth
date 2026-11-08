@@ -1,3 +1,4 @@
+import EditorialMedia from "./EditorialMedia";
 import { Barcode, Search, Utensils, Camera, ChevronRight } from 'lucide-react';
 import CompanionHero from './CompanionHero';
 import type { FoodEntryMethod, foodEntryMethods } from '@shared/food-entry';
@@ -12,7 +13,7 @@ export default function FoodEntryChooser({ methods, onSelect, photoLabel }: {
   const icons = { barcode: Barcode, search: Search, describe: Utensils, restaurant: Utensils, photo: Camera };
   const order={describe:0,barcode:1,photo:2,restaurant:3,search:4};
   return <div className="food-entry-chooser">
-    <CompanionHero className="food-entry-hero" headingId="food-entry-primary" eyebrow="YOUR NEXT ACTION" title={primary.label}
+    <CompanionHero media={<EditorialMedia slot="food" sizes="(max-width:767px) 100vw, 800px" />} className="food-entry-hero" headingId="food-entry-primary" eyebrow="YOUR NEXT ACTION" title={primary.label}
       reason={primary.description + ' Review the food and portion before saving.'}
       actions={<button type="button" className="hero-button" onClick={() => onSelect(primary.id)}>{primary.label}<ChevronRight size={18} aria-hidden="true"/></button>}/>
     <div className="food-entry-alternatives">{methods.filter(method => method.id !== primary.id).sort((a,b)=>order[a.id]-order[b.id]).map(method => {

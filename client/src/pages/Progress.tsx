@@ -1,3 +1,4 @@
+import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import CheckinEntrySource from "@/components/CheckinEntrySource";
 import {activityAmountText} from "@shared/activity-capture";
@@ -42,6 +43,7 @@ export default function Progress() {
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
+        <EditorialMedia slot="progress" sizes="120px" />
         <p className="eyebrow">{bloomCopy.progress.eyebrow}</p>
         <h1>{bloomCopy.progress.h1}</h1>
         <p>

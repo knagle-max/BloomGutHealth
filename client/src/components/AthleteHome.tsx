@@ -1,3 +1,4 @@
+import EditorialMedia from "./EditorialMedia";
 import {localDate} from "@/lib/experience";
 import {athleteBlockerMessage,type AthleteBlockerReason} from "@shared/athlete-eligibility";
 import { Button } from "@/components/ui/button";
@@ -45,7 +46,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
         { title: 'Recorded training', detail: !day ? 'Current context not checked' : day.loadEntries ? `${day.loadEntries} completed session(s) with RPE` : 'No completed RPE entry', Icon: Activity, onClick: () => openSource('athlete-load-context', 'summary') },
     ];
     return <>
-  <CompanionHero className="athlete-home-hero" headingId="athlete-home-action" icon="/brand/bloom-icon-athlete.svg" eyebrow="YOUR PLAN · YOUR NEXT STEP" title={title} reason={reason} actions={<><button type="button" className="hero-button" onClick={act}>{label}</button><button type="button" className="text-link" onClick={() => openSource('athlete-profile', 'input[name="sport"]')}>Adjust setup</button></>}>
+  <CompanionHero media={!checking&&!unavailable&&!dayUnavailable?<EditorialMedia slot="athlete" sizes="(max-width:767px) 100vw, 800px" />:undefined} className="athlete-home-hero" headingId="athlete-home-action" icon="/brand/bloom-icon-athlete.svg" eyebrow="YOUR PLAN · YOUR NEXT STEP" title={title} reason={reason} actions={<><button type="button" className="hero-button" onClick={act}>{label}</button><button type="button" className="text-link" onClick={() => openSource('athlete-profile', 'input[name="sport"]')}>Adjust setup</button></>}>
    {dayChecking&&<p role="status" className="panel-note">Checking your current athlete day…</p>}
    {dayUnavailable && <div role="alert" className="athlete-home-context-error" data-blocker-reason="source_unavailable"><p>Current fueling targets could not be checked. Numerical guidance is unavailable.</p><Button variant="outline" disabled={retrying} onClick={onRetryDay}>Retry athlete day</Button></div>}
    {day?.blocked && <div className="athlete-fueling-review" data-blocker-reasons={blockers.join(" ")}>

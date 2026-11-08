@@ -1,4 +1,3 @@
-import EditorialArt from "@/components/EditorialArt";
 import { bloomCopy } from "@/content/bloomCopy";
 import {useHistoryState} from "wouter/use-browser-location";
 import {readCatalogueMassHandoff} from "@shared/catalogue-mass-handoff";
@@ -193,8 +192,6 @@ export default function LogMeal() {
         <span className="panel-icon">
           <Utensils size={24} />
         </span>
-
-        {!method && !savedMeal && <EditorialArt name="bloom-oatmeal-bowl-primary" />}
         <h1>{bloomCopy.food.h1}</h1>
         <p className="muted">
           {bloomCopy.food.takeaway}

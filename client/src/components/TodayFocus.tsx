@@ -1,3 +1,4 @@
+import EditorialMedia from "./EditorialMedia";
 import {useEffect,useRef,useState} from "react";
 import {useAuth} from "@/lib/auth";
 import CompanionHero from "./CompanionHero";
@@ -29,7 +30,7 @@ export default function TodayFocus({now,mealCount=0,missingNutritionCount=0,load
  const chosen=proposed?.choice&&proposed.choice.choice!=="clear";
  const title=paused?"Suggestion paused":proposed?proposed.action.title:loading?"Make space for today":journalError?"Keep a place for your day":!mealCount?"Start with a meal":missingNutritionCount?"A clearer food picture":sessionAction?"Fuel your planned session":"One good next step";
  const reason=paused?"Paused for this visit. Bring the suggestion back when you are ready.":proposed?proposed.action.description:action.reason;
- return <CompanionHero title={title} eyebrow={proposed?"WHAT YOU CAN TRY":"A LITTLE CARE, EVERY DAY"} reason={reason} actions={<>
+ return <CompanionHero media={!loading&&!journalError?<EditorialMedia slot="today" sizes="(max-width:767px) 100vw, 800px" priority />:undefined} title={title} eyebrow={proposed?"WHAT YOU CAN TRY":"A LITTLE CARE, EVERY DAY"} reason={reason} actions={<>
   {proposed?(chosen?<Link className="hero-button" href={proposed.action.href}>{proposed.action.linkLabel}</Link>:<button type="button" className="hero-button" disabled={choices.busy||choices.waiting||!choices.sourceReady} onClick={()=>choices.choose(proposed.action.id,"try",true)}>Try this</button>):<Link className="hero-button" href="/log-meal">Add food</Link>}
   {proposed&&<Link className="text-link" href="/log-meal">Add food</Link>}
   {paused?<button type="button" className="text-link" onClick={()=>{pendingFocus.current=true;setSkipped(null);}}>Show suggestion</button>:<>

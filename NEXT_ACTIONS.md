@@ -27,11 +27,15 @@ Tracking: [Issue #3](https://github.com/knagle-max/BloomGutHealth/issues/3), PR 
 
 ---
 
-## Final RC checkpoint — 2026-11-08
+## Current P0 — R4 M1 before any RC sign-off
+
+Owner has reopened UI implementation for M1. Original Designer M1-D, complete integrated master, corrections, ledger and Biology restoration are now committed/read at16b8546; **source access is RESOLVED**. Do not ask for these files again or repeat the earlier main-merge approval question. Import actual39 media files, finish all prescribed mobile slots and click-by-name detail discovery, test actual source/save/error/keyboard/image fallback/zoom, then publish one updated RC. Current changes retain exact originals and replace provisional photo derivatives with the supplied ones. v0.6 remains paused; main unchanged.
+
+## Earlier R4 RC checkpoint — superseded by M1 scope
 
 Application `06efa3f146dcc20ba2fad840e73ee2b29db441e5` is verified: CI42432060658 SUCCESS, Render LIVE `dep-dbnshia9lscs73cdr1v0`. All seven R4 views/shared shell and original source assets are integrated. The final consolidated review packet is `docs/verification/V05_R4_RELEASE_CANDIDATE_20261108.md` with machine-readable dispositions/fingerprints beside it. Original 207-ID statuses are preserved; this is not full public/clinical certification.
 
-Current decision: **final owner RC/main approval is required by the November7 policy above**. No approval or finite defect list has been received. Fix any supplied concrete defect autonomously. Do not restart asset hunts, rerun unchanged checks, treat independent review as an interim coding gate, merge main without approval, or resume unrelated v0.6 before the approved RC is merged. Direct hosted requests remain proxy403; Render live and isolated CI proofs do not establish its DB binding. v0.6 stash remains untouched.
+Historical decision at the earlier RC: final owner approval was required. The subsequent M1 request is a concrete implementation scope change and supersedes that prior readiness/approval target. Fix any supplied concrete defect autonomously. Do not restart asset hunts, rerun unchanged checks, treat independent review as an interim coding gate, merge main without approval, or resume unrelated v0.6 before the approved RC is merged. Direct hosted requests remain proxy403; Render live and isolated CI proofs do not establish its DB binding. v0.6 stash remains untouched.
 
 # Continue Bloom v0.5 → v0.6 — current checkpoint2026-11-08
 
@@ -55,7 +59,7 @@ V0.6 paused at uncommitted recorded nutrient observations/disclosure: named Git 
 
 ## Execute next
 
-1. Present the completed consolidated RC packet and immutable application/CI/preview evidence for the single final owner decision. Current R4 engineering/source intake is delivered and verified, not a pending code task. A main merge and dependent v0.6 work remain unauthorized until that final decision. See the Final RC checkpoint above; any actual feedback becomes the next executable repair.
+1. M1 UI/media/Biology restoration is implemented and locally verified. Publish current code and verify final CI, Render revision and the added public39-image HTTP digest check, repairing real failures. Then record one updated integrated RC with genuine acceptance limits; do not reuse the earlier06efa3f approval target or repeat its owner question. Source access is resolved and all39 actual image files are imported. Details: docs/verification/R4_M1_IMPLEMENTATION_20261108.json.
 2. Latest integrated R4 source supersedes earlier paint-only restrictions. Preserve actual task hierarchy, source/unknown/consent/save semantics and canonical per-set state; no fabricated active-workout model. Original source files remain byte-identical; no new galleries or interim approval requests. Future v0.6 stash restore must manually merge the later MealAnalysis summary/recordedMeal props, keyboard source regions, capability map and improved private-source journey rather than overwrite UI fixes.
 ### Deferred v0.6 queue — resume only after the approved RC/main merge
 

@@ -1,3 +1,4 @@
+import EditorialMedia from "@/components/EditorialMedia";
 import {recordedMealTime} from "@shared/meal-time";
 import {journalIdentity} from "@shared/journal-identity";
 import {foodMass} from "@shared/nutrition-display";
@@ -493,6 +494,7 @@ export default function NutritionHistory() {
         <h1>Food journal</h1>
         <p>Your meals and nutrient totals, together in one place.</p>
       </div>
+      {!showLogForm&&<EditorialMedia slot="food" sizes="(max-width:767px) 100vw, 1000px" />}
       {showLogForm && (
         <Card className="mb-6" data-testid="card-log-meal-form">
           <CardHeader>

@@ -30,7 +30,7 @@
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
-    "server/vite.ts": "428666ee73562993e88ae268033faa23a36edca25e65e331e13de1a7906c613e"
+    "server/vite.ts": "ade8d79bc6dfdb3870f7903dd2a5433be0c902715a7be86e32757fea55ef3025"
   },
   "entries": [
     {
@@ -1215,7 +1215,7 @@
     },
     {
       "file": "server/vite.ts",
-      "line": 79,
+      "line": 78,
       "method": "USE",
       "pathExpression": "express.static(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",

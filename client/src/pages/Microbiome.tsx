@@ -1,3 +1,4 @@
+import EditorialMedia from "@/components/EditorialMedia";
 import {functionalResearchGroups} from "@shared/functional-microbiome";
 import MicrobiomeReportManagement from"@/components/MicrobiomeReportManagement";
 import OrganismPortrait from "@/components/OrganismPortrait";
@@ -24,7 +25,7 @@ export default function Microbiome() {
   const reportHeading=useRef<HTMLHeadingElement|null>(null);
   const[reportNotice,setReportNotice]=useState<{owner:string;text:string}|null>(null);
   const [comparisonId, setComparisonId] = useState("");
-  const [tab, setTab] = useState("results");
+  const [tab, setTab] = useState(()=>new URLSearchParams(window.location.search).get("tab")==="results"?"results":"bacteria");
   const [taxonSearch,setTaxonSearch]=useState<{owner:string;sample:string;text:string}|null>(null);
   const [researchSelection,setResearchSelection]=useState<{owner:string;sample:string;group:string}|null>(null);
   const taxonSearchInput=useRef<HTMLInputElement|null>(null);
@@ -66,6 +67,7 @@ export default function Microbiome() {
   useEffect(()=>{if(selectedTaxon&&!activeTaxon){setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}}},[selectedTaxon,activeTaxon]);
   return (
     <main className="science-page gut-reports-workspace space-y-5">
+      <EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" />
       <div className="science-heading">
         <p className="eyebrow">REPORTS & RESEARCH</p>
         <h1>Gut reports</h1>
@@ -73,6 +75,7 @@ export default function Microbiome() {
           Review your source values and what is missing. A gut report is optional.
         </p>
         <div className="flex flex-wrap gap-3">
+          {sorted.length>0&&<Button type="button" variant="outline" onClick={()=>{setTab("bacteria");requestAnimationFrame(()=>{const heading=document.getElementById("reported-organisms-heading");heading?.focus();heading?.scrollIntoView({block:"start"});});}}>Browse reported organisms</Button>}
           {(!currentSamples||sorted.length>0)&&<Link className="text-link" href="/upload">Upload or enter a report</Link>}
           <details className="workspace-disclosure"><summary>Related tools</summary><div className="flex flex-wrap gap-3 pt-3"><Link className="text-link" href="/progress">Recorded progress</Link><Link className="text-link" href="/meal-planner">Goal-based meals</Link></div></details>
         </div>
@@ -153,7 +156,7 @@ export default function Microbiome() {
 
       {tab === "bacteria" && (
         <section className="bloom-panel">
-          <h2>Microbial composition & change</h2>
+          <h2 id="reported-organisms-heading" tabIndex={-1}>Bacteria &amp; other reported organisms</h2><h3>Microbial composition &amp; change</h3>
           <p className="panel-note">Representative illustrations, not species diagnosis or your sample. Some show generic morphology; unavailable images use a labeled neutral symbol.</p>
           {currentId && (
             <label>

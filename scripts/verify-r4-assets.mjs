@@ -30,20 +30,13 @@ for (const asset of raster.assets) {
   assert.equal(original.readUInt32BE(20), asset.height, asset.path);
   assert.equal(original[25], asset.mode === 'RGBA' ? 6 : 2, asset.path);
 }
-const derivativeRoot = 'client/public/brand/editorial-r4';
-const derivatives = JSON.parse(await bytes(`${derivativeRoot}/MANIFEST.json`));
-assert.equal(derivatives.assets.length, 26);
-for (const asset of derivatives.assets) {
-  assert.equal(digest(await bytes(`${derivativeRoot}/${asset.path}`)), asset.sha256, asset.path);
-  const source = raster.assets.find(row => row.path === asset.source);
-  assert.equal(source?.sha256, asset.sourceSha256, asset.path);
-  assert(asset.width <= source.width && asset.height <= source.height, 'Never upscale');
-  if (process.argv.includes('--built')) {
-    assert.equal(digest(await bytes(`dist/public/brand/editorial-r4/${asset.path}`)), asset.sha256);
-  }
-}
 assert.deepEqual(await bytes('client/src/content/bloomCopy.ts'), await bytes('design/visual-system/r4-branding/bloomCopy.ts'));
-assert.deepEqual(await bytes('client/src/styles/bloom-visual-scoped.css'), await bytes(`${designer}/assets/styles/bloom-visual-scoped.css`));
+const canonical = (await bytes('client/src/styles/bloom-visual-scoped.css')).toString();
+const originalCSS = (await bytes(`${designer}/assets/styles/bloom-visual-scoped.css`)).toString();
+assert(canonical.startsWith(originalCSS), 'Original R4 CSS preserved as exact prefix');
+const m1 = (await bytes('docs/design/r4-m1/Bloom_R4_Mobile_Visual_Media_Full_Build_Spec_M1_Designer_Integrated_2026-11-07.md')).toString();
+const finalMediaCSS = m1.match(/### D4\.[\s\S]*?```css\n([\s\S]*?)```/)[1];
+assert(canonical.includes(finalMediaCSS), 'Exact M1-D final CSS merged into canonical stylesheet');
 const styles = (await bytes('client/src/styles/app.css')).toString();
 assert.equal((styles.match(/@import[^;]*bloom-visual-scoped\.css/g) || []).length, 1);
 assert(!styles.includes('motion.css'));
@@ -51,4 +44,4 @@ const icons = (await bytes('client/src/components/PremiumIcon.tsx')).toString();
 for (const [, filename] of icons.matchAll(/"(batch-[\w/-]+\.svg)"/g)) {
   assert(manifest.assets.some(asset => asset.filename === filename), filename);
 }
-console.log('R4 verified: 87 original SVGs/public copies; 13 original PNG hashes/dimensions/modes; 26 source-linked WebP derivatives; exact copy and canonical CSS.');
+console.log('R4 verified: 87 original SVGs/public copies; 13 original PNG hashes/dimensions/modes; exact copy, original CSS prefix and final M1-D canonical extension.');

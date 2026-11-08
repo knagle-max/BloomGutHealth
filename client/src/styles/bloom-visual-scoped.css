@@ -232,3 +232,74 @@
  .app-shell[data-bloom-visual="premium"] .bv-quiet-inset {background:Canvas;color:CanvasText;border-color:CanvasText;}
  .app-shell[data-bloom-visual="premium"] .bv-state-error {border-color:CanvasText;}
 }
+
+/* M1-D §D4: exact final Designer source. */
+.app-shell[data-bloom-visual="premium"] .bv-media { position:relative; isolation:isolate; overflow:hidden; min-width:0; margin:0; border-radius:20px; background:var(--bv-paper,#F5F3EB); pointer-events:none; }
+.app-shell[data-bloom-visual="premium"] .bv-media img { display:block; width:100%; height:100%; object-fit:contain; }
+.app-shell[data-bloom-visual="premium"] .bv-media--banner img,
+.app-shell[data-bloom-visual="premium"] .bv-media--conceptual img { object-fit:cover; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] img { object-position:70% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"] img { object-position:78% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] img { object-position:73% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] img { object-position:80% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { background:#182B45; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] img { object-position:75% 45%; }
+.app-shell[data-bloom-visual="premium"] .bv-media--conceptual { overflow:visible; }
+.app-shell[data-bloom-visual="premium"] .bv-media-concept-label { position:absolute; inset-inline-start:8px; bottom:8px; max-width:calc(100% - 16px); padding:4px 8px; border-radius:8px; background:#FFFEFA; color:#173E32; font:600 12px/1.4 system-ui,sans-serif; }
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero:has(.bv-media)::after { content:none !important; }
+@media (max-width:767px) { .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="progress-corner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="profile-corner"] { display:none; } }
+@media (forced-colors:active) { .app-shell[data-bloom-visual="premium"] .bv-media img { display:none; } .app-shell[data-bloom-visual="premium"] .bv-media-concept-label { position:static; background:Canvas; color:CanvasText; border:1px solid CanvasText; } }
+@media (prefers-reduced-transparency:reduce) { .app-shell[data-bloom-visual="premium"] .bv-media { backdrop-filter:none; -webkit-backdrop-filter:none; } }
+@media (prefers-reduced-motion:reduce) { .app-shell[data-bloom-visual="premium"] .bv-media, .app-shell[data-bloom-visual="premium"] .bv-media img { animation:none !important; transition:none !important; } }
+
+/* M1-D §D3 heights and §3.2 passive sibling placement. The caption flows
+   below Biology art as required by D3, including fallback/forced colors. */
+.app-shell:not([data-bloom-visual="premium"]) .bv-media { display:none; }
+.app-shell[data-bloom-visual="premium"] .bv-media { --bv-media-size:120px; block-size:var(--bv-media-size); inline-size:100%; }
+.app-shell[data-bloom-visual="premium"] .bv-media img { block-size:var(--bv-media-size); }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-media-source="svg"] img { object-fit:contain;object-position:center; }
+.app-shell[data-bloom-visual="premium"] .bv-media-slot { min-width:0;margin-block-start:16px; }
+.app-shell[data-bloom-visual="premium"] .bv-media--conceptual { block-size:auto; }
+.app-shell[data-bloom-visual="premium"] .bv-media-concept-label { position:static;display:block;inline-size:fit-content;margin:8px; }
+.app-shell[data-bloom-visual="premium"] .bv-media--cutout { inline-size:96px;--bv-media-size:96px;background:transparent; }
+.app-shell[data-bloom-visual="premium"] .bv-media--state { inline-size:120px;--bv-media-size:120px;background:transparent; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:120px; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:144px; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] { --bv-media-size:128px; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:132px; }
+@media(max-width:359px) {
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:96px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:112px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] { --bv-media-size:100px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:104px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media--state { inline-size:96px;--bv-media-size:96px; }
+}
+@media(min-width:768px) {
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:156px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:180px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] { --bv-media-size:160px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:168px; }
+}
+@media(min-width:1440px) {
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:176px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:220px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:200px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media--cutout { inline-size:120px;--bv-media-size:120px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media--state { inline-size:140px;--bv-media-size:140px; }
+}
+/* Biology restoration: source-group rows, not a card per marker. */
+.app-shell[data-bloom-visual="premium"] .bv-marker-list { list-style:none;margin:0;padding:0; }
+.app-shell[data-bloom-visual="premium"] .bv-marker-list li+li { border-top:1px solid var(--bv-line); }
+.app-shell[data-bloom-visual="premium"] .bloodwork-section-links .bv-marker-trigger { display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;inline-size:100%;padding:10px 0;border:0;border-radius:0;background:transparent;color:var(--bv-forest);text-align:start;box-shadow:none; }
+.app-shell[data-bloom-visual="premium"] .bv-marker-trigger > span { min-width:0;overflow-wrap:anywhere; }
+.app-shell[data-bloom-visual="premium"] .bv-marker-trigger small { display:block;font-size:14px;line-height:1.5;color:var(--bv-secondary); }
+.app-shell[data-bloom-visual="premium"] .bv-marker-affordance { display:flex;align-items:center;gap:4px;font-size:14px; }
+.app-shell[data-bloom-visual="premium"] .lab-marker-details { scroll-margin-top:6rem; }
+@media(forced-colors:active) { .app-shell[data-bloom-visual="premium"] .bv-media:not(.bv-media--conceptual) { display:none; } }
+
+.app-shell[data-bloom-visual="premium"] .lab-marker-details .precision-observation { scroll-margin-top:6rem; }
+@media(min-width:768px) {
+ .app-shell[data-bloom-visual="premium"] .science-heading:has(>.bv-media--cutout) { display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px; }
+ .app-shell[data-bloom-visual="premium"] .science-heading>.bv-media--cutout { grid-column:2;grid-row:1/span 4; }
+ .app-shell[data-bloom-visual="premium"] .science-heading:has(>.bv-media--cutout)>:not(.bv-media) { grid-column:1;min-width:0; }
+}

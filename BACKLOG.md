@@ -1,3 +1,7 @@
+## Current P0 — R4 M1 mobile/media and Biology restoration
+
+Owner requires M1 before any release-candidate sign-off; prior74191cf packet is a historical checkpoint. Original source is resolved/read at16b8546. M0–M8 engineering and Biology P1 source/detail restoration are implemented and locally tested; source/slot/test mappings are in docs/verification/R4_M1_IMPLEMENTATION_20261108.json. Publish and verify full CI, exact Render revision and the new read-only public39-image HTTP digest check. No interim approval request, main merge, unrelated v0.6 work, image gallery or private transfer. Physical/independent/device/operator/clinical acceptance remains explicitly separate.
+
 ## Consolidated R4 RC — 2026-11-08
 
 Application06efa3f: seven main views/shared shell and exact original source assets IMPLEMENTED_AND_TESTED; CI42432060658 SUCCESS and Render LIVE dep-dbnshia9lscs73cdr1v0. `docs/verification/V05_R4_RELEASE_CANDIDATE_20261108.{md,json}` is the single integrated owner review packet. All207 legacy IDs retain their bounded dispositions; nine R4 implementation surfaces have explicit evidence. Full v0.5 public/clinical release remains NOT_CERTIFIED.

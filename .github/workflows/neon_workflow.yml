@@ -77,6 +77,19 @@ jobs:
         run: npm test
       - name: Production build
         run: npm run build
+      - name: Verify Render public M1 image responses
+        timeout-minutes: 4
+        run: node scripts/verify-r4-m1-media.mjs --built --http https://bloomguthealth.onrender.com/
+      - name: Verify deployed M1 browser layout with read-only synthetic API fixtures
+        timeout-minutes: 5
+        env:
+          BLOOM_M1: "1"
+          BLOOM_UI_SHELL_TARGETS: "1"
+          BLOOM_M1_BASE_URL: https://bloomguthealth.onrender.com
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+          BLOOM_MATERIAL_REVIEW: /tmp/bloom-m1-hosted-browser
+        run: node --import tsx scripts/qa/visual-materials-parity.mjs
       - name: Start production app and verify live Neon persistence
         env:
           DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}

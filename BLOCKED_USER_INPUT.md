@@ -1,6 +1,6 @@
-# FINAL-RC-MAIN-20261108 — final owner decision (current)
+# FINAL-RC-MAIN-20261108 — SUPERSEDED by owner M1 implementation request
 
-- Status: BLOCKED_USER_INPUT for protected main merge and dependent v0.6 sequencing only. This is the final gate explicitly required by the newer owner policy, not an interim specialist approval or historical blocker revival.
+- Status: SUPERSEDED for current task selection. Owner explicitly requires R4 M1 mobile/media production and Biology restoration before any RC sign-off; source access is resolved at16b8546. Continue coding/test/push; the old RC is not the current approval target. Protected main merge and dependent v0.6 sequencing still require the later final decision. This is the final gate explicitly required by the newer owner policy, not an interim specialist approval or historical blocker revival.
 - Concrete review result: application06efa3f146dcc20ba2fad840e73ee2b29db441e5; CI42432060658 SUCCESS; Render LIVE dep-dbnshia9lscs73cdr1v0. Packet: docs/verification/V05_R4_RELEASE_CANDIDATE_20261108.md and JSON. All seven R4 views are transitioned; all207 legacy IDs remain traced without invented independent acceptance.
 - Exact question: Do you approve merging this consolidated RC into main?
 - Options: approve the reviewed RC for a separately authorized main merge; or provide concrete integrated defects to repair before that decision.

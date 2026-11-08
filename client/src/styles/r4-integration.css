@@ -65,13 +65,8 @@ html[data-experience="athlete"] body:has(.app-shell[data-bloom-visual="premium"]
 .app-shell[data-bloom-visual="premium"] .dashboard-heading > div { min-width:0; }
 .app-shell[data-bloom-visual="premium"] .dashboard-heading { flex-wrap:wrap;gap:1rem; }
 
-.app-shell[data-bloom-visual="premium"] .r4-editorial-cutout { width:112px;height:112px;object-fit:contain;pointer-events:none;flex-shrink:0; }
-.app-shell[data-bloom-visual="premium"] .meal-page-heading > .r4-editorial-cutout { float:right;margin-inline-start:1rem; }
 
-.r4-editorial-cutout { display:none; }
-.app-shell[data-bloom-visual="premium"] .r4-editorial-cutout { display:block; }
 .app-shell[data-bloom-visual="premium"] :is(.bloom-dashboard,.meal-page,.science-page) { background-color:transparent; }
-@media(max-width:768px),(forced-colors:active) { .app-shell[data-bloom-visual="premium"] .r4-editorial-cutout { display:none; } }
 
 .r4-icon { display:none;flex-shrink:0;background:currentColor;mask-repeat:no-repeat;mask-position:center;mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center;-webkit-mask-size:contain; }
 .r4-icon-fallback { display:inline-flex; }

@@ -1,4 +1,3 @@
-import EditorialArt from "@/components/EditorialArt";
 import { bloomCopy } from "@/content/bloomCopy";
 import {reportDateText} from "@shared/report-dates";
 import {useLocalClock} from "@/lib/use-local-clock";
@@ -83,7 +82,6 @@ export default function Dashboard() {
           <h1>{bloomCopy.today.h1}</h1>
           <p className="panel-note">{bloomCopy.today.takeaway}</p>
         </div>
-        <EditorialArt name="bloom-three-leaf-sprig" />
         <span className="date-pill">
           <CalendarDays size={16} />
           {date}

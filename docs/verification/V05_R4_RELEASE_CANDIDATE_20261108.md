@@ -1,3 +1,5 @@
+> **Superseded approval target:** the owner subsequently required full R4 M1 and Biology restoration before any RC sign-off. See [M1 implementation](R4_M1_IMPLEMENTATION_20261108.json). The application/CI facts below remain historical evidence, not current RC readiness.
+
 # Bloom v0.5 + R4 — consolidated release candidate
 
 Application commit: [`06efa3f146dcc20ba2fad840e73ee2b29db441e5`](https://github.com/knagle-max/BloomGutHealth/commit/06efa3f146dcc20ba2fad840e73ee2b29db441e5). Review branch: `enhance/bloom-experience`, PR #1. [Working preview](https://bloomguthealth.onrender.com). Render reports this application commit live (`dep-dbnshia9lscs73cdr1v0`). [Final application CI passed](https://github.com/knagle-max/BloomGutHealth/actions/runs/42432060658), including full unit/embedded PostgreSQL, production build, Python contracts and live isolated Neon persistence.

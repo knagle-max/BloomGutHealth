@@ -1,3 +1,4 @@
+import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import{MicrobiomeFoodReason}from'@/components/MicrobiomeFoodPreferences';
 import type{MicrobiomeFoodTrace}from'@shared/microbiome-food-influence';
@@ -367,6 +368,7 @@ export default function PrecisionNutrition() {
       e instanceof Error ? e.message : "Check the information entered.",
     );
 
+  const labMarkerTrigger=useRef<HTMLElement|null>(null);
   const [labSourceToOpen,setLabSourceToOpen]=useState<{rowId:string;target?:'row'}|null>(null);
   useEffect(()=>setLabSourceToOpen(null),[user?.id]);
   const r = result.data;
@@ -429,6 +431,7 @@ export default function PrecisionNutrition() {
         {(tab!=="overview"||!currentResult)&&<Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>}
         {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
       </div>
+      {tab==="overview"&&<EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" />}
       {tab!=="overview"&&tabNavigation}
       <div aria-live="polite">
         {status && (
@@ -663,7 +666,8 @@ export default function PrecisionNutrition() {
             {tab === "labs" && (
               <>
                 {requestedLabResult&&![...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs].some(row=>row.id===requestedLabResult)&&<p role="alert">The requested laboratory result is not available in your current records.</p>}
-                <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={rowId=>setLabSourceToOpen({rowId})}/>
+                <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={(rowId,target)=>{if(target==='row')labMarkerTrigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setLabSourceToOpen({rowId,target});}}/>
+                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-source-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
                 <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
@@ -712,7 +716,7 @@ export default function PrecisionNutrition() {
                       {r.sourceOnlyLabs?.length||r.pendingLabs?.length?"No results ready for interpretation; review the recorded source rows below.":"No bloodwork recorded. Genetics and microbiome data are optional too."}
                     </p>
                   )}
-                  <LabSourceHistory focusRequest={labSourceToOpen} trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+
 
                 </section>
                 <section className="bloom-panel">

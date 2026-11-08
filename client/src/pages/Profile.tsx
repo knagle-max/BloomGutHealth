@@ -1,3 +1,4 @@
+import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import MicrobiomeFoodPreferences from"@/components/MicrobiomeFoodPreferences";
 import FoodRegionSettings from "@/components/FoodRegionSettings";
@@ -136,6 +137,7 @@ export default function Profile({
   return (
     <main className="science-page profile-workspace space-y-5">
       <div className="science-heading">
+        <EditorialMedia slot="profile" sizes="120px" />
         <p className="eyebrow">{bloomCopy.profile.eyebrow}</p><h1>{bloomCopy.profile.h1}</h1>
         <p>{bloomCopy.profile.takeaway}</p>
         <p className="panel-note">Signed in as {user?.username}</p>
