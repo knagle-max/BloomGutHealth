@@ -75,6 +75,12 @@ jobs:
           node --import tsx scripts/api-exposure-inventory.ts --check
           node --import tsx scripts/capability-crosswalk.ts --check
           node --import tsx scripts/biology-content-coverage.ts --check
+      - name: Verify exact isolated hosted review persistence
+        timeout-minutes: 5
+        env:
+          BLOOM_HOSTED_RC_ISOLATED: "true"
+          BLOOM_HOSTED_RC_EXPECTED_COMMIT: ${{ github.event.pull_request.head.sha }}
+        run: node --import tsx scripts/qa/hosted-rc-persistence.mjs
       - name: Unit and embedded PostgreSQL tests
         run: npm test
       - name: Production build
@@ -92,12 +98,6 @@ jobs:
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
           BLOOM_MATERIAL_REVIEW: /tmp/bloom-m1-hosted-browser
         run: node --import tsx scripts/qa/visual-materials-parity.mjs
-      - name: Verify exact isolated hosted review persistence
-        timeout-minutes: 5
-        env:
-          BLOOM_HOSTED_RC_ISOLATED: "true"
-          BLOOM_HOSTED_RC_EXPECTED_COMMIT: ${{ github.event.pull_request.head.sha }}
-        run: node --import tsx scripts/qa/hosted-rc-persistence.mjs
       - name: Start production app and verify live Neon persistence
         env:
           DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}

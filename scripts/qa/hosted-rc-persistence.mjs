@@ -30,7 +30,7 @@ async function signup(){const account={username:'rc-synthetic-'+randomUUID(),pas
 let cleanupFailed=false;
 try {
  // Wait only for deployment propagation, and never register while mismatched.
- let qualified=false;for(let attempt=0;attempt<12;attempt++){try{await qualify();qualified=true;break;}catch{if(attempt<11)await delay(5000);}}
+ let qualified=false;for(let attempt=0;attempt<24;attempt++){try{await qualify();qualified=true;break;}catch{if(attempt<23)await delay(5000);}}
  assert.ok(qualified,'Exact hosted review build/binding not ready; no accounts created');
  const first=await signup(),second=await signup();
  assert.equal((await request(first,'/api/auth/me')).user.id,first.id);

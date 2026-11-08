@@ -20,7 +20,6 @@
     "freshPGliteTransaction": "PASS",
     "isolatedNeonTransaction": "PASS"
   },
-  "expiresAt": "2026-11-15T14:47:55Z",
   "configuration": {
     "updatedKeys": [
       "DATABASE_URL",
@@ -46,7 +45,11 @@
   },
   "scopeLimits": [
     "Existing accounts and records remain on the prior database. Isolated review starts with its own account namespace.",
-    "Review database expires with the PR branch; no production migration, main merge or public release.",
+    "No production migration, main merge or public release. Only the short-lived hosted write-test qualification expires; the review database is retained independently from CI teardown.",
     "Clinical/provider/native/human-device acceptance remains accurately scoped; no automatic specialist approval."
-  ]
+  ],
+  "branchName": "review/bloom-v05",
+  "branchExpiresAt": null,
+  "qualificationExpiresAt": "2026-11-15T14:47:55Z",
+  "lifecycleRepair": "Renamed the schema-only branch and removed auto-expiry. CI creates/deletes its own different preview/pr-1 branch; closing PR1/main merge cannot delete the active Render review database. No data movement or production changes."
 }
