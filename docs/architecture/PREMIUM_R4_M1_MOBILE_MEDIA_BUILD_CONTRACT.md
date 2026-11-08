@@ -1,3 +1,9 @@
+## LATEST LAB ICON ART UPDATE — FIXED 10 RASTER ILLUSTRATIONS (2026-11-07)
+
+**Read complete source and required visual reconciliation:** [`design/visual-system/bloodwork-category-fix/LATEST_RASTER_ICONS_INTEGRATION.md`](../../design/visual-system/bloodwork-category-fix/LATEST_RASTER_ICONS_INTEGRATION.md). The owner supplied ten **new raster icons**, each 512px transparent-outside/ivory-background-inside, as 10 PNG + 10 WebP; ZIP `Bloom_Lab_Icons_FIXED_All_10(1).zip`, SHA256 `74b63adbdc038f4ddf47275356064e5a5ab70254fc8b3b009c71dffae7e208c6`, 20/20 hashes verified. Exact original ZIP published to shared Library as `Bloom_Lab_Icons_FIXED_All_10_2026-11-07.zip`. Distinct from the 10 already-imported 24px currentColor SVGs and from the earlier Designer handoff. **Codex: obtain original raster bytes, do not generate replacements, import as `client/public/images/editorial/lab-categories/` and verify deployed HTTP.** Choose raster in approved slots only where visually legible, retaining compact row density and SVG fallback where raster needs ≥64px and 40px optical sizes fail. All previous R4/M1 mobile+desktop, science, user consent, light/dark and single RC constraints remain.
+
+---
+
 ## BLOODWORK CATEGORY VISUAL FIX — LATEST DESIGNER ARTIFACTS AND IMPLEMENTATION (2026-11-07)
 
 **Use exact uploaded artwork, do not substitute generic icons.** Product-owner archive: `Bloom_R4_M1_Bloodwork_Category_Visual_Fix_2026-11-07(1).zip`, SHA256 `474d6ee3d40be3bb8e896f7d4697110b32cef49474cc5a49124695227b3c9554`; ZIP CRC and 13/13 source-package payload hashes verified. All TEN byte-preserved original 24px SVGs are **now available directly to Codex in the repository** under `client/public/brand/visual-v2/lab-categories/`; source manifest and designer implementation references at `design/visual-system/bloodwork-category-fix/`.
