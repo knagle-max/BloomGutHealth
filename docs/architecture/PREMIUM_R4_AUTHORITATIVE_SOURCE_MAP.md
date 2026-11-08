@@ -1,3 +1,20 @@
+## R4 newest addendum — editorial raster media (2026-11-07 late update)
+
+**ADDITIVE authoritative specialist source:** Shared Library `/Bloom gut health/Agent Handoffs/`:
+- `Bloom_R4_D3_Raster_Media_UX_Architect_Decision_2026-11-07.md` — D3-R Structural UX safe image-slot decision, mandatory scientific “Illustrative, not your data” adjacent to schematic microbiology, responsive and overlay safeguards, same UX hierarchy and real source states.
+- `Bloom_R4_Editorial_Raster_Production_13_Originals_26_WebP_2026-11-07.zip` — archive SHA256 `e2782156585d595c421197e627e72df4492044856eca716718cfc8d1e5b2d62e`; 42 ZIP items (13 source PNG, 26 derived WebP, README, both manifests). Archive CRC PASS and **39/39** per-file image SHA256 match `manifest.json`.
+- `Bloom_R4_Editorial_Raster_Manifest_2026-11-07.json` — standalone metadata and exact file/variant paths, hashes, dimensions, attribution gaps and source lineage.
+
+**Source hierarchy:** final R4 master + Branding copy + 87 original SVG and canonical scoped CSS remain the baseline. D3-R adds media options and does **not** replace any of those files, invent navigation, become food/biological observations or override original source logic. Treat each editorial slot as **optional** and choose one best asset (raster or SVG fallback), not overlapping multiple heroes. Use supplied original files, not image generation or stock photography.
+
+**Implementation:** import chosen exact assets to versioned public paths, preserve per-file hash mapping; use paired 1x/2x WebP `srcSet`/`sizes`, intrinsic dimensions, lazy loading except true LCP hero, safe crop, light/dark/athlete and zoom/forced-colors fallback. No raster may cover headings, actions, amounts, labs, sources, consent, error/status or disclosures. Scientific conceptual microbiology shows visible adjacent “Illustrative, not your data” in every relevant layout. Avoid global CSS/second skin, fake photographic science, misrepresenting depicted foods as entered meals, glass/transparent text overlays without adequate contrast.
+
+**Provenance/release caveat:** raster manifest explicitly states commercial usage rights, generator/model/date and exact prompts were **not independently verified**. Don't invent them or claim licensed originals. Use existing approved SVG fallback for any specific media lacking adequate rights verification at public release. Treat this as a media-specific release consideration, **not a stop-all-development gate**.
+
+**Owner workflow still supersedes old specialist QA deliverables:** no interim Today review, no owner feedback loops and **no screenshot/image artifacts as development or final RC deliverables**. This does NOT prohibit using *approved designed images inside the application*. Actual browser visual/layout/a11y testing remains required. Finish all seven screens then present one integrated RC for owner approval before main. No unrelated v0.6 coding.
+
+---
+
 # Bloom Premium Production R4 — authoritative source map for Codex
 
 **Status:** Binding engineering input. This document points to *actual* specialist files and original source assets, not a replacement design specification. Owner authorization: implement all seven experiences autonomously, no interim feedback/screenshot deliverables, present one full RC before `main`, defer all unrelated v0.6 features.
