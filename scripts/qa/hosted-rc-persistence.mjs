@@ -22,7 +22,7 @@ async function request(account,path,method='GET',body,status=200,headers={}){
  const response=await fetch(base+path,{method,redirect:'error',signal:AbortSignal.timeout(30000),headers:{origin:base,...(account.cookie?{cookie:account.cookie}:{}),...(body?{'content-type':'application/json'}:{}),...headers},...(body?{body:JSON.stringify(body)}:{})});
  const cookies=response.headers.getSetCookie();
  const session=cookies.find(value=>value.startsWith('connect.sid='));
- if(session){if(!session.startsWith('connect.sid=;')){assert.match(session,/;\s*Secure/i,'Hosted cookie must be Secure');assert.match(session,/;\s*HttpOnly/i,'Hosted cookie must be HttpOnly');}account.cookie=session.split(';')[0];}
+ if(session){if(!session.startsWith('connect.sid=;')){assert.ok(/;\s*Secure/i.test(session),'Hosted cookie must be Secure');assert.ok(/;\s*HttpOnly/i.test(session),'Hosted cookie must be HttpOnly');}account.cookie=session.split(';')[0];}
  assert.equal(response.status,status,`Unexpected hosted response: ${method} ${path}`);
  return response.status===204?null:response.json();
 }
