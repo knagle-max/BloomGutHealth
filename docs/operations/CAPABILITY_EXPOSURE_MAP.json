@@ -1974,7 +1974,7 @@
     "server/food-catalog.ts": "e6ba72bb8cd39b4c6ffaf654776ebe4a33f5c391fb6373c6856db78b923c3684",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
-    "server/index.ts": "93c65477963efa0c8b512686464e0f96dde2863ac62dd92436769c19ec3b002d",
+    "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
     "server/meal-edit.ts": "f0605274f6be77993ab305f9d24e3866b5d633c5c1155e1743fabed7fd51b25c",
     "server/meal-intelligence.ts": "c63120f85b841a097299adf464942a2184471eb4bd3b4457d66000f692c49126",
     "server/meal-records.ts": "b8bdc2a1dd925bdd07424938b795041af238b4c3fb8b73f0b667e9f7e19c5ff7",

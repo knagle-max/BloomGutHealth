@@ -62,7 +62,7 @@
       "latestVerification": "PENDING"
     }
   },
-  "releaseStatus": "INCOMPLETE_PENDING_FULL_V05_QUALIFICATION",
+  "releaseStatus": "ACTIVE_ISOLATED_HOSTED_QUALIFICATION",
   "notClaimed": [
     "Production migration authorization",
     "Dataset isolation from environment flag",
@@ -70,7 +70,7 @@
     "Physical device or VoiceOver results"
   ],
   "migrationPlan": {
-    "status": "OWNER_AUTHORIZATION_PENDING_PRODUCTION_NAMED_BINDING",
+    "status": "SUPERSEDED_DO_NOT_EXECUTE_ON_PRODUCTION_NAMED_BINDING",
     "targetEndpoint": "ep-bitter-field-arqdkfep",
     "targetBranch": "br-orange-cloud-aru4p4fw",
     "files": [
@@ -85,5 +85,6 @@
     ],
     "scope": "Existing additive source tables/index/immutable-history triggers; no existing record rewrite, main merge or public release",
     "isolationEvidence": "Both migrations exercised on isolated CI branch and PostgreSQL regression tests; production-named binding is not claimed isolated"
-  }
+  },
+  "currentDisposition": "Original production-named binding was not migrated. Render now uses a separate empty template0 review database on the verified schema-only PR branch; all24 deployed application-role schema contracts pass. See V05_ISOLATED_REVIEW_REPAIR_20261108.json. No interim authorization required."
 }

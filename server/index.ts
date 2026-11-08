@@ -1,3 +1,4 @@
+import {registerReviewQualification} from "./review-qualification";
 import {schemaReadinessAudit} from "./schema-readiness";
 import {reviewRuntimeAudit} from "./review-runtime-audit";
 import { productService } from "./products";
@@ -66,10 +67,13 @@ app.use((req, res, next) => {
   log("Initializing shared request budgets before readiness.");
   await budgets.initialize();
   log("Shared request budgets ready.");
-  log(JSON.stringify(await reviewRuntimeAudit(pgPool, process.env)));
-  log(JSON.stringify(await schemaReadinessAudit(pgPool)));
+  const runtimeAudit=await reviewRuntimeAudit(pgPool, process.env);
+  const schemaAudit=await schemaReadinessAudit(pgPool);
+  log(JSON.stringify(runtimeAudit));
+  log(JSON.stringify(schemaAudit));
   productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",usdaSharedRequestLimit(),60));
   app.use(budgets.middleware());
+  registerReviewQualification(app,runtimeAudit,schemaAudit);
   const budgetCleanup = setInterval(() => { void budgets.prune().catch(() => {}); }, 60_000);
   budgetCleanup.unref();
   const server = await registerRoutes(app);

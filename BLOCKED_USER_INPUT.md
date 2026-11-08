@@ -1,3 +1,7 @@
+## SUPERSEDED — production-named source-storage migration question, 2026-11-08
+
+The pending question asking permission to run0015/0016 on the production-named binding is **withdrawn**, not an active approval or stop-work gate. The latest single-final-RC Architect policy directs safe isolated provisioning under existing authorization. That repair is implemented: separate template0 review database on the verified schema-only PR branch, canonical schema/public registry installed, all24 deployed application-role catalog contracts ready. Existing production-named records were not copied or migrated. Continue actual hosted persistence qualification and full-v0.5 engineering. No interim owner input is required. Only the final completed whole-v0.5 RC before main is the owner review checkpoint; no unrelated v0.6 before acceptance/merge. See NEXT_ACTIONS.md current entry.
+
 # FINAL-RC-MAIN-20261108 — SUPERSEDED by owner M1 implementation request
 
 - Status: SUPERSEDED for current task selection. Owner explicitly requires R4 M1 mobile/media production and Biology restoration before any RC sign-off; source access is resolved at16b8546. Continue coding/test/push; the old RC is not the current approval target. Protected main merge and dependent v0.6 sequencing still require the later final decision. This is the final gate explicitly required by the newer owner policy, not an interim specialist approval or historical blocker revival.

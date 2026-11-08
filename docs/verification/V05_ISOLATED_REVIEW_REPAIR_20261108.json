@@ -1,0 +1,52 @@
+{
+  "status": "ISOLATED_REVIEW_BINDING_REPAIRED_HOSTED_PERSISTENCE_TEST_PENDING",
+  "authority": "docs/architecture/V05_SINGLE_FINAL_RC_GATE_AUTONOMOUS_EXECUTION_20261108.md",
+  "serviceId": "srv-db9u7mjbc2fs73d86uv0",
+  "projectId": "fancy-smoke-82120373",
+  "branchId": "br-old-butterfly-ar8fetpm",
+  "endpointId": "ep-frosty-frost-arl3uo8c",
+  "databaseNameHash": "595f56395d9e8af97ce6e489db391f31709f76a6c11ba4c1533fe3f0ea3ba24d",
+  "branchInitSource": "parent-schema",
+  "databaseInitSource": "CREATE DATABASE with template0; no record copy",
+  "createdEmptyAccountDataset": true,
+  "schema": {
+    "source": "shared/application-schema.ts plus canonical support migrations and session DDL",
+    "expectedColumns": 150,
+    "contracts": 24,
+    "ownerCatalog": "PASS",
+    "deployedApplicationRoleCatalog": "PASS",
+    "generatedBaseSchemaSha256": "564a621a573f2edb4dd58ae9bf321f095a8ace98257ee4a7d118df694b95c33f",
+    "singlePreparedStatements": 92,
+    "freshPGliteTransaction": "PASS",
+    "isolatedNeonTransaction": "PASS"
+  },
+  "expiresAt": "2026-11-15T14:47:55Z",
+  "configuration": {
+    "updatedKeys": [
+      "DATABASE_URL",
+      "DATABASE_URL_UNPOOLED"
+    ],
+    "replaceAll": false,
+    "unrelatedValuesPreserved": true,
+    "credentialsPrintedOrCommitted": false
+  },
+  "oldBinding": {
+    "endpoint": "ep-bitter-field-arqdkfep",
+    "branch": "br-orange-cloud-aru4p4fw",
+    "branchName": "production",
+    "mutatedByMigration": false,
+    "recordsCopied": false,
+    "priorMigrationApprovalRequest": "SUPERSEDED_WITHDRAWN; do not apply there"
+  },
+  "deployedReceipt": {
+    "applicationCommit": "5a85a63ccf6546af2cd45ab4748c099da644dce9",
+    "deployId": "dep-dboedkuc6qcc73ddv7g0",
+    "startup": "2026-11-08T21:18:47Z",
+    "catalogStatus": "catalog-ready"
+  },
+  "scopeLimits": [
+    "Existing accounts and records remain on the prior database. Isolated review starts with its own account namespace.",
+    "Review database expires with the PR branch; no production migration, main merge or public release.",
+    "Clinical/provider/native/human-device acceptance remains accurately scoped; no automatic specialist approval."
+  ]
+}

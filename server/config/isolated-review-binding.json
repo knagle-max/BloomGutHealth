@@ -1,0 +1,10 @@
+{
+  "version": "v05-review-20261108",
+  "serviceId": "srv-db9u7mjbc2fs73d86uv0",
+  "projectId": "fancy-smoke-82120373",
+  "branchId": "br-old-butterfly-ar8fetpm",
+  "endpointId": "ep-frosty-frost-arl3uo8c",
+  "databaseNameHash": "595f56395d9e8af97ce6e489db391f31709f76a6c11ba4c1533fe3f0ea3ba24d",
+  "expiresAt": "2026-11-15T14:47:55Z",
+  "provisioning": "Separate empty database created from template0 on the control-plane-verified parent-schema PR branch; canonical schema and public research registry installed; zero accounts verified before binding. Production-named branch was not modified."
+}

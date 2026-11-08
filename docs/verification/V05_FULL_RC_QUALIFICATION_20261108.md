@@ -1,3 +1,5 @@
+> **Current correction:** the production-named migration request below is historical and withdrawn. Under the new single-final-RC Architect handoff, the Render review app was safely rebound to a separately created template0 database on the verified schema-only PR branch. All150 columns/24 application-role contracts now pass. Existing records remain on the prior binding. See V05_ISOLATED_REVIEW_REPAIR_20261108.json; exact new hosted authenticated persistence qualification is the next active step, not an owner approval hold.
+
 # Full v0.5 RC qualification — active
 
 Owner clarification on 2026-11-08: finish the complete v0.5 release candidate, including functional/data/security/deployment verification. R4/M1 UI completion is one milestone. This record does not certify the full RC, a main merge, public launch or v0.6 start.
@@ -23,4 +25,4 @@ Read-only endpoint metadata maps Render's `ep-bitter-field-arqdkfep` to Neon pro
 
 Existing additive migrations `0015_experiment_versions.sql` and `0016_profile_measurement_sources.sql` are implemented and tested on isolated PostgreSQL/CI. Their exact checksums and proposed target are in [the schema qualification record](V05_FULL_RC_SCHEMA_QUALIFICATION_20261108.json). Authorization for applying these two migrations to the production-named binding has been requested separately; no live migration or account-record read/write has occurred during this qualification. The pending question concerns that database change only, not a UI checkpoint, main merge or public release.
 
-Full-RC qualification remains open until the deployed source-storage gap and exact-head verification are resolved. Continue safe independent work; preserve feature-scoped provider/native/clinical/operator and genuine human/device review limits without representing them as missing core code or fabricated passes. Main remains unchanged, and v0.6 stays paused.
+Full-RC qualification remains open for exact-head hosted persistence and the finite final functional review. The source-storage binding gap is repaired; the prior request to mutate the production-named branch is withdrawn. Continue safe independent work; preserve feature-scoped provider/native/clinical/operator and genuine human/device review limits without representing them as missing core code or fabricated passes. Main remains unchanged, and v0.6 stays paused.

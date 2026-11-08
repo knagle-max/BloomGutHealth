@@ -19,7 +19,7 @@
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
-    "server/index.ts": "93c65477963efa0c8b512686464e0f96dde2863ac62dd92436769c19ec3b002d",
+    "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
@@ -28,6 +28,7 @@
     "server/profile-routes.ts": "3da2b5b82a13f63ed7af86dfb02e971331e7065e3ab3ad533d03b9b137258719",
     "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
+    "server/review-qualification.ts": "d9dca0b6ef903adaf167cac58188321e23fce81461c1aa52d123ee75cc412aab",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
     "server/vite.ts": "ade8d79bc6dfdb3870f7903dd2a5433be0c902715a7be86e32757fea55ef3025"
@@ -1026,6 +1027,14 @@
       "review": "REVIEW_REQUIRED"
     },
     {
+      "file": "server/review-qualification.ts",
+      "line": 14,
+      "method": "GET",
+      "path": "/api/review/qualification",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
       "file": "server/routes.ts",
       "line": 60,
       "method": "POST",
@@ -1147,7 +1156,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 23,
+      "line": 24,
       "method": "USE",
       "pathExpression": "securityHeaders",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1155,7 +1164,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 26,
+      "line": 27,
       "method": "USE",
       "pathExpression": "sameOriginWrites",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1163,7 +1172,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 27,
+      "line": 28,
       "method": "USE",
       "pathExpression": "express.json(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1171,7 +1180,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 28,
+      "line": 29,
       "method": "USE",
       "pathExpression": "express.urlencoded(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1179,7 +1188,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 37,
+      "line": 38,
       "method": "USE",
       "pathExpression": "session(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1187,7 +1196,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 56,
+      "line": 57,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1195,7 +1204,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 72,
+      "line": 75,
       "method": "USE",
       "pathExpression": "budgets.middleware(arguments omitted)",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
@@ -1203,7 +1212,7 @@
     },
     {
       "file": "server/index.ts",
-      "line": 77,
+      "line": 81,
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
