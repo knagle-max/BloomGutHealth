@@ -1,3 +1,15 @@
+## BLOODWORK CATEGORY VISUAL FIX — LATEST DESIGNER ARTIFACTS AND IMPLEMENTATION (2026-11-07)
+
+**Use exact uploaded artwork, do not substitute generic icons.** Product-owner archive: `Bloom_R4_M1_Bloodwork_Category_Visual_Fix_2026-11-07(1).zip`, SHA256 `474d6ee3d40be3bb8e896f7d4697110b32cef49474cc5a49124695227b3c9554`; ZIP CRC and 13/13 source-package payload hashes verified. All TEN byte-preserved original 24px SVGs are **now available directly to Codex in the repository** under `client/public/brand/visual-v2/lab-categories/`; source manifest and designer implementation references at `design/visual-system/bloodwork-category-fix/`.
+
+**Binding task:** Fix user-reported visual failure in Progress → Biology → Bloodwork category navigation. Preserve existing `LabExplorer.tsx` source/category mapping, `details/summary` keyboard and URL semantics, marker counts and name-click details. Replace current generic/network-dependent `LabCategoryIcon.tsx` art with the supplied ten inline SVG geometries staged in `design/visual-system/bloodwork-category-fix/LabCategoryIcon.designer.tsx` (remove unused imports), with `other` fallback. Merge scoped style guidance from `lab-categories-premium.designer.css` into the **one** canonical `client/src/styles/bloom-visual-scoped.css`, not a second theme import. The sample CSS requires adaptation to the actual **Athlete light and Athlete dark palettes**; don't blindly use unconditional navy Athlete override that perpetuates known theme defect.
+
+**Geometry/quality:** Mobile 76–92px compact scan rows, 40–42px icon tile, 15/20 sans title + 12/17 metadata, two-line title wrapping, ≥44px summary target. Desktop same compact navigation without tall cards; serif only for editorial page title. Check light/dark, Athlete variants, 320/390/768/1440, 200% zoom, open/closed, unknown/zero, unit review, long labels, focus, forced-colors and reduced motion. Aim at ≥5 comparable category rows on 390px where categories exist, but rely on actual browser density evidence. Do not invent categories, clinical findings, alerts, interpretation or measured values.
+
+**Provenance:** Original SVG bytes preserved; readable staged TSX/CSS integration copies use supplied design geometry/rules, but are **not claimed byte-identical** to the ZIP's TSX/CSS. Original ZIP remains ground truth for any discrepancy. No interim owner review or screenshot artifact deliverables; actual UI quality/testing is still mandatory. Full integrated RC approval before `main`.
+
+---
+
 ## FOOD CAPTURE & EDITING — USER TESTING CORRECTION (2026-11-07)
 
 **Original full handoff:** [`docs/design/r4-m1/Bloom_User_Testing_Food_Capture_Edit_Unification_Handoff_2026-11-07.md`](../design/r4-m1/Bloom_User_Testing_Food_Capture_Edit_Unification_Handoff_2026-11-07.md). Read UT-FOOD-UX-5301–5314 and acceptance F-01–F-15 in full; implementation is P1 within existing R4/M1 Food UI, not unrelated v0.6, while data/save integrity requirements are P0 invariants. User Testing verified code-path fragmentation, **not** actual browser failures.
