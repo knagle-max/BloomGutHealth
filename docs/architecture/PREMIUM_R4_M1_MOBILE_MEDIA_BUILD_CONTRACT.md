@@ -1,3 +1,17 @@
+## ORIGINAL M1 SOURCE NOW COMMITTED — USE THESE DIRECT REPOSITORY FILES
+
+The exact M1 source documents have been copied into this **development branch**, addressing Codex's actual access problem. **Read the originals in full, not merely this Architect summary:**
+
+- [M1 Designer-integrated full build spec (includes Appendix M1-D exact CSS, sizing, layouts)](../design/r4-m1/Bloom_R4_Mobile_Visual_Media_Full_Build_Spec_M1_Designer_Integrated_2026-11-07.md)
+- [Biology bloodwork and microbial organism click-by-name detail restoration](../design/r4-m1/Bloom_R4_Biology_Detail_Discovery_Restoration_Handoff_2026-11-07.md)
+- [M1 Designer Review Corrections](../design/r4-m1/Bloom_R4_M1_Designer_Review_Corrections_2026-11-07.md)
+- [Full R4+M1 integrated master (2,110 source lines)](../design/r4-m1/Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_M1_Integrated_2026-11-07.md)
+- [M1 designer media asset ledger CSV](../design/r4-m1/Bloom_R4_M1_Editorial_Asset_Ledger_2026-11-07.csv)
+
+The documentation ZIP remains [in the Shared Library] by exact name `Bloom_R4_M1_Designer_Integrated_Documentation_2026-11-07.zip`; Codex **does not need Library access to read the above source specs**. Image/media bytes are independent assets; the eight attached image ZIPs contain images/manifests, not this separate documentation. The exact CSS appendix is **inside the first Markdown file** at `Appendix M1-D — FINAL DESIGNER MEDIA RESOLUTION` / `D4. Scoped CSS paint values`. Implement the Designer's final D4 rather than guessing from the images. This is not another design gate.
+
+---
+
 # Bloom R4 M1 — Chief Architect definitive mobile visual/media implementation contract
 **Date:** 2026-11-07 | **Priority:** P0 within full R4/v0.5 RC | **Branch:** `enhance/bloom-experience` | **Development issue:** #3 | **Supersedes only conflicting M1 implementation instructions**, not the R4 master, R4 UX state model or owner release policy.
 
