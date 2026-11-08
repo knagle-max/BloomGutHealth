@@ -1,3 +1,13 @@
+## LATEST REQUIRED EXTENSION — R4 MOBILE VISUAL & MEDIA PRODUCTION M1
+
+**Implement the original M1 specialist handoff, not a Codex-designed approximation.** Full binding executable specification: [`docs/architecture/PREMIUM_R4_M1_MOBILE_MEDIA_BUILD_CONTRACT.md`](https://github.com/knagle-max/BloomGutHealth/blob/enhance/bloom-experience/docs/architecture/PREMIUM_R4_M1_MOBILE_MEDIA_BUILD_CONTRACT.md).
+
+**Exact Shared Library originals:** `Bloom_R4_M1_Designer_Integrated_Documentation_2026-11-07.zip`, `Bloom_R4_Mobile_Visual_Media_Full_Build_Spec_M1_Designer_Integrated_2026-11-07.md`, `Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_M1_Integrated_2026-11-07.md`, `Bloom_R4_M1_Editorial_Asset_Ledger_2026-11-07.csv`, `Bloom_R4_M1_Designer_Review_Corrections_2026-11-07.md`, `Bloom_R4_Mobile_Media_Production_Handoff_M1_2026-11-07.zip`, `Bloom_R4_Mobile_Art_Asset_Ledger_2026-11-07.csv`, `Bloom_R4_Mobile_QA_Tracking_2026-11-07.csv`, and `Bloom_R4_Biology_Detail_Discovery_Restoration_Handoff_2026-11-07.md`. Also obtain the separate raster-production 13-PNG/26-WebP ZIP and underlying finalized R4 87-SVG/204-key Branding source.
+
+**Effective order:** R4 product/UX/Brand base -> M1 Designer-integrated Appendix M1-D final responsive artwork sizing/CSS/slots -> original raster manifest -> current live existing state logic. Earlier M1 provisional 'raster not delivered' and draft invalid CSS selectors are superseded. No separate visual skin, no unverified claim of commercial asset rights, no invented species result. No interim feedback/image deliverables; test the running app and present one full RC before main.
+
+---
+
 ## R4 newest addendum — editorial raster media (2026-11-07 late update)
 
 **ADDITIVE authoritative specialist source:** Shared Library `/Bloom gut health/Agent Handoffs/`:
