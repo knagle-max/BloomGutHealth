@@ -1,3 +1,20 @@
+## PRODUCT OWNER PERMANENT DESIGN REQUIREMENT — DESKTOP + MOBILE EQUAL PRIORITY (2026-11-07)
+
+**Binding for R4, M1 and EVERY subsequent Bloom feature and design handoff.** Desktop and mobile are coequal supported experiences; mobile must never be deferred as an afterthought, an untested scaled-down desktop screen, or a post-implementation polish task. Tablet/reflow is also required.
+
+**Every change must ship with both experiences together:**
+- **Desktop (1440px reference):** meaningful wide-screen composition, clear information density, precise readable telemetry and source details, fully functional sidebar and keyboard/mouse workflows. Do not force a narrow mobile layout into desktop.
+- **Mobile (390px primary, 320px constrained):** deliberately composed visual hierarchy and original media placement, touch-first controls >=44px, preserved contextual CTA, actual mobile nav (Everyday 3 tabs, Athlete 5), safe areas, keyboard/software keyboard, long text, overflow and source details. Do not just scale down desktop, suppress the main illustration to invisibility or bury scientific discoveries in nested accordions.
+- **Tablet/reflow (768px) and 200% zoom:** intentional intermediate composition, no lost controls, content or source provenance, functional route navigation. Check dark/light and Athlete themes where applicable, reduced motion, forced colours, reduced transparency and failed media loading.
+- **Same functional coverage across screen sizes:** logging/review/receipt, labs and organism detail access, Explore citations, Progress date-aware data, Athlete session controls, Profile privacy/consent and revision conflict handling, meaningful errors/partial/empty states. Different layouts may simplify visible density but must not eliminate capabilities.
+- **Shared design system, tailored compositions:** reuse approved R4 tokens and supplied assets; permit responsive variations chosen by Designer/UX, not an invented second mobile design language or separate conflicting CSS theme. Art/media may hide only for verified collision/safety, not as a blanket 'mobile = no artwork' default.
+- **Implementation/QA in lockstep:** every touched screen requires both desktop and mobile implementation/testing in the same development slice. Record concise per-route checks at 320, 390, 768, 1440 and 200% zoom, with measured navigation/controls/source/CTA and critical state assertions. Missing mobile or desktop implementation is **NOT DONE**, even if the other viewport passes.
+- **No new owner gates or image/screenshot deliverables**: actual interactive browser checks still mandatory; owner reviews one integrated RC before main. No unrelated v0.6 work until accepted RC merges.
+
+This product-owner instruction supersedes earlier screen/build task sequencing whenever it allows desktop to be declared complete while leaving mobile pending, or vice versa.
+
+---
+
 ## LATEST REQUIRED EXTENSION — R4 MOBILE VISUAL & MEDIA PRODUCTION M1
 
 **Implement the original M1 specialist handoff, not a Codex-designed approximation.** Full binding executable specification: [`docs/architecture/PREMIUM_R4_M1_MOBILE_MEDIA_BUILD_CONTRACT.md`](https://github.com/knagle-max/BloomGutHealth/blob/enhance/bloom-experience/docs/architecture/PREMIUM_R4_M1_MOBILE_MEDIA_BUILD_CONTRACT.md).
