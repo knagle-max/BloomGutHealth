@@ -39,7 +39,10 @@
     "browser": [
       "Synthetic Profile export acknowledgement/download/error/reflow PASS",
       "Actual handlers plus encrypted isolated PostgreSQL routine correction/history/reload/export/ownership/deletion and keyboard/reflow PASS",
-      "Actual missing-history browser save preserves source and typed draft; applying isolated migration then retrying saves once PASS"
+      "Actual missing-history browser save preserves source and typed draft; applying isolated migration then retrying saves once PASS",
+      "Actual pizza household portions/correction/reload/reuse/grams 320/390px PASS",
+      "Actual native Viome PDF saved companion links with no collection date, upload context/retry/unlink/deletion/ownership/reflow PASS",
+      "Actual compact Athlete five-row editor, only1/2 completed, Set2-only edit, original units/stable IDs, encrypted save/reload and owner separation PASS"
     ],
     "staticSourceInventories": "PASS",
     "mainMerged": false,
@@ -48,6 +51,15 @@
       "runId": 42494394452,
       "status": "FAILED_PRE_START_SESSION_REQUIREMENT",
       "resolution": "6852c349 separates pre-start schema check from runtime session check; migration step now passes in run42494603568"
+    },
+    "deployment": {
+      "commit": "6852c349f977e4eb491418a2632ce638f2638bb8",
+      "status": "LIVE",
+      "deployId": "dep-dbo981favr4c73b63g60",
+      "finishedAt": "2026-11-08T15:25:43.540283Z",
+      "schemaStatus": "INCOMPLETE_TWO_SOURCE_TABLES_ABSENT",
+      "latestApplicationCommit": "7c24f08a66439c8954cb8591e72cb598a0c8e975",
+      "latestVerification": "PENDING"
     }
   },
   "releaseStatus": "INCOMPLETE_PENDING_FULL_V05_QUALIFICATION",

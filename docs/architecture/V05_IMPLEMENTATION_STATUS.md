@@ -1,5 +1,9 @@
 # v0.5 implementation reconciliation — 2026-10-23
 
+## Active full-RC qualification — owner clarification 2026-11-08
+
+The full v0.5 RC is the active objective; the R4/M1 UI/workflow checkpoint is not the finish line. Main is unchanged and v0.6 is paused. See [current full-scope qualification](../verification/V05_FULL_RC_QUALIFICATION_20261108.md) and [read-only schema findings](../verification/V05_FULL_RC_SCHEMA_QUALIFICATION_20261108.json). New routine corrections preserve their source when history storage is unavailable; catalog audits and isolated CI qualification now cover application storage with actual required privileges. Current full-RC work identified two absent support tables on Render's production-named Neon binding; their additive rollout requires separate authorization. The older November7 statement that v0.6 work is active is superseded. Historical independent/provider/device acceptance is not automatic proof of missing software.
+
 ## Current engineering checkpoint — 2026-11-07
 
 `50f0945`: integrated620/620 tests pass, strict TS/build, new/existing actual meal and organism browser journeys pass. Household meal units/size/count, source-plan history preservation and cited research topic/profile are implemented; unknowns, canonical records and original descriptions remain preserved. See `docs/verification/V05_INTEGRATED_CHECKPOINT_20261107.json` for exact tested scope and CI/preview pending-at-check states. The source collection date remains optional for companion linking; upload context is separate. New actual whole-pizza quantity failure found during follow-through audit is repaired and focused/browser checked in its own subsequent change.
