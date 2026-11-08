@@ -1,3 +1,32 @@
+# AUTHORITATIVE FINAL UI SOURCE — R4 FINAL DESIGNER + BRANDING COMPLETE (2026-11-07)
+
+**Use this finalized source, not an earlier R3/R4 draft or historic ZIP, for the CURRENT P0 UI implementation:** shared Library `/Bloom gut health/Agent Handoffs/Bloom_R4_Final_Integrated_Designer_Production_2026-11-07.zip`, exact archive SHA256 `9076ecdedb071b20a48051de2b301c5ffd6d69b645152675ccd0fa10c08b6cc2`. It includes:
+- `Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_2026-11-07.md` at ZIP root (authoritative integrated seven-view spec)
+- `branding/bloomCopy.ts`, `branding/bloomCopy.json`, `branding/Bloom_R4_Brand_Copy_Table_2026-11-07.csv`, Brand voice guide, and source-hash manifest; **204 copy keys**, including runtime-reserved keys whose dynamic values must be preserved
+- `assets/` with **87 original SVGs**, `FINAL_R4_DESIGNER_ASSET_MANIFEST.json` with exact path-to-use/metadata and 87 verified asset hashes, and ONE canonical `assets/styles/bloom-visual-scoped.css`; `assets/styles/motion.css` is OPTIONAL and must not duplicate keyframes
+- Designer audit and `START_HERE.md`; reference-only visual package is not an application screen or functional contract
+
+**Packaging clarification:** The branding submanifest lists the previously separate `Bloom_Master_Build_Spec_R4_Designer_UX_Brand_Copy_Integrated_2026-11-07.md` which is not bundled under `branding/`; the **newer R4 FINAL master at ZIP root supersedes it**. The five other branding payload hashes and all 87 SVG hashes match this ZIP. No wait for a corrected archive; record this mapping during asset import.
+
+**CODER: IMPLEMENT IMMEDIATELY.** Re-inventory current code, import approved exact assets and copy, integrate custom premium editorial presentation across **ALL seven views**, use only the final scoped stylesheet with correct focus selector and verified feature flag/cascade, preserve actual source/permission/save/data workflows, test working browser, CI and Render preview, repair defects and create one final RC. Do not stop for Today review, per-screen approvals, image or screenshot deliverables, copy signoffs, asset signoffs, or another planning document. Branding copy is described as proposed in its own provenance; use safe runtime truth as higher authority and make warranted local edits rather than represent unreviewed claims as clinically validated. **No unrelated v0.6 features before approved RC merged into main. No main merge without final owner review.**
+
+Tracking: [Issue #3](https://github.com/knagle-max/BloomGutHealth/issues/3), PR #1.
+
+---
+
+# HIGHEST PRECEDENCE — Product Owner 2026-11-07: FULL UI TRANSITION FIRST, ONE FINAL RC REVIEW
+
+**This explicitly supersedes all older visual screenshot, interim checkpoint, signoff and task-selection instructions in this file, Issue #3, previous Architect/Designer/UX handoffs and PR comments wherever they conflict.**
+
+- **Codex must implement and finish the entire approved Premium Production R4 UI specification and original assets on `enhance/bloom-experience`, covering Today, Food, Biology/Gut, Explore, Progress, Athlete, Profile and shared shell/states.** Keep executing autonomously across all views; no pause after Today, no interim owner/designer/UX/Architect feedback requests, approval checkpoints, or new planning rounds.
+- **NO images or before/after screenshot artifacts are required during development or for the final RC package.** Do not create screenshot galleries merely to satisfy obsolete documentation requirements or consume review tokens. This does **not** waive actual rendered UI inspection, responsive/browser checks, visual quality or accessibility: Codex must test the running application at relevant widths/themes/states and repair observed issues. Record concise text-based test results, exact SHA and genuine defects instead. If the owner later explicitly requests images, provide them then.
+- **No midstream 'gating':** imported assets, microcopy adjustments, safe art-slot placement, route compositions and responsive refinements are routine implementation decisions. Use the latest canonical designer/Branding files, grounded existing app semantics and approved color/type/voice guidance; resolve conflicts in code without awaiting per-string or per-screen approvals. Never fabricate clinical metrics, skip user consent, break auth/data integrity or claim unexecuted tests.
+- **Only after all UI views are transitioned:** assemble one integrated **release candidate** of v0.5 functionality + full premium design on an immutable SHA and available Render preview. Present one consolidated product-owner review **for approval to merge to `main`**, together with practical engineering, UX, scientific/privacy/security/legal evidence and any actual blocking defects. Do not merge without final owner authorization. Do not demand separate interim specialist signoffs; specialists' evidence can be consolidated at final RC.
+- **No v0.6 feature coding until the approved RC is merged to main.** Preserve already completed/stashed v0.6 code without bringing it into this RC.
+- **Current executable assignment:** [P0 Issue #3](https://github.com/knagle-max/BloomGutHealth/issues/3). Use shared Library's R4 master/UX closure and exact editable original Designer asset archives. Progress should be shown through code commits, tests and the working preview, not process-only handoffs.
+
+---
+
 # Continue Bloom v0.5 → v0.6 — current checkpoint2026-11-08
 
 Stay on `enhance/bloom-experience`, PR1 and existing Render review preview. Routine commit/push/preview authorized; preserve main/other contributors. No paid infrastructure, production data/schema writes, secret discovery or unapproved private-data transfer. Continue after milestones; no repetitive final acknowledgments.
