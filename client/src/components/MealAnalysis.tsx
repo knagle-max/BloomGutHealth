@@ -277,7 +277,7 @@ export default function MealAnalysis({
       )}
       <details open>
         <summary>Macros, vitamins & minerals</summary>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2" role="region" aria-label="Meal nutrient estimates and coverage" tabIndex={0}>
           <table className="w-full text-sm">
             <thead>
               <tr>

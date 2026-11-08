@@ -9,7 +9,7 @@ export default function BiologyHome({ report,gutReports, onOpen }: { report: Pre
   const results = report.labHistory.length + pending + sourceOnly;
   const gutNote=gutReports?gutReports.saved?`${gutReports.saved} saved ${gutReports.saved===1?'report':'reports'}${gutReports.awaitingReview?` · ${gutReports.awaitingReview} to review`:''}`:gutReports.awaitingReview?`${gutReports.awaitingReview} ${gutReports.awaitingReview===1?'report':'reports'} to review`:'Add your first report':report.microbiome.report?'Report added':'Review gut reports';
   const rows = [
-    { label: 'Bloodwork', note: `${results?`${results} recorded results`:'Add your first result'}${pending ? ` · ${pending} source unit${pending===1?' needs':'s need'} review` : ''}${sourceOnly ? ` · ${sourceOnly} source-only` : ''}`, tab: 'labs', Icon: FlaskConical },
+    { label: 'Bloodwork', note: `${results?`${results} recorded results`:'Add your first result'}${pending ? ` · ${pending} unit${pending===1?'':'s'} to confirm` : ''}${sourceOnly ? ` · ${sourceOnly} without an explanation` : ''}`, tab: 'labs', Icon: FlaskConical },
     { label: 'Gut reports', note:gutNote, href: '/microbiome', Icon: Leaf },
     { label: 'Genetics', note: report.genetics.import ? 'Recorded calls & research context' : 'Explore genes or add a source', tab: 'genetics', Icon: Dna },
     { label: 'Measurements', note: report.checkins.length?`${report.checkins.length} dated check-ins`:'Add your first measurement', tab: 'progress', Icon: Activity },

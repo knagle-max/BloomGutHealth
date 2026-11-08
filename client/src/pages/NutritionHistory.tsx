@@ -778,7 +778,7 @@ export default function NutritionHistory() {
       </Card>
 
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
           <h2 className="text-lg font-semibold flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
             Recent Meals
@@ -1093,7 +1093,7 @@ export default function NutritionHistory() {
                       </details>
                     )}
                     <Button
-                      className="mt-3"
+                      className="mt-3 h-auto min-h-11 max-w-full whitespace-normal"
                       variant="outline"
                       disabled={updateMealMutation.isPending}
                       onClick={() =>

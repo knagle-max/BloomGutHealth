@@ -40,7 +40,7 @@ try{
   await go();await region.getByRole('button',{name:/^Genetics/}).click();await page.getByRole('region',{name:'Your genetics',exact:true}).waitFor();
   await go();await region.getByRole('button',{name:/^Measurements/}).click();await page.getByRole('heading',{name:'Record your response',exact:true}).waitFor();
   scenario='empty';await go();await region.getByRole('link',{name:/Gut reports/}).getByText('Add your first report',{exact:true}).waitFor();
-  scenario='pending';await go();await region.getByRole('button',{name:/^Bloodwork/}).getByText(/source unit.*review/).waitFor();await region.getByRole('button',{name:/^Bloodwork/}).focus();await page.keyboard.press('Enter');await page.getByText(/Confirm source unit/).first().waitFor();
+  scenario='pending';await go();await region.getByRole('button',{name:/^Bloodwork/}).getByText(/unit.*confirm/).waitFor();await region.getByRole('button',{name:/^Bloodwork/}).focus();await page.keyboard.press('Enter');await page.getByText(/Confirm source unit/).first().waitFor();
   scenario='qualitative';await go();await region.getByRole('button',{name:/^Bloodwork/}).focus();await page.keyboard.press('Tab');assert.match(await page.evaluate(()=>document.activeElement?.textContent),/Gut reports/);
   await page.setViewportSize({width:1280,height:1000});await page.evaluate(()=>document.documentElement.style.zoom='2');assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   mode='athlete';await page.reload();await region.getByRole('link',{name:/Gut reports/}).getByText('1 saved report',{exact:true}).waitFor();assert.deepEqual(await region.locator('.biology-home-source strong').allTextContents(),['Bloodwork','Gut reports','Genetics','Measurements']);
