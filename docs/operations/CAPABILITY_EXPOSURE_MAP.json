@@ -1857,7 +1857,7 @@
     "client/src/components/GenotypeExplanations.tsx": "43c3aa3e54127f5940a3349145fa60845358bc9ac19fb03b2546f185b3083e0c",
     "client/src/components/ImportedReportDetails.tsx": "01abf37dc644f3c3679471e572908a03d17cc5deb9445af04ceadf8a97c57a50",
     "client/src/components/IngredientMassEntry.tsx": "948b603a10b9e215fe404a5092e2b11a0e7f695d4474847d710d35127d9d6da0",
-    "client/src/components/LabCategoryIcon.tsx": "62ee23056ca64d22769c31f48f5617744ea6b33f87edc18e36ab2fb4ac87df15",
+    "client/src/components/LabCategoryIcon.tsx": "ab0460b7da1707222e8b635ede5fcf6e79a5b8a3030a662099ca7368e21d7caf",
     "client/src/components/LabExplorer.tsx": "65aab0bc1d75bd8c3c6684ebf1410dd4f7845d4f3281187a086712aa7666a1e1",
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
     "client/src/components/LabSourceHistory.tsx": "4980ec3e6206947ec08fefe09d00fed5d5cc94c3a9cb413a8c7d505405b6f176",

@@ -1,3 +1,11 @@
+## Active R4/M1 follow-up — 2026-11-08
+
+| Task | Status / acceptance |
+| --- | --- |
+| Athlete distinct light/dark + Today readable action states | Implemented locally;24 route/width/theme cases and normal/hover/focus/active contrast pass; 56 shared Athlete cases, original wordmark bytes and strict TypeScript/build pass; publication follows. |
+| Compact Lab category navigation | Original inline geometry integrated;92 labels ×6 source records, source/owner/keyboard/offline and5-width light/dark pass. Original raster ZIP unavailable; approved inline SVG compact fallback retained. |
+| Unified Food capture/edit | NEXT actionable P1; use canonical composer/review, atomic owned conditional update and replay-safe receipt; preserve original meal/date/source and one record. F-01–F-15 remain open. |
+
 ## Current P0 — R4 M1 mobile/media and Biology restoration
 
 Owner requires M1 before any release-candidate sign-off; prior74191cf packet is a historical checkpoint. Original source is resolved/read at16b8546. M0–M8 engineering and Biology P1 source/detail restoration are implemented and locally tested; source/slot/test mappings are in docs/verification/R4_M1_IMPLEMENTATION_20261108.json. Publish and verify full CI, exact Render revision and the new read-only public39-image HTTP digest check. No interim approval request, main merge, unrelated v0.6 work, image gallery or private transfer. Physical/independent/device/operator/clinical acceptance remains explicitly separate.
@@ -8,7 +16,7 @@ Application06efa3f: seven main views/shared shell and exact original source asse
 
 | Task | Status / dependency | Next action |
 | --- | --- | --- |
-| Final integrated RC/main decision | BLOCKED_USER_INPUT by latest owner policy, NEXT_ACTIONS lines24–25; not an interim specialist gate | Owner reviews the concrete candidate and approves main merge or supplies finite defects. Fix actual defects autonomously. |
+| Earlier integrated RC/main decision | SUPERSEDED by reopened M1/P0/Food implementation; no current engineering blocker | Finish actionable UI work before assembling the updated final candidate. Main merge still requires owner authorization. |
 | Direct hosted acceptance / Render schema binding | BLOCKED_TECHNICAL; proxy403 and unidentified binding/runner | No repeated unchanged probe, secret hunt or production mutation. Existing scoped external evidence remains open. |
 | v0.6 continuation | PAUSED by explicit no-v0.6-before-approved-main policy | Preserve stashf0fd364; resume approved dependency backlog after authorized main merge. |
 

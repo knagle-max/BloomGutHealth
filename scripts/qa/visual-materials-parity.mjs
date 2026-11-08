@@ -13,14 +13,14 @@ const layoutBaseline=process.env.BLOOM_UI_LAYOUT_BASELINE;
 const historicalFiles=layoutBaseline?new Map(['client/src/components/AthleteHome.tsx','client/src/pages/PrecisionNutrition.tsx'].map(file=>[path.resolve(file),execFileSync('git',['show',layoutBaseline+':'+file],{encoding:'utf8'})])):new Map();
 const vite=remote?null:await createServer({plugins:layoutBaseline?[{name:'controlled-ui-source-baseline',enforce:'pre',load(id){return historicalFiles.get(id.split('?')[0]);}}]:[],server:{host:'127.0.0.1',port:5244,strictPort:true}});if(vite)await vite.listen();const{chromium}=createRequire(import.meta.url)(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');const browser=await chromium.launch({headless:true,executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:390,height:1000},timezoneId:'UTC'});await page.clock.setFixedTime(now);page.setDefaultTimeout(12000);const errors=[],evidence=[],mutations=[],interceptedComputations=[];page.on('pageerror',e=>errors.push(e.message));await page.route('https://fonts.**/**',r=>r.abort());
 await page.route('**/api/**',async route=>{const u=new URL(route.request().url()),p=u.pathname;let json=[];if(route.request().method()==='POST'&&p==='/api/experience/athlete-day')interceptedComputations.push(p);else if(!['GET','HEAD','OPTIONS'].includes(route.request().method())){mutations.push(p);return route.fulfill({status:403,json:{error:'Read-only synthetic browser fixture'}});}
- if(p==='/api/auth/me')json={user};else if(p==='/api/experience/settings')json=settings();else if(p==='/api/preferences')json=prefs;
+ if(p==='/api/auth/me')json={user};else if(p==='/api/experience/settings')json=settings();else if(p==='/api/preferences')json=prefs;else if(process.env.BLOOM_P0_VISUAL==='1'&&p.startsWith('/api/meals'))json=[{id:'synthetic-complete-meal',mealText:'Synthetic lunch',loggedAt:now.toISOString(),totalCalories:400,protein:20,carbs:40,fat:12,nutritionalData:{calories:400,protein:20,carbs:40,fat:12}}];
  else if(p==='/api/precision')json={...report,availableReports:[],intake:{days:28,mealsLogged:0,nutrients:[]},records:[]};else if(p==='/api/precision/context')json=health;else if(p==='/api/precision/wellness-context')json=context;
  else if(p==='/api/experience/wellness-actions')json=buildWellnessActionView({context,settings:settings(),day:{date:'2026-11-07',timezoneOffset:0},sessions:[],activities:[],choices:[],now});
  else if(p==='/api/biology/registry')json=registry;else if(p==='/api/profile')json=user;
  else if(p==='/api/experience/athlete-day')json={profileSourceKey:athleteProfileSourceKey(settings().athlete),...buildAthleteDay(settings().athlete,[],[],[]),hydration:[]};
  else if(p==='/api/experience/review')json={checkins:[],experiments:[],observations:[],messages:[],summary:[],notices:[],signals:[],experimentSummaries:[],metrics:[],entries:0,from:'2026-11-01',to:'2026-11-07',next:'Record a check-in',note:'Synthetic fixture'};
  else if(p.includes('/nutrition/targets'))json={calories:null,protein:null,fiber:null};else if(p==='/api/health-sources')json={connections:[]};else if(p==='/api/health-sources/observations')json={observations:[],returned:0,total:0,offset:0,limit:50,hasMore:false};else if(p==='/api/capabilities')json={eligible:false,experimentalEnabled:false};else if(p==='/api/analysis/status')json={ai:{configured:false},nutrition:{liveLookupConfigured:false}};
- await route.fulfill({json});
+ if(process.env.BLOOM_P0_VISUAL==='1'&&p==='/api/experience/wellness-actions')json={...json,actions:[],primaryActionId:null};await route.fulfill({json});
 });
 const paint=enabled=>r4?page.locator('.app-shell').evaluate((el,on)=>{if(on)el.dataset.bloomVisual='premium';else delete el.dataset.bloomVisual;},enabled):page.evaluate(({on,stylesheet})=>{const style=document.querySelector(`style[data-vite-dev-id$="/${stylesheet}"]`);if(!style?.sheet)throw Error('Material stylesheet not loaded');style.sheet.disabled=!on;},{on:enabled,stylesheet});
 const structure=()=>page.evaluate(()=>Array.from(document.querySelectorAll('.app-shell a,.app-shell button,.app-shell input,.app-shell select,.app-shell textarea,.app-shell summary,.app-shell h1,.app-shell h2,.app-shell h3')).flatMap(el=>{const r=el.getBoundingClientRect();if(!r.width||!r.height||!el.checkVisibility({checkOpacity:true,checkVisibilityCSS:true}))return[];return[{tag:el.tagName,text:(el.getAttribute('aria-label')||el.textContent||'').trim(),href:el.getAttribute('href'),role:el.getAttribute('role'),x:r.x,y:r.y,width:r.width,height:r.height,font:getComputedStyle(el).fontFamily}];}));
@@ -56,9 +56,22 @@ try{
      const card=color('porcelain'),canvas=color('canvas'),ink=color('forest'),muted=color('secondary'),brand=color('brand');probe.remove();
      return{background:style.backgroundColor,font:getComputedStyle(el.querySelector('h1')).fontFamily,ratios:[contrast(ink,card),contrast(muted,card),contrast(muted,canvas),contrast(canvas,brand)]};
     });
-    assert.equal(palette.background,athlete?'rgb(15, 27, 46)':theme==='dark'?'rgb(16, 28, 23)':'rgb(248, 249, 243)');
+    assert.equal(palette.background,athlete&&theme==='dark'?'rgb(15, 27, 46)':theme==='dark'?'rgb(16, 28, 23)':'rgb(248, 249, 243)');
     assert.match(palette.font,/Georgia|Iowan|Baskerville|Palatino/);
     assert.ok(palette.ratios.every(value=>value>=4.5),`${name} ${theme}: authored text/action contrast ${palette.ratios}`);
+   }
+   if(process.env.BLOOM_P0_VISUAL==='1'&&name==='today'){
+    const hero=page.locator('.today-focus').first();
+    for(const label of['Choose my next meal','Adjust']){
+     const link=hero.getByRole('link',{name:label,exact:true});await link.waitFor();
+     for(const state of['normal','hover','focus','active']){
+      await page.mouse.move(0,0);if(state==='hover')await link.hover();if(state==='focus')await link.focus();if(state==='active'){await link.hover();await page.mouse.down();}
+      const contrast=await link.evaluate(el=>{const c=getComputedStyle(el),hero=el.closest('.today-focus'),h=getComputedStyle(hero);const rgb=s=>s.match(/[\d.]+/g).slice(0,3).map(Number);const lum=c=>c.map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4;}).reduce((s,x,i)=>s+x*[.2126,.7152,.0722][i],0);const text=lum(rgb(c.color));const stops=h.backgroundImage.match(/rgba?\([^)]+\)/g)||[h.backgroundColor];return Math.min(...stops.map(v=>{const b=lum(rgb(v));return(Math.max(text,b)+.05)/(Math.min(text,b)+.05);}));});
+      assert.ok(contrast>=4.5,`${label} ${theme} ${state}: contrast ${contrast}`);
+      if(state==='active'){await page.mouse.move(0,0);await page.mouse.up();}
+     }
+     assert.ok((await link.boundingBox()).height>=44,label+' touch target');
+    }
    }
    if(m1){
     const slot={today:'today',food:'food',biology:'biology',explore:'explore',progress:'progress',profile:'profile',athlete:'athlete',journal:'food',gut:'biology'}[name];

@@ -75,6 +75,26 @@ body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon-fallback { display:no
 @media(forced-colors:active) { body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon { forced-color-adjust:none;background:CanvasText; } }
 
 .app-shell[data-bloom-visual="premium"] .food-progress-plot { color:var(--bv-chart); }
-/* Athlete's authored surface remains navy even with the light theme selected. */
-html[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-ink { display:none; }
-html[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-reversed { display:block; }
+/* Dark Athlete surfaces use the reversed wordmark; light uses the ink original. */
+html.dark[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-ink { display:none; }
+html.dark[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-reversed { display:block; }
+
+html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual="premium"]) {
+  --background: 70.000 33.333% 96.471%;
+  --foreground: 216.774 50.820% 11.961%;
+  --card: 48.000 100.000% 99.020%;
+  --card-foreground: 216.774 50.820% 11.961%;
+  --popover: 48.000 100.000% 99.020%;
+  --popover-foreground: 216.774 50.820% 11.961%;
+  --primary: 211.162791 63.546798% 39.803922%;
+  --primary-foreground: 70.000 33.333% 96.471%;
+  --secondary: 111.429 22.581% 93.922%;
+  --secondary-foreground: 216.774 50.820% 11.961%;
+  --muted: 111.429 22.581% 93.922%;
+  --muted-foreground: 147.273 11.828% 36.471%;
+  --accent: 111.429 22.581% 93.922%;
+  --accent-foreground: 216.774 50.820% 11.961%;
+  --input: 106.667 27.273% 87.059%;
+  --border: 106.667 27.273% 87.059%;
+  --ring: 211.162791 63.546798% 39.803922%;
+}

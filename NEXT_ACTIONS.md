@@ -1,3 +1,7 @@
+## Active execution — 2026-11-08, supersedes the stale paused goal checkpoint
+
+R4/M1 implementation is ACTIVE; no owner input is needed for remaining safe engineering. Original media/Biology changes are pushed at3db397c. Finish current P0 Athlete light/dark, Today action contrast and compact Lab categories, then the approved unified Food capture/edit workflow (original handoff linked in the Architect contract). Verify/publish each meaningful change and continue. The earlier RC/main question below is historical, not a current stop condition. Keep main unchanged and v0.6 stash intact under the current full-UI-first owner policy. Final main authorization applies only after all actionable RC work is complete.
+
 # AUTHORITATIVE FINAL UI SOURCE — R4 FINAL DESIGNER + BRANDING COMPLETE (2026-11-07)
 
 **Use this finalized source, not an earlier R3/R4 draft or historic ZIP, for the CURRENT P0 UI implementation:** shared Library `/Bloom gut health/Agent Handoffs/Bloom_R4_Final_Integrated_Designer_Production_2026-11-07.zip`, exact archive SHA256 `9076ecdedb071b20a48051de2b301c5ffd6d69b645152675ccd0fa10c08b6cc2`. It includes:
