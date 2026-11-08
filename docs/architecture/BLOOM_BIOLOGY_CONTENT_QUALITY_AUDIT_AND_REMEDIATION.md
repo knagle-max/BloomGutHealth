@@ -1,3 +1,20 @@
+## IMPLEMENTED 2026-11-08 — DRAFT IS NOT A UI ACCESS BLOCKER
+
+**Owner decision:** Show all available educational draft content now. Independent scientific sign-off is a **publication-quality/evidence status**, NOT a software gate that hides the lab/organism explanation. Do not relabel `reviewed_draft` as `reviewed`, strip citation warnings, manufacture clinical certainty or bury text behind placeholders.
+
+**Actual code committed on `enhance/bloom-experience`:**
+- Original machine-readable registry is accessible at `shared/data/bloom_biology_content_coverage_r4m1_2026-11-08.json` (same 14 lab/94 organism entries as the handoff).
+- `shared/biology-content.ts`: typed, versioned exact-name resolver; supports all 14 lab IDs and 94 fixture names without gating by draft/limited status; intentionally refuses inferred genus/strain synonyms.
+- `client/src/components/LabExplorer.tsx`: replaces brief dictionary/boilerplate sections with all four authored lab description sections and expandable real citation/source-status text, while preserving existing chart, raw source and unit-review controls.
+- `client/src/components/MicrobialProfile.tsx`: reads registry first, then pre-existing `report-explanations.ts` research context, then limited unknown-identity explanation; shows three authored organism sections for exact fixture names, removes repeated “Research explanation not available yet” / “Reviewed research profile not yet available”, and avoids contradictory “Not reported · Reported observation” in the main summary.
+- `tests/biology-content-registry.test.ts`: full 14+94 resolution assertions, unknown identity and no false approval assertions.
+
+**Scientific limitation remains:** The source has 14 lab drafts and 94 organism records, but many of the 94 are deliberately limited or unresolved, not complete study-backed profiles. Their available descriptions are displayed as provided; Codex/Science must continue improving missing specificity and validating claims rather than using `DRAFT_NOT_INDEPENDENTLY_APPROVED` to suppress everything. The original source `scientificApproval` stays unchanged. Never claim this implementation means claim-specific medical review is complete.
+
+**Verification state:** Source commits have been made and static registry counts were inspected, but full `npm run check`, `npm test`, actual deployed-browser rendering, all 4 themes and 320/390/768/1440 screenshot/contrast QA have not been run by the Architect in this environment. Codex must execute them on branch, fix failures and deliver verified RC. No interim owner stop/go or image deliverable.
+
+---
+
 ## UPDATE 2026-11-08 — ORIGINAL BIOLOGY JSON LOCATED, VALIDATED AND COMMITTED
 
 **THE MISSING SOURCE BLOCKER IS RESOLVED.** The exact original user-supplied Biology registry from shared Library `/Bloom gut health/Agent Handoffs/bloom_biology_content_coverage_r4m1_2026-11-08.json` has been added to the development branch: [`docs/biology/bloom_biology_content_coverage_r4m1_2026-11-08.json`](../biology/bloom_biology_content_coverage_r4m1_2026-11-08.json), commit `91d6b5d02983e533e17cc134494354a32d7638a5`.
