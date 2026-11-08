@@ -68,7 +68,7 @@ jobs:
           node scripts/prepare-preview-schema.mjs
           node scripts/push-preview-schema.mjs
           npm run db:seed:knowledge
-          node --import tsx scripts/verify-preview-schema.ts
+          node --import tsx scripts/verify-preview-schema.ts --before-app-start
       - name: Type check and API source inventory
         run: |
           npm run check
@@ -99,6 +99,7 @@ jobs:
           BLOOM_SMOKE_ISOLATED: "true"
         run: |
           npm run test:neon
+          node --import tsx scripts/verify-preview-schema.ts
           node --import tsx scripts/spend-ledger-smoke.ts
           node --import tsx scripts/feature-control-smoke.ts
 

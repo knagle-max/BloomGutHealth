@@ -7,7 +7,8 @@ assert.equal(process.env.BLOOM_SMOKE_ISOLATED,'true');
 assert.ok(process.env.DATABASE_URL_UNPOOLED);
 const pool=new Pool({connectionString:process.env.DATABASE_URL_UNPOOLED,max:1});
 try {
- const result=await schemaReadinessAudit(pool);
+ const phase=process.argv.includes("--before-app-start")?"before-app-start":"runtime";
+ const result=await schemaReadinessAudit(pool,phase);
  console.log(JSON.stringify(result));
- assert.equal(result.status,'catalog-ready','Required application schema is incomplete; do not qualify this deployment');
+ assert.equal(result.status,phase==='before-app-start'?'pre-bootstrap-catalog-ready':'catalog-ready','Required application schema is incomplete; do not qualify this deployment');
 } finally {await pool.end();}

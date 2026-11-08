@@ -16,6 +16,10 @@ test('catalog audit detects absent core storage, missing columns and optional st
   assert.equal(ready.status,'catalog-ready');
   assert.ok('storage' in ready&&ready.storage.filter(t=>!t.required).every(t=>t.status==='missing-table'));
   assert.ok(!JSON.stringify(ready).includes('PRIVATE_HEALTH_SENTINEL'));
+  await db.exec('DROP TABLE session');
+  assert.equal((await schemaReadinessAudit(pool)).status,'incomplete','Runtime requires session storage');
+  assert.equal((await schemaReadinessAudit(pool,'before-app-start')).status,'pre-bootstrap-catalog-ready','Lazy session creation must be verified after live app bootstrap');
+  await db.exec('CREATE TABLE session (sid text,sess text,expire text)');
   await db.exec('ALTER TABLE meals DROP COLUMN nutritional_data');
   const incomplete=await schemaReadinessAudit(pool);
   assert.equal(incomplete.status,'incomplete');

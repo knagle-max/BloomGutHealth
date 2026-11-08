@@ -23,7 +23,7 @@ SELECT e.table_name, e.column_name,
  COALESCE(has_table_privilege(current_user,to_regclass(e.table_name),'UPDATE'),false) AS updatable,
  COALESCE(has_table_privilege(current_user,to_regclass(e.table_name),'DELETE'),false) AS deletable
 FROM expected e`;
-export async function schemaReadinessAudit(pool:{query(config:{text:string;query_timeout:number}):Promise<{rows:Record<string,unknown>[]}>}) {
+export async function schemaReadinessAudit(pool:{query(config:{text:string;query_timeout:number}):Promise<{rows:Record<string,unknown>[]}>}, phase:"runtime"|"before-app-start"="runtime") {
  try {
   const {rows}=await pool.query({text:schemaReadinessQuery,query_timeout:5000});
   const storage=schemaContracts.map(contract=>{
@@ -33,7 +33,7 @@ export async function schemaReadinessAudit(pool:{query(config:{text:string;query
    const access={read:records.length>0&&records.every(row=>row.readable===true),write:records.length>0&&records.every(row=>row.insertable===true&&row.updatable===true&&row.deletable===true)};
    return {table:contract.name,required:contract.required,status:!present?'missing-table':missingColumns.length?'missing-columns':!access.read||!access.write?'insufficient-access':'available',missingColumns,access};
   });
-  return {event:'application-schema-readiness',status:storage.some(table=>table.required&&table.status!=='available')?'incomplete':'catalog-ready',storage,note:'Catalog and table privileges only; does not verify constraints, encryption, data isolation, consent, sequence privileges or successful user workflows.'};
+  return {event:'application-schema-readiness',status:storage.some(table=>table.required&&!(phase==='before-app-start'&&table.table==='session')&&table.status!=='available')?'incomplete':phase==='before-app-start'?'pre-bootstrap-catalog-ready':'catalog-ready',phase,storage,note:'Catalog and table privileges only; does not verify constraints, encryption, data isolation, consent, sequence privileges or successful user workflows.'};
  } catch(error) {
   const code=(error as {code?:unknown})?.code;
   return {event:'application-schema-readiness',status:'unavailable',errorCode:typeof code==='string'&&/^[A-Z0-9]{5}$/.test(code)?code:'unclassified'};
