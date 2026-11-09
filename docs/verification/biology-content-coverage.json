@@ -25225,7 +25225,7 @@
     "tests/report-storage-owner.test.ts": "ff3d0d8bcf89a68f274d60c8b40bffd6881b5def2331118177c53d97a68ba4a8",
     "tests/reported-taxa.test.ts": "f726496829641be935746638b703c79bf23b210bc7e38658cf5b7cee714d532e",
     "tests/scientific-contracts.test.ts": "6c60dff555b9e014449963adfc71afffaf66c11fd839c03cd939f2e8b7abccb5",
-    "tests/source-only-lab-paste.test.ts": "3dfac5409e71b27ab28304db464b5652c5d0dccafee8a32ae5b4988f0b8d4cdb",
+    "tests/source-only-lab-paste.test.ts": "e6be3a0fdc399ad2222dfa5755a9e828e4dc27c6fee98f9f459d6d85d98a5b9b",
     "tests/source-only-lab.test.ts": "b2046b9eefb1002b70d238c835867d61fff6b62df10b50924b709bef0346562a",
     "tests/specialist-security.test.ts": "cf782f24ecfe3dfebc60984b3ba8febd52bd97ae9d86d47b731925368b63a493",
     "tests/structured-report-roundtrip.test.ts": "8017d2bab928c8142baeef9e02bc2555531f7cda15d4f3ab3fb4de3736742cc5",
