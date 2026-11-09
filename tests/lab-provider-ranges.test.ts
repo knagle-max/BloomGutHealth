@@ -46,6 +46,7 @@ test('display comparison fields cannot override source method, fasting or origin
  const point={date:'2026-01-01T01:00:00+10:00',method:context.method,fasting:'yes',sourceReport:{enteredDate:'2026-01-01'}};
  assert.equal(providerContextMatchesSource(point,context),true);
  for(const change of [{method:'Other method'},{fasting:'no'},{collectedOn:'2025-12-31'}])assert.equal(providerContextMatchesSource(point,{...context,...change}as ProviderRangeContext),false);
+ assert.equal(providerContextMatchesSource({...point,sourceReport:undefined},context),false,'A legacy timestamp alone cannot establish a source collection-era date');
  assert.equal(providerContextMatchesSource({...point,method:'Not supplied'},context),false);
  assert.equal(providerContextMatchesSource({...point,dateCorrection:{enteredDate:'2026-01-02'}},context),false);
  assert.equal(providerContextMatchesSource({...point,fasting:'unknown'},{...context,fasting:'yes'}),false,'A display selector does not fill unknown source fasting');

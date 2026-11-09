@@ -20,7 +20,7 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
  const id=useId(),points=t.points,unit=points[0].unit;
  const selectedPoint=resolveRecordedLabPoint(points,selected);
  const selectedSourceVersion=JSON.stringify([selectedPoint?.id,selectedPoint?.date,selectedPoint?.laboratory,selectedPoint?.method,selectedPoint?.fasting,selectedPoint?.sourceUnit,selectedPoint?.sourceValue,selectedPoint?.referenceLow,selectedPoint?.referenceHigh]);
- const sourceDisplayContext:Pick<LabOverlayChoice['context'],'method'|'fasting'|'collectedOn'>={method:selectedPoint?.method||'',fasting:selectedPoint?.fasting??'unknown',collectedOn:selectedPoint?(selectedPoint.dateCorrection?.enteredDate||selectedPoint.sourceReport?.enteredDate||selectedPoint.date.slice(0,10)):''};
+ const sourceDisplayContext:Pick<LabOverlayChoice['context'],'method'|'fasting'|'collectedOn'>={method:selectedPoint?.method||'',fasting:selectedPoint?.fasting??'unknown',collectedOn:selectedPoint?(selectedPoint.dateCorrection?.enteredDate||selectedPoint.sourceReport?.enteredDate||''):''};
  useEffect(()=>{setOverlay(value=>({...value,context:{...emptyLabOverlayChoice().context,...sourceDisplayContext},confirmed:false}));},[selectedSourceVersion,t.marker]);
  const times=points.map(p=>Date.parse(p.date)),values=points.map(p=>p.value),first=Math.min(...times),latestTime=Math.max(...times),span=latestTime-first;
  const intervals=points.map(point=>sourceReferenceIntervalForPlot(t.marker,point)),showReferences=overlay.provider!=='none';

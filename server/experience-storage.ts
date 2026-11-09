@@ -1,3 +1,4 @@
+import {checkinRecordSourceSchema,type CheckinRecordSource} from '../shared/wellness-checkin-sources';
 import {ExperimentHistoryUnavailable} from "./experience-errors";
 import {WellnessChoiceStorage} from "./wellness-choice-storage";
 import {WellnessChoiceConflict} from "./wellness-actions";
@@ -60,6 +61,10 @@ export class ExperienceStorage {
   const rows=await this.db.select({id:experimentVersions.id,recordId:experimentVersions.recordId,encryptedPayload:experimentVersions.encryptedPayload,sourceCreatedAt:experimentVersions.sourceCreatedAt,sourceUpdatedAt:experimentVersions.sourceUpdatedAt,supersededAt:experimentVersions.supersededAt}).from(experimentVersions).innerJoin(experienceRecords,eq(experimentVersions.recordId,experienceRecords.id)).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,"experiment"),...(recordId?[eq(experienceRecords.id,recordId)]:[]))).orderBy(desc(experimentVersions.supersededAt),desc(experimentVersions.id)).limit(50001);
   if(rows.length>50000||Buffer.byteLength(JSON.stringify(rows),"utf8")>20*1024*1024)throw Error("EXPERIMENT_HISTORY_TOO_LARGE");
   return{status:"available",versions:rows.map(({encryptedPayload,...row})=>({...row,sourceCreatedAt:row.sourceCreatedAt.toISOString(),sourceUpdatedAt:row.sourceUpdatedAt.toISOString(),supersededAt:row.supersededAt.toISOString(),payload:experimentSchema.parse(decryptPrecision(encryptedPayload,userId))}))};
+ }
+ async getCheckinRecord(userId:string,id:string):Promise<CheckinRecordSource|null>{
+  const [row]=await this.db.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin")));
+  return row?checkinRecordSourceSchema.parse(decode(row,userId)):null;
  }
  async getCheckinFeedback(userId:string,id:string):Promise<CheckinFeedbackView|null>{
   const [row]=await this.db.select({id:experienceRecords.id,encryptedPayload:experienceRecords.encryptedPayload}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,"checkin")));
@@ -189,6 +194,7 @@ export class ExperienceStorage {
  }
 }
 export interface ExperienceStore {
+ getCheckinRecord?(userId:string,id:string):Promise<CheckinRecordSource|null>;
  getWellnessActionView?(userId:string,day:WellnessDay):Promise<import("../shared/wellness-actions").WellnessActionView>;
  createWellnessChoice?(userId:string,command:WellnessChoiceCommand):Promise<ExperienceRecord>;
  deleteWellnessChoiceHistory?(userId:string,command:WellnessHistoryDelete):Promise<void>;

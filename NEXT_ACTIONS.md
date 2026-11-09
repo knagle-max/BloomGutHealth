@@ -1,3 +1,13 @@
+## Current check-in source context and collection-date checkpoint — 2026-11-09
+
+Development baseline633f683 passed exact CI42637797946. New check-in source context is implemented and engineering-tested locally: separate weekly date-only and dated-measurement sources, 28-day disclosed window, immutable source revisions, original owned weekly-record reader, explicit zero versus missing, cross-mode source labels without mode switching, and edit/delete/account withdrawal. Source summaries expose field presence and dates only; private values remain behind the explicit original-record read. Optional missing/corrupt/incomplete source categories abstain independently and do not disable ordinary food logging or unrelated valid actions. No recommendation ranking, outcome/causation or readiness inference is added.
+
+Provider comparisons additionally require an explicitly entered/corrected source collection date. A legacy timestamp cannot establish collection-era applicability. Original source intervals remain available. The published-provider catalog is still empty pending independent official-source verification; no BC examples are promoted or used for SK/ON.
+
+Evidence:44 focused subsystem regressions;9 final focused tests, TypeScript and production build passed. Actual App/API/encrypted-SQL journey passes populated context48-state mode/theme/viewport/text/page-zoom checks, original reader24-state matrix, explicit zero/null, correction, deletion and foreign-account denial. No physical VoiceOver or independent scientific approval claimed. Checkpoint: docs/verification/V06_CHECKIN_SOURCE_CONTEXT_20261109.json. Publish current slice and verify exact CI, then continue approved Phase3 observed-outcome foundations and remaining TRAIN/micronutrient work. No interim approval or main merge; full v0.6 is still open.
+
+---
+
 ## Bounded source-history correctness — 2026-11-09
 
 Food/source-context e22c639 passed exact CI42635587202; current development baseline retains all prior bloodwork/provider/source checks. New local fix separates bounded movement and action-choice reads (6000/2000 plus sentinel rows). Large activity history cannot hide an unrelated saved intention. A truncated movement source is explicitly unavailable/incomplete and cannot produce another movement suggestion; food/routine choices remain eligible when their own history is complete. Unexpected truncated choice history is labelled, refuses only new choice writes, preserves exact completed-receipt replay and leaves ordinary food/activity logging available. No claim that a partial source is empty or complete.

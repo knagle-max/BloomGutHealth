@@ -52,6 +52,6 @@ export function publishedRangeText(match:{low:number|null;high:number|null;unit:
 /** Display fields cannot overrule the saved observation's method, fasting or
  * entered collection calendar. Correct that source through its reviewed action. */
 export function providerContextMatchesSource(point:{date:string;method:string;fasting?:string;sourceReport?:{enteredDate?:string};dateCorrection?:{enteredDate:string}},context:Pick<ProviderRangeContext,'method'|'fasting'|'collectedOn'>){
- const collectionDate=point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate||point.date.slice(0,10);
+ const collectionDate=point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate||'';
  return known(point.method)&&key(point.method)===key(context.method)&&z.iso.date().safeParse(collectionDate).success&&context.collectedOn===collectionDate&&context.fasting===(point.fasting??'unknown');
 }

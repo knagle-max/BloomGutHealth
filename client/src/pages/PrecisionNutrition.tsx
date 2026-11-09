@@ -448,6 +448,7 @@ export default function PrecisionNutrition() {
           </p>
         )}
       </div>
+      {tab==="progress"&&requestedObservation&&currentResult&&r&&!r.checkins.some(row=>row.id===requestedObservation)&&<p role="status" className="panel-note">The requested dated observation is not available in your current records.</p>}
       {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
       {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}

@@ -1,3 +1,4 @@
+import CheckinSourceDetails from './CheckinSourceDetails';
 import FoodSourceDetails from './FoodSourceDetails';
 import EditorialMedia from "./EditorialMedia";
 import {useEffect,useRef,useState} from "react";
@@ -52,6 +53,7 @@ export default function TodayFocus({now,mealCount=0,missingNutritionCount=0,load
     <p className="panel-note">{goal?.actions[0]||"This step uses your food journal and available saved context. Unlogged intake does not establish a nutrient deficit."}</p>
     {goal&&<div className="space-y-2">{report.data?.sources.filter(s=>goal.sourceIds.includes(s.id)).map(s=><p key={s.id} className="panel-note"><a className="text-link" href={s.url} target="_blank" rel="noopener noreferrer">{s.title}</a> — {s.limitation}</p>)}</div>}
    </>}
+   <CheckinSourceDetails sources={choices.current?.checkinSources} loading={choices.source.fetchStatus!=="idle"}/>
    <FoodSourceDetails sources={choices.current?.foodSources} date={choices.current?.day.date??localDate(current)} loading={choices.source.fetchStatus!=="idle"}/>
    <MovementSourceDetails sources={choices.current?.movementSources} date={choices.current?.day.date??localDate(current)} loading={choices.source.fetchStatus!=="idle"}/>
    <div className="flex flex-wrap gap-4"><Link className="text-link" href={mealCount?"/log-meal":"/plan-day"}>{mealCount?"Log another meal":"Plan meals"}</Link><Link className="text-link" href="/explore">Explore why foods matter</Link><Link className="text-link" href="/progress">Review my progress</Link></div>

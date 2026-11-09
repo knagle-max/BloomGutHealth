@@ -1,3 +1,4 @@
+import type {CheckinSources} from './wellness-checkin-sources';
 import {z} from "zod";
 import {dateKey,type WellnessChoice} from "./experience";
 import type {goalSources} from "./goal-guidance";
@@ -39,6 +40,7 @@ export interface WellnessActionView {
  choiceHistoryComplete?:boolean;
  lifecycleId:string|null;asOf:string;dateCurrent:boolean;actions:WellnessActionDecision[];primaryActionId:string|null;
  sources:typeof goalSources;history:{id:string;intentId:string;actionId:string;date:string;choice:WellnessChoice["choice"];chosenAt:string;revision:string;timezoneOffset:number;lifecycleId:string;requestRevision:string;actionVersion:string;contextRevision:string;evidenceVersion:string}[];
+ checkinSources?:CheckinSources;
  foodSources?:{version:"wellness-food-sources-v1";status:"available"|"unavailable";purpose:"own-account-app";limited:boolean;observations:WellnessFoodObservation[]};
  movementSources?:{version:"wellness-movement-sources-v1";status:"available"|"unavailable";limited?:boolean;purpose:"own-account-app";observations:WellnessMovementObservation[]};
 }

@@ -1,3 +1,4 @@
+import CheckinSourceDetails from './CheckinSourceDetails';
 import FoodSourceDetails from './FoodSourceDetails';
 import MovementSourceDetails from './MovementSourceDetails';
 import {useWellnessChoices} from '@/lib/wellness-choices';
@@ -59,7 +60,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
     {blockers.some(reason=>["profile_unreviewed","reference_mass_missing","targets_unconfirmed"].includes(reason))&&<details className="today-focus-evidence"><summary>Review fueling setup</summary><ul className="list-disc pl-5 space-y-2 py-2">{blockers.filter(reason=>["profile_unreviewed","reference_mass_missing","targets_unconfirmed"].includes(reason)).map(reason=><li key={reason}>{athleteBlockerMessage[reason]}</li>)}</ul></details>}
    </div>}
    {day?.partial && <p className="panel-note">Some logged nutrients are missing. Review matches before using remaining-fuel suggestions.</p>}
-   <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p>{calendar.validDate&&<><FoodSourceDetails sources={sourceContext.current?.foodSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/><MovementSourceDetails sources={sourceContext.current?.movementSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/></>}</details>
+   <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p>{calendar.validDate&&<><CheckinSourceDetails sources={sourceContext.current?.checkinSources} loading={sourceContext.source.fetchStatus!=="idle"}/><FoodSourceDetails sources={sourceContext.current?.foodSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/><MovementSourceDetails sources={sourceContext.current?.movementSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/></>}</details>
   </CompanionHero>
   <p><Link className="text-link" href="/activity">Add activity · describe, select or repeat</Link></p>
   <nav className="athlete-home-links" aria-label="Your training sources">{cards.map(({ title, detail, Icon, href, onClick }) => {

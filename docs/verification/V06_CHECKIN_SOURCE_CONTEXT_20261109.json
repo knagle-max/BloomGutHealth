@@ -1,0 +1,27 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "version": "v0.6",
+  "baseline": "633f6835f356f65befd20a0c8a45ffb699afa6b8",
+  "scope": [
+    "owned weekly and dated-measurement source presence",
+    "explicit original weekly source reader",
+    "source collection date required for published-provider matching"
+  ],
+  "evidence": {
+    "focusedSubsystemTests": 44,
+    "finalFocusedTests": 9,
+    "typecheck": "PASS",
+    "productionBuild": "PASS",
+    "actualAppEncryptedSqlJourney": "PASS",
+    "populatedContextStates": 48,
+    "originalReaderStates": 24
+  },
+  "limits": [
+    "published provider catalog empty; official source verification pending",
+    "no outcome or recommendation inference",
+    "no physical VoiceOver or independent review performed",
+    "exact publication CI pending",
+    "full v0.6 remains open"
+  ],
+  "sourceData": "synthetic isolated accounts only"
+}

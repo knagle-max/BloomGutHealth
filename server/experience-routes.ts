@@ -62,6 +62,15 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
   try{await store.deleteWellnessChoiceHistory(req.session.userId!,input.data);res.status(204).end();}catch(error){fail(res,error);}
  });
  app.get("/api/experience/records",async(req,res)=>{if(req.query.kind!==undefined&&!kindSchema.includes(req.query.kind as any))return res.status(400).json({error:"Choose a supported record type."});try{res.json(await store.getExperienceRecords(req.session.userId!,req.query.kind as ExperienceEntry["kind"]|undefined));}catch(e){fail(res,e);}});
+ app.get("/api/experience/checkins/:id/source",async(req,res)=>{
+  if(!req.params.id||req.params.id.length>100)return res.status(400).json({error:"Choose a saved check-in."});
+  try{
+   if(!store.getCheckinRecord)return res.status(503).json({error:"Saved check-in source details are unavailable."});
+   const record=await store.getCheckinRecord(req.session.userId!,req.params.id);
+   if(!record)return res.status(404).json({error:"Check-in not found in your account."});
+   return res.json(record);
+  }catch(error){fail(res,error);}
+ });
  app.get("/api/experience/checkins/:id/feedback",async(req,res)=>{
   try{
    if(!store.getCheckinFeedback)return res.status(503).json({error:"Focus response review is unavailable."});
