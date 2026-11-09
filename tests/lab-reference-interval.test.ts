@@ -26,3 +26,11 @@ test('plot axes include actual reference limits and stay finite even for extreme
  const domain=labPlotExtent([1,2],[range]);assert.equal(domain.min,0);assert.ok(domain.max>100);
  for(const extent of [labPlotExtent([0],[]),labPlotExtent([1],[{...range,high:Number.MAX_VALUE}]),labPlotExtent([Number.MAX_VALUE],[])])assert.ok(Number.isFinite(extent.min)&&Number.isFinite(extent.max)&&extent.max>extent.min);
 });
+test('explicit one-sided source operators survive display conversion without inventing missing endpoints',()=>{
+ for(const [text,operator,inclusive]of [['<130','<',false],['≤130','≤',true]]as const){
+  const range=sourceReferenceIntervalForPlot('ldl',{...point,referenceLow:null,referenceHigh:130,sourceInput:{text:`LDL, 120, mg/dL, ${text}`,number:'120',suppliedUnit:'mg/dL',capture:'pasted-report'}})!;
+  assert.equal(range.low,null);assert.equal(range.highInclusive,inclusive);assert.ok(referenceIntervalText(range.low,range.high,range.unit,range).startsWith(operator));
+ }
+ const lower=sourceReferenceIntervalForPlot('hdl',{...point,referenceLow:1,referenceHigh:null,sourceUnit:'mmol/L',unit:'mmol/L',sourceInput:{text:'HDL, 1.2, mmol/L, >1',number:'1.2',suppliedUnit:'mmol/L',capture:'pasted-report'}})!;assert.equal(lower.lowInclusive,false);assert.equal(lower.high,null);assert.match(referenceIntervalText(lower.low,lower.high,lower.unit,lower),/^>1 mmol\/L/);
+ const corrected=sourceReferenceIntervalForPlot('ldl',{...point,referenceLow:null,referenceHigh:140,sourceInput:{text:'LDL, 120, mg/dL, <130',number:'120',suppliedUnit:'mg/dL',capture:'pasted-report'}})!;assert.equal(corrected.highInclusive,undefined,'Old raw operator cannot silently qualify an edited bound');
+});

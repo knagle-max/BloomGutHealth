@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 193,
     "unresolvedIdentity": 314,
-    "sourceFilesScanned": 689,
+    "sourceFilesScanned": 692,
     "relevantSourceFiles": 67,
     "researchPathways": 7
   },
@@ -25204,7 +25204,7 @@
     "scripts/qa/genetic-source-management-journey.mjs": "4e0a9eb916ece03ffa7d38c36be5b543003324523491e86cd53bff20e4ff6e78",
     "scripts/qa/gut-report-current-context-journey.mjs": "25830ad8516cdff302373ede2ca3ae4520244864f2a526a6c23e726dbd433664",
     "scripts/qa/gut-review-comparison.mjs": "421b2ef9ade47048f0d2e8a3cf6c632c27034b9b20468dbcd768c3375dbcc3b2",
-    "scripts/qa/lab-explorer-journey.mjs": "b50af9af5cf8328ab2e6b780f5a98f3cf2d92c764ba84b1cde20c93a2653619d",
+    "scripts/qa/lab-explorer-journey.mjs": "29787d5d00dbf6cef5399ff4a998b0b227ddc37ea32a3a88414293e1dccb8b78",
     "scripts/qa/lab-source-context-journey.mjs": "749adf7c67465cc4223a3f5bfdc0424850b24c8612feecd49a039e04d88641be",
     "scripts/qa/lab-source-review-journey.mjs": "3e554c4ab10e5f52ae459018d0235e3ca60a154316c808c7314c054172a851bf",
     "scripts/qa/microbial-profile-journey.mjs": "3998fb5f68e6f82bb1ee2255e483be00ac192c2719441e35da11d1ab4ffa3827",

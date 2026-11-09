@@ -41,14 +41,22 @@ try{
   const rangeNote=page.getByRole('note',{name:'Report reference ranges'});await rangeNote.waitFor();
   if(bounds[0][0]===null&&bounds[0][1]===null){await rangeNote.getByText('Reference range not supplied for these results.',{exact:true}).waitFor();assert.equal(await page.locator('[data-reference-limit]').count(),0);}
   else if(bounds[0][0]===bounds[1][0]){assert.match(await rangeNote.innerText(),/mmol\/L/);assert.equal(await page.locator('[data-reference-limit="shared"]').count(),bounds[0][0]===null?1:2);assert.equal(await page.locator('[data-reference-band]').count(),bounds[0][0]===null?0:1);}
-  else{assert.equal(await page.locator('[data-reference-band]').count(),0);assert.equal(await page.locator('[data-reference-limit="individual"]').count(),4);}
+  else{assert.equal(await page.locator('[data-reference-band]').count(),0);assert.equal(await page.locator('[data-reference-limit]').count(),0);await page.getByLabel('LDL cholesterol recorded result',{exact:true}).selectOption('range-0');await rangeNote.getByText(/selected result only/).waitFor();assert.equal(await page.locator('[data-reference-limit="selected"]').count(),2);assert.ok(Number(await page.locator('[data-reference-band]').getAttribute('width'))<100);}
   const point=page.locator('.lab-point-button').first();assert.match(await point.getAttribute('aria-label'),bounds[0][1]===null?/not supplied/:/130 mg\/dL/);
  }
+ // Provider selection is display-only, source-original wins and unverified regions abstain.
+ currentRecords=[0,1].map(index=>({id:`provider-${index}`,kind:'lab',createdAt:`2026-10-0${index+1}T12:00:00Z`,payload:labSchema.parse({marker:'ldl',value:100+index,unit:'mg/dL',measuredAt:`2026-10-0${index+1}T12:00:00Z`,laboratory:index?'Other synthetic laboratory':'Synthetic source',method:index?'Other synthetic assay':'Synthetic assay',fasting:'yes',referenceLow:80,referenceHigh:130})}));
+ await page.goto('http://127.0.0.1:5222/progress?view=biology&marker=ldl');await page.getByLabel('Reference overlay',{exact:true}).waitFor();assert.equal(await page.locator('[data-reference-band]').count(),0,'Identical numbers cannot bridge different laboratory/assay context');
+ await page.getByLabel('LDL cholesterol recorded result',{exact:true}).selectOption('provider-0');await page.getByRole('note',{name:'Report reference ranges'}).getByText(/Original report reference range.*selected result only/).waitFor();assert.ok(Number(await page.locator('[data-reference-band]').getAttribute('width'))<100);
+ const originalValues=JSON.stringify(currentRecords);await page.getByLabel('Reference overlay',{exact:true}).selectOption('LifeLabs');const province=page.getByLabel('Comparison province / territory (required)',{exact:true});await province.waitFor();assert.equal(await province.inputValue(),'');
+ for(const region of['SK','ON','BC']){await province.selectOption(region);await page.getByText('Reference unavailable for this provider, province and collection context. No published comparison is plotted.',{exact:true}).waitFor();await page.getByText("Comparison only — not this result's laboratory.",{exact:true}).waitFor();assert.equal(await page.locator('[data-reference-band]').count(),1,'The original interval remains explicitly labelled; no provider substitution');}
+ assert.equal(JSON.stringify(currentRecords),originalValues);await page.getByLabel('Reference overlay',{exact:true}).selectOption('none');assert.equal(await page.locator('[data-reference-band]').count(),0);assert.equal(await page.locator('.lab-point-button').count(),2);await page.getByLabel('Reference overlay',{exact:true}).selectOption('original-report');await page.getByRole('note',{name:'Report reference ranges'}).waitFor();
  currentRecords=records;
  // Expanded information-first content uses the same four actual themes and keeps raw sources accessible.
  for(const testMode of ['everyday','athlete']){
   mode=testMode;await page.goto('http://127.0.0.1:5222/progress?view=biology&marker=hdl');
   const context=page.getByRole('region',{name:'HDL cholesterol biological context',exact:true});await context.waitFor();
+  await page.getByLabel('HDL cholesterol recorded result',{exact:true}).selectOption('source-3-1');await page.getByLabel('Reference overlay',{exact:true}).selectOption('LifeLabs');await page.getByLabel('Comparison province / territory (required)',{exact:true}).selectOption('SK');await page.getByText('Collection context for a provider comparison',{exact:true}).click();
   for(const width of [320,390,768,1440])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:900});await setAppTheme(page,theme);
    for(const zoom of ['1','2']){

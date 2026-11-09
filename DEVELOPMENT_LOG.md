@@ -1,3 +1,15 @@
+## Latest owner handoff — provider reference overlays (v0.6), 2026-11-09
+
+The owner supplied Provider-Specific Lab Ranges on Graphs (dated2026-11-08). Current v0.5 main stays unchanged. Previous bloodwork catalog/range/review writer d63eb3e passed exact CI42567337752, including the actual source-review48-state browser, original catalog/source browser, saved-nutrient browser, types/inventories, full embedded regression, build and hosted isolated persistence/media checks. No new main merge authorized.
+
+New display-only provider overlay work is implemented locally: Original report / LifeLabs / Other lab / None, required comparison province, explicitly confirmed historical collection context (no current-Profile age/sex substitution), strict provider/region/analyte/specimen/assay/method/date-era/demographic/fasting/unit matcher, independent-verification gating, distinct reference/decision/risk kinds, no treatment targets. Exact original intervals take priority; changing provider does not write records. Different laboratories/assays or bounds now require a selected-result-local band rather than a global range; numeric boundary labels, original operators, one-sided unknowns, source drilldown and independent recorded points remain. The provider browser passes with expanded collection controls at mobile/dark/light/both modes/200% zoom, SK/ON/BC abstention and None/source priority. Focused matching/source tests, types and build pass; final publication checks remain.
+
+Official LifeLabs BC PDF access returned403. Owner examples and ON notices are pending source leads only; publishedLabRanges is empty. This feature-scoped dataset verification dependency does not prevent original source ranges or independent work. Binding summary: docs/architecture/LAB_PROVIDER_RANGE_OVERLAYS_OWNER_HANDOFF_20261108.md.
+
+Food-context source work already begun is preserved byte-exact at /tmp/bloom-food-context-wip-20261109/MANIFEST.json (6files;4tracked+2new). Existing12 wellness tests passed; types had a narrowed Database.execute facade issue subsequently fixed before the checkpoint. Resume after provider publication without blind overwrite. It is not released or complete. Continue remaining approved v0.6 dependency1–4/M1 work without interim approval.
+
+---
+
 ## Bloodwork reviewed-source implementation — 2026-11-09
 
 Source-review reader publication884511a is LIVE in the isolated review environment; exact CI42561600199 has passed the expanded bloodwork and saved-nutrient browser journeys, TypeScript/source inventories, embedded regression suite and production build; remaining hosted checks must pass before writer publication. Reader rollback support must remain after any new sourceCorrection-bearing write.

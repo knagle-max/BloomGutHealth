@@ -1,4 +1,6 @@
-import {sourceReferenceIntervalForPlot,referenceIntervalText,labPlotExtent} from '@shared/lab-reference-interval';
+import {matchProviderRanges,publishedLabRanges,publishedRangeText} from '@shared/lab-provider-ranges';
+import LabRangeSelector,{emptyLabOverlayChoice} from './LabRangeSelector';
+import {sourceReferenceIntervalForPlot,referenceIntervalText,labPlotExtent,canShareSourceReference} from '@shared/lab-reference-interval';
 import {hasConfirmedLabIdentity} from '@shared/lab-assay-identity';
 import {Link} from 'wouter';
 import {Button} from './ui/button';
@@ -12,15 +14,32 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
  const selected=selection?selection.point:localSelected,setSelected=(point:string)=>selection?onSelectionChange?.({point}):setLocalSelected(point);
  const [comparisonOpen,setComparisonOpen]=useState(!!(selection?.first||selection?.second));
  useEffect(()=>{if(selection?.first||selection?.second)setComparisonOpen(true);},[selection?.first,selection?.second]);
+ const [overlay,setOverlay]=useState(emptyLabOverlayChoice);
+ // Collection context belongs to a selected source; switching it withdraws prior
+ // display confirmations rather than borrowing another result's demographics.
  const id=useId(),points=t.points,unit=points[0].unit;
+ const selectedPoint=resolveRecordedLabPoint(points,selected);
+ const selectedSourceVersion=JSON.stringify([selectedPoint?.id,selectedPoint?.date,selectedPoint?.laboratory,selectedPoint?.method,selectedPoint?.fasting,selectedPoint?.sourceUnit,selectedPoint?.sourceValue,selectedPoint?.referenceLow,selectedPoint?.referenceHigh]);
+ useEffect(()=>{setOverlay(value=>({...value,context:emptyLabOverlayChoice().context,confirmed:false}));},[selectedSourceVersion,t.marker]);
  const times=points.map(p=>Date.parse(p.date)),values=points.map(p=>p.value),first=Math.min(...times),latestTime=Math.max(...times),span=latestTime-first;
- const intervals=points.map(point=>sourceReferenceIntervalForPlot(t.marker,point));
- const commonInterval=intervals[0]&&intervals.every(r=>r&&r.low===intervals[0]!.low&&r.high===intervals[0]!.high&&r.unit===intervals[0]!.unit)?intervals[0]:null;
- const {min,max}=labPlotExtent(values,intervals),toY=(value:number)=>100-(value-min)/(max-min)*100;
+ const intervals=points.map(point=>sourceReferenceIntervalForPlot(t.marker,point)),showReferences=overlay.provider!=='none';
+ const sharedInterval=canShareSourceReference(points,intervals)?intervals[0]:null;
+ const selectedIndex=selectedPoint?points.findIndex(point=>point.id===selectedPoint.id):-1;
+ const originalInterval=showReferences?(sharedInterval||(selectedIndex>=0?intervals[selectedIndex]:null)):null;
+ const providerSelected=overlay.provider==='LifeLabs'||overlay.provider==='other';
+ const comparisons=providerSelected&&overlay.confirmed&&selectedPoint?matchProviderRanges({provider:overlay.provider==='other'?overlay.otherProvider:overlay.provider,province:overlay.province,markerId:t.marker,...overlay.context,sourceUnit:selectedPoint.sourceUnit,plotUnit:unit,sourceInput:selectedPoint.sourceInput},publishedLabRanges):[];
+ const comparisonIntervals=comparisons.filter(match=>match.range.kind==='reference_interval');
+ // Conflicting verified reference intervals abstain. Separately classified
+ // decision limits can coexist; they never acquire a normal-range band.
+ const displayedComparisons=originalInterval?[]:comparisonIntervals.length>1?comparisons.filter(match=>match.range.kind!=='reference_interval'):comparisons;
+ const commonInterval=originalInterval||(displayedComparisons.find(match=>match.range.kind==='reference_interval')??null);
+ const plotRanges=showReferences?[...(originalInterval?[originalInterval]:[]),...displayedComparisons.map(match=>({...match,sourceLow:match.range.low??null,sourceHigh:match.range.high??null,sourceUnit:match.range.unit}))]:[];
+ const {min,max}=labPlotExtent(values,plotRanges),toY=(value:number)=>100-(value-min)/(max-min)*100;
  const referenceCount=intervals.filter(Boolean).length,hasReportedBounds=points.some(p=>p.referenceLow!=null||p.referenceHigh!=null);
+ const selectedX=selectedIndex<0?50:(span?(times[selectedIndex]-first)/span:.5)*100;
+ const localBand=!!commonInterval&&!sharedInterval&&points.length>1,bandLeft=localBand?Math.max(0,selectedX-4):0,bandRight=localBand?Math.min(100,selectedX+4):100;
  const plotted=points.map((p,i)=>({x:(span?(times[i]-first)/span:0.5)*100,y:toY(p.value),p}));
  const latestPoints=points.filter(point=>Date.parse(point.date)===latestTime);
- const selectedPoint=resolveRecordedLabPoint(points,selected);
  const openSource=(pointId:string)=>{if(!points.some(point=>point.id===pointId))return;setSelected(pointId);if(sources.current)sources.current.open=true;const row=document.getElementById(`${id}-source-${pointId}`);row?.focus();row?.scrollIntoView({block:'nearest',inline:'nearest'});};
  const assayConfirmed=points.every(point=>hasConfirmedLabIdentity(t.marker,point));
  const canPlot=assayConfirmed&&points.every(point=>point.unit===unit);
@@ -35,8 +54,15 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
    {latestPoints.map(point=><div key={point.id}><p className="insight-value">{point.sourceValue} {point.sourceUnit}</p><p className="panel-note">Latest entry: {labDateText(point.date,point.sourceReport,point.dateCorrection)} · {point.laboratory}</p></div>)}
    <p className="panel-note">{points.length} dated result(s) · {Array.from(new Set(points.map(point=>point.unit))).join(", ")}. Entered values are not independently verified.</p>
    {!canPlot&&<p className="panel-note" role="status">{change}</p>}
-   {canPlot&&<div className="lab-reference-summary panel-note" role="note" aria-label="Report reference ranges">
-    {commonInterval?<p><span className="lab-reference-key" aria-hidden="true"/>Lab reference range: {referenceIntervalText(commonInterval.low,commonInterval.high,unit)}.</p>:referenceCount?<p>Reference ranges differ or are missing for some results. Dashed limits belong to each individual source result.</p>:<p>{hasReportedBounds?'Reported bounds could not be plotted safely. Review the original range and units.':'Reference range not supplied for these results.'}</p>}
+   <LabRangeSelector value={overlay} onChange={setOverlay} id={id} selected={!!selectedPoint}/>
+   {providerSelected&&<div className="panel-note space-y-2" role="status">
+    {!comparisons.length?<p>Reference unavailable for this provider, province and collection context. No published comparison is plotted.</p>:comparisons.map(match=><p key={match.range.id}>{match.range.kind==='reference_interval'?'Published comparison interval':match.range.kind==='clinical_decision_limit'?'Published clinical decision limit':'Published risk threshold'}{match.range.label?` · ${match.range.label}`:''} — {match.range.provider} {match.range.province}, {match.range.sourceDocumentDate}: {publishedRangeText(match)}. <a className="text-link" href={match.range.sourceUrl} target="_blank" rel="noopener noreferrer">Published source{match.range.page?` · printed page ${match.range.page}`:''}</a></p>)}
+    {selectedPoint&&selectedPoint.laboratory.trim().toLowerCase()!==(overlay.provider==='other'?overlay.otherProvider:overlay.provider).trim().toLowerCase()&&<p><strong>Comparison only — not this result's laboratory.</strong> Recorded laboratory: {selectedPoint.laboratory}.</p>}
+    {originalInterval&&<p>The original report interval takes priority and remains visible. Published comparison values do not replace it.</p>}
+    {comparisonIntervals.length>1&&<p>Published reference versions conflict; no comparison interval band is shown.</p>}
+   </div>}
+   {canPlot&&showReferences&&<div className="lab-reference-summary panel-note" role="note" aria-label="Report reference ranges">
+    {commonInterval?<p><span className="lab-reference-key" aria-hidden="true"/>{originalInterval?'Original report reference range':'Published comparison interval'}{localBand?' · selected result only':''}: {referenceIntervalText(commonInterval.low,commonInterval.high,unit,originalInterval||("range" in commonInterval?commonInterval.range:{}))}.</p>:referenceCount?<p>Reference applicability differs across results. Choose a recorded result to show its own interval; one range is not extended across other laboratories or assays.</p>:<p>{hasReportedBounds?'Reported bounds could not be plotted safely. Review the original range and units.':'Reference range not supplied for these results.'}</p>}
     <p>These are the report’s reference limits, not personal treatment targets. Original bounds and units remain in the source details.</p>
    </div>}
    <figure className="lab-measured-figure" aria-labelledby={canPlot?`${id}-chart-title`:undefined} aria-label={canPlot?undefined:`${t.name} recorded source selection`}>
@@ -44,18 +70,17 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
     <div className="lab-measured-plot" role="region" aria-label={`${t.name} recorded plot`} tabIndex={0}>
      <div className="lab-plot-axis" aria-label={`Vertical axis in ${unit}`}><span>{formatRecordedLabNumber(max)}</span><span>{formatRecordedLabNumber(min)}</span></div>
      <div className="lab-point-canvas"><div className="lab-point-inner">
-      <svg className="lab-chart" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-labelledby={`${id}-title ${id}-desc`}><title id={`${id}-title`}>{t.name} · {unit}</title><desc id={`${id}-desc`}>{points.map(p=>`${labDateText(p.date,p.sourceReport,p.dateCorrection)}: ${formatRecordedLabNumber(p.value)} ${p.unit}; source reference ${referenceIntervalText(p.referenceLow??null,p.referenceHigh??null,p.sourceUnit)}`).join("; ")}. {t.comparable?"Straight segments join compatible dated observations.":"Points are not connected because comparability is unconfirmed."} The vertical axis is cropped to the labelled range; missing dates are not filled. Use the point buttons or result selector to inspect original source values.</desc>
+      <svg className="lab-chart" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-labelledby={`${id}-title ${id}-desc`}><title id={`${id}-title`}>{t.name} · {unit}</title><desc id={`${id}-desc`}>{points.map((p,index)=>`${labDateText(p.date,p.sourceReport,p.dateCorrection)}: ${formatRecordedLabNumber(p.value)} ${p.unit}; source reference ${referenceIntervalText(p.referenceLow??null,p.referenceHigh??null,p.sourceUnit,intervals[index]||{})}`).join("; ")}. {t.comparable?"Straight segments join compatible dated observations.":"Points are not connected because comparability is unconfirmed."} The vertical axis is cropped to the labelled range; missing dates are not filled. Use the point buttons or result selector to inspect original source values.</desc>
        {commonInterval?<g className="lab-reference-marks" aria-hidden="true">
-        {commonInterval.low!==null&&commonInterval.high!==null&&<rect data-reference-band="true" x="0" y={toY(commonInterval.high)} width="100" height={toY(commonInterval.low)-toY(commonInterval.high)} fill="currentColor" fillOpacity=".1"/>}
-        {[commonInterval.low,commonInterval.high].filter((bound):bound is number=>bound!==null).map((bound,index)=><line key={index} data-reference-limit="shared" x1="0" y1={toY(bound)} x2="100" y2={toY(bound)} stroke="currentColor" strokeWidth="1.2" strokeDasharray="4 3" vectorEffect="non-scaling-stroke"/>)}
-       </g>:intervals.map((range,index)=>range&&<g key={points[index].id} data-reference-source={points[index].id} aria-hidden="true" stroke="currentColor" strokeWidth="1.2" vectorEffect="non-scaling-stroke">
-        {range.low!==null&&range.high!==null&&<line x1={plotted[index].x} y1={toY(range.low)} x2={plotted[index].x} y2={toY(range.high)} strokeDasharray="3 2"/>}
-        {[range.low,range.high].filter((bound):bound is number=>bound!==null).map((bound,boundIndex)=><line key={boundIndex} data-reference-limit="individual" x1={Math.max(0,plotted[index].x-3)} y1={toY(bound)} x2={Math.min(100,plotted[index].x+3)} y2={toY(bound)}/>)}
-       </g>)}
+        {commonInterval.low!==null&&commonInterval.high!==null&&<rect data-reference-band="true" x={bandLeft} y={toY(commonInterval.high)} width={bandRight-bandLeft} height={toY(commonInterval.low)-toY(commonInterval.high)} fill="currentColor" fillOpacity=".1"/>}
+        {[commonInterval.low,commonInterval.high].filter((bound):bound is number=>bound!==null).map((bound,index)=><line key={index} data-reference-limit={localBand?"selected":"shared"} x1={bandLeft} y1={toY(bound)} x2={bandRight} y2={toY(bound)} stroke="currentColor" strokeWidth="1.2" strokeDasharray="4 3" vectorEffect="non-scaling-stroke"/>)}
+       </g>:null}
+       {showReferences&&displayedComparisons.filter(match=>match.range.kind!=='reference_interval').map(match=><g key={match.range.id} data-provider-limit-kind={match.range.kind} aria-hidden="true">{[match.low,match.high].filter((bound):bound is number=>bound!==null).map((bound,index)=><line key={index} x1={Math.max(0,selectedX-4)} x2={Math.min(100,selectedX+4)} y1={toY(bound)} y2={toY(bound)} stroke="currentColor" strokeDasharray="4 3" vectorEffect="non-scaling-stroke"/>)}</g>)}
        <line x1="0" y1="0" x2="0" y2="100" stroke="currentColor" vectorEffect="non-scaling-stroke"/><line x1="0" y1="100" x2="100" y2="100" stroke="currentColor" vectorEffect="non-scaling-stroke"/>
        {t.comparable&&<polyline points={plotted.map(point=>`${point.x},${point.y}`).join(' ')} stroke="currentColor" strokeWidth="2" fill="none" vectorEffect="non-scaling-stroke"/>}
       </svg>
-      {plotted.map(({x,y,p},index)=><button type="button" key={p.id} className="lab-point-button" style={{left:`${x}%`,top:`${y}%`}} data-point-id={p.id} data-source-selected={selectedPoint?.id===p.id||undefined} aria-controls={`${id}-sources`} aria-label={`View ${t.name} result ${index+1}: ${labDateText(p.date,p.sourceReport,p.dateCorrection)}, ${formatRecordedLabNumber(p.value)} ${p.unit}; original ${p.sourceValue} ${p.sourceUnit}; report reference ${referenceIntervalText(p.referenceLow??null,p.referenceHigh??null,p.sourceUnit)}`} onClick={()=>openSource(p.id)}><span aria-hidden="true"/></button>)}
+      {commonInterval&&[commonInterval.low,commonInterval.high].filter((bound):bound is number=>bound!==null).map((bound,index)=><span key={index} className="lab-reference-boundary-label" style={{...(bandLeft>50?{right:0}:{left:`${bandLeft}%`}),top:`${toY(bound)}%`}}>Reference {formatRecordedLabNumber(bound)} {unit}</span>)}
+      {plotted.map(({x,y,p},index)=><button type="button" key={p.id} className="lab-point-button" style={{left:`${x}%`,top:`${y}%`}} data-point-id={p.id} data-source-selected={selectedPoint?.id===p.id||undefined} aria-controls={`${id}-sources`} aria-label={`View ${t.name} result ${index+1}: ${labDateText(p.date,p.sourceReport,p.dateCorrection)}, ${formatRecordedLabNumber(p.value)} ${p.unit}; original ${p.sourceValue} ${p.sourceUnit}; report reference ${referenceIntervalText(p.referenceLow??null,p.referenceHigh??null,p.sourceUnit,intervals[index]||{})}`} onClick={()=>openSource(p.id)}><span aria-hidden="true"/></button>)}
      </div></div>
      <div className="lab-plot-dates"><time dateTime={points[0].date}>{labDateText(points[0].date,points[0].sourceReport,points[0].dateCorrection)}</time>{points.length>1&&<time dateTime={points[points.length-1].date}>{labDateText(points[points.length-1].date,points[points.length-1].sourceReport,points[points.length-1].dateCorrection)}</time>}</div>
     </div>
