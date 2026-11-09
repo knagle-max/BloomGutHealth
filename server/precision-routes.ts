@@ -1,3 +1,4 @@
+import {labSourceReviewSchema} from '../shared/lab-source-review';
 import {buildWellnessContext} from "./wellness-context";
 import{reportFoodDisplay,microbiomeFoodPlanningGuard,microbiomeFoodPlanningGuardSchema}from'../shared/microbiome-food-influence';
 import{geneticSourceCommandSchema,GENETIC_SOURCE_CONFIRM,GeneticSourceError}from"../shared/genetic-source-selection";
@@ -51,6 +52,7 @@ type Store = Pick<
   | "insertPrecisionRecord"
   | "insertReviewedLab"
   | "correctLabDate"
+  | "reviewLabSource"
   | "getGeneticSources"
   | "changeGeneticSource"
   | "getMicrobiomeFood"
@@ -649,6 +651,19 @@ export function registerPrecisionRoutes(
       );
     } catch (e) {
       unavailable(res, e);
+    }
+  });
+  app.post("/api/precision/labs/:id/review-source",async(req,res)=>{
+    const input=labSourceReviewSchema.safeParse(req.body),key=req.get("Idempotency-Key");
+    if(req.get("X-Bloom-Confirm")!=="review-lab-source"||!input.success||!key||!/^[A-Za-z0-9_-]{8,128}$/.test(key))return res.status(400).json({error:"Review the reported marker, unit and optional reference limits against the original report, with a reason and new review reference."});
+    try{
+      if(!store.reviewLabSource)return res.status(503).json({error:"Source review is unavailable. The original result was retained."});
+      return res.status(201).json(await store.reviewLabSource(req.session.userId!,req.params.id,input.data,key));
+    }catch(error){
+      if(error instanceof Error&&error.message==="LAB_NOT_FOUND")return res.status(404).json({error:"Laboratory result not found in your account."});
+      if(error instanceof Error&&["LAB_SOURCE_CHANGED","PRECISION_SAVE_CONFLICT"].includes(error.message))return res.status(409).json({error:"The source or review reference changed. Cancel and review the current result."});
+      if(error instanceof z.ZodError||error instanceof Error&&["LAB_REVIEW_NUMBER_UNKNOWN","LAB_REVIEW_IDENTITY_UNKNOWN","LAB_REVIEW_INVALID"].includes(error.message))return res.status(400).json({error:"Keep an exact numeric source value and confirm a supported analyte and unit. Qualitative or threshold findings remain source-only."});
+      unavailable(res,error);
     }
   });
   app.post("/api/precision/labs/:id/correct-date", async (req, res) => {

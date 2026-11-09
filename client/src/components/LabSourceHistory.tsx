@@ -9,7 +9,7 @@ function MarkerHistory({name,trend}:{name:string;trend:PrecisionReport['trends']
  const [open,setOpen]=useState(false);
  return <details className="mt-3 min-w-0" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}><summary>Recorded history for {name}</summary>{open&&<><p className="panel-note">This chart includes all available dated measurements for this marker, beyond any selected report date. Each point retains its own source; comparison limits appear below.</p><LabTrend trend={trend}/></>}</details>;
 }
-export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[],focusRequest,onDismiss}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends'];focusRequest?:{rowId:string;target?:'row'}|null;onDismiss?:()=>void}){
+export default function LabSourceHistory({labs,onDelete,onCorrect,onReview,trends=[],focusRequest,onDismiss}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;onReview?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends'];focusRequest?:{rowId:string;target?:'row'}|null;onDismiss?:()=>void}){
  const [open,setOpen]=useState(false),[date,setDate]=useState('');
  const root=useRef<HTMLDetailsElement>(null),handled=useRef<typeof focusRequest>(undefined);
  const selected=focusRequest?.target==='row'?labs.find(row=>row.id===focusRequest.rowId):undefined;
@@ -34,7 +34,7 @@ export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[],focu
     {pending&&<p className="evidence-state">Unit provisional — confirm against the report before interpretation.</p>}
     {trend&&<MarkerHistory name={name} trend={trend}/>}
     <details><summary>Source details for {name}</summary><LabSourceContext source={row.sourceInput} report={row.sourceReport} correction={row.dateCorrection} review={row.sourceCorrection}/><p>Stored timestamp: {row.measuredAt}</p><p>{row.laboratory} · {row.method} · fasting {row.fasting}</p></details>
-   </div>{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
+   </div>{onReview&&<Button className="min-w-0 max-w-full whitespace-normal min-h-11" variant="outline" onClick={()=>onReview(row)}>Review marker & range</Button>}{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
   </div>;
  });
  return <>{selected&&<section id="lab-marker-details" className="bloom-panel lab-marker-details" aria-label="Marker details"><div className="flex flex-wrap gap-3 items-center justify-between"><h3>Marker details</h3><Button type="button" variant="outline" onClick={onDismiss}>Back to results</Button></div>{rows([selected])}</section>}<details ref={root} id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>

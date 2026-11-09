@@ -27,8 +27,8 @@
     "reviewed": 14,
     "limited": 193,
     "unresolvedIdentity": 314,
-    "sourceFilesScanned": 685,
-    "relevantSourceFiles": 64,
+    "sourceFilesScanned": 689,
+    "relevantSourceFiles": 67,
     "researchPathways": 7
   },
   "entries": [
@@ -2320,8 +2320,24 @@
           "kind": "source-only-analyte",
           "spelling": "Hemoglobin",
           "rank": null,
+          "file": "scripts/qa/lab-source-review-journey.mjs",
+          "line": 4,
+          "method": "static source literal"
+        },
+        {
+          "kind": "source-only-analyte",
+          "spelling": "Hemoglobin",
+          "rank": null,
           "file": "tests/lab-source-review-reader.test.ts",
           "line": 13,
+          "method": "static source literal"
+        },
+        {
+          "kind": "source-only-analyte",
+          "spelling": "Hemoglobin",
+          "rank": null,
+          "file": "tests/lab-source-review.test.ts",
+          "line": 4,
           "method": "static source literal"
         }
       ]
@@ -25031,6 +25047,12 @@
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
     {
+      "file": "shared/lab-source-review.ts",
+      "line": 32,
+      "field": "reportedAnalyte",
+      "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
+    },
+    {
       "file": "shared/precision-nutrition.ts",
       "line": 615,
       "field": "reportedAnalyte",
@@ -25184,6 +25206,7 @@
     "scripts/qa/gut-review-comparison.mjs": "421b2ef9ade47048f0d2e8a3cf6c632c27034b9b20468dbcd768c3375dbcc3b2",
     "scripts/qa/lab-explorer-journey.mjs": "b50af9af5cf8328ab2e6b780f5a98f3cf2d92c764ba84b1cde20c93a2653619d",
     "scripts/qa/lab-source-context-journey.mjs": "749adf7c67465cc4223a3f5bfdc0424850b24c8612feecd49a039e04d88641be",
+    "scripts/qa/lab-source-review-journey.mjs": "3e554c4ab10e5f52ae459018d0235e3ca60a154316c808c7314c054172a851bf",
     "scripts/qa/microbial-profile-journey.mjs": "3998fb5f68e6f82bb1ee2255e483be00ac192c2719441e35da11d1ab4ffa3827",
     "scripts/qa/microbiome-report-delete-journey.mjs": "1f80c2d11ae42a0780365a25f756254fd42f2503b34db25d8db8ae1e2d5dd370",
     "scripts/qa/report-date-provenance-journey.mjs": "60c80b0c348127111be3efe20e1bcc9eb10c6911f00e96cd41072b868591a9a4",
@@ -25193,6 +25216,7 @@
     "scripts/qa/viome-pairing-journey.mjs": "c36a672f1aa6e770e14606813172c481d8851d96e3113bf6207d4be89836695d",
     "scripts/qa/viome-postsave-link-journey.mjs": "19eda9b8dbdb6d053365bf732920b24fc588cb91ccc1b3241307caff6bbc14b3",
     "shared/lab-paste.ts": "8b1acd99505712f1125899e168a7e26967dc7c9f426b03362e38b2953625187f",
+    "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
     "shared/precision-nutrition.ts": "cbe672865b29d4860d0cb4b4749152f2de057c77f8a0277533a3f713e8beff74",
     "shared/reported-taxa.ts": "aa5789ab4f24b8740676a53ed0069150ee70aeab4971525f602db412298b2a52",
     "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
@@ -25215,6 +25239,7 @@
     "tests/lab-reimport.test.ts": "f49d8dd68f85d12861798f6eacd6d5ffaa99df49b8db73f940e8a551e87569b0",
     "tests/lab-review.test.ts": "731f962d82ff9886da23749e12e9c815e9254a57319363cf484149caa402294e",
     "tests/lab-source-review-reader.test.ts": "3d9b7b74fc1e50e489a9a822d0e3b9baaa04a04099d675ba64eca6b56a372a0e",
+    "tests/lab-source-review.test.ts": "0f851566fd417b58778b205565d1656c0c9b4822405a59854f35d01a621cd7d7",
     "tests/metabolite-research.test.ts": "e5906613e233508d30e982f50c5999d826e7266fc8183f4fcf6ae505927fabbd",
     "tests/microbiome-report-delete.test.ts": "20955c4c4ca491e707931e7d5e006be12e5e7c8e9ffdf73b344ab47e20e9c912",
     "tests/precision-nutrition.test.ts": "7aa18de5b7782e1788fc7cf9241fef3e6e888f425346135eaf75228b3c29a78a",

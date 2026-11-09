@@ -1,3 +1,4 @@
+import type {LabSourceReview} from '../shared/lab-source-review';
 import{getBiologicalReports,deleteBiologicalReports}from'./biological-report-management';
 import type{BiologicalReportCategory,BiologicalReportSnapshot,BiologicalReportDelete}from'../shared/biological-report-management';
 import type{MicrobiomeFoodControl,MicrobiomeFoodSource}from"../shared/microbiome-food-influence";
@@ -101,6 +102,7 @@ export interface IStorage extends ExperienceStore {
     saveKey?: string,
   ): Promise<PrecisionRecord>;
   insertReviewedLab?(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]):Promise<PrecisionRecord>;
+  reviewLabSource?(userId:string,sourceId:string,input:LabSourceReview,saveKey:string):Promise<PrecisionRecord>;
   correctLabDate?(userId:string, sourceId:string, input:LabDateChange, saveKey:string):Promise<PrecisionRecord>;
   getGeneticSources?(userId:string):Promise<GeneticSourceSnapshot>;
   changeGeneticSource?(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>;
@@ -243,6 +245,7 @@ export class DatabaseStorage implements IStorage {
   insertReviewedLab(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]){
     return this.precision.insertReviewedLab(userId,payload,saveKey,reviewedMatches);
   }
+  reviewLabSource(userId:string,sourceId:string,input:LabSourceReview,saveKey:string){return this.precision.reviewLabSource(userId,sourceId,input,saveKey);}
   correctLabDate(userId:string, sourceId:string, input:LabDateChange, saveKey:string) {
     return this.precision.correctLabDate(userId,sourceId,input,saveKey);
   }
