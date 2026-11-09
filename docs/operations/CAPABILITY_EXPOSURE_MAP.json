@@ -1891,7 +1891,7 @@
     "client/src/components/MicrobiomeFoodPreferences.tsx": "18f4f506f25ee3593bd09a506519b923af4aea9c3f05894f0840fd769a7355c3",
     "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
-    "client/src/components/MovementSourceDetails.tsx": "10e1a0d75f823289d33c4acb7a06a7a8ddf468796cb29d863366c2d4b948e729",
+    "client/src/components/MovementSourceDetails.tsx": "3dceeea869d9f136264069a9c6a76086230030c77facb8f5a7e4e297b18a0171",
     "client/src/components/NutrientDefinitionDisclosure.tsx": "e8b072e63492b8ef78d1eff8bc26946e7cc8b0e7403b5bd4019bbd7049502c09",
     "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/PremiumIcon.tsx": "29781821b893c047b1e31193a55cd680d57df55ee2763047b49ec93952cf03b4",
@@ -1908,7 +1908,7 @@
     "client/src/components/ViomeReviewEditor.tsx": "24b890f707d69e6efcb1eadd2b4147bf410497a462d13a7d8afea21c14845418",
     "client/src/components/ViomeSavedContext.tsx": "fdd47736eeffd78326362f135ee093cbab7ec62dec6617c53c526664fb69215d",
     "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
-    "client/src/components/WellnessChoiceDetails.tsx": "55193b53015e461448bbe8e85b6a4c173fa78a9df8c13b87b32423d514c21e0b",
+    "client/src/components/WellnessChoiceDetails.tsx": "ea23362460daa7fa604ef42912cbc651d18b2ae567feb300edb4b777e90664d0",
     "client/src/components/ui/dialog.tsx": "a7ffb13c54eef6dc5c1e6166d746135f925a094443fb1d78e76ec271ea91c53e",
     "client/src/components/ui/sheet.tsx": "54a0e3c6aa525dbe08ae260bff597e403e25e33b7a520f1d2572c85111d8c54d",
     "client/src/content/bloomCopy.ts": "7b75614c0cc61e67cda4a6e6b7664564c664fb41d91c05f97c28a262ff3cb0cb",
@@ -2018,8 +2018,8 @@
     "server/vite.ts": "ade8d79bc6dfdb3870f7903dd2a5433be0c902715a7be86e32757fea55ef3025",
     "server/weekly-runner.ts": "eec5493ab25389816ecf6435f9a82f1949c8214af2d4bd398af295d921dc1252",
     "server/weekly-worker.ts": "da1967463b8ce42a53a73dde879b11d1b2087639392cc198baeb1fea513b01a2",
-    "server/wellness-actions.ts": "06f928b68651b3bfa635db8de6e3da9d6b18c6233a4b60da97c7a27db294ac96",
-    "server/wellness-choice-storage.ts": "8e4bc30e954654875464020886c4de02d3f51c6f77483daae06ae6f11f0c42f4",
+    "server/wellness-actions.ts": "f9d38dbba87ac81318a4baffccfa1cf84d2ad71979669e0cefcf3803c917fe92",
+    "server/wellness-choice-storage.ts": "e257e7ff5c2f08382f6106c77b6ac4665378d658f9932fee465be40b90cdd5fe",
     "server/wellness-context.ts": "7569388b8fbebb7274b2e6810ac9c643d7ed73c3255b0f8628a6a3b99f099fad",
     "server/wellness-observations.ts": "ce007e27466f2183f33c0628f79f7aa683820d1e12bb57e7b432c1d357821d1b",
     "shared/activity-capture.ts": "2c776d7d1593ac1826e525ae9e1200c3fa490272b950138b243d6dd85a748a41",
@@ -2098,7 +2098,7 @@
     "shared/viome-pdf.ts": "59edbefd28553fec08c56a3fb2727c4f947edd416f62fbf09c0cb436eaea2bd9",
     "shared/viome-report-context.ts": "65b4431affd72af8ff17135c19f3a64b96f164a0d7656be9e3b779239fe7c966",
     "shared/weekly-planner.ts": "00638f351f2eb92a61e48873d70db4f4f2219bc3a8450b24f5387794d95fb90b",
-    "shared/wellness-actions.ts": "185ca3d7bf17b85a32a8fef836169067b1089659d1c99ec2b1e8bc68c20a95bf",
+    "shared/wellness-actions.ts": "3f69d0865ff992e77eb31d2d0205a0a1ac68052f410b0fc2b8b505a6cac667a8",
     "shared/wellness-context.ts": "751a13690e046e9765c44b7b5b71f5e9266138f5d50377938cf5abaa32353bb7"
   }
 }

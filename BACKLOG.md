@@ -1,3 +1,11 @@
+## Bounded source-history correctness — 2026-11-09
+
+Food/source-context e22c639 passed exact CI42635587202; current development baseline retains all prior bloodwork/provider/source checks. New local fix separates bounded movement and action-choice reads (6000/2000 plus sentinel rows). Large activity history cannot hide an unrelated saved intention. A truncated movement source is explicitly unavailable/incomplete and cannot produce another movement suggestion; food/routine choices remain eligible when their own history is complete. Unexpected truncated choice history is labelled, refuses only new choice writes, preserves exact completed-receipt replay and leaves ordinary food/activity logging available. No claim that a partial source is empty or complete.
+
+Actual encrypted SQL and actual App/browser tests exercise6001 movement rows and>2000 choice rows, source warnings, preserved prior intents, food eligibility, no false movement suggestion, exact retry, owner isolation and normal logging fallback. Existing48-state food/movement mode/theme/zoom journey still passes.27 focused wellness/experience/source tests, types/inventories and build pass. Publish/verify this change, then continue check-in/permitted source context and observed-outcome foundations; full v0.6 remains open. No main merge or interim approval.
+
+---
+
 ## Current v0.6 source-context checkpoint — 2026-11-09
 
 Provider-range development3f0c48f passed CI42625802791:697/697, types/inventories/build, expanded provider/source browser, source-review48-state browser, saved-nutrient browser and isolated hosted persistence/media. Source originals stay primary; no verified LifeLabs dataset is installed, so published comparisons abstain. Main/v0.5 remains unchanged.

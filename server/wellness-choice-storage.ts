@@ -18,8 +18,12 @@ export class WellnessChoiceStorage {
   if(!actor)throw new WellnessChoiceConflict("scope");
   const [profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
   const [settings]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
-  const records=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),inArray(experienceRecords.kind,["session","activity","wellness-choice"]))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(6000);
-  const decoded=records.map(row=>({...experienceEntrySchema.parse({kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId)}),id:row.id,createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()}));
+  // Separate bounds: many old activities cannot hide an unrelated saved choice.
+  // One sentinel row distinguishes a complete source from a truncated view.
+  const movement=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),inArray(experienceRecords.kind,["session","activity"]))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(6001);
+  const choiceRows=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,"wellness-choice"))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(2001);
+  const movementHistoryComplete=movement.length<=6000,choiceHistoryComplete=choiceRows.length<=2000;
+  const decoded=[...movement.slice(0,6000),...choiceRows.slice(0,2000)].map(row=>({...experienceEntrySchema.parse({kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId)}),id:row.id,createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()}));
   // Optional journal source: missing table/columns/permissions must not disable
   // goals-only actions. Preflight avoids aborting the consistent transaction.
   const availability=await (tx as Database&Pick<typeof appDatabase,"execute">).execute(sql`SELECT CASE WHEN to_regclass('public.meals') IS NULL THEN false ELSE has_table_privilege('public.meals','SELECT') AND (SELECT count(*)=12 FROM information_schema.columns WHERE table_schema='public' AND table_name='meals' AND column_name IN ('id','user_id','meal_text','meal_type','logged_at','nutritional_data','meal_context','intelligence','total_calories','total_protein','total_carbs','total_fat')) END AS available`);
@@ -31,7 +35,7 @@ export class WellnessChoiceStorage {
    food={records:journal.slice(0,200),limited:journal.length>200};
   }
   const context=buildWellnessContext(userId,profile?decryptPrecision(profile.encryptedContext,userId):undefined,actor,this.now());
-  return buildWellnessActionView({context,settings:experienceSettingsSchema.parse(settings?decryptPrecision(settings.encryptedPayload,userId):{}),day,sessions:decoded.filter(r=>r.kind==="session"),activities:decoded.filter(r=>r.kind==="activity"),choices:decoded.filter(r=>r.kind==="wellness-choice"),food,now:this.now()});
+  return buildWellnessActionView({context,settings:experienceSettingsSchema.parse(settings?decryptPrecision(settings.encryptedPayload,userId):{}),day,sessions:decoded.filter(r=>r.kind==="session"),activities:decoded.filter(r=>r.kind==="activity"),choices:decoded.filter(r=>r.kind==="wellness-choice"),choiceHistoryComplete,movementHistoryComplete,food,now:this.now()});
  }
  async view(userId:string,day:WellnessDay){
   day=wellnessDaySchema.parse(day);
