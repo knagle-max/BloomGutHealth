@@ -1,3 +1,9 @@
+## BIOLOGICAL OPTIMIZATION INTELLIGENCE — CONSOLIDATED v0.6 DIRECTIVE (2026-11-09)
+
+Read [`docs/architecture/BOI_V06_ARCHITECT_RECONCILIATION_20261109.md`](docs/architecture/BOI_V06_ARCHITECT_RECONCILIATION_20261109.md) and four original specialist handoffs in `docs/architecture/boi/`. **Approve core concept with revisions; implement exact delta in current v0.6 roadmap.** Everyday guidance must work from goals/preferences without mandatory tests or devices, show one actionable evidence-linked choice, preserve intended vs actual vs measured outcome. Develop *separately* real reference-only producer/consumer molecular research **in parallel**; no user-specific SCFA/GLP-1/pathway flux inferred. Preserve owner-requested genetics Issue #4 and lab Issue #5 priorities and current code; avoid duplicate implementations. No new specialist or owner checkpoint for routine work. Do not classify handoff or JSON inventory as implemented runtime functionality.
+
+---
+
 ## Source-dated outcome comparison — 2026-11-09
 
 Check-in/provider-date source slice published as ade6852b84fa2e49bc58df8345666b545f6f6121. Exact CI42646197306 passed bloodwork/source-review/nutrient browser gates but failed weekly-reader320px/200% page zoom: the existing Save check-in button overflowed by17px in Chrome156. Scoped weekly-review button wrapping/minimum44px target fixes the same reproduced min-content cause found by the new experiment browser; no assertion is weakened.
