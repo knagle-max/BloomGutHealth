@@ -45,6 +45,9 @@ try{
     await page.evaluate(value=>document.documentElement.style.zoom=value,zoom);
     // Permit at most one CSS pixel of fractional rounding, scaled by text zoom.
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+Math.max(1,Number.parseFloat(document.documentElement.style.zoom)||1)),JSON.stringify({testMode,width,theme,zoom,overflow:await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,elements:[...document.querySelectorAll('body *')].filter(el=>el.checkVisibility()&&el.getBoundingClientRect().right>innerWidth+1).slice(0,16).map(el=>({tag:el.tagName,class:el.className,text:el.textContent?.slice(0,70),right:el.getBoundingClientRect().right}))}))}));
+    const plot=page.getByRole('region',{name:'HDL cholesterol recorded plot',exact:true});
+    assert.ok(await plot.evaluate(el=>el.clientWidth<=el.parentElement.clientWidth+1),'chart scroll region stays within its figure');
+    for(const point of await plot.locator('.lab-point-button').all())assert.ok(await point.evaluate(el=>{const style=getComputedStyle(el);return parseFloat(style.width)>=44&&parseFloat(style.height)>=44;}),'chart point retains44 CSS px target');
     for(const name of ['What it does','Why values vary','Why it matters','What to discuss'])await context.getByRole('heading',{name,exact:true}).waitFor();
     assert.doesNotMatch(await context.innerText(),/Interpretation not yet reviewed|Research explanation not available yet/);
    }
