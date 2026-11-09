@@ -1,0 +1,28 @@
+{
+  "applicationCommit": "0e41e457c1c920202b23b330e02bf2bec95073ac",
+  "mergeCommit": "fb8b24ae6da60a0386a446ad323444272b3ecd41",
+  "PR": 1,
+  "mergeAuthorized": "Owner requested referenced corrections then merge",
+  "merged": true,
+  "CI": {
+    "run": 42551184922,
+    "result": "SUCCESS",
+    "tests": 676,
+    "failed": 0
+  },
+  "releaseChecks": [
+    "TypeScript",
+    "source inventories",
+    "production build",
+    "assay/importer/report tests",
+    "bloodwork browser including320px200percent",
+    "hosted media72states",
+    "isolated synthetic account persistence/export/erase/revocation/cleanup",
+    "separate isolated PostgreSQL persistence"
+  ],
+  "deployedApplicationMatched": true,
+  "productionDataChanged": false,
+  "independentHumanDeviceVoiceOver": "NOT_RUN",
+  "preferredDetailedLabRaster": "UNAVAILABLE compact SVG retained; bounded design follow-up",
+  "transition": "Approved v0.6 development resumed; no v0.6 main merge or public/provider activation authorized"
+}
