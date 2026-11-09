@@ -133,3 +133,6 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
  .app-shell[data-bloom-visual="premium"] .lab-explorer-markers { padding-inline:4px; }
  .app-shell[data-bloom-visual="premium"] .lab-explorer-detail .evidence-insight { padding-inline:8px; }
 }
+
+/* Closed native disclosures must not contribute hidden source-table widths. */
+.app-shell[data-bloom-visual="premium"] .lab-explorer details:not([open]) > :not(summary) { display:none; }
