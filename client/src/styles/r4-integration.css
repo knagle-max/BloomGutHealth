@@ -136,3 +136,4 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
 
 /* Anonymous flex text otherwise keeps the longest word as a minimum width. */
 .app-shell[data-bloom-visual="premium"] .workspace-disclosure > summary { display:grid;grid-template-columns:minmax(0,1fr) auto;min-width:0;overflow-wrap:anywhere; }
+.app-shell[data-bloom-visual="premium"] .progress-workspace { overflow-wrap:anywhere; }
