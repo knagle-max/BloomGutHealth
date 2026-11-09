@@ -1,3 +1,9 @@
+## LATEST CHIEF ARCHITECT FINAL-v0.5 RC SPECIALIST REVIEW — 2026-11-08
+
+Read [`docs/architecture/V05_FINAL_RC_SPECIALIST_CONSOLIDATION_20261108.md`](docs/architecture/V05_FINAL_RC_SPECIALIST_CONSOLIDATION_20261108.md) and the four verbatim handoffs in `docs/verification/specialist-final-rc/`. **One actual P0 source issue identified:** `LabMarkerEducation.tsx` vitamin D assay identity regex erroneously allows 1,25-dihydroxy and generic dihydroxy as 25-OH; Codex must fix, add adversarial tests, repin actual new app SHA and verify CI/Render. This is a scoped fix, not another specialist/owner approval gate. Independent human visual/physical tests were NOT RUN; other reviewers did not reproduce new P0. Preserve isolated review DB, original health data and disabled external provider/personal clinical claims. The prior `672/672` receipt is for the **old application SHA** and must not be carried over as proof of the fixed code. After corrected full-v0.5 RC is verified, ask the owner **once** before main. No interim user requests, screenshots or v0.6.
+
+---
+
 ## FINAL WHOLE-v0.5 RC — verify publication, then single owner gate (2026-11-08)
 
 Verified applicationd20e384b / CI42533189930 SUCCESS672/672 including actual hosted guarded persistence/cleanup, public media/browser and live isolated Neon. Render LIVEdep-dbofv1dg1s2s738gu23g. Supplied two deidentified/reconstructed PDFs PASS both dev and compiled production assets with real bundled PDF worker, independent exact in-memory MuPDF comparison, review/save/reload/reimport/deletion/owner/keyboard/reflow; the compiled deletion failure was a QA race corrected by waiting for its HTTP response. No private source artifacts or screenshots are delivered.
