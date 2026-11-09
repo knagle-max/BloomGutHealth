@@ -1,3 +1,9 @@
+## NEW — Biological Optimization Intelligence Architect reconciliation (2026-11-09)
+
+**Read [BOI final Architect consolidation](BOI_V06_ARCHITECT_RECONCILIATION_20261109.md) and the four original BOI review sources in [`boi/`](boi/).** These are **v0.6 acceptance refinements to V06-09/12/13/14/17**, not a new implementation authority/parallel architecture. Two parallel tracks: (a) practical, guideline-supported one-action Today + independent chosen/performed/observed receipts; (b) synthetic/reference molecular production+consumption/cross-feeding R&D with source rights and separate model-validity benchmark. No compulsory extensive onboarding, speculative personal molecule/hormone/GLP1 scores, second source database, live wearable claim or unsupported clinical advice. Reuse recent actual v0.6 commits and owner's queued genetics/bloodwork issues, implement delta only; no intermediate user gate. Original inventory JSON is inside shared ZIP, **not deployed code**.
+
+---
+
 # Bloom v0.6 — Consolidated Chief Architect Handoff (Living Draft)
 **Created:** 2026-10-23 | **Owner:** Chief Architect & Integration Lead | **Status:** Architecture planning / specialist intake; NOT authorization to displace unfinished v0.5.
 
