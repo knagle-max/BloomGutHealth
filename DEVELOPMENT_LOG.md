@@ -1,3 +1,13 @@
+## Source-dated outcome comparison — 2026-11-09
+
+Check-in/provider-date source slice published as ade6852b84fa2e49bc58df8345666b545f6f6121. Exact CI42646197306 passed bloodwork/source-review/nutrient browser gates but failed weekly-reader320px/200% page zoom: the existing Save check-in button overflowed by17px in Chrome156. Scoped weekly-review button wrapping/minimum44px target fixes the same reproduced min-content cause found by the new experiment browser; no assertion is weakened.
+
+Existing experiment comparisons now exclude future-dated source observations while retaining every original value. Coverage disclosure shows elapsed versus recorded/missing days, exact reported/null/zero adherence and descriptive minimum–maximum, with confounding/method/causation limits. Three days remains an existing descriptive display threshold, never a scientific power rule. Current source failure still withdraws comparisons; correction/history/export/delete/owner isolation remain canonical. No automatic action ranking or treatment/plan change.8 focused scientific/experiment/encrypted-history tests, types/build and actual original-reader/history browser24-state theme/viewport/text/page-zoom pass, including all-future insufficiency. The real browser is now included in CI.
+
+Next: publish this integrated fix and verify exact CI, then continue remaining approved v0.6 work. Full Phase3 action-to-outcome linkage and reassessment remains open; this is a descriptive source foundation. No new main merge or approval checkpoint.
+
+---
+
 ## Bounded source-history correctness — 2026-11-09
 
 Food/source-context e22c639 passed exact CI42635587202; current development baseline retains all prior bloodwork/provider/source checks. New local fix separates bounded movement and action-choice reads (6000/2000 plus sentinel rows). Large activity history cannot hide an unrelated saved intention. A truncated movement source is explicitly unavailable/incomplete and cannot produce another movement suggestion; food/routine choices remain eligible when their own history is complete. Unexpected truncated choice history is labelled, refuses only new choice writes, preserves exact completed-receipt replay and leaves ordinary food/activity logging available. No claim that a partial source is empty or complete.

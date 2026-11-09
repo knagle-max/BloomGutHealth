@@ -1,3 +1,13 @@
+## Source-dated outcome comparison — 2026-11-09
+
+Check-in/provider-date source slice published as ade6852b84fa2e49bc58df8345666b545f6f6121. Exact CI42646197306 passed bloodwork/source-review/nutrient browser gates but failed weekly-reader320px/200% page zoom: the existing Save check-in button overflowed by17px in Chrome156. Scoped weekly-review button wrapping/minimum44px target fixes the same reproduced min-content cause found by the new experiment browser; no assertion is weakened.
+
+Existing experiment comparisons now exclude future-dated source observations while retaining every original value. Coverage disclosure shows elapsed versus recorded/missing days, exact reported/null/zero adherence and descriptive minimum–maximum, with confounding/method/causation limits. Three days remains an existing descriptive display threshold, never a scientific power rule. Current source failure still withdraws comparisons; correction/history/export/delete/owner isolation remain canonical. No automatic action ranking or treatment/plan change.8 focused scientific/experiment/encrypted-history tests, types/build and actual original-reader/history browser24-state theme/viewport/text/page-zoom pass, including all-future insufficiency. The real browser is now included in CI.
+
+Next: publish this integrated fix and verify exact CI, then continue remaining approved v0.6 work. Full Phase3 action-to-outcome linkage and reassessment remains open; this is a descriptive source foundation. No new main merge or approval checkpoint.
+
+---
+
 ## Current check-in source context and collection-date checkpoint — 2026-11-09
 
 Development baseline633f683 passed exact CI42637797946. New check-in source context is implemented and engineering-tested locally: separate weekly date-only and dated-measurement sources, 28-day disclosed window, immutable source revisions, original owned weekly-record reader, explicit zero versus missing, cross-mode source labels without mode switching, and edit/delete/account withdrawal. Source summaries expose field presence and dates only; private values remain behind the explicit original-record read. Optional missing/corrupt/incomplete source categories abstain independently and do not disable ordinary food logging or unrelated valid actions. No recommendation ranking, outcome/causation or readiness inference is added.

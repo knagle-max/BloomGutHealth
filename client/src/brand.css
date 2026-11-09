@@ -224,6 +224,7 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 .weekly-review-workspace .science-heading h1 { font-family:Georgia,serif; font-weight:500; }
 .weekly-review-workspace .workspace-disclosure > summary { min-height:44px; align-content:center; }
+.weekly-review-workspace button { max-width:100%; white-space:normal; overflow-wrap:anywhere; min-height:44px; }
 
 .progress-observation-metrics { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:12px 0; }
 .progress-observation-metrics dt { color:hsl(var(--muted-foreground)); font-size:13px; }
