@@ -1,0 +1,33 @@
+{
+  "version": "v0.6",
+  "status": "ENGINEERING_TESTED_FIRST_SLICE",
+  "authority": "docs/architecture/RECURRING_ACTIVITY_QUICK_LOG_ARCHITECT_RECONCILIATION_20261109.md",
+  "implemented": [
+    "Nullable nonnegative integer actual steps and explicit session/whole-day scope on existing canonical activities/components",
+    "Manual source label; no device synchronization or target count copied",
+    "Same existing editor, owned encrypted save/correction/export/delete and frozen receipt retry",
+    "Source child observations drive compatibility projection; multi-component counts never summed",
+    "Repeat clears actual count; old client omission preserves existing counts by stable child ID",
+    "Activity history/Today/Progress reuse source display; normal compact five-column set rows preserved and enlarged available-width reflow keeps separate44px controls",
+    "Header/Activity button/nav reflow at enlarged zoom without removing page overflow assertions"
+  ],
+  "evidence": {
+    "focusedTests": {
+      "passed": 12,
+      "failed": 0,
+      "includes": "Invalid/fractional/scope/zero/unknown;12400session+14100whole-day never26500;repeat;actual SQL owned retry/correction/export/deletion and unaware client preservation"
+    },
+    "actualActivityBrowser": "PASS actual App/HTTP/encrypted SQL Today\u2192save\u2192committed lost reply\u2192same retry\u2192correction\u2192Today\u2192Progress\u2192delete; manually recorded12400 retained;320px keyboard and other owner isolation",
+    "mixedActivityBrowser": "PASS actual reviewed parent/child source identities, independent sets, same-source retry, reload both modes; source actual12400 retained;96 mode/theme/viewport/text/page-zoom states",
+    "headerBrowser": "PASS local Chromium source lifecycle including1280px at200% page zoom; Chrome156 exactCI pending",
+    "typecheck": "PASS",
+    "productionBuild": "PASS final build and exact original asset byte checks",
+    "exactPublicationCI": "PENDING"
+  },
+  "remaining": [
+    "Named selected-weekday routines, due Today quick log, pause/skip/reschedule and stable occurrence transaction tests remain to implement",
+    "No fake device feed or native bridge",
+    "Physical VoiceOver, independent usability/design/science review not performed",
+    "Full v0.6 RC not ready; no main merge"
+  ]
+}

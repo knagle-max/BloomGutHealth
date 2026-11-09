@@ -154,9 +154,10 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-source-section { padding:12px 0 8px; margin-top:8px; border-top:1px solid hsl(var(--border)); color:hsl(var(--foreground)); font-weight:600; }
 
 /* Exercise Intelligence v1.2: Food Review parity with real parent/child observations. */
+.activity-workspace button { max-width:100%; white-space:normal; overflow-wrap:anywhere; min-height:44px; height:auto; }
 .activity-source-description { padding:12px; background:hsl(var(--muted)); border-radius:16px; }
 .activity-review-row { border-top:1px solid hsl(var(--border)); padding:16px 0; min-width:0; }
-.activity-review-row > summary { display:flex; align-items:center; gap:12px; min-height:44px; }
+.activity-review-row > summary { display:flex; flex-wrap:wrap; align-items:center; gap:12px; min-height:44px; }
 .activity-review-row > summary > span:first-child { flex:1; min-width:0; overflow-wrap:anywhere; }
 .activity-review-row strong,.activity-review-row small { display:block; }
 .activity-review-row small,.activity-row-status { color:hsl(var(--muted-foreground)); font-size:13px; }
@@ -353,3 +354,41 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 
 /* Closed food rows stay scannable; their native summary retains48px targets. */
 .meal-review .review-food-row:not([open]) {padding-block:10px;}
+
+/* Accessibility reflow only when a set row has less than 180px available.
+   Original five-column hierarchy remains at normal 320/390px presentation. */
+.activity-workspace .activity-set-row { container-type:inline-size; }
+@container(max-width:180px) {
+ .activity-workspace .activity-set-compact { grid-template-columns:44px minmax(0,1fr) 44px; gap:2px; overflow-wrap:anywhere; }
+ .activity-workspace .activity-set-compact > :first-child { grid-column:1; grid-row:1 / 4; }
+ .activity-workspace .activity-set-compact > :nth-child(2) { grid-column:2; grid-row:1; }
+ .activity-workspace .activity-set-compact > :nth-child(3) { grid-column:2; grid-row:2; }
+ .activity-workspace .activity-set-compact > :nth-child(4) { grid-column:2; grid-row:3; }
+ .activity-workspace .activity-set-compact > :last-child { grid-column:3; grid-row:1 / 4; }
+ .activity-workspace .activity-set-fields { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .activity-workspace .activity-set-fields > label:last-child { grid-column:1 / -1; }
+}
+
+/* Keep Athlete navigation targets operable under enlarged page zoom. */
+@media(max-width:767px) {
+ .app-shell .bloom-bottom-nav { flex-wrap:wrap; }
+ .app-shell .bloom-bottom-nav a { flex:1 1 44px; min-width:44px; max-width:100%; overflow-wrap:anywhere; text-align:center; }
+}
+
+.activity-workspace { container-type:inline-size; overflow-wrap:anywhere; }
+.activity-workspace legend { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+@container(max-width:180px) {
+ .activity-workspace .bloom-panel { padding-left:8px; padding-right:8px; }
+ .activity-workspace .activity-summary-values { grid-template-columns:minmax(0,1fr); }
+}
+
+/* Header actions reflow when zoom leaves less room than their source labels. */
+.app-shell .bloom-header-inner { flex-wrap:wrap; height:auto; min-height:84px; }
+.app-shell .header-context { min-width:0; overflow-wrap:anywhere; }
+.app-shell .header-actions { min-width:0; max-width:100%; flex-wrap:wrap; }
+.app-shell .profile-link { flex-shrink:0; min-width:44px; min-height:44px; }
+
+@media(max-width:991px) {
+ .app-shell .bloom-header-inner { min-height:68px; }
+ .app-shell.athlete-mode main { padding-bottom:calc(120px + env(safe-area-inset-bottom,0px)); }
+}

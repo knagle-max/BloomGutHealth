@@ -88,15 +88,17 @@ export function describeActivity(description:string) {
   notice:reportedLabel?'The reported activity name is retained; a specific classification has not been assumed.':needsSetReview?'Set counts or amounts could not be matched. Add or correct each set; the original description is retained.':choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};
 }
 
-export function activityAmountText(activity:Pick<Activity,'minutes'|'distanceM'|'components'>){
+export function activityAmountText(activity:Pick<Activity,'minutes'|'distanceM'|'components'|'steps'|'stepScope'>){
+ const stepObservations=activity.components?activity.components.items:[activity];
+ const stepText=stepObservations.filter(part=>part.steps!==undefined||part.stepScope!==undefined).map(part=>`${part.steps==null?'Step count not recorded':`${part.steps.toLocaleString('en-CA')} steps`} (${part.stepScope==='whole-day'?'whole day, manual':part.stepScope==='session'?'session, manual':'scope not recorded'})`).join(' · ');
  const missing=activity.components?.items.filter(part=>part.minutes===null).length||0;
  const sets=activity.components?.items.flatMap(part=>part.actualSets?.sets||[]);
- return `${activity.minutes===null?'Duration not recorded':`${activity.minutes} minutes`}${missing&&activity.minutes!==null?` known · ${missing} duration(s) unrecorded`:''}${activity.distanceM==null?'':` · ${Number((activity.distanceM/1000).toFixed(3))} km reported`}${sets?.length?` · ${sets.length} set rows (completion recorded separately)`:''}`;
+ return `${activity.minutes===null?'Duration not recorded':`${activity.minutes} minutes`}${missing&&activity.minutes!==null?` known · ${missing} duration(s) unrecorded`:''}${activity.distanceM==null?'':` · ${Number((activity.distanceM/1000).toFixed(3))} km reported`}${sets?.length?` · ${sets.length} set rows (completion recorded separately)`:''}${stepText?` · ${stepText}`:''}`;
 }
 
 export function activityParts(activity:Activity,id=()=>crypto.randomUUID()):ActivityComponent[]{
  if(activity.components)return structuredClone(activity.components.items);
- return [{id:id(),title:activity.title,activityId:activity.capture?.activityId||'other',match:activity.capture?.interpretation==='rule-suggestion'?'suggested':activity.capture?.interpretation==='unclassified'?'unclassified':'reported',minutes:activity.minutes,distanceM:activity.distanceM??null,...(activity.actualSets?{actualSets:{version:1 as const,sets:activity.actualSets.sets.map(set=>({...set,id:set.id||id()}))}}:{})}];
+ return [{id:id(),title:activity.title,activityId:activity.capture?.activityId||'other',match:activity.capture?.interpretation==='rule-suggestion'?'suggested':activity.capture?.interpretation==='unclassified'?'unclassified':'reported',minutes:activity.minutes,distanceM:activity.distanceM??null,...(activity.steps!==undefined?{steps:activity.steps}:{}),...(activity.stepScope!==undefined?{stepScope:activity.stepScope}:{}),...(activity.actualSets?{actualSets:{version:1 as const,sets:activity.actualSets.sets.map(set=>({...set,id:set.id||id()}))}}:{})}];
 }
 /** Structural fallback, not an exercise dictionary or an AI model. All clauses survive. */
 export function activityDescriptionSpans(description:string){
@@ -147,7 +149,7 @@ export function describeActivityParts(description:string,id=()=>crypto.randomUUI
 export function activityProjection(items:readonly ActivityComponent[]){
  const minutes=items.flatMap(part=>part.minutes===null?[]:[part.minutes]),distance=items.flatMap(part=>part.distanceM===null?[]:[part.distanceM]);
  const sets=items.flatMap(part=>part.actualSets?.sets||[]);
- return {title:items.length===1?items[0].title:`${items.length} activities`,minutes:minutes.length?minutes.reduce((a,b)=>a+b,0):null,distanceM:distance.length?distance.reduce((a,b)=>a+b,0):null,actualSets:{version:1 as const,sets}};
+ return {steps:items.length===1?items[0].steps??null:null,stepScope:items.length===1?items[0].stepScope??null:null,title:items.length===1?items[0].title:`${items.length} activities`,minutes:minutes.length?minutes.reduce((a,b)=>a+b,0):null,distanceM:distance.length?distance.reduce((a,b)=>a+b,0):null,actualSets:{version:1 as const,sets}};
 }
 
 /** Calendar-window observations only; missing days are never zero movement. */
@@ -177,4 +179,9 @@ export function activitySetSummary(sets:readonly ActivityDraftSet[],fallbackUnit
 }
 export function activityCompletionSummary(sets:readonly ActivityDraftSet[]) {
  return `${sets.filter(set=>set.completed&&set.state!=='planned'&&set.state!=='cancelled').length} of ${sets.length} completed`;
+}
+
+/** Repeat is a fresh observation, never a copy of a prior actual count. */
+export function repeatActivityParts(activity:Activity,id=()=>crypto.randomUUID()):ActivityComponent[]{
+ return activityParts(activity,id).map(part=>({...part,id:id(),...(part.steps!==undefined?{steps:null}:{}),...(part.actualSets?{actualSets:{version:1 as const,sets:part.actualSets.sets.map(set=>({...set,id:id(),completed:false,state:'described' as const}))}}:{})}));
 }

@@ -1,3 +1,7 @@
+## 2026-11-09 — Actual source steps and zoom regression repair
+
+Extended the existing owned activity record/editor with nullable actual steps plus explicit session/whole-day scope. No inferred steps, target completion, device ingestion or summed overlapping counts. Repeat withdraws prior actuals; old clients preserve step fields by stable component ID. Reused existing encrypted persistence, retry/correction/export/delete and existing Today/Progress display.12 focused checks and actual browser lifecycle plus96 mode/theme/viewport/zoom states pass. Source-only lab journey text now includes report/specimen availability; full lab browser work passed latest CI, whose remaining failure was header profile-link overflow at1280px/pageZoom2, fixed with wrapping. Exact CI remains required; routine scheduling and full v0.6 are open. See verification receipts.
+
 ## Current integrated laboratory P0 checkpoint — 2026-11-09
 
 Issue5/source preservation and Issue4/recorded genetics are published on development6b00bd6; latest original owner/Architect sources remain preserved. New integrated Issues8/9/10 code is engineering-tested locally:49 marker identities, explicit row skip/separate and fresh409review, typed date/unit diagnostics, single import/report/specimen-scoped overlay using existing SVG, owner/source-version context, original interval priority and source deletion withdrawal. Source preferences stay in signed-in session memory across navigation/mode; reload returns Original report/reconfirmation, with no new persistence format.

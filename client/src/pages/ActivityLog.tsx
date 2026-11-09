@@ -1,5 +1,5 @@
 import {activityTimeText} from '@shared/activity';
-import {activityChoices,describeActivityParts,activityParts,activityProjection,activityAmountText,unresolvedActivityLoads,defaultActivityLoadUnits,canonicalActivityParts,type ActivityDraftComponent} from '@shared/activity-capture';
+import {activityChoices,describeActivityParts,activityParts,repeatActivityParts,activityProjection,activityAmountText,unresolvedActivityLoads,defaultActivityLoadUnits,canonicalActivityParts,type ActivityDraftComponent} from '@shared/activity-capture';
 import {useEffect,useLayoutEffect,useRef,useState} from 'react';
 import {Link} from 'wouter';
 import {useAuth} from '@/lib/auth';
@@ -33,7 +33,7 @@ function ActivityWorkspace(){
  function review(items:ActivityDraftComponent[],source:NonNullable<Activity['capture']>){focusReviewRequested.current=true;setParts(settingsReady?defaultActivityLoadUnits(items,settings.displayUnits.bodyWeight):items);setCapture(source);setComposerOpen(false);setError('');setMessage('');setReviewKey(value=>value+1);}
  function describe(){try{review(describeActivityParts(description),{version:1,method:'describe',description,activityId:'other',interpretation:'rule-suggestion'});}catch(e){setError((e as Error).message);}}
  function select(id:typeof activityChoices[number]['id']){const choice=activityChoices.find(choice=>choice.id===id)!;review([{id:crypto.randomUUID(),title:choice.label,activityId:id,match:id==='other'?'unclassified':'reported',minutes:null,distanceM:null,...(id==='strength'?{actualSets:{version:1 as const,sets:[]}}:{})}],{version:1,method:'select',description:choice.label,activityId:id,interpretation:'user-selected'});}
- function repeat(row:Row){const items=activityParts(row.payload).map(part=>({...part,id:crypto.randomUUID(),...(part.actualSets?{actualSets:{version:1 as const,sets:part.actualSets.sets.map(set=>({...set,id:crypto.randomUUID(),completed:false,state:'described' as const}))}}:{})}));setDraft(fresh());review(items,{version:1,method:'repeat',description:row.payload.capture?.description||row.payload.title,activityId:row.payload.capture?.activityId||'other',interpretation:'user-selected'});}
+ function repeat(row:Row){const items=repeatActivityParts(row.payload);setDraft(fresh());review(items,{version:1,method:'repeat',description:row.payload.capture?.description||row.payload.title,activityId:row.payload.capture?.activityId||'other',interpretation:'user-selected'});}
  async function save(attempt:Attempt){
   if(busy.current||!active.current)return;busy.current=true;setPending(true);setHeld(attempt);setDefinite(false);setError('');setMessage('');
   try{

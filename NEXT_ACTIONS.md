@@ -1,3 +1,11 @@
+## Actual steps and responsive regression checkpoint — 2026-11-09
+
+The integrated laboratory changes are published in1825d05/9e9c591. Exact CI passed chart/source/dates/duplicates/report overlays and source/outcome readers, then found header-actions/profile-link overflow at1280px/pageZoom2 (dialog itself fits). Header wrapping is corrected locally; exact follow-on CI required. No real provider interval was activated; pending complete method/specimen applicability remains feature-scoped.
+
+First activity slice adds source-scoped actual steps to existing canonical activities/editor/history/Today/Progress. Unknown stays null; session12400 and whole-day14100 are never added; repeats leave actual blank; correction/owned export/delete preserve source identity and exact save retries.12 focused tests and actual SQL/UI lifecycle plus96 mode/theme/width/text/page-zoom states pass. Narrow available-width reflow retains independent44px set controls. See docs/verification/V06_ACTUAL_STEPS_20261109.json. Named routines and scheduling are NOT implemented by this slice; continue R1/R2 next after exact-build repairs, then remaining v0.6 work. No new owner checkpoint and no main merge.
+
+---
+
 ## Current integrated laboratory P0 checkpoint — 2026-11-09
 
 Issue5/source preservation and Issue4/recorded genetics are published on development6b00bd6; latest original owner/Architect sources remain preserved. New integrated Issues8/9/10 code is engineering-tested locally:49 marker identities, explicit row skip/separate and fresh409review, typed date/unit diagnostics, single import/report/specimen-scoped overlay using existing SVG, owner/source-version context, original interval priority and source deletion withdrawal. Source preferences stay in signed-in session memory across navigation/mode; reload returns Original report/reconfirmation, with no new persistence format.

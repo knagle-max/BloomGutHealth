@@ -66,7 +66,8 @@
         "passed": 7,
         "failed": 0
       },
-      "exactChrome156CI": "PENDING"
+      "exactChrome156CI": "PENDING",
+      "diagnosticCorrection": "9e9c591 CI proved the dialog fits510px. Actual remaining overflow is header-actions/profile-link at1280/pageZoom2 (right1291.6 on1280 viewport). Header now wraps within available width; no assertion removed."
     },
     "firstPublicationCI": {
       "commit": "1825d05707b53417ac6a3508b5c27bcc478f570f",
@@ -79,7 +80,23 @@
       "failure": "Reimport review now includes original report/specimen labels; old test expected shorter exact string",
       "fix": "Assert current full label including explicit not supplied identifiers; actual source-only HTTP/encrypted SQL browser rerun PASS"
     },
-    "sourceOnlyFinalBrowser": "PASS full current default source-only/save/retry/duplicate/date-correction/deletion journey"
+    "sourceOnlyFinalBrowser": "PASS full current default source-only/save/retry/duplicate/date-correction/deletion journey",
+    "secondPublicationCI": {
+      "commit": "9e9c5913644da77d3a9fe7288a0e38f9764d8ac0",
+      "run": 42691501147,
+      "status": "FAILED_HEADER_OVERFLOW",
+      "passed": [
+        "chart browser",
+        "source correction 48 states",
+        "source-only lifecycle",
+        "dated panel and per-row duplicates",
+        "report-scoped synthetic verified overlays 48 states",
+        "generic and label nutrients",
+        "owned action/checkin/source histories",
+        "experiment history"
+      ],
+      "fix": "Header reflow; local actual source lifecycle PASS, exact Chrome156 check pending"
+    }
   },
   "limits": [
     "No claim of full v0.6 RC readiness",

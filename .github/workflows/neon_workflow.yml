@@ -80,6 +80,14 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/experiment-history-journey.mjs
+      - name: Source-scoped actual steps and existing activity lifecycle browser regression
+        timeout-minutes: 5
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: |
+          node --import tsx scripts/qa/activity-log-journey.mjs
+          node --import tsx scripts/qa/activity-mixed-description-journey.mjs
       - name: Owned genetics recorded filter and source lifecycle browser regression
         timeout-minutes: 5
         env:
