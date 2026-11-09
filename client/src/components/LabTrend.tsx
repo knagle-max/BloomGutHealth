@@ -1,5 +1,5 @@
-import {matchProviderRanges,publishedLabRanges,publishedRangeText} from '@shared/lab-provider-ranges';
-import LabRangeSelector,{emptyLabOverlayChoice} from './LabRangeSelector';
+import {matchProviderRanges,publishedLabRanges,publishedRangeText,providerContextMatchesSource} from '@shared/lab-provider-ranges';
+import LabRangeSelector,{emptyLabOverlayChoice,type LabOverlayChoice} from './LabRangeSelector';
 import {sourceReferenceIntervalForPlot,referenceIntervalText,labPlotExtent,canShareSourceReference} from '@shared/lab-reference-interval';
 import {hasConfirmedLabIdentity} from '@shared/lab-assay-identity';
 import {Link} from 'wouter';
@@ -20,14 +20,15 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
  const id=useId(),points=t.points,unit=points[0].unit;
  const selectedPoint=resolveRecordedLabPoint(points,selected);
  const selectedSourceVersion=JSON.stringify([selectedPoint?.id,selectedPoint?.date,selectedPoint?.laboratory,selectedPoint?.method,selectedPoint?.fasting,selectedPoint?.sourceUnit,selectedPoint?.sourceValue,selectedPoint?.referenceLow,selectedPoint?.referenceHigh]);
- useEffect(()=>{setOverlay(value=>({...value,context:emptyLabOverlayChoice().context,confirmed:false}));},[selectedSourceVersion,t.marker]);
+ const sourceDisplayContext:Pick<LabOverlayChoice['context'],'method'|'fasting'|'collectedOn'>={method:selectedPoint?.method||'',fasting:selectedPoint?.fasting??'unknown',collectedOn:selectedPoint?(selectedPoint.dateCorrection?.enteredDate||selectedPoint.sourceReport?.enteredDate||selectedPoint.date.slice(0,10)):''};
+ useEffect(()=>{setOverlay(value=>({...value,context:{...emptyLabOverlayChoice().context,...sourceDisplayContext},confirmed:false}));},[selectedSourceVersion,t.marker]);
  const times=points.map(p=>Date.parse(p.date)),values=points.map(p=>p.value),first=Math.min(...times),latestTime=Math.max(...times),span=latestTime-first;
  const intervals=points.map(point=>sourceReferenceIntervalForPlot(t.marker,point)),showReferences=overlay.provider!=='none';
  const sharedInterval=canShareSourceReference(points,intervals)?intervals[0]:null;
  const selectedIndex=selectedPoint?points.findIndex(point=>point.id===selectedPoint.id):-1;
  const originalInterval=showReferences?(sharedInterval||(selectedIndex>=0?intervals[selectedIndex]:null)):null;
  const providerSelected=overlay.provider==='LifeLabs'||overlay.provider==='other';
- const comparisons=providerSelected&&overlay.confirmed&&selectedPoint?matchProviderRanges({provider:overlay.provider==='other'?overlay.otherProvider:overlay.provider,province:overlay.province,markerId:t.marker,...overlay.context,sourceUnit:selectedPoint.sourceUnit,plotUnit:unit,sourceInput:selectedPoint.sourceInput},publishedLabRanges):[];
+ const comparisons=providerSelected&&overlay.confirmed&&selectedPoint&&providerContextMatchesSource(selectedPoint,overlay.context)?matchProviderRanges({provider:overlay.provider==='other'?overlay.otherProvider:overlay.provider,province:overlay.province,markerId:t.marker,...overlay.context,sourceUnit:selectedPoint.sourceUnit,plotUnit:unit,sourceInput:selectedPoint.sourceInput},publishedLabRanges):[];
  const comparisonIntervals=comparisons.filter(match=>match.range.kind==='reference_interval');
  // Conflicting verified reference intervals abstain. Separately classified
  // decision limits can coexist; they never acquire a normal-range band.
@@ -54,9 +55,10 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
    {latestPoints.map(point=><div key={point.id}><p className="insight-value">{point.sourceValue} {point.sourceUnit}</p><p className="panel-note">Latest entry: {labDateText(point.date,point.sourceReport,point.dateCorrection)} · {point.laboratory}</p></div>)}
    <p className="panel-note">{points.length} dated result(s) · {Array.from(new Set(points.map(point=>point.unit))).join(", ")}. Entered values are not independently verified.</p>
    {!canPlot&&<p className="panel-note" role="status">{change}</p>}
-   <LabRangeSelector value={overlay} onChange={setOverlay} id={id} selected={!!selectedPoint}/>
+   <LabRangeSelector value={overlay} onChange={next=>setOverlay(current=>next.provider!==current.provider?{...next,context:{...next.context,...sourceDisplayContext}}:next)} id={id} selected={!!selectedPoint}/>
    {providerSelected&&<div className="panel-note space-y-2" role="status">
     {!comparisons.length?<p>Reference unavailable for this provider, province and collection context. No published comparison is plotted.</p>:comparisons.map(match=><p key={match.range.id}>{match.range.kind==='reference_interval'?'Published comparison interval':match.range.kind==='clinical_decision_limit'?'Published clinical decision limit':'Published risk threshold'}{match.range.label?` · ${match.range.label}`:''} — {match.range.provider} {match.range.province}, {match.range.sourceDocumentDate}: {publishedRangeText(match)}. <a className="text-link" href={match.range.sourceUrl} target="_blank" rel="noopener noreferrer">Published source{match.range.page?` · printed page ${match.range.page}`:''}</a></p>)}
+    {overlay.confirmed&&selectedPoint&&!providerContextMatchesSource(selectedPoint,overlay.context)&&<p>The comparison context differs from this saved source, or its method is unknown. Review the original source before using a published comparison.</p>}
     {selectedPoint&&selectedPoint.laboratory.trim().toLowerCase()!==(overlay.provider==='other'?overlay.otherProvider:overlay.provider).trim().toLowerCase()&&<p><strong>Comparison only — not this result's laboratory.</strong> Recorded laboratory: {selectedPoint.laboratory}.</p>}
     {originalInterval&&<p>The original report interval takes priority and remains visible. Published comparison values do not replace it.</p>}
     {comparisonIntervals.length>1&&<p>Published reference versions conflict; no comparison interval band is shown.</p>}

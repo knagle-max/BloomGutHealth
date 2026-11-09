@@ -50,6 +50,12 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/private-source-context-journey.mjs
+      - name: Saved wellness choices and food source context browser regression
+        timeout-minutes: 6
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/wellness-choice-journey.mjs
       - name: Python service authentication and evidence contracts
         run: |
           python3 -m venv /tmp/bloom-service-tests

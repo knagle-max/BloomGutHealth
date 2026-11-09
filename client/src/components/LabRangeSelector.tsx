@@ -13,13 +13,14 @@ export default function LabRangeSelector({value,onChange,id,selected}:{value:Lab
    <p className="panel-note">BC examples cannot be used for Saskatchewan or Ontario. Current Profile demographics never fill collection context.</p>
    <details><summary className="min-h-11 cursor-pointer">Collection context for a provider comparison</summary><div className="space-y-2 py-2 min-w-0">
     {!selected&&<p className="panel-note">Choose a recorded result below. Collection context belongs to that observation, not your current Profile.</p>}
-    <label className="block">Collection date shown on report<input type="date" className="bloom-input w-full" value={value.context.collectedOn} onChange={event=>context({collectedOn:event.target.value})}/></label>
+    <p className="panel-note">Date, method and fasting come from the selected saved observation. Review the original source to correct its recorded context.</p>
+    <label className="block">Recorded test date<input type="date" className="bloom-input w-full" value={value.context.collectedOn} readOnly/></label>
     <label className="block">Age at collection (years)<input type="number" min="0" max="130" step="any" className="bloom-input w-full" value={value.context.ageAtCollection??''} onChange={event=>context({ageAtCollection:event.target.value===''?null:Number(event.target.value)})}/></label>
     <label className="block" htmlFor={id+'-sex'}>Report reference sex category</label><select id={id+'-sex'} className="bloom-input w-full" value={value.context.sexReferenceCategory??''} onChange={event=>context({sexReferenceCategory:(event.target.value||null) as 'M'|'F'|null})}><option value="">Unknown / not supplied</option><option value="M">M — report reference category</option><option value="F">F — report reference category</option></select>
     <label className="block">Reported specimen type<input className="bloom-input w-full" value={value.context.specimen} maxLength={100} onChange={event=>context({specimen:event.target.value})}/></label>
     <label className="block">Reported assay<input className="bloom-input w-full" value={value.context.assay} maxLength={200} onChange={event=>context({assay:event.target.value})}/></label>
-    <label className="block">Reported method<input className="bloom-input w-full" value={value.context.method} maxLength={200} onChange={event=>context({method:event.target.value})}/></label>
-    <label className="block" htmlFor={id+'-fasting'}>Fasting context at collection</label><select id={id+'-fasting'} className="bloom-input w-full" value={value.context.fasting} onChange={event=>context({fasting:event.target.value as 'yes'|'no'|'unknown'})}><option value="unknown">Unknown / not supplied</option><option value="yes">Fasting</option><option value="no">Not fasting / random</option></select>
+    <label className="block">Reported method<input className="bloom-input w-full" value={value.context.method} maxLength={200} readOnly/></label>
+    <label className="block" htmlFor={id+'-fasting'}>Fasting context at collection</label><select id={id+'-fasting'} className="bloom-input w-full" value={value.context.fasting} disabled><option value="unknown">Unknown / not supplied</option><option value="yes">Fasting</option><option value="no">Not fasting / random</option></select>
     <label className="block"><input type="checkbox" checked={value.confirmed} onChange={event=>onChange({...value,confirmed:event.target.checked})}/> I checked this collection context against the selected source report.</label>
    </div></details>
   </>}

@@ -1,3 +1,6 @@
+import FoodSourceDetails from './FoodSourceDetails';
+import MovementSourceDetails from './MovementSourceDetails';
+import {useWellnessChoices} from '@/lib/wellness-choices';
 import EditorialMedia from "./EditorialMedia";
 import {localDate} from "@/lib/experience";
 import {athleteBlockerMessage,type AthleteBlockerReason} from "@shared/athlete-eligibility";
@@ -30,6 +33,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
     retrying: boolean;
 }) {
     const ready = !checking && !unavailable, calendar = athleteCalendarSummary(ready ? records : [], date), session = calendar.session;
+    const sourceContext=useWellnessChoices({date,timezoneOffset:new Date().getTimezoneOffset()},ready&&calendar.validDate);
     const activities=ready&&calendar.validDate?records.filter(row=>row.kind==="activity"&&localDate(new Date(row.payload.startedAt))===date):undefined;
     const readableDate = calendar.validDate ? new Date(date + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'the selected date';
     const upcoming = session?.payload.status === 'planned' && Date.parse(session.payload.startsAt) >= Date.now();
@@ -55,7 +59,7 @@ export default function AthleteHome({ date, records, checking, unavailable, day,
     {blockers.some(reason=>["profile_unreviewed","reference_mass_missing","targets_unconfirmed"].includes(reason))&&<details className="today-focus-evidence"><summary>Review fueling setup</summary><ul className="list-disc pl-5 space-y-2 py-2">{blockers.filter(reason=>["profile_unreviewed","reference_mass_missing","targets_unconfirmed"].includes(reason)).map(reason=><li key={reason}>{athleteBlockerMessage[reason]}</li>)}</ul></details>}
    </div>}
    {day?.partial && <p className="panel-note">Some logged nutrients are missing. Review matches before using remaining-fuel suggestions.</p>}
-   <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p></details>
+   <details className="today-focus-evidence"><summary>Why this?</summary><p>A saved planned session is selected by its date, reported status and start time. This is a calendar action, not a readiness score, medical clearance or an inferred energy requirement.</p>{calendar.validDate&&<><FoodSourceDetails sources={sourceContext.current?.foodSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/><MovementSourceDetails sources={sourceContext.current?.movementSources} date={date} loading={sourceContext.source.fetchStatus!=="idle"}/></>}</details>
   </CompanionHero>
   <p><Link className="text-link" href="/activity">Add activity · describe, select or repeat</Link></p>
   <nav className="athlete-home-links" aria-label="Your training sources">{cards.map(({ title, detail, Icon, href, onClick }) => {

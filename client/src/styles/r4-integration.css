@@ -147,3 +147,6 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
 .lab-reference-boundary-label { position:absolute;pointer-events:none;transform:translateY(-50%);font-size:.6875rem;line-height:1.2;background:hsl(var(--background)/.9);color:hsl(var(--foreground));max-width:100%;overflow-wrap:anywhere; }
 .lab-range-selector { overflow-wrap:anywhere; }
 .lab-range-selector :is(input,select) { min-width:0;max-width:100%; }
+.athlete-workspace .athlete-session-status { max-width:100%;white-space:normal;overflow-wrap:anywhere; }
+.athlete-home-links .workspace-shortcut > span { min-width:0;flex:1;overflow-wrap:anywhere; }
+@media (max-width:600px) { .athlete-home-links .workspace-shortcut { flex-wrap:wrap; } .athlete-home-links .workspace-shortcut > svg:last-child { display:none; } }

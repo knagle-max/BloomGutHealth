@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {labRangeSchema,matchProviderRanges,publishedLabRanges,providerRangeSourceLeads,publishedRangeText,type ProviderRangeContext} from '../shared/lab-provider-ranges';
+import {labRangeSchema,matchProviderRanges,publishedLabRanges,providerRangeSourceLeads,publishedRangeText,providerContextMatchesSource,type ProviderRangeContext} from '../shared/lab-provider-ranges';
 import {canShareSourceReference,sourceReferenceIntervalForPlot} from '../shared/lab-reference-interval';
 // Explicitly synthetic verified fixtures exercise matching, not a provider import.
 const range=labRangeSchema.parse({id:'synthetic-bc-ldl',provider:'LifeLabs',province:'BC',markerId:'ldl',specimen:'serum',assay:'Synthetic LDL assay',method:'Synthetic LDL method',ageMinYears:30,sexReferenceCategory:'all',fasting:'either',effectiveFrom:'2025-09-02',effectiveTo:'2026-09-01',kind:'reference_interval',low:1.5,high:3.4,unit:'mmol/L',sourceUrl:'https://example.invalid/synthetic-range',sourceDocumentDate:'2025-09-02',page:36,scientificReviewStatus:'verified'});
@@ -25,6 +25,7 @@ test('one-sided operators and clinical decision limits retain their kind and nev
  const matched=matchProviderRanges(b12,[low])[0];assert.equal(matched.low,null);assert.equal(matched.high,150);assert.equal(matched.range.kind,'clinical_decision_limit');assert.match(publishedRangeText(matched),/^<150 pmol\/L; lower limit not supplied$/);
  const ferritin=[{...range,id:'synthetic-on-ferritin-low',province:'ON',markerId:'ferritin',low:undefined,high:30,highInclusive:false,unit:'ug/L',kind:'clinical_decision_limit'},{...range,id:'synthetic-on-ferritin-high',province:'ON',markerId:'ferritin',low:600,high:undefined,lowInclusive:true,unit:'ug/L',kind:'clinical_decision_limit'}];
  const limits=matchProviderRanges({...context,province:'ON',markerId:'ferritin',sourceUnit:'ug/L',plotUnit:'ug/L'},ferritin);assert.equal(limits.length,2);assert.ok(limits.every(limit=>limit.range.kind==='clinical_decision_limit'&&(limit.low===null||limit.high===null)));assert.match(publishedRangeText(limits[1]),/^≥600/);
+ const native=matchProviderRanges({...context,province:'ON',markerId:'ferritin',sourceUnit:'µg/L',plotUnit:'ug/L'},[{...ferritin[0],unit:'µg/L'}])[0];assert.equal(native.high,30);assert.equal(native.range.unit,'µg/L','Provider-native notation stays intact while conversion uses the canonical unit');
  assert.equal(labRangeSchema.safeParse({...range,kind:'treatment_target'}).success,false);
 });
 test('vitamin-D identity and physical conversion are explicit; original source intervals remain separate',()=>{
@@ -39,4 +40,13 @@ test('equal source numbers cannot paint a shared band across different laborator
  assert.equal(canShareSourceReference([point,point],[interval,interval]),true);
  for(const patch of [{laboratory:'Other lab'},{method:'Other assay'},{fasting:'no'},{sourceUnit:'mg/dL'}])assert.equal(canShareSourceReference([point,{...point,...patch}],[interval,interval]),false);
  assert.equal(canShareSourceReference([point,point],[interval,{...interval,high:4}]),false);assert.equal(canShareSourceReference([{...point,method:'Not supplied'},point],[interval,interval]),false);
+});
+
+test('display comparison fields cannot override source method, fasting or original collection calendar',()=>{
+ const point={date:'2026-01-01T01:00:00+10:00',method:context.method,fasting:'yes',sourceReport:{enteredDate:'2026-01-01'}};
+ assert.equal(providerContextMatchesSource(point,context),true);
+ for(const change of [{method:'Other method'},{fasting:'no'},{collectedOn:'2025-12-31'}])assert.equal(providerContextMatchesSource(point,{...context,...change}as ProviderRangeContext),false);
+ assert.equal(providerContextMatchesSource({...point,method:'Not supplied'},context),false);
+ assert.equal(providerContextMatchesSource({...point,dateCorrection:{enteredDate:'2026-01-02'}},context),false);
+ assert.equal(providerContextMatchesSource({...point,fasting:'unknown'},{...context,fasting:'yes'}),false,'A display selector does not fill unknown source fasting');
 });

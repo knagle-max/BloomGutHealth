@@ -1,3 +1,5 @@
+import {foodSourceObservations} from './wellness-food-observations';
+import type {Meal} from '../shared/schema';
 import {createHash} from "node:crypto";
 import {movementSourceObservations} from "./wellness-observations";
 import {goalSources} from "../shared/goal-guidance";
@@ -13,7 +15,7 @@ export const wellnessDigest=(value:unknown)=>createHash("sha256").update(JSON.st
 export const wellnessChoiceId=(userId:string,intentId:string)=>"choice_"+wellnessDigest(["wellness-intent-v1",userId,intentId.toLowerCase()]);
 export const wellnessChoiceRevision=(userId:string,payload:unknown)=>wellnessDigest(["wellness-choice-source-v1",userId,payload]);
 const dateAt=(value:Date,offset:number)=>new Date(+value-offset*60000).toISOString().slice(0,10);
-export function buildWellnessActionView({context,settings,day,sessions,activities,choices,now=new Date()}:{context:WellnessContext;settings:ExperienceSettings;day:WellnessDay;sessions:ExperienceRecord[]|null;activities:ExperienceRecord[]|null;choices:ExperienceRecord[];now?:Date}):WellnessActionView{
+export function buildWellnessActionView({context,settings,day,sessions,activities,choices,food=null,now=new Date()}:{context:WellnessContext;settings:ExperienceSettings;day:WellnessDay;sessions:ExperienceRecord[]|null;activities:ExperienceRecord[]|null;choices:ExperienceRecord[];food?:{records:Meal[];limited:boolean}|null;now?:Date}):WellnessActionView{
  day=wellnessDaySchema.parse(day);
  const dateCurrent=Number.isFinite(+now)&&dateAt(now,day.timezoneOffset)===day.date;
  const lifecycleId=settings.lifecycleId??null;
@@ -43,5 +45,6 @@ export function buildWellnessActionView({context,settings,day,sessions,activitie
  const selected=records.find(r=>actions.some(a=>a.eligible&&a.choice?.id===r.id&&(a.choice.choice==="try"||a.choice.choice==="later")));
  const primary=selected?actions.find(a=>a.choice?.id===selected.id):order.map(id=>actions.find(a=>a.action.id===id)).find(a=>a?.eligible&&a.choice?.choice!=="not-relevant");
  return{version:"wellness-actions-v1",accountScope:context.accountScope,day,contextRevision:context.revision,evidenceVersion:context.evidenceVersion,lifecycleId,asOf:now.toISOString(),dateCurrent,actions,primaryActionId:primary?.action.id??null,sources:goalSources.filter(s=>actions.some(a=>a.action.sourceIds.includes(s.id))),history,
+  foodSources:{version:"wellness-food-sources-v1",status:food?"available":"unavailable",purpose:"own-account-app",limited:food?.limited??false,observations:food?foodSourceObservations(context.accountScope,food.records,now):[]},
   movementSources:{version:"wellness-movement-sources-v1",status:calendarKnown?"available":"unavailable",purpose:"own-account-app",observations:calendarKnown?movementSourceObservations(context.accountScope,calendar,now):[]}};
 }

@@ -1,6 +1,6 @@
 import {randomUUID} from "node:crypto";
-import {and,eq,desc,inArray,sql} from "drizzle-orm";
-import {users,precisionProfiles,experienceSettings,experienceRecords} from "../shared/schema";
+import {and,eq,desc,inArray,sql,gte,lt} from "drizzle-orm";
+import {users,precisionProfiles,experienceSettings,experienceRecords,meals} from "../shared/schema";
 import {experienceSettingsSchema,experienceEntrySchema,wellnessChoiceSchema,type ExperienceRecord} from "../shared/experience";
 import {wellnessDaySchema,wellnessChoiceCommandSchema,wellnessHistoryDeleteSchema,type WellnessDay,type WellnessChoiceCommand,type WellnessHistoryDelete} from "../shared/wellness-actions";
 import {encryptPrecision,decryptPrecision} from "./precision-crypto";
@@ -20,8 +20,18 @@ export class WellnessChoiceStorage {
   const [settings]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
   const records=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),inArray(experienceRecords.kind,["session","activity","wellness-choice"]))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(6000);
   const decoded=records.map(row=>({...experienceEntrySchema.parse({kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId)}),id:row.id,createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()}));
+  // Optional journal source: missing table/columns/permissions must not disable
+  // goals-only actions. Preflight avoids aborting the consistent transaction.
+  const availability=await (tx as Database&Pick<typeof appDatabase,"execute">).execute(sql`SELECT CASE WHEN to_regclass('public.meals') IS NULL THEN false ELSE has_table_privilege('public.meals','SELECT') AND (SELECT count(*)=12 FROM information_schema.columns WHERE table_schema='public' AND table_name='meals' AND column_name IN ('id','user_id','meal_text','meal_type','logged_at','nutritional_data','meal_context','intelligence','total_calories','total_protein','total_carbs','total_fat')) END AS available`);
+  const available=(Array.isArray(availability)?availability:(availability as {rows?:unknown[]}).rows)?.[0] as {available?:boolean}|undefined;
+  let food:{records:typeof meals.$inferSelect[];limited:boolean}|null=null;
+  if(available?.available===true){
+   const start=new Date(Date.parse(day.date+'T00:00:00Z')+day.timezoneOffset*60000),end=new Date(+start+86400000);
+   const journal=await tx.select().from(meals).where(and(eq(meals.userId,userId),gte(meals.loggedAt,start),lt(meals.loggedAt,end))).orderBy(desc(meals.loggedAt),desc(meals.id)).limit(201);
+   food={records:journal.slice(0,200),limited:journal.length>200};
+  }
   const context=buildWellnessContext(userId,profile?decryptPrecision(profile.encryptedContext,userId):undefined,actor,this.now());
-  return buildWellnessActionView({context,settings:experienceSettingsSchema.parse(settings?decryptPrecision(settings.encryptedPayload,userId):{}),day,sessions:decoded.filter(r=>r.kind==="session"),activities:decoded.filter(r=>r.kind==="activity"),choices:decoded.filter(r=>r.kind==="wellness-choice"),now:this.now()});
+  return buildWellnessActionView({context,settings:experienceSettingsSchema.parse(settings?decryptPrecision(settings.encryptedPayload,userId):{}),day,sessions:decoded.filter(r=>r.kind==="session"),activities:decoded.filter(r=>r.kind==="activity"),choices:decoded.filter(r=>r.kind==="wellness-choice"),food,now:this.now()});
  }
  async view(userId:string,day:WellnessDay){
   day=wellnessDaySchema.parse(day);

@@ -1,3 +1,13 @@
+## Current v0.6 source-context checkpoint — 2026-11-09
+
+Provider-range development3f0c48f passed CI42625802791:697/697, types/inventories/build, expanded provider/source browser, source-review48-state browser, saved-nutrient browser and isolated hosted persistence/media. Source originals stay primary; no verified LifeLabs dataset is installed, so published comparisons abstain. Main/v0.5 remains unchanged.
+
+Next development slice is complete locally: minimized saved-food source context in the existing owned wellness snapshot, shown in Today and Athlete Why. Existing meal IDs, immutable source availability, meal-record time (not food collection date) and canonical mealRecordRevision; no raw food descriptions/notes/amounts, second totals store, absorption/adequacy or recommendation change. Day/offset SQL ownership, missing-table/old-schema/permission preflight fallback and disclosed200-record limit preserve goals-only use. Ordinary meal cache invalidation withdraws edited/deleted facts. Actual App/API/encrypted SQL journey passes full48-state mode/theme/viewport/text/page-zoom matrix, canonical edit, deletion, account switch and journal link;32 focused wellness/experience/provider/source tests, types and build pass. Fixed reproduced Athlete shortcut/status enlarged-zoom overflow. Additional provider hardening binds comparison date/method/fasting to the saved source and accepts canonical µg notation without rewriting native provider units;8 focused food/provider tests and expanded provider browser pass. Publication/exact new CI pending.
+
+Next after publication: continue check-in/permitted source context and source-read completeness before observed-outcome reassessment. Existing6000-record movement/choice read cap must not imply a complete/empty source history if truncated. v0.6 remains open for full temporal context, outcomes, TRAIN and staged micronutrient forms/Canadian authority/supplement observations; scientific/model/device/rights activations remain scoped. No interim approval or main merge. The temporary6-file food checkpoint is superseded by this integrated implementation; retain it only as recovery evidence.
+
+---
+
 ## Latest owner handoff — provider reference overlays (v0.6), 2026-11-09
 
 The owner supplied Provider-Specific Lab Ranges on Graphs (dated2026-11-08). Current v0.5 main stays unchanged. Previous bloodwork catalog/range/review writer d63eb3e passed exact CI42567337752, including the actual source-review48-state browser, original catalog/source browser, saved-nutrient browser, types/inventories, full embedded regression, build and hosted isolated persistence/media checks. No new main merge authorized.

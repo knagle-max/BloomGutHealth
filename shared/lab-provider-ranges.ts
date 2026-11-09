@@ -1,3 +1,4 @@
+import {normalizedLabUnit} from './lab-source-identity';
 import {formatRecordedLabNumber} from './lab-history';
 import {z} from 'zod';
 import {canonicalLab,markerDefinitions,type Lab} from './precision-nutrition';
@@ -20,13 +21,13 @@ const key=(value:string)=>value.trim().toLowerCase(),known=(value:string)=>!!val
  * specimen identifiers and values cannot fill unknown collection context. */
 export function matchProviderRanges(input:ProviderRangeContext,ranges:readonly unknown[]){
  const definition=markerDefinitions.find(marker=>marker.id===input.markerId);
- if(!definition||!known(input.provider)||!known(input.province)||!known(input.specimen)||!known(input.assay)||!known(input.method)||!z.iso.date().safeParse(input.collectedOn).success||input.ageAtCollection===null||!Number.isFinite(input.ageAtCollection)||input.ageAtCollection<0||input.unitReview?.status==='pending'||!(definition.units as readonly string[]).includes(input.sourceUnit)||!hasConfirmedLabIdentity(input.markerId,input))return[];
+ if(!definition||!known(input.provider)||!known(input.province)||!known(input.specimen)||!known(input.assay)||!known(input.method)||!z.iso.date().safeParse(input.collectedOn).success||input.ageAtCollection===null||!Number.isFinite(input.ageAtCollection)||input.ageAtCollection<0||input.unitReview?.status==='pending'||!normalizedLabUnit(input.sourceUnit,definition.units)||!hasConfirmedLabIdentity(input.markerId,input))return[];
  return ranges.flatMap(value=>{
   const parsed=labRangeSchema.safeParse(value);if(!parsed.success)return[];const range=parsed.data;
   if(range.scientificReviewStatus!=='verified'||key(range.provider)!==key(input.provider)||key(range.province)!==key(input.province)||range.markerId!==input.markerId||!known(range.specimen)||key(range.specimen)!==key(input.specimen)||!range.assay||!range.method||key(range.assay)!==key(input.assay)||key(range.method)!==key(input.method)||input.collectedOn<range.effectiveFrom||range.effectiveTo!==undefined&&input.collectedOn>range.effectiveTo||range.sexReferenceCategory!=='all'&&range.sexReferenceCategory!==input.sexReferenceCategory||range.fasting!=='either'&&range.fasting!==input.fasting)return[];
   const age=input.ageAtCollection!;
-  if(range.ageMinYears!==undefined&&(age<range.ageMinYears||age===range.ageMinYears&&!range.ageMinInclusive)||range.ageMaxYears!==undefined&&(age>range.ageMaxYears||age===range.ageMaxYears&&!range.ageMaxInclusive)||!(definition.units as readonly string[]).includes(range.unit))return[];
-  const convert=(value:number|undefined)=>value===undefined?null:canonicalLab({marker:definition.id,value,unit:range.unit,method:input.method,sourceInput:input.sourceInput});
+  if(range.ageMinYears!==undefined&&(age<range.ageMinYears||age===range.ageMinYears&&!range.ageMinInclusive)||range.ageMaxYears!==undefined&&(age>range.ageMaxYears||age===range.ageMaxYears&&!range.ageMaxInclusive)||!normalizedLabUnit(range.unit,definition.units))return[];
+  const convert=(value:number|undefined)=>value===undefined?null:canonicalLab({marker:definition.id,value,unit:normalizedLabUnit(range.unit,definition.units)!,method:input.method,sourceInput:input.sourceInput});
   const low=convert(range.low),high=convert(range.high);
   if([low,high].some(bound=>bound&&(!Number.isFinite(bound.value)||bound.unit!==input.plotUnit)))return[];
   return[{range,low:low?.value??null,high:high?.value??null,unit:input.plotUnit}];
@@ -47,4 +48,10 @@ export function publishedRangeText(match:{low:number|null;high:number|null;unit:
  if(low!==null)return `${range.lowInclusive===false?'>':range.lowInclusive===true?'≥':'lower limit '}${formatRecordedLabNumber(low)} ${unit}; upper limit not supplied`;
  if(high!==null)return `${range.highInclusive===false?'<':range.highInclusive===true?'≤':'upper limit '}${formatRecordedLabNumber(high)} ${unit}; lower limit not supplied`;
  return 'Reference unavailable';
+}
+/** Display fields cannot overrule the saved observation's method, fasting or
+ * entered collection calendar. Correct that source through its reviewed action. */
+export function providerContextMatchesSource(point:{date:string;method:string;fasting?:string;sourceReport?:{enteredDate?:string};dateCorrection?:{enteredDate:string}},context:Pick<ProviderRangeContext,'method'|'fasting'|'collectedOn'>){
+ const collectionDate=point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate||point.date.slice(0,10);
+ return known(point.method)&&key(point.method)===key(context.method)&&z.iso.date().safeParse(collectionDate).success&&context.collectedOn===collectionDate&&context.fasting===(point.fasting??'unknown');
 }
