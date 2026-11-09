@@ -1881,7 +1881,7 @@
     "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
     "client/src/components/LabSourceHistory.tsx": "4980ec3e6206947ec08fefe09d00fed5d5cc94c3a9cb413a8c7d505405b6f176",
     "client/src/components/LabSourceManagement.tsx": "f8502d68c239448f6db8f7310f20577d9fc997d8e880b7b5c2d90bda2ce21929",
-    "client/src/components/LabTrend.tsx": "ae30f7bfd0462d78771593f4508faa1e5b6d97c594265672d84eabd12c4b9c80",
+    "client/src/components/LabTrend.tsx": "94d8bfee9688df549ce5fccd3b3df8574d00199a021cc8ce559c31c3397d5373",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "0c3793be49e077cfa7bfd587504dd1aec6bad9fa36c01e4b5087713b95bb29fd",
     "client/src/components/MealAnalysis.tsx": "a508a75d536304a6047d7294b4524298f800e29772e563df8d89356f0c347e7c",

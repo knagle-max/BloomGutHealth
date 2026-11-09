@@ -43,11 +43,15 @@ try{
    await page.setViewportSize({width,height:900});await setAppTheme(page,theme);
    for(const zoom of ['1','2']){
     await page.evaluate(value=>document.documentElement.style.zoom=value,zoom);
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
     // Permit at most one CSS pixel of fractional rounding, scaled by text zoom.
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+Math.max(1,Number.parseFloat(document.documentElement.style.zoom)||1)),JSON.stringify({testMode,width,theme,zoom,overflow:await page.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth,browser:navigator.userAgent,containers:[...document.querySelectorAll('.lab-measured-figure,.lab-measured-plot,.evidence-insight')].map(el=>{const c=getComputedStyle(el);return{class:el.className,width:el.clientWidth,scroll:el.scrollWidth,right:el.getBoundingClientRect().right,overflow:c.overflow,grid:c.gridTemplateColumns,contain:c.contain};}),elements:[...document.querySelectorAll('body *')].filter(el=>el.checkVisibility()&&el.getBoundingClientRect().right>innerWidth+1).slice(0,16).map(el=>({tag:el.tagName,class:el.className,text:el.textContent?.slice(0,70),right:el.getBoundingClientRect().right}))}))}));
-    const plot=page.getByRole('region',{name:'HDL cholesterol recorded plot',exact:true});
-    assert.ok(await plot.evaluate(el=>el.clientWidth<=el.parentElement.clientWidth+1),'chart scroll region stays within its figure');
-    for(const point of await plot.locator('.lab-point-button').all())assert.ok(await point.evaluate(el=>{const style=getComputedStyle(el);return parseFloat(style.width)>=44&&parseFloat(style.height)>=44;}),'chart point retains44 CSS px target');
+    const plot=page.locator('.lab-measured-plot');
+    if(await plot.isVisible()){
+     await page.getByRole('region',{name:'HDL cholesterol recorded plot',exact:true}).waitFor();
+     assert.ok(await plot.evaluate(el=>el.clientWidth<=el.parentElement.clientWidth+1),'chart scroll region stays within its figure');
+     for(const point of await plot.locator('.lab-point-button').all())assert.ok(await point.evaluate(el=>{const style=getComputedStyle(el);return parseFloat(style.width)>=44&&parseFloat(style.height)>=44;}),'chart point retains44 CSS px target');
+    }else{await page.getByText('The chart needs more space. Choose a recorded result below to inspect every original value and source.',{exact:true}).waitFor();await page.getByLabel('HDL cholesterol recorded result',{exact:true}).waitFor();}
     for(const name of ['What it does','Why values vary','Why it matters','What to discuss'])await context.getByRole('heading',{name,exact:true}).waitFor();
     assert.doesNotMatch(await context.innerText(),/Interpretation not yet reviewed|Research explanation not available yet/);
    }

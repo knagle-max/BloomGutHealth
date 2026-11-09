@@ -119,3 +119,17 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
  .app-shell[data-bloom-visual="premium"] .lab-point-controls { grid-template-columns:minmax(0,1fr); }
 }
 .app-shell[data-bloom-visual="premium"] .lab-point-button { width:44px;height:44px;min-width:44px;min-height:44px; }
+
+/* A 200% zoomed phone can leave less than one touch target inside nested panels.
+   Keep all source results available through the existing selector in that space. */
+.app-shell[data-bloom-visual="premium"] .lab-measured-figure { container-type:inline-size; }
+.app-shell[data-bloom-visual="premium"] .lab-chart-space-note { display:none; }
+@container (max-width:120px) {
+ .app-shell[data-bloom-visual="premium"] .lab-measured-plot,
+ .app-shell[data-bloom-visual="premium"] .lab-chart-caption { display:none; }
+ .app-shell[data-bloom-visual="premium"] .lab-chart-space-note { display:block; }
+}
+@media (max-width:480px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-markers { padding-inline:4px; }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-detail .evidence-insight { padding-inline:8px; }
+}

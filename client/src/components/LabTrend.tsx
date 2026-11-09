@@ -32,7 +32,7 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
    <p className="panel-note">{points.length} dated result(s) · {Array.from(new Set(points.map(point=>point.unit))).join(", ")}. Entered values are not independently verified.</p>
    {!canPlot&&<p className="panel-note" role="status">{change}</p>}
    <figure className="lab-measured-figure" aria-labelledby={canPlot?`${id}-chart-title`:undefined} aria-label={canPlot?undefined:`${t.name} recorded source selection`}>
-    {canPlot&&<><figcaption id={`${id}-chart-title`} className="panel-note">Recorded observations · plot unit {unit}</figcaption>
+    {canPlot&&<><figcaption id={`${id}-chart-title`} className="panel-note lab-chart-caption">Recorded observations · plot unit {unit}</figcaption>
     <div className="lab-measured-plot" role="region" aria-label={`${t.name} recorded plot`} tabIndex={0}>
      <div className="lab-plot-axis" aria-label={`Vertical axis in ${unit}`}><span>{formatRecordedLabNumber(max)}</span><span>{formatRecordedLabNumber(min)}</span></div>
      <div className="lab-point-canvas"><div className="lab-point-inner">
@@ -45,6 +45,7 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
      <div className="lab-plot-dates"><time dateTime={points[0].date}>{labDateText(points[0].date,points[0].sourceReport,points[0].dateCorrection)}</time>{points.length>1&&<time dateTime={points[points.length-1].date}>{labDateText(points[points.length-1].date,points[points.length-1].sourceReport,points[points.length-1].dateCorrection)}</time>}</div>
     </div>
     </>}
+    {canPlot&&<p className="panel-note lab-chart-space-note">The chart needs more space. Choose a recorded result below to inspect every original value and source.</p>}
     <div className="lab-point-controls"><label>Recorded result<select className="bloom-input w-full" aria-label={`${t.name} recorded result`} value={selectedPoint?.id||''} onChange={event=>setSelected(event.target.value)}><option value="">Choose a result</option>{points.map((point,index)=><option key={point.id} value={point.id}>{index+1} · {labDateText(point.date,point.sourceReport,point.dateCorrection)} · {point.sourceValue} {point.sourceUnit}</option>)}</select></label><Button type="button" variant="outline" disabled={!selectedPoint} aria-label={`View selected ${t.name} source`} onClick={()=>selectedPoint&&openSource(selectedPoint.id)}>View source</Button></div>
     {selection&&selectedPoint&&<section className="lab-timeline-reveal space-y-2" aria-label="What was recorded then"><h4>What was recorded then</h4><p>{selectedPoint.sourceValue} {selectedPoint.sourceUnit} · {labDateText(selectedPoint.date,selectedPoint.sourceReport,selectedPoint.dateCorrection)}</p><p className="panel-note">Recorded timestamp: {selectedPoint.date} · {selectedPoint.laboratory} · {selectedPoint.method||"Method not reported"}. This is a source observation, not an explanation of a cause.</p></section>}
     {selection&&((selectedPoint&&selected!==selectedPoint.id)||(comparison.first&&selection.first!==comparison.first.id)||(comparison.second&&selection.second!==comparison.second.id))&&<p className="panel-note" role="status">A selected source has a saved revision. Its current recorded revision is shown and used.</p>}
