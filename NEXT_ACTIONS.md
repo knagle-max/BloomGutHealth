@@ -1,3 +1,9 @@
+## OWNER-APPROVED P1 — SAVED LABORATORY SOURCES: PROVIDER & REFERENCE MANAGEMENT (2026-11-09)
+
+**Codex approved existing-workflow improvement**: [`docs/architecture/V06_REPORT_PROVIDER_MANAGEMENT_ARCHITECT_20261109.md`](docs/architecture/V06_REPORT_PROVIDER_MANAGEMENT_ARCHITECT_20261109.md), [Issue #11](https://github.com/knagle-max/BloomGutHealth/issues/11). **Primary UI** Biology → Bloodwork → Saved laboratory sources → **Manage laboratory & reference ranges**. Persist source-confirmed performing provider (LifeLabs/Dynacare/other/unknown), jurisdiction incl SK and optional actual location once per original report group; original imported labels/observations/dates/units/reference limits unchanged. Reuse recent report-level overlay controls and shared provider-match engine; all charts/management one authority, preferably persist report-scoped overlay preference too, separate from original measurements. Existing three owner-reported reports (May 9 2026:27, Aug 9 2025:17, Apr 8 2025:26) must remain editable without reimport. API/Postgres/reauth and browser regression, source revision/account isolation, pending BC candidate ranges ≠ verified SK. Coordinate #5/#8/#9/#10; no new owner approval gate. Latest code inspected `c71cad59`; recheck branch HEAD before change.
+
+---
+
 ## Actual steps and responsive regression checkpoint — 2026-11-09
 
 The integrated laboratory changes are published in1825d05/9e9c591. Exact CI passed chart/source/dates/duplicates/report overlays and source/outcome readers, then found header-actions/profile-link overflow at1280px/pageZoom2 (dialog itself fits). Header wrapping is corrected locally; exact follow-on CI required. No real provider interval was activated; pending complete method/specimen applicability remains feature-scoped.
