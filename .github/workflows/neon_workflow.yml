@@ -32,6 +32,12 @@ jobs:
         run: npm ci
       - name: Check production dependency advisories
         run: npm audit --omit=dev --audit-level=high
+      - name: Vitamin D assay and bloodwork browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-explorer-journey.mjs
       - name: Python service authentication and evidence contracts
         run: |
           python3 -m venv /tmp/bloom-service-tests
@@ -85,12 +91,6 @@ jobs:
         run: npm test
       - name: Production build
         run: npm run build
-      - name: Vitamin D assay and bloodwork browser regression
-        timeout-minutes: 4
-        env:
-          BLOOM_PLAYWRIGHT_MODULE: playwright-core
-          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
-        run: node --import tsx scripts/qa/lab-explorer-journey.mjs
       - name: Verify Render public M1 image responses
         timeout-minutes: 4
         run: node scripts/verify-r4-m1-media.mjs --built --http https://bloomguthealth.onrender.com/
