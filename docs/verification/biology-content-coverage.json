@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 193,
     "unresolvedIdentity": 314,
-    "sourceFilesScanned": 702,
+    "sourceFilesScanned": 704,
     "relevantSourceFiles": 67,
     "researchPathways": 7
   },
@@ -25054,13 +25054,13 @@
     },
     {
       "file": "shared/precision-nutrition.ts",
-      "line": 615,
+      "line": 617,
       "field": "reportedAnalyte",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
     {
       "file": "shared/precision-nutrition.ts",
-      "line": 671,
+      "line": 673,
       "field": "reportedAnalyte",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25201,7 +25201,7 @@
     "scripts/qa/biology-source-count-journey.mjs": "d3aa899bfa49e6a860a8595c232f92b5c3e92e9b7a1b281807da8fca2e83da35",
     "scripts/qa/bloodwork-source-overview-journey.mjs": "364a627533daadcc5c4928ac8097ce5f95acad1484ad22c67b4559dc9c8bb612",
     "scripts/qa/functional-microbiome-journey.mjs": "582a7dac8b8417380cf645d0510cb8e2eb518c6aa3873ba17119268e9bc03e9d",
-    "scripts/qa/genetic-source-management-journey.mjs": "4e0a9eb916ece03ffa7d38c36be5b543003324523491e86cd53bff20e4ff6e78",
+    "scripts/qa/genetic-source-management-journey.mjs": "85ef93208d0afc3e426caec7b8700d72d2862b403bab2fc1354a9b3a13578177",
     "scripts/qa/gut-report-current-context-journey.mjs": "25830ad8516cdff302373ede2ca3ae4520244864f2a526a6c23e726dbd433664",
     "scripts/qa/gut-review-comparison.mjs": "421b2ef9ade47048f0d2e8a3cf6c632c27034b9b20468dbcd768c3375dbcc3b2",
     "scripts/qa/lab-explorer-journey.mjs": "29787d5d00dbf6cef5399ff4a998b0b227ddc37ea32a3a88414293e1dccb8b78",
@@ -25217,7 +25217,7 @@
     "scripts/qa/viome-postsave-link-journey.mjs": "19eda9b8dbdb6d053365bf732920b24fc588cb91ccc1b3241307caff6bbc14b3",
     "shared/lab-paste.ts": "8b1acd99505712f1125899e168a7e26967dc7c9f426b03362e38b2953625187f",
     "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
-    "shared/precision-nutrition.ts": "cbe672865b29d4860d0cb4b4749152f2de057c77f8a0277533a3f713e8beff74",
+    "shared/precision-nutrition.ts": "79447e3bdc657eb30867de798d8ccf97efd408fb5598da6ba2cbc24b4c90a2e7",
     "shared/reported-taxa.ts": "aa5789ab4f24b8740676a53ed0069150ee70aeab4971525f602db412298b2a52",
     "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
     "tests/account-erasure.test.ts": "c58aff3d9c8cee02f8cbceed84a11d6e0033311f45968ffcdf4632d60976094e",

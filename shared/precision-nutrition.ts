@@ -11,7 +11,7 @@ import {geneticsCatalogueCounts} from "./genetics-catalogue";
 import {foodPreferenceMatches,unknownAllergyTerms,intoleranceWarnings,tasteMatches} from "./food-preference-policy";
 import { goalGuidance, goalMealFit, goalSources } from "./goal-guidance";
 import genotypeReference from "./data/genotype-reference.json";
-import { explainGenotypes, genotypeAnnotations, genotypeReferenceCompatibility } from "./genotype-explanations";
+import { explainGenotypes, genotypeAnnotations, genotypeReferenceCompatibility, GENOTYPE_EXPLANATION_VERSION } from "./genotype-explanations";
 import { z } from "zod";
 import {
   recipes,
@@ -377,8 +377,9 @@ export type ManualGeneticImport = z.infer<typeof manualGeneticImportSchema>;
 export function classifyManualGenetics(data: ManualGeneticImport) {
   return data.entries.map((entry) => {
     const variant = variantCatalog.find((v) => v.rsid === entry.rsid);
+    const annotation=genotypeAnnotations.find(v=>v.rsid===entry.rsid);
     const reason = !variant
-      ? "Recorded only: this SNP is outside Bloom’s diet-ranking catalogue. Educational explanations, where available, are separate."
+      ? annotation?"General research education is available; this variant is outside the diet-ranking rule set.":"A source-checked variant explanation and compatible build, assay and allele evidence are not established here."
       : data.strand !== "forward"
         ? "Recorded only: forward-strand orientation has not been confirmed."
         : entry.genotype !== "--" &&
@@ -392,6 +393,7 @@ export function classifyManualGenetics(data: ManualGeneticImport) {
       reviewed: !reason,
       reason,
       canonicalGene: variant?.gene || null,
+      education:annotation?{gene:annotation.gene,geneRole:annotation.geneRole,variantMeaning:annotation.variantMeaning,evidence:annotation.evidence,version:GENOTYPE_EXPLANATION_VERSION,sources:annotation.sources}:null,
       note:
         entry.rsid === "rs429358" || entry.rsid === "rs7412"
           ? "No APOE type or disease-risk interpretation is inferred from these entries."

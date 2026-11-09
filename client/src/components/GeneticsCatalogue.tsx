@@ -1,19 +1,25 @@
-import { useState } from "react";
+import RecordedGeneticVariants from "./RecordedGeneticVariants";
+import { useEffect,useState } from "react";
 import { genotypeAnnotations, type GenotypeExplanation } from "@shared/genotype-explanations";
-import { geneticsCatalogueCounts, geneticsDomains, searchGeneticsCatalogue, type GeneticsDomain } from "@shared/genetics-catalogue";
+import { recordedGeneticsCatalogue, geneticsCatalogueCounts, geneticsDomains, searchGeneticsCatalogue, type GeneticsDomain } from "@shared/genetics-catalogue";
 
 /** Education uses static public source material; it never creates a measured call. */
 export default function GeneticsCatalogue({ explanations }: { explanations: GenotypeExplanation[] }) {
+  const [scope,setScope]=useState<"all"|"recorded">("all");
   const [domain, setDomain] = useState<GeneticsDomain | "all">("all");
   const [query, setQuery] = useState("");
   const [expanded, setExpanded] = useState(false);
   const counts = geneticsCatalogueCounts(explanations);
-  const shown = searchGeneticsCatalogue(query, domain);
+  const catalogue = searchGeneticsCatalogue(query, domain),recorded=recordedGeneticsCatalogue(explanations,query,domain),shown=scope==="all"?catalogue:recorded;
+  const noCalls=recordedGeneticsCatalogue(explanations).filter(group=>!group.hasReadableCall).length;
+  useEffect(()=>setExpanded(false),[scope,query,domain,explanations]);
   return <section id="genetics-catalogue" tabIndex={-1} className="bloom-panel space-y-4 scroll-mt-20" aria-labelledby="genetics-catalogue-title">
     <div><p className="eyebrow">LEARN WITHOUT UPLOADING DNA</p><h2 id="genetics-catalogue-title">Explore genetics</h2>
       <p>Browse scientific topics and the limits of what a genetic result can tell you. A research entry does not mean your DNA was tested or establish a personal action.</p></div>
     <p className="panel-note">{counts.savedCalls} saved calls · {counts.matchedExplanations} matched explanations. Self-reported calls are not clinical confirmation.</p>
     <a className="text-link inline-flex min-h-11 items-center" href="#genetics-source-entry">Review or add a genetic source</a>
+    <fieldset className="flex flex-wrap gap-3"><legend className="font-medium">Variant view</legend>{([['all','All genetics'],['recorded',`My recorded variants (${counts.savedCalls})`]] as const).map(([value,label])=><label key={value} className="inline-flex min-h-11 items-center gap-2"><input type="radio" name="genetics-catalogue-scope" value={value} checked={scope===value} onChange={()=>{setScope(value);setExpanded(false);}}/>{label}</label>)}</fieldset>
+    {scope==='recorded'&&<p className="panel-note">Active selected-source records only; {noCalls} variants have no readable genotype. Unclassified recorded rsIDs appear under All domains. Research topics never substitute for an assayed call.</p>}
     <div className="grid gap-3 sm:grid-cols-2">
       <label className="block min-w-0">Scientific domain<select className="bloom-input w-full min-w-0" value={domain} onChange={e => { setDomain(e.target.value as GeneticsDomain | "all"); setExpanded(false); }}>
         <option value="all">All 17 domains</option>{geneticsDomains.map(d => <option key={d.id} value={d.id}>{d.title}</option>)}
@@ -21,9 +27,9 @@ export default function GeneticsCatalogue({ explanations }: { explanations: Geno
       <label className="block min-w-0">Search catalogue<input className="bloom-input w-full" type="search" value={query} onChange={e => { setQuery(e.target.value); setExpanded(false); }} placeholder="Gene, rsID or variant type" /></label>
     </div>
     <p role="status">{shown.length} {shown.length === 1 ? "result" : "results"}</p>
-    {!shown.length && <p>{query.trim() ? "No matching entries. Try another gene, rsID or domain." : "No sourced entries in this domain yet."}</p>}
-    <div className="divide-y divide-border">
-      {(expanded ? shown : shown.slice(0,8)).map(candidate => {
+    {!shown.length && <p>{scope==="recorded"?counts.savedCalls?"No recorded variants match this search and domain.":"No variants are recorded for the current account and selected source.":query.trim() ? "No matching entries. Try another gene, rsID or domain." : "No sourced entries in this domain yet."}</p>}
+    {scope==="recorded"?<RecordedGeneticVariants groups={expanded?recorded:recorded.slice(0,8)}/>:<div className="divide-y divide-border">
+      {(expanded ? catalogue : catalogue.slice(0,8)).map(candidate => {
         const content = candidate.content;
         const education = content.status === "existing-education" ? genotypeAnnotations.find(a => a.rsid === content.explanationRsid) : undefined;
         const rsid = "rsid" in candidate.identity ? candidate.identity.rsid : null;
@@ -32,7 +38,7 @@ export default function GeneticsCatalogue({ explanations }: { explanations: Geno
           <summary className="min-h-11 cursor-pointer py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"><span className="font-medium">{candidate.label}</span><span className="block text-sm text-muted-foreground">{candidate.identity.kind === "gene" ? "Gene-only research topic" : candidate.content.status === "review-pending" ? "Research candidate · review pending" : "Existing educational explanation"}</span></summary>
           <div className="space-y-3 pb-3 pl-3">
             <p className="panel-note">{candidate.domains.map(id => geneticsDomains.find(d => d.id === id)!.title).join(" · ")}</p>
-            {education ? <><p>{education.geneRole}</p><p>{education.limitations}</p></> : <p>Evidence review pending. No genotype interpretation, health prediction or personal recommendation is available for this entry.</p>}
+            {education ? <><p>{education.geneRole}</p><p>{education.variantMeaning}</p><p className="panel-note">Research evidence: {education.evidence}</p><p>{education.limitations}</p></> : <p>Evidence review pending. No genotype interpretation, health prediction or personal recommendation is available for this entry.</p>}
             <p>{candidate.identity.kind === "gene" ? "This gene-only topic does not register a variant or result. Separate sourced variant entries may be listed; none implies that your DNA was tested." : saved ? `Saved source call: ${saved.status === "matched" ? "matched to an existing explanation" : saved.status === "no-call" ? "no readable call" : saved.status === "orientation-unconfirmed" ? "orientation not confirmed" : "not interpreted"}.` : "No saved call. Catalogue membership does not establish that this variant was assayed."}</p>
             <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Assay, sources & limitations</summary><div className="space-y-2 pb-2">
               <p>{candidate.assayRequirement}</p>
@@ -45,7 +51,7 @@ export default function GeneticsCatalogue({ explanations }: { explanations: Geno
           </div>
         </details>;
       })}
-    </div>
+    </div>}
     {shown.length > 8 && !expanded && <button className="text-link min-h-11 focus-visible:outline focus-visible:outline-2" type="button" onClick={() => setExpanded(true)}>Show all {shown.length} entries (8 shown)</button>}
     <details><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Catalogue coverage & boundaries</summary><div className="space-y-3">
       <p>{counts.candidates} unique variant / complex candidates and {counts.geneTopics} gene-only topics. {counts.existingExplanations} existing explanations; {counts.pendingCandidates} new candidates await review. New independently reviewed candidates: {counts.independentlyReviewedNewCandidates}; new personal action rules: {counts.newPersonalActionRules}.</p>

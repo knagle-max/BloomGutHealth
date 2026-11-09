@@ -1,0 +1,24 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "issue": 4,
+  "scope": [
+    "All genetics / My recorded variants accessible radio filter",
+    "saved unknown rsIDs and separately labelled no-calls",
+    "deduplicated rsID counts with conflicts retained",
+    "domain/search intersection and expansion reset",
+    "existing sourced gene/function/variant evidence moved ahead of catalogue-status text"
+  ],
+  "scientificBoundary": "No new variant interpretation, clinical/diet rule, source assay verification, structural/PGx or APOE inference; existing curated general research and canonical active sources reused",
+  "focusedTests": 26,
+  "types": "PASS",
+  "build": "PASS",
+  "actualBrowsers": {
+    "sourceManagement": "PASS: actual App/API/encrypted SQL, active/historical switch, deletion/lost retry/stop/account; recorded unknown/no-call/search/domain;48 mode/theme/width/text/page-zoom states",
+    "selectedGenotypes": "PASS: actual source/manual/raw preview/consent/save/reload/literal original spelling/build/assay context; no personal promotion of unverified source"
+  },
+  "limits": [
+    "Exact publication CI pending",
+    "Physical VoiceOver and independent review not performed"
+  ],
+  "nextPriority": "Latest owner report-level reference overlay and dated import diagnostics P0; original supplied CSV remains manual-review pending where applicability unspecified"
+}

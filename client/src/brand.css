@@ -37,7 +37,7 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
 .lab-chart text { fill:hsl(var(--foreground)); font-size:12px; }
 .lab-history-table { width:100%; border-collapse:collapse; font-size:14px; }
 .lab-history-table :is(td,th) { text-align:left; padding:10px 6px; border-bottom:1px solid hsl(var(--border)); overflow-wrap:anywhere; }
-.lab-review-row { border:1px solid hsl(var(--border)); border-radius:16px; padding:20px; display:grid; gap:12px; }
+.lab-review-row { min-width:0; overflow-wrap:anywhere; border:1px solid hsl(var(--border)); border-radius:16px; padding:20px; display:grid; gap:12px; }
 .lab-review-row select { width:100%; }
 .lab-source-text { white-space:pre-wrap; overflow-wrap:anywhere; }
 @media(max-width:600px) {

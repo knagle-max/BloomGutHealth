@@ -1,0 +1,21 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "baseline": "9522f2e1c78289b98796532e606fcab35b2847d1",
+  "issue": 5,
+  "behavior": "Eligible source-only report rows included by default; per-row explicit exclusion before save; accurate recognized/pending/source-only/excluded/invalid counts",
+  "persistence": "Existing owner-scoped import receipts and payloads unchanged",
+  "focusedTests": 15,
+  "types": "PASS",
+  "build": "PASS",
+  "actualBrowsers": {
+    "sourceOnly": "PASS: inclusion/exclusion, threshold/qualitative/unit absence, original row ordering, encrypted save/lost reply/exact retry/correction/date/deletion/owner;24 viewport/theme/zoom states",
+    "csvTsv": "PASS: default inclusion, raw header/reference identity, zero, idempotency, repeat-match review, stale read and navigation",
+    "pdf": "PASS: actual worker/default inclusion/review/encrypted save/cancel/limits",
+    "image": "Updated default-inclusion assertions; actual OCR journey not rerun for this UI-only behavior change"
+  },
+  "limits": [
+    "Exact publication CI pending",
+    "No independent VoiceOver/device review",
+    "Source-only rows have no interpretation or invented analyte mapping"
+  ]
+}

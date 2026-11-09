@@ -91,6 +91,8 @@ export default function GenotypeExplanations({
             <div>
               <h4 className="font-semibold">Why this gene matters</h4>
               <p>{e.geneRole}</p>
+              {e.variantMeaning&&<p>{e.variantMeaning}</p>}
+              {e.evidence!=="Not curated"&&<p className="panel-note">Research evidence: {e.evidence}</p>}
             </div>
           )}
           <div className="rounded-xl bg-muted/50 p-4 space-y-2">
