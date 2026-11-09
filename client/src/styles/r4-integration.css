@@ -106,7 +106,7 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
  .app-shell[data-bloom-visual="premium"] .bloom-header-inner { flex-wrap:wrap;height:auto;min-height:68px;padding-block:8px; }
  .app-shell[data-bloom-visual="premium"] .header-actions { flex-wrap:wrap;max-width:100%; }
 }
-.app-shell[data-bloom-visual="premium"] .lab-measured-plot { grid-template-columns:minmax(36px,max-content) minmax(88px,1fr);min-width:0;max-width:100%;contain:inline-size layout paint;overflow-x:auto;padding-block:6px; }
+.app-shell[data-bloom-visual="premium"] .lab-measured-plot { grid-template-columns:minmax(36px,max-content) minmax(88px,1fr);min-width:0;max-width:100%;overflow-x:auto;padding-block:6px; }
 /* Dialog portals sit outside app-shell; preserve the original portrait at normal
    widths and fit its square inside a narrow, zoomed sheet. */
 .microbial-profile-sheet .organism-visual-portrait { width:min(180px,100%);height:auto;aspect-ratio:1; }
@@ -134,5 +134,5 @@ html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual
  .app-shell[data-bloom-visual="premium"] .lab-explorer-detail .evidence-insight { padding-inline:8px; }
 }
 
-/* Closed native disclosures must not contribute hidden source-table widths. */
-.app-shell[data-bloom-visual="premium"] .lab-explorer details:not([open]) > :not(summary) { display:none; }
+/* Anonymous flex text otherwise keeps the longest word as a minimum width. */
+.app-shell[data-bloom-visual="premium"] .workspace-disclosure > summary { display:grid;grid-template-columns:minmax(0,1fr) auto;min-width:0;overflow-wrap:anywhere; }

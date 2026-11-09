@@ -24188,7 +24188,7 @@
     "scripts/qa/genetic-source-management-journey.mjs": "4e0a9eb916ece03ffa7d38c36be5b543003324523491e86cd53bff20e4ff6e78",
     "scripts/qa/gut-report-current-context-journey.mjs": "25830ad8516cdff302373ede2ca3ae4520244864f2a526a6c23e726dbd433664",
     "scripts/qa/gut-review-comparison.mjs": "421b2ef9ade47048f0d2e8a3cf6c632c27034b9b20468dbcd768c3375dbcc3b2",
-    "scripts/qa/lab-explorer-journey.mjs": "0bc496853a41162d9aeb7c2ee681e9ce8ecb04e45bf29d4d6b66f0009251397a",
+    "scripts/qa/lab-explorer-journey.mjs": "771aeaa77051a9781f5431c0bb58da322616b499d654c71783a2718994b8086b",
     "scripts/qa/lab-source-context-journey.mjs": "749adf7c67465cc4223a3f5bfdc0424850b24c8612feecd49a039e04d88641be",
     "scripts/qa/microbial-profile-journey.mjs": "3998fb5f68e6f82bb1ee2255e483be00ac192c2719441e35da11d1ab4ffa3827",
     "scripts/qa/microbiome-report-delete-journey.mjs": "1f80c2d11ae42a0780365a25f756254fd42f2503b34db25d8db8ae1e2d5dd370",
