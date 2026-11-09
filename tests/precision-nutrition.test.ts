@@ -487,3 +487,17 @@ test("all reviewed genetic findings and ranked actions resolve their cited evide
   for (const action of [...r.foods, ...r.recommendations])
     assert.ok(action.sourceIds.every((id) => ids.has(id)));
 });
+
+test('vitamin D interpretation and conversion abstain for different or unconfirmed assays',()=>{
+ for(const method of ['1,25-dihydroxyvitamin D','1,25-(OH)2','calcitriol','dihydroxy','Not supplied','25OH uncertain']){
+  const observation=lab({marker:'vitamin_d',value:10,unit:'ng/mL',method,referenceLow:20,referenceHigh:50});
+  const original=structuredClone(observation);
+  const report=buildPrecisionReport([record('vd','lab',observation)],context,defaultPreferences,null,now);
+  assert.equal(report.labs[0].flag,'assay unconfirmed',method);
+  assert.ok(!report.supplements.some(s=>JSON.stringify(s).includes('vitamin_d')),method);
+  assert.deepEqual(observation,original);
+  if(/1,25|calcitriol|dihydroxy/.test(method))assert.deepEqual(canonicalLab(observation),{value:10,unit:'ng/mL'});
+ }
+ const supported=lab({marker:'vitamin_d',value:10,unit:'ng/mL',method:'25(OH)D',referenceLow:20,referenceHigh:50});
+ assert.equal(buildPrecisionReport([record('vd','lab',supported)],context,defaultPreferences,null,now).labs[0].flag,'below reported range');
+});

@@ -1,3 +1,4 @@
+import {supportsVitaminDStatus} from '@shared/lab-assay-identity';
 import {Link} from 'wouter';
 import {Button} from './ui/button';
 import {labDateText,resolveRecordedLabPoint,recordedLabDifference,compareRecordedLabResults,formatRecordedLabNumber,type LabPointSelection} from "@shared/lab-history";
@@ -17,8 +18,10 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
  const latestPoints=points.filter(point=>Date.parse(point.date)===latestTime);
  const selectedPoint=resolveRecordedLabPoint(points,selected);
  const openSource=(pointId:string)=>{if(!points.some(point=>point.id===pointId))return;setSelected(pointId);if(sources.current)sources.current.open=true;const row=document.getElementById(`${id}-source-${pointId}`);row?.focus();row?.scrollIntoView({block:'nearest',inline:'nearest'});};
- const difference=recordedLabDifference(points);
- const change=t.comparable?`Observed change: ${t.change!>0?"+":""}${formatRecordedLabNumber(t.change!)} ${unit}.`:difference!==null?`Recorded difference: ${difference>0?"+":""}${formatRecordedLabNumber(difference)} ${unit}. Measurement comparability is unverified; this is not a confirmed clinical change.`:"A dated difference is unavailable; review the recorded points and collection dates.";
+ const assayConfirmed=t.marker!=='vitamin_d'||points.every(supportsVitaminDStatus);
+ const canPlot=assayConfirmed&&points.every(point=>point.unit===unit);
+ const difference=canPlot?recordedLabDifference(points):null;
+ const change=!assayConfirmed?"Vitamin D assay identity is unconfirmed. Review the original source observations before comparing results.":!canPlot?"Recorded units differ. Review the original source observations before comparing results.":t.comparable?`Observed change: ${t.change!>0?"+":""}${formatRecordedLabNumber(t.change!)} ${unit}.`:difference!==null?`Recorded difference: ${difference>0?"+":""}${formatRecordedLabNumber(difference)} ${unit}. Measurement comparability is unverified; this is not a confirmed clinical change.`:"A dated difference is unavailable; review the recorded points and collection dates.";
  const comparison=compareRecordedLabResults(points,selection?.first||"",selection?.second||"");
  const comparisonMessage={"choose-two":"Choose two separate recorded results.",unavailable:"A selected source result is no longer available. Choose from current records.","same-record":"Choose two different source observations.","same-time":"The observations share a recorded timestamp; numeric direction is unavailable. Their original values remain distinct.","reverse-time":"Choose a second observation recorded after the first.",incompatible:"A numeric difference is unavailable for these recorded dates, values or units.","recorded-difference":""}[comparison.status];
  const optionText=(p:typeof points[number])=>`${labDateText(p.date,p.sourceReport,p.dateCorrection)} · timestamp ${p.date} · ${p.sourceValue} ${p.sourceUnit} · ${p.sourceReport?.specimenIdentifier||p.sourceReport?.reportIdentifier||p.id}`;
@@ -26,9 +29,10 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
    {latestLabel&&<h4>{latestLabel}</h4>}
    {latestPoints.length>1&&<p className="panel-note">Multiple source observations share the latest recorded timestamp.</p>}
    {latestPoints.map(point=><div key={point.id}><p className="insight-value">{point.sourceValue} {point.sourceUnit}</p><p className="panel-note">Latest entry: {labDateText(point.date,point.sourceReport,point.dateCorrection)} · {point.laboratory}</p></div>)}
-   <p className="panel-note">{points.length} dated result(s) · {unit}. Entered values are not independently verified.</p>
-   <figure className="lab-measured-figure" aria-labelledby={`${id}-chart-title`}>
-    <figcaption id={`${id}-chart-title`} className="panel-note">Recorded observations · plot unit {unit}</figcaption>
+   <p className="panel-note">{points.length} dated result(s) · {Array.from(new Set(points.map(point=>point.unit))).join(", ")}. Entered values are not independently verified.</p>
+   {!canPlot&&<p className="panel-note" role="status">{change}</p>}
+   <figure className="lab-measured-figure" aria-labelledby={canPlot?`${id}-chart-title`:undefined} aria-label={canPlot?undefined:`${t.name} recorded source selection`}>
+    {canPlot&&<><figcaption id={`${id}-chart-title`} className="panel-note">Recorded observations · plot unit {unit}</figcaption>
     <div className="lab-measured-plot" role="region" aria-label={`${t.name} recorded plot`} tabIndex={0}>
      <div className="lab-plot-axis" aria-label={`Vertical axis in ${unit}`}><span>{formatRecordedLabNumber(max)}</span><span>{formatRecordedLabNumber(min)}</span></div>
      <div className="lab-point-canvas"><div className="lab-point-inner">
@@ -40,6 +44,7 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
      </div></div>
      <div className="lab-plot-dates"><time dateTime={points[0].date}>{labDateText(points[0].date,points[0].sourceReport,points[0].dateCorrection)}</time>{points.length>1&&<time dateTime={points[points.length-1].date}>{labDateText(points[points.length-1].date,points[points.length-1].sourceReport,points[points.length-1].dateCorrection)}</time>}</div>
     </div>
+    </>}
     <div className="lab-point-controls"><label>Recorded result<select className="bloom-input w-full" aria-label={`${t.name} recorded result`} value={selectedPoint?.id||''} onChange={event=>setSelected(event.target.value)}><option value="">Choose a result</option>{points.map((point,index)=><option key={point.id} value={point.id}>{index+1} · {labDateText(point.date,point.sourceReport,point.dateCorrection)} · {point.sourceValue} {point.sourceUnit}</option>)}</select></label><Button type="button" variant="outline" disabled={!selectedPoint} aria-label={`View selected ${t.name} source`} onClick={()=>selectedPoint&&openSource(selectedPoint.id)}>View source</Button></div>
     {selection&&selectedPoint&&<section className="lab-timeline-reveal space-y-2" aria-label="What was recorded then"><h4>What was recorded then</h4><p>{selectedPoint.sourceValue} {selectedPoint.sourceUnit} · {labDateText(selectedPoint.date,selectedPoint.sourceReport,selectedPoint.dateCorrection)}</p><p className="panel-note">Recorded timestamp: {selectedPoint.date} · {selectedPoint.laboratory} · {selectedPoint.method||"Method not reported"}. This is a source observation, not an explanation of a cause.</p></section>}
     {selection&&((selectedPoint&&selected!==selectedPoint.id)||(comparison.first&&selection.first!==comparison.first.id)||(comparison.second&&selection.second!==comparison.second.id))&&<p className="panel-note" role="status">A selected source has a saved revision. Its current recorded revision is shown and used.</p>}
@@ -48,10 +53,10 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
       {([['first','First recorded result'],['second','Second recorded result']]as const).map(([key,label])=><label className="block" key={key}>{label}<select className="bloom-input w-full" aria-label={`${t.name} ${label.toLowerCase()}`} value={resolveRecordedLabPoint(points,selection[key])?.id||''} onChange={e=>onSelectionChange?.({[key]:e.target.value})}><option value="">Choose a result</option>{points.map(p=><option key={p.id} value={p.id}>{optionText(p)}</option>)}</select></label>)}
       {comparison.first&&<p>First original result: {comparison.first.sourceValue} {comparison.first.sourceUnit} · {comparison.first.date}</p>}
       {comparison.second&&<p>Second original result: {comparison.second.sourceValue} {comparison.second.sourceUnit} · {comparison.second.date}</p>}
-      <p role="status">{comparison.difference!==null?`Calculated difference: ${comparison.difference>0?'+':''}${formatRecordedLabNumber(comparison.difference)} ${comparison.first!.unit}.`:comparisonMessage}</p>
+      <p role="status">{canPlot&&comparison.difference!==null?`Calculated difference: ${comparison.difference>0?'+':''}${formatRecordedLabNumber(comparison.difference)} ${comparison.first!.unit}.`:!canPlot?change:comparisonMessage}</p>
       <p className="panel-note">Difference means second minus first in the plot unit. Selection does not establish assay comparability, clinical improvement or a food/treatment effect. Check original methods, occurrences and sources.</p>
     </div></details>}
-    <p className="panel-note">Choose a point or a result to inspect its original source. Overlapping points remain individually available in the selector.</p>
+    <p className="panel-note">Choose a recorded result to inspect its original source. Each source observation remains individually available in the selector.</p>
    </figure>
  </EvidenceInsight>;
 }

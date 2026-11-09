@@ -1,3 +1,9 @@
+## ACTIVE — Owner-authorized scoped correction and merge, 2026-11-09
+
+The owner explicitly instructed “Make the changes found here then you can merge,” referencing specialist consolidation commit8418fcdc22a843553dcfb51f22b7bfa0df23c2ce. This supersedes older requests to ask again before main: complete RC-SCI-01, validate the corrected exact application and merge PR#1 only after required checks pass. No additional owner or specialist approval checkpoint. Preserve production data, disabled external integrations and the v0.6 stash. Incoming original specialist documents synchronized from remote bca748c without overwriting contributor work. Shared assay identity guards cover source interval education, report flags/conversion, trends and incompatible pasted analytes; original source observations remain available. Current validation and exact CI/deployed SHA will be recorded in the scoped correction evidence. Preferred detailed lab-icon archive remains unavailable after bounded attachment/Library metadata search; compact approved SVG fallback retained, with P1 fidelity limitation rather than a global hold. Physical/human/VoiceOver and independent scientific signoff remain NOT RUN, not engineering passes.
+
+---
+
 ## FINAL WHOLE-v0.5 RC — verify publication, then single owner gate (2026-11-08)
 
 Verified applicationd20e384b / CI42533189930 SUCCESS672/672 including actual hosted guarded persistence/cleanup, public media/browser and live isolated Neon. Render LIVEdep-dbofv1dg1s2s738gu23g. Supplied two deidentified/reconstructed PDFs PASS both dev and compiled production assets with real bundled PDF worker, independent exact in-memory MuPDF comparison, review/save/reload/reimport/deletion/owner/keyboard/reflow; the compiled deletion failure was a QA race corrected by waiting for its HTTP response. No private source artifacts or screenshots are delivered.

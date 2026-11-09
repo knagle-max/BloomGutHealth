@@ -19,8 +19,22 @@ try{
  else{
  const explorer=page.getByRole('region',{name:'Grouped bloodwork explorer'});await explorer.getByText('14 recognized markers · 78 unclassified source labels',{exact:true}).waitFor();assert.equal(await explorer.locator('.lab-category-icon>svg').count(),6);for(const icon of await explorer.locator('.lab-category-icon').all()){assert.equal(await icon.getAttribute('aria-hidden'),'true');const box=await icon.boundingBox();assert.equal(box.width,40);assert.equal(box.height,40);}assert.equal(await page.locator('.lab-chart').count(),0);assert.equal(await explorer.locator('details[open]').count(),0);await capture();
  // Reference knowledge is separate from original numbers and unknown source identities.
- for(const definition of markerDefinitions){await page.goto('http://127.0.0.1:5222/progress?view=biology&marker='+definition.id);const detail=page.getByRole('region',{name:definition.name+' recorded detail',exact:true}),education=detail.locator('.lab-marker-education');await education.getByText(definition.education.definition,{exact:true}).waitFor();await education.getByText(definition.education.context,{exact:true}).waitFor();assert.equal(await page.locator('.lab-chart').count(),1);await education.getByText('Sources, studies & limitations',{exact:true}).click();for(const source of definition.education.sources){const link=education.getByRole('link',{name:source.title,exact:true});assert.equal(await link.getAttribute('href'),source.url);assert.equal(await link.getAttribute('rel'),'noopener noreferrer');}}
+ for(const definition of markerDefinitions){await page.goto('http://127.0.0.1:5222/progress?view=biology&marker='+definition.id);const detail=page.getByRole('region',{name:definition.name+' recorded detail',exact:true}),education=detail.locator('.lab-marker-education');await education.getByText(definition.education.definition,{exact:true}).waitFor();await education.getByText(definition.education.context,{exact:true}).waitFor();assert.equal(await page.locator('.lab-chart').count(),definition.id==='vitamin_d'?0:1);await education.getByText('Sources, studies & limitations',{exact:true}).click();for(const source of definition.education.sources){const link=education.getByRole('link',{name:source.title,exact:true});assert.equal(await link.getAttribute('href'),source.url);assert.equal(await link.getAttribute('rel'),'noopener noreferrer');}}
 
+ // Adversarial assay fixtures exercise the actual rendered context and original source table.
+ for(const method of ['25(OH)D','1,25-dihydroxyvitamin D','1,25-(OH)2','calcitriol','dihydroxy','Not supplied','25OH uncertain']){
+  const supported=method==='25(OH)D';
+  currentRecords=[1,2].map(day=>({id:`assay-${day}`,kind:'lab',createdAt:`2026-10-0${day}T12:00:00Z`,payload:labSchema.parse({marker:'vitamin_d',value:10+day,unit:'ng/mL',measuredAt:`2026-10-0${day}T12:00:00Z`,laboratory:'Synthetic assay source',fasting:'unknown',method,referenceLow:20,referenceHigh:50,sourceInput:{text:`${method}, ${10+day}, ng/mL`,number:String(10+day),suppliedUnit:'ng/mL',capture:'pasted-report'}})}));
+  await page.goto('http://127.0.0.1:5222/progress?view=biology&marker=vitamin_d&point=assay-1&firstResult=assay-1&secondResult=assay-2');
+  const education=page.locator('.lab-marker-education');await education.waitFor();
+  await education.getByText('What this might mean for this record',{exact:true}).click();
+  if(supported)await education.getByText(/The selected observation is below its supplied source interval/).waitFor();
+  else {await education.getByText('Confirm the vitamin D assay before relating this result to status guidance.',{exact:true}).waitFor();assert.equal(await education.getByText(/selected observation is (above|below)/).count(),0);assert.equal(await page.getByText(/Calculated difference:/).count(),0);}
+  assert.equal(await page.locator('.lab-chart').count(),supported?1:0,method);
+  await page.getByRole('button',{name:/^View selected .* source$/}).click();
+  const row=page.locator('[data-lab-source-id="assay-1"]');await row.waitFor();assert.match(await row.innerText(),/11 ng\/mL/);assert.ok((await row.innerText()).includes(method));
+ }
+ currentRecords=records;
  // Expanded information-first content uses the same four actual themes and keeps raw sources accessible.
  for(const testMode of ['everyday','athlete']){
   mode=testMode;await page.goto('http://127.0.0.1:5222/progress?view=biology&marker=hdl');

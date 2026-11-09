@@ -1,5 +1,7 @@
 import {labEditorialFor,labEditorialSources} from '@shared/biology-labs';
-import {sourceIntervalPosition} from '@shared/biology-lab-observation';
+import {supportedSourceIntervalPosition} from '@shared/biology-lab-observation';
+import {supportsVitaminDStatus} from '@shared/lab-assay-identity';
+import {markerDefinitions} from '@shared/precision-nutrition';
 import {resolveRecordedLabPoint} from '@shared/lab-history';
 import type {PrecisionReport} from '@shared/precision-nutrition';
 export default function LabMarkerEducation({markerId,points,selectedPointId}:{markerId:string;points:PrecisionReport['trends'][number]['points'];selectedPointId:string}){
@@ -9,10 +11,11 @@ export default function LabMarkerEducation({markerId,points,selectedPointId}:{ma
  const latestTime=Math.max(...points.map(point=>Date.parse(point.date))),latest=points.filter(point=>Date.parse(point.date)===latestTime);
  // An explicit unavailable selection must not silently become another record.
  const point=selectedPointId?selected:latest.length===1?latest[0]:undefined;
- const position=sourceIntervalPosition(point);
- const assayUncertain=profile.assayIdentityRequired&&!/25[\s-]*(?:oh|hydroxy)|1\s*,\s*25|dihydroxy/i.test(point?.method||'');
+ const position=supportedSourceIntervalPosition(markerId,markerDefinitions.find(marker=>marker.id===markerId)?.units||[],point);
+ const assayUncertain=profile.assayIdentityRequired&&!supportsVitaminDStatus(point);
  const framing=position==='unknown'||assayUncertain?null:position==='above'?'The selected observation is above its supplied source interval.':position==='below'?'The selected observation is below its supplied source interval.':'The selected observation lies within its supplied source interval.';
  return <section className="lab-marker-education space-y-3" aria-label={`${profile.name} biological context`}>
+  {assayUncertain&&<p className="panel-note">The recorded vitamin D assay is not confirmed as 25-hydroxy vitamin D. The general explanation below does not interpret this observation; its original value, unit and source remain available.</p>}
   <div className="space-y-2"><h4>What it does</h4><p>{profile.whatItDoes}</p></div>
   <div className="space-y-2"><h4>Why values vary</h4><p>{profile.higher}</p>{profile.lower&&<p>{profile.lower}</p>}</div>
   <div className="space-y-2"><h4>Why it matters</h4><p>{profile.whyItMatters}</p></div>

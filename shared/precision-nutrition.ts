@@ -1,3 +1,4 @@
+import {supportsVitaminDStatus,vitaminDAssayIdentity} from "./lab-assay-identity";
 import {markerEducation} from './biology-labs';
 import {BIOLOGY_CONTENT_VERSION} from './biology-content-types';
 import{geneticsSourceControlSchema,selectedGeneticSource,healthContextOnly}from"./genetic-source-selection";
@@ -673,6 +674,9 @@ export type SourceOnlyLab=z.infer<typeof sourceOnlyLabSchema>;
 
 export function canonicalLab(l: Lab) {
   if (l.unitReview?.status === "pending") throw Error("Confirm the source unit before normalizing this laboratory result.");
+  // Keep explicitly different/ambiguous vitamin-D metabolites in their source units.
+  // Historical records stay readable; never reinterpret them as the supported assay.
+  if(l.marker==='vitamin_d'&&(vitaminDAssayIdentity(l.method)==='different-or-ambiguous'||vitaminDAssayIdentity(l.sourceInput?.text)==='different-or-ambiguous'))return {value:l.value,unit:l.unit};
   let value = l.value,
     unit = l.unit;
   if (
@@ -712,6 +716,7 @@ export function canonicalLab(l: Lab) {
 }
 export function labFlag(l: Lab) {
   if (l.unitReview?.status === "pending") return "unit unconfirmed";
+  if(l.marker==='vitamin_d'&&!supportsVitaminDStatus(l))return "assay unconfirmed";
   return l.referenceHigh !== null && l.value > l.referenceHigh
     ? "above reported range"
     : l.referenceLow !== null && l.value < l.referenceLow
@@ -1238,7 +1243,7 @@ export function buildPrecisionReport(
     const first = series[0],
       last = series[series.length - 1];
     const known = (v: string) => !!v.trim() && !/^(unknown|not supplied)$/i.test(v.trim());
-    const comparable = series.length > 1 && known(first.laboratory) && known(first.method) &&
+    const comparable = (m.id!=='vitamin_d'||series.every(supportsVitaminDStatus)) && series.length > 1 && known(first.laboratory) && known(first.method) &&
       new Set(series.map(l => Date.parse(l.measuredAt))).size === series.length &&
       series.every(l => l.laboratory === first.laboratory && l.method === first.method &&
         l.fasting === first.fasting && canonicalLab(l).unit === canonicalLab(first).unit) &&

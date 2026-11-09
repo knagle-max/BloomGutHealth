@@ -1,3 +1,9 @@
+## ACTIVE — Owner-authorized scoped correction and merge, 2026-11-09
+
+The owner explicitly instructed “Make the changes found here then you can merge,” referencing specialist consolidation commit8418fcdc22a843553dcfb51f22b7bfa0df23c2ce. This supersedes older requests to ask again before main: complete RC-SCI-01, validate the corrected exact application and merge PR#1 only after required checks pass. No additional owner or specialist approval checkpoint. Preserve production data, disabled external integrations and the v0.6 stash. Incoming original specialist documents synchronized from remote bca748c without overwriting contributor work. Shared assay identity guards cover source interval education, report flags/conversion, trends and incompatible pasted analytes; original source observations remain available. Current validation and exact CI/deployed SHA will be recorded in the scoped correction evidence. Preferred detailed lab-icon archive remains unavailable after bounded attachment/Library metadata search; compact approved SVG fallback retained, with P1 fidelity limitation rather than a global hold. Physical/human/VoiceOver and independent scientific signoff remain NOT RUN, not engineering passes.
+
+---
+
 ## SINGLE FINAL WHOLE-v0.5 RC GATE — after publication verification (2026-11-08)
 
 Status: final publication CI/Render verification must complete before asking. Concrete full engineering candidate is applicationd20e384b9223bef553f6a0def273f0d697028846 (CI42533189930 SUCCESS672/672, actual hosted synthetic lifecycle and supplied-PDF compiled-worker acceptance PASS); exact evidence/QA publication SHA/receipts will be recorded in PR1. Packet: docs/verification/V05_FULL_RELEASE_CANDIDATE_20261108.md and JSON. Full supported ordinary-wellness v0.5 functionality, R4/M1 UX, source/privacy/security boundaries and scoped residual conditions are consolidated there.

@@ -1,3 +1,4 @@
+import {vitaminDAssayIdentity,labSourceColumns} from "./lab-assay-identity";
 import { markerDefinitions, labSchema, sourceOnlyLabSchema, type SourceOnlyLab } from "./precision-nutrition";
 const aliases: Record<string, string> = {
   ldlcholesterol: "ldl",
@@ -59,7 +60,7 @@ export function parseLabPaste(
     const reject=(message:string)=>{
       errors.push({line:index+1,message});
       // Only explicit delimited source columns; never guess a scientific assay or unit.
-      const fields=raw.split(/[,\t]/);
+      const fields=labSourceColumns(raw);
       if(fields.length<2||fields.length>4||fields.some(field=>field.includes('"')))return;
       const reportedValue=fields[1].trim(),reportedUnit=fields[2]?.trim()||null;
       const parsed=sourceOnlyLabSchema.safeParse({sourceOnly:true,reportedAnalyte:fields[0].trim(),reportedValue,reportedUnit,
@@ -67,13 +68,17 @@ export function parseLabPaste(
         sourceInput:{text:raw,number:reportedValue,suppliedUnit:reportedUnit,capture:"pasted-report",rowOrder:index,...(reportedSection===undefined?{}:{reportedSection})}});
       if(parsed.success)sourceOnly.push({line:index+1,payload:parsed.data});
     };
-    const delimited=raw.split(/[,\t]/);
+    const delimited=labSourceColumns(raw);
+    if(vitaminDAssayIdentity(delimited[0])==='different-or-ambiguous'){
+      reject("This vitamin D assay is not confirmed as 25-hydroxy vitamin D. Retain the original observation as source-only for separate assay review.");
+      return;
+    }
     if(delimited.length>4||(delimited.length===4&&!!delimited[3].trim())){
       reject("Reference text or additional columns need separate source review. Keep as source-only, or enter the result and reference interval manually.");
       return;
     }
     // Suggestions use only the marker catalogue, never magnitude-based clinical inference.
-    const match = row
+    const match = (delimited[0]!==raw.split(/[,\t]/)[0]?delimited.join("\t"):row)
       .trim()
       .match(/^(.+?)[,\t ]+([0-9]+(?:\.[0-9]+)?)(?:[,\t ]+([^,\t]+))?(?:[,\t].*)?$/);
     if (!match) {
@@ -85,7 +90,7 @@ export function parseLabPaste(
         (m) =>
           normalize(m.id) === key ||
           normalize(m.name) === key ||
-          m.id === aliases[key],
+          m.id === aliases[key] || (m.id === "vitamin_d" && vitaminDAssayIdentity(match[1]) === "25-hydroxy"),
       );
     if (!marker) {
       reject(`Unsupported marker: ${match[1]}. Use one of the listed tests.`);
