@@ -1,0 +1,22 @@
+{
+  "archiveBytes": 137689,
+  "archiveSha256": "9c9d47d3947584fdc52775bf76b5f122e3c6d5f5e6a0c84ea6b57825fcf16c79",
+  "files": {
+    "05-food-parity-activity-review.svg": "d97d59622318d6b615377db91ed12cfa57a6869ab97919265097d2c175f5767a",
+    "06-exercise-parent-per-set-review.svg": "67d269017b3795250f0c87811af562caf33dcbdb2d1e5265cea5c8388e5665ba",
+    "ARCHITECT_HANDOFF.md": "2b7f23251ddb1c45baa1884e63fe5d9dbd3d2e7e0f83791fcdffdd7eed19cca3",
+    "01-everyday-today.svg": "45b61873fd37455aea2906573658a728939d826694d0a6788d3e8707434936df",
+    "AMENDMENT_B_SET_EDITOR.md": "2f1570a085cd3d576e382257fcefbeb9c1fcfd3a4afeadeb4baaff0278196415",
+    "04-everyday-dark.svg": "2db492865dbe77d180f7ad8759d6222a0d9009d88e7ccbcca06db9f23e8715f2",
+    "03-athlete-session.svg": "8e3c28f4a05580ce512e0d2e733c8a820befaabfa6cd3e072197da6e264e7323",
+    "05-food-parity-activity-review.png": "ecb4d5b479b96ce27c532cbcba0df3fe00ac3f6191defcf1a791b693905bab1b",
+    "SHA256SUMS.txt": "311abc476fb78147fa1707369103950f6c0d764c12a22245d013fbbb9354e92b",
+    "UX_BLUEPRINT.md": "1a865c3fa9543474a53c00e25498d470bcfacdc7622ccf24996ece9d8f621511",
+    "02-description-review.svg": "06e79e29f6320af78629540049cdba463d1192b67947248ecce172a18a2a1016",
+    "DEVELOPER_CONTRACT.md": "d0cf451337b28e7a9be04a533abf0646c5e0ac17573b5db71b738055ed728cb1",
+    "README_AMENDMENT_A.md": "434529f7915000d876465667d886da4fe6ce09b4b3bb01f082e6c33cef9a2682"
+  },
+  "manifestVerified": true,
+  "source": "User v1.2 attachment",
+  "independentAcceptance": false
+}

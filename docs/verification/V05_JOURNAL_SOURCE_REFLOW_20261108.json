@@ -1,0 +1,37 @@
+{
+  "scope": "Existing v0.5 UI source/journal reflow, keyboard tables and plain-language status; v0.6 stash untouched",
+  "sourceHashes": {
+    "client/src/pages/NutritionHistory.tsx": "eb482289342b067f4e8fbae9a9a113e8d10a6ba9a3b5f14bfa5afdede6086dce",
+    "client/src/components/NutrientDefinitionDisclosure.tsx": "dd84c7faa2e51fb1ddb45cdf3543413fecae0072638de99e44581dea23d22f21",
+    "client/src/components/MealAnalysis.tsx": "52323f7f47ecbed8e8192e273a7ae105bbc1cbfc08e69062911ecc523ca20e10",
+    "client/src/components/BiologyHome.tsx": "84e5a14754f8e2fa1ef64b8e05bcf21a03653f267313c9e89094fde1d34be74b",
+    "scripts/qa/private-source-context-journey.mjs": "35e62ccba9a61da5644b1d7e34defbee3d92d0ec15ace0d8cd8629b25bb271ca",
+    "scripts/qa/training-compact-ui-journey.mjs": "ec49ca908ccb2d78843f1934d9965a76016323b89414785c82a02071edaf7387"
+  },
+  "focusedTests": {
+    "passed": 11,
+    "elapsedMs": 6835.58965
+  },
+  "typecheck": "PASS",
+  "productionBuild": "PASS",
+  "actualBrowserChecks": [
+    "saved generic pizza via actual review/SQL \u2192 journal/native source table;390px/dark/root font200percent document width no longer406px",
+    "Recent Meals/Add Meal header now wraps; Recalculate nutrition wraps within actual card",
+    "original source table remains horizontally contained, named/focusable with visible outline; ArrowRight scrolls it while focus remains in region",
+    "generic source survives reload and is absent on other owner; original420kcal label entry remains",
+    "existing source/label failed-save retry, source deletion retention, Progress0/unknown/unit/read failure/second owner checks retained",
+    "Biology empty/provisional/source-only/mixed source count, original source drilldown, paused withdrawal/both modes/320390 and qualitative report navigation pass",
+    "focused set validation reveals/focuses hidden invalid blank exercise without request; subsequent correction/removal/save retains exact IDs and planned session"
+  ],
+  "copy": "Landing uses units to confirm and without an explanation; original technical status/source values remain in detail",
+  "previousHostedMilestone": {
+    "commit": "8eb3ded728cfa17513ad1ebaef9c98291270f22b",
+    "workflow": 42411287994,
+    "status": "SUCCESS"
+  },
+  "incomingPreview": "fecec4de07dc2e0c06120a86511102a0305d0864 LIVEdep-dbnrrqlg1s2s73ftftt0 observed before merge; do not attribute uncommitted journal fixes to it",
+  "v06Stash": "f0fd36479176b1daa7b8c5525306292b10670d8f: not applied/retested. Its prior overflow may share the now-fixed journal controls, but v0.6 source contribution feature remains paused.",
+  "physicalVoiceOver": "NOT_RUN",
+  "independentReview": "NOT_GRANTED",
+  "visualPacket": "None for small copy/reflow/focus correction; actual DOM/width/native keyboard and SQL evidence retained"
+}

@@ -1,0 +1,9 @@
+# Saved meal review through the canonical food draft
+
+Saved meals now offer **Review & adjust before logging** as well as their existing quick-log action. The link carries only template ID, portion multiplier and meal type. Date/time is reviewed in the destination form; no meal ingredients, label data or health context enter the URL.
+
+The destination reads owned encrypted meal templates using the existing authenticated source, withholds loading while that source is stale/unavailable, and offers retry. Explicit **Load saved ingredients** copies the selected snapshot into the existing LogMeal draft, validates the scaled ingredient/product portions, and preserves unknown gram values. It does not write consumption or mutate the template. Changing the description uses a new description parse rather than applying mismatched saved ingredients. Adding selected products joins the same complete ingredient review.
+
+The existing review/confirm endpoints and MealAnalysis editor recalculate current sources, retract dirty totals and require explicit confirmation. The existing save receipt, actor/lifetime guards and journal/Today invalidations remain in use. The copied source belongs to the current account; no new datastore, endpoint, background operation or external provider is introduced. Explicitly reloading the source replaces the unsaved draft; later template changes do not silently rewrite the loaded snapshot or historical meals.
+
+Validation: actual App/API/encrypted PGlite source failure/retry → 2× load → ingredient correction → confirmed save; original template unchanged, foreign account empty,320px reflow. Six existing template receipt/experience API/review-source tests, types and production build pass. Full402 suite passed on the preceding taste/tolerance batch; exact-commit CI repeats it for this change. Selective visual evidence lives in `docs/reviews/saved-meal-review/README.md`; no hosted user or independent design acceptance is inferred.

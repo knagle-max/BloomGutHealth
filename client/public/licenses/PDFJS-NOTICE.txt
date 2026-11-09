@@ -1,0 +1,5 @@
+PDF.js / pdfjs-dist 6.4.299
+Copyright 2024 Mozilla Foundation
+https://github.com/mozilla/pdf.js
+Licensed under the Apache License, Version 2.0. See PDFJS-LICENSE.txt.
+Bloom uses the JavaScript text extraction library and local worker. The PDF is not uploaded.

@@ -1,0 +1,14 @@
+{
+  "designSystem": "Bloom v0.5",
+  "everyday": "#246B50",
+  "athlete": "inherited existing blue tokens",
+  "coach": "inherited proposed indigo tokens",
+  "sourceStatuses": [
+    "official_documented",
+    "research_historical",
+    "generic_estimate",
+    "user_entered",
+    "unavailable"
+  ],
+  "note": "labels and icons must express status, not colour alone"
+}

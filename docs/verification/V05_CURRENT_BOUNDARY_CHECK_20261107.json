@@ -1,0 +1,33 @@
+{
+  "sourceCommit": "0f4e0705dd297cf9b619cf834a2c0f398575f4ac",
+  "scope": "Bounded current-source static audit during source-plan fix; not final M-05 independent release acceptance",
+  "scanner": "scripts/qa/check-architecture-boundaries.mjs",
+  "changedProductionSources": {
+    "client/src/components/ActivitySetEditor.tsx": "afe982136a59173e3572a45906c4738e107568b6b80a6784bdae1f232c219c68",
+    "server/plan-history.ts": "429883d9a3eb3a5e540bcf547cd0d2c30cd0508d376070c1bdfadef0b46b32c7",
+    "server/precision-storage.ts": "9dfba39a7234a4e9181352bdc99b037620c82070bfecef9129a0535439c7859f"
+  },
+  "result": {
+    "filesScanned": 360,
+    "edges": 1079,
+    "layeringViolations": [],
+    "circularImports": [
+      [
+        "server/storage.ts",
+        "server/structured-report-storage.ts",
+        "server/report-routes.ts",
+        "server/storage.ts"
+      ]
+    ],
+    "plannerEvidenceImports": [
+      "shared/meal-intelligence.ts -> shared/science-coach.ts",
+      "shared/weekly-planner.ts -> shared/evidence-network.ts",
+      "shared/weekly-planner.ts -> shared/science-coach.ts"
+    ]
+  },
+  "manualReview": {
+    "cycle": "The sole closing report-routes.ts \u2192 storage.ts edge is import type {IStorage}; erased by TypeScript, not a runtime initialization cycle. No new runtime cycle defect demonstrated.",
+    "plannerEvidence": "Existing read-only source/evidence composition is preserved; no new cross-domain write, required provider, or approval inferred.",
+    "limits": "Regex/literal import analysis does not inspect all dynamic/package edges or prove authorization, runtime isolation or physical-device behavior."
+  }
+}

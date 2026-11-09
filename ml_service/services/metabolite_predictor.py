@@ -81,11 +81,11 @@ class MetabolitePredictor:
                     
                     # Calculate predicted concentration based on bacterial abundance
                     # Higher abundance = more metabolite production
-                    base_concentration = np.random.uniform(0.5, 2.0)
+                    base_concentration = 1.0  # deterministic, unvalidated relative model index; not concentration
                     concentration = base_concentration * (abundance / 10.0)
                     
                     # Calculate confidence based on genome data quality
-                    confidence = min(0.95, 0.7 + (abundance / 100.0))
+                    confidence = 0.0  # no calibrated confidence available
                     
                     if metabolite_name not in metabolite_totals:
                         metabolite_totals[metabolite_name] = {
@@ -107,6 +107,7 @@ class MetabolitePredictor:
                 "metabolite_name": metabolite_name,
                 "pathway_id": data["pathway_id"],
                 "predicted_concentration": round(data["concentration"], 2),
+                "value_kind": "experimental_relative_index_not_concentration",
                 "confidence": round(np.mean(data["confidences"]), 2),
                 "production_genes": list(data["genes"]),
                 "producing_bacteria": data["producing_bacteria"],

@@ -1,0 +1,44 @@
+{
+  "synthetic": true,
+  "baselineApplication": "f2f56c3; Today unchanged through 861b04a",
+  "checks": [
+    {
+      "width": 320,
+      "primaryInFirstViewport": true
+    },
+    {
+      "width": 375,
+      "primaryInFirstViewport": true
+    },
+    {
+      "width": 390,
+      "primaryInFirstViewport": true
+    },
+    {
+      "width": 1280,
+      "primaryInFirstViewport": true
+    },
+    {
+      "progressiveDetailsPreserved": true,
+      "missingEnergyVisible": true
+    },
+    {
+      "setupNotRequired": true
+    },
+    {
+      "sourcedGoalDetail": true,
+      "canonicalGoalEditorFocused": true,
+      "explicitGoalSaveUpdatesToday": true
+    },
+    {
+      "errorsVisibleAndNotEmpty": true
+    },
+    {
+      "effectiveZoomViewport320": true,
+      "pageEndClear": true
+    }
+  ],
+  "errors": [],
+  "physicalSafariVerified": false,
+  "voiceOverVerified": false
+}

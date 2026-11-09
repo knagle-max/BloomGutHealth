@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "Bloom",
+  "short_name": "Bloom",
+  "description": "Record meals, explore nutrition evidence and follow your observations over time with Bloom.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#246B50",
+  "prefer_related_applications": false,
+  "icons": [
+    { "src": "/brand/bloom-icon-everyday-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/brand/bloom-icon-everyday-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

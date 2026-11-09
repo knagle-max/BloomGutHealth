@@ -1,0 +1,629 @@
+{
+  "baseCommit": "c61dd63beb85f78a54324aad204cfc46b5dd782c",
+  "comparison": "Same current app/DOM/API state, added material stylesheet disabled versus enabled; not historical hosted screenshots",
+  "fixtures": "Synthetic empty/unknown sources, no assays/model; fonts blocked",
+  "cases": 48,
+  "evidence": [
+    {
+      "name": "today",
+      "width": 320,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "4cb3266e2186ee3442ff9573c7e0aaff54d5ec00d9153fdb776877f3ee6c9d3b"
+    },
+    {
+      "name": "today",
+      "width": 320,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "4cb3266e2186ee3442ff9573c7e0aaff54d5ec00d9153fdb776877f3ee6c9d3b"
+    },
+    {
+      "name": "today",
+      "width": 390,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "5e9ac9343b8c5affdec7d6ba4b83d03622bd48400df0d1d13bfd95679db85449"
+    },
+    {
+      "name": "today",
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "06098f8aa081430176fc303f6cb1028bf5d289c3abb867e1993d25459bcc9442"
+    },
+    {
+      "name": "today",
+      "width": 768,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "8ff1322934d66ac36de00be75f2011a290a4ad312ef585de396794aa3f5a16d9"
+    },
+    {
+      "name": "today",
+      "width": 768,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "d493d36c11f2f7d62f11b8fea19e4b4c51a6eccf8e69ba5caceacef7b210cce0"
+    },
+    {
+      "name": "today",
+      "width": 1440,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "4920ba53e9cacf097f81aa98bbc3a403e363d05a4e4929e46d781984bd7a9ea4"
+    },
+    {
+      "name": "today",
+      "width": 1440,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "aea6f44d66002cf1ffe778df8122c206e7527689d35ab8ff44f5b3201d068eff"
+    },
+    {
+      "name": "food",
+      "width": 320,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "0def0cefd6ceff2d1f1e0145c7920c36537f6bf70b9278d2ba3d7329db64469d"
+    },
+    {
+      "name": "food",
+      "width": 320,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "0def0cefd6ceff2d1f1e0145c7920c36537f6bf70b9278d2ba3d7329db64469d"
+    },
+    {
+      "name": "food",
+      "width": 390,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "463c3c19fcf19da087f100fa2b28ffb0826deefa1c18bf2e21f9525ec01583f4"
+    },
+    {
+      "name": "food",
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "413289502aeafac4f61fe57c199d5aff301de14987f533d113f2c01767af08fc"
+    },
+    {
+      "name": "food",
+      "width": 768,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "782fcd486080e7ed3f88d873dc1418d0b9f9d35303b870e7a116af42701b268a"
+    },
+    {
+      "name": "food",
+      "width": 768,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "f2c1d9d4017e313fac98656761e520313cff1d94b7e664b6443b0c345a588f40"
+    },
+    {
+      "name": "food",
+      "width": 1440,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "b20a70df7b752cd47c0b340d75b3b70af9f19f7b95fce85eed8cb4d9ead5e3a7"
+    },
+    {
+      "name": "food",
+      "width": 1440,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "769ec2a3b2c14d3c07b13bfd65f6cef657783b7e98f2a1bba9c8b64912de13e9"
+    },
+    {
+      "name": "biology",
+      "width": 320,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "e6663a05b3a74fcd9b87b9e12196f23e3b23e1c57f91c90a5fb119a220d1a310"
+    },
+    {
+      "name": "biology",
+      "width": 320,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "e6663a05b3a74fcd9b87b9e12196f23e3b23e1c57f91c90a5fb119a220d1a310"
+    },
+    {
+      "name": "biology",
+      "width": 390,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "e0cd86c8b7494fc4973d31b18381bbb145e4dc426a1c24eed9c4be5b0b43cabf"
+    },
+    {
+      "name": "biology",
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "b5b5101db4fc37064e5e2bad0ba3b06b2b679f2dfb02068ce53e6db21b31cc51"
+    },
+    {
+      "name": "biology",
+      "width": 768,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "b08dbff0c99691d7d85017ca5ba0f24ac0dc592fd29cbd9ec940653ef144c10b"
+    },
+    {
+      "name": "biology",
+      "width": 768,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "afe97f37074fb98f0fb312bd7f7058ffdccc6bc7e0f4428961ae2c6643f4c82f"
+    },
+    {
+      "name": "biology",
+      "width": 1440,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "b3534777a018f42f48991485d50eab8082dc2912a82902bd849dc7c280342d1d"
+    },
+    {
+      "name": "biology",
+      "width": 1440,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "1ce0251c03a0adcff559702b164b03b69bad50c7603124c8ea01e7f771beefd8"
+    },
+    {
+      "name": "explore",
+      "width": 320,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "ccd5bc5664cb30339984cfd26c8036effe76dcc7d8d9eb7d3be06d0485809b06"
+    },
+    {
+      "name": "explore",
+      "width": 320,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "ccd5bc5664cb30339984cfd26c8036effe76dcc7d8d9eb7d3be06d0485809b06"
+    },
+    {
+      "name": "explore",
+      "width": 390,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "dc1083d05376b10ccf0f18358a5b37b25424b150191dc90a96c27b6ccb6d1398"
+    },
+    {
+      "name": "explore",
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "98452c3979fdf7cfa06f189e838d4e2f2f3fa5fcf75f9de1a6ace446b9820447"
+    },
+    {
+      "name": "explore",
+      "width": 768,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "54e73f66d32cca232bb6931aa542128ba279075842f4bc3d45cb257d5a0eb676"
+    },
+    {
+      "name": "explore",
+      "width": 768,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "bb2a22d9d7ac4fd66d326a309ad01f648b0ec7fb2b602195bc38019914eee1ad"
+    },
+    {
+      "name": "explore",
+      "width": 1440,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "00fb279af98178d54d80b02190566950fb8adf13413c095b0aac61503523fad0"
+    },
+    {
+      "name": "explore",
+      "width": 1440,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "83f979119adc51bd7b85d43712d4cfc904df9a6fee7ca957fe958d1d877ba3dd"
+    },
+    {
+      "name": "progress",
+      "width": 320,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "ab374c82d2b7936410c0e01dacdb96479a02ac7d64d4d12d885f5ac24a348c03"
+    },
+    {
+      "name": "progress",
+      "width": 320,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "ab374c82d2b7936410c0e01dacdb96479a02ac7d64d4d12d885f5ac24a348c03"
+    },
+    {
+      "name": "progress",
+      "width": 390,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "dda26c2279ece88a271d9877b83fd7663f3c5063630f4143930bbe85daacb2ea"
+    },
+    {
+      "name": "progress",
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "599b899d4886b1ce70fc53147471aa44ddbad867e5cebf04f18faf55ea5dd383"
+    },
+    {
+      "name": "progress",
+      "width": 768,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "77332f9577dd6373c137ced5551505d2aa23be071506e687e1ee3dfda5b70134"
+    },
+    {
+      "name": "progress",
+      "width": 768,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "de8df78beee3d24585951ebc3c5e7d54cbce4dfebf427c5bcd419e1b17780ed1"
+    },
+    {
+      "name": "progress",
+      "width": 1440,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 14.35935158608746,
+        "muted": 6.035990311859337
+      },
+      "structureSha256": "903025dcf216f0672e2b9b488ae4f96450fddc8e801ce974a98222f0ce1405c2"
+    },
+    {
+      "name": "progress",
+      "width": 1440,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 8.594862487678519,
+        "muted": 7.86468148661863
+      },
+      "structureSha256": "ead2f9a5e46c0f5bbebe3ec35b300a5c4de5564d40b8802c4e8a164bfbc4d649"
+    },
+    {
+      "name": "athlete",
+      "width": 320,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.571911157801539,
+        "muted": 6.201686835587847
+      },
+      "structureSha256": "3ed8ef68ae94e3599f5e31a242640fe80ed012cd47bb22c1eb74a96221b44b2a"
+    },
+    {
+      "name": "athlete",
+      "width": 320,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.219975378647463,
+        "muted": 9.49831325503794
+      },
+      "structureSha256": "3ed8ef68ae94e3599f5e31a242640fe80ed012cd47bb22c1eb74a96221b44b2a"
+    },
+    {
+      "name": "athlete",
+      "width": 390,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.571911157801539,
+        "muted": 6.201686835587847
+      },
+      "structureSha256": "37b07d6ade8c86249ad1abc4af7b73e5cb385a4d88eca0401b9f13a8d4f08fdb"
+    },
+    {
+      "name": "athlete",
+      "width": 390,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.219975378647463,
+        "muted": 9.49831325503794
+      },
+      "structureSha256": "cb8fa268ae74426d054f27f4e5089aa4244298417a75df55894977106834961f"
+    },
+    {
+      "name": "athlete",
+      "width": 768,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.571911157801539,
+        "muted": 6.201686835587847
+      },
+      "structureSha256": "fc01371bfb4518c1380ee6d40f62b18e8cbda8a31dd5967c2677b272459d2368"
+    },
+    {
+      "name": "athlete",
+      "width": 768,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.219975378647463,
+        "muted": 9.49831325503794
+      },
+      "structureSha256": "9ea85b722784e34776e401994359c4609a4d4165f4afcbc0252a23471efbd471"
+    },
+    {
+      "name": "athlete",
+      "width": 1440,
+      "theme": "light",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.571911157801539,
+        "muted": 6.201686835587847
+      },
+      "structureSha256": "cc5f98d9e0b03dde1ab4973f285a7826c416384bc3f0548a2c867b28cd5afe03"
+    },
+    {
+      "name": "athlete",
+      "width": 1440,
+      "theme": "dark",
+      "geometryAndOrder": "identical",
+      "overflow": false,
+      "materialContrast": {
+        "foreground": 13.219975378647463,
+        "muted": 9.49831325503794
+      },
+      "structureSha256": "a823680169ff9184d03c3b91b21894320da157fc3fd7eb0be967e9073851a604"
+    }
+  ],
+  "errors": [],
+  "physicalDevices": "NOT_RUN",
+  "independentReview": "NOT_GRANTED",
+  "scope": "Compatible material/ambient paint; source scenes/controls/type/geometry unchanged. Separate reproduced Explore nowrap overflow repair applied before paint comparison.",
+  "sourceHashes": {
+    "client/src/visual-materials.css": "da5fc984296b06fa9a9f1a1a764d3b7cfe7cfef1c7f5ca67a1fdd0cbd62f4149",
+    "client/src/main.tsx": "669d3ec71aa1f8a87c84023c4ab811ef1fdd1d5a0c12efc4b860df04dec8aa91",
+    "client/src/pages/Explore.tsx": "808121d2c0abae81d8d2a3344f06d63f57b4591834f1f59868485a938b63da9d",
+    "scripts/qa/visual-materials-parity.mjs": "ac05fc77c5769ff723db56bac4a72670970a3d30dce7f83169249836bbcc924e",
+    "scripts/qa/explore-science-composition-journey.mjs": "d5d51dc267396832679068aee2edca1d5d5f49a79f1f84d11f2b30cfc9c826c9"
+  },
+  "focusedTests": {
+    "pass": 8,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 3971.33659
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "sourceCrosswalk": "52 IDs/241 files PASS",
+    "apiInventory": "unchanged PASS",
+    "actualExploreScienceFoodJourney": "PASS including390px/200% root text, subject keyboard selection and44px control"
+  },
+  "contrastScope": "Theme default and muted text against changed material on both ambient extrema, not whole-app accessibility certification",
+  "minimumContrast": {
+    "foreground": 8.594862487678519,
+    "muted": 6.035990311859337
+  },
+  "visualReview": "Matched selective originals generated/inspected in temporary QA output; changes are a small compatible paint refinement. No near-identical PNG gallery committed.",
+  "reproducedDefect": {
+    "route": "/explore",
+    "condition": "390px viewport,200% root text",
+    "beforeDocumentWidth": 396,
+    "cause": "Molecules & pathways subject button inherited whitespace-nowrap",
+    "repair": "Keep same button/order;max-width100%,normal wrapping,autoheight,min44",
+    "paintBaseline": "Both stylesheet-disabled/enabled comparisons use the repaired current source; not a comparison claiming the old overflow never existed"
+  },
+  "previousPublication": {
+    "commit": "c61dd63beb85f78a54324aad204cfc46b5dd782c",
+    "deploy": "dep-dbnnch5g1s2s73fom9ag",
+    "status": "live",
+    "ciRun": 42404425160,
+    "ciStatus": "success"
+  }
+}

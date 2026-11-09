@@ -1,0 +1,11 @@
+# Experience settings source revisions
+
+Aware storage adapters expose a strong ETag and X-Bloom-Settings-Revision on settings GET/PATCH responses. Bodies remain strict canonical ExperienceSettings JSON. The account-bound digest covers normalized current settings, not ciphertext or a dated measurement. Unaware adapters advertise no revision; a versioned request to one returns503 instead of downgrading.
+
+A quoted If-Match compares the current source under the existing encrypted-store advisory transaction lock before merging any section or changing Athlete review state. Stale source returns409 without applying the patch. Existing review acknowledgement/invalidation rules remain. No schema or credential changes.
+
+All current web settings writers, including chained Everyday setup, use the provider. It strips header metadata from public settings and request bodies and pins the adopted source. The query cache remains authoritative; an immutable editing basis in the existing mutation intent retains form keys and dirty fields through pending/error states. Derived guidance remains withheld when the saved source differs or cannot be verified. A fresh unchanged source permits correcting/retrying a failed save. Changed source requires explicit Load latest saved settings; that action states it replaces unsaved fields and refreshes dependent views. Submitted Athlete/practical fields freeze. Mode navigation follows acknowledgement, not intent.
+
+Legacy no-header writers remain compatible; universal mandatory versioning is still open. A digest proves source currentness only, not clinical approval, permission, or safety eligibility. An older server removes versioned protection; retain aware readers/comparison when backing out presentation changes.
+
+Local verification:352 tests/types/build/API92+13/source125; actual encrypted PostgreSQL stale Athlete section and concurrent writers; strict API header/owner/unaware-adapter cases; actual two-tab encrypted-store/App conflicts, explicit adoption, committed503, precommit retry, freeze/repeated-submit and mode navigation; setup/actor guard, practical/minor and Profile-copy regressions. Isolated production Neon settings concurrency is added to CI; require matching run success before claiming it.

@@ -1,0 +1,132 @@
+{
+  "version": "synthetic-molecular-benchmark-v1",
+  "engine": "synthetic-vertex-lp-v1",
+  "solverSha256": "5ee0d92d183d27dd9a037220f95aaec94964766e28d893e1084644cc43b72a2c",
+  "casesSha256": "2e0ba17cf4e3e4e294d1e6b904df7674455ae185cdb2f55d8f61b9dedd3a95ba",
+  "modelRights": "First-party synthetic mathematical fixture; no biological reconstruction",
+  "unit": "synthetic-flux-unit",
+  "cases": [
+    {
+      "supply": 10,
+      "consumption": 4,
+      "exchangeLower": 0,
+      "expected": "6",
+      "actual": "6",
+      "status": "optimal",
+      "grossOnlyComparator": "10"
+    },
+    {
+      "supply": 7,
+      "consumption": 2,
+      "exchangeLower": 0,
+      "expected": "5",
+      "actual": "5",
+      "status": "optimal",
+      "grossOnlyComparator": "7"
+    },
+    {
+      "supply": 3,
+      "consumption": 3,
+      "exchangeLower": 0,
+      "expected": "0",
+      "actual": "0",
+      "status": "optimal",
+      "grossOnlyComparator": "3"
+    },
+    {
+      "supply": 0,
+      "consumption": 0,
+      "exchangeLower": 0,
+      "expected": "0",
+      "actual": "0",
+      "status": "optimal",
+      "grossOnlyComparator": "0"
+    },
+    {
+      "supply": 2,
+      "consumption": 3,
+      "exchangeLower": 0,
+      "expected": null,
+      "actual": null,
+      "status": "infeasible",
+      "grossOnlyComparator": "2"
+    },
+    {
+      "supply": 0,
+      "consumption": 1,
+      "exchangeLower": 0,
+      "expected": null,
+      "actual": null,
+      "status": "infeasible",
+      "grossOnlyComparator": "0"
+    },
+    {
+      "supply": 2,
+      "consumption": 5,
+      "exchangeLower": -10,
+      "expected": "-3",
+      "actual": "-3",
+      "status": "optimal",
+      "grossOnlyComparator": "2"
+    },
+    {
+      "supply": 5,
+      "consumption": 2,
+      "exchangeLower": -10,
+      "expected": "3",
+      "actual": "3",
+      "status": "optimal",
+      "grossOnlyComparator": "5"
+    },
+    {
+      "supply": 0.5,
+      "consumption": 0.2,
+      "exchangeLower": 0,
+      "expected": "3/10",
+      "actual": "3/10",
+      "status": "optimal",
+      "grossOnlyComparator": "0.5"
+    }
+  ],
+  "passed": 9,
+  "failed": 0,
+  "elapsedMs": 14.954,
+  "limits": [
+    "Not independent biological validation, calibration or a curated genome-scale model",
+    "Internal-pool steady-state balance is not an elemental/charge audit of biochemical reactions",
+    "No organism, food-to-colon conversion, measured abundance or patient data",
+    "No personal/clinical prediction or public research activation"
+  ],
+  "baseCommit": "bcf0fc12e884003676fe7f273ea814803ad14d59",
+  "scope": "First typed projection of existing evidence graph and exact CPU-backed synthetic solver; full B0/B1 biological reconstruction acceptance remains open",
+  "checks": {
+    "pythonTests": {
+      "pass": 6,
+      "fail": 0,
+      "durationSeconds": 0.021
+    },
+    "affectedTypeScriptTests": {
+      "pass": 23,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 5076.69269
+    },
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "crosswalk": "52 IDs/229 source files PASS",
+    "apiInventory": "unchanged PASS",
+    "fullRegression": "Previous shared-store milestone632/632; not repeated for isolated research and additive reference metadata"
+  },
+  "sourceHashes": {
+    "shared/scientific-contracts.ts": "750a113cdce24ec2cd4ce464d5f0c3d7a194f7253ae2091b9fd5d7eaaf1ea5a6",
+    "ml_service/research/stoichiometry.py": "5ee0d92d183d27dd9a037220f95aaec94964766e28d893e1084644cc43b72a2c",
+    "scripts/qa/synthetic-molecular-benchmark.py": "7c0de896cd7301db411ff4c01812ac1fbd52989f6f02e1366b6f60ae5f18108e",
+    "tests/molecular-reference.test.ts": "38acfa742947c52629ac3039470e9e2b722a7a02c8a65d456df0c675af88cec9",
+    "tests/test_synthetic_stoichiometry.py": "5ae6fd2364fee9a3b20463e0dbf69581a486869b2d110c576f1a3830993af4c7"
+  },
+  "previousPublication": {
+    "commit": "bcf0fc12e884003676fe7f273ea814803ad14d59",
+    "render": "LIVE dep-dbnjr2vb9u1s73cofku0",
+    "ci": "42384432402 in_progress at check"
+  }
+}

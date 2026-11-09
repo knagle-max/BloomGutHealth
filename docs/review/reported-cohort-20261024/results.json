@@ -1,0 +1,15 @@
+{
+  "synthetic": true,
+  "baseline": "67cce8f actual Microbiome source with unchanged shared runtime",
+  "checks": [
+    "Unsupported cohort chooser/execution absent",
+    "Real study links retained",
+    "Withheld history distinct from empty records",
+    "Original zero abundance retained",
+    "320/375/390/1280 light/dark/zoom reflow",
+    "Keyboard study link and result outage/retry"
+  ],
+  "providerCalls": 0,
+  "writes": [],
+  "errors": []
+}

@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "source": "two attached deidentified/reconstructed reports; not original private PDFs",
+  "oracleVersion": "mupdf-row-oracle-2026-11-06.1",
+  "oracle": "independent MuPDF spans; exact names/categories/page/column/row positions, values withheld",
+  "counts": [
+    {
+      "pages": 7,
+      "organisms": 94,
+      "assessments": 0,
+      "foods": 0
+    },
+    {
+      "pages": 13,
+      "organisms": 0,
+      "assessments": 22,
+      "foods": 371
+    }
+  ],
+  "build": "compiled-production-assets",
+  "bundledPdfWorker": "PASS",
+  "journey": "actual native PDF.js browser upload; review-before-save; row editor; HTTP/in-memory PGlite persistence/reload; idempotent reimport; owned deletion/other account;320390dark200%/keyboard",
+  "externalUpload": false,
+  "privateSourceArtifactsWritten": false,
+  "hosted": "NOT_RUN",
+  "independentSecurity": "NOT_GRANTED"
+}

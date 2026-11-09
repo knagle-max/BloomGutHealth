@@ -1,0 +1,123 @@
+{
+  "project": "Bloom",
+  "date": "2026-11-07",
+  "assets": [
+    {
+      "path": "cutouts/bloom-blueberry-sprig.png",
+      "source_filename": "blueberry_branch_botanical_still_life.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "sha256": "df348dca4e5d4850ede6bf940e42731afd45c62a62b39b72ff49906b7958b6e8",
+      "alpha": true
+    },
+    {
+      "path": "cutouts/bloom-echinacea-flower.png",
+      "source_filename": "side_view_pink_echinacea_bloom.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "sha256": "5ef1b36939c40c351e0b6d4d24311c6af70020f3c01c9daba3287ed55ad0fa8b",
+      "alpha": true
+    },
+    {
+      "path": "cutouts/bloom-three-leaf-sprig.png",
+      "source_filename": "a_crisp_high_resolution_isolated_botanical_illustr.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "sha256": "f849d3fbfc18ac26b3067c6d014568916275577e152d62dba20736b55852c6cf",
+      "alpha": true
+    },
+    {
+      "path": "cutouts/bloom-oatmeal-bowl-primary.png",
+      "source_filename": "a_clean_high_resolution_food_photography_image_on.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "sha256": "b19065a8356d0526248f66cd81c57bb54fa2a5117c0688b8ce13de1a3f7e6b0b",
+      "alpha": true
+    },
+    {
+      "path": "cutouts/bloom-oatmeal-bowl-alternate.png",
+      "source_filename": "a_photograph_showcases_a_ceramic_breakfast_bowl_wi.png",
+      "width": 1024,
+      "height": 1024,
+      "mode": "RGBA",
+      "sha256": "2d2344ae5af8a700ed61d1fa2cfa7ecce7a8f590276831edf88ee78646038e28",
+      "alpha": true
+    },
+    {
+      "path": "cutouts/bloom-yogurt-honey-blueberries.png",
+      "source_filename": "a_clean_high_resolution_food_product_photo_on_a_t.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "sha256": "ad73c9ae2bcb9dcac4bbfc92db7524e627b9bce8c5b54dd4c4025407add0cf24",
+      "alpha": true
+    },
+    {
+      "path": "cutouts/bloom-raspberry-smoothie.png",
+      "source_filename": "a_clean_product_style_close_up_on_a_transparent_ch.png",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "sha256": "e3486b2ffe72049b0214fd73abb8728b5376192aaa32d2855b884ae7f7cb6765",
+      "alpha": true
+    },
+    {
+      "path": "heroes/bloom-food-oatmeal-linen.png",
+      "source_filename": "a_clean_minimal_food_still_life_on_a_neutral_beig.png",
+      "width": 1942,
+      "height": 809,
+      "mode": "RGB",
+      "sha256": "8bc288276903d53de16f11c7a696957849082423b78bb93ce8377b5136763ec9",
+      "alpha": false
+    },
+    {
+      "path": "heroes/bloom-explore-blueberry-macro.png",
+      "source_filename": "a_crisp_photorealistic_macro_nature_photograph_in.png",
+      "width": 1942,
+      "height": 809,
+      "mode": "RGB",
+      "sha256": "dc113432d95e0b4edde7c02861532aee794161d0f4655b29302a8cc838374fed",
+      "alpha": false
+    },
+    {
+      "path": "heroes/bloom-today-meadow.png",
+      "source_filename": "a_wide_cinematic_nature_photo_of_a_sunlit_meadow.png",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "sha256": "597c6009b05a42e05c414d2d574b6661e394bd3ae3035c1d1af4833529b2e927",
+      "alpha": false
+    },
+    {
+      "path": "heroes/bloom-athlete-mountains.png",
+      "source_filename": "a_wide_cinematic_landscape_photo_a_serene_mounta.png",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "sha256": "fcb5dfd8b83656bbc553338a93fd1af7660275dc417e6cfaf5120e5e7bbe1a88",
+      "alpha": false
+    },
+    {
+      "path": "heroes/bloom-biology-rods.png",
+      "source_filename": "a_highly_detailed_soft_focus_3d_scientific_style.png",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "sha256": "537c9b30b857dcccbd00e4372d5eff2d5e0f2fc10fb5aa4727d0f1a550f1b543",
+      "alpha": false
+    },
+    {
+      "path": "heroes/bloom-biology-abstract-cells.png",
+      "source_filename": "a_wide_cinematic_high_detail_3d_rendered_microsc.png",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "sha256": "e68f40097a2f6b5a6435362e844437530ad8bdcf029ed3c0abc9eb146fc65861",
+      "alpha": false
+    }
+  ]
+}

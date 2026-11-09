@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="648" viewBox="0 0 780 648" role="img" aria-label="Compare approaches design wireframe">
+<rect width="780" height="648" fill="#F6F9F7"/>
+<rect x="16" y="16" width="748" height="70" rx="16" fill="white" stroke="#D8E4DB"/>
+<text x="32" y="58" font-family="Arial" font-size="25" font-weight="bold" fill="#246B50">Bloom / Personal progress</text>
+<text x="22" y="117" font-family="Arial" font-size="23" font-weight="bold" fill="#172E26">Compare approaches</text>
+<text x="22" y="140" font-family="Arial" font-size="13" fill="#50665A">Options first; uncertainties remain visible.</text>
+<rect x="16" y="160" width="748" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="190" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">Practical choices</text>
+<text x="30" y="217" font-family="Arial" font-size="14" fill="#50665A">Time, effort, priorities and trade-offs</text>
+<text x="30" y="261" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">Compare options →</text>
+<rect x="16" y="302" width="748" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="332" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">Evidence status</text>
+<text x="30" y="359" font-family="Arial" font-size="14" fill="#50665A">Guideline-based; not a personal forecast</text>
+<text x="30" y="403" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">Review sources →</text>
+<rect x="16" y="444" width="748" height="126" rx="15" fill="white" stroke="#D8E4DB"/>
+<text x="30" y="474" font-family="Arial" font-size="19" font-weight="bold" fill="#182C24">What to measure next</text>
+<text x="30" y="501" font-family="Arial" font-size="14" fill="#50665A">Track actual dated outcomes, not predicted scores</text>
+<text x="30" y="545" font-family="Arial" font-size="14" font-weight="bold" fill="#246B50">View progress →</text>
+<text x="21" y="629" font-family="Arial" font-size="11" fill="#63776D">Synthetic layout — not a personal prediction or app screenshot</text></svg>

@@ -1,0 +1,164 @@
+{
+  "synthetic": true,
+  "phase": "after",
+  "baseline": "aa22265c415f3ee702b06f93f70314bacd29856c",
+  "checks": [
+    {
+      "width": 320,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 320,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 375,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 390,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "empty",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "partial",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "recorded",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "no-session",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "delayed",
+      "primaryInViewport": true
+    },
+    {
+      "width": 1280,
+      "state": "error",
+      "primaryInViewport": true
+    },
+    {
+      "state": "empty",
+      "zoomEquivalent320x500": true,
+      "primaryClearOfNavigation": true
+    },
+    {
+      "state": "partial",
+      "zoomEquivalent320x500": true,
+      "primaryClearOfNavigation": true
+    },
+    {
+      "state": "recorded",
+      "zoomEquivalent320x500": true,
+      "primaryClearOfNavigation": true
+    },
+    {
+      "state": "no-session",
+      "zoomEquivalent320x500": true,
+      "primaryClearOfNavigation": true
+    },
+    {
+      "state": "error",
+      "zoomEquivalent320x500": true,
+      "primaryClearOfNavigation": true
+    },
+    {
+      "cachedSessionRetractedDuringRefreshAndFailure": true,
+      "cachedGoalRetractedDuringRefreshAndFailure": true,
+      "explicitRetryRestores": true,
+      "recordedZeroSleepPreserved": true,
+      "canonicalGoalAdjustment": true,
+      "canonicalAddFood": true
+    }
+  ],
+  "errors": [],
+  "nativeSafari": false,
+  "voiceOver": false,
+  "plannedRestContract": false
+}

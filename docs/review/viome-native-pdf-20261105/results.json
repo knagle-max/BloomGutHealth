@@ -1,0 +1,18 @@
+{
+  "syntheticOnly": true,
+  "checks": [
+    "actual native PDF.js worker7and13pages",
+    "94organisms82/7/5",
+    "22qualitative/299foods",
+    "raw filename/header/metadata/hidden canary excluded from DOM/save/browser storage/console",
+    "review before any POST",
+    "biological correction preserves original/position",
+    "one minimized save and reload",
+    "food-category correction keeps original",
+    "320390lightdark reflow"
+  ],
+  "genuine7PageFidelity": "NOT_RUN",
+  "genuine13PageFidelity": "NOT_RUN",
+  "securityAudit": "NOT_GRANTED",
+  "physicalVoiceOver": "NOT_RUN"
+}

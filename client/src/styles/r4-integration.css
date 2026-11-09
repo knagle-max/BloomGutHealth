@@ -1,0 +1,139 @@
+/* Bridges existing HSL component tokens to the exact authored R4 palette.
+   Layout and data ownership remain in their existing components. */
+body:has(.app-shell[data-bloom-visual="premium"]) {
+  --background: 70.000 33.333% 96.471%;
+  --foreground: 161.538 45.882% 16.667%;
+  --card: 48.000 100.000% 99.020%;
+  --card-foreground: 161.538 45.882% 16.667%;
+  --popover: 48.000 100.000% 99.020%;
+  --popover-foreground: 161.538 45.882% 16.667%;
+  --primary: 157.183 49.650% 28.039%;
+  --primary-foreground: 70.000 33.333% 96.471%;
+  --secondary: 111.429 22.581% 93.922%;
+  --secondary-foreground: 161.538 45.882% 16.667%;
+  --muted: 111.429 22.581% 93.922%;
+  --muted-foreground: 147.273 11.828% 36.471%;
+  --accent: 111.429 22.581% 93.922%;
+  --accent-foreground: 161.538 45.882% 16.667%;
+  --input: 106.667 27.273% 87.059%;
+  --border: 106.667 27.273% 87.059%;
+  --ring: 157.183 49.650% 28.039%;
+}
+html.dark body:has(.app-shell[data-bloom-visual="premium"]) {
+  --background: 155.000 27.273% 8.627%;
+  --foreground: 112.500 30.769% 94.902%;
+  --card: 152.727 24.444% 17.647%;
+  --card-foreground: 112.500 30.769% 94.902%;
+  --popover: 152.727 24.444% 17.647%;
+  --popover-foreground: 112.500 30.769% 94.902%;
+  --primary: 141.429 45.902% 76.078%;
+  --primary-foreground: 155.000 27.273% 8.627%;
+  --secondary: 145.714 25.926% 21.176%;
+  --secondary-foreground: 112.500 30.769% 94.902%;
+  --muted: 145.714 25.926% 21.176%;
+  --muted-foreground: 138.750 17.778% 82.353%;
+  --accent: 145.714 25.926% 21.176%;
+  --accent-foreground: 112.500 30.769% 94.902%;
+  --input: 146.250 23.529% 26.667%;
+  --border: 146.250 23.529% 26.667%;
+  --ring: 141.429 45.902% 76.078%;
+}
+html[data-experience="athlete"] body:has(.app-shell[data-bloom-visual="premium"]) {
+  --background: 216.774 50.820% 11.961%;
+  --foreground: 218.571 100.000% 97.255%;
+  --card: 214.667 48.387% 18.235%;
+  --card-foreground: 218.571 100.000% 97.255%;
+  --popover: 214.667 48.387% 18.235%;
+  --popover-foreground: 218.571 100.000% 97.255%;
+  --primary: 210.952 100.000% 75.294%;
+  --primary-foreground: 216.774 50.820% 11.961%;
+  --secondary: 215.821 51.145% 25.686%;
+  --secondary-foreground: 218.571 100.000% 97.255%;
+  --muted: 215.821 51.145% 25.686%;
+  --muted-foreground: 213.158 46.341% 83.922%;
+  --accent: 215.821 51.145% 25.686%;
+  --accent-foreground: 218.571 100.000% 97.255%;
+  --input: 207.273 47.143% 27.451%;
+  --border: 207.273 47.143% 27.451%;
+  --ring: 210.952 100.000% 75.294%;
+}
+.app-shell[data-bloom-visual="premium"] :is(.science-heading,.dashboard-heading,.meal-page-heading) { background-image:none; }
+.app-shell[data-bloom-visual="premium"] .today-focus::before { content:none; }
+.app-shell[data-bloom-visual="premium"] .today-focus :is(.eyebrow,.today-focus-reason) { color:var(--bv-secondary); }
+.app-shell[data-bloom-visual="premium"] .today-focus .hero-button { background:var(--bv-brand);color:var(--bv-canvas); }
+.app-shell[data-bloom-visual="premium"] .today-focus .hero-secondary { color:var(--bv-forest);border-color:var(--bv-line); }
+.app-shell[data-bloom-visual="premium"] .dashboard-heading > div { min-width:0; }
+.app-shell[data-bloom-visual="premium"] .dashboard-heading { flex-wrap:wrap;gap:1rem; }
+
+
+.app-shell[data-bloom-visual="premium"] :is(.bloom-dashboard,.meal-page,.science-page) { background-color:transparent; }
+
+.r4-icon { display:none;flex-shrink:0;background:currentColor;mask-repeat:no-repeat;mask-position:center;mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center;-webkit-mask-size:contain; }
+.r4-icon-fallback { display:inline-flex; }
+body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon { display:inline-block; }
+body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon-fallback { display:none; }
+@media(forced-colors:active) { body:has(.app-shell[data-bloom-visual="premium"]) .r4-icon { forced-color-adjust:none;background:CanvasText; } }
+
+.app-shell[data-bloom-visual="premium"] .food-progress-plot { color:var(--bv-chart); }
+/* Dark Athlete surfaces use the reversed wordmark; light uses the ink original. */
+html.dark[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-ink { display:none; }
+html.dark[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .bloom-wordmark-reversed { display:block; }
+
+html:not(.dark)[data-experience="athlete"] body:has(.app-shell[data-bloom-visual="premium"]) {
+  --background: 70.000 33.333% 96.471%;
+  --foreground: 216.774 50.820% 11.961%;
+  --card: 48.000 100.000% 99.020%;
+  --card-foreground: 216.774 50.820% 11.961%;
+  --popover: 48.000 100.000% 99.020%;
+  --popover-foreground: 216.774 50.820% 11.961%;
+  --primary: 211.162791 63.546798% 39.803922%;
+  --primary-foreground: 70.000 33.333% 96.471%;
+  --secondary: 111.429 22.581% 93.922%;
+  --secondary-foreground: 216.774 50.820% 11.961%;
+  --muted: 111.429 22.581% 93.922%;
+  --muted-foreground: 147.273 11.828% 36.471%;
+  --accent: 111.429 22.581% 93.922%;
+  --accent-foreground: 216.774 50.820% 11.961%;
+  --input: 106.667 27.273% 87.059%;
+  --border: 106.667 27.273% 87.059%;
+  --ring: 211.162791 63.546798% 39.803922%;
+}
+
+/* Long Progress actions and scientific text must reflow at 200% text zoom. */
+.app-shell[data-bloom-visual="premium"] .progress-workspace .hero-button { white-space:normal;max-width:100%;overflow-wrap:anywhere;text-align:center; }
+.app-shell[data-bloom-visual="premium"] .lab-marker-education { min-width:0;overflow-wrap:anywhere; }
+@media (max-width:991px) {
+ .app-shell[data-bloom-visual="premium"] .bloom-header-inner { flex-wrap:wrap;height:auto;min-height:68px;padding-block:8px; }
+ .app-shell[data-bloom-visual="premium"] .header-actions { flex-wrap:wrap;max-width:100%; }
+}
+.app-shell[data-bloom-visual="premium"] .lab-measured-plot { grid-template-columns:minmax(36px,max-content) minmax(88px,1fr);min-width:0;max-width:100%;overflow-x:auto;padding-block:6px; }
+/* Dialog portals sit outside app-shell; preserve the original portrait at normal
+   widths and fit its square inside a narrow, zoomed sheet. */
+.microbial-profile-sheet .organism-visual-portrait { width:min(180px,100%);height:auto;aspect-ratio:1; }
+
+/* Nested grid tracks must shrink at narrow widths and 200% zoom. Keep any
+   minimum chart width inside its labelled scroll region, not the page. */
+.app-shell[data-bloom-visual="premium"] .lab-explorer-detail .evidence-insight { grid-template-columns:minmax(0,1fr); }
+.app-shell[data-bloom-visual="premium"] .lab-measured-figure { max-width:100%; }
+@media (max-width:480px) {
+ .app-shell[data-bloom-visual="premium"] .lab-point-controls { grid-template-columns:minmax(0,1fr); }
+}
+.app-shell[data-bloom-visual="premium"] .lab-point-button { width:44px;height:44px;min-width:44px;min-height:44px; }
+
+/* A 200% zoomed phone can leave less than one touch target inside nested panels.
+   Keep all source results available through the existing selector in that space. */
+.app-shell[data-bloom-visual="premium"] .lab-measured-figure { container-type:inline-size; }
+.app-shell[data-bloom-visual="premium"] .lab-chart-space-note { display:none; }
+@container (max-width:120px) {
+ .app-shell[data-bloom-visual="premium"] .lab-measured-plot,
+ .app-shell[data-bloom-visual="premium"] .lab-chart-caption { display:none; }
+ .app-shell[data-bloom-visual="premium"] .lab-chart-space-note { display:block; }
+}
+@media (max-width:480px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-markers { padding-inline:4px; }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-detail .evidence-insight { padding-inline:8px; }
+}
+
+/* Anonymous flex text otherwise keeps the longest word as a minimum width. */
+.app-shell[data-bloom-visual="premium"] .workspace-disclosure > summary { display:grid;grid-template-columns:minmax(0,1fr) auto;min-width:0;overflow-wrap:anywhere; }
+.app-shell[data-bloom-visual="premium"] .progress-workspace { overflow-wrap:anywhere; }

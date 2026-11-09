@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "8bf7ecb9c4b1da62365e545a74e99a102408bd9d",
+  "scope": "Interim current-source check, not M-05 final engineering exit or independent release acceptance",
+  "scanner": "scripts/qa/check-architecture-boundaries.mjs",
+  "result": {
+    "filesScanned": 319,
+    "edges": 985,
+    "layeringViolations": [],
+    "circularImports": [
+      [
+        "server/storage.ts",
+        "server/structured-report-storage.ts",
+        "server/report-routes.ts",
+        "server/storage.ts"
+      ]
+    ],
+    "plannerEvidenceImports": [
+      "shared/meal-intelligence.ts -> shared/science-coach.ts",
+      "shared/weekly-planner.ts -> shared/evidence-network.ts",
+      "shared/weekly-planner.ts -> shared/science-coach.ts"
+    ]
+  },
+  "manualReview": {
+    "cycle": "report-routes.ts imports IStorage with import type; that closing edge is erased by TypeScript, not runtime initialization. No runtime cycle defect demonstrated.",
+    "plannerEvidence": "Existing read-only shared evidence imports are allowed composition; no new cross-domain write or required remote provider introduced.",
+    "limitations": "Scanner is conservative regex static/literal import analysis, includes source examples, does not inspect all dynamic/package imports or prove runtime authorization. Full M-05 exact-final-candidate/off-capability and independent review remain separate."
+  }
+}

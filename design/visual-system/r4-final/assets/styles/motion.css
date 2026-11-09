@@ -1,0 +1,57 @@
+/* Motion contract (classes must be state-bound; confirmation only on persisted receipt):
+   name              trigger                       duration easing              reduced motion
+   hero entrance     first visible mount            520ms    --bv-ease-out        instant
+   activity-logged   confirmed activity receipt     240ms    --bv-ease-out        instant check
+   hydration add     confirmed hydration receipt    320ms    --bv-ease-out        instant value
+   saved             confirmed server receipt       240ms    --bv-ease-out        instant text
+   loading shimmer   pending data source            1200ms   linear                static mist
+   chart line draw   first verified data draw       680ms    --bv-ease-out        final line
+   progress ring     verified completion change     520ms    --bv-ease-out        final ring
+   tab switch        activated tab panel            240ms    --bv-ease-standard   instant panel
+   sync spinner      syncing, not stale/failed      1200ms   linear                static symbol
+*/
+/* Bloom premium motion — opt in only. Attach classes to meaningful, stateful elements. */
+.app-shell[data-bloom-visual="premium"] {
+  --bv-dur-instant: 0ms;
+  --bv-dur-quick: 160ms;
+  --bv-dur-short: 240ms;
+  --bv-dur-medium: 320ms;
+  --bv-dur-hero: 520ms;
+  --bv-dur-chart: 680ms;
+  --bv-dur-shimmer: 1200ms;
+  --bv-ease-out: cubic-bezier(.16,1,.3,1);
+  --bv-ease-standard: cubic-bezier(.4,0,.2,1);
+  --bv-ease-press: cubic-bezier(.2,0,0,1);
+}
+@keyframes bv-hero-appear { from {opacity:0;transform:translateY(8px)} to {opacity:1;transform:translateY(0)} }
+@keyframes bv-check-appear { from {opacity:.5;transform:scale(.88)} to {opacity:1;transform:scale(1)} }
+@keyframes bv-hydration-flash { 0% {outline-color:transparent} 40% {outline-color:#81BEFF} 100% {outline-color:transparent} }
+@keyframes bv-saved-appear { from {opacity:.55} to {opacity:1} }
+@keyframes bv-shimmer { from {background-position:100% 0} to {background-position:0 0} }
+@keyframes bv-chart-reveal { from {stroke-dashoffset:var(--bv-line-length,100)} to {stroke-dashoffset:0} }
+@keyframes bv-ring-update { from {stroke-dashoffset:var(--bv-ring-before,100)} to {stroke-dashoffset:var(--bv-ring-after,0)} }
+@keyframes bv-tab-switch { from {opacity:.65;transform:translateY(3px)} to {opacity:1;transform:translateY(0)} }
+@keyframes bv-sync-spin { to {transform:rotate(360deg)} }
+.app-shell[data-bloom-visual="premium"] .bv-motion-hero {animation:bv-hero-appear var(--bv-dur-hero) var(--bv-ease-out) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-activity-logged[data-status="confirmed"] {animation:bv-check-appear var(--bv-dur-short) var(--bv-ease-out) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-hydration[data-status="confirmed"] {outline:2px solid transparent;outline-offset:3px;animation:bv-hydration-flash var(--bv-dur-medium) var(--bv-ease-out) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-saved[data-status="confirmed"] {animation:bv-saved-appear var(--bv-dur-short) var(--bv-ease-out) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-loading {background-image:linear-gradient(90deg,#EDF3EC 0%,#D9E7D5 50%,#EDF3EC 100%);background-size:200% 100%;animation:bv-shimmer var(--bv-dur-shimmer) linear infinite}
+.app-shell[data-bloom-visual="premium"] .bv-motion-chart-line[data-reveal="true"] {stroke-dasharray:var(--bv-line-length,100);animation:bv-chart-reveal var(--bv-dur-chart) var(--bv-ease-out) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-progress-ring[data-update="true"] {animation:bv-ring-update var(--bv-dur-hero) var(--bv-ease-out) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-tab-panel[data-active="true"] {animation:bv-tab-switch var(--bv-dur-short) var(--bv-ease-standard) both}
+.app-shell[data-bloom-visual="premium"] .bv-motion-sync[data-sync="pending"] {transform-origin:center;animation:bv-sync-spin var(--bv-dur-shimmer) linear infinite}
+@media (prefers-reduced-motion:reduce) {
+  .app-shell[data-bloom-visual="premium"] .bv-motion-hero,
+  .app-shell[data-bloom-visual="premium"] .bv-motion-activity-logged[data-status="confirmed"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-hydration[data-status="confirmed"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-saved[data-status="confirmed"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-loading,
+  .app-shell[data-bloom-visual="premium"] .bv-motion-chart-line[data-reveal="true"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-progress-ring[data-update="true"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-tab-panel[data-active="true"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-sync[data-sync="pending"] {animation:none!important;transition:none!important}
+  .app-shell[data-bloom-visual="premium"] .bv-motion-loading {background:#EDF3EC}
+  .app-shell[data-bloom-visual="premium"] .bv-motion-chart-line[data-reveal="true"],
+  .app-shell[data-bloom-visual="premium"] .bv-motion-progress-ring[data-update="true"] {stroke-dashoffset:var(--bv-ring-after,0)}
+}

@@ -1,0 +1,112 @@
+/* Bloom M1 · bloodwork explorer category refinement.
+   Designer-supplied production source; merge into ONE canonical bloom-visual-scoped.css.
+   No data, DOM or focus-order changes. */
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category {
+  margin-block:0 10px; border:1px solid #52685C; background:#FFFEFA;
+  border-radius:20px; box-shadow:none; overflow:clip;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary {
+  display:grid; grid-template-columns:minmax(0,1fr) 18px; gap:4px 12px;
+  align-items:center; min-height:82px; padding:13px 16px;
+  cursor:pointer; list-style:none; text-align:start; touch-action:manipulation;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::-webkit-details-marker {display:none;}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::marker {content:"";}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after {
+  content:""; width:9px; height:9px; border-right:1.75px solid currentColor;
+  border-bottom:1.75px solid currentColor; transform:rotate(45deg);
+  color:#52685C; grid-column:2; grid-row:1 / span 2; justify-self:center;
+  transition:transform 160ms cubic-bezier(.2,0,0,1);
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category[open] > summary::after {transform:rotate(225deg);}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title {
+  display:flex; align-items:center; gap:12px; min-width:0; grid-column:1; grid-row:1;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong {
+  display:block; min-width:0; color:#173E32;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:21px; font-weight:650; letter-spacing:-.015em;
+  overflow-wrap:normal;word-break:normal;
+}
+.app-shell[data-bloom-visual="premium"] .lab-category-icon {
+  display:inline-flex; flex:0 0 42px; width:42px; height:42px;
+  align-items:center; justify-content:center; border-radius:13px;
+  color:#246B50; background:#EDF3EC;
+}
+.app-shell[data-bloom-visual="premium"] .lab-category-icon svg,
+.app-shell[data-bloom-visual="premium"] .lab-category-icon img {
+  width:24px;height:24px;object-fit:contain;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type {
+  display:block; grid-column:1;grid-row:2; padding-inline-start:54px;
+  color:#52685C;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:13px;line-height:18px;font-weight:450;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary:focus-visible {
+  outline:3px solid #246B50;outline-offset:-4px;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category[open] > summary {
+  border-bottom:1px solid #D9E7D5;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-markers {padding:10px 12px 14px;}
+@media (max-width:639px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer {display:block;}
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category {margin-block-end:8px;border-radius:17px;}
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary {
+   min-height:76px;padding:11px 12px;gap:3px 8px;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category-title {gap:10px;}
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong {
+   font-size:15px;line-height:20px;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-category-icon {
+   flex-basis:40px;width:40px;height:40px;border-radius:12px;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type {
+   padding-inline-start:50px;font-size:12px;line-height:17px;
+ }
+}
+@media (min-width:900px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary {min-height:78px;}
+}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category {
+ background:#173E32;border-color:#52685C;
+}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category-title > strong {color:#FFFEFA;}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category > summary > span:last-of-type {color:#D9E7D5;}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-category-icon,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-category-icon {
+ color:#173E32;background:#D9E7D5;
+}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category > summary::after {color:#D9E7D5;}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary:focus-visible,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category > summary:focus-visible {
+ outline-color:#81BEFF;
+}
+@media (prefers-reduced-motion:reduce) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after {
+   transition:none;
+ }
+}
+@media (forced-colors:active) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category,
+ .app-shell[data-bloom-visual="premium"] .lab-category-icon {
+   background:Canvas;color:CanvasText;border:1px solid CanvasText;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary:focus-visible {
+   outline:3px solid Highlight;
+ }
+}
+/* Designer Athlete sample: implementer must reconcile with actual Athlete light/dark variants. */
+.app-shell[data-bloom-visual="premium"]:is(html[data-experience="athlete"] *) .lab-explorer-category {
+ background:#182B45;border-color:#52685C;
+}
+.app-shell[data-bloom-visual="premium"]:is(html[data-experience="athlete"] *) .lab-explorer-category-title > strong {color:#FFFEFA;}
+.app-shell[data-bloom-visual="premium"]:is(html[data-experience="athlete"] *) .lab-explorer-category > summary > span:last-of-type {color:#D9E7D5;}
+.app-shell[data-bloom-visual="premium"]:is(html[data-experience="athlete"] *) .lab-category-icon {background:#0F1B2E;color:#81BEFF;}
+.app-shell[data-bloom-visual="premium"]:is(html[data-experience="athlete"] *) .lab-explorer-category > summary::after {color:#81BEFF;}

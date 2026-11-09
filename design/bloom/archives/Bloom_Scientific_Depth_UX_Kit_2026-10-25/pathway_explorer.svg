@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="790" viewBox="0 0 430 790">
+<rect width="430" height="790" fill="#F7FAF8"/>
+<rect x="18" y="18" width="394" height="64" rx="16" fill="white"/>
+<text x="34" y="56" font-family="Arial" font-size="22" font-weight="bold" fill="#246B50">Bloom</text>
+<text x="22" y="124" font-family="Arial" font-size="23" font-weight="bold" fill="#183D30">Explore science</text>
+<rect x="18" y="155" width="394" height="160" rx="15" fill="#FFFFFF" stroke="#D6E3DB"/>
+<text x="35" y="190" font-family="Arial" font-size="19" font-weight="bold" fill="#183D30">Food → substrate</text>
+<text x="35" y="227" font-family="Arial" font-size="14" fill="#354E42">Fibre → fermentable substrates</text>
+<text x="35" y="275" font-family="Arial" font-size="13" fill="#246B50">General mechanism</text>
+<rect x="18" y="335" width="394" height="160" rx="15" fill="#FFFFFF" stroke="#D6E3DB"/>
+<text x="35" y="370" font-family="Arial" font-size="19" font-weight="bold" fill="#183D30">Microbial processes</text>
+<text x="35" y="407" font-family="Arial" font-size="14" fill="#354E42">Representative organisms / genes / reactions</text>
+<text x="35" y="455" font-family="Arial" font-size="13" fill="#246B50">Not your detected organisms</text>
+<rect x="18" y="515" width="394" height="160" rx="15" fill="#FFFFFF" stroke="#D6E3DB"/>
+<text x="35" y="550" font-family="Arial" font-size="19" font-weight="bold" fill="#183D30">Potential host link</text>
+<text x="35" y="587" font-family="Arial" font-size="14" fill="#354E42">Metabolite / studied human evidence</text>
+<text x="35" y="635" font-family="Arial" font-size="13" fill="#246B50">Association ≠ individual benefit</text>
+<text x="22" y="760" font-family="Arial" font-size="12" fill="#64766A">Editable concept only · synthetic language · not deployed</text></svg>

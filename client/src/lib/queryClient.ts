@@ -1,9 +1,17 @@
+import { accountFetch } from "./request-actor";
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+
+export class ApiRequestError extends Error {constructor(readonly status:number,message:string){super(message);}}
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    let message = text;
+    try {
+      const body = JSON.parse(text);
+      message = body.error || body.message || text;
+    } catch { /* Non-JSON responses retain their original message. */ }
+    throw new ApiRequestError(res.status,message);
   }
 }
 
@@ -11,12 +19,15 @@ export async function apiRequest(
   method: string,
   url: string,
   data?: unknown | undefined,
+  headers?: Record<string, string>,
+  signal?: AbortSignal,
 ): Promise<Response> {
-  const res = await fetch(url, {
+  const res = await accountFetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers: { ...(data ? { "Content-Type": "application/json" } : {}), ...headers },
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
+    signal,
   });
 
   await throwIfResNotOk(res);
@@ -28,9 +39,10 @@ export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
-  async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+  async ({ queryKey, signal }) => {
+    const res = await accountFetch(queryKey.join("/") as string, {
       credentials: "include",
+      signal,
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {

@@ -1,0 +1,20 @@
+{
+  "synthetic": true,
+  "backend": "actual admin/capability handlers; in-memory tester preference and explicit synthetic read-only deployment-bound role",
+  "baseline": "actual f3dce55 App/navigation source without admin route",
+  "checks": [
+    "Ordinary/tester absence and denial",
+    "Forged client eligibility cannot obtain backend metadata",
+    "52 source entries and independent review dimensions",
+    "Search/status filters/disabled changes",
+    "320–1280 light/dark/zoom and keyboard",
+    "Role poll removes navigation/data and aborts actual in-flight request"
+  ],
+  "metadataReads": 2,
+  "aborted": 1,
+  "abortedSignals": 1,
+  "writes": [],
+  "errors": [],
+  "realAdminProvisioned": false,
+  "activationMutationsImplemented": false
+}

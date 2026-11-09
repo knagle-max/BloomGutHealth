@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "baseCommit": "31e9562dc9a785d3e818892e877f539dc800cdd6",
+  "scope": "Capture actual selected local generic source values at review, bind them to save, preserve original source through reload/replay; broader M1 intake/reference work open",
+  "unitIntegration": {
+    "pass": 644,
+    "tests": 644,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 274449.75706
+  },
+  "focusedTests": {
+    "pass": 23,
+    "fail": 0,
+    "durationMs": 6414.699983
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "sourceCrosswalk": "52 IDs/238 files PASS",
+    "apiInventory": "unchanged PASS",
+    "finalLinkTouchAndName": "44px contextual source link verified in final browser run; presentation only, no backend change after full suite"
+  },
+  "journeys": [
+    "Actual App\u2192review\u2192source tables\u2192slice/quantity edit\u2192explicit save\u2192SQL\u2192reload/reuse,320390lightdark/200%/keyboard",
+    "Private label source\u2192explicit meal save\u2192label deletion/reload\u2192Progress/other account remains correct"
+  ],
+  "sourceTruth": [
+    "Raw per100g values copied from the actual local calculation source, before rounding/scaling",
+    "Missing null remains unknown; source0 is a flagged estimate, never independently verified biological zero",
+    "No collection date invented; no historical source reconstructed from current lookup",
+    "Below-display source changes reject pending saves",
+    "Completed receipts replay original saved source after later catalogue changes",
+    "Unsafe/unresolved/unsupported source views withhold details, preserve saved estimates",
+    "Replacement provider totals clear partial generic source snapshots"
+  ],
+  "sourceHashes": {
+    "shared/nutrient-source-snapshot.ts": "5376d1ad28d430d54ae21304ac5571ac4d04e92feb432a0315020bc2937181fe",
+    "shared/meal-intelligence.ts": "b95247f5ad4ada8c79fa5483c0cd0e8d55e644eaf2bea35826cea837e35afea0",
+    "shared/food-snapshot.ts": "8146df34e996633b1d1703e5765e5729184ac3bc203a5e1a2035087e9cc15102",
+    "server/food-catalog.ts": "40a9dc056fa137cf41e26ef26c935946acf511d8f383ed66f03611189d19b33c",
+    "server/meal-intelligence.ts": "c63120f85b841a097299adf464942a2184471eb4bd3b4457d66000f692c49126",
+    "server/meal-review-source.ts": "66d59b27ee3ef8f5370f6d4d6a4c4088286acdb4329edb525618ba3dc0286240",
+    "client/src/components/NutrientDefinitionDisclosure.tsx": "47e052542a50155cf90b234c8abd0f53eb3c19c1d5743829ffc0e4fb88832b88",
+    "tests/nutrient-source-snapshot.test.ts": "a81c18a43b4c5da5ae5d137c64bd130b4bd9212f88938882b7bc3a07e5b3297d",
+    "scripts/qa/meal-household-portions-journey.mjs": "7d4aa5f63d3ccefb39fcb0c449674aa9e81e9505c10fd6a366ce50f3d2bd108c"
+  },
+  "previousPublication": {
+    "commit": "31e9562dc9a785d3e818892e877f539dc800cdd6",
+    "deploy": "dep-dbnk9tlg1s2s73fl1e0g",
+    "status": "live",
+    "ciRun": 42387026228,
+    "ciStatus": "success"
+  },
+  "notClaimed": [
+    "Complete nutrient observation/adequacy/Canadian reference engine",
+    "Complete live-provider/label source-native capture or chemical form verification",
+    "Verified biological zero or equivalent/dose conversion",
+    "Physical VoiceOver/independent Design/full version acceptance"
+  ]
+}

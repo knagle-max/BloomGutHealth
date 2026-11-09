@@ -1,0 +1,98 @@
+{
+  "task": "VIOME-LAYOUT-P0-07",
+  "date": "2026-11-06",
+  "baselineCommit": "4764846d8e99bef33bc746cf4c9810433cdb6949",
+  "implementationCommit": "commit containing this evidence; see Git history",
+  "sources": [
+    {
+      "kind": "attached deidentified Health Results",
+      "pages": 7,
+      "organisms": 94
+    },
+    {
+      "kind": "attached deidentified reconstructed Scores/Foods",
+      "pages": 13,
+      "assessments": 22,
+      "foods": 371
+    }
+  ],
+  "sourceComparison": {
+    "status": "PASS",
+    "oracle": "mupdf-row-oracle-2026-11-06.1",
+    "fields": [
+      "every name",
+      "provider class/category",
+      "page",
+      "column",
+      "row"
+    ],
+    "expectedManifest": "generated in memory from attached source spans; not persisted",
+    "independentHumanReview": "NOT_RUN"
+  },
+  "actualBrowserLocal": {
+    "status": "PASS",
+    "engine": "Chromium/PDF.js dedicated worker",
+    "path": [
+      "native upload",
+      "no write at preview",
+      "row editor",
+      "explicit source review",
+      "existing HTTP",
+      "isolated in-memory PGlite",
+      "reload",
+      "exact reimport keeps existing source",
+      "owned source deletion",
+      "other account isolation"
+    ],
+    "viewports": [
+      320,
+      390
+    ],
+    "theme": "light/dark",
+    "zoom": "1280px CSS zoom 2; not physical browser/device certification",
+    "keyboard": "focus/navigation checks"
+  },
+  "syntheticRegression": {
+    "native94_22_299": "PASS",
+    "positionOnlyUncertaintyManualResolutionBeforeSave": "PASS",
+    "pageRotate90": "PASS",
+    "explicitKnownDatePairingReuseDeleteOwner": "PASS",
+    "canaryChecks": "PASS; not a semantic PII certification"
+  },
+  "validation": {
+    "focused": {
+      "pass": 26,
+      "fail": 0
+    },
+    "typecheck": "PASS",
+    "build": "PASS",
+    "sourceCrosswalk": "PASS 52 registry IDs /207 source files; no authorization promoted",
+    "apiInventory": "PASS",
+    "broadCheckpoint": {
+      "total": 575,
+      "pass": 573,
+      "fail": 2,
+      "milliseconds": 217709.554288,
+      "failures": "stale generated source fingerprints; legacy food array order",
+      "resolution": "regenerated fingerprints and preserved page/column/row traversal; both affected tests pass in final focused26",
+      "fullSuiteRerun": "not repeated; final exact-commit CI is separate"
+    }
+  },
+  "privacy": {
+    "originalPdfsCopiedIntoRepo": false,
+    "privatePdfHashesLogged": false,
+    "rawPageTextPersisted": false,
+    "individualFindingsOrManifestsCommittedOrLogged": false,
+    "privateScreenshotsCaptured": false,
+    "externalPdfUpload": false,
+    "database": "ephemeral local PGlite only; no environment/Render DB accessed"
+  },
+  "remainingAcceptance": [
+    "original private reports and earlier named synthetic PDFs are distinct untested sources",
+    "assessment description prose and unsupported date formats not reconciled",
+    "only ISO-labelled dates extracted; no assumed slash-date locale or attachment pairing",
+    "exact hosted upload NOT_RUN",
+    "independent Security/semantic PII NOT_GRANTED",
+    "physical device/VoiceOver NOT_RUN"
+  ]
+}

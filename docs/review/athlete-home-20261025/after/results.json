@@ -1,0 +1,227 @@
+{
+  "phase": "after",
+  "baseline": "b9813d9d51a7ca63e0d0f2d1c5061c572ac72535",
+  "synthetic": true,
+  "source": "Actual experience handlers with synthetic source storage",
+  "checks": [
+    {
+      "width": 320,
+      "state": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 320,
+      "state": "planned",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 320,
+      "state": "completed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 320,
+      "state": "partial",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 320,
+      "state": "blocked",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 320,
+      "state": "delayed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 320,
+      "state": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "planned",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "completed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "partial",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "blocked",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "delayed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 375,
+      "state": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "planned",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "completed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "partial",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "blocked",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "delayed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 390,
+      "state": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "planned",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "completed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "partial",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "blocked",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "delayed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 768,
+      "state": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "planned",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "completed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "partial",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "blocked",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "delayed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1024,
+      "state": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "planned",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "completed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "partial",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "blocked",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "delayed",
+      "noHorizontalOverflow": true
+    },
+    {
+      "width": 1440,
+      "state": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "canonicalSessionForm": true,
+      "selectedDatePreserved": true,
+      "oneActualSaveOneCalendarEntry": true,
+      "sourceFocus": true
+    }
+  ],
+  "errors": [],
+  "deviceSafari": false,
+  "voiceOver": false
+}

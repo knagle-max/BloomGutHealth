@@ -1,0 +1,20 @@
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+{
+  "outcomes": [
+    "Skip preserves unknown safety and preferences",
+    "Setup persists selected goal and existing restrictions; navigates to first log",
+    "Demo editing isolated, fixed sample explicitly detached",
+    "Progressive Athlete fields preserve incomplete-profile blocking",
+    "Partial batch, persistent provisional review and original-number unit correction",
+    "Lab chart has an accessible source/date/unit table",
+    "Each AI-photo request consumes fresh affirmative consent; manual fallback remains",
+    "Lost meal-save response retains fields, retries the same reference once, and permits a separate intentional entry after success",
+    "Persistent meal action and no page overflow at 320–1440 widths",
+    "Desktop CSS zoom 200% reflow surrogate; native browser zoom remains unverified",
+    "Reduced motion and keyboard entry checked"
+  ],
+  "errors": [],
+  "providerCalls": "mocked only; none external",
+  "independentAcceptance": false
+}

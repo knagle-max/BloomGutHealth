@@ -1,0 +1,21 @@
+{
+  "synthetic": true,
+  "stage": "before",
+  "checks": [
+    {
+      "width": 320,
+      "empty": true
+    },
+    {
+      "width": 375,
+      "empty": true
+    },
+    {
+      "width": 390,
+      "empty": true
+    }
+  ],
+  "errors": [],
+  "physicalSafariVerified": false,
+  "voiceOverVerified": false
+}

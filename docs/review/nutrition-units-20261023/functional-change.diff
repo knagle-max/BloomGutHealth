@@ -1,0 +1,779 @@
+diff --git a/client/src/components/FoodCompositionExplorer.tsx b/client/src/components/FoodCompositionExplorer.tsx
+index ab090b0..6908957 100644
+--- a/client/src/components/FoodCompositionExplorer.tsx
++++ b/client/src/components/FoodCompositionExplorer.tsx
+@@ -1,3 +1,6 @@
++import { useExperience } from "@/lib/experience";
++import FoodMassInput from "./FoodMassInput";
++import { foodMass, nutrientDisplay } from "@shared/nutrition-display";
+ import { useState } from "react";
+ import { useQuery } from "@tanstack/react-query";
+ import { Link } from "wouter";
+@@ -7,8 +10,10 @@ import type { explainNutrientContribution } from "@shared/food-intelligence";
+ type Food = {fdcId:number;description:string};
+ type Detail = Food & {grams:number;portions:[string,number][];contributions:ReturnType<typeof explainNutrientContribution>;source:{title:string;url:string};limits:string[]};
+ export function FoodCompositionExplorer({onSelect}:{onSelect?:()=>void}){
++ const { settings } = useExperience();
++ const units = settings.displayUnits;
+  const [text,setText]=useState(""),[query,setQuery]=useState(""),[selected,setSelected]=useState<number|null>(null),[grams,setGrams]=useState(100);
+  const search=useQuery<{foods:Food[];totalFoods:number}>({queryKey:["/api/biology/catalogue",query],enabled:query.length>=2,queryFn:async()=>(await apiRequest("GET","/api/biology/catalogue?q="+encodeURIComponent(query))).json()});
+  const detail=useQuery<Detail>({queryKey:["/api/biology/catalogue",selected,grams],enabled:selected!==null&&grams>0&&grams<=3000,queryFn:async()=>(await apiRequest("GET",`/api/biology/catalogue/${selected}?grams=${grams}`)).json()});
+- return <section className="bloom-panel space-y-4"><p className="eyebrow">FOOD INTELLIGENCE</p><h2>Understand a portion</h2><p>Search thousands of generic foods. Compare preparation styles and check what your chosen portion contributes before logging it.</p><form className="flex flex-wrap items-end gap-3" onSubmit={e=>{e.preventDefault();setQuery(text.trim());setSelected(null);}}><label className="flex-1 min-w-0">Find a food<input className="bloom-input w-full" value={text} onChange={e=>setText(e.target.value)} placeholder="Salmon, tofu, spinach…" minLength={2} maxLength={100} required/></label><Button type="submit">Search foods</Button></form>{search.isFetching&&<p role="status">Searching food composition…</p>}{search.error&&<p role="alert">{search.error.message}</p>}{search.data&&<><p className="panel-note">{search.data.totalFoods.toLocaleString()} USDA food records. Select the closest preparation; these are estimates, not your exact product label.</p><div className="explore-node-list">{search.data.foods.map(f=><button key={f.fdcId} aria-pressed={selected===f.fdcId} onClick={()=>{setSelected(f.fdcId);setGrams(100);onSelect?.();}}><span>{f.description}</span></button>)}</div>{!search.data.foods.length&&<p>No matching generic food. Try a simpler name, or scan your package in Food logging.</p>}</>}{selected!==null&&<div className="space-y-3"><label>Portion in grams<input className="bloom-input" type="number" min="1" max="3000" step="1" value={grams||""} onChange={e=>setGrams(Number(e.target.value))}/></label>{!(grams>0&&grams<=3000)&&<p role="alert">Enter a portion between 1 and 3,000 grams.</p>}{detail.isFetching&&<p role="status">Checking this portion…</p>}{detail.error&&<p role="alert">{detail.error.message}</p>}{detail.data&&<><h3>{detail.data.description} · {detail.data.grams} g</h3>{detail.data.portions.length>0&&<label>Or choose a USDA portion<select className="bloom-input w-full" aria-label="USDA portion" value="" onChange={e=>{if(e.target.value)setGrams(Number(e.target.value));}}><option value="">Choose a portion…</option>{detail.data.portions.map(([name,g],i)=><option key={i} value={g}>{name} · {g} g</option>)}</select></label>}<div className="meal-nutrition-strip">{detail.data.contributions.slice(0,6).map(n=><span key={n.key}>{n.amount===null?"Unknown":Number(n.amount.toFixed(1))} {n.unit} {n.name}</span>)}</div><details><summary>All nutrients, source & limits</summary>{detail.data.contributions.slice(6).map(n=><p key={n.key}>{n.explanation}</p>)}<a className="text-link" href={detail.data.source.url} target="_blank" rel="noreferrer">{detail.data.source.title}</a>{detail.data.limits.map(v=><p className="panel-note" key={v}>{v}</p>)}</details><p className="panel-note">These values describe the food. Your personal meal planner checks portions against your reviewed targets and known logged intake.</p><Link className="hero-button" href={`/log-meal?fdcId=${detail.data.fdcId}&grams=${detail.data.grams}`}>Review & log this food</Link></>}</div>}</section>;
++ return <section className="bloom-panel space-y-4"><p className="eyebrow">FOOD INTELLIGENCE</p><h2>Understand a portion</h2><p>Search thousands of generic foods. Compare preparation styles and check what your chosen portion contributes before logging it.</p><form className="flex flex-wrap items-end gap-3" onSubmit={e=>{e.preventDefault();setQuery(text.trim());setSelected(null);}}><label className="flex-1 min-w-0">Find a food<input className="bloom-input w-full" value={text} onChange={e=>setText(e.target.value)} placeholder="Salmon, tofu, spinach…" minLength={2} maxLength={100} required/></label><Button type="submit">Search foods</Button></form>{search.isFetching&&<p role="status">Searching food composition…</p>}{search.error&&<p role="alert">{search.error.message}</p>}{search.data&&<><p className="panel-note">{search.data.totalFoods.toLocaleString()} USDA food records. Select the closest preparation; these are estimates, not your exact product label.</p><div className="explore-node-list">{search.data.foods.map(f=><button key={f.fdcId} aria-pressed={selected===f.fdcId} onClick={()=>{setSelected(f.fdcId);setGrams(100);onSelect?.();}}><span>{f.description}</span></button>)}</div>{!search.data.foods.length&&<p>No matching generic food. Try a simpler name, or scan your package in Food logging.</p>}</>}{selected!==null&&<div className="space-y-3"><FoodMassInput key={selected} grams={grams} unit={units.foodWeight} onChange={setGrams}/><p className="panel-note">Mass converts to source grams for calculation. Household and label portions retain their source units; volume is not inferred from weight.</p>{detail.isFetching&&<p role="status">Checking this portion…</p>}{detail.error&&<p role="alert">{detail.error.message}</p>}{detail.data&&grams>0&&grams<=3000&&detail.data.grams===grams&&!detail.isFetching&&<><h3>{detail.data.description} · {foodMass(detail.data.grams, units.foodWeight)}</h3>{detail.data.portions.length>0&&<label>Or choose a USDA portion<select className="bloom-input w-full" aria-label="USDA portion" value="" onChange={e=>{if(e.target.value)setGrams(Number(e.target.value));}}><option value="">Choose a portion…</option>{detail.data.portions.map(([name,g],i)=><option key={i} value={g}>{name} · {g} g</option>)}</select></label>}<div className="meal-nutrition-strip">{detail.data.contributions.slice(0,6).map(n=><span key={n.key}>{n.amount===null?"Unknown":Number(nutrientDisplay(n.key,n.amount,n.unit,units).amount?.toFixed(1))} {nutrientDisplay(n.key,n.amount,n.unit,units).unit} {n.name}</span>)}</div><details><summary>All nutrients, source & limits</summary>{detail.data.contributions.slice(6).map(n=><p key={n.key}>{n.explanation}</p>)}<a className="text-link" href={detail.data.source.url} target="_blank" rel="noreferrer">{detail.data.source.title}</a>{detail.data.limits.map(v=><p className="panel-note" key={v}>{v}</p>)}</details><p className="panel-note">These values describe the food. Your personal meal planner checks portions against your reviewed targets and known logged intake.</p><Link className="hero-button" href={`/log-meal?fdcId=${detail.data.fdcId}&grams=${detail.data.grams}`}>Review & log this food</Link></>}</div>}</section>;
+ }
+diff --git a/client/src/components/FoodMassInput.tsx b/client/src/components/FoodMassInput.tsx
+new file mode 100644
+index 0000000..067c96f
+--- /dev/null
++++ b/client/src/components/FoodMassInput.tsx
+@@ -0,0 +1,34 @@
++import { useEffect, useId, useRef, useState } from "react";
++import { quantityFromCanonical } from "@shared/display-units";
++import { foodMassDraft, type NutritionDisplayUnits } from "@shared/nutrition-display";
++
++/** Draft text stays editable; only a valid canonical mass leaves this control. */
++export default function FoodMassInput({ grams, unit, onChange }: {
++  grams: number;
++  unit: NutritionDisplayUnits["foodWeight"];
++  onChange: (grams: number) => void;
++}) {
++  const display = (g: number, u: NutritionDisplayUnits["foodWeight"]) =>
++    g > 0 ? String(Number(quantityFromCanonical("foodWeight", g, u).toFixed(8))) : "";
++  const [draft, setDraft] = useState(() => display(grams, unit));
++  const last = useRef({ grams, unit });
++  const errorId = useId();
++  useEffect(() => {
++    if (last.current.grams !== grams || last.current.unit !== unit) setDraft(display(grams, unit));
++    last.current = { grams, unit };
++  }, [grams, unit]);
++  const valid = foodMassDraft(draft, unit) !== null;
++  return <div>
++    <label>Amount eaten ({unit})
++      <input className="bloom-input" type="text" inputMode="decimal" value={draft}
++        aria-invalid={!valid} aria-describedby={!valid ? errorId : undefined}
++        onChange={e => {
++          const raw = e.target.value, canonical = foodMassDraft(raw, unit) ?? 0;
++          setDraft(raw);
++          last.current = { grams: canonical, unit };
++          onChange(canonical);
++        }} />
++    </label>
++    {!valid && <p id={errorId} role="alert">Enter a positive mass up to {unit === "oz" ? "105.82 oz" : "3,000 g"}. Finish decimals before continuing.</p>}
++  </div>;
++}
+diff --git a/client/src/components/MealAnalysis.tsx b/client/src/components/MealAnalysis.tsx
+index 9341e4e..b8b9f0e 100644
+--- a/client/src/components/MealAnalysis.tsx
++++ b/client/src/components/MealAnalysis.tsx
+@@ -1,3 +1,5 @@
++import { useExperience } from "@/lib/experience";
++import { nutrientDisplay, foodMass } from "@shared/nutrition-display";
+ import FoodRelationshipLinks from "./FoodRelationshipLinks";
+ import ProductPicker from "./ProductPicker";
+ import { unmatchedFoods } from "@shared/nutrition-review";
+@@ -13,6 +15,8 @@ export default function MealAnalysis({
+   onRecalculate?: (ingredients: Ingredient[]) => void;
+   pending?: boolean;
+ }) {
++  const { settings } = useExperience();
++  const units = settings.displayUnits;
+   const [edits, setEdits] = useState<Ingredient[] | null>(null);
+   const ingredients = edits ?? analysis.ingredients;
+   const missing = unmatchedFoods(analysis);
+@@ -42,6 +46,7 @@ export default function MealAnalysis({
+       <details open>
+         <summary>Review foods & estimated portions</summary>
+         <p className="panel-note">
++          Portion corrections use source grams; saved label servings retain their printed basis.
+           Working estimates, not measured intake. Check the amount you ate, meat
+           cut, dressing and cooking fat. Unknown brand, salt and marinade can
+           change nutrients substantially.
+@@ -171,7 +176,7 @@ export default function MealAnalysis({
+             ) : (
+               <p>
+                 {item.name}:{" "}
+-                {item.grams === null ? "Amount unknown" : `${item.grams} g`}
++                {item.grams === null ? "Amount unknown" : foodMass(item.grams, units.foodWeight)}
+               </p>
+             )}
+             <p className="panel-note">{item.assumption}</p>
+@@ -231,7 +236,7 @@ export default function MealAnalysis({
+                   <td className="p-2">
+                     {n.amount === null
+                       ? "Unavailable"
+-                      : `${n.amount.toFixed(1)} ${n.unit}`}
++                      : `${nutrientDisplay(n.key, n.amount, n.unit, units).amount?.toFixed(1)} ${nutrientDisplay(n.key, n.amount, n.unit, units).unit}`}
+                   </td>
+                   <td className="p-2">
+                     {n.coverage === 1
+diff --git a/client/src/components/TodayFocus.tsx b/client/src/components/TodayFocus.tsx
+index a4cb418..1a6157c 100644
+--- a/client/src/components/TodayFocus.tsx
++++ b/client/src/components/TodayFocus.tsx
+@@ -1,9 +1,11 @@
+ import { useQuery } from "@tanstack/react-query";
+ import { Link } from "wouter";
+ import type { PrecisionReport } from "@shared/precision-nutrition";
+-export default function TodayFocus({ mealCount = 0, loading = false }: { mealCount?: number; loading?: boolean }) {
++import { todayJournalAction } from "@shared/today-focus";
++export default function TodayFocus({ mealCount = 0, missingNutritionCount = 0, loading = false, journalError = false }: { mealCount?: number; missingNutritionCount?: number; loading?: boolean; journalError?: boolean }) {
+   const report = useQuery<PrecisionReport>({ queryKey: ["/api/precision"] }),
+     goal = report.data?.goals.find((g) => g.id !== "unmapped");
++  const action = todayJournalAction({ mealCount, missingNutritionCount, loading, unavailable: journalError });
+   return (
+     <section className="bloom-panel today-focus space-y-3">
+       <p className="eyebrow">TODAY’S FOCUS</p>
+@@ -24,10 +26,10 @@ export default function TodayFocus({ mealCount = 0, loading = false }: { mealCou
+         </p>
+       )}
+       <div className="today-next-action">
+-        <Link className="hero-button" href={mealCount ? "/plan-day" : "/log-meal"}>
+-          {mealCount ? "Choose my next meal" : "Log my first meal"}
++        <Link className="hero-button" href={action.href}>
++          {action.label}
+         </Link>
+-        <p className="panel-note">{loading ? "Your journal is loading. You can still add a meal." : mealCount ? "Suggestions use the meals you have logged today. Review portions and missing values." : "Start with what you ate. You can scan a package, choose a saved meal or type a description."}</p>
++        <p className="panel-note">{action.reason}</p>
+       </div>
+       <details><summary>Your focus & next steps</summary>
+       <div className="flex flex-wrap gap-4">
+diff --git a/client/src/components/TodayPlanner.tsx b/client/src/components/TodayPlanner.tsx
+index 7263a8d..6b21e96 100644
+--- a/client/src/components/TodayPlanner.tsx
++++ b/client/src/components/TodayPlanner.tsx
+@@ -1,3 +1,5 @@
++import { useExperience } from "@/lib/experience";
++import { foodMass, nutrientDisplay } from "@shared/nutrition-display";
+ import { recipeDisplayName } from "@/lib/recipe-display";
+ import { useState, useEffect } from "react";
+ import { useQuery, useMutation } from "@tanstack/react-query";
+@@ -11,6 +13,8 @@ import { recipePreparation } from "@shared/recipe-preparation";
+ const round = (v: number | null) =>
+   v === null ? "Unknown" : Number(v.toFixed(1));
+ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?: () => void } = {}) {
++  const { settings } = useExperience();
++  const units = settings.displayUnits;
+   const [edited, setEdited] = useState<WeeklyRequest | null>(null),
+     [result, setResult] = useState<
+       (TodayPlan & { targetSource: string }) | null
+@@ -61,6 +65,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
+           <details>
+             <summary>Review daily targets</summary>
+             <p className="panel-note">
++              Target entry retains canonical kcal and source nutrient units. Displayed estimates below use your saved unit preferences.
+               Energy uses a ±10% planning range. Other maxima below are limits.
+               These targets are not inferred from genetic variants or a
+               diagnosis.
+@@ -201,7 +206,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
+                 </h3>
+                 <p className="panel-note">About {prep.minutes} minutes · {m.portion} × recipe</p>
+                 <div className="meal-nutrition-strip">
+-                  {[[m.nutrients.calories, "kcal"], [m.nutrients.protein_g, "g protein"], [m.nutrients.carbohydrates_total_g, "g carbs"], [m.nutrients.fat_total_g, "g fat"], [m.nutrients.fiber_g, "g fiber"]].map(([value, unit]) => <span key={String(unit)}>{value == null ? "Unknown" : Math.round(Number(value))} {unit}</span>)}
++                  {[[nutrientDisplay("calories", m.nutrients.calories, "kcal", units).amount, units.energy], [m.nutrients.protein_g, "g protein"], [m.nutrients.carbohydrates_total_g, "g carbs"], [m.nutrients.fat_total_g, "g fat"], [m.nutrients.fiber_g, "g fiber"]].map(([value, unit]) => <span key={String(unit)}>{value == null ? "Unknown" : Math.round(Number(value))} {unit}</span>)}
+                 </div>
+                 <details>
+                   <summary>Ingredients, recipe & evidence</summary>
+@@ -210,14 +215,14 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
+                     {prep.shopping.map((i) => (
+                       <li key={i.name}>
+                         {i.estimated ? "Approximately " : ""}
+-                        {round(i.grams * m.portion)} g {i.name}
++                        {foodMass(i.grams * m.portion, units.foodWeight)} {i.name}
+                       </li>
+                     ))}
+                   </ul>
+                   <p className="panel-note">
+                     Nutrition uses these prepared portions:{" "}
+                     {m.recipe.ingredients
+-                      .map((i) => `${round(i.grams * m.portion)} g ${i.name}`)
++                      .map((i) => `${foodMass(i.grams * m.portion, units.foodWeight)} ${i.name}`)
+                       .join("; ")}
+                     .
+                   </p>
+@@ -307,21 +312,23 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
+                   </tr>
+                 </thead>
+                 <tbody>
+-                  {r.checks.map((c) => (
++                  {r.checks.map((c) => {
++                    const display = (v: number | null) => round(nutrientDisplay(c.key, v, c.unit, units).amount);
++                    return (
+                     <tr key={c.key}>
+                       <td>
+-                        {c.name} ({c.unit})
++                        {c.name} ({nutrientDisplay(c.key, null, c.unit, units).unit})
+                       </td>
+-                      <td>{round(c.consumed)}</td>
+-                      <td>{round(c.added)}</td>
+-                      <td>{round(c.projected)}</td>
++                      <td>{display(c.consumed)}</td>
++                      <td>{display(c.added)}</td>
++                      <td>{display(c.projected)}</td>
+                       <td>
+-                        {c.min === null ? "" : `≥${round(c.min)} `}
+-                        {c.max === null ? "" : `≤${round(c.max)}`}
++                        {c.min === null ? "" : `≥${display(c.min)} `}
++                        {c.max === null ? "" : `≤${display(c.max)}`}
+                       </td>
+                       <td>{c.status}</td>
+                     </tr>
+-                  ))}
++                  );})}
+                 </tbody>
+               </table>
+             </div>
+diff --git a/client/src/pages/Dashboard.tsx b/client/src/pages/Dashboard.tsx
+index 5bbb1d9..f96c0c8 100644
+--- a/client/src/pages/Dashboard.tsx
++++ b/client/src/pages/Dashboard.tsx
+@@ -1,3 +1,4 @@
++import { energyAmount } from "@shared/nutrition-display";
+ import EverydayStart from "@/components/EverydayStart";
+ import { useExperience } from "@/lib/experience";
+ import TodayFocus from "@/components/TodayFocus";
+@@ -72,7 +73,7 @@ export default function Dashboard() {
+       </div>
+ 
+       {!settingsLoading && !meals.isLoading && !mealError && !(meals.data?.length) && settings.onboarding.status === "not-started"
+-        ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} loading={meals.isLoading} />}
++        ? <EverydayStart /> : <TodayFocus mealCount={summary.meals.length} missingNutritionCount={summary.nutritionUnavailable} loading={meals.isLoading} journalError={mealError} />}
+       <div className="section-heading">
+         <div>
+           <p className="eyebrow">FROM YOUR FOOD JOURNAL</p>
+@@ -125,8 +126,8 @@ export default function Dashboard() {
+             },
+             {
+               label: "Energy",
+-              value: summary.calories?.toFixed(0) ?? "—",
+-              unit: "kcal",
++              value: energyAmount(summary.calories, settings.displayUnits.energy),
++              unit: settings.displayUnits.energy,
+               icon: FlaskConical,
+               note: summary.coverage.calories.partial
+                 ? `Partial: ${summary.coverage.calories.completeMeals} of ${summary.coverage.calories.totalMeals} meals complete`
+@@ -188,7 +189,7 @@ export default function Dashboard() {
+                 <span className="meal-calories">
+                   {meal.totalCalories == null
+                     ? "Unavailable"
+-                    : `${Math.round(meal.totalCalories)} kcal`}
++                    : `${energyAmount(meal.totalCalories, settings.displayUnits.energy)} ${settings.displayUnits.energy}`}
+                 </span>
+                 <ChevronRight size={17} />
+               </Link>
+diff --git a/client/src/pages/LogMeal.tsx b/client/src/pages/LogMeal.tsx
+index 07939cd..00fc05e 100644
+--- a/client/src/pages/LogMeal.tsx
++++ b/client/src/pages/LogMeal.tsx
+@@ -1,3 +1,5 @@
++import { useExperience } from "@/lib/experience";
++import { energyAmount, foodMass } from "@shared/nutrition-display";
+ import FoodCapture from "@/components/FoodCapture";
+ import { SaveMealButton } from "@/components/SavedMeals";
+ import ProductPicker from "@/components/ProductPicker";
+@@ -21,6 +23,7 @@ import {
+ import type { Meal } from "@shared/schema";
+ 
+ export default function LogMeal() {
++  const { settings } = useExperience();
+   const params = new URLSearchParams(window.location.search);
+   const requestedType = params.get("type");
+   const catalogueId=params.get("fdcId"),catalogueGrams=Number(params.get("grams"));
+@@ -197,7 +200,7 @@ export default function LogMeal() {
+           </Button>
+         </section>
+       )}
+-      {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{catalogueSelection.data.grams} g {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
++      {catalogueEnabled&&<section className="bloom-panel space-y-3"><h2>Selected catalogue food</h2>{catalogueSelection.isLoading&&<p role="status">Loading your selected food…</p>}{catalogueSelection.error&&<p role="alert">The selected record could not load. Return to Explore or describe the food manually.</p>}{catalogueSelection.data&&<p>{foodMass(catalogueSelection.data.grams, settings.displayUnits.foodWeight)} {catalogueSelection.data.description}. This exact USDA record will be used when you save.</p>}<Button type="button" variant="outline" onClick={()=>setCatalogueEnabled(false)}>Use a different food or description</Button></section>}
+       <FoodCapture onDescription={setDescription} onProduct={i=>setProducts(v=>[...v,i].slice(0,10))}/>
+       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
+       </fieldset>
+@@ -354,7 +357,7 @@ export default function LogMeal() {
+           {savedMeal.totalCalories !== null ? (
+             <div className="saved-nutrients">
+               <span>
+-                <strong>{Math.round(savedMeal.totalCalories!)}</strong> kcal
++                <strong>{energyAmount(savedMeal.totalCalories, settings.displayUnits.energy)}</strong> {settings.displayUnits.energy}
+               </span>
+               <span>
+                 <strong>
+diff --git a/client/src/pages/NutritionHistory.tsx b/client/src/pages/NutritionHistory.tsx
+index 1e597f8..1fa48b2 100644
+--- a/client/src/pages/NutritionHistory.tsx
++++ b/client/src/pages/NutritionHistory.tsx
+@@ -1,3 +1,5 @@
++import { useExperience } from "@/lib/experience";
++import { energyAmount } from "@shared/nutrition-display";
+ import { SaveMealButton } from "@/components/SavedMeals";
+ import MealAnalysis from "@/components/MealAnalysis";
+ import { unmatchedFoods, nutritionUpdateFeedback } from "@shared/nutrition-review";
+@@ -46,6 +48,8 @@ function HistoricalTrends({
+   userId: string;
+   targets: any;
+ }) {
++  const { settings } = useExperience();
++  const energyUnit = settings.displayUnits.energy;
+   const currentDate = new Date();
+   const currentMonth = currentDate.getMonth();
+   const currentYear = currentDate.getFullYear();
+@@ -101,16 +105,16 @@ function HistoricalTrends({
+               <div>
+                 <div className="flex justify-between items-center mb-1">
+                   <span className="text-xs text-muted-foreground">
+-                    Avg Calories/Day
++                    Avg energy/day
+                   </span>
+                   <span
+                     className={`text-sm font-semibold ${getStatusColor(monthlyData.dailyAverages.calories, targets.calories)}`}
+                   >
+-                    {monthlyData.dailyAverages.calories}
++                    {energyAmount(monthlyData.dailyAverages.calories, energyUnit)} {energyUnit}
+                   </span>
+                 </div>
+                 <p className="text-xs text-muted-foreground">
+-                  Target: {targets.calories}
++                  Target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
+                 </p>
+               </div>
+               <div>
+@@ -208,15 +212,15 @@ function HistoricalTrends({
+             <div className="grid grid-cols-2 gap-3 pb-3 border-b">
+               <div>
+                 <p className="text-xs text-muted-foreground">
+-                  Yearly Avg Calories
++                  Yearly average energy
+                 </p>
+                 <p
+                   className={`text-lg font-semibold ${getStatusColor(yearlyData.dailyAverages.calories, targets.calories)}`}
+                 >
+-                  {yearlyData.dailyAverages.calories}/day
++                  {energyAmount(yearlyData.dailyAverages.calories, energyUnit)} {energyUnit}/day
+                 </p>
+                 <p className="text-xs text-muted-foreground">
+-                  Target: {targets.calories}
++                  Target: {energyAmount(targets.calories, energyUnit)} {energyUnit}
+                 </p>
+               </div>
+               <div>
+@@ -251,7 +255,7 @@ function HistoricalTrends({
+                           targets.calories,
+                         )}
+                       >
+-                        {month.avgCalories} cal/day
++                        {energyAmount(month.avgCalories, energyUnit)} {energyUnit}/day
+                       </span>
+                       <span
+                         className={getStatusColor(
+@@ -274,6 +278,8 @@ function HistoricalTrends({
+ }
+ 
+ export default function NutritionHistory() {
++  const { settings } = useExperience();
++  const energyUnit = settings.displayUnits.energy;
+   const [historyLimit, setHistoryLimit] = useState(20);
+   const [reviewingMealId, setReviewingMealId] = useState<string | null>(null);
+   const [showLogForm, setShowLogForm] = useState(false);
+@@ -574,16 +580,16 @@ export default function NutritionHistory() {
+         <CardContent className="space-y-4">
+           <div className="space-y-2">
+             <div className="flex justify-between items-center">
+-              <span className="text-sm font-medium">Calories</span>
++              <span className="text-sm font-medium">Energy ({energyUnit})</span>
+               <div className="flex items-center gap-2">
+                 <span
+                   className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
+                 >
+-                  {showAmount(totals.calories)}
++                  {energyAmount(totals.calories, energyUnit)}
+                   {dailyData?.nutritionCoverage?.calories?.partial
+                     ? " (partial)"
+                     : ""}{" "}
+-                  / {nutrientTargets.calories || 2000}
++                  / {energyAmount(nutrientTargets.calories || 2000, energyUnit)} {energyUnit}
+                 </span>
+                 <Badge
+                   variant="outline"
+@@ -841,8 +847,8 @@ export default function NutritionHistory() {
+                         >
+                           {meal.totalCalories == null
+                             ? "Unavailable"
+-                            : Math.round(meal.totalCalories)}{" "}
+-                          cal
++                            : energyAmount(meal.totalCalories, energyUnit)}{" "}
++                          {energyUnit}
+                         </Badge>
+                         <Badge variant="secondary">
+                           P:{" "}
+@@ -933,10 +939,10 @@ export default function NutritionHistory() {
+                               <div className="grid grid-cols-2 gap-2 text-xs">
+                                 <div className="flex justify-between">
+                                   <span className="text-muted-foreground">
+-                                    Calories
++                                    Energy ({energyUnit})
+                                   </span>
+                                   <Badge variant="outline" className="h-5">
+-                                    {item.calories}
++                                    {energyAmount(item.calories, energyUnit)} {energyUnit}
+                                   </Badge>
+                                 </div>
+                                 <div className="flex justify-between">
+diff --git a/client/src/pages/PlanDay.tsx b/client/src/pages/PlanDay.tsx
+index 0229fdd..e5f309c 100644
+--- a/client/src/pages/PlanDay.tsx
++++ b/client/src/pages/PlanDay.tsx
+@@ -1,3 +1,4 @@
++import { energyAmount, foodMass } from "@shared/nutrition-display";
+ import { useState } from "react";
+ import { Link, Redirect } from "wouter";
+ import { useQuery } from "@tanstack/react-query";
+@@ -7,4 +8,4 @@ import { useExperience, dayClock } from "@/lib/experience";
+ import { practicalPreferencesSchema } from "@shared/experience";
+ import { recipeDisplayName } from "@/lib/recipe-display";
+ import TodayPlanner from "@/components/TodayPlanner";
+-export default function PlanDay(){const{mode,settings,patch,saving}=useExperience(),[selected,setSelected]=useState<string|null>(null),[error,setError]=useState("");const clock=dayClock();const choices=useQuery<any>({queryKey:["/api/experience/day-choices",clock.date,clock.hour],enabled:mode==="everyday",queryFn:async()=>(await apiRequest("POST","/api/experience/day-choices",clock)).json()});if(mode==="athlete")return <Redirect to="/athlete/fueling"/>;const r=choices.data,p=settings.practical,chosen=r?.choices.find((c:any)=>c.recipe.id===selected);return <main className="science-page space-y-5"><div className="science-heading"><p className="eyebrow">MAKE THE NEXT MEAL EASY</p><h1>Plan my day</h1><p>Three practical alternatives for your next meal, using your known intake, preferences and available time.</p></div><div className="flex flex-wrap gap-3"><Link className="text-link" href="/meal-planner">Full daily & weekly plans</Link><Link className="text-link" href="/weekly-review">Weekly review</Link><Link className="text-link" href="/saved-meals">Saved meals</Link></div><details className="bloom-panel workspace-disclosure"><summary>Time, pantry, budget & household</summary><form key={JSON.stringify(p)} className="space-y-4" onSubmit={e=>{e.preventDefault();try{const d=new FormData(e.currentTarget);patch({practical:practicalPreferencesSchema.parse({minutes:Number(d.get("minutes")),household:Number(d.get("household")),budget:d.get("budget"),pantry:String(d.get("pantry")||"").split(",").map(s=>s.trim()).filter(Boolean),equipment:d.getAll("equipment")})});setError("");}catch{setError("Check the time, household and equipment choices.");}}}><div className="precision-grid"><label>Available preparation time (minutes)<input className="bloom-input w-full" name="minutes" type="number" min="5" max="180" defaultValue={p.minutes} required/></label><label>People to shop for<input className="bloom-input w-full" name="household" type="number" min="1" max="8" defaultValue={p.household} required/></label><label>Budget preference<select className="bloom-input w-full" name="budget" defaultValue={p.budget}><option value="economical">Prioritize staple ingredients</option><option value="flexible">Flexible ingredients</option></select></label><label>Foods already at home (comma separated)<input className="bloom-input w-full" name="pantry" maxLength={4000} defaultValue={p.pantry.join(", ")} placeholder="Oats, eggs, rice, spinach"/></label></div><fieldset><legend>Available equipment</legend><div className="flex flex-wrap gap-3">{["stove","oven","microwave","none"].map(v=><label key={v}><input type="checkbox" name="equipment" value={v} defaultChecked={p.equipment.includes(v as any)}/>{v}</label>)}</div></fieldset><p className="panel-note">Household size scales the shopping list. Nutrition is shown for your personal portion. Budget preference prioritizes staples; it is not a live price quote.</p><Button disabled={saving}>Save practical preferences</Button>{error&&<p role="alert">{error}</p>}</form></details>{choices.isLoading&&<p role="status">Finding practical choices…</p>}{choices.error&&<p role="alert">{choices.error.message}</p>}{r&&<><p className="panel-note">{r.note}</p>{!r.choices.length&&<section className="bloom-panel space-y-3"><h2>Let’s finish the context for your plan</h2><p>No eligible choices fit the current restrictions, known limits and available time. Confirm your health context and targets, or review your preferences.</p><Link className="text-link" href="/precision">Review my health context</Link><Link className="text-link" href="/meal-planner?preferences=1">Review food preferences</Link></section>}<div className="practical-choice-grid">{r.choices.map((c:any)=><article className="bloom-panel practical-choice space-y-3" key={c.kind}><p className="eyebrow">{c.title}</p><h2>{recipeDisplayName(c.recipe.name)}</h2><p>{c.prep.minutes} minutes · {Math.round(c.nutrients.calories)} kcal · {Math.round(c.nutrients.protein_g)} g protein</p><p className="panel-note">{c.confidence}</p>{c.kind==="convenient"&&<p className="panel-note">For convenience, look for plain prepared versions of these ingredients or use the recipe. Packaged and restaurant versions need their own label or menu nutrition checked before logging.</p>}<details><summary>Ingredients, preparation & why it fits</summary><h3>How this portion fits your targets</h3>{c.contributions?.filter((n:any)=>n.percentOfMinimum!==null||n.percentOfMaximum!==null||n.percentOfTarget!==null).map((n:any)=><p key={n.key}>{n.explanation}</p>)}<p className="panel-note">Percentages compare this portion with selected daily targets, not measured biological effects. Remaining amounts use known logged intake.</p><h3>For your portion</h3><ul>{c.recipe.ingredients.map((i:any)=><li key={i.foodId||i.name}>{Math.round(i.grams*c.portion)} g {i.name}</li>)}</ul><ol>{c.prep.instructions.map((s:string,i:number)=><li key={i}>{s}</li>)}</ol><p className="panel-note">{c.prep.note}</p>{c.reasons.map((s:string,i:number)=><p className="panel-note" key={i}>{s}</p>)}{c.sourceLinks?.map((s:any)=><p key={s.url}><a className="text-link" href={s.url} target="_blank" rel="noreferrer">{s.title}</a></p>)}<p className="panel-note">Check usefulness through your weekly review and appropriate clinician-directed follow-up. A good nutrient fit does not establish an individual medical benefit.</p></details><div className="flex flex-wrap gap-2"><Button variant="outline" onClick={()=>setSelected(c.recipe.id)}>Build shopping list</Button><Link className="hero-button" href={"/log-meal?description="+encodeURIComponent(c.recipe.ingredients.map((i:any)=>`${Math.round(i.grams*c.portion)} g ${i.name.replaceAll(","," ")}`).join(", "))+"&type="+(r.day.slots[0]||"snack")}>Review & log this choice</Link></div></article>)}</div>{chosen&&<section className="bloom-panel space-y-3"><h2>Shopping & preparation</h2><p>{recipeDisplayName(chosen.recipe.name)} · shopping for {p.household} person(s).</p><ul className="shopping-checklist">{chosen.shopping.map((i:any)=><li key={i.name}><label><input type="checkbox"/>{i.estimated?"About ":""}{i.grams} g {i.name}</label></li>)}</ul><p className="panel-note">Check the list against your pantry. Raw shopping quantities may be estimated from cooked composition weights; portions shown above are personal nutrient portions.</p><Button variant="outline" onClick={()=>{const text=[chosen.recipe.name,`Shopping for ${p.household}`, ...chosen.shopping.map((i:any)=>`${i.grams} g ${i.name}`),"",...chosen.prep.instructions].join("\n"),url=URL.createObjectURL(new Blob([text],{type:"text/plain"})),a=document.createElement("a");a.href=url;a.download="bloom-shopping-and-preparation.txt";a.click();URL.revokeObjectURL(url);}}>Download shopping & preparation list</Button></section>}<details className="bloom-panel workspace-disclosure"><summary>Review daily targets & full-day coverage</summary><TodayPlanner/></details></>}</main>;}
++export default function PlanDay(){const{mode,settings,patch,saving}=useExperience(),[selected,setSelected]=useState<string|null>(null),[error,setError]=useState("");const clock=dayClock();const choices=useQuery<any>({queryKey:["/api/experience/day-choices",clock.date,clock.hour],enabled:mode==="everyday",queryFn:async()=>(await apiRequest("POST","/api/experience/day-choices",clock)).json()});if(mode==="athlete")return <Redirect to="/athlete/fueling"/>;const r=choices.data,p=settings.practical,chosen=r?.choices.find((c:any)=>c.recipe.id===selected);return <main className="science-page space-y-5"><div className="science-heading"><p className="eyebrow">MAKE THE NEXT MEAL EASY</p><h1>Plan my day</h1><p>Three practical alternatives for your next meal, using your known intake, preferences and available time.</p></div><div className="flex flex-wrap gap-3"><Link className="text-link" href="/meal-planner">Full daily & weekly plans</Link><Link className="text-link" href="/weekly-review">Weekly review</Link><Link className="text-link" href="/saved-meals">Saved meals</Link></div><details className="bloom-panel workspace-disclosure"><summary>Time, pantry, budget & household</summary><form key={JSON.stringify(p)} className="space-y-4" onSubmit={e=>{e.preventDefault();try{const d=new FormData(e.currentTarget);patch({practical:practicalPreferencesSchema.parse({minutes:Number(d.get("minutes")),household:Number(d.get("household")),budget:d.get("budget"),pantry:String(d.get("pantry")||"").split(",").map(s=>s.trim()).filter(Boolean),equipment:d.getAll("equipment")})});setError("");}catch{setError("Check the time, household and equipment choices.");}}}><div className="precision-grid"><label>Available preparation time (minutes)<input className="bloom-input w-full" name="minutes" type="number" min="5" max="180" defaultValue={p.minutes} required/></label><label>People to shop for<input className="bloom-input w-full" name="household" type="number" min="1" max="8" defaultValue={p.household} required/></label><label>Budget preference<select className="bloom-input w-full" name="budget" defaultValue={p.budget}><option value="economical">Prioritize staple ingredients</option><option value="flexible">Flexible ingredients</option></select></label><label>Foods already at home (comma separated)<input className="bloom-input w-full" name="pantry" maxLength={4000} defaultValue={p.pantry.join(", ")} placeholder="Oats, eggs, rice, spinach"/></label></div><fieldset><legend>Available equipment</legend><div className="flex flex-wrap gap-3">{["stove","oven","microwave","none"].map(v=><label key={v}><input type="checkbox" name="equipment" value={v} defaultChecked={p.equipment.includes(v as any)}/>{v}</label>)}</div></fieldset><p className="panel-note">Household size scales the shopping list. Nutrition is shown for your personal portion. Budget preference prioritizes staples; it is not a live price quote.</p><Button disabled={saving}>Save practical preferences</Button>{error&&<p role="alert">{error}</p>}</form></details>{choices.isLoading&&<p role="status">Finding practical choices…</p>}{choices.error&&<p role="alert">{choices.error.message}</p>}{r&&<><p className="panel-note">{r.note}</p>{!r.choices.length&&<section className="bloom-panel space-y-3"><h2>Let’s finish the context for your plan</h2><p>No eligible choices fit the current restrictions, known limits and available time. Confirm your health context and targets, or review your preferences.</p><Link className="text-link" href="/precision">Review my health context</Link><Link className="text-link" href="/meal-planner?preferences=1">Review food preferences</Link></section>}<div className="practical-choice-grid">{r.choices.map((c:any)=><article className="bloom-panel practical-choice space-y-3" key={c.kind}><p className="eyebrow">{c.title}</p><h2>{recipeDisplayName(c.recipe.name)}</h2><p>{c.prep.minutes} minutes · {energyAmount(c.nutrients.calories, settings.displayUnits.energy)} {settings.displayUnits.energy} · {Math.round(c.nutrients.protein_g)} g protein</p><p className="panel-note">{c.confidence}</p>{c.kind==="convenient"&&<p className="panel-note">For convenience, look for plain prepared versions of these ingredients or use the recipe. Packaged and restaurant versions need their own label or menu nutrition checked before logging.</p>}<details><summary>Ingredients, preparation & why it fits</summary><h3>How this portion fits your targets</h3>{c.contributions?.filter((n:any)=>n.percentOfMinimum!==null||n.percentOfMaximum!==null||n.percentOfTarget!==null).map((n:any)=><p key={n.key}>{n.explanation}</p>)}<p className="panel-note">Percentages compare this portion with selected daily targets, not measured biological effects. Remaining amounts use known logged intake.</p><h3>For your portion</h3><ul>{c.recipe.ingredients.map((i:any)=><li key={i.foodId||i.name}>{foodMass(i.grams*c.portion, settings.displayUnits.foodWeight)} {i.name}</li>)}</ul><ol>{c.prep.instructions.map((s:string,i:number)=><li key={i}>{s}</li>)}</ol><p className="panel-note">{c.prep.note}</p>{c.reasons.map((s:string,i:number)=><p className="panel-note" key={i}>{s}</p>)}{c.sourceLinks?.map((s:any)=><p key={s.url}><a className="text-link" href={s.url} target="_blank" rel="noreferrer">{s.title}</a></p>)}<p className="panel-note">Check usefulness through your weekly review and appropriate clinician-directed follow-up. A good nutrient fit does not establish an individual medical benefit.</p></details><div className="flex flex-wrap gap-2"><Button variant="outline" onClick={()=>setSelected(c.recipe.id)}>Build shopping list</Button><Link className="hero-button" href={"/log-meal?description="+encodeURIComponent(c.recipe.ingredients.map((i:any)=>`${Math.round(i.grams*c.portion)} g ${i.name.replaceAll(","," ")}`).join(", "))+"&type="+(r.day.slots[0]||"snack")}>Review & log this choice</Link></div></article>)}</div>{chosen&&<section className="bloom-panel space-y-3"><h2>Shopping & preparation</h2><p>{recipeDisplayName(chosen.recipe.name)} · shopping for {p.household} person(s).</p><ul className="shopping-checklist">{chosen.shopping.map((i:any)=><li key={i.name}><label><input type="checkbox"/>{i.estimated?"About ":""}{foodMass(i.grams, settings.displayUnits.foodWeight)} {i.name}</label></li>)}</ul><p className="panel-note">Check the list against your pantry. Raw shopping quantities may be estimated from cooked composition weights; portions shown above are personal nutrient portions.</p><Button variant="outline" onClick={()=>{const text=[chosen.recipe.name,`Shopping for ${p.household}`, ...chosen.shopping.map((i:any)=>`${foodMass(i.grams, settings.displayUnits.foodWeight)} ${i.name}`),"",...chosen.prep.instructions].join("\n"),url=URL.createObjectURL(new Blob([text],{type:"text/plain"})),a=document.createElement("a");a.href=url;a.download="bloom-shopping-and-preparation.txt";a.click();URL.revokeObjectURL(url);}}>Download shopping & preparation list</Button></section>}<details className="bloom-panel workspace-disclosure"><summary>Review daily targets & full-day coverage</summary><TodayPlanner/></details></>}</main>;}
+diff --git a/docs/architect-r6/HEALTH_INGESTION_STATUS.md b/docs/architect-r6/HEALTH_INGESTION_STATUS.md
+index 7958cdf..69b0bff 100644
+--- a/docs/architect-r6/HEALTH_INGESTION_STATUS.md
++++ b/docs/architect-r6/HEALTH_INGESTION_STATUS.md
+@@ -1,5 +1,7 @@
+ # V0.5 external health ingestion — implementation boundary
+ 
++Historical contract-only snapshot. Later code adds encrypted source storage, account-scoped inspection/export/revocation/deletion routes and Progress observations, with no native connector activation. See [current reconciliation](../architecture/V05_IMPLEMENTATION_STATUS.md) and `server/health-source-{storage,routes}.ts` for the present boundary. The contract-only statements below apply to the original increment.
++
+ Updated 2026-10-18. Branch: `enhance/bloom-experience`.
+ 
+ ## What is implemented
+diff --git a/docs/architect-r6/IMPLEMENTATION_STATUS.md b/docs/architect-r6/IMPLEMENTATION_STATUS.md
+index dc6a87f..4f3bacd 100644
+--- a/docs/architect-r6/IMPLEMENTATION_STATUS.md
++++ b/docs/architect-r6/IMPLEMENTATION_STATUS.md
+@@ -1,5 +1,7 @@
+ # Architect v0.5 revision 6 — implementation return
+ 
++For current-code reconciliation after the Codex takeover, see [v0.5 implementation status](../architecture/V05_IMPLEMENTATION_STATUS.md). The return below is historical and does not describe every later implementation.
++
+ Owner: Developer Agent. Intake: 18 October 2026 (America/Regina). Implementation branch: `review/architect-v05-r6`. Baseline and PR #1 head rechecked: `01638ec1ebf1d397602dcf330865956286b64c4c`. The commit containing this file is the candidate code revision; the paired comparison manifest records its full SHA separately.
+ 
+ Follow-up: the initial candidate's exact source tree was published as `5da5b13` and verified live on the existing enhancement-branch Render review service, with GitHub CI passing. Subsequent meal-save retry work and its validation are described in `MEAL_SAVE_RECOVERY.md`. Statements below about not being deployed describe the initial pre-publication return, not the current review service. Specialist acceptance is still pending.
+diff --git a/docs/architecture/V05_IMPLEMENTATION_STATUS.md b/docs/architecture/V05_IMPLEMENTATION_STATUS.md
+new file mode 100644
+index 0000000..127e24b
+--- /dev/null
++++ b/docs/architecture/V05_IMPLEMENTATION_STATUS.md
+@@ -0,0 +1,36 @@
++# v0.5 implementation reconciliation — 2026-10-23
++
++Source: `CURRENT_V05_REQUIREMENTS.md` through Amendment F; PR #1, `enhance/bloom-experience`, inspected baseline `58f9e63ee732a97b0f6d6f92decf3effa58f31c3`. This is a current-code supplement to the historical specialist ledgers, not a replacement or release approval. Main remains unchanged; the post-v0.5 roadmap is not started.
++
++## Current increment: nutrition unit preferences
++
++ARC-UNIT-001 (Amendment D), ARC-UT-03/07 and INT-2026-103 are advanced by the commit containing this file:
++
++- Existing independent, encrypted account settings and body/hydration conversions are retained. The gap was consumption of saved energy/food-weight preferences in current food workflows.
++- Today, meal-save feedback, meal analysis, daily/monthly/yearly journal summaries, practical meal choices and remaining-day projections now display the preferred energy unit. Planning percentages and canonical targets retain their original arithmetic.
++- Explore accepts food masses in grams or ounces according to the account preference. Incomplete/invalid drafts hide stale results and cannot navigate to a journal save. Exact USDA identity and unrounded canonical grams survive the Explore → review → save path.
++- Prepared/shopping masses use the selected display unit; the practical shopping download does too. Source household portions, original label facts, gram-based portion corrections and explicitly labelled canonical target editors retain their source units. No density inference, lab convention conversion, database migration, historical rewrite or new provider call is introduced.
++- `shared/nutrition-display.ts` confines conversion to canonical kcal energy and food mass. Null, zero and partial coverage remain distinct. UI text is not parsed back into stored intake.
++
++Validation: TypeScript and production build passed; 180 Node tests and 19 Python contracts passed locally (Node 24; cloud CI targets Node 22). New tests check incomplete/invalid ounce drafts, exact canonical mass, null/zero/partial nutrition, source-unit preservation, no double conversion and unchanged target ratios. Chromium checks cover the exact-food save payload, saved energy, separate-account unit selection, and 390/1440px light/dark views. All fixtures are synthetic and API responses intercepted; these checks do not establish real-provider or physical-device acceptance.
++
++Paired before/after screenshots are supplied in the task's comparison gallery. Baseline is immutable `58f9e63`; candidate manifests record SHA and dirty state rather than mislabelling an uncommitted build. Reproduce with `node scripts/qa/nutrition-display-units.mjs`, `BLOOM_PLAYWRIGHT_MODULE`, `BLOOM_CHROMIUM_EXECUTABLE`, `BLOOM_REVIEW_OUTPUT`; for baseline set `BLOOM_CAPTURE_ROOT` to the immutable checkout and `BLOOM_CAPTURE_STAGE=before`. Fonts are blocked consistently, timezone America/Regina, locale en-CA, fixed fictional date/time in the runner. Specialist review remains pending. Remote CI and Render deployment are verified separately after push; neither is implied by this file.
++
++## Today next action
++
++ARC-UT-04 now routes a logged meal with missing energy estimates to journal review before planning. Loading and failed journal requests offer a general logging action rather than claiming an empty journal. Saved goal wording and clinical/sport eligibility remain unchanged. Pure priority tests and synthetic partial/outage browser cases cover these states; source-dependent nutrient or training-session priorities are still future work.
++
++## Remaining work, reconciled against code
++
++| Requirement family | Current implementation evidence | Remaining v0.5 acceptance / work |
++| --- | --- | --- |
++| ARC-BRAND-P0-01–07, ARC-UT-01/02/05 | Real assets in `client/public/brand`, generated tokens, branded shell, beginner and progressive Athlete setup, detached fixed demo | Full exact-candidate screen/asset review, all-screen comparison coverage, accessibility and independent Branding acceptance remain open. Existing branding is implemented, not an absent package. |
++| ARC-UNIT-001 | Account-scoped settings, Profile/Progress/Athlete conversions, canonical entry helpers; this increment extends food/energy workflows | Broader remaining surfaces and exports, real-device/mixed-unit comprehension, independent correctness and design review. Not marked globally complete. |
++| ARC-UT-03/04/06/07, MKT-011–020 | Capture, retry/idempotency, TodayFocus, EvidenceInsight, lab trend/source tables, biology/food explanations | Richer supported Today prioritization, consistent evidence-card adoption across all domains, full goal/context views, and source-aware null/contradiction comprehension checks. Preserve existing safety exclusions. |
++| ARC-LAB-01/02/03 | Provisional unit queue, original-value reinterpretation, encrypted confirmation history, compatible-method trends | Broader reviewed catalogue/import/context coverage; qualified clinical escalation remains disabled pending clinical/science/legal validation. |
++| INT-102/104/112, UT-INT-109–115 | `health-source-storage.ts`, authenticated observation/status/export/revoke/delete routes, Progress source inspection, reconciliation tests | The historical `HEALTH_INGESTION_STATUS.md` understates current storage/routes. Native permissions, real connector authentication, incremental device cursors and physical-device evidence are still absent. No real connected device is claimed; native platform choice is external. |
++| BLOOM-SEC-001–010, LEG-004–008 | Rate/origin/tenant/crypto controls, scoped portability/erasure and consent boundaries; integration/security regression tests | Complete all-data/backup/vendor lifecycle and notices, managed key operations, deployed proxy/load/restore/incident exercises, independent security/privacy review. Scoped controls do not imply complete account erasure. |
++| BIO-101–108, LEG-001–003/009–016 | Evidence/claim contracts, sourced food composition, contraindication/abstention gates, OFF licensing flag | Reviewed intervention/clinical coverage, scientific/legal/territorial/licensing decisions and public-launch approvals remain external or gated. No unreviewed provider or clinical feature is activated. |
++| ARC-UT-08, ARC-BRAND-P0-05/06 | Synthetic browser, keyboard/reflow and regression infrastructure | Real phones, screen readers, full WCAG/200% zoom assessment, recruited persona study and seven-day follow-up remain independent work. No participant outcomes or specialist sign-offs are fabricated. |
++
++v0.5 remains incomplete. Implemented, tested, deployed and independently accepted are separate states. Continue approved independent engineering; blocked provider/legal/clinical features stay disabled.
+diff --git a/scripts/qa/architect-r6-browser.mjs b/scripts/qa/architect-r6-browser.mjs
+index e053e83..82920cf 100644
+--- a/scripts/qa/architect-r6-browser.mjs
++++ b/scripts/qa/architect-r6-browser.mjs
+@@ -15,6 +15,8 @@ else if(p==='/api/experience/athlete-day')json={...buildAthleteDay(settings.athl
+ else if(p==='/api/experience/scan'){scanCount++;assert.equal(body.consent,true);json={scan:{description:'Synthetic photo draft',nutrients:[],name:'',brand:'',servingDescription:'',servingGrams:null},note:'Synthetic provider response; no external transfer.'};}
+ else if(p==='/api/meals'&&req.method()==='POST'){const key=req.headers()['idempotency-key'];assert.ok(key);mealAttempts.push({key,body});if(!mealSaves.has(key))mealSaves.set(key,{id:'meal-'+mealSaves.size,userId:'synthetic',mealText:body.mealText,mealType:body.mealType,mealContext:body.mealContext,loggedAt:body.mealContext.eatenAt,totalCalories:null,totalProtein:null,totalCarbs:null,totalFat:null,nutritionalData:[],intelligence:null});if(loseMealResponse){loseMealResponse=false;await route.abort('failed');return;}json=mealSaves.get(key);}
+ else if(p==='/api/profile')json={dietaryPreferences:prefs};
++else if(p==='/api/health-sources')json={connections:[]};
++else if(p==='/api/health-sources/observations')json={observations:[],returned:0,total:0,offset:0,limit:50,hasMore:false,interpretation:'Synthetic source observations; no device connected'};
+ else if(p==='/api/experience/review')json={entries:0,metrics:[],from:'2026-10-11',to:'2026-10-18',next:'Record a check-in',note:'Synthetic fixture'};
+ await route.fulfill({json});});
+ const go=async p=>{await page.goto('http://127.0.0.1:5187'+p,{waitUntil:'domcontentloaded'});await page.getByRole('main').waitFor();};
+diff --git a/scripts/qa/nutrition-display-units.mjs b/scripts/qa/nutrition-display-units.mjs
+new file mode 100644
+index 0000000..61d23bd
+--- /dev/null
++++ b/scripts/qa/nutrition-display-units.mjs
+@@ -0,0 +1,107 @@
++import assert from 'node:assert/strict';
++import {createRequire} from 'node:module';
++import {execFileSync} from 'node:child_process';
++import fs from 'node:fs/promises';
++import path from 'node:path';
++import {fileURLToPath} from 'node:url';
++
++const require=createRequire(import.meta.url);
++const root=process.env.BLOOM_CAPTURE_ROOT||path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
++const output=process.env.BLOOM_REVIEW_OUTPUT||path.resolve(root,'work/nutrition-units');
++const stage=process.env.BLOOM_CAPTURE_STAGE||'after';
++const {chromium}=require(process.env.BLOOM_PLAYWRIGHT_MODULE||'playwright');
++const {createServer}=await import(root+'/node_modules/vite/dist/node/index.js');
++const vite=await createServer({configFile:root+'/vite.config.ts',server:{port:5187,host:'127.0.0.1',strictPort:true}});
++await fs.mkdir(output,{recursive:true});await vite.listen();
++const browser=await chromium.launch({headless:true,...(process.env.BLOOM_CHROMIUM_EXECUTABLE?{executablePath:process.env.BLOOM_CHROMIUM_EXECUTABLE,args:['--no-sandbox']}: {})});
++const page=await browser.newPage({viewport:{width:390,height:1000},locale:'en-CA',timezoneId:'America/Regina'});
++page.setDefaultTimeout(12000);
++await page.addInitScript(()=>localStorage.removeItem('theme'));
++await page.clock.install({time:new Date('2026-10-23T18:00:00Z')});
++const errors=[],writes=[],masses=[],captures=[];
++let alternateAccount=false, journalState='complete';
++page.on('pageerror',e=>errors.push(e.message));
++await page.route('https://fonts.**/**',r=>r.abort());
++const meal={id:'synthetic-meal',userId:'synthetic',mealText:'Synthetic oats lunch',mealType:'lunch',loggedAt:'2026-10-23T17:00:00Z',totalCalories:500,totalProtein:20,totalCarbs:60,totalFat:20,nutritionalData:[{name:'Synthetic oats',calories:500,protein_g:20,carbohydrates_total_g:60,fat_total_g:20,fiber_g:8}],intelligence:null};
++await page.route('**/api/**',async route=>{
++  const req=route.request(),url=new URL(req.url()),p=url.pathname;
++  let json=[];
++  if(req.method()!=='GET')writes.push({path:p,body:req.postDataJSON()});
++  if(p==='/api/auth/me')json={user:{id:alternateAccount?'synthetic-second':'synthetic',username:'Synthetic Gardener'}};
++  else if(p==='/api/experience/settings')json={mode:'everyday',onboarding:{status:'complete'},displayUnits:alternateAccount?{energy:'kcal',foodWeight:'g'}:{energy:'kJ',foodWeight:'oz'}};
++  else if(p.startsWith('/api/meals')&&req.method()==='GET'&&journalState==='unavailable')return route.fulfill({status:503,json:{error:'Synthetic journal outage'}});
++  else if(p.startsWith('/api/meals')&&req.method()==='GET'&&journalState==='partial')json=[{...meal,totalCalories:null,nutritionalData:[]}];
++  else if(p.startsWith('/api/meals'))json=req.method()==='POST'?meal:[alternateAccount?{...meal,id:'second-meal',userId:'synthetic-second',mealText:'Second account lunch'}:meal];
++  else if(p.startsWith('/api/nutrition/daily'))json={meals:[meal],totals:{calories:500,protein:20,carbs:60,fat:20,fiber:8,sugar:null,sodium:null,potassium:null}};
++  else if(p.startsWith('/api/nutrition/targets'))json={calories:2000,protein:120,carbs:225,fat:67,fiber:30};
++  else if(p==='/api/precision')json={goals:[],context:{},safetyBlocks:[]};
++  else if(p==='/api/biology/registry')json={entities:[],relationships:[],sources:[]};
++  else if(p.startsWith('/api/biology/foods/'))json={food:{label:'Synthetic oats'},decision:'No personal rule',conflicts:[],reasons:[],qualitativeNutrients:[],relationshipEffects:[],tracking:[],limits:[],observations:{labs:[],genetics:[]}};
++  else if(p==='/api/biology/catalogue')json={foods:[{fdcId:123,description:'Synthetic oats'}],totalFoods:1};
++  else if(p==='/api/biology/catalogue/123'){
++    const grams=Number(url.searchParams.get('grams'));masses.push(grams);
++    json={fdcId:123,description:'Synthetic oats',grams,portions:[['Source serving',100]],contributions:[{key:'calories',name:'Energy',amount:500,unit:'kcal'},{key:'protein_g',name:'Protein',amount:20,unit:'g'}],source:{title:'Synthetic composition fixture',url:'https://example.invalid/fixture'},limits:['Synthetic fixture; not a real food composition claim.']};
++  }
++  await route.fulfill({json});
++});
++const go=async route=>{await page.goto('http://127.0.0.1:5187'+route);await page.getByRole('main').waitFor();};
++const capture=async(name,width,theme)=>{
++  assert.equal(await page.evaluate(()=>document.documentElement.classList.contains('dark')),theme==='dark');
++  const filename=`${stage}-${name}-${width}-${theme}.png`;
++  await page.screenshot({path:path.join(output,filename),fullPage:true});
++  captures.push({filename,route:new URL(page.url()).pathname,width,height:1000,theme});
++};
++try{
++  for(const width of [390,1440])for(const theme of ['light','dark']){
++    await page.setViewportSize({width,height:1000});
++    await page.emulateMedia({colorScheme:theme});
++    for(const [route,name] of [['/','today'],['/nutrition','nutrition']]){
++      await go(route);await page.getByText('Synthetic oats lunch',{exact:true}).first().waitFor();
++      if(stage==='after')assert.ok((await page.locator('main').innerText()).includes('2092'));
++      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${route} ${width}`);
++      await capture(name,width,theme);
++    }
++    await go('/explore');await page.getByLabel('Find a food').fill('oats');await page.getByRole('button',{name:'Search foods',exact:true}).click();
++    await page.getByRole('button',{name:'Synthetic oats',exact:true}).click();
++    const amount=page.getByLabel(stage==='after'?'Amount eaten (oz)':'Portion in grams');
++    await amount.fill(stage==='after'?'4':'113.3980925');
++    await page.getByRole('heading',{name:/Synthetic oats ·/}).waitFor();
++    if(stage==='after')assert.equal(masses.at(-1),113.3980925);
++    await capture('explore-portion',width,theme);
++  }
++  if(stage==='after'){
++    const amount=page.getByLabel('Amount eaten (oz)');
++    await amount.fill('4.');await page.getByRole('alert').filter({hasText:'Finish decimals'}).waitFor();
++    assert.equal(await page.getByRole('link',{name:'Review & log this food'}).count(),0);
++    await amount.fill('4');await page.getByRole('link',{name:'Review & log this food'}).click();
++    await page.getByText(/4 oz Synthetic oats/).waitFor();
++    await page.getByRole('button',{name:'Save to my journal',exact:true}).click();
++    await page.getByRole('heading',{name:'Your meal is saved.',exact:true}).waitFor();
++    assert.ok((await page.locator('.saved-nutrients').innerText()).includes('2092'));
++    const saved=writes.find(w=>w.path==='/api/meals').body;
++    assert.equal(saved.ingredients[0].grams,113.3980925);
++    assert.equal(saved.ingredients[0].catalogue.fdcId,123);
++    assert.equal(saved.mealText,'113.3980925 g Synthetic oats');
++    assert.equal(writes.filter(w=>w.path==='/api/meals').length,1);
++    alternateAccount=true;await go('/');
++    await page.getByText('Second account lunch',{exact:true}).first().waitFor();
++    assert.equal(await page.getByText('Synthetic oats lunch',{exact:true}).count(),0);
++    assert.ok((await page.locator('.meal-calories').innerText()).includes('500 kcal'));
++    assert.equal((await page.locator('main').innerText()).includes('2092'),false);
++  }
++  alternateAccount=false;
++  await page.setViewportSize({width:390,height:1000});await page.emulateMedia({colorScheme:'light'});
++  for(const state of ['partial','unavailable']){
++    journalState=state;await go('/');
++    const action=page.locator('.today-next-action .hero-button');
++    if(stage==='after')await page.getByRole('link',{name:state==='partial'?'Review my meal estimates':'Log a meal',exact:true}).first().waitFor();
++    else if(state==='partial')await page.getByText('Synthetic oats lunch',{exact:true}).first().waitFor();
++    else await page.getByRole('button',{name:'Try again',exact:true}).first().waitFor();
++    if(stage==='after')assert.equal(await action.getAttribute('href'),state==='partial'?'/nutrition':'/log-meal');
++    await capture('today-'+state,390,'light');
++  }
++  assert.deepEqual(errors,[]);
++  const evidence={stage,capturedAt:new Date().toISOString(),browser:browser.version(),os:process.platform,devicePixelRatio:1,fonts:'External fonts blocked; system fallback',sha:execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:!!execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'}).trim(),fixtureTime:'2026-10-23T18:00:00Z',locale:'en-CA',timezone:'America/Regina',synthetic:true,providerCalls:'Intercepted; none external',captures,errors};
++  await fs.writeFile(path.join(output,`${stage}-manifest.json`),JSON.stringify(evidence,null,2));
++  console.log(JSON.stringify(evidence,null,2));
++}catch(error){console.error({errors,body:await page.locator('body').innerText()});throw error;}finally{await browser.close();await vite.close();}
+diff --git a/shared/nutrition-display.ts b/shared/nutrition-display.ts
+new file mode 100644
+index 0000000..d213868
+--- /dev/null
++++ b/shared/nutrition-display.ts
+@@ -0,0 +1,34 @@
++import { quantityFromCanonical } from "./display-units";
++
++export type NutritionDisplayUnits = { energy: "kcal" | "kJ"; foodWeight: "g" | "oz" };
++
++/** Convert only the canonical nutrition energy convention, never arbitrary lab/label units. */
++export function nutrientDisplay(
++  key: string,
++  amount: number | null | undefined,
++  sourceUnit: string,
++  units: Pick<NutritionDisplayUnits, "energy">,
++): { amount: number | null; unit: string } {
++  const convert = key === "calories" && sourceUnit === "kcal";
++  const known = typeof amount === "number" && Number.isFinite(amount) && amount >= 0;
++  return {
++    amount: known ? (convert ? quantityFromCanonical("energy", amount, units.energy) : amount) : null,
++    unit: convert ? units.energy : sourceUnit,
++  };
++}
++
++export function energyAmount(kcal: number | null | undefined, unit: NutritionDisplayUnits["energy"]): string {
++  const value = nutrientDisplay("calories", kcal, "kcal", { energy: unit }).amount;
++  return value === null ? "Unavailable" : String(Math.round(value));
++}
++
++export function foodMass(grams: number | null | undefined, unit: NutritionDisplayUnits["foodWeight"]): string {
++  if (grams == null || !Number.isFinite(grams) || grams < 0) return "Amount unknown";
++  return `${Number(quantityFromCanonical("foodWeight", grams, unit).toFixed(unit === "oz" ? 2 : 1))} ${unit}`;
++}
++
++export function foodMassDraft(raw: string, unit: NutritionDisplayUnits["foodWeight"]): number | null {
++  if (!/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(raw.trim())) return null;
++  const grams = Number(raw) * (unit === "oz" ? 28.349523125 : 1);
++  return Number.isFinite(grams) && grams > 0 && grams <= 3000 ? grams : null;
++}
+diff --git a/shared/today-focus.ts b/shared/today-focus.ts
+new file mode 100644
+index 0000000..312a4b1
+--- /dev/null
++++ b/shared/today-focus.ts
+@@ -0,0 +1,30 @@
++/** Journal completeness changes the next action, never a clinical priority. */
++export function todayJournalAction({ mealCount, missingNutritionCount = 0, loading = false, unavailable = false }: {
++  mealCount: number;
++  missingNutritionCount?: number;
++  loading?: boolean;
++  unavailable?: boolean;
++}) {
++  if (loading || unavailable) return {
++    href: "/log-meal",
++    label: "Log a meal",
++    reason: loading
++      ? "Your journal is loading. You can still add a meal."
++      : "Your journal could not load. You can still record food; your existing intake is unknown until the journal reconnects.",
++  };
++  if (!mealCount) return {
++    href: "/log-meal",
++    label: "Log my first meal",
++    reason: "Start with what you ate. You can scan a package, choose a saved meal or type a description.",
++  };
++  if (missingNutritionCount > 0) return {
++    href: "/nutrition",
++    label: "Review my meal estimates",
++    reason: `${missingNutritionCount} logged meal(s) have incomplete energy estimates. Review matches and portions before relying on remaining-intake suggestions; missing values are not zero.`,
++  };
++  return {
++    href: "/plan-day",
++    label: "Choose my next meal",
++    reason: "Suggestions use the meals you have logged today. Review portions and missing values.",
++  };
++}
+diff --git a/tests/nutrition-display.test.ts b/tests/nutrition-display.test.ts
+new file mode 100644
+index 0000000..fec743b
+--- /dev/null
++++ b/tests/nutrition-display.test.ts
+@@ -0,0 +1,45 @@
++import test from "node:test";
++import assert from "node:assert/strict";
++import { energyAmount, foodMass, foodMassDraft, nutrientDisplay } from "../shared/nutrition-display";
++import { mealNutritionSummary } from "../shared/nutrition-summary";
++
++test("nutrition display keeps unknown, zero, partial coverage and stored kcal distinct", () => {
++  const meals = [{ totalCalories: 500 }, { totalCalories: null }];
++  const before = structuredClone(meals);
++  const summary = mealNutritionSummary(meals);
++  assert.equal(energyAmount(summary.totals.calories, "kJ"), "2092");
++  assert.equal(summary.coverage.calories.partial, true);
++  assert.equal(energyAmount(null, "kJ"), "Unavailable");
++  assert.equal(energyAmount(undefined, "kcal"), "Unavailable");
++  assert.equal(energyAmount(NaN, "kJ"), "Unavailable");
++  assert.equal(energyAmount(0, "kJ"), "0");
++  assert.equal(energyAmount(500, "kcal"), "500");
++  assert.deepEqual(meals, before);
++  assert.equal(summary.totals.calories, 500);
++});
++
++test("only canonical kcal energy is converted, with no inferred lab or label conventions", () => {
++  assert.deepEqual(nutrientDisplay("calories", 500, "kcal", {energy:"kJ"}), {amount:2092,unit:"kJ"});
++  assert.deepEqual(nutrientDisplay("calories", 2092, "kJ", {energy:"kJ"}), {amount:2092,unit:"kJ"});
++  assert.deepEqual(nutrientDisplay("protein_g", 20, "g", {energy:"kJ"}), {amount:20,unit:"g"});
++  assert.deepEqual(nutrientDisplay("glucose", 5, "mmol/L", {energy:"kJ"}), {amount:5,unit:"mmol/L"});
++  assert.deepEqual(nutrientDisplay("calories", null, "kcal", {energy:"kJ"}), {amount:null,unit:"kJ"});
++  const intake = nutrientDisplay("calories", 500, "kcal", {energy:"kJ"}).amount!;
++  const target = nutrientDisplay("calories", 2000, "kcal", {energy:"kJ"}).amount!;
++  assert.equal(intake / target, 0.25);
++});
++
++test("ounce portion entry preserves exact mass and rejects unfinished or unsupported drafts", () => {
++  const grams = foodMassDraft("4", "oz")!;
++  assert.equal(grams, 113.3980925);
++  assert.equal(foodMass(grams, "oz"), "4 oz");
++  assert.equal(foodMass(grams, "g"), "113.4 g");
++  assert.equal(foodMassDraft(".5", "oz"), 14.1747615625);
++  assert.equal(foodMassDraft("3000", "g"), 3000);
++  assert.equal(foodMassDraft("105.83", "oz"), null);
++  for (const draft of ["", ".", "4.", "0", "-1", "1e3", "4 cups", "Infinity", "3001"]) {
++    assert.equal(foodMassDraft(draft, "g"), null, draft);
++  }
++  assert.equal(foodMass(null, "oz"), "Amount unknown");
++  assert.equal(foodMass(0, "oz"), "0 oz");
++});
+diff --git a/tests/today-focus.test.ts b/tests/today-focus.test.ts
+new file mode 100644
+index 0000000..a8f6505
+--- /dev/null
++++ b/tests/today-focus.test.ts
+@@ -0,0 +1,21 @@
++import test from "node:test";
++import assert from "node:assert/strict";
++import { todayJournalAction } from "../shared/today-focus";
++
++test("empty, complete and incomplete journals choose useful distinct next actions", () => {
++  assert.equal(todayJournalAction({mealCount:0}).label, "Log my first meal");
++  assert.equal(todayJournalAction({mealCount:2}).href, "/plan-day");
++  const partial = todayJournalAction({mealCount:2,missingNutritionCount:1});
++  assert.equal(partial.href, "/nutrition");
++  assert.match(partial.reason, /1 logged meal/);
++  assert.match(partial.reason, /missing values are not zero/);
++});
++
++test("loading and failed requests never imply the user has no logged food", () => {
++  for (const input of [{mealCount:0,loading:true},{mealCount:0,unavailable:true},{mealCount:2,missingNutritionCount:1,unavailable:true}]) {
++    const action = todayJournalAction(input);
++    assert.equal(action.label, "Log a meal");
++    assert.equal(action.href, "/log-meal");
++    assert.doesNotMatch(action.reason, /first meal|1 logged meal/);
++  }
++});

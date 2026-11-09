@@ -1,0 +1,54 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {labSchema} from '../shared/precision-nutrition';
+import {parseLabPaste} from '../shared/lab-paste';
+const date='2026-10-15T12:00:00Z';
+const reportIdentity={importId:'fb001025-1025-4025-8025-000000000001',reportIdentifier:'  REPORT / source-A  ',specimenIdentifier:'  specimen # 2  ',enteredDate:'2026-10-15',enteredTime:'12:00'};
+test('lab reader accepts exact optional reported heading and row order without inventing taxonomy or changing legacy payloads',()=>{
+ const original=structuredClone(parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload);
+ delete original.sourceInput!.reportedSection;delete original.sourceInput!.rowOrder;
+ assert.equal(Object.hasOwn(original.sourceInput!,'reportedSection'),false);assert.equal(Object.hasOwn(original.sourceInput!,'rowOrder'),false);
+ const input={...original,sourceInput:{...original.sourceInput,reportedSection:'  [ LIPIDS & CARDIOVASCULAR — source label ]  ',rowOrder:12}};
+ const read=labSchema.parse(input);assert.deepEqual(read,input);assert.equal(read.marker,original.marker);assert.equal(read.value,3.2);assert.equal(read.sourceInput?.number,'3.20');
+ for(const bad of [{rowOrder:-1},{rowOrder:1.5},{rowOrder:30001},{reportedSection:'x'.repeat(1001)},{canonicalCategory:'invented interpretation'}])assert.equal(labSchema.safeParse({...input,sourceInput:{...input.sourceInput,...bad}}).success,false);
+ assert.deepEqual(labSchema.parse(original),original);
+});
+
+test('encrypted lab source metadata survives authenticated save, source-unit confirmation, reload and owner isolation',async()=>{
+ const express=(await import('express')).default;const {PGlite}=await import('@electric-sql/pglite');const {drizzle}=await import('drizzle-orm/pglite');const {readFileSync}=await import('node:fs');const{randomBytes}=await import('node:crypto');const {PrecisionStorage}=await import('../server/precision-storage');const {registerPrecisionRoutes}=await import('../server/precision-routes');const {decryptPrecision}=await import('../server/precision-crypto');
+ const previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');const pg=new PGlite();await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY,dietary_preferences jsonb);INSERT INTO users(id) VALUES('a'),('b');");await pg.exec(readFileSync(new URL('../migrations/0002_precision_nutrition.sql',import.meta.url),'utf8'));
+ const store=new PrecisionStorage(drizzle(pg) as any),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')} as any;next();});registerPrecisionRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401)) as any,store as any);const server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server.once('listening',r));
+ const request=async(path:string,body:unknown,user='a')=>{const res=await fetch(`http://127.0.0.1:${(server.address() as any).port}/api/precision${path}`,{method:'POST',headers:{'content-type':'application/json','x-user':user},body:JSON.stringify(body)});return {status:res.status,body:await res.json().catch(()=>null)};};
+ try{
+  const pending=parseLabPaste('LDL, 120',date).pending[0].payload;const payload={...pending,sourceReport:reportIdentity,sourceInput:{...pending.sourceInput,reportedSection:'[ UNKNOWN ORIGINAL GROUP ]',rowOrder:4}};
+  assert.equal((await request('/records',{kind:'lab',payload},'')).status,401);const saved=await request('/records',{kind:'lab',payload});assert.equal(saved.status,201);assert.deepEqual(saved.body.payload.sourceInput,payload.sourceInput);assert.deepEqual(saved.body.payload.sourceReport,reportIdentity);
+  const endpoint=`/labs/${saved.body.id}/confirm-unit`;assert.equal((await request(endpoint,{unit:'mg/dL'},'b')).status,404);const confirmed=await request(endpoint,{unit:'mg/dL'});assert.equal(confirmed.status,201);assert.deepEqual(confirmed.body.payload.sourceInput,payload.sourceInput);assert.deepEqual(confirmed.body.payload.sourceReport,reportIdentity);assert.equal(confirmed.body.payload.value,120);assert.equal(confirmed.body.payload.unitReview.supersedes,saved.body.id);
+  const own=await store.getPrecisionRecords('a');assert.equal(own.length,2);for(const row of own)assert.deepEqual((row.payload as any).sourceInput,payload.sourceInput);assert.equal((await store.getPrecisionRecords('b')).length,0);
+  const encrypted=await pg.query('SELECT encrypted_payload FROM precision_records');for(const row of encrypted.rows as any[]){assert.equal(JSON.stringify(row.encrypted_payload).includes('UNKNOWN ORIGINAL'),false);assert.deepEqual((decryptPrecision(row.encrypted_payload,'a') as any).sourceInput,payload.sourceInput);assert.deepEqual((decryptPrecision(row.encrypted_payload,'a') as any).sourceReport,reportIdentity);assert.throws(()=>decryptPrecision(row.encrypted_payload,'b'));}
+ }finally{server.closeAllConnections();await new Promise<void>(r=>server.close(()=>r()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
+});
+
+test('longitudinal report points retain exact original source metadata without deriving missing headings',async()=>{
+ const {buildPrecisionReport,contextSchema}=await import('../shared/precision-nutrition');const {defaultPreferences}=await import('../shared/meal-intelligence');
+ const sourceInput={text:'  Ferritin, 0, µg/L  ',number:'0',suppliedUnit:'µg/L',capture:'pasted-report' as const,reportedSection:' [ Unclassified original heading ] ',rowOrder:4};
+ const payload=labSchema.parse({marker:'ferritin',value:0,unit:'ug/L',measuredAt:date,laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'unknown',referenceLow:null,referenceHigh:null,sourceInput,sourceReport:reportIdentity});
+ const records=[{id:'source',kind:'lab',createdAt:date,payload},{id:'legacy',kind:'lab',createdAt:date,payload:{...payload,measuredAt:'2026-10-16T12:00:00Z',sourceInput:undefined,sourceReport:undefined}}];
+ const report=buildPrecisionReport(records as any,contextSchema.parse({}),defaultPreferences,null,Date.parse('2026-10-26T12:00:00Z'));
+ const points=report.trends.find(t=>t.marker==='ferritin')!.points;assert.deepEqual(points[0].sourceInput,sourceInput);assert.deepEqual(points[0].sourceReport,reportIdentity);assert.equal(points[0].sourceValue,0);assert.equal(points[0].sourceUnit,'ug/L');assert.equal(points[1].sourceInput,undefined);assert.equal(points[1].sourceReport,undefined);assert.equal(report.labs[0].sourceInput,undefined,'Latest legacy entry must not inherit an earlier record’s source context');
+});
+
+test('optional lab import identity is exact source metadata and cannot invent identity for legacy rows',()=>{
+ const legacy=parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload;
+ assert.equal(Object.hasOwn(labSchema.parse(legacy),'sourceReport'),false);
+ assert.deepEqual(labSchema.parse({...legacy,sourceReport:reportIdentity}).sourceReport,reportIdentity);
+ for(const sourceReport of [{...reportIdentity,importId:'not-an-id'},{...reportIdentity,reportIdentifier:'x'.repeat(201)},{...reportIdentity,specimenIdentifier:'x'.repeat(201)},{...reportIdentity,verified:true}])assert.equal(labSchema.safeParse({...legacy,sourceReport}).success,false);
+ const second={...reportIdentity,importId:'fb001025-1025-4025-8025-000000000002',specimenIdentifier:'different specimen'};
+ assert.notDeepEqual(labSchema.parse({...legacy,sourceReport:second}).sourceReport,labSchema.parse({...legacy,sourceReport:reportIdentity}).sourceReport);
+});
+
+test('entered lab date/time reader preserves global-offset source clocks and rejects contradictory or malformed context',()=>{
+ const base=parseLabPaste('LDL, 3.20, mmol/L',date).valid[0].payload;
+ for(const [measuredAt,enteredDate,enteredTime]of[['2026-10-14T22:00:00Z','2026-10-15',undefined],['2026-10-16T00:00:00Z','2026-10-15',undefined],['2026-10-15T12:00:00Z','2026-10-16',undefined],['2026-10-14T19:15:00Z','2026-10-15','09:15'],['2026-10-15T14:15:00Z','2026-10-15','09:15']]){const sourceReport={...reportIdentity,enteredDate,...(enteredTime?{enteredTime}:{enteredTime:undefined})};const result=labSchema.parse({...base,measuredAt,sourceReport});assert.equal(result.sourceReport?.enteredDate,enteredDate);assert.equal(result.measuredAt,measuredAt);}
+ for(const sourceReport of [{...reportIdentity,enteredDate:'2026-02-29'},{...reportIdentity,enteredTime:'24:00'},{...reportIdentity,enteredTime:'9:15'},{...reportIdentity,enteredDate:undefined},{...reportIdentity,enteredDate:'2026-10-18'}])assert.equal(labSchema.safeParse({...base,sourceReport}).success,false);
+ const legacy=labSchema.parse(base);assert.equal(legacy.sourceReport,undefined);
+});

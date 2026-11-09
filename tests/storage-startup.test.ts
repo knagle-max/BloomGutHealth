@@ -1,0 +1,5 @@
+import test from'node:test';import assert from'node:assert/strict';import{execFile}from'node:child_process';import{promisify}from'node:util';
+test('constructing application storage never reads or writes a database to seed synthetic accounts or predictions',async()=>{
+ const code=`import assert from 'node:assert/strict';const{db,pool}=await import('./server/db.ts');let queries=0;for(const method of['select','insert','update','delete','execute','transaction'])db[method]=()=>{queries++;throw Error('Unexpected database access during storage initialization');};const{DatabaseStorage}=await import('./server/storage.ts');new DatabaseStorage();await new Promise(setImmediate);await pool.end();assert.equal(queries,0,'Storage initialization must not seed account data or historical model predictions');`;
+ const result=await promisify(execFile)(process.execPath,['--import','tsx','--input-type=module','-e',code],{cwd:new URL('../',import.meta.url),env:{...process.env,DATABASE_URL:'postgresql://unused:unused@127.0.0.1:1/unused'},timeout:10000});assert.equal(result.stdout,'');assert.equal(result.stderr,'');
+});

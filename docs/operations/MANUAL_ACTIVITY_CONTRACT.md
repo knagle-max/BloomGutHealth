@@ -1,0 +1,11 @@
+# Manual Everyday activity
+
+Core Journey P1, owner execution sequence B. Existing experience_records encrypted storage has an activity kind: manual title, supplied instant, duration, optional effort/timezone/notes. There is no new table or migration. It does not become an Athlete session or alter food totals/fueling targets. No energy expenditure, RPE, weather or device confidence is inferred. Reader2042b61 was deployed/CI verified before capture publication.
+
+POST /api/experience/activities requires authenticated ownership, strict activity payload, UUID Idempotency-Key and explicit storage adapter. Under the existing owner lock, a purpose/owner/key-derived record ID replays an exact canonical payload; different details under the same key409. Generic record POST remains denied for activity. The normal record limit and shared write budget apply. Existing owner-scoped GET/filter, PUT correction, DELETE and private export are reused. No permission grant or new provider is introduced.
+
+The Activity log keeps one frozen request during an uncertain response, validates the returned kind/ID/payload and offers exact retry. Definite4xx requires reviewing details. Mounted/actor-key scope prevents old callbacks changing another workspace. Each settled mutation refetches canonical records, including an uncertain save, so history is not silently treated as empty. Source time is preserved for a duration-only correction; an edited date captures the newly supplied instant/zone.
+
+Today Move displays dated manual entries and training records as separate sources. Progress shows the latest five manual entries and links to correction/history. Unknown/failed source reads withhold current lists. There is no aggregate device deduplication or clinical interpretation. Offline durable storage remains outside this visit-scoped form.
+
+Evidence: full396 local tests, focused encrypted API receipt/ownership/correction/export/deletion checks, actual rendered ordinary create/retry/correct/refetch/Today/Progress/delete journey, prior movement-source regression, types/build/API100+13/source130. Isolated Neon smoke adds activity create/replay/correct/delete before the existing quota check (1checkin+4activity+4feedback+21invalid=30 writes). No real user data.

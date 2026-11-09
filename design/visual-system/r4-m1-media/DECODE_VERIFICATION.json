@@ -1,0 +1,381 @@
+{
+  "tool": "Pillow verify/decode",
+  "results": [
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-blueberry-sprig.png",
+      "sha256": "df348dca4e5d4850ede6bf940e42731afd45c62a62b39b72ff49906b7958b6e8",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-blueberry-sprig.webp",
+      "sha256": "7d2f9ab5a4057b5d99d1ff6f631cf07f437e72903244e1632886f2fb3f67a007",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-blueberry-sprig@2x.webp",
+      "sha256": "7856ba8143db14ae8a844c5e04bd2eda102d8b846b96bcd1a5a6af90e11a0b53",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-echinacea-flower.png",
+      "sha256": "5ef1b36939c40c351e0b6d4d24311c6af70020f3c01c9daba3287ed55ad0fa8b",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-echinacea-flower.webp",
+      "sha256": "a561edfdca657d9bb5529c5e966922bccdecf45f3d695fc54b2514c1c9327180",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-echinacea-flower@2x.webp",
+      "sha256": "2c6ed6c8d7cfc470f9061dd1f790e66e53ace56acef4c70fad9ddd4fe7c26e99",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.png",
+      "sha256": "f849d3fbfc18ac26b3067c6d014568916275577e152d62dba20736b55852c6cf",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+      "sha256": "3f4359731ac1566acf924321715f6753cb03fb3fcc67fde09493435fefd793b3",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig@2x.webp",
+      "sha256": "2e852fa7510187e48ae2a54bc73b341c58e53968d9602db38c49e6b9d6e6adad",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-primary.png",
+      "sha256": "b19065a8356d0526248f66cd81c57bb54fa2a5117c0688b8ce13de1a3f7e6b0b",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-primary.webp",
+      "sha256": "c6229a44f9c85880f50f53fc960fc3aff71c2ad079ea30e8a0eec72109f876bc",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-primary@2x.webp",
+      "sha256": "8a5b60b306dffdac919219e91d488198846d8b1694e5cc192db62a3342ff1f40",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-alternate.png",
+      "sha256": "2d2344ae5af8a700ed61d1fa2cfa7ecce7a8f590276831edf88ee78646038e28",
+      "width": 1024,
+      "height": 1024,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-alternate.webp",
+      "sha256": "223076ba37a47984badf0564b864a32e7498fb8cee538bca31a640befdf6af14",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-alternate@2x.webp",
+      "sha256": "c1d47210b35106fd0f6b1dc79077266eda8073e72a18909620131e798daa9673",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-yogurt-honey-blueberries.png",
+      "sha256": "ad73c9ae2bcb9dcac4bbfc92db7524e627b9bce8c5b54dd4c4025407add0cf24",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-yogurt-honey-blueberries.webp",
+      "sha256": "cd0580a931d6004886654b9b63fd39bc9fb61d8032c5301f303e99196916aed6",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-yogurt-honey-blueberries@2x.webp",
+      "sha256": "fd7a08387b22cce0d89f0d04ba2492e3d38a60ec0ad90d90f5f6d40c6027275b",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-raspberry-smoothie.png",
+      "sha256": "e3486b2ffe72049b0214fd73abb8728b5376192aaa32d2855b884ae7f7cb6765",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-raspberry-smoothie.webp",
+      "sha256": "0f4a14d0459a49dc9b37b6b74bde135fbe88ce6f4e8f36d45d64d425c14dcefe",
+      "width": 600,
+      "height": 600,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/cutouts/bloom-raspberry-smoothie@2x.webp",
+      "sha256": "f83b4d932c3d9cf423efec61a9db80c399b4d856bbb6380915cb1c3547b9bd7a",
+      "width": 1200,
+      "height": 1200,
+      "mode": "RGBA",
+      "alphaRange": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen.png",
+      "sha256": "8bc288276903d53de16f11c7a696957849082423b78bb93ce8377b5136763ec9",
+      "width": 1942,
+      "height": 809,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
+      "sha256": "8071380f51d748e435b3438c502c70e6d6c5690a7fe1f307dd792e955480df2b",
+      "width": 1200,
+      "height": 500,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen@2x.webp",
+      "sha256": "64e01ab7693cbeabced8ae938a6bd8db3bcae2177048ec4bff83e9a5c9c419e0",
+      "width": 2400,
+      "height": 1000,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro.png",
+      "sha256": "dc113432d95e0b4edde7c02861532aee794161d0f4655b29302a8cc838374fed",
+      "width": 1942,
+      "height": 809,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
+      "sha256": "b99386cef0cf1d4326040aa2446fbde13f128f51c1fa284aef18fc39118ee98d",
+      "width": 1200,
+      "height": 500,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro@2x.webp",
+      "sha256": "b29f0c4d321601c0bf4029f20183aca4a63af332b29ab6ccc7c4786afa013763",
+      "width": 2400,
+      "height": 1000,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-today-meadow.png",
+      "sha256": "597c6009b05a42e05c414d2d574b6661e394bd3ae3035c1d1af4833529b2e927",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-today-meadow.webp",
+      "sha256": "72f76225f898d52c5ee73109c6cdaccac60796e69be5df2e59b12410dbf5546e",
+      "width": 1200,
+      "height": 500,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-today-meadow@2x.webp",
+      "sha256": "e3f268196905cb43eea68137a5d050f8115664a60b601bb2a9b97c80c1fc2ce0",
+      "width": 2400,
+      "height": 1000,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-athlete-mountains.png",
+      "sha256": "fcb5dfd8b83656bbc553338a93fd1af7660275dc417e6cfaf5120e5e7bbe1a88",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-athlete-mountains.webp",
+      "sha256": "1b8579ef1ead1e509cf30a0473263d56bc875203ae704202864adfd505f6ad77",
+      "width": 1200,
+      "height": 500,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-athlete-mountains@2x.webp",
+      "sha256": "61a6950589f88d71cd635d46a2422037aa18a98eb66a0b0395be9363ebddcd84",
+      "width": 2400,
+      "height": 1000,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-biology-rods.png",
+      "sha256": "537c9b30b857dcccbd00e4372d5eff2d5e0f2fc10fb5aa4727d0f1a550f1b543",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-biology-rods.webp",
+      "sha256": "4cd5ea1b142e1cdc308d9f1082e08daa6e54859b6c82147509cc6d65c705471a",
+      "width": 1200,
+      "height": 500,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-biology-rods@2x.webp",
+      "sha256": "4e61564626a901ff9b7c58498ae34453c0acec6b55ace945a7c60cb85b5c2430",
+      "width": 2400,
+      "height": 1000,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells.png",
+      "sha256": "e68f40097a2f6b5a6435362e844437530ad8bdcf029ed3c0abc9eb146fc65861",
+      "width": 1944,
+      "height": 809,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells.webp",
+      "sha256": "cd6fde190758eb7976398141fd939eba07903618b964a59e7c8251945aa80f74",
+      "width": 1200,
+      "height": 500,
+      "mode": "RGB",
+      "alphaRange": null
+    },
+    {
+      "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells@2x.webp",
+      "sha256": "c42596c2190e301486f2b43125468905d0390e518c80e64bfcd59ab42b96ac68",
+      "width": 2400,
+      "height": 1000,
+      "mode": "RGB",
+      "alphaRange": null
+    }
+  ],
+  "result": "PASS:39/39; seven true-alpha cutout pairs; source-upscaling declarations checked"
+}

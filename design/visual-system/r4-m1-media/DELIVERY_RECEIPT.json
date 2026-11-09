@@ -1,0 +1,91 @@
+{
+  "archives": [
+    {
+      "archive": "1-Bloom_R4_Original_PNGs_Part_2_of_7.zip",
+      "sha256": "2fb9e09ed2a36e8bfc71c584faa62982a11ae97e028c6e93da2f9c1f2b4037ed",
+      "crc": "PASS",
+      "entries": 5
+    },
+    {
+      "archive": "2-Bloom_R4_Original_PNGs_Part_7_of_7.zip",
+      "sha256": "afc7ab148eecb6d7ed5635ae8a00bd8ae4f8cc09f255e2a3f8c4291114b06a87",
+      "crc": "PASS",
+      "entries": 4
+    },
+    {
+      "archive": "3-Bloom_R4_Original_PNGs_Part_4_of_7.zip",
+      "sha256": "82ad418baa071c88e91caaa3a0c37ea254fc3c28fedfcffaf5f7c1dfb8fc0153",
+      "crc": "PASS",
+      "entries": 5
+    },
+    {
+      "archive": "4-Bloom_R4_Original_PNGs_Part_6_of_7.zip",
+      "sha256": "435f970e2ab4fcdd8e7907854109253af703c30f5ca97e28e122e4f8d3f2766a",
+      "crc": "PASS",
+      "entries": 6
+    },
+    {
+      "archive": "5-Bloom_R4_Original_PNGs_Part_3_of_7.zip",
+      "sha256": "2ab16358a667b65169ca3b523602036aa18bb585e823fe04dac81a51d743377d",
+      "crc": "PASS",
+      "entries": 5
+    },
+    {
+      "archive": "6-Bloom_R4_Editorial_WebP_Only_26_Images.zip",
+      "sha256": "8241f4d46acc9c0ed381e241b0923dcfc0c75238a8fdf05b748626d79930c36a",
+      "crc": "PASS",
+      "entries": 29
+    },
+    {
+      "archive": "7-Bloom_R4_Original_PNGs_Part_5_of_7.zip",
+      "sha256": "7d4a05b978783a78e3750aeaaebc4653ffc05aba4bc9761db68390530823b0ef",
+      "crc": "PASS",
+      "entries": 5
+    },
+    {
+      "archive": "8-Bloom_R4_Original_PNGs_Part_1_of_7.zip",
+      "sha256": "a8ec74d401946923804c945dee93111722863c469c08ccdf7352684cc2bb19d7",
+      "crc": "PASS",
+      "entries": 4
+    }
+  ],
+  "uniqueImages": 39,
+  "originalPNGs": 13,
+  "suppliedWebP": 26,
+  "manifest": "6-Bloom_R4_Editorial_WebP_Only_26_Images/manifest.json",
+  "source": "Owner-provided seven original PNG parts and WebP-only archive; paths/bytes unchanged",
+  "m1DesignerDocumentation": "RESOLVED: exact Designer-integrated M1/2110-line master/corrections/Biology restoration source committed by owner at16b8546; read and source-delta reconciled",
+  "releaseCandidate": "REOPENED: M1 supersedes previous RC readiness; no sign-off or main merge",
+  "canonicalPublicRoot": "client/public/images/editorial",
+  "priorProvisionalDerivatives": "Removed inactive client/public/brand/editorial-r4 engineering exports and unused EditorialArt; preserved in application06efa3f history. Now use supplied M1 WebPs, not substitutes.",
+  "sourceDocuments": [
+    {
+      "file": "docs/design/r4-m1/Bloom_R4_Biology_Detail_Discovery_Restoration_Handoff_2026-11-07.md",
+      "sha256": "c55878013ee430f39b6a5085fd77bcb485d6be09219d15236c737b2a85e7cee6"
+    },
+    {
+      "file": "docs/design/r4-m1/Bloom_R4_M1_Editorial_Asset_Ledger_2026-11-07.csv",
+      "sha256": "aa7989cedfd80419bbf92d459aa9d8bad2e3fc0d977e15f22f975b5efe3f2367"
+    },
+    {
+      "file": "docs/design/r4-m1/Bloom_Master_Build_Spec_R4_FINAL_Designer_Complete_M1_Integrated_2026-11-07.md",
+      "sha256": "f90f55b1a70c9de4334bddd8eee673891314933a6d07995336d81f313caad9c8"
+    },
+    {
+      "file": "docs/design/r4-m1/Bloom_R4_M1_Designer_Review_Corrections_2026-11-07.md",
+      "sha256": "3d8b8a67385019ad6a3a8cdf93e976276375e8957763425eb9f0251021c7c588"
+    },
+    {
+      "file": "docs/design/r4-m1/Bloom_R4_Mobile_Visual_Media_Full_Build_Spec_M1_Designer_Integrated_2026-11-07.md",
+      "sha256": "b611c5cf290c16da53546e7c654bde393529625848231c8348de2c443aa1d2e4"
+    }
+  ],
+  "sourceReadEvidence": "Read full823-line Designer M1 source, corrections and Biology restoration. Integrated master has byte-identical original2100-line R4 prefix plus10-line Appendix M; original master had already been read in full. Duplicate M1 source copies match bytes. All26 CSV ledger rows match manifest hashes/dimensions.",
+  "implementationAdaptations": [
+    "Use strict approved slot registry rather than arbitrary image URLs or health props.",
+    "Preserve exact original CSS prefix and exact M1-D D4 block, then apply D3 breakpoint values in that same canonical file.",
+    "D3 requires conceptual caption below the image: override D4 absolute caption position to normal flow; retain it in SVG fallback/forced colors.",
+    "SVG fallback contains the square original within the reserved banner geometry rather than cropping its content.",
+    "Media follows existing context/error/disclosures inside CompanionHero so source/safety text precedes decoration."
+  ]
+}

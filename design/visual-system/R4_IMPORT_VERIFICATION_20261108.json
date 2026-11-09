@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-08",
+  "source": "Owner-supplied original ZIPs; extracted without path or byte changes",
+  "archives": [
+    {"name": "Bloom_R4_Final_Integrated_Designer_Production_2026-11-07.zip", "sha256": "9076ecdedb071b20a48051de2b301c5ffd6d69b645152675ccd0fa10c08b6cc2", "destination": "design/visual-system/r4-final"},
+    {"name": "Bloom_R4_Master_With_Brand_Copy_2026-11-07.zip", "sha256": "a4608c3cd960cbff7a9e205400b5d4c02a1d38099ab372cee4c581a6616b22c2", "destination": "design/visual-system/r4-branding"},
+    {"name": "Bloom_Original_PNG_Assets_Part_1_of_3.zip", "sha256": "8bd745c2aea3e5326c6f66afaa83fadd876863e0019545579715c0c5f0802ad6", "destination": "design/visual-system/r4-editorial"},
+    {"name": "Bloom_Original_PNG_Assets_Part_2_of_3.zip", "sha256": "2bc317b7554bd50948b27e904d2227eabafc102e551b174170a8abe916bba86e", "destination": "design/visual-system/r4-editorial"},
+    {"name": "Bloom_Original_PNG_Assets_Part_3_of_3.zip", "sha256": "1ef0ac7582420cebed55f6620dc4be3da61b2273961874ab7fc5f3ff53e0b03a", "destination": "design/visual-system/r4-editorial"}
+  ],
+  "verification": {
+    "zipCRC": "PASS: all five archives",
+    "pathSafety": "PASS: no duplicate, absolute or parent-traversal paths; repeated cross-part README/manifest bytes agree",
+    "svgOriginals": "PASS: 87/87 original hashes, lengths and passive XML; public copies byte-identical",
+    "pngOriginals": "PASS: 13/13 SHA-256, dimensions, RGB/RGBA and Pillow decode verification; seven cutouts have alpha extrema 0–255",
+    "brandingManifest": "PASS: 6/6 original manifest file hashes and lengths",
+    "masterRelationship": "Final integrated master begins with the byte-identical standalone Branding master; corresponding six Branding payload files are byte-identical",
+    "runtimeCopy": "Byte-identical bloomCopy.ts; exact canonical stylesheet imported once; motion.css deliberately not imported because its keyframes duplicate canonical motion",
+    "derivatives": "26 WebP copies, no crop, retouch or upscaling; source/output hashes and dimensions in client/public/brand/editorial-r4/MANIFEST.json",
+    "repeatableCheck": "node scripts/verify-r4-assets.mjs; npm run build also checks built WebP bytes"
+  },
+  "sourceReading": "Read the complete 2100-line integrated master, Designer audit, source map, canonical CSS, original Brand voice/copy and asset metadata. Older TO COMPLETE placeholders are superseded by integrated final UX closure.",
+  "historicalOptionalCSSURLs": "Four legacy opt-in data-bv-art URL examples are absent from the final manifest. No such attributes are activated; actual manual image slots use supplied registered files, with no substitute artwork.",
+  "scope": "R4 integration only. Separate 32-image Anatomy asset-only branch remains separate; v0.6 source-observation stash is not applied.",
+  "independentReview": "Not granted; importing assets and passing engineering checks do not constitute Design, Brand, scientific, legal or physical VoiceOver approval. Generator/prompt provenance not independently verified."
+}

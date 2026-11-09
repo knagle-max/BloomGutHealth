@@ -1,0 +1,717 @@
+{
+  "schema": "bloom-editorial-raster-manifest-v1",
+  "created_at": "2026-11-07",
+  "source_handoff_commit": "64a92815c3d769ff9f6fdb129e7e756c81651317",
+  "source_archive_note": "Supplied as 3 split archives; original collective ZIP SHA cannot be verified without original concatenated package; all 13 source PNG SHA hashes verified against included identical MANIFEST.json",
+  "target_root": "client/public/images/editorial",
+  "asset_count": 13,
+  "original_png_count": 13,
+  "webp_variant_count": 26,
+  "source_of_truth": "Manifest references R4 D3-R source images; source PNG files retained unmodified",
+  "files": [
+    {
+      "name": "bloom-blueberry-sprig",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-blueberry-sprig.png",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "bytes": 1047448,
+        "sha256": "df348dca4e5d4850ede6bf940e42731afd45c62a62b39b72ff49906b7958b6e8",
+        "source_filename": "blueberry_branch_botanical_still_life.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-blueberry-sprig.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 52386,
+          "sha256": "7d2f9ab5a4057b5d99d1ff6f631cf07f437e72903244e1632886f2fb3f67a007",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-blueberry-sprig@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 160290,
+          "sha256": "7856ba8143db14ae8a844c5e04bd2eda102d8b846b96bcd1a5a6af90e11a0b53",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/ and /explore; contextual hero botanical accent",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 1180127,
+        "partially_transparent_pixels": 390472,
+        "total_pixels": 1572516,
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-echinacea-flower",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-echinacea-flower.png",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "bytes": 1023488,
+        "sha256": "5ef1b36939c40c351e0b6d4d24311c6af70020f3c01c9daba3287ed55ad0fa8b",
+        "source_filename": "side_view_pink_echinacea_bloom.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-echinacea-flower.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 63628,
+          "sha256": "a561edfdca657d9bb5529c5e966922bccdecf45f3d695fc54b2514c1c9327180",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-echinacea-flower@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 206656,
+          "sha256": "2c6ed6c8d7cfc470f9061dd1f790e66e53ace56acef4c70fad9ddd4fe7c26e99",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/; optional Today botanical accent",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 1159944,
+        "partially_transparent_pixels": 411677,
+        "total_pixels": 1572516,
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-three-leaf-sprig",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.png",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "bytes": 1131543,
+        "sha256": "f849d3fbfc18ac26b3067c6d014568916275577e152d62dba20736b55852c6cf",
+        "source_filename": "a_crisp_high_resolution_isolated_botanical_illustr.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 48416,
+          "sha256": "3f4359731ac1566acf924321715f6753cb03fb3fcc67fde09493435fefd793b3",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 155186,
+          "sha256": "2e852fa7510187e48ae2a54bc73b341c58e53968d9602db38c49e6b9d6e6adad",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/progress, /profile, empty states; decoration only",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 1128727,
+        "partially_transparent_pixels": 443504,
+        "total_pixels": 1572516,
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-oatmeal-bowl-primary",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-primary.png",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "bytes": 1865438,
+        "sha256": "b19065a8356d0526248f66cd81c57bb54fa2a5117c0688b8ce13de1a3f7e6b0b",
+        "source_filename": "a_clean_high_resolution_food_photography_image_on.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-primary.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 77154,
+          "sha256": "c6229a44f9c85880f50f53fc960fc3aff71c2ad079ea30e8a0eec72109f876bc",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-primary@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 254316,
+          "sha256": "8a5b60b306dffdac919219e91d488198846d8b1694e5cc192db62a3342ff1f40",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/log-meal, /nutrition; representative editorial food illustration",
+      "alt": "Representative editorial food image; not a logged meal",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 705253,
+        "partially_transparent_pixels": 867108,
+        "total_pixels": 1572516,
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-oatmeal-bowl-alternate",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-alternate.png",
+        "width": 1024,
+        "height": 1024,
+        "mode": "RGBA",
+        "bytes": 1861632,
+        "sha256": "2d2344ae5af8a700ed61d1fa2cfa7ecce7a8f590276831edf88ee78646038e28",
+        "source_filename": "a_photograph_showcases_a_ceramic_breakfast_bowl_wi.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-alternate.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 93076,
+          "sha256": "223076ba37a47984badf0564b864a32e7498fb8cee538bca31a640befdf6af14",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-oatmeal-bowl-alternate@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 310004,
+          "sha256": "c1d47210b35106fd0f6b1dc79077266eda8073e72a18909620131e798daa9673",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/log-meal, /nutrition; alternate example image not simultaneous with primary",
+      "alt": "Representative editorial food image; not a logged meal",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 457111,
+        "partially_transparent_pixels": 174536,
+        "total_pixels": 1048576,
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-yogurt-honey-blueberries",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-yogurt-honey-blueberries.png",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "bytes": 1582162,
+        "sha256": "ad73c9ae2bcb9dcac4bbfc92db7524e627b9bce8c5b54dd4c4025407add0cf24",
+        "source_filename": "a_clean_high_resolution_food_product_photo_on_a_t.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-yogurt-honey-blueberries.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 62326,
+          "sha256": "cd0580a931d6004886654b9b63fd39bc9fb61d8032c5301f303e99196916aed6",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-yogurt-honey-blueberries@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 199080,
+          "sha256": "fd7a08387b22cce0d89f0d04ba2492e3d38a60ec0ad90d90f5f6d40c6027275b",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/nutrition; editorial food example only",
+      "alt": "Representative editorial food image; not a logged meal",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 736428,
+        "partially_transparent_pixels": 835694,
+        "total_pixels": 1572516,
+        "corner_alpha": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-raspberry-smoothie",
+      "type": "cutout",
+      "source": {
+        "file": "client/public/images/editorial/cutouts/bloom-raspberry-smoothie.png",
+        "width": 1254,
+        "height": 1254,
+        "mode": "RGBA",
+        "bytes": 1691858,
+        "sha256": "e3486b2ffe72049b0214fd73abb8728b5376192aaa32d2855b884ae7f7cb6765",
+        "source_filename": "a_clean_product_style_close_up_on_a_transparent_ch.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-raspberry-smoothie.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 80160,
+          "sha256": "0f4a14d0459a49dc9b37b6b74bde135fbe88ce6f4e8f36d45d64d425c14dcefe",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-raspberry-smoothie@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 289990,
+          "sha256": "f83b4d932c3d9cf423efec61a9db80c399b4d856bbb6380915cb1c3547b9bd7a",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "slot": "/nutrition; editorial food example only",
+      "alt": "Representative editorial food image; not a logged meal",
+      "conceptual_label": null,
+      "alpha_qa": {
+        "alpha_range": [
+          0,
+          255
+        ],
+        "transparent_pixels": 644509,
+        "partially_transparent_pixels": 927736,
+        "total_pixels": 1572516,
+        "corner_alpha": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "alpha_integrity_pass": true
+      },
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-food-oatmeal-linen",
+      "type": "banner",
+      "source": {
+        "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen.png",
+        "width": 1942,
+        "height": 809,
+        "mode": "RGB",
+        "bytes": 3270561,
+        "sha256": "8bc288276903d53de16f11c7a696957849082423b78bb93ce8377b5136763ec9",
+        "source_filename": "a_clean_minimal_food_still_life_on_a_neutral_beig.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 101156,
+          "sha256": "8071380f51d748e435b3438c502c70e6d6c5690a7fe1f307dd792e955480df2b",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 324538,
+          "sha256": "64e01ab7693cbeabced8ae938a6bd8db3bcae2177048ec4bff83e9a5c9c419e0",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "slot": "/log-meal, /nutrition; Food entry banner",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": null,
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-explore-blueberry-macro",
+      "type": "banner",
+      "source": {
+        "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro.png",
+        "width": 1942,
+        "height": 809,
+        "mode": "RGB",
+        "bytes": 1906019,
+        "sha256": "dc113432d95e0b4edde7c02861532aee794161d0f4655b29302a8cc838374fed",
+        "source_filename": "a_crisp_photorealistic_macro_nature_photograph_in.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 38196,
+          "sha256": "b99386cef0cf1d4326040aa2446fbde13f128f51c1fa284aef18fc39118ee98d",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 91908,
+          "sha256": "b29f0c4d321601c0bf4029f20183aca4a63af332b29ab6ccc7c4786afa013763",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "slot": "/explore; featured editorial banner",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": null,
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-today-meadow",
+      "type": "banner",
+      "source": {
+        "file": "client/public/images/editorial/heroes/bloom-today-meadow.png",
+        "width": 1944,
+        "height": 809,
+        "mode": "RGB",
+        "bytes": 2042924,
+        "sha256": "597c6009b05a42e05c414d2d574b6661e394bd3ae3035c1d1af4833529b2e927",
+        "source_filename": "a_wide_cinematic_nature_photo_of_a_sunlit_meadow.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-today-meadow.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 58784,
+          "sha256": "72f76225f898d52c5ee73109c6cdaccac60796e69be5df2e59b12410dbf5546e",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-today-meadow@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 134328,
+          "sha256": "e3f268196905cb43eea68137a5d050f8115664a60b601bb2a9b97c80c1fc2ce0",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "slot": "/; optional Today banner alternative to botanical cutout composition",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": null,
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-athlete-mountains",
+      "type": "banner",
+      "source": {
+        "file": "client/public/images/editorial/heroes/bloom-athlete-mountains.png",
+        "width": 1944,
+        "height": 809,
+        "mode": "RGB",
+        "bytes": 2149242,
+        "sha256": "fcb5dfd8b83656bbc553338a93fd1af7660275dc417e6cfaf5120e5e7bbe1a88",
+        "source_filename": "a_wide_cinematic_landscape_photo_a_serene_mounta.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-athlete-mountains.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 49580,
+          "sha256": "1b8579ef1ead1e509cf30a0473263d56bc875203ae704202864adfd505f6ad77",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-athlete-mountains@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 135094,
+          "sha256": "61a6950589f88d71cd635d46a2422037aa18a98eb66a0b0395be9363ebddcd84",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "slot": "/athlete; navy hero banner",
+      "alt": "",
+      "conceptual_label": null,
+      "alpha_qa": null,
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-biology-rods",
+      "type": "conceptual-render",
+      "source": {
+        "file": "client/public/images/editorial/heroes/bloom-biology-rods.png",
+        "width": 1944,
+        "height": 809,
+        "mode": "RGB",
+        "bytes": 1718593,
+        "sha256": "537c9b30b857dcccbd00e4372d5eff2d5e0f2fc10fb5aa4727d0f1a550f1b543",
+        "source_filename": "a_highly_detailed_soft_focus_3d_scientific_style.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-rods.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 20440,
+          "sha256": "4cd5ea1b142e1cdc308d9f1082e08daa6e54859b6c82147509cc6d65c705471a",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-rods@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 52412,
+          "sha256": "4e61564626a901ff9b7c58498ae34453c0acec6b55ace945a7c60cb85b5c2430",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "slot": "/precision, /microbiome; conceptual hero variant",
+      "alt": "",
+      "conceptual_label": "Illustrative, not your data",
+      "alpha_qa": null,
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    },
+    {
+      "name": "bloom-biology-abstract-cells",
+      "type": "conceptual-render",
+      "source": {
+        "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells.png",
+        "width": 1944,
+        "height": 809,
+        "mode": "RGB",
+        "bytes": 1871197,
+        "sha256": "e68f40097a2f6b5a6435362e844437530ad8bdcf029ed3c0abc9eb146fc65861",
+        "source_filename": "a_wide_cinematic_high_detail_3d_rendered_microsc.png",
+        "original_manifest_verified": true
+      },
+      "variants": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 30514,
+          "sha256": "cd6fde190758eb7976398141fd939eba07903618b964a59e7c8251945aa80f74",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 73780,
+          "sha256": "c42596c2190e301486f2b43125468905d0390e518c80e64bfcd59ab42b96ac68",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "slot": "/precision, /microbiome; conceptual hero alternate",
+      "alt": "",
+      "conceptual_label": "Illustrative, not your data",
+      "alpha_qa": null,
+      "origin": "User-supplied original PNG from Bloom Editorial Visual Assets handoff; generated imagery as identified by source",
+      "licensing": "Commercial-use rights not independently verified; owner/Architect must confirm generation terms before public release",
+      "generation_tool_model_date": "Not provided in received original manifest; do not invent",
+      "exact_generation_prompt": "Not included in received original manifest; do not invent",
+      "visual_human_review": "Pending Designer full-resolution artifact, food-accuracy, light/dark edge, and responsive app screenshot acceptance"
+    }
+  ],
+  "limitations": [
+    "Six hero 2x exports are upscaled from ~1944px source to 2400px, not native high-resolution images.",
+    "The alternate oatmeal PNG is 1024px; its 1200px export is upscaled.",
+    "Commercial use terms, exact generation prompts and generation model were not supplied in the source manifest.",
+    "Pixel-level edge halo and real-browser contrast tests remain necessary before visual acceptance."
+  ],
+  "integration_rules": [
+    "One selected image per slot; existing SVG remains fallback.",
+    "Decorative media alt empty; informative food examples receive truthful alt and never stand in for logged items.",
+    "Biology conceptual image requires adjacent visible label Illustrative, not your data.",
+    "Do not change DOM/focus order, controls, data or source disclosures.",
+    "Use srcset and reserve sizes; load only actual above-fold LCP eagerly.",
+    "Do not halt unrelated R4 implementation for media asset QA."
+  ]
+}

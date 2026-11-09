@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "baseCommit": "897889365bc6a12bab7d221070be2cbe5b7df1c5",
+  "scope": "Private fixed synthetic molecular service integration, no public app route or personal-source processing",
+  "unitIntegration": {
+    "tests": 638,
+    "pass": 638,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 252522.212113
+  },
+  "pythonServiceTests": {
+    "pass": 29,
+    "fail": 0,
+    "durationSeconds": 0.149
+  },
+  "focusedTypeScriptTests": {
+    "pass": 13,
+    "fail": 0,
+    "durationMs": 1708.447474
+  },
+  "checks": {
+    "typescript": "PASS",
+    "productionBuild": "PASS",
+    "sourceCrosswalk": "52 IDs/235 files PASS",
+    "apiInventory": "unchanged Node declarations; Python excluded by declared inventory scope",
+    "actualNodePythonHttp": "PASS four CPU-backed synthetic scenarios, auth/body/private-fields/source-only analysis separation"
+  },
+  "sourceHashes": {
+    "ml_service/main.py": "75907f076235a2b9a32e72a95842d4318136c1fe7a2a22005ff3b06234c4dd50",
+    "ml_service/research/synthetic_service.py": "40df1ad9e0f0bc1c34edab9ae8f4965e2528f4774245d189c789195e079483a2",
+    "server/ml-service.ts": "6628b5b094c5a5634c075f2bf8945beb4de55a506c255ae9dfb8c68abcb1e19d",
+    "server/synthetic-molecular.ts": "ba91a96f5fd960dc240725c4c0749231792ce0306077d39ca06af157c7603dc5",
+    "shared/synthetic-molecular.ts": "eb7aa920c087a6bf0f42d126afd41e8e1ed8ad39a9257385c487e30f3ccc6885",
+    "tests/test_synthetic_service.py": "42bcd51e1b72bb5e9d3677f66bf5fc94ce0df7092fcda4b6d3e9cb3a3094507f",
+    "tests/synthetic-molecular.test.ts": "5e38ddfa1f70d0b8357a725bbc502a86e7e24a24d856b386a1763dbd158e331d",
+    "scripts/qa/synthetic-molecular-http.mjs": "dfedbb5f9069b1ddee0bde7ddd4bb1e51fe4f52678530ea2b2ef7e8a23eed79f",
+    "requirements-test.txt": "73d4ea8d272d5585e8beea7c8454eac8859cecde6025475d03e252a6f943588d",
+    ".github/workflows/neon_workflow.yml": "dfc9a8f9564636df0f885f3d99bd04478126163f0a139c1c9fb3e260f4323662"
+  },
+  "sourceScope": "Fixed first-party synthetic mathematical controls only; no person/assay/taxa/food/model upload accepted",
+  "previousPublication": {
+    "commit": "897889365bc6a12bab7d221070be2cbe5b7df1c5",
+    "deploy": "dep-dbnk1e29lscs73c48d10",
+    "status": "live",
+    "ciRun": 42385548705,
+    "ciStatus": "in_progress at check"
+  },
+  "previousResearchCI": {
+    "commit": "ae58bcb4039348dbd45b78f4c267c5688dd5f2d7",
+    "run": 42384937238,
+    "status": "success"
+  },
+  "notClaimed": [
+    "remote Python deployed/configured",
+    "full Express/user UI practical optimizer",
+    "biological reconstruction/independent benchmark",
+    "person-linked research entitlement",
+    "clinical/user-action activation",
+    "full version completion"
+  ]
+}

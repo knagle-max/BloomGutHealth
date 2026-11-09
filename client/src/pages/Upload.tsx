@@ -1,94 +1,186 @@
-import { useState } from 'react';
-import FileUploadZone from '@/components/FileUploadZone';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CalendarIcon, ChevronDown, ChevronUp } from 'lucide-react';
-import { format } from 'date-fns';
-import { useToast } from '@/hooks/use-toast';
-import { useLocation } from 'wouter';
-import { useAuth } from '@/lib/auth';
+import ImportedReportDetails from "@/components/ImportedReportDetails";
+import {useStructuredReportSave} from "@/lib/useStructuredReportSave";
+import {invalidatePlanningInputs} from "@/lib/planning-cache";
+import { useState, useRef, useEffect, useMemo,useCallback } from "react";
+import { parseReportDocument, STRUCTURED_REPORT_MAX_BYTES } from "@shared/structured-report";
+import {hasViomeFindingsMarker,parseViomeFindings,ViomeFindingsError} from "@shared/viome-findings";
+import {readViomePdf,ViomePdfError,type ViomePdfIssue} from "@shared/viome-pdf";
+import ViomeReviewEditor,{ViomeExtractionReview} from "@/components/ViomeReviewEditor";
+import ViomeImportChoices,{type ViomeImportDecision} from "@/components/ViomeImportChoices";
+import { queryClient } from "@/lib/queryClient";
+import FileUploadZone from "@/components/FileUploadZone";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
+import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
+import { Link, useLocation } from "wouter";
+import { useAuth } from "@/lib/auth";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
   const [testDate, setTestDate] = useState<Date>();
-  const [testingCompany, setTestingCompany] = useState('');
-  const [testId, setTestId] = useState('');
-  const [notes, setNotes] = useState('');
+  const [testingCompany, setTestingCompany] = useState("");
+  const [testId, setTestId] = useState("");
+  const [notes, setNotes] = useState("");
   const [showManualEntry, setShowManualEntry] = useState(false);
-  const [manualData, setManualData] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
+  const [manualData, setManualData] = useState("");
+  const [inputError,setInputError]=useState("");
+  const errorRef=useRef<HTMLParagraphElement>(null);
+  const [reading, setReading] = useState(false);
+  const [pdfSource,setPdfSource]=useState(false),[pdfReviewed,setPdfReviewed]=useState(false),[pdfEditing,setPdfEditing]=useState(false);
+  const [pdfIssues,setPdfIssues]=useState<ViomePdfIssue[]>([]);
+  const pdfRead=useRef<AbortController|null>(null);
+  const[importDecision,setImportDecision]=useState<ViomeImportDecision|null>(null);
+  const updateImportDecision=useCallback((decision:ViomeImportDecision|null)=>setImportDecision(decision),[]);
+  const [attempted, setAttempted] = useState(false);
+  const [preview, setPreview] = useState<(ReturnType<typeof parseReportDocument> & {originalFilename?:string}) | null>(null);
+  const save=useStructuredReportSave(),isUploading=reading||save.pending,frozen=isUploading||save.uncertain||!!save.saved||!!preview;
   const { toast } = useToast();
+  const notice=useRef<{dismiss:()=>void}|null>(null);
   const [, setLocation] = useLocation();
   const { user } = useAuth();
+  useEffect(()=>()=>pdfRead.current?.abort(),[user?.id]);
+  const previewHeading=useRef<HTMLHeadingElement>(null);
+  const viome=useMemo(()=>preview&&hasViomeFindingsMarker(preview.parsed.sourceReport)?parseViomeFindings(preview.parsed.sourceReport):null,[preview]);
+  useEffect(()=>{if(preview)previewHeading.current?.focus();},[preview]);
+  const reportError=inputError||save.error?.message;
+  useEffect(()=>{if(reportError)errorRef.current?.focus();},[reportError]);
+  const active=useRef(true),actor=useRef(user?.id);actor.current=user?.id;
+  useEffect(()=>{active.current=true;return()=>{active.current=false;pdfRead.current?.abort();};},[]);
+  const clearViomeInput=()=>{setFile(null);setManualData("");setTestingCompany("");setTestId("");setNotes("");setTestDate(undefined);};
 
   const handleSubmit = async () => {
-    if (!file) {
-      toast({
-        title: 'No file selected',
-        description: 'Please select a microbiome test file to upload.',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    setIsUploading(true);
-
+    const owner=user?.id;if(!owner||isUploading||save.saved)return;
+    setInputError("");
+    let acknowledged=false;
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      if (testDate) formData.append('testDate', testDate.toISOString());
-      if (testingCompany) formData.append('testingCompany', testingCompany);
-      if (testId) formData.append('testId', testId);
-      if (notes) formData.append('notes', notes);
-
-      const response = await fetch('/api/microbiome/upload', {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Upload failed');
+      let result;
+      if(save.uncertain)result=await save.retry();
+      else if(!preview) {
+        const pasted=showManualEntry?manualData.trim():"",selected=showManualEntry?null:file;
+        if(!selected&&!pasted)throw Error("Choose a file or paste report data.");
+        const isPdf=!!selected&&/\.pdf$/i.test(selected.name);
+        if(selected&&!isPdf&&selected.size>STRUCTURED_REPORT_MAX_BYTES)throw Error("JSON/CSV reports must be 2 MB or smaller.");
+        if(selected&&!/\.(pdf|json|csv)$/i.test(selected.name))throw Error("Choose a Viome PDF, JSON or CSV report. Raw sequence processing is not available.");
+        setReading(true);
+        if(isPdf){
+          const controller=new AbortController();pdfRead.current=controller;
+          try{
+            const draft=await readViomePdf(selected!,async(bytes,signal,onPage)=>{
+              const {extractViomePdf}=await import("@/lib/viome-pdf-reader");
+              if(signal.aborted)throw new ViomePdfError("cancelled");
+              return extractViomePdf(bytes,signal,onPage);
+            },controller.signal);
+            if(!active.current||actor.current!==owner)return;
+            // Local validation/projection only. Nothing is sent until the
+            // separate mandatory row-review affirmation and explicit Save.
+            const{extraction,...biological}=draft;
+            const findings=parseViomeFindings({...biological,reviewConfirmed:true}),parsed=parseReportDocument(JSON.stringify(findings),"json");
+            setPreview({source:findings,parsed:parsed.parsed});setPdfSource(true);setPdfReviewed(false);setPdfIssues(extraction?.issues||[]);clearViomeInput();
+          }finally{if(pdfRead.current===controller)pdfRead.current=null;}
+          return;
+        }
+        const text=pasted||await selected!.text(),parsed=parseReportDocument(text,pasted||selected!.name.toLowerCase().endsWith(".json")?"json":"csv");
+        if(!active.current||actor.current!==owner)return;
+        notice.current?.dismiss();
+        if(hasViomeFindingsMarker(parsed.parsed.sourceReport)){
+          setPreview({source:parsed.parsed.sourceReport,parsed:parsed.parsed});clearViomeInput();
+        }else setPreview({...parsed,originalFilename:pasted?undefined:selected?.name});
+        return;
+      } else {
+        if(pdfSource&&(!pdfReviewed||pdfEditing||pdfIssues.length>0))throw Error("Confirm that you reviewed the extracted biological rows before saving.");
+        setAttempted(true);
+        if(viome&&!importDecision)throw Error("Review the existing-report and specimen choices before saving.");
+        // An exported historical link is not fresh confirmation to link a new
+        // import. Only this review's explicit specimen choice can add it.
+        const{specimenEvent:_priorLink,...viomeFacts}=viome||{};
+        const command=viome?{report:{...viomeFacts,...(importDecision?.specimenEvent?{specimenEvent:importDecision.specimenEvent}:{})},...(importDecision?.reuseExistingReportId?{reuseExistingReportId:importDecision.reuseExistingReportId}:{})}:{report:preview.source,originalFilename:preview.originalFilename,testDate:testDate?format(testDate,"yyyy-MM-dd"):undefined,testingCompany,testId,notes};
+        result=await save.submit(command,{kind:preview.parsed.kind,scores:preview.parsed.scores.length,reportedOrganisms:preview.parsed.organisms.length,quantifiedTaxa:Object.keys(preview.parsed.bacteria_percentages||{}).length});
       }
-
-      toast({
-        title: 'Microbiome test uploaded!',
-        description: 'AI analysis in progress. Results will appear in Insights.',
-      });
-
-      setTimeout(() => {
-        setLocation('/insights');
-      }, 1500);
-    } catch (error: any) {
-      toast({
-        title: 'Upload failed',
-        description: error.message || 'Failed to upload file. Please try again.',
-        variant: 'destructive',
-      });
+      if(!result||!active.current||actor.current!==owner)return;
+      acknowledged=true;
+      await invalidatePlanningInputs();
+      await queryClient.invalidateQueries({queryKey:["/api/microbiome/samples"]});
+      if(!active.current||actor.current!==owner)return;
+      toast({title:result.reusedExisting?"Existing report kept":"Report saved",description:result.reusedExisting?"Your matching saved report was kept. No duplicate biological observation was created.":`${result.preview.scores} provider assessments, ${result.preview.reportedOrganisms} reported organisms and ${result.preview.quantifiedTaxa} quantified taxa saved.${preview?.parsed.foods?.length?` ${preview.parsed.foods.length} provider food suggestions retained.`:""} Missing measurements remain unavailable.`});
+      setLocation("/microbiome?sample="+encodeURIComponent(result.sampleId));
+    } catch(error) {
+      if(!active.current||actor.current!==owner)return;
+      if(error instanceof ViomeFindingsError||error instanceof ViomePdfError)clearViomeInput();
+      if(acknowledged)notice.current=toast({title:"Report saved",description:"Open the saved report using the link below."});
+      else {setInputError(error instanceof Error?error.message:"Check your report and try again.");requestAnimationFrame(()=>{if(active.current&&actor.current===owner)errorRef.current?.focus();});}
     } finally {
-      setIsUploading(false);
+      if(active.current&&actor.current===owner)setReading(false);
     }
   };
 
   return (
-    <div className="pb-20 pt-4 px-4 max-w-md mx-auto space-y-6">
+    <main className="science-page upload-page space-y-6">
       <div>
-        <h1 className="font-display text-2xl font-semibold mb-2">Upload Microbiome Test</h1>
-        <p className="text-sm text-muted-foreground">Get personalized insights from your results</p>
+        <h1 className="font-display text-2xl font-semibold mb-2">
+          Add a gut report
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Load a text-based Viome PDF, or use JSON/CSV. PDF reading stays in this browser; only reviewed biological findings are sent when you save.
+        </p>
       </div>
 
-      <FileUploadZone onFileSelect={setFile} />
+      <fieldset hidden={!!preview} disabled={frozen} className="min-w-0 space-y-6 border-0 p-0 m-0"><legend className="sr-only">Gut report input</legend>
+      <div className="method-switch" role="group" aria-label="Report entry method">
+        <Button variant={!showManualEntry ? "default" : "outline"} aria-pressed={!showManualEntry} onClick={() => {setShowManualEntry(false);setInputError("");}}>Upload a file</Button>
+        <Button variant={showManualEntry ? "default" : "outline"} aria-pressed={showManualEntry} onClick={() => {setShowManualEntry(true);setInputError("");}} data-testid="button-toggle-manual">Paste JSON data</Button>
+      </div>
+      {!showManualEntry && <FileUploadZone
+        disabled={frozen}
+        file={file}
+        onFileSelect={next=>{if(!frozen){setFile(next);setInputError("");setPdfSource(false);setPdfReviewed(false);setPdfEditing(false);setPdfIssues([]);}}}
+        acceptedFormats={["PDF", "JSON", "CSV"]}
+        maxSizeMB={8}
+        showFilename={!file||!/\.pdf$/i.test(file.name)}
+      />}
+      <div className="report-paste-section">
+        {showManualEntry && (
+          <div className="mt-4 space-y-2">
+            <Label htmlFor="manual-data">Paste Your Data</Label>
+            <Textarea
+              id="manual-data"
+              placeholder='{"bacteria_percentages": {"Akkermansia": 2.5, ...}}'
+              value={manualData}
+              onChange={(e) => {setManualData(e.target.value);setInputError("");}}
+              className="min-h-32 font-mono text-sm resize-none"
+              data-testid="input-manual-data"
+            />
+            <p className="text-xs text-muted-foreground">
+              Paste the full JSON object, including scores/organisms or bacteria_percentages. Numeric scores are not treated as bacterial percentages.
+            </p>
+          </div>
+        )}
+      </div>
+
+
+
+      {(!file||!/\.pdf$/i.test(file.name))&&<details className="bloom-panel workspace-disclosure">
+      <summary>Report details (optional)</summary>
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label>Test Date</Label>
+          <Label>Test Date (Optional)</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button
@@ -97,20 +189,21 @@ export default function Upload() {
                 data-testid="button-date-picker"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {testDate ? format(testDate, 'PPP') : <span>Pick a date</span>}
+                {testDate ? format(testDate, "PPP") : <span>Pick a date</span>}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">
               <Calendar
                 mode="single"
                 selected={testDate}
-                onSelect={setTestDate}
+                onSelect={next=>{if(!frozen)setTestDate(next);}}
                 initialFocus
               />
             </PopoverContent>
           </Popover>
         </div>
 
+        <p className="text-xs text-muted-foreground">If no date is chosen, an exact date in the report is used when available. Otherwise the report is labelled with its import date; a reported month/year is kept separately.</p>
         <div className="space-y-2">
           <Label htmlFor="company">Testing Company</Label>
           <Select value={testingCompany} onValueChange={setTestingCompany}>
@@ -152,42 +245,40 @@ export default function Upload() {
         </div>
       </div>
 
-      <div className="border-t pt-6">
-        <button
-          onClick={() => setShowManualEntry(!showManualEntry)}
-          className="flex items-center gap-2 text-sm font-medium text-primary hover-elevate px-3 py-2 rounded-lg"
-          data-testid="button-toggle-manual"
-        >
-          <span>Manual Data Entry</span>
-          {showManualEntry ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-        </button>
 
-        {showManualEntry && (
-          <div className="mt-4 space-y-2">
-            <Label htmlFor="manual-data">Paste Your Data</Label>
-            <Textarea
-              id="manual-data"
-              placeholder='{"bacteria_percentages": {"Akkermansia": 2.5, ...}}'
-              value={manualData}
-              onChange={(e) => setManualData(e.target.value)}
-              className="min-h-32 font-mono text-xs resize-none"
-              data-testid="input-manual-data"
-            />
-            <p className="text-xs text-muted-foreground">
-              Paste your microbiome data in JSON format
-            </p>
-          </div>
-        )}
-      </div>
-
+      </details>}
+      </fieldset>
+      {preview&&<section className="bloom-panel space-y-3" aria-labelledby="report-preview-title">
+        <h2 id="report-preview-title" ref={previewHeading} tabIndex={-1}>{pdfSource?"Review your Viome report":"Review report before saving"}</h2>
+        <p>{attempted?'Review of the source prepared for this import. Save status is shown below.':'Prepared locally; nothing has been uploaded or saved yet.'}</p>
+        <p>{preview.parsed.scores.length} provider assessments · {preview.parsed.organisms.length} reported organisms · {Object.keys(preview.parsed.bacteria_percentages||{}).length} quantified taxa{preview.parsed.foods?.length?` · ${preview.parsed.foods.length} provider food suggestions`:""}</p>
+        {viome&&<div className="report-context"><p>This record keeps the reviewed finding fields. Optional identifiers, notes and the original filename are omitted.</p><p>Collection: {viome.biologicalDates.collectedOn||"not supplied"} · received: {viome.biologicalDates.receivedOn||"not supplied"} · reported: {viome.biologicalDates.reportedOn||"not supplied"}.</p><p className="panel-note">Collection dates remain separate from received and reported dates. Raw-document and general-purpose text fields are not accepted.</p></div>}
+        {viome&&pdfSource&&<><ViomeExtractionReview issues={pdfIssues} value={viome} disabled={isUploading||save.uncertain||!!save.saved||pdfEditing} onResolve={next=>{const parsed=parseReportDocument(JSON.stringify(next),"json");setPreview({source:next,parsed:parsed.parsed});setPdfIssues(rows=>rows.slice(1));setPdfReviewed(false);}}/><ViomeReviewEditor value={viome} onEditingChange={editing=>{setPdfEditing(editing);setPdfReviewed(false);}} disabled={isUploading||save.uncertain||!!save.saved} onChange={next=>{try{const parsed=parseReportDocument(JSON.stringify(next),"json");setPreview({source:next,parsed:parsed.parsed});setPdfReviewed(false);setInputError("");}catch{setInputError("Check the row correction before continuing.");}}} /><label className="flex min-h-11 items-start gap-3"><input type="checkbox" checked={pdfReviewed} disabled={isUploading||save.uncertain||!!save.saved||pdfEditing||pdfIssues.length>0} onChange={e=>setPdfReviewed(e.target.checked)} /><span>I reviewed the biological rows and categories against my source. They contain no personal identifiers.</span></label></>}
+        {viome&&<ViomeImportChoices key={user?.id} incoming={viome} disabled={isUploading||save.uncertain||!!save.saved} onDecision={updateImportDecision} />}
+        <p className="panel-note">{testDate ? `Test date you entered: ${format(testDate,"yyyy-MM-dd")}.` : 'No date entered. An exact date in the report will be used when present; otherwise its import date will be labelled separately.'} Scores and organism listings are not measured abundance.</p>
+        <details><summary>Recognized data & missing measurements</summary>
+          {preview.parsed.bacteria_percentages&&<section aria-label="Reported relative abundance" className="space-y-2">
+            <h3>Reported relative abundance</h3>
+            <p className="panel-note">Percentages from this source are not absolute organism counts or proof of activity.</p>
+            <dl tabIndex={0} aria-label="Reported taxa percentages" className="max-h-80 overflow-auto space-y-2">{Object.entries(preview.parsed.bacteria_percentages).map(([name,value])=><div className="flex justify-between gap-3" key={name}><dt className="min-w-0 break-words">{name}</dt><dd>{value}%</dd></div>)}</dl>
+          </section>}
+          <ImportedReportDetails report={preview.parsed}/>
+        </details>
+        {!isUploading&&!save.uncertain&&!save.saved&&<Button type="button" variant="outline" onClick={()=>{setPreview(null);setAttempted(false);setInputError("");setPdfSource(false);setPdfReviewed(false);setPdfEditing(false);setPdfIssues([]);}}>Change report or details</Button>}
+      </section>}
+      {reportError&&<p role="alert" tabIndex={-1} ref={errorRef} className="report-import-error">{reportError}</p>}
+      {reading&&pdfRead.current&&<Button type="button" variant="outline" onClick={()=>pdfRead.current?.abort()}>Cancel PDF reading</Button>}
+      {save.uncertain&&<p role="status">Keep this page open to retry the same import. Your original details are locked until the save is confirmed. <Link className="text-link" href={save.checkHref} target="_blank" rel="noopener">Check saved reports</Link></p>}
+      {save.saved&&<p role="status">Report saved. <Link className="text-link" href={save.checkHref}>Open saved report</Link></p>}
       <Button
         onClick={handleSubmit}
         className="w-full h-12"
-        disabled={!file && !manualData || isUploading}
+        disabled={(!preview&&!save.uncertain&&(showManualEntry ? !manualData.trim() : !file)) || isUploading || !!save.saved || !!preview&&pdfSource&&(!pdfReviewed||pdfEditing||pdfIssues.length>0)&&!save.uncertain || !!viome&&!importDecision&&!save.uncertain}
         data-testid="button-submit-upload"
       >
-        {isUploading ? 'Uploading...' : 'Analyze Microbiome'}
+        {reading&&!save.pending?"Reading report…":isUploading?"Saving your report…":save.saved?"Report saved":save.uncertain?"Retry saving report":preview?"Save report":"Review report"}
       </Button>
-    </div>
+      <details className="workspace-disclosure"><summary>Supported report formats</summary><p className="panel-note">Text-based Viome PDFs: up to 8 MB and 20 pages, local extraction only. Scanned, protected and unrecognized layouts are not supported. Synthetic layout checks do not certify compatibility with every provider report. JSON/CSV: up to 2 MB, including optional structured Viome findings or abundance percentages. Categories and organism lists stay separate from quantities. Raw sequence classification is not implemented.</p></details>
+    </main>
   );
 }

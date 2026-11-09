@@ -1,0 +1,19 @@
+# Athlete original-entry source contract — reader first
+
+ARC-UNIT-001 optional v1 metadata in existing encrypted settings/session/hydration payloads; no new table. Strict known fields and unit families, bounded numeric lexical tokens, source-kind tags. Each source field must match a known canonical value; zero is distinct from null, nonfinite and underflowed nonzero inputs are rejected. Existing integer-kcal team target rounding remains unchanged. No original entry backfill, personal-rule approval, copied-Profile original invention or numerical recommendation changes.
+
+Reader-only slice adds folded accessible original-vs-display disclosures for saved Athlete references, training calendar sessions and exact-ID hydration estimates. Legacy originals are explicitly unavailable. Current display preferences cannot rewrite or reconstruct retained originals. Strict refinements return invalid input without throwing on nonfinite source tokens. Shared numeric-token schema also tightens check-in metadata safely.
+
+The Athlete energy draft now retains reviewed energy units when shared preferences refresh; explicit Clear energy entry adopts the latest preference, invalidates existing target review and does not silently upgrade safety eligibility. Actual browser verifies2500kcal remains2500kcal after switching preference to kJ, then clear adopts kcal on a later change. No UI capture producer in this reader commit; verify readerLIVE before enabling new metadata writes.
+
+Evidence:534/534 PASS202662ms; final11 focused source/check-in/review/crosswalk checks, types/build, actual App reader kg/kJ/L/zero/legacy/reload320–1440 and draft-energy refresh/save/clear journeys pass. Actual encrypted experience storage preserves source fields through settings/session idempotent retry/hydration read/export and isolates owners without extra observations. Developer/local evidence only; no independent physical VoiceOver/Design/clinical approval or new screenshot gallery for small disclosures.
+
+Existing isolated CI286555c run42066854547 job127383209291 SUCCESS verifies schema reconciliation/types/tests/build/live persistence after0016bootstrap fix. That is an isolated synthetic PR database, not proof of Render's database binding. Public images remain ungated. Roll back capture before reader; retain encrypted sources and never backfill unknown originals.
+
+## New capture after reader deployment
+
+Reader85f376b7d06cc118dfad52ad804f57691190c6ef verified RenderLIVE dep-dbmd34ivcj2c73e3af3g before producer publication. New manual Athlete mass/energy, session fluid and touched hydration entries retain exact original strings and their reviewed units. Unit-switch metadata retains the first manual mass lexeme. Loaded and copied canonical mass uses an explicit original-unknown conversion basis; manually retyping the same copied mass changes provenance to manual. Copying Profile never fabricates typed originals. Untouched/default hydration zeros do not acquire invented original tokens; explicitly typed zero does.
+
+Unchanged original fields are preserved in both current UI and server storage for unaware editors. A changed value clears a now-incompatible original; changing it back cannot resurrect that original. These compatibility merges occur under the existing owned settings/record transaction lock. No extra observation, timestamp inference, clinical output or database table. Existing training receipt identity and export semantics retained.
+
+Final537/537 PASS194068ms after server compatibility changes;11focused source/review/receipt/owner guards, types/build, actual App source capture→shared preference refresh→save→reload disclosure and existing mixed-unit editor/source/default/override/review/320–1440/200% surrogate journeys PASS. Prior full537 before final server merge is not substituted for this final run. No independent device acceptance claimed.

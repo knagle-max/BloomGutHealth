@@ -1,0 +1,18 @@
+# Bloom — Microbial Composition Profile UX Contract
+Version 1.0 | 2026-10-30 | Branding & UX | Proposed for Architect review
+
+**Authoritative interaction direction.** In My Biology → Microbiome → **Microbial composition & change**, taxon names are accessible full-row controls opening an in-context bottom sheet on mobile, side pane on desktop. Preserve table sorting, selected sample, date, original percentage, scroll and keyboard focus when dismissed. Screen must conform to Bloom Everyday evergreen #246B50, existing typography, organic warm surfaces and light/dark contrast. Do not invent alternative navigation.
+
+**Row:** Full italicized taxon name, source-reported exact percentage or "Not reported", resolution/method if known, chevron, >=44px hit area. Stable taxon identity and original report spelling. Long names wrap without clipping.
+
+**Sheet:** Visible accessible close control, title organism name, report observation section (date, actual source %, method, synthetic flag). Short default information, then sections IN ORDER: (1) What this organism is (2) What research has found (3) Nutrients & molecules (4) Diet studies (5) Your report: what it does and doesn't show (6) Studies & limitations. Note the first descriptive section is mandatory in addition to the five research/context disclosures. One expanded section at a time on mobile. Focus trapped/returned; Escape/back close; 320px, 200% zoom, screen reader and reduced motion.
+
+**Science presentation:** Evidence applies to individual claims, never permanent organism-wide green/red grades. Claim badges Human intervention / Observational / Laboratory / Animal / Insufficient, sourced with studied population, resolution, conditions, results and limitations. Distinguish substrate → transformation → possible metabolite and studied potential vs directly measured personal metabolite; relative abundance is NOT measured butyrate, toxin, methane flux or infection. No optimal abundance goals, no treatment/eradication. Methanobrevibacter smithii is archaeal. Species E. coli or Klebsiella cannot imply strain virulence.
+
+**Missing/withdrawn:** All 20 fixture taxa remain clickable. For unavailable reviewed content display "Reviewed research profile not yet available" with original observation; never generate unsourced functions. Source withdrawal invalidates explanatory claim, not historical observation. Never show missing percentage as zero. Synthetic reports conspicuously labeled.
+
+**Visual:** Mobile sheet warm white, evergreen headings, botanical small icon if helpful but no inaccurate scientific illustration; 16px body, 24–30px title, 8/12/16/24px spacing, 16–24px radius; quiet evidence chips and subtle separators, no blanket organism risk colors. Desktop side pane uses same content.
+
+**Developer acceptance:** all 20 rows route to correct identity/profile or unknown; stable source values, method, comparison, source date; full keyboard/screen reader flow, focus return, Escape, 320px, 200% zoom, dark/light; mixed assays, retractions, synthetic examples, privacy and cross-account separation. Developer reports exact head SHA, screenshots, tests; Biology independently approves every scientific claim; Branding & UX independently signs off visual and interaction fidelity. No app implementation or clinical approval is claimed here.
+
+Source crosswalk: UT-TAXON-2801–2808, BIO-TAXON-2901–2905. This contract supersedes any suggestion to assign a permanent good/bad species category. Do not duplicate the existing organism-profile catalogue or imported report data.

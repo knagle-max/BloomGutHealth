@@ -67,8 +67,7 @@ export async function setupVite(app: Express, server: Server) {
   });
 }
 
-export function serveStatic(app: Express) {
-  const distPath = path.resolve(import.meta.dirname, "public");
+export function serveStatic(app: Express, distPath = path.resolve(import.meta.dirname, "public")) {
 
   if (!fs.existsSync(distPath)) {
     throw new Error(
@@ -77,6 +76,8 @@ export function serveStatic(app: Express) {
   }
 
   app.use(express.static(distPath));
+  app.use("/science", (_req,res)=>{res.status(404).end();});
+  app.use(["/images/editorial", "/brand/visual-v2"], (_req,res)=>{res.status(404).end();});
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {

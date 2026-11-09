@@ -1,0 +1,374 @@
+{
+  "sourceCommit": "16b8546837356b4ee49a694e0423bc9216ca1eef",
+  "sourceReceipt": "design/visual-system/r4-m1-media/DELIVERY_RECEIPT.json",
+  "status": "M1 engineering implemented and verified; consolidated owner review candidate, no release/main authorization",
+  "mediaRows": [
+    {
+      "slot": "today",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-today-meadow.png",
+          "width": 1944,
+          "height": 809,
+          "mode": "RGB",
+          "bytes": 2042924,
+          "sha256": "597c6009b05a42e05c414d2d574b6661e394bd3ae3035c1d1af4833529b2e927",
+          "source_filename": "a_wide_cinematic_nature_photo_of_a_sunlit_meadow.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-today-meadow.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 58784,
+          "sha256": "72f76225f898d52c5ee73109c6cdaccac60796e69be5df2e59b12410dbf5546e",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-today-meadow@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 134328,
+          "sha256": "e3f268196905cb43eea68137a5d050f8115664a60b601bb2a9b97c80c1fc2ce0",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "focalPoint": "70% 50%",
+      "imageHeights3203907681440": [
+        96,
+        120,
+        156,
+        176
+      ],
+      "fallback": "/brand/visual-v2/batch-1-original/hero-today.svg",
+      "conceptualLabel": "If active SVG is conceptual, same visible text is retained",
+      "stateRules": "After journal check; hidden on journal loading/error; action/context/safety details precede passive media",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "slot": "food",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen.png",
+          "width": 1942,
+          "height": 809,
+          "mode": "RGB",
+          "bytes": 3270561,
+          "sha256": "8bc288276903d53de16f11c7a696957849082423b78bb93ce8377b5136763ec9",
+          "source_filename": "a_clean_minimal_food_still_life_on_a_neutral_beig.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 101156,
+          "sha256": "8071380f51d748e435b3438c502c70e6d6c5690a7fe1f307dd792e955480df2b",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-food-oatmeal-linen@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 324538,
+          "sha256": "64e01ab7693cbeabced8ae938a6bd8db3bcae2177048ec4bff83e9a5c9c419e0",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "focalPoint": "78% 50%",
+      "imageHeights3203907681440": [
+        112,
+        144,
+        180,
+        220
+      ],
+      "fallback": "/brand/visual-v2/batch-2-heroes/hero-food.svg",
+      "conceptualLabel": "If active SVG is conceptual, same visible text is retained",
+      "stateRules": "Chooser only on LogMeal; Journal intro hidden during active add/edit form",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "slot": "biology",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells.png",
+          "width": 1944,
+          "height": 809,
+          "mode": "RGB",
+          "bytes": 1871197,
+          "sha256": "e68f40097a2f6b5a6435362e844437530ad8bdcf029ed3c0abc9eb146fc65861",
+          "source_filename": "a_wide_cinematic_high_detail_3d_rendered_microsc.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 30514,
+          "sha256": "cd6fde190758eb7976398141fd939eba07903618b964a59e7c8251945aa80f74",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-biology-abstract-cells@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 73780,
+          "sha256": "c42596c2190e301486f2b43125468905d0390e518c80e64bfcd59ab42b96ac68",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "focalPoint": "73% 50%",
+      "imageHeights3203907681440": [
+        100,
+        128,
+        160,
+        200
+      ],
+      "fallback": "/brand/visual-v2/batch-4-food-science/concept-microbe-community.svg",
+      "conceptualLabel": "Illustrative, not your data",
+      "stateRules": "Non-data intro only on Biology/Gut; source values and organism portraits are separate",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "slot": "explore",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro.png",
+          "width": 1942,
+          "height": 809,
+          "mode": "RGB",
+          "bytes": 1906019,
+          "sha256": "dc113432d95e0b4edde7c02861532aee794161d0f4655b29302a8cc838374fed",
+          "source_filename": "a_crisp_photorealistic_macro_nature_photograph_in.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 38196,
+          "sha256": "b99386cef0cf1d4326040aa2446fbde13f128f51c1fa284aef18fc39118ee98d",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-explore-blueberry-macro@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 91908,
+          "sha256": "b29f0c4d321601c0bf4029f20183aca4a63af332b29ab6ccc7c4786afa013763",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "focalPoint": "80% 50%",
+      "imageHeights3203907681440": [
+        104,
+        132,
+        168,
+        200
+      ],
+      "fallback": "/brand/visual-v2/batch-2-heroes/hero-explore.svg",
+      "conceptualLabel": "If active SVG is conceptual, same visible text is retained",
+      "stateRules": "Intro above headline, general evidence/subject/data context unchanged",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "slot": "athlete",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/heroes/bloom-athlete-mountains.png",
+          "width": 1944,
+          "height": 809,
+          "mode": "RGB",
+          "bytes": 2149242,
+          "sha256": "fcb5dfd8b83656bbc553338a93fd1af7660275dc417e6cfaf5120e5e7bbe1a88",
+          "source_filename": "a_wide_cinematic_landscape_photo_a_serene_mounta.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-athlete-mountains.webp",
+          "width": 1200,
+          "height": 500,
+          "bytes": 49580,
+          "sha256": "1b8579ef1ead1e509cf30a0473263d56bc875203ae704202864adfd505f6ad77",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": false
+        },
+        {
+          "file": "client/public/images/editorial/heroes/bloom-athlete-mountains@2x.webp",
+          "width": 2400,
+          "height": 1000,
+          "bytes": 135094,
+          "sha256": "61a6950589f88d71cd635d46a2422037aa18a98eb66a0b0395be9363ebddcd84",
+          "variant": "2x",
+          "original_detail_upscaled": true,
+          "webp_alpha_verified": false
+        }
+      ],
+      "focalPoint": "75% 45%",
+      "imageHeights3203907681440": [
+        112,
+        144,
+        180,
+        220
+      ],
+      "fallback": "/brand/visual-v2/batch-2-heroes/hero-athlete.svg",
+      "conceptualLabel": "If active SVG is conceptual, same visible text is retained",
+      "stateRules": "Overview only after source check; no media on calendar/day failure; status/action/eligibility remain before decoration",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "slot": "progress",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 1131543,
+          "sha256": "f849d3fbfc18ac26b3067c6d014568916275577e152d62dba20736b55852c6cf",
+          "source_filename": "a_crisp_high_resolution_isolated_botanical_illustr.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 48416,
+          "sha256": "3f4359731ac1566acf924321715f6753cb03fb3fcc67fde09493435fefd793b3",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 155186,
+          "sha256": "2e852fa7510187e48ae2a54bc73b341c58e53968d9602db38c49e6b9d6e6adad",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "focalPoint": "contain",
+      "imageHeights3203907681440": [
+        0,
+        0,
+        96,
+        120
+      ],
+      "fallback": "/brand/visual-v2/batch-5-system-onboarding/ornament-botanical-branch.svg",
+      "conceptualLabel": "If active SVG is conceptual, same visible text is retained",
+      "stateRules": "Header-only reserved column; no image below768px; not inside plots or units",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    },
+    {
+      "slot": "profile",
+      "source": "M1-D D3/D4/D5",
+      "sourceFiles": [
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.png",
+          "width": 1254,
+          "height": 1254,
+          "mode": "RGBA",
+          "bytes": 1131543,
+          "sha256": "f849d3fbfc18ac26b3067c6d014568916275577e152d62dba20736b55852c6cf",
+          "source_filename": "a_crisp_high_resolution_isolated_botanical_illustr.png",
+          "original_manifest_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+          "width": 600,
+          "height": 600,
+          "bytes": 48416,
+          "sha256": "3f4359731ac1566acf924321715f6753cb03fb3fcc67fde09493435fefd793b3",
+          "variant": "1x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        },
+        {
+          "file": "client/public/images/editorial/cutouts/bloom-three-leaf-sprig@2x.webp",
+          "width": 1200,
+          "height": 1200,
+          "bytes": 155186,
+          "sha256": "2e852fa7510187e48ae2a54bc73b341c58e53968d9602db38c49e6b9d6e6adad",
+          "variant": "2x",
+          "original_detail_upscaled": false,
+          "webp_alpha_verified": true
+        }
+      ],
+      "focalPoint": "contain",
+      "imageHeights3203907681440": [
+        0,
+        0,
+        96,
+        120
+      ],
+      "fallback": "/brand/visual-v2/batch-5-system-onboarding/ornament-botanical-branch.svg",
+      "conceptualLabel": "If active SVG is conceptual, same visible text is retained",
+      "stateRules": "Header-only reserved column; no image below768px; not inside account/consent/edit controls",
+      "localBrowserStatus": "IMPLEMENTED_AND_TESTED",
+      "independentAcceptance": "NOT_GRANTED"
+    }
+  ],
+  "packets": {
+    "M0": "Existing router/AppShell/CSS/source/media audited; prior provisional exports retired, no duplicate active photo target",
+    "M1": "87 original SVG/public hashes and actual local HTTP status/MIME/byte digests PASS",
+    "M2": "Strict passive slot component; WebP/SVG404, offline, source/variant reset, DPR2, conceptual fallback label and no-flag/forced-color checks PASS",
+    "M3": "Today authored image and source-confirmed empty-journal SVG, action/source ordering and128 responsive cases PASS",
+    "M4": "Food/Journal/Biology/Gut/Explore prescribed media; source/form conditions and detail discovery PASS",
+    "M5": "Athlete navy banner; Progress/Profile desktop-only ornaments with reserved header columns PASS",
+    "M6": "Exact original CSS prefix plus exact final M1-D D4 in one canonical import; D3 heights;128 theme/width cases plus18 zoom cases and9 200% collision checks PASS",
+    "M7": "39 exact supplied image hashes/bytes/dimensions; actual decode/alpha/upscale declarations, local126 HTTP200 MIME/digest responses; production public checker tested for39 responses and added to existing CI",
+    "M8": "Domain regressions and actual Food/set/Profile/Biology journeys PASS;667/667 full regression, exact-head CI42491219281 SUCCESS and Render LIVE. Independent/human/device acceptance remains unperformed."
+  },
+  "biologyRestoration": {
+    "status": "IMPLEMENTED_AND_TESTED",
+    "labs": "Interactive analyte names grouped only by actual source sections; direct adjacent source-qualified details use existing history/context/trends, with original mutation controls. Explicit Back restores trigger; deep link supported; zero/provisional/source-only cases tested without writes.",
+    "organisms": "Reported organisms visible by default, direct browse action, existing comparison/filter/name profile path retained. Five calm sections retain all prior source observations, research and interpretation caveats; keyboard/Back/Escape/report switch/paused/offline tests pass."
+  },
+  "knownLimits": [
+    "No physical VoiceOver or independent Designer/human/device acceptance claimed",
+    "Raster commercial rights/model/prompt remain unknown; no application activation gate added",
+    "2x heroes/alternate oatmeal upscaling retained and explicitly declared, not new native detail",
+    "Render database binding/production schema acceptance unchanged; no production DB or main operation",
+    "Existing workspace proxy403 is not reused as proof of image delivery; new CI performs read-only public Render image checks"
+  ],
+  "v06": "Paused; existing stash untouched; M1 precedes any new RC sign-off.",
+  "productionValidation": {
+    "localBuiltBrowser": "PASS72cases/9routes; actual compiled app/JS/CSS/art; all API responses synthetic/intercepted; compute-only Athlete POST intercepted, writes denied",
+    "publicHTTP": "PASS39 public original images and compiledCSS in final CI",
+    "hostedBrowser": "PASS72 hosted compiled frontend cases in final CI, synthetic intercepted APIs and no user mutations",
+    "CIOutcome": "SUCCESS42491219281 at5fda77550533b00d75b7071afceceac9fc4f5a1c"
+  },
+  "consolidatedCandidate": "docs/verification/V05_R4_M1_RELEASE_CANDIDATE_20261108.json"
+}

@@ -1,0 +1,34 @@
+{
+  "scope": "Approved Food task hierarchy and single primary action; existing review/save/source contract unchanged",
+  "approvedSource": "cd4e749f04cb066feb6161bd99b2f0723a5713a5:design/bloom/ux-coherence/2026-11-05/SCREEN_BY_SCREEN_IMPLEMENTATION_DIRECTION.md, approved in SCREEN_BY_SCREEN_UX_ARCHITECT_DECISION_2026-11-05",
+  "baseline": "62499d8383f3beabd9ff883551363caa84653328",
+  "sourceHashes": {
+    "client/src/components/MealAnalysis.tsx": "45f58e84f3497e97bf8e54f7fd9eb1b65e39d6398c3a02771fff8bcee1884136",
+    "client/src/pages/LogMeal.tsx": "61a9ac9b64972745bb8bfee1234252672bcf67ef99a2cc5a2c10d5cb5342f43d",
+    "client/src/brand.css": "be18afe5d02cfc78be25d13f295f45aa1a7b431c0633df85d8076274191d3b21",
+    "client/src/visual-overhaul.css": "16761c474c543bb14d8f2a33a768a40ec7f373ff0a933fccfd2fb71a7574d985",
+    "scripts/qa/meal-household-portions-journey.mjs": "d9f1167979354fede0c8f46f4ce9d09f4af6d7f4afac30b34e974d16f15f80e2",
+    "scripts/qa/meal-presave-review-journey.mjs": "2c12726747c2831153f7b2cdd20234942895ae6684a6af6ef10e7d9e9cf61fe1"
+  },
+  "focusedTests": {
+    "passed": 9,
+    "elapsedMs": 4824.837363
+  },
+  "types": "PASS",
+  "productionBuild": "PASS",
+  "actualBrowserHttpSql": [
+    "two-food draft unsaved until confirmation; edit one200g portion, dirty totals withdrawn, source update, pending draft frozen, committed response lost then exact receipt retry recovers one row",
+    "pizza2slices\u21923large slices372g, individual source unit/reload/reuse/grams,320390lightdark/root font200percent no overflow",
+    "actual source change prevents insertion and retracts totals; explicit Update review restores valid source then one Save",
+    "DOM food rows precede compact totals; unchanged review Update is quiet, dirty update is primary with Save disabled",
+    "390px actual two-food Save target44px and bottom above navigation",
+    "Profile grouped landing/privacy/password-clear/mixed units/draft/hashes/320390dark/200percent integration passes; no erasure/write",
+    "Genetics selected SNP consent/source/privacy/unknown strand/build/assay/quality/minimized post/encrypted save/reload/320 integration passes"
+  ],
+  "integratedVisualMatrix": "48 states/six routes/four widths/lightdark and root-font200percent/no overflow/reduced-motion on integrated UI before final Food-review copy/row compaction (default entry screen unaffected). Art stylesheet remains paint-only; responsive Progress styles moved unchanged into UX-owned brand.css.",
+  "fullSuite": "Mandatory hosted CI retained; no unchanged local backend full-suite repeat for ordinary UI composition",
+  "physicalVoiceOver": "NOT_RUN",
+  "independentReview": "NOT_GRANTED",
+  "packet": "docs/review/ui-overhaul-20261107/food-review/index.html",
+  "v06Checkpoint": "f0fd36479176b1daa7b8c5525306292b10670d8f stash untouched. Future restore must merge MealAnalysis summary/recordedMeal props, capability map and private-source journey rather than overwrite UI work."
+}

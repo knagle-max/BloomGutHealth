@@ -1,0 +1,2104 @@
+{
+  "version": 1,
+  "registryVersion": "2026-10-24-preliminary",
+  "scope": "Initial source crosswalk for all registry IDs; not exhaustive runtime authorization or approval evidence",
+  "entries": [
+    {
+      "featureId": "bloom.profile.basics",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Profile.tsx"
+        ],
+        "api": [
+          "server/routes.ts",
+          "server/auth-routes.ts",
+          "server/profile-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/display-units.ts",
+          "server/shared-rate-limit.ts",
+          "server/profile-source.ts",
+          "server/profile-measurement-source.ts",
+          "server/profile-errors.ts",
+          "shared/profile-measurement-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/wellness-context.ts",
+          "server/wellness-context.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.onboarding",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Dashboard.tsx",
+          "client/src/components/TodayFocus.tsx",
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/EverydayStart.tsx",
+          "client/src/App.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts",
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/experience.ts",
+          "shared/goal-guidance.ts",
+          "shared/today-focus.ts",
+          "server/planning-context.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/biology-source-inventory.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.goals.multi",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Dashboard.tsx",
+          "client/src/components/TodayFocus.tsx",
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/WellnessChoiceDetails.tsx",
+          "client/src/lib/wellness-choices.ts",
+          "client/src/components/MovementSourceDetails.tsx"
+        ],
+        "api": [
+          "server/experience-routes.ts",
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/experience.ts",
+          "shared/goal-guidance.ts",
+          "shared/today-focus.ts",
+          "server/planning-context.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/wellness-context.ts",
+          "server/wellness-context.ts",
+          "shared/wellness-actions.ts",
+          "server/wellness-actions.ts",
+          "server/wellness-observations.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/experience-storage.ts",
+          "server/wellness-choice-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.today.dashboard",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Dashboard.tsx",
+          "client/src/components/TodayFocus.tsx",
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/TodayStatus.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteHome.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/TodayFoodSummary.tsx",
+          "client/src/main.tsx",
+          "client/src/components/ui/dialog.tsx",
+          "client/src/components/ui/sheet.tsx",
+          "client/src/content/bloomCopy.ts",
+          "client/src/components/PremiumIcon.tsx",
+          "client/src/components/BottomNav.tsx",
+          "client/src/components/EditorialMedia.tsx",
+          "client/src/content/editorial-media.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts",
+          "server/precision-routes.ts",
+          "server/vite.ts"
+        ],
+        "logicOrJobs": [
+          "shared/experience.ts",
+          "shared/goal-guidance.ts",
+          "shared/today-focus.ts",
+          "server/planning-context.ts",
+          "shared/athlete-calendar.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "client/src/lib/dashboard-data.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.search.basic",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/LogMeal.tsx",
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/RecentMealSource.tsx",
+          "client/src/components/FoodCompositionExplorer.tsx",
+          "client/src/components/FoodMassInput.tsx",
+          "client/src/components/IngredientMassEntry.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/products.ts"
+        ],
+        "logicOrJobs": [
+          "shared/products.ts",
+          "server/meal-intelligence.ts",
+          "shared/product-search.ts",
+          "shared/barcodes.ts",
+          "server/food-catalog.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/nutrition-display.ts",
+          "shared/food-intelligence.ts",
+          "shared/ingredient-mass-entry.ts",
+          "shared/ingredient-mass-capture.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/private-product-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts",
+          "shared/catalogue-mass-handoff.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.usda.branded",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/components/ProductPicker.tsx"
+        ],
+        "api": [
+          "server/products.ts",
+          "server/planner-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/usda-branded.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/private-product-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts"
+        ]
+      },
+      "observation": "Existing owner-authorized branded preview remains; source access is distinct from exact Canadian SKU and Legal acceptance.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.open_food_facts",
+      "implementation": "DENIED_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [],
+        "api": [
+          "server/products.ts"
+        ],
+        "logicOrJobs": [],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/private-product-storage.ts"
+        ],
+        "cache": [
+          "server/products.ts"
+        ]
+      },
+      "observation": "Source-specific approval/configuration gate; no OFF activation inferred from USDA availability.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.private_labels",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/LogMeal.tsx",
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/products.ts"
+        ],
+        "logicOrJobs": [
+          "shared/products.ts",
+          "server/meal-intelligence.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/private-product-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.barcode",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/LogMeal.tsx",
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/products.ts"
+        ],
+        "logicOrJobs": [
+          "shared/products.ts",
+          "server/meal-intelligence.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/private-product-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.meal_logging",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/LogMeal.tsx",
+          "client/src/components/ProductPicker.tsx",
+          "client/src/pages/NutritionHistory.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/SavedMeals.tsx",
+          "client/src/components/MealAnalysis.tsx",
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/FoodCompositionExplorer.tsx",
+          "client/src/components/FoodMassInput.tsx",
+          "client/src/components/IngredientMassEntry.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/products.ts",
+          "server/nutrition-history.ts",
+          "server/nutrition-targets.ts",
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/products.ts",
+          "server/meal-intelligence.ts",
+          "server/ai-configuration.ts",
+          "server/metered-ai.ts",
+          "server/spend-ledger.ts",
+          "server/provider-circuit.ts",
+          "server/ai-costing.ts",
+          "server/recipe-ranking.ts",
+          "server/recipe-generation.ts",
+          "shared/nutrition-summary.ts",
+          "shared/meal-portions.ts",
+          "server/preference-source.ts",
+          "server/settings-source.ts",
+          "server/meal-review-source.ts",
+          "shared/food-progress.ts",
+          "shared/measurement-entry.ts",
+          "shared/nutrition-display.ts",
+          "shared/food-intelligence.ts",
+          "shared/ingredient-mass-entry.ts",
+          "shared/ingredient-mass-capture.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/meal-save.ts",
+          "server/private-product-storage.ts",
+          "server/meal-edit.ts",
+          "server/meal-records.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts",
+          "client/src/lib/planning-cache.ts",
+          "client/src/lib/meal-cache.ts",
+          "shared/catalogue-mass-handoff.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Monthly/yearly owner-only recorded nutrition reuses canonical coverage; unknown/zero/partial contributions and historical denominators remain explicit. Journal planning references distinguish explicit examples from estimates using complete actual adult profile inputs; no demographic defaults or clinical clearance. Unified owned meal edits reuse the reviewed canonical composer; atomic original-record revision and latest-command receipt protect stale/concurrent/dropped-response updates without creating a second meal.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.macro_micro",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/LogMeal.tsx",
+          "client/src/components/ProductPicker.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/FoodCompositionExplorer.tsx",
+          "client/src/components/FoodMassInput.tsx",
+          "client/src/components/IngredientMassEntry.tsx",
+          "client/src/components/NutrientDefinitionDisclosure.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/products.ts"
+        ],
+        "logicOrJobs": [
+          "shared/products.ts",
+          "server/meal-intelligence.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts",
+          "shared/food-progress.ts",
+          "shared/nutrition-summary.ts",
+          "shared/measurement-entry.ts",
+          "shared/nutrition-display.ts",
+          "shared/food-intelligence.ts",
+          "shared/ingredient-mass-entry.ts",
+          "shared/ingredient-mass-capture.ts",
+          "shared/nutrient-definitions.ts",
+          "shared/nutrient-source-snapshot.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/private-product-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts",
+          "shared/catalogue-mass-handoff.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.photo_ai",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/DevelopmentPhotoPreview.tsx",
+          "client/src/pages/LogMeal.tsx",
+          "client/src/components/ExperimentalSettings.tsx",
+          "client/src/components/FoodEntryChooser.tsx",
+          "client/src/components/CompanionHero.tsx"
+        ],
+        "api": [
+          "server/experience-routes.ts",
+          "server/capability-access.ts"
+        ],
+        "logicOrJobs": [
+          "server/capability-policy.ts",
+          "shared/development-features.ts",
+          "server/supplemental-grant.ts",
+          "server/review-runtime-audit.ts",
+          "server/index.ts",
+          "server/settings-source.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts"
+        ]
+      },
+      "observation": "Direct image inference hard denied; separate explicit synthetic UI display scope allows local preview only. OFF/role revocation clears local image/cache; no real grant.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.allergy_filters",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/MealPlanner.tsx",
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/meal-intelligence.ts",
+          "shared/weekly-planner.ts",
+          "server/planning-context.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/plan-history.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Manual/curated preview rules preserved; optional paid text paths separately default denied by absent reviewed executor.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.food.recommendations",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/MealPlanner.tsx",
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts",
+          "client/src/pages/PlanDay.tsx",
+          "client/src/components/MealChoiceConstraints.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/precision-routes.ts",
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/meal-intelligence.ts",
+          "shared/weekly-planner.ts",
+          "server/ai-configuration.ts",
+          "server/metered-ai.ts",
+          "server/spend-ledger.ts",
+          "server/provider-circuit.ts",
+          "server/ai-costing.ts",
+          "server/recipe-ranking.ts",
+          "server/recipe-generation.ts",
+          "server/planning-context.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts",
+          "shared/practical-planner.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/plan-history.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "server/products.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Manual/curated preview rules preserved; optional paid text paths separately default denied by absent reviewed executor.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.exercise.basic",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteHome.tsx",
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/pages/ActivityLog.tsx",
+          "client/src/pages/Progress.tsx",
+          "client/src/components/TrainingSetsEditor.tsx",
+          "client/src/components/ActivityReview.tsx",
+          "client/src/components/ActivitySetEditor.tsx",
+          "client/src/components/ActivityWeekSummary.tsx",
+          "client/src/lib/useDraftUnits.ts",
+          "shared/athlete-entry-source.ts",
+          "client/src/components/AthleteEntrySource.tsx",
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/athlete.ts",
+          "shared/athlete-calendar.ts",
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/activity-capture.ts",
+          "shared/activity.ts",
+          "shared/experience.ts",
+          "shared/training-set-history.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/experience-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.exercise.sessions",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/TodayStatus.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteHome.tsx",
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/pages/ActivityLog.tsx",
+          "client/src/pages/Progress.tsx",
+          "client/src/components/TrainingSetsEditor.tsx",
+          "client/src/components/ActivityReview.tsx",
+          "client/src/components/ActivitySetEditor.tsx",
+          "client/src/components/ActivityWeekSummary.tsx",
+          "client/src/lib/useDraftUnits.ts",
+          "shared/athlete-entry-source.ts",
+          "client/src/components/AthleteEntrySource.tsx",
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/athlete.ts",
+          "shared/athlete-calendar.ts",
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/activity-capture.ts",
+          "shared/activity.ts",
+          "shared/experience.ts",
+          "shared/training-set-history.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/experience-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.exercise.recovery",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/TodayStatus.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/lib/useDraftUnits.ts",
+          "shared/athlete-entry-source.ts",
+          "client/src/components/AthleteEntrySource.tsx",
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/athlete.ts",
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.exercise.advanced",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/lib/useDraftUnits.ts",
+          "shared/athlete-entry-source.ts",
+          "client/src/components/AthleteEntrySource.tsx",
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/athlete.ts",
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing safety-gated deterministic athlete preview is not approval for advanced/clinical/predictive coaching; scope reconciliation required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.body.trends",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Progress.tsx",
+          "client/src/components/LabTrend.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/LabExplorer.tsx",
+          "client/src/components/LabCategoryIcon.tsx",
+          "client/src/components/CheckinEntrySource.tsx",
+          "client/src/components/LabMarkerEducation.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/lab-history.ts",
+          "shared/food-progress.ts",
+          "shared/nutrition-summary.ts",
+          "shared/lab-explorer.ts",
+          "shared/scientific-visuals.ts",
+          "shared/checkin-entry-source.ts",
+          "shared/numeric-entry-token.ts",
+          "shared/biology-content-types.ts",
+          "shared/biology-labs.ts",
+          "shared/biology-lab-observation.ts",
+          "shared/biology-content.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.lab.capture",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/QuickLabEntry.tsx",
+          "client/src/components/LabUnitReview.tsx",
+          "client/src/components/LabSourceHistory.tsx",
+          "client/src/components/BloodworkSourceOverview.tsx",
+          "client/src/components/LabSourceManagement.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/lab-paste.ts",
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/lab-history.ts",
+          "shared/lab-reimport.ts",
+          "shared/lab-text-file.ts",
+          "shared/lab-pdf-file.ts",
+          "client/src/lib/lab-pdf-reader.ts",
+          "shared/lab-image-file.ts",
+          "client/src/lib/lab-image-reader.ts",
+          "client/src/lib/lab-image-worker.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/precision-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Existing supported manual/source-text review, local text PDF and bounded local English PNG/JPEG transcription into the same editable review/unit/atomic-import path. Original image stays on-device and is not stored; no external laboratory connector, autonomous clinical confirmation, paid inference or source/clinical approval. Image-model asset hashes/licences are separately inventoried; all authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.lab.trend",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Progress.tsx",
+          "client/src/components/LabTrend.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/LabSourceHistory.tsx",
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/BloodworkSourceOverview.tsx",
+          "client/src/components/LabExplorer.tsx",
+          "client/src/components/LabCategoryIcon.tsx",
+          "client/src/components/CheckinEntrySource.tsx",
+          "client/src/components/LabMarkerEducation.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/lab-history.ts",
+          "shared/food-progress.ts",
+          "shared/nutrition-summary.ts",
+          "shared/lab-explorer.ts",
+          "shared/scientific-visuals.ts",
+          "shared/checkin-entry-source.ts",
+          "shared/numeric-entry-token.ts",
+          "shared/biology-content-types.ts",
+          "shared/biology-labs.ts",
+          "shared/biology-lab-observation.ts",
+          "shared/biology-content.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/precision-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.lab.clinical_interpretation",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/CheckinEntrySource.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/checkin-entry-source.ts",
+          "shared/numeric-entry-token.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/precision-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Recorded flags/general reviewed context must remain distinct from diagnosis, urgent triage or treatment. Detailed clinical activation remains separately gated.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.progress.response",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Progress.tsx",
+          "client/src/components/LabTrend.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/FoodProgress.tsx",
+          "client/src/components/LabExplorer.tsx",
+          "client/src/components/LabCategoryIcon.tsx",
+          "client/src/components/CheckinEntrySource.tsx",
+          "client/src/components/LabMarkerEducation.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/lab-history.ts",
+          "shared/food-progress.ts",
+          "shared/nutrition-summary.ts",
+          "shared/lab-explorer.ts",
+          "shared/scientific-visuals.ts",
+          "shared/checkin-entry-source.ts",
+          "shared/numeric-entry-token.ts",
+          "shared/biology-content-types.ts",
+          "shared/biology-labs.ts",
+          "shared/biology-lab-observation.ts",
+          "shared/biology-content.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.experiment.nof1",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/ExperimentObservations.tsx",
+          "client/src/components/ExperimentSourceHistory.tsx",
+          "client/src/components/WeeklyReview.tsx"
+        ],
+        "api": [
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/experiment-review.ts",
+          "server/settings-source.ts",
+          "server/experience-storage.ts",
+          "shared/experience.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Owned self-reported routine observations, encrypted previous saved versions, review/export and parent-scoped deletion only. Missing history storage is explicitly unavailable, not an empty archive; older deployments retain existing edit behavior. No clinical, research, causal-effect or adaptive treatment approval.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.microbiome.import",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Upload.tsx",
+          "client/src/pages/Microbiome.tsx",
+          "client/src/components/OrganismPortrait.tsx",
+          "client/src/components/ViomeReviewEditor.tsx",
+          "client/src/components/FileUploadZone.tsx",
+          "client/src/components/ViomeImportChoices.tsx",
+          "client/src/components/ViomeSavedContext.tsx",
+          "client/src/components/MicrobiomeReportManagement.tsx"
+        ],
+        "api": [
+          "server/report-routes.ts",
+          "server/routes.ts",
+          "server/profile-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/report-import.ts",
+          "server/analysis-boundary.ts",
+          "ml_service/main.py",
+          "server/report-analysis.ts",
+          "server/profile-source.ts",
+          "shared/scientific-visuals.ts",
+          "server/profile-measurement-source.ts",
+          "server/profile-errors.ts",
+          "shared/profile-measurement-source.ts",
+          "shared/viome-pdf.ts",
+          "shared/viome-findings.ts",
+          "shared/structured-report.ts",
+          "client/src/lib/viome-pdf-reader.ts",
+          "shared/viome-report-context.ts",
+          "server/structured-report-storage.ts",
+          "server/shared-rate-limit.ts",
+          "shared/biology-source-inventory.ts",
+          "shared/report-management.ts",
+          "server/report-records.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts",
+          "client/src/lib/useStructuredReportSave.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Bounded browser-local Viome text-PDF adapter uses typed findings only, no original PDF/metadata/raw-text transmission. Synthetic layouts do not certify genuine provider fidelity or independent PII exclusion. Explicit owner-confirmed compatible companion references remain separate biological sources. Exact owned reimport reuse is read-only and creates no observations. Explicit owned report deletion applies to legacy/manual/quantitative/current qualitative sources, requires active actor/scope/If-Match, removes exclusively dependent legacy records transactionally and unlinks surviving companions/shared owned references. Missing-in-account retries are indistinguishable from foreign references and never claim a foreign record was deleted. Other reports/categories are retained; no new specialist authorization implied.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.microbiome.taxonomy",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Upload.tsx",
+          "client/src/pages/Microbiome.tsx",
+          "client/src/components/OrganismPortrait.tsx"
+        ],
+        "api": [
+          "server/report-routes.ts",
+          "server/routes.ts",
+          "server/profile-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/report-import.ts",
+          "server/analysis-boundary.ts",
+          "ml_service/main.py",
+          "server/report-analysis.ts",
+          "server/profile-source.ts",
+          "shared/scientific-visuals.ts",
+          "server/profile-measurement-source.ts",
+          "server/profile-errors.ts",
+          "shared/profile-measurement-source.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Reported composition is summarized locally from owned source percentages, with no sidecar transfer or personal prediction. No validated reference dataset is installed; cohort API remains unavailable and prototype UI is removed. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.microbiome.functional",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Microbiome.tsx",
+          "client/src/components/OrganismPortrait.tsx",
+          "client/src/components/ProviderFoodSuggestions.tsx",
+          "client/src/components/ImportedReportDetails.tsx",
+          "client/src/pages/Upload.tsx",
+          "client/src/components/MicrobiomeFoodPreferences.tsx",
+          "client/src/components/MicrobialProfile.tsx",
+          "client/src/pages/ReportManagement.tsx"
+        ],
+        "api": [
+          "server/report-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/structured-report.ts",
+          "server/analysis-boundary.ts",
+          "server/report-analysis.ts",
+          "shared/scientific-visuals.ts",
+          "shared/viome-findings.ts",
+          "shared/microbiome-food-influence.ts",
+          "shared/biological-report-management.ts",
+          "server/biological-report-management.ts",
+          "shared/functional-microbiome.ts",
+          "shared/biology-content.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Provider-reported source scores may be displayed as report data; inferred gene activity/concentrations remain withheld. No functional-model approval. SCI-VIS first-party public representative illustrations per direct owner instruction2026-11-05, with generic/neutral fallback; no public image preview/approval flag. Source, diagnosis, personal effects, micrographs and verified chemical claims are not conferred by imagery. Canonical optional provider food rows and qualitative categories are historical source display only; no added allergy, exclusion, score calibration, measured metabolite, food rank or native PDF/privacy certification. Reviewed Viome findings have a strict field allowlist and reject extra identifiers/filename metadata before storage or request hashing; this is not native-PDF extraction or full PII-value exclusion certification.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.microbiome.flux",
+      "implementation": "DENIED_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/components/MetaboliteResearch.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/metabolite-research.ts",
+          "server/capability-policy.ts",
+          "server/planning-context.ts",
+          "ml_service/research/stoichiometry.py",
+          "ml_service/research/__init__.py",
+          "shared/scientific-contracts.ts",
+          "ml_service/research/synthetic_service.py",
+          "server/synthetic-molecular.ts",
+          "shared/synthetic-molecular.ts",
+          "server/ml-service.ts",
+          "ml_service/main.py"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Restricted middleware denies research execution; no internal UI preference bypass.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.metabolite.scores",
+      "implementation": "INCIDENT_RETIRED_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [],
+        "api": [
+          "server/retired-health-routes.ts",
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/analysis-boundary.ts",
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": []
+      },
+      "observation": "Incident capabilities remain disabled; historical raw generated records require output/export/job/cache review, not deletion of original observations.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.genetics.manual",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/ManualGenetics.tsx",
+          "client/src/components/GenotypeExplanations.tsx",
+          "client/src/components/GeneticsCatalogue.tsx",
+          "client/src/components/GeneticHighlights.tsx",
+          "client/src/components/GeneticSourceManagement.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/genetic-selection.ts",
+          "shared/manual-genetics.ts",
+          "shared/genotype-explanations.ts",
+          "shared/genetics-catalogue.ts",
+          "shared/genetic-call-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/data/genetics-candidate-bibliography.ts",
+          "shared/genetics-relevance.ts",
+          "shared/genetic-source-selection.ts",
+          "server/precision-storage.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions. Saved dataset selection/deletion uses explicit owned source and selection versions in the existing encrypted profile; active deletion sets no active dataset and never activates history. Historical source facts remain read-only and sensitive storage-only markers stay withheld. This does not verify an assay or authorize personal-effect claims.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.genetics.clinical",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/components/ManualGenetics.tsx",
+          "client/src/components/GenotypeExplanations.tsx",
+          "client/src/components/GeneticsCatalogue.tsx",
+          "client/src/components/GeneticHighlights.tsx",
+          "client/src/components/GeneticSourceManagement.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/genetic-selection.ts",
+          "shared/manual-genetics.ts",
+          "shared/genotype-explanations.ts",
+          "shared/genetics-catalogue.ts",
+          "shared/genetic-call-source.ts",
+          "shared/measurement-entry.ts",
+          "shared/data/genetics-candidate-bibliography.ts",
+          "shared/genetics-relevance.ts",
+          "shared/genetic-source-selection.ts",
+          "server/precision-storage.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Manual/report source handling, optional literal build/assay/quality notes and educational context remain distinct from verified assay status, clinical genetic interpretation, diagnosis or genotype-only food ranking. Unknown strand/no call/source-only notes never upgrade eligibility. Static 17-domain navigation and pending candidate types do not expand retained raw calls or activate clinical/sensitive interpretation; source presence, study coverage, scientific review and personal-action eligibility are distinct. Claim-level highlight eligibility and ordinal grouping do not grant review: production claim registry is empty, existing assay notes remain unverified, and legacy explanations stay separate. No new personal actions. Saved dataset selection/deletion uses explicit owned source and selection versions in the existing encrypted profile; active deletion sets no active dataset and never activates history. Historical source facts remain read-only and sensitive storage-only markers stay withheld. This does not verify an assay or authorize personal-effect claims.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.genetics.diet_rank",
+      "implementation": "INCIDENT_RETIRED_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [],
+        "api": [
+          "server/retired-health-routes.ts",
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/analysis-boundary.ts",
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/genetic-selection.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": []
+      },
+      "observation": "Incident capabilities remain disabled; historical raw generated records require output/export/job/cache review, not deletion of original observations.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.pathways.host_microbe",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Explore.tsx",
+          "client/src/pages/Insights.tsx",
+          "client/src/components/MolecularIllustration.tsx"
+        ],
+        "api": [
+          "server/biology-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/biological-model.ts",
+          "shared/scientific-contracts.ts",
+          "shared/scientific-visuals.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.coach.general",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/ScienceCoach.tsx"
+        ],
+        "api": [
+          "server/planner-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/science-coach.ts",
+          "server/metered-ai.ts",
+          "server/ai-configuration.ts",
+          "server/metered-ai.ts",
+          "server/spend-ledger.ts",
+          "server/provider-circuit.ts",
+          "server/ai-costing.ts",
+          "server/recipe-ranking.ts",
+          "server/recipe-generation.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Curated educational planning remains; unapproved AI coaching default denied. No therapeutic inference approval.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.optimizer.rules",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/MealPlanner.tsx",
+          "client/src/pages/PrecisionNutrition.tsx",
+          "client/src/components/BiologyHome.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/LabSourceContext.tsx",
+          "client/src/lib/preferences-source.ts"
+        ],
+        "api": [
+          "server/planner-routes.ts",
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/meal-intelligence.ts",
+          "shared/weekly-planner.ts",
+          "server/weekly-runner.ts",
+          "server/weekly-worker.ts",
+          "server/planning-context.ts",
+          "server/preference-source.ts",
+          "server/meal-review-source.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/plan-history.ts",
+          "server/precision-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Manual/curated preview rules preserved; optional paid text paths separately default denied by absent reviewed executor.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.optimizer.adaptive",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.digital_twin",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.ai.therapeutic",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.healthkit",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/DeviceObservations.tsx"
+        ],
+        "api": [
+          "server/health-source-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/health-ingestion.ts",
+          "server/health-source-storage.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Consent/observation contracts and explicit unsupported web/native status only; no real native/provider connection or hardware acceptance.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.health_connect",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/DeviceObservations.tsx"
+        ],
+        "api": [
+          "server/health-source-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/health-ingestion.ts",
+          "server/health-source-storage.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Consent/observation contracts and explicit unsupported web/native status only; no real native/provider connection or hardware acceptance.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.devices.third_party",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/DeviceObservations.tsx"
+        ],
+        "api": [
+          "server/health-source-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/health-ingestion.ts",
+          "server/health-source-storage.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Consent/observation contracts and explicit unsupported web/native status only; no real native/provider connection or hardware acceptance.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.lab.import",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/QuickLabEntry.tsx",
+          "client/src/components/LabUnitReview.tsx",
+          "client/src/components/LabSourceHistory.tsx",
+          "client/src/components/BloodworkSourceOverview.tsx"
+        ],
+        "api": [
+          "server/precision-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/lab-paste.ts",
+          "shared/precision-nutrition.ts",
+          "server/planning-context.ts",
+          "shared/lab-history.ts",
+          "shared/lab-reimport.ts",
+          "shared/lab-text-file.ts",
+          "shared/lab-pdf-file.ts",
+          "client/src/lib/lab-pdf-reader.ts",
+          "shared/lab-image-file.ts",
+          "client/src/lib/lab-image-reader.ts",
+          "client/src/lib/lab-image-worker.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/precision-storage.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Existing supported manual/source-text review, local text PDF and bounded local English PNG/JPEG transcription into the same editable review/unit/atomic-import path. Original image stays on-device and is not stored; no external laboratory connector, autonomous clinical confirmation, paid inference or source/clinical approval. Image-model asset hashes/licences are separately inventoried; all authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.account.export",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Profile.tsx"
+        ],
+        "api": [
+          "server/account-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/account-export.ts",
+          "server/account-erasure.ts",
+          "server/shared-rate-limit.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Owner-scoped active application operations; export historical-output filtering and active erasure do not prove backup/vendor lifecycle completion.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.account.delete",
+      "implementation": "PREVIEW_SOURCE_PATHS",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/Profile.tsx"
+        ],
+        "api": [
+          "server/account-routes.ts"
+        ],
+        "logicOrJobs": [
+          "server/account-export.ts",
+          "server/account-erasure.ts",
+          "server/shared-rate-limit.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts",
+          "client/src/lib/planning-cache.ts"
+        ]
+      },
+      "observation": "Owner-scoped active application operations; export historical-output filtering and active erasure do not prove backup/vendor lifecycle completion.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.coach.athlete",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/AthleteWorkspace.tsx",
+          "client/src/components/CompanionHero.tsx",
+          "client/src/components/AthleteProfileForm.tsx",
+          "client/src/lib/useDraftUnits.ts",
+          "shared/athlete-entry-source.ts",
+          "client/src/components/AthleteEntrySource.tsx",
+          "shared/numeric-entry-token.ts",
+          "shared/athlete-entry-capture.ts"
+        ],
+        "api": [
+          "server/experience-routes.ts"
+        ],
+        "logicOrJobs": [
+          "shared/athlete.ts",
+          "shared/athlete-eligibility.ts",
+          "shared/athlete-review.ts",
+          "server/settings-source.ts",
+          "shared/measurement-entry.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing safety-gated deterministic athlete preview is not approval for advanced/clinical/predictive coaching; scope reconciliation required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.research.consent",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.research.workbench",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.research.trials",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.research.evidence_bridge",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.dev.preview",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/components/ExperimentalSettings.tsx",
+          "client/src/lib/capabilities.ts"
+        ],
+        "api": [
+          "server/capability-access.ts"
+        ],
+        "logicOrJobs": [
+          "server/capability-policy.ts",
+          "shared/capability-state.ts",
+          "server/supplemental-grant.ts",
+          "server/review-runtime-audit.ts",
+          "server/index.ts",
+          "shared/description-intelligence.ts",
+          "client/src/lib/description-intelligence.ts",
+          "client/src/lib/description-validation-worker.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts"
+        ],
+        "cache": [
+          "client/src/lib/auth.tsx",
+          "client/src/lib/queryClient.ts"
+        ]
+      },
+      "observation": "Existing preview paths plus an internal source-validation worker prototype. No packaged model, active interpretation UI, privilege, clinical approval or default model promotion is inferred; runtime and specialist authorization review remains required.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.regulatory.flags",
+      "implementation": "MIXED_REQUIRES_REVIEW",
+      "surfaces": {
+        "ui": [
+          "client/src/pages/FeatureManagement.tsx",
+          "client/src/App.tsx",
+          "client/src/components/AppNavigation.tsx"
+        ],
+        "api": [
+          "server/capability-policy.ts",
+          "server/capability-access.ts",
+          "server/feature-administration.ts",
+          "server/feature-control-http.ts"
+        ],
+        "logicOrJobs": [
+          "shared/capability-state.ts",
+          "shared/feature-administration.ts",
+          "client/src/lib/capabilities.ts",
+          "server/effective-capability.ts",
+          "server/supplemental-grant.ts",
+          "server/review-runtime-audit.ts",
+          "server/index.ts",
+          "shared/schema-management.ts",
+          "server/feature-step-up.ts",
+          "server/feature-controller-auth.ts",
+          "server/feature-control-service.ts"
+        ],
+        "storedOrExported": [
+          "server/account-export.ts",
+          "server/storage.ts",
+          "shared/schema.ts",
+          "server/feature-control-storage.ts",
+          "shared/application-schema.ts"
+        ],
+        "cache": []
+      },
+      "observation": "Provisional classification/readiness are orthogonal. Separate deployment-bound administrator metadata-read role and read-only review UI; no live role provisioned or activation/step-up/audit/rollout writes. Tester preference never grants admin access. Shared execution evaluator binds independent reviews, immutable categories, material version, scope, consent and narrow staged rollout; no actual facts/control adapter installed.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    },
+    {
+      "featureId": "bloom.billing",
+      "implementation": "NOT_IMPLEMENTED",
+      "surfaces": {
+        "ui": [],
+        "api": [],
+        "logicOrJobs": [],
+        "storedOrExported": [],
+        "cache": []
+      },
+      "observation": "No implemented end-to-end authorized feature claimed. Research components/prototypes and source files do not establish this capability or permit public enrolment/billing/clinical use.",
+      "authorizationReview": "REVIEW_REQUIRED"
+    }
+  ],
+  "sourceHashes": {
+    "client/src/App.tsx": "c9072699599cc9fe5843a9612e716bc71f51c8134a8e8ea115c06137874733d7",
+    "client/src/components/ActivityReview.tsx": "3c143dad57903b113bec68e01f28c4822f938b37b4922f865fdd311e49fd217e",
+    "client/src/components/ActivitySetEditor.tsx": "afe982136a59173e3572a45906c4738e107568b6b80a6784bdae1f232c219c68",
+    "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
+    "client/src/components/AppNavigation.tsx": "5d3d58e21c7a601693f2483f63434dc4ee5d895eaec594e5e445039e15fe87af",
+    "client/src/components/AthleteEntrySource.tsx": "334328365f4f125c115c2f74d8b9667ed60b0e7c3c1f275b6d67e3a55e415bf4",
+    "client/src/components/AthleteHome.tsx": "d27754aca5d5f899ec59fdb86cc28ef04d02fceeb20483b465cf822e52fe523d",
+    "client/src/components/AthleteProfileForm.tsx": "78f8fddb566930c5d23f499da8faaed161d0d77757a3fe10325fc592deea9ac3",
+    "client/src/components/BiologyHome.tsx": "84e5a14754f8e2fa1ef64b8e05bcf21a03653f267313c9e89094fde1d34be74b",
+    "client/src/components/BloodworkSourceOverview.tsx": "b997590cd6a19feb436962490b03d2ec1b2f688b6cc527175f08bee4426f77e5",
+    "client/src/components/BottomNav.tsx": "984e2f76160c424e97e274085ffc0223f5d70e677d2797ae7d2b2fd373b2fdf2",
+    "client/src/components/CheckinEntrySource.tsx": "f1db6546df547cbaf00483c4ea21150557469a68d74c5b17d584560ebc20c3f8",
+    "client/src/components/CompanionHero.tsx": "b1028bbe07f69e63d4e9ebb424a5b41abd7c9369583e05e65a7c31140d7a14dc",
+    "client/src/components/DevelopmentPhotoPreview.tsx": "cd851793a43cfc40392a3bd1815bbebddda8c8a9eab63fce036ef0d119aef565",
+    "client/src/components/DeviceObservations.tsx": "4e77899c809c47784ba116934b1d32e52954f824d4281cab964c3543745bd11c",
+    "client/src/components/EditorialMedia.tsx": "ea05d1f0bc014d76df0c8dbf739c6c7cc92535bb22480a0f97174ab00d30c57d",
+    "client/src/components/EverydayStart.tsx": "36427e2ab2fe8446e5f8f1722af1fb6243cdd706aada0546c460c68d1be6ac9a",
+    "client/src/components/ExperimentObservations.tsx": "8bbb5344ad94e5ca3afc4bf355407c7510630d0029d7ba27c91c930a03e3033f",
+    "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
+    "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
+    "client/src/components/FileUploadZone.tsx": "c44f0da75adeaccf2fa21d3a466e1b1f8db6ded316b359b9ab22bb8552825f2d",
+    "client/src/components/FoodCompositionExplorer.tsx": "8c36d11a61e445e6bb82cecd214b8a9e4db78b2493995b955ec6390d8ea5f768",
+    "client/src/components/FoodEntryChooser.tsx": "0f92032695d7a7d4e3a3a763b9299245e110e330e647375ccd680d77c24f7bf1",
+    "client/src/components/FoodMassInput.tsx": "2a80f9097be1001af2644fdcc20856b8961632753ea07aa6ac44969f3bae7420",
+    "client/src/components/FoodProgress.tsx": "0003309db038db8ddacf6ff0fefad267bd0714e68049685fa2ccaacfe5597dc6",
+    "client/src/components/GeneticHighlights.tsx": "7c561f40c6f8f3e615a02947fcdf54bdcf05a5b1530c870b91d44ed03c2c5692",
+    "client/src/components/GeneticSourceManagement.tsx": "b93f09afc9b942c62688598652bb0d3ebbf18e98e2deddde906d9f97adb25052",
+    "client/src/components/GeneticsCatalogue.tsx": "1152b4d007ac683e63289a2064a9819c19cd06b8338d10ba82d2dcc7e1fd978a",
+    "client/src/components/GenotypeExplanations.tsx": "43c3aa3e54127f5940a3349145fa60845358bc9ac19fb03b2546f185b3083e0c",
+    "client/src/components/ImportedReportDetails.tsx": "01abf37dc644f3c3679471e572908a03d17cc5deb9445af04ceadf8a97c57a50",
+    "client/src/components/IngredientMassEntry.tsx": "948b603a10b9e215fe404a5092e2b11a0e7f695d4474847d710d35127d9d6da0",
+    "client/src/components/LabCategoryIcon.tsx": "ab0460b7da1707222e8b635ede5fcf6e79a5b8a3030a662099ca7368e21d7caf",
+    "client/src/components/LabExplorer.tsx": "27108635fe7e2a29867e2b39f4551ecd57dada3fcd6fa086844b03ea8afafbf4",
+    "client/src/components/LabMarkerEducation.tsx": "7cf9096a29cf0e0263ce549adb19cd055a55cbf1219ec2915811cd34aafc5fb6",
+    "client/src/components/LabSourceContext.tsx": "acef320d4f815f1a66111c47762fb5af4cd7588e408c944a7b07801658e61ab3",
+    "client/src/components/LabSourceHistory.tsx": "4980ec3e6206947ec08fefe09d00fed5d5cc94c3a9cb413a8c7d505405b6f176",
+    "client/src/components/LabSourceManagement.tsx": "f8502d68c239448f6db8f7310f20577d9fc997d8e880b7b5c2d90bda2ce21929",
+    "client/src/components/LabTrend.tsx": "94d8bfee9688df549ce5fccd3b3df8574d00199a021cc8ce559c31c3397d5373",
+    "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
+    "client/src/components/ManualGenetics.tsx": "0c3793be49e077cfa7bfd587504dd1aec6bad9fa36c01e4b5087713b95bb29fd",
+    "client/src/components/MealAnalysis.tsx": "a508a75d536304a6047d7294b4524298f800e29772e563df8d89356f0c347e7c",
+    "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
+    "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
+    "client/src/components/MicrobialProfile.tsx": "d31efb0477ac6b21f995625bec27ad676ceaa11f46b590c58ebe4531e2b21a8e",
+    "client/src/components/MicrobiomeFoodPreferences.tsx": "18f4f506f25ee3593bd09a506519b923af4aea9c3f05894f0840fd769a7355c3",
+    "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
+    "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
+    "client/src/components/MovementSourceDetails.tsx": "10e1a0d75f823289d33c4acb7a06a7a8ddf468796cb29d863366c2d4b948e729",
+    "client/src/components/NutrientDefinitionDisclosure.tsx": "dd84c7faa2e51fb1ddb45cdf3543413fecae0072638de99e44581dea23d22f21",
+    "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
+    "client/src/components/PremiumIcon.tsx": "29781821b893c047b1e31193a55cd680d57df55ee2763047b49ec93952cf03b4",
+    "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",
+    "client/src/components/ProviderFoodSuggestions.tsx": "7af2c558458edfceb1276fb63ae737ac29eb310dbe543b033598a3855dd79438",
+    "client/src/components/QuickLabEntry.tsx": "094154aaa388d1eb959d8d06d1ac0f2962ae63f46c2c8cf040e210cd7425c984",
+    "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
+    "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
+    "client/src/components/TodayFocus.tsx": "65193a446e5594fbd9c789155929c774a5d4b7c105ac5328691c3a4a89f2a765",
+    "client/src/components/TodayFoodSummary.tsx": "f8a0a9fe6b0cc6f5ad05a584877ff5a7b9eebd4026b140e09d3cc30ec9ef23e8",
+    "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",
+    "client/src/components/TrainingSetsEditor.tsx": "1c6c8488e35a3308270829ee416551f133e5b9a6743f95ee16ca88d9b027005e",
+    "client/src/components/ViomeImportChoices.tsx": "67d0e56d401291bf0fd40164fb158b830ae8c897579008e289578d31579ddb86",
+    "client/src/components/ViomeReviewEditor.tsx": "24b890f707d69e6efcb1eadd2b4147bf410497a462d13a7d8afea21c14845418",
+    "client/src/components/ViomeSavedContext.tsx": "fdd47736eeffd78326362f135ee093cbab7ec62dec6617c53c526664fb69215d",
+    "client/src/components/WeeklyReview.tsx": "53c812485b642eea778d137e2da5022dfac4b3e3ea3f0382163ad57732f9b8aa",
+    "client/src/components/WellnessChoiceDetails.tsx": "55193b53015e461448bbe8e85b6a4c173fa78a9df8c13b87b32423d514c21e0b",
+    "client/src/components/ui/dialog.tsx": "a7ffb13c54eef6dc5c1e6166d746135f925a094443fb1d78e76ec271ea91c53e",
+    "client/src/components/ui/sheet.tsx": "54a0e3c6aa525dbe08ae260bff597e403e25e33b7a520f1d2572c85111d8c54d",
+    "client/src/content/bloomCopy.ts": "7b75614c0cc61e67cda4a6e6b7664564c664fb41d91c05f97c28a262ff3cb0cb",
+    "client/src/content/editorial-media.ts": "35534d6a9b6a7e7247894357518a3e1eac29bdf7cef1e439a20026d4970a9fea",
+    "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
+    "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
+    "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
+    "client/src/lib/description-intelligence.ts": "9c09317633941005ca3b2d7d60bbebdca4ec26738904c631df4ebec69c62fec7",
+    "client/src/lib/description-validation-worker.ts": "b0e1f8c6ded2c447d59a7332bb15d216be94e3d819e632a01380cde4856ed36e",
+    "client/src/lib/lab-image-reader.ts": "61755e9cb13a980b2522b12475891baa7316e7b35c8e7e2517087c55c1ebb4f1",
+    "client/src/lib/lab-image-worker.ts": "76a621faecfeea685c734adfd59531c72cc956d0fb32a1f0cd83509c066b2838",
+    "client/src/lib/lab-pdf-reader.ts": "f567e7ffbb7b5200e530ced63bb3ba547ea0f3de9fe4dc33a1988bb1a35c105f",
+    "client/src/lib/meal-cache.ts": "89b4b11900ce88ff19fa74a4b6fa766c4a0fb6ee811e617c0ad1cfc235b6a557",
+    "client/src/lib/planning-cache.ts": "edadb696f635339a920ffb89247f215e203157e194d1ad3ea2de2f6f41b29f12",
+    "client/src/lib/preferences-source.ts": "f2bd33c345bc664e4a5fbfc88bfa6e1de3e2c4302b2c00dc56b7e66585aeda7e",
+    "client/src/lib/queryClient.ts": "7bb7953e098f1aaf79ca0109bf09753d82f71ba2e665a563cbb9f2fe80e0d561",
+    "client/src/lib/useDraftUnits.ts": "123386dddf9c88abda074a7bcf246526b0d9d6c6865ac5447fbdd06e3246fcc6",
+    "client/src/lib/useStructuredReportSave.ts": "812af766d3fe60c15323c9d17ed565891291cbb3726978d7d1805f5f09265cbb",
+    "client/src/lib/viome-pdf-reader.ts": "8a780c44790652e05c307ea931d127b09671eed34dd67972c0472faa7e7cceb7",
+    "client/src/lib/wellness-choices.ts": "0f3ec9292f19dd8415d79dbf825e378cadc99e66c92f9c906cdce4576fc1e801",
+    "client/src/main.tsx": "6c8b2b61f503b292f5f887becfcb2b779d06c32f35fecc9ef494ba82e7688416",
+    "client/src/pages/ActivityLog.tsx": "1d6c40af714d40bbee979b86001252cc39891a14c41773208d3d528f36b19e44",
+    "client/src/pages/AthleteWorkspace.tsx": "2e97dfb0c6f3783f4b1939416fefd2418554a7c9bb919cf323a5155f1169f1ee",
+    "client/src/pages/Dashboard.tsx": "8001d1ee1995e66b1efe25aac6765802fbf095735b349b8879e22cf0520b5f68",
+    "client/src/pages/Explore.tsx": "0278cb63020e12416299f6839423325bf6940f359976c2593b30e49c79e0a504",
+    "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
+    "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
+    "client/src/pages/LogMeal.tsx": "6a4c01ce83cb7f606e119dadfef212e80c0e3d7d6d62a85a45f7e43f5337c569",
+    "client/src/pages/MealPlanner.tsx": "6024f6405e22279fc7374af1fdb549976b4f4494450b7bbe0d8458c556476240",
+    "client/src/pages/Microbiome.tsx": "bafd7f422894fc50892947c2336051096ae4d9d94590166fb38cbc93a277dd75",
+    "client/src/pages/NutritionHistory.tsx": "f8cb0a4983db09ac317779826a945b44e275532afe04cfbb9183ea24b1915b42",
+    "client/src/pages/PlanDay.tsx": "407bd5a61b00bde5114b4966099f7882095b3ec4c3548dc92d80d7e8cb2f1d36",
+    "client/src/pages/PrecisionNutrition.tsx": "fb5eda073dcb9ddbcc772ed4c6a185fc988d980910a8261cd8d884134fbba81b",
+    "client/src/pages/Profile.tsx": "f148560f61659b72efffedb648efc368202ffb56d97ce97e41e2a10840cf3ce9",
+    "client/src/pages/Progress.tsx": "3381c165f34755deb8cb2cbf49a2b91d3c883c27eb06d03a21b27c173dbee087",
+    "client/src/pages/ReportManagement.tsx": "4bc41c20cf7bed768b591b9ce059ec3c4ce96f75e10be297b97ed35b0a88031c",
+    "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
+    "client/src/pages/Upload.tsx": "bceb13cffb48c18161b96799f86a04a4db51bffd10a18ac2cd24bc0ae8a27df7",
+    "ml_service/main.py": "75907f076235a2b9a32e72a95842d4318136c1fe7a2a22005ff3b06234c4dd50",
+    "ml_service/research/__init__.py": "d8b215e9b4889b5ff9ca8c58e2ab733d7d2e3a905420f2c5a25078e5018547af",
+    "ml_service/research/stoichiometry.py": "5ee0d92d183d27dd9a037220f95aaec94964766e28d893e1084644cc43b72a2c",
+    "ml_service/research/synthetic_service.py": "40df1ad9e0f0bc1c34edab9ae8f4965e2528f4774245d189c789195e079483a2",
+    "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
+    "server/account-export.ts": "055352309dbdbc4afbe618da5376d0aee3230dae17352109b1bab99d88fac46b",
+    "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
+    "server/ai-configuration.ts": "b6bb5b437c7a279470c821d5dfb59f321f39ce59d275faeb38da3fa7999878d5",
+    "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
+    "server/analysis-boundary.ts": "d6e5cece02bb063cae0ed48140ded286ee856a9ac80a7a54bc22f29f4074c80a",
+    "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
+    "server/biological-report-management.ts": "214ff00ed798324a7867f1bae62a1108a9dec8e3e31888fb72ceecacb5c70074",
+    "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
+    "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
+    "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
+    "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
+    "server/experience-routes.ts": "9209e1dd55d77015d9ff5c1d698866aeda3273c3acbeda35df47d45ed48b21e9",
+    "server/experience-storage.ts": "abe0e61ae1ec01a341f11f452f79a319298fba20e8229493bc1259c3ea1cff3f",
+    "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
+    "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
+    "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
+    "server/feature-control-storage.ts": "a8f0621d78dba162d419506bad4d941d409b2300689c107c915cb947f57f55bf",
+    "server/feature-controller-auth.ts": "f349587780d99a77c51b9beb6088ce235b5cab7be179a8227c60df42861bfea0",
+    "server/feature-step-up.ts": "8a173d439d0faea45e2ff19adcf7880b9e28ff206fdfb8804e01f29d6289c0ca",
+    "server/food-catalog.ts": "e6ba72bb8cd39b4c6ffaf654776ebe4a33f5c391fb6373c6856db78b923c3684",
+    "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
+    "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
+    "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
+    "server/meal-edit.ts": "f0605274f6be77993ab305f9d24e3866b5d633c5c1155e1743fabed7fd51b25c",
+    "server/meal-intelligence.ts": "c63120f85b841a097299adf464942a2184471eb4bd3b4457d66000f692c49126",
+    "server/meal-records.ts": "b8bdc2a1dd925bdd07424938b795041af238b4c3fb8b73f0b667e9f7e19c5ff7",
+    "server/meal-review-source.ts": "66d59b27ee3ef8f5370f6d4d6a4c4088286acdb4329edb525618ba3dc0286240",
+    "server/meal-save.ts": "4ed54debee262c7e3e3e5823387869c77ebe21b5b8718f01c107286d2d0538d5",
+    "server/metabolite-research.ts": "104a893799f7c7633619292039e200d5019197c488c3ccc89163689d5aa26395",
+    "server/metered-ai.ts": "7599be780a29236841947526bbdcc6f57c213f5b1c0e4c6353e0077ea02d6c8e",
+    "server/ml-service.ts": "6628b5b094c5a5634c075f2bf8945beb4de55a506c255ae9dfb8c68abcb1e19d",
+    "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
+    "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
+    "server/plan-history.ts": "429883d9a3eb3a5e540bcf547cd0d2c30cd0508d376070c1bdfadef0b46b32c7",
+    "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
+    "server/planning-context.ts": "480aa6cc462980700883d411483a9e7da1d3241d5c6f9dcefea39c81cd169b8b",
+    "server/precision-routes.ts": "ac09298617af40a8ae9f11b66daea3f95430cbe008416d78db3ddf2df07554e0",
+    "server/precision-storage.ts": "9dfba39a7234a4e9181352bdc99b037620c82070bfecef9129a0535439c7859f",
+    "server/preference-source.ts": "439afcf8ce9081a61c84176e6537659c3788597c4a0aca24907619933ae4dc46",
+    "server/private-product-storage.ts": "f42c4879f5611c7c7cbc204d3fceadc396c48e84488018326c0459245743eb2d",
+    "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
+    "server/profile-errors.ts": "8f3fe5c77bbc8abc65fa2cc94296871b7bfb331ee8263253d4a5d74d1836d4d5",
+    "server/profile-measurement-source.ts": "23d2a97948c28c0b833e2a6562a5b8dc4fc7dbf9be43f78d11d4a10717b50f1f",
+    "server/profile-routes.ts": "3da2b5b82a13f63ed7af86dfb02e971331e7065e3ab3ad533d03b9b137258719",
+    "server/profile-source.ts": "3e15a3382b07b79aa06aa74c944dc8ba22a06570306b15d58de3b399f6b00cf5",
+    "server/provider-circuit.ts": "71246eed4751c8e1f2e8e5801a65a059128ce4945f14545638bab2c06cb16e93",
+    "server/recipe-generation.ts": "697df64ef796b6662af16658cd087d24244257f859af72b60a4e49d5e0ebefd0",
+    "server/recipe-ranking.ts": "99f74c8711694fc4779d8dbf8232a4d32d47a716186ae9d2e7c6dffa9e2c9595",
+    "server/report-analysis.ts": "be7fe43839066ec596f770da4992905ec06f685595cc64ea720b648bb5d76025",
+    "server/report-records.ts": "35858e44b1ec09ab16d6979b723ddf31d0e3b1eda7ad1852a5190e7372214aa1",
+    "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
+    "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
+    "server/review-runtime-audit.ts": "12d4d26b37e0967da4273d0c8b3d990e106695f73f6f8f39f7c925070867008f",
+    "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
+    "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
+    "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
+    "server/shared-rate-limit.ts": "7330ecb41868d6f444ac0a3f3a18cca8e9bdfc652966c0ea52c00ae94e9ba049",
+    "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
+    "server/storage.ts": "7228cc587b97dac8b4974cb8f0d39292542aad47d6a0e849c1934059c84025bf",
+    "server/structured-report-storage.ts": "42a1a776b78fdc33893a7a9417c3aa28d06ee85e53536e03388b02f9245d88c5",
+    "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
+    "server/synthetic-molecular.ts": "ba91a96f5fd960dc240725c4c0749231792ce0306077d39ca06af157c7603dc5",
+    "server/usda-branded.ts": "f3187261b694bf164c6bcedfc80800a42085b079b3e77cd507797c722860b0a3",
+    "server/vite.ts": "ade8d79bc6dfdb3870f7903dd2a5433be0c902715a7be86e32757fea55ef3025",
+    "server/weekly-runner.ts": "eec5493ab25389816ecf6435f9a82f1949c8214af2d4bd398af295d921dc1252",
+    "server/weekly-worker.ts": "da1967463b8ce42a53a73dde879b11d1b2087639392cc198baeb1fea513b01a2",
+    "server/wellness-actions.ts": "c1cf0c5e35c172718b9198158d0d87404a7273e23012e7fafe12a6bae2097251",
+    "server/wellness-choice-storage.ts": "a91a7d8d3c7ffa045f0468b513c3454dc15ae87acd24962392c0f465b9ff87fb",
+    "server/wellness-context.ts": "7569388b8fbebb7274b2e6810ac9c643d7ed73c3255b0f8628a6a3b99f099fad",
+    "server/wellness-observations.ts": "ce007e27466f2183f33c0628f79f7aa683820d1e12bb57e7b432c1d357821d1b",
+    "shared/activity-capture.ts": "2c776d7d1593ac1826e525ae9e1200c3fa490272b950138b243d6dd85a748a41",
+    "shared/activity.ts": "cb671b73a9ee131e86a75f05fafab0178ecffb78646fd7eba0865094dab49d5b",
+    "shared/application-schema.ts": "9015fbb016fac2a32e0ac92c37b5f66b6ce0e31ea3fdcc29b2f9a25de27ccf13",
+    "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
+    "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
+    "shared/athlete-entry-capture.ts": "3bdea9805f6dd73892145d05c2cadaa6d153589e4db8d1ea759b8f1c4dde2039",
+    "shared/athlete-entry-source.ts": "1f7058cad67becfdfe056ee72a671efafd342703fa9c80c16119f6aa89ab927d",
+    "shared/athlete-review.ts": "a0625e796a40e7ef639809c11dcd7ca60568ea23eafcdbfbe2df1b2165a92ea1",
+    "shared/athlete.ts": "380767ce6e5245df8fa52d6b66a60c41346022e0614f72f83cf2a58bbb6707b5",
+    "shared/barcodes.ts": "6602a438f1cfe8addfd21e335c8126dee4c74270cb36c19b8683771fcd760f70",
+    "shared/biological-model.ts": "c2c424b0249946fa02dfa0bf54845162d5aee9fc9ac748058b3a80c0bcb38625",
+    "shared/biological-report-management.ts": "94e1c6dcd345af8d9b1a5fccd0766704683d7718426b6cd4fac29298f55e7364",
+    "shared/biology-content-types.ts": "058bbbd94e8b44e359b1e4bb1d8fad4bf7fcd046aeb8b025032c0054078a38d0",
+    "shared/biology-content.ts": "fd70e97317d6042783b7f5e464d21f2e50ce31a6a0e9f99f81f72a777bb6806c",
+    "shared/biology-lab-observation.ts": "39eeb52d730975b2e92b6e29516e2298125cf266e5fa6bd24cb2bc981d9a8b31",
+    "shared/biology-labs.ts": "fbeeea4adb7a4961b3969680a4c90c6e93631aab1109fde53d5712e0b9e8376d",
+    "shared/biology-source-inventory.ts": "92bc100e93c34fa24e9ca9a34b188ed0e35dfaad702aec6adbd65e47b27254be",
+    "shared/capability-state.ts": "1ee066d79b01cc3ff936cf8d04cd3b7d8d617566f2313bb7fcaa1c26d3f8fc49",
+    "shared/catalogue-mass-handoff.ts": "9e762fd498ce23d370f05d22ead54aa6e50cd41881d6fd8b17f2f8e3206a3cac",
+    "shared/checkin-entry-source.ts": "540ba0ee7e0c9a27e7ee6b14ad934a71c0b65cf99254771c471d5a054e884d48",
+    "shared/data/genetics-candidate-bibliography.ts": "6f173fc6952934d2b51e20078ed02eaa7406b3569a0116c1399bfaeb8b2985a1",
+    "shared/description-intelligence.ts": "d76fd822733c8bad2f5cbc786a9d9958d93a97f3b8ee1e514bf7a7b3acbd6baf",
+    "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
+    "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
+    "shared/experience.ts": "fbb3ba94e3a5e9f6efc8d3dbb12f1c33eb489ee89b2cd5aae635e6ccd53908c4",
+    "shared/experiment-review.ts": "6ef1e12a8ef16075da0e5b72b24ce7352e0131a15f197bc02487585e97917e00",
+    "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
+    "shared/food-intelligence.ts": "4ad0deb199cd8a6e52b6bb844fd6679000659f766c64a304d25f6a680b6fb3d9",
+    "shared/food-progress.ts": "da5b8b3a59c12ebd5099904ed976835020000b562f7dd941bf531283b20a9bc9",
+    "shared/functional-microbiome.ts": "c0a253c0cedc47fb37ea04ec2a736846ca6648c0ccc5b5b8854fdef7d1b39b6c",
+    "shared/genetic-call-source.ts": "9506490a39eb81b7ea252c655f1361c1d5fe811ada499353c3a93ac36892e587",
+    "shared/genetic-selection.ts": "76afc607150749cd1f3cac972c6fd657633ffc7ece0037cadc5fa0d0b4f07a89",
+    "shared/genetic-source-selection.ts": "b9eebf03ba286b4b7d6af9f8312fc7ddaa6388b7f0f29c0f4136edf90c2f59d8",
+    "shared/genetics-catalogue.ts": "633b2d7610c4f6af3fa9bcb74f5e46e5661559684c22f50c039786a17fc35f68",
+    "shared/genetics-relevance.ts": "e28ab72713cd5ef6a6515b9c03a09d196ab1307e894fdf2ca4da2bc37d3430c5",
+    "shared/genotype-explanations.ts": "602ecf33f06f34acc1a94746fb5690c073ecf68741ee57c0d75e5a7430b46ea9",
+    "shared/goal-guidance.ts": "f70b53ed1fd1b751e72f70685b123bdda75f581752d096319830323ba0fd4ee1",
+    "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
+    "shared/ingredient-mass-capture.ts": "0fcd4bf37628fb2b4a57537982cdeeb738d14203991e360eec0730e654628ded",
+    "shared/ingredient-mass-entry.ts": "85523bb5d76e0e8b42c90f6c5c0701bd47793b9f9b4917deefafaf6c0279e78c",
+    "shared/lab-explorer.ts": "2e40ded4a56e73fe6445eefeaf14a2a16d413c7474e75dad0bb2237f6fad9449",
+    "shared/lab-history.ts": "2fe9f461ba0233085f7c7e8f3b7ca973798215859479ae1cccb7dbaec6a25658",
+    "shared/lab-image-file.ts": "63b696d30e906fbacba155218bfc0b86506fcbd30e3089e9af476d59a838860f",
+    "shared/lab-paste.ts": "cded9df12fadb5fe51e91cda24692644c1b5fc5bb7f58abb71bf5f4d09d95954",
+    "shared/lab-pdf-file.ts": "87dd2c7403af24db72724da3306f6f812d733aa935c8d2b2b4c68ac353e92180",
+    "shared/lab-reimport.ts": "04b613fe84fc4a3fbfb4077ffe5b8b1f962ff9dc4d60147082baa148ffd72468",
+    "shared/lab-text-file.ts": "98dbba4f3b7300bd92571cdab259dacaeaa03844fd6807ed347d4a89befded22",
+    "shared/manual-genetics.ts": "b64377f85b8f2a9696bd35b14a96a854a191d7a81e970e9eef0b4ec66a7d2cd2",
+    "shared/meal-intelligence.ts": "b95247f5ad4ada8c79fa5483c0cd0e8d55e644eaf2bea35826cea837e35afea0",
+    "shared/meal-portions.ts": "7be9e467b590acffd89043337b562561dddd1a830e2317d6846ff5f9930acfba",
+    "shared/measurement-entry.ts": "399bedf83d62bcc171436529139ba7e02153b03de595f5b9605aac7ef7eb4910",
+    "shared/microbiome-food-influence.ts": "4f249edf6e69d22f4ae6fd97df83d14b835446d58a817f2f107d515f2d681320",
+    "shared/numeric-entry-token.ts": "e8e72128b93502fb623f08e10d951864ea2151e3a72efb498844cc4803e37159",
+    "shared/nutrient-definitions.ts": "2f2614aa9f0bd588a9c616647667801e71424950f751e75179adc2479f988585",
+    "shared/nutrient-source-snapshot.ts": "5376d1ad28d430d54ae21304ac5571ac4d04e92feb432a0315020bc2937181fe",
+    "shared/nutrition-display.ts": "ca164c626fa377a3ee16698b3811f0475f603210b0419d8b8061f7b98b641303",
+    "shared/nutrition-summary.ts": "6c42335166b206a4ebc3ebd65f271435fcefeaca0e279fdd16f5f482076a2855",
+    "shared/practical-planner.ts": "a27c14e695a6ef8fe5339357f6f2e1e9c228ebfc92ff703c1665fddc591d39a2",
+    "shared/precision-nutrition.ts": "45f207014d783689dcaef77240bb1b4afda9d40d7f87722a601fbd7351069b66",
+    "shared/product-search.ts": "5eb8b54222420b1970979bc51688074b865a9cfbd1d386f50b0013511e55098f",
+    "shared/products.ts": "2328bea0109ac0ab6bf6ebc5424233d2ed38a316d411070c169c6916cfbb50d0",
+    "shared/profile-measurement-source.ts": "7aad632c9c98bf5670eea4277155a98507350e5a6983f6d917c05aed3a994a4e",
+    "shared/report-import.ts": "696c818d09df2a07d6280c9fcb315e95fe6600b468ea68dc9a6853abf23bdf3b",
+    "shared/report-management.ts": "66865c0aa48bc98d2d6e82238b66ec22bbb92f770ee58e537eb4f798d0eda4ed",
+    "shared/schema-management.ts": "eba91c937a23eaaeca25cc7f0b21b818335c0baaa40b870a024900aaae0d6f77",
+    "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
+    "shared/scientific-contracts.ts": "750a113cdce24ec2cd4ce464d5f0c3d7a194f7253ae2091b9fd5d7eaaf1ea5a6",
+    "shared/scientific-visuals.ts": "f0f311377ea9662888bc5d366bbd57c5fb53c5534f3418c1fbdb4090de010437",
+    "shared/structured-report.ts": "081443badc0ea9ec62000500e7821daf89b53981be03038b30bf559cfcf46d73",
+    "shared/synthetic-molecular.ts": "eb7aa920c087a6bf0f42d126afd41e8e1ed8ad39a9257385c487e30f3ccc6885",
+    "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",
+    "shared/training-set-history.ts": "03047067eaa9ef8b076488c11b431925ca262f4c24c7846e8b7dd9db58ace2e2",
+    "shared/viome-findings.ts": "29f8fa970769feb48c6de213f0d22c3bd4d337e0718d1dae542714bec56c81e8",
+    "shared/viome-pdf.ts": "59edbefd28553fec08c56a3fb2727c4f947edd416f62fbf09c0cb436eaea2bd9",
+    "shared/viome-report-context.ts": "65b4431affd72af8ff17135c19f3a64b96f164a0d7656be9e3b779239fe7c966",
+    "shared/weekly-planner.ts": "00638f351f2eb92a61e48873d70db4f4f2219bc3a8450b24f5387794d95fb90b",
+    "shared/wellness-actions.ts": "1e3452aea5a77a74d18dc57991a3147eea0e17eb1d33a853ef839cd3b62984e6",
+    "shared/wellness-context.ts": "751a13690e046e9765c44b7b5b71f5e9266138f5d50377938cf5abaa32353bb7"
+  }
+}

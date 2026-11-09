@@ -189,3 +189,6 @@ function useToast() {
 }
 
 export { useToast, toast }
+
+/** Remove visit notices immediately when private account context is withdrawn. */
+export function clearToasts() { dispatch({ type: "REMOVE_TOAST" }); }

@@ -1,0 +1,35 @@
+{
+  "version": "bloom.screen_simplification.2026-11-05",
+  "discipline": "Branding UX",
+  "approval": "REVISE existing screen composition",
+  "authority": "proposed Architect reconciliation",
+  "featuresPreserved": [
+    "canonical data models",
+    "current navigation",
+    "Everyday/Athlete tokens",
+    "source history",
+    "science evidence",
+    "consent and safety"
+  ],
+  "screenOrder": [
+    "Today",
+    "Food",
+    "Athlete",
+    "Biology",
+    "Genetics",
+    "Explore",
+    "Progress",
+    "Profile"
+  ],
+  "globalChecks": [
+    "one primary purpose",
+    "one dominant CTA where task action exists",
+    "meaningful summary visible",
+    "details available by deliberate expansion",
+    "plain language",
+    "one inline exception notice",
+    "no lost draft",
+    "no fabricated unknowns"
+  ],
+  "status": "not tested in live app"
+}

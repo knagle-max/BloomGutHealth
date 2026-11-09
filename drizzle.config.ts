@@ -1,3 +1,5 @@
+import "./server/env";
+import { APPLICATION_TABLE_FILTER } from "./shared/schema-management";
 import { defineConfig } from "drizzle-kit";
 
 if (!process.env.DATABASE_URL) {
@@ -6,9 +8,10 @@ if (!process.env.DATABASE_URL) {
 
 export default defineConfig({
   out: "./migrations",
-  schema: "./shared/schema.ts",
+  schema: "./shared/application-schema.ts",
+  tablesFilter: APPLICATION_TABLE_FILTER,
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    url: process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL,
   },
 });

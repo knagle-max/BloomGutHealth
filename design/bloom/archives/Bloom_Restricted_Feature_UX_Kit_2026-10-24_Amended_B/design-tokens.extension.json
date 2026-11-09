@@ -1,0 +1,52 @@
+{
+  "scope": "authorized development reviewer UI only",
+  "semanticReleaseStates": {
+    "GENERAL_RELEASE": {
+      "foreground": "#246B50",
+      "background": "#E7F3EC",
+      "label": "Candidate for general release"
+    },
+    "HIDDEN_PENDING_APPROVAL": {
+      "foreground": "#945B13",
+      "background": "#FFF2DC",
+      "label": "Dev only \u00b7 pending approval"
+    },
+    "INTERNAL_RESEARCH_ONLY": {
+      "foreground": "#67539A",
+      "background": "#F0EBF9",
+      "label": "Internal research only"
+    },
+    "DISABLED_INCIDENT": {
+      "foreground": "#9B3F43",
+      "background": "#FBE9EA",
+      "label": "Disabled \u00b7 incident restriction"
+    }
+  },
+  "warnings": [
+    "Classification != approval",
+    "Developer toggle != authorization",
+    "Frontend state does not control server access"
+  ],
+  "developmentToggle": {
+    "background": "#343B43",
+    "backgroundHover": "#252B32",
+    "trackOff": "#7A838B",
+    "trackOn": "#414A52",
+    "thumb": "#FFFFFF",
+    "focus": "#91C8F9",
+    "text": "#252B32",
+    "surface": "#F4F5F6",
+    "semantics": "neutral switch; release classification always has separate plain-text label",
+    "visibility": "server-authorized testers and environments only"
+  },
+  "embeddedDevelopmentSurface": {
+    "background": "#F2F3F4",
+    "border": "#68737C",
+    "foreground": "#343B43",
+    "darkBackground": "#252B32",
+    "darkBorder": "#8B959D",
+    "darkForeground": "#F2F4F5",
+    "label": "Dev only \u00b7 pending approval / Internal research only",
+    "note": "Graphite wrapper on a restricted component in its real production layout; surrounding Bloom mode colours and clinical semantic states stay unchanged"
+  }
+}

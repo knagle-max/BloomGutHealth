@@ -1,0 +1,458 @@
+{
+  "phase": "before",
+  "baseline": "299eda8a977b004cf22d350034b4f62c9d6c5c39",
+  "synthetic": true,
+  "source": "Actual precision handlers with synthetic storage",
+  "checks": [
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "everyday",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 320,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 375,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 768,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "light",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "empty",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "reported",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "pending",
+      "noHorizontalOverflow": true
+    },
+    {
+      "mode": "athlete",
+      "width": 1440,
+      "theme": "dark",
+      "scenario": "error",
+      "noHorizontalOverflow": true
+    }
+  ],
+  "nativeDevice": false,
+  "independentReview": false
+}

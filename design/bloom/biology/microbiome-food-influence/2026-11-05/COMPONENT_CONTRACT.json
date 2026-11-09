@@ -1,0 +1,36 @@
+{
+  "version": "bloom.microfood.ux.2026-11-05",
+  "approval": "approve_with_revisions",
+  "role": "Branding UX",
+  "noNewDashboard": true,
+  "defaultOptIn": false,
+  "primaryLabel": "Use my microbiome food recommendations",
+  "badge": "Microbiome report match",
+  "badgeWhen": "actual material selection/rank contribution",
+  "readOnlySourceLabel": "Listed in your microbiome report",
+  "requiresExactFoodMatch": true,
+  "precedence": [
+    "hard_safety_exclusions",
+    "explicit_user_preferences",
+    "validated_nutrition_and_goals",
+    "opted_in_provider_category_secondary",
+    "variety_cost_convenience"
+  ],
+  "reportRecordsExpected": {
+    "currentHandoffs": 299,
+    "priorExtractionClaim": 371,
+    "needsOriginalSourceReconciliation": true
+  },
+  "states": [
+    "off",
+    "on",
+    "no_report",
+    "unmatched",
+    "needs_review",
+    "source_deleted",
+    "report_conflict"
+  ],
+  "mobileAccessibility": "not_tested",
+  "implementation": "not_verified",
+  "devBranchAtInspection": "aab68943dfda97100d124e5f73a6a1d645e8717e"
+}

@@ -1,0 +1,34 @@
+# Bloom — Biology / Progress and Expandable Bloodwork Explorer UX Contract
+Date: 2026-10-30 | Version 1.0 | Branding & UX | Architect proposal (not implemented)
+Source crosswalk: UT-BIOPROG-2901–2907 and BIO-BIOPROG-3001–3004.
+
+## Primary information architecture
+My Biology = scientific identity, current records, imports, original sources, corrections, research and links. Progress > Biology = **single canonical** longitudinal lab experience. Replace My Biology > Progress duplicated text-only "Repeatable biomarkers" with "View bloodwork trends" deep link to /progress?view=biology&marker=<canonical-marker-id> where supported. Both views consume existing canonical observations; no duplicate chart/record stores. Everyday and Athlete share results without expanding Coach permissions.
+
+## Explorer layout
+Progress / Biology → category accordion → marker row → expanded sourced chart + interpretive dossier. Candidate navigation categories: Heart & cholesterol, Blood sugar & insulin, Liver & biliary, Kidney & electrolytes, Complete blood count, Iron & blood nutrients, Hormones & thyroid, Inflammation & immunity, Bone & micronutrients, Other / needs identification. Categories aren't diagnoses. Category header shows counts of source-reported markers (not goals, health completeness or achievement). Avoid hardcoded 92-marker ceiling. Multi-category aliases may link one canonical marker without duplicate data. Unknown analytes always shown, original wording preserved.
+
+Marker row default: name, latest **source-linked** value/unit/date where present, number of dated observations, compact expand affordance; do not color-code universal health success. Expand view: titled date chart (reuse LabTrend), accessible point-by-point table or text equivalent, latest observation, technically comparable numerical movement *only where supported*, collapsible sections in order **What this measures → Recorded changes → What this might mean → Research on influences → Evidence & original report**. If reviewed interpretation unavailable, show "Interpretation not yet reviewed" and allow reading/correction of original result. Link directly back to exact canonical source observation and preserve scroll/focus/selected date/marker.
+
+Charts: source dates and units, no falsified readings; consider small multiples only for genuine comparable paired analytes; include normalized and original units/provenance; reference intervals distinguished from decision thresholds and individualized targets, only when reviewed. Avoid visually dramatized nonzero y-axes, unsupported green/red zones, fake thresholds or interpolated points. 320px, dark/light, 200% zoom, keyboard selection, tabular accessible alternative and reduced motion.
+
+## Engagement features (proposals, not interpretation or medical proof)
+1. **Timeline Reveal**: scrub or tap genuine dated lab points to reveal "What was recorded then", with original source; no fictional animation, predictions or causality.
+2. **Compare Two Dates**: user-selectable valid compatible samples, show actual numeric differences (not "improvement" unless reviewed context permits) and assay mismatch explanatory states. No automatic attribution to food/exercise.
+3. **Microbe Ecosystem Atlas**: visually explore measured taxon observations and curated research relationships; clicking organism opens canonical research profile. Taxon abundance visually encoded only with actual source values and assay comparability. No race/winner/loser, infection or arbitrary good/bad grading.
+4. **Molecule Journey**: interactive research graph Food/component → microbial or host pathway → potential molecule → researched physiological role. Edge types visible: laboratory possibility, observational association, human intervention or measured in personal sample. Never confuse taxonomy with flux; clicking a node reveals references and unknowns.
+5. **Discoveries / Learn Cards**: opt-in short "Explore a molecule" or "Learn what ALT measures" cards, with progress only for **reading/exploration**, not body chemistry. Avoid badges for reaching an arbitrary biomarker, increasing/decreasing microbes or "optimizing" unvalidated scores.
+6. **Side-by-Side Science & My Data**: persistent separated panels "Research says" and "Your report shows", links but never causal bridges. Celebrate curiosity or consistency of logging rather than biomarker status.
+7. **What Changed? Feed**: dated *record observations only* added from actual user data; distinguish correction/reimport from physiological change; neutral phrasing "Different measurement recorded", not "Your microbiome improved".
+
+## Research presentation states
+Every claim shows evidence type and scope; clinical review controls. One prominent human-readable caveat rather than repeated warnings, with high-risk context-specific safety near affected results. Unknown ≠ zero. Old or conflicting units, same-day distinct draws, changed labs/methods, retracted paper, source revocation or cross-account mismatch must withdraw unsupported synthesis rather than original evidence. No clinical urgency determination without reviewed clinical+legal release rules.
+
+## Design system
+Editorial biology aesthetic, evergreen #246B50 in Everyday, warm offwhite / botanical texture, sophisticated typography, tiny rich interactive illustrations only when factual and fully text-alternative accessible. Athlete blue where context changes, not divergent data stores. Gentle transitions, no surprise audio/haptics, support prefers-reduced-motion. Dense 92-marker imports must remain navigable and search/filterable; accordion search index includes aliases and source-only terms. Respect established flagship visual direction and existing design system.
+
+## Accessibility and acceptance
+Keyboard and screen reader operation, focus return after closing panel, deep links, 320/375/390/1280 widths, 200% zoom, dark and light. Unit/date/source correction updates all views once; period and comparison selection preserved, no duplicate calculations. Validate two same-day occurrences, mixed assays, source-only records, contradictory units, 92 marker/6 sample synthetic fixture, login/account switch, pending errors, reimports and deleted observations. User comprehension benchmark proposed >=90% task success, not observed result. Independent Biology signoff of claims and User Testing real browser acceptance required.
+
+## Source authority
+This document specifies UI only. Chief Architect resolves overlaps; Developer/Codex owns source implementation, tests and Render deployment; Biology approves dossier content/comparability; Legal/Security approve claims and scopes; Branding & UX owns visual acceptance. This is not a developer or clinical approval.

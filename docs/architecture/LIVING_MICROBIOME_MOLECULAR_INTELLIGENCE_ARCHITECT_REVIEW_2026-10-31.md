@@ -1,0 +1,40 @@
+# Bloom — Architect review: Living Microbiome & Molecular Intelligence
+Date: 2026-10-31 | Status: CONDITIONAL APPROVAL FOR V0.6 SCOPE; not built, clinically approved or public release cleared.
+
+## Source specialist briefs reviewed (2026-10-31)
+Biology `Bloom_Biology_Living_Microbiome_Molecular_Intelligence_BFT_Acceptance_2026-10-31.md` (BIO-LIVE-3801–3808); ML `Bloom_ML_Living_Microbiome_Molecular_Intelligence_Handoff_2026-10-31.md` (ML-MOLEC-1201–1206); Integrations `Bloom_Integration_Living_Microbiome_Molecular_Intelligence_2026-10-31.md`; Security `Bloom_Security_Living_Microbiome_Intelligence_2026-10-31.md` (SEC-LMI-01–06); Legal `Bloom_Legal_Living_Microbiome_Molecular_Intelligence_Handoff_2026-10-31.md` (LEG-LIVE-1501–1506); UX `Bloom_User_Testing_Living_Microbiome_Intelligence_BFT_2026-10-31.md` (UT-LIVE-3801–3810). Their findings are proposed requirements and reviews, not independently shipped features.
+
+## Approved product and scope
+Enhance existing `V06_HANDOFF.md` living-evidence framework (V06-01) and host–microbe–reaction typed graph (V06-09/V06-14), existing taxon profiles, provenance, claim registry, scientific approval and wellness recommendation boundaries. **No second research crawler, graph database, microbiome store, recommendation engine or medical model**. Preserve core-first v0.5 gates and Codex session-efficiency policy. Optional general scientific explorer works without any user report or AI provider.
+
+### Journey: five questions
+For any organism/molecule/food link, answer in plain language: **What does it do? Why does it matter? What may influence it? What research supports this? What do my actual results establish?** Summarize initially, with optional deep mechanism, direct claim-level citations, clear measurement labels and easy return to original report. Make 320px/zoom/screen reader/navigation functional; avoid implying images or graph art are source evidence.
+
+### Scientific state and graph contract
+Every reviewed claim/edge must pin IDs/resolution (species ≠ strain ≠ gene ≠ expressed gene ≠ measured protein/toxin ≠ measured host effect), predicate, directness, experiment system (biochemical/cell/organoid/animal/human observational/human intervention), actual endpoint (relative abundance vs absolute, gene presence vs expression vs activity vs clinical result), studied population, dose/form/duration/comparator, uncertainty/null/contradictory outcomes, citations/rights, scientific reviewer, version and withdrawal. Preserve raw vendor observations, assay capability, date and source. **Unknown is unknown, not negative or zero**. Edges cannot implicitly promote evidence strength when chained.
+
+### BFT worked acceptance scenario (NOT pre-approved personalized claim)
+1. White et al. `10.1038/s41586-026-10375-0`—review study directly for claudin-4/BFT/E-cadherin experimental relation, exact model system and factual scope.
+2. Almond randomized trial (PMID `31528836`): n=73 college freshmen; reportedly `56.7 g/day`, 8 weeks vs graham cracker comparator; source-linked measured endpoint was *B. fragilis* **species-level relative abundance**, **not** ETBF-strain abundance, BFT gene or toxin expression/activity, claudin-4 blockade or disease reduction.
+3. Any contradictory 2025 ETBF mouse study remains unverified until exact original bibliography, studied model and endpoints are inspected. Do not invent a citation or treat incomparable outcomes as directly contradictory.
+4. A user-provided species-level *B. fragilis* reading does **not** imply enterotoxigenic strain, `bft` gene, active BFT, measured human epithelial effect or medical risk. Even positive gene presence does not imply toxin expression. Show source-specific limits and study context.
+5. An evidence-linked food card may explain what a particular intervention study found; **cannot become** an unreviewed toxin-inhibition dietary protocol, generalized personal efficacy, or clinical claim.
+
+### Publication intake → publishing firewall
+Use existing PubMed/Europe PMC metadata, Crossref identifier/retraction reconciliation, ClinicalTrials.gov trial metadata and curated taxonomy/protein references (as rights/access allow). Source research is untrusted and may contain injected instructions. DOI/PMID/title matching, study design, exact source span, versions, null/adverse findings, and immutable review history required. Pipeline: discovered → retrieved/licence verified → structured candidate extracted → automated source/graph negative checks → Biology reviewer approved education → versioned public education. **Distinct optional approval** for any action to influence a personal food/workout recommendation: human applicability, safety/preferences, scientific evidence, Legal actual intended use, fixed action/ranking rule and automated regression. LLM drafts alone never authorize production or action. Respect licences: metadata and original educational diagrams rather than unlicensed paper figures or mirrored full text.
+
+### Cross-specialist governance and minimal technical changes
+- **Biology:** grade per claim/endpoint; review strain resolution, dose and contradictions. No source says every human benefit transfers from mechanistic or animal evidence.
+- **ML:** typed non-entailing graph transitions, evidence extraction candidate schema, unknown/abstention, negative-case tests and strict reviewed-action IDs.
+- **Integrations:** reuse existing providers/adapters; pinned DOI/PMID/TaxID/protein identifiers, no personal records in public literature queries, quota/rights/retraction handling.
+- **Security:** protect cross-account source overlays, prompt injection from papers, privileged reviewer signoff, downstream withdrawal and egress minimization. Test shared taxon IDs across two accounts and revoked claims.
+- **Legal:** maintain separate CA/US intended-use claim records; research education is compatible with owner wellness purpose, but personalized medical instructions, toxin eradication or disease prevention are outside initial release. Rights-check figures. Legal's AI draft is not qualified human legal clearance.
+- **UX:** independent comprehension testing; user must correctly distinguish species presence from toxin, and species abundance changes from toxin inhibition. At least five formative uncoached participants proposed; record actual human evidence, not simulated testers.
+
+## Delivery priority and anti-overhead policy
+**Now while core-first:** only adapt/extend existing typed claim/evidence provenance structures **when directly required by approved core features**; capture BFT cases as fixtures in existing safety tests if minimal and not distracting. Do not divert Codex into a new biomedical ingestion pipeline or 6 duplicate implementations.
+**After v0.5 engineering and relevant Eat–Move–Recover dependencies:** (1) current source/graph schema and real UI audit; (2) minimal typed claim and report-overlay contract + negative fixtures; (3) one navigable BFT research journey with manually reviewed sources and no user uploads required; (4) source/licence/retraction and review workflow using existing evidence framework; (5) optional personalized overlay if assay-aware; (6) human comprehension acceptance. Only then consider scheduled automated literature discovery/drafting, if demonstrably useful and affordable. Preserve separate approved regular personalized nutrition and workouts.
+**Do not implement based solely on specialist's 'P0' label:** P0 within an approved new feature's safety tests is not P0 priority to build it now. Core-first execution remains unchanged.
+
+## Definition of done for this scope
+Actual source citation/range checked; view passes all specific no-inference fixtures; no unapproved graph-to-ranking link; two-account private overlay isolation; disabled research/AI/microbiome still allows Food, Today, Progress and Athlete; retraced claims withdraw safely; design/accessibility review; actual SHA/CI/Render and independent user acceptance recorded separately. Preserve no-code-change/undeployed status until verified.

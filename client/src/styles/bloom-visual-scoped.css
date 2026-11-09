@@ -1,0 +1,449 @@
+/* Bloom Visual v2.4 R2 — SINGLE CANONICAL opt-in stylesheet. */
+
+/* Activation: add data-bloom-visual="premium" to the EXISTING .app-shell. */
+
+/* Do not import the retired bloom-premium-visual.css or bloom-production-skin.css. */
+
+/* This file makes NO style changes without the app-shell opt-in attribute. */
+
+.app-shell[data-bloom-visual="premium"] {
+  --bv-canvas: #F8F9F3; --bv-paper:#F5F3EB; --bv-porcelain:#FFFEFA;
+  --bv-forest:#173E32;--bv-forest-strong:#102B25;--bv-brand:#246B50;
+  --bv-sage:#D9E7D5; --bv-mist:#EDF3EC; --bv-clay:#D4A37C;
+  --bv-lilac:#C9BDE3; --bv-secondary:#52685C;
+  --bv-line:rgba(23,62,50,.11);--bv-line-soft:rgba(23,62,50,.07);
+  --bv-shadow:0 12px 32px rgba(18,47,37,.065);
+  --bv-shadow-focus:0 20px 55px rgba(18,47,37,.11);
+  --bv-gradient:linear-gradient(135deg,#F5F3EB 0%,#EDF3EC 100%);
+  --bv-ambient:radial-gradient(ellipse at 9% 0%,rgba(217,231,213,.58),transparent 47%);
+  --bv-chart:#246B50;--bv-grid:rgba(23,62,50,.13);
+  --bv-chart-area-top:rgba(36,107,80,.22);--bv-chart-area-bottom:rgba(36,107,80,0);
+  --bv-focus:#14543B;
+}
+
+.app-shell[data-bloom-visual="premium"]:is(html.dark *) {
+ --bv-canvas:#101C17;--bv-paper:#192B24;--bv-porcelain:#22382E;
+ --bv-forest:#EFF6EE;--bv-forest-strong:#FFFFFF;--bv-brand:#A6DEBA;
+ --bv-sage:#345442;--bv-mist:#284434;--bv-secondary:#CADACF;
+ --bv-line:rgba(229,245,233,.17);--bv-line-soft:rgba(229,245,233,.09);
+ --bv-shadow:0 16px 35px rgba(0,0,0,.23);--bv-shadow-focus:0 20px 55px rgba(0,0,0,.28);
+ --bv-gradient:linear-gradient(135deg,#22382E,#29483A);
+ --bv-ambient:radial-gradient(ellipse at 9% 0%,rgba(52,84,66,.45),transparent 47%);
+ --bv-chart:#A6DEBA;--bv-grid:rgba(225,247,233,.16);
+ --bv-chart-area-top:rgba(157,217,176,.23);--bv-chart-area-bottom:rgba(157,217,176,0);
+ --bv-focus:#A6DEBA;
+}
+
+.app-shell[data-bloom-visual="premium"]:is(html[data-experience="athlete"] *) {
+ --bv-canvas:#0F1B2E;--bv-paper:#17263E;--bv-porcelain:#182B45;
+ --bv-forest:#F1F6FF;--bv-forest-strong:#FFFFFF;--bv-brand:#81BEFF;
+ --bv-sage:#254967;--bv-mist:#203B63;--bv-secondary:#C3D4E9;
+ --bv-line:rgba(241,246,255,.16);--bv-line-soft:rgba(241,246,255,.09);
+ --bv-shadow:0 16px 32px rgba(2,10,25,.28);--bv-shadow-focus:0 20px 52px rgba(2,10,25,.33);
+ --bv-gradient:linear-gradient(135deg,#203B63,#0F1B2E);
+ --bv-ambient:radial-gradient(ellipse at 12% 0%,rgba(41,95,149,.29),transparent 48%);
+ --bv-chart:#81BEFF;--bv-grid:rgba(241,246,255,.15);
+ --bv-chart-area-top:rgba(129,190,255,.26);--bv-chart-area-bottom:rgba(129,190,255,0);
+ --bv-focus:#81BEFF;
+}
+
+.app-shell[data-bloom-visual="premium"] { background-color:var(--bv-canvas); background-image:var(--bv-ambient);color:var(--bv-forest); }
+
+.app-shell[data-bloom-visual="premium"] .bloom-header { background:var(--bv-porcelain);border-color:var(--bv-line); }
+
+.app-shell[data-bloom-visual="premium"] .workspace-sidebar { background:var(--bv-porcelain);border-color:var(--bv-line); }
+
+.app-shell[data-bloom-visual="premium"] .navigation-group > p { color:var(--bv-secondary);font-size:12px;letter-spacing:.11em; }
+
+.app-shell[data-bloom-visual="premium"] .navigation-group a { color:var(--bv-secondary);border-radius:14px; font-size:14px; }
+
+.app-shell[data-bloom-visual="premium"] .navigation-group a:hover { background:var(--bv-mist);color:var(--bv-forest); }
+
+.app-shell[data-bloom-visual="premium"] .navigation-group a[aria-current="page"] { background:var(--bv-mist);color:var(--bv-forest-strong);box-shadow:inset 3px 0 0 var(--bv-brand); }
+
+.app-shell[data-bloom-visual="premium"] h1 { color:var(--bv-forest-strong);font-family:Georgia,"Iowan Old Style",serif;font-size:clamp(30px,3.2vw,42px);font-weight:600;line-height:1.16;letter-spacing:-.03em; }
+
+.app-shell[data-bloom-visual="premium"] h2 { color:var(--bv-forest);letter-spacing:-.02em; }
+
+.app-shell[data-bloom-visual="premium"] .eyebrow {color:var(--bv-secondary);font-size:12px;letter-spacing:.12em;font-weight:650;}
+
+.app-shell[data-bloom-visual="premium"] .panel-note, .app-shell[data-bloom-visual="premium"] .sidebar-note {color:var(--bv-secondary);font-size:14px;}
+
+.app-shell[data-bloom-visual="premium"] .bloom-panel, .app-shell[data-bloom-visual="premium"] .biology-context {background:var(--bv-porcelain);color:var(--bv-forest);border:1px solid var(--bv-line);border-radius:26px;box-shadow:var(--bv-shadow);}
+
+.app-shell[data-bloom-visual="premium"] .bloom-panel .bloom-panel {box-shadow:none;border-color:var(--bv-line-soft);}
+
+.app-shell[data-bloom-visual="premium"] .daily-welcome, .app-shell[data-bloom-visual="premium"] .today-focus { background:var(--bv-gradient);color:var(--bv-forest);border-color:var(--bv-line-soft);border-radius:28px;box-shadow:var(--bv-shadow); }
+
+.app-shell[data-bloom-visual="premium"] .bloom-input {background:var(--bv-porcelain);color:var(--bv-forest);border-color:var(--bv-line);border-radius:14px;}
+
+.app-shell[data-bloom-visual="premium"] main button:not([role="checkbox"]), .app-shell[data-bloom-visual="premium"] .header-log {border-radius:14px;}
+
+.app-shell[data-bloom-visual="premium"] .workspace-tabs > [role="tablist"], .app-shell[data-bloom-visual="premium"] .precision-tabs {background:var(--bv-mist);border-color:var(--bv-line-soft);border-radius:16px;}
+
+.app-shell[data-bloom-visual="premium"] .workspace-tabs > [role="tablist"] > button[data-state="active"], .app-shell[data-bloom-visual="premium"] .precision-tabs button[aria-pressed="true"] {background:var(--bv-porcelain);color:var(--bv-forest);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+
+.app-shell[data-bloom-visual="premium"] .biology-summary-tile {background:var(--bv-porcelain);border-color:var(--bv-line);border-radius:20px;}
+
+.app-shell[data-bloom-visual="premium"] .biology-summary-tile:hover {background:var(--bv-mist);}
+
+.app-shell[data-bloom-visual="premium"] main :is(button, a, input, select, textarea, summary):focus-visible {outline:3px solid var(--bv-focus);outline-offset:3px;}
+
+.app-shell[data-bloom-visual="premium"] .bv-surface-card {background:var(--bv-porcelain);border:1px solid var(--bv-line);border-radius:28px;box-shadow:var(--bv-shadow);color:var(--bv-forest);min-width:0;}
+
+.app-shell[data-bloom-visual="premium"] .bv-surface-card[data-depth="inset"] {background:var(--bv-mist);box-shadow:inset 0 1px 0 var(--bv-line-soft);}
+
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero {background:var(--bv-gradient);border:1px solid var(--bv-line-soft);border-radius:32px; color:var(--bv-forest);min-width:0;}
+
+.app-shell[data-bloom-visual="premium"] .bv-telemetry-display {background:var(--bv-mist);color:var(--bv-forest);border:1px solid var(--bv-line-soft);border-radius:20px;}
+
+.app-shell[data-bloom-visual="premium"] .bv-telemetry-display [data-value] {font:600 36px/40px ui-monospace,SFMono-Regular,Consolas,monospace;font-variant-numeric:tabular-nums;}
+
+.app-shell[data-bloom-visual="premium"] .bv-telemetry-display [data-unit] {font-size:14px;color:var(--bv-secondary);}
+
+.app-shell[data-bloom-visual="premium"] .bv-provenance {font-size:14px;line-height:1.5;color:var(--bv-secondary);}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-line {fill:none;stroke:var(--bv-chart);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-grid {stroke:var(--bv-grid);stroke-width:1;}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-point {fill:var(--bv-chart);stroke:var(--bv-porcelain);stroke-width:2;}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-association {fill:none;stroke:var(--bv-chart);stroke-width:2;stroke-dasharray:4 4;}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-tick {font:500 13px/18px ui-monospace,monospace;fill:var(--bv-secondary);}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-ring-track {stroke:var(--bv-line);stroke-width:8;fill:none;}
+
+.app-shell[data-bloom-visual="premium"] .bv-chart-ring-progress {stroke:var(--bv-chart);stroke-width:8;fill:none;stroke-linecap:round;}
+
+.app-shell[data-bloom-visual="premium"] .bv-state-loading {background:linear-gradient(110deg,var(--bv-mist) 8%,var(--bv-porcelain) 18%,var(--bv-mist) 33%);background-size:220% 100%;}
+
+.app-shell[data-bloom-visual="premium"] .bv-state-empty {background:var(--bv-mist);color:var(--bv-forest);}
+
+.app-shell[data-bloom-visual="premium"] .bv-state-partial {border-bottom:2px dashed var(--bv-brand);}
+
+.app-shell[data-bloom-visual="premium"] .bv-state-error {border:1px solid #AD675B;background:var(--bv-porcelain);color:var(--bv-forest);}
+
+.app-shell[data-bloom-visual="premium"] .bv-state-review {background:var(--bv-paper);border:1px solid var(--bv-line);}
+
+.app-shell[data-bloom-visual="premium"] .bv-state-research {background:var(--bv-forest-strong);color:var(--bv-porcelain);}
+
+@media (prefers-reduced-motion:reduce) {
+  .app-shell[data-bloom-visual="premium"] .bv-surface-card, .app-shell[data-bloom-visual="premium"] .bv-editorial-hero, .app-shell[data-bloom-visual="premium"] .bv-telemetry-display, .app-shell[data-bloom-visual="premium"] .bv-state-loading {animation:none!important;transition:none!important;background-size:100% 100%;}
+}
+
+@media (forced-colors:active) {
+  .app-shell[data-bloom-visual="premium"] .bv-surface-card, .app-shell[data-bloom-visual="premium"] .bv-editorial-hero, .app-shell[data-bloom-visual="premium"] .bv-telemetry-display, .app-shell[data-bloom-visual="premium"] .bloom-panel {border:1px solid CanvasText;box-shadow:none;}
+  .app-shell[data-bloom-visual="premium"] .bv-chart-line {stroke:CanvasText;}
+}
+
+/* R2 DELTA: type character and reusable paint-only title slots. No imported fonts. */
+.app-shell[data-bloom-visual="premium"] {
+  --bv-serif: "Iowan Old Style", "Baskerville", "Palatino Linotype", Georgia, serif;
+  --bv-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --bv-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --bv-title-lg:clamp(1.9rem,2.3vw,2.75rem);
+  --bv-title-md:clamp(1.45rem,1.9vw,1.875rem);
+  --bv-title-sm:1.25rem;
+  --bv-motion-ease:cubic-bezier(.2,.8,.2,1);
+  --bv-clay:#D4A37C; --bv-lilac:#C9BDE3;
+}
+.app-shell[data-bloom-visual="premium"] :is(h1,h2,h3,.bv-card-title,.bv-empty-title) {
+  font-family:var(--bv-serif);font-synthesis: none;
+  text-wrap:balance;
+}
+.app-shell[data-bloom-visual="premium"] :is(h2,.bv-card-title) {
+  font-size:var(--bv-title-md);line-height:1.23;font-weight:550;letter-spacing:-.018em;
+}
+.app-shell[data-bloom-visual="premium"] :is(h3,.bv-empty-title) {
+  font-size:var(--bv-title-sm);line-height:1.32;font-weight:600;letter-spacing:-.012em;
+}
+.app-shell[data-bloom-visual="premium"] :is(p,label,button,a,input,select,textarea) {font-family:var(--bv-sans);}
+.app-shell[data-bloom-visual="premium"] :is(.bv-telemetry-value,.bv-chart-tick,.bv-telemetry-display [data-value]) {
+  font-family:var(--bv-mono);font-variant-numeric:tabular-nums;
+}
+/* Tiny use of unused palette accents as atmospheric/informationally neutral materials. */
+.app-shell[data-bloom-visual="premium"] .bv-food-illustration-wash {background:linear-gradient(145deg,var(--bv-paper),color-mix(in srgb,var(--bv-clay) 22%,var(--bv-porcelain)));}
+.app-shell[data-bloom-visual="premium"] .bv-research-illustration-wash {background:linear-gradient(145deg,var(--bv-porcelain),color-mix(in srgb,var(--bv-lilac) 16%,var(--bv-porcelain)));}
+/* Decoration is explicitly opted in on a UX-owned, already-existing safe noninteractive slot. */
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art][data-bv-art-safe="true"] {position:relative;isolation:isolate;}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art][data-bv-art-safe="true"]::after {
+ content:"";pointer-events:none;position:absolute;z-index:0;right:1rem;top:50%;transform:translateY(-50%);
+ width:min(30%,220px);aspect-ratio:1;background-repeat:no-repeat;background-position:center;background-size:contain;opacity:.18;
+}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art="botanical-orbit"]::after {background-image:url('/brand/visual-v2/botanical-orbit.svg');}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art="ingredient-oats"]::after {background-image:url('/brand/visual-v2/ingredient-oats.svg');}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art="organism-concept"]::after {background-image:url('/brand/visual-v2/organism-concept.svg');}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art="athlete-motion"]::after {background-image:url('/brand/visual-v2/athlete-motion.svg');}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art-safe="true"] > * {position:relative;z-index:1;}
+/* Optional manual art slot within approved UX region. Decorative image never receives focus. */
+.app-shell[data-bloom-visual="premium"] .bv-decorative-image {pointer-events:none;user-select:none;object-fit:contain;max-width:100%;height:auto;}
+/* Only skeletons explicitly designated bv-state-loading may shimmer. */
+.app-shell[data-bloom-visual="premium"] .bv-state-loading {animation:bv-loading-shimmer 1.6s linear infinite;}
+@keyframes bv-loading-shimmer {0%{background-position:105% 0}100%{background-position:-105% 0}}
+/* Three optional decorative microinteractions; never infer data changes. */
+.app-shell[data-bloom-visual="premium"] .bv-hero-enter {animation:bv-hero-reveal 280ms var(--bv-motion-ease) both;}
+.app-shell[data-bloom-visual="premium"] .bv-save-confirmed[data-save-state="confirmed"] {animation:bv-save-reveal 260ms var(--bv-motion-ease) both;}
+.app-shell[data-bloom-visual="premium"] .bv-chart-ink[data-chart-ready="true"] {animation:bv-chart-appear 420ms var(--bv-motion-ease) both;}
+@keyframes bv-hero-reveal {from{opacity:.85;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bv-save-reveal {from{opacity:.72;transform:scale(.992)}to{opacity:1;transform:scale(1)}}
+@keyframes bv-chart-appear {from{opacity:.45}to{opacity:1}}
+/* Aesthetic flattening: only when opted in after UX approves the specific wrapper. */
+.app-shell[data-bloom-visual="premium"] .bv-flat-group {border:0!important;border-radius:0!important;box-shadow:none!important;background:transparent!important;}
+.app-shell[data-bloom-visual="premium"] .bv-flat-group + .bv-flat-group {border-top:1px solid var(--bv-line-soft)!important;}
+@media(max-width:639px) {
+  .app-shell[data-bloom-visual="premium"] {--bv-title-lg:2rem;--bv-title-md:1.5rem;--bv-title-sm:1.18rem;}
+  .app-shell[data-bloom-visual="premium"] h1 {font-size:2rem;line-height:1.17;}
+  .app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art][data-bv-art-safe="true"]::after {width:110px;right:0;top:0;transform:none;opacity:.07;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .app-shell[data-bloom-visual="premium"] :is(.bv-state-loading,.bv-hero-enter,.bv-save-confirmed,.bv-chart-ink) {animation:none!important;transition:none!important;}
+}
+@media(forced-colors:active) {
+  .app-shell[data-bloom-visual="premium"] .bv-editorial-hero[data-bv-art][data-bv-art-safe="true"]::after {display:none;}
+  .app-shell[data-bloom-visual="premium"] :is(.bv-food-illustration-wash,.bv-research-illustration-wash){background:Canvas;color:CanvasText;}
+  .app-shell[data-bloom-visual="premium"] .bv-state-loading {background:Canvas;border:1px solid CanvasText;}
+}
+
+/* R3 Designer completion: paint layer only. Existing layout, CTA order and DOM stay UX-owned. */
+.app-shell[data-bloom-visual="premium"] {
+  --bv-radius-control:14px;--bv-radius-inset:20px;--bv-radius-panel:26px;
+  --bv-radius-hero:28px;--bv-radius-editorial:32px;
+  --bv-label-size:14px;--bv-metric-leading:40px;
+}
+.app-shell[data-bloom-visual="premium"] .today-focus-reason {font:400 16px/24px var(--bv-sans);color:var(--bv-secondary);}
+.app-shell[data-bloom-visual="premium"] .flagship-recorded-energy,
+.app-shell[data-bloom-visual="premium"] .bv-metric-number {
+ font-family:var(--bv-mono);font-variant-numeric:tabular-nums;
+}
+.app-shell[data-bloom-visual="premium"] .bv-editorial-caption {font:400 14px/21px var(--bv-sans);color:var(--bv-secondary);}
+.app-shell[data-bloom-visual="premium"] .bv-action-label {font:650 15px/21px var(--bv-sans);}
+.app-shell[data-bloom-visual="premium"] .bv-measured-figure {font-family:var(--bv-mono);font-variant-numeric:tabular-nums;}
+.app-shell[data-bloom-visual="premium"] .bv-section-divider {border:0;border-top:1px solid var(--bv-line-soft);margin-block:24px;}
+.app-shell[data-bloom-visual="premium"] .bv-quiet-inset {background:var(--bv-mist);border:1px solid var(--bv-line-soft);border-radius:var(--bv-radius-inset);box-shadow:none;}
+/* Art source never stands in for a numeric series, unit, error, source or human action. */
+.app-shell[data-bloom-visual="premium"] .bv-art-off::after {display:none!important;}
+@media (max-width:639px) {
+ .app-shell[data-bloom-visual="premium"] {--bv-metric-leading:38px;}
+ .app-shell[data-bloom-visual="premium"] .bv-telemetry-display [data-value] {font-size:32px;line-height:38px;}
+}
+@media(forced-colors:active){
+ .app-shell[data-bloom-visual="premium"] .bv-quiet-inset {background:Canvas;color:CanvasText;border-color:CanvasText;}
+ .app-shell[data-bloom-visual="premium"] .bv-state-error {border-color:CanvasText;}
+}
+
+/* M1-D §D4: exact final Designer source. */
+.app-shell[data-bloom-visual="premium"] .bv-media { position:relative; isolation:isolate; overflow:hidden; min-width:0; margin:0; border-radius:20px; background:var(--bv-paper,#F5F3EB); pointer-events:none; }
+.app-shell[data-bloom-visual="premium"] .bv-media img { display:block; width:100%; height:100%; object-fit:contain; }
+.app-shell[data-bloom-visual="premium"] .bv-media--banner img,
+.app-shell[data-bloom-visual="premium"] .bv-media--conceptual img { object-fit:cover; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] img { object-position:70% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"] img { object-position:78% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] img { object-position:73% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] img { object-position:80% 50%; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { background:#182B45; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] img { object-position:75% 45%; }
+.app-shell[data-bloom-visual="premium"] .bv-media--conceptual { overflow:visible; }
+.app-shell[data-bloom-visual="premium"] .bv-media-concept-label { position:absolute; inset-inline-start:8px; bottom:8px; max-width:calc(100% - 16px); padding:4px 8px; border-radius:8px; background:#FFFEFA; color:#173E32; font:600 12px/1.4 system-ui,sans-serif; }
+.app-shell[data-bloom-visual="premium"] .bv-editorial-hero:has(.bv-media)::after { content:none !important; }
+@media (max-width:767px) { .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="progress-corner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="profile-corner"] { display:none; } }
+@media (forced-colors:active) { .app-shell[data-bloom-visual="premium"] .bv-media img { display:none; } .app-shell[data-bloom-visual="premium"] .bv-media-concept-label { position:static; background:Canvas; color:CanvasText; border:1px solid CanvasText; } }
+@media (prefers-reduced-transparency:reduce) { .app-shell[data-bloom-visual="premium"] .bv-media { backdrop-filter:none; -webkit-backdrop-filter:none; } }
+@media (prefers-reduced-motion:reduce) { .app-shell[data-bloom-visual="premium"] .bv-media, .app-shell[data-bloom-visual="premium"] .bv-media img { animation:none !important; transition:none !important; } }
+
+/* M1-D §D3 heights and §3.2 passive sibling placement. The caption flows
+   below Biology art as required by D3, including fallback/forced colors. */
+.app-shell:not([data-bloom-visual="premium"]) .bv-media { display:none; }
+.app-shell[data-bloom-visual="premium"] .bv-media { --bv-media-size:120px; block-size:var(--bv-media-size); inline-size:100%; }
+.app-shell[data-bloom-visual="premium"] .bv-media img { block-size:var(--bv-media-size); }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-media-source="svg"] img { object-fit:contain;object-position:center; }
+.app-shell[data-bloom-visual="premium"] .bv-media-slot { min-width:0;margin-block-start:16px; }
+.app-shell[data-bloom-visual="premium"] .bv-media--conceptual { block-size:auto; }
+.app-shell[data-bloom-visual="premium"] .bv-media-concept-label { position:static;display:block;inline-size:fit-content;margin:8px; }
+.app-shell[data-bloom-visual="premium"] .bv-media--cutout { inline-size:96px;--bv-media-size:96px;background:transparent; }
+.app-shell[data-bloom-visual="premium"] .bv-media--state { inline-size:120px;--bv-media-size:120px;background:transparent; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:120px; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:144px; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] { --bv-media-size:128px; }
+.app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:132px; }
+@media(max-width:359px) {
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:96px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:112px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] { --bv-media-size:100px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:104px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media--state { inline-size:96px;--bv-media-size:96px; }
+}
+@media(min-width:768px) {
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:156px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:180px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"] { --bv-media-size:160px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:168px; }
+}
+@media(min-width:1440px) {
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="today-hero"] { --bv-media-size:176px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="food-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="athlete-banner"] { --bv-media-size:220px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="biology-banner"], .app-shell[data-bloom-visual="premium"] .bv-media[data-bv-slot="explore-banner"] { --bv-media-size:200px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media--cutout { inline-size:120px;--bv-media-size:120px; }
+ .app-shell[data-bloom-visual="premium"] .bv-media--state { inline-size:140px;--bv-media-size:140px; }
+}
+/* Biology restoration: source-group rows, not a card per marker. */
+.app-shell[data-bloom-visual="premium"] .bv-marker-list { list-style:none;margin:0;padding:0; }
+.app-shell[data-bloom-visual="premium"] .bv-marker-list li+li { border-top:1px solid var(--bv-line); }
+.app-shell[data-bloom-visual="premium"] .bloodwork-section-links .bv-marker-trigger { display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;inline-size:100%;padding:10px 0;border:0;border-radius:0;background:transparent;color:var(--bv-forest);text-align:start;box-shadow:none; }
+.app-shell[data-bloom-visual="premium"] .bv-marker-trigger > span { min-width:0;overflow-wrap:anywhere; }
+.app-shell[data-bloom-visual="premium"] .bv-marker-trigger small { display:block;font-size:14px;line-height:1.5;color:var(--bv-secondary); }
+.app-shell[data-bloom-visual="premium"] .bv-marker-affordance { display:flex;align-items:center;gap:4px;font-size:14px; }
+.app-shell[data-bloom-visual="premium"] .lab-marker-details { scroll-margin-top:6rem; }
+@media(forced-colors:active) { .app-shell[data-bloom-visual="premium"] .bv-media:not(.bv-media--conceptual) { display:none; } }
+
+.app-shell[data-bloom-visual="premium"] .lab-marker-details .precision-observation { scroll-margin-top:6rem; }
+@media(min-width:768px) {
+ .app-shell[data-bloom-visual="premium"] .science-heading:has(>.bv-media--cutout) { display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:16px; }
+ .app-shell[data-bloom-visual="premium"] .science-heading>.bv-media--cutout { grid-column:2;grid-row:1/span 4; }
+ .app-shell[data-bloom-visual="premium"] .science-heading:has(>.bv-media--cutout)>:not(.bv-media) { grid-column:1;min-width:0; }
+}
+
+/* Latest owner P0: distinct Athlete light, reusing approved R4 pale surfaces,
+   existing Athlete light blue and the approved navy as foreground. */
+html:not(.dark)[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] {
+ --bv-canvas:#F8F9F3;--bv-paper:#F5F3EB;--bv-porcelain:#FFFEFA;
+ --bv-forest:#0F1B2E;--bv-forest-strong:#0F1B2E;--bv-brand:hsl(var(--primary));
+ --bv-sage:#D9E7D5;--bv-mist:#EDF3EC;--bv-secondary:#52685C;
+ --bv-line:rgba(15,27,46,.16);--bv-line-soft:rgba(15,27,46,.09);
+ --bv-shadow:0 12px 32px rgba(18,47,37,.065);--bv-shadow-focus:0 20px 55px rgba(18,47,37,.11);
+ --bv-gradient:linear-gradient(135deg,#F5F3EB,#EDF3EC);--bv-ambient:none;
+ --bv-chart:hsl(var(--primary));--bv-grid:rgba(15,27,46,.16);--bv-focus:hsl(var(--primary));
+}
+.app-shell[data-bloom-visual="premium"] .today-focus .text-link { min-block-size:44px;min-inline-size:44px; color:var(--bv-brand);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px; }
+.app-shell[data-bloom-visual="premium"] .today-focus .text-link:is(:hover,:active,:focus-visible) { color:var(--bv-forest-strong); }
+.app-shell[data-bloom-visual="premium"] .today-focus :is(button.text-link,.hero-button):disabled { color:var(--bv-secondary);background:var(--bv-mist);opacity:1; }
+
+/* Supplied compact category treatment; dark-only Athlete sample reconciled. */
+/* Bloom M1 · bloodwork explorer category refinement.
+   Designer-supplied production source; merge into ONE canonical bloom-visual-scoped.css.
+   No data, DOM or focus-order changes. */
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category {
+  margin-block:0 10px; border:1px solid #52685C; background:#FFFEFA;
+  border-radius:20px; box-shadow:none; overflow:clip;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary {
+  display:grid; grid-template-columns:minmax(0,1fr) 18px; gap:4px 12px;
+  align-items:center; min-height:82px; padding:13px 16px;
+  cursor:pointer; list-style:none; text-align:start; touch-action:manipulation;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::-webkit-details-marker {display:none;}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::marker {content:"";}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after {
+  content:""; width:9px; height:9px; border-right:1.75px solid currentColor;
+  border-bottom:1.75px solid currentColor; transform:rotate(45deg);
+  color:#52685C; grid-column:2; grid-row:1 / span 2; justify-self:center;
+  transition:transform 160ms cubic-bezier(.2,0,0,1);
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category[open] > summary::after {transform:rotate(225deg);}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title {
+  display:flex; align-items:center; gap:12px; min-width:0; grid-column:1; grid-row:1;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong {
+  display:block; min-width:0; color:#173E32;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px; line-height:21px; font-weight:650; letter-spacing:-.015em;
+  overflow-wrap:normal;word-break:normal;
+}
+.app-shell[data-bloom-visual="premium"] .lab-category-icon {
+  display:inline-flex; flex:0 0 42px; width:42px; height:42px;
+  align-items:center; justify-content:center; border-radius:13px;
+  color:#246B50; background:#EDF3EC;
+}
+.app-shell[data-bloom-visual="premium"] .lab-category-icon svg,
+.app-shell[data-bloom-visual="premium"] .lab-category-icon img {
+  width:24px;height:24px;object-fit:contain;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type {
+  display:block; grid-column:1;grid-row:2; padding-inline-start:54px;
+  color:#52685C;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:13px;line-height:18px;font-weight:450;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary:focus-visible {
+  outline:3px solid #246B50;outline-offset:-4px;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category[open] > summary {
+  border-bottom:1px solid #D9E7D5;
+}
+.app-shell[data-bloom-visual="premium"] .lab-explorer-markers {padding:10px 12px 14px;}
+@media (max-width:639px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer {display:block;}
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category {margin-block-end:8px;border-radius:17px;}
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary {
+   min-height:76px;padding:11px 12px;gap:3px 8px;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category-title {gap:10px;}
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong {
+   font-size:15px;line-height:20px;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-category-icon {
+   flex-basis:40px;width:40px;height:40px;border-radius:12px;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type {
+   padding-inline-start:50px;font-size:12px;line-height:17px;
+ }
+}
+@media (min-width:900px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary {min-height:78px;}
+}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category {
+ background:#173E32;border-color:#52685C;
+}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category-title > strong {color:#FFFEFA;}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category > summary > span:last-of-type {color:#D9E7D5;}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-category-icon,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-category-icon {
+ color:#173E32;background:#D9E7D5;
+}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category > summary::after {color:#D9E7D5;}
+html.dark .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary:focus-visible,
+.app-shell[data-bloom-visual="premium"][data-theme="dark"] .lab-explorer-category > summary:focus-visible {
+ outline-color:#81BEFF;
+}
+@media (prefers-reduced-motion:reduce) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after {
+   transition:none;
+ }
+}
+@media (forced-colors:active) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category,
+ .app-shell[data-bloom-visual="premium"] .lab-category-icon {
+   background:Canvas;color:CanvasText;border:1px solid CanvasText;
+ }
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary:focus-visible {
+   outline:3px solid Highlight;
+ }
+}
+/* Designer Athlete sample: implementer must reconcile with actual Athlete light/dark variants. */
+.app-shell[data-bloom-visual="premium"]:is(html.dark[data-experience="athlete"] *) .lab-explorer-category {
+ background:#182B45;border-color:#52685C;
+}
+.app-shell[data-bloom-visual="premium"]:is(html.dark[data-experience="athlete"] *) .lab-explorer-category-title > strong {color:#FFFEFA;}
+.app-shell[data-bloom-visual="premium"]:is(html.dark[data-experience="athlete"] *) .lab-explorer-category > summary > span:last-of-type {color:#D9E7D5;}
+.app-shell[data-bloom-visual="premium"]:is(html.dark[data-experience="athlete"] *) .lab-category-icon {background:#0F1B2E;color:#81BEFF;}
+.app-shell[data-bloom-visual="premium"]:is(html.dark[data-experience="athlete"] *) .lab-explorer-category > summary::after {color:#81BEFF;}
+
+html:not(.dark)[data-experience="athlete"] .app-shell[data-bloom-visual="premium"] .lab-category-icon { color:var(--bv-brand); }
+
+/* Native details keep the existing icon/title span; share its icon column across
+   both text lines so source counts wrap without inflating compact rows. */
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category { padding:0; }
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary { grid-template-columns:42px minmax(0,1fr) 18px; }
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title { display:contents; }
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > .lab-category-icon { grid-column:1;grid-row:1 / span 2; }
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category-title > strong { grid-column:2;grid-row:1; }
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary > span:last-of-type { grid-column:2;grid-row:2;padding-inline-start:0; }
+.app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary::after { grid-column:3; }
+@media(max-width:639px) {
+ .app-shell[data-bloom-visual="premium"] .lab-explorer-category > summary { grid-template-columns:40px minmax(0,1fr) 18px; }
+}

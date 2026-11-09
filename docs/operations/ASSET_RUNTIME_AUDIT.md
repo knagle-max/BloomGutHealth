@@ -1,0 +1,14 @@
+# Original source → runtime audit — 2026-10-30
+
+Audited runtime source99f103005b42b4c9bb08f6151d7113004cabe466. Run `npm run build` then `node --import tsx scripts/asset-runtime-audit.ts` to regenerate the machine-readable reference/build inventory. Auditor SHA and individual file/build hashes are included. This is MKT-ASSET-3104 / ARC-BRAND-P0-01 evidence, separate from visual acceptance.
+
+-221 checked-out design files:133SVG,9PNG,6TSX and supporting sources/documents. These are not221 unused images.192 manifest paths:191 byte-identical, the single missing legacy concept image remains the already recorded exception. No new missing/mismatched source.
+-13 original brand files map byte-for-byte to public runtime files. All16 public files, including legal notices and manifest, match production build copies. Full paths, original matches, sizes and hashes are in ASSET_RUNTIME_AUDIT.json.
+-176 reachable local modules;18 literal lazy imports are possible reachability, not execution. No computed import encountered. Type-only imports excluded. Imports of reference/archive modules are absent. Conditional public URL generation/package internals are not comprehensively proven by static strings.
+-Current microbial design files are original references adapted to canonical components; their SVG/TSX reference files are not mounted as production screens. No blanket import of archived previews.
+-Four exact duplicate artwork groups occur between exercise/2026-10-29 and exercise-intelligence/2026-10-29. These remain original package copies. No deletion recommended or performed.
+-Several PNG icon variants are shipped without direct current runtime references; retain approved variants pending design review. design-tokens.json is consumed by scripts/brand-tokens.py, so absence from the runtime import graph is intentional. PDFJS notices are shipped licence artifacts, not unused decorative assets.
+
+Local actual App/Vite browser trace ASSET_BROWSER_LOCAL_2026-10-30.json checks returned original asset bytes, correct single visible light/dark wordmark/alt and observed mode icons across Today/Profile/Progress/Gut reports/Diet coach/Athlete. Its synthetic no-data account and limited route coverage are explicit. It does not prove every shipped asset rendered, every feature state, authenticated hosted resource loading or independent acceptance. Original source labels and explanatory design references cannot be mapped by equal-byte analysis alone; source-family implementation packets remain complementary.
+
+Remaining: actual hosted authenticated browser resource trace and exact-candidate independent Branding sign-off. Hosted capture is the recorded technical access blocker; source inventory/local build evidence is available and does not block independent implementation. No paid service, production data, source activation, artwork removal or release permission changed.
