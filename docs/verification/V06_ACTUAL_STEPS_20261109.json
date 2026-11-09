@@ -22,7 +22,14 @@
     "headerBrowser": "PASS local Chromium source lifecycle including1280px at200% page zoom; Chrome156 exactCI pending",
     "typecheck": "PASS",
     "productionBuild": "PASS final build and exact original asset byte checks",
-    "exactPublicationCI": "PENDING"
+    "exactPublicationCI": "PENDING",
+    "firstPublicationCI": {
+      "commit": "abeda3a0bb5a0f0da952a244c3e0843ac745cc0e",
+      "run": 42692878438,
+      "browserChecks": "ALL_PASS including Chrome156 header/source deletion at1280x2 and actual activities",
+      "stoppedAt": "Capability source crosswalk hash drift; runtime source and API inventory/types passed",
+      "fix": "Reviewed six changed source hashes and regenerated crosswalk in clean published-commit worktree;52 registry IDs remain review required, no authorization changed"
+    }
   },
   "remaining": [
     "Named selected-weekday routines, due Today quick log, pause/skip/reschedule and stable occurrence transaction tests remain to implement",
