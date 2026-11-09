@@ -1,3 +1,4 @@
+import LabelNutrientSources from "./LabelNutrientSources";
 import type {MealIntelligence} from "@shared/meal-intelligence";
 import {nutrientDefinitionDetails,nutrientDefinitionSource} from "@shared/nutrient-definitions";
 import {readNutrientSourceSnapshots} from "@shared/nutrient-source-snapshot";
@@ -26,6 +27,7 @@ export default function NutrientDefinitionDisclosure({analysis,recordedMeal}:{an
      <a className="text-link inline-flex items-center min-h-11 min-w-0 max-w-full whitespace-normal [overflow-wrap:anywhere]" aria-label={`Original food source for ${snapshot.ingredient}`} href={snapshot.sourceUrl} target="_blank" rel="noopener noreferrer">Original food source</a>
     </section>)}
    </section>:<p className="panel-note">{captured.status==="unsupported"?"Original generic source details could not be verified for this view.":"Original generic per100g values were not captured for this entry."} Its saved estimates and any label snapshot remain available; a current database lookup would not recreate the original source.</p>)}
+   {open&&<LabelNutrientSources analysis={analysis}/>}
    <a className="text-link inline-flex items-center min-h-11 min-w-0 max-w-full whitespace-normal [overflow-wrap:anywhere]" href="https://fdc.nal.usda.gov/data-documentation.html" target="_blank" rel="noopener noreferrer">USDA source documentation</a>
   </div>
  </details>;

@@ -1892,7 +1892,7 @@
     "client/src/components/MicrobiomeReportManagement.tsx": "43c83fbcfcad414db2c89efad682c5bc4aafd803f2ed012689ceb917d5356390",
     "client/src/components/MolecularIllustration.tsx": "a76af9c6dde66c074027d95785703a9b803b283b97f85304da81bbfde411ae9d",
     "client/src/components/MovementSourceDetails.tsx": "3dceeea869d9f136264069a9c6a76086230030c77facb8f5a7e4e297b18a0171",
-    "client/src/components/NutrientDefinitionDisclosure.tsx": "e8b072e63492b8ef78d1eff8bc26946e7cc8b0e7403b5bd4019bbd7049502c09",
+    "client/src/components/NutrientDefinitionDisclosure.tsx": "85a186a3295500ce063d78ae31e49e7a535cfb1e24daee150a5649b66f70ffec",
     "client/src/components/OrganismPortrait.tsx": "844281c660d66253738fd4eab914c7cc8681da8e1f20c84b2a9a158f37e88e1c",
     "client/src/components/PremiumIcon.tsx": "29781821b893c047b1e31193a55cd680d57df55ee2763047b49ec93952cf03b4",
     "client/src/components/ProductPicker.tsx": "ee86382383c6ee1cca880bd6200668b71a49af39a8fae3575f24b7d1043866e1",

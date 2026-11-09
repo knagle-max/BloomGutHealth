@@ -4,6 +4,16 @@ Read [`docs/architecture/BOI_V06_ARCHITECT_RECONCILIATION_20261109.md`](docs/arc
 
 ---
 
+## Original saved-label nutrient values — 2026-11-09
+
+Current published source/outcome/wrapping development is e5fa15d595ea2e0702e4a44494ee4621b37c461e; exact CI42654014834 is pending. New source-only M1 slice is implemented locally: existing Nutrient forms & units exposes the immutable product label already captured on a meal. Original per-label-serving amounts, serving/mass, source identity and actual retrieval time remain separate from scaled meal estimates and collection/formulation dates. Known label zero, missing composition, unsupported/legacy source and unknown chemical equivalents stay distinct. Other label declarations remain separate with no double count, elemental/RAE/DFE/NE/IU conversion, ingestion confirmation, adequacy or second totals engine. No new persistent field or provider lookup.
+
+8 focused label/generic/definition/encrypted persistence tests, TypeScript and production build pass. Actual UI manual-label review→save→SQL→library delete→journal/reload passes original210 per serving versus420 meal energy, zero protein/unknown sodium, keyboard disclosure, owner switch and48-state label mode/theme/mobile/desktop/text/page-zoom matrix. Existing generic48-state source journey also passes. Independent forms/Canadian DRI/supplement-consumption work remains open. Evidence: docs/verification/V06_LABEL_SOURCE_VALUES_20261109.json.
+
+Next: verify preceding exact CI, publish this slice, verify exact follow-on CI, then continue remaining approved v0.6 TRAIN and action-to-outcome/micronutrient work. No new main merge or interim approval gate. Full v0.6 is not ready for final release.
+
+---
+
 ## Source-dated outcome comparison — 2026-11-09
 
 Check-in/provider-date source slice published as ade6852b84fa2e49bc58df8345666b545f6f6121. Exact CI42646197306 passed bloodwork/source-review/nutrient browser gates but failed weekly-reader320px/200% page zoom: the existing Save check-in button overflowed by17px in Chrome156. Scoped weekly-review button wrapping/minimum44px target fixes the same reproduced min-content cause found by the new experiment browser; no assertion is weakened.
