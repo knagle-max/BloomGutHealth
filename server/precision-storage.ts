@@ -35,7 +35,7 @@ function labSourceGroups(userId:string,records:PrecisionRecord[]){
  const facts=new Map<string,Lab|SourceOnlyLab>();
  for(const row of rows){const known=labSchema.safeParse(row.payload),raw=sourceOnlyLabSchema.safeParse(row.payload);const fact=known.success?known.data:raw.success?raw.data:null;if(!fact)continue;facts.set(row.id,fact);
   if(fact.sourceReport){const source=fact.sourceReport,key=JSON.stringify([source.importId,source.reportIdentifier??null,source.specimenIdentifier??null]);imports.set(key,[...(imports.get(key)||[]),row.id]);}
-  const parents=[fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
+  const parents=[fact.sourceCorrection?.supersedes,fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
   for(const parent of parents)if(parent&&byId.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
  }
  for(const ids of Array.from(imports.values()))for(const id of ids.slice(1)){links.get(ids[0])!.add(id);links.get(id)!.add(ids[0]);}
@@ -128,11 +128,11 @@ export class PrecisionStorage {
         }
       }
       const plan = payload as any;
-      if (kind === "lab" && plan?.dateCorrection && plan?.unitReview?.status !== "confirmed") throw Error("LAB_SOURCE_CHANGED");
+      if (kind === "lab" && (plan?.sourceCorrection && plan?.unitReview?.status !== "confirmed" || plan?.dateCorrection && plan?.unitReview?.status !== "confirmed")) throw Error("LAB_SOURCE_CHANGED");
       if(reviewedLabMatches!==undefined){
         const known=labSchema.safeParse(payload),raw=sourceOnlyLabSchema.safeParse(payload);
         const incoming=known.success?known.data:raw.success?raw.data:null;
-        if(kind!=="lab"||!saveKey||!incoming||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
+        if(kind!=="lab"||!saveKey||!incoming||incoming.sourceCorrection||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
         const owned=await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
         const rows=owned.map(row=>{
           const decoded=decryptPrecision(row.encryptedPayload,userId),supported=labSchema.safeParse(decoded),source=sourceOnlyLabSchema.safeParse(decoded);
@@ -150,7 +150,7 @@ export class PrecisionStorage {
         const prior = active.find(row=>row.unitReview?.supersedes===plan.unitReview.supersedes);
         const source = decoded.find(r=>r.id===plan.unitReview.supersedes);
         const parsed = labSchema.safeParse(source?.payload);
-        if(!parsed.success||!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection))throw Error("LAB_SOURCE_CHANGED");
+        if(!parsed.success||(!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection)||!isDeepStrictEqual(parsed.data.sourceCorrection,plan.sourceCorrection)))throw Error("LAB_SOURCE_CHANGED");
         if(prior){const record=decoded.find(row=>row.id===prior.id)!;return {id:record.id,kind:record.kind,payload:record.payload,createdAt:record.createdAt};}
         if(!active.some(row=>row.id===source?.id))throw Error("LAB_SOURCE_CHANGED");
         if(!parsed.success || parsed.data.unitReview?.status!=="pending" ||
@@ -329,8 +329,9 @@ export class PrecisionStorage {
         }
       }
       for(const row of [...supported,...raw]){
-        const parent=row.dateCorrection?.supersedes;
-        if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+        for(const parent of [row.dateCorrection?.supersedes,row.sourceCorrection?.supersedes]){
+         if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+        }
       }
       if (!activeLabRows([...supported,...raw]).some(row => row.id === id))
         throw Error("LAB_SOURCE_CHANGED");

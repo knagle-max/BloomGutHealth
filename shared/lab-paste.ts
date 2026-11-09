@@ -1,3 +1,6 @@
+import {additionalLabSourceIdentity,normalizedLabUnit,labUnitKey} from './lab-source-identity';
+import {parseSourceReference} from './lab-source-reference';
+import {additionalLabMarkers} from './additional-lab-markers';
 import {vitaminDAssayIdentity,labSourceColumns} from "./lab-assay-identity";
 import { markerDefinitions, labSchema, sourceOnlyLabSchema, type SourceOnlyLab } from "./precision-nutrition";
 const aliases: Record<string, string> = {
@@ -61,7 +64,7 @@ export function parseLabPaste(
       errors.push({line:index+1,message});
       // Only explicit delimited source columns; never guess a scientific assay or unit.
       const fields=labSourceColumns(raw);
-      if(fields.length<2||fields.length>4||fields.some(field=>field.includes('"')))return;
+      if(fields.length<2||fields.length>4)return;
       const reportedValue=fields[1].trim(),reportedUnit=fields[2]?.trim()||null;
       const parsed=sourceOnlyLabSchema.safeParse({sourceOnly:true,reportedAnalyte:fields[0].trim(),reportedValue,reportedUnit,
         ...(fields[3]?.trim()?{reportedReferenceInterval:fields[3].trim()}:{}),measuredAt,laboratory:laboratory.trim()||"Not supplied",method:"Not supplied",fasting:"unknown",
@@ -69,45 +72,30 @@ export function parseLabPaste(
       if(parsed.success)sourceOnly.push({line:index+1,payload:parsed.data});
     };
     const delimited=labSourceColumns(raw);
+    if(!delimited.length){reject("Quoted source columns are incomplete or ambiguous. Correct the original row before importing.");return;}
     if(vitaminDAssayIdentity(delimited[0])==='different-or-ambiguous'){
-      reject("This vitamin D assay is not confirmed as 25-hydroxy vitamin D. Retain the original observation as source-only for separate assay review.");
-      return;
+      reject("This vitamin D assay is not confirmed as 25-hydroxy vitamin D. Retain the original observation as source-only for separate assay review.");return;
     }
-    if(delimited.length>4||(delimited.length===4&&!!delimited[3].trim())){
-      reject("Reference text or additional columns need separate source review. Keep as source-only, or enter the result and reference interval manually.");
-      return;
-    }
-    // Suggestions use only the marker catalogue, never magnitude-based clinical inference.
-    const match = (delimited[0]!==raw.split(/[,\t]/)[0]?delimited.join("\t"):row)
-      .trim()
-      .match(/^(.+?)[,\t ]+([0-9]+(?:\.[0-9]+)?)(?:[,\t ]+([^,\t]+))?(?:[,\t].*)?$/);
-    if (!match) {
-      reject("Use Marker, value, unit (for example LDL, 3.2, mmol/L).");
-      return;
-    }
-    const key = normalize(match[1]),
-      marker = markerDefinitions.find(
-        (m) =>
-          normalize(m.id) === key ||
-          normalize(m.name) === key ||
-          m.id === aliases[key] || (m.id === "vitamin_d" && vitaminDAssayIdentity(match[1]) === "25-hydroxy"),
-      );
-    if (!marker) {
-      reject(`Unsupported marker: ${match[1]}. Use one of the listed tests.`);
-      return;
-    }
-    // A second trailing value is ambiguous (possibly reference ranges or notes).
-    // Preserve strict review instead of silently discarding it.
-    if (match[3] && /\s/.test(match[3].trim())) {
-      reject("Use a single supported source unit; enter other report details separately.");
-      return;
-    }
-    const missingUnit = !match[3]?.trim();
-    const sourceUnit=(match[3] || "").trim();
-    const rawUnit = sourceUnit.replace(/μ|µ/g, "u"),
-      unit = marker.units.find(
-        (u) => u.toLowerCase().replace(/μ|µ/g, "u") === rawUnit.toLowerCase(),
-      );
+    if(delimited.length>4){reject("Additional source columns need separate review. Keep the original row and enter its reported result and interval explicitly.");return;}
+    const reference=parseSourceReference(delimited[3]||'');
+    if(!reference){reject("The reported reference text is not a supported numeric interval. Keep it as source-only or review its exact bounds without inventing a normal range.");return;}
+    const numeric='(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][+-]?\\d+)?';
+    let match:RegExpMatchArray|null;
+    if(delimited.length>=2){
+      const measured=delimited[1].trim().match(new RegExp(`^(${numeric})(?:\\s*([^\\d\\s].*))?$`));
+      if(!measured){reject("Enter an exact source number, keeping thresholds or qualitative findings as source-only.");return;}
+      const embedded=measured[2]?.trim(),supplied=delimited[2]?.trim();
+      if(embedded&&supplied&&labUnitKey(embedded)!==labUnitKey(supplied)){reject("Two conflicting source units need review before this result can be interpreted.");return;}
+      match=[raw,delimited[0].trim(),measured[1],supplied||embedded||''] as RegExpMatchArray;
+    }else match=row.trim().match(new RegExp(`^(.+?)\\s+(${numeric})(?:\\s*([^\\d\\s].*))?$`));
+    if(!match){reject("Use Marker, value, unit and optionally the report reference range.");return;}
+    const identified=additionalLabSourceIdentity(match[1],match[3]);
+    if(identified.ambiguous){reject(identified.ambiguous);return;}
+    const key=normalize(match[1]),marker=markerDefinitions.find(m=>
+      identified.id?m.id===identified.id:normalize(m.id)===key||normalize(m.name)===key||m.id===aliases[key]||(m.id==='vitamin_d'&&vitaminDAssayIdentity(match[1])==='25-hydroxy'));
+    if(!marker){reject(`Unsupported marker: ${match[1]}. Its original source value remains available for review.`);return;}
+    const missingUnit=!match[3]?.trim(),sourceUnit=(match[3]||'').trim();
+    const unit=normalizedLabUnit(sourceUnit,marker.units),rawUnit=sourceUnit.replace(/[µμ]/g,'u');
     const p = labSchema.safeParse({
       marker: marker.id,
       value: Number(match[2]),
@@ -116,8 +104,8 @@ export function parseLabPaste(
       laboratory: laboratory.trim() || "Not supplied",
       method: "Not supplied",
       fasting: "unknown",
-      referenceLow: null,
-      referenceHigh: null,
+      referenceLow: reference.low,
+      referenceHigh: reference.high,
       sourceInput:{text:raw,number:match[2],suppliedUnit:missingUnit?null:sourceUnit,capture:"pasted-report",rowOrder:index,...(reportedSection===undefined?{}:{reportedSection})},
       ...(missingUnit ? {unitReview:{status:"pending",originalValue:Number(match[2]),originalUnit:null,
         originalText:raw,suggestedUnit:marker.units[0],confirmedAt:null,supersedes:null}} : {}),
@@ -139,5 +127,5 @@ export function parseLabPaste(
 
 /** Reuse the parser's existing aliases for local navigation search, not diagnosis. */
 export function labMarkerSearchTerms(marker:string):string[]{
- return [marker,...markerDefinitions.filter(m=>m.id===marker).map(m=>m.name),...Object.entries(aliases).filter(([,id])=>id===marker).map(([name])=>name)];
+ return [marker,...additionalLabMarkers.filter(m=>m.id===marker).flatMap(m=>[...m.aliases]),...markerDefinitions.filter(m=>m.id===marker).map(m=>m.name),...Object.entries(aliases).filter(([,id])=>id===marker).map(([name])=>name)];
 }

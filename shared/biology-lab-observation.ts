@@ -1,4 +1,4 @@
-import {supportsVitaminDStatus} from "./lab-assay-identity";
+import {hasConfirmedLabIdentity} from "./lab-assay-identity";
 /** Editorial framing uses only source-native units/bounds, never a clinical target. */
 export type EditorialLabObservation={sourceValue:number;sourceUnit:string;referenceLow?:number|null;referenceHigh?:number|null;method?:string;sourceInput?:{text:string};unitReview?:{status:string}};
 export function sourceIntervalPosition(point:EditorialLabObservation|undefined):'above'|'below'|'within'|'unknown'{
@@ -11,6 +11,6 @@ export function sourceIntervalPosition(point:EditorialLabObservation|undefined):
 
 /** Source-native editorial comparison, restricted to the supported unit/analyte. */
 export function supportedSourceIntervalPosition(marker:string,units:readonly string[],point:EditorialLabObservation|undefined){
- if(!point||!units.includes(point.sourceUnit)||point.unitReview?.status==='pending'||(marker==='vitamin_d'&&!supportsVitaminDStatus(point)))return 'unknown' as const;
+ if(!point||!units.includes(point.sourceUnit)||point.unitReview?.status==='pending'||!hasConfirmedLabIdentity(marker,point))return 'unknown' as const;
  return sourceIntervalPosition(point);
 }

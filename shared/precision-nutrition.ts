@@ -1,4 +1,5 @@
-import {supportsVitaminDStatus,vitaminDAssayIdentity} from "./lab-assay-identity";
+import {additionalLabMarkers} from './additional-lab-markers';
+import {supportsVitaminDStatus,vitaminDAssayIdentity,hasConfirmedLabIdentity} from "./lab-assay-identity";
 import {markerEducation} from './biology-labs';
 import {BIOLOGY_CONTENT_VERSION} from './biology-content-types';
 import{geneticsSourceControlSchema,selectedGeneticSource,healthContextOnly}from"./genetic-source-selection";
@@ -454,7 +455,7 @@ export function parse23andMe(text: string, collectedAt: string) {
 /** General reference descriptions are display metadata, not interpretation rules.
  * Source access dates are not claims of independent product/clinical approval. */
 export const LAB_MARKER_EDUCATION_VERSION=BIOLOGY_CONTENT_VERSION;
-const markerIdentities = [
+const originalMarkerIdentities = [
   {
     "id": "ldl",
     "name": "LDL cholesterol",
@@ -564,6 +565,7 @@ const markerIdentities = [
     ]
   }
 ] as const;
+const markerIdentities=[...originalMarkerIdentities,...additionalLabMarkers] as const;
 export const markerDefinitions = markerIdentities.map(marker=>({...marker,education:markerEducation(marker.id)}));
 export type MarkerId = (typeof markerDefinitions)[number]["id"];
 const markerIds = markerDefinitions.map((m) => m.id) as [
@@ -607,6 +609,12 @@ export const labSourceInputSchema = z.object({
       reportedSection:z.string().max(1000).optional(),
       rowOrder:z.number().int().min(0).max(30000).optional(),
     }).strict();
+export const labSourceCorrectionSchema=z.object({
+ version:z.literal(1),supersedes:z.string().min(1).max(100),previousRevision:z.string().regex(/^[a-f0-9]{64}$/),
+ reviewedAt:z.string().datetime(),reason:z.string().trim().min(1).max(300),requestFingerprint:z.string().regex(/^[a-f0-9]{64}$/),
+ original:z.object({kind:z.enum(["source-only","supported"]),reportedAnalyte:z.string().max(1000),reportedValue:z.string().max(100),reportedUnit:z.string().max(50).nullable(),reportedReferenceInterval:z.string().max(1000).nullable(),referenceLow:z.number().finite().nonnegative().nullable(),referenceHigh:z.number().finite().nonnegative().nullable(),method:z.string().max(200)}).strict(),
+}).strict();
+export type LabSourceCorrection=z.infer<typeof labSourceCorrectionSchema>;
 export const labSchema = z
   .object({
     marker: z.enum(markerIds),
@@ -621,6 +629,7 @@ export const labSchema = z
     notes: z.string().max(1000).default(""),
     sourceReport: labSourceReportSchema.optional(),
     dateCorrection: labDateCorrectionSchema.optional(),
+    sourceCorrection:labSourceCorrectionSchema.optional(),
     sourceInput: labSourceInputSchema.optional(),
     unitReview: z.object({
       status: z.enum(["pending", "confirmed"]),
@@ -664,7 +673,7 @@ export const sourceOnlyLabSchema=z.object({
  reportedUnit:z.string().min(1).max(50).refine(value=>!!value.trim()).nullable(),
  reportedReferenceInterval:z.string().max(200).optional(),
  measuredAt:isoDate,laboratory:shortText,method:shortText,fasting:z.enum(["yes","no","unknown"]),
- sourceReport:labSourceReportSchema.optional(),dateCorrection:labDateCorrectionSchema.optional(),sourceInput:labSourceInputSchema,
+ sourceReport:labSourceReportSchema.optional(),dateCorrection:labDateCorrectionSchema.optional(),sourceCorrection:labSourceCorrectionSchema.optional(),sourceInput:labSourceInputSchema,
 }).strict().superRefine((value,ctx)=>{
  validateLabEntryClock(value,ctx);
  if(!value.sourceInput.text.trim()||value.sourceInput.number!==value.reportedValue||value.sourceInput.suppliedUnit!==value.reportedUnit)
@@ -672,7 +681,7 @@ export const sourceOnlyLabSchema=z.object({
 });
 export type SourceOnlyLab=z.infer<typeof sourceOnlyLabSchema>;
 
-export function canonicalLab(l: Lab) {
+export function canonicalLab(l: Pick<Lab,"marker"|"value"|"unit"|"method"|"sourceInput"|"unitReview">) {
   if (l.unitReview?.status === "pending") throw Error("Confirm the source unit before normalizing this laboratory result.");
   // Keep explicitly different/ambiguous vitamin-D metabolites in their source units.
   // Historical records stay readable; never reinterpret them as the supported assay.
@@ -712,11 +721,14 @@ export function canonicalLab(l: Lab) {
     value = value * 0.09148 + 2.152;
     unit = "%";
   }
+  const added=additionalLabMarkers.find(marker=>marker.id===l.marker);
+  if(added){const factor=(added.factors as Readonly<Record<string,number>>)[unit];if(factor!==undefined){value*=factor;unit=added.canonicalUnit;}}
   return { value, unit };
 }
 export function labFlag(l: Lab) {
   if (l.unitReview?.status === "pending") return "unit unconfirmed";
   if(l.marker==='vitamin_d'&&!supportsVitaminDStatus(l))return "assay unconfirmed";
+  if(l.marker==='bilirubin')return "fraction unconfirmed";
   return l.referenceHigh !== null && l.value > l.referenceHigh
     ? "above reported range"
     : l.referenceLow !== null && l.value < l.referenceLow
@@ -882,7 +894,7 @@ export const precisionFoods = [
 ];
 /** Canonical active supported observations, shared by reporting and transactional save guards. */
 export function activeLabRows<Row extends (Lab|SourceOnlyLab)&{id:string}>(rows:readonly Row[]){
- const superseded=new Set(rows.flatMap(row=>[...(row.dateCorrection?[row.dateCorrection.supersedes]:[]),...("unitReview" in row&&row.unitReview?.supersedes?[row.unitReview.supersedes]:[])]));
+ const superseded=new Set(rows.flatMap(row=>[...(row.sourceCorrection?[row.sourceCorrection.supersedes]:[]),...(row.dateCorrection?[row.dateCorrection.supersedes]:[]),...("unitReview" in row&&row.unitReview?.supersedes?[row.unitReview.supersedes]:[])]));
  return rows.filter(row=>!superseded.has(row.id));
 }
 export function activeLabObservations<Row extends Lab&{id:string}>(rows:readonly Row[]){
@@ -910,12 +922,14 @@ export function buildPrecisionReport(
         : [],
     )
     .sort((a, b) => +new Date(b.measuredAt) - +new Date(a.measuredAt));
-  const sourceOnlyLabs=activeLabRows(entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
-    ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt)));
-  const labRowsById=new Map(allLabs.map(row=>[row.id,row]));
+  const rawLabHistory=entries.flatMap(entry=>entry.parsed.success&&entry.parsed.data.kind==="lab"&&"sourceOnly" in entry.parsed.data.payload
+    ?[{...entry.parsed.data.payload,id:entry.record.id}]:[]).sort((a,b)=>Date.parse(b.measuredAt)-Date.parse(a.measuredAt));
+  const reviewedIds=new Set(allLabs.flatMap(row=>row.sourceCorrection?[row.sourceCorrection.supersedes]:[]));
+  const sourceOnlyLabs=activeLabRows(rawLabHistory).filter(row=>!reviewedIds.has(row.id));
+  const labRowsById=new Map<string,(Lab|SourceOnlyLab)&{id:string}>([...allLabs,...rawLabHistory].map(row=>[row.id,row]));
   const supersededIds=(row:typeof allLabs[number])=>{
-    const ids=new Set<string>(),pending=[row.dateCorrection?.supersedes,row.unitReview?.supersedes];
-    while(pending.length){const id=pending.pop();if(!id||id===row.id||ids.has(id))continue;const previous=labRowsById.get(id);if(!previous||previous.marker!==row.marker)continue;ids.add(id);pending.push(previous.dateCorrection?.supersedes,previous.unitReview?.supersedes);}
+    const ids=new Set<string>(),pending=[{id:row.dateCorrection?.supersedes,reviewed:false},{id:row.unitReview?.supersedes,reviewed:false},{id:row.sourceCorrection?.supersedes,reviewed:true}];
+    while(pending.length){const next=pending.pop()!,id=next.id;if(!id||id===row.id||ids.has(id))continue;const previous=labRowsById.get(id);if(!previous||(!next.reviewed&&(!("marker" in previous)||previous.marker!==row.marker)))continue;ids.add(id);pending.push({id:previous.dateCorrection?.supersedes,reviewed:next.reviewed},{id:"unitReview" in previous?previous.unitReview?.supersedes:undefined,reviewed:next.reviewed},{id:previous.sourceCorrection?.supersedes,reviewed:true});}
     return Array.from(ids);
   };
   const {pendingLabs,labs}=activeLabObservations(allLabs);
@@ -1243,7 +1257,7 @@ export function buildPrecisionReport(
     const first = series[0],
       last = series[series.length - 1];
     const known = (v: string) => !!v.trim() && !/^(unknown|not supplied)$/i.test(v.trim());
-    const comparable = (m.id!=='vitamin_d'||series.every(supportsVitaminDStatus)) && series.length > 1 && known(first.laboratory) && known(first.method) &&
+    const comparable = series.every(point=>hasConfirmedLabIdentity(m.id,point)) && series.length > 1 && known(first.laboratory) && known(first.method) &&
       new Set(series.map(l => Date.parse(l.measuredAt))).size === series.length &&
       series.every(l => l.laboratory === first.laboratory && l.method === first.method &&
         l.fasting === first.fasting && canonicalLab(l).unit === canonicalLab(first).unit) &&
@@ -1259,6 +1273,7 @@ export function buildPrecisionReport(
           sourceInput: l.sourceInput,
           sourceReport: l.sourceReport,
           dateCorrection: l.dateCorrection,
+          sourceCorrection:l.sourceCorrection,
           laboratory: l.laboratory, method: l.method, sourceValue: l.value, sourceUnit: l.unit,
           referenceLow: l.referenceLow, referenceHigh: l.referenceHigh, fasting: l.fasting,
           provenance: l.unitReview ? "User-confirmed source unit" : "User-entered result",

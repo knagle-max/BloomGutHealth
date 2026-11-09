@@ -436,7 +436,7 @@ export default function NutritionHistory() {
       )}
 
 
-      <Card className="mb-6 min-w-0 break-words" data-testid="card-daily-summary">
+      <Card className="mb-6 min-w-0 [overflow-wrap:anywhere]" data-testid="card-daily-summary">
         <CardHeader>
           <CardTitle className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
             <Calendar className="h-5 w-5" />

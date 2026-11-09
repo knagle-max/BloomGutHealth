@@ -1,10 +1,10 @@
-import registry from "./data/biology-content-r4m1-v2.json";
+import registry from "./biology-registry";
 
 /** Educational descriptions are displayable even while independent evidence review is pending.
  * This module never interprets a user's observations or changes their source records. */
 export const biologyContentVersion = registry.schemaVersion;
 
-export type BiologyCitation = {title:string;url:string;evidenceType?:string;studyDesign?:string;reviewStatus?:string;verification?:string;pmid?:string;doi?:string;scopeLimit?:string;verifiedOn?:string};
+export type BiologyCitation = {title:string;url:string;evidenceType?:string;studyDesign?:string;reviewStatus?:string;verification?:string;pmid?:string;doi?:string;scopeLimit?:string;verifiedOn?:string|null};
 export type LabBiography = {
   id:string;coverageStatus:string;reviewStatus:string;
   firstLayer:{whatItDoes:string;whyLowHigh:string;whyItMatters:string;whatToDiscuss:string};
