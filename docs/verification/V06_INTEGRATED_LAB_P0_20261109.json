@@ -67,7 +67,19 @@
         "failed": 0
       },
       "exactChrome156CI": "PENDING"
-    }
+    },
+    "firstPublicationCI": {
+      "commit": "1825d05707b53417ac6a3508b5c27bcc478f570f",
+      "run": 42690665938,
+      "status": "FAILED_STALE_SOURCE_ONLY_TEXT_ASSERTION",
+      "passed": [
+        "Vitamin D/chart browser",
+        "owned source correction browser 48 states"
+      ],
+      "failure": "Reimport review now includes original report/specimen labels; old test expected shorter exact string",
+      "fix": "Assert current full label including explicit not supplied identifiers; actual source-only HTTP/encrypted SQL browser rerun PASS"
+    },
+    "sourceOnlyFinalBrowser": "PASS full current default source-only/save/retry/duplicate/date-correction/deletion journey"
   },
   "limits": [
     "No claim of full v0.6 RC readiness",
