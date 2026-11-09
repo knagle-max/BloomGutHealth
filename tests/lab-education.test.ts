@@ -6,7 +6,7 @@ import {labExplorerEntries} from '../shared/lab-explorer';
 import {defaultPreferences} from '../shared/meal-intelligence';
 
 test('expanded catalog retains original14 measurement identities, units and source verification while new descriptions remain drafts',()=>{
- assert.equal(LAB_MARKER_EDUCATION_VERSION,'biology-content-r4m1-2026-11-08.3+bloodwork-catalog-2026-11-09-v1');
+ assert.equal(LAB_MARKER_EDUCATION_VERSION,'biology-content-r4m1-2026-11-08.3+bloodwork-catalog-2026-11-09-v2');
  assert.deepEqual(markerDefinitions.slice(0,14).map(({id,units})=>[id,[...units]]),[
   ['ldl',['mmol/L','mg/dL']],['apob',['g/L','mg/dL']],['triglycerides',['mmol/L','mg/dL']],['hdl',['mmol/L','mg/dL']],['alt',['U/L']],['ast',['U/L']],['ggt',['U/L']],['glucose',['mmol/L','mg/dL']],['hba1c',['%','mmol/mol']],['b12',['pmol/L','pg/mL']],['vitamin_d',['nmol/L','ng/mL']],['ferritin',['ug/L','ng/mL']],['folate',['nmol/L','ng/mL']],['homocysteine',['umol/L']]]);
  for(const definition of markerDefinitions){

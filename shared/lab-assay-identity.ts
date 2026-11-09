@@ -40,5 +40,12 @@ export function labSourceColumns(raw:string):string[]{
 
 /** An unidentified bilirubin fraction is retained as its own source identity. */
 export function hasConfirmedLabIdentity(marker:string,point:{method?:string;sourceInput?:{text:string}}|undefined):boolean {
- return marker==='bilirubin'?false:marker==='vitamin_d'?supportsVitaminDStatus(point):true;
+ if(marker==='bilirubin')return false;
+ if(marker==='vitamin_d')return supportsVitaminDStatus(point);
+ const label=normalized(labSourceColumns(point?.sourceInput?.text||'')[0]),method=normalized(point?.method);
+ // Explicitly different fractions stay source-native, even when a controlled
+ // review chooses a total marker. Unknown source labels are not auto-mapped.
+ if(marker==='psa_total'&&(/\bfree\b|\bratio\b|%|\bfpsa\b/.test(label)||/\bfree[\s-]+(?:psa|prostate)|\bpsa[\s-]+free\b/.test(method)))return false;
+ if(marker==='testosterone_total'&&(/\bfree\b|\bbioavailable\b/.test(label)||/\b(?:free|bioavailable)[\s-]+testosterone\b|\btestosterone[\s-]+(?:free|bioavailable)\b/.test(method)))return false;
+ return true;
 }

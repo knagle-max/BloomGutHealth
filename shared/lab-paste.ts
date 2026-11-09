@@ -1,3 +1,4 @@
+import {labValidationIssues,labValidationMessage,type LabValidationIssue} from "./lab-validation-issues";
 import {additionalLabSourceIdentity,normalizedLabUnit,labUnitKey} from './lab-source-identity';
 import {parseSourceReference} from './lab-source-reference';
 import {additionalLabMarkers} from './additional-lab-markers';
@@ -39,14 +40,15 @@ export function parseLabPaste(
 ) {
   if (text.length > 30000)
     throw Error("Paste up to 30,000 characters at a time.");
-  if (!Number.isFinite(Date.parse(measuredAt))) return { valid: [], pending: [], sourceOnly: [], errors: [{ line: 0, message: "Choose a valid report date." }] };
+  const dateCheck=labSchema.shape.measuredAt.safeParse(measuredAt);
+  if(!dateCheck.success){const issues=labValidationIssues(dateCheck.error.issues.map(issue=>({...issue,path:["measuredAt",...issue.path]})));return{valid:[],pending:[],sourceOnly:[],errors:[{line:0,message:labValidationMessage(issues),issues}]};}
   const rows = text.split(/\r?\n/).map((raw,index)=>({raw,row:raw.trim(),index})).filter(({row})=>Boolean(row));
   if (rows.filter(({row})=>!isLabSectionHeading(row)&&!isColumnHeading(row)).length > 50) throw Error("Paste up to 50 results at a time.");
   const valid: Array<{
       line: number;
       payload: ReturnType<typeof labSchema.parse>;
     }> = [],
-    errors: Array<{ line: number; message: string }> = [],
+    errors: Array<{ line: number; message: string;issues?:LabValidationIssue[] }> = [],
     pending: typeof valid = [];
   const sourceOnly:Array<{line:number;payload:SourceOnlyLab}>=[];
   let reportedSection:string|undefined,sectionBlocked=false;
@@ -60,8 +62,8 @@ export function parseLabPaste(
     if(isColumnHeading(row))return;
     if(sectionBlocked){errors.push({line:index+1,message:"Correct the preceding source section before importing this result."});return;}
     if(raw.length>1000){errors.push({line:index+1,message:"Source row exceeds 1,000 characters. Correct it before importing."});return;}
-    const reject=(message:string)=>{
-      errors.push({line:index+1,message});
+    const reject=(message:string,issues?:LabValidationIssue[])=>{
+      errors.push({line:index+1,message,...(issues?{issues}:{})});
       // Only explicit delimited source columns; never guess a scientific assay or unit.
       const fields=labSourceColumns(raw);
       if(fields.length<2||fields.length>4)return;
@@ -113,7 +115,7 @@ export function parseLabPaste(
         "Imported from source text; verify against the original laboratory report.",
     });
     if (!p.success) {
-      reject(`Check value and unit for ${marker.name}; accepted units: ${marker.units.join(", ")}.`);
+      const issues=labValidationIssues(p.error.issues);reject(labValidationMessage(issues,marker),issues);
       return;
     }
     if ([...valid,...pending].some((v) => v.payload.marker === p.data.marker)) {

@@ -1,3 +1,4 @@
+import {labReportGroupKey} from './lab-history';
 import {labSourceColumns} from './lab-assay-identity';
 import {parseSourceReference} from './lab-source-reference';
 import {canonicalLab,markerDefinitions,type Lab} from './precision-nutrition';
@@ -33,7 +34,7 @@ export function labPlotExtent(values:readonly number[],ranges:readonly (PlotRefe
  return{min:Math.max(0,lo-pad),max:Math.min(Number.MAX_VALUE,hi+pad)};
 }
 /** Identical numbers alone do not establish applicability across laboratories. */
-export function canShareSourceReference(points:readonly {laboratory:string;method:string;fasting?:string;sourceUnit:string}[],ranges:readonly (PlotReferenceInterval|null)[]){
+export function canShareSourceReference(points:readonly {laboratory:string;method:string;fasting?:string;sourceUnit:string;date?:string;sourceReport?:Lab['sourceReport'];dateCorrection?:Lab['dateCorrection']}[],ranges:readonly (PlotReferenceInterval|null)[]){
  const first=points[0],range=ranges[0],known=(value:string)=>!!value.trim()&&!/^(unknown|not supplied)$/i.test(value.trim());
- return !!first&&!!range&&(points.length===1||known(first.laboratory)&&known(first.method))&&points.every((point,index)=>point.laboratory===first.laboratory&&point.method===first.method&&point.fasting===first.fasting&&point.sourceUnit===first.sourceUnit&&!!ranges[index]&&ranges[index]!.low===range.low&&ranges[index]!.high===range.high&&ranges[index]!.unit===range.unit&&ranges[index]!.lowInclusive===range.lowInclusive&&ranges[index]!.highInclusive===range.highInclusive);
+ return !!first&&!!range&&(points.length===1||known(first.laboratory)&&known(first.method))&&points.every((point,index)=>point.laboratory===first.laboratory&&point.method===first.method&&point.fasting===first.fasting&&point.sourceUnit===first.sourceUnit&&labReportGroupKey(point.sourceReport)===labReportGroupKey(first.sourceReport)&&(!first.sourceReport||(point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate)===(first.dateCorrection?.enteredDate||first.sourceReport.enteredDate))&&!!ranges[index]&&ranges[index]!.low===range.low&&ranges[index]!.high===range.high&&ranges[index]!.unit===range.unit&&ranges[index]!.lowInclusive===range.lowInclusive&&ranges[index]!.highInclusive===range.highInclusive);
 }

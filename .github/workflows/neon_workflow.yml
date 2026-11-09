@@ -16,7 +16,7 @@ jobs:
     name: Create Neon branch and verify Bloom
     if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out the pull request
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -50,6 +50,18 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/source-only-lab-journey.mjs
+      - name: Dated bloodwork panel and row duplicate decisions browser regression
+        timeout-minutes: 6
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-dated-panel-journey.mjs
+      - name: Report-scoped reference matching browser regression
+        timeout-minutes: 5
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/report-range-overlay-journey.mjs
       - name: Saved nutrient source and contribution browser regression
         timeout-minutes: 4
         env:

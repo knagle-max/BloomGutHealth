@@ -1,5 +1,5 @@
 /** Source identities and physical unit conversions; no clinical thresholds. */
-export const ADDITIONAL_LAB_CATALOG_VERSION="bloodwork-catalog-2026-11-09-v1";
+export const ADDITIONAL_LAB_CATALOG_VERSION="bloodwork-catalog-2026-11-09-v2";
 export const additionalLabMarkers=[
   {
     "id": "alp",
@@ -718,6 +718,92 @@ export const additionalLabMarkers=[
       "nmol/L": 1,
       "ng/dL": 0.03467165938561819,
       "ng/mL": 3.4671659385618194
+    }
+  },
+  {
+    "id": "immature_granulocytes",
+    "name": "Immature granulocytes — absolute count",
+    "units": [
+      "10^9/L",
+      "10^3/uL"
+    ],
+    "aliases": [
+      "immature granulocytes absolute",
+      "absolute immature granulocytes",
+      "immature granulocyte absolute count",
+      "IG absolute",
+      "IG count"
+    ],
+    "categories": [
+      "blood-count"
+    ],
+    "canonicalUnit": "10^9/L",
+    "factors": {
+      "10^9/L": 1,
+      "10^3/uL": 1
+    }
+  },
+  {
+    "id": "iron_saturation",
+    "name": "Transferrin saturation",
+    "units": [
+      "%"
+    ],
+    "aliases": [
+      "iron saturation",
+      "transferrin saturation",
+      "transferrin saturation percent",
+      "TSAT"
+    ],
+    "categories": [
+      "nutrients"
+    ],
+    "canonicalUnit": "%",
+    "factors": {
+      "%": 1
+    }
+  },
+  {
+    "id": "psa_total",
+    "name": "Total prostate-specific antigen (PSA)",
+    "units": [
+      "ng/mL",
+      "ug/L"
+    ],
+    "aliases": [
+      "total PSA",
+      "PSA total",
+      "total prostate specific antigen",
+      "prostate specific antigen total"
+    ],
+    "categories": [
+      "other"
+    ],
+    "canonicalUnit": "ng/mL",
+    "factors": {
+      "ng/mL": 1,
+      "ug/L": 1
+    }
+  },
+  {
+    "id": "cholesterol_total",
+    "name": "Total cholesterol",
+    "units": [
+      "mmol/L",
+      "mg/dL"
+    ],
+    "aliases": [
+      "total cholesterol",
+      "cholesterol total",
+      "cholesterol,t"
+    ],
+    "categories": [
+      "heart"
+    ],
+    "canonicalUnit": "mmol/L",
+    "factors": {
+      "mmol/L": 1,
+      "mg/dL": 0.02585983966899405
     }
   }
 ] as const;
@@ -1953,6 +2039,166 @@ export const additionalLabProfiles=[
         "id": "lab-expansion-testosterone",
         "title": "Testosterone levels test — MedlinePlus",
         "url": "https://medlineplus.gov/lab-tests/testosterone-levels-test/",
+        "design": "General medical test reference; cited educational background",
+        "studyDesign": "General medical test reference",
+        "evidenceLevel": "clinical guidance",
+        "scopeLimit": "General test description, not an individualized interpretation or treatment recommendation.",
+        "verifiedOn": null,
+        "verification": "citation-not-retrieved",
+        "reviewStatus": "not_independently_verified"
+      }
+    ]
+  },
+  {
+    "id": "immature_granulocytes",
+    "type": "lab_marker",
+    "name": "Immature granulocytes — absolute count",
+    "reviewStatus": "developer_draft_not_independently_reviewed",
+    "coverageStatus": "limited",
+    "reviewedAt": null,
+    "version": "bloodwork-catalog-2026-11-09-v2",
+    "firstLayer": {
+      "whatItDoes": "Immature granulocytes are developing white blood cells. This result is their absolute number per volume of blood, not their percentage among white cells.",
+      "whyLowHigh": "Counts vary with the blood-cell population and laboratory method; a percentage is a different measurement.",
+      "whyItMatters": "Counts vary with the blood-cell population and laboratory method; a percentage is a different measurement.",
+      "whatToDiscuss": "Review the original differential, specimen and measurement method; a count alone does not identify an infection or marrow condition."
+    },
+    "directionalContext": {
+      "higher": "A higher reported value needs the original assay, reference interval and clinical context; no diagnosis or treatment target is inferred.",
+      "lower": "A lower reported value likewise needs source context; it is not a reason to try to change the result through an unreviewed intervention."
+    },
+    "limitations": [
+      "General educational draft, not an interpretation of your result. Independent specialist review is not claimed.",
+      "Use the source laboratory’s interval and exact measurement identity; no universal normal range or personal treatment target is supplied.",
+      "Citation retrieval could not be verified from this environment. Open the cited reference and original report for context."
+    ],
+    "scopeLimit": "Source-faithful reported values and general education only; no diagnosis, urgency, dose or personal clinical target.",
+    "assayIdentityRequired": false,
+    "citations": [
+      {
+        "id": "lab-expansion-immature_granulocytes",
+        "title": "Blood differential — MedlinePlus",
+        "url": "https://medlineplus.gov/lab-tests/blood-differential/",
+        "design": "General medical test reference; cited educational background",
+        "studyDesign": "General medical test reference",
+        "evidenceLevel": "clinical guidance",
+        "scopeLimit": "General test description, not an individualized interpretation or treatment recommendation.",
+        "verifiedOn": null,
+        "verification": "citation-not-retrieved",
+        "reviewStatus": "not_independently_verified"
+      }
+    ]
+  },
+  {
+    "id": "iron_saturation",
+    "type": "lab_marker",
+    "name": "Transferrin saturation",
+    "reviewStatus": "developer_draft_not_independently_reviewed",
+    "coverageStatus": "limited",
+    "reviewedAt": null,
+    "version": "bloodwork-catalog-2026-11-09-v2",
+    "firstLayer": {
+      "whatItDoes": "Transferrin saturation is the reported percentage of iron-binding capacity occupied by iron. It is distinct from the amount of iron, TIBC and transferrin concentration.",
+      "whyLowHigh": "Interpretation depends on the source calculation or assay, timing and other iron indices. Bloom does not recalculate a missing saturation from unrelated samples.",
+      "whyItMatters": "Interpretation depends on the source calculation or assay, timing and other iron indices. Bloom does not recalculate a missing saturation from unrelated samples.",
+      "whatToDiscuss": "Review ferritin, serum iron and the original report together, including collection context; no iron dose is inferred."
+    },
+    "directionalContext": {
+      "higher": "A higher reported value needs the original assay, reference interval and clinical context; no diagnosis or treatment target is inferred.",
+      "lower": "A lower reported value likewise needs source context; it is not a reason to try to change the result through an unreviewed intervention."
+    },
+    "limitations": [
+      "General educational draft, not an interpretation of your result. Independent specialist review is not claimed.",
+      "Use the source laboratory’s interval and exact measurement identity; no universal normal range or personal treatment target is supplied.",
+      "Citation retrieval could not be verified from this environment. Open the cited reference and original report for context."
+    ],
+    "scopeLimit": "Source-faithful reported values and general education only; no diagnosis, urgency, dose or personal clinical target.",
+    "assayIdentityRequired": false,
+    "citations": [
+      {
+        "id": "lab-expansion-iron_saturation",
+        "title": "Iron tests — MedlinePlus",
+        "url": "https://medlineplus.gov/lab-tests/iron-tests/",
+        "design": "General medical test reference; cited educational background",
+        "studyDesign": "General medical test reference",
+        "evidenceLevel": "clinical guidance",
+        "scopeLimit": "General test description, not an individualized interpretation or treatment recommendation.",
+        "verifiedOn": null,
+        "verification": "citation-not-retrieved",
+        "reviewStatus": "not_independently_verified"
+      }
+    ]
+  },
+  {
+    "id": "psa_total",
+    "type": "lab_marker",
+    "name": "Total prostate-specific antigen (PSA)",
+    "reviewStatus": "developer_draft_not_independently_reviewed",
+    "coverageStatus": "limited",
+    "reviewedAt": null,
+    "version": "bloodwork-catalog-2026-11-09-v2",
+    "firstLayer": {
+      "whatItDoes": "Total PSA measures the total concentration of prostate-specific antigen reported by the assay. Free PSA and the free-to-total ratio are different tests.",
+      "whyLowHigh": "A total result can vary with prostate conditions, recent procedures, medicines and the assay. It does not establish a cancer diagnosis.",
+      "whyItMatters": "A total result can vary with prostate conditions, recent procedures, medicines and the assay. It does not establish a cancer diagnosis.",
+      "whatToDiscuss": "Discuss the purpose, method and collection circumstances with the ordering clinician. No screening threshold, cancer probability or treatment target is supplied."
+    },
+    "directionalContext": {
+      "higher": "A higher reported value needs the original assay, reference interval and clinical context; no diagnosis or treatment target is inferred.",
+      "lower": "A lower reported value likewise needs source context; it is not a reason to try to change the result through an unreviewed intervention."
+    },
+    "limitations": [
+      "General educational draft, not an interpretation of your result. Independent specialist review is not claimed.",
+      "Use the source laboratory’s interval and exact measurement identity; no universal normal range or personal treatment target is supplied.",
+      "Citation retrieval could not be verified from this environment. Open the cited reference and original report for context."
+    ],
+    "scopeLimit": "Source-faithful reported values and general education only; no diagnosis, urgency, dose or personal clinical target.",
+    "assayIdentityRequired": false,
+    "citations": [
+      {
+        "id": "lab-expansion-psa_total",
+        "title": "PSA test — MedlinePlus",
+        "url": "https://medlineplus.gov/lab-tests/prostate-specific-antigen-psa-test/",
+        "design": "General medical test reference; cited educational background",
+        "studyDesign": "General medical test reference",
+        "evidenceLevel": "clinical guidance",
+        "scopeLimit": "General test description, not an individualized interpretation or treatment recommendation.",
+        "verifiedOn": null,
+        "verification": "citation-not-retrieved",
+        "reviewStatus": "not_independently_verified"
+      }
+    ]
+  },
+  {
+    "id": "cholesterol_total",
+    "type": "lab_marker",
+    "name": "Total cholesterol",
+    "reviewStatus": "developer_draft_not_independently_reviewed",
+    "coverageStatus": "limited",
+    "reviewedAt": null,
+    "version": "bloodwork-catalog-2026-11-09-v2",
+    "firstLayer": {
+      "whatItDoes": "Total cholesterol is cholesterol measured across the circulating lipoprotein fractions. It is not LDL cholesterol, HDL cholesterol or non-HDL cholesterol.",
+      "whyLowHigh": "The lipid fractions and collection context provide information that the total alone cannot separate. A missing total is not reconstructed from unrelated results.",
+      "whyItMatters": "The lipid fractions and collection context provide information that the total alone cannot separate. A missing total is not reconstructed from unrelated results.",
+      "whatToDiscuss": "Review the original lipid panel and laboratory interval; total cholesterol alone does not set an individual cardiovascular treatment target."
+    },
+    "directionalContext": {
+      "higher": "A higher reported value needs the original assay, reference interval and clinical context; no diagnosis or treatment target is inferred.",
+      "lower": "A lower reported value likewise needs source context; it is not a reason to try to change the result through an unreviewed intervention."
+    },
+    "limitations": [
+      "General educational draft, not an interpretation of your result. Independent specialist review is not claimed.",
+      "Use the source laboratory’s interval and exact measurement identity; no universal normal range or personal treatment target is supplied.",
+      "Citation retrieval could not be verified from this environment. Open the cited reference and original report for context."
+    ],
+    "scopeLimit": "Source-faithful reported values and general education only; no diagnosis, urgency, dose or personal clinical target.",
+    "assayIdentityRequired": false,
+    "citations": [
+      {
+        "id": "lab-expansion-cholesterol_total",
+        "title": "Cholesterol levels — MedlinePlus",
+        "url": "https://medlineplus.gov/lab-tests/cholesterol-levels/",
         "design": "General medical test reference; cited educational background",
         "studyDesign": "General medical test reference",
         "evidenceLevel": "clinical guidance",

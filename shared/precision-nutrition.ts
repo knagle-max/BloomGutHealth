@@ -655,6 +655,7 @@ export const labSchema = z
       ctx.addIssue({
         code: "custom",
         message: "Unsupported unit for this marker",
+        path:["unit"],
       });
     if (
       l.referenceHigh !== null &&
@@ -664,6 +665,7 @@ export const labSchema = z
       ctx.addIssue({
         code: "custom",
         message: "Reference low must be below reference high",
+        path:["referenceHigh"],
       });
   });
 export type Lab = z.infer<typeof labSchema>;
@@ -685,6 +687,7 @@ export type SourceOnlyLab=z.infer<typeof sourceOnlyLabSchema>;
 
 export function canonicalLab(l: Pick<Lab,"marker"|"value"|"unit"|"method"|"sourceInput"|"unitReview">) {
   if (l.unitReview?.status === "pending") throw Error("Confirm the source unit before normalizing this laboratory result.");
+  if(['psa_total','testosterone_total'].includes(l.marker)&&!hasConfirmedLabIdentity(l.marker,l))return{value:l.value,unit:l.unit};
   // Keep explicitly different/ambiguous vitamin-D metabolites in their source units.
   // Historical records stay readable; never reinterpret them as the supported assay.
   if(l.marker==='vitamin_d'&&(vitaminDAssayIdentity(l.method)==='different-or-ambiguous'||vitaminDAssayIdentity(l.sourceInput?.text)==='different-or-ambiguous'))return {value:l.value,unit:l.unit};
@@ -729,7 +732,7 @@ export function canonicalLab(l: Pick<Lab,"marker"|"value"|"unit"|"method"|"sourc
 }
 export function labFlag(l: Lab) {
   if (l.unitReview?.status === "pending") return "unit unconfirmed";
-  if(l.marker==='vitamin_d'&&!supportsVitaminDStatus(l))return "assay unconfirmed";
+  if(l.marker!=='bilirubin'&&!hasConfirmedLabIdentity(l.marker,l))return "assay unconfirmed";
   if(l.marker==='bilirubin')return "fraction unconfirmed";
   return l.referenceHigh !== null && l.value > l.referenceHigh
     ? "above reported range"

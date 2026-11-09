@@ -1,3 +1,4 @@
+import LabReportOverlayPanel from "./LabReportOverlayControls";
 import LabCategoryIcon from './LabCategoryIcon';
 import {useEffect,useMemo,useRef,useState} from 'react';
 import {Link} from 'wouter';
@@ -17,6 +18,7 @@ export default function LabExplorer({report,owner,marker,group,onSelect,selectio
  useEffect(()=>{if(!marker){focused.current=null;return;}if(!report)return;if(!selected){focused.current=null;return;}const request=`${owner}:${activeGroup}:${marker}`;if(focused.current===request)return;const frame=requestAnimationFrame(()=>{const target=document.getElementById(`lab-marker-${encodeURIComponent(marker)}`)?.querySelector<HTMLElement>('button[data-marker-toggle]');if(target&&!document.activeElement?.matches('input,textarea,select')){target.focus({preventScroll:true});target.scrollIntoView({block:'start'});focused.current=request;}});return()=>cancelAnimationFrame(frame);},[owner,marker,activeGroup,selected,report]);
  if(!report)return null;
  return <section className="lab-explorer space-y-4" aria-label="Grouped bloodwork explorer">
+  <LabReportOverlayPanel labs={[...report.labHistory,...report.pendingLabs,...report.sourceOnlyLabs]} trends={report.trends}/>
   <p className="panel-note">Categories help you browse source records; they are not diagnoses. Unclassified results retain their original labels and units.</p>
   <label className="block">Find a marker or source label<input type="search" className="bloom-input w-full" value={search} onChange={e=>setSearch(e.target.value)} maxLength={200}/></label>
   <p role="status" className="panel-note">{matching.filter(e=>!e.sourceOnly.length).length} recognized markers · {matching.filter(e=>e.sourceOnly.length).length} unclassified source labels</p>

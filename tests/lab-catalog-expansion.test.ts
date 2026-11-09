@@ -18,7 +18,7 @@ test('every owner-identified common test imports as an explicit supported measur
   assert.equal(result.valid.length,1,raw);assert.equal(result.errors.length,0,raw);
   const lab=result.valid[0].payload;assert.equal(lab.marker,id);assert.equal(lab.value,Number(value));assert.equal(lab.sourceInput?.text,raw);assert.equal(lab.sourceInput?.number,value);assert.equal(lab.sourceInput?.suppliedUnit,unit);
  }
- assert.equal(markerDefinitions.length,45);assert.equal(new Set(markerDefinitions.map(m=>m.id)).size,45);
+ assert.equal(markerDefinitions.length,49);assert.equal(new Set(markerDefinitions.map(m=>m.id)).size,49);
 });
 test('differential percentages and absolute counts, RDW forms and hormone/fraction identity cannot be conflated',()=>{
  const result=parseLabPaste('Neutrophils, 55, %\nNeutrophils, 3, 10^9/L\nRDW, 13, %\nRDW, 42, fL',date);

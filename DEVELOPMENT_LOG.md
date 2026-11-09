@@ -1,3 +1,15 @@
+## Current integrated laboratory P0 checkpoint — 2026-11-09
+
+Issue5/source preservation and Issue4/recorded genetics are published on development6b00bd6; latest original owner/Architect sources remain preserved. New integrated Issues8/9/10 code is engineering-tested locally:49 marker identities, explicit row skip/separate and fresh409review, typed date/unit diagnostics, single import/report/specimen-scoped overlay using existing SVG, owner/source-version context, original interval priority and source deletion withdrawal. Source preferences stay in signed-in session memory across navigation/mode; reload returns Original report/reconfirmation, with no new persistence format.
+
+Actual App/API/encrypted-SQL dated34-row and31/7duplicate tests pass; positive verified-synthetic comparison10–35U/L and source<45priority browser passes48 mode/theme/viewport/text/page-zoom states, same-day imports, mode/navigation, None, deletion/account and reload. Standard49-marker/source/timeline browser passes. Local full716 produced714pass and2editorial/version failures, now corrected and29focused tests pass. Final types/build/inventories and exact publication CI remain required; no blanket full-suite PASS claimed yet. Receipt: docs/verification/V06_INTEGRATED_LAB_P0_20261109.json.
+
+Important source limits: all24 official BC candidates remain pending complete runtime matching approval;6adult table entries have Architect spot-checks, not method/specimen/rights approval. Runtime catalogue stays empty; original report ranges work and provider absence is explicit. Exact owner August/May full input/runtime failure is not reproduced: synthetic diagnostic34rows pass both dates, and the future-clock guard is a proven conditional misdiagnostic path only. No shifted source date is substituted. No additional owner question/gate; preserve this specific uncertainty and continue safe work.
+
+Execute next: publish/verify this integrated frozen build on PR6, repair reproduced failures, then continue approved recurring activities/actual steps and remaining v0.6 source/outcome/TRAIN/micronutrient work. Full v0.6 and independent release acceptance remain open; main/v0.5 stays unchanged.
+
+---
+
 ## Source-dated outcome comparison — 2026-11-09
 
 Check-in/provider-date source slice published as ade6852b84fa2e49bc58df8345666b545f6f6121. Exact CI42646197306 passed bloodwork/source-review/nutrient browser gates but failed weekly-reader320px/200% page zoom: the existing Save check-in button overflowed by17px in Chrome156. Scoped weekly-review button wrapping/minimum44px target fixes the same reproduced min-content cause found by the new experiment browser; no assertion is weakened.

@@ -3,6 +3,8 @@ const nameKey=(text:string)=>text.toLowerCase().replace(/[^a-z0-9]/g,'');
 export function labUnitKey(raw:string){return raw.replace(/¹²/g,'^12').replace(/⁹/g,'^9').replace(/⁶/g,'^6').replace(/³/g,'^3').normalize('NFKC').replace(/[µμ]/g,'u').toLowerCase().replace(/\s/g,'').replace(/^[x×]/,'').replace(/10\*/g,'10^').replace(/mcg/g,'ug');}
 export function additionalLabSourceIdentity(label:string,unit:string|undefined):{id?:AdditionalLabMarkerId;ambiguous?:string}{
  const key=nameKey(label),unitKey=labUnitKey(unit||'');
+ if(key==='psa'||key==='prostatespecificantigen')return{ambiguous:'Confirm total PSA versus free PSA or a ratio from the original report; an unspecified fraction stays source-only.'};
+ if(key==='immaturegranulocytes'||key==='immaturegranulocyte'){if(['10^9/l','10^3/ul','k/ul'].includes(unitKey))return{id:'immature_granulocytes'};return{ambiguous:'Confirm absolute immature granulocyte count versus percentage from the source unit; they are different measurements.'};}
  for(const base of ['neutrophils','lymphocytes','monocytes','eosinophils','basophils']as const){
   const singular=base.slice(0,-1),short={neutrophils:'neut',lymphocytes:'lymph',monocytes:'mono',eosinophils:'eos',basophils:'baso'}[base];
   if([base,singular,short,base+'count',singular+'count'].includes(key)){

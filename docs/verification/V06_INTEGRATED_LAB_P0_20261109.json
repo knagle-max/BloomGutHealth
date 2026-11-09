@@ -1,0 +1,80 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "version": "v0.6",
+  "baseline": "6b00bd64cb8ea74ee7481939e92aa61b301ba0ea",
+  "issues": [
+    5,
+    8,
+    9,
+    10
+  ],
+  "sourceAuthority": [
+    "docs/architecture/V06_P0_REPORT_LEVEL_LAB_RANGE_OVERLAYS_20261109.md",
+    "docs/architecture/V06_P0_LAB_IMPORT_DATE_AND_DIAGNOSTICS_20261109.md"
+  ],
+  "implemented": [
+    "source-only default preservation with explicit exclusion",
+    "per-row duplicate skip/separate plus reversible bulk skip and exact retry",
+    "typed Zod paths; shared date errors shown once instead of per-row unit misdiagnosis",
+    "49 canonical marker representations; explicit immature granulocytes absolute/transferrin saturation/total PSA/total cholesterol",
+    "negative total/free PSA/testosterone identity and source-native abstention",
+    "one report/provider/province preference keyed by import plus original report/specimen identity",
+    "existing SVG original/reference/one-sided/selected-result overlays; no provider writes",
+    "source-version-bound collection context; owner-change withdrawal and deleted-source invalidation"
+  ],
+  "preferenceLifetime": "Signed-in session memory only, across navigation/mode changes. Reload returns Original report and requires context recheck; no new persistent source/preferences format.",
+  "providerCuration": {
+    "originalCandidates": 24,
+    "architectAdultTableSpotChecks": 6,
+    "pendingPageReview": 18,
+    "completeRuntimeApproval": 0,
+    "runtimePublishedRanges": 0,
+    "reason": "Specimen/assay/method applicability and full era/demographic/fasting/rights review remain incomplete; no SK source or ON normal band invented"
+  },
+  "datedOwnerReproduction": {
+    "authenticFullAugMayPanel": "NOT_AVAILABLE_IN_REPOSITORY_HANDOFF",
+    "fixture": "tests/fixtures/lab-date-diagnostic-panel.json; explicitly synthetic, five supplied values plus illustrative rows",
+    "observed": "Both May1 and Aug9 diagnostic panels pass identical values and units, source dates and no-time persistence",
+    "conditionalFailureProven": "A clock earlier than collection triggers measuredAt future guard; now reported once with typed path. This does not prove the owner exact runtime root cause."
+  },
+  "evidence": {
+    "actualDatedPanelBrowser": "PASS:34-row source/save/encrypted SQL/reload;48 mode/theme/width/text/page-zoom states; lost reply/exact retry",
+    "actualDuplicateBrowser": "PASS:31 rows/7candidate matches\u2192skip7/save24; all-match/reverse-one-separate; fresh post-preview source409\u2192row skip/retry; two accounts",
+    "actualReferenceBrowser": "PASS:34-row import; verified synthetic10\u201335 U/L SVG/bounds; original<45priority; unknown/SK/ON abstention; same-date import isolation; mode/navigation/None/deletion/account/reload;48 states",
+    "standardExplorer": "PASS:49 definitions, original/varying/one-sided/source/operator/alias/timeline/revision/browser scope",
+    "fullLocalInitial": {
+      "tests": 716,
+      "passed": 714,
+      "failed": 2,
+      "findings": [
+        "new immature-granulocyte editorial was99 words; corrected with precise measurement-method wording",
+        "lab educational registry test pinned prior v1; advanced to actual v2 expansion"
+      ]
+    },
+    "finalFocusedAfterFix": {
+      "passed": 29,
+      "failed": 0
+    },
+    "typecheck": "PASS",
+    "productionBuild": "PASS: final types, production build and original asset byte checks",
+    "exactPublicationCI": "PENDING",
+    "geneticsModalRegression": {
+      "priorCI": "6b00bd6 failed Chrome156 1280px at page zoom 200% delete dialog overflow",
+      "fix": "Bound dialog grid min-content, descendant widths and wrapping; retain all assertions and add responsive diagnostics",
+      "localBrowser": "PASS actual App/HTTP/encrypted SQL source lifecycle; 320/390 dark and 1280 at 200% zoom",
+      "focusedTests": {
+        "passed": 7,
+        "failed": 0
+      },
+      "exactChrome156CI": "PENDING"
+    }
+  },
+  "limits": [
+    "No claim of full v0.6 RC readiness",
+    "No real LifeLabs runtime comparison activated",
+    "Actual owner dated-import root is unproven without authentic full input/runtime clock",
+    "Physical VoiceOver/device and independent design/science acceptance not performed",
+    "Session view preferences are not cross-device settings",
+    "Original assets and source records remain authoritative; no main merge"
+  ]
+}
