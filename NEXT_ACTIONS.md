@@ -4,6 +4,14 @@
 
 ---
 
+## Reader-first routine rollout — 2026-11-09
+
+Verified v0.6 source/lab/actual-step baseline c71cad590 passed exact CI42694146238:719/719 and all hosted/source/media gates. This compatibility slice recognizes new owned routine plans and immutable explicit occurrence source snapshots before writers emit them. Existing owned history/export/delete and source-native actual zero/unknown/log-time labels work; generic routine writes and unreviewed routine-source writes are denied on this version. Ordinary activity capture keeps its existing contract.
+
+Next immediately after exact reader CI/live verification: publish already implemented full named-routine/Today/atomic occurrence/skip/restore/reschedule/pause/partial-strength integration, then verify and continue remaining v0.6 work. New writer UI is intentionally absent in the compatibility build; no approval checkpoint or main merge. Maintain the reader guard during mixed-version rollout. Full v0.6 remains open.
+
+---
+
 ## Actual steps and responsive regression checkpoint — 2026-11-09
 
 The integrated laboratory changes are published in1825d05/9e9c591. Exact CI passed chart/source/dates/duplicates/report overlays and source/outcome readers, then found header-actions/profile-link overflow at1280px/pageZoom2 (dialog itself fits). Header wrapping is corrected locally; exact follow-on CI required. No real provider interval was activated; pending complete method/specimen applicability remains feature-scoped.

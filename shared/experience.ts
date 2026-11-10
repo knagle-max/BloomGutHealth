@@ -105,7 +105,27 @@ export const activityComponentsSchema=z.object({version:z.literal(1),items:z.arr
  if(sets.length>100||sets.some(set=>set.completed&&(set.state==='planned'||set.state==='cancelled')))ctx.addIssue({code:'custom',message:'Review set count and explicit completion states'});
 });
 export type ActivityComponent=z.infer<typeof activityComponentSchema>;
+/** A reusable plan has no actual step counts or performed sets. */
+export const activityRoutinePlanSchema=z.object({
+ version:z.literal(1),revision:z.string().uuid(),name:z.string().trim().min(1).max(120),
+ components:activityComponentsSchema,
+ weekdays:z.array(z.number().int().min(0).max(6)).min(1).max(7).refine(days=>new Set(days).size===days.length),
+ timeZone:z.string().min(1).max(100).refine(zone=>{try{new Intl.DateTimeFormat('en',{timeZone:zone});return true;}catch{return false;}},'Choose a recognized time zone'),
+ effectiveFrom:dateKey,effectiveTo:dateKey.nullable(),preferredTime:z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/).nullable(),paused:z.boolean(),
+ stepTarget:z.object({min:z.number().int().nonnegative().safe().nullable(),max:z.number().int().nonnegative().safe().nullable()}).strict().nullable(),
+}).strict().superRefine((plan,ctx)=>{
+ if(plan.effectiveTo&&plan.effectiveTo<plan.effectiveFrom)ctx.addIssue({code:'custom',path:['effectiveTo'],message:'End date precedes the start date'});
+ if(plan.stepTarget?.min!=null&&plan.stepTarget.max!=null&&plan.stepTarget.max<plan.stepTarget.min)ctx.addIssue({code:'custom',path:['stepTarget'],message:'Check target minimum and maximum'});
+ for(const part of plan.components.items)if(part.steps!=null||part.actualSets?.sets.some(set=>set.completed||set.state!=='planned'))ctx.addIssue({code:'custom',path:['components'],message:'Routine templates hold plans, never actual counts or performed sets'});
+});
+export type ActivityRoutinePlan=z.infer<typeof activityRoutinePlanSchema>;
+export const routineOccurrenceOverrideSchema=z.object({revision:z.string().uuid(),state:z.enum(['skipped','rescheduled']),toDate:dateKey.nullable()}).strict().refine(value=>value.state==='rescheduled'?value.toDate!==null:value.toDate===null);
+export type RoutineOccurrenceOverride=z.infer<typeof routineOccurrenceOverrideSchema>;
+export const activityRoutineSchema=z.object({priorPlans:z.array(activityRoutinePlanSchema).max(100).default([]),occurrenceOverrides:z.record(dateKey,routineOccurrenceOverrideSchema).refine(rows=>Object.keys(rows).length<=2000).default({}),plan:activityRoutinePlanSchema,sourceActivityId:z.string().min(1).max(100).nullable(),acknowledgedOccurrences:z.record(dateKey,z.object({activityId:z.string().min(1).max(100),revision:z.string().uuid(),receiptHash:z.string().regex(/^[a-f0-9]{64}$/)}).strict()).refine(rows=>Object.keys(rows).length<=2000)}).strict();
+export type ActivityRoutine=z.infer<typeof activityRoutineSchema>;
+export const activityRoutineSourceSchema=z.object({routineId:z.string().min(1).max(100),revision:z.string().uuid(),localDate:dateKey,scheduledDate:dateKey,occurrenceRevision:z.string().uuid().nullable(),timeZone:z.string().min(1).max(100),confirmedPerformed:z.literal(true),timestampBasis:z.literal('log-time'),planSnapshot:activityRoutinePlanSchema}).strict();
 export const activitySchema=z.object({
+ routineSource:activityRoutineSourceSchema.optional(),
  ...actualStepsFields,
  title:z.string().trim().min(1).max(120),startedAt:z.string().datetime({offset:true}),
  minutes:z.number().int().min(1).max(1440).nullable(),effort:z.enum(["easy","moderate","hard"]).nullable().default(null),
@@ -214,6 +234,7 @@ export const memorySchema = z.object({
   key: z.string().trim().min(1).max(2000), ingredients: z.array(ingredientSchema.strict()).min(1).max(20),
 }).strict();
 export const experienceEntrySchema = z.discriminatedUnion("kind", [
+  z.object({kind:z.literal("activity-routine"),payload:activityRoutineSchema}).strict(),
   z.object({kind:z.literal("wellness-choice"),payload:wellnessChoiceSchema}).strict(),
   z.object({kind:z.literal("activity"),payload:activitySchema}).strict(),
   z.object({kind:z.literal("session"), payload:trainingSessionSchema}).strict(),

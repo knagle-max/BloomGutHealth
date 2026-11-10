@@ -1,3 +1,11 @@
+## v0.6 routine source reader compatibility — 2026-11-09
+
+ALREADY_VERIFIED baseline c71cad590:719/719 exact CI42694146238 plus owned hosted/source/media gates. This next compatibility slice is IMPLEMENTED_AND_TESTED locally:14 focused checks, types, inventories and production build; exact publication CI pending. New routine plans/explicit actual source snapshots can be read/exported/deleted before any writer emits them. Generic/new routine-source writes stay denied in this build, ordinary activity remains unchanged, and log time is explicitly separate from unknown start time.
+
+Full routine writer/UI/Today/skip-reschedule-pause/partial-strength work continues in the active workspace and must follow exact reader verification. No main merge or new owner checkpoint. Full v0.6 remains open. Receipt: docs/verification/V06_ROUTINE_READER_20261109.json.
+
+---
+
 ## Bounded source-history correctness — 2026-11-09
 
 Food/source-context e22c639 passed exact CI42635587202; current development baseline retains all prior bloodwork/provider/source checks. New local fix separates bounded movement and action-choice reads (6000/2000 plus sentinel rows). Large activity history cannot hide an unrelated saved intention. A truncated movement source is explicitly unavailable/incomplete and cannot produce another movement suggestion; food/routine choices remain eligible when their own history is complete. Unexpected truncated choice history is labelled, refuses only new choice writes, preserves exact completed-receipt replay and leaves ordinary food/activity logging available. No claim that a partial source is empty or complete.

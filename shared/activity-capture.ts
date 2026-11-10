@@ -88,12 +88,12 @@ export function describeActivity(description:string) {
   notice:reportedLabel?'The reported activity name is retained; a specific classification has not been assumed.':needsSetReview?'Set counts or amounts could not be matched. Add or correct each set; the original description is retained.':choice.id==='other'?'Choose the activity you meant, or keep Other activity. No specific match was assumed.':'Review this local suggestion. Only quantities you typed were filled; no effort, heart rate or calories were inferred.'};
 }
 
-export function activityAmountText(activity:Pick<Activity,'minutes'|'distanceM'|'components'|'steps'|'stepScope'>){
+export function activityAmountText(activity:Pick<Activity,'minutes'|'distanceM'|'components'|'steps'|'stepScope'|'routineSource'>){
  const stepObservations=activity.components?activity.components.items:[activity];
  const stepText=stepObservations.filter(part=>part.steps!==undefined||part.stepScope!==undefined).map(part=>`${part.steps==null?'Step count not recorded':`${part.steps.toLocaleString('en-CA')} steps`} (${part.stepScope==='whole-day'?'whole day, manual':part.stepScope==='session'?'session, manual':'scope not recorded'})`).join(' · ');
  const missing=activity.components?.items.filter(part=>part.minutes===null).length||0;
  const sets=activity.components?.items.flatMap(part=>part.actualSets?.sets||[]);
- return `${activity.minutes===null?'Duration not recorded':`${activity.minutes} minutes`}${missing&&activity.minutes!==null?` known · ${missing} duration(s) unrecorded`:''}${activity.distanceM==null?'':` · ${Number((activity.distanceM/1000).toFixed(3))} km reported`}${sets?.length?` · ${sets.length} set rows (completion recorded separately)`:''}${stepText?` · ${stepText}`:''}`;
+ return `${activity.minutes===null?'Duration not recorded':`${activity.minutes} minutes`}${missing&&activity.minutes!==null?` known · ${missing} duration(s) unrecorded`:''}${activity.distanceM==null?'':` · ${Number((activity.distanceM/1000).toFixed(3))} km reported`}${sets?.length?` · ${sets.length} set rows (completion recorded separately)`:''}${stepText?` · ${stepText}`:''}${activity.routineSource?` · Logged time, start not recorded · Routine: ${activity.routineSource.planSnapshot.name}${activity.routineSource.scheduledDate!==activity.routineSource.localDate?` (moved from ${activity.routineSource.scheduledDate})`:''}`:''}`;
 }
 
 export function activityParts(activity:Activity,id=()=>crypto.randomUUID()):ActivityComponent[]{

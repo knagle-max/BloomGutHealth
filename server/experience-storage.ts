@@ -96,6 +96,7 @@ export class ExperienceStorage {
  private async createTimedRecord(userId:string,kind:"activity"|"session",input:Activity|TrainingSession,key:string):Promise<ExperienceRecord>{
   let payload=kind==="activity"?activitySchema.parse(input):trainingSessionSchema.parse(input);
   if(kind==="activity"&&(payload as Activity).components)payload=activitySchema.parse({...payload,...activityProjection((payload as Activity).components!.items)});
+  if(kind==='activity'&&(payload as Activity).routineSource)throw Error('ROUTINE_WRITE_UNAVAILABLE');
   if(!/^[a-f0-9-]{36}$/i.test(key))throw Error("INVALID_SAVE_KEY");
   const id=kind+"_"+createHash("sha256").update(JSON.stringify([`manual-${kind}-v1`,userId,key])).digest("hex");
   return this.db.transaction(async tx=>{
@@ -111,6 +112,7 @@ export class ExperienceStorage {
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="activity")throw Error("ACTIVITY_ACTION_REQUIRED");
+  if(entry.kind==='activity-routine')throw Error('ROUTINE_ACTION_REQUIRED');
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
@@ -134,6 +136,7 @@ export class ExperienceStorage {
   });
  }
  async updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry) {
+  if(entry.kind==='activity-routine')throw Error('ROUTINE_ACTION_REQUIRED');
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
@@ -145,6 +148,7 @@ export class ExperienceStorage {
    let payload=preserveFocusFeedback(entry,previous);
    if(entry.kind==="activity"){
     const current=activitySchema.parse(previous);
+    if(current.routineSource||entry.payload.routineSource)throw Error('ROUTINE_WRITE_UNAVAILABLE');
     if(current.components&&entry.payload.components===undefined&&(entry.payload.minutes!==current.minutes||entry.payload.title!==current.title||(entry.payload.distanceM!==undefined&&entry.payload.distanceM!==current.distanceM)||(entry.payload.actualSets!==undefined&&JSON.stringify(entry.payload.actualSets)!==JSON.stringify(current.actualSets))))throw Error("ACTIVITY_COMPONENT_REVIEW_REQUIRED");
     payload={...entry.payload,
      ...(entry.payload.components===undefined&&current.components?{components:current.components}:{}),

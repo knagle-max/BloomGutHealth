@@ -1,0 +1,19 @@
+{
+  "version": "v0.6",
+  "status": "ENGINEERING_TESTED_READER_BEFORE_WRITER",
+  "baseline": "c71cad5908579fa8dfdcb3e7e4ee2739cc90b8d6",
+  "reader": [
+    "Owned encrypted routine kind and immutable actual occurrence plan snapshot accepted by common reader/export/deletion",
+    "Actual counts remain separate from targets and template deletion; zero preserved",
+    "Explicit log-time basis; unknown start time not fabricated",
+    "Generic routine writes and routine-source capture/correction disabled until reviewed dedicated writer"
+  ],
+  "tests": {
+    "focused": 14,
+    "failed": 0,
+    "types": "PASS",
+    "build": "PASS production build and original asset bytes",
+    "exactPublicationCI": "PENDING"
+  },
+  "next": "Verify reader exact build, then publish full current routine implementation without an owner checkpoint; no main merge"
+}

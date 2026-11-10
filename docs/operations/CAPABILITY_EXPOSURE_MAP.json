@@ -635,7 +635,8 @@
           "shared/activity.ts",
           "shared/experience.ts",
           "shared/training-set-history.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/activity-routines.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -686,7 +687,8 @@
           "shared/activity.ts",
           "shared/experience.ts",
           "shared/training-set-history.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "shared/activity-routines.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1963,8 +1965,8 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "672c093034fd76da3b6159807cc31e7370feeb0117a279e649136f6b62b75522",
-    "server/experience-storage.ts": "367237e583a509b7361022f71ccc5a8d2a69bb1b93b1801ea1471161020e6fe2",
+    "server/experience-routes.ts": "e6dc73dc697c9999ace29ee4633d450bdbb7b9caf82678f6c3f62b1349f9c5f8",
+    "server/experience-storage.ts": "5c0b4f4d49ad7b4abc4851507c9376bc3f105b06a88ef7c80ad82a4e1a434ad8",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -2022,8 +2024,9 @@
     "server/wellness-choice-storage.ts": "878c3a463cb34ecbf7d9ae09d6c3e581e2ff62160a28304a8ea7dc0c34d3f007",
     "server/wellness-context.ts": "7569388b8fbebb7274b2e6810ac9c643d7ed73c3255b0f8628a6a3b99f099fad",
     "server/wellness-observations.ts": "ce007e27466f2183f33c0628f79f7aa683820d1e12bb57e7b432c1d357821d1b",
-    "shared/activity-capture.ts": "7775badca1756de69c3d362261adc0b7f55156d631a563d6a94cdb5148d27384",
-    "shared/activity.ts": "cb671b73a9ee131e86a75f05fafab0178ecffb78646fd7eba0865094dab49d5b",
+    "shared/activity-capture.ts": "12f5373b68bbc9c9400b79ec990a87e7784188e3347a4ec20b9b0e7dbb3d3694",
+    "shared/activity-routines.ts": "f815704390b2c864c2c7d0f0586d20401d5ce6dcd405c964229515549c946819",
+    "shared/activity.ts": "a076eecfe480b7157c8b8fc5052eb41bc5335a1d8cf3652393a2a6faedeef785",
     "shared/application-schema.ts": "9015fbb016fac2a32e0ac92c37b5f66b6ce0e31ea3fdcc29b2f9a25de27ccf13",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
     "shared/athlete-eligibility.ts": "6d37527e0352c3a1b0356984314eb87cb3f051903ecf2edd7d01162edca0e052",
@@ -2046,7 +2049,7 @@
     "shared/description-intelligence.ts": "d76fd822733c8bad2f5cbc786a9d9958d93a97f3b8ee1e514bf7a7b3acbd6baf",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
-    "shared/experience.ts": "29b97f087abb585f1049aa300a18ac1a0dfb5a6239cb1853de2ac467827e4546",
+    "shared/experience.ts": "97b5483dd1ae524167f6775aed4b62af3168b7686c40502b8e6f02f79b94c5cd",
     "shared/experiment-review.ts": "fb4b1bc9ee0839a4a9bb448e1f55cd2cda0fa49283585660b1244eda4203a76f",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-intelligence.ts": "4ad0deb199cd8a6e52b6bb844fd6679000659f766c64a304d25f6a680b6fb3d9",
