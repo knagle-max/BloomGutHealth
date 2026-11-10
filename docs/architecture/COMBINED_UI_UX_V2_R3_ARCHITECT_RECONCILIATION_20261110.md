@@ -54,3 +54,30 @@ The following were separately inspected and committed to `docs/architecture/comb
 5. **Visual hierarchy (P1):** `SurfaceCard variant="telemetry"` wraps all Today evidence, reintroducing a bordered nested block. Use existing hierarchy, whitespace and dividers rather than default shadow/card repetition. `EditorialHero` thin forwarding is technically compatible with existing `CompanionHero` props but optional, not required by correctness. Check mobile 320/390 and desktop 768/1440 for real editorial photography, type, control placement, no overflow and four themes; same-SHA browser screenshots and accessible focus/200% zoom.
 
 **Action to Codex:** do not label this chat proposal as implemented or run its files as drop-in production patches. Apply the above corrections in the existing isolated v2 feature-branch work order [Issue #13](https://github.com/knagle-max/BloomGutHealth/issues/13). All original source disclosures, wellness choices, activity/meal receipts, data source detail, report identity and biological research depth must survive. Typecheck, real browser focus/CTA/organism journey, tests, build, screenshots and exact reviewed SHA required before affected branch integration. No additional owner gate; other safe v0.6 work continues.
+
+## Architect amendment — owner's FINAL RECONCILIATION & CODEX AUDIT pasted update (2026-11-10)
+
+**Disposition: APPROVE DESIGN INTENT WITH CORRECTIONS; REJECT PASTED SOURCE AS BUILDABLE.** This update is candidate code in chat, not actual implemented, tested or deployed application files.
+
+### Accepted corrections
+- The revised CSS correctly uses hsl(var(--primary)), hsl(var(--card)), hsl(var(--muted)), hsl(var(--border)), hsl(var(--foreground)) and hsl(var(--ring)), which are compatible with Bloom's HSL-channel CSS theme (subject to actual theme/render checks). Previous bare var(--primary) as color was wrong.
+- Today evidence no longer uses a nested SurfaceCard telemetry wrapper. Prefer editorial whitespace and divider over extra card deck.
+- Biology source metadata is conceptually lighter and distinguishes sample collection from upload date, with quantified source rows not species richness. Only display if nonduplicative and sourced to currently selected owned report.
+
+### P0 invalid JSX — do not paste this source directly
+1. The CSS code fence continues into TypeScript source beginning 'import * as React'. Separate today-editorial.css and primitives.tsx into distinct modules.
+2. EditorialHero returns malformed CompanionHero markup and mixed quoted props. Use JSX props: className={cn('today-focus--editorial', className)} headingId={headingId} reason={description} {...props} (mind prop override order).
+3. Quoted JSX expressions href="{action.href}" and href="{proposed.action.href}" must be href={action.href} and href={proposed.action.href}.
+4. WellnessChoiceDetails markup containing '!journalError !loading ... && controller="{choices}"' is syntactically invalid; restore controller={choices}, selected={selected}, showAlternatives={!paused && !loading && !journalError && !missingNutritionCount && !sessionAction}.
+5. CheckinSourceDetails, FoodSourceDetails and MovementSourceDetails have quoted expressions and malformed '?? date' portions. Restore validated props, including date={choices.current?.day.date ?? localDate(current)}. Preserve all three disclosures.
+6. The final related-page Link is malformed; use href={mealCount ? '/log-meal' : '/plan-day'}.
+7. TelemetryMetric value="{savedDiversity}" and value="{countedTaxa}" incorrectly pass string literals, not numeric/null values; use value={savedDiversity} and value={countedTaxa}. Handle missing undefined explicitly.
+
+### P0 behaviour still unresolved
+- Paused Today still shows a dominant non-proposed contextual link along with 'Show suggestion'. Paused recommendation must not masquerade as active; recovery primary and independent tasks clearly separated. Preserve selected choice intent versus performed event, source freshness, safe routes, focus restoration, account switching, loading/error, idempotent receipts.
+- The existing Microbiome page separates Latest results from Bacteria; actual organism search and profiles currently live on the Bacteria tab. Adding the light telemetry strip under Latest results does NOT make search/filter/profile first. Change real hierarchy while retaining report selection, sources, taxon ranking, organism profiles and focus/back.
+- Existing selected-report 'gut-report-facts' already displays quantified taxa and diversity. Avoid duplicate telemetry; ideally retain one compact line or omit the extra component entirely. Collection vs upload date must be actual sourced data and retract on switch/delete, never guessed.
+- This UI CTA fix must not be treated as the substantive useful food/exercise recommendation requested under Issue #12.
+
+### Required Codex execution
+Implement a narrow, source-preserving diff on an isolated UI v2 integration branch from latest active v0.6 SHA, not a blind wholesale pasted replacement. Run typecheck, tests, production build, real browser interaction and exact-SHA screenshot matrix 320/390/768/1440 in Everyday/Athlete light/dark, focus/keyboard, 200% zoom. Report PASS/FAIL/NOT TESTED and CI/Render association before merge. No new owner checkpoint or main merge authorization is implied.
