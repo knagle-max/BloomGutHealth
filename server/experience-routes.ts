@@ -1,3 +1,5 @@
+import {ActivityRoutineConflict} from './activity-routine-errors';
+import {activityRoutinePlanSchema,routineOccurrenceOverrideSchema} from '../shared/experience';
 import {ExperimentHistoryUnavailable} from "./experience-errors";
 import {wellnessDaySchema,wellnessChoiceCommandSchema,wellnessHistoryDeleteSchema} from "../shared/wellness-actions";
 import {WellnessChoiceConflict} from "./wellness-actions";
@@ -29,7 +31,7 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
  app.use("/api/experience",auth,(_req,res,next)=>{res.setHeader("Cache-Control","no-store");next();});
  const counters=new Map<string,{at:number;count:number}>();
  const limit:RequestHandler=(req,res,next)=>{const t=Date.now();for(const [id,v] of Array.from(counters))if(t-v.at>60000)counters.delete(id);const id=req.session.userId!,v=counters.get(id)||{at:t,count:0};if(v.count>=30)return void res.status(429).json({error:"Please wait a minute before another update."});v.count++;counters.set(id,v);next();};
- const fail=(res:any,e:unknown)=>e instanceof ExperimentHistoryUnavailable?res.status(503).json({error:e.message,code:"ROUTINE_HISTORY_UNAVAILABLE"}):e instanceof WellnessChoiceConflict?res.status(e.code==="scope"?404:e.code==="limit"?422:e.code==="dedicated-action"?400:409).json({error:e.message,code:e.code}):e instanceof Error&&e.message==="ACTIVITY_COMPONENT_REVIEW_REQUIRED"?res.status(409).json({error:"Open the activity component review before changing its type or duration."}):e instanceof SettingsRevisionConflict?res.status(409).json({error:e.message}):res.status(e instanceof Error&&e.message==="EXPERIENCE_LIMIT"?422:503).json({error:e instanceof Error&&e.message==="EXPERIENCE_LIMIT"?"Your workspace has reached its record limit. Export and remove old entries before adding more.":"Your workspace could not load or save. Please retry."});
+ const fail=(res:any,e:unknown)=>e instanceof ActivityRoutineConflict?res.status(e.status).json({error:e.message}):e instanceof ExperimentHistoryUnavailable?res.status(503).json({error:e.message,code:"ROUTINE_HISTORY_UNAVAILABLE"}):e instanceof WellnessChoiceConflict?res.status(e.code==="scope"?404:e.code==="limit"?422:e.code==="dedicated-action"?400:409).json({error:e.message,code:e.code}):e instanceof Error&&e.message==="ACTIVITY_COMPONENT_REVIEW_REQUIRED"?res.status(409).json({error:"Open the activity component review before changing its type or duration."}):e instanceof SettingsRevisionConflict?res.status(409).json({error:e.message}):res.status(e instanceof Error&&e.message==="EXPERIENCE_LIMIT"?422:503).json({error:e instanceof Error&&e.message==="EXPERIENCE_LIMIT"?"Your workspace has reached its record limit. Export and remove old entries before adding more.":"Your workspace could not load or save. Please retry."});
  const settingsResponse=(req:{get:(name:string)=>string|undefined},res:any,userId:string,settings:Awaited<ReturnType<typeof store.getExperienceSettings>>)=>{if(store.putExperienceSettingsIfCurrent){const revision=settingsRevision(userId,settings);res.setHeader("ETag",`"${revision}"`);res.setHeader("X-Bloom-Settings-Revision",revision);}res.vary("X-Bloom-Settings-Fields");
   const {lifecycleId,...publicSettings}=settings;
   if(req.get("X-Bloom-Settings-Fields")==="practical-region-v1")return res.json(publicSettings);
@@ -60,6 +62,21 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
   if(!input.success)return res.status(400).json({error:"Select the exact saved choices to delete."});
   if(!store.deleteWellnessChoiceHistory)return res.status(503).json({error:"Choice history deletion is unavailable. Your records have not changed."});
   try{await store.deleteWellnessChoiceHistory(req.session.userId!,input.data);res.status(204).end();}catch(error){fail(res,error);}
+ });
+ app.post('/api/experience/activity-routines',limit,async(req,res)=>{
+  const input=z.object({plan:activityRoutinePlanSchema,sourceActivityId:z.string().min(1).max(100).nullable()}).strict().safeParse(req.body),key=req.get('Idempotency-Key');
+  if(!input.success||!z.string().uuid().safeParse(key).success)return res.status(400).json({error:'Review the routine name, weekdays, target and local dates before saving.'});
+  try{if(!store.createActivityRoutine)return res.status(503).json({error:'Routine setup is unavailable. Your draft is retained.'});res.status(201).json(await store.createActivityRoutine(req.session.userId!,input.data.plan,key!,input.data.sourceActivityId));}catch(error){fail(res,error);}
+ });
+ app.put('/api/experience/activity-routines/:id',limit,async(req,res)=>{
+  const input=z.object({expectedRevision:z.string().uuid(),plan:activityRoutinePlanSchema}).strict().safeParse(req.body);
+  if(!input.success||req.params.id.length>100)return res.status(400).json({error:'Review the routine schedule before saving.'});
+  try{if(!store.updateActivityRoutine)return res.status(503).json({error:'Routine changes are unavailable. Your draft is retained.'});const row=await store.updateActivityRoutine(req.session.userId!,req.params.id,input.data.expectedRevision,input.data.plan);if(!row)return res.status(404).json({error:'Routine not found in your account.'});res.json(row);}catch(error){fail(res,error);}
+ });
+ app.put('/api/experience/activity-routines/:id/occurrences/:date',limit,async(req,res)=>{
+  const input=z.object({expectedPlanRevision:z.string().uuid(),expectedRevision:z.string().uuid().nullable(),next:routineOccurrenceOverrideSchema.nullable()}).strict().safeParse(req.body);
+  if(!input.success||!dateKey.safeParse(req.params.date).success||req.params.id.length>100)return res.status(400).json({error:'Review the exact scheduled day and occurrence change.'});
+  try{if(!store.changeRoutineOccurrence)return res.status(503).json({error:'Occurrence changes are unavailable. No activity was recorded.'});const row=await store.changeRoutineOccurrence(req.session.userId!,req.params.id,req.params.date,input.data.expectedPlanRevision,input.data.expectedRevision,input.data.next);if(!row)return res.status(404).json({error:'Routine not found in your account.'});res.json(row);}catch(error){fail(res,error);}
  });
  app.get("/api/experience/records",async(req,res)=>{if(req.query.kind!==undefined&&!kindSchema.includes(req.query.kind as any))return res.status(400).json({error:"Choose a supported record type."});try{res.json(await store.getExperienceRecords(req.session.userId!,req.query.kind as ExperienceEntry["kind"]|undefined));}catch(e){fail(res,e);}});
  app.get("/api/experience/checkins/:id/source",async(req,res)=>{
@@ -104,7 +121,6 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
  app.post("/api/experience/activities",limit,async(req,res)=>{
   const input=activitySchema.safeParse(req.body),key=req.get("Idempotency-Key");
   if(!input.success||!key||!z.string().uuid().safeParse(key).success)return res.status(400).json({error:"Check the activity, date and duration before saving."});
-  if(input.data.routineSource)return res.status(503).json({error:'Routine source records are readable; routine recording is not available on this application version.'});
   try{
    if(!store.createActivity)return res.status(503).json({error:"Activity logging is unavailable. Your draft is retained."});
    res.status(201).json(await store.createActivity(req.session.userId!,input.data,key));

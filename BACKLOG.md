@@ -6,6 +6,26 @@ Full routine writer/UI/Today/skip-reschedule-pause/partial-strength work continu
 
 ---
 
+## Verified v0.6 laboratory and actual-steps milestone — 2026-11-09
+
+Exact source c71cad5908579fa8dfdcb3e7e4ee2739cc90b8d6 passed CI42694146238:719/719, all browser regressions, types/API/capability/biology source audits, production build and exact isolated hosted persistence/media. Main/v0.5 remains accepted atfb8b24a; new v0.6 is draft PR6 only.
+
+| Version / approved requirement | Status | Evidence / dependency |
+|---|---|---|
+| v0.5 Amendment F accepted scope | ALREADY_VERIFIED |0e41e45 exact676/676 and authorized main mergefb8b24a; unchanged |
+| v0.6 source-original reference bands, thresholds, units/source fidelity | IMPLEMENTED_AND_TESTED |c71cad590; existing SVG; no fake one-sided endpoint; source override and strict applicability browser |
+| v0.6 Issues5/8/9/10 source preservation, per-row duplicates, typed date diagnostics, report preferences | IMPLEMENTED_AND_TESTED |c71cad590;34-row dated synthetic and31/7skip24 actual SQL/browser;49 marker identities; report/specimen source priority |
+| v0.6 Issue4 recorded genetics and educational detail | IMPLEMENTED_AND_TESTED |c71cad590; active source filter; unknown/no-call; source lifecycle and corrected enlarged header |
+| v0.6 UT-RECUR-5504 actual scoped steps | IMPLEMENTED_AND_TESTED |c71cad590;12400session and14100whole-day never summed;unknown/zero/repeat/correction/export/ownership;96 layout states |
+| v0.6 published LifeLabs production catalogue | BLOCKED_TECHNICAL |24 pending full method/specimen/era/demographic/rights matching approval;6 Architect numeric spot-checks are insufficient. Runtime catalogue empty, source report bounds remain usable |
+| v0.6 exact owner Aug/May34-row import root reproduction | BLOCKED_USER_INPUT |Authentic unshifted full inputs/runtime clock unavailable. Typed diagnostic bug fixed/tested; no claim of exact owner root cause |
+| v0.6 UT-RECUR-5501–5503/5506–5512/5515–5516 routines | OPEN — IMPLEMENTING |Existing record model, atomic canonical occurrence, versioned snapshots, due Today, skip/reschedule/pause and source tests in progress; no second diary/scheduler |
+| v0.6 remaining BOI/outcomes/TRAIN/micronutrient work | OPEN |Existing approved reconciliation/dependency backlog; keep independently actionable work moving |
+
+No blanket full v0.6 RC claim, independent clinical/design approval, physical VoiceOver result, native bridge or new main merge. Next: finish/verify current routine integration, then remaining approved backlog. Receipts: docs/verification/V06_INTEGRATED_LAB_P0_20261109.json andV06_ACTUAL_STEPS_20261109.json.
+
+---
+
 ## Bounded source-history correctness — 2026-11-09
 
 Food/source-context e22c639 passed exact CI42635587202; current development baseline retains all prior bloodwork/provider/source checks. New local fix separates bounded movement and action-choice reads (6000/2000 plus sentinel rows). Large activity history cannot hide an unrelated saved intention. A truncated movement source is explicitly unavailable/incomplete and cannot produce another movement suggestion; food/routine choices remain eligible when their own history is complete. Unexpected truncated choice history is labelled, refuses only new choice writes, preserves exact completed-receipt replay and leaves ordinary food/activity logging available. No claim that a partial source is empty or complete.

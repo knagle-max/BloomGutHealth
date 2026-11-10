@@ -1,3 +1,6 @@
+import {routineSourceMatches,routineLocalDate,routineDue,addRoutineDays} from '../shared/activity-routines';
+import {ActivityRoutineConflict} from './activity-routine-errors';
+import {activityRoutineSchema,activityRoutinePlanSchema,type ActivityRoutinePlan,routineOccurrenceOverrideSchema,type RoutineOccurrenceOverride} from '../shared/experience';
 import {checkinRecordSourceSchema,type CheckinRecordSource} from '../shared/wellness-checkin-sources';
 import {ExperimentHistoryUnavailable} from "./experience-errors";
 import {WellnessChoiceStorage} from "./wellness-choice-storage";
@@ -91,28 +94,81 @@ export class ExperienceStorage {
    return updated.length?checkinFeedbackView(userId,id,next):null;
   });
  }
+ async createActivityRoutine(userId:string,plan:ActivityRoutinePlan,key:string,sourceActivityId:string|null):Promise<ExperienceRecord>{
+  plan=activityRoutinePlanSchema.parse(plan);
+  if(!/^[a-f0-9-]{36}$/i.test(key))throw new ActivityRoutineConflict(400,'Choose a valid routine save reference.');
+  const id='routine_'+createHash('sha256').update(JSON.stringify(['activity-routine-v1',userId,key])).digest('hex');
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
+   const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.id,id),eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'activity-routine')));
+   if(existing){const row=decode(existing,userId);if(row.kind!=='activity-routine'||JSON.stringify(row.payload.plan)!==JSON.stringify(plan)||row.payload.sourceActivityId!==sourceActivityId)throw new ActivityRoutineConflict(409,'This routine save already has different details. Review the saved routine.');return row;}
+   if(sourceActivityId){const [source]=await tx.select({id:experienceRecords.id}).from(experienceRecords).where(and(eq(experienceRecords.id,sourceActivityId),eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'activity')));if(!source)throw new ActivityRoutineConflict(404,'Source activity not found in your account.');}
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,'wellness-choice')));if(count.count>=2000)throw Error('EXPERIENCE_LIMIT');
+   const payload=activityRoutineSchema.parse({plan,sourceActivityId,acknowledgedOccurrences:{}});
+   const [row]=await tx.insert(experienceRecords).values({id,userId,kind:'activity-routine',encryptedPayload:encryptPrecision(payload,userId)}).returning();return decode(row,userId);
+  });
+ }
+ async updateActivityRoutine(userId:string,id:string,expectedRevision:string,plan:ActivityRoutinePlan):Promise<ExperienceRecord|null>{
+  plan=activityRoutinePlanSchema.parse(plan);
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
+   const [source]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,'activity-routine'))).for('update');if(!source)return null;
+   const current=activityRoutineSchema.parse(decryptPrecision(source.encryptedPayload,userId));
+   if(current.plan.revision===plan.revision&&JSON.stringify(current.plan)===JSON.stringify(plan))return decode(source,userId);
+   if(current.plan.revision!==expectedRevision||plan.revision===expectedRevision)throw new ActivityRoutineConflict(409,'This routine changed elsewhere. Review its latest schedule before saving.');
+   if(current.priorPlans.length>=100)throw new ActivityRoutineConflict(409,'This routine has reached its saved revision limit. Keep it for history and create a new routine.');
+   const payload=activityRoutineSchema.parse({...current,priorPlans:[...current.priorPlans,current.plan],plan});const [row]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,'activity-routine'))).returning();return decode(row,userId);
+  });
+ }
+ async changeRoutineOccurrence(userId:string,id:string,date:string,expectedPlanRevision:string,expectedRevision:string|null,next:RoutineOccurrenceOverride|null):Promise<ExperienceRecord|null>{
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
+   const [row]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,'activity-routine'))).for('update');if(!row)return null;
+   const current=activityRoutineSchema.parse(decryptPrecision(row.encryptedPayload,userId)),previous=current.occurrenceOverrides[date],today=routineLocalDate(current.plan.timeZone);
+   if(next)next=routineOccurrenceOverrideSchema.parse(next);
+   if(next&&JSON.stringify(previous)===JSON.stringify(next))return decode(row,userId);
+   if(!next&&!previous&&expectedPlanRevision===current.plan.revision)return decode(row,userId);
+   if(next&&next.revision===expectedRevision)throw new ActivityRoutineConflict(409,'A changed occurrence requires a fresh revision.');
+   if(current.plan.revision!==expectedPlanRevision||(previous?.revision??null)!==expectedRevision)throw new ActivityRoutineConflict(409,'This occurrence or schedule changed elsewhere. Review its latest source.');
+   if(current.acknowledgedOccurrences[date])throw new ActivityRoutineConflict(409,'This occurrence was already recorded. Correct or remove its actual record in activity history.');
+   if(date<addRoutineDays(today,-28)||date>addRoutineDays(today,28)||!routineDue({...current.plan,paused:false},date))throw new ActivityRoutineConflict(400,'Choose a scheduled day within 28 days of today.');
+   if(next?.state==='rescheduled'&&(next.toDate!<today||next.toDate!>addRoutineDays(today,28)||next.toDate===date))throw new ActivityRoutineConflict(400,'Choose a different local date between today and 28 days from now.');
+   const overrides={...current.occurrenceOverrides};if(next)overrides[date]=next;else delete overrides[date];
+   const payload=activityRoutineSchema.parse({...current,occurrenceOverrides:overrides});const [updated]=await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,'activity-routine'))).returning();return decode(updated,userId);
+  });
+ }
  createActivity(userId:string,input:Activity,key:string):Promise<ExperienceRecord>{return this.createTimedRecord(userId,"activity",input,key);}
  createSession(userId:string,input:TrainingSession,key:string):Promise<ExperienceRecord>{return this.createTimedRecord(userId,"session",input,key);}
  private async createTimedRecord(userId:string,kind:"activity"|"session",input:Activity|TrainingSession,key:string):Promise<ExperienceRecord>{
   let payload=kind==="activity"?activitySchema.parse(input):trainingSessionSchema.parse(input);
   if(kind==="activity"&&(payload as Activity).components)payload=activitySchema.parse({...payload,...activityProjection((payload as Activity).components!.items)});
-  if(kind==='activity'&&(payload as Activity).routineSource)throw Error('ROUTINE_WRITE_UNAVAILABLE');
   if(!/^[a-f0-9-]{36}$/i.test(key))throw Error("INVALID_SAVE_KEY");
-  const id=kind+"_"+createHash("sha256").update(JSON.stringify([`manual-${kind}-v1`,userId,key])).digest("hex");
+  const routineSource=kind==='activity'?(payload as Activity).routineSource:undefined;
+  const id=kind+"_"+createHash("sha256").update(JSON.stringify(routineSource?['routine-activity-v1',userId,routineSource.routineId,routineSource.scheduledDate]:[`manual-${kind}-v1`,userId,key])).digest("hex");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
    const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id),eq(experienceRecords.kind,kind)));
    if(existing){const record=decode(existing,userId);if(record.kind!==kind||JSON.stringify(record.payload)!==JSON.stringify(payload))throw Error(kind==="activity"?"ACTIVITY_SAVE_CONFLICT":"SESSION_SAVE_CONFLICT");return record;}
+   let routine: {id:string;payload:ReturnType<typeof activityRoutineSchema.parse>}|null=null;
+   if(routineSource){
+    const [source]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,routineSource.routineId),eq(experienceRecords.kind,'activity-routine'))).for('update');
+    if(!source)throw new ActivityRoutineConflict(404,'Routine not found in your account.');
+    const saved=activityRoutineSchema.parse(decryptPrecision(source.encryptedPayload,userId));
+    if(saved.acknowledgedOccurrences[routineSource.scheduledDate])throw new ActivityRoutineConflict(409,'This occurrence was already recorded. Review its source history; a retry cannot restore a deleted record.');
+    if(!routineSourceMatches(payload as Activity,saved.plan,new Date(),saved.occurrenceOverrides))throw new ActivityRoutineConflict(409,'Review the current routine, local date and explicit completion before saving.');
+    routine={id:source.id,payload:saved};
+   }
    const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice")));
    if(count.count>=2000)throw Error("EXPERIENCE_LIMIT");
    const [row]=await tx.insert(experienceRecords).values({id,userId,kind,encryptedPayload:encryptPrecision(payload,userId)}).returning();
+   if(routine&&routineSource){const next=activityRoutineSchema.parse({...routine.payload,acknowledgedOccurrences:{...routine.payload.acknowledgedOccurrences,[routineSource.scheduledDate]:{activityId:id,revision:routineSource.revision,receiptHash:createHash('sha256').update(JSON.stringify([id,payload])).digest('hex')}}});await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,routine.id),eq(experienceRecords.kind,'activity-routine')));}
    return decode(row,userId);
   });
  }
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="activity")throw Error("ACTIVITY_ACTION_REQUIRED");
-  if(entry.kind==='activity-routine')throw Error('ROUTINE_ACTION_REQUIRED');
+  if(entry.kind==="activity-routine")throw new ActivityRoutineConflict(400,"Use the versioned routine action.");
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
@@ -136,7 +192,7 @@ export class ExperienceStorage {
   });
  }
  async updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry) {
-  if(entry.kind==='activity-routine')throw Error('ROUTINE_ACTION_REQUIRED');
+  if(entry.kind==="activity-routine")throw new ActivityRoutineConflict(400,"Use the versioned routine controls.");
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
@@ -148,9 +204,11 @@ export class ExperienceStorage {
    let payload=preserveFocusFeedback(entry,previous);
    if(entry.kind==="activity"){
     const current=activitySchema.parse(previous);
-    if(current.routineSource||entry.payload.routineSource)throw Error('ROUTINE_WRITE_UNAVAILABLE');
+    if(entry.payload.routineSource&&JSON.stringify(entry.payload.routineSource)!==JSON.stringify(current.routineSource))throw new ActivityRoutineConflict(409,'The original routine occurrence identity cannot be replaced.');
+    if(current.routineSource&&routineLocalDate(current.routineSource.timeZone,new Date(entry.payload.startedAt))!==current.routineSource.localDate)throw new ActivityRoutineConflict(409,'This activity belongs to its original routine day. Review the occurrence before changing its day.');
     if(current.components&&entry.payload.components===undefined&&(entry.payload.minutes!==current.minutes||entry.payload.title!==current.title||(entry.payload.distanceM!==undefined&&entry.payload.distanceM!==current.distanceM)||(entry.payload.actualSets!==undefined&&JSON.stringify(entry.payload.actualSets)!==JSON.stringify(current.actualSets))))throw Error("ACTIVITY_COMPONENT_REVIEW_REQUIRED");
     payload={...entry.payload,
+     ...(current.routineSource?{routineSource:current.routineSource}:{}),
      ...(entry.payload.components===undefined&&current.components?{components:current.components}:{}),
      ...(entry.payload.components?{components:{version:1 as const,items:entry.payload.components.items.map(part=>{const prior=current.components?.items.find(old=>old.id===part.id);return {...part,...(part.steps===undefined&&prior?.steps!==undefined?{steps:prior.steps}:{}),...(part.stepScope===undefined&&prior?.stepScope!==undefined?{stepScope:prior.stepScope}:{})};})}}:{}),
      ...(entry.payload.steps===undefined&&current.steps!==undefined?{steps:current.steps}:{}),
@@ -211,6 +269,9 @@ export interface ExperienceStore {
  putCheckinFeedback?(userId:string,id:string,request:FocusFeedbackRequest,key:string):Promise<CheckinFeedbackView|null>;
  createSession?(userId:string,payload:TrainingSession,key:string):Promise<ExperienceRecord>;
  createActivity?(userId:string,payload:Activity,key:string):Promise<ExperienceRecord>;
+ createActivityRoutine?(userId:string,plan:ActivityRoutinePlan,key:string,sourceActivityId:string|null):Promise<ExperienceRecord>;
+ updateActivityRoutine?(userId:string,id:string,expectedRevision:string,plan:ActivityRoutinePlan):Promise<ExperienceRecord|null>;
+ changeRoutineOccurrence?(userId:string,id:string,date:string,expectedPlanRevision:string,expectedRevision:string|null,next:RoutineOccurrenceOverride|null):Promise<ExperienceRecord|null>;
  getCheckinFeedback?(userId:string,id:string):Promise<CheckinFeedbackView|null>;
  exportExperience?(userId:string):Promise<{settings:ExperienceSettings;records:ExperienceRecord[];history:ExperimentHistory|null}>;
  getExperimentHistory?(userId:string,recordId?:string):Promise<ExperimentHistory|null>;

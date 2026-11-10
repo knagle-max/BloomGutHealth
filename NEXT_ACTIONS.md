@@ -4,6 +4,14 @@
 
 ---
 
+## Routine writer ready for exact compatibility gate — 2026-11-10
+
+Current published reader671b0bf36e906826414eb822d014f521dd1a269f preserves latest Issue11 provider-management handoff byte-exact. Reader CI42725912273 passed720/720 plus all hosted/source/media gates. Local writer integration reuses canonical encrypted activity records: named weekdays/targets, Today actual steps with scope/unknown and explicit acknowledgment, original plan snapshot and UUIDv5 per-occurrence child source identity, future revision/pause, bounded skip/restore/reschedule, partial strength, canonical retries/409/anti-resurrection, export/delete and account guards. Final96-state actual browser and18 focused source/activity tests pass; initial broad722 had one legacy error-code regression now restored. Final local build/audits pass; exact writer CI remains required; do not claim a full suite PASS for the writer yet.
+
+Immediately verify reader exact success, publish the frozen writer on draft PR6, then implement the approved P1 Saved laboratory sources → Manage laboratory & reference ranges workflow above. Existing encrypted precisionRecords can represent reserved append-only owned report annotations without a second observation store, but must first validate full source grouping/revision/deletion/export and generic-write guards. Keep original laboratory fields untouched, share one persisted preference authority, and preserve pending LifeLabs/SK abstention. No owner checkpoint or main merge.
+
+---
+
 ## Reader-first routine rollout — 2026-11-09
 
 Verified v0.6 source/lab/actual-step baseline c71cad590 passed exact CI42694146238:719/719 and all hosted/source/media gates. This compatibility slice recognizes new owned routine plans and immutable explicit occurrence source snapshots before writers emit them. Existing owned history/export/delete and source-native actual zero/unknown/log-time labels work; generic routine writes and unreviewed routine-source writes are denied on this version. Ordinary activity capture keeps its existing contract.

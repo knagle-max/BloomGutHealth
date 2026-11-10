@@ -392,3 +392,5 @@ body { font-family:var(--font-sans); color:hsl(var(--foreground)); }
  .app-shell .bloom-header-inner { min-height:68px; }
  .app-shell.athlete-mode main { padding-bottom:calc(120px + env(safe-area-inset-bottom,0px)); }
 }
+
+.activity-workspace fieldset { min-inline-size:0; }

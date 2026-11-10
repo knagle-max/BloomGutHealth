@@ -88,6 +88,7 @@ jobs:
         run: |
           node --import tsx scripts/qa/activity-log-journey.mjs
           node --import tsx scripts/qa/activity-mixed-description-journey.mjs
+          node --import tsx scripts/qa/activity-routines-journey.mjs
       - name: Owned genetics recorded filter and source lifecycle browser regression
         timeout-minutes: 5
         env:

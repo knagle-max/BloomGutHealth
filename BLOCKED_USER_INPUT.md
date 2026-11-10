@@ -1,3 +1,11 @@
+## Scoped unresolved owner-date reproduction — 2026-11-09
+
+Only the exact historical root reproduction remains BLOCKED_USER_INPUT: authentic unshifted full34-result August9 and May panel input plus actual browser date/time/timezone are not present in the handoff. A Library file explicitly shifts collection dates and must not be used as an authentic fixture. Exact question, deferred without interrupting implementation: “Which original, unshifted deidentified34-row input and runtime browser clock reproduce the failure?” Options: original source text/export with clock context (recommended), or a complete reproducible failing paste plus capture context; a shifted reconstruction cannot establish this historical root. Independent typed-path/global-date fixes,49-marker source support and actual date-persistence tests are implemented/verified on c71cad590. This item blocks neither ordinary lab entry nor the rest of v0.6; do not repeatedly ask or re-probe unchanged sources.
+
+Provider-catalogue activation remains a separate technical/source-review constraint, not a new owner approval question. All24 BC CSV rows remain pending full applicability; direct report bounds are available. No normal interval is borrowed from another province or invented from a treatment target.
+
+---
+
 ## Feature-scoped provider catalog verification — 2026-11-09
 
 Provider comparison dataset activation is pending independently verified LifeLabs region/test/specimen/assay/method/collection-era/demographic/fasting entries. Official BC PDF access returned HTTP403 from the environment. Owner-supplied examples are pending source leads, not active ranges; B12/folate BC and any SK implementation remain unknown. Original report overlays and all other development continue. No credentials, clinical verification dates, universal ranges or current-Profile historical demographics are invented. No new owner approval question is pending. The handoff and URLs are preserved in docs/architecture/LAB_PROVIDER_RANGE_OVERLAYS_OWNER_HANDOFF_20261108.md.

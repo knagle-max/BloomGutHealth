@@ -57,7 +57,20 @@
     },
     "typecheck": "PASS",
     "productionBuild": "PASS: final types, production build and original asset byte checks",
-    "exactPublicationCI": "PENDING",
+    "exactPublicationCI": {
+      "commit": "c71cad5908579fa8dfdcb3e7e4ee2739cc90b8d6",
+      "run": 42694146238,
+      "conclusion": "SUCCESS",
+      "tests": 719,
+      "failed": 0,
+      "gates": [
+        "all added lab/source/date/duplicate/report and source-context browser journeys",
+        "Chrome156 enlarged header/source deletion regression",
+        "types/API/capability/biology source audits",
+        "exact isolated hosted production build, two-account persistence/export/erasure and media",
+        "full unit/embedded SQL suite and final production build"
+      ]
+    },
     "geneticsModalRegression": {
       "priorCI": "6b00bd6 failed Chrome156 1280px at page zoom 200% delete dialog overflow",
       "fix": "Bound dialog grid min-content, descendant widths and wrapping; retain all assertions and add responsive diagnostics",
@@ -66,7 +79,7 @@
         "passed": 7,
         "failed": 0
       },
-      "exactChrome156CI": "PENDING",
+      "exactChrome156CI": "PASS at c71cad590",
       "diagnosticCorrection": "9e9c591 CI proved the dialog fits510px. Actual remaining overflow is header-actions/profile-link at1280/pageZoom2 (right1291.6 on1280 viewport). Header now wraps within available width; no assertion removed."
     },
     "firstPublicationCI": {

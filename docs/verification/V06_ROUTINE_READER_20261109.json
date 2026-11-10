@@ -13,7 +13,15 @@
     "failed": 0,
     "types": "PASS",
     "build": "PASS production build and original asset bytes",
-    "exactPublicationCI": "PENDING"
+    "exactPublicationCI": {
+      "commit": "671b0bf36e906826414eb822d014f521dd1a269f",
+      "run": 42725912273,
+      "tests": 720,
+      "passed": 720,
+      "failed": 0,
+      "conclusion": "SUCCESS",
+      "hosted": "PASS isolated account/persistence/source and public media/72-state skin gates"
+    }
   },
   "next": "Verify reader exact build, then publish full current routine implementation without an owner checkpoint; no main merge"
 }

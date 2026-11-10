@@ -620,7 +620,9 @@
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
           "shared/numeric-entry-token.ts",
-          "shared/athlete-entry-capture.ts"
+          "shared/athlete-entry-capture.ts",
+          "client/src/components/ActivityRoutines.tsx",
+          "client/src/pages/Dashboard.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -636,7 +638,8 @@
           "shared/experience.ts",
           "shared/training-set-history.ts",
           "shared/measurement-entry.ts",
-          "shared/activity-routines.ts"
+          "shared/activity-routines.ts",
+          "server/activity-routine-errors.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -649,7 +652,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "observation": "Existing owned activity/save/history paths plus versioned routine plans and explicit canonical occurrences; targets, skip/reschedule/pause and actual source observations stay separate. Source mapping is not runtime or independent specialist authorization.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -672,7 +675,9 @@
           "shared/athlete-entry-source.ts",
           "client/src/components/AthleteEntrySource.tsx",
           "shared/numeric-entry-token.ts",
-          "shared/athlete-entry-capture.ts"
+          "shared/athlete-entry-capture.ts",
+          "client/src/components/ActivityRoutines.tsx",
+          "client/src/pages/Dashboard.tsx"
         ],
         "api": [
           "server/experience-routes.ts"
@@ -688,7 +693,8 @@
           "shared/experience.ts",
           "shared/training-set-history.ts",
           "shared/measurement-entry.ts",
-          "shared/activity-routines.ts"
+          "shared/activity-routines.ts",
+          "server/activity-routine-errors.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -701,7 +707,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required.",
+      "observation": "Existing owned activity/save/history paths plus versioned routine plans and explicit canonical occurrences; targets, skip/reschedule/pause and actual source observations stay separate. Source mapping is not runtime or independent specialist authorization.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1847,8 +1853,9 @@
   ],
   "sourceHashes": {
     "client/src/App.tsx": "5ca3b0ecaeeb7217c912723d1a5459fc72c4b012ae7ded7dd29c1e2f00bf62bb",
-    "client/src/components/ActivityReview.tsx": "dc6dceb2483638f891272b9897b0956c2dfca762ecc7fa538156c60e04333ac8",
-    "client/src/components/ActivitySetEditor.tsx": "afe982136a59173e3572a45906c4738e107568b6b80a6784bdae1f232c219c68",
+    "client/src/components/ActivityReview.tsx": "60882dc09a2cda7a7828dd1b20f7c7b58579135f97a9aae1c05d4dc3c7741c75",
+    "client/src/components/ActivityRoutines.tsx": "35020f8cbb2da76d09b659bdc8248e5db90d7b3d46f5c0fb375be5921b7e6779",
+    "client/src/components/ActivitySetEditor.tsx": "05d2c10c828b2fb1550520346606366abacaed97e734108c53e120146c06b774",
     "client/src/components/ActivityWeekSummary.tsx": "0563ac997e65c86527f6039395a5dbc4652594b7623b8d7396766fb7566a6469",
     "client/src/components/AppNavigation.tsx": "5d3d58e21c7a601693f2483f63434dc4ee5d895eaec594e5e445039e15fe87af",
     "client/src/components/AthleteEntrySource.tsx": "334328365f4f125c115c2f74d8b9667ed60b0e7c3c1f275b6d67e3a55e415bf4",
@@ -1932,9 +1939,9 @@
     "client/src/lib/viome-pdf-reader.ts": "8a780c44790652e05c307ea931d127b09671eed34dd67972c0472faa7e7cceb7",
     "client/src/lib/wellness-choices.ts": "0f3ec9292f19dd8415d79dbf825e378cadc99e66c92f9c906cdce4576fc1e801",
     "client/src/main.tsx": "6c8b2b61f503b292f5f887becfcb2b779d06c32f35fecc9ef494ba82e7688416",
-    "client/src/pages/ActivityLog.tsx": "0710da252c68e3c018c11812dee665128a45d2af0274111eb6197bdbf4d48c2b",
+    "client/src/pages/ActivityLog.tsx": "a68dd03cf49e45f2ed6bc3b678383756cb1743e89592b1f7c8da08dc0d39ae64",
     "client/src/pages/AthleteWorkspace.tsx": "2e97dfb0c6f3783f4b1939416fefd2418554a7c9bb919cf323a5155f1169f1ee",
-    "client/src/pages/Dashboard.tsx": "8001d1ee1995e66b1efe25aac6765802fbf095735b349b8879e22cf0520b5f68",
+    "client/src/pages/Dashboard.tsx": "b14959d6fe944757b603f878da568ed15a5f0370bc522477d403f7031e0e9b49",
     "client/src/pages/Explore.tsx": "0278cb63020e12416299f6839423325bf6940f359976c2593b30e49c79e0a504",
     "client/src/pages/FeatureManagement.tsx": "e5d99da0935446362eb6f2cc817271c13bb4b1f15f73441519068ab7d4a92708",
     "client/src/pages/Insights.tsx": "bbc608be9a6b2485b3b20fc60d2171ba1e2bdc128962558f4f485d84c9e76d67",
@@ -1956,6 +1963,7 @@
     "server/account-erasure.ts": "047c4d133644df2d54d7d2c9fddfcd4f3bfa0ca798a8f8952627edfbf7d77bbb",
     "server/account-export.ts": "055352309dbdbc4afbe618da5376d0aee3230dae17352109b1bab99d88fac46b",
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
+    "server/activity-routine-errors.ts": "1da4759d0cedbbc0d3ae7377e7ca4efb099d8a01ccffac3f04204c59e8a35403",
     "server/ai-configuration.ts": "b6bb5b437c7a279470c821d5dfb59f321f39ce59d275faeb38da3fa7999878d5",
     "server/ai-costing.ts": "02096f114774940fb7a5aae441b5ff36a10bc3b3398705d32b1a1c421aa13b34",
     "server/analysis-boundary.ts": "d6e5cece02bb063cae0ed48140ded286ee856a9ac80a7a54bc22f29f4074c80a",
@@ -1965,8 +1973,8 @@
     "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "e6dc73dc697c9999ace29ee4633d450bdbb7b9caf82678f6c3f62b1349f9c5f8",
-    "server/experience-storage.ts": "5c0b4f4d49ad7b4abc4851507c9376bc3f105b06a88ef7c80ad82a4e1a434ad8",
+    "server/experience-routes.ts": "e66b2f3ce646bac47e9e5fde23c9b73616429c03f0999fa89c14979bff45c9d7",
+    "server/experience-storage.ts": "d33885d668deb965fb6a4bb89b60d853e6431d027a17323b05ef53d6809a4e39",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -2012,7 +2020,7 @@
     "server/settings-source.ts": "b67475857b2ef8c3b5fdc3bc11a0e0cb018616f22198af3997e9cb8709d43d65",
     "server/shared-rate-limit.ts": "7330ecb41868d6f444ac0a3f3a18cca8e9bdfc652966c0ea52c00ae94e9ba049",
     "server/spend-ledger.ts": "bcf37a1e4e80654e942b321bb8f4aa7c71cb1cc412fb57fd6fa121da2efa6164",
-    "server/storage.ts": "a795b56d0f4c953feb618bdb648d683fe060285f99ea5f9bac5eff39063d5cc0",
+    "server/storage.ts": "b1427afabf033929c055620d787c061bc00cc2509f32710f35598cacd057b128",
     "server/structured-report-storage.ts": "42a1a776b78fdc33893a7a9417c3aa28d06ee85e53536e03388b02f9245d88c5",
     "server/supplemental-grant.ts": "506eca9e4fa4e209903468b91a8d8593170c461d4f3fb1d133c41f5d26255556",
     "server/synthetic-molecular.ts": "ba91a96f5fd960dc240725c4c0749231792ce0306077d39ca06af157c7603dc5",
@@ -2025,7 +2033,7 @@
     "server/wellness-context.ts": "7569388b8fbebb7274b2e6810ac9c643d7ed73c3255b0f8628a6a3b99f099fad",
     "server/wellness-observations.ts": "ce007e27466f2183f33c0628f79f7aa683820d1e12bb57e7b432c1d357821d1b",
     "shared/activity-capture.ts": "12f5373b68bbc9c9400b79ec990a87e7784188e3347a4ec20b9b0e7dbb3d3694",
-    "shared/activity-routines.ts": "f815704390b2c864c2c7d0f0586d20401d5ce6dcd405c964229515549c946819",
+    "shared/activity-routines.ts": "4730b8197792ea41299e01f2e05dc0995cc7bcfab082380d9444978005807edb",
     "shared/activity.ts": "a076eecfe480b7157c8b8fc5052eb41bc5335a1d8cf3652393a2a6faedeef785",
     "shared/application-schema.ts": "9015fbb016fac2a32e0ac92c37b5f66b6ce0e31ea3fdcc29b2f9a25de27ccf13",
     "shared/athlete-calendar.ts": "890cd1399116ab935d8e7947701e1d3b4f47f9d643365d686e09955b8182909f",
