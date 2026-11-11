@@ -1,0 +1,51 @@
+/* Optional, tightly scoped visual enhancement to the existing Today hero.
+   Existing .today-focus and brand tokens remain authoritative. */
+.today-focus.today-focus--editorial {
+  border-radius: var(--surface-radius, 16px);
+  border: 1px solid hsl(var(--card-border));
+  background: linear-gradient(142deg, hsl(var(--card)), hsl(var(--muted) / 0.42));
+  box-shadow: 0 12px 36px hsl(var(--foreground) / 0.06);
+  min-width: 0;
+}
+.today-focus--editorial .today-focus-heading h2 {
+  font-family: var(--font-display, var(--font-sans));
+  font-weight: 450;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.today-focus--editorial .today-focus-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.today-focus--editorial .today-focus-actions .hero-button {
+  min-height: 44px;
+  margin: 0;
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: var(--radius, 10px);
+}
+.today-focus--editorial .today-focus-actions .text-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.today-focus--editorial .today-focus-evidence {
+  min-width: 0;
+}
+.today-focus--editorial .today-focus-evidence summary {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+.today-focus--editorial :is(a, button, summary):focus-visible {
+  outline: 3px solid hsl(var(--ring));
+  outline-offset: 3px;
+}
+.today-focus--editorial .bloom-surface { max-width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .today-focus--editorial *, .today-focus--editorial *::before, .today-focus--editorial *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

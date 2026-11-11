@@ -1,3 +1,4 @@
+import {additionalLabMarkers,type AdditionalLabMarkerId} from './additional-lab-markers';
 import type {PrecisionReport,SourceOnlyLab,MarkerId} from './precision-nutrition';
 import {markerDefinitions} from './precision-nutrition';
 import {labMarkerSearchTerms} from './lab-paste';
@@ -12,7 +13,8 @@ export const labCategories=[
  {id:'bone',name:'Bone & micronutrients'}, {id:'other',name:'Other / needs identification'},
 ]as const;
 export type LabCategoryId=typeof labCategories[number]['id'];
-const navigation:Record<MarkerId,readonly LabCategoryId[]>={ldl:['heart'],apob:['heart'],triglycerides:['heart'],hdl:['heart'],alt:['liver'],ast:['liver'],ggt:['liver'],glucose:['sugar'],hba1c:['sugar'],b12:['nutrients'],vitamin_d:['bone'],ferritin:['nutrients'],folate:['nutrients'],homocysteine:['nutrients','heart']};
+const addedNavigation=Object.fromEntries(additionalLabMarkers.map(marker=>[marker.id,marker.categories])) as unknown as Record<AdditionalLabMarkerId,readonly LabCategoryId[]>;
+const navigation:Record<MarkerId,readonly LabCategoryId[]>={...addedNavigation,ldl:['heart'],apob:['heart'],triglycerides:['heart'],hdl:['heart'],alt:['liver'],ast:['liver'],ggt:['liver'],glucose:['sugar'],hba1c:['sugar'],b12:['nutrients'],vitamin_d:['bone'],ferritin:['nutrients'],folate:['nutrients'],homocysteine:['nutrients','heart']};
 export type LabExplorerEntry={id:string;name:string;categories:readonly LabCategoryId[];trend?:PrecisionReport['trends'][number];pending:PrecisionReport['pendingLabs'];sourceOnly:(SourceOnlyLab&{id:string})[];recordCount:number;searchKey:string};
 const nonSearchCharacter=new RegExp('[^\\p{L}\\p{N}]','gu');
 export const normalizeLabSearch=(text:string)=>text.toLowerCase().replace(nonSearchCharacter,'');

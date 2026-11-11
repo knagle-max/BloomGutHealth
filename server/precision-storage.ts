@@ -1,3 +1,4 @@
+import {labSourceReviewSchema,labReviewRevisionText,applyLabSourceReview,type LabSourceReview} from '../shared/lab-source-review';
 import{knownPlanUsesSources}from'./plan-history';
 import{viomeSource}from"../shared/viome-report-context";
 import type{MicrobiomeFoodSource,MicrobiomeFoodControl}from"../shared/microbiome-food-influence";
@@ -35,7 +36,7 @@ function labSourceGroups(userId:string,records:PrecisionRecord[]){
  const facts=new Map<string,Lab|SourceOnlyLab>();
  for(const row of rows){const known=labSchema.safeParse(row.payload),raw=sourceOnlyLabSchema.safeParse(row.payload);const fact=known.success?known.data:raw.success?raw.data:null;if(!fact)continue;facts.set(row.id,fact);
   if(fact.sourceReport){const source=fact.sourceReport,key=JSON.stringify([source.importId,source.reportIdentifier??null,source.specimenIdentifier??null]);imports.set(key,[...(imports.get(key)||[]),row.id]);}
-  const parents=[fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
+  const parents=[fact.sourceCorrection?.supersedes,fact.dateCorrection?.supersedes,...('unitReview'in fact?[fact.unitReview?.supersedes]:[])];
   for(const parent of parents)if(parent&&byId.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
  }
  for(const ids of Array.from(imports.values()))for(const id of ids.slice(1)){links.get(ids[0])!.add(id);links.get(id)!.add(ids[0]);}
@@ -128,11 +129,11 @@ export class PrecisionStorage {
         }
       }
       const plan = payload as any;
-      if (kind === "lab" && plan?.dateCorrection && plan?.unitReview?.status !== "confirmed") throw Error("LAB_SOURCE_CHANGED");
+      if (kind === "lab" && (plan?.sourceCorrection && plan?.unitReview?.status !== "confirmed" || plan?.dateCorrection && plan?.unitReview?.status !== "confirmed")) throw Error("LAB_SOURCE_CHANGED");
       if(reviewedLabMatches!==undefined){
         const known=labSchema.safeParse(payload),raw=sourceOnlyLabSchema.safeParse(payload);
         const incoming=known.success?known.data:raw.success?raw.data:null;
-        if(kind!=="lab"||!saveKey||!incoming||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
+        if(kind!=="lab"||!saveKey||!incoming||incoming.sourceCorrection||incoming.dateCorrection||("unitReview" in incoming&&incoming.unitReview&&(incoming.unitReview.status!=="pending"||incoming.unitReview.confirmedAt!==null||incoming.unitReview.supersedes!==null||incoming.value!==incoming.unitReview.originalValue)))throw Error("LAB_SOURCE_CHANGED");
         const owned=await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
         const rows=owned.map(row=>{
           const decoded=decryptPrecision(row.encryptedPayload,userId),supported=labSchema.safeParse(decoded),source=sourceOnlyLabSchema.safeParse(decoded);
@@ -150,7 +151,7 @@ export class PrecisionStorage {
         const prior = active.find(row=>row.unitReview?.supersedes===plan.unitReview.supersedes);
         const source = decoded.find(r=>r.id===plan.unitReview.supersedes);
         const parsed = labSchema.safeParse(source?.payload);
-        if(!parsed.success||!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection))throw Error("LAB_SOURCE_CHANGED");
+        if(!parsed.success||(!isDeepStrictEqual(parsed.data.dateCorrection,plan.dateCorrection)||!isDeepStrictEqual(parsed.data.sourceCorrection,plan.sourceCorrection)))throw Error("LAB_SOURCE_CHANGED");
         if(prior){const record=decoded.find(row=>row.id===prior.id)!;return {id:record.id,kind:record.kind,payload:record.payload,createdAt:record.createdAt};}
         if(!active.some(row=>row.id===source?.id))throw Error("LAB_SOURCE_CHANGED");
         if(!parsed.success || parsed.data.unitReview?.status!=="pending" ||
@@ -267,6 +268,30 @@ export class PrecisionStorage {
       return {id:row.id,kind:row.kind,payload:corrected,createdAt:row.createdAt};
     });
   }
+  async reviewLabSource(userId:string,sourceId:string,input:LabSourceReview,saveKey:string):Promise<PrecisionRecord>{
+    const request=labSourceReviewSchema.parse(input);
+    if(!/^[A-Za-z0-9_-]{8,128}$/.test(saveKey))throw Error("LAB_REVIEW_INVALID");
+    const id="lab_review_"+createHash("sha256").update(JSON.stringify(["lab-source-review-v1",userId,saveKey])).digest("hex");
+    const fingerprint=createHash("sha256").update(JSON.stringify([sourceId,request])).digest("hex");
+    return this.db.transaction(async tx=>{
+      await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 0))`);
+      const [receipt]=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.id,id)));
+      if(receipt){
+        const parsed=labSchema.safeParse(decryptPrecision(receipt.encryptedPayload,userId));
+        if(receipt.kind!=="lab"||!parsed.success||parsed.data.sourceCorrection?.requestFingerprint!==fingerprint)throw Error("PRECISION_SAVE_CONFLICT");
+        return{id:receipt.id,kind:receipt.kind,payload:parsed.data,createdAt:receipt.createdAt};
+      }
+      const rows=await tx.select({id:precisionRecords.id,encryptedPayload:precisionRecords.encryptedPayload}).from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"lab")));
+      if(!rows.some(row=>row.id===sourceId))throw Error("LAB_NOT_FOUND");
+      const owned=rows.map(row=>{const payload=decryptPrecision(row.encryptedPayload,userId),known=labSchema.safeParse(payload),raw=sourceOnlyLabSchema.safeParse(payload);if(!known.success&&!raw.success)throw Error("LAB_SOURCE_CHANGED");return{...(known.success?known.data:raw.data!),id:row.id};});
+      const source=activeLabRows(owned).find(row=>row.id===sourceId);
+      if(!source||createHash("sha256").update(labReviewRevisionText(source)).digest("hex")!==request.expectedRevision)throw Error("LAB_SOURCE_CHANGED");
+      const payload=applyLabSourceReview(source,sourceId,request,fingerprint,new Date().toISOString());
+      const [row]=await tx.insert(precisionRecords).values({id,userId,kind:"lab",encryptedPayload:encryptPrecision(payload,userId)}).returning();
+      await this.removeSourcePlans(tx,userId,new Set([sourceId]));
+      return{id:row.id,kind:row.kind,payload,createdAt:row.createdAt};
+    });
+  }
   private microbiomeFoodSources(rows:any[]):MicrobiomeFoodSource[]{return rows.flatMap(row=>{const data=row.processingStatus==='completed'?viomeSource(row.structuredData):null;if(!data||data.documentKind!=='health-scores-foods'||!data.foods.length)return[];const foods=data.foods.map(food=>({name:food.correctedName||food.name,reportedCategory:food.correctedCategory||food.reportedCategory,sourcePage:food.position.page,sourceColumn:food.position.column,notes:null}));const revision=createHash('sha256').update(JSON.stringify(['microbiome-food-source-v1',row.id,foods,data.biologicalDates])).digest('hex');return[{id:row.id,revision,provider:data.provider,date:data.biologicalDates.collectedOn||data.biologicalDates.reportedOn||null,foods}];});}
   async getMicrobiomeFood(userId:string){
    const context=contextSchema.parse(await this.getPrecisionContext(userId)||{}),control=context.microbiomeFood||{enabled:false,reportId:null,reportRevision:null,ignoredFoodIds:[],nonce:null};
@@ -329,8 +354,9 @@ export class PrecisionStorage {
         }
       }
       for(const row of [...supported,...raw]){
-        const parent=row.dateCorrection?.supersedes;
-        if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+        for(const parent of [row.dateCorrection?.supersedes,row.sourceCorrection?.supersedes]){
+         if(parent&&links.has(parent)){links.get(row.id)!.add(parent);links.get(parent)!.add(row.id);}
+        }
       }
       if (!activeLabRows([...supported,...raw]).some(row => row.id === id))
         throw Error("LAB_SOURCE_CHANGED");

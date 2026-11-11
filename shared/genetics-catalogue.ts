@@ -122,3 +122,18 @@ export function geneticsCatalogueCounts(explanations: GenotypeExplanation[]) {
     targetMinimum: 150, targetMaximum: 250, shortfall: Math.max(0, 150 - candidates.length),
   };
 }
+
+/** Display the active source projection, including rsIDs outside the research
+ * catalogue. Gene-only topics never establish an assayed variant. Conflicting
+ * supplied calls remain visible rather than choosing one by array order. */
+export function recordedGeneticsCatalogue(explanations:GenotypeExplanation[],query='',domain:GeneticsDomain|'all'='all'){
+ const grouped=new Map<string,GenotypeExplanation[]>();
+ for(const explanation of explanations){const group=grouped.get(explanation.rsid)??[];if(!group.some(e=>e.genotype===explanation.genotype&&e.sourceCall?.original===explanation.sourceCall?.original&&e.submittedGene===explanation.submittedGene))group.push(explanation);grouped.set(explanation.rsid,group);}
+ const normalized=query.trim().toLowerCase();
+ return Array.from(grouped).flatMap(([rsid,calls])=>{
+  const candidate=geneticsCatalogue.find(c=>'rsid'in c.identity&&c.identity.rsid===rsid)??null;
+  if(domain!=='all'&&!candidate?.domains.includes(domain))return[];
+  if(!`${rsid} ${candidate?.label??''} ${calls.map(e=>`${e.gene} ${e.submittedGene} ${e.topic??''} ${e.genotype} ${e.sourceCall?.original??''}`).join(' ')}`.toLowerCase().includes(normalized))return[];
+  return[{rsid,candidate,calls,hasReadableCall:calls.some(e=>/^[ACGT]{2}$/.test(e.genotype)),conflicting:new Set(calls.filter(e=>/^[ACGT]{2}$/.test(e.genotype)).map(e=>e.genotype)).size>1}];
+ });
+}

@@ -1,6 +1,8 @@
+import {optionalWellnessSourceReadable} from './wellness-source-readiness';
+import {checkinSourceObservations,type OwnedCheckinRow} from './wellness-checkin-observations';
 import {randomUUID} from "node:crypto";
-import {and,eq,desc,inArray,sql} from "drizzle-orm";
-import {users,precisionProfiles,experienceSettings,experienceRecords} from "../shared/schema";
+import {and,eq,desc,inArray,sql,gte,lt} from "drizzle-orm";
+import {users,precisionProfiles,experienceSettings,experienceRecords,meals,precisionRecords} from "../shared/schema";
 import {experienceSettingsSchema,experienceEntrySchema,wellnessChoiceSchema,type ExperienceRecord} from "../shared/experience";
 import {wellnessDaySchema,wellnessChoiceCommandSchema,wellnessHistoryDeleteSchema,type WellnessDay,type WellnessChoiceCommand,type WellnessHistoryDelete} from "../shared/wellness-actions";
 import {encryptPrecision,decryptPrecision} from "./precision-crypto";
@@ -18,10 +20,32 @@ export class WellnessChoiceStorage {
   if(!actor)throw new WellnessChoiceConflict("scope");
   const [profile]=await tx.select().from(precisionProfiles).where(eq(precisionProfiles.userId,userId));
   const [settings]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
-  const records=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),inArray(experienceRecords.kind,["session","activity","wellness-choice"]))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(6000);
-  const decoded=records.map(row=>({...experienceEntrySchema.parse({kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId)}),id:row.id,createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()}));
+  // Separate bounds: many old activities cannot hide an unrelated saved choice.
+  // One sentinel row distinguishes a complete source from a truncated view.
+  const movement=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),inArray(experienceRecords.kind,["session","activity"]))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(6001);
+  const choiceRows=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,"wellness-choice"))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(2001);
+  const movementHistoryComplete=movement.length<=6000,choiceHistoryComplete=choiceRows.length<=2000;
+  const decoded=[...movement.slice(0,6000),...choiceRows.slice(0,2000)].map(row=>({...experienceEntrySchema.parse({kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId)}),id:row.id,createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()}));
+  // Optional journal source: missing table/columns/permissions must not disable
+  // goals-only actions. Preflight avoids aborting the consistent transaction.
+  const sourceDb=tx as Database&Pick<typeof appDatabase,"execute">;
+  const weeklyRows=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,"checkin"))).orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(2001);
+  let body:OwnedCheckinRow[]|null=null,bodyLimited=false;
+  if(await optionalWellnessSourceReadable(sourceDb,'precision_records')){
+   const rows=await tx.select().from(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"checkin"))).orderBy(desc(precisionRecords.createdAt),desc(precisionRecords.id)).limit(2001);bodyLimited=rows.length>2000;
+   try{body=bodyLimited?[]:rows.map(row=>({id:row.id,userId:row.userId,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt.toISOString()}));}catch{body=null;}
+  }
+  const weeklyLimited=weeklyRows.length>2000;let weekly:OwnedCheckinRow[]|null=null;
+  try{weekly=weeklyLimited?[]:weeklyRows.map(row=>({id:row.id,userId:row.userId,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()}));}catch{weekly=null;}
+  const checkinSources=checkinSourceObservations(userId,day,weekly,body,weeklyLimited,bodyLimited,this.now());
+  let food:{records:typeof meals.$inferSelect[];limited:boolean}|null=null;
+  if(await optionalWellnessSourceReadable(sourceDb,'meals')){
+   const start=new Date(Date.parse(day.date+'T00:00:00Z')+day.timezoneOffset*60000),end=new Date(+start+86400000);
+   const journal=await tx.select().from(meals).where(and(eq(meals.userId,userId),gte(meals.loggedAt,start),lt(meals.loggedAt,end))).orderBy(desc(meals.loggedAt),desc(meals.id)).limit(201);
+   food={records:journal.slice(0,200),limited:journal.length>200};
+  }
   const context=buildWellnessContext(userId,profile?decryptPrecision(profile.encryptedContext,userId):undefined,actor,this.now());
-  return buildWellnessActionView({context,settings:experienceSettingsSchema.parse(settings?decryptPrecision(settings.encryptedPayload,userId):{}),day,sessions:decoded.filter(r=>r.kind==="session"),activities:decoded.filter(r=>r.kind==="activity"),choices:decoded.filter(r=>r.kind==="wellness-choice"),now:this.now()});
+  return buildWellnessActionView({context,settings:experienceSettingsSchema.parse(settings?decryptPrecision(settings.encryptedPayload,userId):{}),day,sessions:decoded.filter(r=>r.kind==="session"),activities:decoded.filter(r=>r.kind==="activity"),choices:decoded.filter(r=>r.kind==="wellness-choice"),choiceHistoryComplete,movementHistoryComplete,food,checkinSources,now:this.now()});
  }
  async view(userId:string,day:WellnessDay){
   day=wellnessDaySchema.parse(day);

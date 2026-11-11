@@ -14,7 +14,7 @@ test('manual activity saves replay once, reject changed receipts, stay owned and
  const store=new ExperienceStorage(drizzle(pg)as any),app=express();app.use(express.json());app.use((req,_res,next)=>{req.session={userId:req.get('x-user')}as any;next();});registerExperienceRoutes(app,((req:any,res:any,next:any)=>req.session.userId?next():res.sendStatus(401))as any,store as any,{}as any);
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const origin=`http://127.0.0.1:${(server.address()as any).port}/api/experience`;
  const request=async(path:string,method='GET',body?:unknown,key?:string,user='a')=>{const response=await fetch(origin+path,{method,headers:{'content-type':'application/json',...(user?{'x-user':user}:{}),...(key?{'Idempotency-Key':key}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})});return{status:response.status,body:await response.json().catch(()=>null)as any};};
- const payload={title:'Lunch walk',startedAt:'2026-10-26T18:00:00Z',minutes:25,source:'manual',timeZone:'America/Regina',effort:null,notes:''},key=randomUUID();
+ const payload={title:'Lunch walk',startedAt:'2026-10-26T18:00:00Z',minutes:25,steps:12400,stepScope:'session',source:'manual',timeZone:'America/Regina',effort:null,notes:''},key=randomUUID();
  try{
   assert.equal((await request('/activities','POST',payload)).status,400);assert.equal((await request('/activities','POST',{...payload,minutes:0},key)).status,400);assert.equal((await request('/activities','POST',payload,key,'')).status,401);
   const created=await request('/activities','POST',payload,key);assert.equal(created.status,201);assert.equal(created.body.kind,'activity');assert.deepEqual(created.body.payload,payload);assert.doesNotMatch(JSON.stringify(created.body),new RegExp(key));
@@ -30,11 +30,15 @@ test('manual activity saves replay once, reject changed receipts, stay owned and
   const clear=await request('/records/'+extended.body.id,'PUT',{kind:'activity',payload:{...rich,actualSets:{version:1,sets:[]}}});assert.deepEqual(clear.body.payload.actualSets.sets,[]);assert.equal((await request('/export')).body.records[0].payload.capture.description,rich.capture.description);
   await request('/records/'+extended.body.id,'DELETE');assert.deepEqual(await store.getExperienceRecords('a','activity'),[]);
   const items=describeActivityParts('Walked 30 minutes, then did 3 sets of bench press at 60 kg for 8 reps');
+  items[0].steps=12400;items[0].stepScope='session';
   const composite=activitySchema.parse({...payload,...activityProjection(items),components:{version:1,items},capture:{version:1,method:'describe',description:'Walked 30 minutes, then did 3 sets of bench press at 60 kg for 8 reps',activityId:'other',interpretation:'rule-suggestion'}});
   const compositeKey=randomUUID(),createdCompound=await request('/activities','POST',{...composite,minutes:99},compositeKey);assert.equal(createdCompound.status,201);assert.equal(createdCompound.body.payload.minutes,30,'Server derives root totals from children');assert.equal((await request('/activities','POST',{...composite,minutes:99},compositeKey)).body.id,createdCompound.body.id);
   const compoundId=createdCompound.body.id,sourceIds=items[1].actualSets!.sets.map(set=>set.id);
   const unaware=await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{title:composite.title,minutes:composite.minutes,startedAt:composite.startedAt,notes:'Metadata-only correction'}});assert.equal(unaware.status,200);assert.deepEqual(unaware.body.payload.components.items,items);
   assert.equal((await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{...payload,title:composite.title,minutes:31}})).status,409);
+  assert.equal(unaware.body.payload.components.items[0].steps,12400);
+  const oldClientItems=items.map(({steps,stepScope,...part})=>part);
+  const oldClient=await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{...composite,components:{version:1,items:oldClientItems}}});assert.equal(oldClient.status,200);assert.equal(oldClient.body.payload.components.items[0].steps,12400);
   const corrected=structuredClone(items);corrected[1].actualSets!.sets[1].loadKg=55;corrected[1].actualSets!.sets[1].reps=6;
   const updatedCompound=await request('/records/'+compoundId,'PUT',{kind:'activity',payload:{...composite,components:{version:1,items:corrected}}});assert.equal(updatedCompound.status,200);assert.deepEqual(updatedCompound.body.payload.components.items[0],items[0]);assert.deepEqual(updatedCompound.body.payload.components.items[1].actualSets.sets.map((set:any)=>set.id),sourceIds);assert.equal(updatedCompound.body.payload.actualSets.sets[1].loadKg,55);
   assert.equal((await request('/records/'+compoundId,'PUT',{kind:'activity',payload:composite},undefined,'b')).status,404);await request('/records/'+compoundId,'DELETE');

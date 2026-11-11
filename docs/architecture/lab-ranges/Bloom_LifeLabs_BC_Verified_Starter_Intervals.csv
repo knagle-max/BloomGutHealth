@@ -1,0 +1,25 @@
+index,analyte,sex,age_applicability,interval_text,unit,source_provider,source_region,source_document_date,source_printed_page,source_url,status
+0,ALT,Male,≥1 year,<50,U/L,LifeLabs,BC,2025-09-02,4,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+1,ALT,Female,≥1 year,<36,U/L,LifeLabs,BC,2025-09-02,4,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+2,AST,All,≥1 year,<36,U/L,LifeLabs,BC,2025-09-02,7,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+3,Alkaline phosphatase,Male,≥18 years,40–145,U/L,LifeLabs,BC,2025-09-02,4,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+4,Alkaline phosphatase,Female,≥18 years,35–120,U/L,LifeLabs,BC,2025-09-02,4,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+5,Albumin,All,<150 years,35–50,g/L,LifeLabs,BC,2025-09-02,3,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+6,Apolipoprotein B,All,≥20 years,0.59–1.25,g/L,LifeLabs,BC,2025-09-02,6,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+7,Total bilirubin,All,≥15 days,<17,µmol/L,LifeLabs,BC,2025-09-02,7,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+8,Calcium,All,<100 years,2.10–2.60,mmol/L,LifeLabs,BC,2025-09-02,9,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+9,Creatinine,Male,≥14 years,45–110,µmol/L,LifeLabs,BC,2025-09-02,13,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+10,Creatinine,Female,≥14 years,45–90,µmol/L,LifeLabs,BC,2025-09-02,13,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+11,Ferritin,Male,>18 years,24–444,µg/L,LifeLabs,BC,2025-09-02,18,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+12,Ferritin,Female,>18 years,15–247,µg/L,LifeLabs,BC,2025-09-02,18,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+13,GGT,Male,<100 years,<65,U/L,LifeLabs,BC,2025-09-02,20,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+14,GGT,Female,<100 years,<44,U/L,LifeLabs,BC,2025-09-02,20,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+15,Fasting glucose,All,<100 years,3.3–5.5,mmol/L,LifeLabs,BC,2025-09-02,21,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+16,HbA1c,All,<100 years,4.5–5.9,%,LifeLabs,BC,2025-09-02,28,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+17,Hemoglobin,Male,≥19 years,135–170,g/L,LifeLabs,BC,2025-09-02,23,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+18,Hemoglobin,Female,≥19 years,115–155,g/L,LifeLabs,BC,2025-09-02,23,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+19,C-reactive protein,All,<100 years,<5.0,mg/L,LifeLabs,BC,2025-09-02,8,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+20,25-OH vitamin D,All,<100 years,50–125,nmol/L,LifeLabs,BC,2025-09-02,2,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+21,Total cholesterol,All,≥30 years,2.00–5.19,mmol/L,LifeLabs,BC,2025-09-02,10,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+22,Free testosterone (calculated),Male,<100 years,115–577,pmol/L,LifeLabs,BC,2025-09-02,8,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production
+23,Free testosterone (calculated),Female,<100 years,<30,pmol/L,LifeLabs,BC,2025-09-02,8,https://lifelabs.azureedge.net/lifelabs-wp-cdn/2025/10/BC_Ranges_Sep25-6798eab0dfdde.pdf,manual_review_required_before_production

@@ -1,5 +1,5 @@
 /** Editorial evidence is separate from a person's measured report observations. */
-import registry from './data/biology-content-r4m1-v2.json';
+import registry from './biology-registry';
 export const BIOLOGY_CONTENT_VERSION=registry.schemaVersion;
 export const BIOLOGY_CONTENT_REVIEW_DATE='2026-11-08';
 export type BiologyEvidenceLevel='clinical guidance'|'human intervention'|'human association'|'mechanistic'|'taxonomy'|'mixed evidence';
@@ -7,7 +7,7 @@ export type BiologyCoverageStatus='reviewed'|'limited'|'unresolved identity';
 export type BiologyCitation={
  id:string;title:string;url:string;pmid?:string;doi?:string;
  design:string;evidenceLevel:BiologyEvidenceLevel;scopeLimit:string;
- verifiedOn:string;
+ verifiedOn:string|null;verification?:string;
 };
 export type LabEditorialProfile={
  id:string;name:string;whatItDoes:string;higher:string;lower:string|null;

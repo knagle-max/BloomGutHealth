@@ -436,9 +436,9 @@ export default function NutritionHistory() {
       )}
 
 
-      <Card className="mb-6" data-testid="card-daily-summary">
+      <Card className="mb-6 min-w-0 [overflow-wrap:anywhere]" data-testid="card-daily-summary">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
             <Calendar className="h-5 w-5" />
             Today's Summary
           </CardTitle>
@@ -473,11 +473,11 @@ export default function NutritionHistory() {
         </CardContent>
         ) : (<CardContent className="space-y-4">
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Energy ({energyUnit})</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.calories, nutrientTargets.calories))}`}
                 >
                   {energyAmount(totals.calories, energyUnit)}
                   {dailyData?.nutritionCoverage?.calories?.partial
@@ -515,11 +515,11 @@ export default function NutritionHistory() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Protein</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.protein, nutrientTargets.protein))}`}
                 >
                   {summaryAmount("protein", "g")} /{" "}
                   {showAmount(nutrientTargets.protein)}g
@@ -553,11 +553,11 @@ export default function NutritionHistory() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Carbs</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.carbs, nutrientTargets.carbs))}`}
                 >
                   {summaryAmount("carbs", "g")} / {showAmount(nutrientTargets.carbs)}g
                 </span>
@@ -581,11 +581,11 @@ export default function NutritionHistory() {
           </div>
 
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
+            <div className="flex flex-wrap justify-between items-center gap-2 min-w-0">
               <span className="text-sm font-medium">Fat</span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 min-w-0 max-w-full">
                 <span
-                  className={`text-sm font-semibold ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
+                  className={`text-sm font-semibold min-w-0 ${getStatusColor(calculatePercentage(totals.fat, nutrientTargets.fat))}`}
                 >
                   {summaryAmount("fat", "g")} / {showAmount(nutrientTargets.fat)}g
                 </span>
@@ -972,6 +972,7 @@ export default function NutritionHistory() {
                             (meal.intelligence as MealIntelligence).analyzedAt
                           }
                           analysis={meal.intelligence as MealIntelligence}
+                          recordedMeal={{id:meal.id,userId:meal.userId,loggedAt:meal.loggedAt}}
                         />}
                       </details>
                     )}

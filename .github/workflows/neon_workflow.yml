@@ -16,7 +16,7 @@ jobs:
     name: Create Neon branch and verify Bloom
     if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Check out the pull request
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -38,6 +38,65 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-explorer-journey.mjs
+      - name: Reviewed laboratory source persistence browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-source-review-journey.mjs
+      - name: Default source-only bloodwork preservation browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/source-only-lab-journey.mjs
+      - name: Dated bloodwork panel and row duplicate decisions browser regression
+        timeout-minutes: 6
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-dated-panel-journey.mjs
+      - name: Report-scoped reference matching browser regression
+        timeout-minutes: 5
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/report-range-overlay-journey.mjs
+      - name: Saved nutrient source and contribution browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/private-source-context-journey.mjs
+      - name: Saved wellness choices and food source context browser regression
+        timeout-minutes: 6
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/wellness-choice-journey.mjs
+      - name: Source-dated experiment comparison browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/experiment-history-journey.mjs
+      - name: Source-scoped actual steps and existing activity lifecycle browser regression
+        timeout-minutes: 5
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: |
+          node --import tsx scripts/qa/activity-log-journey.mjs
+          node --import tsx scripts/qa/activity-mixed-description-journey.mjs
+          node --import tsx scripts/qa/activity-routines-journey.mjs
+      - name: Owned genetics recorded filter and source lifecycle browser regression
+        timeout-minutes: 5
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: |
+          node --import tsx scripts/qa/genetic-source-management-journey.mjs
+          node --import tsx scripts/qa/selected-genetics-journey.mjs
       - name: Python service authentication and evidence contracts
         run: |
           python3 -m venv /tmp/bloom-service-tests

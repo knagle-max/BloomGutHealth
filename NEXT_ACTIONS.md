@@ -1,3 +1,199 @@
+## FOOD JOURNAL EDITORIAL UI — APPROVED ISOLATED VISUAL SLICE (2026-11-10)
+
+Codex: implement [Food Journal Architect reconciliation](docs/architecture/FOOD_JOURNAL_EDITORIAL_V06_ARCHITECT_RECONCILIATION_20261110.md), [Issue #14](https://github.com/knagle-max/BloomGutHealth/issues/14), on already-created isolated branch `feature/food-journal-editorial-v06`, not directly in `enhance/bloom-experience`, `feature/combined-uiux-v2-r3` or `main`. Original Food editorial, Architect, Independent User Testing handoffs, plus exact provided **Python patcher and CSS** are stored at `docs/architecture/food-journal-editorial/` and reference-code. Source audit at `2f461081`: 16 of 16 expected patch anchors match once, but no runtime application/tests performed. Before running script check latest branch HEAD, fail-closed preflight and inspect a **classes/imports + one CSS file only** diff. Preserve Food capture/edit/source/review, 409s, lost-ack retries, source/units/dates, `MealAnalysis`, `explainFoods`, Show more 20→40+, monthly/yearly reports; don't replace large canonical TSX with shorter page copies. Journal separator rows are good; avoid applying heavy cards/borders to every other Food panel. Test actual 320/390/768/1440 screenshot at frozen SHA, four appearance modes, keyboard/zoom, full source/workflow regressions and build. Issue #12 real Add/Edit friction and servings-zero bug **remain open**; don't call them fixed by styling. Integrate to active dev branch only after accepted tests, Render then validates target. No extra owner gate.
+
+---
+
+## COMBINED UI/UX v2 FINAL PASTED SOURCE — CORRECT JSX BEFORE BUILD (2026-11-10)
+
+Latest owner "FINAL RECONCILIATION & CODEX AUDIT" improves HSL CSS channels and removes a nested Today evidence card, but **is not valid source code as pasted**. Binding amended [UI/UX v2 R3 directive](docs/architecture/COMBINED_UI_UX_V2_R3_ARCHITECT_RECONCILIATION_20261110.md) commit `b359a126`; [Issue #13](https://github.com/knagle-max/BloomGutHealth/issues/13). Fix malformed `EditorialHero` JSX, dynamic `href="{action.href}"` literal-vs-expression, invalid `WellnessChoiceDetails`, quoted/malformed Checkin/Food/Movement props, related-page Link, and quoted telemetry value props; keep CSS and TSX in separate files. **P0 still open**: Today shows prominent action despite paused state; organism search lives in Bacteria tab, and adding metadata to Latest results does not make it discoverable. Existing gut summary already shows numeric-count/diversity so avoid redundant strip. Use isolated integration branch, preserve source and account/receipt safeguards, test typecheck/build/browser four-theme same-SHA visual proof. Never claim production-ready from the pasted proposal, and do not equate this presentation change with Issue #12's meaningful actual dietary/exercise advice. No new owner checkpoint.
+
+---
+
+## OWNER REVISED COMBINED UI/UX v2 CODE — ARCHITECT CORRECTIONS (2026-11-10)
+
+Review of user-posted newer `primitives.tsx`, `today-editorial.css`, `TodayFocus.tsx`, `BiologyReportTelemetry.tsx` and microbiome insertion guidance: **not production-ready as written**. See binding [Combined v2 R3 Architect amendment](docs/architecture/COMBINED_UI_UX_V2_R3_ARCHITECT_RECONCILIATION_20261110.md#architect-amendment--owner-provided-revised-four-file-production-ready-package-2026-11-10) and [Issue #13](https://github.com/knagle-max/BloomGutHealth/issues/13). Three P0 fixes: (1) current Tailwind/theme vars are HSL channel triplets so raw CSS `var(--primary)`, `var(--border)`, etc. used as colors invalid; use `hsl(var(--...))` or semantic Tailwind classes; (2) revised Today still shows prominent non-proposed action even during paused state plus `Show suggestion`; fix intentional pause with source-fresh CTA and focus; (3) organism search currently on Bacteria tab, while proposed telemetry goes into Latest results; restructure selected valid report to make organism search/profile immediately discoverable rather than adding duplicate metrics. P1: preserve source/collection-date truth, avoid duplicate telemetry cards and nested bordered evidence; four theme responsive screenshots/test on isolated feature branch. **Do not install inline code wholesale or call it deployed.** No new owner gate.
+
+---
+
+## OWNER-FINAL — COMBINED UI/UX v2 R3 + NEW ZIP (3), ISOLATED INTEGRATION (2026-11-10)
+
+**Codex: implement on new isolated feature branch, not as unreviewed replacement in active live branch.** Controlling [`docs/architecture/COMBINED_UI_UX_V2_R3_ARCHITECT_RECONCILIATION_20261110.md`](docs/architecture/COMBINED_UI_UX_V2_R3_ARCHITECT_RECONCILIATION_20261110.md), [Issue #13](https://github.com/knagle-max/BloomGutHealth/issues/13). Original Architect v2, independent User Testing R3, and **all seven files** extracted from latest owner-supplied `Bloom_Today_UI_Handoff_Code_v2(3).zip` in `docs/architecture/combined-uiux-v2/reference-code/` (review-only, NOT runtime). Create branch from latest active v0.6 HEAD; record exact SHA and diff before editing. Fix Today non-proposed primary CTA to trusted contextual action href+label (ZIP still hardcodes Add food), paused Show suggestion, retain source/choice/receipt/three evidence components and editorial image. Make gut organism search/filter/profile first (ZIP telemetry currently two redundant bordered cards; at most one compact source-authentic metadata line). Premium mobile+desktop composition, existing tokens correctly used, four modes/themes; no parallel UI framework, no source data loss, no made-up gut metrics. Verify browser 320/390/768/1440, 200% zoom, keyboard/focus/mobile, same-SHA screenshots and full relevant CI before integrating affected feature; report PASS/FAIL/NOT TESTED. No new interim owner gate, don't reopen v0.5, don't auto-merge main or claim deployed before exact evidence. Issue #12 substantive Today recommendations still separate from CTA presentation fix.
+
+---
+
+## OWNER PRIORITY — USEFUL TODAY + WALKING PAD ENERGY + SERVINGS INPUT (2026-11-09)
+
+Binding [`docs/architecture/V06_ACTIVITY_ENERGY_SERVINGS_TODAY_ACTION_20261109.md`](docs/architecture/V06_ACTIVITY_ENERGY_SERVINGS_TODAY_ACTION_20261109.md) and [Issue #12](https://github.com/knagle-max/BloomGutHealth/issues/12). **P0 near-term:** fix servings controlled input coercion `Number('')=0` so clear/replace works, and make Today offer an actual concrete food/portion or realistic workout with why/action and safe exclusion, not generic `One good next step`. **P1 source-safe feature:** workday walking pad actual steps + easy editable actual duration (example 2h), disclosed estimated duration/kcal with correction; daily source-coverage-gated intake versus net expenditure, no double-count watch/full-day/baseline and no single-day promised weight loss. Integrate existing ActivityRoutines / Food composer / wellness choices / BOI, no duplicate diary or calories ledger, no invented measurements. Exact API, CI and Render tests, no interim owner gate. Current source inspected `ca560c2` (moving).
+
+---
+
+## OWNER-APPROVED P1 — SAVED LABORATORY SOURCES: PROVIDER & REFERENCE MANAGEMENT (2026-11-09)
+
+**Codex approved existing-workflow improvement**: [`docs/architecture/V06_REPORT_PROVIDER_MANAGEMENT_ARCHITECT_20261109.md`](docs/architecture/V06_REPORT_PROVIDER_MANAGEMENT_ARCHITECT_20261109.md), [Issue #11](https://github.com/knagle-max/BloomGutHealth/issues/11). **Primary UI** Biology → Bloodwork → Saved laboratory sources → **Manage laboratory & reference ranges**. Persist source-confirmed performing provider (LifeLabs/Dynacare/other/unknown), jurisdiction incl SK and optional actual location once per original report group; original imported labels/observations/dates/units/reference limits unchanged. Reuse recent report-level overlay controls and shared provider-match engine; all charts/management one authority, preferably persist report-scoped overlay preference too, separate from original measurements. Existing three owner-reported reports (May 9 2026:27, Aug 9 2025:17, Apr 8 2025:26) must remain editable without reimport. API/Postgres/reauth and browser regression, source revision/account isolation, pending BC candidate ranges ≠ verified SK. Coordinate #5/#8/#9/#10; no new owner approval gate. Latest code inspected `c71cad59`; recheck branch HEAD before change.
+
+---
+
+## Routine writer ready for exact compatibility gate — 2026-11-10
+
+Current published reader671b0bf36e906826414eb822d014f521dd1a269f preserves latest Issue11 provider-management handoff byte-exact. Reader CI42725912273 passed720/720 plus all hosted/source/media gates. Local writer integration reuses canonical encrypted activity records: named weekdays/targets, Today actual steps with scope/unknown and explicit acknowledgment, original plan snapshot and UUIDv5 per-occurrence child source identity, future revision/pause, bounded skip/restore/reschedule, partial strength, canonical retries/409/anti-resurrection, export/delete and account guards. Final96-state actual browser and18 focused source/activity tests pass; initial broad722 had one legacy error-code regression now restored. Final local build/audits pass; exact writer CI remains required; do not claim a full suite PASS for the writer yet.
+
+Immediately verify reader exact success, publish the frozen writer on draft PR6, then implement the approved P1 Saved laboratory sources → Manage laboratory & reference ranges workflow above. Existing encrypted precisionRecords can represent reserved append-only owned report annotations without a second observation store, but must first validate full source grouping/revision/deletion/export and generic-write guards. Keep original laboratory fields untouched, share one persisted preference authority, and preserve pending LifeLabs/SK abstention. No owner checkpoint or main merge.
+
+---
+
+## Reader-first routine rollout — 2026-11-09
+
+Verified v0.6 source/lab/actual-step baseline c71cad590 passed exact CI42694146238:719/719 and all hosted/source/media gates. This compatibility slice recognizes new owned routine plans and immutable explicit occurrence source snapshots before writers emit them. Existing owned history/export/delete and source-native actual zero/unknown/log-time labels work; generic routine writes and unreviewed routine-source writes are denied on this version. Ordinary activity capture keeps its existing contract.
+
+Next immediately after exact reader CI/live verification: publish already implemented full named-routine/Today/atomic occurrence/skip/restore/reschedule/pause/partial-strength integration, then verify and continue remaining v0.6 work. New writer UI is intentionally absent in the compatibility build; no approval checkpoint or main merge. Maintain the reader guard during mixed-version rollout. Full v0.6 remains open.
+
+---
+
+## Actual steps and responsive regression checkpoint — 2026-11-09
+
+The integrated laboratory changes are published in1825d05/9e9c591. Exact CI passed chart/source/dates/duplicates/report overlays and source/outcome readers, then found header-actions/profile-link overflow at1280px/pageZoom2 (dialog itself fits). Header wrapping is corrected locally; exact follow-on CI required. No real provider interval was activated; pending complete method/specimen applicability remains feature-scoped.
+
+First activity slice adds source-scoped actual steps to existing canonical activities/editor/history/Today/Progress. Unknown stays null; session12400 and whole-day14100 are never added; repeats leave actual blank; correction/owned export/delete preserve source identity and exact save retries.12 focused tests and actual SQL/UI lifecycle plus96 mode/theme/width/text/page-zoom states pass. Narrow available-width reflow retains independent44px set controls. See docs/verification/V06_ACTUAL_STEPS_20261109.json. Named routines and scheduling are NOT implemented by this slice; continue R1/R2 next after exact-build repairs, then remaining v0.6 work. No new owner checkpoint and no main merge.
+
+---
+
+## Current integrated laboratory P0 checkpoint — 2026-11-09
+
+Issue5/source preservation and Issue4/recorded genetics are published on development6b00bd6; latest original owner/Architect sources remain preserved. New integrated Issues8/9/10 code is engineering-tested locally:49 marker identities, explicit row skip/separate and fresh409review, typed date/unit diagnostics, single import/report/specimen-scoped overlay using existing SVG, owner/source-version context, original interval priority and source deletion withdrawal. Source preferences stay in signed-in session memory across navigation/mode; reload returns Original report/reconfirmation, with no new persistence format.
+
+Actual App/API/encrypted-SQL dated34-row and31/7duplicate tests pass; positive verified-synthetic comparison10–35U/L and source<45priority browser passes48 mode/theme/viewport/text/page-zoom states, same-day imports, mode/navigation, None, deletion/account and reload. Standard49-marker/source/timeline browser passes. Local full716 produced714pass and2editorial/version failures, now corrected and29focused tests pass. Final types/build/inventories pass; exact publication CI remains required; no blanket full-suite PASS claimed yet. Receipt: docs/verification/V06_INTEGRATED_LAB_P0_20261109.json.
+
+Important source limits: all24 official BC candidates remain pending complete runtime matching approval;6adult table entries have Architect spot-checks, not method/specimen/rights approval. Runtime catalogue stays empty; original report ranges work and provider absence is explicit. Exact owner August/May full input/runtime failure is not reproduced: synthetic diagnostic34rows pass both dates, and the future-clock guard is a proven conditional misdiagnostic path only. No shifted source date is substituted. No additional owner question/gate; preserve this specific uncertainty and continue safe work.
+
+Execute next: publish/verify this integrated frozen build on PR6, repair reproduced failures, then continue approved recurring activities/actual steps and remaining v0.6 source/outcome/TRAIN/micronutrient work. Full v0.6 and independent release acceptance remain open; main/v0.5 stays unchanged.
+
+---
+
+## VERIFIED SOURCE INPUT — LIFELABS BC REFERENCE OVERLAY P0 (2026-11-09)
+
+Owner supplied a **24-row BC LifeLabs starter CSV** plus official source handoff. Architect inspected exact original PDF printed pages 4/18 (ALT, ALP, ferritin adult ranges) but CSV flags **every row pending manual review**. No automatically verified 24-row dataset; no Saskatchewan ranges delivered. Source files committed to `docs/architecture/lab-ranges/`. Binding existing report-level preference/chart fix and source-status contract: [`docs/architecture/V06_P0_REPORT_LEVEL_LAB_RANGE_OVERLAYS_20261109.md`](docs/architecture/V06_P0_REPORT_LEVEL_LAB_RANGE_OVERLAYS_20261109.md), updated commit `91eaa970`, [Issue #10](https://github.com/knagle-max/BloomGutHealth/issues/10). Codex to move chart-local overlay choice to original report's importId; show per eligible marker only matching verified official interval and plotted labelled bound, otherwise explicit abstention; original report intervals prioritized, source-only data retained. Do not conflate ON decision limits with normal bands or borrow BC for SK. No new owner gate. Coordinate other urgent lab importer issues #5/#8/#9.
+
+---
+
+## P0 OWNER ESCALATION — DATE-DEPENDENT LAB IMPORT ERROR (2026-11-09)
+
+**Codex implement next as scoped existing-functionality remediation.** [`docs/architecture/V06_P0_LAB_IMPORT_DATE_AND_DIAGNOSTICS_20261109.md`](docs/architecture/V06_P0_LAB_IMPORT_DATE_AND_DIAGNOSTICS_20261109.md) specifies the authoritative single work order. An owner-provided 34-result `2026-08-09` panel produces invalid “Check value and unit” notices for accepted units, while a May panel is said to work. `shared/lab-paste.ts` demonstrably swallows `labSchema.safeParse` error paths. **Root cause of date dependence remains UNPROVEN**; reproduce and capture actual Zod issues before fixing. Distinguish global date error vs individual invalid units; add verified aliases/identities for absolute immature granulocytes, iron saturation, PSA fraction and total cholesterol; preserve otherwise valid source-only rows automatically; coordinate duplicate row decisions Issues #5/#8. A deidentified panel file in Library has explicitly shifted dates and is NOT authentic Aug 9 fixture. Strict source/time/assay provenance, no guessed values. Exact tests/CI/Render completion report; no extra owner checkpoint or new lab system.
+
+---
+
+## RECURRING ACTIVITIES + ONE-TAP QUICK LOGGING — 2026-11-09
+
+**Architect-approved v0.6 implementation:** [`docs/architecture/RECURRING_ACTIVITY_QUICK_LOG_ARCHITECT_RECONCILIATION_20261109.md`](docs/architecture/RECURRING_ACTIVITY_QUICK_LOG_ARCHITECT_RECONCILIATION_20261109.md) and original [UT-RECUR-5501–5516 specialist handoff](docs/architecture/activity/Bloom_User_Testing_Recurring_Activity_Quick_Log_Handoff_2026-11-09.md). Extend **existing** ActivityLog/ActivityReview/experience canonical schema/Today/Progress/Athlete—no duplicate exercise journal or scheduler. First implement source-scoped nullable *actual steps* separate from target, named selected-weekday routines and due Today `Log today` with confirmed save; then skip/pause/reschedule, DST/date, reuse strength planned sets, idempotency/account isolation and device-overlap protection. A template never implies performed; missed/unrecorded is not zero; no fake device synchronization. Engineering tests and mobile/desktop four-theme QA mandatory, **no new owner milestone gate**. Retain owner genetics/bloodwork priorities and BOI crosswalk.
+
+---
+
+## BIOLOGICAL OPTIMIZATION INTELLIGENCE — CONSOLIDATED v0.6 DIRECTIVE (2026-11-09)
+
+Read [`docs/architecture/BOI_V06_ARCHITECT_RECONCILIATION_20261109.md`](docs/architecture/BOI_V06_ARCHITECT_RECONCILIATION_20261109.md) and four original specialist handoffs in `docs/architecture/boi/`. **Approve core concept with revisions; implement exact delta in current v0.6 roadmap.** Everyday guidance must work from goals/preferences without mandatory tests or devices, show one actionable evidence-linked choice, preserve intended vs actual vs measured outcome. Develop *separately* real reference-only producer/consumer molecular research **in parallel**; no user-specific SCFA/GLP-1/pathway flux inferred. Preserve owner-requested genetics Issue #4 and lab Issue #5 priorities and current code; avoid duplicate implementations. No new specialist or owner checkpoint for routine work. Do not classify handoff or JSON inventory as implemented runtime functionality.
+
+---
+
+## Original saved-label nutrient values — 2026-11-09
+
+Current published source/outcome/wrapping development is e5fa15d595ea2e0702e4a44494ee4621b37c461e; exact CI42654014834 is pending. New source-only M1 slice is implemented locally: existing Nutrient forms & units exposes the immutable product label already captured on a meal. Original per-label-serving amounts, serving/mass, source identity and actual retrieval time remain separate from scaled meal estimates and collection/formulation dates. Known label zero, missing composition, unsupported/legacy source and unknown chemical equivalents stay distinct. Other label declarations remain separate with no double count, elemental/RAE/DFE/NE/IU conversion, ingestion confirmation, adequacy or second totals engine. No new persistent field or provider lookup.
+
+8 focused label/generic/definition/encrypted persistence tests, TypeScript and production build pass. Actual UI manual-label review→save→SQL→library delete→journal/reload passes original210 per serving versus420 meal energy, zero protein/unknown sodium, keyboard disclosure, owner switch and48-state label mode/theme/mobile/desktop/text/page-zoom matrix. Existing generic48-state source journey also passes. Independent forms/Canadian DRI/supplement-consumption work remains open. Evidence: docs/verification/V06_LABEL_SOURCE_VALUES_20261109.json.
+
+Next: verify preceding exact CI, publish this slice, verify exact follow-on CI, then continue remaining approved v0.6 TRAIN and action-to-outcome/micronutrient work. No new main merge or interim approval gate. Full v0.6 is not ready for final release.
+
+---
+
+## Source-dated outcome comparison — 2026-11-09
+
+Check-in/provider-date source slice published as ade6852b84fa2e49bc58df8345666b545f6f6121. Exact CI42646197306 passed bloodwork/source-review/nutrient browser gates but failed weekly-reader320px/200% page zoom: the existing Save check-in button overflowed by17px in Chrome156. Scoped weekly-review button wrapping/minimum44px target fixes the same reproduced min-content cause found by the new experiment browser; no assertion is weakened.
+
+Existing experiment comparisons now exclude future-dated source observations while retaining every original value. Coverage disclosure shows elapsed versus recorded/missing days, exact reported/null/zero adherence and descriptive minimum–maximum, with confounding/method/causation limits. Three days remains an existing descriptive display threshold, never a scientific power rule. Current source failure still withdraws comparisons; correction/history/export/delete/owner isolation remain canonical. No automatic action ranking or treatment/plan change.8 focused scientific/experiment/encrypted-history tests, types/build and actual original-reader/history browser24-state theme/viewport/text/page-zoom pass, including all-future insufficiency. The real browser is now included in CI.
+
+Next: publish this integrated fix and verify exact CI, then continue remaining approved v0.6 work. Full Phase3 action-to-outcome linkage and reassessment remains open; this is a descriptive source foundation. No new main merge or approval checkpoint.
+
+---
+
+## Current check-in source context and collection-date checkpoint — 2026-11-09
+
+Development baseline633f683 passed exact CI42637797946. New check-in source context is implemented and engineering-tested locally: separate weekly date-only and dated-measurement sources, 28-day disclosed window, immutable source revisions, original owned weekly-record reader, explicit zero versus missing, cross-mode source labels without mode switching, and edit/delete/account withdrawal. Source summaries expose field presence and dates only; private values remain behind the explicit original-record read. Optional missing/corrupt/incomplete source categories abstain independently and do not disable ordinary food logging or unrelated valid actions. No recommendation ranking, outcome/causation or readiness inference is added.
+
+Provider comparisons additionally require an explicitly entered/corrected source collection date. A legacy timestamp cannot establish collection-era applicability. Original source intervals remain available. The published-provider catalog is still empty pending independent official-source verification; no BC examples are promoted or used for SK/ON.
+
+Evidence:44 focused subsystem regressions;9 final focused tests, TypeScript and production build passed. Actual App/API/encrypted-SQL journey passes populated context48-state mode/theme/viewport/text/page-zoom checks, original reader24-state matrix, explicit zero/null, correction, deletion and foreign-account denial. No physical VoiceOver or independent scientific approval claimed. Checkpoint: docs/verification/V06_CHECKIN_SOURCE_CONTEXT_20261109.json. Publish current slice and verify exact CI, then continue approved Phase3 observed-outcome foundations and remaining TRAIN/micronutrient work. No interim approval or main merge; full v0.6 is still open.
+
+---
+
+## Bounded source-history correctness — 2026-11-09
+
+Food/source-context e22c639 passed exact CI42635587202; current development baseline retains all prior bloodwork/provider/source checks. New local fix separates bounded movement and action-choice reads (6000/2000 plus sentinel rows). Large activity history cannot hide an unrelated saved intention. A truncated movement source is explicitly unavailable/incomplete and cannot produce another movement suggestion; food/routine choices remain eligible when their own history is complete. Unexpected truncated choice history is labelled, refuses only new choice writes, preserves exact completed-receipt replay and leaves ordinary food/activity logging available. No claim that a partial source is empty or complete.
+
+Actual encrypted SQL and actual App/browser tests exercise6001 movement rows and>2000 choice rows, source warnings, preserved prior intents, food eligibility, no false movement suggestion, exact retry, owner isolation and normal logging fallback. Existing48-state food/movement mode/theme/zoom journey still passes.27 focused wellness/experience/source tests, types/inventories and build pass. Publish/verify this change, then continue check-in/permitted source context and observed-outcome foundations; full v0.6 remains open. No main merge or interim approval.
+
+---
+
+## Current v0.6 source-context checkpoint — 2026-11-09
+
+Provider-range development3f0c48f passed CI42625802791:697/697, types/inventories/build, expanded provider/source browser, source-review48-state browser, saved-nutrient browser and isolated hosted persistence/media. Source originals stay primary; no verified LifeLabs dataset is installed, so published comparisons abstain. Main/v0.5 remains unchanged.
+
+Next development slice is complete locally: minimized saved-food source context in the existing owned wellness snapshot, shown in Today and Athlete Why. Existing meal IDs, immutable source availability, meal-record time (not food collection date) and canonical mealRecordRevision; no raw food descriptions/notes/amounts, second totals store, absorption/adequacy or recommendation change. Day/offset SQL ownership, missing-table/old-schema/permission preflight fallback and disclosed200-record limit preserve goals-only use. Ordinary meal cache invalidation withdraws edited/deleted facts. Actual App/API/encrypted SQL journey passes full48-state mode/theme/viewport/text/page-zoom matrix, canonical edit, deletion, account switch and journal link;32 focused wellness/experience/provider/source tests, types and build pass. Fixed reproduced Athlete shortcut/status enlarged-zoom overflow. Additional provider hardening binds comparison date/method/fasting to the saved source and accepts canonical µg notation without rewriting native provider units;8 focused food/provider tests and expanded provider browser pass. Publication/exact new CI pending.
+
+Next after publication: continue check-in/permitted source context and source-read completeness before observed-outcome reassessment. Existing6000-record movement/choice read cap must not imply a complete/empty source history if truncated. v0.6 remains open for full temporal context, outcomes, TRAIN and staged micronutrient forms/Canadian authority/supplement observations; scientific/model/device/rights activations remain scoped. No interim approval or main merge. The temporary6-file food checkpoint is superseded by this integrated implementation; retain it only as recovery evidence.
+
+---
+
+## Latest owner handoff — provider reference overlays (v0.6), 2026-11-09
+
+The owner supplied Provider-Specific Lab Ranges on Graphs (dated2026-11-08). Current v0.5 main stays unchanged. Previous bloodwork catalog/range/review writer d63eb3e passed exact CI42567337752, including the actual source-review48-state browser, original catalog/source browser, saved-nutrient browser, types/inventories, full embedded regression, build and hosted isolated persistence/media checks. No new main merge authorized.
+
+New display-only provider overlay work is implemented locally: Original report / LifeLabs / Other lab / None, required comparison province, explicitly confirmed historical collection context (no current-Profile age/sex substitution), strict provider/region/analyte/specimen/assay/method/date-era/demographic/fasting/unit matcher, independent-verification gating, distinct reference/decision/risk kinds, no treatment targets. Exact original intervals take priority; changing provider does not write records. Different laboratories/assays or bounds now require a selected-result-local band rather than a global range; numeric boundary labels, original operators, one-sided unknowns, source drilldown and independent recorded points remain. The provider browser passes with expanded collection controls at mobile/dark/light/both modes/200% zoom, SK/ON/BC abstention and None/source priority. Focused matching/source tests, types and build pass; final publication checks remain.
+
+Official LifeLabs BC PDF access returned403. Owner examples and ON notices are pending source leads only; publishedLabRanges is empty. This feature-scoped dataset verification dependency does not prevent original source ranges or independent work. Binding summary: docs/architecture/LAB_PROVIDER_RANGE_OVERLAYS_OWNER_HANDOFF_20261108.md.
+
+Food-context source work already begun is preserved byte-exact at /tmp/bloom-food-context-wip-20261109/MANIFEST.json (6files;4tracked+2new). Existing12 wellness tests passed; types had a narrowed Database.execute facade issue subsequently fixed before the checkpoint. Resume after provider publication without blind overwrite. It is not released or complete. Continue remaining approved v0.6 dependency1–4/M1 work without interim approval.
+
+---
+
+## Bloodwork reviewed-source implementation — 2026-11-09
+
+Source-review reader publication884511a is LIVE in the isolated review environment; exact CI42561600199 has passed the expanded bloodwork and saved-nutrient browser journeys, TypeScript/source inventories, embedded regression suite and production build; remaining hosted checks must pass before writer publication. Reader rollback support must remain after any new sourceCorrection-bearing write.
+
+Writer engineering is complete locally: Review marker & reference range opens from the original source detail and supported result actions. Explicit marker/unit/method/reference limits/reason/confirmation; exact numeric source value is read-only. Missing bounds remain null. Qualitative/threshold findings and ambiguous vitamin-D/bilirubin identity cannot be promoted. Stable owner-bound revision + idempotency receipt, serialized immutable successor, strict generic-write rejection, original source/date/section/row/IDs preserved, one canonical active record, old-link ancestry, linked-plan invalidation and full logical delete. No backfill, second store, production migration, provider call or fabricated original source row. New educational additions remain draft/source-retrieval pending.
+
+New actual App/API/encrypted SQL browser passes all48 states (Everyday/Athlete ×320/390/768/1440 ×light/dark ×100/200% text/page zoom), keyboard save, invalid bounds, lost-save-response exact retry, reload/original links, converted one-sided chart range, original zero/source preservation and foreign-owner isolation. Narrow/enlarged-text buttons and heading now reflow. Unit/API tests cover concurrent competing reviews, stale edits, exact historical retries, deletion/no resurrection, linked-plan invalidation and legacy absent source text. Local full691-test run had690 passes and a stale source-crosswalk failure while UI changed; regenerate/check and exact writer CI remain required. Current types and production build pass; existing import/date/delete browser regression is being rechecked, preserving unrelated plans and deleting only explicitly linked plans.
+
+Next: finish exact reader checks, publish writer on PR6, verify its full CI/live preview; then resume dependency1 food/check-in context projections and remaining approved v0.6 work. No interim owner approval and no new main merge/public activation. This is not a full v0.6 RC claim.
+
+---
+
+## Bloodwork implementation checkpoint — 2026-11-09
+
+The owner's named tests are implemented as45 supported representations (14 original +31 additions): CBC, separately identified absolute/% differential, RDW-CV/SD, liver/bilirubin fractions, iron/TIBC/transferrin, non-HDL and total testosterone. No free-testosterone substitution, absolute/% guessing, universal reference limits or new supplement rule. Report bounds are parsed explicitly and graphed in the same converted units as their observations; raw limits/units remain accessible. Missing, invalid and one-sided limits remain distinct. Original supplied registry bytes and published mechanistic graph cohort stay fixed. New educational entries are explicitly developer drafts; source retrieval/independent review is pending, not falsely dated.
+
+Actual App browser journey passes all45 definitions, same/varying/one-sided/absent reference ranges, original source/zero/assay guards,320/390/768/1440 theme/mode/zoom and owner isolation. Saved-nutrient48-state browser also passes locally after Daily Summary title wrap correction. Types, production build, focused catalog/range/reader/encrypted ownership/deletion tests pass. Full regression and exact remote CI remain pending; do not call this final RC.
+
+Source-review reader expansion is included without writer emission. Canonical history/source groups/delete lineage understand an explicit immutable sourceCorrection edge; generic create/import cannot forge it. Historical source-only records are not silently reinterpreted. Next: verify exact reader publication/preview, then implement the owner-reviewed identity/unit/reference correction action with retry, revision, original-source and account guarantees. This remains active work, not an owner approval checkpoint. v0.5 is already merged; new v0.6 work stays on development PR6.
+
+---
+
+## ACTIVE OWNER STEERING — Bloodwork ranges and missing common tests, 2026-11-09
+
+Prioritize the owner's new request over the next independent food-context projection. Show source-reported laboratory reference ranges on existing bloodwork charts; absent ranges stay unknown, not invented universal normal values. Add missing common tests identified by the owner: ALP/bilirubin; hemoglobin/hematocrit/RBC/WBC/platelets; neutrophils/lymphocytes/eosinophils/basophils; MCV/MCHC/RDW/MPV; iron/TIBC/transferrin; non-HDL cholesterol; total testosterone. Current canonical catalog has14 markers. Preserve absolute-versus-percent differential identity, bilirubin fractions, original numbers/units/reference/source IDs, and true zero versus unknown. Newly supported historical source-only rows need an explicit reviewed identification path; do not silently overwrite original source records. Existing authoritative source/unknown/comparability rules and Biology/Progress explorer handoff apply. No newer missing-marker handoff was found in current main/development or Issue#3; the owner supplied the concrete list directly. Public MedlinePlus source retrieval was blocked by environment network policy; do not invent verification dates or independent clinical approval. Raw-value support and source-faithful charts remain safely actionable.
+
+Previous v0.6 generic nutrient slice is published in draft PR#6 at5cdd39c; first CI42554679672 failed the new320px/200% source-view case. Local48-state source-link wrapping correction is now published at0bbd3ed; exact CI pending. v0.5 remains merged atfb8b24a after verified0e41e45/CI42551184922. No further main merge or production-data changes authorized. Continue code/test/push; no interim approval or screenshot deliverables.
+
+---
+
+## ACTIVE — v0.6 resumed after authorized v0.5 merge, 2026-11-09
+
+v0.5 PR#1 merged atfb8b24ae6da60a0386a446ad323444272b3ecd41 under the owner's explicit “make the changes … then you can merge” authorization. Application0e41e457c1c920202b23b330e02bf2bec95073ac passed exact CI42551184922:676/676, types/source inventories/build, adversarial bloodwork/source browser, hosted72-state media and isolated account/persistence/export/erasure checks. Deployed application matched. Remaining detailed lab raster/independent physical/clinical/provider conditions are scoped disclosures; there is no pending v0.5 owner approval question. Original production records were not modified. Accepted receipt: docs/verification/V05_SCOPED_FINAL_ACCEPTANCE_20261109.json.
+
+Continue approved v0.6 from docs/operations/V06_DEPENDENCY_BACKLOG.md and the latest V06_HANDOFF/Architect decisions. First resumed slice: saved generic nutrient contribution projection (BIO-MICRO-01/07/13; M1 partial). Restored source/test modules from the preserved stash and manually merged props/UI/QA onto current Food code, retaining v0.5 editing and accessible source-scroll controls. No blind stash pop; stash retained. Original native values, estimated source-zero, unknown/conflicting units and saved-record time stay separate. Preview is not recorded intake; foreign owner is denied and missing/ambiguous time stays unknown. Focused8 tests, current TypeScript/production build/source inventories and actual App/API/encrypted SQL review/save/reload/source keyboard flow pass. The48-state320/390/768/1440 × Everyday/Athlete light/dark ×100/200% text/page-zoom matrix passes, retaining every original source row; daily-summary values now wrap at narrow enlarged text sizes. Publication and exact CI are pending. This is generic-source M1 engineering, not complete micronutrient adequacy or a second totals store.
+
+Next: finish this slice's current validation, commit/push and open the next development PR from accepted main, then continue dependency1 permitted food/check-in source projections and staged M1–M3 work. No new main merge/public or paid-provider activation authorized for v0.6. Preserve inherited feature-scoped rights/physical/model/clinical boundaries; do not wait for interim approval or invent major requirements.
+
+---
+
 ## ACTIVE — Owner-authorized scoped correction and merge, 2026-11-09
 
 The owner explicitly instructed “Make the changes found here then you can merge,” referencing specialist consolidation commit8418fcdc22a843553dcfb51f22b7bfa0df23c2ce. This supersedes older requests to ask again before main: complete RC-SCI-01, validate the corrected exact application and merge PR#1 only after required checks pass. No additional owner or specialist approval checkpoint. Preserve production data, disabled external integrations and the v0.6 stash. Incoming original specialist documents synchronized from remote bca748c without overwriting contributor work. Shared assay identity guards cover source interval education, report flags/conversion, trends and incompatible pasted analytes; original source observations remain available. Current validation and exact CI/deployed SHA will be recorded in the scoped correction evidence. Preferred detailed lab-icon archive remains unavailable after bounded attachment/Library metadata search; compact approved SVG fallback retained, with P1 fidelity limitation rather than a global hold. Physical/human/VoiceOver and independent scientific signoff remain NOT RUN, not engineering passes.

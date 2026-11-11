@@ -1,0 +1,8 @@
+import type {ProviderRangeContext} from './lab-provider-ranges';
+export type LabOverlayPreference={provider:'original-report'|'LifeLabs'|'other'|'none';province:string;otherProvider:string};
+export type LabOverlayChoice=LabOverlayPreference&{context:Pick<ProviderRangeContext,'specimen'|'assay'|'method'|'ageAtCollection'|'sexReferenceCategory'|'fasting'|'collectedOn'>;confirmed:boolean};
+export const emptyLabOverlayChoice=():LabOverlayChoice=>({provider:'original-report',province:'',otherProvider:'',context:{specimen:'',assay:'',method:'',ageAtCollection:null,sexReferenceCategory:null,fasting:'unknown',collectedOn:''},confirmed:false});
+/** A confirmation is invalidated by any source revision; display context never
+ * changes the stored source. Private source details stay in account memory only. */
+export function labOverlaySourceVersion(point:{id:string;date:string;laboratory:string;method:string;fasting?:string;sourceUnit:string;sourceValue:number;referenceLow?:number|null;referenceHigh?:number|null;sourceReport?:unknown;dateCorrection?:unknown;sourceInput?:unknown}){return JSON.stringify([point.id,point.date,point.laboratory,point.method,point.fasting,point.sourceUnit,point.sourceValue,point.referenceLow,point.referenceHigh,point.sourceReport,point.dateCorrection,point.sourceInput]);}
+export function labSourceDisplayContext(point:{method:string;fasting?:'yes'|'no'|'unknown';sourceReport?:{enteredDate?:string};dateCorrection?:{enteredDate:string}}):Pick<LabOverlayChoice['context'],'method'|'fasting'|'collectedOn'>{return{method:point.method||'',fasting:point.fasting??'unknown',collectedOn:point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate||''};}

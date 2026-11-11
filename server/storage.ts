@@ -1,3 +1,4 @@
+import type {LabSourceReview} from '../shared/lab-source-review';
 import{getBiologicalReports,deleteBiologicalReports}from'./biological-report-management';
 import type{BiologicalReportCategory,BiologicalReportSnapshot,BiologicalReportDelete}from'../shared/biological-report-management';
 import type{MicrobiomeFoodControl,MicrobiomeFoodSource}from"../shared/microbiome-food-influence";
@@ -101,6 +102,7 @@ export interface IStorage extends ExperienceStore {
     saveKey?: string,
   ): Promise<PrecisionRecord>;
   insertReviewedLab?(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]):Promise<PrecisionRecord>;
+  reviewLabSource?(userId:string,sourceId:string,input:LabSourceReview,saveKey:string):Promise<PrecisionRecord>;
   correctLabDate?(userId:string, sourceId:string, input:LabDateChange, saveKey:string):Promise<PrecisionRecord>;
   getGeneticSources?(userId:string):Promise<GeneticSourceSnapshot>;
   changeGeneticSource?(userId:string,command:GeneticSourceCommand):Promise<GeneticSourceSnapshot>;
@@ -209,8 +211,12 @@ export class DatabaseStorage implements IStorage {
   getExperienceSettings: ExperienceStore["getExperienceSettings"] = (id) => this.experience.getExperienceSettings(id);
   putExperienceSettings: ExperienceStore["putExperienceSettings"] = (id,p) => this.experience.putExperienceSettings(id,p);
   putExperienceSettingsIfCurrent = (id:string,p:Parameters<ExperienceStore["putExperienceSettings"]>[1],revision:string) => this.experience.putExperienceSettingsIfCurrent(id,p,revision);
+  getCheckinRecord(userId:string,id:string){return this.experience.getCheckinRecord(userId,id);}
   getCheckinFeedback(userId:string,id:string){return this.experience.getCheckinFeedback(userId,id);}
   createActivity(...args:Parameters<ExperienceStorage["createActivity"]>){return this.experience.createActivity(...args);}
+  createActivityRoutine(...args:Parameters<ExperienceStorage["createActivityRoutine"]>){return this.experience.createActivityRoutine(...args);}
+  updateActivityRoutine(...args:Parameters<ExperienceStorage["updateActivityRoutine"]>){return this.experience.updateActivityRoutine(...args);}
+  changeRoutineOccurrence(...args:Parameters<ExperienceStorage["changeRoutineOccurrence"]>){return this.experience.changeRoutineOccurrence(...args);}
   createSession(...args:Parameters<ExperienceStorage["createSession"]>){return this.experience.createSession(...args);}
   putCheckinFeedback(...args:Parameters<ExperienceStorage["putCheckinFeedback"]>){return this.experience.putCheckinFeedback(...args);}
   exportExperience = (id:string) => this.experience.exportExperience(id);
@@ -243,6 +249,7 @@ export class DatabaseStorage implements IStorage {
   insertReviewedLab(userId:string,payload:unknown,saveKey:string,reviewedMatches:readonly string[]){
     return this.precision.insertReviewedLab(userId,payload,saveKey,reviewedMatches);
   }
+  reviewLabSource(userId:string,sourceId:string,input:LabSourceReview,saveKey:string){return this.precision.reviewLabSource(userId,sourceId,input,saveKey);}
   correctLabDate(userId:string, sourceId:string, input:LabDateChange, saveKey:string) {
     return this.precision.correctLabDate(userId,sourceId,input,saveKey);
   }

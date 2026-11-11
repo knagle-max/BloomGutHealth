@@ -1,0 +1,15 @@
+import {genotypeAnnotations} from '@shared/genotype-explanations';
+import {geneticsDomains,type recordedGeneticsCatalogue} from '@shared/genetics-catalogue';
+export default function RecordedGeneticVariants({groups}:{groups:ReturnType<typeof recordedGeneticsCatalogue>}){
+ return <div className="divide-y divide-border">{groups.map(group=>{const education=genotypeAnnotations.find(e=>e.rsid===group.rsid);return <details key={group.rsid} className="py-2 [overflow-wrap:anywhere]">
+  <summary className="min-h-11 cursor-pointer py-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"><span className="font-medium">{group.candidate?.label??group.rsid}</span><span className="block text-sm text-muted-foreground">{!group.hasReadableCall?'Recorded no-call / no readable genotype':education?'Recorded variant · general education available':'Recorded variant · education limited'}{group.conflicting?' · conflicting calls':''}</span></summary>
+  <div className="space-y-3 pb-3 pl-3">
+   {education?<><p>{education.geneRole}</p><p>{education.variantMeaning}</p><p className="panel-note">Evidence: {education.evidence}</p></>:<p>A source-checked variant explanation and compatible build, assay and allele evidence are not established here.</p>}
+   {group.calls.map((call,index)=><div key={index} className="space-y-1"><p>Saved unphased call: <strong>{call.genotype}</strong>{call.sourceCall?` · original source token: ${call.sourceCall.original}`:' · original spelling not captured'}</p>{call.submittedGene&&<p className="panel-note">Submitted gene label: {call.submittedGene}. A submitted name does not verify gene identity.</p>}</div>)}
+   <p className="panel-note">{group.conflicting?'Resolve conflicting source calls before any personal comparison.':!group.hasReadableCall?'No readable genotype was recorded; no personal effect is inferred.':'These saved letters do not verify source assembly, assay or study applicability. General research is separate from a personal effect or diet rule.'}</p>
+   {group.candidate&&<p className="panel-note">Research domains: {group.candidate.domains.map(id=>geneticsDomains.find(d=>d.id===id)!.title).join(' · ')}.</p>}
+   {education&&<details><summary className="min-h-11 cursor-pointer py-2">Research sources & limits</summary><p className="panel-note">{education.limitations}</p><ul>{education.sources.map(source=><li key={source.url}><a className="text-link inline-flex min-h-11 items-center max-w-full [overflow-wrap:anywhere]" href={source.url} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">{source.title}</a></li>)}</ul></details>}
+   <a className="text-link inline-flex min-h-11 items-center" href="#genotype-explanations">Review saved-source explanations</a><p className="panel-note">{education?`Education version and source provenance: ${group.calls[0].version}.`:'No new interpretation or gene-only linkage is assigned.'} No APOE isoform, structural result or medication action is inferred.</p>
+  </div>
+ </details>;})}</div>;
+}

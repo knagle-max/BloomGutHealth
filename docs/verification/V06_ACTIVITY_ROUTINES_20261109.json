@@ -1,0 +1,61 @@
+{
+  "version": "v0.6",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_WRITER_CI",
+  "authority": [
+    "docs/architecture/RECURRING_ACTIVITY_QUICK_LOG_ARCHITECT_RECONCILIATION_20261109.md",
+    "docs/architecture/activity/Bloom_User_Testing_Recurring_Activity_Quick_Log_Handoff_2026-11-09.md"
+  ],
+  "verifiedBaseline": {
+    "commit": "c71cad5908579fa8dfdcb3e7e4ee2739cc90b8d6",
+    "ci": 42694146238,
+    "tests": 719,
+    "failed": 0
+  },
+  "implemented": [
+    "Existing encrypted experience record/table/API/editor reused, no duplicate diary or scheduler",
+    "Owned named templates from selected activity or prior reviewed history; versioned future plans, selected local weekdays, IANA timezone/effective dates/preferred time, separate targets and planned set references",
+    "Due Today inline actual count/scope, optional other actuals, blank unknown, explicit performed acknowledgement and canonical save",
+    "Atomic account lock binds template/current revision/28-day bounded occurrence override and stable original scheduled-day identity; confirmed record plus receipt acknowledgement commit together",
+    "Exact replay, changed-content conflict, stale plan/occurrence rejection, account404 and removed-record anti-resurrection",
+    "Manual skip/restore/reschedule and pause; missed/skipped/unrecorded never zero; duplicate occurrence prevention and distinct rescheduled sessions",
+    "Independent strength sets remain pending until each explicit toggle; planned copies do not inherit performance",
+    "Immutable plan snapshot on actual record; future edits/deleted template do not rewrite/delete actuals; prior plan revisions retained",
+    "Account-keyed UI withdrawal, retained frozen retry drafts, fresh source eligibility and scoped history/export/erasure",
+    "Timestamp basis explicitly log-time, never an invented observed start time; existing source display/editor reflect this",
+    "Standard deterministic UUIDv5 child identities bind original plan revision/scheduled day/planned child to actual children without adding a new record format; independent reference fixture and day/retry stability tested",
+    "Upcoming seven local days bounded/disclosed; skipped or moved today visible without implying performed",
+    "Committed template-delete reply loss recovers only after a fresh owned source-list404-absence check",
+    "Copied strength metrics remain explicitly planned until a separate performed toggle transitions only that set; saved activity corrections retain this distinction"
+  ],
+  "evidence": {
+    "focusedCore": "18 focused source/activity/reader/routine tests pass after restoring stable ACTIVITY_ACTION_REQUIRED contract;3 core SQL/date/identity tests pass after UUIDv5 provenance hardening",
+    "routineBrowser": "PASS final actual App/HTTP/encrypted SQL including96 mode/theme/viewport/text/page-zoom states, explicit scope and unknowns, frozen retry, skip/restore/reschedule/pause,1of3strengthsets, original snapshots, owned export/template deletion and lost-delete404 canonical absence recovery; no physical-device claim",
+    "ordinaryBrowser": "PASS existing Today\u2192manual save/lost reply/retry/correct\u2192Today/Progress\u2192delete and320 keyboard",
+    "types": "PASS final",
+    "productionBuild": "PASS final planned-reference/UUIDv5 source build and original media byte verification",
+    "fullLocal": {
+      "tests": 722,
+      "passed": 721,
+      "failed": 1,
+      "cause": "Existing direct-store ACTIVITY_ACTION_REQUIRED error was inadvertently replaced; original contract restored and focused reader/source tests now pass",
+      "finalExactCI": "PENDING"
+    },
+    "exactPublicationCI": "PENDING",
+    "latestPlannedSourceRegression": "PASS13 source/record/routine tests and final actual browser: states described/planned/planned after confirming exactly one of3; correction uses the same per-set state grammar"
+  },
+  "notClaimed": [
+    "No real device bridge or unsolicited notifications",
+    "No power/pace or calorie inference, readiness/clinical effect or target achievement",
+    "No physical VoiceOver or independent timed usability/design/science acceptance",
+    "Full v0.6 RC remains open; no main merge or production-data write"
+  ],
+  "verifiedOn": "2026-11-10",
+  "readerCompatibility": {
+    "commit": "671b0bf36e906826414eb822d014f521dd1a269f",
+    "localTree": "85a8facb1e21dcef8a465c9e298dce2fce5a8509",
+    "ci": 42725912273,
+    "status": "VERIFIED exact reader CI720/720, all hosted/source/media gates",
+    "tests": 720,
+    "failed": 0
+  }
+}

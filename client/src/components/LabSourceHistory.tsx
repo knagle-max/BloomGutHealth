@@ -1,3 +1,6 @@
+import {useLabReportOverlays} from "@/lib/lab-report-overlays";
+import {labReportGroupKey} from "@shared/lab-history";
+import {LabReportOverlayControls,useLabOverlaySources} from "./LabReportOverlayControls";
 import {useEffect,useRef,useState} from 'react';
 import {groupLabHistory,labDateText,labHistoryDates,labHistoryOnDate,reportedLabSections,type AnyLabHistoryRow} from '@shared/lab-history';
 import {markerDefinitions,labEnteredContext} from '@shared/precision-nutrition';
@@ -5,14 +8,16 @@ import {Button} from './ui/button';
 import LabSourceContext from './LabSourceContext';
 import LabTrend from './LabTrend';
 import type {PrecisionReport} from '@shared/precision-nutrition';
-function MarkerHistory({name,trend}:{name:string;trend:PrecisionReport['trends'][number]}){
- const [open,setOpen]=useState(false);
- return <details className="mt-3 min-w-0" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}><summary>Recorded history for {name}</summary>{open&&<><p className="panel-note">This chart includes all available dated measurements for this marker, beyond any selected report date. Each point retains its own source; comparison limits appear below.</p><LabTrend trend={trend}/></>}</details>;
+function MarkerHistory({name,trend,sourceId}:{name:string;trend:PrecisionReport['trends'][number];sourceId:string}){
+ const [open,setOpen]=useState(false),overlays=useLabReportOverlays();
+ return <details className="mt-3 min-w-0" onToggle={event=>{if(event.target===event.currentTarget){setOpen(event.currentTarget.open);if(event.currentTarget.open)overlays.activate(labReportGroupKey(trend.points.find(point=>point.id===sourceId)?.sourceReport));}}}><summary>Recorded history for {name}</summary>{open&&<><p className="panel-note">This chart includes all available dated measurements for this marker, beyond any selected report date. Each point retains its own source; comparison limits appear below.</p><LabTrend trend={trend} initialPointId={sourceId}/></>}</details>;
 }
-export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[],focusRequest,onDismiss}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends'];focusRequest?:{rowId:string;target?:'row'}|null;onDismiss?:()=>void}){
+export default function LabSourceHistory({labs,onDelete,onCorrect,onReview,trends=[],focusRequest,onDismiss}:{labs:AnyLabHistoryRow[];onDelete:(row:AnyLabHistoryRow)=>void;onCorrect?:(row:AnyLabHistoryRow)=>void;onReview?:(row:AnyLabHistoryRow)=>void;trends?:PrecisionReport['trends'];focusRequest?:{rowId:string;target?:'row'}|null;onDismiss?:()=>void}){
  const [open,setOpen]=useState(false),[date,setDate]=useState('');
+ const overlayGroups=useLabOverlaySources(labs);
  const root=useRef<HTMLDetailsElement>(null),handled=useRef<typeof focusRequest>(undefined);
  const selected=focusRequest?.target==='row'?labs.find(row=>row.id===focusRequest.rowId):undefined;
+ const selectedReport=selected?overlayGroups.find(group=>group.rows.some(row=>row.id===selected.id)):undefined;
  useEffect(()=>{if(focusRequest){setDate('');const history=focusRequest.target!=='row';setOpen(history);if(root.current)root.current.open=history;}},[focusRequest]);
  useEffect(()=>{if(!selected)return;const row=document.getElementById(`lab-source-row-${selected.id}`);row?.focus({preventScroll:true});row?.scrollIntoView({block:'start'});},[focusRequest,selected?.id]);
  useEffect(()=>{if(!open||date||!focusRequest||handled.current===focusRequest)return;const heading=focusRequest.target==='row'?document.getElementById(`lab-source-row-${focusRequest.rowId}`):document.getElementById(`lab-source-section-${focusRequest.rowId}`)||document.getElementById(`lab-source-row-${focusRequest.rowId}`);if(!heading||!root.current?.contains(heading))return;let parent=heading.parentElement;while(parent&&parent!==root.current){if(parent instanceof HTMLDetailsElement)parent.open=true;parent=parent.parentElement;}handled.current=focusRequest;heading.focus({preventScroll:true});heading.scrollIntoView({block:'start'});},[focusRequest,open,date]);
@@ -32,12 +37,12 @@ export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[],focu
     {raw&&<p className="evidence-state">Source record only — no interpretation</p>}
     {raw&&row.reportedReferenceInterval!==undefined&&<p className="panel-note whitespace-pre-wrap">Reported reference text: {row.reportedReferenceInterval}</p>}
     {pending&&<p className="evidence-state">Unit provisional — confirm against the report before interpretation.</p>}
-    {trend&&<MarkerHistory name={name} trend={trend}/>}
-    <details><summary>Source details for {name}</summary><LabSourceContext source={row.sourceInput} report={row.sourceReport} correction={row.dateCorrection}/><p>Stored timestamp: {row.measuredAt}</p><p>{row.laboratory} · {row.method} · fasting {row.fasting}</p></details>
-   </div>{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
+    {trend&&<MarkerHistory name={name} trend={trend} sourceId={row.id}/>}
+    <details><summary>Source details for {name}</summary><LabSourceContext source={row.sourceInput} report={row.sourceReport} correction={row.dateCorrection} review={row.sourceCorrection}/><p>Stored timestamp: {row.measuredAt}</p><p>{row.laboratory} · {row.method} · fasting {row.fasting}</p></details>
+   </div>{onReview&&<Button className="min-w-0 max-w-full whitespace-normal min-h-11" variant="outline" onClick={()=>onReview(row)}>Review marker & range</Button>}{onCorrect&&<Button variant="outline" onClick={()=>onCorrect(row)}>Correct result date</Button>}<Button variant="outline" onClick={()=>onDelete(row)}>Delete historical result</Button></article>
   </div>;
  });
- return <>{selected&&<section id="lab-marker-details" className="bloom-panel lab-marker-details" aria-label="Marker details"><div className="flex flex-wrap gap-3 items-center justify-between"><h3>Marker details</h3><Button type="button" variant="outline" onClick={onDismiss}>Back to results</Button></div>{rows([selected])}</section>}<details ref={root} id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>
+ return <>{selected&&<section id="lab-marker-details" className="bloom-panel lab-marker-details" aria-label="Marker details"><div className="flex flex-wrap gap-3 items-center justify-between"><h3>Marker details</h3><Button type="button" variant="outline" onClick={onDismiss}>Back to results</Button></div>{selectedReport&&<LabReportOverlayControls group={selectedReport} trends={trends}/>} {rows([selected])}</section>}<details ref={root} id="lab-source-history" className="mt-4" onToggle={event=>{if(event.target===event.currentTarget)setOpen(event.currentTarget.open);}}>
   <summary>Reports & source history ({labs.length} results)</summary>
   {open&&<div className="space-y-4 mt-3">
    <label className="block space-y-2">Report date
@@ -53,6 +58,7 @@ export default function LabSourceHistory({labs,onDelete,onCorrect,trends=[],focu
    {groups.imports.map(group=><details key={group.key} className="border rounded-xl p-3 break-words">
     <summary>{group.source.reportIdentifier?.trim()?group.source.reportIdentifier:'Imported results'} · {group.rows.length} result(s){group.source.specimenIdentifier?.trim()?` · specimen ${group.source.specimenIdentifier}`:''}</summary>
     <p className="panel-note">Source dates: {Array.from(new Set(group.rows.map(row=>`${labEnteredContext(row)?.enteredDate?'Entered':'Recorded'} ${labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)}`))).join(' · ')}</p>
+    {selectedReport?.key!==group.key&&<LabReportOverlayControls group={overlayGroups.find(full=>full.key===group.key)||group} trends={trends}/>}
     {sectionLinks(group.rows)}
     {rows(group.rows,selected?"history-":"")}
    </details>)}

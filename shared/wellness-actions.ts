@@ -1,3 +1,4 @@
+import type {CheckinSources} from './wellness-checkin-sources';
 import {z} from "zod";
 import {dateKey,type WellnessChoice} from "./experience";
 import type {goalSources} from "./goal-guidance";
@@ -28,9 +29,18 @@ export interface WellnessMovementObservation {
  reportedMinutes:number|null;scheduledMinutes:number|null;
  sets:{recorded:number;confirmedCompleted:number;notConfirmed:number;explicitlyCancelled:number}|null;
 }
+export interface WellnessFoodObservation {
+ sourceId:string;sourceKind:"meal";sourceRevision:string;valueKind:"recorded-meal";
+ recordedAt:string|null;dateBasis:"meal-record-time"|"not-recorded";
+ temporalStatus:"future-entry"|"elapsed-entry"|"unknown";
+ genericSourceStatus:"available"|"not-captured"|"unsupported";capturedGenericSources:number|null;
+}
 export interface WellnessActionView {
  version:"wellness-actions-v1";accountScope:string;day:WellnessDay;contextRevision:string;evidenceVersion:string;
+ choiceHistoryComplete?:boolean;
  lifecycleId:string|null;asOf:string;dateCurrent:boolean;actions:WellnessActionDecision[];primaryActionId:string|null;
  sources:typeof goalSources;history:{id:string;intentId:string;actionId:string;date:string;choice:WellnessChoice["choice"];chosenAt:string;revision:string;timezoneOffset:number;lifecycleId:string;requestRevision:string;actionVersion:string;contextRevision:string;evidenceVersion:string}[];
- movementSources?:{version:"wellness-movement-sources-v1";status:"available"|"unavailable";purpose:"own-account-app";observations:WellnessMovementObservation[]};
+ checkinSources?:CheckinSources;
+ foodSources?:{version:"wellness-food-sources-v1";status:"available"|"unavailable";purpose:"own-account-app";limited:boolean;observations:WellnessFoodObservation[]};
+ movementSources?:{version:"wellness-movement-sources-v1";status:"available"|"unavailable";limited?:boolean;purpose:"own-account-app";observations:WellnessMovementObservation[]};
 }

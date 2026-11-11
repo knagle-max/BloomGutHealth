@@ -1,3 +1,4 @@
+import LabSourceReviewDialog from '@/components/LabSourceReviewDialog';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import{MicrobiomeFoodReason}from'@/components/MicrobiomeFoodPreferences';
@@ -315,6 +316,7 @@ export default function PrecisionNutrition() {
       );
     },
   });
+  const [labToReview,setLabToReview]=useState<{actor:string;source:AnyLabHistoryRow}|null>(null);
   const [labToCorrect,setLabToCorrect]=useState<{actor:string;source:AnyLabHistoryRow}|null>(null);
   const [labToDelete, setLabToDelete] = useState<string | null>(null);
   const deleteLab = useMutation({
@@ -377,7 +379,7 @@ export default function PrecisionNutrition() {
   const requestedObservation=new URLSearchParams(search).get("observation"),focusedObservation=useRef("");
   useEffect(()=>{const key=`${user?.id}:${requestedObservation}`;if(tab!=="progress"||!requestedObservation||!currentResult||focusedObservation.current===key||!r?.checkins.some(row=>row.id===requestedObservation))return;const target=document.getElementById(`precision-observation-${requestedObservation}`);if(target){target.focus();target.scrollIntoView({block:"start"});focusedObservation.current=key;}},[requestedObservation,tab,currentResult,r?.checkins,user?.id]);
   const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
-  useEffect(()=>{const key=`${user?.id}:${requestedLabResult}`;if(tab!=="labs"||!requestedLabResult||!currentResult||focusedLabResult.current===key||![...(r?.labHistory||[]),...(r?.pendingLabs||[]),...(r?.sourceOnlyLabs||[])].some(row=>row.id===requestedLabResult))return;focusedLabResult.current=key;setLabSourceToOpen({rowId:requestedLabResult,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
+  useEffect(()=>{if(tab!=="labs"||!requestedLabResult||!currentResult||!r)return;const rows=[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])],resolved=rows.find(row=>row.id===requestedLabResult)||rows.find(row=>row.sourceCorrection?.supersedes===requestedLabResult)||rows.find(row=>r.trends.some(trend=>trend.points.some(point=>point.id===row.id&&point.supersededIds?.includes(requestedLabResult))));if(!resolved)return;const key=`${user?.id}:${requestedLabResult}:${resolved.id}`;if(focusedLabResult.current===key)return;focusedLabResult.current=key;setLabSourceToOpen({rowId:resolved.id,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
   function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#add-labs-title"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
@@ -406,12 +408,13 @@ export default function PrecisionNutrition() {
   );
   return (
     <main className="science-page precision-page">
+      {labToReview&&labToReview.actor===user?.id&&<LabSourceReviewDialog key={labToReview.actor+":"+labToReview.source.id} source={labToReview.source} onClose={()=>setLabToReview(null)}/>}
       {labToCorrect&&labToCorrect.actor===user?.id&&<LabDateCorrectionDialog key={labToCorrect.actor+":"+labToCorrect.source.id} source={labToCorrect.source} onClose={()=>setLabToCorrect(null)}/>}
       <AlertDialog open={labToDelete !== null} onOpenChange={open => { if (!open && !deleteLab.isPending) setLabToDelete(null); }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this laboratory result?</AlertDialogTitle>
-            <AlertDialogDescription>This deletes this result and its original source and unit revisions. Other results in the same report are retained. Saved precision plans using clinical inputs will be cleared. This cannot be undone.</AlertDialogDescription>
+            <AlertDialogDescription>This deletes this result and its original source and unit revisions. Other results in the same report are retained. Saved precision plans linked to this result will be cleared. This cannot be undone.</AlertDialogDescription>
           </AlertDialogHeader>
           {deleteLab.isError && <p role="alert">{deleteLab.error.message} If the response was lost, retrying this same deletion is safe. If sources changed, cancel and review the reloaded result.</p>}
           <AlertDialogFooter>
@@ -445,6 +448,7 @@ export default function PrecisionNutrition() {
           </p>
         )}
       </div>
+      {tab==="progress"&&requestedObservation&&currentResult&&r&&!r.checkins.some(row=>row.id===requestedObservation)&&<p role="status" className="panel-note">The requested dated observation is not available in your current records.</p>}
       {tab==="labs"&&<LabSourceManagement key={`lab-sources:${user?.id}`}/>}
       {tab==="genetics"&&<GeneticSourceManagement key={`sources:${user?.id}`} hasDraft={geneticManualDirty||!!geneticPreview} onChanged={message=>{geneticSourceFocus.current=user!.id;setStatus(message);setGeneticPreview(null);setGeneticManualDirty(false);}}/>}
       {!currentResult&&!result.isError&&<p role="status">Checking current biology inputs…</p>}
@@ -667,7 +671,7 @@ export default function PrecisionNutrition() {
               <>
                 {requestedLabResult&&![...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs].some(row=>row.id===requestedLabResult)&&<p role="alert">The requested laboratory result is not available in your current records.</p>}
                 <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={(rowId,target)=>{if(target==='row')labMarkerTrigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setLabSourceToOpen({rowId,target});}}/>
-                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-source-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-source-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onReview={source=>user&&setLabToReview({actor:user.id,source})} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
                 <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
@@ -695,7 +699,7 @@ export default function PrecisionNutrition() {
                           </p>
                           <details><summary>Original report context</summary><LabSourceContext source={l.sourceInput} report={l.sourceReport} correction={l.dateCorrection}/></details>
                         </div>
-                        <Button variant="outline" onClick={()=>user&&setLabToCorrect({actor:user.id,source:l})}>Correct result date</Button>
+                        <Button className="min-w-0 max-w-full whitespace-normal min-h-11" variant="outline" onClick={()=>user&&setLabToReview({actor:user.id,source:l})}>Review marker & range</Button><Button variant="outline" onClick={()=>user&&setLabToCorrect({actor:user.id,source:l})}>Correct result date</Button>
                         <Button
                           variant="outline"
                           onClick={() =>

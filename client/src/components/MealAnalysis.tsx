@@ -1,3 +1,4 @@
+import type {RecordedFoodRecord} from "@shared/nutrient-observations";
 import {captureIngredientMassEntry} from "@shared/ingredient-mass-capture";
 import IngredientMassEntry from "./IngredientMassEntry";
 import NutrientDefinitionDisclosure from "./NutrientDefinitionDisclosure";
@@ -19,9 +20,11 @@ export default function MealAnalysis({
   disabled = false,
   onDraftChange,
   nutritionSummary,
+  recordedMeal,
 }: {
   analysis: MealIntelligence;
   nutritionSummary?: ReactNode;
+  recordedMeal?:RecordedFoodRecord;
   onRecalculate?: (ingredients: Ingredient[], options?:{keepItemFocus?:boolean}) => void;
   pending?: boolean;
   current?: boolean;
@@ -308,7 +311,7 @@ export default function MealAnalysis({
           </table>
         </div>
       </details>
-      <NutrientDefinitionDisclosure analysis={analysis}/>
+      <NutrientDefinitionDisclosure analysis={analysis} recordedMeal={recordedMeal}/>
       {analysis.productDetails?.some(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote)&&<details>
         <summary>Recorded source context</summary>
         {analysis.productDetails.filter(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote).map((p,i)=><div key={i}><h3>{p.name}</h3><p className="panel-note break-words">{p.labelSnapshot!.sourceNote}</p></div>)}

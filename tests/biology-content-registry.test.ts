@@ -1,10 +1,11 @@
+import {markerDefinitions} from '../shared/precision-nutrition';
 import assert from "node:assert/strict";
 import test from "node:test";
 import registry from "../shared/data/bloom_biology_content_coverage_r4m1_2026-11-08.json";
 import {labBiography,organismBiography,biologyContentCoverage} from "../shared/biology-content";
 
 test("all 14 supported authored lab profiles are available for display without review-state gating",()=>{
- assert.equal(biologyContentCoverage.labProfiles,14);
+ assert.equal(biologyContentCoverage.labProfiles,markerDefinitions.length);
  for(const lab of registry.labMarkerDefinitions){
   const found=labBiography(lab.id);
   assert.ok(found,lab.id);
