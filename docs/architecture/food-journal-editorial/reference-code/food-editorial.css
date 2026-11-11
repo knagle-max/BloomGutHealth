@@ -1,0 +1,99 @@
+/* Bloom Food editorial enhancement, scoped to two existing pages.
+   Theme colors inherit brand-tokens.css. No speculative scientific status colors.
+   All hooks, source provenance, forms and data values remain owned by existing TSX. */
+.bloom-food-editorial {
+  --bloom-food-rounding: var(--surface-radius, 16px);
+  --bloom-food-rule: hsl(var(--border) / .72);
+  --bloom-food-soft: hsl(var(--muted) / .34);
+  --bloom-food-text: hsl(var(--foreground));
+  --bloom-food-secondary: hsl(var(--muted-foreground));
+  width: 100%;
+  min-width: 0;
+}
+.bloom-food-page-heading {
+  max-width: 64rem;
+  border-bottom: 1px solid var(--bloom-food-rule);
+  padding-bottom: clamp(1.25rem, 3vw, 2rem);
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+.bloom-food-page-heading h1 {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -.035em;
+  font-weight: 400;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.bloom-food-page-heading > p:not(.eyebrow),
+.bloom-food-page-heading .muted { color: var(--bloom-food-secondary); line-height: 1.65; }
+
+/* Warm editorial treatment without imposing dark text on dark surfaces. */
+.bloom-food-editorial .bloom-food-form,
+.bloom-food-editorial .bloom-food-tools,
+.bloom-food-editorial .bloom-food-review,
+.bloom-food-editorial .bloom-food-confirmation,
+.bloom-food-editorial .bloom-food-summary,
+.bloom-food-editorial .bloom-food-history-panel,
+.bloom-food-editorial .bloom-food-trends {
+  background: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border: 1px solid var(--bloom-food-rule);
+  border-radius: var(--bloom-food-rounding);
+  box-shadow: 0 6px 22px hsl(var(--foreground) / .035);
+}
+.bloom-food-editorial .bloom-food-confirmation {
+  border-color: hsl(var(--primary) / .3);
+  box-shadow: inset 3px 0 0 hsl(var(--primary) / .45), 0 6px 22px hsl(var(--foreground) / .035);
+}
+.bloom-food-editorial .bloom-food-review {
+  border-color: hsl(var(--primary) / .24);
+}
+.bloom-food-editorial .bloom-food-form :is(textarea, input[type="datetime-local"], select),
+.bloom-food-editorial .bloom-food-tools :is(input, select) {
+  max-width: 100%;
+}
+.bloom-food-editorial .bloom-food-form :is(textarea, input[type="datetime-local"], select):focus-visible,
+.bloom-food-editorial .bloom-food-tools :is(input, select):focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Meal entries resemble journal rows rather than repeated dashboards. */
+.bloom-food-journal .bloom-food-meal-row {
+  border: 0;
+  border-bottom: 1px solid var(--bloom-food-rule);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: background-color var(--brand-motion-normal, 200ms) ease;
+}
+.bloom-food-journal .bloom-food-meal-row:hover,
+.bloom-food-journal .bloom-food-meal-row:focus-within {
+  background: var(--bloom-food-soft);
+}
+.bloom-food-journal .bloom-food-meal-row :is(button, a):focus-visible,
+.bloom-food-editorial summary:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 3px;
+}
+.bloom-food-editorial .bloom-food-trends > summary,
+.bloom-food-editorial .bloom-food-tools > summary {
+  min-height: var(--control-size, 44px);
+  display: list-item;
+  align-content: center;
+  cursor: pointer;
+}
+.bloom-food-editorial .bloom-food-summary,
+.bloom-food-editorial .bloom-food-history-panel { overflow-wrap: anywhere; }
+.bloom-food-editorial .saved-nutrients { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 640px) {
+  .bloom-food-editorial .bloom-food-form,
+  .bloom-food-editorial .bloom-food-confirmation,
+  .bloom-food-editorial .bloom-food-review { padding: 1rem; }
+  .bloom-food-editorial .bloom-food-tools { padding: 1rem; }
+  .bloom-food-page-heading h1 { font-size: clamp(1.8rem, 9vw, 2.35rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bloom-food-journal .bloom-food-meal-row { transition: none; }
+}
