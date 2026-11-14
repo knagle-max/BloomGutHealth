@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, BookOpen, Camera, ChevronRight, Leaf, Plus, ScanLine, Sparkles, Utensils, Waves } from "lucide-react";
+import { ArrowRight, BookOpen, ChevronRight, Leaf, Plus, Sparkles, Utensils, Waves } from "lucide-react";
 import "./food-editorial-reference.css";
 
 type LoggedFood = {
