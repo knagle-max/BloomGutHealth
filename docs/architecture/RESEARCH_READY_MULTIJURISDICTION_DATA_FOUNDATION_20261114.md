@@ -23,6 +23,8 @@
 
 ---
 
+**Day-one preference exception (later owner amendment):** A simple default-Off future-research-contact interest switch is authorized in existing Account/Privacy under [the controlling preference decision](RESEARCH_PARTICIPATION_PREFERENCE_DAY_ONE_DECISION_20261114.md). It is **not** consent to research processing, data pooling, historical sharing, research recruitment or model training. All other deferrals remain; only display the control with truthful locally reviewed notice/purpose. Earlier text in this document prohibiting any research consent UI should be read as prohibiting **active participation or processing consent**, not this informational contact preference.
+
 ## Owner mission clarification — research in service of long, healthy lives (2026-11-14)
 
 **Controlling product intent:** Bloom's ultimate purpose is to help people live longer, healthier lives by supporting well-informed decisions with scientifically trustworthy evidence. The purpose of any eventual academic/pharmaceutical partnership is **to advance useful knowledge and feed appropriately reviewed discoveries back into Bloom for the benefit of people**, not to monetize identifiable or individual users' health records. Commercial partnerships may fund legitimate scientific analyses, secure infrastructure, validation and product improvement, but revenue or sponsor demand must not override participant trust, privacy, independent evidence standards or scientific integrity.
