@@ -1,5 +1,6 @@
 import {useLocation} from "wouter";
 import EditorialMedia from "@/components/EditorialMedia";
+import FoodEditorialDashboard from "@/components/FoodEditorialDashboard";
 import {recordedMealTime} from "@shared/meal-time";
 import {journalIdentity} from "@shared/journal-identity";
 import {foodMass} from "@shared/nutrition-display";
@@ -413,6 +414,22 @@ export default function NutritionHistory() {
 
   return (
     <main className="science-page journal-page">
+      <FoodEditorialDashboard
+        daily={dailyData || null}
+        meals={allMeals || null}
+        targets={targets || null}
+        onEdit={(mealId) => navigate(`/log-meal?edit=${encodeURIComponent(mealId)}`)}
+        onHistory={() => {
+          const details = document.getElementById("food-full-journal");
+          if (details instanceof HTMLDetailsElement) {
+            details.open = true;
+            details.scrollIntoView({block:"start",behavior:"auto"});
+            details.querySelector("summary")?.focus();
+          }
+        }}
+      />
+      <details id="food-full-journal" className="fe-detail-archive">
+        <summary tabIndex={0}>Detailed food journal, nutrient history &amp; source records</summary>
       <div className="science-heading">
         <p className="eyebrow">YOUR DAILY RECORD</p>
         <h1>Food journal</h1>
@@ -999,6 +1016,7 @@ export default function NutritionHistory() {
         </Button>
       )}
 
+      </details>
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
