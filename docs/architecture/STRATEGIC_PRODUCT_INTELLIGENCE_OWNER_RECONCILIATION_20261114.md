@@ -1,3 +1,9 @@
+## CONTROLLING OWNER CORRECTION — CROSS-MARKER RESPONSE INTELLIGENCE (2026-11-14)
+
+Triglycerides were one fixture, NOT the intended feature scope. The P0-B requirement is multi-marker report-level Response Intelligence: inspect all valid source observations and comparable historical results; use reviewed marker-specific scientific relevance, related-marker tradeoffs, goals and practical actionability to select meaningful findings, not largest percentage change. Initial reviewed examples should span lipids, liver, glycaemic and CBC/iron; the whole report remains visible and partially supported markers abstain selectively. TG-only implementation fails. Binding detailed guidance is in RESPONSE_INTELLIGENCE_V06_ARCHITECT_RECONCILIATION_20261114.md. No new engine/owner checkpoint.
+
+---
+
 # Chief Architect — Strategic Product & Intelligence Enhancement reconciliation
 
 **Decision date:** 2026-11-14. **Owner handoff:** *BLOOM — STRATEGIC PRODUCT & INTELLIGENCE ENHANCEMENT HANDOFF* (16 sections, user supplied verbatim in conversation). **Disposition:** APPROVED WITH EXISTING-ARCHITECTURE REUSE; make practical recommendation delivery the binding product milestone. **This is a reconciliation, not another v0.6 plan, clinical authorization, evidence registry or implemented feature.**
