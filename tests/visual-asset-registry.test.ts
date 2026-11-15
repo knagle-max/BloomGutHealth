@@ -1,0 +1,38 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import registry from '../docs/visual-assets/visual-asset-registry.json';
+import {visualAssetRegistrySchema,editorialVisualProjection} from '../shared/visual-asset-registry';
+import {editorialMedia} from '../client/src/content/editorial-media';
+import {editorialVisualAssetIds} from '../client/src/content/visual-asset-ids';
+
+test('permanent visual IDs bind every existing editorial slot to the original master without claiming approval or integrating unavailable art',()=>{
+ const parsed=visualAssetRegistrySchema.parse(registry),projection=editorialVisualProjection(registry);
+ assert.deepEqual(projection.bindings,editorialVisualAssetIds);
+ assert.deepEqual(Object.keys(projection.bindings).sort(),Object.keys(editorialMedia).sort());
+ for(const[slot,id]of Object.entries(editorialVisualAssetIds)){
+  const entry=parsed.assets.find(asset=>asset.id===id)!;assert.equal(entry.sourceRelation.existingSlot,slot);assert.equal(entry.lifecycle,'Identified');
+  const asset=editorialMedia[slot as keyof typeof editorialMedia];assert.ok(entry.filePaths.includes('raster'in asset?asset.raster.src:asset.svg.src));
+  for(const path of entry.filePaths)assert.ok(readFileSync('client/public'+path).length>0);
+ }
+ assert.equal(parsed.assets.filter(asset=>asset.integration.verified).length,0,'Static delivery mapping is not independent rendered approval');
+});
+test('registry rejects reused or ambiguous permanent IDs, false integration and nonlocal public image paths',()=>{
+ for(const alter of [
+  (r:any)=>r.assets.push(structuredClone(r.assets[0])),
+  (r:any)=>r.retiredAssetIds.push(r.assets[0].id),
+  (r:any)=>r.assets[1].sourceRelation.existingSlot=r.assets[0].sourceRelation.existingSlot,
+  (r:any)=>{r.assets[8].lifecycle='Integrated';r.assets[8].filePaths=[];},
+  (r:any)=>r.assets[0].filePaths=['https://example.invalid/prototype.webp'],
+  (r:any)=>r.assets[0].filePaths=['/images/../private/source.png'],
+ ]){const copy=structuredClone(registry);alter(copy);assert.equal(visualAssetRegistrySchema.safeParse(copy).success,false);}
+});
+
+test('rejected renditions do not retire their reinstated scene requirements or authorize their publication',()=>{
+ const parsed=visualAssetRegistrySchema.parse(registry),projection=editorialVisualProjection(registry);
+ for(const id of ['BVA-0022','BVA-0025','BVA-0026','BVA-0027','BVA-0028']){
+  const asset=parsed.assets.find(row=>row.id===id)!;assert.ok(projection.ids.includes(id));assert.equal(asset.lifecycle,'Briefed');assert.equal(asset.ownerApproval?.approved,false);assert.deepEqual(asset.filePaths,[]);
+  const copy=structuredClone(registry),row=copy.assets.find(asset=>asset.id===id)!;row.lifecycle='Integrated';row.filePaths=['/images/editorial/heroes/bloom-today-meadow.webp'];assert.equal(visualAssetRegistrySchema.safeParse(copy).success,false);
+ }
+ for(const id of ['BVA-0023','BVA-0024'])assert.equal(parsed.assets.find(row=>row.id===id)?.lifecycle,'Approved','Separately approved runner/coach originals stay intact');
+});

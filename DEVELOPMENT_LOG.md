@@ -1,3 +1,13 @@
+## UI-first navigation and existing-media delivery — 2026-11-15
+
+IMPLEMENTED_AND_ENGINEERING_TESTED locally: one shared five-destination Everyday shell (Today/Food/Biology/Explore/Progress), all13 previous Everyday and12 Athlete drawer routes retained, unchanged Athlete tab structure, source-section context, generated permanent IDs for8 existing editorial slots and a stable terminal media fallback. Master registry28IDs validated without retiring rejected requirements or promoting review/integration state.23 App paths plus fallback inventoried;9routes have baseline72-state rendering. After72states,18 network media failure/recovery placements, both-mode320/390 keyboard/focus/navigation and6 focused source tests pass. Exact frozen publication/build/CI remains pending. Receipt: docs/verification/V06_UI_NAVIGATION_MEDIA_20261115.json.
+
+ALREADY_VERIFIED provisional lab reference source9d38a212f9d11870c65abbe9bef959bcbb403f68: CI43728041030 SUCCESS727/727 plus exact hosted metadata/source persistence, account isolation/export/erasure, deployed layout/media and live database. Supplied37entries are available without review-approval gating; pending review remains labelled. The bounded isolated review attestation was renewed after binding/schema checks; no source/ownership security control was removed.
+
+Next: publish and verify this UI source, then continue the current owner UI-first sequence. Do not claim full-app theme completion from this foundation. Exact Stitch/BVA production import needs access to already supplied original archives; route/action/state polish and other independently safe UI work continue. Main/v0.5 unchanged; no new approval question or merge.
+
+---
+
 ## Owner correction — reference ranges available now — 2026-11-15
 
 The owner explicitly removes review-approval display gating for supplied provider ranges.37 supplied entries are enabled as provisional publication comparisons; their scientific review status remains pending. Source method/specimen/date and review checkboxes do not withhold provisional values. Optional category fields narrow alternatives without inferring demographics. Original report limits retain priority; Ontario decision limits remain thresholds; region/analyte/unit identity and all original records remain intact. Binding decision: docs/architecture/V06_OWNER_PROVISIONAL_RANGE_DISPLAY_20261115.md.

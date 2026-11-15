@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI",
+  "status": "VERIFIED_EXACT_COMMIT_CI",
   "authority": "docs/architecture/V06_OWNER_PROVISIONAL_RANGE_DISPLAY_20261115.md",
   "enabled": {
     "total": 37,
@@ -24,7 +24,16 @@
     "existing_explorer": "PASS92labels\u00d76 observations, every marker source education, source intervals, both modes/themes/zoom and account withdrawal",
     "types": "PASS",
     "production_build": "PASS source and built original asset byte/hash parity; final exact build/CI still required",
-    "exact_new_commit_CI": "PENDING"
+    "exact_new_commit_CI": {
+      "commit": "9d38a212f9d11870c65abbe9bef959bcbb403f68",
+      "run": 43728041030,
+      "tests": 727,
+      "passed": 727,
+      "failed": 0,
+      "hosted": "PASS exact isolated binding, saved provider/province/None preferences, retries, reauthentication, original source invariance, other-account denial, export and erasure",
+      "layout": "PASS72 deployed states and all lab/browser gates",
+      "renewal": "Existing bounded isolated test attestation renewed after control-plane endpoint, named-database hash and runtime schema revalidation; reference display has no dependency on this test attestation"
+    }
   },
   "notClaimed": [
     "Independent verification of the supplied numeric transcriptions",

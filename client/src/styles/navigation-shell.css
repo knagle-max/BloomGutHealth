@@ -1,0 +1,5 @@
+/* Current section in a deep view uses location; the exact destination uses page. */
+.app-shell[data-bloom-visual="premium"] .navigation-group a[aria-current="location"] {
+  background:var(--bv-mist);color:var(--bv-forest-strong);box-shadow:inset 3px 0 0 var(--bv-brand);
+}
+.app-shell .bloom-bottom-nav a[aria-current="location"] {color:hsl(var(--primary));font-weight:650;}

@@ -1,0 +1,14 @@
+/* Preserve the existing media slot after both original source variants fail.
+   Decorative only: no fabricated anatomy, user data, new image or animation. */
+.app-shell[data-bloom-visual="premium"] .bv-media-placeholder {
+  display:block;
+  inline-size:100%;
+  block-size:var(--bv-media-size,120px);
+  border-radius:inherit;
+  background:
+    radial-gradient(ellipse at 78% 20%,color-mix(in srgb,var(--bv-brand) 18%,transparent),transparent 68%),
+    linear-gradient(135deg,var(--bv-paper),var(--bv-porcelain));
+}
+@media (forced-colors:active) {
+  .app-shell[data-bloom-visual="premium"] .bv-media-placeholder { background:Canvas; }
+}

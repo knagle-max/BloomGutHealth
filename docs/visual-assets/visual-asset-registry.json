@@ -59,7 +59,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "today",
         "existingPath": "/images/editorial/heroes/bloom-today-meadow.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -67,9 +67,9 @@
         "/images/editorial/heroes/bloom-today-meadow.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -79,7 +79,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/heroes/bloom-today-meadow.webp",
+              "sha256": "72f76225f898d52c5ee73109c6cdaccac60796e69be5df2e59b12410dbf5546e"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -131,7 +141,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "food",
         "existingPath": "/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -139,9 +149,9 @@
         "/images/editorial/heroes/bloom-food-oatmeal-linen.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -151,7 +161,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
+              "sha256": "8071380f51d748e435b3438c502c70e6d6c5690a7fe1f307dd792e955480df2b"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -203,7 +223,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "biology",
         "existingPath": "/images/editorial/heroes/bloom-biology-abstract-cells.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -211,9 +231,9 @@
         "/images/editorial/heroes/bloom-biology-abstract-cells.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -223,7 +243,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/heroes/bloom-biology-abstract-cells.webp",
+              "sha256": "cd6fde190758eb7976398141fd939eba07903618b964a59e7c8251945aa80f74"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -275,7 +305,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "explore",
         "existingPath": "/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -283,9 +313,9 @@
         "/images/editorial/heroes/bloom-explore-blueberry-macro.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -295,7 +325,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
+              "sha256": "b99386cef0cf1d4326040aa2446fbde13f128f51c1fa284aef18fc39118ee98d"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -347,7 +387,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "athlete",
         "existingPath": "/images/editorial/heroes/bloom-athlete-mountains.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -355,9 +395,9 @@
         "/images/editorial/heroes/bloom-athlete-mountains.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -367,7 +407,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/heroes/bloom-athlete-mountains.webp",
+              "sha256": "1b8579ef1ead1e509cf30a0473263d56bc875203ae704202864adfd505f6ad77"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -418,7 +468,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "progress",
         "existingPath": "/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -426,9 +476,9 @@
         "/images/editorial/cutouts/bloom-three-leaf-sprig.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -438,7 +488,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+              "sha256": "3f4359731ac1566acf924321715f6753cb03fb3fcc67fde09493435fefd793b3"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -489,7 +549,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "profile",
         "existingPath": "/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -497,9 +557,9 @@
         "/images/editorial/cutouts/bloom-three-leaf-sprig.webp"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -509,7 +569,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+              "sha256": "3f4359731ac1566acf924321715f6753cb03fb3fcc67fde09493435fefd793b3"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -560,7 +630,7 @@
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "journal-empty",
         "existingPath": "/brand/visual-v2/batch-1-original/empty-journal.svg",
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true
       },
       "lifecycle": "Identified",
       "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
@@ -568,9 +638,9 @@
         "/brand/visual-v2/batch-1-original/empty-journal.svg"
       ],
       "integration": {
-        "state": "existing mapping present; route-level rendering needs verification",
+        "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "pending",
@@ -580,7 +650,17 @@
       },
       "statusEvidence": {
         "auditedFrom": "GitHub source and owner screenshot; no full render audit",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "codexSourceAudit": {
+          "date": "2026-11-15",
+          "files": [
+            {
+              "path": "/brand/visual-v2/batch-1-original/empty-journal.svg",
+              "sha256": "665ac003941e3792c5775b562bdda1f7091d94078051a9beea2a25b67ad0955c"
+            }
+          ],
+          "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        }
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -2328,5 +2408,6 @@
     "scope": "prior generated image outputs only, not requirements or permanent registry IDs",
     "replacementStatus": "briefed; awaiting new candidate and individual owner approval",
     "originalVisuals": "rejected; do not publish or distribute"
-  }
+  },
+  "codexDeliveryStatus": "PARTIAL:28 permanent IDs validated;8 existing editorial slots have typed delivery bindings and local failure/recovery evidence. Other20 assets and full new-theme adoption are not integrated or verified."
 }

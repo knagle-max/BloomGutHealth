@@ -159,10 +159,12 @@ jobs:
       - name: Verify Render public M1 image responses
         timeout-minutes: 4
         run: node scripts/verify-r4-m1-media.mjs --built --http https://bloomguthealth.onrender.com/
-      - name: Verify deployed M1 browser layout with read-only synthetic API fixtures
-        timeout-minutes: 5
+      - name: Verify deployed navigation, media recovery and responsive layout
+        timeout-minutes: 8
         env:
           BLOOM_M1: "1"
+          BLOOM_MEDIA_FALLBACK_CHECK: "1"
+          BLOOM_NAVIGATION_CHECK: "1"
           BLOOM_UI_SHELL_TARGETS: "1"
           BLOOM_M1_BASE_URL: https://bloomguthealth.onrender.com
           BLOOM_PLAYWRIGHT_MODULE: playwright-core

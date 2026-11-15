@@ -1,3 +1,13 @@
+## Feature-scoped original visual artifact access — 2026-11-15
+
+BLOCKED_TECHNICAL for exact new-design source fidelity and already approved media import only: original `stitch_bloom_health_interface_design 2.zip` (SHA256 bc3da1a7a068f86d61af8aab1bb4750275e61202bbbb0cf4ea99f223d947f298) and BVA batch archives referenced in Shared Library are not present in the accessible project attachment filesystem/repository; no connected Library file-access tool was found. Source documents are preserved; they explicitly do not reproduce all original PNG/HTML bytes. Do not invent a source match or regenerate owner-approved artwork. Existing public original media remains available and unchanged.
+
+Exact deferred question: “Which project artifact location makes the original ten-screen Stitch ZIP and approved BVA batch archives readable to Codex?” Options: (recommended) mount the already supplied archives into the project workspace; or provide the originals through the development repository/file connector with manifest hashes. This is access to existing artifacts, not owner photography procurement or a new design approval request. No question is being used to pause independent UI work.
+
+Provisional reference range availability is VERIFIED, not blocked:9d38a21 passed exact727/727 and hosted gates. Current broader RC remains open.
+
+---
+
 ## Reference range display no longer blocked — 2026-11-15
 
 Owner authorized provisional display of supplied reference values without waiting for review. The prior empty-catalogue activation hold is superseded for these labelled publication comparisons. No further owner input is required. Missing actual region/analyte data is not invented; all supplied values remain browsable with source/category labels.

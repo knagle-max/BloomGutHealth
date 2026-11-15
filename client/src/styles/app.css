@@ -9,3 +9,6 @@
 @import './bloom-visual-scoped.css' layer(bloom-premium);
 
 @import "./r4-integration.css" layer(bloom-premium);
+
+@import "./visual-asset-fallback.css" layer(bloom-premium);
+@import "./navigation-shell.css" layer(bloom-premium);

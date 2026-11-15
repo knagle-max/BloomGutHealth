@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {editorialVisualAssetIds} from "@/content/visual-asset-ids";
 import { editorialMedia, type EditorialMediaAsset, type EditorialMediaSlot } from "@/content/editorial-media";
 
 interface EditorialMediaProps {
@@ -18,16 +19,15 @@ export default function EditorialMedia({ slot, variant = "webp", sizes, priority
 
 function MediaSource({ slot, asset, variant, sizes, priority }: EditorialMediaProps & { asset: EditorialMediaAsset }) {
   const [phase, setPhase] = useState<"raster" | "svg" | "failed">(variant === "webp" && asset.raster ? "raster" : "svg");
-  if (phase === "failed") return null;
   const raster = phase === "raster" ? asset.raster : undefined;
   const image = raster ?? asset.svg;
-  return <figure className={`bv-media bv-media--${image.conceptual ? "conceptual" : asset.mode}`} data-slot={slot} data-bv-slot={asset.placement} data-media-source={phase}>
-    <img key={image.src} src={image.src}
+  return <figure className={`bv-media bv-media--${image.conceptual ? "conceptual" : asset.mode}`} data-slot={slot} data-bloom-asset-id={editorialVisualAssetIds[slot]} data-bv-slot={asset.placement} data-media-source={phase}>
+    {phase === "failed" ? <div className="bv-media-placeholder" aria-hidden="true" /> : <img key={image.src} src={image.src}
       srcSet={raster ? `${raster.src} ${raster.width}w, ${raster.src2x} ${raster.width2x}w` : undefined}
       sizes={raster ? sizes : undefined} width={image.width} height={image.height}
       alt="" aria-hidden="true" decoding="async" loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : "auto"}
-      onError={() => setPhase(current => current === phase ? phase === "raster" ? "svg" : "failed" : current)} />
+      onError={() => setPhase(current => current === phase ? phase === "raster" ? "svg" : "failed" : current)} />}
     {image.conceptual && <figcaption className="bv-media-concept-label">Illustrative, not your data</figcaption>}
   </figure>;
 }

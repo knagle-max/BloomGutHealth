@@ -1,0 +1,34 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI",
+  "authority": [
+    "docs/architecture/VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md",
+    "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md"
+  ],
+  "implemented": [
+    "Shared Today/Food/Biology/Explore/Progress primary destinations across desktop, bottom navigation and drawer",
+    "All13 existing Everyday and12 existing Athlete drawer destinations retained, with unchanged Athlete five-tab structure and role-gated admin entry",
+    "Deep food/source/review routes mark section location while exact page retains distinct current-page semantics",
+    "One master visual registry:28 permanent IDs validated;8 existing editorial delivery slots receive generated typed IDs without shipping planning prompts into client",
+    "Original raster\u2192original SVG fallback preserved; terminal failure retains quiet decorative slot and caption without broken image or layout collapse; reload recovers source",
+    "Build checks schema/ID uniqueness/retired-ID reuse/local references/projection drift; rejected rendition does not retire requirement or authorize integration"
+  ],
+  "proof": {
+    "sourceBaseline": "9d38a212f9d11870c65abbe9bef959bcbb403f68",
+    "routeLedger": "docs/verification/V06_UI_ROUTE_PRESERVATION_20261115.json",
+    "localUnit": "6/6 route/navigation/registry tests pass; original-static media tests also pass",
+    "types": "PASS",
+    "before": "PASS72 synthetic responsive baseline states at9routes; selective320/390 light/dark image captures in /tmp/bloom-ui-media-before",
+    "after": "PASS72 layout states,18 real-network media failure/recovery placements covering8 asset IDs, five-tab keyboard navigation both modes\u00d7320/390\u00d7light/dark, all previous drawer links/ordinary-role exclusion/menu focus return; no writes; selective matched screenshots in /tmp/bloom-ui-shell-after",
+    "independentDesignScienceVoiceOver": "NOT_RUN; engineering comparison does not grant independent approval",
+    "productionBuildAndExactCI": {
+      "productionBuild": "PASS: generated registry bindings, source/built immutable SVG/PNG/WebP fingerprints and client/server build",
+      "exactPublicationCI": "PENDING"
+    }
+  },
+  "artwork": "Original files/paths/bytes preserved. No new or replacement images generated or published. BVA-0023/0024 approved originals retained; unapproved reinstated requirements remain active with no publication authorization. Existing8 lifecycle states are not promoted.",
+  "remaining": [
+    "Original ten-screen Stitch ZIP and already approved BVA batch archives are not accessible in project filesystem/repository; no connected Library file access was found",
+    "23 literal routes plus fallback inventoried; nine baseline routes rendered. Complete per-route action/role/empty/error/new-theme parity remains open",
+    "Remaining full-app theme, source-backed Food/Today and frozen v0.6 Core/Advanced work remain open; no full RC or main merge claimed"
+  ]
+}
