@@ -1,0 +1,54 @@
+# Bloom — v0.6 Delivery Status Ledger & Single-Task Completion Rules
+**Created:** 2026-11-15 | **Owner instruction:** Codex must know what is on the roadmap, what is already done, and must not rework completed capabilities unless new instructions or objective defects require revision.
+**Purpose:** Concise **status/evidence map**, not an alternate priority queue. **NEXT_ACTIONS.md selects tasks; AGENTS.md governs execution; V06_HANDOFF.md defines scope.** This ledger records status. Historic detailed tests remain in `docs/verification/`, the dependency backlog and preserved archives.
+
+## Status vocabulary — never equate these
+| Label | Meaning | Minimum evidence |
+|---|---|---|
+| `ROADMAP` | Approved requirement, not implemented/verified | Stable requirement ID, owner/source and dependency |
+| `NOT_STARTED` | No verified code implementing accepted acceptance cases | Current HEAD check |
+| `IN_PROGRESS` | Work in active branch/worktree | Task ID, commit/working-tree provenance, next exit |
+| `IMPLEMENTED_UNVERIFIED` | Code committed but actual integration/tests not established | Exact SHA and feature mapping |
+| `ENGINEERING_TESTED` | Meaningful focused checks passed at concrete SHA | Test names/results and feature coverage; not a hosted claim |
+| `PENDING_PUBLICATION_OR_HOST_VERIFICATION` | Locally verified/committed; review branch/CI/Render evidence missing | Local/current/published SHA distinction and blocker |
+| `VERIFIED_ON_REVIEW_BRANCH` | Exact SHA CI + representative runtime, API/DB and real UI tests pass for scoped feature | CI/Render URL/version/source and meaningful outcomes |
+| `RC_READY` | Integrated candidate has required scope and complete regression evidence | Frozen accepted feature matrix, design/science/rights/security readiness and release-test dossier |
+| `OWNER_RC_REVIEW` | Owner reviews **images, UI and functionality together** at assembled release candidate | Candidate SHA/preview, acceptance checklist and corrections (if any) |
+| `DONE_FOR_SCOPE` | Specific accepted scope completed and verified; owner RC accepted where required for release | Exact feature-specific SHA/evidence, release scope and date |
+| `BLOCKED_DEPENDENCY` | One actual external/technical/safety constraint, with independent work available | Reproducer, attempted fixes, required trigger/action; do not repeatedly retry absent change |
+| `REVISED` | Previously completed scope reopened for a **new owner instruction**, demonstrated regression, security/correctness issue or failed acceptance | Link to change request, prior done proof and delta; do not relabel whole workstream as unbuilt |
+
+**Partial vs full:** A working navigation shell or source/media registry does **not** make the complete visual redesign or bloodwork intelligence done. A locally passed test does **not** establish hosted parity. An approved image exists ≠ integrated ≠ visually verified. An artifact that is a blueprint is `ROADMAP`, not `DONE`.
+
+## Current known scope map — intentionally conservative
+The receipts listed here are **historical evidence**, not live HEAD/CI/Render verification by the Architect on 2026-11-15. **Codex must validate actual current code and correct statuses after the next run.** This is a seed, not a claim of completion.
+
+| Task / workstream | Latest known state | Evidence/source | Reopen only when |
+|---|---|---|---|
+| **T0: Food drawer Escape focus readiness / exact publication check** | `PENDING_PUBLICATION_OR_HOST_VERIFICATION` (verify current HEAD first) | `docs/verification/V06_FOOD_EDITORIAL_20261115.json`; active `NEXT_ACTIONS.md` | Published SHA still fails or check unverified; don't rerun after exact PASS |
+| Auth theme/login/signup visual correction | `ENGINEERING_TESTED`, publication unverified | `docs/verification/V06_AUTH_THEME_20261115.json` | Unpublished or demonstrated regression / owner revision |
+| Saved-meal responsive reflow | `ENGINEERING_TESTED`, publication unverified | `docs/verification/V06_SAVED_MEAL_REFLOW_20261115.json` | Unpublished or demonstrated regression / owner revision |
+| Food Journal editorial/layout slice | `ENGINEERING_TESTED`, full exact CI pending in receipt | `docs/verification/V06_FOOD_EDITORIAL_20261115.json` | Real unverified scope or new specific issue |
+| Shared navigation and initial editorial media mappings | **Some portions historically tested**; `VERIFIED_ON_REVIEW_BRANCH` requires Codex exact SHA confirmation | Current `NEXT_ACTIONS.md` T1 and existing media registry | Missing functionality or new corrected requirements |
+| Full app-wide botanical theme, Green/Blue/Purple mode parity, all routes | `IN_PROGRESS` at broad feature level; do NOT infer all routes done | `APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md`, current T1 | Each remaining route visual gap/critical task |
+| Master asset registry requirement and detailed briefs | **Architecture/source committed**; CI enforcement/full route audit `ROADMAP` | `docs/visual-assets/visual-asset-registry.json` (28 active IDs) | Validator/new asset changes or owner art correction |
+| New AI images for all BVA slots; layout publication and visual QA | **MIXED, asset-by-asset**: consult current JSON, distinguish existing/approved images vs not integrated | registry, image production receipts/rights | Only real pending IDs, asset replacements or real visual regressions |
+| v0.6 Core: Today/Food #12 end-to-end | `ROADMAP` / partially implemented components; full proof pending | `V06_CORE_ADVANCED_EXECUTION_CLASSIFICATION_20261114.md`; T2a | Actual acceptance slice remains unsatisfied |
+| v0.6 Core: full-panel Response #15 | `ROADMAP` / partial; full proof pending | Response reconciliation and T2b | Actual full-panel acceptance unsatisfied |
+| v0.6 Core: nutrient/reference source data & protected-goal adaptive guidance | `ROADMAP` / partially implemented; verify per-slice | T2c/T2d, source contracts and dependency backlog | Known source/revision/test deficit |
+| v0.6 Advanced: scientific modeling, research AI, Coach | **Dependency-gated mixed development, not full release** | Advanced classification/individual receipts | Explicit approved scientific/rights/permitted feature scope |
+| SwiftUI native iOS | Architecture `ROADMAP`, deliberately last | `NATIVE_IOS_SWIFTUI_FINAL_ARCHITECTURE_LATE_V06_20261114.md` | Late entry condition met; no Capacitor work |
+| Full integrated v0.6 release candidate | `NOT_STARTED` as combined owner acceptance unless current evidence shows otherwise | accepted Core/Advanced/scope and visual matrix | When qualified development candidate is assembled |
+
+## How Codex maintains the ledger without creating more loops
+1. **Start one session:** read `AGENTS.md` + short `NEXT_ACTIONS.md` + this small ledger; inspect current HEAD and previous relevant verification receipt. Do **not** read every old `AGENTS`, full 248KB handoff or every historic priority before choosing work.
+2. **Before coding, deduplicate:** Search existing implementation, tests, source assets, active branches, and old receipts for same requirement ID. If already passes the acceptance at current SHA, mark `DONE_FOR_SCOPE` or `VERIFIED_ON_REVIEW_BRANCH` as evidenced and **do not rewrite**. If incomplete, work only on the uncovered delta.
+3. **Each task stays stable**: ID, named feature/capability, affected routes, previous status/implementation SHA, remaining acceptance, currently owned worktree, test names, external gate and next action. Changes are small atomic entries rather than repeatedly rewriting unrelated completed reports.
+4. **Close a vertical slice** when the explicitly scoped acceptance and required safety/CI/host checks pass, with exact SHA/receipts. **Don't reopen it** because a historical note says “first” or “continue.” If new owner feedback requires rework, create a linked `REVISION` delta and keep the earlier proof (do not erase it).
+5. **At checkpoint:** update only task's status and evidence. `NEXT_ACTIONS.md` changes solely if top actionable item/priority/blocked status truly changed; this ledger changes only when a state/evidence changes; detailed logs go to `docs/verification/`. Avoid updating six redundant planning docs for every small commit.
+6. **No approval loop:** Design specialist owns quality and Biology reviews scientific depictions as required, but routine image generation, review-branch publication and functionality QA proceed **without owner approval**. One **integrated RC** is owner review for imagery/UI/functionality; changes requested there become specific `REVISION` tasks, not fresh global scoping. Legal, clinical, provider rights, protected deployment and privacy gates remain independent.
+7. **Historical conflict:** If this ledger's seed state differs from latest CI/code, **latest verified evidence wins**; document updated SHA and reason. The ledger cannot override source truth or contract safety.
+8. **Never claim a roadmap item built because it exists in a plan.** For releases, report `requirement`, `code`, `engineering tests`, `actual hosted preview`, `external science/rights`, `owner RC` as separate fields.
+
+## Current next actions
+Select from **[NEXT_ACTIONS.md](../../NEXT_ACTIONS.md)**: validate T0 publication check once, then T1 app-wide visual/asset vertical slices, then incomplete T2 Core tasks, authorized Advanced and SwiftUI late. This ledger is **not** a second task selector.
