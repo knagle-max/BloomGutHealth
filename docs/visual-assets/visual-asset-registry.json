@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-14",
-  "registryStatus": "Architect-maintained 28 active requirements; 6 prior image renditions rejected; replacement artwork unapproved, full application audit/visual QA still pending",
+  "registryStatus": "architect-seeded PARTIAL; approved BVA-0023 runner-bench and BVA-0024 coach/client images published; not integrated or visually verified",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -1747,7 +1747,7 @@
         "webp",
         "avif"
       ],
-      "promptBrief": "REFERENCE DESCRIPTION OF APPROVED IMAGE ONLY — NOT A REQUEST TO REGENERATE: premium outdoor post-workout still life on stone ledge featuring clear jar of deep purple blueberry smoothie topped with whole blueberries/seeds; ceramic bowl of real blueberries, bananas and small seed bowl at left; teal insulated water bottle with light leaf-like symbol and folded grey towel at right; soft evergreen trees and snowy mountains in golden sunrise background. Source composition is 3:2 and intentionally full, with no reliable left text-safe overlay area. Athlete-blue text must sit outside photograph. Do not replace or regenerate approved image based on this brief.",
+      "promptBrief": "DESCRIPTIVE RECORD OF CURRENT OWNER-APPROVED IMAGE: OWNER-APPROVED CURRENT PHOTOGRAPH: One adult woman in a navy-blue sleeveless athletic top and shorts rests on a weathered wooden outdoor bench after training, leaning forward with relaxed arms and looking toward distant hills. On the bench to her left are a blue reusable water bottle, folded light-blue towel, small glass of purple berry smoothie and berries. Golden low-angle light, distant layered hills, open neutral sky to the left, no visible performance data or medical findings. This is an editorial post-training recovery scene, not an actual user workout.",
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
@@ -1756,58 +1756,74 @@
         "existingSlot": null,
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_0023_Approved_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_0023_Approved_manifest_2026-11-14.json"
+        "deliveryArchive": "Bloom_BVA-0023_Runner_Bench_Owner_Approved_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json"
       },
       "lifecycle": "Approved",
-      "productionStatus": "Owner explicitly approved this NEW individually generated BVA-0023 image on 2026-11-14. Original PNG and responsive WebP variants published to Shared Library; rights verification and application integration/render checks pending.",
+      "productionStatus": "Owner-approved individual image published to Shared Library with original PNG and responsive WebPs; application integration, rights confirmation and rendered QA pending",
       "filePaths": [],
       "integration": {
-        "state": "NOT INTEGRATED; binary assets in shared library; developer must verify rights and responsive appearance first",
+        "state": "not integrated; approved image package in Shared Library",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "owner approved 2026-11-14",
-        "scientific": "decorative still-life; no personalized measurement or recovery claim",
-        "rights": "pending commercial-use/provider and incidental mark assessment",
-        "rendered": "pending light/dark mobile/desktop"
+        "design": "Owner explicitly approved exact source image; desktop/mobile render QA not yet performed",
+        "scientific": "Decorative editorial only; any coach credential claim disallowed",
+        "rights": "provider terms, logo-like incidental mark, commercial-use review pending",
+        "rendered": "pending 320/390/768/1440 and light/dark mode"
       },
       "statusEvidence": {
-        "auditedFrom": "Actual 1536x1024 source image, derived WebP exports, SHA-256 manifest, Shared Library upload and explicit user approval",
+        "auditedFrom": "Physically verified original image, 3 WebP exports and SHA-256 hashes, ZIP archive and individual Shared Library publication, owner explicit approval",
         "date": "2026-11-14"
       },
       "delivery": {
-        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_Approved_2026-11-14.zip",
-        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_Approved_manifest_2026-11-14.json",
-        "original": "originals/BVA-0023-athlete-recovery-approved.png",
-        "originalSha256": "9d35bd356f65ab59c89b10afed6be82644dd90106a5a59945e3ac1be6ac12413",
-        "webp": "webp/BVA-0023-athlete-recovery-original-aspect.webp",
-        "webpSha256": "be3905e66c671b671d6ece8df3d46259a7b3be5ce9b577caa2c20a1bce9ca621",
-        "desktopWebp": "webp/BVA-0023-athlete-recovery-hero-16x9.webp",
-        "desktopSha256": "e78fa75beaa0d3c9af39e251914d63efe83ff4ce7ebedecec831bac708033ac4",
-        "mobileWebp": "webp/BVA-0023-athlete-recovery-mobile-3x4.webp",
-        "mobileSha256": "7895f742bddd8e374fc684eca2bd110f13b463f0a8e3a1fdc82616755c8a7f79",
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA-0023_Runner_Bench_Owner_Approved_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json",
+        "original": "BVA-0023/originals/BVA-0023-athlete-recovery-runner-bench-source.png",
+        "originalSha256": "67623300381989ecf0589c5b793a570f7491ceeb901d9956f3fde1fc51378c5b",
+        "webp": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-full.webp",
+        "webpSha256": "26f4b42a7912892a705e532197ce610586993ea395d8dcaa23417ff8992979b4",
+        "desktopWebp": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
+        "desktopSha256": "41d7378308a2aebfe2b4b78e74935999200f232385e79cad74e62e5d481dee48",
+        "mobileWebp": "BVA-0023/webp/BVA-0023-athlete-recovery-runner-bench-mobile-3x4.webp",
+        "mobileSha256": "09dfbc29088ec61a2bce48fd60515b6a989aaf2618643e29a67116cd794461dd",
+        "originalDimensions": [
+          1536,
+          1024
+        ],
+        "desktopDimensions": [
+          1536,
+          864
+        ],
+        "mobileDimensions": [
+          768,
+          1024
+        ],
         "publicImportTarget": "client/public/images/registry/bva-0023/",
-        "sourceType": "individual AI-generated scene, NOT old montage crop",
+        "sourceType": "individual AI-generated image (not a collage crop)",
         "verifiedArchive": true
       },
       "ownerApproval": {
         "approved": true,
-        "scope": "BVA-0023 visual image ONLY; publication and registry update",
+        "scope": "Exact BVA-0023 generated image, publication and registry update",
         "date": "2026-11-14",
-        "evidence": "Explicit user message: I approve BVA-0023 for publication and registry update."
+        "evidence": "User message: I approve BVA-0023 for publication and registry update. The runner on the bench. You can also approve the 24 original with the coach and client."
       },
       "productionBriefV2": {
-        "briefVersion": "2026-11-14-approved-asset-description-02",
-        "sceneDescription": "DESCRIPTIVE RECORD OF THE EXACT OWNER-APPROVED EXISTING IMAGE: On an outdoor rocky ledge in alpine morning light, a clear glass jar of thick purple berry smoothie with blueberries and seeds on top is the central subject. At left sit a rustic bowl filled with blueberries, two ripe bananas behind it and a smaller wooden bowl of seeds in the foreground. At right sit a tall teal/blue insulated water bottle (with a small leaf-like mark) and a folded grey textured towel. Evergreen foliage, forested slopes and snow-dusted mountains are softly defocused in warm low sunrise light. There are no people, exercise poses, health readings or medical equipment. The subject group fills much of the picture; it represents generic refuelling/hydration/recovery atmosphere, not a verified recovery outcome.",
+        "briefVersion": "2026-11-14-approved-source",
+        "sceneDescription": "OWNER-APPROVED CURRENT PHOTOGRAPH: One adult woman in a navy-blue sleeveless athletic top and shorts rests on a weathered wooden outdoor bench after training, leaning forward with relaxed arms and looking toward distant hills. On the bench to her left are a blue reusable water bottle, folded light-blue towel, small glass of purple berry smoothie and berries. Golden low-angle light, distant layered hills, open neutral sky to the left, no visible performance data or medical findings. This is an editorial post-training recovery scene, not an actual user workout.",
         "opticsLightingMaterials": "Existing photographic-style generated still life. Golden directional low sun from upper right; realistic speckled ceramic, reflective smoothie jar, condensation on teal bottle, natural blueberry bloom and knitted towel texture; shallow background depth of field, rocky foreground. Record these as observed image traits, not a new prompt for generating different artwork.",
         "framingAndUsage": "Approved original 1536×1024 PNG (3:2); published 16:9 desktop and 3:4 mobile WebPs are derivatives. Image is visually busy across width, so text and controls must occupy a separate solid Athlete-blue region, not an image overlay. Check focal subjects remain visible on 320/390/768/1440 layouts and 200% zoom; avoid cropping smoothie, towel or water bottle destructively.",
         "accuracyAndExclusions": "Decorative editorial image only. Do not imply foods/smoothie guarantee recovery, measured hydration, a user's actual meal or workout, or clinical endorsement. No nutritional macros, invented health metric, made-up exercise event or source attribution. Existing small leaf-like mark on bottle requires incidental-mark/rights review. Do not claim the image has an empty left headline-safe area. The owner approved THIS smoothie still-life only; no new imagery can replace it without separate user approval.",
-        "existingAssetAndApprovalHandling": "Immutable approved visual source: preserve existing BVA-0023 delivery filenames, byte hashes, approval scope and rights/integration states. This text-only correction reconciles production brief with the 2026-11-14 owner-approved image; it does not authorize generation or replacement. If a different recovery scene is desired, obtain a new explicit owner image approval.",
+        "existingAssetAndApprovalHandling": "Owner-approved replacement of earlier smoothie-only recovery image. Existing approval controls; a new image needs new owner approval.",
         "deliverableNotes": "Previously delivered individual approved source and responsive exports already exist; do not generate new files. Original 1536×1024 PNG and responsive 16:9 desktop / 3:4 mobile WebPs are referenced in the unchanged delivery manifest. Until actual live testing, responsive crop quality, contrast, rights and integration remain pending. Images decorative with empty alt; descriptive visible recovery messaging lives outside image.",
         "negativePromptContext": "Not applicable to replacement or generation: this entry documents already approved imagery. Future independently requested replacements must be individually reviewed, must not depict the earlier withdrawn running-bench concept by default, and cannot suggest recovery effects without evidence.",
-        "generationInstruction": "DO NOT GENERATE OR REPLACE THIS APPROVED ASSET. The image is already finalized for visual approval as an alpine berry-smoothie, fruit, hydration bottle and towel still life. For placement use the existing image files and independent text surface. Any future artwork request is a new proposal requiring owner review before publication."
+        "generationInstruction": "DO NOT REGENERATE: current source image approved by owner. Description of APPROVED artifact: OWNER-APPROVED CURRENT PHOTOGRAPH: One adult woman in a navy-blue sleeveless athletic top and shorts rests on a weathered wooden outdoor bench after training, leaning forward with relaxed arms and looking toward distant hills. On the bench to her left are a blue reusable water bottle, folded light-blue towel, small glass of purple berry smoothie and berries. Golden low-angle light, distant layered hills, open neutral sky to the left, no visible performance data or medical findings. This is an editorial post-training recovery scene, not an actual user workout."
+      },
+      "supersededDelivery": {
+        "archive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_Approved_2026-11-14.zip",
+        "note": "Previously approved smoothie-only scene, explicitly replaced by newly owner-approved runner-on-bench scene; preserve historical audit only. NOT active."
       }
     },
     {
@@ -1840,51 +1856,79 @@
         "webp",
         "avif"
       ],
-      "promptBrief": "Two adult people in a calm contemporary coaching workspace, seated at a round light-oak table reviewing a generic, non-legible training plan together. The coach, on the LEFT, wears a soft charcoal overshirt; their adult client, on the RIGHT, wears simple muted plum activewear. The coach gestures openly toward a paper notebook as the client listens, both in candid relaxed side profiles rather than posing for a camera. A small neutral water carafe and a single indoor plant may appear, but there must be no patient paperwork, visible personal data, doctor coat or medical examination. The backdrop is warm slate and muted purple fabric paneling with softened afternoon window light. 35mm lens, f/2.8; eye-level candid editorial photography, diffused natural window light from upper left, realistic skin texture and hair strands, true fabric weave, mild background depth blur, natural slight grain; understated authentic approved Coach purple accent rather than purple-tinted faces. 16:9 hero with subjects concentrated in RIGHT 55%, LEFT 40% low-contrast quiet lavender/charcoal gradient area reserved for native or web heading. Mobile portrait variant should preserve faces, hands and conversational posture without obstructing UI chrome. Accuracy and exclusions: Do not present Coach as a physician/clinical relationship, imply therapist endorsement, embed readable personal records or logos, or show an unrealistic AI-rendered extra hand. Avoid staged handshake or glossy boardroom stock imagery. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0024 requirement restored; rejected image is withdrawn from production, not the design need. Generate an independent new composition with individual owner approval before asset publication/distribution. Coach mode must remain permission-scoped and purple.",
+      "promptBrief": "DESCRIPTIVE RECORD OF CURRENT OWNER-APPROVED IMAGE: OWNER-APPROVED ORIGINAL COACH-CLIENT PHOTOGRAPH: Two adults in a naturally illuminated contemporary fitness studio review a blank-looking dark tablet together. A dark-haired woman in a navy athletic tank sits on the left, smiling while looking at the tablet. A dark-haired man with slight grey stubble, wearing a navy zip-neck shirt and a small leaf emblem, sits to the right pointing at the tablet with an encouraging expression. Soft dumbbells and windows with forested mountains are in the background. Not a clinician or clinical consultation; tablet content is not readable. People occupy center-to-right and most of the frame, so desktop text must be placed separately rather than overlaying faces.",
       "priority": "P2",
       "impact": "selective",
       "sourceRelation": {
-        "action": "replace-rejected-image",
+        "action": "owner-approved-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_BVA-0024_Coach_Client_Owner_Approved_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner-approved individual image published to Shared Library with original PNG and responsive WebPs; application integration, rights confirmation and rendered QA pending",
       "filePaths": [],
       "integration": {
-        "state": "new replacement asset absent; reserved placeholder required",
+        "state": "not integrated; approved image package in Shared Library",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "previous image rejected; NEW candidate not reviewed",
-        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
-        "rights": "pending for new artwork",
-        "rendered": "not integrated / not verified"
+        "design": "Owner explicitly approved exact source image; desktop/mobile render QA not yet performed",
+        "scientific": "Decorative editorial only; any coach credential claim disallowed",
+        "rights": "provider terms, logo-like incidental mark, commercial-use review pending",
+        "rendered": "pending 320/390/768/1440 and light/dark mode"
       },
       "statusEvidence": {
-        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
-        "date": "2026-11-14",
-        "imageRejected": true,
-        "requirementReinstated": true
+        "auditedFrom": "Physically verified original image, 3 WebP exports and SHA-256 hashes, ZIP archive and individual Shared Library publication, owner explicit approval",
+        "date": "2026-11-14"
       },
       "ownerApproval": {
-        "approved": false,
-        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
-        "date": null
+        "approved": true,
+        "scope": "Exact BVA-0024 generated image, publication and registry update",
+        "date": "2026-11-14",
+        "evidence": "User message: I approve BVA-0023 for publication and registry update. The runner on the bench. You can also approve the 24 original with the coach and client."
       },
       "productionBriefV2": {
-        "briefVersion": "2026-11-14-detailed-02",
-        "sceneDescription": "Two adult people in a calm contemporary coaching workspace, seated at a round light-oak table reviewing a generic, non-legible training plan together. The coach, on the LEFT, wears a soft charcoal overshirt; their adult client, on the RIGHT, wears simple muted plum activewear. The coach gestures openly toward a paper notebook as the client listens, both in candid relaxed side profiles rather than posing for a camera. A small neutral water carafe and a single indoor plant may appear, but there must be no patient paperwork, visible personal data, doctor coat or medical examination. The backdrop is warm slate and muted purple fabric paneling with softened afternoon window light.",
+        "briefVersion": "2026-11-14-approved-source",
+        "sceneDescription": "OWNER-APPROVED ORIGINAL COACH-CLIENT PHOTOGRAPH: Two adults in a naturally illuminated contemporary fitness studio review a blank-looking dark tablet together. A dark-haired woman in a navy athletic tank sits on the left, smiling while looking at the tablet. A dark-haired man with slight grey stubble, wearing a navy zip-neck shirt and a small leaf emblem, sits to the right pointing at the tablet with an encouraging expression. Soft dumbbells and windows with forested mountains are in the background. Not a clinician or clinical consultation; tablet content is not readable. People occupy center-to-right and most of the frame, so desktop text must be placed separately rather than overlaying faces.",
         "opticsLightingMaterials": "35mm lens, f/2.8; eye-level candid editorial photography, diffused natural window light from upper left, realistic skin texture and hair strands, true fabric weave, mild background depth blur, natural slight grain; understated authentic approved Coach purple accent rather than purple-tinted faces.",
         "framingAndUsage": "16:9 hero with subjects concentrated in RIGHT 55%, LEFT 40% low-contrast quiet lavender/charcoal gradient area reserved for native or web heading. Mobile portrait variant should preserve faces, hands and conversational posture without obstructing UI chrome.",
         "accuracyAndExclusions": "Do not present Coach as a physician/clinical relationship, imply therapist endorsement, embed readable personal records or logos, or show an unrealistic AI-rendered extra hand. Avoid staged handshake or glossy boardroom stock imagery. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
-        "existingAssetAndApprovalHandling": "Original BVA-0024 requirement restored; rejected image is withdrawn from production, not the design need. Generate an independent new composition with individual owner approval before asset publication/distribution. Coach mode must remain permission-scoped and purple.",
+        "existingAssetAndApprovalHandling": "Owner-approved original coach-and-client image; do not replace with newer unapproved purple-coaching brief. Existing approval controls; a new image needs new owner approval.",
         "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
         "deliverableNotes": "Produce webp/avif with target 1600×900, mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified; ensure coach-purple-light, coach-purple-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
-        "generationInstruction": "Two adult people in a calm contemporary coaching workspace, seated at a round light-oak table reviewing a generic, non-legible training plan together. The coach, on the LEFT, wears a soft charcoal overshirt; their adult client, on the RIGHT, wears simple muted plum activewear. The coach gestures openly toward a paper notebook as the client listens, both in candid relaxed side profiles rather than posing for a camera. A small neutral water carafe and a single indoor plant may appear, but there must be no patient paperwork, visible personal data, doctor coat or medical examination. The backdrop is warm slate and muted purple fabric paneling with softened afternoon window light. 35mm lens, f/2.8; eye-level candid editorial photography, diffused natural window light from upper left, realistic skin texture and hair strands, true fabric weave, mild background depth blur, natural slight grain; understated authentic approved Coach purple accent rather than purple-tinted faces. 16:9 hero with subjects concentrated in RIGHT 55%, LEFT 40% low-contrast quiet lavender/charcoal gradient area reserved for native or web heading. Mobile portrait variant should preserve faces, hands and conversational posture without obstructing UI chrome. Accuracy and exclusions: Do not present Coach as a physician/clinical relationship, imply therapist endorsement, embed readable personal records or logos, or show an unrealistic AI-rendered extra hand. Avoid staged handshake or glossy boardroom stock imagery. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0024 requirement restored; rejected image is withdrawn from production, not the design need. Generate an independent new composition with individual owner approval before asset publication/distribution. Coach mode must remain permission-scoped and purple."
+        "generationInstruction": "DO NOT REGENERATE: current source image approved by owner. Description of APPROVED artifact: OWNER-APPROVED ORIGINAL COACH-CLIENT PHOTOGRAPH: Two adults in a naturally illuminated contemporary fitness studio review a blank-looking dark tablet together. A dark-haired woman in a navy athletic tank sits on the left, smiling while looking at the tablet. A dark-haired man with slight grey stubble, wearing a navy zip-neck shirt and a small leaf emblem, sits to the right pointing at the tablet with an encouraging expression. Soft dumbbells and windows with forested mountains are in the background. Not a clinician or clinical consultation; tablet content is not readable. People occupy center-to-right and most of the frame, so desktop text must be placed separately rather than overlaying faces."
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA-0024_Coach_Client_Owner_Approved_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json",
+        "original": "BVA-0024/originals/BVA-0024-coach-client-consultation-source.png",
+        "originalSha256": "a79ac1740f5809f60025c49c13768ae6b9f7f8bae8a380472feedac98cb74f18",
+        "webp": "BVA-0024/webp/BVA-0024-coach-client-consultation-full.webp",
+        "webpSha256": "06c030cc46b2434969cce4ee9b4955cdb75a723537403603ee99c32e3d7dfc41",
+        "desktopWebp": "BVA-0024/webp/BVA-0024-coach-client-consultation-desktop-16x9.webp",
+        "desktopSha256": "81332b35f86cc1607db46700dea169850a03bd524d0fbf9ec656040082ec4a28",
+        "mobileWebp": "BVA-0024/webp/BVA-0024-coach-client-consultation-mobile-3x4.webp",
+        "mobileSha256": "c6c032eef8526df8947dba0abf2bc3603896197ce111701de06dab2173d21fdd",
+        "originalDimensions": [
+          1536,
+          1024
+        ],
+        "desktopDimensions": [
+          1536,
+          864
+        ],
+        "mobileDimensions": [
+          768,
+          1024
+        ],
+        "publicImportTarget": "client/public/images/registry/bva-0024/",
+        "sourceType": "individual AI-generated image (not a collage crop)",
+        "verifiedArchive": true
       }
     },
     {
@@ -2193,7 +2237,7 @@
       }
     }
   ],
-  "lastDesignerDelivery": "2026-11-14: BVA-0023 independently generated, owner-approved and published individually; developer import and live QA pending. No other Batch D files authorized.",
+  "lastDesignerDelivery": "2026-11-14: BVA-0023 runner-on-bench replacement and original BVA-0024 coach/client images individually owner-approved and published; application integration pending.",
   "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "Every new or revised visual asset must be presented individually to owner for review and explicit approval BEFORE publication to Shared Library, GitHub, production registry, or developer distribution.",
