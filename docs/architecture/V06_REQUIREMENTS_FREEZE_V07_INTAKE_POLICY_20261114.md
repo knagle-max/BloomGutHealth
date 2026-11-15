@@ -1,3 +1,9 @@
+## Frozen-v0.6 exception — permanent asset production pipeline (2026-11-14)
+
+The owner's comprehensive Visual Asset Registry/Continuous Asset Production requirements are a **v0.6 necessary implementation clarification for the already-approved app-wide premium visual redesign**, not authorization to grow scientific or consumer features. See [Codex implementation handoff](VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md). Initial master registry and priority audit ensure asset requests, placeholders, generation and visual verification are part of finishing the current theme correctly; future v0.7 changes inherit the same process without re-opening v0.6 scope. Keep current editor/source/rendering workflows and IDs, add minimal validation and evidence, do not create competing assets database or block unrelated safety fixes while artwork pending.
+
+---
+
 ## Owner-directed in-version UI acceptance correction (2026-11-14)
 
 The owner has explicitly prioritized the supplied five-screen Stitch Today/Food/Biology/Explore/Progress visual direction **before other Codex development**. This is classified as a **v0.6 necessary exception / Core experience correction** because it completes the already-approved premium editorial UX within existing user routes, not a new biological research capability or separate v0.7 feature. Binding source and careful scientific reconciliation: [Stitch five-screen UI-first decision](OWNER_STITCH_FIVE_SCREEN_UI_FIRST_RECONCILIATION_20261114.md). Keep all existing navigation, privacy, activity, Food save/review and actual lab source behavior. Reject fabricated claims and model-generated personal scores in static design, maintain honest missing/partial states, accessibility and authenticated responsive app tests. Do not treat styling-only screenshots as app completion. After integrated UI verification, resume the frozen v0.6 Core/Advanced queue with no additional expansion.
