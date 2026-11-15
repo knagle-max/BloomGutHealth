@@ -2666,9 +2666,88 @@
         "date": "2026-11-15",
         "auditedFrom": "User-provided original PNG images, local WebP optimization and SHA-256 verification, delivered Shared Library ZIP"
       }
+    },
+    {
+      "id": "BVA-0032",
+      "name": "Biology overview — Bloodwork with vial",
+      "route": "/precision",
+      "component": "Biology overview > Bloodwork navigation tile",
+      "purpose": "Distinctive editorial visual for Bloodwork entry on Biology overview; preserve existing counts and disclosure navigation",
+      "category": "editorial-banner",
+      "subject": "red blood cells and a prominent capped laboratory blood collection vial in a cinematic conceptual scene",
+      "composition": "wide 3:1; vial and red cells prominent toward right; no embedded UI text; readable copy outside image",
+      "scientificAccuracy": "Conceptual illustration, not an actual patient result, microscopy observation, or diagnostic image. Scientific review required before using it for factual education.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "all text and controls on opaque separate surface, never on untreated photo",
+      "aspectRatio": "3:1",
+      "targetDimensions": {
+        "width": 2172,
+        "height": 724
+      },
+      "responsiveVariants": [
+        "1086×362 standard WebP",
+        "2172×724 high-DPI WebP"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "promptBrief": "Editorial close-up of realistic red blood cells in warm atmospheric bloodstream, with one prominent capped laboratory blood collection vial containing blood at right. Background offers visual depth, no text or measurements. Not a real test image.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "owner-selected-generated-and-shared-library-published",
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "Biology > Bloodwork tile",
+        "existingPath": null,
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_BVA_0032_Biology_Bloodwork_Vial_2026-11-15.zip",
+        "deliveryManifest": "BVA_0032_Biology_Bloodwork_Vial_Manifest_2026-11-15.json"
+      },
+      "lifecycle": "Generated",
+      "productionStatus": "Owner-selected Bloodwork image with vial; original PNG and 1x/2x WebPs published to Agent Handoffs. GitHub binary import and application visual QA pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "Not yet integrated; Codex to import binaries, wire category tile, verify HTTP/hash, and test responsive screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "Owner selected this rendition; rendered app not tested",
+        "scientific": "pending for biology/hematology factual use",
+        "rights": "commercial-use provenance pending",
+        "rendered": "not tested at mobile and desktop"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Generated asset saved in conversation, optimized and SHA-256 verified with Library publication",
+        "date": "2026-11-15"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0032_Biology_Bloodwork_Vial_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/BVA_0032_Biology_Bloodwork_Vial_Manifest_2026-11-15.json",
+        "original": "originals/BVA-0032-biology-bloodwork-vial.png",
+        "webp": "webp/BVA-0032-biology-bloodwork-vial.webp",
+        "webp2x": "webp/BVA-0032-biology-bloodwork-vial@2x.webp",
+        "originalSha256": "60c0efe7d6d105f08bc933fe07a01144ae661d60133dd74d62a47dd89ab0ed68",
+        "webpSha256": "715d4b863cfbfaf8ba40a301f306b83756cb12694e26421c30e681aefc1009ef",
+        "webp2xSha256": "680183461a7c81a6686cddb6dac14da4d3c9cf9a0198bbf64d6c560bc6828a60",
+        "dimensions": [
+          2172,
+          724
+        ],
+        "publicImportTarget": "/images/registry/biology/BVA-0032-biology-bloodwork-vial.webp"
+      },
+      "relatedRegistryIds": [
+        "BVA-0009"
+      ],
+      "notes": "BVA-0009 remains the original Bloodwork landing hero. BVA-0032 is an intentional separate artwork for Biology overview entry tile, not a replacement."
     }
   ],
-  "lastDesignerDelivery": "2026-11-15: BVA-0029–0031 original PNG + WebP packages published in Agent Handoffs; master registry updated; GitHub binary import and rendered acceptance pending",
+  "lastDesignerDelivery": "2026-11-15: published BVA-0032 vial-inclusive Biology Bloodwork tile via Shared Library, registered hashes and import target; rendered application QA pending",
   "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "No per-image owner approval for generation, integration, development/review-branch publication, asset-library handoff or QA. Codex and specialists perform appropriate design/science/rights QA autonomously. Owner reviews imagery, UI and functionality together at an integrated release candidate; explicit owner correcting instructions reopen only affected assets. Protected public/production release and external legal/privacy/licensing/clinical permissions are separate.",
