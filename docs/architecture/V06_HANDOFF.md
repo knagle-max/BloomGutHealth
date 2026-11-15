@@ -1,3 +1,9 @@
+## OWNER DESIGN INVARIANT — FULL-APP COHESION AND PROGRESSIVE DISCLOSURE (2026-11-14)
+
+[Binding full-app theme and no-regression contract](APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md) extends the ten-screen Stitch visual vocabulary to every actual Bloom screen, including deeper workflows and support/role/empty states, not just the five main destinations. Use the owner-inspired five-step method to question, delete redundant **presentation not data/features**, simplify, accelerate, and automate only proven safe flows. Default to one strong actionable summary and beautiful reachable secondary detail. Preserve all existing route/CTA/edit/save/export/consent/role functionality and source/clinical precision; inventory actual App.tsx/BottomNav/AppNavigation before theme changes. Visually reconcile Athlete, Food Review, lab details, onboarding, settings, error and dark modes. Actual source-supported functionality and accessible end-to-end regression beat pixel-level mock copying. This approved Core UI correction is first priority inside frozen v0.6; no new owner gate.
+
+---
+
 ## REQUIREMENTS BASELINE FREEZE — v0.6 CORE + ADVANCED (2026-11-14)
 
 [Binding owner-approved v0.6 freeze and v0.7 intake policy](V06_REQUIREMENTS_FREEZE_V07_INTAKE_POLICY_20261114.md). All approved existing Core and Advanced requirements are the frozen v0.6 baseline; **implementation, safety/correctness fixes, source acquisition, validation and launch readiness continue**. New functionality defaults to v0.7 unless essential to an existing v0.6 accepted journey or required for substantive security, privacy, data/science correctness, safety, legal/regulatory or release defect; Architect documents narrow exception without repeated owner checkpoints. Existing bounded research-only Advanced development is not cancelled and does not block Core success. Release-status evidence is separate from scope acceptance; no new roadmap/store or owner approval cycle.
