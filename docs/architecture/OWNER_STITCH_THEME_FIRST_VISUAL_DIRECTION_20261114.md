@@ -1,3 +1,9 @@
+## Aesthetic precedence refinement — owner's later Bloodwork screenshot (2026-11-14)
+
+**Newest controlling example:** [immersive botanical Bloodwork visual benchmark](OWNER_IMMERSIVE_BOTANICAL_BLOODWORK_VISUAL_BENCHMARK_20261114.md). The earlier ten-screen Stitch HTML remains helpful for tokens, interaction layouts and lighter paper-ledger cards, but **does not outrank the user's later immersive bloodwork screenshot for Everyday visual quality**. Aim for beautiful depth, atmospheric natural-science anatomy, creamy large editorial type, minimal chrome and integrated translucent row structures rather than uniform ivory stacked cards. Preserve accessible readable data detail, intentional light theme and Athlete BLUE / Coach PURPLE identities. Take screenshot as a visual direction, not fixed content or a licence to delete functional routes.
+
+---
+
 ## Photo/illustration acquisition clarification — AI-first (2026-11-14)
 
 [Approved AI visual-production standard](AI_FIRST_VISUAL_ASSET_PROMPT_AND_PRODUCTION_STANDARD_20261114.md) governs every Stitch-to-production image slot. The owner authorizes high-quality AI-generated first-party photography and scientific artwork rather than manually sourcing photos. Designer defines scene roles and crop-safe prompt specifications; developer/authorized generator supplies assets with verified rights, plausible food/human anatomy, natural optics, non-plastic surfaces, file/manifest/hash and accessible captions, consistent in Everyday green, Athlete blue, Coach purple. Examples in mockups are visual references, **not** evidence of measured or eaten personal health values; art must not impersonate real user uploads. No new external photo purchasing task.
