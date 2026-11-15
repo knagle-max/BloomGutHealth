@@ -1409,12 +1409,93 @@
         "proposedPublicImportTarget": "/images/registry/batch-c/BVA-0021-progress-editorial-scene.webp",
         "verifiedArchive": true
       }
+    },
+    {
+      "id": "BVA-0023",
+      "name": "Athlete recovery editorial",
+      "route": "/athlete/recovery",
+      "component": "Recovery section",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "candid post-workout outdoor recovery cool natural daylight blue-led ambience",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "3:2 original; derived 16:9 desktop and 3:4 mobile",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: candid post-workout outdoor recovery cool natural daylight blue-led ambience. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "owner-approved-published",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_BVA_0023_Approved_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_0023_Approved_manifest_2026-11-14.json"
+      },
+      "lifecycle": "Approved",
+      "productionStatus": "Owner explicitly approved this NEW individually generated BVA-0023 image on 2026-11-14. Original PNG and responsive WebP variants published to Shared Library; rights verification and application integration/render checks pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "NOT INTEGRATED; binary assets in shared library; developer must verify rights and responsive appearance first",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "owner approved 2026-11-14",
+        "scientific": "decorative still-life; no personalized measurement or recovery claim",
+        "rights": "pending commercial-use/provider and incidental mark assessment",
+        "rendered": "pending light/dark mobile/desktop"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Actual 1536x1024 source image, derived WebP exports, SHA-256 manifest, Shared Library upload and explicit user approval",
+        "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_Approved_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_Approved_manifest_2026-11-14.json",
+        "original": "originals/BVA-0023-athlete-recovery-approved.png",
+        "originalSha256": "9d35bd356f65ab59c89b10afed6be82644dd90106a5a59945e3ac1be6ac12413",
+        "webp": "webp/BVA-0023-athlete-recovery-original-aspect.webp",
+        "webpSha256": "be3905e66c671b671d6ece8df3d46259a7b3be5ce9b577caa2c20a1bce9ca621",
+        "desktopWebp": "webp/BVA-0023-athlete-recovery-hero-16x9.webp",
+        "desktopSha256": "e78fa75beaa0d3c9af39e251914d63efe83ff4ce7ebedecec831bac708033ac4",
+        "mobileWebp": "webp/BVA-0023-athlete-recovery-mobile-3x4.webp",
+        "mobileSha256": "7895f742bddd8e374fc684eca2bd110f13b463f0a8e3a1fdc82616755c8a7f79",
+        "publicImportTarget": "client/public/images/registry/bva-0023/",
+        "sourceType": "individual AI-generated scene, NOT old montage crop",
+        "verifiedArchive": true
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "BVA-0023 visual image ONLY; publication and registry update",
+        "date": "2026-11-14",
+        "evidence": "Explicit user message: I approve BVA-0023 for publication and registry update."
+      }
     }
   ],
-  "lastDesignerDelivery": "Batch A and C generated; Batch D was withdrawn 2026-11-14 before owner visual approval. Do not publish new assets without owner review and explicit approval.",
+  "lastDesignerDelivery": "2026-11-14: BVA-0023 independently generated, owner-approved and published individually; developer import and live QA pending. No other Batch D files authorized.",
   "retiredAssetIds": [
     "BVA-0022",
-    "BVA-0023",
     "BVA-0024",
     "BVA-0025",
     "BVA-0026",
@@ -1424,6 +1505,6 @@
   "ownerPublicationGate": {
     "rule": "Every new or revised visual asset must be presented individually to owner for review and explicit approval BEFORE publication to Shared Library, GitHub, production registry, or developer distribution.",
     "effective": "2026-11-14",
-    "note": "Batch D seven withdrawn assets (BVA-0022..0028) must not be reintroduced automatically; IDs reserved and never reused."
+    "note": "BVA-0023 independently regenerated, approved by owner and republished as single ID. BVA-0022 and BVA-0024..0028 remain withdrawn/unapproved; no blanket approval of Batch D."
   }
 }
