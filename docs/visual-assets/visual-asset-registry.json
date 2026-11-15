@@ -1077,29 +1077,42 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
-        "rights": "pending",
+        "design": "pending on actual mobile/desktop rendering",
+        "scientific": "pending where applicable; imagery conceptual not observed biology",
+        "rights": "pending production rights check",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "original": "originals/BVA-0017-microbiome-editorial-backdrop.png",
+        "webp": "webp/BVA-0017-microbiome-editorial-backdrop.webp",
+        "webpSha256": "0426d2990d497e509b7d6d92cab9543ced48df6f51999846e1f3be4e4b812af7",
+        "width": 1672,
+        "height": 941,
+        "proposedPublicImportTarget": "/images/registry/batch-c/BVA-0017-microbiome-editorial-backdrop.webp",
+        "verifiedArchive": true
       }
     },
     {
@@ -1135,29 +1148,42 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
-        "rights": "pending",
+        "design": "pending on actual mobile/desktop rendering",
+        "scientific": "pending where applicable; imagery conceptual not observed biology",
+        "rights": "pending production rights check",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "original": "originals/BVA-0018-genetics-editorial-accent.png",
+        "webp": "webp/BVA-0018-genetics-editorial-accent.webp",
+        "webpSha256": "90e95d1ba65d7919de6e3b805dec8e9f99387f718054c80d15877450713cfeda",
+        "width": 1672,
+        "height": 941,
+        "proposedPublicImportTarget": "/images/registry/batch-c/BVA-0018-genetics-editorial-accent.webp",
+        "verifiedArchive": true
       }
     },
     {
@@ -1194,29 +1220,42 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
-        "rights": "pending",
+        "design": "pending on actual mobile/desktop rendering",
+        "scientific": "pending where applicable; imagery conceptual not observed biology",
+        "rights": "pending production rights check",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "original": "originals/BVA-0019-explore-living-atlas.png",
+        "webp": "webp/BVA-0019-explore-living-atlas.webp",
+        "webpSha256": "0390f1d0266784097068d71dc9dd8f91947d8b19cd8faa53b424d87c2e0f5138",
+        "width": 1672,
+        "height": 941,
+        "proposedPublicImportTarget": "/images/registry/batch-c/BVA-0019-explore-living-atlas.webp",
+        "verifiedArchive": true
       }
     },
     {
@@ -1252,29 +1291,51 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated: editable SVG pathway kit delivered; raster concept is reference-only, not a scientific diagram. Not integrated or reviewed.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
-        "rights": "pending",
+        "design": "pending on actual mobile/desktop rendering",
+        "scientific": "pending where applicable; imagery conceptual not observed biology",
+        "rights": "pending production rights check",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "original": "originals/BVA-0020-explore-pathway-reference.png",
+        "webp": "webp/BVA-0020-explore-pathway-reference.webp",
+        "webpSha256": "458ef94a87b6fe4fb7de67f4c2fd8d4bde6fd5441f3e545300ee116431522416",
+        "width": 1448,
+        "height": 1086,
+        "proposedPublicImportTarget": "/images/registry/batch-c/BVA-0020-explore-pathway-reference.webp",
+        "verifiedArchive": true,
+        "svgKit": [
+          "svg/pathway-node-plant.svg",
+          "svg/pathway-node-molecule.svg",
+          "svg/pathway-node-microbe.svg",
+          "svg/pathway-connector.svg",
+          "svg/pathway-overview-decorative.svg"
+        ],
+        "rasterRole": "mood/reference only, NOT a data-driven pathway or evidenced causal graph",
+        "svgRole": "reusable, code-authored decorative shapes requiring app data-driven labels, reviewed links and provenance"
       }
     },
     {
@@ -1311,29 +1372,42 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where relevant",
-        "rights": "pending",
+        "design": "pending on actual mobile/desktop rendering",
+        "scientific": "pending where applicable; imagery conceptual not observed biology",
+        "rights": "pending production rights check",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "original": "originals/BVA-0021-progress-editorial-scene.png",
+        "webp": "webp/BVA-0021-progress-editorial-scene.webp",
+        "webpSha256": "b7fc320473dd5c6ec45493f076381f3396c6a59405d69014d9521e9cb28a6683",
+        "width": 1672,
+        "height": 941,
+        "proposedPublicImportTarget": "/images/registry/batch-c/BVA-0021-progress-editorial-scene.webp",
+        "verifiedArchive": true
       }
     },
     {
@@ -1746,5 +1820,5 @@
       }
     }
   ],
-  "lastDesignerDelivery": "2026-11-14: Batch A BVA-0009..0014 generated/published, pending import and review"
+  "lastDesignerDelivery": "2026-11-14 Batch C BVA-0017 through BVA-0021: 5 raster originals, 5 WebPs and BVA-0020 five-part editable SVG kit; Generated only, assets in Shared Library"
 }
