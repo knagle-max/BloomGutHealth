@@ -3,6 +3,12 @@
 
 **Authority and delivery:** owner-approved `enhance/bloom-experience` review branch; no unauthorized `main` merge/public release. Select one task with a testable exit, verify actual current HEAD/working tree and relevant evidence, code/test/push, then proceed. A historical “P0/ACTIVE/first/stop” is not active merely because an archived section has that heading. Scope frozen at v0.6 with net-new functionality going to v0.7 by default. Affected privacy/security/real clinical-safety incidents always outrank this task list.
 
+## Roadmap / done source of truth
+
+**Before selecting or restarting anything:** consult the [Delivery Status Ledger](docs/operations/V06_DELIVERY_STATUS_LEDGER_20261115.md) alongside exact current code/tests/CI/Render. It tracks approved-but-unbuilt, local engineering tested, hosted verified, RC-ready, done, and specifically revised work, with stable evidence. A status-only document is **not another queue**. Once a feature's current accepted scope is truly complete and evidenced, **do not reopen it** absent a new owner direction, meaningful acceptance failure or reproduced defect. Preserve old receipts, record only the missing delta, and do not confuse planned functionality, source registry, files, staged UI, screenshots and deployed verification.
+
+---
+
 ## NOW — T0: finish only genuinely outstanding current UI publication/CI qualification
 
 **Observed in 2026-11-15 task receipts (not independently reverified by this Architect at live Render/head):**
