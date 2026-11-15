@@ -1,3 +1,5 @@
+T1b-bloodwork-atlas: no owner input/approval needed. Six approved/generated archive originals are not locally readable, so existing renderer uses registered decorative reserved frames; full layout/source navigation is implemented/tested. Art-byte import remains scoped; ordinary Core/UI work proceeds. Latest owner policy removes individual-image approval gates.
+
 ## Parent qualification and control fixes require no input — 2026-11-15
 
 Published e495708 is fully verified733/733 plus hosted gates. Shared-button/report and200% drawer fixes are locally tested and ready to integrate; no permission or provider activation needed. Font metadata for the already approved typography is available under OFL; use still requires checking packaged license/bytes and rendered parity, not owner photography. Exact original art/ZIP access remains scoped only.

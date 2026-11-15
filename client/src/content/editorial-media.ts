@@ -5,7 +5,8 @@ export interface EditorialMediaAsset {
   mode: EditorialMediaMode;
   placement: string;
   raster?: { src: string; src2x: string; width: number; height: number; width2x: number; height2x: number; conceptual: boolean };
-  svg: { src: string; width: number; height: number; conceptual: boolean };
+  svg?: { src: string; width: number; height: number; conceptual: boolean };
+  reserved?: { width: number; height: number; conceptual: boolean };
 }
 export const editorialMedia = {
   "today": {
@@ -150,6 +151,12 @@ export const editorialMedia = {
       "height": 480,
       "conceptual": false
     }
-  }
+  },
+  "bloodwork-hero": {mode:"conceptual",placement:"bloodwork-hero",reserved:{width:1600,height:900,conceptual:true}},
+  "bloodwork-heart": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-sugar": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-liver": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-iron": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-bone": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}}
 } as const satisfies Record<string, EditorialMediaAsset>;
 export type EditorialMediaSlot = keyof typeof editorialMedia;

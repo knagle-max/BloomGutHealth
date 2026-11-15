@@ -13,3 +13,4 @@
 @import "./visual-asset-fallback.css" layer(bloom-premium);
 @import "./navigation-shell.css" layer(bloom-premium);
 @import "./auth-shell.css" layer(bloom-premium);
+@import "./bloodwork-atlas.css" layer(bloom-premium);

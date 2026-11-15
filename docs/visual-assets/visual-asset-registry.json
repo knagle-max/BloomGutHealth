@@ -709,11 +709,12 @@
       "impact": "high",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-hero",
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
       },
       "lifecycle": "Approved",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
@@ -721,7 +722,11 @@
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true,
+        "reservedFallbackModes": [
+          "everyday",
+          "athlete"
+        ]
       },
       "review": {
         "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
@@ -803,11 +808,12 @@
       "impact": "high",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-heart",
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
       },
       "lifecycle": "Approved",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
@@ -815,7 +821,11 @@
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true,
+        "reservedFallbackModes": [
+          "everyday",
+          "athlete"
+        ]
       },
       "review": {
         "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
@@ -897,11 +907,12 @@
       "impact": "high",
       "sourceRelation": {
         "action": "generated-awaiting-review",
-        "existingRegistry": null,
-        "existingSlot": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-sugar",
         "existingPath": null,
         "existingArtifactByteVerified": false,
-        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
       },
       "lifecycle": "Generated",
       "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
@@ -909,7 +920,11 @@
       "integration": {
         "state": "not integrated; import and route-level checks required",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true,
+        "reservedFallbackModes": [
+          "everyday",
+          "athlete"
+        ]
       },
       "review": {
         "design": "pending",
@@ -978,11 +993,12 @@
       "impact": "high",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-liver",
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
       },
       "lifecycle": "Approved",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
@@ -990,7 +1006,11 @@
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true,
+        "reservedFallbackModes": [
+          "everyday",
+          "athlete"
+        ]
       },
       "review": {
         "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
@@ -1072,11 +1092,12 @@
       "impact": "high",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-iron",
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
       },
       "lifecycle": "Approved",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
@@ -1084,7 +1105,11 @@
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true,
+        "reservedFallbackModes": [
+          "everyday",
+          "athlete"
+        ]
       },
       "review": {
         "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
@@ -1166,11 +1191,12 @@
       "impact": "high",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-bone",
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
       },
       "lifecycle": "Approved",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
@@ -1178,7 +1204,11 @@
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true,
+        "reservedFallbackModes": [
+          "everyday",
+          "athlete"
+        ]
       },
       "review": {
         "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",

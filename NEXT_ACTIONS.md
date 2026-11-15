@@ -24,7 +24,7 @@
 
 ## NEXT — T1: app-wide premium UI and visual asset integration (owner top design priority)
 
-**Active T1a-control-reflow:** publish tested shared Button/report and200% mobile drawer fixes, preserving concurrent documentation; exit exact CI/preview or scoped technical dependency. Next eligible T1b: Biology/Bloodwork overview, BVA-0009–0014 assets/fallbacks, no per-image owner gate.
+**T1a CLOSED — VERIFIED_ON_REVIEW_BRANCH:**8ffc52ccd7c5816612c9329edc1545eaf3669c55 / CI43753593433 SUCCESS733/733 plus exact hosted/media/account gates; do not reopen. **Active T1b-bloodwork-atlas:** layout/source drill-ins and six reserved EditorialMedia slots are ENGINEERING_TESTED (V06_BLOODWORK_ATLAS_20261115.json); publish candidate and check exact CI/preview once. Next eligible T1c/T2a or T2b uncovered acceptance after affected UI is safe; no image approval hold.
 
 **Goal:** one coherent immersive botanical editorial app, with Everyday forest-green, Athlete original blue and Coach original purple. Upgrade **all authorized user-facing and deep routes** and real empty/error states, not only five Stitch screenshots. Preserve every existing useful control, original lab/food/source detail, account/role/consent permission, route and action. **Use actual source fixtures and real app screenshot comparison**, not static copied HTML.
 

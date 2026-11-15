@@ -11,8 +11,10 @@ test('permanent visual IDs bind every existing editorial slot to the original ma
  assert.deepEqual(projection.bindings,editorialVisualAssetIds);
  assert.deepEqual(Object.keys(projection.bindings).sort(),Object.keys(editorialMedia).sort());
  for(const[slot,id]of Object.entries(editorialVisualAssetIds)){
-  const entry=parsed.assets.find(asset=>asset.id===id)!;assert.equal(entry.sourceRelation.existingSlot,slot);assert.equal(entry.lifecycle,'Identified');
-  const asset=editorialMedia[slot as keyof typeof editorialMedia];assert.ok(entry.filePaths.includes('raster'in asset?asset.raster.src:asset.svg.src));
+  const entry=parsed.assets.find(asset=>asset.id===id)!;assert.equal(entry.sourceRelation.existingSlot,slot);
+  const asset=editorialMedia[slot as keyof typeof editorialMedia];
+  if('reserved' in asset){assert.deepEqual(entry.filePaths,[]);assert.equal(entry.integration.verified,false);assert.ok(asset.reserved.width>0&&asset.reserved.height>0);continue;}
+  assert.equal(entry.lifecycle,'Identified');assert.ok(entry.filePaths.includes('raster'in asset?asset.raster.src:asset.svg.src));
   for(const path of entry.filePaths)assert.ok(readFileSync('client/public'+path).length>0);
  }
  assert.equal(parsed.assets.filter(asset=>asset.integration.verified).length,0,'Static delivery mapping is not independent rendered approval');
@@ -28,11 +30,12 @@ test('registry rejects reused or ambiguous permanent IDs, false integration and 
  ]){const copy=structuredClone(registry);alter(copy);assert.equal(visualAssetRegistrySchema.safeParse(copy).success,false);}
 });
 
-test('rejected renditions do not retire their reinstated scene requirements or authorize their publication',()=>{
+test('historical owner decisions do not gate new development candidates; actual rejected renditions stay excluded',()=>{
  const parsed=visualAssetRegistrySchema.parse(registry),projection=editorialVisualProjection(registry);
  for(const id of ['BVA-0022','BVA-0025','BVA-0026','BVA-0027','BVA-0028']){
   const asset=parsed.assets.find(row=>row.id===id)!;assert.ok(projection.ids.includes(id));assert.equal(asset.lifecycle,'Briefed');assert.equal(asset.ownerApproval?.approved,false);assert.deepEqual(asset.filePaths,[]);
-  const copy=structuredClone(registry),row=copy.assets.find(asset=>asset.id===id)!;row.lifecycle='Integrated';row.filePaths=['/images/editorial/heroes/bloom-today-meadow.webp'];assert.equal(visualAssetRegistrySchema.safeParse(copy).success,false);
+  const copy:any=structuredClone(registry),row=copy.assets.find((asset:any)=>asset.id===id)!;row.lifecycle='Integrated';row.filePaths=['/images/editorial/heroes/replacement-candidate.webp'];row.currentRendition={id:id+'-replacement',status:'candidate'};assert.equal(visualAssetRegistrySchema.safeParse(copy).success,true,'Owner reviews the assembled RC, not each new development candidate');
+  row.currentRendition.status='rejected';assert.equal(visualAssetRegistrySchema.safeParse(copy).success,false,'Explicit rejection follows the rendition, not the scene requirement');
  }
  for(const id of ['BVA-0023','BVA-0024'])assert.equal(parsed.assets.find(row=>row.id===id)?.lifecycle,'Approved','Separately approved runner/coach originals stay intact');
 });

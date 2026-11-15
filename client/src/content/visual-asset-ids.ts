@@ -9,5 +9,11 @@ export const editorialVisualAssetIds={
   "athlete": "BVA-0005",
   "progress": "BVA-0006",
   "profile": "BVA-0007",
-  "journal-empty": "BVA-0008"
+  "journal-empty": "BVA-0008",
+  "bloodwork-hero": "BVA-0009",
+  "bloodwork-heart": "BVA-0010",
+  "bloodwork-sugar": "BVA-0011",
+  "bloodwork-liver": "BVA-0012",
+  "bloodwork-iron": "BVA-0013",
+  "bloodwork-bone": "BVA-0014"
 } as const satisfies Record<EditorialMediaSlot,BloomVisualAssetId>;

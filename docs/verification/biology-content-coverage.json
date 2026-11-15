@@ -12,23 +12,23 @@
     "independentlyApproved": 0
   },
   "counts": {
-    "totalIdentityRecords": 521,
+    "totalIdentityRecords": 522,
     "supportedMarkers": 49,
     "registryTaxa": 126,
     "researchContextProfiles": 56,
     "identityContextProfiles": 70,
-    "fixtureIdentityRecords": 346,
+    "fixtureIdentityRecords": 347,
     "fixtureCohorts": {
       "explicit-rank-mismatch-fixture": 3,
       "named-or-negative-identity-fixture": 68,
-      "synthetic-or-unknown-fixture": 270,
+      "synthetic-or-unknown-fixture": 271,
       "unsupported-assay-fixture": 5
     },
     "reviewed": 14,
     "limited": 197,
-    "unresolvedIdentity": 310,
-    "sourceFilesScanned": 730,
-    "relevantSourceFiles": 68,
+    "unresolvedIdentity": 311,
+    "sourceFilesScanned": 732,
+    "relevantSourceFiles": 69,
     "researchPathways": 7
   },
   "entries": [
@@ -4489,6 +4489,38 @@
           "file": "scripts/qa/lab-explorer-journey.mjs",
           "line": 0,
           "method": "bounded 43-label synthetic scale fixture after 49 supported markers"
+        }
+      ]
+    },
+    {
+      "cohort": "synthetic-or-unknown-fixture",
+      "uniqueId": "fixture:5815d6f767233aa742b3",
+      "kind": "source-only-analyte",
+      "sourceSpellings": [
+        "Synthetic unmapped source label"
+      ],
+      "taxonomicLevel": null,
+      "aliases": [],
+      "displayedSurfaces": [
+        "source-only laboratory observation"
+      ],
+      "profileRegistryId": null,
+      "evidenceLevel": "Unresolved source identity; no biological function inferred",
+      "coverageStatus": "unresolved identity",
+      "rawCoverageStatus": null,
+      "reviewStatus": "identity_not_established",
+      "reviewedOn": null,
+      "lastRevised": "biology-content-r4m1-2026-11-08.3+bloodwork-catalog-2026-11-09-v2",
+      "citations": [],
+      "unresolvedReason": "Intentionally synthetic or unspecified public fixture; no real biological identity is asserted.",
+      "sources": [
+        {
+          "kind": "source-only-analyte",
+          "spelling": "Synthetic unmapped source label",
+          "rank": null,
+          "file": "scripts/qa/bloodwork-atlas-journey.mjs",
+          "line": 15,
+          "method": "static source literal"
         }
       ]
     },
@@ -23665,6 +23697,14 @@
       "reviewerNeed": "No literature writeup required for an intentional synthetic/negative fixture; preserve its unknown state."
     },
     {
+      "uniqueId": "fixture:5815d6f767233aa742b3",
+      "sourceSpellings": [
+        "Synthetic unmapped source label"
+      ],
+      "reason": "Intentionally synthetic or unspecified public fixture; no real biological identity is asserted.",
+      "reviewerNeed": "No literature writeup required for an intentional synthetic/negative fixture; preserve its unknown state."
+    },
+    {
       "uniqueId": "fixture:59093ff2e6d0d4f963ca",
       "sourceSpellings": [
         "Synthetic marker 52"
@@ -25319,6 +25359,7 @@
     "scripts/qa/biological-report-management-journey.mjs": "9868064c019894f8329ce1ce361a5a617853147fde2b08ddd0dbf5238286c3cb",
     "scripts/qa/biology-content-journey.mjs": "45664e92ae397ab8328ec277af45090844be5def803226f2d4ab4ff7b1b6caf1",
     "scripts/qa/biology-source-count-journey.mjs": "d3aa899bfa49e6a860a8595c232f92b5c3e92e9b7a1b281807da8fca2e83da35",
+    "scripts/qa/bloodwork-atlas-journey.mjs": "fcc94c6caa871036a826014830331256855078f17b370cbeeece051235d0123f",
     "scripts/qa/bloodwork-source-overview-journey.mjs": "364a627533daadcc5c4928ac8097ce5f95acad1484ad22c67b4559dc9c8bb612",
     "scripts/qa/functional-microbiome-journey.mjs": "582a7dac8b8417380cf645d0510cb8e2eb518c6aa3873ba17119268e9bc03e9d",
     "scripts/qa/genetic-source-management-journey.mjs": "8e02e36167aab1ab2824862323a075722ee91be6f3085adc6252b21b4c18f5bb",

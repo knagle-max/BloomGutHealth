@@ -1,3 +1,4 @@
+import BloodworkAtlas from "@/components/BloodworkAtlas";
 import LabSourceReviewDialog from '@/components/LabSourceReviewDialog';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
@@ -381,7 +382,7 @@ export default function PrecisionNutrition() {
   const requestedLabResult=new URLSearchParams(search).get("labResult"),focusedLabResult=useRef("");
   useEffect(()=>{if(tab!=="labs"||!requestedLabResult||!currentResult||!r)return;const rows=[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])],resolved=rows.find(row=>row.id===requestedLabResult)||rows.find(row=>row.sourceCorrection?.supersedes===requestedLabResult)||rows.find(row=>r.trends.some(trend=>trend.points.some(point=>point.id===row.id&&point.supersededIds?.includes(requestedLabResult))));if(!resolved)return;const key=`${user?.id}:${requestedLabResult}:${resolved.id}`;if(focusedLabResult.current===key)return;focusedLabResult.current=key;setLabSourceToOpen({rowId:resolved.id,target:'row'});},[requestedLabResult,tab,currentResult,r,user?.id]);
   const currentProfile=savedProfile.fetchStatus==="idle"&&!savedProfile.isError?savedProfile.data:undefined;
-  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?(r&&(r.labHistory.length+r.pendingLabs.length+r.sourceOnlyLabs.length)?"#bloodwork-source-overview":"#add-labs-title"):'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
+  function openSource(next:string){setTab(next);requestAnimationFrame(()=>{const target=document.querySelector<HTMLElement>(next==="labs"?"#bloodwork-atlas-title":'.precision-page fieldset[aria-label="Current biology inputs"] h2');if(target){target.setAttribute("tabindex","-1");target.focus();target.scrollIntoView({block:"start"});}});}
   const tabNavigation=(
       <div
         className="precision-tabs"
@@ -423,6 +424,7 @@ export default function PrecisionNutrition() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      {tab==="labs" ? <BloodworkAtlas report={currentResult?r:undefined}/> : (
       <div className="flex flex-wrap gap-3 justify-between items-start">
         <div className="science-heading">
           {tab!=="overview"&&<p className="eyebrow">Your evidence, connected</p>}
@@ -434,6 +436,7 @@ export default function PrecisionNutrition() {
         {(tab!=="overview"||!currentResult)&&<Link className="text-link inline-flex min-h-11 items-center" href="/biology/reports">Manage reports</Link>}
         {tab!=="overview"&&<Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>}
       </div>
+      )}
       {tab==="overview"&&<EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" />}
       {tab!=="overview"&&tabNavigation}
       <div aria-live="polite">
@@ -671,7 +674,7 @@ export default function PrecisionNutrition() {
               <>
                 {requestedLabResult&&![...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs].some(row=>row.id===requestedLabResult)&&<p role="alert">The requested laboratory result is not available in your current records.</p>}
                 <BloodworkSourceOverview labs={[...r.labHistory,...r.pendingLabs,...r.sourceOnlyLabs]} onOpen={(rowId,target)=>{if(target==='row')labMarkerTrigger.current=document.activeElement instanceof HTMLElement?document.activeElement:null;setLabSourceToOpen({rowId,target});}}/>
-                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-source-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onReview={source=>user&&setLabToReview({actor:user.id,source})} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
+                <LabSourceHistory onDismiss={()=>{setLabSourceToOpen(null);focusedLabResult.current="";const url=new URL(window.location.href);url.searchParams.delete("labResult");window.history.replaceState(window.history.state,"",url.pathname+url.search);requestAnimationFrame(()=>{const target=labMarkerTrigger.current?.isConnected?labMarkerTrigger.current:document.getElementById("bloodwork-atlas-title");target?.focus();});}} focusRequest={labSourceToOpen} trends={r.trends} onReview={source=>user&&setLabToReview({actor:user.id,source})} onCorrect={source=>user&&setLabToCorrect({actor:user.id,source})} labs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]} onDelete={l=>remove({id:l.id,kind:"lab",payload:l,createdAt:l.measuredAt})}/>
                 <QuickLabEntry key={user?.id||"signed-out"} existingLabs={[...r.labHistory,...(r.pendingLabs||[]),...(r.sourceOnlyLabs||[])]}/>
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">

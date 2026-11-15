@@ -1,3 +1,5 @@
+T1b-bloodwork-atlas | ENGINEERING_TESTED_PENDING_PUBLICATION | Real system→existing explorer/source navigation, original rows retained,6 reserved frames;16 responsive states/200% text,source/media regressions. Exit exact CI/preview. Receipt V06_BLOODWORK_ATLAS_20261115.json. T1a closed verified8ffc52c/43753593433.
+
 T1a-control-reflow: IMPLEMENTED_AND_ENGINEERING_TESTED; publication/CI pending. T0 ALREADY_VERIFIED e495708/43750257253. Incoming55d854c2 consolidated task contract preserved; current selector is short NEXT_ACTIONS, next T1b overview with BVA fallbacks.
 
 ## Verified parent; shared control and enlarged-text drawer correction — 2026-11-15
