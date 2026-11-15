@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 310,
-    "sourceFilesScanned": 718,
+    "sourceFilesScanned": 723,
     "relevantSourceFiles": 68,
     "researchPathways": 7
   },
@@ -12454,7 +12454,7 @@
           "spelling": " Unmapped source assay ",
           "rank": null,
           "file": "tests/account-export.test.ts",
-          "line": 44,
+          "line": 47,
           "method": "static source literal"
         }
       ]
@@ -25204,7 +25204,7 @@
     },
     {
       "file": "tests/account-export.test.ts",
-      "line": 25,
+      "line": 26,
       "field": "bacterialName",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25324,7 +25324,7 @@
     "scripts/qa/genetic-source-management-journey.mjs": "8e02e36167aab1ab2824862323a075722ee91be6f3085adc6252b21b4c18f5bb",
     "scripts/qa/gut-report-current-context-journey.mjs": "25830ad8516cdff302373ede2ca3ae4520244864f2a526a6c23e726dbd433664",
     "scripts/qa/gut-review-comparison.mjs": "421b2ef9ade47048f0d2e8a3cf6c632c27034b9b20468dbcd768c3375dbcc3b2",
-    "scripts/qa/lab-explorer-journey.mjs": "c1c235395c4937d63a78c45a5f93acc32be7c4bca75abbbab8d16c872b0d9d82",
+    "scripts/qa/lab-explorer-journey.mjs": "ddfa81a9dca9232fdaffc30bf55a26da13b2d0791715c195907dd06d742003f4",
     "scripts/qa/lab-source-context-journey.mjs": "749adf7c67465cc4223a3f5bfdc0424850b24c8612feecd49a039e04d88641be",
     "scripts/qa/lab-source-review-journey.mjs": "3e554c4ab10e5f52ae459018d0235e3ca60a154316c808c7314c054172a851bf",
     "scripts/qa/microbial-profile-journey.mjs": "3998fb5f68e6f82bb1ee2255e483be00ac192c2719441e35da11d1ab4ffa3827",
@@ -25339,9 +25339,9 @@
     "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
     "shared/precision-nutrition.ts": "17100542667b7ba9d9b19a41f2ba4c786eaa5163ebe25497aa579c4396c67166",
     "shared/reported-taxa.ts": "aa5789ab4f24b8740676a53ed0069150ee70aeab4971525f602db412298b2a52",
-    "shared/schema.ts": "c8477642f4374c65a530472c39be9700db8892d44a8afafced39647e065b3dd4",
+    "shared/schema.ts": "3a5a433f8354427676c872bbefe79f4528de92fd63f8d26ea470a80cc0c678d1",
     "tests/account-erasure.test.ts": "c58aff3d9c8cee02f8cbceed84a11d6e0033311f45968ffcdf4632d60976094e",
-    "tests/account-export.test.ts": "a55a97133b50c066619f2d8b753c9463042647e73f7481c55ead0e6f8ec47474",
+    "tests/account-export.test.ts": "191511ad40484f0cf21aad1d281a4c11b3da2dfa3e3c35f0128e022831554386",
     "tests/biological-report-management.test.ts": "42707f79920630022da35f21fcb431c0ce1c1319e769d932d99275eca25bbf8b",
     "tests/biology-content-registry.test.ts": "20e7e895240ba9892b6bdce7b3be85f68e087380ac3f43ccfe28ebff9a497d88",
     "tests/biology-source-inventory.test.ts": "1e70668b1771a4b26739f46ed663a247031c5a58d47ef4b2f50d51e41114f7c0",

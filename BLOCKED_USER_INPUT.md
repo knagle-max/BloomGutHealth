@@ -1,3 +1,9 @@
+## Provider/source management execution — 2026-11-15
+
+No owner input is required for the implemented report annotation/preference workflow or its remaining exact CI/isolated-hosted verification. LifeLabs SK/other unverified published comparisons remain feature-scoped unavailable; direct original report bounds remain usable. Pending source verification does not block original-data display or the latest full-app theme/no-regression work. Authentic historical Aug/May importer reproduction and physical VoiceOver remain separately unverified; do not repeat unchanged questions. No new production data write or main merge authorized by this checkpoint.
+
+---
+
 ## Scoped unresolved owner-date reproduction — 2026-11-09
 
 Only the exact historical root reproduction remains BLOCKED_USER_INPUT: authentic unshifted full34-result August9 and May panel input plus actual browser date/time/timezone are not present in the handoff. A Library file explicitly shifts collection dates and must not be used as an authentic fixture. Exact question, deferred without interrupting implementation: “Which original, unshifted deidentified34-row input and runtime browser clock reproduce the failure?” Options: original source text/export with clock context (recommended), or a complete reproducible failing paste plus capture context; a shifted reconstruction cannot establish this historical root. Independent typed-path/global-date fixes,49-marker source support and actual date-persistence tests are implemented/verified on c71cad590. This item blocks neither ordinary lab entry nor the rest of v0.6; do not repeatedly ask or re-probe unchanged sources.

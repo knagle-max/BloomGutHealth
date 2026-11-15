@@ -19,11 +19,21 @@ export type ProviderRangeContext={provider:string;province:string;markerId:strin
 const key=(value:string)=>value.trim().toLowerCase(),known=(value:string)=>!!value.trim()&&!/^(unknown|not supplied|not-specified)$/i.test(value.trim());
 /** Independently verified, exact applicability only. Current profile age/sex,
  * specimen identifiers and values cannot fill unknown collection context. */
+/** Eligibility to request missing collection details, not permission to plot.
+ * Source-known method/date/units/fasting must already permit a verified entry. */
+export function providerComparisonCandidates(input:Pick<ProviderRangeContext,'provider'|'province'|'markerId'|'method'|'collectedOn'|'sourceUnit'|'plotUnit'|'fasting'|'unitReview'|'sourceInput'>,ranges:readonly unknown[]){
+ const definition=markerDefinitions.find(marker=>marker.id===input.markerId);
+ if(!definition||!known(input.provider)||!known(input.province)||!known(input.method)||!z.iso.date().safeParse(input.collectedOn).success||input.unitReview?.status==='pending'||!normalizedLabUnit(input.sourceUnit,definition.units)||!hasConfirmedLabIdentity(input.markerId,input))return[];
+ return ranges.flatMap(value=>{const parsed=labRangeSchema.safeParse(value);if(!parsed.success)return[];const range=parsed.data;
+  if(range.scientificReviewStatus!=='verified'||key(range.provider)!==key(input.provider)||key(range.province)!==key(input.province)||range.markerId!==input.markerId||!known(range.specimen)||!known(range.assay||'')||!known(range.method||'')||key(range.method!)!==key(input.method)||input.collectedOn<range.effectiveFrom||range.effectiveTo!==undefined&&input.collectedOn>range.effectiveTo||range.fasting!=='either'&&range.fasting!==input.fasting||!normalizedLabUnit(range.unit,definition.units))return[];
+  const bound=range.low??range.high!;const converted=canonicalLab({marker:definition.id,value:bound,unit:normalizedLabUnit(range.unit,definition.units)!,method:input.method,sourceInput:input.sourceInput});if(converted.unit!==input.plotUnit||!Number.isFinite(converted.value))return[];
+  return[range];
+ });
+}
 export function matchProviderRanges(input:ProviderRangeContext,ranges:readonly unknown[]){
  const definition=markerDefinitions.find(marker=>marker.id===input.markerId);
  if(!definition||!known(input.provider)||!known(input.province)||!known(input.specimen)||!known(input.assay)||!known(input.method)||!z.iso.date().safeParse(input.collectedOn).success||input.ageAtCollection===null||!Number.isFinite(input.ageAtCollection)||input.ageAtCollection<0||input.unitReview?.status==='pending'||!normalizedLabUnit(input.sourceUnit,definition.units)||!hasConfirmedLabIdentity(input.markerId,input))return[];
- return ranges.flatMap(value=>{
-  const parsed=labRangeSchema.safeParse(value);if(!parsed.success)return[];const range=parsed.data;
+ return providerComparisonCandidates(input,ranges).flatMap(range=>{
   if(range.scientificReviewStatus!=='verified'||key(range.provider)!==key(input.provider)||key(range.province)!==key(input.province)||range.markerId!==input.markerId||!known(range.specimen)||key(range.specimen)!==key(input.specimen)||!range.assay||!range.method||key(range.assay)!==key(input.assay)||key(range.method)!==key(input.method)||input.collectedOn<range.effectiveFrom||range.effectiveTo!==undefined&&input.collectedOn>range.effectiveTo||range.sexReferenceCategory!=='all'&&range.sexReferenceCategory!==input.sexReferenceCategory||range.fasting!=='either'&&range.fasting!==input.fasting)return[];
   const age=input.ageAtCollection!;
   if(range.ageMinYears!==undefined&&(age<range.ageMinYears||age===range.ageMinYears&&!range.ageMinInclusive)||range.ageMaxYears!==undefined&&(age>range.ageMaxYears||age===range.ageMaxYears&&!range.ageMaxInclusive)||!normalizedLabUnit(range.unit,definition.units))return[];

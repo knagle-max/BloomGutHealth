@@ -335,6 +335,13 @@ export const precisionRecords = pgTable(
   ],
 );
 
+// Provider assertions are annotations, never laboratory observations or clinical ranges.
+export const labReportMetadataVersions=pgTable('lab_report_metadata_versions',{
+ id:varchar('id').primaryKey(),userId:varchar('user_id').notNull().references(()=>users.id,{onDelete:'cascade'}),
+ sourceId:varchar('source_id').notNull(),sourceRecordIds:text('source_record_ids').array().notNull(),
+ encryptedPayload:jsonb('encrypted_payload').notNull(),createdAt:timestamp('created_at').notNull().defaultNow(),
+},table=>[index('lab_report_metadata_owner_source_idx').on(table.userId,table.sourceId,table.createdAt.desc()),index('lab_report_metadata_members_idx').using('gin',table.sourceRecordIds),check('lab_report_metadata_source_id',sql`${table.sourceId} ~ '^[a-f0-9]{64}$'`),check('lab_report_metadata_members',sql`cardinality(${table.sourceRecordIds})>0 AND array_position(${table.sourceRecordIds},NULL) IS NULL`)]);
+
 // Personal product labels are private and encrypted, separate from public reference data.
 export const nutritionProducts = pgTable(
   "nutrition_products",

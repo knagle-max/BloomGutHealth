@@ -58,7 +58,7 @@ try{
  for(const testMode of ['everyday','athlete']){
   mode=testMode;await page.goto('http://127.0.0.1:5222/progress?view=biology&marker=hdl');
   const context=page.getByRole('region',{name:'HDL cholesterol biological context',exact:true});await context.waitFor();
-  await page.getByLabel('HDL cholesterol recorded result',{exact:true}).selectOption('source-3-1');await reportPreferences();await page.getByLabel('Reference overlay',{exact:true}).selectOption('LifeLabs');await page.getByLabel('Comparison province / territory (required)',{exact:true}).selectOption('SK');await page.getByText('Collection context for a provider comparison',{exact:true}).click();
+  await page.getByLabel('HDL cholesterol recorded result',{exact:true}).selectOption('source-3-1');await reportPreferences();await page.getByLabel('Reference overlay',{exact:true}).selectOption('LifeLabs');await page.getByLabel('Comparison province / territory (required)',{exact:true}).selectOption('SK');assert.equal(await page.getByText('Collection context for a provider comparison',{exact:true}).count(),0,'No verified provider candidate: do not request collection facts that cannot enable a match');
   for(const width of [320,390,768,1440])for(const theme of ['light','dark']){
    await page.setViewportSize({width,height:900});await setAppTheme(page,theme);
    for(const zoom of ['1','2']){

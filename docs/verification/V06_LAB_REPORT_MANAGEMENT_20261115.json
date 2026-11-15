@@ -1,0 +1,67 @@
+{
+  "version": "v0.6",
+  "verifiedOn": "2026-11-15",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_COMMIT_CI_HOSTED",
+  "authority": "docs/architecture/V06_REPORT_PROVIDER_MANAGEMENT_ARCHITECT_20261109.md",
+  "scope": "Saved laboratory sources \u2192 Manage laboratory & reference ranges, sharing existing SVG report preferences and matcher",
+  "storage": {
+    "reused": [
+      "precision_records immutable original observations and existing report grouping/revisions",
+      "existing SVG LabTrend and matching engine",
+      "account encryption/session/actor guards and source deletion/export"
+    ],
+    "added": "0017_lab_report_metadata.sql: separate encrypted append-only owned lab_report_metadata_versions; existing clinical kind CHECK unchanged; SQL immutability and source cleanup triggers; FK account erasure; excluded from routine Drizzle reconciliation",
+    "reason": "The existing precision_records SQL kind CHECK excludes annotations. No clinical kind expansion or observation rewrite.",
+    "migrationState": "Only synthetic PGlite locally; exact isolated hosted migration/verification pending; no production database changes"
+  },
+  "implemented": [
+    "Readable original/confirmed lab title, date precision, result count/report IDs, separate manage/view/delete",
+    "Separate versioned user-confirmed LifeLabs/Dynacare/other/unknown provider, jurisdiction and optional sourced location",
+    "Persisted report overlay choice shared by management and all charts, refreshed on canonical annotation/source version",
+    "Source and metadata CAS, atomic owner lock, exact receipt retry and no source resurrection",
+    "Provider/source changes invalidate fact-specific collection confirmations; current Profile never supplies historical demographics",
+    "Collection questions only when independently verified eligible candidate exists; complete matcher still required to draw",
+    "Original source range priority, one-sided thresholds, labelled numerical limits, mixed-source local bands and unchanged observations",
+    "Owned metadata history/export and full account erasure; partial source deletion retains applicable history and last-fact SQL deletion cleans it even across app versions"
+  ],
+  "tests": {
+    "fixtures": "Synthetic existing reports 2026-05-09:27, 2025-08-09:17, 2025-04-08:26; no real owner account access",
+    "apiSQL": "2 actual authenticated API/encrypted PGlite tests: 70 original encrypted lab payloads byte-identical; other 17/26 report revisions unchanged; LifeLabs SK saved/reloaded; CAS/conflict/replay/foreign actor/404/delete/legacy correction IDs; immutable update and old-version raw SQL cleanup",
+    "focused": "9 range/metadata tests pass; final14 account export/provider/schema/crosswalk regression tests pass",
+    "managementBrowser": "PASS actual App\u2192API\u2192encrypted SQL, lost save response/retry, persisted None/Original reload/mode, no verified SK comparison or pointless collection prompt, management\u2194source charts, conflicting write retains draft, account withdrawal;96 mode/theme/viewport/text/page-zoom states",
+    "positiveRangeBrowser": "PASS verified synthetic 10\u201335 comparison, source <45 priority, unknown/SK/ON abstention, 48 states; production catalogue remains empty",
+    "existingBrowsers": [
+      "PASS grouped explorer/timeline92 labels\u00d76 records",
+      "PASS source review48 states, original/one-sided converted limits and account isolation",
+      "PASS source-only raw import/date conflict/history/deletion",
+      "PASS recurring activity96 states, date-independent synthetic setup"
+    ],
+    "types": "PASS final",
+    "build": "PASS production plus immutable original media fingerprints; final exact CI build still required",
+    "fullLocal": {
+      "tests": 725,
+      "passed": 723,
+      "failed": 2,
+      "issues": "Stale source crosswalk and absent new-table migration-managed classification; both repaired. Final14 focused regression tests pass; added eligibility test is included in focused pass; exact fresh full CI remains required."
+    },
+    "hosted": "Pending exact new commit qualification; actual hosted script now checks metadata readiness, unchanged source, retry, reauthentication, owner isolation, export and full erasure"
+  },
+  "coverage": {
+    "runtimeProviderRanges": 0,
+    "sourceReportRanges": "Available from validated individual report",
+    "LifeLabsSK": "No verified interval; BC is never substituted",
+    "scientificStatus": "All24 BC candidates remain pending complete applicability;6 adult table spot-checks do not verify method/specimen/era/rights"
+  },
+  "notClaimed": [
+    "Full v0.6 RC",
+    "Real owner report access",
+    "Physical VoiceOver",
+    "Independent Design/Science/User Testing acceptance",
+    "New main merge or production deployment"
+  ],
+  "upstreamPreserved": {
+    "head": "74ea4bbe6a6b4420312f22d2b80f866abd98a6fd",
+    "files": 49,
+    "verification": "Original Git blob hashes verified for all upstream documents/registry; preserved prior code unchanged. Latest UI-first sequence supersedes ordinary feature queue after current source integrity work."
+  }
+}

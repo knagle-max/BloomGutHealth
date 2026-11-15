@@ -1,7 +1,9 @@
+import {useLabSources} from '@/lib/lab-sources';
+import {sourceOverlayKey,reportIdentityBasis,reportProviderName} from '@shared/lab-report-metadata';
 import {useLabReportOverlays} from "@/lib/lab-report-overlays";
 import {labOverlaySourceVersion,labSourceDisplayContext} from "@shared/lab-overlay-preference";
 import {labReportGroupKey} from "@shared/lab-history";
-import {matchProviderRanges,publishedLabRanges,publishedRangeText,providerContextMatchesSource} from '@shared/lab-provider-ranges';
+import {matchProviderRanges,providerComparisonCandidates,publishedLabRanges,publishedRangeText,providerContextMatchesSource} from '@shared/lab-provider-ranges';
 import LabRangeSelector,{emptyLabOverlayChoice,type LabOverlayChoice} from './LabRangeSelector';
 import {sourceReferenceIntervalForPlot,referenceIntervalText,labPlotExtent,canShareSourceReference} from '@shared/lab-reference-interval';
 import {hasConfirmedLabIdentity} from '@shared/lab-assay-identity';
@@ -13,18 +15,22 @@ import type { PrecisionReport } from "@shared/precision-nutrition";
 import EvidenceInsight from "./EvidenceInsight";
 import LabSourceContext from "./LabSourceContext";
 export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,onSelectionChange,latestLabel,initialPointId}:{trend:PrecisionReport["trends"][number];directionLabel?:string;sourceLabel?:string;selection?:LabPointSelection;onSelectionChange?:(patch:Partial<LabPointSelection>)=>void;latestLabel?:string;initialPointId?:string}) {
- const overlays=useLabReportOverlays();
+ const overlays=useLabReportOverlays(),managedSources=useLabSources();
+ function managedFor(point:typeof t.points[number]|undefined){if(!point)return undefined;const key=labReportGroupKey(point.sourceReport);return managedSources.data?.find(source=>key?source.groupKey===key:source.scope==='result'&&source.detailRecordId===point.id);}
+ function pointKey(point:typeof t.points[number]|undefined){if(!point)return null;const source=managedFor(point);return labReportGroupKey(point.sourceReport)||(source?sourceOverlayKey(source):null);}
+ useEffect(()=>{if(managedSources.data&&!managedSources.isError)overlays.hydrate(managedSources.data);},[managedSources.data,managedSources.isError,overlays.hydrate]);
  const sources=useRef<HTMLDetailsElement>(null),[localSelected,setLocalSelected]=useState(initialPointId||"");
- const selected=selection?selection.point:localSelected,setSelected=(point:string)=>{const source=resolveRecordedLabPoint(t.points,point);overlays.activate(labReportGroupKey(source?.sourceReport));if(selection)onSelectionChange?.({point});else setLocalSelected(point);};
+ const selected=selection?selection.point:localSelected,setSelected=(point:string)=>{const source=resolveRecordedLabPoint(t.points,point);overlays.activate(pointKey(source));if(selection)onSelectionChange?.({point});else setLocalSelected(point);};
  const [comparisonOpen,setComparisonOpen]=useState(!!(selection?.first||selection?.second));
  useEffect(()=>{if(selection?.first||selection?.second)setComparisonOpen(true);},[selection?.first,selection?.second]);
  // Provider/province belong to the actual report group. Collection context
  // remains source-specific and is withdrawn on any current-source revision.
  const id=useId(),points=t.points,unit=points[0].unit,requestedPoint=resolveRecordedLabPoint(points,selected);
- const reportPoints=overlays.state.active?points.filter(point=>labReportGroupKey(point.sourceReport)===overlays.state.active):[];
- const selectedPoint=overlays.state.active?(requestedPoint&&labReportGroupKey(requestedPoint.sourceReport)===overlays.state.active?requestedPoint:reportPoints.length===1?reportPoints[0]:undefined):requestedPoint;
- const reportKey=labReportGroupKey(selectedPoint?.sourceReport)||overlays.state.active,preference=reportKey?overlays.state.preferences[reportKey]??emptyLabOverlayChoice():emptyLabOverlayChoice();
- const selectedSourceVersion=selectedPoint?labOverlaySourceVersion(selectedPoint):'',savedContext=selectedPoint?overlays.state.contexts[selectedPoint.id]:undefined;
+ const reportPoints=overlays.state.active?points.filter(point=>pointKey(point)===overlays.state.active):[];
+ const selectedPoint=overlays.state.active?(requestedPoint&&pointKey(requestedPoint)===overlays.state.active?requestedPoint:reportPoints.length===1?reportPoints[0]:undefined):requestedPoint;
+ const reportKey=pointKey(selectedPoint)||overlays.state.active,preference=reportKey?overlays.state.preferences[reportKey]??emptyLabOverlayChoice():emptyLabOverlayChoice();
+ const managed=managedFor(selectedPoint),metadataReady=managedSources.fetchStatus==='idle'&&!managedSources.isError,metadataBasis=managed?.metadata?.available?(metadataReady?reportIdentityBasis(managed.revision,managed.metadata.current):'source-metadata-unavailable'):undefined,confirmedIdentity=metadataReady&&managed?.metadata?.sourceCurrent?managed.metadata.current?.identity:null;
+ const selectedSourceVersion=selectedPoint?labOverlaySourceVersion(selectedPoint,metadataBasis):'',savedContext=selectedPoint?overlays.state.contexts[selectedPoint.id]:undefined;
  const checkedContext=savedContext?.version===selectedSourceVersion?savedContext:undefined;
  const sourceDisplayContext=selectedPoint?labSourceDisplayContext(selectedPoint):{method:'',fasting:'unknown' as const,collectedOn:''};
  const overlay:LabOverlayChoice={...emptyLabOverlayChoice(),...preference,context:{...emptyLabOverlayChoice().context,...checkedContext?.context,...sourceDisplayContext},confirmed:checkedContext?.confirmed??false};
@@ -64,11 +70,11 @@ export default function LabTrend({trend:t,directionLabel,sourceLabel,selection,o
    {!canPlot&&<p className="panel-note" role="status">{change}</p>}
    <p className="panel-note">Reference preference: {overlay.provider==='original-report'?'Original report':overlay.provider==='none'?'None':`${overlay.provider==='other'?overlay.otherProvider||'Other provider':overlay.provider} ${overlay.province||'(province required)'}`}. {selectedPoint&&reportKey?'Inherited from this result’s original report group.':reportKey?'The active report has no unambiguous selected occurrence here.':'No report grouping is established for the selected result.'} <Link className="text-link inline-flex min-h-11 items-center" href={selectedPoint?`/precision?tab=labs&labResult=${encodeURIComponent(selectedPoint.id)}`:'/precision?tab=labs'}>Review report reference preferences</Link></p>
    {overlays.state.active&&!reportPoints.length&&<p role="status">The selected report has no current occurrence of this marker. Other recorded observations remain visible; no interval from another report is substituted.</p>}
-   {providerSelected&&<LabRangeSelector value={overlay} onChange={setOverlay} id={id} selected={!!selectedPoint} contextOnly/>}
+   {providerSelected&&!!selectedPoint&&providerComparisonCandidates({provider:overlay.provider==='other'?overlay.otherProvider:overlay.provider,province:overlay.province,markerId:t.marker,...sourceDisplayContext,sourceUnit:selectedPoint.sourceUnit,plotUnit:unit,sourceInput:selectedPoint.sourceInput},publishedLabRanges).length>0&&<LabRangeSelector value={overlay} onChange={setOverlay} id={id} selected={!!selectedPoint} contextOnly/>}
    {providerSelected&&<div className="panel-note space-y-2" role="status">
     {!comparisons.length?<p>Reference unavailable: no verified {overlay.provider==='other'?overlay.otherProvider||'provider':overlay.provider} {overlay.province||'(province required)'} interval matches this source and collection context. No published comparison is plotted.</p>:comparisons.map(match=><p key={match.range.id}>{match.range.kind==='reference_interval'?'Published comparison interval':match.range.kind==='clinical_decision_limit'?'Published clinical decision limit':'Published risk threshold'}{match.range.label?` · ${match.range.label}`:''} — {match.range.provider} {match.range.province}, {match.range.sourceDocumentDate}: {publishedRangeText(match)}. <a className="text-link" href={match.range.sourceUrl} target="_blank" rel="noopener noreferrer">Published source{match.range.page?` · printed page ${match.range.page}`:''}</a></p>)}
     {overlay.confirmed&&selectedPoint&&!providerContextMatchesSource(selectedPoint,overlay.context)&&<p>The comparison context differs from this saved source, or its method is unknown. Review the original source before using a published comparison.</p>}
-    {selectedPoint&&selectedPoint.laboratory.trim().toLowerCase()!==(overlay.provider==='other'?overlay.otherProvider:overlay.provider).trim().toLowerCase()&&<p><strong>Comparison only — not this result's laboratory.</strong> Recorded laboratory: {selectedPoint.laboratory}.</p>}
+    {selectedPoint&&(()=>{const provider=overlay.provider==='other'?overlay.otherProvider:overlay.provider,actual=reportProviderName(confirmedIdentity??null)||selectedPoint.laboratory;if(!reportProviderName(confirmedIdentity??null)&&/^\s*(?:not supplied|unknown|not recorded|unspecified)?\s*$/i.test(actual))return <p><strong>Comparison only — the performing laboratory has not been confirmed for this result.</strong></p>;if(actual.trim().toLowerCase()!==provider.trim().toLowerCase())return <p><strong>Comparison only — not this result's laboratory.</strong> Original laboratory label: {selectedPoint.laboratory}{confirmedIdentity?` · user-confirmed ${actual} ${confirmedIdentity.province}`:''}.</p>;if(!confirmedIdentity?.province||confirmedIdentity.province!==overlay.province)return <p><strong>Comparison only — this result's testing jurisdiction does not match or is not confirmed.</strong></p>;return null;})()}
     {originalInterval&&<p>The original report interval takes priority and remains visible. Published comparison values do not replace it.</p>}
     {comparisonIntervals.length>1&&<p>Published reference versions conflict; no comparison interval band is shown.</p>}
    </div>}

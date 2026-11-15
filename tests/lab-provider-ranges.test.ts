@@ -1,9 +1,18 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {labRangeSchema,matchProviderRanges,publishedLabRanges,providerRangeSourceLeads,publishedRangeText,providerContextMatchesSource,type ProviderRangeContext} from '../shared/lab-provider-ranges';
+import {labRangeSchema,matchProviderRanges,providerComparisonCandidates,publishedLabRanges,providerRangeSourceLeads,publishedRangeText,providerContextMatchesSource,type ProviderRangeContext} from '../shared/lab-provider-ranges';
 import {canShareSourceReference,sourceReferenceIntervalForPlot} from '../shared/lab-reference-interval';
 // Explicitly synthetic verified fixtures exercise matching, not a provider import.
 const range=labRangeSchema.parse({id:'synthetic-bc-ldl',provider:'LifeLabs',province:'BC',markerId:'ldl',specimen:'serum',assay:'Synthetic LDL assay',method:'Synthetic LDL method',ageMinYears:30,sexReferenceCategory:'all',fasting:'either',effectiveFrom:'2025-09-02',effectiveTo:'2026-09-01',kind:'reference_interval',low:1.5,high:3.4,unit:'mmol/L',sourceUrl:'https://example.invalid/synthetic-range',sourceDocumentDate:'2025-09-02',page:36,scientificReviewStatus:'verified'});
 const context:ProviderRangeContext={provider:'LifeLabs',province:'BC',markerId:'ldl',specimen:'serum',assay:'Synthetic LDL assay',method:'Synthetic LDL method',ageAtCollection:40,sexReferenceCategory:'F',fasting:'yes',collectedOn:'2026-01-01',sourceUnit:'mg/dL',plotUnit:'mmol/L'};
+test('collection details are requested only for an eligible verified comparison; eligibility alone never permits a plotted match',()=>{
+ const missing={...context,ageAtCollection:null,specimen:'',assay:'',sexReferenceCategory:null};
+ assert.equal(providerComparisonCandidates(missing,[range]).length,1);
+ assert.equal(matchProviderRanges(missing,[range]).length,0,'The complete matcher still requires the actual collection facts');
+ for(const patch of [{province:'SK'},{province:'ON'},{method:'unknown'},{collectedOn:''},{collectedOn:'2025-09-01'},{sourceUnit:'U/L'},{plotUnit:'g/L'},{unitReview:{status:'pending'}}])assert.equal(providerComparisonCandidates({...missing,...patch},[range]).length,0,JSON.stringify(patch));
+ assert.equal(providerComparisonCandidates(missing,[{...range,scientificReviewStatus:'pending'}]).length,0);
+ assert.equal(providerComparisonCandidates({...missing,fasting:'unknown'},[{...range,fasting:'yes'}]).length,0);
+ assert.equal(providerComparisonCandidates(missing,[]).length,0,'An empty catalogue must not prompt unnecessary collection fields');
+});
 test('published provider references require exact region, source applicability, collection era and independent verification',()=>{
  assert.equal(matchProviderRanges(context,[range]).length,1);const original=structuredClone(context);
  for(const patch of [{province:'SK'},{province:'ON'},{provider:'Other lab'},{markerId:'b12'},{specimen:'plasma'},{assay:'Other assay'},{method:'Not supplied'},{ageAtCollection:null},{collectedOn:'2025-09-01'},{collectedOn:'2026-09-02'},{sourceUnit:'U/L'},{plotUnit:'g/L'},{unitReview:{status:'pending'}}])assert.equal(matchProviderRanges({...context,...patch} as ProviderRangeContext,[range]).length,0,JSON.stringify(patch));

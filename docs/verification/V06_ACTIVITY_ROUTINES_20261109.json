@@ -1,6 +1,6 @@
 {
   "version": "v0.6",
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_WRITER_CI",
+  "status": "VERIFIED_EXACT_WRITER_CI",
   "authority": [
     "docs/architecture/RECURRING_ACTIVITY_QUICK_LOG_ARCHITECT_RECONCILIATION_20261109.md",
     "docs/architecture/activity/Bloom_User_Testing_Recurring_Activity_Quick_Log_Handoff_2026-11-09.md"
@@ -38,9 +38,16 @@
       "passed": 721,
       "failed": 1,
       "cause": "Existing direct-store ACTIVITY_ACTION_REQUIRED error was inadvertently replaced; original contract restored and focused reader/source tests now pass",
-      "finalExactCI": "PENDING"
+      "finalExactCI": "PASS723/723; initial local failure retained as historical evidence"
     },
-    "exactPublicationCI": "PENDING",
+    "exactPublicationCI": {
+      "commit": "ca560c2090a0b0932de6f908f254f9fcfb0c6f18",
+      "run": 42728609992,
+      "tests": 723,
+      "passed": 723,
+      "failed": 0,
+      "status": "SUCCESS; hosted persistence/isolation/export/erasure and browser/media gates pass"
+    },
     "latestPlannedSourceRegression": "PASS13 source/record/routine tests and final actual browser: states described/planned/planned after confirming exactly one of3; correction uses the same per-set state grammar"
   },
   "notClaimed": [

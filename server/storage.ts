@@ -1,3 +1,4 @@
+import type {LabReportMetadataCommand} from '../shared/lab-report-metadata';
 import type {LabSourceReview} from '../shared/lab-source-review';
 import{getBiologicalReports,deleteBiologicalReports}from'./biological-report-management';
 import type{BiologicalReportCategory,BiologicalReportSnapshot,BiologicalReportDelete}from'../shared/biological-report-management';
@@ -111,6 +112,7 @@ export interface IStorage extends ExperienceStore {
   getBiologicalReports?(userId:string,category:BiologicalReportCategory):Promise<BiologicalReportSnapshot>;
   deleteBiologicalReports?(userId:string,input:BiologicalReportDelete):Promise<{success:true;state:"deleted"|"not-present"}>;
   getLabSources?(userId:string):Promise<LabSourceSummary[]>;
+  saveLabReportMetadata?(userId:string,sourceId:string,input:LabReportMetadataCommand,key:string):Promise<LabSourceSummary>;
   deleteLabSource?(userId:string,id:string,revision:string):Promise<void>;
   deleteLabEntry?(userId: string, id: string): Promise<void>;
   deletePrecisionRecord(userId: string, id: string): Promise<boolean>;
@@ -260,6 +262,7 @@ export class DatabaseStorage implements IStorage {
   getBiologicalReports(userId:string,category:BiologicalReportCategory){return getBiologicalReports(db,userId,category);}
   deleteBiologicalReports(userId:string,input:BiologicalReportDelete){return deleteBiologicalReports(db,userId,input);}
   getLabSources(userId:string){return this.precision.getLabSources(userId);}
+  saveLabReportMetadata(...args:Parameters<PrecisionStorage["saveLabReportMetadata"]>){return this.precision.saveLabReportMetadata(...args);}
   deleteLabSource(userId:string,id:string,revision:string){return this.precision.deleteLabSource(userId,id,revision);}
   deleteLabEntry(userId: string, id: string) {
     return this.precision.deleteLabEntry(userId, id);

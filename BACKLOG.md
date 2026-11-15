@@ -1,3 +1,13 @@
+## Saved laboratory provider/reference management — 2026-11-15
+
+Implemented and engineering-tested the approved Issue11 existing-source workflow and shared persistent overlay preferences. Separate encrypted append-only report annotations preserve original lab observations and clinical kind CHECK. SQL lifecycle triggers protect history/source/account erasure across versions; compare-and-swap, exact retries and actor guards apply. Synthetic27/17/26 reports retain all70 original encrypted values unchanged. Actual management96-state browser, positive synthetic comparison48-state browser, existing explorer/source-review/source-only/routine browsers, types/build and focused SQL/export/schema tests pass. Initial full suite found stale audit hashes and migration-table classification; both repaired with focused regressions. Exact new-commit CI/isolated hosted checks remain pending; no claim of full RC. Receipt: docs/verification/V06_LAB_REPORT_MANAGEMENT_20261115.json.
+
+Previous routine writer ca560c2090a0b0932de6f908f254f9fcfb0c6f18 is now VERIFIED: CI42728609992 passed723/723 and all hosted/browser/media gates. Preserve49 incoming documents/visual registry from74ea4bbe byte-exact; newest owner UI-first theme/asset/no-regression instructions control the next work, ahead of ordinary Core/Advanced expansion after this source workflow is qualified. Do not restart completed routines or request an interim owner checkpoint. Main/v0.5 unchanged; v0.6 stays draft PR6.
+
+Continue: publish this frozen source-management change using current remote-head lease; verify exact CI/hosted migrations/source invariance. Then audit current full-app routes/actions/assets and implement the latest owner botanical/stitch/theme-first contract, preserving all existing workflows and approved green/blue/purple palettes. No provider catalogue activated: source bounds work, all24 BC candidates remain pending complete applicability, and LifeLabs SK remains unavailable. Physical VoiceOver and independent visual/scientific acceptance are not claimed.
+
+---
+
 ## v0.6 routine source reader compatibility — 2026-11-09
 
 ALREADY_VERIFIED baseline c71cad590:719/719 exact CI42694146238 plus owned hosted/source/media gates. This next compatibility slice is IMPLEMENTED_AND_TESTED locally:14 focused checks, types, inventories and production build; exact publication CI pending. New routine plans/explicit actual source snapshots can be read/exported/deleted before any writer emits them. Generic/new routine-source writes stay denied in this build, ordinary activity remains unchanged, and log time is explicitly separate from unknown start time.

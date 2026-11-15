@@ -9,11 +9,12 @@ import { encryptPrecision } from "../server/precision-crypto";
 import { AccountExportStorage } from "../server/account-export";
 import { registerAccountRoutes } from "../server/account-routes";
 import express from "express";
+import {labReportMetadataSchema} from "../shared/lab-report-metadata";
 
 test("account snapshot includes every owned class, decrypts original payloads and isolates another account",async()=>{
  const pg=new PGlite(),previous=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString("base64");
  try {
- const tables=[schema.users,schema.profileMeasurementSources,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.experimentVersions,schema.healthSourceConsents,schema.healthObservations,schema.capabilityPreferences];
+ const tables=[schema.users,schema.profileMeasurementSources,schema.meals,schema.microbiomeSamples,schema.bacterialComposition,schema.metabolites,schema.healthImpacts,schema.mlAnalyses,schema.recommendations,schema.precisionProfiles,schema.precisionRecords,schema.labReportMetadataVersions,schema.nutritionProducts,schema.experienceSettings,schema.experienceRecords,schema.experimentVersions,schema.healthSourceConsents,schema.healthObservations,schema.capabilityPreferences];
  for(const table of tables){const c=getTableConfig(table);await pg.exec(`CREATE TABLE "${c.name}" (${c.columns.map(col=>`"${col.name}" ${col.getSQLType()}`).join(',')})`);}
  const queries:string[]=[];const db=drizzle(pg,{logger:{logQuery(query){queries.push(query);}}}),store=new AccountExportStorage(db as any);
  for(const user of ['a','b']) {
@@ -30,6 +31,8 @@ test("account snapshot includes every owned class, decrypts original payloads an
   const payload={owner:user,value:12,unit:'source-unit',confirmation:'provisional'};
   for(const table of [schema.precisionRecords,schema.nutritionProducts,schema.experienceRecords,schema.healthObservations])await db.insert(table as any).values({id:'private-'+user,userId:user,kind:'lab',sourceKey:'key-'+user,encryptedPayload:encryptPrecision(payload,user)});
   await db.insert(schema.precisionProfiles).values({userId:user,encryptedContext:encryptPrecision(payload,user)});
+  const annotation=labReportMetadataSchema.parse({version:1,sourceId:'a'.repeat(64),groupKey:null,revision:'00000000-0000-4000-8000-000000000001',supersedes:null,sourceRevision:'b'.repeat(64),identity:{provider:'LifeLabs',otherProvider:'',province:user==='a'?'SK':'BC',location:'Synthetic '+user,assertion:'user-confirmed'},identityAssertedAt:'2026-10-01T00:00:00Z',overlay:{provider:'none',province:'',otherProvider:''},recordedAt:'2026-10-01T00:00:00Z',receiptHash:'c'.repeat(64)});
+  await db.insert(schema.labReportMetadataVersions).values({id:'annotation-'+user,userId:user,sourceId:annotation.sourceId,sourceRecordIds:['private-'+user],encryptedPayload:encryptPrecision(annotation,user)});
   await db.insert(schema.experimentVersions).values({id:'version-'+user,recordId:'private-'+user,encryptedPayload:encryptPrecision({...payload,originalValue:0},user),sourceCreatedAt:new Date('2026-10-01T00:00:00Z'),sourceUpdatedAt:new Date('2026-10-02T00:00:00Z'),supersededAt:new Date('2026-10-03T00:00:00Z')});
   await db.insert(schema.experienceSettings).values({userId:user,encryptedPayload:encryptPrecision(payload,user)});
   await db.insert(schema.healthSourceConsents).values({userId:user,provider:'apple_health',encryptedPayload:encryptPrecision(payload,user)});
@@ -44,6 +47,7 @@ test("account snapshot includes every owned class, decrypts original payloads an
  const {sourceOnlyLabSchema}=await import("../shared/precision-nutrition");const sourceOnly=sourceOnlyLabSchema.parse({sourceOnly:true,reportedAnalyte:" Unmapped source assay ",reportedValue:"<0.50",reportedUnit:null,measuredAt:"2026-10-15T12:00:00Z",laboratory:"Synthetic source",method:"Not supplied",fasting:"unknown",sourceReport:sourceLab.sourceReport,sourceInput:{text:" Unmapped source assay, <0.50 ",number:"<0.50",suppliedUnit:null,capture:"pasted-report",reportedSection:" [ Unknown source category ] ",rowOrder:9}});
  await db.insert(schema.precisionRecords).values({id:"source-only-a",userId:"a",kind:"lab",encryptedPayload:encryptPrecision(sourceOnly,"a")});
  queries.length=0;const a=await store.exportAccount('a'),b=await store.exportAccount('b');
+ assert.equal(a.biology.reportMetadata.status,'available');assert.equal(a.biology.reportMetadata.versions!.length,1);assert.equal(a.biology.reportMetadata.versions![0].id,'annotation-a');assert.equal(a.biology.reportMetadata.versions![0].payload.identity?.province,'SK');assert.equal(b.biology.reportMetadata.versions![0].payload.identity?.province,'BC');assert.equal('receiptHash' in a.biology.reportMetadata.versions![0].payload,false,'Internal retry fingerprints do not belong in a private source export');
  const exportedSource=a.biology.records.find(record=>record.id==="source-lab-a") as any;
  assert.deepEqual(labSchema.parse(exportedSource.payload),sourceLab);assert.equal(exportedSource.payload.sourceInput.reportedSection,"  [ ORIGINAL REPORTED GROUP ]  ");assert.equal(exportedSource.payload.sourceInput.rowOrder,1);assert.equal(exportedSource.payload.sourceInput.number,"0.00");assert.ok(!b.biology.records.some(record=>record.id==="source-lab-a"));
  assert.deepEqual((a.biology.records.find(record=>record.id==="source-only-a")as any).payload,sourceOnly);assert.ok(!b.biology.records.some(record=>record.id==="source-only-a"));
@@ -69,6 +73,7 @@ test("account snapshot includes every owned class, decrypts original payloads an
  assert.equal((a.savedLabels[0].payload as any).owner,'a');assert.equal((a.experience.records[0].payload as any).owner,'a');assert.equal((a.healthSources.observations![0].payload as any).owner,'a');
  const text=JSON.stringify(a);for(const forbidden of ['HASH-MUST-NOT-EXPORT','AUTH-GRANT-MUST-NOT-EXPORT','/private/internal.fastq','encryptedPayload','ciphertext','sample-b','meal-b','FORBIDDEN_','predictedConcentration','impactScore','productionGenes'])assert.equal(text.includes(forbidden),false);
  await assert.rejects(()=>store.exportAccount('missing'));
+ await pg.exec('DROP TABLE lab_report_metadata_versions');const noAnnotations=await store.exportAccount('a');assert.equal(noAnnotations.biology.reportMetadata.status,'not-provisioned');assert.equal(noAnnotations.biology.reportMetadata.versions,null);assert.ok(noAnnotations.biology.records.some(record=>record.id==='source-lab-a'));
  await pg.exec('DROP TABLE experiment_versions');const noHistory=await store.exportAccount('a');assert.equal(noHistory.experience.history.status,'not-provisioned');assert.equal(noHistory.experience.history.versions,null);
  await pg.exec('DROP TABLE health_source_consents');const older=await store.exportAccount('a');assert.equal(older.healthSources.storage.consents,'not-provisioned');assert.equal(older.healthSources.consents,null);assert.equal(older.healthSources.observations!.length,1);assert.equal(older.journal.length,1);
  await pg.exec('DROP TABLE health_observations');assert.equal((await store.exportAccount('a')).healthSources.observations,null);
