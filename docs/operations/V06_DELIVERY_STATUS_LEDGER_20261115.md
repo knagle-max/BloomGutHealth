@@ -65,3 +65,5 @@ The receipts listed here are **historical evidence**, not live HEAD/CI/Render ve
 
 ## Current next actions
 Select from **[NEXT_ACTIONS.md](../../NEXT_ACTIONS.md)**: validate T0 publication check once, then T1 app-wide visual/asset vertical slices, then incomplete T2 Core tasks, authorized Advanced and SwiftUI late. This ledger is **not** a second task selector.
+
+2026-11-15 | V06-EXP-ACCESS-01 | ENGINEERING_TESTED; explicit standing grant plus legacy expiry/fingerprint compatibility,21 focused/HTTP/SQL tests and synthetic App preview/revocation PASS. Actual runtime configuration/CAS transition pending publication; no permanent-access/session verification claim yet. Receipt V06_STANDING_TESTER_ACCESS_20261115.json.
