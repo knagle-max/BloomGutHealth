@@ -2669,27 +2669,27 @@
     },
     {
       "id": "BVA-0032",
-      "name": "Biology overview — Bloodwork with vial",
+      "name": "Biology overview — Bloodwork with vial (text-safe)",
       "route": "/precision",
       "component": "Biology overview > Bloodwork navigation tile",
-      "purpose": "Distinctive editorial visual for Bloodwork entry on Biology overview; preserve existing counts and disclosure navigation",
+      "purpose": "Premium editorial visual storytelling for Biology entry tile, with text-safe left side for mobile and desktop",
       "category": "editorial-banner",
-      "subject": "red blood cells and a prominent capped laboratory blood collection vial in a cinematic conceptual scene",
-      "composition": "wide 3:1; vial and red cells prominent toward right; no embedded UI text; readable copy outside image",
-      "scientificAccuracy": "Conceptual illustration, not an actual patient result, microscopy observation, or diagnostic image. Scientific review required before using it for factual education.",
+      "subject": "Red blood cells, a white blood cell and red-capped blood collection vial weighted toward right",
+      "composition": "3:1 full-width static banner; calm left ~45–55%, focal subject at right; no embedded controls or section headings",
+      "scientificAccuracy": "Illustrative/conceptual media only; not personal findings, live wearable data, actual laboratory or microbiome imagery. Verify biological detail before factual educational use.",
       "mode": [
         "everyday-green-light",
         "everyday-green-dark"
       ],
-      "textPlacement": "all text and controls on opaque separate surface, never on untreated photo",
+      "textPlacement": "DOM-layered text on protected opaque or high-contrast panel. The bitmap itself does not establish WCAG AA.",
       "aspectRatio": "3:1",
       "targetDimensions": {
         "width": 2172,
         "height": 724
       },
       "responsiveVariants": [
-        "1086×362 standard WebP",
-        "2172×724 high-DPI WebP"
+        "1086x362 1x WebP",
+        "2172x724 2x WebP"
       ],
       "transparent": false,
       "outputFormats": [
@@ -2700,54 +2700,293 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "owner-selected-generated-and-shared-library-published",
+        "action": "designer-generated-and-shared-library-published",
         "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
-        "existingSlot": "Biology > Bloodwork tile",
+        "existingSlot": "Biology > Bloodwork",
         "existingPath": null,
         "existingArtifactByteVerified": true,
-        "deliveryArchive": "Bloom_BVA_0032_Biology_Bloodwork_Vial_2026-11-15.zip",
-        "deliveryManifest": "BVA_0032_Biology_Bloodwork_Vial_Manifest_2026-11-15.json"
+        "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
       },
       "lifecycle": "Generated",
-      "productionStatus": "Owner-selected Bloodwork image with vial; original PNG and 1x/2x WebPs published to Agent Handoffs. GitHub binary import and application visual QA pending.",
+      "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
       "filePaths": [],
       "integration": {
-        "state": "Not yet integrated; Codex to import binaries, wire category tile, verify HTTP/hash, and test responsive screenshots",
+        "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "Owner selected this rendition; rendered app not tested",
-        "scientific": "pending for biology/hematology factual use",
+        "design": "user requested text-safe revision; independent actual screen check pending",
+        "scientific": "pending where used educationally",
         "rights": "commercial-use provenance pending",
-        "rendered": "not tested at mobile and desktop"
+        "rendered": "pending mobile, desktop, dark theme and 200% zoom"
       },
       "statusEvidence": {
-        "auditedFrom": "Generated asset saved in conversation, optimized and SHA-256 verified with Library publication",
-        "date": "2026-11-15"
+        "date": "2026-11-15",
+        "auditedFrom": "Actual separate PNGs, optimized WebPs, SHA-256 manifest and successfully published Shared Library archives"
       },
       "delivery": {
-        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0032_Biology_Bloodwork_Vial_2026-11-15.zip",
-        "manifest": "/Bloom gut health/Agent Handoffs/BVA_0032_Biology_Bloodwork_Vial_Manifest_2026-11-15.json",
-        "original": "originals/BVA-0032-biology-bloodwork-vial.png",
-        "webp": "webp/BVA-0032-biology-bloodwork-vial.webp",
-        "webp2x": "webp/BVA-0032-biology-bloodwork-vial@2x.webp",
-        "originalSha256": "60c0efe7d6d105f08bc933fe07a01144ae661d60133dd74d62a47dd89ab0ed68",
-        "webpSha256": "715d4b863cfbfaf8ba40a301f306b83756cb12694e26421c30e681aefc1009ef",
-        "webp2xSha256": "680183461a7c81a6686cddb6dac14da4d3c9cf9a0198bbf64d6c560bc6828a60",
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "lightweightArchive": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_WebP_Only_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "original": "originals/BVA-0032-biology-bloodwork-vial-text-safe.png",
+        "webp": "webp/BVA-0032-biology-bloodwork-vial-text-safe.webp",
+        "webp2x": "webp/BVA-0032-biology-bloodwork-vial-text-safe@2x.webp",
+        "webpSha256": "c0845e423257961d1da5d2eaffc8ae68031b2f7704789f8b56973e7af2ea0633",
         "dimensions": [
           2172,
           724
         ],
-        "publicImportTarget": "/images/registry/biology/BVA-0032-biology-bloodwork-vial.webp"
+        "publicImportTarget": "/images/editorial/biology/BVA-0032-biology-bloodwork-vial-text-safe.webp"
       },
       "relatedRegistryIds": [
         "BVA-0009"
       ],
-      "notes": "BVA-0009 remains the original Bloodwork landing hero. BVA-0032 is an intentional separate artwork for Biology overview entry tile, not a replacement."
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls.",
+      "previousRendition": {
+        "status": "superseded by 2026-11-15 text-safe revision, preserved as historical source archive",
+        "delivery": {
+          "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0032_Biology_Bloodwork_Vial_2026-11-15.zip",
+          "manifest": "/Bloom gut health/Agent Handoffs/BVA_0032_Biology_Bloodwork_Vial_Manifest_2026-11-15.json",
+          "original": "originals/BVA-0032-biology-bloodwork-vial.png",
+          "webp": "webp/BVA-0032-biology-bloodwork-vial.webp",
+          "webp2x": "webp/BVA-0032-biology-bloodwork-vial@2x.webp",
+          "originalSha256": "60c0efe7d6d105f08bc933fe07a01144ae661d60133dd74d62a47dd89ab0ed68",
+          "webpSha256": "715d4b863cfbfaf8ba40a301f306b83756cb12694e26421c30e681aefc1009ef",
+          "webp2xSha256": "680183461a7c81a6686cddb6dac14da4d3c9cf9a0198bbf64d6c560bc6828a60",
+          "dimensions": [
+            2172,
+            724
+          ],
+          "publicImportTarget": "/images/registry/biology/BVA-0032-biology-bloodwork-vial.webp"
+        }
+      }
+    },
+    {
+      "id": "BVA-0033",
+      "name": "Biology overview — Gut Reports (text-safe)",
+      "route": "/precision",
+      "component": "Biology overview > Gut reports navigation tile",
+      "purpose": "Premium editorial visual storytelling for Biology entry tile, with text-safe left side for mobile and desktop",
+      "category": "editorial-banner",
+      "subject": "Conceptual intestinal villi with colorful microbial shapes weighted toward right",
+      "composition": "3:1 full-width static banner; calm left ~45–55%, focal subject at right; no embedded controls or section headings",
+      "scientificAccuracy": "Illustrative/conceptual media only; not personal findings, live wearable data, actual laboratory or microbiome imagery. Verify biological detail before factual educational use.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "DOM-layered text on protected opaque or high-contrast panel. The bitmap itself does not establish WCAG AA.",
+      "aspectRatio": "3:1",
+      "targetDimensions": {
+        "width": 2172,
+        "height": 724
+      },
+      "responsiveVariants": [
+        "1086x362 1x WebP",
+        "2172x724 2x WebP"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "designer-generated-and-shared-library-published",
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "Biology > Gut reports",
+        "existingPath": null,
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+      },
+      "lifecycle": "Generated",
+      "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "user requested text-safe revision; independent actual screen check pending",
+        "scientific": "pending where used educationally",
+        "rights": "commercial-use provenance pending",
+        "rendered": "pending mobile, desktop, dark theme and 200% zoom"
+      },
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Actual separate PNGs, optimized WebPs, SHA-256 manifest and successfully published Shared Library archives"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "lightweightArchive": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_WebP_Only_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "original": "originals/BVA-0033-biology-gut-reports-text-safe.png",
+        "webp": "webp/BVA-0033-biology-gut-reports-text-safe.webp",
+        "webp2x": "webp/BVA-0033-biology-gut-reports-text-safe@2x.webp",
+        "webpSha256": "dc88f5242930b7d5b39660b97efdd04133ceb203ea2a3327679b2ab3843b59b7",
+        "dimensions": [
+          2172,
+          724
+        ],
+        "publicImportTarget": "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe.webp"
+      },
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls."
+    },
+    {
+      "id": "BVA-0034",
+      "name": "Biology overview — Genetics (text-safe)",
+      "route": "/precision",
+      "component": "Biology overview > Genetics navigation tile",
+      "purpose": "Premium editorial visual storytelling for Biology entry tile, with text-safe left side for mobile and desktop",
+      "category": "editorial-banner",
+      "subject": "Conceptual DNA double helix in teal, lilac and warm gold weighted toward right",
+      "composition": "3:1 full-width static banner; calm left ~45–55%, focal subject at right; no embedded controls or section headings",
+      "scientificAccuracy": "Illustrative/conceptual media only; not personal findings, live wearable data, actual laboratory or microbiome imagery. Verify biological detail before factual educational use.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "DOM-layered text on protected opaque or high-contrast panel. The bitmap itself does not establish WCAG AA.",
+      "aspectRatio": "3:1",
+      "targetDimensions": {
+        "width": 2172,
+        "height": 724
+      },
+      "responsiveVariants": [
+        "1086x362 1x WebP",
+        "2172x724 2x WebP"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "designer-generated-and-shared-library-published",
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "Biology > Genetics",
+        "existingPath": null,
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+      },
+      "lifecycle": "Generated",
+      "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "user requested text-safe revision; independent actual screen check pending",
+        "scientific": "pending where used educationally",
+        "rights": "commercial-use provenance pending",
+        "rendered": "pending mobile, desktop, dark theme and 200% zoom"
+      },
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Actual separate PNGs, optimized WebPs, SHA-256 manifest and successfully published Shared Library archives"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "lightweightArchive": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_WebP_Only_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "original": "originals/BVA-0034-biology-genetics-text-safe.png",
+        "webp": "webp/BVA-0034-biology-genetics-text-safe.webp",
+        "webp2x": "webp/BVA-0034-biology-genetics-text-safe@2x.webp",
+        "webpSha256": "607aa4505c5f1f1552a7d5896d378c65f67d2ff0b8076681b94419429bd29f3c",
+        "dimensions": [
+          2172,
+          724
+        ],
+        "publicImportTarget": "/images/editorial/biology/BVA-0034-biology-genetics-text-safe.webp"
+      },
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls."
+    },
+    {
+      "id": "BVA-0035",
+      "name": "Biology overview — Measurements (text-safe)",
+      "route": "/precision",
+      "component": "Biology overview > Measurements navigation tile",
+      "purpose": "Premium editorial visual storytelling for Biology entry tile, with text-safe left side for mobile and desktop",
+      "category": "editorial-banner",
+      "subject": "Illustrative smartwatch and measuring tape weighted toward right; watch image contains fictional step figure 10,432, never user data",
+      "composition": "3:1 full-width static banner; calm left ~45–55%, focal subject at right; no embedded controls or section headings",
+      "scientificAccuracy": "Illustrative/conceptual media only; not personal findings, live wearable data, actual laboratory or microbiome imagery. Verify biological detail before factual educational use.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "DOM-layered text on protected opaque or high-contrast panel. The bitmap itself does not establish WCAG AA.",
+      "aspectRatio": "3:1",
+      "targetDimensions": {
+        "width": 2172,
+        "height": 724
+      },
+      "responsiveVariants": [
+        "1086x362 1x WebP",
+        "2172x724 2x WebP"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "designer-generated-and-shared-library-published",
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "Biology > Measurements",
+        "existingPath": null,
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+      },
+      "lifecycle": "Generated",
+      "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
+      "filePaths": [],
+      "integration": {
+        "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "user requested text-safe revision; independent actual screen check pending",
+        "scientific": "pending where used educationally",
+        "rights": "commercial-use provenance pending",
+        "rendered": "pending mobile, desktop, dark theme and 200% zoom"
+      },
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Actual separate PNGs, optimized WebPs, SHA-256 manifest and successfully published Shared Library archives"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
+        "lightweightArchive": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_WebP_Only_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "original": "originals/BVA-0035-biology-measurements-text-safe.png",
+        "webp": "webp/BVA-0035-biology-measurements-text-safe.webp",
+        "webp2x": "webp/BVA-0035-biology-measurements-text-safe@2x.webp",
+        "webpSha256": "7443c821c8f25848b1f18a686597e3f93d502dc545e48399968225eaa58a0f0e",
+        "dimensions": [
+          2172,
+          724
+        ],
+        "publicImportTarget": "/images/editorial/biology/BVA-0035-biology-measurements-text-safe.webp"
+      },
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls."
     }
   ],
-  "lastDesignerDelivery": "2026-11-15: published BVA-0032 vial-inclusive Biology Bloodwork tile via Shared Library, registered hashes and import target; rendered application QA pending",
+  "lastDesignerDelivery": "2026-11-15: Biology overview 4 text-safe banners delivered (BVA-0032 revised; BVA-0033–0035 new) as independent PNGs/WebPs; GitHub image integration and rendered QA pending",
   "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "No per-image owner approval for generation, integration, development/review-branch publication, asset-library handoff or QA. Codex and specialists perform appropriate design/science/rights QA autonomously. Owner reviews imagery, UI and functionality together at an integrated release candidate; explicit owner correcting instructions reopen only affected assets. Protected public/production release and external legal/privacy/licensing/clinical permissions are separate.",
