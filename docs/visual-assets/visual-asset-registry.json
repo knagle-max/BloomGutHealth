@@ -1,0 +1,1677 @@
+{
+  "schemaVersion": "1.0.0",
+  "lastArchitectReview": "2026-11-14",
+  "registryStatus": "architect-seeded PARTIAL; Codex must complete all route/component rendered audit",
+  "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
+  "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
+  "allowedLifecycle": [
+    "Identified",
+    "Briefed",
+    "Approved for Production",
+    "Generated",
+    "Design Reviewed",
+    "Scientific Reviewed",
+    "Approved",
+    "Integrated",
+    "Visually Verified",
+    "Retired"
+  ],
+  "lifecycleNotes": "Scientific Reviewed is conditional and recorded as not-applicable by reviewer for purely decorative assets, not falsely skipped; requested/created/integrated distinct",
+  "enforcedPendingCodex": true,
+  "reference": "docs/architecture/OWNER_IMMERSIVE_BOTANICAL_BLOODWORK_VISUAL_BENCHMARK_20261114.md",
+  "visualPromptStandard": "docs/architecture/AI_FIRST_VISUAL_ASSET_PROMPT_AND_PRODUCTION_STANDARD_20261114.md",
+  "assets": [
+    {
+      "id": "BVA-0001",
+      "name": "Today editorial hero",
+      "route": "/",
+      "component": "Dashboard/EverydayStart",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "natural botanical wellness environment with intentional left text negative space",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: natural botanical wellness environment with intentional left text negative space. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "today",
+        "existingPath": "/images/editorial/heroes/bloom-today-meadow.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/heroes/bloom-today-meadow.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0002",
+      "name": "Food editorial hero",
+      "route": "/nutrition",
+      "component": "NutritionHistory/EditorialMedia",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "handmade ivory ceramic breakfast still-life real hydrated oats berries natural window light",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: handmade ivory ceramic breakfast still-life real hydrated oats berries natural window light. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "food",
+        "existingPath": "/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/heroes/bloom-food-oatmeal-linen.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0003",
+      "name": "Biology editorial hero",
+      "route": "/precision",
+      "component": "PrecisionNutrition/EditorialMedia",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "abstract organic scientific biological forms without invented quantified findings",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: abstract organic scientific biological forms without invented quantified findings. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "biology",
+        "existingPath": "/images/editorial/heroes/bloom-biology-abstract-cells.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/heroes/bloom-biology-abstract-cells.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0004",
+      "name": "Explore editorial hero",
+      "route": "/explore",
+      "component": "Explore/EditorialMedia",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "nature-to-science close-up organic biochemical study visual",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: nature-to-science close-up organic biochemical study visual. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "explore",
+        "existingPath": "/images/editorial/heroes/bloom-explore-blueberry-macro.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/heroes/bloom-explore-blueberry-macro.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0005",
+      "name": "Athlete editorial hero",
+      "route": "/athlete",
+      "component": "Athlete shared presentation",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "natural outdoor athlete environment; approved blue accents",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: natural outdoor athlete environment; approved blue accents. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "athlete",
+        "existingPath": "/images/editorial/heroes/bloom-athlete-mountains.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/heroes/bloom-athlete-mountains.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0006",
+      "name": "Progress botanical accent",
+      "route": "/progress",
+      "component": "Progress/EditorialMedia",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "three-leaf organic sprig restrained paper ledger styling",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: three-leaf organic sprig restrained paper ledger styling. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "progress",
+        "existingPath": "/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/cutouts/bloom-three-leaf-sprig.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0007",
+      "name": "Profile botanical accent",
+      "route": "/profile",
+      "component": "Profile/EditorialMedia",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "modest botanical sprig on warm understated background",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: modest botanical sprig on warm understated background. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "profile",
+        "existingPath": "/images/editorial/cutouts/bloom-three-leaf-sprig.webp",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/images/editorial/cutouts/bloom-three-leaf-sprig.webp"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0008",
+      "name": "Empty Food journal",
+      "route": "/nutrition",
+      "component": "Journal empty state",
+      "purpose": "supportive accessible no-data experience",
+      "category": "empty-state",
+      "subject": "tasteful isolated botanical line-illustration for no food recorded",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": true,
+      "outputFormats": [
+        "svg",
+        "png"
+      ],
+      "promptBrief": "Editorial Bloom empty-state image: tasteful isolated botanical line-illustration for no food recorded. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "reuse-review",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "journal-empty",
+        "existingPath": "/brand/visual-v2/batch-1-original/empty-journal.svg",
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "filePaths": [
+        "/brand/visual-v2/batch-1-original/empty-journal.svg"
+      ],
+      "integration": {
+        "state": "existing mapping present; route-level rendering needs verification",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0009",
+      "name": "Immersive bloodwork landing hero",
+      "route": "/precision",
+      "component": "Bloodwork hero / original report overview",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "organic deep evergreen macro environment with lifelike red blood cells floating at upper-right and soft botanical texture, left third left readable",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: organic deep evergreen macro environment with lifelike red blood cells floating at upper-right and soft botanical texture, left third left readable. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0010",
+      "name": "Cardiovascular system thumbnail",
+      "route": "/precision",
+      "component": "Bloodwork system heart/cardio category",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "thumbnail",
+      "subject": "anatomically credible human heart editorial anatomical sculpture with natural soft sidelighting, dark forest background",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom thumbnail image: anatomically credible human heart editorial anatomical sculpture with natural soft sidelighting, dark forest background. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0011",
+      "name": "Glycaemic system thumbnail",
+      "route": "/precision",
+      "component": "Bloodwork system glucose category",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "thumbnail",
+      "subject": "restrained botanical microscopic glucose metabolism metaphor, no fake glucose meter",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom thumbnail image: restrained botanical microscopic glucose metabolism metaphor, no fake glucose meter. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0012",
+      "name": "Liver and biliary thumbnail",
+      "route": "/precision",
+      "component": "Bloodwork system liver category",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "thumbnail",
+      "subject": "anatomically credible human liver with subtle biliary vascular architecture warm directional illumination",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom thumbnail image: anatomically credible human liver with subtle biliary vascular architecture warm directional illumination. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0013",
+      "name": "Iron and blood thumbnail",
+      "route": "/precision",
+      "component": "Bloodwork system hematology category",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "thumbnail",
+      "subject": "realistic morphology red blood cells in atmospheric green scientific macro scene, not patient blood micrograph",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom thumbnail image: realistic morphology red blood cells in atmospheric green scientific macro scene, not patient blood micrograph. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0014",
+      "name": "Bone and micronutrient thumbnail",
+      "route": "/precision",
+      "component": "Bloodwork system bone category",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "thumbnail",
+      "subject": "anatomical cancellous bone microstructure conceptual cutaway with natural light",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom thumbnail image: anatomical cancellous bone microstructure conceptual cutaway with natural light. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0015",
+      "name": "Meal suggestion photograph",
+      "route": "/meal-planner",
+      "component": "Meal planner/Today suggested meal card",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "single plausible real cooked meal matching actual approved ingredient recipe and exclusions; dynamic generation must not falsely match logged food",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:3",
+      "targetDimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: single plausible real cooked meal matching actual approved ingredient recipe and exclusions; dynamic generation must not falsely match logged food. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 4:3; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0016",
+      "name": "Food nutrient journal accent",
+      "route": "/nutrition",
+      "component": "NutritionHistory nutrient section",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "natural macro of grains and seeds with real irregular forms and soft linen",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:3",
+      "targetDimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: natural macro of grains and seeds with real irregular forms and soft linen. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 4:3; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0017",
+      "name": "Microbiome editorial category backdrop",
+      "route": "/microbiome",
+      "component": "Gut report system overview",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "scientific microbial ecosystem in an abstract garden metaphor, no species diagnostic photo claim",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: scientific microbial ecosystem in an abstract garden metaphor, no species diagnostic photo claim. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0018",
+      "name": "Genetic biology editorial accent",
+      "route": "/precision",
+      "component": "Genetics overview",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "responsible DNA helices as original scientific illustration with soft forest atmosphere",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:3",
+      "targetDimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: responsible DNA helices as original scientific illustration with soft forest atmosphere. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 4:3; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0019",
+      "name": "Explore living atlas scene",
+      "route": "/explore",
+      "component": "Mechanism explorer hero/entry",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "organic botanical root and illustrated molecule-pathway network visual, clean left negative space, no empirical personal activation",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: organic botanical root and illustrated molecule-pathway network visual, clean left negative space, no empirical personal activation. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0020",
+      "name": "Explore pathway diagram kit",
+      "route": "/explore",
+      "component": "Graph mechanism nodes and links",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "illustration",
+      "subject": "editable SVG scientific atlas nodes, connection rules and typography-free backgrounds",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Conceptual educational illustration; anatomically/scientifically accurate and independently reviewed before factual use; never a personal diagnostic image.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:3",
+      "targetDimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "svg",
+        "png"
+      ],
+      "promptBrief": "Original editable Bloom scientific atlas illustration: editable SVG scientific atlas nodes, connection rules and typography-free backgrounds. Fine precise editorial ink and believable scientific structure, warm botanical environmental depth, no embedded text, chart values, logos or watermarks. UI crop 4:3, visually simple enough for accessible app-rendered labels.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0021",
+      "name": "Progress longitudinal editorial scene",
+      "route": "/progress",
+      "component": "Progress header",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "quiet botanically infused environmental detail with right-subject and left clean text, legible chart surface below",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: quiet botanically infused environmental detail with right-subject and left clean text, legible chart surface below. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0022",
+      "name": "Athlete exercise technique study",
+      "route": "/athlete",
+      "component": "Workout detail/movement illustration",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "real person executing verified strength exercise with credible hand position joints fabric sweat and approved blue accents",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:5",
+      "targetDimensions": {
+        "width": 1000,
+        "height": 1250
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: real person executing verified strength exercise with credible hand position joints fabric sweat and approved blue accents. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 4:5; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0023",
+      "name": "Athlete recovery editorial",
+      "route": "/athlete/recovery",
+      "component": "Recovery section",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "candid post-workout outdoor recovery cool natural daylight blue-led ambience",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: candid post-workout outdoor recovery cool natural daylight blue-led ambience. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0024",
+      "name": "Coach editorial header",
+      "route": "/insights",
+      "component": "Coach professional surface when enabled",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "warm collaborative coaching interaction editorial with approved purple environment accents, no false clinical endorsement",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "coach-purple-light",
+        "coach-purple-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: warm collaborative coaching interaction editorial with approved purple environment accents, no false clinical endorsement. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0025",
+      "name": "Onboarding welcome atmosphere",
+      "route": "/signup",
+      "component": "Signup/onboarding",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "natural organic botanical green interior illuminated from left, clear copy-safe space",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom hero image: natural organic botanical green interior illuminated from left, clear copy-safe space. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 16:9; subject on right third with softly dark/quiet left-third overlay-safe negative space. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0026",
+      "name": "No lab records empty state",
+      "route": "/precision",
+      "component": "Bloodwork no records state",
+      "purpose": "supportive accessible no-data experience",
+      "category": "empty-state",
+      "subject": "original botanical clinical-notebook illustration with neutral glass specimen and foliage, no fake specimen data",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": true,
+      "outputFormats": [
+        "svg",
+        "png"
+      ],
+      "promptBrief": "Editorial Bloom empty-state image: original botanical clinical-notebook illustration with neutral glass specimen and foliage, no fake specimen data. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0027",
+      "name": "No activity recorded state",
+      "route": "/activity",
+      "component": "Activity empty state",
+      "purpose": "supportive accessible no-data experience",
+      "category": "empty-state",
+      "subject": "subtle running shoe or trail marker illustration, friendly source-independent atmosphere",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": true,
+      "outputFormats": [
+        "svg",
+        "png"
+      ],
+      "promptBrief": "Editorial Bloom empty-state image: subtle running shoe or trail marker illustration, friendly source-independent atmosphere. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 1:1; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    },
+    {
+      "id": "BVA-0028",
+      "name": "Source-import education",
+      "route": "/upload",
+      "component": "Upload explanation/empty state",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "warm tactile paper lab documents and no legible fake medical values, editorial still-life",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:3",
+      "targetDimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Editorial Bloom accent image: warm tactile paper lab documents and no legible fake medical values, editorial still-life. Natural imperfect physical surfaces, believable material contact, specific optics suitable to subject (35mm f/2.8 environmental for heroes; 50mm f/4 for close-up), directional natural side/window lighting, subtle film grain and physically plausible depth of field. UI composition 4:3; single clear focal point with generous edge-safe crop and unobtrusive background. Restrained forest/sage warmth except Athlete blue or Coach purple mode. Avoid plastic-looking polish, toy-like CGI, wax-figure skin, oversaturation, incorrect anatomy, false clinical imaging, text, logos and watermarks.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "generate",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Identified",
+      "productionStatus": "new brief; not generated",
+      "filePaths": [],
+      "integration": {
+        "state": "not integrated",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending",
+        "scientific": "pending where relevant",
+        "rights": "pending",
+        "rendered": "pending"
+      },
+      "statusEvidence": {
+        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "date": "2026-11-14"
+      }
+    }
+  ]
+}
