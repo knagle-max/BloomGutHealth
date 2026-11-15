@@ -1,4 +1,5 @@
 import {additionalLabMarkers} from './additional-lab-markers';
+import {assessLabComparability,labComparabilityReasons} from './lab-comparability';
 import {supportsVitaminDStatus,vitaminDAssayIdentity,hasConfirmedLabIdentity} from "./lab-assay-identity";
 import {markerEducation} from './biology-labs';
 import {BIOLOGY_CONTENT_VERSION} from './biology-content-types';
@@ -1261,12 +1262,8 @@ export function buildPrecisionReport(
     if (!series.length) return [];
     const first = series[0],
       last = series[series.length - 1];
-    const known = (v: string) => !!v.trim() && !/^(unknown|not supplied)$/i.test(v.trim());
-    const comparable = series.every(point=>hasConfirmedLabIdentity(m.id,point)) && series.length > 1 && known(first.laboratory) && known(first.method) &&
-      new Set(series.map(l => Date.parse(l.measuredAt))).size === series.length &&
-      series.every(l => l.laboratory === first.laboratory && l.method === first.method &&
-        l.fasting === first.fasting && canonicalLab(l).unit === canonicalLab(first).unit) &&
-      (!["glucose", "triglycerides"].includes(m.id) || first.fasting !== "unknown");
+    const comparability = assessLabComparability(m.id,series.map(point=>({...point,date:point.measuredAt,...canonicalLab(point)})));
+    const {comparable}=comparability;
     return [
       {
         marker: m.id,
@@ -1285,12 +1282,13 @@ export function buildPrecisionReport(
           ...canonicalLab(l),
         })),
         comparable,
+        comparabilityReasons:comparability.reasons,
         change: comparable
           ? canonicalLab(last).value - canonicalLab(first).value
           : null,
         note: comparable
           ? "Same reported lab, known method and relevant fasting status; change is observational, not proof of dietary causation."
-          : "Measurement comparability is unverified. Separate dates and matching laboratory, method and relevant fasting conditions are needed to assess a change; recorded points do not establish clinical significance.",
+          : `Measurement comparability is unverified. ${comparability.reasons.map(reason=>labComparabilityReasons[reason]).join(' ')} Recorded points do not establish clinical significance.`,
       },
     ];
   });

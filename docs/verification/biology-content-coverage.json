@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 311,
-    "sourceFilesScanned": 732,
+    "sourceFilesScanned": 734,
     "relevantSourceFiles": 69,
     "researchPathways": 7
   },
@@ -25214,13 +25214,13 @@
     },
     {
       "file": "shared/precision-nutrition.ts",
-      "line": 617,
+      "line": 618,
       "field": "reportedAnalyte",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
     {
       "file": "shared/precision-nutrition.ts",
-      "line": 675,
+      "line": 676,
       "field": "reportedAnalyte",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25378,7 +25378,7 @@
     "scripts/qa/viome-postsave-link-journey.mjs": "19eda9b8dbdb6d053365bf732920b24fc588cb91ccc1b3241307caff6bbc14b3",
     "shared/lab-paste.ts": "bac3247011efe1af98699fe5a621c72fe0bd042097b3aa18e4eca51d21f6bbfb",
     "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
-    "shared/precision-nutrition.ts": "17100542667b7ba9d9b19a41f2ba4c786eaa5163ebe25497aa579c4396c67166",
+    "shared/precision-nutrition.ts": "3fd8f3ded08f4e36af0fda787aec1e5c2a0efecbe2004af52293fd291cbc424b",
     "shared/reported-taxa.ts": "aa5789ab4f24b8740676a53ed0069150ee70aeab4971525f602db412298b2a52",
     "shared/schema.ts": "3a5a433f8354427676c872bbefe79f4528de92fd63f8d26ea470a80cc0c678d1",
     "tests/account-erasure.test.ts": "c58aff3d9c8cee02f8cbceed84a11d6e0033311f45968ffcdf4632d60976094e",
