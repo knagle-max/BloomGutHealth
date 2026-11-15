@@ -112,6 +112,18 @@
 .bloom-food-editorial .bloom-food-summary,
 .bloom-food-editorial .bloom-food-history-panel { overflow-wrap: anywhere; }
 .bloom-food-editorial .saved-nutrients { font-variant-numeric: tabular-nums; }
+.saved-meals-page {
+  overflow-wrap: anywhere;
+}
+.saved-meals-page fieldset {
+  min-inline-size: 0;
+}
+.saved-meals-page :is(button, .text-link, .hero-button) {
+  max-width: 100%;
+  min-height: 44px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
 
 @media (max-width: 640px) {
   .bloom-food-editorial .bloom-food-form,

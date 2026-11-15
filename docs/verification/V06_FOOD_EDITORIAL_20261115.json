@@ -44,6 +44,13 @@
       "browserAndTypes": "PASS; all32 Food states, actual SQL saved editor/retry and paused source lifecycle",
       "failure": "Crosswalk stale source hashes for the two styled pages; next biology audit also needed the new checked-in QA file count",
       "correction": "Only the2 reviewed page hashes and scanned-file count729\u2192730 refreshed. All52 capability entries and521 biology identity records remain byte-equivalent as parsed JSON; no authorization/science approval changed. Both audit checks pass."
+    },
+    "auditedPublishedCI": {
+      "sha": "89448061429634df7735a85e2d5c69fac505da76",
+      "run": "43748622041",
+      "unit": "733/733 PASS; browser/type/source audits/build also passed",
+      "finalFailure": "Navigation Escape assertion raced drawer readiness during deployed layout test; no app handler or clinical record failure identified",
+      "correction": "Navigation check now awaits drawer focus and opening animation, matching existing shell check. Escape detachment and trigger focus-return assertions retained. Local8 layout states plus complete both-mode320/390 light/dark keyboard navigation/drawer/close/focus regression passes. All affected auth/saved UI changes are separately tested."
     }
   },
   "assetOpportunity": "Reuse BVA-0002 original Food editorial media on journal; immediate composer stays task-focused with no new image. No asset bytes or lifecycle/owner approval changed.",

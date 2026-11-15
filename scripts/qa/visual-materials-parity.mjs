@@ -134,6 +134,10 @@ try{
   const trigger=page.getByRole('button',{name:'Open navigation',exact:true});await trigger.focus();await page.keyboard.press('Enter');const menu=page.getByRole('dialog',{name:'Explore Bloom',exact:true});await menu.waitFor();const all=menu.getByRole('navigation',{name:'All pages',exact:true});
   const required=athlete?['/athlete','/athlete/fueling','/athlete/recovery','/athlete/competition','/explore','/progress','/nutrition','/saved-meals','/precision','/microbiome','/upload','/profile']:['/','/precision','/progress','/nutrition','/activity','/plan-day','/meal-planner','/saved-meals','/explore','/microbiome','/insights','/upload','/profile'];
   const targets=await all.locator('a').evaluateAll(links=>links.map(link=>link.getAttribute('href')));assert.deepEqual([...targets].sort(),required.sort(),'All previous secondary routes remain in the drawer');assert.equal(await all.getByRole('link',{name:'Feature management',exact:true}).count(),0,'Ordinary account has no administrative navigation');
+  // Match the interactive-ready boundary used by the shell checks below: a
+  // visible Radix portal may precede focus placement and opening animation.
+  await page.waitForFunction(()=>document.querySelector('.mobile-navigation-sheet')?.contains(document.activeElement));
+  await menu.evaluate(el=>Promise.all(el.getAnimations().map(animation=>animation.finished.catch(()=>{}))));
   await page.keyboard.press('Escape');await menu.waitFor({state:'detached'});assert.equal(await trigger.evaluate(el=>el===document.activeElement),true);
  }
  if(process.env.BLOOM_UI_SHELL_TARGETS==='1')await page.evaluate(()=>{window.bloomShellKeys=[];document.addEventListener('keydown',event=>{window.bloomShellKeys.push({key:event.key,prevented:event.defaultPrevented,target:event.target.tagName});});});

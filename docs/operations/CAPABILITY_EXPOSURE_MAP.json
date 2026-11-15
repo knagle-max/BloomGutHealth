@@ -1908,7 +1908,7 @@
     "client/src/components/ProviderFoodSuggestions.tsx": "7af2c558458edfceb1276fb63ae737ac29eb310dbe543b033598a3855dd79438",
     "client/src/components/QuickLabEntry.tsx": "b3aecee8acecefb7b58d48e226097106f70f6d659e4819efe3a2433339cef5d3",
     "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",
-    "client/src/components/SavedMeals.tsx": "79729d976cb12c63e2ba9d26984e02bcb75fe36d094bbfa93b478a03e37c578d",
+    "client/src/components/SavedMeals.tsx": "58c8d105cf3d5613614830a9b7722f96245b5e107e2ed1504f9585a6a9cfc826",
     "client/src/components/TodayFocus.tsx": "5d96662ec30fd42f47aaa47b42897c7844956ca50306c636d88492739810cf0b",
     "client/src/components/TodayFoodSummary.tsx": "f8a0a9fe6b0cc6f5ad05a584877ff5a7b9eebd4026b140e09d3cc30ec9ef23e8",
     "client/src/components/TodayStatus.tsx": "cc4357786ff03cad883b8dff47ba6acc66e878a6b9e72cef58cee36a547b687b",

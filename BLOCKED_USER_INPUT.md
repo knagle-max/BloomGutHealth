@@ -1,3 +1,21 @@
+## Drawer check synchronization is locally resolved — 2026-11-15
+
+No owner input: previous full CI's timing-sensitive drawer Escape check now waits for the same focus/animation readiness as existing shell checks, retaining close/focus assertions. Targeted actual-browser checks pass; publish tested auth/saved reflow and QA correction together, then qualify exact source. Artifact access remains feature-scoped only.
+
+---
+
+## Saved-meal reflow needs no user input — 2026-11-15
+
+Reproduced mobile overflow is locally fixed/tested with exact retry and actual encrypted saved-source review. Auth+saved reflow publication awaits the in-progress frozen Food qualification only; no user decision or external activation required. Existing original-artifact access remains feature-scoped.
+
+---
+
+## Account entry styling needs no owner input — 2026-11-15
+
+Login/signup theme refinement is locally tested with actual synthetic session handlers and matched screenshots. Exact publication is pending the current frozen Food source qualification, not a user approval. Existing original-archive access remains feature-scoped; whole-app visual/science/physical-device acceptance is not claimed.
+
+---
+
 ## Source audit correction requires no user input — 2026-11-15
 
 Food source-audit mismatch was reproduced and corrected after checking the class-only source diff; no external blocker or approval gate. Exact updated CI remains pending. Existing artifact-access limitation remains feature-scoped; other UI work continues.

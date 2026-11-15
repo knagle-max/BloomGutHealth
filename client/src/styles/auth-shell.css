@@ -1,0 +1,45 @@
+/* Public entry screens use the same existing Bloom typography and theme roles.
+   Keep credentials quiet and readable; no decorative image competes with sign-in. */
+.auth-page {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  overflow-wrap: anywhere;
+}
+.auth-page .auth-brand {
+  padding: clamp(1.5rem, 5vw, 3rem) 1rem;
+  border-bottom: 1px solid hsl(var(--border));
+  background: linear-gradient(135deg, hsl(var(--muted)), hsl(var(--background)));
+}
+.auth-page .auth-brand p {
+  max-width: 30ch;
+  line-height: 1.6;
+}
+.auth-page .auth-content {
+  max-width: 32rem;
+  min-width: 0;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 3vw, 2rem);
+}
+.auth-page .auth-heading h1 {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+  font-weight: 400;
+}
+.auth-page .auth-heading p {
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 42ch;
+}
+.auth-page .auth-content :is(input, button, a) {
+  max-width: 100%;
+  min-height: 44px;
+}
+.auth-page .auth-content :is(button, a) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.auth-page .auth-content :is(input, button, a):focus-visible {
+  outline: 3px solid hsl(var(--ring));
+  outline-offset: 3px;
+}

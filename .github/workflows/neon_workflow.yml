@@ -112,6 +112,14 @@ jobs:
           node --import tsx scripts/qa/food-journal-editorial-journey.mjs
           node --import tsx scripts/qa/unified-meal-editor-journey.mjs
           node scripts/qa/journal-current-context-journey.mjs
+          node scripts/qa/saved-template-retry-journey.mjs
+          node --import tsx scripts/qa/saved-meal-review-journey.mjs
+      - name: Public account entry theme and session browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/auth-form-ux-journey.mjs
       - name: Python service authentication and evidence contracts
         run: |
           python3 -m venv /tmp/bloom-service-tests

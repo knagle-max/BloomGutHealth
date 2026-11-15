@@ -1,3 +1,27 @@
+## Drawer qualification synchronization; publish tested account/Food support UI — 2026-11-15
+
+Food/audit source89448061429634df7735a85e2d5c69fac505da76 CI43748622041 passed733/733, browser/type/source audit/build stages, then failed the deployed navigation Escape assertion. It sent Escape immediately on dialog visibility. Applied the existing shell check's focus+opening-animation readiness boundary to this navigation check; no arbitrary sleep, runtime behavior change, skipped assertion or weaker close/focus expectation. Local targeted8 layout states and complete Everyday/Athlete320/390 light/dark keyboard route/drawer/close/focus checks PASS. Capability/biology audits remain unchanged and pass.
+
+Publish the tested local auth8258aa3f and Saved meals4f1bb9c9 slices with this QA correction to the authorized development branch; then verify the exact frozen source in full CI/hosted review. Their types/build/actual session and encrypted meal source journeys,32 saved reflow states including200% text, original-media fingerprints and matched before/after screenshots already pass. Receipts: V06_AUTH_THEME_20261115.json, V06_SAVED_MEAL_REFLOW_20261115.json and V06_FOOD_EDITORIAL_20261115.json. Continue next independently safe app-wide UI task; no main merge, final RC claim or owner checkpoint.
+
+---
+
+## Saved meal reflow and source-preserving reuse — 2026-11-15
+
+IMPLEMENTED_AND_ENGINEERING_TESTED locally: fixed reproduced320px/200% Saved meals action overflow; applied existing Food heading and scoped wrapping/intrinsic-safe fields. CSS import/classes only; normalized TypeScript proof preserves every log/retry/portion/source/correction handler. Original recipe100g/20g remains unchanged after2x reuse then first-ingredient correction creates explicit150g/40g journal entry. PASS actual App/API/encrypted SQL source error/retry/owner isolation;16 mode/theme/width states plus200% text; exact lost-response receipt/body retry makes one meal and a later explicit log creates a separate intent. Types/build and original-media fingerprints pass; matched before/after captured. Capability audit refresh changes only reviewed SavedMeals source hash; no feature/science approval changed. Receipt: docs/verification/V06_SAVED_MEAL_REFLOW_20261115.json.
+
+Next: publish the tested auth+saved reflow commits once frozen Food/audit89448061 finishes exact qualification; preserve its hosted source binding during checks. Independent UI work may continue; no owner approval or global pause. Full theme/Core/RC remains open, original-artifact access feature-scoped.
+
+---
+
+## Public account entry theme — 2026-11-15
+
+IMPLEMENTED_AND_ENGINEERING_TESTED locally: Login/Signup retain every original auth handler/state/validation/error/session behavior while adopting existing Bloom typography, calmer header/form spacing, bounded readable width and visible focus. Normalized TSX proof confirms class attributes only. Existing original wordmarks/theme roles preserved; credentials do not benefit from an additional decorative asset. No new mode/capability or provider activation introduced.
+
+PASS types/build/immutable original media; actual App/auth/session-handler journey at20 login/signup width/theme states plus200% text, keyboard/44px/autocomplete, focused persistent errors/draft preservation, safe transport error, frozen pending credentials/navigation, duplicate-submit guard, canonical cookie ack/logout and page lifecycle withdrawal. Source/stylesheet-asserted matched320/390/1280 screenshots inspected; no independent approval or physical VoiceOver claimed. Existing source audits pass with no registry/science changes. Receipt: docs/verification/V06_AUTH_THEME_20261115.json. Auth publication remains pending while exact prior Food/audit source89448061 qualifies. No main merge; continue remaining UI/Core work.
+
+---
+
 ## Food publication audit correction — 2026-11-15
 
 Published Food source96d517ec39523d40f51ee048ad0939ba2730d98e. Its CI43732451781 passed all32-state Food, actual SQL saved editor/retry/account isolation, journal cache checks and types, then correctly rejected stale source-audit fingerprints. Reviewed normalized AST proof remains class/import-only. Refreshed exactly2 capability page hashes and biology scanned-source count729→730; all52 capability entries and521 biology identity records unchanged, no permission/scientific approval promoted. Both source audits now PASS. Publish this audit correction and verify exact full CI; keep development moving on independent UI tasks while qualification runs. No main merge or new owner question. Receipt: docs/verification/V06_FOOD_EDITORIAL_20261115.json.

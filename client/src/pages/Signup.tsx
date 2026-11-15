@@ -43,8 +43,8 @@ export default function Signup() {
     <main className="auth-page min-h-screen flex flex-col" aria-labelledby="signup-title">
       <div className="auth-brand"><BloomBrand /><p>Precision nutrition made practical.</p></div>
 
-      <div className="flex-1 px-4 py-8 max-w-md mx-auto w-full">
-        <div className="mb-8">
+      <div className="auth-content flex-1 px-4 py-8 max-w-md mx-auto w-full">
+        <div className="auth-heading mb-8">
           <h1 id="signup-title" className="font-display text-2xl font-semibold mb-2">Create Account</h1>
           <p className="text-sm text-muted-foreground">Start with a meal. Connect optional biology data when you choose.</p>
         </div>
