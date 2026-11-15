@@ -14,6 +14,8 @@
 
 **Do not reread all large handoffs or sequentially execute every heading.** Read the exact section needed for the selected task. If old documents disagree, resolve using the above rules in one short note and proceed; do not create a new reconciliation loop.
 
+**Roadmap/completion evidence:** Read the [v0.6 Delivery Status Ledger](docs/operations/V06_DELIVERY_STATUS_LEDGER_20261115.md) only for the selected task and current known states. Before any implementation, search current code, relevant tests and verification receipts for matching feature IDs and acceptance. **Do not redo work already evidenced at the current SHA.** `ROADMAP`, `IMPLEMENTED`, `ENGINEERING_TESTED`, `VERIFIED_ON_REVIEW_BRANCH`, `RC_READY` and `DONE_FOR_SCOPE` mean distinct things. When the owner requests a change or a real regression is proven, append a narrowly scoped `REVISED` delta, retaining original completion evidence. Codex updates this ledger at real state transitions—not every commit—and keeps `NEXT_ACTIONS.md` short.
+
 ## 2. Implementation and task-selection rules
 
 - **Codex owns engineering**: inspect actual branch `enhance/bloom-experience`, PR/review and working tree; implement/test/commit/push to authorized review branch, verify applicable Render preview. Never overwrite independent local work, reset contributors or merge to `main` without appropriate authorization.
