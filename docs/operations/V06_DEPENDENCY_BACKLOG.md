@@ -1,3 +1,9 @@
+## Immediate owner preemption — Stitch five-screen UI integration (2026-11-14)
+
+Before normal Core/Advanced feature progression, Codex must implement [owner five-screen UI reconciliation](../architecture/OWNER_STITCH_FIVE_SCREEN_UI_FIRST_RECONCILIATION_20261114.md) and current `NEXT_ACTIONS.md` first. The five user-provided `screen.png`/`code.html` pairs are the design source for Today, Food, Biology, Explore (Connections), Progress; preserve behavior, source identity, accessibility and legitimate first-party assets. Treat mocked biological scores, microbiome flux, projected personal lab benefits, fake live clinical telemetry and claim-specific results as unsupported illustrative copy: exclude or source-gate, never fabricate. This is **necessary v0.6 Core UX correction under the existing freeze**, not a new functional science feature. Existing urgent security/safety/source correctness incidents can preempt; Core Food #12 and full-panel Response #15 remain required and integrated with the UI work. No premature claim of app code, CI, Render or five-screen validation.
+
+---
+
 ## v0.6 scope freeze / v0.7 default intake — 2026-11-14
 
 [Controlling v0.6 freeze policy](../architecture/V06_REQUIREMENTS_FREEZE_V07_INTAKE_POLICY_20261114.md): the approved Core/Advanced split and all existing requirements are **baseline-frozen**, not code-complete. Codex continues actual P0 Food/Today, full-panel Response, reference-data pilots, practical nutrition and other approved Core slices plus bounded parallel Advanced research. Post-freeze new features default to **v0.7-candidate**. Keep only existing-v0.6 corrections and narrow essential product/safety/privacy/science/source/legal defects in v0.6 with reasons and tests. Feature-blocked research/clinical/rights items remain gated and cannot block unrelated Core. No new planning cycle or intermediate owner checkpoint.
