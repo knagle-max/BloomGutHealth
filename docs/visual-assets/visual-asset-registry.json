@@ -540,29 +540,41 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; import and route-level checks required",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
         "design": "pending",
-        "scientific": "pending where relevant",
+        "scientific": "pending where educational anatomy",
         "rights": "pending",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "original": "originals/BVA-0009-bloodwork-immersive-rbc-hero.png",
+        "webp": "webp/BVA-0009-bloodwork-immersive-rbc-hero.webp",
+        "webpSha256": "7f6842c4c042a5ba1c506d40f0fc88c9589bebc86f2f7c83b372502fbb5b19ab",
+        "dimensions": [
+          1672,
+          941
+        ],
+        "publicImportTarget": "/images/registry/batch-a/BVA-0009-bloodwork-immersive-rbc-hero.webp"
       }
     },
     {
@@ -598,29 +610,41 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; import and route-level checks required",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
         "design": "pending",
-        "scientific": "pending where relevant",
+        "scientific": "pending where educational anatomy",
         "rights": "pending",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "original": "originals/BVA-0010-cardiovascular-anatomy.png",
+        "webp": "webp/BVA-0010-cardiovascular-anatomy.webp",
+        "webpSha256": "12151b266158753000d0b354722af5376c0c003cce67f238d55cd78813883b66",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "publicImportTarget": "/images/registry/batch-a/BVA-0010-cardiovascular-anatomy.webp"
       }
     },
     {
@@ -656,29 +680,41 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; import and route-level checks required",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
         "design": "pending",
-        "scientific": "pending where relevant",
+        "scientific": "pending where educational anatomy",
         "rights": "pending",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "original": "originals/BVA-0011-glycaemic-concept.png",
+        "webp": "webp/BVA-0011-glycaemic-concept.webp",
+        "webpSha256": "ea92b8f72c3bdc43808254b239ed88d33bdc8043d8396c4d4af6808542b98442",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "publicImportTarget": "/images/registry/batch-a/BVA-0011-glycaemic-concept.webp"
       }
     },
     {
@@ -714,29 +750,41 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; import and route-level checks required",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
         "design": "pending",
-        "scientific": "pending where relevant",
+        "scientific": "pending where educational anatomy",
         "rights": "pending",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "original": "originals/BVA-0012-liver-biliary-anatomy.png",
+        "webp": "webp/BVA-0012-liver-biliary-anatomy.webp",
+        "webpSha256": "1dfd6929a48b683584dfa278425a8cb69885d3e0091379ad1279b1538228c157",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "publicImportTarget": "/images/registry/batch-a/BVA-0012-liver-biliary-anatomy.webp"
       }
     },
     {
@@ -772,29 +820,41 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; import and route-level checks required",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
         "design": "pending",
-        "scientific": "pending where relevant",
+        "scientific": "pending where educational anatomy",
         "rights": "pending",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "original": "originals/BVA-0013-blood-rbc-morphology.png",
+        "webp": "webp/BVA-0013-blood-rbc-morphology.webp",
+        "webpSha256": "cba3349d741465321cbb11621ea9bfcf86b21fb57fd0a6843f2e47c1666c76d0",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "publicImportTarget": "/images/registry/batch-a/BVA-0013-blood-rbc-morphology.webp"
       }
     },
     {
@@ -830,29 +890,41 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generate",
+        "action": "generated-awaiting-review",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": false,
+        "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Identified",
-      "productionStatus": "new brief; not generated",
+      "lifecycle": "Generated",
+      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
       "filePaths": [],
       "integration": {
-        "state": "not integrated",
+        "state": "not integrated; import and route-level checks required",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
         "design": "pending",
-        "scientific": "pending where relevant",
+        "scientific": "pending where educational anatomy",
         "rights": "pending",
         "rendered": "pending"
       },
       "statusEvidence": {
-        "auditedFrom": "GitHub source and owner screenshot; no full render audit",
+        "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
         "date": "2026-11-14"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "original": "originals/BVA-0014-bone-trabecular.png",
+        "webp": "webp/BVA-0014-bone-trabecular.webp",
+        "webpSha256": "8a2f191a3e17c51bc1b32045c928944315baa83eb04b4931a8c4b3d1af7ba122",
+        "dimensions": [
+          1254,
+          1254
+        ],
+        "publicImportTarget": "/images/registry/batch-a/BVA-0014-bone-trabecular.webp"
       }
     },
     {
@@ -1673,5 +1745,6 @@
         "date": "2026-11-14"
       }
     }
-  ]
+  ],
+  "lastDesignerDelivery": "2026-11-14: Batch A BVA-0009..0014 generated/published, pending import and review"
 }
