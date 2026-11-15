@@ -1,3 +1,11 @@
+## Owner correction — reference ranges available now — 2026-11-15
+
+The owner explicitly removes review-approval display gating for supplied provider ranges.37 supplied entries are enabled as provisional publication comparisons; their scientific review status remains pending. Source method/specimen/date and review checkboxes do not withhold provisional values. Optional category fields narrow alternatives without inferring demographics. Original report limits retain priority; Ontario decision limits remain thresholds; region/analyte/unit identity and all original records remain intact. Binding decision: docs/architecture/V06_OWNER_PROVISIONAL_RANGE_DISPLAY_20261115.md.
+
+Previous report-management source4104822 is VERIFIED: exact CI43720589780 attempt3 passed726/726, all hosted source/metadata persistence/export/erasure, media and layout gates. Its isolated hosted named-database migration is now applied. New provisional catalogue/code checks and publication are in progress; do not misrepresent pending transcriptions as independently verified. Continue the existing UI-first work after qualification; no interim owner question or main merge.
+
+---
+
 ## Saved laboratory provider/reference management — 2026-11-15
 
 Implemented and engineering-tested the approved Issue11 existing-source workflow and shared persistent overlay preferences. Separate encrypted append-only report annotations preserve original lab observations and clinical kind CHECK. SQL lifecycle triggers protect history/source/account erasure across versions; compare-and-swap, exact retries and actor guards apply. Synthetic27/17/26 reports retain all70 original encrypted values unchanged. Actual management96-state browser, positive synthetic comparison48-state browser, existing explorer/source-review/source-only/routine browsers, types/build and focused SQL/export/schema tests pass. Initial full suite found stale audit hashes and migration-table classification; both repaired with focused regressions. Exact new-commit CI/isolated hosted checks remain pending; no claim of full RC. Receipt: docs/verification/V06_LAB_REPORT_MANAGEMENT_20261115.json.

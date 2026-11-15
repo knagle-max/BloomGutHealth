@@ -1,3 +1,9 @@
+## Reference range display no longer blocked — 2026-11-15
+
+Owner authorized provisional display of supplied reference values without waiting for review. The prior empty-catalogue activation hold is superseded for these labelled publication comparisons. No further owner input is required. Missing actual region/analyte data is not invented; all supplied values remain browsable with source/category labels.
+
+---
+
 ## Provider/source management execution — 2026-11-15
 
 No owner input is required for the implemented report annotation/preference workflow or its remaining exact CI/isolated-hosted verification. LifeLabs SK/other unverified published comparisons remain feature-scoped unavailable; direct original report bounds remain usable. Pending source verification does not block original-data display or the latest full-app theme/no-regression work. Authentic historical Aug/May importer reproduction and physical VoiceOver remain separately unverified; do not repeat unchanged questions. No new production data write or main merge authorized by this checkpoint.

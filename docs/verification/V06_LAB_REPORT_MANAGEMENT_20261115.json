@@ -1,7 +1,7 @@
 {
   "version": "v0.6",
   "verifiedOn": "2026-11-15",
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_COMMIT_CI_HOSTED",
+  "status": "VERIFIED_EXACT_COMMIT_CI",
   "authority": "docs/architecture/V06_REPORT_PROVIDER_MANAGEMENT_ARCHITECT_20261109.md",
   "scope": "Saved laboratory sources \u2192 Manage laboratory & reference ranges, sharing existing SVG report preferences and matcher",
   "storage": {
@@ -63,5 +63,15 @@
     "head": "74ea4bbe6a6b4420312f22d2b80f866abd98a6fd",
     "files": 49,
     "verification": "Original Git blob hashes verified for all upstream documents/registry; preserved prior code unchanged. Latest UI-first sequence supersedes ordinary feature queue after current source integrity work."
+  },
+  "exactVerification": {
+    "commit": "4104822d6c362181ecb3fe81d8eecc043816d1fb",
+    "run": 43720589780,
+    "attempt": 3,
+    "tests": 726,
+    "passed": 726,
+    "failed": 0,
+    "hosted": "PASS reauthentication, provider/province/None retry, unchanged source, owned export/erasure and isolation",
+    "schemaRepair": "Committed0017 applied to the actual named isolated review database after endpoint AND database-name-hash verification. Branch-default neondb is a different database. No production database mutation."
   }
 }

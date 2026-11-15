@@ -1,0 +1,35 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI",
+  "authority": "docs/architecture/V06_OWNER_PROVISIONAL_RANGE_DISPLAY_20261115.md",
+  "enabled": {
+    "total": 37,
+    "BC_reference_entries": 32,
+    "ON_decision_entries": 5,
+    "existing_chart_entries": 29,
+    "existing_chart_markers": 17,
+    "browse_only_source_specific_entries": 8,
+    "review_status": "pending; no false verification"
+  },
+  "behavior": [
+    "Supplied publication comparisons visible without review confirmation, assay/specimen approval or collection date",
+    "Optional age/sex and fasting-reference category selections narrow alternatives; current Profile and original source fasting remain unchanged",
+    "Original report ranges retain priority; no combined band for ambiguous demographic/category alternatives",
+    "Source URLs/date/page/operator/unit labels retained; source-only calculated free testosterone/calcitriol never substitute for total testosterone/25-OH D",
+    "Same account-scoped saved report preference and existing SVG; no new observation or database storage"
+  ],
+  "verification": {
+    "focused": "13/13 range/report/source SQL tests pass",
+    "browser": "PASS actual34-row import\u2192provisional ferritin24\u2013444 band without confirmation/age/specimen/method approval\u2192glucose fasting3.3\u20135.5 category\u2192AST<36 threshold; original<45 priority and verified synthetic10\u201335 path;24 provisional layout states plus48 mode/theme/viewport/text/page-zoom verified states; source bytes invariant; saved navigation/None/source delete/owner isolation",
+    "source_management": "PASS96 layout states and actual owned encrypted source/metadata reload/conflict/retry lifecycle",
+    "existing_explorer": "PASS92labels\u00d76 observations, every marker source education, source intervals, both modes/themes/zoom and account withdrawal",
+    "types": "PASS",
+    "production_build": "PASS source and built original asset byte/hash parity; final exact build/CI still required",
+    "exact_new_commit_CI": "PENDING"
+  },
+  "notClaimed": [
+    "Independent verification of the supplied numeric transcriptions",
+    "Personal normal-range applicability",
+    "Physical VoiceOver or independent Design/Science approval",
+    "Full v0.6 RC or main merge"
+  ]
+}

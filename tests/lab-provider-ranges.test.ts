@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';
-import {labRangeSchema,matchProviderRanges,providerComparisonCandidates,publishedLabRanges,providerRangeSourceLeads,publishedRangeText,providerContextMatchesSource,type ProviderRangeContext} from '../shared/lab-provider-ranges';
+import {labRangeSchema,displayProviderRanges,matchProviderRanges,providerComparisonCandidates,publishedLabRanges,providerRangeSourceLeads,publishedRangeText,providerContextMatchesSource,type ProviderRangeContext} from '../shared/lab-provider-ranges';
 import {canShareSourceReference,sourceReferenceIntervalForPlot} from '../shared/lab-reference-interval';
 // Explicitly synthetic verified fixtures exercise matching, not a provider import.
 const range=labRangeSchema.parse({id:'synthetic-bc-ldl',provider:'LifeLabs',province:'BC',markerId:'ldl',specimen:'serum',assay:'Synthetic LDL assay',method:'Synthetic LDL method',ageMinYears:30,sexReferenceCategory:'all',fasting:'either',effectiveFrom:'2025-09-02',effectiveTo:'2026-09-01',kind:'reference_interval',low:1.5,high:3.4,unit:'mmol/L',sourceUrl:'https://example.invalid/synthetic-range',sourceDocumentDate:'2025-09-02',page:36,scientificReviewStatus:'verified'});
@@ -18,7 +18,7 @@ test('published provider references require exact region, source applicability, 
  for(const patch of [{province:'SK'},{province:'ON'},{provider:'Other lab'},{markerId:'b12'},{specimen:'plasma'},{assay:'Other assay'},{method:'Not supplied'},{ageAtCollection:null},{collectedOn:'2025-09-01'},{collectedOn:'2026-09-02'},{sourceUnit:'U/L'},{plotUnit:'g/L'},{unitReview:{status:'pending'}}])assert.equal(matchProviderRanges({...context,...patch} as ProviderRangeContext,[range]).length,0,JSON.stringify(patch));
  assert.equal(matchProviderRanges({...context,sexReferenceCategory:null,fasting:'unknown'},[range]).length,1,'Explicit all/either applicability does not invent missing personal context');
  assert.equal(matchProviderRanges(context,[{...range,scientificReviewStatus:'pending'}]).length,0);assert.equal(matchProviderRanges(context,[{...range,assay:undefined}]).length,0);assert.equal(matchProviderRanges(context,[{...range,method:undefined}]).length,0);assert.deepEqual(context,original);
- assert.equal(publishedLabRanges.length,0,'Owner examples are not independently verified imports');assert.ok(providerRangeSourceLeads.every(source=>source.status==='pending'));assert.equal(providerRangeSourceLeads.some(source=>source.province==='SK' as any),false);
+ assert.equal(publishedLabRanges.length,37,'Owner-supplied reference values are available without review approval');assert.ok(publishedLabRanges.every(range=>range.scientificReviewStatus==='pending'&&range.availability==='provisional'));assert.ok(providerRangeSourceLeads.every(source=>source.status==='pending'));assert.equal(providerRangeSourceLeads.some(source=>source.province==='SK' as any),false);
 });
 test('age boundaries, sex categories and fasting/random forms resolve separately without guessing from values',()=>{
  const younger={...range,id:'synthetic-younger',ageMinYears:18,ageMaxYears:30,ageMaxInclusive:false,high:3};
@@ -59,4 +59,18 @@ test('display comparison fields cannot override source method, fasting or origin
  assert.equal(providerContextMatchesSource({...point,method:'Not supplied'},context),false);
  assert.equal(providerContextMatchesSource({...point,dateCorrection:{enteredDate:'2026-01-02'}},context),false);
  assert.equal(providerContextMatchesSource({...point,fasting:'unknown'},{...context,fasting:'yes'}),false,'A display selector does not fill unknown source fasting');
+});
+
+test('owner-supplied provisional values display without source confirmation, method, specimen or collection date; review remains pending',()=>{
+ const missing={...context,markerId:'ast',sourceUnit:'U/L',plotUnit:'U/L',method:'Not supplied',specimen:'',assay:'',ageAtCollection:null,sexReferenceCategory:null,collectedOn:'',fasting:'unknown' as const};
+ const result=displayProviderRanges(missing,publishedLabRanges,false,false);assert.equal(result.length,1);assert.equal(result[0].high,36);assert.equal(result[0].low,null);assert.equal(result[0].range.scientificReviewStatus,'pending');assert.match(publishedRangeText(result[0]),/^<36 U\/L/);
+ assert.equal(displayProviderRanges({...missing,province:'SK'},publishedLabRanges,false,false).length,0);
+ assert.equal(displayProviderRanges({...missing,sourceUnit:'mg/dL'},publishedLabRanges,false,false).length,0);
+ const ferritin={...missing,markerId:'ferritin',sourceUnit:'ug/L',plotUnit:'ug/L'};
+ assert.equal(displayProviderRanges(ferritin,publishedLabRanges,false,false).length,2,'Unknown sex shows both labelled alternatives, never silently assumes one');
+ const male=displayProviderRanges({...ferritin,sexReferenceCategory:'M'},publishedLabRanges,false,false);assert.equal(male.length,1);assert.equal(male[0].low,24);assert.equal(male[0].high,444);
+ const limits=displayProviderRanges({...ferritin,province:'ON'},publishedLabRanges,false,false);assert.equal(limits.length,2);assert.ok(limits.every(match=>match.range.kind==='clinical_decision_limit'));
+ assert.equal(displayProviderRanges({...missing,markerId:'vitamin_d',method:'calcitriol',sourceUnit:'ng/mL',plotUnit:'nmol/L'},publishedLabRanges,false,false).length,0);
+ const glucose={...missing,markerId:'glucose',sourceUnit:'mmol/L',plotUnit:'mmol/L'};assert.equal(displayProviderRanges(glucose,publishedLabRanges,false,false).length,2);const fasting=displayProviderRanges({...glucose,comparisonFasting:'yes'},publishedLabRanges,false,false);assert.equal(fasting.length,1);assert.equal(fasting[0].high,5.5);assert.equal(glucose.fasting,'unknown','A reference-category selection never changes source fasting');
+ assert.equal(publishedLabRanges.some(range=>range.label?.includes('Free testosterone')&&range.markerId==='testosterone_total'),false);
 });
