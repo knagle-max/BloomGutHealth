@@ -9,6 +9,14 @@
 
 ---
 
+## ENGINEERING QUALITY WHILE BUILDING — EXPECT SPECIALIST REVIEW, DON'T WAIT FOR IT (2026-11-15)
+
+The [autonomous development policy](docs/architecture/V06_AUTONOMOUS_DEVELOPMENT_POST_IMPLEMENTATION_RC_REVIEW_20261115.md) now includes **shift-left specialist acceptance**: Codex should apply pertinent Biology/AI/Integrations/Security/UX/Legal requirements **while writing and testing code**, without scheduling a specialist signoff or extra planning packet for every slice. One concise risk/acceptance note per task, check account/role/consent/source/unknown/negative paths, user outcome, evidence and visual/accessibility criteria as applicable, and run tests proportionally. Fix predictable issues now; integrated specialist audits happen in parallel at RC. Low-risk improvements must not wait for irrelevant reviewers; truly restricted real-user execution stays guarded. **Efficiency and security together**, no redundant rewrites of completed tasks.
+
+---
+
+
+
 ## Roadmap / done source of truth
 
 **Before selecting or restarting anything:** consult the [Delivery Status Ledger](docs/operations/V06_DELIVERY_STATUS_LEDGER_20261115.md) alongside exact current code/tests/CI/Render. It tracks approved-but-unbuilt, local engineering tested, hosted verified, RC-ready, done, and specifically revised work, with stable evidence. A status-only document is **not another queue**. Once a feature's current accepted scope is truly complete and evidenced, **do not reopen it** absent a new owner direction, meaningful acceptance failure or reproduced defect. Preserve old receipts, record only the missing delta, and do not confuse planned functionality, source registry, files, staged UI, screenshots and deployed verification.
