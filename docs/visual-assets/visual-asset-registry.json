@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
   "lastArchitectReview": "2026-11-14",
-  "registryStatus": "architect-seeded PARTIAL; BVA-0022..0028 withdrawn by owner; no Batch D distribution or integration permitted",
+  "registryStatus": "Architect-maintained 28 active requirements; 6 prior image renditions rejected; replacement artwork unapproved, full application audit/visual QA still pending",
   "singleSourceOfTruthFor": "Visual asset requirements and production lifecycle; keep existing content/editorial-media.ts and scientific visual registries as delivery/source-specific metadata without duplicating them",
   "idPolicy": "BVA-0001 sequential permanent IDs; never reuse, reserve deleted entries as retired",
   "allowedLifecycle": [
@@ -1642,6 +1642,82 @@
       }
     },
     {
+      "id": "BVA-0022",
+      "name": "Athlete exercise technique study",
+      "route": "/athlete",
+      "component": "Workout detail/movement illustration",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "real person executing verified strength exercise with credible hand position joints fabric sweat and approved blue accents",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:5",
+      "targetDimensions": {
+        "width": 1000,
+        "height": 1250
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Show ONE adult recreational athlete performing a conventional standing dumbbell hammer curl at the midpoint of the lift, viewed from the front-right three-quarter angle. The athlete wears a muted blue performance shirt and dark navy shorts, with a neutral wrist, elbows close to ribs, both hands around clearly defined dumbbell handles, the forearms at approximately 90 degrees and upper arms hanging naturally; shoulders relaxed, knees softly unlocked. Frame from upper thigh to above head, emphasizing the working forearm, biceps and grip while keeping both weights and the entire elbow region clearly visible. Background: a real daylight-lit gym with indistinct wooden bench and dark blue-grey wall, never floating barbells or anatomy overlays. An adult of an ordinary healthy build, not exaggerated bodybuilding physique. 50mm lens, f/3.5; soft side-window lighting from camera-left with gentle directional definition on muscles and forearms, natural skin pores, fine arm hair, believable understated sweat only if credible, realistic fabric weave and weight-metal wear; slight natural grain, cool-neutral blue accents, no neon shine. Compact 4:5 exercise card; subject centered just right of middle, 12% safe margin around head, elbow and dumbbells to tolerate 1:1 mobile inset crop; no baked-in instructions, counters or text. If full dumbbells cannot fit, reframe, do not crop wrists or exercise form. Accuracy and exclusions: Educational movement illustration, not evidence of user's performed workout. No wrist extension, lifted shoulders, impossible elbow rotation, extra fingers or disconnected weight plates. For exercise instructions, actual movement mechanics and safe relevance require qualified review; don't generate a generic unsuitable exercise and label it as an arbitrary workout. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0022 requirement restored unchanged in identity; earlier image rendition rejected, **not** this request. Previous files not approved. New generated candidate must undergo design and, if presented as technique guidance, safety/anatomical review plus individual owner approval before publishing.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "replace-rejected-image",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "filePaths": [],
+      "integration": {
+        "state": "new replacement asset absent; reserved placeholder required",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "previous image rejected; NEW candidate not reviewed",
+        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
+        "rights": "pending for new artwork",
+        "rendered": "not integrated / not verified"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
+        "date": "2026-11-14",
+        "imageRejected": true,
+        "requirementReinstated": true
+      },
+      "ownerApproval": {
+        "approved": false,
+        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
+        "date": null
+      },
+      "productionBriefV2": {
+        "briefVersion": "2026-11-14-detailed-02",
+        "sceneDescription": "Show ONE adult recreational athlete performing a conventional standing dumbbell hammer curl at the midpoint of the lift, viewed from the front-right three-quarter angle. The athlete wears a muted blue performance shirt and dark navy shorts, with a neutral wrist, elbows close to ribs, both hands around clearly defined dumbbell handles, the forearms at approximately 90 degrees and upper arms hanging naturally; shoulders relaxed, knees softly unlocked. Frame from upper thigh to above head, emphasizing the working forearm, biceps and grip while keeping both weights and the entire elbow region clearly visible. Background: a real daylight-lit gym with indistinct wooden bench and dark blue-grey wall, never floating barbells or anatomy overlays. An adult of an ordinary healthy build, not exaggerated bodybuilding physique.",
+        "opticsLightingMaterials": "50mm lens, f/3.5; soft side-window lighting from camera-left with gentle directional definition on muscles and forearms, natural skin pores, fine arm hair, believable understated sweat only if credible, realistic fabric weave and weight-metal wear; slight natural grain, cool-neutral blue accents, no neon shine.",
+        "framingAndUsage": "Compact 4:5 exercise card; subject centered just right of middle, 12% safe margin around head, elbow and dumbbells to tolerate 1:1 mobile inset crop; no baked-in instructions, counters or text. If full dumbbells cannot fit, reframe, do not crop wrists or exercise form.",
+        "accuracyAndExclusions": "Educational movement illustration, not evidence of user's performed workout. No wrist extension, lifted shoulders, impossible elbow rotation, extra fingers or disconnected weight plates. For exercise instructions, actual movement mechanics and safe relevance require qualified review; don't generate a generic unsuitable exercise and label it as an arbitrary workout. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+        "existingAssetAndApprovalHandling": "Original BVA-0022 requirement restored unchanged in identity; earlier image rendition rejected, **not** this request. Previous files not approved. New generated candidate must undergo design and, if presented as technique guidance, safety/anatomical review plus individual owner approval before publishing.",
+        "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
+        "deliverableNotes": "Produce webp/avif with target 1000×1250, 1x; 2x when justified; ensure athlete-blue-light, athlete-blue-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
+        "generationInstruction": "Show ONE adult recreational athlete performing a conventional standing dumbbell hammer curl at the midpoint of the lift, viewed from the front-right three-quarter angle. The athlete wears a muted blue performance shirt and dark navy shorts, with a neutral wrist, elbows close to ribs, both hands around clearly defined dumbbell handles, the forearms at approximately 90 degrees and upper arms hanging naturally; shoulders relaxed, knees softly unlocked. Frame from upper thigh to above head, emphasizing the working forearm, biceps and grip while keeping both weights and the entire elbow region clearly visible. Background: a real daylight-lit gym with indistinct wooden bench and dark blue-grey wall, never floating barbells or anatomy overlays. An adult of an ordinary healthy build, not exaggerated bodybuilding physique. 50mm lens, f/3.5; soft side-window lighting from camera-left with gentle directional definition on muscles and forearms, natural skin pores, fine arm hair, believable understated sweat only if credible, realistic fabric weave and weight-metal wear; slight natural grain, cool-neutral blue accents, no neon shine. Compact 4:5 exercise card; subject centered just right of middle, 12% safe margin around head, elbow and dumbbells to tolerate 1:1 mobile inset crop; no baked-in instructions, counters or text. If full dumbbells cannot fit, reframe, do not crop wrists or exercise form. Accuracy and exclusions: Educational movement illustration, not evidence of user's performed workout. No wrist extension, lifted shoulders, impossible elbow rotation, extra fingers or disconnected weight plates. For exercise instructions, actual movement mechanics and safe relevance require qualified review; don't generate a generic unsuitable exercise and label it as an arbitrary workout. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0022 requirement restored unchanged in identity; earlier image rendition rejected, **not** this request. Previous files not approved. New generated candidate must undergo design and, if presented as technique guidance, safety/anatomical review plus individual owner approval before publishing."
+      }
+    },
+    {
       "id": "BVA-0023",
       "name": "Athlete recovery editorial",
       "route": "/athlete/recovery",
@@ -1733,26 +1809,414 @@
         "negativePromptContext": "Not applicable to replacement or generation: this entry documents already approved imagery. Future independently requested replacements must be individually reviewed, must not depict the earlier withdrawn running-bench concept by default, and cannot suggest recovery effects without evidence.",
         "generationInstruction": "DO NOT GENERATE OR REPLACE THIS APPROVED ASSET. The image is already finalized for visual approval as an alpine berry-smoothie, fruit, hydration bottle and towel still life. For placement use the existing image files and independent text surface. Any future artwork request is a new proposal requiring owner review before publication."
       }
+    },
+    {
+      "id": "BVA-0024",
+      "name": "Coach editorial header",
+      "route": "/insights",
+      "component": "Coach professional surface when enabled",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "warm collaborative coaching interaction editorial with approved purple environment accents, no false clinical endorsement",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "coach-purple-light",
+        "coach-purple-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "Two adult people in a calm contemporary coaching workspace, seated at a round light-oak table reviewing a generic, non-legible training plan together. The coach, on the LEFT, wears a soft charcoal overshirt; their adult client, on the RIGHT, wears simple muted plum activewear. The coach gestures openly toward a paper notebook as the client listens, both in candid relaxed side profiles rather than posing for a camera. A small neutral water carafe and a single indoor plant may appear, but there must be no patient paperwork, visible personal data, doctor coat or medical examination. The backdrop is warm slate and muted purple fabric paneling with softened afternoon window light. 35mm lens, f/2.8; eye-level candid editorial photography, diffused natural window light from upper left, realistic skin texture and hair strands, true fabric weave, mild background depth blur, natural slight grain; understated authentic approved Coach purple accent rather than purple-tinted faces. 16:9 hero with subjects concentrated in RIGHT 55%, LEFT 40% low-contrast quiet lavender/charcoal gradient area reserved for native or web heading. Mobile portrait variant should preserve faces, hands and conversational posture without obstructing UI chrome. Accuracy and exclusions: Do not present Coach as a physician/clinical relationship, imply therapist endorsement, embed readable personal records or logos, or show an unrealistic AI-rendered extra hand. Avoid staged handshake or glossy boardroom stock imagery. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0024 requirement restored; rejected image is withdrawn from production, not the design need. Generate an independent new composition with individual owner approval before asset publication/distribution. Coach mode must remain permission-scoped and purple.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "replace-rejected-image",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "filePaths": [],
+      "integration": {
+        "state": "new replacement asset absent; reserved placeholder required",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "previous image rejected; NEW candidate not reviewed",
+        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
+        "rights": "pending for new artwork",
+        "rendered": "not integrated / not verified"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
+        "date": "2026-11-14",
+        "imageRejected": true,
+        "requirementReinstated": true
+      },
+      "ownerApproval": {
+        "approved": false,
+        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
+        "date": null
+      },
+      "productionBriefV2": {
+        "briefVersion": "2026-11-14-detailed-02",
+        "sceneDescription": "Two adult people in a calm contemporary coaching workspace, seated at a round light-oak table reviewing a generic, non-legible training plan together. The coach, on the LEFT, wears a soft charcoal overshirt; their adult client, on the RIGHT, wears simple muted plum activewear. The coach gestures openly toward a paper notebook as the client listens, both in candid relaxed side profiles rather than posing for a camera. A small neutral water carafe and a single indoor plant may appear, but there must be no patient paperwork, visible personal data, doctor coat or medical examination. The backdrop is warm slate and muted purple fabric paneling with softened afternoon window light.",
+        "opticsLightingMaterials": "35mm lens, f/2.8; eye-level candid editorial photography, diffused natural window light from upper left, realistic skin texture and hair strands, true fabric weave, mild background depth blur, natural slight grain; understated authentic approved Coach purple accent rather than purple-tinted faces.",
+        "framingAndUsage": "16:9 hero with subjects concentrated in RIGHT 55%, LEFT 40% low-contrast quiet lavender/charcoal gradient area reserved for native or web heading. Mobile portrait variant should preserve faces, hands and conversational posture without obstructing UI chrome.",
+        "accuracyAndExclusions": "Do not present Coach as a physician/clinical relationship, imply therapist endorsement, embed readable personal records or logos, or show an unrealistic AI-rendered extra hand. Avoid staged handshake or glossy boardroom stock imagery. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+        "existingAssetAndApprovalHandling": "Original BVA-0024 requirement restored; rejected image is withdrawn from production, not the design need. Generate an independent new composition with individual owner approval before asset publication/distribution. Coach mode must remain permission-scoped and purple.",
+        "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
+        "deliverableNotes": "Produce webp/avif with target 1600×900, mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified; ensure coach-purple-light, coach-purple-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
+        "generationInstruction": "Two adult people in a calm contemporary coaching workspace, seated at a round light-oak table reviewing a generic, non-legible training plan together. The coach, on the LEFT, wears a soft charcoal overshirt; their adult client, on the RIGHT, wears simple muted plum activewear. The coach gestures openly toward a paper notebook as the client listens, both in candid relaxed side profiles rather than posing for a camera. A small neutral water carafe and a single indoor plant may appear, but there must be no patient paperwork, visible personal data, doctor coat or medical examination. The backdrop is warm slate and muted purple fabric paneling with softened afternoon window light. 35mm lens, f/2.8; eye-level candid editorial photography, diffused natural window light from upper left, realistic skin texture and hair strands, true fabric weave, mild background depth blur, natural slight grain; understated authentic approved Coach purple accent rather than purple-tinted faces. 16:9 hero with subjects concentrated in RIGHT 55%, LEFT 40% low-contrast quiet lavender/charcoal gradient area reserved for native or web heading. Mobile portrait variant should preserve faces, hands and conversational posture without obstructing UI chrome. Accuracy and exclusions: Do not present Coach as a physician/clinical relationship, imply therapist endorsement, embed readable personal records or logos, or show an unrealistic AI-rendered extra hand. Avoid staged handshake or glossy boardroom stock imagery. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Original BVA-0024 requirement restored; rejected image is withdrawn from production, not the design need. Generate an independent new composition with individual owner approval before asset publication/distribution. Coach mode must remain permission-scoped and purple."
+      }
+    },
+    {
+      "id": "BVA-0025",
+      "name": "Onboarding welcome atmosphere",
+      "route": "/signup",
+      "component": "Signup/onboarding",
+      "purpose": "editorial category atmosphere",
+      "category": "hero",
+      "subject": "natural organic botanical green interior illuminated from left, clear copy-safe space",
+      "composition": "off-centre subject, quiet text overlay region",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "left third overlay-safe, validate every responsive crop",
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait/safe subject alternative or CSS crop",
+        "desktop 16:9",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "A welcoming modern home kitchen and plant-filled breakfast nook at morning light, photographed from just inside a doorway. In the RIGHT foreground, an imperfect ceramic mug on a light-oak counter beside a thriving small green herb plant; behind, softly out-of-focus linen curtains, matte ceramic tile and leaves near the sunlit window. No people, specific meals, medical instruments or devices are necessary. The entire LEFT half is an intentionally calm atmospheric forest-to-ivory transitional wall area with subtle botanical shadows so that Bloom's app onboarding message can remain legible. Tone should evoke a lived-in healthy home, not a showroom. 35mm environmental lens, f/2.8; window daylight from upper right, authentic light through leaves, real porcelain glaze and wooden grain, natural film grain, gentle highlights without artificial gloss; warm ivory and evergreen contrast. 16:9 desktop and separately planned 3:4 or 4:5 mobile hero crop; keep main plant, mug and bright light safely on right, left 45% clear for onboarding/title/forms. Forms must rest on accessible solid/gradient overlay rather than low contrast image detail. Accuracy and exclusions: No embedded 'Welcome' text, branding, fake user portraits, staged overly polished wellness props, gratuitous pill bottles or clinical data. The image is decorative and onboarding must work perfectly without it. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Reinstated original BVA-0025 need, not its rejected artwork. Maintain a beautiful layout fallback until a newly generated, individually owner-approved asset exists.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "replace-rejected-image",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "filePaths": [],
+      "integration": {
+        "state": "new replacement asset absent; reserved placeholder required",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "previous image rejected; NEW candidate not reviewed",
+        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
+        "rights": "pending for new artwork",
+        "rendered": "not integrated / not verified"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
+        "date": "2026-11-14",
+        "imageRejected": true,
+        "requirementReinstated": true
+      },
+      "ownerApproval": {
+        "approved": false,
+        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
+        "date": null
+      },
+      "productionBriefV2": {
+        "briefVersion": "2026-11-14-detailed-02",
+        "sceneDescription": "A welcoming modern home kitchen and plant-filled breakfast nook at morning light, photographed from just inside a doorway. In the RIGHT foreground, an imperfect ceramic mug on a light-oak counter beside a thriving small green herb plant; behind, softly out-of-focus linen curtains, matte ceramic tile and leaves near the sunlit window. No people, specific meals, medical instruments or devices are necessary. The entire LEFT half is an intentionally calm atmospheric forest-to-ivory transitional wall area with subtle botanical shadows so that Bloom's app onboarding message can remain legible. Tone should evoke a lived-in healthy home, not a showroom.",
+        "opticsLightingMaterials": "35mm environmental lens, f/2.8; window daylight from upper right, authentic light through leaves, real porcelain glaze and wooden grain, natural film grain, gentle highlights without artificial gloss; warm ivory and evergreen contrast.",
+        "framingAndUsage": "16:9 desktop and separately planned 3:4 or 4:5 mobile hero crop; keep main plant, mug and bright light safely on right, left 45% clear for onboarding/title/forms. Forms must rest on accessible solid/gradient overlay rather than low contrast image detail.",
+        "accuracyAndExclusions": "No embedded 'Welcome' text, branding, fake user portraits, staged overly polished wellness props, gratuitous pill bottles or clinical data. The image is decorative and onboarding must work perfectly without it. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+        "existingAssetAndApprovalHandling": "Reinstated original BVA-0025 need, not its rejected artwork. Maintain a beautiful layout fallback until a newly generated, individually owner-approved asset exists.",
+        "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
+        "deliverableNotes": "Produce webp/avif with target 1600×900, mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
+        "generationInstruction": "A welcoming modern home kitchen and plant-filled breakfast nook at morning light, photographed from just inside a doorway. In the RIGHT foreground, an imperfect ceramic mug on a light-oak counter beside a thriving small green herb plant; behind, softly out-of-focus linen curtains, matte ceramic tile and leaves near the sunlit window. No people, specific meals, medical instruments or devices are necessary. The entire LEFT half is an intentionally calm atmospheric forest-to-ivory transitional wall area with subtle botanical shadows so that Bloom's app onboarding message can remain legible. Tone should evoke a lived-in healthy home, not a showroom. 35mm environmental lens, f/2.8; window daylight from upper right, authentic light through leaves, real porcelain glaze and wooden grain, natural film grain, gentle highlights without artificial gloss; warm ivory and evergreen contrast. 16:9 desktop and separately planned 3:4 or 4:5 mobile hero crop; keep main plant, mug and bright light safely on right, left 45% clear for onboarding/title/forms. Forms must rest on accessible solid/gradient overlay rather than low contrast image detail. Accuracy and exclusions: No embedded 'Welcome' text, branding, fake user portraits, staged overly polished wellness props, gratuitous pill bottles or clinical data. The image is decorative and onboarding must work perfectly without it. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Reinstated original BVA-0025 need, not its rejected artwork. Maintain a beautiful layout fallback until a newly generated, individually owner-approved asset exists."
+      }
+    },
+    {
+      "id": "BVA-0026",
+      "name": "No lab records empty state",
+      "route": "/precision",
+      "component": "Bloodwork no records state",
+      "purpose": "supportive accessible no-data experience",
+      "category": "empty-state",
+      "subject": "original botanical clinical-notebook illustration with neutral glass specimen and foliage, no fake specimen data",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": true,
+      "outputFormats": [
+        "svg",
+        "png"
+      ],
+      "promptBrief": "A precise but warm editorial empty-state illustration of a single CLOSED cream-paper lab notebook with one blank specimen envelope and an empty transparent glass sample vial, arranged in a small triangular grouping on a neutral ivory surface. One delicate sage leaf curves into the upper-right edge, all objects resting with credible contact shadows. The notebook is deliberately unmarked and the sample vial contains no colored liquid, patient label, blood or diagnosis. The mood is calm, inviting the person to add their first real bloodwork report without visually implying their results already exist. Original editable vector illustration with subtle drawn paper fibre, thin forest-green ink contours, restrained ivory/sage tones, and one soft shadow; if rendered as a still-life reference, 55mm lens f/5.6 with diffuse upper-left daylight. Maintain original artwork identity, not a fake clinical photograph. 1:1 transparent or clean neutral-background empty-state illustration; complete notebook/vial/leaf within central 72% with generous margins, readable at 120–220px, no space-dependent details. App renders headings, help and upload CTA outside image. Accuracy and exclusions: No actual lab numbers, graphs, fake medical paperwork, syringes, needles, frightening blood, or excessive clipart. Do not use a blank vial to imply the user has taken a specimen; strictly decorative empty state. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Reinstated original BVA-0026 request while rejecting only the previous poor image. Use dimension-stable approved fallback until fresh individually owner-approved work is available.",
+      "priority": "P1",
+      "impact": "medium",
+      "sourceRelation": {
+        "action": "replace-rejected-image",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "filePaths": [],
+      "integration": {
+        "state": "new replacement asset absent; reserved placeholder required",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "previous image rejected; NEW candidate not reviewed",
+        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
+        "rights": "pending for new artwork",
+        "rendered": "not integrated / not verified"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
+        "date": "2026-11-14",
+        "imageRejected": true,
+        "requirementReinstated": true
+      },
+      "ownerApproval": {
+        "approved": false,
+        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
+        "date": null
+      },
+      "productionBriefV2": {
+        "briefVersion": "2026-11-14-detailed-02",
+        "sceneDescription": "A precise but warm editorial empty-state illustration of a single CLOSED cream-paper lab notebook with one blank specimen envelope and an empty transparent glass sample vial, arranged in a small triangular grouping on a neutral ivory surface. One delicate sage leaf curves into the upper-right edge, all objects resting with credible contact shadows. The notebook is deliberately unmarked and the sample vial contains no colored liquid, patient label, blood or diagnosis. The mood is calm, inviting the person to add their first real bloodwork report without visually implying their results already exist.",
+        "opticsLightingMaterials": "Original editable vector illustration with subtle drawn paper fibre, thin forest-green ink contours, restrained ivory/sage tones, and one soft shadow; if rendered as a still-life reference, 55mm lens f/5.6 with diffuse upper-left daylight. Maintain original artwork identity, not a fake clinical photograph.",
+        "framingAndUsage": "1:1 transparent or clean neutral-background empty-state illustration; complete notebook/vial/leaf within central 72% with generous margins, readable at 120–220px, no space-dependent details. App renders headings, help and upload CTA outside image.",
+        "accuracyAndExclusions": "No actual lab numbers, graphs, fake medical paperwork, syringes, needles, frightening blood, or excessive clipart. Do not use a blank vial to imply the user has taken a specimen; strictly decorative empty state. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+        "existingAssetAndApprovalHandling": "Reinstated original BVA-0026 request while rejecting only the previous poor image. Use dimension-stable approved fallback until fresh individually owner-approved work is available.",
+        "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
+        "deliverableNotes": "Produce svg/png with target 1024×1024, 1x; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
+        "generationInstruction": "A precise but warm editorial empty-state illustration of a single CLOSED cream-paper lab notebook with one blank specimen envelope and an empty transparent glass sample vial, arranged in a small triangular grouping on a neutral ivory surface. One delicate sage leaf curves into the upper-right edge, all objects resting with credible contact shadows. The notebook is deliberately unmarked and the sample vial contains no colored liquid, patient label, blood or diagnosis. The mood is calm, inviting the person to add their first real bloodwork report without visually implying their results already exist. Original editable vector illustration with subtle drawn paper fibre, thin forest-green ink contours, restrained ivory/sage tones, and one soft shadow; if rendered as a still-life reference, 55mm lens f/5.6 with diffuse upper-left daylight. Maintain original artwork identity, not a fake clinical photograph. 1:1 transparent or clean neutral-background empty-state illustration; complete notebook/vial/leaf within central 72% with generous margins, readable at 120–220px, no space-dependent details. App renders headings, help and upload CTA outside image. Accuracy and exclusions: No actual lab numbers, graphs, fake medical paperwork, syringes, needles, frightening blood, or excessive clipart. Do not use a blank vial to imply the user has taken a specimen; strictly decorative empty state. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Reinstated original BVA-0026 request while rejecting only the previous poor image. Use dimension-stable approved fallback until fresh individually owner-approved work is available."
+      }
+    },
+    {
+      "id": "BVA-0027",
+      "name": "No activity recorded state",
+      "route": "/activity",
+      "component": "Activity empty state",
+      "purpose": "supportive accessible no-data experience",
+      "category": "empty-state",
+      "subject": "subtle running shoe or trail marker illustration, friendly source-independent atmosphere",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": true,
+      "outputFormats": [
+        "svg",
+        "png"
+      ],
+      "promptBrief": "An understated, reassuring illustration of ONE pair of ordinary running shoes with slightly imperfect laces, placed beside a short winding segment of pale gravel trail on an ivory surface. Only the shoes and a small curved green trail marker line are foreground subjects; the rest remains quietly spacious. Shoes are practical neutral stone-grey with tiny sage-blue details, small scuffs and natural woven fabric, not floating, glowing or arranged as a product advertisement. This means 'ready whenever you are', not an invented workout session. Editorial ink-and-wash style with subtle real-material fabric and rubber texture; optional still-life photography reference on a 50mm f/4 lens with diffuse natural window light and delicate grain. Matte surfaces, soft believable ground shadows and restrained contrast. 1:1/4:5 compact empty state with centred single visual grouping, 15% safe margin and clear negative space above/below for actual app text and first activity CTA; background transparent/neutral to adapt to both light and dark modes. Accuracy and exclusions: No activity rings, step counts, clocks, timers, active route map, smartwatch screens, intense athletes or guilt-inducing messaging. Avoid brand logos or inaccurate safety cues. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Restore BVA-0027 requirement; prior visual execution was rejected only. Designer produces new candidate, then individual owner review before integration or publication.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "replace-rejected-image",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "filePaths": [],
+      "integration": {
+        "state": "new replacement asset absent; reserved placeholder required",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "previous image rejected; NEW candidate not reviewed",
+        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
+        "rights": "pending for new artwork",
+        "rendered": "not integrated / not verified"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
+        "date": "2026-11-14",
+        "imageRejected": true,
+        "requirementReinstated": true
+      },
+      "ownerApproval": {
+        "approved": false,
+        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
+        "date": null
+      },
+      "productionBriefV2": {
+        "briefVersion": "2026-11-14-detailed-02",
+        "sceneDescription": "An understated, reassuring illustration of ONE pair of ordinary running shoes with slightly imperfect laces, placed beside a short winding segment of pale gravel trail on an ivory surface. Only the shoes and a small curved green trail marker line are foreground subjects; the rest remains quietly spacious. Shoes are practical neutral stone-grey with tiny sage-blue details, small scuffs and natural woven fabric, not floating, glowing or arranged as a product advertisement. This means 'ready whenever you are', not an invented workout session.",
+        "opticsLightingMaterials": "Editorial ink-and-wash style with subtle real-material fabric and rubber texture; optional still-life photography reference on a 50mm f/4 lens with diffuse natural window light and delicate grain. Matte surfaces, soft believable ground shadows and restrained contrast.",
+        "framingAndUsage": "1:1/4:5 compact empty state with centred single visual grouping, 15% safe margin and clear negative space above/below for actual app text and first activity CTA; background transparent/neutral to adapt to both light and dark modes.",
+        "accuracyAndExclusions": "No activity rings, step counts, clocks, timers, active route map, smartwatch screens, intense athletes or guilt-inducing messaging. Avoid brand logos or inaccurate safety cues. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+        "existingAssetAndApprovalHandling": "Restore BVA-0027 requirement; prior visual execution was rejected only. Designer produces new candidate, then individual owner review before integration or publication.",
+        "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
+        "deliverableNotes": "Produce svg/png with target 1024×1024, 1x; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
+        "generationInstruction": "An understated, reassuring illustration of ONE pair of ordinary running shoes with slightly imperfect laces, placed beside a short winding segment of pale gravel trail on an ivory surface. Only the shoes and a small curved green trail marker line are foreground subjects; the rest remains quietly spacious. Shoes are practical neutral stone-grey with tiny sage-blue details, small scuffs and natural woven fabric, not floating, glowing or arranged as a product advertisement. This means 'ready whenever you are', not an invented workout session. Editorial ink-and-wash style with subtle real-material fabric and rubber texture; optional still-life photography reference on a 50mm f/4 lens with diffuse natural window light and delicate grain. Matte surfaces, soft believable ground shadows and restrained contrast. 1:1/4:5 compact empty state with centred single visual grouping, 15% safe margin and clear negative space above/below for actual app text and first activity CTA; background transparent/neutral to adapt to both light and dark modes. Accuracy and exclusions: No activity rings, step counts, clocks, timers, active route map, smartwatch screens, intense athletes or guilt-inducing messaging. Avoid brand logos or inaccurate safety cues. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. Restore BVA-0027 requirement; prior visual execution was rejected only. Designer produces new candidate, then individual owner review before integration or publication."
+      }
+    },
+    {
+      "id": "BVA-0028",
+      "name": "Source-import education",
+      "route": "/upload",
+      "component": "Upload explanation/empty state",
+      "purpose": "visual comprehension and distinctive Bloom polish",
+      "category": "accent",
+      "subject": "warm tactile paper lab documents and no legible fake medical values, editorial still-life",
+      "composition": "single focal illustration, safe crop",
+      "scientificAccuracy": "Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "text external to image, not baked in",
+      "aspectRatio": "4:3",
+      "targetDimensions": {
+        "width": 1200,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "1x",
+        "2x when justified"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "webp",
+        "avif"
+      ],
+      "promptBrief": "A tactile editorial still-life about bringing existing health records into Bloom: THREE blank cream paper sheets partially overlapping, one simple sealed kraft-paper envelope at lower right, and a closed charcoal folder underneath. At top right a tiny sage leaf casts a delicate shadow; all paper is blank except possibly indistinct non-readable horizontal marks that do not resemble actual results. Natural worn paper edges and fine grain. Photographed from an elevated three-quarter angle on an unbleached linen desk, with no laptop needed; clean empty LEFT third reserved for app's source-import explanation. 50mm lens, f/5, diffuse side-window light from upper left, physically credible paper grain, slight corner curl, natural inkless page shadows, desaturated forest/ivory palette; gentle natural film grain. 4:3 wide accent, composition grouped on RIGHT 60%, left quiet enough for text if needed; 1:1 responsive thumbnail crop keeps envelope and sheets entirely visible. App overlays all upload instructions, file types and error information separately. Accuracy and exclusions: No names, dates, synthetic bloodwork values, barcodes, QR codes, readable text, real logos, floating files, connected doctors or fabricated endorsements. Not a representation of any actual user-uploaded medical record. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. BVA-0028 restored as visual requirement; previous image remains rejected/unusable. A new image needs specific owner approval before moving to publication or developer delivery.",
+      "priority": "P2",
+      "impact": "selective",
+      "sourceRelation": {
+        "action": "replace-rejected-image",
+        "existingRegistry": null,
+        "existingSlot": null,
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "filePaths": [],
+      "integration": {
+        "state": "new replacement asset absent; reserved placeholder required",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "previous image rejected; NEW candidate not reviewed",
+        "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
+        "rights": "pending for new artwork",
+        "rendered": "not integrated / not verified"
+      },
+      "statusEvidence": {
+        "auditedFrom": "Original 2026-11-14 BVA 28-asset registry plus owner's correction that ONLY generated images were rejected",
+        "date": "2026-11-14",
+        "imageRejected": true,
+        "requirementReinstated": true
+      },
+      "ownerApproval": {
+        "approved": false,
+        "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
+        "date": null
+      },
+      "productionBriefV2": {
+        "briefVersion": "2026-11-14-detailed-02",
+        "sceneDescription": "A tactile editorial still-life about bringing existing health records into Bloom: THREE blank cream paper sheets partially overlapping, one simple sealed kraft-paper envelope at lower right, and a closed charcoal folder underneath. At top right a tiny sage leaf casts a delicate shadow; all paper is blank except possibly indistinct non-readable horizontal marks that do not resemble actual results. Natural worn paper edges and fine grain. Photographed from an elevated three-quarter angle on an unbleached linen desk, with no laptop needed; clean empty LEFT third reserved for app's source-import explanation.",
+        "opticsLightingMaterials": "50mm lens, f/5, diffuse side-window light from upper left, physically credible paper grain, slight corner curl, natural inkless page shadows, desaturated forest/ivory palette; gentle natural film grain.",
+        "framingAndUsage": "4:3 wide accent, composition grouped on RIGHT 60%, left quiet enough for text if needed; 1:1 responsive thumbnail crop keeps envelope and sheets entirely visible. App overlays all upload instructions, file types and error information separately.",
+        "accuracyAndExclusions": "No names, dates, synthetic bloodwork values, barcodes, QR codes, readable text, real logos, floating files, connected doctors or fabricated endorsements. Not a representation of any actual user-uploaded medical record. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event.",
+        "existingAssetAndApprovalHandling": "BVA-0028 restored as visual requirement; previous image remains rejected/unusable. A new image needs specific owner approval before moving to publication or developer delivery.",
+        "negativePromptContext": "Avoid airbrushed skin, plastic CGI finish, oversaturation, warped anatomy/objects, glossy stock photography, toy-like uniform geometry, clutter, embedded text, watermarks, logos and unreal shadows. Interpret constraints according to subject: accurate naturally smooth surfaces are valid.",
+        "deliverableNotes": "Produce webp/avif with target 1200×900, 1x; 2x when justified; ensure everyday-green-light, everyday-green-dark compatibility, responsive crop and accessible non-image fallback. The prior image is rejected, not the underlying concept.",
+        "generationInstruction": "A tactile editorial still-life about bringing existing health records into Bloom: THREE blank cream paper sheets partially overlapping, one simple sealed kraft-paper envelope at lower right, and a closed charcoal folder underneath. At top right a tiny sage leaf casts a delicate shadow; all paper is blank except possibly indistinct non-readable horizontal marks that do not resemble actual results. Natural worn paper edges and fine grain. Photographed from an elevated three-quarter angle on an unbleached linen desk, with no laptop needed; clean empty LEFT third reserved for app's source-import explanation. 50mm lens, f/5, diffuse side-window light from upper left, physically credible paper grain, slight corner curl, natural inkless page shadows, desaturated forest/ivory palette; gentle natural film grain. 4:3 wide accent, composition grouped on RIGHT 60%, left quiet enough for text if needed; 1:1 responsive thumbnail crop keeps envelope and sheets entirely visible. App overlays all upload instructions, file types and error information separately. Accuracy and exclusions: No names, dates, synthetic bloodwork values, barcodes, QR codes, readable text, real logos, floating files, connected doctors or fabricated endorsements. Not a representation of any actual user-uploaded medical record. Decorative/conceptual; must not imply personal measurement, diagnosis, assay or actual recorded event. Avoid airbrushed/plastic CGI or wax-like unreal materials, illegible props or embedded text. BVA-0028 restored as visual requirement; previous image remains rejected/unusable. A new image needs specific owner approval before moving to publication or developer delivery."
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-14: BVA-0023 independently generated, owner-approved and published individually; developer import and live QA pending. No other Batch D files authorized.",
-  "retiredAssetIds": [
-    "BVA-0022",
-    "BVA-0024",
-    "BVA-0025",
-    "BVA-0026",
-    "BVA-0027",
-    "BVA-0028"
-  ],
+  "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "Every new or revised visual asset must be presented individually to owner for review and explicit approval BEFORE publication to Shared Library, GitHub, production registry, or developer distribution.",
     "effective": "2026-11-14",
-    "note": "BVA-0023 independently regenerated, approved by owner and republished as single ID. BVA-0022 and BVA-0024..0028 remain withdrawn/unapproved; no blanket approval of Batch D."
+    "note": "Owner clarification: earlier BVA-0022 and BVA-0024–0028 IMAGES alone were rejected; their asset requirement IDs/briefs have been restored. New/revised replacement image files require individual owner approval before publication or developer distribution. BVA-0023 individually approved artwork is unchanged."
   },
   "descriptiveBriefStandard": {
     "version": "2026-11-14-01",
     "requirement": "Every active visual asset entry requires uniquely authored sceneDescription, opticsLightingMaterials, framingAndUsage, accuracyAndExclusions, existingAssetAndApprovalHandling, deliverableNotes and complete generationInstruction. Generic global prompt alone is insufficient; image generator should not infer species, food, human pose, camera, light, background, crop, colour, context, exclusions or UI placement.",
     "reviewRule": "Brief revisions do not imply artwork replacement, new approval, publication or generation. Preserve ownerPublicationGate and all actual production/review statuses. New/revised art itself must pass individual owner review before publication.",
     "futureEntries": "Codex enforce nonblank per-field lengths, distinct descriptions, appropriate UI role and subject-specific review; cannot mechanically duplicate a common template across assets. No invented scientific anatomy/microbe behavior."
+  },
+  "imageRejectionHistory": {
+    "assetIds": [
+      "BVA-0022",
+      "BVA-0024",
+      "BVA-0025",
+      "BVA-0026",
+      "BVA-0027",
+      "BVA-0028"
+    ],
+    "scope": "prior generated image outputs only, not requirements or permanent registry IDs",
+    "replacementStatus": "briefed; awaiting new candidate and individual owner approval",
+    "originalVisuals": "rejected; do not publish or distribute"
   }
 }
