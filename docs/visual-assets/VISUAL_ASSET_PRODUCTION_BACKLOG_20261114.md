@@ -1,3 +1,9 @@
+## Current owner-controlled registry counts and detailed brief quality (2026-11-14)
+
+**Live canonical registry now contains 22 active records**, each with detailed production-ready `productionBriefV2` text including exact scene geometry and staging, physical optics and light, mode/negative-space use, scientific limits/exclusions, existing image handling and combined generation instruction. The original 28-item source-audit seed in this historical backlog is **superseded** by six later owner withdrawals: **BVA-0022, BVA-0024–BVA-0028**. Do not treat historical Batch D rows for those IDs as current production authorization; remove them from the actionable dispatch list. **BVA-0023** is separately owner approved and must not be replaced. The canonical `ownerPublicationGate` requires every new/revised actual image be shown individually to owner and approved **before publishing to Shared Library, GitHub asset paths or developer distribution**. Editing a textual description does not change the image status. Future Codex source audit/production counts must read the live JSON instead of cached 28/20 estimates.
+
+---
+
 # Bloom — Visual Asset Production Backlog and Initial Full-App Audit
 **2026-11-14 | Chief Architect initial source audit | Status: PARTIAL source-based, mandatory Codex full rendered audit outstanding**
 **Canonical requirements:** [visual-asset-registry.json](visual-asset-registry.json). This Markdown document is a **generated/maintained human work queue** keyed by the same permanent asset IDs, not another registry. No unregistered image request or undocumented artwork reuse.
