@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "ALREADY_VERIFIED",
   "authority": "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md",
   "sourceBaseline": {
     "published": "89448061429634df7735a85e2d5c69fac505da76",
@@ -37,7 +37,14 @@
     "browser": "PASS actual App/auth/session handlers, in-memory synthetic users and canonical cookie sessions; login and signup20 theme/width states plus200% text, keyboard order,44px targets, username autocomplete and persistent focused errors; transport details withheld; pending credentials/navigation frozen; duplicate-submit guard; logout and authenticated public-route redirect; pagehide/pageshow withdraw and clear credential drafts",
     "screenshots": "Matched source/stylesheet-controlled before/after at320/390/1280 light/dark in /tmp/bloom-auth-ui-before and /tmp/bloom-auth-ui-after. Explicit assertions prove baseline/current TSX AND stylesheet were selected. Representative390light and320dark manually inspected by implementer.",
     "sourceAudits": "Capability crosswalk and biology inventory checks PASS without changing registry entries, identity content or approval status",
-    "exactCI": "PENDING_PUBLICATION; previous Food/audit733/733 passed but deployed drawer test needed explicit interactive-readiness synchronization; fix locally tested with assertions retained"
+    "exactCI": {
+      "sha": "e495708bdd20c3b82f9ce70e6fdebf7a18dd662d",
+      "run": "43750257253",
+      "job": "132922420884",
+      "status": "SUCCESS",
+      "tests": "733/733",
+      "hosted": "Exact isolated binding, report lab/province/overlay exact retry and reauthentication, unchanged source observations, owned export/account erasure/other-account denial;72 deployed layout states,18 real-network media recovery placements and synthetic account cleanup"
+    }
   },
   "limitations": [
     "Public account entry uses Everyday default and any existing saved theme; Coach access or new mode selector is not implemented",

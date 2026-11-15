@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "ALREADY_VERIFIED",
   "authority": "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md",
   "baseLocal": "8258aa3fbd9b4ea4feae0e4d153d8a0648124734",
   "problem": "Reproduced320px light/200% text overflow in Log this saved meal and Remove saved meal before changes",
@@ -26,7 +26,14 @@
     "actualEncryptedSourceJourney": "PASS actual App/API/encrypted SQL saved template \u21922x canonical ingredients \u2192independent first-ingredient correction \u2192explicit journal save. Original100g/20g recipe unchanged; saved150g/40g new entry; source error/retry and owner isolation;320px.",
     "beforeAfter": "Source-asserted original SavedMeals module versus current; matched320/390 light/dark/everyday/athlete at100% and200% in /tmp/bloom-saved-ui-before and /tmp/bloom-saved-ui-after. Implementer inspected320light/200% pair. Baseline intentionally retains known overflow; after asserts none.",
     "sourceAudit": "Only reviewed SavedMeals page hash updated in capability map; all52 feature entries and all521 biological identity records unchanged. Capability/biology checks pass.",
-    "exactCI": "PENDING_PUBLICATION; previous Food/audit733/733 passed but deployed drawer test needed explicit interactive-readiness synchronization; fix locally tested with assertions retained"
+    "exactCI": {
+      "sha": "e495708bdd20c3b82f9ce70e6fdebf7a18dd662d",
+      "run": "43750257253",
+      "job": "132922420884",
+      "status": "SUCCESS",
+      "tests": "733/733",
+      "hosted": "Exact isolated binding, report lab/province/overlay exact retry and reauthentication, unchanged source observations, owned export/account erasure/other-account denial;72 deployed layout states,18 real-network media recovery placements and synthetic account cleanup"
+    }
   },
   "limits": [
     "No independent brand/physical VoiceOver or full Food redesign approval claimed",

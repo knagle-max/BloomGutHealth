@@ -1,3 +1,15 @@
+## Parent qualification and control fixes require no input — 2026-11-15
+
+Published e495708 is fully verified733/733 plus hosted gates. Shared-button/report and200% drawer fixes are locally tested and ready to integrate; no permission or provider activation needed. Font metadata for the already approved typography is available under OFL; use still requires checking packaged license/bytes and rendered parity, not owner photography. Exact original art/ZIP access remains scoped only.
+
+---
+
+## Shared control/report reflow is unblocked — 2026-11-15
+
+Actual mobile enlarged-text overflow is fixed/tested in an isolated branch, including native PDF review/privacy and existing auth/Food source workflows. Integrate after current frozen parent qualifies; no owner input or activation approval needed. Existing original-artifact access remains a scoped dependency for exact new art/fidelity, not a blocker to other UI work.
+
+---
+
 ## Drawer check synchronization is locally resolved — 2026-11-15
 
 No owner input: previous full CI's timing-sensitive drawer Escape check now waits for the same focus/animation readiness as existing shell checks, retaining close/focus assertions. Targeted actual-browser checks pass; publish tested auth/saved reflow and QA correction together, then qualify exact source. Artifact access remains feature-scoped only.

@@ -1,3 +1,25 @@
+T1a-control-reflow: IMPLEMENTED_AND_ENGINEERING_TESTED; publication/CI pending. T0 ALREADY_VERIFIED e495708/43750257253. Incoming55d854c2 consolidated task contract preserved; current selector is short NEXT_ACTIONS, next T1b overview with BVA fallbacks.
+
+## Verified parent; shared control and enlarged-text drawer correction — 2026-11-15
+
+ALREADY_VERIFIED published e495708bdd20c3b82f9ce70e6fdebf7a18dd662d: CI43750257253 SUCCESS733/733, exact hosted isolated source/preferences/ownership/export/erasure,72 deployed responsive states,18 media failure/recovery placements and synthetic cleanup. Food/auth/saved-meal receipts now pin this passed source. Reference comparisons remain ungated, pending scientific review honestly labelled.
+
+IMPLEMENTED_AND_ENGINEERING_TESTED isolated shared-control348991a1 plus drawer correction: one default Button class literal fixes report-entry overflow; AppHeader adds one heading class, scoped CSS fixes44px close target/reserved title space at200% text. Actual both-mode320/390 lightdark100/200% drawer matrix (16cases) passes no overlap/overflow, target size, click/keyboard/Escape/focus restoration. No state/handler/source/routing/permissions changes. Types/build/original-media/source audits pass;72 page states, native PDF review/privacy, actual auth and Food SQL/retry checks passed. Receipt: docs/verification/V06_SHARED_CONTROL_REFLOW_20261115.json.
+
+Next: integrate/publish these tested isolated commits, verify exact full CI, then continue approved app-wide typography/theme and other UI/Core work without an interim checkpoint. Supplied source requests Newsreader/Plus Jakarta Sans; package metadata confirms OFL-1.1 availability, but no fonts installed/used yet. Existing original artwork missing-access limitation remains feature-scoped. Main/v0.5 unchanged; no full RC or independent/physical review claim.
+
+---
+
+## Shared control reflow; report entry and native PDF review — 2026-11-15
+
+IMPLEMENTED_AND_ENGINEERING_TESTED in isolated feature/bloom-control-reflow-v06 from published e495708. Reproduced report-entry Paste JSON data overflow at320px/200% text; fixed the shared Button's forced no-wrap default with one class-literal edit (bounded width/normal wrapping/long-token breaks). Props/handlers/variants/icons/explicit caller overrides and all labels/source/clinical/permission semantics unchanged. No artwork added or replaced.
+
+PASS types/build/original media/source audits;72 layout states at9routes plus200% text and both-mode320/390 lightdark keyboard/drawer/close/focus; real auth/session journey; actual SQL meal portion-only edit/exact retry/owner isolation;16 saved reuse layout states plus200% text and exact retry. Expanded native PDF QA passes32 initial-input/preview width/theme/text states,94 synthetic organisms/22 assessments/299 food suggestions, corrections/uncertain-source blocking/minimized one-save/reload and privacy canaries. Historical QA now opens the existing Latest results tab after default Bacteria view; no runtime navigation changed. CI includes this native report regression. Receipt: docs/verification/V06_SHARED_CONTROL_REFLOW_20261115.json.
+
+Next: once parent e495708 finishes frozen qualification, integrate/publish this tested shared-control slice and verify exact CI. Continue independently safe full-app UI work; full RC, original archive fidelity and independent/physical-device acceptance remain open. No main merge or owner checkpoint.
+
+---
+
 ## Drawer qualification synchronization; publish tested account/Food support UI — 2026-11-15
 
 Food/audit source89448061429634df7735a85e2d5c69fac505da76 CI43748622041 passed733/733, browser/type/source audit/build stages, then failed the deployed navigation Escape assertion. It sent Escape immediately on dialog visibility. Applied the existing shell check's focus+opening-animation readiness boundary to this navigation check; no arbitrary sleep, runtime behavior change, skipped assertion or weaker close/focus expectation. Local targeted8 layout states and complete Everyday/Athlete320/390 light/dark keyboard route/drawer/close/focus checks PASS. Capability/biology audits remain unchanged and pass.

@@ -11,6 +11,8 @@
 
 ## NOW — T0: finish only genuinely outstanding current UI publication/CI qualification
 
+**CLOSED:** VERIFIED_ON_REVIEW_BRANCH at e495708bdd20c3b82f9ce70e6fdebf7a18dd662d / CI43750257253,733/733 + hosted source/account +72 layout/18 media recovery. Delivery ledger and dated receipts contain evidence; do not rerun T0.
+
 **Observed in 2026-11-15 task receipts (not independently reverified by this Architect at live Render/head):**
 - Food editorial source `96d517ec...`, subsequent source/audit `89448061...` and CI `43748622041`: recorded 733/733 passing stages with a **deployed navigation Escape timing assertion** failure; a narrowly scoped focus/animation readiness correction has been locally tested without suppressing the real expectation.
 - Auth theme slice `auth8258aa3f` and Saved Meals reflow `4f1bb9c9` are described as **locally implemented and tested**, with publication/exact-hosted SHA verification outstanding; audit receipts in `docs/verification/V06_AUTH_THEME_20261115.json`, `V06_SAVED_MEAL_REFLOW_20261115.json`, `V06_FOOD_EDITORIAL_20261115.json`.
@@ -21,6 +23,8 @@
 **Critical protection:** Do not solve stale source-audit fingerprints by weakening/omitting audits. The previous test failure was a focus/animation race in the **test's timing**, not authorization to skip Escape/close/focus correctness. Read exact receipt and current source before touching.
 
 ## NEXT — T1: app-wide premium UI and visual asset integration (owner top design priority)
+
+**Active T1a-control-reflow:** publish tested shared Button/report and200% mobile drawer fixes, preserving concurrent documentation; exit exact CI/preview or scoped technical dependency. Next eligible T1b: Biology/Bloodwork overview, BVA-0009–0014 assets/fallbacks, no per-image owner gate.
 
 **Goal:** one coherent immersive botanical editorial app, with Everyday forest-green, Athlete original blue and Coach original purple. Upgrade **all authorized user-facing and deep routes** and real empty/error states, not only five Stitch screenshots. Preserve every existing useful control, original lab/food/source detail, account/role/consent permission, route and action. **Use actual source fixtures and real app screenshot comparison**, not static copied HTML.
 

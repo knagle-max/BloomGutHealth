@@ -3,3 +3,18 @@
   background:var(--bv-mist);color:var(--bv-forest-strong);box-shadow:inset 3px 0 0 var(--bv-brand);
 }
 .app-shell .bloom-bottom-nav a[aria-current="location"] {color:hsl(var(--primary));font-weight:650;}
+/* Scale drawer text independently of its icon-only close target. The original
+   rem-sized target outgrew its reserved heading space at 200% text on mobile. */
+.mobile-navigation-sheet .mobile-navigation-heading {
+  min-width:0;
+  padding-right:56px;
+  overflow-wrap:anywhere;
+}
+.mobile-navigation-sheet > button:last-child {
+  top:16px;
+  right:16px;
+  width:44px;
+  height:44px;
+  min-width:44px;
+  min-height:44px;
+}

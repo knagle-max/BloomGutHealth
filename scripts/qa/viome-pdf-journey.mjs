@@ -23,9 +23,22 @@ await page.route('**/api/**',route=>{const req=route.request(),path=new URL(req.
  return route.fulfill({json});
 });
 const dir=new URL('../../docs/review/viome-native-pdf-20261105/',import.meta.url);if(capture)await mkdir(dir,{recursive:true});
-async function screenshots(){for(const[width,dark]of[[320,false],[390,false],[390,true]]){await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:dark?'dark':'light'});await page.evaluate(d=>document.documentElement.classList.toggle('dark',d),dark);await page.evaluate(()=>window.scrollTo(0,0));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));if(capture)await page.screenshot({path:new URL(`${before?'before':'after'}-${width}-${dark?'dark':'light'}.png`,dir).pathname});}}
+async function screenshots(){
+ for(const width of [320,390,768,1440])for(const dark of [false,true]){
+  await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:dark?'dark':'light'});await page.evaluate(d=>document.documentElement.classList.toggle('dark',d),dark);await page.evaluate(()=>window.scrollTo(0,0));
+  for(const textSize of ['100%','200%']){
+   await page.evaluate(value=>document.documentElement.style.fontSize=value,textSize);
+   const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1);
+   if(overflow)console.log(await page.locator('main').evaluate(root=>Array.from(root.querySelectorAll('*')).filter(el=>el.getBoundingClientRect().right>innerWidth+1).slice(0,8).map(el=>({tag:el.tagName,class:el.className,text:el.textContent?.slice(0,60)}))));
+   assert.equal(overflow,false,`Report input/review ${width}/${dark?'dark':'light'}/${textSize}`);
+  }
+  await page.evaluate(()=>document.documentElement.style.fontSize='');
+  if(capture)await page.screenshot({path:new URL(`${before?'before':'after'}-${width}-${dark?'dark':'light'}.png`,dir).pathname});
+ }
+}
 try{
  await page.goto('http://127.0.0.1:5272/upload');
+ await page.getByRole('heading',{name:'Add a gut report',exact:true}).waitFor();await screenshots();
  await page.getByTestId('input-file').setInputFiles({name:VIOME_PDF_CANARY+'.pdf',mimeType:'application/pdf',buffer:Buffer.from(syntheticViomePdf('organisms'))});
  if(before){await page.getByText('Choose JSON or CSV format.',{exact:true}).waitFor();await screenshots();console.log('Captured native PDF rejection baseline.');}
  else{
@@ -37,7 +50,7 @@ try{
   await page.getByRole('button',{name:'Edit Syntheticus bacterium FIX-0',exact:true}).click();assert.equal(await page.getByRole('checkbox',{name:'I reviewed the biological rows and categories against my source. They contain no personal identifiers.',exact:true}).isDisabled(),true);await page.getByRole('textbox',{name:'Corrected biological label',exact:true}).fill('Syntheticus corrected FIX-0');await page.getByRole('button',{name:'Apply row correction',exact:true}).click();
   await page.getByText('Original biological label: Syntheticus bacterium FIX-0',{exact:true}).waitFor();
   await page.getByRole('checkbox',{name:'I reviewed the biological rows and categories against my source. They contain no personal identifiers.',exact:true}).check();await page.getByRole('button',{name:'Save report',exact:true}).click();
-  await page.waitForURL(/\/microbiome\?sample=report_/);await page.reload();await page.getByRole('region',{name:'Imported report details',exact:true}).getByText('Syntheticus corrected FIX-0',{exact:true}).waitFor();assert.equal(posts.length,1);
+  await page.waitForURL(/\/microbiome\?sample=report_/);await page.reload();await page.getByRole('button',{name:'Latest results',exact:true}).click();await page.getByRole('region',{name:'Imported report details',exact:true}).getByText('Syntheticus corrected FIX-0',{exact:true}).waitFor();assert.equal(posts.length,1);
   assert.equal(posts[0].report.organisms[0].name,'Syntheticus bacterium FIX-0');assert.equal(posts[0].report.organisms[0].correctedName,'Syntheticus corrected FIX-0');
   await page.goto('http://127.0.0.1:5272/upload');await page.getByTestId('input-file').setInputFiles({name:VIOME_PDF_CANARY+'.pdf',mimeType:'application/pdf',buffer:Buffer.from(syntheticViomePdf('recommendations'))});await page.getByRole('button',{name:'Review report',exact:true}).click();await page.getByRole('heading',{name:'Review your Viome report',exact:true}).waitFor();
   await page.getByText('22 provider assessments · 0 reported organisms · 0 quantified taxa · 299 provider food suggestions',{exact:true}).waitFor();

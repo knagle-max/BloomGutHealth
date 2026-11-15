@@ -246,9 +246,9 @@
         "Review and import original supported report",
         "Keep missing collection date optional"
       ],
-      "baselineLayout": "SOURCE_AUDITED_RUNTIME_THEME_CHECK_PENDING",
-      "mutationProof": "Existing functional tests remain separate; this ledger alone proves no database or authorization behavior",
-      "themeStatus": "Full new owner theme adoption not claimed"
+      "baselineLayout": "RENDERED_REPORT_INPUT_AND_PREVIEW_32_WIDTH_THEME_TEXT_STATES",
+      "mutationProof": "docs/verification/V06_SHARED_CONTROL_REFLOW_20261115.json; actual native PDF.js synthetic94-organism/22-assessment/299-food review/correction/minimized one-save/reload and privacy canaries with mocked HTTP; not actual database or authentic private report verification",
+      "themeStatus": "SHARED_BUTTON_REFLOW_ENGINEERING_TESTED; independent design/VoiceOver and full theme adoption pending"
     },
     {
       "path": "/demo",

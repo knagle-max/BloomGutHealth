@@ -1,0 +1,72 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "authority": "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md",
+  "isolatedBranch": "feature/bloom-control-reflow-v06",
+  "base": {
+    "published": "e495708bdd20c3b82f9ce70e6fdebf7a18dd662d",
+    "localEquivalent": "6c095e71beb5b0791efaec4e742664e6f1bd1b9e",
+    "tree": "83421715987fc5fbdf7ba64753d1ba3cf140624b"
+  },
+  "problem": "Actual report entry Paste JSON data button overflows320px at200% text because shared Button forces whitespace-nowrap; two Food routes had already needed scoped wrapping fixes",
+  "implementation": [
+    "One base class literal changes: shared Button constrains maximum width, allows normal wrapping and long-token breaking; all props/handlers/variants/icons and explicit caller class overrides retained",
+    "No router, auth, clinical values, source fields, button labels or completion semantics change",
+    "Historical PDF browser assertion now explicitly opens existing Latest results after default Bacteria view; runtime report navigation is unchanged",
+    "Existing native PDF browser now checks initial report intake and biological preview across4widths\u00d72themes\u00d7100/200% text before continuing real synthetic PDF extraction/correction/privacy journey; added to CI",
+    "Reproduced drawer heading/Close overlap at320px/200% text; fixed scoped heading reserved space and fixed44px icon-only close target. AppHeader adds one CSS class only; drawer state/handlers/links/focus unchanged."
+  ],
+  "sourceSha256": {
+    "client/src/components/ui/button.tsx": "5c9037e0d378ffc8ddf93de1ff61346eefacf284fe75277082cb9f65f67fe337",
+    "scripts/qa/viome-pdf-journey.mjs": "d3f8258650cb116eaa70dca9de4e6443db9a76ac8cd600be8ae6b2deaadfb162",
+    ".github/workflows/neon_workflow.yml": "705d3a0b7a01cc281539dd17684a3ba65cfb0173a3a6d1daf779d036f70b7a22",
+    "client/src/components/AppHeader.tsx": "93f01e99d34f3e012df33da69e0101e5fac859322ce6270b4d1f26aa1b37a7b7",
+    "client/src/styles/navigation-shell.css": "47bc1ef2d688e91e801c696c1e193f30132290ce7961fffdf95747cce2bc010c",
+    "scripts/qa/visual-materials-parity.mjs": "a508691624f56c108249655d14643e27c38692d01f26ff4fce059e506fbac39d"
+  },
+  "validation": {
+    "typesAndProductionBuild": "PASS after final drawer CSS/class update; immutable scientific/R4/M1 original media fingerprints retained",
+    "sourceAudits": "PASS, unchanged52 capability entries/521 biology identity records/730 scanned sources; no approval promotion or source audit refresh required",
+    "nativeReport": "PASS32 input/preview width/theme/text states; native PDF.js7/13page synthetic94organisms/22assessments/299foods; explicit biological correction preserves original; minimized one save/reload; uncertain extraction blocks save until resolution/new review; rotated source, unreadable/invalid PDF, filename/header/metadata/hidden canary absent from outbound payload, storage, console and external document processors. Mock API, not private owner document or actual SQL persistence.",
+    "sharedLayout": "PASS72 states at9 actual routes/4widths/lightdark plus200% text/reduced motion; both-mode320/390 lightdark five-tab keyboard routes/all drawer links/Escape/close/focus return; no writes. Receipt /tmp/bloom-shared-button-parity/parity.json",
+    "auth": "PASS existing real App/auth/session-handler browser with20 theme/width states plus200% text, keyboard/44px, pending/error/draft/session lifecycle",
+    "food": "PASS actual App/planner/isolated SQL canonical portion-only edit/lost-response exact retry/single row/date/type/context0/reload/changed-text invalidation/owner isolation/four widths/both modes/themes/200% text",
+    "savedMeals": "PASS16 mode/theme/width states plus200% text, exact lost-response retry/frozen inputs/single meal, later explicit intent separate and linked-source invalidation",
+    "exactCI": "PENDING_PUBLICATION; parent e495708 is now fully verified733/733 and hosted gates",
+    "drawerZoom": "PASS both Everyday/Athlete \u00d7320/390 \u00d7light/dark \u00d7100/200% text (16 cases): no heading/Close overlap or viewport overflow,44px target, click/keyboard close, Escape, trigger focus restoration. Targeted normal navigation8 combos plus8 page layout states also pass. /tmp/bloom-control-drawer-zoom/parity.json"
+  },
+  "assetOpportunity": "No image helps essential shared control labels. Existing asset registry/artwork/digests/lifecycles untouched.",
+  "remaining": [
+    "No blanket all-route/action/theme or clinical literature approval from shared-control checks",
+    "No physical VoiceOver or independent visual approval claimed",
+    "Full v0.6 RC remains open; preserve live parent until exact hosted qualification ends; no main merge or production data changes"
+  ],
+  "parentQualification": {
+    "sha": "e495708bdd20c3b82f9ce70e6fdebf7a18dd662d",
+    "run": "43750257253",
+    "job": "132922420884",
+    "status": "SUCCESS",
+    "tests": "733/733",
+    "hosted": "Exact isolated binding, report lab/province/overlay exact retry and reauthentication, unchanged source observations, owned export/account erasure/other-account denial;72 deployed layout states,18 real-network media recovery placements and synthetic account cleanup"
+  },
+  "incomingGovernance": {
+    "head": "55d854c2b60988a97a76bbaf39d65fd300eccc66",
+    "scope": "Seven documentation-only changes imported and source blob hashes verified; condensed AGENTS/NEXT_ACTIONS remain authoritative, historical snapshots preserved. T0 explicitly closed from exact e495708 verification; T1a current publication then T1b overview/fallbacks.",
+    "files": [
+      "AGENTS.md",
+      "NEXT_ACTIONS.md",
+      "docs/architecture/V06_HANDOFF.md",
+      "docs/architecture/VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md",
+      "docs/operations/V06_DEPENDENCY_BACKLOG.md",
+      "docs/operations/history/AGENTS_ARCHIVE_PRE_EXECUTION_CLEANUP_20261115.md",
+      "docs/operations/history/NEXT_ACTIONS_ARCHIVE_PRE_EXECUTION_CLEANUP_20261115.md"
+    ],
+    "applicationCodeChangedByIncoming": false,
+    "latestHead": "e80a20902f40baf9fe11beec2e11882231c64b3c",
+    "additionalFiles": [
+      "docs/operations/V06_DELIVERY_STATUS_LEDGER_20261115.md",
+      "docs/visual-assets/VISUAL_ASSET_PRODUCTION_BACKLOG_20261114.md",
+      "docs/visual-assets/visual-asset-registry.json"
+    ],
+    "latestDecision": "Owner per-image approval gate explicitly removed; use specialist quality/rights/science checks and one integrated RC review. Preserve28 IDs and prior rejected/approved rendition history. Incoming7 latest files imported with exact blob hash verification; only short queue/status-ledger evidence then updated. Registry projection check passes without changing incoming asset bytes."
+  }
+}
