@@ -1,3 +1,9 @@
+## Frozen-scope architecture substitution — native SwiftUI iOS, late v0.6 (2026-11-14)
+
+Owner's definitive decision [fully native Swift/SwiftUI iOS; late v0.6 delivery](NATIVE_IOS_SWIFTUI_FINAL_ARCHITECTURE_LATE_V06_20261114.md) replaces the *implementation technology* previously authorized for iOS (Capacitor) without expanding frozen user capabilities or restarting v0.6. `V06_HANDOFF.md` §35 has been directly revised; HK-ARCH-01 now requires native SwiftUI integration and HK-ARCH-02–08 continue as adapted HealthKit/consent/source/security/device-testing contracts. The iOS work is **one of the last v0.6 engineering efforts** after ongoing web/visual/Core verification. No interim Capacitor/RN/WebView app and no independent Swift science stack. Native release remains separately gated and cannot be claimed from React completeness or Swift feasibility. Normal v0.7 proposal routing still applies to any new consumer features.
+
+---
+
 ## Frozen-v0.6 exception — permanent asset production pipeline (2026-11-14)
 
 The owner's comprehensive Visual Asset Registry/Continuous Asset Production requirements are a **v0.6 necessary implementation clarification for the already-approved app-wide premium visual redesign**, not authorization to grow scientific or consumer features. See [Codex implementation handoff](VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md). Initial master registry and priority audit ensure asset requests, placeholders, generation and visual verification are part of finishing the current theme correctly; future v0.7 changes inherit the same process without re-opening v0.6 scope. Keep current editor/source/rendering workflows and IDs, add minimal validation and evidence, do not create competing assets database or block unrelated safety fixes while artwork pending.
