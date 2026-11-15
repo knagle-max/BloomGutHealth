@@ -10,6 +10,12 @@ This **later direct owner instruction supersedes all historical language in this
 
 ---
 
+## Owner's governing development workflow — build autonomously; review integrated RC (2026-11-15)
+
+[Binding execution amendment](V06_AUTONOMOUS_DEVELOPMENT_POST_IMPLEMENTATION_RC_REVIEW_20261115.md): Codex **implements, tests and stages existing approved v0.6 Core and Advanced roadmap work without per-feature specialist/Architect/owner pre-signoff**. Historical Biology Rev 2.0/2.1, ML and Integrations handoffs supply scientific/QA expectations and final **parallel integrated RC review**, not a development-interrupting list of preapprovals. The status ledger must separately represent engineering tested/deployed versus restricted real-person exposure. Medical diagnosis/dosing/personal predictive claims, privacy/consent, source licensing and public/production actions remain subject to actual execution/release safeguards; development and safe synthetic/reference preview may continue. Owner reviews combined image/UI/functionality at RC prior to authorized `main` merge. This supersedes contradictory old serial gate language without deleting prior requirements.
+
+---
+
 ## Execution-navigation note — 2026-11-15
 
 This long document preserves **approved v0.6 requirements and historical decisions**, not an instruction to start at Section 1 or select tasks by the newest/oldest heading. For day-to-day engineering, read [AGENTS.md](../../AGENTS.md) once and [NEXT_ACTIONS.md](../../NEXT_ACTIONS.md) for the single active task; use the relevant section of this file only when that task needs scope/acceptance details. Current product-owner supersessions include native SwiftUI over Capacitor (§35), v0.6 Core before Advanced, the day-one research-*contact* preference without live research processing, and **one integrated owner release-candidate review of images, UI and functionality**; image generation and development-branch publication proceed autonomously after normal specialist quality checks. Earlier copied priority/stop/review language is source history, not another concurrent task selector. This note does not erase any science/privacy/rights/release gate or supported requirement.
