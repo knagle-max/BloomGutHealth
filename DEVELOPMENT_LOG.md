@@ -1,3 +1,9 @@
+## Food publication audit correction — 2026-11-15
+
+Published Food source96d517ec39523d40f51ee048ad0939ba2730d98e. Its CI43732451781 passed all32-state Food, actual SQL saved editor/retry/account isolation, journal cache checks and types, then correctly rejected stale source-audit fingerprints. Reviewed normalized AST proof remains class/import-only. Refreshed exactly2 capability page hashes and biology scanned-source count729→730; all52 capability entries and521 biology identity records unchanged, no permission/scientific approval promoted. Both source audits now PASS. Publish this audit correction and verify exact full CI; keep development moving on independent UI tasks while qualification runs. No main merge or new owner question. Receipt: docs/verification/V06_FOOD_EDITORIAL_20261115.json.
+
+---
+
 ## Food editorial trial and accessible journal actions — 2026-11-15
 
 IMPLEMENTED_AND_ENGINEERING_TESTED locally from verified UI source7238d8cd1fd4023edf5177834e70bd0647c8900c. Applied the approved16-anchor class/CSS-only trial in isolated feature/food-journal-editorial-v06-validation; normalized TypeScript AST proves all hooks/handlers/data/save/source behavior preserved. Open separator rows, editorial hierarchy and existing BVA-0002 media retained. Actual testing required scoped44px icon targets and wrapping journal actions/reusable-meal buttons at320px/200% text. No images or clinical data changed.
