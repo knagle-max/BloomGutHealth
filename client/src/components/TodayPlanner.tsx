@@ -1,4 +1,5 @@
 import {quantityFromCanonical,quantityToCanonical} from "@shared/display-units";
+import {useLocalClock} from '@/lib/use-local-clock';
 import { useExperience } from "@/lib/experience";
 import { foodMass, nutrientDisplay } from "@shared/nutrition-display";
 import { recipeDisplayName } from "@/lib/recipe-display";
@@ -18,24 +19,26 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
   const units = settings.displayUnits;
   const [edited, setEdited] = useState<WeeklyRequest | null>(null),
     [result, setResult] = useState<
-      (TodayPlan & { targetSource: string }) | null
+      {scope:string;plan:TodayPlan & { targetSource: string }} | null
     >(null);
-  const clock = new Date(),
+  const clock = useLocalClock(),
     day = new Date(+clock - clock.getTimezoneOffset() * 60000)
       .toISOString()
       .slice(0, 10),
-    hour = clock.getHours();
+    hour = clock.getHours(),timezoneOffset=clock.getTimezoneOffset(),
+    scope=`${day}|${hour}|${timezoneOffset}`;
+  const currentResult=result?.scope===scope?result.plan:null;
   const fetchPlan = async (plan?: WeeklyRequest) =>
     (
       await apiRequest("POST", "/api/precision/today-plan", {
         date: day,
-        timezoneOffset: clock.getTimezoneOffset(),
+        timezoneOffset,
         hour,
         ...(plan ? { plan } : {}),
       })
     ).json() as Promise<TodayPlan & { targetSource: string }>;
   const initial = useQuery({
-    queryKey: ["/api/precision/today-plan", day, hour],
+    queryKey: ["/api/precision/today-plan", day, hour,timezoneOffset],
     queryFn: () => fetchPlan(edited || undefined),
     staleTime: 60000,
   });
@@ -43,13 +46,13 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
     setResult(null);
   }, [initial.dataUpdatedAt]);
   const build = useMutation({
-    mutationFn: () => fetchPlan(edited || (result || initial.data)!.request),
+    mutationFn: async () => ({scope,plan:await fetchPlan(edited || (currentResult || initial.data)!.request)}),
     onSuccess: (r) => setResult(r),
   });
   const checking = initial.isPending || initial.fetchStatus !== "idle" || build.isPending;
   // A failed or unfinished current-context check cannot fall back to a
   // previous suggestion set. Keep the draft targets for an explicit retry.
-  const r = checking || initial.isError || build.isError ? null : result || initial.data,
+  const r = checking || initial.isError || build.isError ? null : currentResult || initial.data,
     request = edited || r?.request;
   return (
     <section className="bloom-panel space-y-4">

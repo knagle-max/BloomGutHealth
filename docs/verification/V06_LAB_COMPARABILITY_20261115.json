@@ -1,6 +1,6 @@
 {
   "task": "T2b-comparison-context",
-  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "scope": "Reuse the existing all-series comparability decision as a structured source-context assessment; explain the selected pair independently without granting clinical significance. Whole-panel relevance, event attribution and evidence-linked actions remain incomplete.",
   "validation": {
     "focusedUnit": "10/10 PASS (4 new scenarios and6 existing lab-review cases)",
@@ -8,11 +8,11 @@
     "productionBuild": "PASS original source/build media verification",
     "browser": "PASS actual App/API/encrypted SQL five results plus pending-unit source, pair-specific missing lab/method reasons, unchanged neutral arithmetic, original source details, outage withdrawal/retry,320px,zero writes",
     "regression": "PASS737/737; zero failed/cancelled/skipped,447294ms",
-    "sourceAudits": "Reviewed changes: two existing code hashes; biology522 identities,49 markers,126 taxa,7 pathways unchanged,734 source files. No new clinical approval."
+    "sourceAudits": "Reviewed changes: two existing code hashes; biology522 identities,49 markers,126 taxa,7 pathways unchanged,734 source files. No new clinical approval.",
+    "exactPublicationCI": "PASS f88f1db9e3b43b7716438137daa8d7a07444d4c4 / CI43761833524 SUCCESS"
   },
   "remaining": [
     "Full Response#15 cross-marker relevance and evidence-linked safe actions",
-    "Exact publication CI/hosted qualification",
     "Physical VoiceOver and independent release acceptance not claimed"
   ],
   "publicationAttempt": "Initial tree5f86cf088619216574a90bc62a6b3dbbce31f4ea created at93da4397c8ec8b216f4f52d65d31c6c9ee2eef6d; branch lease rejected while six Architect documentation commits arrived. Preserving all incoming documentation and republishing from e7a28460f26f3026d944e98624e49c3e86e68d99."
