@@ -4,6 +4,12 @@ This **later direct owner instruction supersedes all historical language in this
 
 ---
 
+## Owner experimental workspace enhancement — v0.6 existing-capability UX, 2026-11-15
+
+[Controlling bounded Codex handoff](EXPERIMENTAL_FEATURES_WORKSPACE_CODEX_HANDOFF_20261115.md) supplements **§§29–31** without replacing their security, provisional Legal source classification or experimental/off policy. Extend current internal Experimental Features toggle into a premium **authenticated server-driven, sanitized presentation workspace**, grouped by eligible domain. Show reliable testing/development/planned/restricted statuses independent from public release and per-capability execution authorization. A valid entry link requires actual verified tester rights, approved existing route and operative server gates; mere Legal registry listing, technical component presence or opt-in never authorizes scientific/clinical/research model output. Authorized synthetic-only Food Photo preview stays synthetic-only, with the existing preference/anti-stale query logic preserved. No second entitlement engine or separate feature data system. Existing safe everyday functionality and green/blue/purple identities remain intact. Implement **V06-EXP-01 as a bounded P1** after higher-priority owner UI and critical Core user outcomes, not a release-wide interrupt; final owner review is one integrated RC, not per-preview approval. Status: requirement/handoff accepted; Codex implementation and tests **NOT VERIFIED**.
+
+---
+
 ## Execution-navigation note — 2026-11-15
 
 This long document preserves **approved v0.6 requirements and historical decisions**, not an instruction to start at Section 1 or select tasks by the newest/oldest heading. For day-to-day engineering, read [AGENTS.md](../../AGENTS.md) once and [NEXT_ACTIONS.md](../../NEXT_ACTIONS.md) for the single active task; use the relevant section of this file only when that task needs scope/acceptance details. Current product-owner supersessions include native SwiftUI over Capacitor (§35), v0.6 Core before Advanced, the day-one research-*contact* preference without live research processing, and **one integrated owner release-candidate review of images, UI and functionality**; image generation and development-branch publication proceed autonomously after normal specialist quality checks. Earlier copied priority/stop/review language is source history, not another concurrent task selector. This note does not erase any science/privacy/rights/release gate or supported requirement.
