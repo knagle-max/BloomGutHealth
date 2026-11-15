@@ -1,3 +1,9 @@
+## Photo/illustration acquisition clarification — AI-first (2026-11-14)
+
+[Approved AI visual-production standard](AI_FIRST_VISUAL_ASSET_PROMPT_AND_PRODUCTION_STANDARD_20261114.md) governs every Stitch-to-production image slot. The owner authorizes high-quality AI-generated first-party photography and scientific artwork rather than manually sourcing photos. Designer defines scene roles and crop-safe prompt specifications; developer/authorized generator supplies assets with verified rights, plausible food/human anatomy, natural optics, non-plastic surfaces, file/manifest/hash and accessible captions, consistent in Everyday green, Athlete blue, Coach purple. Examples in mockups are visual references, **not** evidence of measured or eaten personal health values; art must not impersonate real user uploads. No new external photo purchasing task.
+
+---
+
 # Bloom — Owner Stitch Theme-First Visual Direction (Ten-Screen Refinement)
 **Date:** 2026-11-14 | **Status:** Approved owner-facing theme correction / immediate Codex and Branding guidance; visual implementation not yet verified.
 **Authority:** Owner specifically corrects prior review: "**Don't focus on the data (ie where there are scores etc)**"; wants a **better visual theme like the latest provided HTML/ZIP**. This is a v0.6 frozen-Core visual direction refinement, not new scientific/data/feature scope.
