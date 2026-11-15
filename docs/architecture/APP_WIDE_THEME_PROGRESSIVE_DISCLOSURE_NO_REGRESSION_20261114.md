@@ -1,3 +1,9 @@
+## Owner-authorized AI-first photography for the entire app (2026-11-14)
+
+[Binding production prompts and asset workflow](AI_FIRST_VISUAL_ASSET_PROMPT_AND_PRODUCTION_STANDARD_20261114.md): Owner confirms AI generation is acceptable for **all Bloom visuals** and will not supply photography. Plan/generate first-party, coherent photo and illustration assets using physical lens/light/imperfection descriptors and hero-versus-accent crop-safe framing. Preserve Everyday forest-green, Athlete genuine blue and Coach genuine purple mode identity. No random remote prototype links, plastic-looking uniform food or skin, anatomically impossible exercise images, licensed assets without rights review, or inaccurate images of user-entered meals. Record source prompt/model/rights/digest, alt-text and responsive crop/fallback. Use meaningful imagery selectively; this is not permission to add clutter, remove UI controls or replace actual data with illustrative screenshots. Integrate through existing asset registry and existing functional routes. Owner does not need to source imagery.
+
+---
+
 # Bloom — App-Wide Cohesive Theme, Progressive Disclosure and No-Regression Design Contract
 **Date:** 2026-11-14 | **Architect disposition:** Controlling v0.6 Core UX-implementation refinement; **immediate priority inside owner Stitch UI-first execution**. Does not authorize new scientific claims or net-new features.
 **Owner intent:** Make Bloom beautiful, coherent, clean and sophisticated **throughout the FULL application**, without losing vital details or any functionality. Apply a five-step engineering discipline: **(1) question requirements, (2) delete only the unnecessary, (3) simplify/optimize, (4) accelerate feedback and interactions, (5) automate after the flow is proven**. Do not confuse deleting visual clutter with deleting a needed capability.
