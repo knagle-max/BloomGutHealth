@@ -10,6 +10,12 @@
 
 ---
 
+## Gate closure lane: approved procedure → implemented and properly authorized scopes (2026-11-15)
+
+Owner wants **ready existing capabilities implemented and actually signed off, not just more planning**. [Consolidated 14-capability closure handoff](../architecture/V06_IMPLEMENTED_CAPABILITY_GATE_CLOSURE_EXECUTION_20261115.md) and [machine-readable evidence worksheet](../verification/V06_CAPABILITY_GATE_CLOSURE_20261115.json) accept Biology Rev 2.1's precise 14 feature checklists, ML six targeted amendments and Integrations five source amendments. Codex owns finding current receipts and doing missing **targeted** real work; specialist/Architect/Legal/Security decisions must be authentic and are scoped to actual outputs. Separate `EVIDENCE_ONLY`, `FAIL_AND_FIX`, `RESTRICTED_AUTHORIZATION`, `ALREADY_VERIFIED` rather than a generic global hold. Prioritize quick Integration source workflows and source-safe ordinary wellness recording, permit safe subfeatures even when restricted clinical/predictive sibling outputs remain OFF. Check exact rendered review SHA and server denials; update existing ledger/registry, not create duplicate auth systems or feature roadmaps. This lane can progress alongside currently assigned UI and Core work; owner reviews one integrated RC, production authorization independent.
+
+---
+
 ## Execution status — dependency evidence, not another task selector (2026-11-15)
 
 The sole current Codex selector is [NEXT_ACTIONS.md](../../NEXT_ACTIONS.md), operated under [AGENTS.md](../../AGENTS.md). The dependency rows and dated owner addenda below preserve detailed requirements and implementation evidence; **do not run them sequentially or treat their “first priority,” “preemption,” or older P0 labels as new immediate interrupts**. Current mainline is scoped UI/asset/no-regression work followed by useful frozen v0.6 Core, bounded authorized Advanced, and native SwiftUI late. A necessary security/privacy/clinical-source defect overrides only the affected feature. Progress receipts stay in dated verification files, not repeated new headings here.
