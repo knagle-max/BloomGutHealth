@@ -1,3 +1,9 @@
+## Owner-directed in-version UI acceptance correction (2026-11-14)
+
+The owner has explicitly prioritized the supplied five-screen Stitch Today/Food/Biology/Explore/Progress visual direction **before other Codex development**. This is classified as a **v0.6 necessary exception / Core experience correction** because it completes the already-approved premium editorial UX within existing user routes, not a new biological research capability or separate v0.7 feature. Binding source and careful scientific reconciliation: [Stitch five-screen UI-first decision](OWNER_STITCH_FIVE_SCREEN_UI_FIRST_RECONCILIATION_20261114.md). Keep all existing navigation, privacy, activity, Food save/review and actual lab source behavior. Reject fabricated claims and model-generated personal scores in static design, maintain honest missing/partial states, accessibility and authenticated responsive app tests. Do not treat styling-only screenshots as app completion. After integrated UI verification, resume the frozen v0.6 Core/Advanced queue with no additional expansion.
+
+---
+
 # Bloom — v0.6 Requirements Freeze and v0.7 Intake Policy
 **Date:** 2026-11-14 | **Status:** Owner-authorized requirements baseline freeze; implementation ongoing. 
 **Authority:** Owner: “We can likely freeze v.6 with these requirements and anything new go into v.7 unless it’s necessary to be in v.6.”
