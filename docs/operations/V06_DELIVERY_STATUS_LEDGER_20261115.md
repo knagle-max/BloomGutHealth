@@ -2,6 +2,12 @@
 **Created:** 2026-11-15 | **Owner instruction:** Codex must know what is on the roadmap, what is already done, and must not rework completed capabilities unless new instructions or objective defects require revision.
 **Purpose:** Concise **status/evidence map**, not an alternate priority queue. **NEXT_ACTIONS.md selects tasks; AGENTS.md governs execution; V06_HANDOFF.md defines scope.** This ledger records status. Historic detailed tests remain in `docs/verification/`, the dependency backlog and preserved archives.
 
+## Owner policy: development readiness is NOT pre-signoff gated (2026-11-15)
+
+[Controlling build-first RC review policy](../architecture/V06_AUTONOMOUS_DEVELOPMENT_POST_IMPLEMENTATION_RC_REVIEW_20261115.md). Maintain implementation evidence `ROADMAP → IMPLEMENTED → TESTED → VERIFIED_ON_REVIEW_BRANCH → RC_REVIEW_PENDING → DONE_FOR_SCOPE` **independently** from `EXPOSURE_RESTRICTED/APPROVED_FOR_NAMED_AUDIENCE`. No domain signature is needed to implement, test or safely deploy a synthetic/restricted preview on authorized review infrastructure. Future specialist/Legal/Security audits are **parallel RC review**, not ongoing feature-by-feature developer gates. A capability can be fully verified but restricted to synthetic testing and remain honestly recorded as such. Only actual real-user personal medical/research output, source/provider rights, account/consent/security and production/public actions continue to have true execution or release protections. Do not create a second gate-closure progress queue or redo verified work merely because old source mapping says REVIEW_REQUIRED. Owner review of images/UI/functionality is once at the integrated RC.
+
+---
+
 ## Status vocabulary — never equate these
 | Label | Meaning | Minimum evidence |
 |---|---|---|
