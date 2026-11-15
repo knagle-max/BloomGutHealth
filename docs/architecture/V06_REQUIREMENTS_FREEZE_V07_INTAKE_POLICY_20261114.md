@@ -16,6 +16,12 @@ The owner has explicitly prioritized the supplied five-screen Stitch Today/Food/
 
 ---
 
+## Owner v0.6 UX exception — Experimental Features workspace (2026-11-15)
+
+[Architect-reviewed bounded implementation](EXPERIMENTAL_FEATURES_WORKSPACE_CODEX_HANDOFF_20261115.md) clarifies and extends already-approved §§29–31 Experimental Features discovery for internal testers. This is a **v0.6 existing capability-system UX correction** and not authorization to build new model/clinical/Coach/integration capabilities, promote the 52-entry provisional Legal registry to functional release or loosen server permissions. Implement a compact server-authorized display catalogue with separate informational and executable status, using the existing toggle, policies and manifests; preserve Core priority and review at integrated RC. New actual features found during inventory default to v0.7 unless already approved and independently eligible. No extra owner task gate.
+
+---
+
 # Bloom — v0.6 Requirements Freeze and v0.7 Intake Policy
 **Date:** 2026-11-14 | **Status:** Owner-authorized requirements baseline freeze; implementation ongoing. 
 **Authority:** Owner: “We can likely freeze v.6 with these requirements and anything new go into v.7 unless it’s necessary to be in v.6.”
