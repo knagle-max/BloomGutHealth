@@ -628,30 +628,32 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; import and route-level checks required",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where educational anatomy",
-        "rights": "pending",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Pending scientific fidelity verification if illustration is used educationally",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
@@ -662,7 +664,9 @@
           1672,
           941
         ],
-        "publicImportTarget": "/images/registry/batch-a/BVA-0009-bloodwork-immersive-rbc-hero.webp"
+        "publicImportTarget": "/images/registry/batch-a/BVA-0009-bloodwork-immersive-rbc-hero.webp",
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_manifest_2026-11-14.json"
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -674,6 +678,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "Immersive Bloodwork hero inspired by owner's actual Bloodwork screenshot: a forest-dark macro environment with two or three anatomically plausible biconcave erythrocytes floating in the UPPER RIGHT and middle-right depth. One sharply focused foreground red blood cell tilts to reveal the central dimple, finely textured flexible membrane and naturally asymmetrical edge; two smaller cells disappear softly into believable depth. Subdued organic leaf-edge structure frames lower corners without looking like a patient microscopic slide. Entire LEFT 45–50% must be calm near-black evergreen with consistent low-contrast texture, reserved for 'Bloodwork' overline and large ivory serif heading. 90mm macro lens impression, f/3.5, warm red rim highlights from upper right and muted forest-green diffuse side illumination, natural fine grain, restrained atmospheric bokeh. Cells crimson rather than fluorescent pink, no glossy plastic sheen. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Wide 16:9 main composition, with a separate mobile-safe upper-right focal crop; reserve top header/safe area and title-safe left. No data numbers, diagnosis, fake assay icons, text or huge foreground cell obscuring navigation. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0009 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -709,30 +719,32 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; import and route-level checks required",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where educational anatomy",
-        "rights": "pending",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Pending scientific fidelity verification if illustration is used educationally",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
@@ -743,7 +755,9 @@
           1254,
           1254
         ],
-        "publicImportTarget": "/images/registry/batch-a/BVA-0010-cardiovascular-anatomy.webp"
+        "publicImportTarget": "/images/registry/batch-a/BVA-0010-cardiovascular-anatomy.webp",
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_manifest_2026-11-14.json"
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -755,6 +769,12 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "An accurate three-dimensional anatomical study of ONE human heart viewed anteriorly at slight three-quarter angle, not a Valentine heart symbol. Clearly distinguish the ventricles, atrial appendages, visible aortic arch and branching major vessels in plausible proportions. Warm coral/muted terracotta flesh tones with fine surface muscle striations; the organ occupies 70% of a small square tile, with dark evergreen vignette and subtle warm light falling from upper left. It should evoke a refined natural-history museum specimen, not a fresh surgical photograph. 85mm close-up lens, f/4, soft directional warm sidelight and deep restrained green-shadow background, realistic moist anatomical tissue without gore, fine grain. Composition: 1:1; text external to image, not baked in Restrictions: No ECG tracing, blood-pressure number, cholesterol particles pasted into chambers, legends or medical claims. Geometry must survive 64–96px tile use and be reviewed for anatomy. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0010 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -871,30 +891,32 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; import and route-level checks required",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where educational anatomy",
-        "rights": "pending",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Pending scientific fidelity verification if illustration is used educationally",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
@@ -905,7 +927,9 @@
           1254,
           1254
         ],
-        "publicImportTarget": "/images/registry/batch-a/BVA-0012-liver-biliary-anatomy.webp"
+        "publicImportTarget": "/images/registry/batch-a/BVA-0012-liver-biliary-anatomy.webp",
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_manifest_2026-11-14.json"
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -917,6 +941,12 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A single anatomically credible liver viewed front-left three-quarter, showing the broad right lobe, smaller left lobe, realistic smooth-but-organic capsule and an understated visible gallbladder/biliary branching detail only in anatomically appropriate position. The organ floats as a deliberately illustrated anatomical specimen within a deep bottle-green atmospheric square field. Its muted burgundy surface has irregular subtle texture, with a fine warm edge light showing volume; no surgical hands, table or gruesome tissue. 85mm close-up lens impression, f/4, soft warm lateral light, restrained haze, slight natural surface texture, sharp anatomical silhouette and cinematic depth. Composition: 1:1; text external to image, not baked in Restrictions: Liver may look naturally smooth; anti-plastic instruction must not force fabricated pores. No steatosis grading, cirrhosis spots, jaundice colour, phantom serum values or diagnostic claims. Review anatomy. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0012 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -952,30 +982,32 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; import and route-level checks required",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where educational anatomy",
-        "rights": "pending",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Pending scientific fidelity verification if illustration is used educationally",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
@@ -986,7 +1018,9 @@
           1254,
           1254
         ],
-        "publicImportTarget": "/images/registry/batch-a/BVA-0013-blood-rbc-morphology.webp"
+        "publicImportTarget": "/images/registry/batch-a/BVA-0013-blood-rbc-morphology.webp",
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_manifest_2026-11-14.json"
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -998,6 +1032,12 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A close-up group of three to five authentic human erythrocytes at varying focal depths, each with the characteristic biconcave disc and slightly irregular folded edge; one cell is crisp in the left-centre, with others receding into forest-green shadow. Colours range from muted red-brown to burgundy with understated light through thin rims. A single-cell crop would be too similar to the hero; this group composition should feel like a distinct 'iron & blood' study. 100mm macro lens impression, f/3.5, warm side light and fine film grain, soft quiet background, natural translucency on edges rather than plastic polished marbles. Composition: 1:1; text external to image, not baked in Restrictions: No false personal blood smear, no bacteria, no heroic giant cell, no microscope scale bars or fake counting labels. Keep visible shapes distinct at 80px. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0013 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -1033,30 +1073,32 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; import and route-level checks required",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending",
-        "scientific": "pending where educational anatomy",
-        "rights": "pending",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Pending scientific fidelity verification if illustration is used educationally",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Manifested original PNGs/WebPs, hashes verified on local files, archive published to Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
@@ -1067,7 +1109,9 @@
           1254,
           1254
         ],
-        "publicImportTarget": "/images/registry/batch-a/BVA-0014-bone-trabecular.webp"
+        "publicImportTarget": "/images/registry/batch-a/BVA-0014-bone-trabecular.webp",
+        "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_A_0009-0014_manifest_2026-11-14.json"
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-01",
@@ -1079,6 +1123,12 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A close cutaway fragment of cancellous bone, showing an interlocking open trabecular honeycomb with uneven strut thickness and irregular oval cavities. Outer rim has subtle off-white ivory cortical bone edge, inner pores warm beige-gold with real dry porous texture, not uniform CGI bubble foam. The bone fragment occupies the central-right 70% of a square deep forest tile; a little soft haze and sidelight make cavities legible at very small size. 90mm close-focus lens impression, f/5.6, warm diffused upper-left light, fine grain and low specular contrast, natural porous mineral texture. Composition: 1:1; text external to image, not baked in Restrictions: Not a medical scan, skeletal fracture, osteoporosis diagnosis or user's bone-density result. Biological structure should be reviewed for plausible trabecular morphology. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0014 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -1253,31 +1303,33 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
         "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending on actual mobile/desktop rendering",
-        "scientific": "pending where applicable; imagery conceptual not observed biology",
-        "rights": "pending production rights check",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Conceptual microbiome artwork; never patient data; scientific portrayal review pending",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
@@ -1300,6 +1352,12 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "An art-directed conceptual view of a human intestinal ecosystem portrayed as a calm underwater botanical garden: a curved, organic translucent surface in the lower RIGHT, varied tiny elongated and rounded microbial silhouettes suspended in gently diffused layers, and soft sage threads suggesting extracellular environment. Avoid recognizable named bacteria or false anatomical realism. The LEFT third is open dark forest atmosphere for 'Gut reports' heading; biology should feel sophisticated and living, not like sci-fi alien slime. Conceptual scientific macro photography language, 85mm lens impression, f/3.2, warm-green backscatter and soft gold side edge, gentle film grain, distinct depth planes. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Explicitly metaphorical image, not a patient-specific microscopic image, gut permeability diagnostic, species composition or measured bacterial abundance. Original image prompt must not depict named microorganism without review. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0017 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -1335,31 +1393,33 @@
       "priority": "P1",
       "impact": "medium",
       "sourceRelation": {
-        "action": "generated-awaiting-review",
+        "action": "owner-confirmed-approved-already-published",
         "existingRegistry": null,
         "existingSlot": null,
         "existingPath": null,
-        "existingArtifactByteVerified": false,
+        "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
         "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
       },
-      "lifecycle": "Generated",
-      "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
       "filePaths": [],
       "integration": {
-        "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
+        "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending on actual mobile/desktop rendering",
-        "scientific": "pending where applicable; imagery conceptual not observed biology",
-        "rights": "pending production rights check",
-        "rendered": "pending"
+        "design": "Owner approval confirmed for existing image; live visual implementation not yet verified",
+        "scientific": "Pending scientific fidelity verification if illustration is used educationally",
+        "rights": "pending commercial-use/marks confirmation",
+        "rendered": "pending real mobile and desktop screenshots"
       },
       "statusEvidence": {
         "auditedFrom": "Individually generated files, actual local PNG/WebP SHA256 verification, valid SVG XML and ZIP CRC; published Shared Library",
-        "date": "2026-11-14"
+        "date": "2026-11-14",
+        "approvalSource": "Current user confirmation",
+        "publicationSource": "Existing Shared Library batch ZIP and manifest confirmed present 2026-11-14"
       },
       "delivery": {
         "libraryArchive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
@@ -1382,6 +1442,12 @@
         "deliverableNotes": "Deliver webp/avif in 1200×900 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/owner review requirements in existing entry remain controlling.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A responsible educational illustration of a double-helical DNA fragment occupying the right-center of a soft forest-science still life. Show two continuous antiparallel backbone ribbons and regular paired rungs, with a small restrained sense of twist; no specific sequence, genotype or chromosome annotation. Surround it with botanical shadow and soft off-white particle haze; left edge remains uncluttered so genetic section labels live outside the image. 85mm close-focus visual language, f/4, directional soft window light, semi-matte off-white strands with sage/amber secondary details, film-grain-like texture; no reflective chrome or neon. Composition: 4:3; text external to image, not baked in Restrictions: This is a generic DNA concept; do not imply user's genomic sequencing, disease variant or expressed protein. Scientific review ensures the helix isn't an anatomically impossible ladder. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "ownerApproval": {
+        "approved": true,
+        "scope": "Existing BVA-0018 generated image in the previously published Batch A/C archive; no replacement or new image authorized",
+        "date": "2026-11-14",
+        "evidence": "User explicitly confirmed: 'All of those should already have been approved and published' in response to the seven named BVA-0009, 0010, 0012, 0013, 0014, 0017, 0018 images."
       }
     },
     {
@@ -2237,7 +2303,7 @@
       }
     }
   ],
-  "lastDesignerDelivery": "2026-11-14: BVA-0023 runner-on-bench replacement and original BVA-0024 coach/client images individually owner-approved and published; application integration pending.",
+  "lastDesignerDelivery": "2026-11-14: Owner confirmed BVA-0009, BVA-0010, BVA-0012, BVA-0013, BVA-0014, BVA-0017 and BVA-0018 already approved/published; registry reconciled. No new artifacts generated or republished.",
   "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "Every new or revised visual asset must be presented individually to owner for review and explicit approval BEFORE publication to Shared Library, GitHub, production registry, or developer distribution.",
