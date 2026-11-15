@@ -1,3 +1,15 @@
+## Food editorial trial and accessible journal actions — 2026-11-15
+
+IMPLEMENTED_AND_ENGINEERING_TESTED locally from verified UI source7238d8cd1fd4023edf5177834e70bd0647c8900c. Applied the approved16-anchor class/CSS-only trial in isolated feature/food-journal-editorial-v06-validation; normalized TypeScript AST proves all hooks/handlers/data/save/source behavior preserved. Open separator rows, editorial hierarchy and existing BVA-0002 media retained. Actual testing required scoped44px icon targets and wrapping journal actions/reusable-meal buttons at320px/200% text. No images or clinical data changed.
+
+PASS: types/build/original-media fingerprints;32 journal/composer mode/theme/viewport states plus200% text, forced colors/reduced motion;42-entry20→40→42 history, original nutrient/source/pathway disclosure, zero vs unknown and recorded month/year averages;392 action/heading entries preserved in each mode. Actual App/planner/isolated SQL saved2slice pizza edit/retry/reload/account-isolation journey and journal paused-source cache checks pass. Historical cache QA now follows the existing routed composer instead of assuming an inline editor. Receipt: docs/verification/V06_FOOD_EDITORIAL_20261115.json. Exact publication/hosted CI pending; no final design, physical VoiceOver or complete Food/RC approval claimed.
+
+ALREADY_VERIFIED navigation/media source7238d8c: exact CI43730489635 SUCCESS733/733,72 deployed layout states,18 media failure/recovery placements, hosted source/reference/account lifecycle and synthetic cleanup. Provisional lab values remain publicly available without review gates. Main/v0.5 unchanged.
+
+Next: integrate/publish this tested scoped change, verify its frozen CI/preview, then continue independently actionable full-app theme/route tasks and source-backed Food/Today requirements. Do not re-open solved ranges or wait for interim signoff. Full archive fidelity remains feature-scoped unavailable; existing original public assets remain working.
+
+---
+
 ## UI-first navigation and existing-media delivery — 2026-11-15
 
 IMPLEMENTED_AND_ENGINEERING_TESTED locally: one shared five-destination Everyday shell (Today/Food/Biology/Explore/Progress), all13 previous Everyday and12 Athlete drawer routes retained, unchanged Athlete tab structure, source-section context, generated permanent IDs for8 existing editorial slots and a stable terminal media fallback. Master registry28IDs validated without retiring rejected requirements or promoting review/integration state.23 App paths plus fallback inventoried;9routes have baseline72-state rendering. After72states,18 network media failure/recovery placements, both-mode320/390 keyboard/focus/navigation and6 focused source tests pass. Exact frozen publication/build/CI remains pending. Receipt: docs/verification/V06_UI_NAVIGATION_MEDIA_20261115.json.

@@ -1,5 +1,5 @@
 {
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI",
+  "status": "ALREADY_VERIFIED",
   "authority": [
     "docs/architecture/VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md",
     "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md"
@@ -22,7 +22,14 @@
     "independentDesignScienceVoiceOver": "NOT_RUN; engineering comparison does not grant independent approval",
     "productionBuildAndExactCI": {
       "productionBuild": "PASS: generated registry bindings, source/built immutable SVG/PNG/WebP fingerprints and client/server build",
-      "exactPublicationCI": "PENDING"
+      "exactPublicationCI": {
+        "sha": "7238d8cd1fd4023edf5177834e70bd0647c8900c",
+        "run": "43730489635",
+        "job": "132861615189",
+        "conclusion": "SUCCESS",
+        "unit": "733/733",
+        "deployed": "72 responsive states/9routes,18 real-network media failure/recovery placements, keyboard/navigation targets, original-media checks, owned source/reference persistence and synthetic account cleanup"
+      }
     }
   },
   "artwork": "Original files/paths/bytes preserved. No new or replacement images generated or published. BVA-0023/0024 approved originals retained; unapproved reinstated requirements remain active with no publication authorization. Existing8 lifecycle states are not promoted.",

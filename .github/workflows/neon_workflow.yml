@@ -103,6 +103,15 @@ jobs:
         run: |
           node --import tsx scripts/qa/genetic-source-management-journey.mjs
           node --import tsx scripts/qa/selected-genetics-journey.mjs
+      - name: Food journal editorial and saved meal no-regression browser checks
+        timeout-minutes: 6
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: |
+          node --import tsx scripts/qa/food-journal-editorial-journey.mjs
+          node --import tsx scripts/qa/unified-meal-editor-journey.mjs
+          node scripts/qa/journal-current-context-journey.mjs
       - name: Python service authentication and evidence contracts
         run: |
           python3 -m venv /tmp/bloom-service-tests

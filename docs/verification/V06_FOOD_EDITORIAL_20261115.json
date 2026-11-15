@@ -1,0 +1,58 @@
+{
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI",
+  "authority": [
+    "docs/architecture/FOOD_JOURNAL_EDITORIAL_V06_ARCHITECT_RECONCILIATION_20261110.md",
+    "docs/architecture/APP_WIDE_THEME_PROGRESSIVE_DISCLOSURE_NO_REGRESSION_20261114.md"
+  ],
+  "base": {
+    "publishedSha": "7238d8cd1fd4023edf5177834e70bd0647c8900c",
+    "localEquivalent": "59f3e2a77c79b91cd239689e79da6500af0fb34a",
+    "tree": "02af677716ae7f8095f2375bf5b0b0e7f8f1fa95",
+    "verifiedCI": "43730489635",
+    "tests": "733/733 plus deployed72-state layout,18 media failure/recovery placements and hosted source/account cleanup"
+  },
+  "implementation": [
+    "Exact16 anchors preflighted; supplied installer applied idempotently in isolated feature/food-journal-editorial-v06-validation worktree; existing remote preferred feature branch was docs-only and was not overwritten",
+    "Only CSS imports/classes changed in LogMeal and NutritionHistory; full hooks/state/conditions/handlers/API/save/source transformations preserved by normalized TypeScript AST comparison",
+    "Scoped authored editorial heading/panel styles and open separator journal rows; existing R4/M1 media preserved",
+    "Engineering correction to trial CSS:44px journal actions, wrapping buttons and action header, fixed-size icons to prevent mobile/200% text overflow; no behavior changes"
+  ],
+  "sourceReferenceCssSha256": "ff3a3dce3094c4587d66dc50734b92dd3fb1a1b93707c849d61eb364f7bcf33d",
+  "semanticProof": [
+    {
+      "file": "client/src/pages/LogMeal.tsx",
+      "normalizedSemanticSha256": "a8031064464f98301af12022a55e6ae3c0b59811403c972bf75a3698a2d0cfdf",
+      "result": "CSS import/classes only"
+    },
+    {
+      "file": "client/src/pages/NutritionHistory.tsx",
+      "normalizedSemanticSha256": "8da54abba094a73b89e4eec92f9e46f808dc0a318503018734c043130f4cbe44",
+      "result": "CSS import/classes only"
+    }
+  ],
+  "checks": {
+    "types": "PASS",
+    "productionBuild": "PASS; immutable scientific/R4/M1 original source/build media fingerprints retained",
+    "journalComposer": "PASS32 viewport/theme/mode states plus200% text,42 entries20\u219240\u219242, known0/unknown, original foods/nutrient/pathway details, monthly/yearly recorded averages,44px actions, keyboard focus, forced-colors/reduced-motion and no writes",
+    "savedEditor": "PASS actual App/planner handlers/isolated SQL; text/searchBack draft, canonical2slice pizza portion-only edit, lost-response exact retry/single row, original date/type/context0, reload, changed-text invalidation and owner isolation",
+    "cacheLifecycle": "PASS actual journal paused daily/targets/history withdraw dependent values without invented zero, idle restoration and routed composer draft preserved; historical QA updated for existing shared routed composer",
+    "beforeAfter": "Controlled baseline uses exact base TSX via Vite source override with explicit assertion that the requested source loaded; source/action/heading semantics392 entries identical in both modes. Local synthetic screenshots /tmp/bloom-food-editorial-before and /tmp/bloom-food-editorial-after",
+    "exactPublicationCI": "PENDING"
+  },
+  "assetOpportunity": "Reuse BVA-0002 original Food editorial media on journal; immediate composer stays task-focused with no new image. No asset bytes or lifecycle/owner approval changed.",
+  "remaining": [
+    "This is an additive styling experiment, not a complete Food redesign or final visual approval",
+    "First-use/error/confirmed-save screenshot coverage and independent design/User Testing/physical VoiceOver remain unclaimed; existing saved functional journey was executed",
+    "Forced-colors/reduced-motion engineering checks do not establish whole-app accessibility compliance",
+    "Exact Stitch/BVA archive access remains feature-scoped; other route/theme/Core work continues",
+    "No main merge, production database writes or full RC declaration"
+  ],
+  "sourceSha256": {
+    "client/src/pages/LogMeal.tsx": "b7bb2fe148e4c58c7083cb2bf6b74103c5dc8039b568d517835aa552c218ce66",
+    "client/src/pages/NutritionHistory.tsx": "a92809cec8b45a20c065f9dbece8aa15ade6a17f693f585e206d8b86bde2bd89",
+    "client/src/styles/food-editorial.css": "a5aff608a72c6fd5da70e5714631e1cd47ca6c396a3ea237261501891e5660ff",
+    "scripts/qa/food-journal-editorial-journey.mjs": "122885ee5869b6b685bd70f4870c603098aaf63c636eff899ba520b601de8707",
+    "scripts/qa/journal-current-context-journey.mjs": "c7de5662049cad1e60989a130096592e5c8088ff033220fb0fa112b611757d05",
+    ".github/workflows/neon_workflow.yml": "7598e09254b09bf77767ef06b49dd63f614c14897d715980d72e3c48c72d0c34"
+  }
+}

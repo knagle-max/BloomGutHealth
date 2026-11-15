@@ -1,3 +1,4 @@
+import "@/styles/food-editorial.css";
 import { bloomCopy } from "@/content/bloomCopy";
 import {useHistoryState} from "wouter/use-browser-location";
 import {readCatalogueMassHandoff} from "@shared/catalogue-mass-handoff";
@@ -194,11 +195,11 @@ export default function LogMeal() {
   function confirmReview(){if(!review||!reviewCurrent||save.isPending)return;const payload=confirmation(review),serialized=JSON.stringify(payload);if(saveAttempt.current?.payload!==serialized||saveAttempt.current.revision!==review.revision)saveAttempt.current={payload:serialized,revision:review.revision,key:crypto.randomUUID(),basis:review.basis};save.mutate({snapshot:review,payload,key:saveAttempt.current.key});}
   if(editId&&(!editState||editState.owner!==user?.id||editState.id!==editId))return <main className="meal-page"><h1>Edit meal</h1>{editSource.isError?<><p role="alert">The saved meal could not load. Your journal entry has not changed.</p><Button onClick={()=>editSource.refetch()}>Retry meal details</Button></>:<p role="status">Loading the saved foods and portions…</p>}<Link href="/nutrition" className="text-link">Back to food journal</Link></main>;
   return (
-    <main className="meal-page">
+    <main className="meal-page bloom-food-editorial bloom-food-composer">
       <Link href="/" className="text-link">
         <ArrowLeft size={16} /> Back to overview
       </Link>
-      <div className="meal-page-heading">
+      <div className="meal-page-heading bloom-food-page-heading">
         <span className="panel-icon">
           <Utensils size={24} />
         </span>
@@ -208,7 +209,7 @@ export default function LogMeal() {
         </p>
       </div>
       {savedMeal && (
-        <section className="bloom-panel saved-meal" role="status">
+        <section className="bloom-panel saved-meal bloom-food-confirmation" role="status">
           <h2 ref={savedHeading} tabIndex={-1} className="flex items-center gap-2">
             <CheckCircle2 size={20} /> Your meal is saved.
           </h2>
@@ -225,7 +226,7 @@ export default function LogMeal() {
         </section>
       )}
       {!savedMeal&&<form
-        className="bloom-panel space-y-6"
+        className="bloom-panel space-y-6 bloom-food-form"
         onSubmit={(e) => {
           e.preventDefault();
           if ((description.trim() || products.length || catalogueEnabled&&catalogueSelection.data) && !inputFrozen && user && (!catalogueEnabled||!!catalogueSelection.data))
@@ -361,7 +362,7 @@ export default function LogMeal() {
           <Button className="w-full h-12" disabled={(!description.trim()&&!products.length&&!(catalogueEnabled&&catalogueSelection.data))||(catalogueEnabled&&!catalogueSelection.data)||inputFrozen||!user} data-testid="button-review-meal">{reviewMeal.isPaused?"Waiting to review…":reviewMeal.isPending?"Reviewing meal…":"Review meal"}</Button>
         </fieldset>
       </form>}
-      {!savedMeal&&<details className="bloom-panel" open={toolsOpen} onToggle={event=>setToolsOpen(event.currentTarget.open)}><summary>Add food another way</summary>{sourceDraftIncomplete&&<p role="status">Finish the food name and amount fields before adding another source. Your ingredient draft is retained below.</p>}      <fieldset hidden={!!savedMeal} disabled={inputFrozen||sourceDraftIncomplete} className="space-y-3">
+      {!savedMeal&&<details className="bloom-panel bloom-food-tools" open={toolsOpen} onToggle={event=>setToolsOpen(event.currentTarget.open)}><summary>Add food another way</summary>{sourceDraftIncomplete&&<p role="status">Finish the food name and amount fields before adding another source. Your ingredient draft is retained below.</p>}      <fieldset hidden={!!savedMeal} disabled={inputFrozen||sourceDraftIncomplete} className="space-y-3">
       <legend className="sr-only">Choose foods to log</legend>
       {params.get("template")&&<SavedMealSource id={params.get("template")!} servings={Number(params.get("servings")??1)} onLoad={(text,ingredients)=>{if(!user||inputFrozen)return;setDescription(text);setProducts([]);setCatalogueEnabled(false);setSavedIngredients({owner:user.id,description:text,ingredients});setReview(null);setReviewDirty(false);setReviewRejected(false);setSavedMeal(null);changeMethod("describe");requestAnimationFrame(()=>document.getElementById("food-input")?.focus());}}/>}
       <section className={`space-y-3 ${!method?"food-entry-selection":""}`}>
@@ -413,7 +414,7 @@ export default function LogMeal() {
       <Link href="/saved-meals" className="text-link">Choose a saved meal</Link>
       </fieldset>
       </details>}
-      {review&&sameReview&&<section className="bloom-panel space-y-4 meal-review" aria-labelledby="meal-review-heading">
+      {review&&sameReview&&<section className="bloom-panel space-y-4 meal-review bloom-food-review" aria-labelledby="meal-review-heading">
         <h2 id="meal-review-heading" ref={reviewHeading} tabIndex={-1}>Review your meal</h2>
         <Button type="button" variant="outline" disabled={inputFrozen} onClick={()=>{const input=document.getElementById('food-input');input?.scrollIntoView({block:'center'});input?.focus();}}>Back to meal details</Button>
         <p role="status">{save.isPaused?"Waiting for a connection. Keep this page open to finish saving this reviewed meal.":saveUnknown?"The save is not confirmed. Retry the same entry or check your journal.":"Not saved yet. Check the foods and portions."}</p>
