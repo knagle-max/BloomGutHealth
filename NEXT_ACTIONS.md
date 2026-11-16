@@ -149,3 +149,7 @@ The [autonomous development policy](docs/architecture/V06_AUTONOMOUS_DEVELOPMENT
 **Current engineering checkpoint (2026-11-16):** T2a fractional dinner transfer and actual review/save journey ENGINEERING_TESTED; publish exact source with CI runner lifecycle correction, then owner illustrated Bloodwork drilldown above. Image fit/reveal a41525e LIVE; broader CI739/740 exposed stale lifecycle test, locally corrected. All47 artwork requirements retained; new36–47 imports pending.
 
 **Active bounded slice:** CBC BVA-0036 optimized original imported; CBC/Iron distinct,16 responsive source-preservation states/types/3 registry tests PASS. Publish after byte-verified build; then illustrated inline LabExplorer consolidation. Dinner precision sourcef350135 submitted; CI43807310443/preview in progress at last check.
+
+**Active T1d illustrated drilldown:** Existing LabExplorer now opens categories/markers inline in Bloodwork; legacy Progress links forward selections, non-lab Progress retained. Initial16-state/source/owner journey,12 units/types PASS; expanded chart200% and complete552-row source regression running before build/publication. CBC211c4be LIVE.
+
+**T1d implementation checkpoint:** unified illustrated drilldown ENGINEERING_TESTED:12 focused units/types/build,92 labels×6 records full source/chart/overlay/revision/offline/owner regression,16 Atlas states and expanded320/390 light/dark200% PASS. Publish/qualify exact source next. Then eligible morphology artwork import and remaining T2a/T2b Core; no approval pause or duplicate chart engine.

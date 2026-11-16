@@ -11,7 +11,7 @@ import { kgToDisplay, cmToHeight, quantityFromCanonical } from "@shared/display-
 import { useExperienceRecords } from "@/lib/experience";
 import DeviceObservations from "@/components/DeviceObservations";
 
-import LabExplorer from "@/components/LabExplorer";
+import {useEffect} from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useSearch } from "wouter";
 import { useAuth } from "@/lib/auth";
@@ -22,6 +22,8 @@ export default function Progress() {
   const [, navigate] = useLocation();
   const params = new URLSearchParams(useSearch());
   const requestedView = params.get("view"), requestedMarker=params.get("marker"),requestedGroup=params.get("group");
+  const legacyLabLink=requestedGroup||requestedMarker;
+  useEffect(()=>{if(!legacyLabLink)return;const next=new URLSearchParams();next.set('tab','labs');for(const name of ['group','marker','point','firstResult','secondResult']){const value=params.get(name);if(value)next.set(name,value);}navigate('/precision?'+next.toString(),{replace:true});},[legacyLabLink,params.toString(),navigate]);
   const selectedView = requestedView && ["nutrition", "activity", "biology"].includes(requestedView) ? requestedView : requestedMarker ? "biology" : undefined;
   const { user } = useAuth(),
     { mode, settings, loading } = useExperience(),
@@ -116,7 +118,7 @@ export default function Progress() {
         {(report.isError||report.fetchStatus==="paused")&&<button type="button" className="text-link" disabled={report.isFetching} onClick={()=>report.refetch()}>Retry Progress observations</button>}
         {currentReport&&!!currentReport.pendingLabs?.length&&<p className="panel-note">{currentReport.pendingLabs.length} result(s) need unit confirmation and are excluded from confirmed trends. <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Review source units in Bloodwork</Link></p>}
         {currentReport&&!!currentReport.sourceOnlyLabs?.length&&<p className="panel-note">{currentReport.sourceOnlyLabs.length} source result(s) await marker identification. They remain available in Bloodwork and are excluded from confirmed trends.</p>}
-        <LabExplorer key={user?.id} owner={user?.id||""} report={currentReport} marker={requestedMarker} group={requestedGroup} selection={{point:params.get('point')||'',first:params.get('firstResult')||'',second:params.get('secondResult')||''}} onSelectionChange={patch=>{const next=new URLSearchParams(params);for(const key of ['point','first','second']as const)if(key in patch){const name=key==='first'?'firstResult':key==='second'?'secondResult':'point';if(patch[key])next.set(name,patch[key]!);else next.delete(name);}if(next.toString()!==params.toString())navigate('/progress?'+next.toString());}} onSelect={(group,marker)=>{const next=new URLSearchParams(params);if(marker&&marker!==requestedMarker){const ownedIds=currentReport?.trends.find(t=>t.marker===marker)?.points.flatMap(p=>[p.id,...p.supersededIds])||[];const retained=[params.get("point"),params.get("firstResult"),params.get("secondResult")].some(id=>id&&ownedIds.includes(id));if(requestedMarker||!retained){next.delete("point");next.delete("firstResult");next.delete("secondResult");}}next.set("view","biology");if(group)next.set("group",group);else next.delete("group");if(marker)next.set("marker",marker);else next.delete("marker");navigate("/progress?"+next.toString());}}/>
+        <p><Link className="hero-button inline-flex min-h-11 items-center" href="/precision?tab=labs">Explore illustrated bloodwork & charts</Link></p>
         {currentReport && !currentReport.trends.length && (
           <p>
             {(currentReport.pendingLabs?.length||currentReport.sourceOnlyLabs?.length)?"No confirmed numeric trends are available. Source records awaiting identification or unit review remain in Bloodwork.":"No dated laboratory results yet. Add a report's values to establish a baseline."}
