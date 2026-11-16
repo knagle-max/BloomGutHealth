@@ -3,7 +3,7 @@ import {useAuth} from '@/lib/auth';
 import {apiRequest,ApiRequestError} from '@/lib/queryClient';
 import {accountContextGuard} from '@/lib/request-actor';
 import {LAB_CONTEXT_CHANGED,notifyLabContextChanged} from '@/lib/lab-context-events';
-import {labResponseQuestions,type LabResponseContextHistory,type LabResponseContextDelete} from '@shared/lab-response-context';
+import {labResponseQuestionText,type LabResponseContextHistory,type LabResponseContextDelete} from '@shared/lab-response-context';
 
 /** Privacy controls remain discoverable when a source correction or deletion
  * removes the corresponding marker from the current panel. */
@@ -17,7 +17,7 @@ export default function LabRememberedContextHistory({sourceKey}:{sourceKey:strin
  const run=async(work:(request:(method:string,path:string,body:unknown,headers?:Record<string,string>)=>Promise<any>)=>Promise<void>)=>{
   const ticket=++serial.current;dirty.current=false;abort.current?.abort();const controller=new AbortController();abort.current=controller;patch({open:true,pending:true,error:''});
   const same=()=>current.current===key&&serial.current===ticket;
-  try{const actor=accountContextGuard(user?.id),request=async(method:string,path:string,body:unknown,headers?:Record<string,string>)=>{actor();if(!same())throw Error('Context changed');const response=await apiRequest(method,'/api/experience/lab-response-context'+path,body,headers,controller.signal);const value=response.status===204?null:await response.json();actor();if(!same())throw Error('Context changed');return value;};await work(request);if(same())patch({pending:false,...(dirty.current?{rows:[],error:'Remembered context changed. Reload the history.'}:{})});}
+  try{const actor=accountContextGuard(user?.id),request=async(method:string,path:string,body:unknown,headers?:Record<string,string>)=>{actor();if(!same())throw Error('Context changed');const response=await apiRequest(method,'/api/experience/lab-response-context'+path,body,{'X-Bloom-Lab-Question-Protocol':'1',...headers},controller.signal);const value=response.status===204?null:await response.json();actor();if(!same())throw Error('Context changed');return value;};await work(request);if(same())patch({pending:false,...(dirty.current?{rows:[],error:'Remembered context changed. Reload the history.'}:{})});}
   catch(error){if(same())patch({pending:false,rows:[],error:error instanceof ApiRequestError?error.message:'History could not be confirmed. Reload before using it.'});}
  };
  const load=()=>run(async request=>{const rows=await request('POST','/history',{});patch({rows,status:'',confirm:null});});
@@ -35,7 +35,7 @@ export default function LabRememberedContextHistory({sourceKey}:{sourceKey:strin
    <button type="button" className="text-link inline-flex min-h-11 items-center" disabled={active.pending} onClick={()=>void load()}>Reload remembered history</button>
    {!active.pending&&!active.error&&!active.rows.length&&<p>No remembered lab answers are saved.</p>}
    {!active.pending&&!active.error&&active.rows.map(entry=>{const record=entry.view.latest?.record.payload;if(!record)return null;return <article key={entry.view.scopeHash} className="lab-panel-review-observation">
-    <h3>{labResponseQuestions[record.family].text}</h3>
+    <h3>{labResponseQuestionText[record.question]}</h3>
     <p>{entry.view.latest!.sourceCurrent?'Linked lab records are unchanged.':'Source changed or removed · this recollection needs review.'}</p>
     <p>Review dates: {record.reviewWindow.from?record.reviewWindow.from+' to ':''}{record.reviewWindow.to} · {entry.view.historyCount} remembered {entry.view.historyCount===1?'answer':'answers'}</p>
     <p>Latest answer: {{yes:'Yes',no:'No',unknown:'Unknown','not-tracked':'Not tracked','prefer-not-answer':'Prefer not to answer'}[record.answer]} · added from memory on {record.recordedAt.slice(0,10)}</p>

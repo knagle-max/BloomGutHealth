@@ -20,7 +20,7 @@
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
-    "server/lab-response-context-routes.ts": "7b155fef245d94ef8680b77222282e227926b4ccf947d6873745bdc2648cb388",
+    "server/lab-response-context-routes.ts": "a027dfe9e8feac6218d545dbb17515fdeb21aaacdd2ccf67a04dbcbb64244b5e",
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
@@ -556,7 +556,7 @@
     },
     {
       "file": "server/lab-response-context-routes.ts",
-      "line": 11,
+      "line": 18,
       "method": "POST",
       "path": "/api/experience/lab-response-context/history",
       "declaredMiddleware": [
@@ -566,7 +566,7 @@
     },
     {
       "file": "server/lab-response-context-routes.ts",
-      "line": 15,
+      "line": 22,
       "method": "POST",
       "path": "/api/experience/lab-response-context/view",
       "declaredMiddleware": [
@@ -576,7 +576,7 @@
     },
     {
       "file": "server/lab-response-context-routes.ts",
-      "line": 19,
+      "line": 26,
       "method": "POST",
       "path": "/api/experience/lab-response-context/prepare",
       "declaredMiddleware": [
@@ -586,7 +586,7 @@
     },
     {
       "file": "server/lab-response-context-routes.ts",
-      "line": 23,
+      "line": 30,
       "method": "POST",
       "path": "/api/experience/lab-response-context/save",
       "declaredMiddleware": [
@@ -596,7 +596,7 @@
     },
     {
       "file": "server/lab-response-context-routes.ts",
-      "line": 27,
+      "line": 34,
       "method": "DELETE",
       "path": "/api/experience/lab-response-context",
       "declaredMiddleware": [

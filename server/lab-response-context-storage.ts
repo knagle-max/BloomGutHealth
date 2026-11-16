@@ -71,10 +71,10 @@ export class LabResponseContextStorage{
   if(visited.size!==answers.length)throw unavailable();
   const epoch=epochs[0]?.payload||null;
   const historyRevision=hash(['lab-context-history-v1',userId,scope,epoch,answers.map(row=>({id:row.id,payload:row.payload})).sort((a,b)=>a.id.localeCompare(b.id))]);
-  return{scope,epoch,answers,head:heads[0]||null,historyRevision,stored};
+  return{family:selection.family,scope,epoch,answers,head:heads[0]||null,historyRevision,stored};
  }
  private async quota(tx:Database,userId:string){const[count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,'wellness-choice')));if(count.count>=2000)throw new LabResponseContextError(422,'Your workspace has reached its record limit. Export and remove old entries before adding context.');}
- private viewOf(inventory:Awaited<ReturnType<LabResponseContextStorage['inventory']>>,facts:Fact[],now:Date,versions=this.versions(facts)):LabResponseContextView{return{scopeHash:inventory.scope,generationId:inventory.epoch?.generationId||null,historyRevision:inventory.historyRevision,historyCount:inventory.answers.length,latest:inventory.head?{record:inventory.head,sourceCurrent:this.current(inventory.head.payload,facts,versions)}:null,asOf:now.toISOString()};}
+ private viewOf(inventory:Awaited<ReturnType<LabResponseContextStorage['inventory']>>,facts:Fact[],now:Date,versions=this.versions(facts)):LabResponseContextView{return{questionId:labResponseQuestions[inventory.family].id,scopeHash:inventory.scope,generationId:inventory.epoch?.generationId||null,historyRevision:inventory.historyRevision,historyCount:inventory.answers.length,latest:inventory.head?{record:inventory.head,sourceCurrent:this.current(inventory.head.payload,facts,versions)}:null,asOf:now.toISOString()};}
  async history(userId:string):Promise<LabResponseContextHistory>{return this.db.transaction(async tx=>{
   await tx.execute(sql`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY`);const dataset=await this.rows(tx,userId),facts=await this.facts(tx,userId),versions=this.versions(facts),now=this.now(),selections=new Map<string,LabResponseContextSelection>();
   for(const item of dataset.decoded)if(item.payload.valueKind==='recalled-context')selections.set(item.scope,scopeSelection(item.payload));
@@ -92,11 +92,12 @@ export class LabResponseContextStorage{
   if(!inventory.epoch||inventory.epoch.generationId!==command.generationId)throw changed();
   const existing=inventory.stored.find(row=>row.id===id);
   if(existing){const parsed=recalledLabResponseContextSchema.safeParse(decryptPrecision(existing.encryptedPayload,userId));if(!parsed.success)throw changed();const payload=parsed.data;
-   const requested=[command.family,refs(command.sourceReferences),command.answer,command.eventWindow,command.datePrecision,command.notes,command.expectedCurrentId];
-   const recorded=[payload.family,refs(payload.sourceReferences),payload.answer,payload.eventWindow,payload.datePrecision,payload.notes,payload.supersedes];
+   const requested=[command.family,refs(command.sourceReferences),command.answer,command.eventWindow,command.datePrecision,command.notes,command.expectedCurrentId,command.expectedQuestion??labResponseQuestions[command.family].id];
+   const recorded=[payload.family,refs(payload.sourceReferences),payload.answer,payload.eventWindow,payload.datePrecision,payload.notes,payload.supersedes,payload.question];
    if(hash(requested)!==hash(recorded))throw changed();return{record:{id,payload,createdAt:existing.createdAt.toISOString(),updatedAt:existing.updatedAt.toISOString()},sourceCurrent:this.current(payload,facts),replayed:true,isLatest:inventory.head?.id===id};
   }
   if(!inventory.epoch||inventory.epoch.generationId!==command.generationId||(inventory.head?.id||null)!==command.expectedCurrentId)throw changed();
+  if(command.expectedQuestion&&command.expectedQuestion!==labResponseQuestions[command.family].id)throw changed();
   const reviewWindow=this.sources(command,facts,now),parsed=recalledLabResponseContextSchema.safeParse({version:1,valueKind:'recalled-context',intentId:command.intentId,family:command.family,question:labResponseQuestions[command.family].id,answer:command.answer,reviewWindow,eventWindow:command.eventWindow,datePrecision:command.datePrecision,recordedAt:now.toISOString(),sourceReferences:refs(command.sourceReferences),supersedes:inventory.head?.id||null,notes:command.notes});
   if(!parsed.success)throw new LabResponseContextError(400,'Review the answer and remembered date precision. A pre-test event cannot be placed after the source date.');await this.quota(tx,userId);
   const payload=parsed.data,[row]=await tx.insert(experienceRecords).values({id,userId,kind:'lab-response-context',encryptedPayload:encryptPrecision(payload,userId)}).returning();

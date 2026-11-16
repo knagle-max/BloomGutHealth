@@ -34,6 +34,14 @@ test('source-current context saves once, keeps event/learned-at separate and rep
  const next=command(firstView,{answer:'no',eventWindow:null,datePrecision:'not-applicable',notes:''});await storage.save('a',next);const oldReceipt=await storage.save('a',request);assert.equal(oldReceipt.isLatest,false);assert.equal((await storage.view('a',selection)).latest.record.payload.answer,'no');
  await rejects(storage.save('a',command(firstView)),409);assert.deepEqual(await precision.getPrecisionRecords('a'),original);
 }));
+test('the writer binds question meaning; explicit and legacy-equivalent receipt retries agree, different questions cannot relabel an answer',()=>fixture(async({storage,prepare,selection,command}:any)=>{
+ const prepared=await storage.prepare('a',prepare);assert.equal(prepared.questionId,'medication-change');
+ const request=command(prepared,{expectedQuestion:'medication-change'}),saved=await storage.save('a',request);assert.equal(saved.record.payload.question,'medication-change');
+ const {expectedQuestion,...legacy}=request;assert.equal((await storage.save('a',legacy)).record.id,saved.record.id,'Old requests derive their original legacy question for receipt comparison');
+ await rejects(storage.save('a',{...request,expectedQuestion:'b12-products'}),409);
+ const view=await storage.view('a',selection);await rejects(storage.save('a',command(view,{expectedQuestion:'b12-products'})),409);
+ const unchanged=await storage.view('a',selection);assert.equal(unchanged.historyCount,1);assert.equal(unchanged.latest.record.id,saved.record.id);assert.equal(unchanged.latest.record.payload.question,'medication-change');
+}));
 test('own scope, family, exact source revision, source-date timing and explicit uncertainty are enforced before writes',()=>fixture(async({storage,prepare,selection,command}:any)=>{
  assert.equal((await storage.view('b',selection)).latest,null);await rejects(storage.prepare('b',prepare),404);
  await rejects(storage.prepare('a',{...prepare,family:'liver'}),409);await rejects(storage.prepare('a',{...prepare,sourceReferences:prepare.sourceReferences.map((source:any)=>({...source,revision:'f'.repeat(64)}))}),409);
