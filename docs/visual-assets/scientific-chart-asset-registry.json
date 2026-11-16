@@ -1319,6 +1319,93 @@
         "Exact table, 44px touch, keyboard, reader and source-linked organism details required",
         "390/1440 actual rendering plus 320/768 adaptation, zoom, four themes, forced-colors pending"
       ]
+    },
+    {
+      "id": "CHART-C04",
+      "name": "Molecular pathway node and evidence-aware edge library",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate published; scientific accuracy, Architect, UX, actual app and accessibility review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C04_Molecular_Pathway_Nodes_Edges_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C04_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C04_Manifest_2026-11-15.json",
+        "sha256Archive": "49b065182c30342b47bff3eaa5243d9381b86a65d5ca0956a3d29ec27b7856b2",
+        "contents": [
+          "tokens/CHART-C04-contract.json",
+          "tokens/CHART-C04-pathways.css",
+          "svg/nodes/ seven individual SVGs",
+          "svg/edges/ five individual SVGs",
+          "svg/CHART-C04-node-library.svg",
+          "editable/ twelve master SVG diagrams",
+          "responsive/{320,390,768,1440}/ 48 SVG specimens",
+          "previews/ 5 PNG renderings",
+          "handoff/CHART-C04-integration.md",
+          "accessibility/CHART-C04-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "nodeTypes": [
+        "molecule",
+        "gene",
+        "enzyme",
+        "microbe",
+        "process",
+        "reaction",
+        "measurement"
+      ],
+      "edgeTypes": [
+        "curated-biochemical",
+        "population-association",
+        "source-measured",
+        "modelled-experimental",
+        "unknown"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 73/73",
+        "responsiveSpecimens": 48,
+        "editableMasters": 12,
+        "previewPNGs": 5,
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "mobileVisualReview": "390px Everyday Light inspected; footer overlap corrected",
+        "desktopVisualReview": "1440px Athlete Dark inspected",
+        "realApp": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "target": "client/src/pages/Explore.tsx",
+        "legacyReference": "design/visual-system/assets/pathway-nodes.svg",
+        "importRule": "Scoped CSS under .app-shell[data-bloom-visual=premium] .bv-scientific-chart; shapes only as editable SVG, source-backed runtime nodes and links"
+      },
+      "constraints": [
+        "No fake measured pathway or metabolic flux, assay, activity or mechanistic inference",
+        "Nodes show type not measured quantity, outcome or evidence quality",
+        "Only reviewed evidence permits graph relationship edge; unknown is disconnected",
+        "Population association nondirectional and noncausal, experimental/modelled qualified",
+        "Data-derived graph and labels must be rendered at runtime, design specimens are fictional",
+        "Original source record, evidence and citations inspectable",
+        "Responsive mobile vertical layouts and desktop graph, >=44px tap target",
+        "320/390/768/1440 browser validation and 200% zoom, forced colors, reduced motion and full screen reader review pending"
+      ]
     }
   ]
 }
