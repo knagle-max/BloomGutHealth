@@ -245,6 +245,80 @@
         "No unapproved DOM/UX changes",
         "320/390/768/1440 and zoom 200%, all themes and accessibility modes pending"
       ]
+    },
+    {
+      "id": "CHART-A05",
+      "name": "Reference interval and decision threshold treatments",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer delivery available; Architect, scientific, UX and real screenshot acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A05_Reference_Intervals_Thresholds_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A05_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A05_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A05-reference-intervals.json",
+          "tokens/CHART-A05-reference-intervals.css",
+          "svg/CHART-A05-reference-symbols.svg",
+          "editable/*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "handoff/CHART-A05-implementation.md",
+          "accessibility/CHART-A05-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "referenceKinds": [
+        "source-interval",
+        "selected-only",
+        "alternate-method",
+        "published-comparison",
+        "decision-threshold",
+        "unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 33/33",
+        "zipIntegrity": "PASS",
+        "jsonValid": "PASS",
+        "responsiveSpecimens": 16,
+        "visualPreview": "RENDERED and 320px mobile checked",
+        "actualApplication": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "related": [
+          "LabRangeSelector",
+          "LabSourceContext"
+        ],
+        "importRule": "A05 CSS once after A01–A04, scoped to premium app-shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "No source-free healthy-range artwork",
+        "Method/context-specific limits only",
+        "Selected-only range not applied across history",
+        "Decision threshold must never look like laboratory reference interval",
+        "Published comparison requires explicit label and scientifically appropriate provenance",
+        "Unavailable means no band, not 0 or normal",
+        "No baked-in lab measurements; source/date/units/assay and exact table retained"
+      ]
     }
   ]
 }
