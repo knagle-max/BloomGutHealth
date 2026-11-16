@@ -126,7 +126,7 @@ export default function WeeklyPlanner() {
           mealText: m.recipe.ingredients
             .map(
               (i) =>
-                `${Math.round(i.grams * m.portion)} g ${i.name.replaceAll(",", " ")}`,
+                `${i.grams * m.portion} g ${i.name.replaceAll(",", " ")}`,
             )
             .join(", "),
           mealType: m.slot,

@@ -283,7 +283,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                       m.recipe.ingredients
                         .map(
                           (i) =>
-                            `${Math.round(i.grams * m.portion)} g ${i.name.replaceAll(",", " ")}`,
+                            `${i.grams * m.portion} g ${i.name.replaceAll(",", " ")}`,
                         )
                         .join(", "),
                     ) +

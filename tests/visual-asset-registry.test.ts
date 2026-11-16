@@ -38,5 +38,11 @@ test('historical owner decisions do not gate new development candidates; actual 
   const copy:any=structuredClone(registry),row=copy.assets.find((asset:any)=>asset.id===id)!;row.lifecycle='Integrated';row.filePaths=['/images/editorial/heroes/replacement-candidate.webp'];row.currentRendition={id:id+'-replacement',status:'candidate'};assert.equal(visualAssetRegistrySchema.safeParse(copy).success,true,'Owner reviews the assembled RC, not each new development candidate');
   row.currentRendition.status='rejected';assert.equal(visualAssetRegistrySchema.safeParse(copy).success,false,'Explicit rejection follows the rendition, not the scene requirement');
  }
- for(const id of ['BVA-0023','BVA-0024'])assert.equal(parsed.assets.find(row=>row.id===id)?.lifecycle,'Approved','Separately approved runner/coach originals stay intact');
+ for(const [id,lifecycle] of [['BVA-0023','Integrated'],['BVA-0024','Approved']]){
+  const asset=parsed.assets.find(row=>row.id===id)!;
+  assert.equal(asset.lifecycle,lifecycle,'Runner is rendered; Coach remains staged without role activation');
+  assert.equal(asset.ownerApproval?.approved,true,'Original historical owner decision stays intact after integration');
+  assert.equal(asset.sourceRelation.integrationSourceByteVerified,true);
+  for(const path of asset.filePaths)assert.ok(readFileSync('client/public'+path).length>0);
+ }
 });

@@ -1,3 +1,5 @@
+v0.6 T2a dinner source precision | IMPLEMENTED_AND_ENGINEERING_TESTED | Existing goals/intake/recipe/review/save dependencies. Fractional prepared grams retained, one edited ingredient only, consumed-save retry/reload/owner denial.16 focused planner+3 registry tests/types and actual browser PASS. Receipt V06_DINNER_PORTION_REVIEW_20261116.json; full T2a partial. Next exact publication, then owner illustrated Bloodwork consolidation.
+
 T1b-bloodwork-atlas | ENGINEERING_TESTED_PENDING_PUBLICATION | Real system→existing explorer/source navigation, original rows retained,6 reserved frames;16 responsive states/200% text,source/media regressions. Exit exact CI/preview. Receipt V06_BLOODWORK_ATLAS_20261115.json. T1a closed verified8ffc52c/43753593433.
 
 T1a-control-reflow: IMPLEMENTED_AND_ENGINEERING_TESTED; publication/CI pending. T0 ALREADY_VERIFIED e495708/43750257253. Incoming55d854c2 consolidated task contract preserved; current selector is short NEXT_ACTIONS, next T1b overview with BVA fallbacks.

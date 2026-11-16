@@ -4620,7 +4620,9 @@
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait"
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",

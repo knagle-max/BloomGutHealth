@@ -1,0 +1,26 @@
+{
+  "task": "T2a-concrete-dinner-portions",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED",
+  "sourceParent": "6c74a1efd7323605e1937bd9799e2d7472b3ee11",
+  "risk": "Source quantity fidelity; existing account/review/save boundaries unchanged.",
+  "change": "Preserve fractional prepared ingredient masses in Today review links and weekly explicit eaten-now logging.",
+  "regression": {
+    "before": "187.5 g planned became 188 g in review",
+    "after": "187.5 g survives review; explicit first-ingredient correction changes only that ingredient"
+  },
+  "tests": [
+    "Actual App/precision HTTP/encrypted SQL: two meals plus goals/exclusions \u2192 sourced dinner \u2192 independent correction \u2192 review/save \u2192 lost-response idempotent retry \u2192 reload and other-owner denial PASS",
+    "16 Today/weekly planner tests PASS",
+    "3 visual-registry tests PASS; historical approval retained while integrated runner lifecycle asserted",
+    "TypeScript PASS",
+    "Production build PASS: all original/source/built artwork byte verifiers unchanged"
+  ],
+  "integration": {
+    "incomingArchitectCommitsPreserved": 45,
+    "registryIds": 47,
+    "schemaRepair": "BVA-0047 sourceRelation explicit registry/slot metadata; no illustration imported or approval invented",
+    "priorCI": "43786671480: 739 passed, 1 stale runner lifecycle assertion failed; corrected locally",
+    "hosted": "Pending next exact source qualification"
+  },
+  "remaining": "Full T2a substitution/protected-goal acceptance remains partial; no human/device or full RC claim."
+}
