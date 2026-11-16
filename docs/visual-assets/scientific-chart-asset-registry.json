@@ -757,6 +757,89 @@
         "44px focus/touch targets, exact table alternative, source withdrawal access safeguards",
         "No deployment or visual signoff without screenshots for mobile/desktop all four themes"
       ]
+    },
+    {
+      "id": "CHART-B03",
+      "name": "Two-result comparison and source-aware reference reveal",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate published; Architect, Science, UX and actual application review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B01",
+        "CHART-B02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B03_Two_Result_Comparison_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B03_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B03_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B03.css",
+          "tokens/CHART-B03-contract.json",
+          "fixtures/CHART-B03-FICTIONAL-ONLY.json",
+          "editable/CHART-B03-*-master.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B03-integration.md",
+          "accessibility/CHART-B03-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "comparable",
+        "non-comparable",
+        "zero-baseline",
+        "reference-unavailable",
+        "method-changed",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "editableSVG": "PASS 104/104 XML parsed",
+        "responsiveCompositions": 96,
+        "editableMasters": 8,
+        "zipIntegrity": "PASS",
+        "jsonValid": "PASS",
+        "mobilePreview": "RENDERED and visually inspected",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibility": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "secondaryCodeTargets": [
+          "LabRangeSelector",
+          "LabSourceContext",
+          "client/src/pages/Progress.tsx"
+        ],
+        "importRule": "Scoped additive styling after existing A01-A08 and B01/B02; no competing global theme or flattened data chart"
+      },
+      "constraints": [
+        "Never display specimen fictional values as personal measurements",
+        "Only calculate differences for validated comparable methods and canonical units",
+        "Percentage not defined for zero baseline; no fake infinity",
+        "Source-specific reference interval and decision thresholds distinct",
+        "Changed assay alone does not warrant comparison",
+        "Revoked source must be redacted, including cached tooltip and table",
+        "Unknown is never zero",
+        "No causal claim from temporal comparison",
+        "Original date, unit, lab, assay, methods, revisions, source and exact-value table remain accessible",
+        "320/390/768/1440, four themes, zoom, keyboard and forced colors must be validated on actual application"
+      ]
     }
   ]
 }
