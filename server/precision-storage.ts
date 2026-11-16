@@ -1,3 +1,6 @@
+import {referenceHash,referenceStreamId,referenceSourceRevision,referenceCorrectionView} from './lab-reference-corrections';
+import {labReferenceCorrectionCommandSchema,labReferenceCorrectionSchema,type LabReferenceCorrectionCommand} from '../shared/lab-reference-correction';
+import {copiedReferenceIntervalForPlot} from '../shared/lab-reference-interval';
 import {LAB_REPORT_METADATA_KIND,labReportMetadataSchema,labReportMetadataCommandSchema,LabReportMetadataError,type LabReportMetadataCommand,type LabReportMetadata,type LabReportMetadataView} from '../shared/lab-report-metadata';
 import {labSourceReviewSchema,labReviewRevisionText,applyLabSourceReview,type LabSourceReview} from '../shared/lab-source-review';
 import{knownPlanUsesSources}from'./plan-history';
@@ -11,7 +14,7 @@ import {labDateChangeSchema,applyLabDateChange,type LabDateChange} from "../shar
 import { createHash,randomUUID } from "node:crypto";
 import { isDeepStrictEqual } from "node:util";
 import { precisionProfiles, precisionRecords,labReportMetadataVersions, users,microbiomeSamples } from "../shared/schema";
-import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
+import { labSchema, sourceOnlyLabSchema, contextSchema,precisionEntrySchema, activeLabObservations, activeLabRows, canonicalLab, type Lab, type SourceOnlyLab } from "../shared/precision-nutrition";
 import {
   preferenceSchema,
   defaultPreferences,
@@ -345,11 +348,47 @@ export class PrecisionStorage {
   async getLabSources(userId:string):Promise<LabSourceSummary[]>{
    const records=await this.getPrecisionRecords(userId),metadata=await this.getLabReportMetadataHistory(userId),indexed=new Map<string,PrecisionRecord[]>(),unattributed:PrecisionRecord[]=[];
    for(const row of metadata.records)if(row.kind===LAB_REPORT_METADATA_KIND){const id=(row.payload as {sourceId?:unknown}|null)?.sourceId;if(typeof id==='string')indexed.set(id,[...(indexed.get(id)||[]),row]);else unattributed.push(row);}
-   return labSourceGroups(userId,records).map(group=>({...group.summary,metadata:metadata.available?this.labMetadataView(group.summary.id,group.summary.revision,[...(indexed.get(group.summary.id)||[]),...unattributed]):{current:null,sourceCurrent:false,history:[],historyCount:0,available:false}}));
+   return labSourceGroups(userId,records).map(group=>{
+    const view=metadata.available?this.labMetadataView(group.summary.id,group.summary.revision,[...(indexed.get(group.summary.id)||[]),...unattributed]):{current:null,sourceCurrent:false,history:[],historyCount:0,available:false};
+    const facts=group.members.flatMap(row=>{const parsed=labSchema.safeParse(row.payload);return parsed.success?[{...parsed.data,id:row.id}]:[];});
+    return{...group.summary,metadata:view,referenceCorrections:{available:metadata.available,observations:activeLabRows(facts).map(fact=>referenceCorrectionView(userId,fact.id,referenceSourceRevision(fact,view.current?.identity??null),metadata.records,metadata.available&&view.available))}};
+   });
   }
+  async saveLabReferenceCorrection(userId:string,sourceId:string,input:LabReferenceCorrectionCommand,key:string):Promise<LabSourceSummary>{
+   input=labReferenceCorrectionCommandSchema.parse(input);if(!/^[a-f0-9-]{36}$/i.test(key))throw new LabReportMetadataError(400,'Choose a valid range save reference.');
+   await this.db.transaction(async tx=>{
+    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
+    if(!await this.labMetadataReady(tx,true))throw new LabReportMetadataError(503,'Laboratory range annotations are unavailable. Original observations remain available.');
+    const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)),records=stored.map(row=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
+    const group=labSourceGroups(userId,records).find(group=>group.summary.id===sourceId);
+    if(!group)throw new LabReportMetadataError(404,'Laboratory source not found in your account.');
+    const facts=group.members.flatMap(row=>{const parsed=labSchema.safeParse(row.payload);return parsed.success?[{...parsed.data,id:row.id}]:[];}),fact=activeLabRows(facts).find(row=>row.id===input.observationId);
+    if(!fact)throw new LabReportMetadataError(404,'Current laboratory observation not found in this source.');
+    const annotations=await this.metadataRows(tx,userId),provider=this.labMetadataView(sourceId,group.summary.revision,annotations),revision=referenceSourceRevision(fact,provider.current?.identity??null),view=referenceCorrectionView(userId,fact.id,revision,annotations);
+    if(!group.valid||!provider.available||!view.available)throw new LabReportMetadataError(409,'The source or range history needs review before changing a range.');
+    const stream=referenceStreamId(userId,fact.id),id=referenceHash(['lab-reference-save-v1',userId,stream,key]),fingerprint=referenceHash(input),receipt=annotations.find(row=>row.id===id);
+    if(receipt){const parsed=labReferenceCorrectionSchema.safeParse(receipt.payload);if(!parsed.success||parsed.data.requestFingerprint!==fingerprint)throw new LabReportMetadataError(409,'This save reference already contains different range details.');return;}
+    if(revision!==input.sourceRevision||(view.current?.revision??null)!==input.expectedCorrectionRevision)throw new LabReportMetadataError(409,'The result, laboratory identity or range changed. Reload and review the latest source.');
+    if(input.limits){
+     if(fact.unitReview?.status==='pending')throw new LabReportMetadataError(400,'Confirm the original source unit before adding a laboratory range.');
+     const comparable=(value:string)=>value.trim().replace(/\s+/g,' ').toLowerCase(),known=(value:string)=>!!value.trim()&&!/^(?:unknown|not supplied|not recorded|unspecified)$/i.test(value.trim());
+     const identity=provider.current?.identity,confirmedLaboratory=identity&&identity.provider!=='unknown'?(identity.provider==='other'?identity.otherProvider:identity.provider):fact.laboratory;
+     for(const [copied,original,label]of[[input.limits.laboratory,confirmedLaboratory,'laboratory'],[input.limits.reportIdentifier,fact.sourceReport?.reportIdentifier??'','report identifier'],[input.limits.method,fact.method,'method']]){
+      if(copied&&known(original)&&comparable(copied)!==comparable(original))throw new LabReportMetadataError(400,`The copied ${label} differs from this saved source. Review its source details before applying a range; absent report details may stay blank.`);
+     }
+     const canonical=canonicalLab(fact),interval=copiedReferenceIntervalForPlot(fact.marker,{sourceValue:fact.value,sourceUnit:fact.unit,unit:canonical.unit,method:fact.method,sourceInput:fact.sourceInput,unitReview:fact.unitReview},input.limits);
+     if(!interval)throw new LabReportMetadataError(400,'The copied unit or assay cannot be validated for this result. Review the original source identity first.');
+    }
+    const previous=view.current?annotations.find(row=>{const parsed=labReferenceCorrectionSchema.safeParse(row.payload);return parsed.success&&parsed.data.sourceId===stream&&parsed.data.revision===view.current!.revision;}):null;
+    const payload=labReferenceCorrectionSchema.parse({version:1,valueKind:'lab-reference-range-correction',sourceId:stream,observationId:fact.id,reportSourceId:sourceId,revision:key,supersedes:previous?.id??null,sourceRevision:revision,limits:input.limits,recordedAt:new Date().toISOString(),requestFingerprint:fingerprint});
+    await tx.insert(labReportMetadataVersions).values({id,userId,sourceId:stream,sourceRecordIds:[fact.id],encryptedPayload:encryptPrecision(payload,userId)});
+   });
+   const source=(await this.getLabSources(userId)).find(row=>row.id===sourceId);if(!source)throw new LabReportMetadataError(404,'The source was removed.');return source;
+  }
+
   async saveLabReportMetadata(userId:string,sourceId:string,input:LabReportMetadataCommand,key:string):Promise<LabSourceSummary>{
    input=labReportMetadataCommandSchema.parse(input);if(!/^[a-f0-9-]{36}$/i.test(key))throw new LabReportMetadataError(400,'Choose a valid report save reference.');
-   return this.db.transaction(async tx=>{
+   await this.db.transaction(async tx=>{
     await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},0))`);
     if(!await this.labMetadataReady(tx,true))throw new LabReportMetadataError(503,'Report annotations are not ready in this deployment. Original observations remain available.');
     const stored=await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)),records=stored.map(row=>({id:row.id,kind:row.kind,payload:decryptPrecision(row.encryptedPayload,userId),createdAt:row.createdAt}));
@@ -366,6 +405,7 @@ export class PrecisionStorage {
     const [saved]=await tx.insert(labReportMetadataVersions).values({id,userId,sourceId,sourceRecordIds:group.members.map(row=>row.id),encryptedPayload:encryptPrecision(metadata,userId)}).returning();
     return{...group.summary,metadata:this.labMetadataView(sourceId,group.summary.revision,[...annotations,{id:saved.id,kind:LAB_REPORT_METADATA_KIND,payload:metadata,createdAt:saved.createdAt}])};
    });
+   const source=(await this.getLabSources(userId)).find(row=>row.id===sourceId);if(!source)throw new LabReportMetadataError(404,'The source was removed.');return source;
   }
   async deleteLabSource(userId:string,id:string,revision:string):Promise<void>{
    await this.db.transaction(async tx=>{

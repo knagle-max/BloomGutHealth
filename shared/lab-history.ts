@@ -1,3 +1,4 @@
+import type {LabSourceReferenceCorrections} from './lab-reference-correction';
 import type {LabReportMetadataView} from './lab-report-metadata';
 import type {Lab,SourceOnlyLab} from './precision-nutrition';
 export type LabHistoryRow=Lab&{id:string};
@@ -82,4 +83,4 @@ export function compareRecordedLabResults<T extends {id:string;date:string;value
 export function formatRecordedLabNumber(value:number){return Number.isFinite(value)?new Intl.NumberFormat(undefined,{maximumSignificantDigits:6}).format(value===0?0:value):'Not available';}
 
 /** Management metadata contains no biomarker values or original report identifiers. */
-export type LabSourceSummary={id:string;revision:string;scope:'report'|'result';results:number|null;records:number;dates:string[];detailRecordId?:string;manageable?:boolean;savedAt?:string|null;groupKey?:string|null;originalLaboratories?:string[];reportIdentifiers?:string[];specimenIdentifiers?:string[];dateContexts?:Array<{date:string;precision:'source-date'|'source-time'|'stored-timestamp-only'}>;metadata?:LabReportMetadataView};
+export type LabSourceSummary={id:string;revision:string;scope:'report'|'result';results:number|null;records:number;dates:string[];detailRecordId?:string;manageable?:boolean;savedAt?:string|null;groupKey?:string|null;originalLaboratories?:string[];reportIdentifiers?:string[];specimenIdentifiers?:string[];dateContexts?:Array<{date:string;precision:'source-date'|'source-time'|'stored-timestamp-only'}>;metadata?:LabReportMetadataView;referenceCorrections?:LabSourceReferenceCorrections};

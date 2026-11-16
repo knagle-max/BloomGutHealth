@@ -1,7 +1,7 @@
 {
   "task": "P1-chart-first-source-reference-ux",
   "authority": "docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md",
-  "status": "INITIAL_DISPLAY_ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "status": "INITIAL_DISPLAY_VERIFIED_ON_REVIEW_BRANCH_FULL_P1_PARTIAL",
   "implemented": [
     "Latest unambiguous chronological display point without mutating initial global report selection; missing latest bounds do not borrow older ones",
     "Compact visible Show reference range and Reference source using existing controller and source-versioned session context",
@@ -19,9 +19,7 @@
     "Paired component captures8 states before/after at320/390 light/dark Everyday/Athlete. Old LabTrend only pinned6db with current App/controller/styles and identical55U/L points, older60/latest45 bounds. Increased viewport height avoids fixed-navigation screenshot obstruction; Athlete390dark inspected"
   ],
   "pending": [
-    "Publish and qualify exact CI/Render source for this initial display slice",
-    "Source correction/deletion and complete affected journey tests; final source audits/build/commit/push/exact CI/Render proof",
-    "Backed per-observation Use my laboratory range correction with immutable original/revision/CAS/deletion semantics",
+    "Backed per-observation correction implementation/verification recorded separately in V06_LAB_REFERENCE_CORRECTION_20261116.json; full P1 remains partial",
     "Incremental deterministic Canadian catalogue fallback per reviewed applicability/rights; no value-based normalizing selection or invented endpoints"
   ],
   "privacy": "Synthetic fixtures only; no private Tester1 data, production data writes, main merge or manual deployment",
@@ -34,5 +32,17 @@
     "/tmp/bloom-chart-first-publish-final-build.log",
     "/tmp/bloom-chart-first-before-final/",
     "/tmp/bloom-chart-first-after-final/"
-  ]
+  ],
+  "publication": {
+    "commit": "fd2c05a65193566fa8c79278a2831ca68e04fbd9",
+    "workflowRun": 43956889596,
+    "workflowJob": 133613680737,
+    "conclusion": "success",
+    "tests": 774,
+    "passed": 774,
+    "failed": 0,
+    "renderDeploy": "dep-dbtn17m7bikc7393ou50",
+    "renderStatus": "live",
+    "finishedAt": "2026-11-16T21:09:27.005334Z"
+  }
 }

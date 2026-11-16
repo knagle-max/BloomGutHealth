@@ -27,5 +27,10 @@
     "finishedAt": "2026-11-16T14:29:51.869225Z",
     "delay": "Older0a21 clone stage delayed automatic queue; older deploy completed14:27:46 then this correction started14:27:47. No manual trigger/configuration/cancellation used.",
     "hostedAuthenticatedUi": "Not inspected; proxy403 and no private health-query authorization."
+  },
+  "ownerAcceptance": {
+    "date": "2026-11-16",
+    "statement": "Organism images work.",
+    "scope": "Owner-confirmed signed-in image rendering; exact authenticated runtime SHA and private source records were not inspected."
   }
 }

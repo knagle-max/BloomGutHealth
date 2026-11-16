@@ -1,0 +1,39 @@
+{
+  "task": "V06-P1-LAB-RANGE-CORRECTION",
+  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "baseCommit": "fd2c05a65193566fa8c79278a2831ca68e04fbd9",
+  "authority": "docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md \u2014 owner source-specific correction extension",
+  "implementation": [
+    "Backed in-chart Use my laboratory\u2019s range; copied lower/upper/operator/unit and optional original report context; explicit report check",
+    "One existing encrypted append-only metadata table, distinct account/observation stream; no migration, duplicate provider store, clinical record write or source reimport",
+    "Server-owned current source identity/revision, current-head CAS, exact receipt retry returning current state, null removal revision; unchanged original source values, intervals, flags and ciphertext",
+    "Copied source interval takes priority only on selected observation; distinct user-confirmed label, localized geometry, None suppresses display; other dates/reports/observations unchanged",
+    "Compatible canonical conversion including affine HbA1c and original assay guards; conflicting copied vitamin-D identity abstains",
+    "Provider identity changes invalidate affected source binding; unrelated report result edits do not invalidate this result; deleted source cannot be recreated by a range retry",
+    "Existing account export includes all owned correction versions separately, without request fingerprints; SQL source cleanup removes every range version with its fact",
+    "Responsive dialog, keyboard/Escape and explicit return focus to opening control; retry retains draft; stale concurrent edits require loading current source"
+  ],
+  "validation": [
+    "13 focused encrypted PostgreSQL/source-range/export/auth tests PASS; broad778/778 PASS; final changed source/formatter/guard9/9 PASS",
+    "Actual App\u2192authenticated HTTP\u2192encrypted SQL PASS: conflicting source-context rejection retains editable draft/no partial annotation; exact lost response retry; selected-result-only priority; source ciphertext unchanged; None/reload/mode; concurrent draft retention; amend/remove/original restoration; new two-sided zero and explicit operators; account withdrawal",
+    "48 Everyday/Athlete \u00d7 light/dark \u00d7320/390/768/1440 \u00d7100%/200% zoom/200% text states PASS; eight original dialog captures; Athlete dark390 inspected; keyboard Escape and explicit opening-control focus restoration PASS",
+    "Final TypeScript, API/capability/Biology exact source audits and production build/source+built original media verification PASS"
+  ],
+  "evidence": [
+    "/tmp/bloom-reference-editor-units-final.log",
+    "/tmp/bloom-reference-editor-browser-final.log",
+    "/tmp/bloom-reference-editor-full-tests.log",
+    "/tmp/bloom-reference-editor-final-types.log",
+    "/tmp/bloom-reference-editor-build-final.log",
+    "/tmp/bloom-lab-reference-editor/"
+  ],
+  "pending": [
+    "Commit/push and exact CI/Render qualification; no manual deployment",
+    "Canadian catalogue selection is the next bounded P1 sub-slice; new numeric entries need actual source applicability and rights evidence"
+  ],
+  "limits": [
+    "No actual private health data accessed or changed; owner separately confirmed organism images work",
+    "No physical VoiceOver, independent clinical/visual approval, full RC, main merge or manual deployment claim",
+    "Source corrections that create a new observation ID never automatically retarget an old range; original annotation history remains in owned account export"
+  ]
+}

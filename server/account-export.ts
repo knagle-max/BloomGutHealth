@@ -1,3 +1,4 @@
+import {labReferenceCorrectionSchema} from '../shared/lab-reference-correction';
 import {readProfileMeasurementSource} from "./profile-measurement-source";
 import {labReportMetadataSchema} from "../shared/lab-report-metadata";
 import {historicalPlanRecord} from "./plan-history";
@@ -44,10 +45,15 @@ export class AccountExportStorage {
       const precision = checked(await tx.select().from(precisionRecords).where(eq(precisionRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})).map(historicalPlanRecord);
       stage="lab-report-metadata";
       const metadataTable=await tx.execute<{present:boolean}>(sql`SELECT to_regclass('public.lab_report_metadata_versions') IS NOT NULL AS present`);
-      const reportMetadata=metadataTable.rows[0]?.present?checked(await tx.select().from(labReportMetadataVersions).where(eq(labReportMetadataVersions.userId,userId)).limit(50001)).map(({encryptedPayload,...record})=>{
-        const {receiptHash,...payload}=labReportMetadataSchema.parse(decryptPrecision(encryptedPayload,userId));
-        return {...record,payload};
-      }):null;
+      const metadataRows=metadataTable.rows[0]?.present?checked(await tx.select().from(labReportMetadataVersions).where(eq(labReportMetadataVersions.userId,userId)).limit(50001)).map(({encryptedPayload,...record})=>({...record,payload:decryptPrecision(encryptedPayload,userId)})):null;
+      const rangeCorrections=metadataRows?.flatMap(({payload:raw,...record})=>{
+        const parsed=labReferenceCorrectionSchema.safeParse(raw);if(!parsed.success)return[];
+        const {requestFingerprint,...payload}=parsed.data;return[{...record,payload}];
+      })??null;
+      const reportMetadata=metadataRows?.flatMap(({payload:raw,...record})=>{
+        if(labReferenceCorrectionSchema.safeParse(raw).success)return[];
+        const {receiptHash,...payload}=labReportMetadataSchema.parse(raw);return[{...record,payload}];
+      })??null;
       stage="labels";
       const labels = checked(await tx.select().from(nutritionProducts).where(eq(nutritionProducts.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
       stage="experience-settings";
@@ -68,7 +74,7 @@ export class AccountExportStorage {
       const profileMeasurementSource=await readProfileMeasurementSource(tx,userId,profile);
       return {experimentalPreference:preview[0]||null,format:"bloom-account-records-v2",derivedOutputPolicy:{historicalGeneratedRecords:"metadata-only",genomeFunctionalProfiles:"withheld",originalSourceObservations:"preserved"},exportedAt:new Date().toISOString(),profile,profileMeasurementSource,journal,
         gutReports:{samples,bacteria:bacteria.map(record=>({...record,genomeData:null,interpretationStatus:"stored_taxonomy_only"})),metabolites:historicalDerivedMetadata(compounds,"metabolite-prediction"),healthImpacts:historicalDerivedMetadata(impacts,"health-impact"),analyses:historicalAnalysisMetadata(analyses),recommendations:historicalDerivedMetadata(advice,"recommendation")},
-        biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision,reportMetadata:{status:reportMetadata===null?"not-provisioned":"available",versions:reportMetadata}},
+        biology:{context:context?{payload:decryptPrecision(context.encryptedContext,userId),updatedAt:context.updatedAt}:null,records:precision,reportMetadata:{status:reportMetadata===null?"not-provisioned":"available",versions:reportMetadata,rangeCorrections}},
         savedLabels:labels,experience:{settings:settings?{payload:decryptPrecision(settings.encryptedPayload,userId),updatedAt:settings.updatedAt}:null,records:experience,history:{status:history===null?"not-provisioned":"available",versions:history}},healthSources:{storage:{consents:healthStorage.consent_table?"provisioned":"not-provisioned",observations:healthStorage.observation_table?"provisioned":"not-provisioned"},consents,observations},
         limits:["Optional health-source sections are null with storage status not-provisioned when those tables are absent in an older deployment; this is distinct from a provisioned empty collection.","Sensitive health information. Store privately and share only with people you choose.","Original observations and units are preserved. Unsupported historical model concentrations, functional profiles, health effects, scores and advice are withheld; metadata records identify their existence. This does not delete stored history or validate a medical interpretation.","Includes the account-owned application records listed here. Excludes passwords, sessions, encryption keys, internal file paths, operational logs and request receipts, database backups and records held independently by external providers.","Downloading does not delete records, revoke permissions or stop future processing. Active-account erasure is a separate action; backup/vendor lifecycle handling is not included in this download."]};
     }); } catch(error) {

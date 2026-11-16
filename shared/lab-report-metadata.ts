@@ -1,3 +1,4 @@
+import {labSourceReferenceCorrectionsSchema} from './lab-reference-correction';
 import {z} from 'zod';
 import type {LabOverlayPreference} from './lab-overlay-preference';
 
@@ -31,7 +32,7 @@ export const labManagedSourceSchema=z.object({
  id:z.string().regex(/^[a-f0-9]{64}$/),revision:z.string().regex(/^[a-f0-9]{64}$/),scope:z.enum(['report','result']),results:z.number().int().nonnegative().nullable(),records:z.number().int().positive(),dates:z.array(z.string()),
  manageable:z.boolean().optional(),savedAt:z.string().nullable().optional(),detailRecordId:z.string().max(100).optional(),groupKey:z.string().nullable().optional(),
  originalLaboratories:z.array(z.string()).optional(),reportIdentifiers:z.array(z.string()).optional(),specimenIdentifiers:z.array(z.string()).optional(),
- dateContexts:z.array(z.object({date:z.string(),precision:z.enum(['source-date','source-time','stored-timestamp-only'])})).optional(),metadata:labReportMetadataViewSchema.optional(),
+ dateContexts:z.array(z.object({date:z.string(),precision:z.enum(['source-date','source-time','stored-timestamp-only'])})).optional(),metadata:labReportMetadataViewSchema.optional(),referenceCorrections:labSourceReferenceCorrectionsSchema.optional(),
 });
 export type LabManagedSource=z.infer<typeof labManagedSourceSchema>;
 export type LabReportMetadataView={current:LabReportMetadata|null;sourceCurrent:boolean;history:Array<{revision:string;recordedAt:string;sourceRevision:string;identity:LabReportMetadata['identity'];identityAssertedAt:string|null;overlay:LabOverlayPreference}>;historyCount:number;available:boolean};

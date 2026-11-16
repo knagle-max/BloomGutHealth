@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 312,
-    "sourceFilesScanned": 756,
+    "sourceFilesScanned": 760,
     "relevantSourceFiles": 72,
     "researchPathways": 7
   },
@@ -12542,7 +12542,7 @@
           "spelling": " Unmapped source assay ",
           "rank": null,
           "file": "tests/account-export.test.ts",
-          "line": 47,
+          "line": 50,
           "method": "static source literal"
         }
       ]
@@ -25314,7 +25314,7 @@
     },
     {
       "file": "tests/account-export.test.ts",
-      "line": 26,
+      "line": 27,
       "field": "bacterialName",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25453,7 +25453,7 @@
     "shared/reported-taxa.ts": "c5b88f64766609a14631ef97461c332702c147caad780bdb78c2ae0b4ca2bf55",
     "shared/schema.ts": "3a5a433f8354427676c872bbefe79f4528de92fd63f8d26ea470a80cc0c678d1",
     "tests/account-erasure.test.ts": "c58aff3d9c8cee02f8cbceed84a11d6e0033311f45968ffcdf4632d60976094e",
-    "tests/account-export.test.ts": "191511ad40484f0cf21aad1d281a4c11b3da2dfa3e3c35f0128e022831554386",
+    "tests/account-export.test.ts": "51ef7bd4293a993c3dd3afe7b3b50465be86eeceff0169c5efd2210a7d4604e9",
     "tests/biological-report-management.test.ts": "42707f79920630022da35f21fcb431c0ce1c1319e769d932d99275eca25bbf8b",
     "tests/biology-content-registry.test.ts": "20e7e895240ba9892b6bdce7b3be85f68e087380ac3f43ccfe28ebff9a497d88",
     "tests/biology-source-inventory.test.ts": "1e70668b1771a4b26739f46ed663a247031c5a58d47ef4b2f50d51e41114f7c0",

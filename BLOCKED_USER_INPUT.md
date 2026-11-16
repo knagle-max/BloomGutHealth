@@ -414,6 +414,8 @@ Dependencies: real candidate worker inference, model quality/resource benchmark 
 
 ## 2026-11-16 — Actual Tester1 microbiome illustration coverage
 
-Scoped blocker only: automatic approval review rejected a read-only aggregate source-coverage query on Tester1 private microbiome records, stating health-record inspection was not authorized. No private records or measurements were returned and no workaround/retry was attempted. The exact-name renderer correction, original image integrity, synthetic/legacy UI validation, GitHub commits and public image checks continue independently.
+**Resolved by owner acceptance (2026-11-16):** “Organism images work.” No private aggregate query is needed; the pending access question below is withdrawn. This confirmation does not authorize health-record inspection. Historical rejection and question retained for audit only.
+
+Historical scoped blocker: automatic approval review rejected a read-only aggregate source-coverage query on Tester1 private microbiome records, stating health-record inspection was not authorized. No private records or measurements were returned and no workaround/retry was attempted. The exact-name renderer correction, original image integrity, synthetic/legacy UI validation, GitHub commits and public image checks continue independently.
 
 Question: May Codex run an account-scoped, read-only aggregate check of Tester1 microbiome source coverage in the existing review database, returning counts only and no organism names or measurements? Options: approve the scoped read-only check; keep verification synthetic and leave actual source verification for owner RC review. Recommendation: approve only if comfortable with this limited health-record access. Dependency: actual private source-coverage verification only; no coding/other Core hold. Receipt V06_LIVE_MORPHOLOGY_MATCH_20261116.json.

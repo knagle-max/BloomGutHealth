@@ -4,8 +4,23 @@ import {parseSourceReference} from './lab-source-reference';
 import {canonicalLab,markerDefinitions,type Lab} from './precision-nutrition';
 import {hasConfirmedLabIdentity} from './lab-assay-identity';
 import {formatRecordedLabNumber} from './lab-history';
+import type {CopiedLabReference} from './lab-reference-correction';
 export type ReferencePoint={sourceValue:number;sourceUnit:string;unit:string;referenceLow?:number|null;referenceHigh?:number|null;method?:string;sourceInput?:Lab['sourceInput'];unitReview?:{status:string}};
 export type PlotReferenceInterval={low:number|null;high:number|null;unit:string;sourceLow:number|null;sourceHigh:number|null;sourceUnit:string;lowInclusive?:boolean;highInclusive?:boolean};
+/** Reuse the canonical marker/unit/assay conversion for a copied interval.
+ * The virtual point exists only for validation; the observation is untouched. */
+export function copiedReferenceIntervalForPlot(marker:string,point:ReferencePoint,limits:CopiedLabReference):PlotReferenceInterval|null{
+ const definition=markerDefinitions.find(value=>value.id===marker);
+ if(!definition||(definition.units as readonly string[]).includes(limits.unit)===false)return null;
+ // Copied context cannot silently turn a different analyte into the plotted
+ // one. Reuse the same source-identity guards rather than interpreting its name.
+ if(!hasConfirmedLabIdentity(marker,{...point,method:[point.method,limits.assay,limits.method].filter(Boolean).join(' ')}))return null;
+ if(!(definition.units as readonly string[]).includes(point.sourceUnit))return null;
+ const measured=canonicalLab({marker:definition.id,value:point.sourceValue,unit:point.sourceUnit,method:point.method??'',sourceInput:point.sourceInput});
+ if(!Number.isFinite(point.sourceValue)||point.sourceValue<0||measured.unit!==point.unit)return null;
+ const interval=sourceReferenceIntervalForPlot(marker,{...point,sourceUnit:limits.unit,referenceLow:limits.low,referenceHigh:limits.high});
+ return interval?{...interval,...(limits.low===null?{}:{lowInclusive:limits.lowOperator==='>='}),...(limits.high===null?{}:{highInclusive:limits.highOperator==='<='})}:null;
+}
 /** Bounds come only from this observation's report. Reuse the same marker-specific
  * unit conversion as its point; neither population targets nor missing bounds are filled. */
 export function sourceReferenceIntervalForPlot(marker:string,point:ReferencePoint):PlotReferenceInterval|null{
@@ -23,6 +38,7 @@ export function sourceReferenceIntervalForPlot(marker:string,point:ReferencePoin
  return{low:lower?.value??null,high:upper?.value??null,unit:point.unit,sourceLow:low,sourceHigh:high,sourceUnit:point.sourceUnit,...operators};
 }
 export function referenceIntervalText(low:number|null,high:number|null,unit:string,operators:{lowInclusive?:boolean;highInclusive?:boolean}={}){
+ if(low!==null&&high!==null&&(operators.lowInclusive!==undefined||operators.highInclusive!==undefined))return `${operators.lowInclusive===false?'>':operators.lowInclusive===true?'≥':'lower limit '}${formatRecordedLabNumber(low)} and ${operators.highInclusive===false?'<':operators.highInclusive===true?'≤':'upper limit '}${formatRecordedLabNumber(high)} ${unit}`;
  return low!==null&&high!==null?`${formatRecordedLabNumber(low)}–${formatRecordedLabNumber(high)} ${unit}`:high!==null?`${operators.highInclusive===false?'<':operators.highInclusive===true?'≤':'upper limit '}${formatRecordedLabNumber(high)} ${unit}; lower limit not supplied`:low!==null?`${operators.lowInclusive===false?'>':operators.lowInclusive===true?'≥':'lower limit '}${formatRecordedLabNumber(low)} ${unit}; upper limit not supplied`:'not supplied';
 }
 /** A nonnegative axis includes supported source bounds as well as real points.

@@ -1,3 +1,4 @@
+import {labReferenceCorrectionCommandSchema} from '../shared/lab-reference-correction';
 import {labReportMetadataCommandSchema,LabReportMetadataError} from '../shared/lab-report-metadata';
 import {labSourceReviewSchema} from '../shared/lab-source-review';
 import {buildWellnessContext} from "./wellness-context";
@@ -60,6 +61,7 @@ type Store = Pick<
   | "putMicrobiomeFood"
   | "getLabSources"
   | "saveLabReportMetadata"
+  | "saveLabReferenceCorrection"
   | "deleteLabSource"
   | "deleteLabEntry"
   | "deletePrecisionRecord"
@@ -714,6 +716,13 @@ export function registerPrecisionRoutes(
    try{await store.putMicrobiomeFood(req.session.userId!,parsed.data.control,parsed.data.revision);res.json({success:true});}catch(e){if(e instanceof Error&&e.message==='MICROBIOME_FOOD_CHANGED')return res.status(409).json({error:'The setting or report changed. Reload and choose the current report.'});unavailable(res,e);}
   });
   app.get("/api/precision/labs/sources",async(req,res)=>{try{if(!store.getLabSources)return res.status(503).json({error:"Laboratory source management is unavailable."});return res.json(await store.getLabSources(req.session.userId!));}catch(e){unavailable(res,e);}});
+  app.post('/api/precision/labs/sources/:id/reference-range',async(req,res)=>{
+   if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload your laboratory results.'});
+   const parsed=labReferenceCorrectionCommandSchema.safeParse(req.body),key=z.string().uuid().safeParse(req.get('Idempotency-Key'));
+   if(!parsed.success||!key.success||!z.string().regex(/^[a-f0-9]{64}$/).safeParse(req.params.id).success)return res.status(400).json({error:'Review the copied laboratory range and source before saving.'});
+   if(!store.saveLabReferenceCorrection)return res.status(503).json({error:'Laboratory range corrections are unavailable. Original observations are unchanged.'});
+   try{return res.json(await store.saveLabReferenceCorrection(req.session.userId!,req.params.id,parsed.data,key.data));}catch(error){if(error instanceof LabReportMetadataError)return res.status(error.status).json({error:error.message});unavailable(res,error);}
+  });
   app.post('/api/precision/labs/sources/:id/metadata',async(req,res)=>{
     if(req.get('X-Bloom-Labs-Actor')!==req.session.userId)return res.status(409).json({error:'The signed-in account changed. Reload before managing a laboratory source.'});
     const parsed=labReportMetadataCommandSchema.safeParse(req.body),key=z.string().uuid().safeParse(req.get('Idempotency-Key'));
