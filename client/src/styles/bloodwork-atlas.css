@@ -48,3 +48,13 @@
 .app-shell[data-bloom-visual="premium"] .bloodwork-system-link::-webkit-details-marker {display:none;}
 .app-shell[data-bloom-visual="premium"] .bloodwork-system-group[open] > summary > svg {transform:rotate(90deg);}
 .app-shell[data-bloom-visual="premium"] .bloodwork-system-group > .lab-explorer-markers {padding:1rem 0;}
+
+/* Report overview shares the canonical explorer and preserves compact artwork navigation. */
+.lab-panel-review {min-width:0;overflow-wrap:anywhere;}
+.lab-panel-review > * + * {margin-top:.75rem;}
+.lab-panel-review summary {min-height:44px;cursor:pointer;padding:.65rem 0;font-family:var(--bv-font-body,inherit);}
+.lab-panel-review summary:focus-visible,.lab-panel-review button:focus-visible {outline:3px solid var(--bv-focus,currentColor);outline-offset:3px;}
+.lab-panel-review-list {list-style:none;margin:0;padding:0;}
+.lab-panel-review-observation {padding:.85rem 0;border-top:1px solid var(--bv-line,currentColor);}
+.lab-panel-review-observation p {margin:.35rem 0;}
+.lab-panel-review-tradeoff {padding:.75rem;border-inline-start:3px solid currentColor;}

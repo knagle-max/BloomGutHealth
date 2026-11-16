@@ -679,7 +679,7 @@ export default function PrecisionNutrition() {
                 <LabUnitReview labs={r.pendingLabs || []} />
                 <section className="bloom-panel">
                   <h2 id="biology-bloodwork-results">Latest results</h2>
-                  <Link className="text-link" href="/progress?view=biology">Review dated biology trends</Link>
+                  <Link className="text-link" href="/precision?tab=labs">Review dated biology trends</Link>
                   {r.labs.length ? (
                     r.labs.map((l) => (
                       <article className="precision-observation" key={l.id}>
@@ -1287,8 +1287,8 @@ export default function PrecisionNutrition() {
                 <section className="bloom-panel">
                   <h2>Bloodwork trends</h2>
                   <p>Review dated results and their original sources in the single Biology explorer in Progress.</p>
-                  <Link className="text-link inline-flex min-h-11 items-center" href="/progress?view=biology">Open bloodwork trends</Link>
-                  {r.trends.length>0&&<details><summary>Choose a recorded marker · {r.trends.length}</summary><ul>{r.trends.map(t=><li key={t.marker}><Link className="text-link inline-flex min-h-11 items-center" href={`/progress?view=biology&marker=${encodeURIComponent(t.marker)}`}>{t.name}</Link></li>)}</ul></details>}
+                  <Link className="text-link inline-flex min-h-11 items-center" href="/precision?tab=labs">Open bloodwork trends</Link>
+                  {r.trends.length>0&&<details><summary>Choose a recorded marker · {r.trends.length}</summary><ul>{r.trends.map(t=><li key={t.marker}><Link className="text-link inline-flex min-h-11 items-center" href={`/precision?tab=labs&marker=${encodeURIComponent(t.marker)}`}>{t.name}</Link></li>)}</ul></details>}
                 </section>
                 <section className="bloom-panel">
                   <h2>Saved plans & observations</h2>

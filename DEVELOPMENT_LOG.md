@@ -1892,3 +1892,10 @@ Biology landing translates source-only to without an explanation and pending uni
 - Mapping correction `bf13da54fe7a0c88f2df6e4060c711ebbff8627f` confirmed Render live in `dep-dbtg3vm8bjmc73fl35j0`, finished 13:17:39 UTC.
 - Added regression for all ten readable screenshot names with missing resolution/provider ordinal. Expected C01/C03/C04 and two source-designated U00 entries; thumbnail and portrait agree. Seven focused tests PASS, including all 94 mappings and public HTTP byte/MIME validation for 22 assets.
 - Hosted browser/network inspection unavailable in this workspace: public HTTPS proxy returns 403. Render live status is deployment evidence, not actual-account visual verification. No private health query performed. Existing source-designated U00 entries remain generic; no inferred replacement artwork.
+
+
+### 2026-11-16 — T2b source-aware whole-panel overview
+- Existing Bloodwork Atlas now reviews every active source label/marker, groups measured related families and explains selected/not-selected source-bound cues. Preserves canonical source drilldowns, original bounds, zero/unknown and exact units. No clinical ranking, meaningful-response claim or personal cause. Primary internal trend links now open the unified Atlas directly.
+- Aligned paired-report TG/LDL/ApoB discordance retained; missing methods/fasting, ambiguous times, same date-only reported day and newer pending units abstain. Edits/deletes/owner/source withdrawal recompute from existing report. No new writes or ledger.
+- Eight model tests,34-row/31-marker browser,50-row illustrated Atlas,34-row actual SQL reference overlay with48 visual states, types and production build pass. Full757-test run passed756; stale source fingerprint failed, then reviewed/refreshed with2/2 focused crosswalk tests passing. No authorization state changed. Full suite not repeated for metadata-only correction.
+- Full Response#15 remains partial. Next: minimal source-linked dated/recalled context annotation, temporal/evidence applicability and revised conditional actions; no personal causal estimate or new signoff gate.
