@@ -1406,6 +1406,87 @@
         "Responsive mobile vertical layouts and desktop graph, >=44px tap target",
         "320/390/768/1440 browser validation and 200% zoom, forced colors, reduced motion and full screen reader review pending"
       ]
+    },
+    {
+      "id": "CHART-C05",
+      "name": "Genetics variant locus, genotype-call and differentiated scientific evidence kit",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, genetics/clinical scientific, UX and real-browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C04"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C05_Genetics_Variant_Evidence_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C05_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C05_Manifest_2026-11-15.json",
+        "sha256Archive": "c9767033089d1ad776ad5c9121e1d50178159b70d665d17ed03d80e579dbf98b",
+        "contents": [
+          "tokens/CHART-C05-contract.json",
+          "tokens/CHART-C05-genetics.css",
+          "svg/8 individual symbolic vector assets",
+          "editable/28 master SVGs",
+          "responsive/{320,390,768,1440}/112 vector designs",
+          "previews/4 PNG specimens",
+          "handoff/CHART-C05-integration.md",
+          "accessibility/CHART-C05-QA.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "recorded",
+        "association",
+        "functional",
+        "clinical",
+        "quality-unknown",
+        "no-call",
+        "withdrawn"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 148/148",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 112,
+        "editableMasters": 28,
+        "individualSymbols": 8,
+        "previewPNGs": 4,
+        "mobileStaticReview": "320 and 390 reviewed",
+        "desktopStaticReview": "1440 Athlete Dark reviewed, initial overlap corrected",
+        "actualApp": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "targets": [
+          "Biology > Genetics",
+          "Explore genetic evidence"
+        ],
+        "importRule": "Reuse A01 tokens + C04 node semantics; all real genotype, source, gene/locus and evidence text from canonical data, never from SVG specimens"
+      },
+      "constraints": [
+        "Locus rail is a schematic without real genomic coordinate or risk magnitude",
+        "Never infer allele, reference call, genome build, strand or method from the drawing",
+        "Reported SNP is not evidence of changed protein/enzyme activity",
+        "Population associations, functional laboratory studies and clinical evidence must be separately qualified and sourced",
+        "No false diagnostic implications, genetic risk scores or other unvalidated claims",
+        "Unknown call not equal reference genotype or zero",
+        "Withdrawn source hidden from caches, detail, tooltip and exact-value table",
+        "Accessible source provenance and keyboard/tap action 44px",
+        "Four themes and 320/390/768/1440 real browser/zoom/forced-color QA pending"
+      ]
     }
   ]
 }
