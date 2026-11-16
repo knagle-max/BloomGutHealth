@@ -12,8 +12,8 @@ All 25 asset families have been retrieved through the **actual** shared Library 
 
 | Contents | Shared filename and Library ID | Verified outer SHA-256 |
 |---|---|---|
-| **CHART-A01–A08** (8 inner ZIPs, 4 sample visuals, metadata) | `Bloom_CHART_A01_A08_All_Assets_And_Examples_2026-11-15.zip` — `file_000000000c7c8212be24d21b9b45940f` | `a342b94fddc47f57c14f4fd397af867e7e0bba3e48ab5dc0882c431d613a38a` (verify exact archive digest after Codex fetch; see note if SHA differs) |
-| **CHART-D01–D05** (5 inner ZIPs and index) | `Bloom_CHART_D01_D05_Complete_2026-11-15.zip` — `file_00000000cad881fd87402902fe045472` | `2a6d05bdd1b3c3e5a9d4dd8f45371506ba3cf8a8778cb4e8ca037e959ee1808` (verify exact archive digest after Codex fetch) |
+| **CHART-A01–A08** (8 inner ZIPs, 4 sample visuals, metadata) | `Bloom_CHART_A01_A08_All_Assets_And_Examples_2026-11-15.zip` — `file_000000000c7c8212be24d21b9b45940f` | `eeb8e7e6fe8efa9ba6a1ecacbf3ed5225f0e83e4167d48f6985617f82efc5e00` (verify exact archive digest after Codex fetch; see note if SHA differs) |
+| **CHART-D01–D05** (5 inner ZIPs and index) | `Bloom_CHART_D01_D05_Complete_2026-11-15.zip` — `file_00000000cad881fd87402902fe045472` | `bc85ab535982ef2832116f9420f708224dae3b899b7aecb19eb9a2976d0fd829` (verify exact archive digest after Codex fetch) |
 
 Each A01–A08 inner archive is listed in `Bloom_CHART_A01_A08_DELIVERY_INDEX_2026-11-15.json` (Library ID `file_000000002fdc82129523ba90b0f3c084`). Each D01–D05 inner ZIP hash matched its actual `delivery_index.json` record inside the consolidated ZIP. The outer archive digests are also independently computable before extraction; **the exact source filenames and file IDs, not speculative paths, are authoritative**.
 
@@ -37,7 +37,7 @@ Each A01–A08 inner archive is listed in `Bloom_CHART_A01_A08_DELIVERY_INDEX_20
 **C06 duplicate rule:** A previous unnumbered `C06` ZIP/manifest also exists in Library; use latest `(1)` file named in canonical GitHub registry **only after checking its SHA/contents and current source version**. Do not mix old/updated C06 masters into one output unnoticed.
 
 ## 2. Independent source/member integrity findings — important packaging caveat
-- **25/25 families** were opened and checked against their embedded manifest rows: approximately **1,950 non-manifest member checks passed** (file SHA-256 and any provided byte count); direct content inspection confirms source SVG/JSON/CSS/README/responsive/QA variants exist. Foundation/athlete inner ZIP checksums agree with delivery indexes where present.
+- **25/25 families** were opened and checked against their embedded manifest rows: **1,950 non-manifest member checks passed** (file SHA-256 and any provided byte count); direct content inspection confirms source SVG/JSON/CSS/README/responsive/QA variants exist. Foundation/athlete inner ZIP checksums agree with delivery indexes where present.
 - **12 manifests include their own `manifest.json` row with a self-referential SHA-256/byte count that does not match the final manifest bytes**: CHART-A04, A08, B01, B05, B06, C04, C05, D01–D05. The only failed rows were the self-referential manifest entries; **all other claimed files passed**. Do **not** falsely report all self-hashes verified, or reject all working vector assets due to a recursively impossible self-checksum. For archive acceptance, verify **outer ZIP SHA-256** and **every other file hash**; document the manifest self-hash anomaly as a metadata QA issue. If a real SVG/JSON/CSS content hash fails, stop using that affected file.
 - This is **binary/source delivery verification**, not claim of SVG visual quality, true four-theme accessibility, scientific semantic acceptance, code integration, production permissions or real-screen browser acceptance. A designer's pre-rendered PNG or SVG with synthetic numbers must NEVER become the actual chart.
 
