@@ -1575,6 +1575,346 @@
         "320/390/768/1440 and 200% zoom, forced-colors, screen-reader actual app QA pending"
       ],
       "notes": "Shared Library assigned (1) suffix to this delivery; registry points to exact confirmed paths, not an earlier namesake."
+    },
+    {
+      "id": "CHART-D01",
+      "name": "Heart rate and zone time-series",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "sampled-zones",
+        "missing-stream",
+        "zones-unavailable",
+        "source-unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Sampled heart rate and source-defined zone limits only; no interpolation through unknown stream.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D02",
+      "name": "Training volume / strength progression",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D02_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "performed",
+        "planned-versus-performed",
+        "partial-and-skipped",
+        "load-unknown"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Actual performed sets and validated loads; planned and skipped never treated as completed.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D03",
+      "name": "Pace, power and effort plot",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D03_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "sampled-pace",
+        "sampled-power",
+        "manual-effort",
+        "stream-unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Timestamped pace/power only where available; manually reported effort remains discrete.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D04",
+      "name": "Planned versus performed activity timeline",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D04_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "planned-and-completed",
+        "cancelled",
+        "unknown-status",
+        "recurring-plan"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Planned recurrence not evidence of completion; missing status not cancelled.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
+    },
+    {
+      "id": "CHART-D05",
+      "name": "Fueling and hydration timeline",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Biology, UX and browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D05_Athlete_Telemetry_2026-11-15.zip",
+        "combinedPackage": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_Complete_2026-11-15.zip",
+        "deliveryIndex": "/Bloom gut health/Agent Handoffs/Bloom_CHART_D01_D05_delivery_index.json",
+        "contents": [
+          "tokens/CSS and JSON",
+          "64 responsive SVGs",
+          "8 editable SVG masters",
+          "5 PNG previews",
+          "fictional fixtures",
+          "implementation handoff",
+          "accessibility review",
+          "SHA-256 manifest"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "logged-with-plan",
+        "hydration-only",
+        "calculated-guidance",
+        "no-intake-recorded"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 72/72",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "staticMobileDesktop": "inspected; desktop overflow corrected",
+        "actualApplication": "NOT TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT INTEGRATED",
+        "sourceRule": "Recorded intake distinct from plan and calculated recommendations; no logs is not zero.",
+        "target": "Athlete and Progress",
+        "dataRendering": "Source-derived at runtime; never use synthetic specimen numbers in production"
+      },
+      "constraints": [
+        "Data absent is not zero",
+        "No invented samples or physiological zones",
+        "Keep source timestamps/units/method/permissions",
+        "Accessible exact table and source inspection",
+        "Browser QA mobile/desktop all four themes pending"
+      ]
     }
   ]
 }
