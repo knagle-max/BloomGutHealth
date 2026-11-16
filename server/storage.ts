@@ -1,5 +1,6 @@
 import type {LabReportMetadataCommand} from '../shared/lab-report-metadata';
 import type {LabSourceReview} from '../shared/lab-source-review';
+import {LabResponseContextStorage} from './lab-response-context-storage';
 import{getBiologicalReports,deleteBiologicalReports}from'./biological-report-management';
 import type{BiologicalReportCategory,BiologicalReportSnapshot,BiologicalReportDelete}from'../shared/biological-report-management';
 import type{MicrobiomeFoodControl,MicrobiomeFoodSource}from"../shared/microbiome-food-influence";
@@ -48,6 +49,7 @@ import type {
 import { eq, and, sql, desc } from "drizzle-orm";
 
 export interface IStorage extends ExperienceStore {
+  labResponseContext?:Pick<LabResponseContextStorage,'history'|'view'|'prepare'|'save'|'deleteHistory'>;
   getBiologicalRegistry(): Promise<BiologicalRegistry>;
   getNutritionProducts(userId: string): Promise<Product[]>;
   insertNutritionProduct(userId: string, label: LabelInput): Promise<Product>;
@@ -120,6 +122,7 @@ export interface IStorage extends ExperienceStore {
 }
 
 export class DatabaseStorage implements IStorage {
+  readonly labResponseContext=new LabResponseContextStorage(db);
   private biology = new BiologyStorage(db);
   getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}
   // Inactive unscoped prediction/cohort accessors are intentionally not part of this application interface.

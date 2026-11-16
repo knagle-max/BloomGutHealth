@@ -1929,3 +1929,7 @@ Biology landing translates source-only to without an explanation and pending uni
 ### 2026-11-16 — P1 exact CI follow-up: remaining Biology audit
 - e037a234 workflow43929359054 passed the former focus failure and type/API/capability checks, then failed Biology inventory. Reviewed19-line stale snapshot delta: tracked-file counts, original morphology fixture line/hash and PSA public fixture provenance.523 identities/49 markers/126 taxa and independent-review DRAFT remain unchanged.
 - Corrected earlier local audit-pass reporting: the prior shell sequence continued after a failed Biology check. Reran all four exact commands with set -e, inspected final exit0/output;5 biology-audit tests PASS. No runtime or permission/scientific approval change. Publish metadata-only follow-up and inspect one fresh exact full run.
+
+2026-11-16 — T2b context activation prepared: actual App/controller/encrypted SQL,8 theme/mobile states, source correction/deletion discovery and sibling invalidation verified. Full working-tree suite766/766; exact final source checks running. Reader73a073c5 compatibility already live. Publish after P1 b4e911c3 full workflow qualifies; no private-account access.
+
+2026-11-16 — P1 qualified: exact b4e911c3 workflow43931701976 SUCCESS766/766, all required browser/audit/hosted/source/media/Neon checks, synthetic cleanup; Render exact source live. Publishing tested context activation; chart integration prepared independently.

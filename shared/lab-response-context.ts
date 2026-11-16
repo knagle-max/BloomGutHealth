@@ -61,3 +61,4 @@ export type LabResponseContextSave=z.infer<typeof labResponseContextSaveSchema>;
 export type LabResponseContextDelete=z.infer<typeof labResponseContextDeleteSchema>;
 export type LabResponseContextRecord={id:string;payload:RecalledLabResponseContext;createdAt:string;updatedAt:string};
 export type LabResponseContextView={scopeHash:string;generationId:string|null;historyRevision:string;historyCount:number;latest:{record:LabResponseContextRecord;sourceCurrent:boolean}|null;asOf:string};
+export type LabResponseContextHistory=Array<{selection:LabResponseContextSelection;view:LabResponseContextView}>;

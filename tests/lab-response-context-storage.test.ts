@@ -46,7 +46,7 @@ test('own scope, family, exact source revision, source-date timing and explicit 
 test('source corrections and deletion withdraw currentness while context remains removable and original source history stays intact',()=>fixture(async({storage,precision,prepare,selection,command,labs}:any)=>{
  const prepared=await storage.prepare('a',prepare),request=command(prepared);await storage.save('a',request);
  const source=labs[1];await precision.reviewLabSource('a',source.id,{expectedRevision:revision(source.payload),marker:'ldl',unit:'mg/dL',referenceLow:null,referenceHigh:125,method:'Synthetic revised LDL assay',reason:'Synthetic original source review',reviewed:true},'context-source-review');
- assert.equal((await storage.view('a',selection)).latest.sourceCurrent,false);assert.equal((await storage.save('a',request)).sourceCurrent,false);await rejects(storage.prepare('a',prepare),404);
+ assert.equal((await storage.view('a',selection)).latest.sourceCurrent,false);const ownedHistory=await storage.history('a');assert.equal(ownedHistory.length,1);assert.equal(ownedHistory[0].view.latest.sourceCurrent,false);assert.equal(ownedHistory[0].view.latest.record.payload.notes,request.notes);assert.deepEqual(await storage.history('b'),[]);assert.equal((await storage.save('a',request)).sourceCurrent,false);await rejects(storage.prepare('a',prepare),404);
  const view=await storage.view('a',selection);await storage.deleteHistory('a',{...selection,intentId:randomUUID(),generationId:view.generationId,expectedHistoryRevision:view.historyRevision});assert.equal((await storage.view('a',selection)).historyCount,0);assert.equal((await precision.getPrecisionRecords('a')).length,3);
 }));
 test('context deletion fences queued saves, repeated deletion preserves later arrivals, and ordinary full erasure cannot resurrect old requests',()=>fixture(async({storage,experience,prepare,selection,command}:any)=>{
@@ -57,20 +57,20 @@ test('context deletion fences queued saves, repeated deletion preserves later ar
  const old=command(await storage.view('a',selection));await experience.clearExperienceData('a');await rejects(storage.save('a',old),409);const recreated=await storage.prepare('a',prepare);assert.notEqual(recreated.generationId,old.generationId);await rejects(storage.save('a',old),409);assert.equal((await storage.view('a',selection)).historyCount,0);
 }));
 test('real HTTP derives signed account, validates source commands, preserves receipts and requires explicit exact deletion',()=>fixture(async({storage,prepare,selection,command}:any)=>{
- const app=express();app.use(express.json());let denied=false,calls=0,budgets=0;const actions:any={};for(const name of ['view','prepare','save','deleteHistory'])actions[name]=(...args:any[])=>{calls++;return storage[name](...args);};
+ const app=express();app.use(express.json());let denied=false,calls=0,budgets=0;const actions:any={};for(const name of ['history','view','prepare','save','deleteHistory'])actions[name]=(...args:any[])=>{calls++;return storage[name](...args);};
  registerLabResponseContextRoutes(app,(req,res,next)=>{const actor=req.get('X-Fixture-Account');if(!actor)return void res.sendStatus(401);req.session={userId:actor} as any;next();},(_req,res,next)=>{budgets++;if(denied)return void res.sendStatus(503);next();},actions);
  const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${(server.address() as any).port}/api/experience/lab-response-context`;
  const send=(path:string,body:any,actor:string|null='a',method='POST',extra:Record<string,string>={})=>fetch(base+path,{method,headers:{'content-type':'application/json',...(actor?{'X-Fixture-Account':actor}:{}),...extra},body:JSON.stringify(body)});
  try{
   const anonymous=await send('/prepare',prepare,null);assert.equal(anonymous.status,401);assert.equal(anonymous.headers.get('cache-control'),'no-store');assert.equal(calls,0);assert.equal(budgets,0);
-  assert.equal((await send('/prepare',{...prepare,userId:'b'})).status,400);assert.equal((await send('/prepare?userId=b',prepare)).status,400);assert.equal(calls,0);
+  assert.equal((await send('/history',{userId:'b'})).status,400);assert.equal((await send('/prepare',{...prepare,userId:'b'})).status,400);assert.equal((await send('/prepare?userId=b',prepare)).status,400);assert.equal(calls,0);
   denied=true;assert.equal((await send('/prepare',prepare)).status,503);assert.equal(calls,0);denied=false;
   assert.equal((await send('/prepare',prepare,'b')).status,404);
   const prepared=await send('/prepare',prepare);assert.equal(prepared.status,200);assert.equal(prepared.headers.get('cache-control'),'no-store');const request=command(await prepared.json());
   const saved=await send('/save',request);assert.equal(saved.status,201);const result=await saved.json();assert.equal(result.sourceCurrent,true);
   const replay=await send('/save',request);assert.equal(replay.status,200);assert.equal((await replay.json()).record.id,result.record.id);
   assert.equal((await send('/save',{...request,notes:'Different retry'})).status,409);
-  const other=await(await send('/view',selection,'b')).json();assert.equal(other.latest,null);assert.equal(other.historyCount,0);
+  assert.equal((await(await send('/history',{})).json()).length,1);assert.deepEqual(await(await send('/history',{},'b')).json(),[]);const other=await(await send('/view',selection,'b')).json();assert.equal(other.latest,null);assert.equal(other.historyCount,0);
   const view=await(await send('/view',selection)).json(),deletion={...selection,intentId:randomUUID(),generationId:view.generationId,expectedHistoryRevision:view.historyRevision};
   const beforeDeleteCalls=calls;assert.equal((await send('',deletion,'a','DELETE')).status,400);assert.equal(calls,beforeDeleteCalls);
   assert.equal((await send('',deletion,'a','DELETE',{'X-Bloom-Confirm':'delete-lab-response-context-history'})).status,204);

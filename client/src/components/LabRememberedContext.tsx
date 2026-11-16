@@ -2,6 +2,7 @@ import {useEffect,useId,useRef,useState} from 'react';
 import {useAuth} from '@/lib/auth';
 import {apiRequest,ApiRequestError} from '@/lib/queryClient';
 import {accountContextGuard} from '@/lib/request-actor';
+import {LAB_CONTEXT_CHANGED,notifyLabContextChanged} from '@/lib/lab-context-events';
 import {labReviewRevision,labReviewRevisionText} from '@shared/lab-source-review';
 import {labResponseQuestions,labResponseContextSaveSchema,type LabResponseContextView,type LabResponseContextSave,type LabResponseContextDelete,type RecalledLabResponseContext} from '@shared/lab-response-context';
 import type {Lab} from '@shared/precision-nutrition';
@@ -11,26 +12,26 @@ type Draft={answer:RecalledLabResponseContext['answer']|'';precision:'unknown'|'
 const blank=():Draft=>({answer:'',precision:'unknown',from:'',to:'',notes:''});
 const remembered=(value:RecalledLabResponseContext):Draft=>({answer:value.answer,precision:value.eventWindow?.precision||'unknown',from:value.eventWindow?.from||'',to:value.eventWindow?.to||'',notes:value.notes});
 type State={key:string;expanded:boolean;form:boolean;view:LabResponseContextView|null;draft:Draft;pending:string|null;error:string;status:string;confirmDelete:boolean};
-/** Staged until reader compatibility and controller activation. Recollections
- * are never written back as source laboratory facts or performed behavior. */
+/** Source-linked recollections remain separate from source laboratory facts
+ * and never establish performed behavior or an individual cause. */
 export default function LabRememberedContext({family,sources}:{family:Family;sources:Array<Lab&{id:string}>}){
  const {user}=useAuth(),id=useId(),heading=useRef<HTMLHeadingElement>(null),opener=useRef<HTMLButtonElement>(null),answerInput=useRef<HTMLSelectElement>(null);
  const key=JSON.stringify([user?.id,family,sources.map(source=>[source.id,labReviewRevisionText(source)])]);
  const currentKey=useRef(key);currentKey.current=key;
  const initial=():State=>({key,expanded:false,form:false,view:null,draft:blank(),pending:null,error:'',status:'',confirmDelete:false});
  const[state,setState]=useState<State>(initial),active=state.key===key?state:initial(),serial=useRef(0),controller=useRef<AbortController|null>(null);
- const focusWhenReady=useRef<'answer'|'heading'|null>(null);
  const attempt=useRef<{key:string;command:LabResponseContextSave}|null>(null),deletion=useRef<{key:string;command:LabResponseContextDelete}|null>(null);
+ const changedDuringRequest=useRef(false),focusWhenReady=useRef<'answer'|'heading'|null>(null);
  useEffect(()=>()=>{serial.current++;controller.current?.abort();},[]);
  const patch=(value:Partial<State>)=>setState(previous=>({...(previous.key===key?previous:initial()),...value}));
  const selection={family,sourceIds:sources.map(source=>source.id)},path='/api/experience/lab-response-context';
  const run=async(stage:string,work:(request:(method:string,suffix:string,body:unknown,headers?:Record<string,string>)=>Promise<any>,assertCurrent:()=>void)=>Promise<void>)=>{
-  const ticket=++serial.current;controller.current?.abort();const abort=new AbortController();controller.current=abort;patch({expanded:true,pending:stage,error:''});
+  const ticket=++serial.current;changedDuringRequest.current=false;controller.current?.abort();const abort=new AbortController();controller.current=abort;patch({expanded:true,pending:stage,error:''});
   const same=()=>currentKey.current===key&&serial.current===ticket;
   try{
    const actor=accountContextGuard(user?.id),assertCurrent=()=>{actor();if(!same())throw Error('Context changed');};assertCurrent();
    const request=async(method:string,suffix:string,body:unknown,headers?:Record<string,string>)=>{assertCurrent();const response=await apiRequest(method,path+suffix,body,headers,abort.signal);const data=response.status===204?null:await response.json();assertCurrent();return data;};
-   await work(request,assertCurrent);if(same())patch({pending:null});
+   await work(request,assertCurrent);if(same())patch({pending:null,...(changedDuringRequest.current?{view:null,error:'Saved context changed elsewhere. Reload and review it before saving.'}:{})});
   }catch(error){if(same())patch({pending:null,error:error instanceof ApiRequestError?error.message:'Context could not be confirmed. Your draft is retained.',...(stage==='loading'||error instanceof ApiRequestError&&[404,409].includes(error.status)?{view:null}:{})});}
  };
  const load=()=>run('loading',async request=>{const view=await request('POST','/view',selection);attempt.current=null;focusWhenReady.current='heading';patch({view,status:'Saved context loaded.'});});
@@ -54,6 +55,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
    }
    const saved=await request('POST','/save',command),view:LabResponseContextView=await request('POST','/view',selection);attempt.current=null;
    focusWhenReady.current='heading';patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});
+   notifyLabContextChanged(id,view.scopeHash);
   });
  };
  const remove=()=>run('deleting',async request=>{
@@ -61,6 +63,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
   const command=deletion.current?.key===key?deletion.current.command:{...selection,intentId:crypto.randomUUID(),generationId:active.view.generationId,expectedHistoryRevision:active.view.historyRevision};deletion.current={key,command};
   await request('DELETE','',command,{'X-Bloom-Confirm':'delete-lab-response-context-history'});const view:LabResponseContextView=await request('POST','/view',selection);deletion.current=null;attempt.current=null;
   focusWhenReady.current='heading';patch({view,form:false,draft:blank(),confirmDelete:false,status:view.historyCount?'Earlier answers were deleted. Newer answers remain.':'Remembered answers deleted.'});
+  notifyLabContextChanged(id,view.scopeHash);
  });
  // Focus only after React commits the enabled control. A frame scheduled
  // during preparation can run while the new select is still disabled.
@@ -70,6 +73,10 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
   if(!target||!target.isConnected||'disabled'in target&&target.disabled||!target.getClientRects().length)return;
   target.focus();if(document.activeElement===target)focusWhenReady.current=null;
  },[key,active.expanded,active.pending,active.form,active.view?.historyRevision]);
+ useEffect(()=>{
+  const changed=(event:Event)=>{const detail=(event as CustomEvent).detail;if(!active.expanded||detail?.origin===id||active.view&&detail?.scopeHash!==active.view.scopeHash)return;if(active.pending){changedDuringRequest.current=true;return;}if(active.form){attempt.current=null;patch({view:null,error:'Saved context changed elsewhere. Your draft is retained; reload and review before saving.'});}else void load();};
+  window.addEventListener(LAB_CONTEXT_CHANGED,changed);return()=>window.removeEventListener(LAB_CONTEXT_CHANGED,changed);
+ },[key,active.expanded,active.form,active.pending,active.view?.scopeHash]);
  const latest=active.view?.latest,record=latest?.record.payload,busy=active.pending!==null;
  if(!user||!sources.length)return null;
  return <section className="lab-remembered-context" aria-label="Remembered context">
@@ -81,7 +88,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
    {active.pending&&<p role="status">{active.pending==='saving'?'Saving remembered context…':active.pending==='deleting'?'Deleting remembered answers…':'Loading source context…'}</p>}
    {active.error&&<p role="alert">{active.error}</p>}
    {active.status&&<p role="status">{active.status}</p>}
-   {!active.error&&record&&<div>
+   {!active.pending&&!active.error&&record&&<div>
     <p><strong>{latest!.sourceCurrent?'Saved recollection':'Source changed · recollection needs review'}</strong></p>
     <p>Answer: {{yes:'Yes',no:'No',unknown:'Unknown','not-tracked':'Not tracked','prefer-not-answer':'Prefer not to answer'}[record.answer]}</p>
     <p>Remembered event date: {record.eventWindow?record.eventWindow.from+(record.eventWindow.to!==record.eventWindow.from?' to '+record.eventWindow.to:''):record.datePrecision==='unknown'?'Unknown':'Not applicable'}</p>

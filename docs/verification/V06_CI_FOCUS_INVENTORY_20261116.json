@@ -1,6 +1,6 @@
 {
   "task": "P1-current-Neon-CI-focus-and-source-inventory",
-  "status": "ENGINEERING_TESTED_FULL_CI_PENDING",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "failedRuns": [
     {
       "run": 43888567422,
@@ -29,7 +29,18 @@
   ],
   "scope": "Focused correction only. Larger context-controller/history activation remains in primary worktree and is not included in this commit. Old Bloodwork heading is not this failure. No test skips, timeout inflation, new approvals or production/private-health writes.",
   "NeonLifecycle": "Failed73 run stopped before branch creation. Cleanup job is intentionally only for closed PRs; inspect schema-only branch expiry and live checks in the new full run. No branch deletion/configuration change performed.",
-  "fullCi": "One fresh automatic PR workflow after push, exact SHA; not green until all required checks pass.",
+  "fullCi": {
+    "run": 43931701976,
+    "sha": "b4e911c3fba3fc12fd8e2497d9d5f7f833fead67",
+    "conclusion": "SUCCESS",
+    "unitTests": {
+      "tests": 766,
+      "pass": 766,
+      "fail": 0
+    },
+    "requiredJob": 133525537016,
+    "cleanup": "Synthetic accounts/records cleaned up; closed-PR-only branch cleanup correctly skipped for open PR"
+  },
   "followUp": {
     "run": 43929359054,
     "sha": "e037a23490602d217d8e0c6eaf592b75f3e267ae",
@@ -43,6 +54,12 @@
     "correction": "Reviewed and regenerated19-line public-source audit delta. All523 identity records/49 markers/126 registry taxa and DRAFT_NOT_INDEPENDENTLY_APPROVED status unchanged.",
     "verification": "All four exact combined-job commands run fail-fast and exit0;5 biology-audit tests PASS.",
     "localReportingCorrection": "The earlier claim that every local source audit passed was inaccurate: a shell sequence continued after Biology check failure. Current verification uses set -e and its final completion/output was inspected.",
-    "newFullWorkflow": "Pending one fresh automatic run after this metadata correction; no rerun of unchanged failing candidate."
+    "newFullWorkflow": "43931701976 SUCCESS at exact b4e911c3; full focus/API/capability/Biology/units/hosted navigation/media/isolated Neon persistence all pass"
+  },
+  "Render": {
+    "sha": "b4e911c3fba3fc12fd8e2497d9d5f7f833fead67",
+    "deploy": "dep-dbtkt9lbedkc73cadca0",
+    "status": "LIVE",
+    "finishedAt": "2026-11-16T18:44:26.895725Z"
   }
 }

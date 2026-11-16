@@ -1,28 +1,37 @@
 {
   "task": "T2b-source-linked-remembered-context",
-  "status": "ENGINEERING_TESTED_ISOLATED_PENDING_READER_DEPLOYMENT",
+  "status": "ENGINEERING_TESTED_MOUNTED_PENDING_EXACT_CI_DEPLOY_VERIFICATION",
   "authority": "docs/architecture/RESPONSE_INTELLIGENCE_V06_ARCHITECT_RECONCILIATION_20261114.md",
   "implementation": [
     "Existing encrypted experience records, no new table or clinical source ledger",
     "Compatible context-lifecycle reader; minimal hashed scope/generation/deletion receipt contains no answer, notes, lab value or source IDs",
-    "Controller and UI implemented but not mounted in live app until this reader deployment is observed",
+    "Controller mounted through existing signed-account workspace auth and account budget; component mounted once in existing LabPanelReview and own-history management in BloodworkAtlas",
     "Actual active owned lab source revisions and family/assay/unit/date identity validated under ordered source0/experience1 account transaction locks",
     "Append-only remembered answers with separate event-date precision/review window/learned-at, explicit unknown/not-tracked/prefer-not-answer",
     "Exact retry receipt/current-head CAS, historical replay not substituted for latest, source edits withdraw currentness; no clinical source overwrite",
     "Exact scoped history deletion, nonce rotation and idempotent deletion receipt prevent queued save resurrection and preserve later arrivals; full workspace erasure also fences old requests",
-    "UI source preparation, optional remembered day/range/unknown, private notes, review/update/delete, current-source status and preserved failed-save draft; signed actor guard and source key prevent stale-owner rendering"
+    "UI source preparation, optional remembered day/range/unknown, private notes, review/update/delete, current-source status and preserved failed-save draft; signed actor guard and source key prevent stale-owner rendering",
+    "Own-context history remains discoverable and deletable after lab correction or removal; opaque same-tab invalidation withdraws stale sibling views without broadcasting notes or source IDs"
   ],
   "validation": [
-    "12 targeted schema/reader/storage/actual HTTP/experience/source-map tests PASS",
-    "Actual staged App/HTTP/encrypted PGlite journey PASS:2 original labs unchanged, source prepare, range vs learned-at, dropped201 then exact200 retry one row, reload, prefer-not-answer clears notes, whole scoped history deletion, other owner withdrawal",
-    "320/390 light/dark/200% text,44px targets, keyboard first-field/save-heading focus and runtime-error-free PASS",
-    "TypeScript and complete production/source+built media fingerprint build PASS"
+    "766/766 full working-tree unit tests PASS before focus-readiness correction; focused pinned-core browser verifies correction",
+    "7 context reader/storage/actual HTTP tests PASS;13 startup/API/workspace quota tests PASS",
+    "Actual mounted App/HTTP/encrypted PGlite journey PASS:2 original labs unchanged, range vs learned-at, lost201/exact200 one-row retry, reload, decline note removal, scoped deletion, owner withdrawal",
+    "Source correction withdraws currentness without reattaching; deletion of all labs leaves old context labelled/discoverable/deletable; same-tab sibling invalidation PASS",
+    "Everyday/Athlete \u00d7320/390\u00d7light/dark,200% text,44px targets and keyboard focus PASS; /tmp/bloom-context-mode-browser.log",
+    "Existing34-row whole-panel browser regression PASS; /tmp/bloom-context-activation-panel-browser.log",
+    "Final staged-source API/capability/Biology audits and TypeScript PASS fail-fast; production/source+built-media fingerprint build PASS;13 final focused reader/storage/route-budget tests PASS"
   ],
   "evidence": "/tmp/bloom-remembered-context/evidence.json",
   "remaining": [
-    "Observe lifecycle-compatible reader in review deployment before mounting producer controls",
-    "Mount same tested controller/component through existing app auth/workspace budgets, repeat affected integration/CI/host checks",
+    "Exact publication CI and Render deployment qualification",
     "Full Response#15 still needs source-timed contributors, vetted evidence/applicability, revised cited conditional actions and integrated RC acceptance; no medical priority or personal causal estimator claimed"
   ],
-  "privacy": "Only synthetic PGlite records used. No Tester1 health-record inspection or actual-account writes."
+  "privacy": "Only synthetic PGlite records used. No Tester1 health-record inspection or actual-account writes.",
+  "readerDeployment": {
+    "sha": "73a073c5735ae8bb4a75d31f519da056ed5c88a0",
+    "status": "LIVE",
+    "deploy": "dep-dbthcktckfvc73ep4t20",
+    "observedAt": "2026-11-16T14:43:56Z"
+  }
 }

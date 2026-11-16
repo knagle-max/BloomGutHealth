@@ -5,6 +5,7 @@ import type {PrecisionReport} from '@shared/precision-nutrition';
 import {labExplorerEntries,type LabCategoryId} from '@shared/lab-explorer';
 import EditorialMedia from './EditorialMedia';
 import LabPanelReview from './LabPanelReview';
+import LabRememberedContextHistory from './LabRememberedContextHistory';
 
 /** Navigation lens over the existing canonical explorer; no result, category,
  * interpretation, trend or source ledger is copied or written here. */
@@ -31,6 +32,7 @@ export default function BloodworkAtlas({report}:{report?:PrecisionReport}){
    </div>
   </header>
   {report&&<LabPanelReview key={user?.id} report={report} onSelect={select}/>}
+  {report&&<LabRememberedContextHistory sourceKey={JSON.stringify(report.labHistory)}/>}
   <LabExplorer key={user?.id} owner={user?.id||''} report={report} marker={marker} group={group} selection={selection} onSelect={select} onSelectionChange={changeSelection} illustrated/>
   {report&&!entries.length&&<p className="panel-note">Add laboratory results to browse your recorded markers. Missing measurements are not treated as zero.</p>}
   {report&&entries.length>0&&<p className="panel-note">Systems help you browse; they are not diagnoses. Some markers appear in more than one system. Original reports and every recorded result remain below.</p>}
