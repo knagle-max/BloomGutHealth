@@ -52,6 +52,16 @@ test('owner-listed exact source names choose reviewed conceptual styles without 
  assert.equal(JSON.stringify(legacy),original);
 });
 
+test('owner mobile screenshot names use their delivered styles with no reported resolution',()=>{
+ const expected:Record<string,string>={'Abiotrophia defectiva':'C01','Alistipes communis':'C03','Amedibacterium intestinale':'U00','Adlercreutzia sp. 8CFCBH1':'U00','Alistipes dispar':'C03','Anaerobutyricum hallii':'C04','Akkermansia muciniphila':'C03','Alistipes indistinctus':'C03','Anaerostipes hadrus':'C04','Anaerostipes rhamnosivorans':'C04'};
+ const rows=Object.keys(expected).map((bacterialName,index)=>({id:`screenshot-${index}`,bacterialName,taxonomyLevel:null,abundance:null}));
+ for(const row of rows)for(const size of ['thumbnail','portrait'] as const){
+  const visual=organismIllustration(row.bacterialName,size,{reportId:'synthetic-screenshot',observationId:row.id,observations:rows});
+  assert.equal(visual.styleId,expected[row.bacterialName],`${row.bacterialName} ${size}`);
+ }
+ assert.equal(new Set(rows.map(row=>organismIllustration(row.bacterialName,'thumbnail',{reportId:'synthetic-screenshot',observationId:row.id,observations:rows}).src)).size,4);
+});
+
 test('conflicting crosswalk rows fail neutral rather than silently choose a replacement classification',()=>{
  const original=crosswalk.entries.length,name=observations[0].bacterialName;
  try{crosswalk.entries.push({...crosswalk.entries[0],artworkStyleId:'C05'});assert.equal(organismIllustration(name,'thumbnail',source(0)).styleId,'U00');}
