@@ -1001,6 +1001,87 @@
         "Privacy, source withdrawal and correction semantics preserved",
         "Mobile and desktop across 320/390/768/1440, four themes, 200% zoom, screen reader and keyboard review still required"
       ]
+    },
+    {
+      "id": "CHART-B06",
+      "name": "Multi-marker small multiples with independently scaled source-aware measurements",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer source published; Architect, Science, UX and same-SHA browser visual acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B01",
+        "CHART-B02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B06_Multi_Marker_Small_Multiples_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B06_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B06_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B06-contract.json",
+          "tokens/CHART-B06-multiples.css",
+          "svg/CHART-B06-symbols.svg",
+          "fixtures/CHART-B06-FICTIONAL-ONLY.json",
+          "editable/*-master.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B06-implementation.md",
+          "accessibility/CHART-B06-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "two",
+        "three",
+        "four",
+        "incompatible"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 81/81",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 64,
+        "editableMasters": 16,
+        "previewPNGs": 5,
+        "mobileVisualReview": "390px preview inspected; actual date spacing and missing-record labeling confirmed",
+        "desktopVisualReview": "1440px preview inspected",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/Progress.tsx",
+        "other": [
+          "client/src/components/LabTrend.tsx",
+          "LabExplorer",
+          "Response Intelligence after approved source logic"
+        ],
+        "importRule": "Add scoped B06 CSS, no global overrides or flattened production data"
+      },
+      "constraints": [
+        "Source-backed independent scales/units; shared date x-axis only",
+        "Selection by actual timestamp and source observation identity, not index",
+        "Missing records and method-incompatible observations never implicitly connected",
+        "Keep original assay, source date, laboratory, unit and corrections available in exact table",
+        "No causal inference from temporally aligned plots",
+        "All example values fictional",
+        "Actual browser QA must test 320/390/768/1440, 200% zoom, four modes, keyboard, screen reader, forced colors and data withdrawal"
+      ]
     }
   ]
 }
