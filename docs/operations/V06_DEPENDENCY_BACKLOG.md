@@ -10,6 +10,12 @@
 
 ---
 
+## Scientific chart delivery — 25 editable source families, integration as normal coding work (2026-11-15)
+
+[CHART-A01–D05 source-verification and Codex handoff](../visual-assets/SCIENTIFIC_CHARTS_25_VERIFIED_DELIVERY_CODEX_20261115.md) confirms 25 chart-design families in Library and the canonical separate `scientific-chart-asset-registry.json`. A01–A08, B01–B06, C01–C06, D01–D05 actual packages verified; 1,950 non-manifest member hash/byte checks pass. Twelve original manifests contain a self-referential self-hash mismatch; this is metadata QA, not evidence of failed SVG/tokens. No claim of current app import. Codex must map these editable specimens into existing dynamic chart code in bounded slices, emphasizing real Bloodwork chart/drilldown and source safety, then Food, microbiome, genetics and actual Athlete observed data. Never bake synthetic chart values into live plots or rebuild working engines; preserve accessible exact values and fallback. No per-chart owner approval; final agents + owner integrated RC before main.
+
+---
+
 ## Illustrated Bloodwork / Progress Biology convergence — owner correction (2026-11-15)
 
 [Unified illustrated Bloodwork drilldown implementation](../architecture/BLOODWORK_PROGRESS_UNIFIED_ILLUSTRATED_DRILLDOWN_20261115.md) replaces the duplicate Progress Biology dark-green, icon-only bloodwork accordion shown in owner's screenshot. On tapping Bloodwork Atlas image-backed Heart/CBC/Liver/etc category, show canonical existing marker lists and `LabTrend`/education/source details **in that Bloodwork experience** rather than routing to the separate Progress category list. Reuse current `LabExplorer` and `shared/lab-explorer`, preserve data, comparison selection, all source rows/units, old links and keyboard states. Progress Biology retains other non-lab content, with one direct Bloodwork deep link. The current Atlas code maps CBC to Iron art; correct to BVA-0036 when available. Codex implements autonomously, verifies actual previews; status: owner-approved UX correction specification, code not yet verified. No independent pre-development signoff.
