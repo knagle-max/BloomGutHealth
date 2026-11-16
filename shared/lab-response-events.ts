@@ -29,10 +29,12 @@ export function labActivityContext(pair:LabPanelAssessment,records:readonly Expe
   // Same-day ordering and missing collection time/zone remain unresolved. Keep
   // only strictly intervening dates, explicitly labelled calendar context.
   if(date<=from||date>=to||Date.parse(activity.startedAt)>now)continue;
-  const reportedWalk=activity.components?.items.some(part=>part.activityId==='walk'&&part.match==='reported');
+  const parts=activity.components?.items||activity.routineSource?.planSnapshot.components.items;
+  const onlyWalking=!parts||parts.every(part=>part.activityId==='walk');
+  const reportedWalk=!!parts?.length&&parts.every(part=>part.activityId==='walk'&&part.match==='reported');
   const selectedWalk=activity.capture?.activityId==='walk'&&activity.capture.interpretation==='user-selected';
   const confirmedRoutineWalk=activity.routineSource?.confirmedPerformed&&activity.routineSource.planSnapshot.components.items.some(part=>part.activityId==='walk');
-  result.observations.push({id:record.id,date,recordedAt:record.createdAt,kind:reportedWalk||selectedWalk||confirmedRoutineWalk?'walking':'activity',minutes:activity.minutes,timing:'calendar-window-only'});
+  result.observations.push({id:record.id,date,recordedAt:record.createdAt,kind:onlyWalking&&(reportedWalk||selectedWalk||confirmedRoutineWalk)?'walking':'activity',minutes:activity.minutes,timing:'calendar-window-only'});
  }
  result.observations.sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));
  return result;

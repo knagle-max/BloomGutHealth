@@ -24,5 +24,15 @@
   "remaining": [
     "One new full exact-SHA workflow and Render qualification; do not rerun unchanged failed8ee",
     "Independent integrated RC acceptance and remaining v0.6 requirements"
-  ]
+  ],
+  "lazyImageFollowUp": {
+    "run": 43939207302,
+    "sha": "88650616ed4cafdeb3d4c71a350c01c884a791d5",
+    "failure": "Atlas4min timeout after only everyday/start phase; cache isolation did not resolve CI",
+    "unboundedAwait": "Promise.all(image.decode()) waits indefinitely for all offscreen native-lazy thumbnails",
+    "controlledRed": "Held original offscreen image responses until visible: unchanged decode wait remains pending and controlled12sec probe fails; /tmp/bloom-atlas-held-lazy-red.log",
+    "controlledGreen": "Same original responses with per-image user-style scroll and12sec-default complete/naturalWidth readiness passes all16 states and source/media/owner assertions; /tmp/bloom-atlas-held-lazy-green.log",
+    "finalIntegrated": "Current source chronology + same controlled lazy policy passes full atlas, types/source audits/build; /tmp/bloom-lazy-integrated-final.log",
+    "ci": "Controlled lazy policy enabled in existing atlas job; job timeout remains4min; no skips/sleeps/time inflation"
+  }
 }

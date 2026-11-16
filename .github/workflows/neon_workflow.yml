@@ -100,6 +100,7 @@ jobs:
         env:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+          BLOOM_ATLAS_DEFER_OFFSCREEN_IMAGES: "1"
         run: node --import tsx scripts/qa/bloodwork-atlas-journey.mjs
       - name: Whole-panel source review browser regression
         timeout-minutes: 4

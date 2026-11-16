@@ -49,3 +49,8 @@ test('calendar projection uses the selected non-TG marker window without transfe
  const view=labActivityContext(pair('alt'),[activity('walk')],now);
  assert.equal(view.status,'available');assert.equal(view.observations[0].kind,'walking');assert.equal(view.observations[0].timing,'calendar-window-only');
 });
+test('mixed activities never relabel the entire recorded duration as walking',()=>{
+ const row=activity('mixed','2026-09-10',{minutes:30,components:{version:1,items:[{id:randomUUID(),title:'Walk',activityId:'walk',match:'reported',minutes:10,distanceM:null},{id:randomUUID(),title:'Run',activityId:'run',match:'reported',minutes:20,distanceM:null}]}});
+ const view=labActivityContext(pair(),[row],now);
+ assert.equal(view.observations[0].kind,'activity');assert.equal(view.observations[0].minutes,30);
+});

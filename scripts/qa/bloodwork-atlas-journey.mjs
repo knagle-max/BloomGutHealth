@@ -31,6 +31,11 @@ await page.route('**/api/**',async route=>{
  else if(p==='/api/experience/review')json={entries:0,metrics:[],from:'2026-10-01',to:'2026-10-06',next:'No check-ins',note:'Synthetic atlas fixture'};
  await route.fulfill({json});
 });
+const deferOffscreenImages=process.env.BLOOM_ATLAS_DEFER_OFFSCREEN_IMAGES==='1';
+// Controlled browser policy fixture: preserve original network responses, but
+// request offscreen art only after actual user-style scrolling. The ordinary
+// journey must also finish on browsers with a short lazy-load distance.
+if(deferOffscreenImages)await page.route('**/images/**',async route=>{try{await page.waitForFunction(path=>{const image=[...document.images].find(image=>new URL(image.currentSrc||image.src,location.href).pathname===path);if(!image)return false;const box=image.getBoundingClientRect();return box.bottom>0&&box.top<innerHeight;},new URL(route.request().url()).pathname);await route.continue();}catch{await route.abort().catch(()=>{});}});
 try{
  for(mode of ['everyday','athlete']){console.log('ATLAS_PHASE',mode,'start',new Date().toISOString());
   await page.goto('http://127.0.0.1:5286/precision?tab=labs');await page.getByRole('heading',{name:'Browse your bloodwork',exact:true}).waitFor();
@@ -40,7 +45,7 @@ try{
   await writeFile(`${out}/source-${mode}.txt`,await original.innerText());
   if(!baseline){const nav=page.getByRole('navigation',{name:'Bloodwork systems',exact:true}),entries=labExplorerEntries(current());
    assert.equal(await nav.locator('summary.bloodwork-system-link').count(),labCategories.filter(c=>entries.some(e=>e.categories.includes(c.id))).length);
-   const ids=await page.locator('.bloodwork-atlas [data-bloom-asset-id]').evaluateAll(nodes=>Array.from(new Set(nodes.map(node=>node.dataset.bloomAssetId))).sort());assert.deepEqual(ids,['BVA-0009','BVA-0010','BVA-0011','BVA-0012','BVA-0013','BVA-0014','BVA-0029','BVA-0030','BVA-0031','BVA-0036']);assert.notEqual(await page.locator('[data-slot="bloodwork-cbc"] img').getAttribute('src'),await page.locator('[data-slot="bloodwork-iron"] img').getAttribute('src'));assert.equal(await page.locator('.bloodwork-atlas img').count(),10,'Original hero and all supplied category images are rendered; CBC and iron use distinct supplied artwork');await page.locator('.bloodwork-atlas img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));assert.ok(await page.locator('.bloodwork-atlas figure').evaluateAll(nodes=>nodes.every(node=>node.getAttribute('aria-hidden')==='true')),'Decorative art does not duplicate source navigation names');
+   const ids=await page.locator('.bloodwork-atlas [data-bloom-asset-id]').evaluateAll(nodes=>Array.from(new Set(nodes.map(node=>node.dataset.bloomAssetId))).sort());assert.deepEqual(ids,['BVA-0009','BVA-0010','BVA-0011','BVA-0012','BVA-0013','BVA-0014','BVA-0029','BVA-0030','BVA-0031','BVA-0036']);assert.notEqual(await page.locator('[data-slot="bloodwork-cbc"] img').getAttribute('src'),await page.locator('[data-slot="bloodwork-iron"] img').getAttribute('src'));assert.equal(await page.locator('.bloodwork-atlas img').count(),10,'Original hero and all supplied category images are rendered; CBC and iron use distinct supplied artwork');console.log('ATLAS_PHASE',mode,'images-start',new Date().toISOString());for(const image of await page.locator('.bloodwork-atlas img').all()){await image.scrollIntoViewIfNeeded();await page.waitForFunction(image=>image.complete&&image.naturalWidth>0,await image.elementHandle());}console.log('ATLAS_PHASE',mode,'images-ready',new Date().toISOString());if(deferOffscreenImages)await page.unroute('**/images/**');assert.ok(await page.locator('.bloodwork-atlas figure').evaluateAll(nodes=>nodes.every(node=>node.getAttribute('aria-hidden')==='true')),'Decorative art does not duplicate source navigation names');
   }
   for(const width of [320,390,768,1440])for(const theme of ['light','dark']){console.log('ATLAS_PHASE',mode,width,theme,new Date().toISOString());
    await page.setViewportSize({width,height:1000});await setAppTheme(page,theme);

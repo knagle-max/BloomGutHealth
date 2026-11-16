@@ -1,6 +1,6 @@
 {
   "task": "T2b-report-level-source-calendar-activity-context",
-  "status": "ENGINEERING_TESTED_PARTIAL_PENDING_PUBLICATION",
+  "status": "ENGINEERING_TESTED_PARTIAL_PENDING_EXACT_CI_DEPLOY_VERIFICATION",
   "implementation": [
     "Existing owned activity API and selected marker across the current panel; no new storage/endpoint or duplicate chronology",
     "Explicit walking classification only; NLP/title suggestions remain generic activity",
@@ -9,10 +9,11 @@
     "Selected marker canonical editorial guidance/citation and existing activity-history action; source revision, deletion, refresh/error and owner withdrawal replace context"
   ],
   "tests": [
-    "13 focused source chronology/panel-review tests PASS including non-TG source windows",
+    "14 focused chronology/panel tests PASS including non-TG windows and mixed activity duration not relabelled as walking",
     "Actual App browser PASS: ALT/TG marker switching with separate windows, typed walking, unknown duration, separate recordedAt, activity deletion/outage/retry/source-date withdrawal, one current panel and owner isolation",
     "8 Everyday/Athlete \u00d7320/390\u00d7light/dark states and200% text PASS; Athlete390dark inspected",
-    "Final TypeScript/API/capability/Biology audits and production build PASS; no authorization review promotion"
+    "Final TypeScript/API/capability/Biology audits and production build PASS; no authorization review promotion",
+    "Integrated source audits/types/build and controlled offscreen-lazy16-state atlas PASS"
   ],
   "evidence": [
     "/tmp/bloom-response-panel-context.log",
@@ -24,7 +25,7 @@
   ],
   "relatedDefect": "Source refresh regression exposed duplicate Atlas sibling keys and two stale panels; distinct panel/explorer keys resolved actual App RED/GREEN, published separately with chart/CI repair",
   "remaining": [
-    "Push after current88650616 exact CI qualification; hosted/CI qualification for this added view",
+    "One new automatic exact-SHA workflow and Render qualification after publication",
     "This is source chronology only: full Response#15 still needs vetted exposure windows/population evidence, recalled context integration, meaningful conditional contributors/actions and complete acceptance scenarios",
     "No independent design/science/physical accessibility or full RC acceptance claimed"
   ],
