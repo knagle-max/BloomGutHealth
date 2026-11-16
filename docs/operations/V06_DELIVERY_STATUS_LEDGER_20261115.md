@@ -43,6 +43,7 @@ The receipts listed here are **historical evidence**, not live HEAD/CI/Render ve
 
 ---
 
+| **PSA analyte-family source-only display correction** | `ROADMAP / SOURCE CONFIRMED DEFECT`: bare PSA deliberately source-only for subtype safety, but UI misleadingly says analyte unidentified | [PSA source display correction](../architecture/PSA_ANALYTE_FAMILY_RECOGNITION_SOURCE_ONLY_UX_CORRECTION_20261115.md), `shared/lab-source-identity.ts`, `LabExplorer.tsx` | Display PSA family with subtype unconfirmed, preserve original 0.5 ug/L and 2026-08-09 source, review action; no fake total trend; verify negative free/ratio cases, exact CI/Render |
 | **T1 Bloodwork illustrated categories + Progress Biology trend convergence** | `OWNER UX REVISION / ROADMAP`; existing illustrated Atlas and independent Progress LabExplorer verified as distinct surfaces, owner screenshot shows duplicate icon-only list. No merged code or hosted behavior verified here | [Architect integration handoff](../architecture/BLOODWORK_PROGRESS_UNIFIED_ILLUSTRATED_DRILLDOWN_20261115.md), `BloodworkAtlas.tsx`, `LabExplorer.tsx`, `Progress.tsx` | Reuse existing marker charts/education/source controls directly under illustrated Bloodwork category selection; remove only redundant Progress category list, keep non-lab history, preserve old deep links, CBC vs Iron distinct art, verify exact CI/hosted app |
 
 
