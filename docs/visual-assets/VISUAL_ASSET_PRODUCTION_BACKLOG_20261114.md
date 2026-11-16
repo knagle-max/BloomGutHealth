@@ -109,6 +109,12 @@ Registry has **31 active BVA asset requirements**. Designer reports new `BVA-002
 
 ---
 
+## New completed source-delivery — BVA-0036 CBC (2026-11-15)
+
+The current canonical visual registry has **36 active permanent BVA requirements**. The new **BVA-0036 Complete Blood Count** category thumbnail is **not** a duplicate/renaming of **BVA-0013 Iron & Blood Nutrients**: the two Bloodwork categories require different images. [Verified file-and-manifest handoff](BVA_0036_CBC_VERIFIED_DELIVERY_20261115.md) supplies exact shared ZIP file ID, optimized WebP basename, size, image SHA, output URL and integration acceptance; source zip original PNG + optimized WebP were independently inspected and passed all manifest checks. Status **Generated/source verified**, NOT GitHub app integrated or Render visually verified. Codex must import once (skip if already working), preserve existing category/marker functionality, and verify responsive rendered UI before upgrading lifecycle. Existing 28/31/35 counts in dated historical sections are superseded.
+
+---
+
 ## Production definition-of-done for each asset
 `Identified → Briefed → Approved for Production → Generated → Design Reviewed → [Scientific Reviewed or N/A] → Approved → Integrated → Visually Verified`. Separate file existence, rights/prompt review, app placement and rendered tests. An image source mapping in old code does **not** advance lifecycle past an appropriately documented legacy reuse review. Preserve first-party file path/hash, approved prompt version, source/reference restrictions, responsive crop, fallback/alt text, scientific disclaimers, CSS and real screenshot evidence. Missing assets remain reserved in a dimensionally stable attractive placeholder tied to valid IDs. See Codex contract in `docs/architecture/VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md`.
 
