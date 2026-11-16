@@ -18,6 +18,8 @@ await page.clock.install({time:new Date('2026-11-15T05:59:50Z')});
 const request={name:'Synthetic day',days:1,householdServings:1,targets:{calories:2000,protein:100,fiber:30,fiberMaximum:45,sodium:2300,saturatedFat:20},customRecipes:[],nutrientTargets:{},locked:{}};
 const report=buildPrecisionReport([],contextSchema.parse({}),defaultPreferences,null);
 const reads=[],errors=[];let heldUpdate,heldDay,fail=false;
+const updateCaptured=Promise.withResolvers(),dayCaptured=Promise.withResolvers();
+const captured=promise=>new Promise((resolve,reject)=>{const timeout=setTimeout(()=>reject(Error('Expected planner request did not reach the source fixture')),12000);promise.then(value=>{clearTimeout(timeout);resolve(value);},error=>{clearTimeout(timeout);reject(error);});});
 const response=body=>({...buildTodayPlan([],body.hour,defaultPreferences,report,body.plan||request),targetSource:`Synthetic current source ${body.date} hour ${body.hour}`});
 page.on('pageerror',error=>errors.push(error.message));
 await page.route('https://fonts.**/**',route=>route.abort());
@@ -32,8 +34,8 @@ await page.route('**/api/**',async route=>{
  else if(p==='/api/meal-planner/progress')json={weeks:[],adherence:[]};
  else if(p==='/api/precision/today-plan'){
   const body=req.postDataJSON();reads.push(body);
-  if(body.plan&&!heldUpdate){heldUpdate={route,body};return;}
-  if(body.date==='2026-11-15'&&!heldDay){heldDay={route,body};return;}
+  if(body.plan&&!heldUpdate){heldUpdate={route,body};updateCaptured.resolve(heldUpdate);return;}
+  if(body.date==='2026-11-15'&&!heldDay){heldDay={route,body};dayCaptured.resolve(heldDay);return;}
   if(fail)return route.fulfill({status:503,json:{error:'Synthetic current-day source unavailable'}});
   json=response(body);
  }
@@ -48,9 +50,8 @@ try{
   await today.getByText('Review daily targets',{exact:true}).click();
   await today.getByLabel('Energy (kcal)',{exact:true}).fill('2200');
   await today.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();
-  await today.getByText('Checking today’s intake and current context…',{exact:true}).waitFor();assert.ok(heldUpdate);
-  const rollover=page.waitForRequest(req=>new URL(req.url()).pathname==='/api/precision/today-plan'&&req.postDataJSON()?.date==='2026-11-15');
-  await page.clock.runFor(20000);await rollover;
+  await today.getByText('Checking today’s intake and current context…',{exact:true}).waitFor();await captured(updateCaptured.promise);assert.ok(heldUpdate);
+  await page.clock.runFor(20000);await captured(dayCaptured.promise);
   assert.ok(heldDay,'New calendar day requests a fresh source even while previous update is pending');
   assert.equal(heldDay.body.timezoneOffset,360);assert.equal(heldDay.body.hour,0);
   assert.equal(heldDay.body.plan.targets.calories,2200,'Edited targets survive rollover');
