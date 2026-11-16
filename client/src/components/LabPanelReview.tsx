@@ -1,5 +1,6 @@
 import type {PrecisionReport} from '@shared/precision-nutrition';
 import LabRememberedContext from './LabRememberedContext';
+import LabActivityContextReview from './LabActivityContextReview';
 import {hasConfirmedLabIdentity} from '@shared/lab-assay-identity';
 import {recordedLabPanelReview,type LabPanelAssessment} from '@shared/lab-panel-review';
 import {formatRecordedLabNumber,labDateText} from '@shared/lab-history';
@@ -27,6 +28,7 @@ export default function LabPanelReview({report,onSelect}:{report:PrecisionReport
   <h2 id="lab-panel-review-title">Your panel, together</h2>
   <p>{review.originalRecords} recorded results across {review.assessments.length} markers or source labels reviewed.</p>
   <p className="panel-note">Cues use original source bounds, not medical urgency, diagnosis or treatment response.</p>
+  <LabActivityContextReview pairs={review.assessments}/>
   {review.lipidTradeoffs.length>0&&<p className="lab-panel-review-tradeoff">Triglycerides decreased while {review.lipidTradeoffs.map(tradeoff=>review.assessments.find(row=>row.id===tradeoff.higher)!.name).join(' and ')} increased and are outside their latest source upper bounds. The paired reports align; an overall benefit or cause is not established.</p>}
   {review.selected.length===0&&review.otherCues.length===0&&<p>No source-bound review cues were assigned. Missing bounds or unresolved source details can limit this review; this does not mean all results are normal.</p>}
   {review.selected.map(family=><details key={family.id} className="lab-panel-review-family">
