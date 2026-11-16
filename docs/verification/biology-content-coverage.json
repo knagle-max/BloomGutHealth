@@ -28,7 +28,7 @@
     "limited": 197,
     "unresolvedIdentity": 312,
     "sourceFilesScanned": 742,
-    "relevantSourceFiles": 70,
+    "relevantSourceFiles": 71,
     "researchPathways": 7
   },
   "entries": [
@@ -2767,6 +2767,14 @@
       ],
       "unresolvedReason": null,
       "sources": [
+        {
+          "kind": "taxon",
+          "spelling": "Bifidobacterium pseudocatenulatum",
+          "rank": null,
+          "file": "scripts/qa/morphology-artwork-journey.mjs",
+          "line": 14,
+          "method": "static source literal"
+        },
         {
           "kind": "taxon",
           "spelling": "Bifidobacterium pseudocatenulatum",
@@ -25243,6 +25251,12 @@
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
     {
+      "file": "scripts/qa/morphology-artwork-journey.mjs",
+      "line": 13,
+      "field": "bacterialName",
+      "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
+    },
+    {
       "file": "scripts/qa/reported-cohort-journey.mjs",
       "line": 18,
       "field": "bacterialName",
@@ -25416,8 +25430,9 @@
     "scripts/qa/lab-explorer-journey.mjs": "a8fd402d71d5a4c024a04c37e76df3a2b362413d8e8afaf06098d8ea24219bf1",
     "scripts/qa/lab-source-context-journey.mjs": "749adf7c67465cc4223a3f5bfdc0424850b24c8612feecd49a039e04d88641be",
     "scripts/qa/lab-source-review-journey.mjs": "83d6513a1d4d7ae7ebe6dcbd818d0ec77324ad33bd50e335bbd2d7a2900ea593",
-    "scripts/qa/microbial-profile-journey.mjs": "cfb952c1c4e80204dc11769a8eda9b069a64cdc07122ec04b26ba2a59144feca",
+    "scripts/qa/microbial-profile-journey.mjs": "ede4795cae2e53944047b044e872f238989c1993d3bd019e922f3edf58bbb184",
     "scripts/qa/microbiome-report-delete-journey.mjs": "1f80c2d11ae42a0780365a25f756254fd42f2503b34db25d8db8ae1e2d5dd370",
+    "scripts/qa/morphology-artwork-journey.mjs": "b91d7c902ab6b65b2b971aab4d32cffb4ac8e3daf9e03cfc4aae1bba6f2f49bf",
     "scripts/qa/report-date-provenance-journey.mjs": "60c80b0c348127111be3efe20e1bcc9eb10c6911f00e96cd41072b868591a9a4",
     "scripts/qa/reported-cohort-journey.mjs": "f5620b9d4d7ecbf415cb055bf8f481d5b457a7f0b6703125b4836b5ed5b73199",
     "scripts/qa/synthetic-molecular-http.mjs": "dfedbb5f9069b1ddee0bde7ddd4bb1e51fe4f52678530ea2b2ef7e8a23eed79f",
@@ -25427,7 +25442,7 @@
     "shared/lab-paste.ts": "bac3247011efe1af98699fe5a621c72fe0bd042097b3aa18e4eca51d21f6bbfb",
     "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
     "shared/precision-nutrition.ts": "3fd8f3ded08f4e36af0fda787aec1e5c2a0efecbe2004af52293fd291cbc424b",
-    "shared/reported-taxa.ts": "aa5789ab4f24b8740676a53ed0069150ee70aeab4971525f602db412298b2a52",
+    "shared/reported-taxa.ts": "c5b88f64766609a14631ef97461c332702c147caad780bdb78c2ae0b4ca2bf55",
     "shared/schema.ts": "3a5a433f8354427676c872bbefe79f4528de92fd63f8d26ea470a80cc0c678d1",
     "tests/account-erasure.test.ts": "c58aff3d9c8cee02f8cbceed84a11d6e0033311f45968ffcdf4632d60976094e",
     "tests/account-export.test.ts": "191511ad40484f0cf21aad1d281a4c11b3da2dfa3e3c35f0128e022831554386",

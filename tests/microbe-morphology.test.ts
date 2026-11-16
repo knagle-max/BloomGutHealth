@@ -21,12 +21,12 @@ test('94 exact source observations retain original data and share all eleven thu
  }
  assert.deepEqual(groups,{Bacterium:82,Eukaryote:5,Virus:7});assert.equal(styles.size,11);assert.equal(JSON.stringify(sample),original);
 });
-test('absent, wrong report/ordinal, changed case, strain/rank and ambiguous source identities use U00 without alias or morphology inference',()=>{
+test('absent, foreign report scope, changed full name, group conflict and ambiguous identities stay neutral without taxonomy inference',()=>{
  const name=observations[0].bacterialName,ctx=source(0);
  const unknown=(label:string|undefined,context?:OrganismArtworkSource)=>assert.equal(organismIllustration(label,'portrait',context).styleId,'U00');
  unknown(name);unknown(undefined,ctx);unknown('Unknown source organism',ctx);unknown(name.toUpperCase(),ctx);unknown(name+' strain synthetic',ctx);
- unknown(name,{...ctx,reportId:'other-report'});unknown(name,{...ctx,observationId:'other-observation'});
- for(const row of [{...observations[0],reportedOrganismSourceId:`reported-organism:${sample.id}:1`},{...observations[0],reportedNotes:'Provider group: Virus'},{...observations[0],taxonomyLevel:'genus'},{...observations[0],taxonomyLevel:'strain'},{...observations[0],taxonomyLevel:'family'},{...observations[0],reportedOrganismSourceId:undefined}])unknown(name,{...ctx,observations:[row,...observations.slice(1)]});
+ unknown(name,{...ctx,reportId:'other-report',observations:observations.map(row=>({...row,sampleId:sample.id}))});unknown(name,{...ctx,observationId:'other-observation'});
+ for(const row of [{...observations[0],reportedNotes:'Provider group: Virus'},{...observations[0],reportedGroup:'Virus'},{...observations[0],reportedGroup:'Bacterium',reportedNotes:'Provider group: Virus'},{...observations[0],sampleId:'foreign-report'}])unknown(name,{...ctx,observations:[row,...observations.slice(1)]});
  unknown(name,{...ctx,observations:[...observations,{...observations[0],id:'duplicate-source-name'}]});
  unknown(name,{...ctx,observations:[...observations,observations[0]]});
 });
@@ -43,4 +43,17 @@ test('all22 morphology files are normally public under the existing passive reso
  const app=express();app.use(securityHeaders);app.use(express.static('client/public'));const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));
  try{const port=(server.address() as {port:number}).port;for(const style of crosswalk.styles)for(const size of ['thumbnail','portrait'] as const){const response=await fetch(`http://127.0.0.1:${port}`+style[size].publicPath);assert.equal(response.status,200);assert.match(response.headers.get('content-type')!,/^image\/webp/);assert.equal(response.headers.get('set-cookie'),null);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),style[size].sha256);}}
  finally{await new Promise<void>(resolve=>server.close(()=>resolve()));}
+});
+test('owner-listed exact source names choose reviewed conceptual styles without fixture ordinals or a species-rank gate',()=>{
+ const expected:Record<string,string>={'Bacteroides vulgatus ATCC 8482':'C03','Bifidobacterium pseudocatenulatum':'C05','Blautia sp. SC05B48':'C02','Butyricimonas virosa':'C03','Bacteroides caccae':'C03','Bacteroides dorei CL03T12C01':'C03','Bacteroides heparinolyticus':'C03','Bacteroides sp. A1C1':'C03','Bacteroides sp. HF-162':'C03'};
+ const legacy=Object.keys(expected).map((bacterialName,index)=>({id:'legacy-'+index,sampleId:'legacy-report',bacterialName,taxonomyLevel:index%2?'strain':null,abundance:index===0?0:null}));
+ const original=JSON.stringify(legacy);
+ for(const rows of [legacy,[...legacy].reverse(),legacy.map((row,index)=>({...row,reportedOrganismSourceId:'unrelated-provider-index:'+index}))])for(const row of rows){const ctx={reportId:'legacy-report',observationId:row.id,observations:rows},thumb=organismIllustration(row.bacterialName,'thumbnail',ctx),portrait=organismIllustration(row.bacterialName,'portrait',ctx);assert.equal(thumb.styleId,expected[row.bacterialName],row.bacterialName);assert.equal(portrait.styleId,thumb.styleId);}
+ assert.equal(JSON.stringify(legacy),original);
+});
+
+test('conflicting crosswalk rows fail neutral rather than silently choose a replacement classification',()=>{
+ const original=crosswalk.entries.length,name=observations[0].bacterialName;
+ try{crosswalk.entries.push({...crosswalk.entries[0],artworkStyleId:'C05'});assert.equal(organismIllustration(name,'thumbnail',source(0)).styleId,'U00');}
+ finally{crosswalk.entries.splice(original);}
 });

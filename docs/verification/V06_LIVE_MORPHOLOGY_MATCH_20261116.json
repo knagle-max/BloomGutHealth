@@ -1,0 +1,31 @@
+{
+  "task": "T1e-live-name-match-REVISED",
+  "status": "IMPLEMENTED_UNVERIFIED",
+  "engineeringValidation": "PASS",
+  "authority": "docs/architecture/MICROBIOME_MORPHOLOGY_LIVE_SOURCE_MATCH_FIX_20261116.md",
+  "revises": "V06_MORPHOLOGY_ARTWORK_20261116.json",
+  "rootReproducer": "A unique approved full name in a composition-only/reordered row selected U00 because fixture ordinal/source-ID format and species-only rank were required. Actual Tester1 failed condition has not been measured.",
+  "change": [
+    "Existing resolver selects the one approved exact full source-name mapping in the current report",
+    "No ordinal/provider-ID format/rank gate for conceptual illustration; actual source rank stays unchanged",
+    "Unique observation/current report scope, duplicate-name/crosswalk conflict and explicit provider-group safeguards retained",
+    "Same style in thumbnail and portrait, unchanged22 original image bytes/URLs/disclosures/fallback",
+    "Canonical source mapping and master registry metadata reflect revised runtime policy; no data migration or source-value changes"
+  ],
+  "tests": [
+    "RED owner-listed composition row expectedC03 but selectedU00",
+    "12 focused morphology/original artwork/public HTTP tests PASS",
+    "94 structured+94 reordered legacy/no-ordinal records,11 style pairs,explicit C03/C05/C02 owner-name examples,report switch with reused rowID PASS",
+    "22 public hash/MIME responses,36/180px frames,16 theme/mode/width states+200%,no referrer,unchanged source0/unknown,broken/offline fallback and other-owner withdrawal PASS",
+    "Existing20 quantified+20 canonical-parser profile source/focus/research/zoom regression PASS",
+    "TypeScript/production build/all original media source+built fingerprints PASS"
+  ],
+  "actualPrivateCoverage": {
+    "status": "BLOCKED_USER_INPUT",
+    "reason": "Automatic approval review rejected a read-only scoped aggregate over Tester1 microbiome records because private health-record inspection was not authorized. No private record names/measurements were retrieved; no workaround or retry performed.",
+    "approvalNeeded": "Explicit authorization for account-scoped read-only aggregate source-coverage verification; code/synthetic testing/public artwork remain unblocked."
+  },
+  "hosted": "Fix publication and exact hosted source verification pending. Prior2b667c4 PSA/Other/artwork deployment observed LIVE at2026-11-16T06:26:38Z; prior checkout delay resolved.",
+  "scopeLimit": "Not DONE_FOR_SCOPE. Actual authenticated owner-source screenshot/coverage and independent RC acceptance remain unverified.",
+  "screenshots": "/tmp/bloom-live-morphology/"
+}

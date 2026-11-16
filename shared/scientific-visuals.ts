@@ -24,21 +24,18 @@ export function legacyOrganismIllustration(sourceName:string|undefined,size:'thu
 }
 
 export type OrganismArtworkSource={reportId:string;observationId:string;observations:readonly ReportedTaxon[]};
-/** Match only an explicit, unique current report observation and its original
- * ordinal/name. This selects conceptual artwork; it never identifies a taxon. */
+/** An exact unique name selects reviewed conceptual art within the current
+ * report. Provider ordinals and taxonomic rank do not verify measured shape. */
 export function organismIllustration(sourceName:string|undefined,size:'thumbnail'|'portrait',source?:OrganismArtworkSource){
  let styleId='U00';
  if(source?.reportId&&source.observationId&&sourceName){
   const matches=source.observations.filter(row=>row.id===source.observationId);
   const row=matches.length===1?matches[0]:undefined;
-  const prefix=`reported-organism:${source.reportId}:`;
-  const suffix=row?.reportedOrganismSourceId?.startsWith(prefix)?row.reportedOrganismSourceId.slice(prefix.length):'';
-  const ordinal=/^(0|[1-9][0-9]*)$/.test(suffix)?Number(suffix)+1:null;
   const uniqueName=source.observations.filter(value=>value.bacterialName===sourceName).length===1;
-  const supportedRank=!row?.taxonomyLevel||row.taxonomyLevel==='species';
-  const entries=morphology.entries.filter(entry=>entry.sourceOrdinal===ordinal&&entry.reportedName===sourceName);
-  const reportedGroup=row?.reportedNotes?.match(/^Provider group: ([^;]+)(?:;|$)/)?.[1];
-  if(row?.bacterialName===sourceName&&uniqueName&&supportedRank&&entries.length===1&&(!reportedGroup||reportedGroup===entries[0].reportedGroup))styleId=entries[0].artworkStyleId;
+  const entries=morphology.entries.filter(entry=>entry.reportedName===sourceName);
+  const reportedGroups=[row?.reportedGroup,row?.reportedNotes?.match(/^Provider group: ([^;]+)(?:;|$)/)?.[1]].filter((value):value is string=>!!value).map(value=>value.trim().toLowerCase());
+  const currentScope=row?.sampleId===undefined||row.sampleId===source.reportId;
+  if(row?.bacterialName===sourceName&&currentScope&&uniqueName&&entries.length===1&&reportedGroups.every(group=>group===entries[0].reportedGroup.toLowerCase()))styleId=entries[0].artworkStyleId;
  }
  const style=morphology.styles.find(value=>value.id===styleId)||morphology.styles.find(value=>value.id==='U00')!;
  const asset=style[size];

@@ -1067,7 +1067,8 @@
       "LLM at render-time",
       "assuming same species across reports",
       "inferring morphology from quantity or taxonomic family"
-    ]
+    ],
+    "runtimeConceptualSelection": "Exact unique full reportedName in the current authorized report and one unique approved crosswalk entry. Source ordinal, provider ID format and taxonomy rank are not illustration gates. Explicit provider-group and foreign sample-scope conflicts stay neutral. This does not verify measured taxon identity or shape."
   },
   "disclosure": {
     "group": "Illustration of a broad microbial form, not an image of this organism or strain.",
