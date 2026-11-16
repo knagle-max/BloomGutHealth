@@ -1,0 +1,203 @@
+{
+  "assetId": "CHART-A02",
+  "schemaVersion": "1.0.0",
+  "title": "Observation marker kit",
+  "designStatus": "Designer deliverable; pending Architect, UX, Science and deployed screen approval",
+  "dependsOn": "CHART-A01",
+  "themes": [
+    "everyday-light",
+    "everyday-dark",
+    "athlete-light",
+    "athlete-dark"
+  ],
+  "shapes": [
+    "circle",
+    "ring",
+    "precision-dot"
+  ],
+  "states": [
+    "ordinary",
+    "hover",
+    "selected",
+    "keyboard-focus",
+    "single-point",
+    "partial",
+    "provisional",
+    "incompatible",
+    "source-unknown",
+    "source-withdrawn"
+  ],
+  "fileCount": 34,
+  "files": [
+    {
+      "file": "editable/CHART-A02-four-theme-specimen.svg",
+      "bytes": 37040,
+      "sha256": "558e6c007cb95661e2ccb168730ca19e88bbf3211dfcfa3eaa7823ad3142d198"
+    },
+    {
+      "file": "editable/CHART-A02-symbols.svg",
+      "bytes": 9707,
+      "sha256": "29c060fa08c72dddb6716b845cf6b73fc8f2625b9ee947f09f4ca7c4c489a2fd"
+    },
+    {
+      "file": "handoff/CHART-A02-implementation.md",
+      "bytes": 4108,
+      "sha256": "2d10251f7c8db81c4099f4be115383264855b650cf5ce09acaddb201bcbdd586"
+    },
+    {
+      "file": "svg/markers/marker-circle-hover.svg",
+      "bytes": 351,
+      "sha256": "e020b4468e9a51daf8c41f629ebec5ab8a1b4f105a2bed967899cdb91474959c"
+    },
+    {
+      "file": "svg/markers/marker-circle-incompatible.svg",
+      "bytes": 426,
+      "sha256": "3eb4d55619194be8dc7063f87d9b312f867467e53ba4be93b13f93bea0de6ace"
+    },
+    {
+      "file": "svg/markers/marker-circle-keyboard-focus.svg",
+      "bytes": 381,
+      "sha256": "703cde4871be78706366c34330c36e04085da571178514150e2b5ecfb0a24641"
+    },
+    {
+      "file": "svg/markers/marker-circle-ordinary.svg",
+      "bytes": 265,
+      "sha256": "25d04e052d89c5aeab43ae0867f70d67971761beb3df2dd12596b09573eb07b2"
+    },
+    {
+      "file": "svg/markers/marker-circle-partial.svg",
+      "bytes": 466,
+      "sha256": "1093045378fe5e1d909f97f568d263beb04500aecc7ea3cc6cedf542e39537ba"
+    },
+    {
+      "file": "svg/markers/marker-circle-provisional.svg",
+      "bytes": 465,
+      "sha256": "af641ae16d689e678bacf9fdd8aa4cd4f2212a87aabf9ac2ea00953d49d79684"
+    },
+    {
+      "file": "svg/markers/marker-circle-selected.svg",
+      "bytes": 364,
+      "sha256": "fc416097d96c0943ee5107cb656997c12bc62e5e93656dfb3a8deb62b16cf884"
+    },
+    {
+      "file": "svg/markers/marker-circle-single-point.svg",
+      "bytes": 377,
+      "sha256": "be53af8c3ee042f2d7356109f30bc43f4ea239cb53bc695b47df0937b8c97f06"
+    },
+    {
+      "file": "svg/markers/marker-circle-source-unknown.svg",
+      "bytes": 369,
+      "sha256": "43314346055d69e7177dc121c1b9e06f0a759c273721f454a497ee4fd94233da"
+    },
+    {
+      "file": "svg/markers/marker-circle-source-withdrawn.svg",
+      "bytes": 459,
+      "sha256": "74fdb8cbb903008afad65b9beb11dd9535113b71a4c62352dcf72c3b2844c5ab"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-hover.svg",
+      "bytes": 405,
+      "sha256": "c9985085e4493d23aa1957dfd668b3397479eb759adde6b523654d4184ce329d"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-incompatible.svg",
+      "bytes": 480,
+      "sha256": "da947221738ae136e213333cb5d7330bb576182d64c284223946fde901b44dc4"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-keyboard-focus.svg",
+      "bytes": 435,
+      "sha256": "a8f36363f0d44229f64f7d910f2d1b1f2e4fa201dcc53c365953c7e3e3cf3b08"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-ordinary.svg",
+      "bytes": 319,
+      "sha256": "546a5d42efdc4505e00c8b3ff829683ae39db92372f5a2f00d0aa6776673a217"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-partial.svg",
+      "bytes": 520,
+      "sha256": "1bedc1be16059105f52702c92f07b7789d2ce8f66b7cde8b8fe84f68e1258f56"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-provisional.svg",
+      "bytes": 519,
+      "sha256": "61afbf84f92b37eaeaee9270b46ea150118cb056e362332e2c2b158ecedd3a49"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-selected.svg",
+      "bytes": 418,
+      "sha256": "9b906747b3f0fb07958c7de030b7154f670ca421d37f57971a73b2bd5b44e03b"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-single-point.svg",
+      "bytes": 431,
+      "sha256": "2d20a4f3062871658e3cd9119943841d590f6cee149100525d8ea993ecec5df7"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-source-unknown.svg",
+      "bytes": 423,
+      "sha256": "442d947d5d5ce8d4c460bfe662c6a9342891dd65d5c53eaa012d31c3674ad29b"
+    },
+    {
+      "file": "svg/markers/marker-precision-dot-source-withdrawn.svg",
+      "bytes": 513,
+      "sha256": "3ecd2145af60f94e8f5a4abbff1c02ea3e897c9129b65c67c71132b5340a6231"
+    },
+    {
+      "file": "svg/markers/marker-ring-hover.svg",
+      "bytes": 351,
+      "sha256": "ea8cafe26f724a5c81857eb82f7371fedb71c2488a30f00e490bfa90a693555e"
+    },
+    {
+      "file": "svg/markers/marker-ring-incompatible.svg",
+      "bytes": 426,
+      "sha256": "2c63cd1c5af5b9ef37630706b0af5e0703d3094b6bd36c24a334fc15ea07837a"
+    },
+    {
+      "file": "svg/markers/marker-ring-keyboard-focus.svg",
+      "bytes": 381,
+      "sha256": "7ee44119e90f132ecc19b2087faf95c910c1409e7d745d899ae86ae14807d7d9"
+    },
+    {
+      "file": "svg/markers/marker-ring-ordinary.svg",
+      "bytes": 265,
+      "sha256": "680affd68824b039a9b9ec54123ff4e78466b64247ba4ef5489e690491c3a107"
+    },
+    {
+      "file": "svg/markers/marker-ring-partial.svg",
+      "bytes": 466,
+      "sha256": "a8ac6396a0626e41c4cc8d94b0c56e2975bcfd22796dd9b7c4723c74a9cb0ab4"
+    },
+    {
+      "file": "svg/markers/marker-ring-provisional.svg",
+      "bytes": 465,
+      "sha256": "3fd5c156b342e2dfc80c8430f42f551ed28f3db1102176a51a54dc493e37bab9"
+    },
+    {
+      "file": "svg/markers/marker-ring-selected.svg",
+      "bytes": 364,
+      "sha256": "6f573615a0ed53600d2d65c923cc3092eb8032ce08d5252cc1a27f3036e4236b"
+    },
+    {
+      "file": "svg/markers/marker-ring-single-point.svg",
+      "bytes": 377,
+      "sha256": "d7f7d4f64967691e78b3136404968143ae3d327cd592efedd98ae82ce8498940"
+    },
+    {
+      "file": "svg/markers/marker-ring-source-unknown.svg",
+      "bytes": 369,
+      "sha256": "cde24381caad14d82bd75b0504582c9a1b9bbe666ee3770c56f101bb36a90da3"
+    },
+    {
+      "file": "svg/markers/marker-ring-source-withdrawn.svg",
+      "bytes": 459,
+      "sha256": "1bf7bc816d57ef9be38e9408fa401fec1c6aef97de93147cc59d0066717920ad"
+    },
+    {
+      "file": "tokens/CHART-A02-markers.css",
+      "bytes": 2163,
+      "sha256": "81128bcd5ffda36fc8eee63add267976027710dde58cfc99096c08fadd2063b0"
+    }
+  ]
+}

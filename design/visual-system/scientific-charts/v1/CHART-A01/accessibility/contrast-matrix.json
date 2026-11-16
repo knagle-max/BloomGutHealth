@@ -1,0 +1,402 @@
+{
+  "calculation": "WCAG 2.x relative luminance contrast; compared to solid chart surface, no photograph behind text",
+  "passCondition": "4.5:1 normal text; 3:1 meaningful strokes/focus",
+  "checks": [
+    {
+      "theme": "everyday-light",
+      "role": "ink",
+      "foreground": "#173E32",
+      "background": "#FFFEFA",
+      "ratio": 11.75,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "inkMuted",
+      "foreground": "#52685C",
+      "background": "#FFFEFA",
+      "ratio": 5.96,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "axis",
+      "foreground": "#52685C",
+      "background": "#FFFEFA",
+      "ratio": 5.96,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "seriesPrimary",
+      "foreground": "#246B50",
+      "background": "#FFFEFA",
+      "ratio": 6.32,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "seriesSecondary",
+      "foreground": "#70548E",
+      "background": "#FFFEFA",
+      "ratio": 6.22,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "seriesTertiary",
+      "foreground": "#87532C",
+      "background": "#FFFEFA",
+      "ratio": 6.3,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "categorical4",
+      "foreground": "#386685",
+      "background": "#FFFEFA",
+      "ratio": 6.11,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "categorical5",
+      "foreground": "#805B63",
+      "background": "#FFFEFA",
+      "ratio": 5.79,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "focus",
+      "foreground": "#14543B",
+      "background": "#FFFEFA",
+      "ratio": 8.81,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "referenceLine",
+      "foreground": "#246B50",
+      "background": "#FFFEFA",
+      "ratio": 6.32,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-light",
+      "role": "threshold",
+      "foreground": "#87532C",
+      "background": "#FFFEFA",
+      "ratio": 6.3,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "ink",
+      "foreground": "#EFF6EE",
+      "background": "#22382E",
+      "ratio": 11.41,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "inkMuted",
+      "foreground": "#CADACF",
+      "background": "#22382E",
+      "ratio": 8.63,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "axis",
+      "foreground": "#CADACF",
+      "background": "#22382E",
+      "ratio": 8.63,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "seriesPrimary",
+      "foreground": "#A6DEBA",
+      "background": "#22382E",
+      "ratio": 8.24,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "seriesSecondary",
+      "foreground": "#D6C2EF",
+      "background": "#22382E",
+      "ratio": 7.66,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "seriesTertiary",
+      "foreground": "#E8BE99",
+      "background": "#22382E",
+      "ratio": 7.33,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "categorical4",
+      "foreground": "#9BC9EA",
+      "background": "#22382E",
+      "ratio": 7.13,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "categorical5",
+      "foreground": "#F0B7C6",
+      "background": "#22382E",
+      "ratio": 7.35,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "focus",
+      "foreground": "#A6DEBA",
+      "background": "#22382E",
+      "ratio": 8.24,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "referenceLine",
+      "foreground": "#A6DEBA",
+      "background": "#22382E",
+      "ratio": 8.24,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "everyday-dark",
+      "role": "threshold",
+      "foreground": "#E8BE99",
+      "background": "#22382E",
+      "ratio": 7.33,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "ink",
+      "foreground": "#173E32",
+      "background": "#FFFFFF",
+      "ratio": 11.85,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "inkMuted",
+      "foreground": "#52685C",
+      "background": "#FFFFFF",
+      "ratio": 6.01,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "axis",
+      "foreground": "#52685C",
+      "background": "#FFFFFF",
+      "ratio": 6.01,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "seriesPrimary",
+      "foreground": "#2264A6",
+      "background": "#FFFFFF",
+      "ratio": 6.1,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "seriesSecondary",
+      "foreground": "#246B50",
+      "background": "#FFFFFF",
+      "ratio": 6.38,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "seriesTertiary",
+      "foreground": "#70548E",
+      "background": "#FFFFFF",
+      "ratio": 6.27,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "categorical4",
+      "foreground": "#87532C",
+      "background": "#FFFFFF",
+      "ratio": 6.36,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "categorical5",
+      "foreground": "#805B63",
+      "background": "#FFFFFF",
+      "ratio": 5.84,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "focus",
+      "foreground": "#2264A6",
+      "background": "#FFFFFF",
+      "ratio": 6.1,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "referenceLine",
+      "foreground": "#2264A6",
+      "background": "#FFFFFF",
+      "ratio": 6.1,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-light",
+      "role": "threshold",
+      "foreground": "#87532C",
+      "background": "#FFFFFF",
+      "ratio": 6.36,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "ink",
+      "foreground": "#F1F6FF",
+      "background": "#182B45",
+      "ratio": 13.17,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "inkMuted",
+      "foreground": "#C3D4E9",
+      "background": "#182B45",
+      "ratio": 9.46,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "axis",
+      "foreground": "#C3D4E9",
+      "background": "#182B45",
+      "ratio": 9.46,
+      "required": 4.5,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "seriesPrimary",
+      "foreground": "#81BEFF",
+      "background": "#182B45",
+      "ratio": 7.31,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "seriesSecondary",
+      "foreground": "#A6DEBA",
+      "background": "#182B45",
+      "ratio": 9.37,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "seriesTertiary",
+      "foreground": "#E1BDF4",
+      "background": "#182B45",
+      "ratio": 8.7,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "categorical4",
+      "foreground": "#F0C69B",
+      "background": "#182B45",
+      "ratio": 9.02,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "categorical5",
+      "foreground": "#F2B4C9",
+      "background": "#182B45",
+      "ratio": 8.26,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "focus",
+      "foreground": "#81BEFF",
+      "background": "#182B45",
+      "ratio": 7.31,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "referenceLine",
+      "foreground": "#81BEFF",
+      "background": "#182B45",
+      "ratio": 7.31,
+      "required": 3,
+      "passContrast": true
+    },
+    {
+      "theme": "athlete-dark",
+      "role": "threshold",
+      "foreground": "#F0C69B",
+      "background": "#182B45",
+      "ratio": 9.02,
+      "required": 3,
+      "passContrast": true
+    }
+  ]
+}

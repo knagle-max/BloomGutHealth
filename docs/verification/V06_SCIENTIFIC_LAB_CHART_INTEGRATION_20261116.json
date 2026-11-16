@@ -1,0 +1,48 @@
+{
+  "task": "T1-CHART-A01-B01-B02-B03",
+  "status": "ENGINEERING_TESTED_INTEGRATED_PENDING_PUBLICATION",
+  "source": "docs/visual-assets/SCIENTIFIC_CHARTS_25_VERIFIED_DELIVERY_CODEX_20261115.md",
+  "assets": {
+    "path": "design/visual-system/scientific-charts/v1",
+    "import": "Selected original editable/token/accessibility/handoff sources; static specimen outputs remain Library references",
+    "verification": "561 non-manifest members checked across11 extracted packages; originals unchanged;3 self-manifest hash anomalies recorded, no runtime data from specimens",
+    "selectedOriginalFilesVerified": 56
+  },
+  "implementation": [
+    "A01 opt-in tokens in existing premium CSS layer; all4 actual themes; existing typography/global tokens preserved",
+    "Existing LabTrend SVG only, actual chronological positions/stable record IDs/exact-value table/source drilldown unchanged",
+    "B02 source interval solid edges, one-sided dashed source bound, dotted published comparisons and long-dashed decision limits; numerical labels and applicability remain source-derived",
+    "B03 original first/second values/timestamps/lab/method paired; incompatible selected pair shows original values and reasons without numeric difference",
+    "44px point targets, selected double ring, single-point dotted halo, keyboard focus, forced-color and reduced-motion adapters"
+  ],
+  "tests": [
+    "11 lab history/comparability/explorer unit tests PASS",
+    "TypeScript PASS before final browser validation",
+    "Production build and original source/built-media verification PASS",
+    "Pinned playwright-core1.57 actual App journey PASS:92labels\u00d76 records, source intervals/shared/selected/one-sided/missing, provider boundaries, source correction/removal/owner withdrawal,320/390/768/1440 and200% zoom, keyboard, forced-colors/reduced-motion",
+    "8 actual chart screenshots Everyday/Athlete \u00d7320/390\u00d7light/dark; Athlete390dark visually inspected",
+    "Final exact-source fail-fast TypeScript/API/capability/Biology audits,11 focused unit tests and production build PASS",
+    "Final focused two-result browser PASS: original2/5U/L gives+3 only with matching context; unknown method removes selected and aggregate numeric difference, preserves both original cards and source reasons;320/390 light/dark screenshots,390dark inspected",
+    "Dedicated actual App1/2/4/12 scenario matrix PASS: numeric irregular date spacing including140-day compatible gap, zero/outlier scale, no line for single point, exact source inspection,12-record mobile4themes/200%; added to CI",
+    "Integrated with mounted context8eea1062: final fail-fast source audits/TypeScript,1-2-4-12 App scenarios, original-pair and unknown-method browser checks,11 unit tests and production build PASS"
+  ],
+  "remaining": [
+    "Remaining specialised unsupported-state variants use canonical source state only; independently reviewed visual/scientific/accessibility acceptance remains at integrated RC",
+    "Registry and delivery status update after verified screenshots",
+    "Review branch publish and exact hosted/CI qualification",
+    "Independent integrated RC design/science/accessibility review; no physical VoiceOver claim"
+  ],
+  "privacy": "Only synthetic source fixtures. No private account access or source writes.",
+  "evidence": [
+    "/tmp/bloom-chart-final.log",
+    "/tmp/bloom-chart-comparison-final.log",
+    "/tmp/bloom-chart-publish-tests.log",
+    "/tmp/bloom-chart-publish-audits.log",
+    "/tmp/bloom-chart-publish-build.log",
+    "/tmp/bloom-chart-scenarios.log",
+    "/tmp/bloom-chart-integrated-scenarios.log",
+    "/tmp/bloom-chart-integrated-comparison.log",
+    "/tmp/bloom-chart-integrated-tests.log",
+    "/tmp/bloom-chart-integrated-build.log"
+  ]
+}

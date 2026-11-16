@@ -1,0 +1,400 @@
+{
+  "assetId": "CHART-B01",
+  "date": "2026-11-15",
+  "status": "generated-and-packaged-not-integrated",
+  "source": "Bloom Scientific Data Visualization Designer Asset Handoff 2026-11-15",
+  "assetCount": 64,
+  "themes": [
+    "everyday-light",
+    "everyday-dark",
+    "athlete-light",
+    "athlete-dark"
+  ],
+  "packageFiles": [
+    {
+      "file": "README.md",
+      "sha256": "62beaa7d35693a45451841570af0ed6bc7252555bef4f231c898242e7fe4ca38",
+      "bytes": 1874
+    },
+    {
+      "file": "accessibility/CHART-B01-review-matrix.md",
+      "sha256": "d47977951f619846b428b3d1568bcf1eec4bcc04f70ca58affa873de0a2b1436",
+      "bytes": 834
+    },
+    {
+      "file": "editable/CHART-B01-athlete-dark-1440-master.svg",
+      "sha256": "ae54f736bdfede2e0f5cc8c92350ece7d8434fddd93fb07ec32d221ef3a93d90",
+      "bytes": 7879
+    },
+    {
+      "file": "editable/CHART-B01-athlete-dark-390-master.svg",
+      "sha256": "f28a3328d4a44add58763045010bddb1fecce185fe08920671e8143ed76b16dd",
+      "bytes": 6535
+    },
+    {
+      "file": "editable/CHART-B01-athlete-light-1440-master.svg",
+      "sha256": "d0202bd3980e12b0b6c9a39f34e3b643a8b428e5f83be46aee2654b70b77781f",
+      "bytes": 7880
+    },
+    {
+      "file": "editable/CHART-B01-athlete-light-390-master.svg",
+      "sha256": "cc3a7c67c8007a5bd978023ee210678589b42e08b694c7baa40b5842c686fa24",
+      "bytes": 6536
+    },
+    {
+      "file": "editable/CHART-B01-everyday-dark-1440-master.svg",
+      "sha256": "abbb623a02c76f41fc29782d5d819149604946afa84ae5b982cd4f13caa45a0b",
+      "bytes": 7880
+    },
+    {
+      "file": "editable/CHART-B01-everyday-dark-390-master.svg",
+      "sha256": "1d97fefefa40fc7ffe3e079c2ca837a1cafd562fb42a39975c0abb7b7eb2972a",
+      "bytes": 6536
+    },
+    {
+      "file": "editable/CHART-B01-everyday-light-1440-master.svg",
+      "sha256": "a097347f3c711fa8f8ce241b41746af2c4c3fcf364728b1f566da0c04cc29161",
+      "bytes": 7881
+    },
+    {
+      "file": "editable/CHART-B01-everyday-light-390-master.svg",
+      "sha256": "417c9f94b5e8dea07b64d944378d7311938f9824cc4b59f4ce953a790bdb70bb",
+      "bytes": 6537
+    },
+    {
+      "file": "handoff/CHART-B01-implementation.md",
+      "sha256": "72adbd8dd37d53f5df3386aae6e462496382d4abe556ec7f09db86326e38df59",
+      "bytes": 2789
+    },
+    {
+      "file": "manifest.json",
+      "sha256": "4dbe8c193d298ba063f2b31d7c330a5c0168480a1301d2f3f8583cd92727ef43",
+      "bytes": 14288
+    },
+    {
+      "file": "previews/B01-desktop-athlete-dark.png",
+      "sha256": "5969ccaa82d5a79580cff7a1716b9ea6c4c20626c3c786fc26b942a4c045194f",
+      "bytes": 53990
+    },
+    {
+      "file": "previews/B01-desktop-athlete-light.png",
+      "sha256": "d0785d11aa4880953228b759eddaaa7b75a627c2b2bab5e3588d51c45e5567e5",
+      "bytes": 60749
+    },
+    {
+      "file": "previews/B01-desktop-everyday-light.png",
+      "sha256": "c98fcd5cb45830a9be3bb9669130e98f71e9ebe6965fd4dac2e239f8991d6e2a",
+      "bytes": 54165
+    },
+    {
+      "file": "previews/B01-mobile-athlete-dark.png",
+      "sha256": "9245ace8541947a2dbb7f251f7ee648d512be24e09fa6f7e29f477d05c30b06a",
+      "bytes": 38758
+    },
+    {
+      "file": "previews/B01-mobile-everyday-dark.png",
+      "sha256": "1271fa96499103c74617281d3a26b51647799ddfb6b2971dc90b54a264e32b2e",
+      "bytes": 38107
+    },
+    {
+      "file": "previews/B01-mobile-everyday-light.png",
+      "sha256": "f03c577355ccba9bd25e81c4a90f92ad7e85d1015887349c1fdf480f5f721716",
+      "bytes": 38082
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-dark-1440-four.svg",
+      "sha256": "79a3c1f8eba2e9fdc641d5eba7c7a4d9bc6138259cf67e4ed0a6d3a17358b4ac",
+      "bytes": 7530
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-dark-1440-gap.svg",
+      "sha256": "ae54f736bdfede2e0f5cc8c92350ece7d8434fddd93fb07ec32d221ef3a93d90",
+      "bytes": 7879
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-dark-1440-one.svg",
+      "sha256": "e07708a99193864f68dbfcc7e980bc20e8dea2b2d043dc53e3e048e76cd902c3",
+      "bytes": 7037
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-dark-1440-outlier.svg",
+      "sha256": "a04d7e903b65df8a74cf1cbfe05ed09c58e285f4fedf256c80bae44160b4aa7a",
+      "bytes": 7953
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-dark-1440-twelve.svg",
+      "sha256": "e7288e58b7fd8cc88b6d036cd16e2abb78220403aa66c896d6a0cd0df84ac155",
+      "bytes": 8354
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-dark-1440-two.svg",
+      "sha256": "3a074c1c5c81e06c3bd1040f7185aa2fe54d50341081b9ec9b1dcb0e712de26a",
+      "bytes": 7319
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-light-1440-four.svg",
+      "sha256": "4d9849fb404b89f4727c579e013138e20d758ac122647eb26036e946afa079f6",
+      "bytes": 7531
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-light-1440-gap.svg",
+      "sha256": "d0202bd3980e12b0b6c9a39f34e3b643a8b428e5f83be46aee2654b70b77781f",
+      "bytes": 7880
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-light-1440-one.svg",
+      "sha256": "c5d673c73bd103f8972e9b58c82cc007f400e197b1d087a20f65344ceb248de8",
+      "bytes": 7038
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-light-1440-outlier.svg",
+      "sha256": "fcf98c39c1459bb6f894d702b1f6d0e9a7b8ea769ba9cd108dd3a0a38f5899ae",
+      "bytes": 7954
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-light-1440-twelve.svg",
+      "sha256": "19b6a0db77832e79fd9d75cf13198808567ae68ca34f01a72905c51a364d2468",
+      "bytes": 8355
+    },
+    {
+      "file": "responsive/1440/CHART-B01-athlete-light-1440-two.svg",
+      "sha256": "30f45517e22dbebec11dee71f290b7cd102a79142cbaf8c10482ba04ff18f223",
+      "bytes": 7320
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-dark-1440-four.svg",
+      "sha256": "9f9cf3a03c1c2ff208567ee91441cb869f6412bb72dd179fd11930c2aba7b69d",
+      "bytes": 7531
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-dark-1440-gap.svg",
+      "sha256": "abbb623a02c76f41fc29782d5d819149604946afa84ae5b982cd4f13caa45a0b",
+      "bytes": 7880
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-dark-1440-one.svg",
+      "sha256": "2e339a050bb96ef172a7f8dfdf6cea0022a0f293cd9abc058839e1269fb1402b",
+      "bytes": 7038
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-dark-1440-outlier.svg",
+      "sha256": "8059350e51e71a96ee489068dfa39a29a26a8fda66839b5dba12880a7a0a7c6e",
+      "bytes": 7954
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-dark-1440-twelve.svg",
+      "sha256": "dd4ff3e7a8e5b8d6827257f3d9d98b33b7f0807588213b664a3aa312d28b4f82",
+      "bytes": 8355
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-dark-1440-two.svg",
+      "sha256": "5db2153757c8c9432897c7791864aedd23968bdb0f52f810579f319891978946",
+      "bytes": 7320
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-light-1440-four.svg",
+      "sha256": "30cee8104a64e079d97cb14dd83dbf9d85066a863c7e8b5b954a5fcb8df3dc80",
+      "bytes": 7532
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-light-1440-gap.svg",
+      "sha256": "a097347f3c711fa8f8ce241b41746af2c4c3fcf364728b1f566da0c04cc29161",
+      "bytes": 7881
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-light-1440-one.svg",
+      "sha256": "0d8dc2c80c1175235612988db69fd5222d59bbd101a0ddf49e83d3d5e25bef9c",
+      "bytes": 7039
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-light-1440-outlier.svg",
+      "sha256": "4140e17da3f6862d9814b1e5594bdf177712ba30620e804ceadc938fe2fbce38",
+      "bytes": 7955
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-light-1440-twelve.svg",
+      "sha256": "69ae0f7ef1228f8daccd01951e2c6ae10046c8683a4719e75d9dc37c257eee4e",
+      "bytes": 8356
+    },
+    {
+      "file": "responsive/1440/CHART-B01-everyday-light-1440-two.svg",
+      "sha256": "d80bcfda47495962206932896227efdb9c45767fa09e6199b5131f21a3159c8f",
+      "bytes": 7321
+    },
+    {
+      "file": "responsive/320/CHART-B01-athlete-dark-320-gap.svg",
+      "sha256": "111aa57648a4b073a07af1e53d1486cc4513ef91b730086c629414032ea2403a",
+      "bytes": 6882
+    },
+    {
+      "file": "responsive/320/CHART-B01-athlete-light-320-gap.svg",
+      "sha256": "b6201614f99e974803b48c2ebbd5f81fc56c7b0edb3cd1407280569e10f17d6d",
+      "bytes": 6883
+    },
+    {
+      "file": "responsive/320/CHART-B01-everyday-dark-320-gap.svg",
+      "sha256": "2b96673c8d2c232f820940ceab59e38af3715796496bc3027688b5548deeea5f",
+      "bytes": 6883
+    },
+    {
+      "file": "responsive/320/CHART-B01-everyday-light-320-gap.svg",
+      "sha256": "24499ce36ffb228f003eb304a8381d77bf29baa94223722c5c9170444adb9f79",
+      "bytes": 6884
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-dark-390-four.svg",
+      "sha256": "f28a3328d4a44add58763045010bddb1fecce185fe08920671e8143ed76b16dd",
+      "bytes": 6535
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-dark-390-gap.svg",
+      "sha256": "bd7d612a12408d39ce180282879cb9f4d79b0b508f9c568d8fa9e61bcf15dd77",
+      "bytes": 6884
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-dark-390-one.svg",
+      "sha256": "951430f59c8223d92a525a0a82f6a3452f0eebaeae0482b506f99cdd8674d6d3",
+      "bytes": 6040
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-dark-390-outlier.svg",
+      "sha256": "77e300acd115f7f5f42469c3ec7ac8e04481aa8422ecece934c1af71d00dbb2b",
+      "bytes": 6956
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-dark-390-twelve.svg",
+      "sha256": "1a0793b50b166430588b6719abff547d5ed9798e166427427997ba9368d4295a",
+      "bytes": 7355
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-dark-390-two.svg",
+      "sha256": "95fc2bce8a5013e1deb9da2d5c8b973eaee11073b8a4705b08d2c4aee89ee6a4",
+      "bytes": 6324
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-light-390-four.svg",
+      "sha256": "cc3a7c67c8007a5bd978023ee210678589b42e08b694c7baa40b5842c686fa24",
+      "bytes": 6536
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-light-390-gap.svg",
+      "sha256": "a7212f6d88692089f14ccc563adc5fbd4a3eba480b474bf642c3ce7e3dc4281f",
+      "bytes": 6885
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-light-390-one.svg",
+      "sha256": "6449bc254d2abd8aef3f4250fdd9c4aecff95f84742a22aa07b2655861cb1664",
+      "bytes": 6041
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-light-390-outlier.svg",
+      "sha256": "95b9c460302997625a45d00e94268970e621ce1565bc1c8f837467d5ddf1dea1",
+      "bytes": 6957
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-light-390-twelve.svg",
+      "sha256": "6729c01aa8087aaea3720b2f35ba9871ea776c1f1a215c1afacd1294386dc912",
+      "bytes": 7356
+    },
+    {
+      "file": "responsive/390/CHART-B01-athlete-light-390-two.svg",
+      "sha256": "9282c7337f6883db6fef249273cd25242d0b04e74fa0f5dfe8ddce179c3ea9b2",
+      "bytes": 6325
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-dark-390-four.svg",
+      "sha256": "1d97fefefa40fc7ffe3e079c2ca837a1cafd562fb42a39975c0abb7b7eb2972a",
+      "bytes": 6536
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-dark-390-gap.svg",
+      "sha256": "711ab816b7bba9b7a5f0868d3d50091a6626e4fb5a6d02fe929c3e246641a805",
+      "bytes": 6885
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-dark-390-one.svg",
+      "sha256": "f2c8c85b0132ffd8cee11d7539203545a7d7f3cb73e95a6056836335a797f11e",
+      "bytes": 6041
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-dark-390-outlier.svg",
+      "sha256": "24489bab2a2d64c9c8863de6600f443bff1abcc60a03b6a849ab28db08afe486",
+      "bytes": 6957
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-dark-390-twelve.svg",
+      "sha256": "5e6581af21167ba8ba4cf29451b734fdc09e89f2dfc74d48ea14bba682a5397d",
+      "bytes": 7356
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-dark-390-two.svg",
+      "sha256": "fbb25f254e196e8f5515387bf58d557bd1d14b04f9b8bc85f9a8281f83b55163",
+      "bytes": 6325
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-light-390-four.svg",
+      "sha256": "417c9f94b5e8dea07b64d944378d7311938f9824cc4b59f4ce953a790bdb70bb",
+      "bytes": 6537
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-light-390-gap.svg",
+      "sha256": "7c5048035bf7535ee14b675e38a669872810bc35c49faee596583b116bfe22fc",
+      "bytes": 6886
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-light-390-one.svg",
+      "sha256": "3401f48d605497626830cb376b249dac681cc76f45dc0949f0748c89b82a14f6",
+      "bytes": 6042
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-light-390-outlier.svg",
+      "sha256": "aedccda5a2bc611a1ce1bbb72014d0078691d60b841596f56fdba1f039079769",
+      "bytes": 6958
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-light-390-twelve.svg",
+      "sha256": "243c9e7e2666e2053e6378e84d8583681cce383d1df550c9e9530526abf849eb",
+      "bytes": 7357
+    },
+    {
+      "file": "responsive/390/CHART-B01-everyday-light-390-two.svg",
+      "sha256": "b47c8642ca3b484930791bc76d27c18b12c738a9fb8d11535e4ba28f016633ff",
+      "bytes": 6326
+    },
+    {
+      "file": "responsive/768/CHART-B01-athlete-dark-768-gap.svg",
+      "sha256": "b251889721107d3ee508b5efb3cd31b4778fde6b8b3a362c613c90ee68ccbff1",
+      "bytes": 7312
+    },
+    {
+      "file": "responsive/768/CHART-B01-athlete-light-768-gap.svg",
+      "sha256": "be1cc3212ee73872c543237f6c6fb31f26a82f4e0abb1f012c496e89b05ff6e4",
+      "bytes": 7313
+    },
+    {
+      "file": "responsive/768/CHART-B01-everyday-dark-768-gap.svg",
+      "sha256": "06f573fcc9886ba6c2f7ef33320d08f75a66305e58b6db91b54e2f1099126f92",
+      "bytes": 7313
+    },
+    {
+      "file": "responsive/768/CHART-B01-everyday-light-768-gap.svg",
+      "sha256": "774fc7890422b364ac5d68c75292d87a2e1ad076d7f9c05727eee80021ac7c84",
+      "bytes": 7314
+    },
+    {
+      "file": "specimen-fixtures.json",
+      "sha256": "519092a219e630fee81587ca1b01bb250abc277422e5ac7cb75558eaccb23076",
+      "bytes": 2335
+    },
+    {
+      "file": "tokens/CHART-B01-contract.json",
+      "sha256": "fc1d571beedd4da79f0335eced7e390de8493ec7dacd52351bc330ada17f98df",
+      "bytes": 2256
+    },
+    {
+      "file": "tokens/CHART-B01-longitudinal.css",
+      "sha256": "920606c93e357bb82556fe403537c2051969db683e68225e76df9cd605a62275",
+      "bytes": 1887
+    }
+  ]
+}

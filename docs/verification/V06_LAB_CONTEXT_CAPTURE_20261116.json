@@ -33,5 +33,13 @@
     "status": "LIVE",
     "deploy": "dep-dbthcktckfvc73ep4t20",
     "observedAt": "2026-11-16T14:43:56Z"
+  },
+  "publication": {
+    "sha": "8eea10621dd06df1ac7f0068e3097b31482abb17",
+    "render": "LIVE",
+    "deploy": "dep-dbtl7utbedkc73fv4crg",
+    "finishedAt": "2026-11-16T19:07:46.908652Z",
+    "ciRun": 43935685328,
+    "ci": "IN_PROGRESS"
   }
 }

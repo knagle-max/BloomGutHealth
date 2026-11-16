@@ -8,7 +8,7 @@
       "id": "CHART-A01",
       "name": "Four-theme scientific chart tokens",
       "priority": "P0",
-      "lifecycle": "Generated",
+      "lifecycle": "Imported",
       "reviewStatus": "Designer candidate; Architect/UX/Science/visual browser review pending",
       "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
       "delivery": {
@@ -38,23 +38,30 @@
         "darkAthleteCrossMode": "STATIC_ONLY"
       },
       "integration": {
-        "status": "NOT_INTEGRATED",
+        "status": "PARTIAL_ENGINEERING_TESTED",
         "importRule": "Single opt-in CSS import once after canonical Bloom visual CSS, no competing global overrides",
         "suggestedTarget": "design/visual-system/scientific-charts/v1/",
-        "targetFirst": "client/src/components/LabTrend.tsx"
+        "targetFirst": "client/src/components/LabTrend.tsx",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Single opt-in palette in4 actual LabTrend themes; global tokens and typography preserved",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
       },
       "importantConstraints": [
         "No invented numeric data or baked-in plots",
         "Reference and uncertainty semantically qualified, not purely by color",
         "Preserve source-aware observation selection, source intervals, exact table alternatives",
         "Do not treat generated assets as an approved/deployed chart"
-      ]
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-A01",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
     },
     {
       "id": "CHART-A02",
       "name": "Observation marker kit",
       "priority": "P0",
-      "lifecycle": "Generated",
+      "lifecycle": "Imported",
       "reviewStatus": "Designer candidate produced; UX/Science/Architect and live visual acceptance pending",
       "dependsOn": "CHART-A01",
       "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
@@ -103,9 +110,12 @@
         "realApp": "NOT_INTEGRATED"
       },
       "integration": {
-        "status": "NOT_INTEGRATED",
+        "status": "PARTIAL_ENGINEERING_TESTED",
         "importRule": "Inherit CHART-A01 --bvc-* variables; chart scoped CSS, use inline SVG or CSS masks for dynamic theming; preserve data and source UX",
-        "firstCodeTarget": "client/src/components/LabTrend.tsx"
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Existing observed circle, selected double halo, keyboard focus and single-point treatment adapted; additional canonical states remain future scope",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
       },
       "constraints": [
         "Status symbols may not substitute source text/labels",
@@ -113,7 +123,11 @@
         "Do not bridge missing observations with invented series points",
         "Native keyboard, focus and table alternatives mandatory",
         "No data or numerical values embedded"
-      ]
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-A02",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
     },
     {
       "id": "CHART-A03",
@@ -308,7 +322,7 @@
           "LabRangeSelector",
           "LabSourceContext"
         ],
-        "importRule": "A05 CSS once after A01–A04, scoped to premium app-shell and .bv-scientific-chart"
+        "importRule": "A05 CSS once after A01\u2013A04, scoped to premium app-shell and .bv-scientific-chart"
       },
       "constraints": [
         "No source-free healthy-range artwork",
@@ -390,7 +404,7 @@
           "client/src/pages/Microbiome.tsx",
           "client/src/pages/AthleteWorkspace.tsx"
         ],
-        "importRule": "Scope CSS under premium app shell and .bv-scientific-chart, import once after A01–A05"
+        "importRule": "Scope CSS under premium app shell and .bv-scientific-chart, import once after A01\u2013A05"
       },
       "constraints": [
         "Unknown or not-measured is never 0",
@@ -475,7 +489,7 @@
           "LabRangeSelector",
           "LabSourceContext"
         ],
-        "importRule": "Import after A01–A06 once; CSS scoped to premium app-shell and .bv-scientific-chart only"
+        "importRule": "Import after A01\u2013A06 once; CSS scoped to premium app-shell and .bv-scientific-chart only"
       },
       "constraints": [
         "Original measured value and unit, exact recorded date/time and source provenance dynamically bound",
@@ -484,7 +498,7 @@
         "Mobile summary below plot, with source drawer preserving CTA and source details",
         "Do not expose values from withdrawn/revoked sources",
         "No source data, personal measurements, hardcoded chart data or new UX flow in assets",
-        "Touch hitboxes 44×44, readable keyboard focus, reduced-motion and forced-color equivalents",
+        "Touch hitboxes 44\u00d744, readable keyboard focus, reduced-motion and forced-color equivalents",
         "320/390/768/1440, 200% zoom, four themes and actual screenshot gates pending"
       ]
     },
@@ -573,7 +587,7 @@
         "status": "NOT_INTEGRATED",
         "firstCodeTarget": "client/src/components/LabTrend.tsx",
         "nextCodeTarget": "client/src/components/FoodProgress.tsx",
-        "importRule": "Once after CHART-A01–A07; CSS scoped to premium app-shell and .bv-scientific-chart"
+        "importRule": "Once after CHART-A01\u2013A07; CSS scoped to premium app-shell and .bv-scientific-chart"
       },
       "constraints": [
         "All exact chart values, units, intervals and event timestamps supplied by runtime canonical data",
@@ -591,7 +605,7 @@
       "id": "CHART-B01",
       "name": "Source-aware longitudinal trend composition family",
       "priority": "P0",
-      "lifecycle": "Generated",
+      "lifecycle": "Imported",
       "reviewStatus": "Designer candidate published; Architect, scientific, UX and actual browser acceptance pending",
       "dependsOn": [
         "CHART-A01",
@@ -654,10 +668,13 @@
         "accessibilityBrowser": "NOT_TESTED"
       },
       "integration": {
-        "status": "NOT_INTEGRATED",
+        "status": "PARTIAL_ENGINEERING_TESTED",
         "firstCodeTarget": "client/src/components/LabTrend.tsx",
         "secondary": "client/src/pages/Progress.tsx",
-        "importRule": "Reuse A01-A08 and component-local scoped B01 CSS; data-bound chart generated in runtime, no flattened plots"
+        "importRule": "Reuse A01-A08 and component-local scoped B01 CSS; data-bound chart generated in runtime, no flattened plots",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Existing chronological measured SVG, source buttons/exact table retained; semantic series/axis/selection styling; numeric comparison requires confirmed source context",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
       },
       "constraints": [
         "Fixture numbers and example interval are fictional and must not appear as personal measurements",
@@ -668,13 +685,17 @@
         "Exact original date/unit/value, assay, source provider, corrections and interval provenance remain retrievable",
         "44px interactive targets and exact-value table alternative needed",
         "320/390/768/1440, 200 percent zoom, four themes, keyboard and screen-reader QA pending"
-      ]
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-B01",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
     },
     {
       "id": "CHART-B02",
       "name": "Laboratory biomarker chart composition with source-aware reference contexts",
       "priority": "P0",
-      "lifecycle": "Generated",
+      "lifecycle": "Imported",
       "reviewStatus": "Designer asset delivered; scientific/UX/Architect and real app screenshots pending",
       "dependsOn": [
         "CHART-A01",
@@ -737,14 +758,17 @@
         "accessibilityBrowser": "NOT_TESTED"
       },
       "integration": {
-        "status": "NOT_INTEGRATED",
+        "status": "PARTIAL_ENGINEERING_TESTED",
         "firstCodeTarget": "client/src/components/LabTrend.tsx",
         "related": [
           "LabRangeSelector",
           "LabExplorer",
           "LabSourceContext"
         ],
-        "importRule": "Scoped additive B02 CSS after A01-A08/B01, no new global theme; all real geometry from canonical records"
+        "importRule": "Scoped additive B02 CSS after A01-A08/B01, no new global theme; all real geometry from canonical records",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Source interval/one-sided bound/published comparison/decision-limit styles added to canonical source-aware geometry",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
       },
       "constraints": [
         "Fictional design data are never user lab results or medical limits",
@@ -756,13 +780,17 @@
         "Original date/unit/source/assay and revision chain retrievable",
         "44px focus/touch targets, exact table alternative, source withdrawal access safeguards",
         "No deployment or visual signoff without screenshots for mobile/desktop all four themes"
-      ]
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-B02",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
     },
     {
       "id": "CHART-B03",
       "name": "Two-result comparison and source-aware reference reveal",
       "priority": "P0",
-      "lifecycle": "Generated",
+      "lifecycle": "Imported",
       "reviewStatus": "Designer candidate published; Architect, Science, UX and actual application review pending",
       "dependsOn": [
         "CHART-A01",
@@ -819,14 +847,17 @@
         "accessibility": "NOT_TESTED"
       },
       "integration": {
-        "status": "NOT_INTEGRATED",
+        "status": "PARTIAL_ENGINEERING_TESTED",
         "firstCodeTarget": "client/src/components/LabTrend.tsx",
         "secondaryCodeTargets": [
           "LabRangeSelector",
           "LabSourceContext",
           "client/src/pages/Progress.tsx"
         ],
-        "importRule": "Scoped additive styling after existing A01-A08 and B01/B02; no competing global theme or flattened data chart"
+        "importRule": "Scoped additive styling after existing A01-A08 and B01/B02; no competing global theme or flattened data chart",
+        "receipt": "docs/verification/V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json",
+        "implementedScope": "Existing two-source comparison styled with original values/timestamps/provider/method; unconfirmed context abstains from numeric difference",
+        "remaining": "Complete family scenario matrix and independent integrated RC visual/scientific/accessibility review; no physical VoiceOver or full25-family completion claimed"
       },
       "constraints": [
         "Never display specimen fictional values as personal measurements",
@@ -839,11 +870,15 @@
         "No causal claim from temporal comparison",
         "Original date, unit, lab, assay, methods, revisions, source and exact-value table remain accessible",
         "320/390/768/1440, four themes, zoom, keyboard and forced colors must be validated on actual application"
-      ]
+      ],
+      "sourceImport": {
+        "path": "design/visual-system/scientific-charts/v1/CHART-B03",
+        "scope": "Selected original tokens/editable/accessibility/handoff files, byte-identical; specimen outputs retained in verified Library archives"
+      }
     },
     {
       "id": "CHART-B04",
-      "name": "Nutrient progress — source-aware linear and optional radial progress",
+      "name": "Nutrient progress \u2014 source-aware linear and optional radial progress",
       "priority": "P0",
       "lifecycle": "Generated",
       "reviewStatus": "Designer package created and published; Architect, Biology/UX, implemented browser acceptance pending",
@@ -909,7 +944,7 @@
           "client/src/components/FoodProgress.tsx",
           "Today and Food summaries"
         ],
-        "importRule": "Only additive scoped CSS after CHART-A01–A08 under .app-shell[data-bloom-visual=premium] .bv-scientific-chart"
+        "importRule": "Only additive scoped CSS after CHART-A01\u2013A08 under .app-shell[data-bloom-visual=premium] .bv-scientific-chart"
       },
       "constraints": [
         "Only source-recorded nutrients and a valid selected target enable ratios",
@@ -1490,7 +1525,7 @@
     },
     {
       "id": "CHART-C06",
-      "name": "Scientific evidence key — seven non-color-only semantic classes",
+      "name": "Scientific evidence key \u2014 seven non-color-only semantic classes",
       "priority": "P1",
       "lifecycle": "Generated",
       "reviewStatus": "Designer candidate; science, Architect, UX and live app accessibility approval pending",
