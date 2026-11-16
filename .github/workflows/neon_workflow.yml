@@ -151,6 +151,12 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-report-management-journey.mjs
+      - name: Canadian comparison selection and ambiguity browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-canadian-reference-journey.mjs
       - name: Per-result laboratory range correction browser regression
         timeout-minutes: 4
         env:

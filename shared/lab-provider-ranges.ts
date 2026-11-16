@@ -5,6 +5,9 @@ import {z} from 'zod';
 import {canonicalLab,markerDefinitions,type Lab} from './precision-nutrition';
 import {hasConfirmedLabIdentity} from './lab-assay-identity';
 export const labRangeSchema=z.object({
+ referenceScope:z.enum(['laboratory','canadian-harmonized']).optional(),
+ ageApplicability:z.enum(['all-ages','bounded']).optional(),
+ rightsStatus:z.enum(['verified-for-display','unreviewed']).optional(),rightsSourceUrl:z.url().refine(value=>new URL(value).protocol==='https:').optional(),sourceVersion:z.string().min(1).max(160).optional(),
  availability:z.literal('provisional').optional(),applicabilityNote:z.string().max(500).optional(),id:z.string().min(1),label:z.string().min(1).max(200).optional(),provider:z.string().min(1),province:z.string().min(1),markerId:z.string().min(1),specimen:z.string().min(1),assay:z.string().min(1).optional(),method:z.string().min(1).optional(),
  ageMinYears:z.number().finite().nonnegative().optional(),ageMaxYears:z.number().finite().nonnegative().optional(),ageMinInclusive:z.boolean().default(true),ageMaxInclusive:z.boolean().default(true),sexReferenceCategory:z.enum(['M','F','all']),fasting:z.enum(['yes','no','either']),
  effectiveFrom:z.iso.date(),effectiveTo:z.iso.date().optional(),kind:z.enum(['reference_interval','clinical_decision_limit','risk_threshold']),
@@ -14,6 +17,7 @@ export const labRangeSchema=z.object({
  if(range.low===undefined&&range.high===undefined||range.low!==undefined&&range.high!==undefined&&range.low>=range.high)ctx.addIssue({code:'custom',message:'Keep explicit, ordered reference bounds.'});
  if(range.effectiveTo&&range.effectiveTo<range.effectiveFrom)ctx.addIssue({code:'custom',message:'Invalid effective interval.'});
  if(range.ageMinYears!==undefined&&range.ageMaxYears!==undefined&&range.ageMinYears>range.ageMaxYears)ctx.addIssue({code:'custom',message:'Invalid collection age interval.'});
+ if(range.ageApplicability==='all-ages'&&(range.ageMinYears!==undefined||range.ageMaxYears!==undefined)||range.ageApplicability==='bounded'&&range.ageMinYears===undefined&&range.ageMaxYears===undefined)ctx.addIssue({code:'custom',message:'State an explicit all-age scope or supplied age bounds, without conflicting assertions.'});
 });
 export type LabRange=z.infer<typeof labRangeSchema>;
 export type ProviderRangeContext={provider:string;province:string;markerId:string;specimen:string;assay:string;method:string;ageAtCollection:number|null;sexReferenceCategory:'M'|'F'|null;fasting:'yes'|'no'|'unknown';comparisonFasting?:'yes'|'no'|'unknown';collectedOn:string;sourceUnit:string;plotUnit:string;sourceInput?:Lab['sourceInput'];unitReview?:{status:string}};
@@ -37,7 +41,8 @@ export function matchProviderRanges(input:ProviderRangeContext,ranges:readonly u
  const definition=markerDefinitions.find(marker=>marker.id===input.markerId);
  if(!definition)return[];
  return providerComparisonCandidates(input,ranges).flatMap(range=>{
-  if(range.availability!=='provisional'&&(!known(input.specimen)||!known(input.assay)||input.ageAtCollection===null||!Number.isFinite(input.ageAtCollection)||input.ageAtCollection<0||range.scientificReviewStatus!=='verified'||key(range.provider)!==key(input.provider)||key(range.province)!==key(input.province)||range.markerId!==input.markerId||!known(range.specimen)||key(range.specimen)!==key(input.specimen)||!range.assay||!range.method||key(range.assay)!==key(input.assay)||key(range.method)!==key(input.method)||input.collectedOn<range.effectiveFrom||range.effectiveTo!==undefined&&input.collectedOn>range.effectiveTo||range.sexReferenceCategory!=='all'&&range.sexReferenceCategory!==input.sexReferenceCategory||range.fasting!=='either'&&range.fasting!==input.fasting))return[];
+  const missingRequiredAge=range.ageApplicability!=='all-ages'&&input.ageAtCollection===null;
+  if(range.availability!=='provisional'&&(!known(input.specimen)||!known(input.assay)||missingRequiredAge||range.scientificReviewStatus!=='verified'||key(range.provider)!==key(input.provider)||key(range.province)!==key(input.province)||range.markerId!==input.markerId||!known(range.specimen)||key(range.specimen)!==key(input.specimen)||!range.assay||!range.method||key(range.assay)!==key(input.assay)||key(range.method)!==key(input.method)||input.collectedOn<range.effectiveFrom||range.effectiveTo!==undefined&&input.collectedOn>range.effectiveTo||range.sexReferenceCategory!=='all'&&range.sexReferenceCategory!==input.sexReferenceCategory||range.fasting!=='either'&&range.fasting!==input.fasting))return[];
   if(range.sexReferenceCategory!=='all'&&input.sexReferenceCategory!==null&&range.sexReferenceCategory!==input.sexReferenceCategory)return[];
   const age=input.ageAtCollection;
   if(age!==null&&(!Number.isFinite(age)||age<0))return[];
@@ -74,4 +79,37 @@ export function publishedRangeText(match:{low:number|null;high:number|null;unit:
 export function providerContextMatchesSource(point:{date:string;method:string;fasting?:string;sourceReport?:{enteredDate?:string};dateCorrection?:{enteredDate:string}},context:Pick<ProviderRangeContext,'method'|'fasting'|'collectedOn'>){
  const collectionDate=point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate||'';
  return known(point.method)&&key(point.method)===key(context.method)&&z.iso.date().safeParse(collectionDate).success&&context.collectedOn===collectionDate&&context.fasting===(point.fasting??'unknown');
+}
+
+type PublishedMatch=ReturnType<typeof matchProviderRanges>[number];
+export type CanadianReferenceResolution={status:'laboratory'|'harmonized'|'provisional'|'ambiguous'|'limits-only'|'unavailable';selected:PublishedMatch|null;candidates:PublishedMatch[];limits:PublishedMatch[];reasons:string[]};
+/** Source-class priority over the existing deterministic matcher. There is
+ * intentionally no measured value, reported flag, current Profile or geography
+ * inference input. Provisional material is suggested, never silently confirmed.
+ * This adds no provider rows and grants no source rights. */
+export function resolveCanadianReference(input:ProviderRangeContext,ranges:readonly unknown[],proof:{performingLaboratoryConfirmed:boolean;collectionContextConfirmed:boolean;sourceMatches:boolean}):CanadianReferenceResolution{
+ const exact:PublishedMatch[]=[],harmonized:PublishedMatch[]=[],provisional:PublishedMatch[]=[],limits:PublishedMatch[]=[],reasons=new Set<string>();
+ for(const raw of ranges){
+  const parsed=labRangeSchema.safeParse(raw);if(!parsed.success)continue;const range=parsed.data;if(range.markerId!==input.markerId)continue;
+  const national=range.referenceScope==='canadian-harmonized';
+  if(national&&(range.provider!=='CSCC'||range.province!=='CA'))continue;
+  // A provincial publication must match a supplied performing identity; a home
+  // province is neither an identity nor evidence that the test was done there.
+  if(!national&&(!proof.performingLaboratoryConfirmed||key(range.provider)!==key(input.provider)||key(range.province)!==key(input.province))){reasons.add('performing-laboratory-or-province-not-matched');continue;}
+  const context=national?{...input,provider:range.provider,province:range.province}:input;
+  const matches=matchProviderRanges(context,[range]);if(!matches.length){reasons.add('source-context-or-unit-not-matched');continue;}
+  if(range.availability==='provisional'){
+   if(national){reasons.add('harmonized-source-not-verified');continue;}
+   for(const match of matches)(range.kind==='reference_interval'?provisional:limits).push(match);
+   continue;
+  }
+  if(range.rightsStatus!=='verified-for-display'||!range.rightsSourceUrl){reasons.add('published-display-rights-not-verified');continue;}
+  if(!proof.collectionContextConfirmed||!proof.sourceMatches){reasons.add('collection-context-not-confirmed');continue;}
+  for(const match of matches)(range.kind!=='reference_interval'?limits:national?harmonized:exact).push(match);
+ }
+ const candidates=exact.length?exact:harmonized.length?harmonized:provisional;
+ const ordered=[...candidates].sort((a,b)=>a.range.id.localeCompare(b.range.id)),orderedLimits=limits.sort((a,b)=>a.range.id.localeCompare(b.range.id));
+ if(ordered.length>1)return{status:'ambiguous',selected:null,candidates:ordered,limits:orderedLimits,reasons:Array.from(reasons).sort()};
+ const selected=ordered[0]??null,status=selected?(exact.length?'laboratory':harmonized.length?'harmonized':'provisional'):orderedLimits.length?'limits-only':'unavailable';
+ return{status,selected:status==='laboratory'||status==='harmonized'?selected:null,candidates:ordered,limits:orderedLimits,reasons:Array.from(reasons).sort()};
 }

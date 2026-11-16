@@ -1,6 +1,6 @@
 {
   "task": "V06-P1-LAB-RANGE-CORRECTION",
-  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "status": "ENGINEERING_TESTED_DEPLOYED_CI_ASSERTION_REPAIR_PENDING",
   "baseCommit": "fd2c05a65193566fa8c79278a2831ca68e04fbd9",
   "authority": "docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md \u2014 owner source-specific correction extension",
   "implementation": [
@@ -28,12 +28,22 @@
     "/tmp/bloom-lab-reference-editor/"
   ],
   "pending": [
-    "Commit/push and exact CI/Render qualification; no manual deployment",
+    "Fresh exact-SHA full CI with the preserved stronger operator assertions; correction runtime is live but not full-CI qualified yet",
     "Canadian catalogue selection is the next bounded P1 sub-slice; new numeric entries need actual source applicability and rights evidence"
   ],
   "limits": [
     "No actual private health data accessed or changed; owner separately confirmed organism images work",
     "No physical VoiceOver, independent clinical/visual approval, full RC, main merge or manual deployment claim",
     "Source corrections that create a new observation ID never automatically retarget an old range; original annotation history remains in owned account export"
-  ]
+  ],
+  "publication": {
+    "commit": "50b83ceaab683f97b0c5b2bff68f10905c464013",
+    "workflowRun": 43962744020,
+    "workflowJob": 133634163501,
+    "conclusion": "failure",
+    "failure": "Report-scoped reference browser expected old 24\u2013444 wording after formatter correctly exposed \u226524 and \u2264444 (and glucose \u22653.3 and \u22645.5). Numeric bounds/classes and source guards unchanged. Two assertions updated; complete original actual HTTP/SQL34-result journey PASS. Fresh CI with Canadian slice next.",
+    "renderDeploy": "dep-dbtnhbtckfvc73bmft40",
+    "renderStatus": "live",
+    "finishedAt": "2026-11-16T21:43:46.237961Z"
+  }
 }
