@@ -319,6 +319,89 @@
         "Unavailable means no band, not 0 or normal",
         "No baked-in lab measurements; source/date/units/assay and exact table retained"
       ]
+    },
+    {
+      "id": "CHART-A06",
+      "name": "Missingness, incomplete coverage and uncertainty language",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate produced; Architect, Science, UX and live-screen review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A06_Missingness_Uncertainty_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A06_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A06_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A06-states.json",
+          "tokens/CHART-A06-states.css",
+          "svg/CHART-A06-symbols.svg",
+          "svg/CHART-A06-patterns.svg",
+          "svg/bvc-a06-*.svg",
+          "editable/CHART-A06-*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "handoff/CHART-A06-implementation.md",
+          "accessibility/CHART-A06-state-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "states": [
+        "not-measured",
+        "missing-observation",
+        "partial-coverage",
+        "non-comparable",
+        "provisional-range",
+        "unknown-method",
+        "source-withdrawn",
+        "loading",
+        "failed-result"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 43/43",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "mobilePreview": "RENDERED and inspected at 390px",
+        "actualApplication": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "screenReader": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "nextCodeTargets": [
+          "client/src/components/FoodProgress.tsx",
+          "client/src/pages/NutritionHistory.tsx",
+          "client/src/pages/Microbiome.tsx",
+          "client/src/pages/AthleteWorkspace.tsx"
+        ],
+        "importRule": "Scope CSS under premium app shell and .bv-scientific-chart, import once after A01–A05"
+      },
+      "constraints": [
+        "Unknown or not-measured is never 0",
+        "Do not connect series or fill through missing/incomparable periods",
+        "Coverage gaps require actual evidence, not assumed from no logs",
+        "Source-withdrawn must not reveal cached personal data",
+        "Published research comparison is not a lab interval or confidence estimate",
+        "Labels and distinct line/pattern glyphs beyond color",
+        "Data values, dates, provenance and exact table still bound dynamically",
+        "Browser QA 320/390/768/1440, 200% zoom, four themes pending"
+      ]
     }
   ]
 }
