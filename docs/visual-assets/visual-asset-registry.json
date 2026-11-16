@@ -3639,37 +3639,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "C01",
       "mappedFixtureObservations": 10,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/C01-BVA-0037-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "7c5e334fef4a60cc351dc35cbca59fa9cd49dbe0a368d04df9368308a59f8f41"
+        },
+        "portrait": {
+          "path": "webp/portrait/C01-BVA-0037-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "505aa6e573c109ab977cbb149f9c244331542d64e837450169d37e5e83f171b0"
+        },
+        "full": {
+          "path": "webp/full/C01-BVA-0037-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "fce1151960259734793942af45e8d8ee817803132bca468d2c40427a18fa5205"
+        },
+        "importBase": "/science/morphology-v1/c01/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Bloom-grade tactile rounded cell morphology, soft sage warm highlights, distinct pair/short-chain composition"
+      "designNotes": "Bloom-grade tactile rounded cell morphology, soft sage warm highlights, distinct pair/short-chain composition",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0038",
@@ -3703,37 +3736,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "C02",
       "mappedFixtureObservations": 6,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/C02-BVA-0038-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "3b5eaad6c14162bbd6946f1fdc2ee20246dd4b1259d3fb821f8072eb4ed6926a"
+        },
+        "portrait": {
+          "path": "webp/portrait/C02-BVA-0038-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "667d11b888f0c4f4a2b160a6a34e8797ec0f0130302167c5c5388b69a516fbec"
+        },
+        "full": {
+          "path": "webp/full/C02-BVA-0038-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "b6b6c6188ce472679aea8b9ee9713950217d05583b2b4717a09f07ea8b771dae"
+        },
+        "importBase": "/science/morphology-v1/c02/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Materially distinctive round/oval cells in floating shallow-focus arrangement"
+      "designNotes": "Materially distinctive round/oval cells in floating shallow-focus arrangement",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0039",
@@ -3767,37 +3833,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "C03",
       "mappedFixtureObservations": 35,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/C03-BVA-0039-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "be714faf40fb0b3cccae2357fee20be7816205160db431aa027d7bebc4560000"
+        },
+        "portrait": {
+          "path": "webp/portrait/C03-BVA-0039-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "b9f45837d9740876a43ab77413ed9b6514d46a0741b68531400d3df404fbaac7"
+        },
+        "full": {
+          "path": "webp/full/C03-BVA-0039-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "ecb94841a5d5442880b011e3175a046bb36c9b69749b9a3b52ea903650e7357d"
+        },
+        "importBase": "/science/morphology-v1/c03/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Compact short forms with organic surface texture and depth, no invented appendages"
+      "designNotes": "Compact short forms with organic surface texture and depth, no invented appendages",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0040",
@@ -3831,37 +3930,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "C04",
       "mappedFixtureObservations": 21,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/C04-BVA-0040-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "1b5f9bde206adc3fe264a60fedf88a77251cce8329475180ddf58817d3445113"
+        },
+        "portrait": {
+          "path": "webp/portrait/C04-BVA-0040-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "d8d7452ba51bbb58ecb19bbcfb99110d5828cbf31cb9211f1c889e66ac239f8f"
+        },
+        "full": {
+          "path": "webp/full/C04-BVA-0040-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "82432cddc83909871fe4a14a0d59076edba8d72cebe16c78e3f9ef6cc4cdd74e"
+        },
+        "importBase": "/science/morphology-v1/c04/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Long cylinders/capsules with believable biological silhouette, not mechanical tubes"
+      "designNotes": "Long cylinders/capsules with believable biological silhouette, not mechanical tubes",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0041",
@@ -3895,37 +4027,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "C05",
       "mappedFixtureObservations": 1,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/C05-BVA-0041-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "00e7e51624dac3f2c843e6294e079bbf2bb9e48785b6e9506dce7d205dad7746"
+        },
+        "portrait": {
+          "path": "webp/portrait/C05-BVA-0041-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "0a58333b44c365c6ce053be7dc5e4b00b1d895765cab584f7022ede8e3f23622"
+        },
+        "full": {
+          "path": "webp/full/C05-BVA-0041-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "97ed0d257a253c74c7e67e363fda91e09883b649657a6450a0e8626dd099dbba"
+        },
+        "importBase": "/science/morphology-v1/c05/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Organic irregular connected/Y-like cells, neither deterministic strain portrait nor trademark shape"
+      "designNotes": "Organic irregular connected/Y-like cells, neither deterministic strain portrait nor trademark shape",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0042",
@@ -3959,37 +4124,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "F01",
       "mappedFixtureObservations": 2,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/F01-BVA-0042-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "6917f00b974b9f3556aef90a0ea237a037040944fa8a3192ba351f45427c7c42"
+        },
+        "portrait": {
+          "path": "webp/portrait/F01-BVA-0042-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "960f25285c0aea0c648a7a21b9a5ffbf4c250206857840723d709d077c3dbbcf"
+        },
+        "full": {
+          "path": "webp/full/F01-BVA-0042-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "41001cc38fa355973d6e7747de3c37caade126fed69f780472ddaddfc9bd1c62"
+        },
+        "importBase": "/science/morphology-v1/f01/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Budding darker pigmented eukaryotic cells, morphological cues visible at small crop"
+      "designNotes": "Budding darker pigmented eukaryotic cells, morphological cues visible at small crop",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0043",
@@ -4023,37 +4221,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "F02",
       "mappedFixtureObservations": 3,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/F02-BVA-0043-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "d2f9bc8677c365b2ca7809dbccb110e849ca1fde189396810e1f5a3371064e19"
+        },
+        "portrait": {
+          "path": "webp/portrait/F02-BVA-0043-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "813a82a17975ef30b9abaaff4998b00b727aa277e962d43e9e7f545ff4aa9fc8"
+        },
+        "full": {
+          "path": "webp/full/F02-BVA-0043-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "300156f300c83c18abb9baaa83ff5cf353f065d105352aea5eab26bb9575f34e"
+        },
+        "importBase": "/science/morphology-v1/f02/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Elegant genuinely filamentous geometry, no plant roots or synthetic hairs"
+      "designNotes": "Elegant genuinely filamentous geometry, no plant roots or synthetic hairs",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0044",
@@ -4087,37 +4318,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "V01",
       "mappedFixtureObservations": 4,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/V01-BVA-0044-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "b2963871f2b2c2794aab8453038834e43f1315e07a7c089b2595ca5f7a3964ae"
+        },
+        "portrait": {
+          "path": "webp/portrait/V01-BVA-0044-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "72b61981012fbd9f5e1308c378abfea09a0e5724b93ca2cf9d2e7f32cabf3258"
+        },
+        "full": {
+          "path": "webp/full/V01-BVA-0044-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "440be4337e5f82954d06e75bad7d5ffcfa2f490a7f95c1061e19c605a17efbbf"
+        },
+        "importBase": "/science/morphology-v1/v01/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Fine structured rigid particles arranged with convincing narrow rod silhouette; no host infection claim"
+      "designNotes": "Fine structured rigid particles arranged with convincing narrow rod silhouette; no host infection claim",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0045",
@@ -4151,37 +4415,70 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "V02",
       "mappedFixtureObservations": 2,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/V02-BVA-0045-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "dcecfeeffd38be59d36b1dd0c1db644b58386d66db35b773a850cbf537e93510"
+        },
+        "portrait": {
+          "path": "webp/portrait/V02-BVA-0045-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "2d1e513f7de8e452fe6487b8f9029028d00bff00b5a175ff2e9c70b455cb661d"
+        },
+        "full": {
+          "path": "webp/full/V02-BVA-0045-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "7681bc9d61c176c45207403bcaba0c5642fd6024d1893cdd8630b0a0c6428f12"
+        },
+        "importBase": "/science/morphology-v1/v02/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Simple bacteriophage capsid/tail forms, strong recognisable silhouette and correct geometry"
+      "designNotes": "Simple bacteriophage capsid/tail forms, strong recognisable silhouette and correct geometry",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
     },
     {
       "id": "BVA-0046",
@@ -4215,40 +4512,167 @@
       "priority": "P0",
       "impact": "high",
       "sourceRelation": {
-        "action": "reserved-pending-owner-supplied-artwork",
+        "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
         "existingPath": null,
-        "existingArtifactByteVerified": false
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
       },
-      "lifecycle": "Briefed",
-      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "lifecycle": "Generated",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
       "filePaths": [],
       "artworkStyleId": "V03",
       "mappedFixtureObservations": 1,
-      "assetStatus": "not-created",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "pending user-supplied art",
-        "scientific": "mapping provisional; depiction pending review",
-        "rights": "pending image provenance",
-        "rendered": "not tested"
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
       },
       "delivery": {
-        "thumbnail": null,
-        "portrait": null,
-        "sha256": null
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/V03-BVA-0046-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "ad323ffef09b721947a67fdb472436408a0fff8bd5693892d2e38283c7f46be6"
+        },
+        "portrait": {
+          "path": "webp/portrait/V03-BVA-0046-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "20b0bafa56ec1e085842ab7eedefa65b40de906af005c7ec3105caa0e913fde0"
+        },
+        "full": {
+          "path": "webp/full/V03-BVA-0046-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "63e83400d58e38d50be42465008a2c980c5eb89d42aa8dc24d63a9d97d160d03"
+        },
+        "importBase": "/science/morphology-v1/v03/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
       },
-      "designNotes": "Dimensional spherical enveloped particle, restrained short projections, no disease implication"
+      "designNotes": "Dimensional spherical enveloped particle, restrained short projections, no disease implication",
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      }
+    },
+    {
+      "id": "BVA-0047",
+      "name": "Microbe morphology U00 — shape-unverified neutral background",
+      "route": "/microbiome",
+      "component": "Organism list thumbnail and detail sheet, U00 fallback",
+      "purpose": "Illustrative backdrop with zero morphological or organism identity claim",
+      "category": "neutral-biological-atmosphere",
+      "subject": "Soft-focus forest green biological environment and organic lower texture, no microbial cell depiction",
+      "composition": "Square thumbnail and square portrait crop; no embedded text",
+      "scientificAccuracy": "U00 implies shape unknown; no organism shown, no species or structure indicated",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "256px thumbnail",
+        "1024px portrait",
+        "1536x1024 full"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "artworkStyleId": "U00",
+      "mappedFixtureObservations": 9,
+      "legacyFallbackId": "bloom-neutral-microorganism-v1",
+      "lifecycle": "Generated",
+      "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
+      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
+      "sourceRelation": {
+        "action": "owner-selected-generated-published-in-shared-library",
+        "existingArtifactByteVerified": true,
+        "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+      },
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
+        "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "thumbnail": {
+          "path": "webp/thumbnail/U00-BVA-0047-thumbnail.webp",
+          "dimensions": [
+            256,
+            256
+          ],
+          "sha256": "69a21d617ee01de3d0540f43cabda6c6e64bd1c80047e5b5f06223063440d2e5"
+        },
+        "portrait": {
+          "path": "webp/portrait/U00-BVA-0047-portrait.webp",
+          "dimensions": [
+            1024,
+            1024
+          ],
+          "sha256": "4879e39c1cf6063645ab695963dd098640493de4a879bfbd337012e464d73101"
+        },
+        "full": {
+          "path": "webp/full/U00-BVA-0047-full.webp",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "sha256": "569a307656e0e87b345e3642665738e83d35473e21a2771a64918f2cdc857f23"
+        },
+        "importBase": "/science/morphology-v1/u00/",
+        "status": "published Shared Library; not yet imported into GitHub public directory"
+      },
+      "filePaths": [],
+      "integration": {
+        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
+        "scientific": "pending morphology and virus/fungus semantics",
+        "rights": "pending applicable AI image usage process",
+        "rendered": "pending 320/390/768/1440, zoom, light/dark"
+      },
+      "statusEvidence": {
+        "date": "2026-11-15",
+        "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
+      },
+      "presentationDisclaimer": "Shape not verified for this report entry."
     }
   ],
-  "lastDesignerDelivery": "2026-11-15: 10 reserved morphology artwork IDs BVA-0037–0046; 94-fixture exact crosswalk, U00 fallback, legacy portraits marked as future-retired; NO ASSETS generated or live integration.",
+  "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
   "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "No per-image owner approval for generation, integration, development/review-branch publication, asset-library handoff or QA. Codex and specialists perform appropriate design/science/rights QA autonomously. Owner reviews imagery, UI and functionality together at an integrated release candidate; explicit owner correcting instructions reopen only affected assets. Protected public/production release and external legal/privacy/licensing/clinical permissions are separate.",
@@ -4279,7 +4703,7 @@
   "codexDeliveryStatus": "PARTIAL:28 permanent IDs validated;8 existing editorial slots have typed delivery bindings and local failure/recovery evidence. Other20 assets and full new-theme adoption are not integrated or verified.",
   "microbeMorphologyProgram": {
     "version": "2026-11-15-morphology-10",
-    "status": "10 visual styles registered and mapped to all 94 source fixture entries; no new artwork generated, no activation",
+    "status": "All ten style assets + new U00 artwork selected and published in Shared Library, mapping registered; not yet switched in live app",
     "crosswalk": "shared/data/microbe-morphology-crosswalk-v1.json",
     "mappingCount": 94,
     "styleAssetIds": [
@@ -4425,6 +4849,60 @@
         }
       ]
     },
-    "approval": "Architect/Science/UX approval required for map semantics; final actual mobile and desktop acceptance after assets received"
+    "approval": "Architect/Science/UX approval required for map semantics; final actual mobile and desktop acceptance after assets received",
+    "imageRelease": "2026-11-15 selected-originals-and-webps",
+    "publishedAssets": [
+      {
+        "styleId": "C01",
+        "assetId": "BVA-0037"
+      },
+      {
+        "styleId": "C02",
+        "assetId": "BVA-0038"
+      },
+      {
+        "styleId": "C03",
+        "assetId": "BVA-0039"
+      },
+      {
+        "styleId": "C04",
+        "assetId": "BVA-0040"
+      },
+      {
+        "styleId": "C05",
+        "assetId": "BVA-0041"
+      },
+      {
+        "styleId": "F01",
+        "assetId": "BVA-0042"
+      },
+      {
+        "styleId": "F02",
+        "assetId": "BVA-0043"
+      },
+      {
+        "styleId": "V01",
+        "assetId": "BVA-0044"
+      },
+      {
+        "styleId": "V02",
+        "assetId": "BVA-0045"
+      },
+      {
+        "styleId": "V03",
+        "assetId": "BVA-0046"
+      },
+      {
+        "styleId": "U00",
+        "assetId": "BVA-0047"
+      }
+    ],
+    "unknownVisualId": "BVA-0047",
+    "technicalNeutralFallback": "bloom-neutral-microorganism-v1",
+    "runtimeActivated": false,
+    "legacyRemovalApproved": false,
+    "sourceFixtureEntries": 94,
+    "scientificReviewPending": true,
+    "renderedVisualQAPending": true
   }
 }
