@@ -147,3 +147,5 @@ The [autonomous development policy](docs/architecture/V06_AUTONOMOUS_DEVELOPMENT
 **Owner visual correction:** T1c-fit-and-reveal ENGINEERING_TESTED: full64/72px organ thumbnails and shorter Biology fade; min contrast5.45. Publish correction, verify latest source once, continue concrete Food/Core. Original artaf99a2f is live; no source-transfer blocker.
 
 **Current engineering checkpoint (2026-11-16):** T2a fractional dinner transfer and actual review/save journey ENGINEERING_TESTED; publish exact source with CI runner lifecycle correction, then owner illustrated Bloodwork drilldown above. Image fit/reveal a41525e LIVE; broader CI739/740 exposed stale lifecycle test, locally corrected. All47 artwork requirements retained; new36–47 imports pending.
+
+**Active bounded slice:** CBC BVA-0036 optimized original imported; CBC/Iron distinct,16 responsive source-preservation states/types/3 registry tests PASS. Publish after byte-verified build; then illustrated inline LabExplorer consolidation. Dinner precision sourcef350135 submitted; CI43807310443/preview in progress at last check.

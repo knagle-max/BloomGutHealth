@@ -1,5 +1,5 @@
 {
-  "sourceFilesVerified": 41,
+  "sourceFilesVerified": 43,
   "optimizedFilesImported": [
     {
       "id": "BVA-0009",
@@ -284,6 +284,18 @@
         1024
       ],
       "sourceArchive": "coach",
+      "format": "webp"
+    },
+    {
+      "id": "BVA-0036",
+      "publicPath": "/images/editorial/bloodwork/BVA-0036-complete-blood-count.webp",
+      "bytes": 112558,
+      "sha256": "e95b820fac2c9edcc7cbdf2c7e3f47f0a5da76b98d797eca8a7a7311f851d1fb",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "sourceArchive": "cbc",
       "format": "webp"
     }
   ],

@@ -3,6 +3,7 @@ import {createHash} from 'node:crypto';
 import {basename} from 'node:path';
 const hash=(data:Uint8Array)=>createHash('sha256').update(data).digest('hex');
 const manifestHashes:Record<string,string>={
+ cbc:'cf5a791a77f8ced0f5b9a611b3a82caf612cf2b2e44e79a067e33c5fb0449fe5',
  'batch-a':'486362d2787a444f2f3457f3f0b5d298132222dc147385a573bd1b615ae1eb16',
  'batch-a-extension':'2727f8ea76f19e5a8c4ae6dd4f061cda4f3f07a1b848c2ee7d9df51d2a6560c4',
  'batch-c':'101fe629abcaeec916cf6438898c77badf1042d7858cd76e6a44f92d007d69e1',
@@ -26,5 +27,5 @@ for(const row of receipt.optimizedFilesImported){
  if(remote){const response=await fetch(remote+row.publicPath,{redirect:'error',signal:AbortSignal.timeout(30000)});const type=row.format==='svg'?'image/svg+xml':'image/webp';if(!response.ok||!response.headers.get('content-type')?.startsWith(type))throw Error(`Editorial public response unavailable: ${row.publicPath}`);const data=new Uint8Array(await response.arrayBuffer());if(data.length!==row.bytes||hash(data)!==row.sha256)throw Error(`Editorial HTTP byte mismatch: ${row.publicPath}`);}
  files++;bytes+=row.bytes;
 }
-if(files!==25)throw Error('Expected25 optimized supplied editorial files');
-console.log(`Ready editorial media PASS: ${files} original files/${bytes} bytes from five immutable source manifests${process.argv.includes('--built')?', built copies':''}${remote?', unauthenticated HTTP bytes':''}. Coach art does not enable Coach access; static artwork never replaces measured graphs.`);
+if(files!==26)throw Error('Expected26 optimized supplied editorial files');
+console.log(`Ready editorial media PASS: ${files} original files/${bytes} bytes from six immutable source manifests${process.argv.includes('--built')?', built copies':''}${remote?', unauthenticated HTTP bytes':''}. Coach art does not enable Coach access; static artwork never replaces measured graphs.`);

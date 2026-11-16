@@ -29,5 +29,6 @@ export const editorialVisualAssetIds={
   "biology-bloodwork": "BVA-0032",
   "biology-gut": "BVA-0033",
   "biology-genetics": "BVA-0034",
-  "biology-measurements": "BVA-0035"
+  "biology-measurements": "BVA-0035",
+  "bloodwork-cbc": "BVA-0036"
 } as const satisfies Record<EditorialMediaSlot,BloomVisualAssetId>;

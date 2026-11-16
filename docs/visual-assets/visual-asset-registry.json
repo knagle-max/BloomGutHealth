@@ -3563,20 +3563,23 @@
       "impact": "high",
       "sourceRelation": {
         "action": "designer-generated-and-shared-library-published",
-        "existingRegistry": null,
-        "existingSlot": "Bloodwork > Complete blood count",
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-cbc",
+        "existingPath": "/images/editorial/bloodwork/BVA-0036-complete-blood-count.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_0036_Complete_Blood_Count_2026-11-15.zip",
-        "deliveryManifest": "BVA_0036_Complete_Blood_Count_Manifest_2026-11-15.json"
+        "deliveryManifest": "BVA_0036_Complete_Blood_Count_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Individual PNG and optimized WebP packaged and published in Shared Library Agent Handoffs; GitHub image binaries, app category binding, scientific/rights and actual visual QA pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0036-complete-blood-count.webp"
+      ],
       "integration": {
-        "state": "Not imported into GitHub public assets or verified in rendered app",
+        "state": "Imported optimized original and bound CBC category; independent final visual review pending",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "Asset supplied; screen-level 390px and 1440px reviews pending",

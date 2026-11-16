@@ -1921,7 +1921,7 @@
     "client/src/components/ui/dialog.tsx": "a7ffb13c54eef6dc5c1e6166d746135f925a094443fb1d78e76ec271ea91c53e",
     "client/src/components/ui/sheet.tsx": "54a0e3c6aa525dbe08ae260bff597e403e25e33b7a520f1d2572c85111d8c54d",
     "client/src/content/bloomCopy.ts": "7b75614c0cc61e67cda4a6e6b7664564c664fb41d91c05f97c28a262ff3cb0cb",
-    "client/src/content/editorial-media.ts": "42cb2ab277565f1eabe19e9656d1c936366e221dcde378dcbdf37e8a764fd89f",
+    "client/src/content/editorial-media.ts": "eb704c68e20e456f0c92dfb9dae1d7258a32857a6f0624f800df130fbd29a26c",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
     "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",

@@ -6,7 +6,7 @@ import EditorialMedia from './EditorialMedia';
 import type {EditorialMediaSlot} from '@/content/editorial-media';
 import LabCategoryIcon from './LabCategoryIcon';
 
-const systemArt:Partial<Record<LabCategoryId,EditorialMediaSlot>>={heart:'bloodwork-heart',sugar:'bloodwork-sugar',liver:'bloodwork-liver',nutrients:'bloodwork-iron','blood-count':'bloodwork-iron',bone:'bloodwork-bone',hormones:'bloodwork-hormones',inflammation:'bloodwork-inflammation',other:'bloodwork-other'};
+const systemArt:Partial<Record<LabCategoryId,EditorialMediaSlot>>={heart:'bloodwork-heart',sugar:'bloodwork-sugar',liver:'bloodwork-liver',nutrients:'bloodwork-iron','blood-count':'bloodwork-cbc',bone:'bloodwork-bone',hormones:'bloodwork-hormones',inflammation:'bloodwork-inflammation',other:'bloodwork-other'};
 
 /** Navigation lens over the existing canonical explorer; no result, category,
  * interpretation, trend or source ledger is copied or written here. */
