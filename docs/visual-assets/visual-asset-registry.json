@@ -4627,7 +4627,7 @@
         "originalsArchive": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
         "thumbnail": {
-          "path": "webp/thumbnail/U00-BVA-0047-thumbnail.webp",
+          "path": "webp/thumbnail/U00-U00-thumbnail.webp",
           "dimensions": [
             256,
             256
@@ -4635,7 +4635,7 @@
           "sha256": "69a21d617ee01de3d0540f43cabda6c6e64bd1c80047e5b5f06223063440d2e5"
         },
         "portrait": {
-          "path": "webp/portrait/U00-BVA-0047-portrait.webp",
+          "path": "webp/portrait/U00-U00-portrait.webp",
           "dimensions": [
             1024,
             1024
@@ -4643,7 +4643,7 @@
           "sha256": "4879e39c1cf6063645ab695963dd098640493de4a879bfbd337012e464d73101"
         },
         "full": {
-          "path": "webp/full/U00-BVA-0047-full.webp",
+          "path": "webp/full/U00-U00-full.webp",
           "dimensions": [
             1536,
             1024
@@ -4651,7 +4651,8 @@
           "sha256": "569a307656e0e87b345e3642665738e83d35473e21a2771a64918f2cdc857f23"
         },
         "importBase": "/science/morphology-v1/u00/",
-        "status": "published Shared Library; not yet imported into GitHub public directory"
+        "status": "published Shared Library; not yet imported into GitHub public directory",
+        "archiveFilenameCorrection": "2026-11-15 source verification: source ZIP and original manifest use U00-U00-{thumbnail,portrait,full}.webp for the neutral fallback (manifest asset registryAssetId says U00). This registry ID remains BVA-0047. At app import rename to U00-BVA-0047-{variant}.webp so published first-party paths are permanent-ID canonical; source SHA hashes unchanged."
       },
       "filePaths": [],
       "integration": {
