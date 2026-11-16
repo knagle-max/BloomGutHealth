@@ -40,6 +40,12 @@ Owner's live mobile screenshot shows *Bacteroides vulgatus ATCC 8482*, *Bifidoba
 
 ---
 
+## 2026-11-16 — owner P1 bloodwork historical connection display regression
+
+**Code confirmed** current `client/src/components/LabTrend.tsx` connects recorded observations with one `<polyline>` only when entire series `t.comparable`, although `shared/lab-comparability.ts` returns pair-specific applicability reasons. Owner reports disconnected dots despite meaningful source chronology. [Updated existing Bloodwork architecture](../architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md) requires **per adjacent valid timepoint solid/dashed/disconnected visual classification**, independent of strict numerical/clinical comparison eligibility, preserving source privacy, unit/assay identity, original/corrected/Canadian range overlays and existing B01–B03 chart styling. **Status `ROADMAP / OWNER-OBSERVED DEFECT` — no implementation, tests or deployed fix verified by Architect.** Codex must implement focused classifier/renderer/accessible legend, test mixed/invalid states and publish exact green CI/Render proof before advancing the status. Previously qualified chart range/user correction work remains complete in its own scope; do not reopen it.
+
+---
+
 ## 2026-11-16 — owner P1 Bloodwork chart reference-range discoverability correction
 
 **Owner extension incorporated into SAME chart-range P1 (2026-11-16):** deterministic candidate hierarchy and in-chart user-corrected original laboratory intervals. [Updated consolidated contract](../architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md). Distinguish implementation statuses individually: `ORIGINAL_AUTO_RANGE`, `IN_CHART_USER_CORRECTION`, `PUBLISHED_CANADIAN_MATCHING`, `CANADIAN_SOURCE_COVERAGE` — **all remain NOT VERIFIED as of this architectural update**. Immediate Slice 1: source original default, direct chart controls, owned source-revisioned correction with immutable original/explicit None. Later Slice 2/3: evidence/rights-based Canadian source matching, no result-based normalizing. No new workstream/gate; Codex deliver and record exact tests and hosted SHA.
