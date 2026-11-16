@@ -1465,3 +1465,5 @@ Biology landing translates source-only to without an explanation and pending uni
 2026-11-16 | v0.6 T1e morphology artwork | IMPLEMENTED_AND_ENGINEERING_TESTED | Existing47-ID crosswalk/resolver/profile dependencies reused.44 source images verified,22 public optimized files,94 source entries/11 styles/16 display states and fallback/owner/source preservation;13 units+existing40-profile+types/build PASS. Receipt V06_MORPHOLOGY_ARTWORK_20261116.json. Exact hosted/CI and actual private Tester1 coverage remain to verify; independent RC not claimed.
 
 2026-11-16 | v0.6 owner Other label | IMPLEMENTED_AND_TESTED | Canonical display name Other; stable other category ID and source states preserved. Focused lab explorer tests PASS; no image bytes changed.
+
+2026-11-16 | v0.6 T2a prepared-mass transfer REVISED | IMPLEMENTED_AND_ENGINEERING_TESTED | Remaining practical/Athlete links preserve112.5g, matching prior Today/weekly correction. Actual browser+20 tests/types PASS.5 integrated source/range/report/context journeys qualified; receipt V06_PREPARED_MEAL_LINKS_20261116.json. Full Core/RC remains incomplete.
