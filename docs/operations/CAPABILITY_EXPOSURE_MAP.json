@@ -980,10 +980,12 @@
           "client/src/components/CheckinEntrySource.tsx",
           "client/src/components/LabMarkerEducation.tsx",
           "client/src/components/BloodworkAtlas.tsx",
-          "client/src/components/LabPanelReview.tsx"
+          "client/src/components/LabPanelReview.tsx",
+          "client/src/components/LabRememberedContext.tsx"
         ],
         "api": [
-          "server/precision-routes.ts"
+          "server/precision-routes.ts",
+          "server/lab-response-context-routes.ts"
         ],
         "logicOrJobs": [
           "shared/precision-nutrition.ts",
@@ -1003,7 +1005,8 @@
           "shared/lab-comparability.ts",
           "shared/lab-reference-interval.ts",
           "shared/lab-response-context.ts",
-          "shared/experience.ts"
+          "shared/experience.ts",
+          "server/lab-response-context-storage.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1016,7 +1019,7 @@
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Source-bound all-marker overview and related-family cues are display-only; no clinical significance ranking, causal attribution, new consent or execution authorization. Source-linked recalled-context reader preserves event precision and learned-at separately; generic producers are denied pending the dedicated versioned source-verified writer. No personal causal inference or research sharing.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Source-bound all-marker overview and related-family cues are display-only; no clinical significance ranking, causal attribution, new consent or execution authorization. Source-linked recalled-context reader preserves event precision and learned-at separately; generic producers are denied pending the dedicated versioned source-verified writer. No personal causal inference or research sharing. Lifecycle reader and isolated source-current CAS/idempotent context controller/component are staged; production route and component mounts remain absent until compatible reader deployment. Minimal deletion nonce holds no answer, notes, values or source IDs. No new inference or authorization.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1907,6 +1910,7 @@
     "client/src/components/LabExplorer.tsx": "1e7ab345c85a87e6255deea969502b758aff866ded7a7e18c4c664fdec17e4c4",
     "client/src/components/LabMarkerEducation.tsx": "3d27db0e5605b6a6fe4dff1c3777c12174126c43082b8b70124f329ee0d1600c",
     "client/src/components/LabPanelReview.tsx": "adb30ce71352c4e636d87aefc1dc98ba703f9f52d02c234da8db7400f81f571d",
+    "client/src/components/LabRememberedContext.tsx": "a48c477abdd4ff9f89a3d7e3d6b09005403c3af682348e519ba5a4efdc9dcc62",
     "client/src/components/LabSourceContext.tsx": "e3e6660bc649622904bb34873a42ad543325febe2c9f331676e0e91f305807ec",
     "client/src/components/LabSourceHistory.tsx": "f3083bee1383b321b0c494a14516c3a941c06bce12b0a16dbf0782bf21a9b67d",
     "client/src/components/LabSourceManagement.tsx": "920a42c4647a74cb4fa44bb1a3e527b9ec61973d189deb0e4302df60a847e72b",
@@ -2005,6 +2009,8 @@
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/health-source-storage.ts": "9d879a00b4cc4634b6efedcec1c8a72095c39ed46955c76127a50b121fad4ac9",
     "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
+    "server/lab-response-context-routes.ts": "820654acacfc65ad7dd64b86b91d3842f81acdbf00d7d92719a1215fd59684f3",
+    "server/lab-response-context-storage.ts": "7c3f5cab0b71b55da86308a0344303fc9bdaee4b61b56c910c35addee704b9c5",
     "server/meal-edit.ts": "f0605274f6be77993ab305f9d24e3866b5d633c5c1155e1743fabed7fd51b25c",
     "server/meal-intelligence.ts": "c63120f85b841a097299adf464942a2184471eb4bd3b4457d66000f692c49126",
     "server/meal-records.ts": "b8bdc2a1dd925bdd07424938b795041af238b4c3fb8b73f0b667e9f7e19c5ff7",
@@ -2102,7 +2108,7 @@
     "shared/lab-pdf-file.ts": "87dd2c7403af24db72724da3306f6f812d733aa935c8d2b2b4c68ac353e92180",
     "shared/lab-reference-interval.ts": "1e29ffb34708605f24ff4d84ddf41af682f52a2e0083167dbd0d9e8401d623e1",
     "shared/lab-reimport.ts": "04b613fe84fc4a3fbfb4077ffe5b8b1f962ff9dc4d60147082baa148ffd72468",
-    "shared/lab-response-context.ts": "db7b075640c3ba7f3141fcb9e4427801d84ba1b3098c418f7ee921a539ff7305",
+    "shared/lab-response-context.ts": "b3691138e0efec3d7726b84a2853e91750dce1a540834d8b6b44cce085c01d32",
     "shared/lab-text-file.ts": "98dbba4f3b7300bd92571cdab259dacaeaa03844fd6807ed347d4a89befded22",
     "shared/manual-genetics.ts": "b64377f85b8f2a9696bd35b14a96a854a191d7a81e970e9eef0b4ec66a7d2cd2",
     "shared/meal-intelligence.ts": "b95247f5ad4ada8c79fa5483c0cd0e8d55e644eaf2bea35826cea837e35afea0",

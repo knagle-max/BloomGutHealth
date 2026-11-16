@@ -93,6 +93,12 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-panel-review-journey.mjs
+      - name: Remembered laboratory context source and privacy browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-remembered-context-journey.mjs
       - name: Reviewed laboratory source persistence browser regression
         timeout-minutes: 4
         env:

@@ -1,6 +1,6 @@
 {
   "task": "T1e-native-viome-provider-group-REVISED",
-  "status": "ENGINEERING_TESTED_PENDING_DEPLOY",
+  "status": "ENGINEERING_TESTED_DEPLOYED_HOSTED_UI_UNVERIFIED",
   "revises": "V06_LIVE_MORPHOLOGY_MATCH_20261116.json",
   "ownerObservation": "All mapped names still show the U00 generic illustration, including Akkermansia muciniphila and Anaerostipes hadrus.",
   "reproducedCause": "Production parseStructuredReport writes Provider group: Bacteria / Viruses / Eukaryotes from the existing native Viome schema. The art crosswalk uses Bacterium / Virus / Eukaryote. The previous exact group string check treated these compatible singular/plural headings as conflicts and selected U00 for native imported rows. Prior art QA used singular headings and missed this actual importer boundary.",
@@ -18,5 +18,14 @@
     "Synthetic native-source reproduction, not a query of Tester1 private records",
     "Hosted screenshot unavailable through workspace HTTPS proxy403; Render commit/status checked separately",
     "Nine supplied crosswalk entries intentionally stay U00; no morphology is invented for them"
-  ]
+  ],
+  "publication": {
+    "commit": "3c5093cb96d61b4711c6e2e3751d6e3b4872ba6f",
+    "branch": "enhance/bloom-experience",
+    "renderDeploy": "dep-dbtgsprji66s73ajs58g",
+    "status": "live",
+    "finishedAt": "2026-11-16T14:29:51.869225Z",
+    "delay": "Older0a21 clone stage delayed automatic queue; older deploy completed14:27:46 then this correction started14:27:47. No manual trigger/configuration/cancellation used.",
+    "hostedAuthenticatedUi": "Not inspected; proxy403 and no private health-query authorization."
+  }
 }
