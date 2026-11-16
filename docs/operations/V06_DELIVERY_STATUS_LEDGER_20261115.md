@@ -40,6 +40,12 @@ Owner's live mobile screenshot shows *Bacteroides vulgatus ATCC 8482*, *Bifidoba
 
 ---
 
+## 2026-11-16 — owner P1 Bloodwork chart reference-range discoverability correction
+
+[Source-reviewed bounded Codex handoff](../architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md). Current `LabTrend.tsx` has source reference bands/limits and original-report preference default, but source-point/report activation can leave `selectedPoint` absent and report overlay controls buried in an advanced collapsible management panel. Owner reports ordinary chart ranges unintuitive to access. **Status: ROADMAP / OWNER UX DEFECT; implementation, full CI and hosted verification NOT YET ESTABLISHED.** Required UX: automatically show applicable original selected-observation range with boundaries/source/units; visible Show range and Original/Published/None selector beside chart, preserving explicit saved None and source-report identity, original precedence, one-sided limits, decision limit classification, source revisions/consent and live user-account isolation. Reuse existing chart and provider/source services, keep original advanced management. Schedule after/alongside active CI fix, focused tests + current exact SHA Render proof, integrated RC owner review only. No new clinical engine or signoff gates.
+
+---
+
 ## Status vocabulary — never equate these
 | Label | Meaning | Minimum evidence |
 |---|---|---|
