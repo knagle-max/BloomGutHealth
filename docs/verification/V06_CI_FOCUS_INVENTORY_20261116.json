@@ -1,0 +1,33 @@
+{
+  "task": "P1-current-Neon-CI-focus-and-source-inventory",
+  "status": "ENGINEERING_TESTED_FULL_CI_PENDING",
+  "failedRuns": [
+    {
+      "run": 43888567422,
+      "job": 133373252063,
+      "step": "Remembered laboratory context source and privacy browser regression",
+      "exactFailure": "page.waitForFunction waiting for activeElement aria-label Your answer; form exists, no runtime errors",
+      "sha": "73a073c5735ae8bb4a75d31f519da056ed5c88a0"
+    },
+    {
+      "run": 43882686749,
+      "job": 133355401275,
+      "step": "Type check and API source inventory",
+      "exactFailure": "API source inventory changed; regenerate and review actual exposure"
+    }
+  ],
+  "fix": [
+    "Queue requested focus until React commits a visible enabled control after pending work; remove frame-timing-dependent focus callbacks without weakening focus assertions",
+    "Review staged auth/session-only source-context controller and existing generic producer denials; regenerate API inventory and capability source fingerprints without changing permission review states"
+  ],
+  "validation": [
+    "Exact73 source and original journey passes locally with pinned playwright-core1.57.0; Node24/Chromium differs from CI Node22/Google Chrome",
+    "Controlled one-frame hold of pending readiness reproduces original focus failure at the same assertion with focus BODY; same hold with only focus-readiness fix passes entire original journey",
+    "Repaired original journey with pinned playwright-core1.57.0 PASS: source prepare/save/lost-response receipt/reload/date precision/owner withdrawal/44px/keyboard/320390/lightdark/200%",
+    "TypeScript, API inventory, capability crosswalk and biology coverage checks PASS",
+    "6 API inventory/capability focused tests PASS; full production and original media fingerprints PASS"
+  ],
+  "scope": "Focused correction only. Larger context-controller/history activation remains in primary worktree and is not included in this commit. Old Bloodwork heading is not this failure. No test skips, timeout inflation, new approvals or production/private-health writes.",
+  "NeonLifecycle": "Failed73 run stopped before branch creation. Cleanup job is intentionally only for closed PRs; inspect schema-only branch expiry and live checks in the new full run. No branch deletion/configuration change performed.",
+  "fullCi": "One fresh automatic PR workflow after push, exact SHA; not green until all required checks pass."
+}

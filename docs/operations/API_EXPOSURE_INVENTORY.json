@@ -15,11 +15,12 @@
     "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
     "server/capability-access.ts": "a4af301a2d14d380a6906b1da60304d45560e46cb8e4d99daff48e30373e98a4",
     "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
-    "server/experience-routes.ts": "e66b2f3ce646bac47e9e5fde23c9b73616429c03f0999fa89c14979bff45c9d7",
+    "server/experience-routes.ts": "fd538866d97c27998421c6870b03991d48fa1bf061d250d947ac79a5721017fc",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
     "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
+    "server/lab-response-context-routes.ts": "820654acacfc65ad7dd64b86b91d3842f81acdbf00d7d92719a1215fd59684f3",
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
@@ -1270,6 +1271,46 @@
       "method": "USE",
       "pathExpression": "[inline middleware]",
       "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/lab-response-context-routes.ts",
+      "line": 9,
+      "method": "USE",
+      "pathExpression": "path",
+      "reason": "DYNAMIC_PATH_OR_UNSCOPED_MIDDLEWARE",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/lab-response-context-routes.ts",
+      "line": 11,
+      "method": "POST",
+      "pathExpression": "path+'/view'",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/lab-response-context-routes.ts",
+      "line": 15,
+      "method": "POST",
+      "pathExpression": "path+'/prepare'",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/lab-response-context-routes.ts",
+      "line": 19,
+      "method": "POST",
+      "pathExpression": "path+'/save'",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/lab-response-context-routes.ts",
+      "line": 23,
+      "method": "DELETE",
+      "pathExpression": "path",
+      "reason": "DYNAMIC_PATH_REQUIRES_REVIEW",
       "review": "REVIEW_REQUIRED"
     },
     {

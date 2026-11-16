@@ -19,6 +19,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
  const currentKey=useRef(key);currentKey.current=key;
  const initial=():State=>({key,expanded:false,form:false,view:null,draft:blank(),pending:null,error:'',status:'',confirmDelete:false});
  const[state,setState]=useState<State>(initial),active=state.key===key?state:initial(),serial=useRef(0),controller=useRef<AbortController|null>(null);
+ const focusWhenReady=useRef<'answer'|'heading'|null>(null);
  const attempt=useRef<{key:string;command:LabResponseContextSave}|null>(null),deletion=useRef<{key:string;command:LabResponseContextDelete}|null>(null);
  useEffect(()=>()=>{serial.current++;controller.current?.abort();},[]);
  const patch=(value:Partial<State>)=>setState(previous=>({...(previous.key===key?previous:initial()),...value}));
@@ -32,11 +33,11 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
    await work(request,assertCurrent);if(same())patch({pending:null});
   }catch(error){if(same())patch({pending:null,error:error instanceof ApiRequestError?error.message:'Context could not be confirmed. Your draft is retained.',...(stage==='loading'||error instanceof ApiRequestError&&[404,409].includes(error.status)?{view:null}:{})});}
  };
- const load=()=>run('loading',async request=>{const view=await request('POST','/view',selection);attempt.current=null;patch({view,status:'Saved context loaded.'});requestAnimationFrame(()=>{if(currentKey.current===key)heading.current?.focus();});});
+ const load=()=>run('loading',async request=>{const view=await request('POST','/view',selection);attempt.current=null;focusWhenReady.current='heading';patch({view,status:'Saved context loaded.'});});
  const begin=()=>run('preparing',async(request,assertCurrent)=>{
   const sourceReferences=await Promise.all(sources.map(async source=>({id:source.id,revision:await labReviewRevision(source)})));assertCurrent();
   const view:LabResponseContextView=await request('POST','/prepare',{family,sourceReferences});attempt.current=null;
-  patch({view,form:true,confirmDelete:false,status:'',draft:active.form?active.draft:view.latest?.sourceCurrent?remembered(view.latest.record.payload):blank()});requestAnimationFrame(()=>{if(currentKey.current===key)answerInput.current?.focus();});
+  focusWhenReady.current='answer';patch({view,form:true,confirmDelete:false,status:'',draft:active.form?active.draft:view.latest?.sourceCurrent?remembered(view.latest.record.payload):blank()});
  });
  const edit=(value:Partial<Draft>)=>{attempt.current=null;patch({draft:{...active.draft,...value},error:'',status:''});};
  const save=()=>{
@@ -52,15 +53,23 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
     command=parsed.data;attempt.current={key,command};
    }
    const saved=await request('POST','/save',command),view:LabResponseContextView=await request('POST','/view',selection);attempt.current=null;
-   patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});requestAnimationFrame(()=>{if(currentKey.current===key)heading.current?.focus();});
+   focusWhenReady.current='heading';patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});
   });
  };
  const remove=()=>run('deleting',async request=>{
   if(!active.view?.generationId)return;
   const command=deletion.current?.key===key?deletion.current.command:{...selection,intentId:crypto.randomUUID(),generationId:active.view.generationId,expectedHistoryRevision:active.view.historyRevision};deletion.current={key,command};
   await request('DELETE','',command,{'X-Bloom-Confirm':'delete-lab-response-context-history'});const view:LabResponseContextView=await request('POST','/view',selection);deletion.current=null;attempt.current=null;
-  patch({view,form:false,draft:blank(),confirmDelete:false,status:view.historyCount?'Earlier answers were deleted. Newer answers remain.':'Remembered answers deleted.'});requestAnimationFrame(()=>{if(currentKey.current===key)heading.current?.focus();});
+  focusWhenReady.current='heading';patch({view,form:false,draft:blank(),confirmDelete:false,status:view.historyCount?'Earlier answers were deleted. Newer answers remain.':'Remembered answers deleted.'});
  });
+ // Focus only after React commits the enabled control. A frame scheduled
+ // during preparation can run while the new select is still disabled.
+ useEffect(()=>{
+  if(!active.expanded||active.pending||state.key!==key||!focusWhenReady.current)return;
+  const target=focusWhenReady.current==='answer'?answerInput.current:heading.current;
+  if(!target||!target.isConnected||'disabled'in target&&target.disabled||!target.getClientRects().length)return;
+  target.focus();if(document.activeElement===target)focusWhenReady.current=null;
+ },[key,active.expanded,active.pending,active.form,active.view?.historyRevision]);
  const latest=active.view?.latest,record=latest?.record.payload,busy=active.pending!==null;
  if(!user||!sources.length)return null;
  return <section className="lab-remembered-context" aria-label="Remembered context">
