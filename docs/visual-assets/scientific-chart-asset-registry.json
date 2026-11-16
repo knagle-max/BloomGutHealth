@@ -921,6 +921,86 @@
         "Source withdrawal and errors must respect privacy",
         "Responsive 320/390/768/1440, four themes, keyboard, 200% zoom, forced colors and reduced motion require real app verification"
       ]
+    },
+    {
+      "id": "CHART-B05",
+      "name": "Food intake time series and source-aware recorded-day coverage",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer visual source published; Architect, Biology, UX, real-app rendered review pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B04"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B05_Food_Intake_Time_Series_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B05_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B05_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B05-contract.json",
+          "tokens/CHART-B05-food-series.css",
+          "svg/CHART-B05-bar-state-symbols.svg",
+          "fixtures/CHART-B05-FICTIONAL-ONLY.json",
+          "editable/*.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B05-implementation.md",
+          "accessibility/CHART-B05-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "recorded-7",
+        "partial-7",
+        "missing-7",
+        "unknown-7",
+        "period-28",
+        "all-recorded"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 113/113",
+        "responsiveSpecimens": 96,
+        "editableMasters": 16,
+        "previewPNGs": 5,
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "mobileVisualReview": "320 and 390 inspected, footer clipped issue corrected",
+        "desktopVisualReview": "1440 specimen rendered, actual-browser still pending",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/FoodProgress.tsx",
+        "sourceUtility": "@shared/food-progress.recordedFoodPeriod",
+        "importRule": "Scoped to premium app-shell and .bv-scientific-chart; no flattened production plots"
+      },
+      "constraints": [
+        "Unrecorded days are not 0 intake",
+        "Unknown nutrient amounts are unavailable rather than 0",
+        "Partial days represent saved-only amounts, never complete intake",
+        "7/28/all period respects canonical day and timezone records",
+        "All-time dates are spaced chronologically",
+        "Exact-values table and source/date/unit/meal-count retained",
+        "No source data or measurement values baked in, demo values fictional",
+        "Privacy, source withdrawal and correction semantics preserved",
+        "Mobile and desktop across 320/390/768/1440, four themes, 200% zoom, screen reader and keyboard review still required"
+      ]
     }
   ]
 }
