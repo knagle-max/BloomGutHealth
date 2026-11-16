@@ -1082,6 +1082,82 @@
         "All example values fictional",
         "Actual browser QA must test 320/390/768/1440, 200% zoom, four modes, keyboard, screen reader, forced colors and data withdrawal"
       ]
+    },
+    {
+      "id": "CHART-C01",
+      "name": "Source-reported taxonomic abundance bars",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer package produced and shared; Architect, Biology, UX, Codex implementation and live-browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C01_Taxonomic_Abundance_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C01_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C01_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-C01-contract.json",
+          "tokens/CHART-C01-taxonomic-abundance.css",
+          "svg/CHART-C01-abundance-primitives.svg",
+          "fixtures/CHART-C01-FICTIONAL-ONLY.json",
+          "editable/20 SVG masters",
+          "responsive/320,390,768,1440/80 SVG compositions",
+          "previews/5 PNG",
+          "handoff/CHART-C01-integration.md",
+          "accessibility/CHART-C01-checks.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "quantified",
+        "unknown",
+        "long-name",
+        "method-source",
+        "source-unavailable"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 101/101",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 80,
+        "editableMasters": 20,
+        "previewPNGs": 5,
+        "mobileReview": "320 and 390px static specimens inspected; long-name card sizing corrected",
+        "actualApp": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/Microbiome.tsx",
+        "related": [
+          "client/src/pages/MicrobialProfile.tsx"
+        ],
+        "importRule": "Add scoped opt-in C01 CSS using A01 semantic tokens; render all bars dynamically, not as asset SVG data charts"
+      },
+      "constraints": [
+        "Rank and source method retained",
+        "No healthy abundance reference values or activity inference",
+        "Measured relative denominator validated; never rescale longest organism to 100%",
+        "Unknown, unquantified and missing distinct from zero",
+        "Organism names remain tappable links to source-scoped original detail",
+        "Revoked sources must remove cached values",
+        "Exact numbers and source evidence available in table and inspection",
+        "320/390/768/1440 real app screenshots, four themes, zoom, keyboard and forced-colors QA pending"
+      ]
     }
   ]
 }
