@@ -178,6 +178,73 @@
         "Area fill must never bridge time gaps or obscure lab intervals",
         "Preserve original source values, dates, units, method and keyboard selection"
       ]
+    },
+    {
+      "id": "CHART-A04",
+      "name": "Scientific axes, grids and labels",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate created; Architect/UX/Science approval and live screenshot acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A04_Axes_Grids_Labels_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A04_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A04_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A04-axis-grid.json",
+          "tokens/CHART-A04-axis-grid.css",
+          "svg/CHART-A04-axis-grid-symbols.svg",
+          "editable/CHART-A04-*-390-specimen.svg",
+          "responsive/320/",
+          "responsive/390/",
+          "responsive/768/",
+          "responsive/1440/",
+          "handoff/CHART-A04-implementation.md",
+          "accessibility/CHART-A04-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "visualPrimitives": [
+        "major/minor gridlines",
+        "axis baseline/tick marks",
+        "source-unit and precise timestamp labels",
+        "responsive density and reserved label spacing",
+        "covered/uncovered time-gap divider when justified"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 21/21 XML-parseable SVG files",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "editablePreview": "RENDERED mobile 390 everyday-light specimen and spacing adjusted",
+        "responsiveSpecimens": 16,
+        "realBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "nextCodeTarget": "client/src/components/FoodProgress.tsx",
+        "importRule": "Only after A01-A03 and approved; all CSS scoped to premium app shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "Actual axes/ticks must be generated from canonical data and user locale",
+        "Specimen dates and values are synthetic, for demonstration only",
+        "Do not infer zero for missing observations or join disconnected periods",
+        "Keep actual source dates, methods, units, and assay metadata available",
+        "Do not draw explicit coverage gap without source evidence of missing period",
+        "No unapproved DOM/UX changes",
+        "320/390/768/1440 and zoom 200%, all themes and accessibility modes pending"
+      ]
     }
   ]
 }
