@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "Bloom Biology Editorial Text-safe Four Banners",
+  "createdUTC": "2026-11-15T21:45:31.128733+00:00",
+  "registrySource": "docs/visual-assets/visual-asset-registry.json",
+  "targetRepo": "knagle-max/BloomGutHealth",
+  "targetBranch": "enhance/bloom-experience",
+  "source": "AI-generated individually rendered image assets from user-directed Bloom design conversation; not clinical photographs or user data",
+  "reviewStatus": "owner reviewed visuals in chat; deployment, contrast, scientific and commercial provenance QA pending",
+  "intendedRepoRoot": "client/public/images/editorial/biology/",
+  "textSafety": "left ~45-55% contains relatively calm background; UI text stays separate DOM and requires 4.5:1 contrast against worst-case; 320/390/768/1440 and zoom tests mandatory",
+  "assets": [
+    {
+      "id": "BVA-0032",
+      "name": "Bloodwork",
+      "slug": "biology-bloodwork-vial-text-safe",
+      "destination": "Biology overview > Bloodwork navigation tile",
+      "intendedPublicUrl": "/images/editorial/biology/BVA-0032-biology-bloodwork-vial-text-safe.webp",
+      "sourceFilename": "a_wide_cinematic_biomedical_scene_for_a_web_app_b.png",
+      "original": {
+        "path": "originals/BVA-0032-biology-bloodwork-vial-text-safe.png",
+        "width": 2172,
+        "height": 724,
+        "bytes": 1952700,
+        "sha256": "a5c99ab244d3a7f9544cb0889085e6f54c3b838687f08ccaa80eef575a6e413c"
+      },
+      "webpVariants": [
+        {
+          "path": "webp/BVA-0032-biology-bloodwork-vial-text-safe.webp",
+          "width": 1086,
+          "height": 362,
+          "bytes": 43352,
+          "sha256": "c0845e423257961d1da5d2eaffc8ae68031b2f7704789f8b56973e7af2ea0633",
+          "variant": "1x"
+        },
+        {
+          "path": "webp/BVA-0032-biology-bloodwork-vial-text-safe@2x.webp",
+          "width": 2172,
+          "height": 724,
+          "bytes": 117104,
+          "sha256": "297a42a20a15ad19b94406d50649c851babd0748724b43135d90559b5ae87677",
+          "variant": "2x"
+        }
+      ],
+      "ratio": "3:1",
+      "illustrativeNotUserData": true,
+      "recommendedAlt": "decorative",
+      "visualStatus": "generated, text-safe composition reviewed; exact rendered overlap/contrast untested",
+      "note": "Refined version of prior BVA-0032, not a new category ID"
+    },
+    {
+      "id": "BVA-0033",
+      "name": "Gut Reports",
+      "slug": "biology-gut-reports-text-safe",
+      "destination": "Biology overview > Gut reports navigation tile",
+      "intendedPublicUrl": "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe.webp",
+      "sourceFilename": "a_widescreen_high_detail_photorealistic_micro_bio.png",
+      "original": {
+        "path": "originals/BVA-0033-biology-gut-reports-text-safe.png",
+        "width": 2172,
+        "height": 724,
+        "bytes": 1989203,
+        "sha256": "fbdb3f288998b12a0417d9286828fe0d28794e4e60badad1440c5a9b4d3496f7"
+      },
+      "webpVariants": [
+        {
+          "path": "webp/BVA-0033-biology-gut-reports-text-safe.webp",
+          "width": 1086,
+          "height": 362,
+          "bytes": 43918,
+          "sha256": "dc88f5242930b7d5b39660b97efdd04133ceb203ea2a3327679b2ab3843b59b7",
+          "variant": "1x"
+        },
+        {
+          "path": "webp/BVA-0033-biology-gut-reports-text-safe@2x.webp",
+          "width": 2172,
+          "height": 724,
+          "bytes": 112652,
+          "sha256": "a2c31c6b01ff47533b70bd510b107f623b9c45eba6ef6ba40ee0221ec6b40fbf",
+          "variant": "2x"
+        }
+      ],
+      "ratio": "3:1",
+      "illustrativeNotUserData": true,
+      "recommendedAlt": "decorative",
+      "visualStatus": "generated, text-safe composition reviewed; exact rendered overlap/contrast untested",
+      "note": "Conceptual intestinal villi and microbes, not actual report findings"
+    },
+    {
+      "id": "BVA-0034",
+      "name": "Genetics",
+      "slug": "biology-genetics-text-safe",
+      "destination": "Biology overview > Genetics navigation tile",
+      "intendedPublicUrl": "/images/editorial/biology/BVA-0034-biology-genetics-text-safe.webp",
+      "sourceFilename": "a_cinematic_high_detail_3d_render_with_a_wide_pan.png",
+      "original": {
+        "path": "originals/BVA-0034-biology-genetics-text-safe.png",
+        "width": 2172,
+        "height": 724,
+        "bytes": 1928458,
+        "sha256": "a84a41f942cacd6b4e047f328bf9542a02f3bc1db0c89b68e708ff73baf2dcc1"
+      },
+      "webpVariants": [
+        {
+          "path": "webp/BVA-0034-biology-genetics-text-safe.webp",
+          "width": 1086,
+          "height": 362,
+          "bytes": 45624,
+          "sha256": "607aa4505c5f1f1552a7d5896d378c65f67d2ff0b8076681b94419429bd29f3c",
+          "variant": "1x"
+        },
+        {
+          "path": "webp/BVA-0034-biology-genetics-text-safe@2x.webp",
+          "width": 2172,
+          "height": 724,
+          "bytes": 115866,
+          "sha256": "5fa95c7d5f4c9edb33e1b2bfd87c82850cadc6e9742f85269844d310ac0e027c",
+          "variant": "2x"
+        }
+      ],
+      "ratio": "3:1",
+      "illustrativeNotUserData": true,
+      "recommendedAlt": "decorative",
+      "visualStatus": "generated, text-safe composition reviewed; exact rendered overlap/contrast untested",
+      "note": "Conceptual DNA double helix, not user variant calls"
+    },
+    {
+      "id": "BVA-0035",
+      "name": "Measurements",
+      "slug": "biology-measurements-text-safe",
+      "destination": "Biology overview > Measurements navigation tile",
+      "intendedPublicUrl": "/images/editorial/biology/BVA-0035-biology-measurements-text-safe.webp",
+      "sourceFilename": "a_wide_cinematic_high_detail_photorealistic_com.png",
+      "original": {
+        "path": "originals/BVA-0035-biology-measurements-text-safe.png",
+        "width": 2172,
+        "height": 724,
+        "bytes": 1879399,
+        "sha256": "60c8e0610251ef309a71b5ac24520509fa7ec5baa28f20ccee4d4dbaf23a72c9"
+      },
+      "webpVariants": [
+        {
+          "path": "webp/BVA-0035-biology-measurements-text-safe.webp",
+          "width": 1086,
+          "height": 362,
+          "bytes": 38120,
+          "sha256": "7443c821c8f25848b1f18a686597e3f93d502dc545e48399968225eaa58a0f0e",
+          "variant": "1x"
+        },
+        {
+          "path": "webp/BVA-0035-biology-measurements-text-safe@2x.webp",
+          "width": 2172,
+          "height": 724,
+          "bytes": 94154,
+          "sha256": "c4464546e5a816de326395b86f828b341a2af472335d1847ac61247a99450e39",
+          "variant": "2x"
+        }
+      ],
+      "ratio": "3:1",
+      "illustrativeNotUserData": true,
+      "recommendedAlt": "decorative",
+      "visualStatus": "generated, text-safe composition reviewed; exact rendered overlap/contrast untested",
+      "note": "Illustrative smartwatch and body tape, watch screen numbers NOT user results"
+    }
+  ]
+}

@@ -13,7 +13,8 @@ test('permanent visual IDs bind every existing editorial slot to the original ma
  for(const[slot,id]of Object.entries(editorialVisualAssetIds)){
   const entry=parsed.assets.find(asset=>asset.id===id)!;assert.equal(entry.sourceRelation.existingSlot,slot);
   const asset=editorialMedia[slot as keyof typeof editorialMedia];
-  if('reserved' in asset){assert.deepEqual(entry.filePaths,[]);assert.equal(entry.integration.verified,false);assert.ok(asset.reserved.width>0&&asset.reserved.height>0);continue;}
+  if('reserved' in asset&&!('raster' in asset)){assert.deepEqual(entry.filePaths,[]);assert.equal(entry.integration.verified,false);assert.ok(asset.reserved.width>0&&asset.reserved.height>0);continue;}
+  if('reserved' in asset&&'raster' in asset){assert.ok(entry.filePaths.includes(asset.raster.src));if('src2x' in asset.raster&&typeof asset.raster.src2x==='string')assert.ok(entry.filePaths.includes(asset.raster.src2x));assert.ok(asset.reserved.width>0&&asset.reserved.height>0);for(const path of entry.filePaths)assert.ok(readFileSync('client/public'+path).length>0);continue;}
   assert.equal(entry.lifecycle,'Identified');assert.ok(entry.filePaths.includes('raster'in asset?asset.raster.src:asset.svg.src));
   for(const path of entry.filePaths)assert.ok(readFileSync('client/public'+path).length>0);
  }

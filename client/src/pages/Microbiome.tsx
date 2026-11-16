@@ -67,7 +67,7 @@ export default function Microbiome() {
   useEffect(()=>{if(selectedTaxon&&!activeTaxon){setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}}},[selectedTaxon,activeTaxon]);
   return (
     <main className="science-page gut-reports-workspace space-y-5">
-      <EditorialMedia slot="biology" sizes="(max-width:767px) 100vw, 1000px" />
+      <EditorialMedia slot="gut-report-hero" sizes="(max-width:767px) 100vw, 1000px" />
       <div className="science-heading">
         <p className="eyebrow">REPORTS & RESEARCH</p>
         <h1>Gut reports</h1>

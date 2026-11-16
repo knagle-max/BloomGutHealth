@@ -179,7 +179,7 @@ export default function Explore() {
   return (
     <main className="science-page biology-explorer space-y-5">
       <div className="science-heading">
-        <EditorialMedia slot="explore" sizes="(max-width:767px) 100vw, 1000px" />
+        <EditorialMedia slot="explore-atlas" sizes="(max-width:767px) 100vw, 1000px" />
         <p className="eyebrow">{bloomCopy.explore.eyebrow}</p>
         <h1>{bloomCopy.explore.h1}</h1>
         <p>

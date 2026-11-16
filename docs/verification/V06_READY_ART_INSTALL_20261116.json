@@ -1,0 +1,72 @@
+{
+  "task": "T1-ready-art-installation",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "requestedChanges": [
+    "Install all other ready supplied images alongside four Biology banners",
+    "Remove visible text backing rectangle; keep text background transparent"
+  ],
+  "scope": {
+    "readyIDs": 20,
+    "optimizedFiles": 33,
+    "webpFiles": 28,
+    "svgFiles": 5,
+    "bytes": 2861526,
+    "originalPngs": "Kept in supplied Library packages; optimized original WebPs/SVGs copied without re-encoding",
+    "integratedIDs": [
+      "BVA-0009",
+      "BVA-0010",
+      "BVA-0011",
+      "BVA-0012",
+      "BVA-0013",
+      "BVA-0014",
+      "BVA-0017",
+      "BVA-0018",
+      "BVA-0019",
+      "BVA-0021",
+      "BVA-0023",
+      "BVA-0029",
+      "BVA-0030",
+      "BVA-0031",
+      "BVA-0032",
+      "BVA-0033",
+      "BVA-0034",
+      "BVA-0035"
+    ],
+    "stagedOnly": [
+      "BVA-0020 pathway reference/vector kit; existing data-driven graph unchanged",
+      "BVA-0024 Coach consultation art; no Coach role, data or capability activation"
+    ]
+  },
+  "sourceProof": {
+    "biologyArchiveSha256": "9fca7fc0286f1ce6944bc9925be008948eae8506ba8be2675b58950f76e6da45",
+    "biologyManifestSha256": "60e9ddc4e3d0003922b97544789666145561d8c5178901550167ee237f0ab0ed",
+    "otherSources": "design/visual-system/ready-20261115/{batch-a,batch-a-extension,batch-c,athlete,coach}/DELIVERY_MANIFEST.json",
+    "importReceipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+    "allOtherSourcePayloads": "41/41 PNG/WebP/SVG payloads independently checked against immutable manifest hashes, sizes and decoded raster dimensions; only25 optimized WebP/SVG copied",
+    "biologicalWebPs": "8/8 matched independent and embedded manifest, original bytes and decoded1086x362/2172x724 dimensions",
+    "githubBinaryObjects": "28/28 uploaded blob SHA1 values equal local original WebP blob hashes; branch publication pending"
+  },
+  "implementation": [
+    "Existing EditorialMedia extended for legitimate single-source WebPs and supplied desktop/mobile art direction; legacy8 original source/SVG fallbacks retained",
+    "Bloodwork original hero and8 category scenes, four Biology banner rows, Gut reports, Genetics education, Explore, Progress and existing Athlete recovery surfaces use supplied artwork",
+    "All original source labels, counts, input/editor/record actions, navigation and permissions retained",
+    "Biology text wrapper is transparent; continuous full-card gradient supplies contrast without a rounded box"
+  ],
+  "validation": {
+    "registryUnit": "3/3 PASS,35 original requirement IDs,28 media slot bindings",
+    "types": "PASS",
+    "productionBuild": "PASS including original scientific/R4/M1 source/build fingerprints plus33 new exact original byte checks",
+    "biologyContrastAndNavigation": "PASS32 mode/width/theme/text-size states,136 image/text samples,min contrast5.72379;1x and2x actual browser sources,simulated390pxDPR3,all4 destinations/source states,keyboard/44px targets,200% zoom,offline same geometry/reload,reduced motion,zero writes",
+    "bloodworkAtlas": "PASS50 original source rows and9 loaded art IDs/10 images,16 mode/width/theme states plus200% text, every system drill-in and original source focus, literal zero/unknown preserved, second-owner withdrawal",
+    "wholeShellAndRecovery": "PASS80 states/10 actual routes,3203907681440,light/dark,200% text,original controls/labels and28 network image failures/geometry/reload; native mobile3:4 and desktop16:9 Athlete crop selected from supplied files",
+    "sourceAudits": "Capability52 IDs/auth unchanged; API127 static declarations/13 unresolved unchanged. Biology522 identities unchanged; audit refreshed for exact touched files only.",
+    "screenshots": "/tmp/bloom-biology-transparent and /tmp/bloom-ready-art-parity; four-banners Everyday light reviewed by implementer; no physical VoiceOver/independent final design claim",
+    "exactHostedCI": "PENDING new source publication; previous96cd01 CI43779202315 reached hosted guard then exact earlier source was superseded by Architect docs; no accounts created by that failed guard"
+  },
+  "remaining": [
+    "Exact new source publication/Render hosted byte/screenshot qualification",
+    "BVA0020 interactive kit usage and authorized Coach UI integration remain separate",
+    "Previously rejected BVA0022,0025\u20130028 remain excluded; active replacement requirements retained",
+    "Full v0.6 Core/RC not complete"
+  ]
+}

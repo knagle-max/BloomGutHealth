@@ -17,7 +17,8 @@ export default function BiologyHome({ report,gutReports, onOpen }: { report: Pre
     { label: 'Measurements', note: report.checkins.length?`${report.checkins.length} dated check-ins`:'Add your first measurement', tab: 'progress', art:'biology-measurements' },
   ] satisfies Array<{label:string;note:string;tab?:string;href?:string;art:EditorialMediaSlot}>;
   return <section aria-label="Your health information" className="biology-home">
-    <h2 className="mb-3">Your health information</h2>
+    <h2 className="mb-2">Your health information</h2>
+    <p className="panel-note mb-3">Artwork is illustrative; summaries reflect your saved records.</p>
     <div className="biology-home-sources">{rows.map(({ label, note, tab, href, art }) => {
       const content = <><EditorialMedia slot={art} sizes="(max-width:767px) 100vw, 720px" showCaption={false}/><span className="biology-home-source-copy"><strong>{label}</strong><small>{note}</small></span><ChevronRight size={18} aria-hidden="true"/></>;
       return href ? <Link key={label} className="biology-home-source" href={href}>{content}</Link> : <button type="button" key={label} className="biology-home-source" onClick={() => onOpen(tab!)}>{content}</button>;

@@ -1,3 +1,4 @@
+import {editorialMedia} from "../../client/src/content/editorial-media.ts";
 import {editorialVisualAssetIds} from '../../client/src/content/visual-asset-ids.ts';
 import assert from 'node:assert/strict';import{createRequire}from'node:module';import{mkdir,writeFile}from'node:fs/promises';import{createHash}from'node:crypto';import{execFileSync}from'node:child_process';import{createServer}from'vite';import path from'node:path';
 import{setAppTheme}from'./set-app-theme.mjs';import{experienceSettingsSchema}from'../../shared/experience.ts';import{contextSchema,buildPrecisionReport}from'../../shared/precision-nutrition.ts';import{preferenceSchema}from'../../shared/meal-intelligence.ts';import{buildBiologicalRegistry}from'../../shared/biological-model.ts';import{buildWellnessContext}from'../../server/wellness-context.ts';import{buildWellnessActionView}from'../../server/wellness-actions.ts';import{buildAthleteDay}from'../../shared/athlete.ts';import{athleteProfileSourceKey}from'../../shared/athlete-review.ts';
@@ -45,8 +46,9 @@ const contrast=()=>page.evaluate(()=>{
  return{foreground:Math.min(...backgrounds.map(bg=>ratio(foreground,bg))),muted:Math.min(...backgrounds.map(bg=>ratio(muted,bg)))};
 });
 try{
- for(const[name,path]of[['today','/'],['food','/log-meal'],['biology','/precision'],['explore','/explore'],['progress','/progress'],['athlete','/athlete'],...(r4?[['profile','/profile']]:[]),...(m1?[['journal','/nutrition'],['gut','/microbiome']]:[])].filter(([name])=>!process.env.BLOOM_MATERIAL_ONLY||process.env.BLOOM_MATERIAL_ONLY.split(',').includes(name))){
-  athlete=name==='athlete'||process.env.BLOOM_M1_ATHLETE_ALL==='1';await page.goto(base+path);await page.waitForLoadState('networkidle');await page.locator('main').first().waitFor();if(name==='food'){await page.getByText('Add food another way',{exact:true}).click();await page.getByRole('button',{name:'Change method / add another item',exact:true}).click();}
+ for(const[name,path]of[['today','/'],['food','/log-meal'],['biology','/precision'],['explore','/explore'],['progress','/progress'],['athlete','/athlete'],...(r4?[['profile','/profile']]:[]),...(m1?[['journal','/nutrition'],['gut','/microbiome'],['recovery','/athlete/recovery']]:[])].filter(([name])=>!process.env.BLOOM_MATERIAL_ONLY||process.env.BLOOM_MATERIAL_ONLY.split(',').includes(name))){
+  console.log('Checking editorial media route: '+name);
+  athlete=['athlete','recovery'].includes(name)||process.env.BLOOM_M1_ATHLETE_ALL==='1';await page.goto(base+path);await page.waitForLoadState('networkidle');await page.locator('main').first().waitFor();if(name==='food'){await page.getByText('Add food another way',{exact:true}).click();await page.getByRole('button',{name:'Change method / add another item',exact:true}).click();}
   for(const width of (process.env.BLOOM_M1_ZOOM_ONLY==='1'?[390]:[320,390,768,1440])){await page.setViewportSize({width,height:1000});for(const theme of ['light','dark']){await setAppTheme(page,theme);await page.keyboard.press('Escape');await page.waitForTimeout(220);
    await paint(false);const before=await structure(),beforeOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);const capture=process.env.BLOOM_CAPTURE_VISUALS==='1'&&(width===390&&theme==='light'||name==='athlete'&&width===390&&theme==='dark'||name==='today'&&width===320&&theme==='light');
    if(capture)await page.screenshot({path:`${out}/${name}-${width}-${theme}-before.png`,animations:'disabled'});
@@ -81,34 +83,34 @@ try{
     }
    }
    if(m1){
-    const slot={today:'today',food:'food',biology:'biology',explore:'explore',progress:'progress',profile:'profile',athlete:'athlete',journal:'food',gut:'biology'}[name];
+    const slot={today:'today',food:'food',biology:'biology',explore:'explore-atlas',progress:'progress-scene',profile:'profile',athlete:'athlete',journal:'food',gut:'gut-report-hero',recovery:'athlete-recovery'}[name];
     const media=page.locator(`.bv-media[data-slot="${slot}"]`).first();
     await media.waitFor({state:'attached'});
-    if(['profile','progress'].includes(name)&&width<768)assert.equal(await media.isVisible(),false,`${name} mobile ornament suppressed`);
+    if(name==='profile'&&width<768)assert.equal(await media.isVisible(),false,`${name} mobile ornament suppressed`);
     else{
      await media.scrollIntoViewIfNeeded();const img=media.locator('img');await page.waitForFunction(el=>el.complete&&el.naturalWidth>0,await img.elementHandle());
      const box=await img.boundingBox(),expected=width<360?{today:96,food:112,biology:100,explore:104,athlete:112}:width<768?{today:120,food:144,biology:128,explore:132,athlete:144}:width<1440?{today:156,food:180,biology:160,explore:168,athlete:180}:{today:176,food:220,biology:200,explore:200,athlete:220};
-     assert.equal(Math.round(box.height),expected[slot]??(width>=1440?120:96),`${name} ${width}: exact M1-D image height`);
+     if(name==='recovery'){const aspect=width<768?3/4:16/9;assert.ok(Math.abs(box.width/box.height-aspect)<.02,'Supplied recovery art direction '+JSON.stringify({width,box}));assert.match(await img.evaluate(element=>element.currentSrc),width<768?/mobile-3x4/:/desktop-16x9/);}else{const heightKey={gut:'biology',explore:'explore'}[name]||slot;assert.equal(Math.round(box.height),name==='progress'?120:expected[heightKey]??(width>=1440?120:96),`${name} ${width}: approved banner image height`);}
      assert.equal(await img.getAttribute('alt'),'');assert.equal(await img.getAttribute('aria-hidden'),'true');
      const collision=await media.evaluate(el=>{const image=el.querySelector('img').getBoundingClientRect();return Array.from(document.querySelectorAll('main h1,main h2,main button,main input,main select,main textarea,main [role="alert"],main .today-focus-reason,main .hero-button')).filter(node=>node.checkVisibility({checkOpacity:true,checkVisibilityCSS:true})).some(node=>{const r=node.getBoundingClientRect();return r.width&&r.height&&image.left<r.right-1&&image.right>r.left+1&&image.top<r.bottom-1&&image.bottom>r.top+1;});});
      assert.equal(collision,false,`${name}: media must not overlap title/action/status/form`);
      assert.equal(await img.evaluate(el=>getComputedStyle(el).opacity),'1');
-     if(slot==='biology')await media.getByText('Illustrative, not your data',{exact:true}).waitFor();
+     if(['biology','gut-report-hero'].includes(slot))await media.getByText('Illustrative, not your data',{exact:true}).waitFor();
     }
    }
    if(capture)await page.screenshot({path:`${out}/${name}-${width}-${theme}-after.png`,animations:'disabled'});
    const materialContrast=r4?null:await contrast();if(!r4)assert.ok(materialContrast.foreground>=4.5&&materialContrast.muted>=4.5,`${name} ${theme} intended material text contrast`);
    evidence.push({name,width,theme,geometryAndOrder:r4?'R4 responsive presentation':'identical',overflow:false,materialContrast,structureSha256:createHash('sha256').update(JSON.stringify(after)).digest('hex')});
   }}
-  await page.setViewportSize({width:390,height:1000});await page.evaluate(()=>document.documentElement.style.fontSize='200%');await page.waitForTimeout(220);await paint(false);const zoomBefore=await structure(),zoomBeforeOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);await paint(true);if(!r4)assert.deepEqual(await structure(),zoomBefore,name+' 200% text structure');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,name+' 200% text overflow');if(m1){const overlap=await page.evaluate(()=>Array.from(document.querySelectorAll('.bv-media img')).filter(el=>el.checkVisibility()).some(el=>{const b=el.getBoundingClientRect();return Array.from(document.querySelectorAll('main h1,main h2,main button,main input,main select,main textarea,main [role=alert]')).filter(node=>node.checkVisibility()).some(node=>{const r=node.getBoundingClientRect();return r.width&&r.height&&b.left<r.right-1&&b.right>r.left+1&&b.top<r.bottom-1&&b.bottom>r.top+1;});}));assert.equal(overlap,false,name+' 200% media/critical content collision');}await page.evaluate(()=>document.documentElement.style.fontSize='');
+  await page.setViewportSize({width:390,height:1000});await page.evaluate(()=>document.documentElement.style.fontSize='200%');await page.waitForTimeout(220);await paint(false);const zoomBefore=await structure(),zoomBeforeOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);await paint(true);if(!r4)assert.deepEqual(await structure(),zoomBefore,name+' 200% text structure');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,name+' 200% text overflow');if(m1){const overlap=await page.evaluate(()=>Array.from(document.querySelectorAll('.bv-media img')).filter(el=>el.checkVisibility()&&!el.closest('.biology-home-source,.bloodwork-atlas-hero')).some(el=>{const b=el.getBoundingClientRect();return Array.from(document.querySelectorAll('main h1,main h2,main button,main input,main select,main textarea,main [role=alert]')).filter(node=>node.checkVisibility()).some(node=>{const r=node.getBoundingClientRect();return r.width&&r.height&&b.left<r.right-1&&b.right>r.left+1&&b.top<r.bottom-1&&b.bottom>r.top+1;});}));assert.equal(overlap,false,name+' 200% media/critical content collision');}await page.evaluate(()=>document.documentElement.style.fontSize='');
   if(process.env.BLOOM_MEDIA_FALLBACK_CHECK==='1')for(const theme of['light','dark']){
    await page.setViewportSize({width:1440,height:1000});await setAppTheme(page,theme);
    mediaFailureMode='raster';await page.reload();await page.waitForLoadState('networkidle');await paint(true);
    const svgGeometry=[];
    for(const figure of await page.locator('figure.bv-media:visible').all()){
     await figure.scrollIntoViewIfNeeded();const slot=await figure.getAttribute('data-slot');
-    await page.waitForFunction(slot=>document.querySelector(`figure.bv-media[data-slot="${slot}"]`)?.dataset.mediaSource==='svg',slot);
-    await figure.locator('img').evaluate(el=>el.complete&&el.naturalWidth>0||new Promise(resolve=>el.addEventListener('load',resolve,{once:true})));
+    const expectedPhase=editorialMedia[slot].svg?'svg':'failed';await page.waitForFunction(({slot,expectedPhase})=>document.querySelector(`figure.bv-media[data-slot="${slot}"]`)?.dataset.mediaSource===expectedPhase,{slot,expectedPhase});
+    if(expectedPhase==='svg')await page.waitForFunction(slot=>{const image=document.querySelector(`figure.bv-media[data-slot="${slot}"] img`);return image?.complete&&image.naturalWidth>0;},slot);else assert.equal(await figure.locator('img').count(),0,'Single-source raster failure uses its reserved frame');
     const box=await figure.boundingBox();svgGeometry.push({slot,width:box.width,height:box.height});
    }
    const semantics=rows=>rows.map(({tag,text,href,role})=>({tag,text,href,role}));const before=semantics(await structure());

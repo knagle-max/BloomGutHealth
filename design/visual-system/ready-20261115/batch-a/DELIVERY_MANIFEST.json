@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "1.0.0",
+  "batch": "A",
+  "registrySource": "docs/visual-assets/visual-asset-registry.json",
+  "repoTarget": "knagle-max/BloomGutHealth:enhance/bloom-experience",
+  "createdUTC": "2026-11-15T04:28:57.760382+00:00",
+  "sourceType": "AI-generated conceptual artwork; not patient imagery or diagnostic evidence",
+  "disposition": "Generated; Designer and Scientific review, rights and deployed visual review pending",
+  "assets": [
+    {
+      "id": "BVA-0009",
+      "name": "bloodwork-immersive-rbc-hero",
+      "purpose": "Bloodwork landing hero",
+      "route": "/precision",
+      "category": "hero",
+      "originalFile": "originals/BVA-0009-bloodwork-immersive-rbc-hero.png",
+      "webpFile": "webp/BVA-0009-bloodwork-immersive-rbc-hero.webp",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "aspectRatio": 1.7768,
+      "files": [
+        {
+          "path": "originals/BVA-0009-bloodwork-immersive-rbc-hero.png",
+          "bytes": 1715428,
+          "sha256": "02179e7c615675a31ee912f3b3a9cf47b8615097f2b8b0b041d0a7f85c8f69e4",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0009-bloodwork-immersive-rbc-hero.webp",
+          "bytes": 82070,
+          "sha256": "7f6842c4c042a5ba1c506d40f0fc88c9589bebc86f2f7c83b372502fbb5b19ab",
+          "format": "webp"
+        }
+      ],
+      "designReview": "pending actual individual crop and desktop/mobile",
+      "scientificReview": "required prior to treating anatomical scenes as factual; conceptual only",
+      "rightsReview": "pending verification",
+      "alt": "decorative",
+      "disclosure": "Illustrative, not your data",
+      "sourceFile": "crimson_cells_in_a_luminous_vessel.png",
+      "generator": "OpenAI image generation, recorded in originating ChatGPT turn; exact model/version unavailable",
+      "generationPrompt": "See originating Batch A image generation conversation; no verbatim prompt record embedded in PNG"
+    },
+    {
+      "id": "BVA-0010",
+      "name": "cardiovascular-anatomy",
+      "purpose": "Heart & cholesterol thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "originalFile": "originals/BVA-0010-cardiovascular-anatomy.png",
+      "webpFile": "webp/BVA-0010-cardiovascular-anatomy.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0010-cardiovascular-anatomy.png",
+          "bytes": 2214551,
+          "sha256": "25eef5ede8ddb044138daa5e6585bffc1ba3c0d3e3adacafd2d8abc833e504b3",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0010-cardiovascular-anatomy.webp",
+          "bytes": 166452,
+          "sha256": "12151b266158753000d0b354722af5376c0c003cce67f238d55cd78813883b66",
+          "format": "webp"
+        }
+      ],
+      "designReview": "pending actual individual crop and desktop/mobile",
+      "scientificReview": "required prior to treating anatomical scenes as factual; conceptual only",
+      "rightsReview": "pending verification",
+      "alt": "decorative",
+      "disclosure": "Illustrative, not your data",
+      "sourceFile": "luminous_heart_in_a_vascular_galaxy.png",
+      "generator": "OpenAI image generation, recorded in originating ChatGPT turn; exact model/version unavailable",
+      "generationPrompt": "See originating Batch A image generation conversation; no verbatim prompt record embedded in PNG"
+    },
+    {
+      "id": "BVA-0011",
+      "name": "glycaemic-concept",
+      "purpose": "Blood sugar & insulin thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "originalFile": "originals/BVA-0011-glycaemic-concept.png",
+      "webpFile": "webp/BVA-0011-glycaemic-concept.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0011-glycaemic-concept.png",
+          "bytes": 2154926,
+          "sha256": "afc1cd3ef9032aaed0623aa038833f118662b0e8b03f501ce368847dccf6394e",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0011-glycaemic-concept.webp",
+          "bytes": 156462,
+          "sha256": "ea92b8f72c3bdc43808254b239ed88d33bdc8043d8396c4d4af6808542b98442",
+          "format": "webp"
+        }
+      ],
+      "designReview": "pending actual individual crop and desktop/mobile",
+      "scientificReview": "required prior to treating anatomical scenes as factual; conceptual only",
+      "rightsReview": "pending verification",
+      "alt": "decorative",
+      "disclosure": "Illustrative, not your data",
+      "sourceFile": "insulin_s_journey_through_the_bloodstream.png",
+      "generator": "OpenAI image generation, recorded in originating ChatGPT turn; exact model/version unavailable",
+      "generationPrompt": "See originating Batch A image generation conversation; no verbatim prompt record embedded in PNG"
+    },
+    {
+      "id": "BVA-0012",
+      "name": "liver-biliary-anatomy",
+      "purpose": "Liver & biliary thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "originalFile": "originals/BVA-0012-liver-biliary-anatomy.png",
+      "webpFile": "webp/BVA-0012-liver-biliary-anatomy.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0012-liver-biliary-anatomy.png",
+          "bytes": 2172893,
+          "sha256": "5ed53057cc035cb9150225e62068fc64a9ff525128bfced796725e5f4c64af87",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0012-liver-biliary-anatomy.webp",
+          "bytes": 164048,
+          "sha256": "1dfd6929a48b683584dfa278425a8cb69885d3e0091379ad1279b1538228c157",
+          "format": "webp"
+        }
+      ],
+      "designReview": "pending actual individual crop and desktop/mobile",
+      "scientificReview": "required prior to treating anatomical scenes as factual; conceptual only",
+      "rightsReview": "pending verification",
+      "alt": "decorative",
+      "disclosure": "Illustrative, not your data",
+      "sourceFile": "glowing_biliary_tree_in_the_liver.png",
+      "generator": "OpenAI image generation, recorded in originating ChatGPT turn; exact model/version unavailable",
+      "generationPrompt": "See originating Batch A image generation conversation; no verbatim prompt record embedded in PNG"
+    },
+    {
+      "id": "BVA-0013",
+      "name": "blood-rbc-morphology",
+      "purpose": "Iron & blood nutrients thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "originalFile": "originals/BVA-0013-blood-rbc-morphology.png",
+      "webpFile": "webp/BVA-0013-blood-rbc-morphology.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0013-blood-rbc-morphology.png",
+          "bytes": 2008301,
+          "sha256": "ab2f3a7fb768ec90e5cfbad38237cdd4d3f503941e5e5974c962be5decc92b89",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0013-blood-rbc-morphology.webp",
+          "bytes": 131522,
+          "sha256": "cba3349d741465321cbb11621ea9bfcf86b21fb57fd0a6843f2e47c1666c76d0",
+          "format": "webp"
+        }
+      ],
+      "designReview": "pending actual individual crop and desktop/mobile",
+      "scientificReview": "required prior to treating anatomical scenes as factual; conceptual only",
+      "rightsReview": "pending verification",
+      "alt": "decorative",
+      "disclosure": "Illustrative, not your data",
+      "sourceFile": "crimson_cells_in_a_golden_bloodstream.png",
+      "generator": "OpenAI image generation, recorded in originating ChatGPT turn; exact model/version unavailable",
+      "generationPrompt": "See originating Batch A image generation conversation; no verbatim prompt record embedded in PNG"
+    },
+    {
+      "id": "BVA-0014",
+      "name": "bone-trabecular",
+      "purpose": "Bone & micronutrient thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "originalFile": "originals/BVA-0014-bone-trabecular.png",
+      "webpFile": "webp/BVA-0014-bone-trabecular.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0014-bone-trabecular.png",
+          "bytes": 2190432,
+          "sha256": "861874f217efb1291a88e5cdb7737f55d7d13187bd08e0117acfd0e656f9684a",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0014-bone-trabecular.webp",
+          "bytes": 158824,
+          "sha256": "8a2f191a3e17c51bc1b32045c928944315baa83eb04b4931a8c4b3d1af7ba122",
+          "format": "webp"
+        }
+      ],
+      "designReview": "pending actual individual crop and desktop/mobile",
+      "scientificReview": "required prior to treating anatomical scenes as factual; conceptual only",
+      "rightsReview": "pending verification",
+      "alt": "decorative",
+      "disclosure": "Illustrative, not your data",
+      "sourceFile": "crystalline_cancellous_bone_lattice.png",
+      "generator": "OpenAI image generation, recorded in originating ChatGPT turn; exact model/version unavailable",
+      "generationPrompt": "See originating Batch A image generation conversation; no verbatim prompt record embedded in PNG"
+    }
+  ]
+}

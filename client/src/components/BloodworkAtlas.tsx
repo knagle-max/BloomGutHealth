@@ -15,7 +15,7 @@ export default function BloodworkAtlas({report}:{report?:PrecisionReport}){
  const records=report?new Set([...report.labHistory,...report.pendingLabs,...report.sourceOnlyLabs].map(row=>row.id)).size:null;
  return <section className="bloodwork-atlas" aria-labelledby="bloodwork-atlas-title">
   <header className="bloodwork-atlas-hero">
-   <EditorialMedia slot="bloodwork-hero" sizes="(max-width:767px) 100vw, 1000px" showCaption={false}/>
+   <EditorialMedia slot="bloodwork-hero" sizes="(max-width:767px) 100vw, 1000px" priority showCaption={false}/>
    <div className="bloodwork-atlas-intro"><p className="eyebrow">YOUR BIOLOGY, WITH CONTEXT</p><h1 id="bloodwork-atlas-title" tabIndex={-1}>Bloodwork</h1><p>Explore your results, with dates, units and source details.</p>
     {records!==null&&<p className="bloodwork-atlas-count">{records} recorded {records===1?'result':'results'}</p>}
     <div className="bloodwork-atlas-actions">{report&&<a className="hero-button" href="#add-labs-title" onClick={()=>requestAnimationFrame(()=>{const target=document.getElementById('add-labs-title');target?.setAttribute('tabindex','-1');target?.focus();})}>Add lab results</a>}<Link className="text-link" href="/biology/reports">Manage reports</Link></div>

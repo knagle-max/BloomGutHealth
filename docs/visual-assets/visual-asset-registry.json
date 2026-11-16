@@ -711,14 +711,17 @@
         "action": "owner-confirmed-approved-already-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-hero",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0009-bloodwork-immersive-rbc-hero.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
-        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0009-bloodwork-immersive-rbc-hero.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -772,6 +775,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0009",
+            "publicPath": "/images/editorial/bloodwork/BVA-0009-bloodwork-immersive-rbc-hero.webp",
+            "bytes": 82070,
+            "sha256": "7f6842c4c042a5ba1c506d40f0fc88c9589bebc86f2f7c83b372502fbb5b19ab",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sourceArchive": "batch-a",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -810,14 +831,17 @@
         "action": "owner-confirmed-approved-already-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-heart",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0010-cardiovascular-anatomy.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
-        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0010-cardiovascular-anatomy.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -871,6 +895,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0010",
+            "publicPath": "/images/editorial/bloodwork/BVA-0010-cardiovascular-anatomy.webp",
+            "bytes": 166452,
+            "sha256": "12151b266158753000d0b354722af5376c0c003cce67f238d55cd78813883b66",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -909,14 +951,17 @@
         "action": "generated-awaiting-review",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-sugar",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0011-glycaemic-concept.webp",
         "existingArtifactByteVerified": false,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
-        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Generated; originals and optimized WebP delivered to Shared Library, not yet integrated or visually/scientifically approved",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0011-glycaemic-concept.webp"
+      ],
       "integration": {
         "state": "not integrated; import and route-level checks required",
         "verified": false,
@@ -957,6 +1002,24 @@
         "deliverableNotes": "Deliver webp/avif in 1024×1024 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A single conceptual representation of blood glucose regulation: three translucent small organic spheres suspended in a calm dark green fluid-like environment, with a restrained hexagonal hint on ONE sphere's surface, not a false microscope image of a glucose molecule. The two foreground objects read distinctly at thumbnail size, lit gently from upper-left and fading toward shadowed margins. This image is for a 'Blood sugar & insulin' CATEGORY, not a real cell count, biomarker percentage or CGM curve. 100mm macro lens impression, f/4, creamy defocus behind semitranslucent surfaces, sage-tinted soft window light and mild film grain; irregular physically believable translucency. Composition: 1:1; text external to image, not baked in Restrictions: No literal molecular structure unless independently reviewed, no pancreas diagnosis, glowing meters or lab labels baked into pixels. Designer should not choose between unrelated icons—this three-sphere study is the composition. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0011",
+            "publicPath": "/images/editorial/bloodwork/BVA-0011-glycaemic-concept.webp",
+            "bytes": 156462,
+            "sha256": "ea92b8f72c3bdc43808254b239ed88d33bdc8043d8396c4d4af6808542b98442",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -995,14 +1058,17 @@
         "action": "owner-confirmed-approved-already-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-liver",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0012-liver-biliary-anatomy.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
-        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0012-liver-biliary-anatomy.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -1056,6 +1122,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0012",
+            "publicPath": "/images/editorial/bloodwork/BVA-0012-liver-biliary-anatomy.webp",
+            "bytes": 164048,
+            "sha256": "1dfd6929a48b683584dfa278425a8cb69885d3e0091379ad1279b1538228c157",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1094,14 +1178,17 @@
         "action": "owner-confirmed-approved-already-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-iron",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0013-blood-rbc-morphology.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
-        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0013-blood-rbc-morphology.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -1155,6 +1242,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0013",
+            "publicPath": "/images/editorial/bloodwork/BVA-0013-blood-rbc-morphology.webp",
+            "bytes": 131522,
+            "sha256": "cba3349d741465321cbb11621ea9bfcf86b21fb57fd0a6843f2e47c1666c76d0",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1193,14 +1298,17 @@
         "action": "owner-confirmed-approved-already-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-bone",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0014-bone-trabecular.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_0009-0014_2026-11-14.zip",
-        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available"
+        "localBindingType": "reserved-fallback-only; original approved/generated archive bytes not locally available",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0014-bone-trabecular.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -1254,6 +1362,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0014",
+            "publicPath": "/images/editorial/bloodwork/BVA-0014-bone-trabecular.webp",
+            "bytes": 158824,
+            "sha256": "8a2f191a3e17c51bc1b32045c928944315baa83eb04b4931a8c4b3d1af7ba122",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1429,16 +1555,19 @@
       "impact": "medium",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "gut-report-hero",
+        "existingPath": "/images/editorial/biology/BVA-0017-microbiome-editorial-backdrop.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/biology/BVA-0017-microbiome-editorial-backdrop.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -1486,6 +1615,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0017",
+            "publicPath": "/images/editorial/biology/BVA-0017-microbiome-editorial-backdrop.webp",
+            "bytes": 69234,
+            "sha256": "0426d2990d497e509b7d6d92cab9543ced48df6f51999846e1f3be4e4b812af7",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sourceArchive": "batch-c",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1522,16 +1669,19 @@
       "impact": "medium",
       "sourceRelation": {
         "action": "owner-confirmed-approved-already-published",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "genetics-accent",
+        "existingPath": "/images/editorial/biology/BVA-0018-genetics-editorial-accent.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner confirmed approved; source originals and derivative WebPs previously published in Shared Library; GitHub application import, rights, scientific accuracy and mobile/desktop rendered QA are NOT verified.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/biology/BVA-0018-genetics-editorial-accent.webp"
+      ],
       "integration": {
         "state": "Not integrated/verified from this registry audit; published source files are available to Codex",
         "verified": false,
@@ -1579,6 +1729,24 @@
         "legacyHistoricalEvidence": true,
         "requiredForNewRenditions": false,
         "notes": "Preserved historical owner decision only. New revisions no longer require per-image owner signoff; quality/scientific/rights checks and final integrated RC review remain."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0018",
+            "publicPath": "/images/editorial/biology/BVA-0018-genetics-editorial-accent.webp",
+            "bytes": 82980,
+            "sha256": "90e95d1ba65d7919de6e3b805dec8e9f99387f718054c80d15877450713cfeda",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sourceArchive": "batch-c",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1616,16 +1784,19 @@
       "impact": "medium",
       "sourceRelation": {
         "action": "generated-awaiting-review",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "explore-atlas",
+        "existingPath": "/images/editorial/explore/BVA-0019-explore-living-atlas.webp",
         "existingArtifactByteVerified": false,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/explore/BVA-0019-explore-living-atlas.webp"
+      ],
       "integration": {
         "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
@@ -1662,6 +1833,24 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "An expansive 'living atlas' environment combining the exposed fine roots of a small real woodland seedling in the RIGHT foreground with very restrained fine editorial ink pathways branching through a translucent atmospheric layer behind them. Root filaments have authentic irregular root hair and soil grains; thin softly illuminated connections read as designed scientific *illustration*, not literal glowing metabolic flux. Background is deep evergreen with a clear quiet LEFT ~45% reserved for Explore title. A single amber point may mark one link, but no repeating bright diagram icons or text. 35mm lens/f2.8 environmental still-life visual language for roots and soft bokeh; realistic damp earth and fibrous textures, natural side lighting, deep layered forest shadow, subtle photographic grain. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Illustrative science metaphor only, no specific organism/molecule label inside art and no simulated user's activated pathway. Real data overlays belong to React/SVG components. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0019",
+            "publicPath": "/images/editorial/explore/BVA-0019-explore-living-atlas.webp",
+            "bytes": 113556,
+            "sha256": "0390f1d0266784097068d71dc9dd8f91947d8b19cd8faa53b424d87c2e0f5138",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sourceArchive": "batch-c",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1698,16 +1887,24 @@
       "impact": "medium",
       "sourceRelation": {
         "action": "generated-awaiting-review",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "pathway-reference",
+        "existingPath": "/images/editorial/explore/BVA-0020-explore-pathway-reference.webp",
         "existingArtifactByteVerified": false,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
       "lifecycle": "Generated",
       "productionStatus": "Generated: editable SVG pathway kit delivered; raster concept is reference-only, not a scientific diagram. Not integrated or reviewed.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/explore/pathway-kit/pathway-node-molecule.svg",
+        "/images/editorial/explore/pathway-kit/pathway-node-plant.svg",
+        "/images/editorial/explore/pathway-kit/pathway-connector.svg",
+        "/images/editorial/explore/pathway-kit/pathway-overview-decorative.svg",
+        "/images/editorial/explore/pathway-kit/pathway-node-microbe.svg",
+        "/images/editorial/explore/BVA-0020-explore-pathway-reference.webp"
+      ],
       "integration": {
         "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
@@ -1753,6 +1950,69 @@
         "deliverableNotes": "Deliver svg/png in 1200×900 reference dimensions or matching approved vector viewBox, with 1x; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "Original editable scientific atlas visual kit, not a finished screenshot: provide exactly four modular node frame types—food/substrate represented by a small leaf-seed silhouette, microbe represented by a generic oval organism silhouette, molecule represented by a simple unlabelled abstract connection/hexagon icon, and human tissue represented by a restrained anatomical-cell outline—plus three connector styles: solid evidence-supported, dotted hypothesized, and neutral unknown. Every shape is delivered as clean vector paths with separate stroke/fill layers and ample unobstructed label space outside the art. No actual percentages, results, genes, scientific formulae, arrows implying specific causal evidence or embedded copy. SVG editorial ink, 1.5–2px adjustable line strokes at 24–48px icon display, curved connectors with rounded caps, evergreen/sage/amber colour tokens and monochrome accessible versions; no photographic lens requirement for this vector kit. Composition: 4:3; text external to image, not baked in Restrictions: The app renderer owns actual source-linked edge semantics, labels and permissions. Scientist must approve any specific molecular structure before it is added. Evidence classes and colours cannot be hardwired falsely into art. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0020",
+            "publicPath": "/images/editorial/explore/pathway-kit/pathway-node-molecule.svg",
+            "bytes": 591,
+            "sha256": "1951eeb9f92c743a058f6a6d4d05455d8646d05b4ba6c8e0b07200f4dac7fad3",
+            "dimensions": null,
+            "sourceArchive": "batch-c",
+            "format": "svg"
+          },
+          {
+            "id": "BVA-0020",
+            "publicPath": "/images/editorial/explore/pathway-kit/pathway-node-plant.svg",
+            "bytes": 438,
+            "sha256": "563e8858537c20372cf8ba5f7fad4e91d33c84353586c4c82d51dd255ed7cc8f",
+            "dimensions": null,
+            "sourceArchive": "batch-c",
+            "format": "svg"
+          },
+          {
+            "id": "BVA-0020",
+            "publicPath": "/images/editorial/explore/pathway-kit/pathway-connector.svg",
+            "bytes": 363,
+            "sha256": "7b9d269283138566f95fcbea7ab5cd336cd40fa6cd20978246a4c13010cb62da",
+            "dimensions": null,
+            "sourceArchive": "batch-c",
+            "format": "svg"
+          },
+          {
+            "id": "BVA-0020",
+            "publicPath": "/images/editorial/explore/pathway-kit/pathway-overview-decorative.svg",
+            "bytes": 1419,
+            "sha256": "210d1e9309a26a39697227b04facafdae5292c3376f0db0f2efbbec20ce0ea2e",
+            "dimensions": null,
+            "sourceArchive": "batch-c",
+            "format": "svg"
+          },
+          {
+            "id": "BVA-0020",
+            "publicPath": "/images/editorial/explore/pathway-kit/pathway-node-microbe.svg",
+            "bytes": 471,
+            "sha256": "eace929cd954f72a5107eb60e5d81de97ca382a63cff1894b615f1f605068ebf",
+            "dimensions": null,
+            "sourceArchive": "batch-c",
+            "format": "svg"
+          },
+          {
+            "id": "BVA-0020",
+            "publicPath": "/images/editorial/explore/BVA-0020-explore-pathway-reference.webp",
+            "bytes": 111752,
+            "sha256": "458ef94a87b6fe4fb7de67f4c2fd8d4bde6fd5441f3e545300ee116431522416",
+            "dimensions": [
+              1448,
+              1086
+            ],
+            "sourceArchive": "batch-c",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import verified; actual component/hosted stages tracked separately"
       }
     },
     {
@@ -1790,16 +2050,19 @@
       "impact": "medium",
       "sourceRelation": {
         "action": "generated-awaiting-review",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "progress-scene",
+        "existingPath": "/images/editorial/progress/BVA-0021-progress-editorial-scene.webp",
         "existingArtifactByteVerified": false,
         "deliveryArchive": "Bloom_BVA_Batch_C_0017-0021_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_Batch_C_0017-0021_manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Generated: original PNG and optimized WebP packaged and published; not integrated or reviewed.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/progress/BVA-0021-progress-editorial-scene.webp"
+      ],
       "integration": {
         "state": "not integrated; download Shared Library archive and verify manifest hashes prior to importing",
         "verified": false,
@@ -1836,6 +2099,24 @@
         "deliverableNotes": "Deliver webp/avif in 1600×900 reference dimensions or matching approved vector viewBox, with mobile portrait/safe subject alternative or CSS crop; desktop 16:9; 2x when justified. Keep illustration completely free of embedded UI labels, app text, data readouts, watermarks or third-party brand marks. Produce natural optical realism for photographs; vector art must remain editable. Respect everyday-green-light, everyday-green-dark and accessible contrast/crops. Status/normal design/scientific/rights QA and integrated RC review apply.",
         "negativePromptContext": "Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores.",
         "generationInstruction": "A tranquil longitudinal Progress header composed of one gently curving botanical branch emerging from the RIGHT edge of a dark green stone-like ledge, with a subtle natural paper texture and long soft afternoon shadows. Background transitions from deep forest to quiet neutral sage at LEFT for a readable editorial title, while the central content below remains visually calm so real trends and tables are dominant. No fake plotted lines or achievement badges within the image. 50mm lens, f/4, angled natural light grazing leaf veins and textured matte surface, subdued grain, realistic imperfect stem and soft botanical bokeh. Composition: 16:9; left third overlay-safe, validate every responsive crop Restrictions: Decorative only, separate from real graphs and biomarker ledger. Crop must not overlap time selector, source line or numerical comparisons. Avoid plastic/airbrushed finish, stereotyped CGI smoothness, oversaturated accents, fake reflections, physically implausible anatomy, deformed hands/joints, text and watermarks. Apply only as relevant: authentic naturally smooth ceramics/liver surfaces and conceptual vector diagrams need accurate physical shape, not fake pores."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0021",
+            "publicPath": "/images/editorial/progress/BVA-0021-progress-editorial-scene.webp",
+            "bytes": 76552,
+            "sha256": "b7fc320473dd5c6ec45493f076381f3396c6a59405d69014d9521e9cb28a6683",
+            "dimensions": [
+              1672,
+              941
+            ],
+            "sourceArchive": "batch-c",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -1952,16 +2233,21 @@
       "impact": "medium",
       "sourceRelation": {
         "action": "owner-approved-published",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "athlete-recovery",
+        "existingPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA-0023_Runner_Bench_Owner_Approved_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Approved",
+      "lifecycle": "Integrated",
       "productionStatus": "Owner-approved individual image published to Shared Library with original PNG and responsive WebPs; application integration, rights confirmation and rendered QA pending",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-mobile-3x4.webp",
+        "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
+        "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-full.webp"
+      ],
       "integration": {
         "state": "not integrated; approved image package in Shared Library",
         "verified": false,
@@ -2027,6 +2313,48 @@
       "supersededDelivery": {
         "archive": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0023_Approved_2026-11-14.zip",
         "note": "Previously approved smoothie-only scene, explicitly replaced by newly owner-approved runner-on-bench scene; preserve historical audit only. NOT active."
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0023",
+            "publicPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-mobile-3x4.webp",
+            "bytes": 52936,
+            "sha256": "09dfbc29088ec61a2bce48fd60515b6a989aaf2618643e29a67116cd794461dd",
+            "dimensions": [
+              768,
+              1024
+            ],
+            "sourceArchive": "athlete",
+            "format": "webp"
+          },
+          {
+            "id": "BVA-0023",
+            "publicPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-desktop-16x9.webp",
+            "bytes": 72014,
+            "sha256": "41d7378308a2aebfe2b4b78e74935999200f232385e79cad74e62e5d481dee48",
+            "dimensions": [
+              1536,
+              864
+            ],
+            "sourceArchive": "athlete",
+            "format": "webp"
+          },
+          {
+            "id": "BVA-0023",
+            "publicPath": "/images/editorial/athlete/BVA-0023-athlete-recovery-runner-bench-full.webp",
+            "bytes": 87430,
+            "sha256": "26f4b42a7912892a705e532197ce610586993ea395d8dcaa23417ff8992979b4",
+            "dimensions": [
+              1536,
+              1024
+            ],
+            "sourceArchive": "athlete",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -2064,16 +2392,21 @@
       "impact": "selective",
       "sourceRelation": {
         "action": "owner-approved-published",
-        "existingRegistry": null,
-        "existingSlot": null,
-        "existingPath": null,
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "coach-consultation",
+        "existingPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-desktop-16x9.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA-0024_Coach_Client_Owner_Approved_2026-11-14.zip",
-        "deliveryManifest": "Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json"
+        "deliveryManifest": "Bloom_BVA_0023_0024_Owner_Approved_Manifest_2026-11-14.json",
+        "integrationSourceByteVerified": true
       },
       "lifecycle": "Approved",
       "productionStatus": "Owner-approved individual image published to Shared Library with original PNG and responsive WebPs; application integration, rights confirmation and rendered QA pending",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/coach/BVA-0024-coach-client-consultation-full.webp",
+        "/images/editorial/coach/BVA-0024-coach-client-consultation-desktop-16x9.webp",
+        "/images/editorial/coach/BVA-0024-coach-client-consultation-mobile-3x4.webp"
+      ],
       "integration": {
         "state": "not integrated; approved image package in Shared Library",
         "verified": false,
@@ -2135,6 +2468,48 @@
         "publicImportTarget": "client/public/images/registry/bva-0024/",
         "sourceType": "individual AI-generated image (not a collage crop)",
         "verifiedArchive": true
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0024",
+            "publicPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-full.webp",
+            "bytes": 109272,
+            "sha256": "06c030cc46b2434969cce4ee9b4955cdb75a723537403603ee99c32e3d7dfc41",
+            "dimensions": [
+              1536,
+              1024
+            ],
+            "sourceArchive": "coach",
+            "format": "webp"
+          },
+          {
+            "id": "BVA-0024",
+            "publicPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-desktop-16x9.webp",
+            "bytes": 93826,
+            "sha256": "81332b35f86cc1607db46700dea169850a03bd524d0fbf9ec656040082ec4a28",
+            "dimensions": [
+              1536,
+              864
+            ],
+            "sourceArchive": "coach",
+            "format": "webp"
+          },
+          {
+            "id": "BVA-0024",
+            "publicPath": "/images/editorial/coach/BVA-0024-coach-client-consultation-mobile-3x4.webp",
+            "bytes": 63982,
+            "sha256": "c6c032eef8526df8947dba0abf2bc3603896197ce111701de06dab2173d21fdd",
+            "dimensions": [
+              768,
+              1024
+            ],
+            "sourceArchive": "coach",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import verified; actual component/hosted stages tracked separately"
       }
     },
     {
@@ -2488,15 +2863,17 @@
         "action": "generated-published-to-shared-library",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-hormones",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0029-hormones-thyroid-anatomy.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip",
         "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "PNG + optimized WebP created and published in shared Agent Handoffs library. NOT committed as image binaries to GitHub or integrated in application; rights, scientific accuracy and mobile/desktop rendered checks pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0029-hormones-thyroid-anatomy.webp"
+      ],
       "integration": {
         "state": "awaiting developer import; no deployed HTTP path verified",
         "verified": false,
@@ -2524,6 +2901,24 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "User-provided original PNG images, local WebP optimization and SHA-256 verification, delivered Shared Library ZIP"
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0029",
+            "publicPath": "/images/editorial/bloodwork/BVA-0029-hormones-thyroid-anatomy.webp",
+            "bytes": 162914,
+            "sha256": "32e9961c46dc495d860020aab1cfd39262ea304e2d1dbd1458ff6718b91da97c",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a-extension",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -2560,15 +2955,17 @@
         "action": "generated-published-to-shared-library",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-inflammation",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0030-inflammation-immunity-response.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip",
         "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "PNG + optimized WebP created and published in shared Agent Handoffs library. NOT committed as image binaries to GitHub or integrated in application; rights, scientific accuracy and mobile/desktop rendered checks pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0030-inflammation-immunity-response.webp"
+      ],
       "integration": {
         "state": "awaiting developer import; no deployed HTTP path verified",
         "verified": false,
@@ -2596,6 +2993,24 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "User-provided original PNG images, local WebP optimization and SHA-256 verification, delivered Shared Library ZIP"
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0030",
+            "publicPath": "/images/editorial/bloodwork/BVA-0030-inflammation-immunity-response.webp",
+            "bytes": 155072,
+            "sha256": "d53f88a50fd3faf8ce85d10d4645c934672aefb42659db9d41f8b1ac5906989c",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a-extension",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -2632,15 +3047,17 @@
         "action": "generated-published-to-shared-library",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "bloodwork-other",
-        "existingPath": null,
+        "existingPath": "/images/editorial/bloodwork/BVA-0031-other-identification-network.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip",
         "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "PNG + optimized WebP created and published in shared Agent Handoffs library. NOT committed as image binaries to GitHub or integrated in application; rights, scientific accuracy and mobile/desktop rendered checks pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/bloodwork/BVA-0031-other-identification-network.webp"
+      ],
       "integration": {
         "state": "awaiting developer import; no deployed HTTP path verified",
         "verified": false,
@@ -2668,6 +3085,24 @@
       "statusEvidence": {
         "date": "2026-11-15",
         "auditedFrom": "User-provided original PNG images, local WebP optimization and SHA-256 verification, delivered Shared Library ZIP"
+      },
+      "deliveryVerification": {
+        "receipt": "design/visual-system/ready-20261115/IMPORT_RECEIPT.json",
+        "sourceFiles": [
+          {
+            "id": "BVA-0031",
+            "publicPath": "/images/editorial/bloodwork/BVA-0031-other-identification-network.webp",
+            "bytes": 136556,
+            "sha256": "4b39dae2b334a5455c4b8cad1ad202e294e5d1193bc44a0025a03a692488bf74",
+            "dimensions": [
+              1254,
+              1254
+            ],
+            "sourceArchive": "batch-a-extension",
+            "format": "webp"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -2706,15 +3141,18 @@
         "action": "designer-generated-and-shared-library-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "biology-bloodwork",
-        "existingPath": null,
+        "existingPath": "/images/editorial/biology/BVA-0032-biology-bloodwork-vial-text-safe.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
         "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/biology/BVA-0032-biology-bloodwork-vial-text-safe.webp",
+        "/images/editorial/biology/BVA-0032-biology-bloodwork-vial-text-safe@2x.webp"
+      ],
       "integration": {
         "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
         "verified": false,
@@ -2765,6 +3203,29 @@
           ],
           "publicImportTarget": "/images/registry/biology/BVA-0032-biology-bloodwork-vial.webp"
         }
+      },
+      "deliveryVerification": {
+        "manifest": "design/visual-system/biology-text-safe/DELIVERY_MANIFEST.json",
+        "archiveSha256": "9fca7fc0286f1ce6944bc9925be008948eae8506ba8be2675b58950f76e6da45",
+        "variants": [
+          {
+            "path": "webp/BVA-0032-biology-bloodwork-vial-text-safe.webp",
+            "width": 1086,
+            "height": 362,
+            "bytes": 43352,
+            "sha256": "c0845e423257961d1da5d2eaffc8ae68031b2f7704789f8b56973e7af2ea0633",
+            "variant": "1x"
+          },
+          {
+            "path": "webp/BVA-0032-biology-bloodwork-vial-text-safe@2x.webp",
+            "width": 2172,
+            "height": 724,
+            "bytes": 117104,
+            "sha256": "297a42a20a15ad19b94406d50649c851babd0748724b43135d90559b5ae87677",
+            "variant": "2x"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
       }
     },
     {
@@ -2802,15 +3263,18 @@
         "action": "designer-generated-and-shared-library-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "biology-gut",
-        "existingPath": null,
+        "existingPath": "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
         "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe.webp",
+        "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe@2x.webp"
+      ],
       "integration": {
         "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
         "verified": false,
@@ -2840,7 +3304,30 @@
         ],
         "publicImportTarget": "/images/editorial/biology/BVA-0033-biology-gut-reports-text-safe.webp"
       },
-      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls."
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls.",
+      "deliveryVerification": {
+        "manifest": "design/visual-system/biology-text-safe/DELIVERY_MANIFEST.json",
+        "archiveSha256": "9fca7fc0286f1ce6944bc9925be008948eae8506ba8be2675b58950f76e6da45",
+        "variants": [
+          {
+            "path": "webp/BVA-0033-biology-gut-reports-text-safe.webp",
+            "width": 1086,
+            "height": 362,
+            "bytes": 43918,
+            "sha256": "dc88f5242930b7d5b39660b97efdd04133ceb203ea2a3327679b2ab3843b59b7",
+            "variant": "1x"
+          },
+          {
+            "path": "webp/BVA-0033-biology-gut-reports-text-safe@2x.webp",
+            "width": 2172,
+            "height": 724,
+            "bytes": 112652,
+            "sha256": "a2c31c6b01ff47533b70bd510b107f623b9c45eba6ef6ba40ee0221ec6b40fbf",
+            "variant": "2x"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      }
     },
     {
       "id": "BVA-0034",
@@ -2877,15 +3364,18 @@
         "action": "designer-generated-and-shared-library-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "biology-genetics",
-        "existingPath": null,
+        "existingPath": "/images/editorial/biology/BVA-0034-biology-genetics-text-safe.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
         "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/biology/BVA-0034-biology-genetics-text-safe.webp",
+        "/images/editorial/biology/BVA-0034-biology-genetics-text-safe@2x.webp"
+      ],
       "integration": {
         "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
         "verified": false,
@@ -2915,7 +3405,30 @@
         ],
         "publicImportTarget": "/images/editorial/biology/BVA-0034-biology-genetics-text-safe.webp"
       },
-      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls."
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls.",
+      "deliveryVerification": {
+        "manifest": "design/visual-system/biology-text-safe/DELIVERY_MANIFEST.json",
+        "archiveSha256": "9fca7fc0286f1ce6944bc9925be008948eae8506ba8be2675b58950f76e6da45",
+        "variants": [
+          {
+            "path": "webp/BVA-0034-biology-genetics-text-safe.webp",
+            "width": 1086,
+            "height": 362,
+            "bytes": 45624,
+            "sha256": "607aa4505c5f1f1552a7d5896d378c65f67d2ff0b8076681b94419429bd29f3c",
+            "variant": "1x"
+          },
+          {
+            "path": "webp/BVA-0034-biology-genetics-text-safe@2x.webp",
+            "width": 2172,
+            "height": 724,
+            "bytes": 115866,
+            "sha256": "5fa95c7d5f4c9edb33e1b2bfd87c82850cadc6e9742f85269844d310ac0e027c",
+            "variant": "2x"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      }
     },
     {
       "id": "BVA-0035",
@@ -2952,15 +3465,18 @@
         "action": "designer-generated-and-shared-library-published",
         "existingRegistry": "client/src/content/editorial-media.ts",
         "existingSlot": "biology-measurements",
-        "existingPath": null,
+        "existingPath": "/images/editorial/biology/BVA-0035-biology-measurements-text-safe.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
         "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
-        "integrationSourceByteVerified": false
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
-      "filePaths": [],
+      "filePaths": [
+        "/images/editorial/biology/BVA-0035-biology-measurements-text-safe.webp",
+        "/images/editorial/biology/BVA-0035-biology-measurements-text-safe@2x.webp"
+      ],
       "integration": {
         "state": "awaiting developer GitHub image import, component binding and 320/390/768/1440 visual QA",
         "verified": false,
@@ -2990,7 +3506,30 @@
         ],
         "publicImportTarget": "/images/editorial/biology/BVA-0035-biology-measurements-text-safe.webp"
       },
-      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls."
+      "notes": "No baked UI title or navigation; no user-specific claims. Preserve Biology source-state/copy and access controls.",
+      "deliveryVerification": {
+        "manifest": "design/visual-system/biology-text-safe/DELIVERY_MANIFEST.json",
+        "archiveSha256": "9fca7fc0286f1ce6944bc9925be008948eae8506ba8be2675b58950f76e6da45",
+        "variants": [
+          {
+            "path": "webp/BVA-0035-biology-measurements-text-safe.webp",
+            "width": 1086,
+            "height": 362,
+            "bytes": 38120,
+            "sha256": "7443c821c8f25848b1f18a686597e3f93d502dc545e48399968225eaa58a0f0e",
+            "variant": "1x"
+          },
+          {
+            "path": "webp/BVA-0035-biology-measurements-text-safe@2x.webp",
+            "width": 2172,
+            "height": 724,
+            "bytes": 94154,
+            "sha256": "c4464546e5a816de326395b86f828b341a2af472335d1847ac61247a99450e39",
+            "variant": "2x"
+          }
+        ],
+        "scope": "Original-byte import and local rendered engineering QA verified; hosted/independent RC acceptance separate"
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-15: Biology overview 4 text-safe banners delivered (BVA-0032 revised; BVA-0033–0035 new) as independent PNGs/WebPs; GitHub image integration and rendered QA pending",

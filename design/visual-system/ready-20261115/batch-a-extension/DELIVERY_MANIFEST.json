@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0.0",
+  "batch": "A-extension",
+  "registrySource": "docs/visual-assets/visual-asset-registry.json",
+  "repoTarget": "knagle-max/BloomGutHealth:enhance/bloom-experience",
+  "createdUTC": "2026-11-15T21:06:43.638591+00:00",
+  "sourceType": "AI-generated conceptual artwork; not patient imagery or diagnostic evidence",
+  "disposition": "Generated; pending library publication in source system, scientific/rights review, GitHub binary import, and deployed visual review",
+  "assets": [
+    {
+      "id": "BVA-0029",
+      "name": "hormones-thyroid-anatomy",
+      "purpose": "Hormones & thyroid thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "description": "Conceptual endocrine/thyroid category artwork for bloodwork browsing.",
+      "originalFile": "originals/BVA-0029-hormones-thyroid-anatomy.png",
+      "webpFile": "webp/BVA-0029-hormones-thyroid-anatomy.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0029-hormones-thyroid-anatomy.png",
+          "bytes": 2166853,
+          "sha256": "57462e7c78c87e0fb5f276df0c5601dc049fe3e0d07be66c3f66c4e271f97352",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0029-hormones-thyroid-anatomy.webp",
+          "bytes": 162914,
+          "sha256": "32e9961c46dc495d860020aab1cfd39262ea304e2d1dbd1458ff6718b91da97c",
+          "format": "webp"
+        }
+      ]
+    },
+    {
+      "id": "BVA-0030",
+      "name": "inflammation-immunity-response",
+      "purpose": "Inflammation & immunity thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "description": "Conceptual immune/inflammatory response artwork for bloodwork browsing.",
+      "originalFile": "originals/BVA-0030-inflammation-immunity-response.png",
+      "webpFile": "webp/BVA-0030-inflammation-immunity-response.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0030-inflammation-immunity-response.png",
+          "bytes": 2121430,
+          "sha256": "b862b134e464974a73b99d06c846790cfb6e5b30dc2a92a443a3454c9f0838cd",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0030-inflammation-immunity-response.webp",
+          "bytes": 155072,
+          "sha256": "d53f88a50fd3faf8ce85d10d4645c934672aefb42659db9d41f8b1ac5906989c",
+          "format": "webp"
+        }
+      ]
+    },
+    {
+      "id": "BVA-0031",
+      "name": "other-identification-network",
+      "purpose": "Other / needs identification thumbnail",
+      "route": "/precision",
+      "category": "thumbnail",
+      "description": "Conceptual classification/discovery artwork for uncategorized bloodwork browsing.",
+      "originalFile": "originals/BVA-0031-other-identification-network.png",
+      "webpFile": "webp/BVA-0031-other-identification-network.webp",
+      "dimensions": [
+        1254,
+        1254
+      ],
+      "aspectRatio": 1.0,
+      "files": [
+        {
+          "path": "originals/BVA-0031-other-identification-network.png",
+          "bytes": 1961432,
+          "sha256": "eddd8d29157ee7f8964e98813f5a0883cceebc467b789094c555053347ba8019",
+          "format": "png"
+        },
+        {
+          "path": "webp/BVA-0031-other-identification-network.webp",
+          "bytes": 136556,
+          "sha256": "4b39dae2b334a5455c4b8cad1ad202e294e5d1193bc44a0025a03a692488bf74",
+          "format": "webp"
+        }
+      ]
+    }
+  ]
+}

@@ -43,7 +43,7 @@ export default function Progress() {
   return (
     <main className="science-page progress-workspace space-y-5">
       <div className="science-heading">
-        <EditorialMedia slot="progress" sizes="120px" />
+        <EditorialMedia slot="progress-scene" sizes="(max-width:767px) 100vw, 1000px" />
         <p className="eyebrow">{bloomCopy.progress.eyebrow}</p>
         <h1>{bloomCopy.progress.h1}</h1>
         <p>

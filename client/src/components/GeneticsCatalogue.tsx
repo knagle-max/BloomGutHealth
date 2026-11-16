@@ -1,3 +1,4 @@
+import EditorialMedia from "./EditorialMedia";
 import RecordedGeneticVariants from "./RecordedGeneticVariants";
 import { useEffect,useState } from "react";
 import { genotypeAnnotations, type GenotypeExplanation } from "@shared/genotype-explanations";
@@ -14,6 +15,7 @@ export default function GeneticsCatalogue({ explanations }: { explanations: Geno
   const noCalls=recordedGeneticsCatalogue(explanations).filter(group=>!group.hasReadableCall).length;
   useEffect(()=>setExpanded(false),[scope,query,domain,explanations]);
   return <section id="genetics-catalogue" tabIndex={-1} className="bloom-panel space-y-4 scroll-mt-20" aria-labelledby="genetics-catalogue-title">
+    <EditorialMedia slot="genetics-accent" sizes="(max-width:767px) 100vw, 1000px"/>
     <div><p className="eyebrow">LEARN WITHOUT UPLOADING DNA</p><h2 id="genetics-catalogue-title">Explore genetics</h2>
       <p>Browse scientific topics and the limits of what a genetic result can tell you. A research entry does not mean your DNA was tested or establish a personal action.</p></div>
     <p className="panel-note">{counts.savedCalls} saved calls · {counts.matchedExplanations} matched explanations. Self-reported calls are not clinical confirmation.</p>
