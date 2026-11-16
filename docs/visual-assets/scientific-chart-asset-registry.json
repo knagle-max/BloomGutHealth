@@ -840,6 +840,87 @@
         "Original date, unit, lab, assay, methods, revisions, source and exact-value table remain accessible",
         "320/390/768/1440, four themes, zoom, keyboard and forced colors must be validated on actual application"
       ]
+    },
+    {
+      "id": "CHART-B04",
+      "name": "Nutrient progress — source-aware linear and optional radial progress",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer package created and published; Architect, Biology/UX, implemented browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B04_Nutrient_Progress_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B04_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B04_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B04-contract.json",
+          "tokens/CHART-B04-nutrient-progress.css",
+          "svg/CHART-B04-progress-primitives.svg",
+          "fixtures/CHART-B04-FICTIONAL-ONLY.json",
+          "editable/*.svg",
+          "responsive/{320,390,768,1440}/*.svg",
+          "previews/*.png",
+          "handoff/CHART-B04-implementation.md",
+          "accessibility/CHART-B04-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "known-target",
+        "partial",
+        "no-target",
+        "unknown",
+        "exceeded",
+        "no-records"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 109/109",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 96,
+        "editableMasters": 12,
+        "previewPNGs": 5,
+        "mobilePreview": "390px Everyday Light and 320px unknown inspected",
+        "desktopPreview": "1440px Athlete Dark inspected",
+        "application": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "a11yBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/NutritionHistory.tsx",
+        "related": [
+          "client/src/components/FoodProgress.tsx",
+          "Today and Food summaries"
+        ],
+        "importRule": "Only additive scoped CSS after CHART-A01–A08 under .app-shell[data-bloom-visual=premium] .bv-scientific-chart"
+      },
+      "constraints": [
+        "Only source-recorded nutrients and a valid selected target enable ratios",
+        "Amount unknown and target unknown never appear as zero",
+        "Incomplete day remains recorded-only and must not suggest total intake",
+        "Over-target ring track caps at 100% without concealing true percent/excess",
+        "No generic health danger or diagnosis implied by target excess",
+        "Numeric/units/target provenance and exact-value table bound from real canonical data",
+        "Source withdrawal and errors must respect privacy",
+        "Responsive 320/390/768/1440, four themes, keyboard, 200% zoom, forced colors and reduced motion require real app verification"
+      ]
     }
   ]
 }
