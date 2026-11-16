@@ -1,6 +1,6 @@
 {
   "task": "T1-atlas-sibling-identity-and-browser-reliability",
-  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY_VERIFICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "failedRun": {
     "run": 43935685328,
     "sha": "8eea10621dd06df1ac7f0068e3097b31482abb17",
@@ -34,5 +34,16 @@
     "controlledGreen": "Same original responses with per-image user-style scroll and12sec-default complete/naturalWidth readiness passes all16 states and source/media/owner assertions; /tmp/bloom-atlas-held-lazy-green.log",
     "finalIntegrated": "Current source chronology + same controlled lazy policy passes full atlas, types/source audits/build; /tmp/bloom-lazy-integrated-final.log",
     "ci": "Controlled lazy policy enabled in existing atlas job; job timeout remains4min; no skips/sleeps/time inflation"
+  },
+  "qualified": {
+    "sha": "6db50175bcbdb2fd891fe2dee1daa6bbafe5054b",
+    "workflow": 43942830235,
+    "conclusion": "SUCCESS",
+    "unitTests": 772,
+    "failedTests": 0,
+    "syntheticCleanup": "PASS",
+    "render": "LIVE",
+    "deploy": "dep-dbtlqv1q5pec73fm9rbg",
+    "finishedAt": "2026-11-16T19:49:22.956055Z"
   }
 }

@@ -21,6 +21,18 @@ export function groupLabHistory<Row extends AnyLabHistoryRow>(rows:readonly Row[
 /** Prefer explicitly entered calendar text; do not reconstruct missing legacy entry context. */
 export function labDateText(timestamp:string,source?:Lab['sourceReport'],correction?:Lab['dateCorrection']){return correction?.enteredDate||source?.enteredDate||timestamp.slice(0,10);}
 
+/** Display context only: never resolve tied occurrences by array order or
+ * substitute an earlier observation because its interval looks preferable. */
+export function latestRecordedLabContext<T extends {date:string;sourceReport?:Lab['sourceReport'];dateCorrection?:Lab['dateCorrection']}>(points:readonly T[]){
+ const dated=points.filter(point=>Number.isFinite(Date.parse(point.date)));
+ if(!dated.length)return{point:undefined as T|undefined,ambiguous:false};
+ const latest=Math.max(...dated.map(point=>Date.parse(point.date))),candidates=dated.filter(point=>Date.parse(point.date)===latest);
+ if(candidates.length!==1)return{point:undefined as T|undefined,ambiguous:true};
+ const point=candidates[0],day=labDateText(point.date,point.sourceReport,point.dateCorrection);
+ const unordered=dated.some(other=>other!==point&&labDateText(other.date,other.sourceReport,other.dateCorrection)===day&&[point,other].some(value=>{const source=value.dateCorrection||value.sourceReport;return !!source?.enteredDate&&!source.enteredTime;}));
+ return{point:unordered?undefined:point,ambiguous:unordered};
+}
+
 /** Filter a source view only; a shared calendar date never establishes a panel. */
 export function labHistoryDates(rows: readonly AnyLabHistoryRow[]) {
  return Array.from(new Set(rows.map(row=>labDateText(row.measuredAt,row.sourceReport,row.dateCorrection)))).sort().reverse();

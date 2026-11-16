@@ -1,6 +1,6 @@
 {
   "task": "T2b-report-level-source-calendar-activity-context",
-  "status": "ENGINEERING_TESTED_PARTIAL_PENDING_EXACT_CI_DEPLOY_VERIFICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_PARTIAL_RESPONSE_SCOPE",
   "implementation": [
     "Existing owned activity API and selected marker across the current panel; no new storage/endpoint or duplicate chronology",
     "Explicit walking classification only; NLP/title suggestions remain generic activity",
@@ -25,9 +25,16 @@
   ],
   "relatedDefect": "Source refresh regression exposed duplicate Atlas sibling keys and two stale panels; distinct panel/explorer keys resolved actual App RED/GREEN, published separately with chart/CI repair",
   "remaining": [
-    "One new automatic exact-SHA workflow and Render qualification after publication",
+    "Full Response contributors/evidence/conditional actions remain beyond this source chronology slice",
     "This is source chronology only: full Response#15 still needs vetted exposure windows/population evidence, recalled context integration, meaningful conditional contributors/actions and complete acceptance scenarios",
     "No independent design/science/physical accessibility or full RC acceptance claimed"
   ],
-  "privacy": "Synthetic fixtures only; no Tester1 health inspection or actual-account writes"
+  "privacy": "Synthetic fixtures only; no Tester1 health inspection or actual-account writes",
+  "publication": {
+    "sha": "6db50175bcbdb2fd891fe2dee1daa6bbafe5054b",
+    "workflow": 43942830235,
+    "conclusion": "SUCCESS",
+    "render": "LIVE",
+    "deploy": "dep-dbtlqv1q5pec73fm9rbg"
+  }
 }

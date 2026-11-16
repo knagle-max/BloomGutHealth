@@ -38,6 +38,13 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-explorer-journey.mjs
+      - name: Chart-first original reference ranges and point selection regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+          BLOOM_CHART_FIRST_RANGES: "1"
+        run: node --import tsx scripts/qa/lab-explorer-journey.mjs
       - name: Scientific chart density, source dates and four-theme regression
         timeout-minutes: 4
         env:

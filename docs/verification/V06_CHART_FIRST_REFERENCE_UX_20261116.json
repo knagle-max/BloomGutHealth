@@ -1,0 +1,38 @@
+{
+  "task": "P1-chart-first-source-reference-ux",
+  "authority": "docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md",
+  "status": "INITIAL_DISPLAY_ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "implemented": [
+    "Latest unambiguous chronological display point without mutating initial global report selection; missing latest bounds do not borrow older ones",
+    "Compact visible Show reference range and Reference source using existing controller and source-versioned session context",
+    "Explicit source point vs report gesture kept distinct; tied occurrences require choice; current source/value/date/laboratory visible",
+    "Existing original-source priority, localized interval, one-sided operators, exact source table, citations and provider eligibility unchanged",
+    "Saved preferences hydrate before paint; owned report None and session-only unlinked point choices remain distinct"
+  ],
+  "validation": [
+    "21 range/history/provider/actual SQL metadata tests PASS",
+    "TypeScript, API/capability/Biology audits and production/source+built media verification PASS",
+    "Actual App direct-first scenarios PASS: one/multiple/tied/latest-missing/one-sided/original over provisional/None consistency,16 responsive themes/200%, keyboard and owner withdrawal; no source writes",
+    "Actual App/HTTP/encrypted SQL34-result import PASS: original displayed without report activation, persisted None/reload with zero range-painted frames during hydration, restored Original, same-date independent sources, scoped contexts/no Profile inference,48 responsive/mode states, source deletion/account withdrawal, original clinical JSON unchanged",
+    "Full92\u00d76-source explorer regression PASS with selected-result-only bounds across differing reports; original0/trace/unknown and exact source actions preserved",
+    "Existing actual SQL source management/lost-response/CAS/erase/account/keyboard journey PASS",
+    "Paired component captures8 states before/after at320/390 light/dark Everyday/Athlete. Old LabTrend only pinned6db with current App/controller/styles and identical55U/L points, older60/latest45 bounds. Increased viewport height avoids fixed-navigation screenshot obstruction; Athlete390dark inspected"
+  ],
+  "pending": [
+    "Publish and qualify exact CI/Render source for this initial display slice",
+    "Source correction/deletion and complete affected journey tests; final source audits/build/commit/push/exact CI/Render proof",
+    "Backed per-observation Use my laboratory range correction with immutable original/revision/CAS/deletion semantics",
+    "Incremental deterministic Canadian catalogue fallback per reviewed applicability/rights; no value-based normalizing selection or invented endpoints"
+  ],
+  "privacy": "Synthetic fixtures only; no private Tester1 data, production data writes, main merge or manual deployment",
+  "evidence": [
+    "/tmp/bloom-chart-first-final-unit.log",
+    "/tmp/bloom-chart-first-report-final.log",
+    "/tmp/bloom-chart-first-source-management.log",
+    "/tmp/bloom-chart-first-explorer-final.log",
+    "/tmp/bloom-chart-first-publish-browser.log",
+    "/tmp/bloom-chart-first-publish-final-build.log",
+    "/tmp/bloom-chart-first-before-final/",
+    "/tmp/bloom-chart-first-after-final/"
+  ]
+}
