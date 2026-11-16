@@ -10,6 +10,12 @@
 
 ---
 
+## Illustrated Bloodwork / Progress Biology convergence — owner correction (2026-11-15)
+
+[Unified illustrated Bloodwork drilldown implementation](../architecture/BLOODWORK_PROGRESS_UNIFIED_ILLUSTRATED_DRILLDOWN_20261115.md) replaces the duplicate Progress Biology dark-green, icon-only bloodwork accordion shown in owner's screenshot. On tapping Bloodwork Atlas image-backed Heart/CBC/Liver/etc category, show canonical existing marker lists and `LabTrend`/education/source details **in that Bloodwork experience** rather than routing to the separate Progress category list. Reuse current `LabExplorer` and `shared/lab-explorer`, preserve data, comparison selection, all source rows/units, old links and keyboard states. Progress Biology retains other non-lab content, with one direct Bloodwork deep link. The current Atlas code maps CBC to Iron art; correct to BVA-0036 when available. Codex implements autonomously, verifies actual previews; status: owner-approved UX correction specification, code not yet verified. No independent pre-development signoff.
+
+---
+
 ## New owner instruction supersedes gate-first development (2026-11-15)
 
 [Binding autonomous build-first policy](../architecture/V06_AUTONOMOUS_DEVELOPMENT_POST_IMPLEMENTATION_RC_REVIEW_20261115.md): implement the approved v0.6 roadmap without pre-specialist or per-feature approval holds. Capability closure checklists remain scoped tests and **integrated RC audit inputs**, not a development prerequisite. Codex may complete, test and stage ordinary functions and protected synthetic preview code now; record implemented/verified separately from actual restricted exposure. Genuine clinical, privacy, research, vendor-rights or production authorizations apply at real-world **execution or release**, not to writing isolated code. End-of-RC specialists review together; owner reviews all images/UI/functionality once; fix issues before authorized main merge. Do not run a serial 14-feature approval treadmill.
