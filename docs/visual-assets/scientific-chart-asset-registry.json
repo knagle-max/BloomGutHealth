@@ -114,6 +114,70 @@
         "Native keyboard, focus and table alternatives mandatory",
         "No data or numerical values embedded"
       ]
+    },
+    {
+      "id": "CHART-A03",
+      "name": "Measurement stroke and gradient kit",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer deliverable; science, structural UX, Architect, Codex integration and same-SHA screenshots pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A03_Strokes_Gradients_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A03_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A03_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A03-strokes.json",
+          "tokens/CHART-A03-strokes.css",
+          "svg/CHART-A03-definitions.svg",
+          "editable/CHART-A03-everyday-light-specimen.svg",
+          "editable/CHART-A03-everyday-dark-specimen.svg",
+          "editable/CHART-A03-athlete-light-specimen.svg",
+          "editable/CHART-A03-athlete-dark-specimen.svg",
+          "handoff/CHART-A03-implementation.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "styles": [
+        "primaryObserved",
+        "secondaryObserved",
+        "tertiaryObserved",
+        "comparisonObserved",
+        "selectedSegment",
+        "provisionalModelled",
+        "incompatible legend-only"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 5/5",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "editablePreview": "RENDERED everyday-light specimen",
+        "renderedInRunningApp": "NOT_TESTED",
+        "responsiveBehavior": "SPECIFIED NOT TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "target": "client/src/components/LabTrend.tsx",
+        "nextTarget": "client/src/components/FoodProgress.tsx",
+        "importRule": "A03 after A01 and A02; all styling opt-in within premium app shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "SVG specimens contain purely synthetic coordinates, never personal results",
+        "Split paths at missing and non-comparable measurements",
+        "Modelled and provisional styling requires explicit text and legend",
+        "Area fill must never bridge time gaps or obscure lab intervals",
+        "Preserve original source values, dates, units, method and keyboard selection"
+      ]
     }
   ]
 }
