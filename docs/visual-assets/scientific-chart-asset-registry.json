@@ -669,6 +669,94 @@
         "44px interactive targets and exact-value table alternative needed",
         "320/390/768/1440, 200 percent zoom, four themes, keyboard and screen-reader QA pending"
       ]
+    },
+    {
+      "id": "CHART-B02",
+      "name": "Laboratory biomarker chart composition with source-aware reference contexts",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer asset delivered; scientific/UX/Architect and real app screenshots pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-B01"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B02_Laboratory_Biomarker_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B02_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B02_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B02-contract.json",
+          "tokens/CHART-B02-laboratory-biomarker.css",
+          "svg/CHART-B02-reference-primitives.svg",
+          "fixtures/B02-FICTIONAL-ONLY.json",
+          "editable/*-master.svg",
+          "responsive/{320,390,768,1440}/*",
+          "previews/*.png",
+          "handoff/CHART-B02-implementation.md",
+          "accessibility/CHART-B02-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "source-interval",
+        "selected-only",
+        "alternate-method",
+        "published-comparison",
+        "non-comparable",
+        "unavailable",
+        "decision-threshold",
+        "method-changing"
+      ],
+      "validation": {
+        "xml": "PASS 97/97 SVG",
+        "archive": "PASS",
+        "json": "PASS",
+        "primarySpecimens": "64 for 390 and 1440; four themes and eight scenarios",
+        "responsiveAdaptations": "24 additional 320 and 768 specimens",
+        "editableMasters": "8 SVG",
+        "rasterPreviews": "5 PNG",
+        "mobileReview": "320 and 390px manual image review; overlaps corrected",
+        "desktopReview": "1440 Athlete Dark and Athlete Light rendered",
+        "actualApplication": "NOT_TESTED",
+        "sourceContextRuntime": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "related": [
+          "LabRangeSelector",
+          "LabExplorer",
+          "LabSourceContext"
+        ],
+        "importRule": "Scoped additive B02 CSS after A01-A08/B01, no new global theme; all real geometry from canonical records"
+      },
+      "constraints": [
+        "Fictional design data are never user lab results or medical limits",
+        "Historical source intervals never inferred from one selected point",
+        "Alternate assay/method must be compared under validated comparability rules",
+        "Original reference interval must be separate from decision limit or published literature",
+        "Non-comparable observations must not form a connected trend",
+        "Unavailable reference means no band, not normal",
+        "Original date/unit/source/assay and revision chain retrievable",
+        "44px focus/touch targets, exact table alternative, source withdrawal access safeguards",
+        "No deployment or visual signoff without screenshots for mobile/desktop all four themes"
+      ]
     }
   ]
 }
