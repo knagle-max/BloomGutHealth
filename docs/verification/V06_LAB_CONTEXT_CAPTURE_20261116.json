@@ -40,6 +40,7 @@
     "deploy": "dep-dbtl7utbedkc73fv4crg",
     "finishedAt": "2026-11-16T19:07:46.908652Z",
     "ciRun": 43935685328,
-    "ci": "IN_PROGRESS"
+    "ci": "FAILURE",
+    "failure": "Atlas browser step exceeded4min; focused source/current-context tests remain verified; corrective sibling keys/cache isolation prepared"
   }
 }

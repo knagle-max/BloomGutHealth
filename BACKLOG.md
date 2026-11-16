@@ -1483,3 +1483,5 @@ T2b-source-linked-remembered-context | ENGINEERING_TESTED_MOUNTED_PENDING_PUBLIC
 2026-11-16 — P1 b4e911c3 workflow43931701976 SUCCESS766/766 + all deployed/source/media/isolated Neon checks. Context activation publish now unblocked.
 
 T1-CHART-A01-B01-B02-B03 | ENGINEERING_TESTED_INTEGRATED_PENDING_PUBLICATION | Original selected sources imported; existing LabTrend data/source controls retained;4 themes/reference patterns/comparable pair guards/1-2-4-12 scenarios/8 visuals/11units/types/source audits/build PASS. Receipt V06_SCIENTIFIC_LAB_CHART_INTEGRATION_20261116.json. Push after context8ee full CI qualification; remaining family-special states and integrated RC independent review tracked separately.
+
+T1-atlas-sibling-identity-and-browser-reliability | ENGINEERING_TESTED_PENDING_CI | Distinct actor-prefixed sibling keys remove stale duplicate panels on source changes. Atlas output-local Vite cache, diagnostic phases and duplicate-key console guard; all original16-state/source/media/owner assertions PASS. Failed8ee CI whole-step timeout exact phase unproven; new full candidate required. Receipt V06_ATLAS_KEYS_CI_20261116.json.

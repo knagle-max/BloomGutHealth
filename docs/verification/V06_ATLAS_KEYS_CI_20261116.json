@@ -1,0 +1,28 @@
+{
+  "task": "T1-atlas-sibling-identity-and-browser-reliability",
+  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY_VERIFICATION",
+  "failedRun": {
+    "run": 43935685328,
+    "sha": "8eea10621dd06df1ac7f0068e3097b31482abb17",
+    "job": 133539532406,
+    "step": "Bloodwork atlas source navigation and reserved media browser regression",
+    "failure": "Whole step exceeded4 minutes; no assertion/phase detail emitted"
+  },
+  "findings": [
+    "Local shared-cache attempts showed dynamic Progress module fetch failures; source app errors and last route captured. Exact CI timeout phase remains unproven",
+    "Atlas panel review and explorer used the same actor key as siblings. Actual source-refresh browser produced two panels including stale calendar context; distinct prefixed actor keys restore one current panel",
+    "Atlas journey now uses its own output-local Vite cache and logs mode/width/category phases plus synthetic DOM on failure; duplicate React-key console errors fail assertions. No timeout increase or source/media/navigation/privacy assertion removed"
+  ],
+  "validation": [
+    "Isolated exact8ee source atlas journey PASS in about22seconds before key correction",
+    "Key-corrected exact8ee full atlas PASS:16 mode/theme/width states,200%,10 original media IDs,all source/category/deep URLs/Add/source focus/second owner",
+    "Integrated chart21526 + corrective keys + cold isolated cache full atlas PASS; /tmp/bloom-chart-repair-atlas.log",
+    "Actual new source-date/activity-withdrawal browser RED duplicate panels / GREEN one current panel, plus owner/outage/8 mobile states",
+    "Final frozen candidate TypeScript/API/capability/Biology audits and production build PASS"
+  ],
+  "scope": "Charts and already-mounted context retained; new activity chronology implementation remains uncommitted and is excluded. No main merge, manual deploy, private data query or real-account writes.",
+  "remaining": [
+    "One new full exact-SHA workflow and Render qualification; do not rerun unchanged failed8ee",
+    "Independent integrated RC acceptance and remaining v0.6 requirements"
+  ]
+}

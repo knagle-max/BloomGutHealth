@@ -25429,7 +25429,7 @@
     "scripts/qa/biological-report-management-journey.mjs": "9868064c019894f8329ce1ce361a5a617853147fde2b08ddd0dbf5238286c3cb",
     "scripts/qa/biology-content-journey.mjs": "88a5dfa47d66ed4fac242475936f7552aa23c633002ee82112b08d2b120ec045",
     "scripts/qa/biology-source-count-journey.mjs": "d3aa899bfa49e6a860a8595c232f92b5c3e92e9b7a1b281807da8fca2e83da35",
-    "scripts/qa/bloodwork-atlas-journey.mjs": "4ab5d647e2422ad9d06d7363188e8b9d01cf482b565f4d7d1d0e014706c8dfcd",
+    "scripts/qa/bloodwork-atlas-journey.mjs": "34b1e139614a3efb4036743c4f4c50b43b0997aea30d897745c1e1d20ef45131",
     "scripts/qa/bloodwork-source-overview-journey.mjs": "364a627533daadcc5c4928ac8097ce5f95acad1484ad22c67b4559dc9c8bb612",
     "scripts/qa/functional-microbiome-journey.mjs": "f29430c9b3fd38a111dded6b69efe48f6004e98252af690ce10c3f21f829e423",
     "scripts/qa/genetic-source-management-journey.mjs": "8e02e36167aab1ab2824862323a075722ee91be6f3085adc6252b21b4c18f5bb",

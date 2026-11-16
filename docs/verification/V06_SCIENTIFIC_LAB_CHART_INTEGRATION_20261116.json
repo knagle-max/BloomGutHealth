@@ -1,6 +1,6 @@
 {
   "task": "T1-CHART-A01-B01-B02-B03",
-  "status": "ENGINEERING_TESTED_INTEGRATED_PENDING_PUBLICATION",
+  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY_VERIFICATION",
   "source": "docs/visual-assets/SCIENTIFIC_CHARTS_25_VERIFIED_DELIVERY_CODEX_20261115.md",
   "assets": {
     "path": "design/visual-system/scientific-charts/v1",
@@ -24,7 +24,8 @@
     "Final exact-source fail-fast TypeScript/API/capability/Biology audits,11 focused unit tests and production build PASS",
     "Final focused two-result browser PASS: original2/5U/L gives+3 only with matching context; unknown method removes selected and aggregate numeric difference, preserves both original cards and source reasons;320/390 light/dark screenshots,390dark inspected",
     "Dedicated actual App1/2/4/12 scenario matrix PASS: numeric irregular date spacing including140-day compatible gap, zero/outlier scale, no line for single point, exact source inspection,12-record mobile4themes/200%; added to CI",
-    "Integrated with mounted context8eea1062: final fail-fast source audits/TypeScript,1-2-4-12 App scenarios, original-pair and unknown-method browser checks,11 unit tests and production build PASS"
+    "Integrated with mounted context8eea1062: final fail-fast source audits/TypeScript,1-2-4-12 App scenarios, original-pair and unknown-method browser checks,11 unit tests and production build PASS",
+    "Frozen chart+context candidate with prefixed Atlas sibling keys and isolated-cache atlas regression PASS:16 states,200%, original art/source/navigation/owner checks; fail-fast audits/types/build PASS"
   ],
   "remaining": [
     "Remaining specialised unsupported-state variants use canonical source state only; independently reviewed visual/scientific/accessibility acceptance remains at integrated RC",

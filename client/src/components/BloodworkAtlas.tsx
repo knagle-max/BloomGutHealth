@@ -31,9 +31,9 @@ export default function BloodworkAtlas({report}:{report?:PrecisionReport}){
     <div className="bloodwork-atlas-actions">{report&&<a className="hero-button" href="#add-labs-title" onClick={()=>requestAnimationFrame(()=>{const target=document.getElementById('add-labs-title');target?.setAttribute('tabindex','-1');target?.focus();})}>Add lab results</a>}<Link className="text-link" href="/biology/reports">Manage reports</Link></div>
    </div>
   </header>
-  {report&&<LabPanelReview key={user?.id} report={report} onSelect={select}/>}
+  {report&&<LabPanelReview key={`panel:${user?.id||"signed-out"}`} report={report} onSelect={select}/>}
   {report&&<LabRememberedContextHistory sourceKey={JSON.stringify(report.labHistory)}/>}
-  <LabExplorer key={user?.id} owner={user?.id||''} report={report} marker={marker} group={group} selection={selection} onSelect={select} onSelectionChange={changeSelection} illustrated/>
+  <LabExplorer key={`explorer:${user?.id||"signed-out"}`} owner={user?.id||''} report={report} marker={marker} group={group} selection={selection} onSelect={select} onSelectionChange={changeSelection} illustrated/>
   {report&&!entries.length&&<p className="panel-note">Add laboratory results to browse your recorded markers. Missing measurements are not treated as zero.</p>}
   {report&&entries.length>0&&<p className="panel-note">Systems help you browse; they are not diagnoses. Some markers appear in more than one system. Original reports and every recorded result remain below.</p>}
   <Link className="text-link" href="/meal-planner">Food preferences & meal planner</Link>
