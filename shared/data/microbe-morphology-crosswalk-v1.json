@@ -1,0 +1,833 @@
+{
+  "schemaVersion": "microbe-morphology-crosswalk-v1",
+  "sourceDocument": "Bloom_Shared_Microbe_Morphology_94_Artwork_Handoff_2026-11-15.md",
+  "fixture": "shared/data/biology-content-r4m1-v2.json",
+  "fixtureBlobSha": "ecb54d3aa4622a1c97bef07b34757693e1a29c47",
+  "scope": "94 fixture observations only; not authenticated current user report or global organism catalog",
+  "status": "mapping registered; artwork not yet generated or activated",
+  "taxonomicCaveat": "artwork styles are morphological visual archetypes, NOT taxonomic families, taxon identities, measured shapes or strain portraits",
+  "defaultStyleId": "U00",
+  "allowedStyleIds": [
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "C05",
+    "F01",
+    "F02",
+    "V01",
+    "V02",
+    "V03",
+    "U00"
+  ],
+  "styles": [
+    {
+      "id": "C01",
+      "registryAssetId": "BVA-0037",
+      "name": "Cocci in chains or pairs",
+      "domain": "bacterium",
+      "contract": "Short loose arrangements of rounded cells; no false defined chain length",
+      "designIntent": "Bloom-grade tactile rounded cell morphology, soft sage warm highlights, distinct pair/short-chain composition",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "C02",
+      "registryAssetId": "BVA-0038",
+      "name": "Round or oval cocci",
+      "domain": "bacterium",
+      "contract": "Separate rounded to oval cells clustered loosely; no colony or sampled species claim",
+      "designIntent": "Materially distinctive round/oval cells in floating shallow-focus arrangement",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "C03",
+      "registryAssetId": "BVA-0039",
+      "name": "Short / oval bacterial rods",
+      "domain": "bacterium",
+      "contract": "Multiple short soft capsules or oval rods; neither scale image nor Gram stain",
+      "designIntent": "Compact short forms with organic surface texture and depth, no invented appendages",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "C04",
+      "registryAssetId": "BVA-0040",
+      "name": "Elongated bacterial rods",
+      "domain": "bacterium",
+      "contract": "Several elongated cells; no invented spores or flagella",
+      "designIntent": "Long cylinders/capsules with believable biological silhouette, not mechanical tubes",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "C05",
+      "registryAssetId": "BVA-0041",
+      "name": "Branched / irregular bacterial rods",
+      "domain": "bacterium",
+      "contract": "Branching or Y-shaped rods; general bifidobacterial shape only",
+      "designIntent": "Organic irregular connected/Y-like cells, neither deterministic strain portrait nor trademark shape",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "F01",
+      "registryAssetId": "BVA-0042",
+      "name": "Dark yeast-like fungi",
+      "domain": "fungus",
+      "contract": "Bud-like dark yeast forms; no bacterial styling",
+      "designIntent": "Budding darker pigmented eukaryotic cells, morphological cues visible at small crop",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "F02",
+      "registryAssetId": "BVA-0043",
+      "name": "Filamentous fungi",
+      "domain": "fungus",
+      "contract": "Natural intertwined hyphae and mycelial threads",
+      "designIntent": "Elegant genuinely filamentous geometry, no plant roots or synthetic hairs",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "V01",
+      "registryAssetId": "BVA-0044",
+      "name": "Rigid rod-shaped plant viruses",
+      "domain": "virus",
+      "contract": "Generic rod or helical capsid; distinct from bacterial rod",
+      "designIntent": "Fine structured rigid particles arranged with convincing narrow rod silhouette; no host infection claim",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "V02",
+      "registryAssetId": "BVA-0045",
+      "name": "Head-and-tail bacteriophages",
+      "domain": "virus",
+      "contract": "Geometric head with long tail; simplified, do not claim named virion",
+      "designIntent": "Simple bacteriophage capsid/tail forms, strong recognisable silhouette and correct geometry",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "V03",
+      "registryAssetId": "BVA-0046",
+      "name": "Enveloped spherical virus",
+      "domain": "virus",
+      "contract": "Spherical envelope with small surface glycoprotein projections",
+      "designIntent": "Dimensional spherical enveloped particle, restrained short projections, no disease implication",
+      "artworkStatus": "NOT_CREATED",
+      "thumbnail": null,
+      "portrait": null
+    },
+    {
+      "id": "U00",
+      "registryAssetId": "bloom-neutral-microorganism-v1",
+      "name": "Neutral microorganism — shape unverified",
+      "domain": "unknown",
+      "contract": "No morphology claim",
+      "designIntent": "Use existing neutral unverified illustration until/unless a future approved neutral design replaces it",
+      "artworkStatus": "existing fallback; remain active"
+    }
+  ],
+  "counts": {
+    "C01": 10,
+    "C02": 6,
+    "C03": 35,
+    "C04": 21,
+    "C05": 1,
+    "F01": 2,
+    "F02": 3,
+    "U00": 9,
+    "V01": 4,
+    "V02": 2,
+    "V03": 1
+  },
+  "entries": [
+    {
+      "sourceOrdinal": 1,
+      "reportedName": "Abiotrophia defectiva",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 2,
+      "reportedName": "Alistipes communis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 3,
+      "reportedName": "Amedibacterium intestinale",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 4,
+      "reportedName": "Adlercreutzia sp. 8CFCBH1",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 5,
+      "reportedName": "Alistipes dispar",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 6,
+      "reportedName": "Anaerobutyricum hallii",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 7,
+      "reportedName": "Akkermansia muciniphila",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 8,
+      "reportedName": "Alistipes indistinctus",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 9,
+      "reportedName": "Anaerostipes hadrus",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 10,
+      "reportedName": "Anaerostipes rhamnosivorans",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 11,
+      "reportedName": "Bacteroides caecimuris",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 12,
+      "reportedName": "Bacteroides fragilis 638R",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 13,
+      "reportedName": "Bacteroides intestinalis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 14,
+      "reportedName": "Bacteroides sp. CACC 737",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 15,
+      "reportedName": "Bacteroides sp. HF-5141",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 16,
+      "reportedName": "Bacteroides uniformis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 17,
+      "reportedName": "Bacteroides zoogleoformans",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 18,
+      "reportedName": "Blautia sp. LZLJ-3",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C02",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 19,
+      "reportedName": "Butyricimonas faecalis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 20,
+      "reportedName": "Bacillus thuringiensis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 21,
+      "reportedName": "Bacteroides cellulosilyticus",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 22,
+      "reportedName": "Bacteroides fragilis YCH46",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 23,
+      "reportedName": "Bacteroides ovatus V975",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 24,
+      "reportedName": "Bacteroides sp. CBA7301",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 25,
+      "reportedName": "Bacteroides sp. HF-5287",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 26,
+      "reportedName": "Bacteroides vulgatus ATCC 8482",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 27,
+      "reportedName": "Bifidobacterium pseudocatenulatum",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C05",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 28,
+      "reportedName": "Blautia sp. SC05B48",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C02",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 29,
+      "reportedName": "Butyricimonas virosa",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 30,
+      "reportedName": "Bacteroides caccae",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 31,
+      "reportedName": "Bacteroides dorei CL03T12C01",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 32,
+      "reportedName": "Bacteroides heparinolyticus",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 33,
+      "reportedName": "Bacteroides sp. A1C1",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 34,
+      "reportedName": "Bacteroides sp. HF-162",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 35,
+      "reportedName": "Bacteroides thetaiotaomicron VPI-5482",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 36,
+      "reportedName": "Bacteroides xylanisolvens",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 37,
+      "reportedName": "Blautia argi",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C02",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 38,
+      "reportedName": "Bordetella trematum",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 39,
+      "reportedName": "Christensenella minuta",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 40,
+      "reportedName": "Clostridium perfringens",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 41,
+      "reportedName": "Dysosmobacter welbionis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 42,
+      "reportedName": "Exophiala phaeomuriformis",
+      "reportedGroup": "Eukaryote",
+      "artworkStyleId": "F01",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 43,
+      "reportedName": "Faecalibacterium prausnitzii A2-165",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 44,
+      "reportedName": "Haemophilus parainfluenzae T3T1",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 45,
+      "reportedName": "Lactobacillus curvatus JCM 1096 = DSM 20019",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 46,
+      "reportedName": "Latilactobacillus sakei",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 47,
+      "reportedName": "Longibaculum sp. KGMB06250",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 48,
+      "reportedName": "Odoribacter splanchnicus DSM 20712",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 49,
+      "reportedName": "Parabacteroides distasonis ATCC 8503",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 50,
+      "reportedName": "Coprobacter sp. 2CBH44",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 51,
+      "reportedName": "Enterocloster bolteae",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 52,
+      "reportedName": "Exophiala spinifera",
+      "reportedGroup": "Eukaryote",
+      "artworkStyleId": "F01",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 53,
+      "reportedName": "Flavonifractor plautii",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 54,
+      "reportedName": "Lacticaseibacillus rhamnosus",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 55,
+      "reportedName": "Lactococcus cremoris",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 56,
+      "reportedName": "Limosilactobacillus fermentum",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 57,
+      "reportedName": "Massilistercora timonensis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 58,
+      "reportedName": "Oscillibacter sp. PEA192",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 59,
+      "reportedName": "Parabacteroides sp. CT06",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 60,
+      "reportedName": "Coprococcus comes",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C02",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 61,
+      "reportedName": "Eptesicus fuscus gammaherpesvirus",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V03",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 62,
+      "reportedName": "Faecalibacillus intestinalis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 63,
+      "reportedName": "Gordonibacter urolithinfaciens",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 64,
+      "reportedName": "Lactiplantibacillus plantarum",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 65,
+      "reportedName": "Lactococcus phage 96603",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V02",
+      "morphologyEvidence": "group_inferred"
+    },
+    {
+      "sourceOrdinal": 66,
+      "reportedName": "Loigolactobacillus backii",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 67,
+      "reportedName": "Mogibacterium diversum",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 68,
+      "reportedName": "Paprika mild mottle virus",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V01",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 69,
+      "reportedName": "Pepper mild mottle virus",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V01",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 70,
+      "reportedName": "Phocaeicola coprophilus",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 71,
+      "reportedName": "Roseburia hominis A2-183",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 72,
+      "reportedName": "Streptococcus pyogenes",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 73,
+      "reportedName": "Streptococcus sp. LPB0220",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 74,
+      "reportedName": "Streptococcus thermophilus ND03",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 75,
+      "reportedName": "Sutterella faecalis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 76,
+      "reportedName": "Tomato brown rugose fruit virus",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V01",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 77,
+      "reportedName": "Ustilaginoidea virens",
+      "reportedGroup": "Eukaryote",
+      "artworkStyleId": "F02",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 78,
+      "reportedName": "[Clostridium] scindens",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 79,
+      "reportedName": "Pyrenophora tritici-repentis",
+      "reportedGroup": "Eukaryote",
+      "artworkStyleId": "F02",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 80,
+      "reportedName": "Ruminococcus bicirculans",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C02",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 81,
+      "reportedName": "Streptococcus salivarius",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 82,
+      "reportedName": "Streptococcus thermophilus LMD-9",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 83,
+      "reportedName": "Streptococcus vestibularis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 84,
+      "reportedName": "Sutterella wadsworthensis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C03",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 85,
+      "reportedName": "Turicibacter sanguinis",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 86,
+      "reportedName": "Veillonella parvula",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C02",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 87,
+      "reportedName": "Pyricularia grisea",
+      "reportedGroup": "Eukaryote",
+      "artworkStyleId": "F02",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 88,
+      "reportedName": "Ruthenibacterium lactatiformans",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "U00",
+      "morphologyEvidence": "unverified"
+    },
+    {
+      "sourceOrdinal": 89,
+      "reportedName": "Streptococcus sp. FDAARGOS_192",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 90,
+      "reportedName": "Streptococcus thermophilus MN-ZLW-002",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C01",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 91,
+      "reportedName": "Streptococcus virus DT1",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V02",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 92,
+      "reportedName": "Tobacco mild green mosaic virus",
+      "reportedGroup": "Virus",
+      "artworkStyleId": "V01",
+      "morphologyEvidence": "reviewed_group"
+    },
+    {
+      "sourceOrdinal": 93,
+      "reportedName": "Turicibacter sp. H121",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    },
+    {
+      "sourceOrdinal": 94,
+      "reportedName": "[Clostridium] innocuum",
+      "reportedGroup": "Bacterium",
+      "artworkStyleId": "C04",
+      "morphologyEvidence": "genus_provisional"
+    }
+  ],
+  "matchingRules": {
+    "primary": "source observation ID plus source report ID",
+    "fixtureOnly": "exact reportedName plus sourceOrdinal and report scope",
+    "unknown": "U00",
+    "prohibit": [
+      "substring species matching",
+      "LLM at render-time",
+      "assuming same species across reports",
+      "inferring morphology from quantity or taxonomic family"
+    ]
+  },
+  "disclosure": {
+    "group": "Illustration of a broad microbial form, not an image of this organism or strain.",
+    "unknown": "Shape not verified for this report entry."
+  },
+  "legacyAssetPolicy": "All 20 current named organism portraits are DESIGNED FOR RETIREMENT, not yet removed from the running application; preserve current file bytes for rollback until 10 replacement styles have been delivered, mapped, and visually/scientifically accepted."
+}
