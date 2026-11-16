@@ -2486,12 +2486,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "generated-published-to-shared-library",
-        "existingRegistry": null,
-        "existingSlot": "Bloodwork system hormones & thyroid category",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-hormones",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "PNG + optimized WebP created and published in shared Agent Handoffs library. NOT committed as image binaries to GitHub or integrated in application; rights, scientific accuracy and mobile/desktop rendered checks pending.",
@@ -2557,12 +2558,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "generated-published-to-shared-library",
-        "existingRegistry": null,
-        "existingSlot": "Bloodwork system inflammation & immunity category",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-inflammation",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "PNG + optimized WebP created and published in shared Agent Handoffs library. NOT committed as image binaries to GitHub or integrated in application; rights, scientific accuracy and mobile/desktop rendered checks pending.",
@@ -2628,12 +2630,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "generated-published-to-shared-library",
-        "existingRegistry": null,
-        "existingSlot": "Bloodwork system other / needs identification category",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "bloodwork-other",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip",
-        "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_BVA_Batch_A_Extension_0029-0031_manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "PNG + optimized WebP created and published in shared Agent Handoffs library. NOT committed as image binaries to GitHub or integrated in application; rights, scientific accuracy and mobile/desktop rendered checks pending.",
@@ -2701,12 +2704,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "designer-generated-and-shared-library-published",
-        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
-        "existingSlot": "Biology > Bloodwork",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "biology-bloodwork",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
@@ -2796,12 +2800,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "designer-generated-and-shared-library-published",
-        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
-        "existingSlot": "Biology > Gut reports",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "biology-gut",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
@@ -2870,12 +2875,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "designer-generated-and-shared-library-published",
-        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
-        "existingSlot": "Biology > Genetics",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "biology-genetics",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",
@@ -2944,12 +2950,13 @@
       "impact": "high",
       "sourceRelation": {
         "action": "designer-generated-and-shared-library-published",
-        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
-        "existingSlot": "Biology > Measurements",
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "biology-measurements",
         "existingPath": null,
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Biology_4_TextSafe_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": false
       },
       "lifecycle": "Generated",
       "productionStatus": "Latest revised text-safe image generated; original PNG + WebP 1x/2x delivered to shared Agent Handoffs. Image binaries NOT verified on GitHub or deployed. Contrast/crops, scientific and rights review pending.",

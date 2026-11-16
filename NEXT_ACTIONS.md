@@ -109,3 +109,5 @@ The [autonomous development policy](docs/architecture/V06_AUTONOMOUS_DEVELOPMENT
 - **Report exactly** `branch HEAD | active task + exit | source/code and test receipts | CI/Render SHA or NOT VERIFIED | blockers | next 2–3 independently safe tasks`; never infer shipped capability from an architecture handoff or locally passing test.
 
 **Latest known entrypoint at this edit:** T0 publication/CI state is from dated 2026-11-15 progress text, **not independently certified here**. Codex shall inspect actual branch/working tree and not replay old tasks automatically.
+
+**Current bounded delta (2026-11-16):** T1c Biology banner/category bindings ENGINEERING_TESTED;35 IDs/21 slots, original navigation/source parity retained. Actual seven new image imports BLOCKED_TECHNICAL on Shared Library bytes (owner confirmed folder; no reader/mount/URL). Publish UI+reviewed API inventory hash correction, then T2a concrete Food journey/T2b uncovered Core; never call reserved frames imported imagery.

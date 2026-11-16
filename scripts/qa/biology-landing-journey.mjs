@@ -22,11 +22,21 @@ const page=await browser.newPage({viewport:{width:390,height:1000}});page.setDef
 await page.route('**/api/**',async route=>{const req=route.request(),path=new URL(req.url()).pathname;if(req.method()!=='GET')writes.push(path);
  if(path==='/api/precision'){const response=await fetch(apiBase+path);return route.fulfill({status:response.status,contentType:'application/json',body:await response.text()});}
  return route.fulfill({json:path==='/api/auth/me'?{user:{id:'synthetic-biology-landing',username:'Synthetic landing review'}}:path==='/api/experience/settings'?{mode,onboarding:{status:'complete'}}:path==='/api/preferences'?defaultPreferences:[]});});
-const dir=new URL('../../docs/review/biology-landing-20261106/',import.meta.url);if(capture)await mkdir(dir,{recursive:true});
+const dir=new URL(process.env.BLOOM_BIOLOGY_REVIEW||'../../docs/review/biology-landing-20261106/',import.meta.url);if(capture)await mkdir(dir,{recursive:true});
 const go=async()=>{await page.goto('http://127.0.0.1:5274/precision');await page.getByRole('region',{name:'Your health information',exact:true}).waitFor();};
 try{
  await go();
- for(const[width,dark]of[[320,false],[390,false],[390,true]]){await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:dark?'dark':'light'});await page.evaluate(d=>document.documentElement.classList.toggle('dark',d),dark);await page.evaluate(()=>window.scrollTo(0,0));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));if(capture)await page.screenshot({path:new URL(`${before?'before':'after'}-${width}-${dark?'dark':'light'}.png`,dir).pathname});}
+ for(mode of ['everyday','athlete']){await go();for(const width of [320,390,768,1440])for(const dark of [false,true]){
+  await page.setViewportSize({width,height:1000});await page.emulateMedia({colorScheme:dark?'dark':'light'});await page.evaluate(d=>document.documentElement.classList.toggle('dark',d),dark);
+  const sources=page.locator('.biology-home-sources');
+  if(!before){assert.deepEqual(await sources.locator('[data-bloom-asset-id]').evaluateAll(nodes=>nodes.map(node=>node.dataset.bloomAssetId)),['BVA-0032','BVA-0033','BVA-0034','BVA-0035']);assert.equal(await sources.locator('img').count(),0,'Unavailable banners stay reserved, not broken');assert.ok(await sources.locator('figure').evaluateAll(nodes=>nodes.every(node=>node.getAttribute('aria-hidden')==='true')));}
+  for(const fontSize of ['100%','200%']){
+   await page.evaluate(value=>document.documentElement.style.fontSize=value,fontSize);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${mode}/${width}/${dark}/${fontSize}`);
+   for(const row of await sources.locator('.biology-home-source').all()){await row.focus();assert.ok(await row.evaluate(element=>getComputedStyle(element).outlineStyle!=='none'&&element===document.activeElement&&element.getBoundingClientRect().height>=44));}
+  }
+  await page.evaluate(()=>{document.documentElement.style.fontSize='';window.scrollTo(0,0);});if(capture&&width<=390)await page.screenshot({path:new URL(`${before?'before':'after'}-${mode}-${width}-${dark?'dark':'light'}.png`,dir).pathname});
+ }}
+ mode='everyday';await go();
  if(!before){
   const region=page.getByRole('region',{name:'Your health information',exact:true});
   safetyReviewed=false;await go();const goalDetails=page.locator('.biology-context');assert.equal(await goalDetails.getAttribute('open'),null);await goalDetails.locator('summary').focus();await page.keyboard.press('Enter');await page.getByText('Health context has not been reviewed. Personal guidance may be unavailable.',{exact:true}).waitFor();const goals=page.locator('input[name="goals"]');await goals.fill('Synthetic unsaved biology goal');await goalDetails.locator('summary').click();await goalDetails.locator('summary').click();assert.equal(await goals.inputValue(),'Synthetic unsaved biology goal');
@@ -36,7 +46,7 @@ try{
   assert.equal(await page.getByRole('button',{name:'View bloodwork',exact:true}).count(),0);await region.getByRole('link',{name:/Gut reports/}).getByText('1 saved report',{exact:true}).waitFor();
   const actual=await(await fetch(apiBase+'/api/precision')).json();assert.equal(actual.microbiome.report,null);assert.deepEqual(actual.availableReports,[]);assert.equal(actual.gutReportInventory.saved,1);
   assert.equal(await region.getByRole('link',{name:/Gut reports/}).getAttribute('href'),'/microbiome');
-  await region.getByRole('button',{name:/^Bloodwork/}).click();await page.getByRole('heading',{name:'Add lab results',exact:true}).waitFor();assert.equal(await page.locator('#add-labs-title').evaluate(el=>el===document.activeElement),true);
+  await region.getByRole('button',{name:/^Bloodwork/}).click();await page.getByRole('heading',{name:'Add lab results',exact:true}).waitFor();await page.waitForFunction(()=>document.getElementById('bloodwork-atlas-title')===document.activeElement);
   await go();await region.getByRole('button',{name:/^Genetics/}).click();await page.getByRole('region',{name:'Your genetics',exact:true}).waitFor();
   await go();await region.getByRole('button',{name:/^Measurements/}).click();await page.getByRole('heading',{name:'Record your response',exact:true}).waitFor();
   scenario='empty';await go();await region.getByRole('link',{name:/Gut reports/}).getByText('Add your first report',{exact:true}).waitFor();

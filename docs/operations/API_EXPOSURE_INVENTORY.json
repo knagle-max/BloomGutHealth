@@ -13,7 +13,7 @@
     "server/account-routes.ts": "b0f387458e436b22d8028490b0de9bc59c11533d6e2f5270842c670eaa38a8dc",
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
-    "server/capability-access.ts": "e1b66eac87b9555ccd807b189a0d25ab9fe06ffe927f0798bc0b45cdb6a6ff7e",
+    "server/capability-access.ts": "a4af301a2d14d380a6906b1da60304d45560e46cb8e4d99daff48e30373e98a4",
     "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
     "server/experience-routes.ts": "e66b2f3ce646bac47e9e5fde23c9b73616429c03f0999fa89c14979bff45c9d7",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
@@ -146,7 +146,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 37,
+      "line": 42,
       "method": "USE",
       "path": "/api/capabilities",
       "declaredMiddleware": [
@@ -156,7 +156,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 38,
+      "line": 43,
       "method": "GET",
       "path": "/api/capabilities",
       "declaredMiddleware": [],
@@ -164,7 +164,7 @@
     },
     {
       "file": "server/capability-access.ts",
-      "line": 47,
+      "line": 52,
       "method": "PATCH",
       "path": "/api/capabilities/experimental",
       "declaredMiddleware": [],

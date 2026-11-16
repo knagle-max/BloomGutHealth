@@ -157,6 +157,13 @@ export const editorialMedia = {
   "bloodwork-sugar": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
   "bloodwork-liver": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
   "bloodwork-iron": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
-  "bloodwork-bone": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}}
+  "bloodwork-bone": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-hormones": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-inflammation": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "bloodwork-other": {mode:"conceptual",placement:"bloodwork-system",reserved:{width:480,height:480,conceptual:true}},
+  "biology-bloodwork": {mode:"conceptual",placement:"biology-source-banner",reserved:{width:2172,height:724,conceptual:true}},
+  "biology-gut": {mode:"conceptual",placement:"biology-source-banner",reserved:{width:2172,height:724,conceptual:true}},
+  "biology-genetics": {mode:"conceptual",placement:"biology-source-banner",reserved:{width:2172,height:724,conceptual:true}},
+  "biology-measurements": {mode:"conceptual",placement:"biology-source-banner",reserved:{width:2172,height:724,conceptual:true}}
 } as const satisfies Record<string, EditorialMediaAsset>;
 export type EditorialMediaSlot = keyof typeof editorialMedia;

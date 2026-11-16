@@ -67,3 +67,5 @@ The receipts listed here are **historical evidence**, not live HEAD/CI/Render ve
 Select from **[NEXT_ACTIONS.md](../../NEXT_ACTIONS.md)**: validate T0 publication check once, then T1 app-wide visual/asset vertical slices, then incomplete T2 Core tasks, authorized Advanced and SwiftUI late. This ledger is **not** a second task selector.
 
 2026-11-15 | V06-EXP-ACCESS-01 | ENGINEERING_TESTED; explicit standing grant plus legacy expiry/fingerprint compatibility,21 focused/HTTP/SQL tests and synthetic App preview/revocation PASS. Actual runtime configuration/CAS transition pending publication; no permanent-access/session verification claim yet. Receipt V06_STANDING_TESTER_ACCESS_20261115.json.
+
+2026-11-16 | T1c-biology-media-bindings | ENGINEERING_TESTED component/adapter delta;21 slots,35 permanent IDs preserved, original four navigation/source states and50 lab rows retained. Actual BVA0029-0035 image-byte import BLOCKED_TECHNICAL on unavailable Shared Library access; lifecycle not advanced. Receipt V06_BIOLOGY_MEDIA_BINDINGS_20261116.json.

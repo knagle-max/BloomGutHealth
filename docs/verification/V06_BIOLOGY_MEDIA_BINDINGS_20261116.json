@@ -1,0 +1,31 @@
+{
+  "task": "T1c-biology-media-bindings",
+  "implementation": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "assetImport": "BLOCKED_TECHNICAL: no shared Library reader/folder mount/download URL or attached ZIP bytes in selected Codex environment. Owner reconfirmed Bloom gut health / Agent Handoffs; this is source access, not an approval hold.",
+  "risk": "LOW read-only UI. Preserve original four destinations/live source summaries, every lab row, source/account withdrawal, accessible navigation and existing palette roles. No clinical claims, new data writes or image generation.",
+  "changes": [
+    "Four Biology navigation surfaces use existing EditorialMedia with text-safe3:1 reserved frames for BVA0032-0035, preserving all labels/counts/targets",
+    "Three additional Bloodwork system bindings map hormones/inflammation/other to BVA0029-0031",
+    "Master35 IDs and all Designer delivery/history fields preserved; lifecycle stays Generated, filePaths empty, integration verified false. Added explicit engineering integration byte verification false. Delivery projection now21 slots:8 existing sources+13 reserved",
+    "API inventory corrected for standing-grant source hash and+5 line offsets only;127 declarations/13 unresolved unchanged"
+  ],
+  "validation": {
+    "types": "PASS",
+    "unit": "3/3 original visual registry contract tests PASS across21 bindings",
+    "build": "PASS original source/build media hashes,35-ID source projection",
+    "biologyBrowser": "PASS actual App/precision HTTP with synthetic source: four ordered destinations, saved qualitative report without quantitative inference,32 mode/theme/3203907681440 text-size states,200% desktop zoom, all four44px keyboard/focus targets, original lab/genetics/measurement routes, empty/pending/failed source, no leaked internal error and zero writes",
+    "atlasBrowser": "PASS50 original rows/zero/unknown,9 reserved IDs,16 mode/theme/width states plus200% text, each system drill-in, original source detail/focus,Add focus and second-owner withdrawal; zero writes",
+    "screenshots": "/tmp/bloom-biology-source-banners; eight320/390 light/dark/mode screenshots; implementer inspected390 Everyday light and320 Athlete dark. Not independent design or physical VoiceOver acceptance.",
+    "sourceAudits": "Capability52 IDs/authorization unchanged, two UI hashes refreshed; biology522 identities/49 markers/126 taxa/7 pathways unchanged; API counts unchanged. All three check modes pass.",
+    "exactPublicationCI": "PENDING; prior e106d5ce CI43778145750 passed standing preview and planner-clock browser checks, then failed stale API inventory fingerprint; reviewed/generated here"
+  },
+  "requiredSourceFiles": [
+    "Bloom_Biology_4_TextSafe_Editorial_Assets_2026-11-15.zip (or WebP-only archive)",
+    "Bloom_BVA_Batch_A_Extension_0029-0031_2026-11-15.zip"
+  ],
+  "notClaimed": [
+    "Original PNG/WebP byte import or crop/image retry verification for unavailable sources",
+    "Integrated/Visually Verified lifecycle",
+    "Full UI overhaul, Core Response#15 or final RC completion"
+  ]
+}

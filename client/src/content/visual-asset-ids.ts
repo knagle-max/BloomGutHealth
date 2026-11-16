@@ -15,5 +15,12 @@ export const editorialVisualAssetIds={
   "bloodwork-sugar": "BVA-0011",
   "bloodwork-liver": "BVA-0012",
   "bloodwork-iron": "BVA-0013",
-  "bloodwork-bone": "BVA-0014"
+  "bloodwork-bone": "BVA-0014",
+  "bloodwork-hormones": "BVA-0029",
+  "bloodwork-inflammation": "BVA-0030",
+  "bloodwork-other": "BVA-0031",
+  "biology-bloodwork": "BVA-0032",
+  "biology-gut": "BVA-0033",
+  "biology-genetics": "BVA-0034",
+  "biology-measurements": "BVA-0035"
 } as const satisfies Record<EditorialMediaSlot,BloomVisualAssetId>;
