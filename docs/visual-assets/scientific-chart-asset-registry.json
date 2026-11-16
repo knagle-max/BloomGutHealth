@@ -402,6 +402,91 @@
         "Data values, dates, provenance and exact table still bound dynamically",
         "Browser QA 320/390/768/1440, 200% zoom, four themes pending"
       ]
+    },
+    {
+      "id": "CHART-A07",
+      "name": "Selection crosshair, inspection tooltip and original-source drawer",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate published; Architect, Science, UX, Codex implementation and real-browser visual acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A07_Source_Inspection_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A07_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A07_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A07-inspection.json",
+          "tokens/CHART-A07-inspection.css",
+          "svg/CHART-A07-source-inspection-symbols.svg",
+          "editable/CHART-A07-*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "handoff/CHART-A07-implementation.md",
+          "handoff/CHART-A07-interaction-storyboard.md",
+          "accessibility/CHART-A07-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "variants": [
+        "vertical and horizontal source-scoped crosshair",
+        "selected halo",
+        "pinned point selection",
+        "compact tooltip",
+        "expanded native-source inspection panel",
+        "multi-series synchronized timestamp",
+        "mobile tap",
+        "desktop hover",
+        "keyboard focus and return"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 33/33",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "previewRendered": [
+          "390px everyday-light",
+          "1440px athlete-dark"
+        ],
+        "mobilePreviewInspected": "PASS for static design specimen",
+        "actualApplication": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "touchAndKeyboardBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "related": [
+          "LabRangeSelector",
+          "LabSourceContext"
+        ],
+        "importRule": "Import after A01–A06 once; CSS scoped to premium app-shell and .bv-scientific-chart only"
+      },
+      "constraints": [
+        "Original measured value and unit, exact recorded date/time and source provenance dynamically bound",
+        "Selection keyed by source observation identity not pixel or position",
+        "No connecting missing or incompatible samples, no fake selected points",
+        "Mobile summary below plot, with source drawer preserving CTA and source details",
+        "Do not expose values from withdrawn/revoked sources",
+        "No source data, personal measurements, hardcoded chart data or new UX flow in assets",
+        "Touch hitboxes 44×44, readable keyboard focus, reduced-motion and forced-color equivalents",
+        "320/390/768/1440, 200% zoom, four themes and actual screenshot gates pending"
+      ]
     }
   ]
 }
