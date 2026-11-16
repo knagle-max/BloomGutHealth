@@ -27,8 +27,8 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 312,
-    "sourceFilesScanned": 742,
-    "relevantSourceFiles": 71,
+    "sourceFilesScanned": 751,
+    "relevantSourceFiles": 72,
     "researchPathways": 7
   },
   "entries": [
@@ -2772,7 +2772,7 @@
           "spelling": "Bifidobacterium pseudocatenulatum",
           "rank": null,
           "file": "scripts/qa/morphology-artwork-journey.mjs",
-          "line": 14,
+          "line": 18,
           "method": "static source literal"
         },
         {
@@ -10844,6 +10844,14 @@
       "citations": [],
       "unresolvedReason": "Uninterpreted source-only label; no assay, supported identity or clinical range inferred.",
       "sources": [
+        {
+          "kind": "source-only-analyte",
+          "spelling": "PSA",
+          "rank": null,
+          "file": "tests/lab-panel-review.test.ts",
+          "line": 43,
+          "method": "static source literal"
+        },
         {
           "kind": "source-only-analyte",
           "spelling": "PSA",
@@ -25252,7 +25260,7 @@
     },
     {
       "file": "scripts/qa/morphology-artwork-journey.mjs",
-      "line": 13,
+      "line": 17,
       "field": "bacterialName",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25432,7 +25440,7 @@
     "scripts/qa/lab-source-review-journey.mjs": "83d6513a1d4d7ae7ebe6dcbd818d0ec77324ad33bd50e335bbd2d7a2900ea593",
     "scripts/qa/microbial-profile-journey.mjs": "ede4795cae2e53944047b044e872f238989c1993d3bd019e922f3edf58bbb184",
     "scripts/qa/microbiome-report-delete-journey.mjs": "1f80c2d11ae42a0780365a25f756254fd42f2503b34db25d8db8ae1e2d5dd370",
-    "scripts/qa/morphology-artwork-journey.mjs": "b91d7c902ab6b65b2b971aab4d32cffb4ac8e3daf9e03cfc4aae1bba6f2f49bf",
+    "scripts/qa/morphology-artwork-journey.mjs": "63b6d8081b6c657675caf5a7038906940f45f761a2733cd8c4b14eb8f7526561",
     "scripts/qa/report-date-provenance-journey.mjs": "60c80b0c348127111be3efe20e1bcc9eb10c6911f00e96cd41072b868591a9a4",
     "scripts/qa/reported-cohort-journey.mjs": "f5620b9d4d7ecbf415cb055bf8f481d5b457a7f0b6703125b4836b5ed5b73199",
     "scripts/qa/synthetic-molecular-http.mjs": "dfedbb5f9069b1ddee0bde7ddd4bb1e51fe4f52678530ea2b2ef7e8a23eed79f",
@@ -25460,6 +25468,7 @@
     "tests/lab-explorer.test.ts": "caf583b6b822f9e44b1bc59a70cb8ca1e1eb8709a9df5ba0a8d975b789dd8e20",
     "tests/lab-history.test.ts": "02f1646f86409bfdda1d56e821a6b99375e746339df14aa7a65dcf1860e6a77a",
     "tests/lab-import-review.test.ts": "390b8323b3435a56861b999684c41ebd7b0e711e4e95a0c5f79f33ad7cb061c1",
+    "tests/lab-panel-review.test.ts": "deab38ea03babf7a9834a40ac2d48ec139b6a6c988607cbf10536db7d064d78b",
     "tests/lab-paste-workflow.test.ts": "5dd52ffd52a325d10d8f3a599f201c1f74101b6db2cf8a96b42f296227484c42",
     "tests/lab-reimport.test.ts": "f49d8dd68f85d12861798f6eacd6d5ffaa99df49b8db73f940e8a551e87569b0",
     "tests/lab-review.test.ts": "731f962d82ff9886da23749e12e9c815e9254a57319363cf484149caa402294e",

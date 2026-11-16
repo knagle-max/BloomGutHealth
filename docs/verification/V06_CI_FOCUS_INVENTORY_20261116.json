@@ -29,5 +29,20 @@
   ],
   "scope": "Focused correction only. Larger context-controller/history activation remains in primary worktree and is not included in this commit. Old Bloodwork heading is not this failure. No test skips, timeout inflation, new approvals or production/private-health writes.",
   "NeonLifecycle": "Failed73 run stopped before branch creation. Cleanup job is intentionally only for closed PRs; inspect schema-only branch expiry and live checks in the new full run. No branch deletion/configuration change performed.",
-  "fullCi": "One fresh automatic PR workflow after push, exact SHA; not green until all required checks pass."
+  "fullCi": "One fresh automatic PR workflow after push, exact SHA; not green until all required checks pass.",
+  "followUp": {
+    "run": 43929359054,
+    "sha": "e037a23490602d217d8e0c6eaf592b75f3e267ae",
+    "passed": [
+      "Remembered context browser regression",
+      "API source inventory",
+      "Capability crosswalk",
+      "TypeScript"
+    ],
+    "failed": "Biology inventory snapshot stale:9 newly tracked source files, one newly inventoried PSA fixture source and morphology fixture line/hash updates",
+    "correction": "Reviewed and regenerated19-line public-source audit delta. All523 identity records/49 markers/126 registry taxa and DRAFT_NOT_INDEPENDENTLY_APPROVED status unchanged.",
+    "verification": "All four exact combined-job commands run fail-fast and exit0;5 biology-audit tests PASS.",
+    "localReportingCorrection": "The earlier claim that every local source audit passed was inaccurate: a shell sequence continued after Biology check failure. Current verification uses set -e and its final completion/output was inspected.",
+    "newFullWorkflow": "Pending one fresh automatic run after this metadata correction; no rerun of unchanged failing candidate."
+  }
 }

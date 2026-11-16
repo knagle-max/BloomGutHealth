@@ -1,3 +1,7 @@
+## P1 CI follow-up — former failures pass, Biology snapshot corrected
+
+Workflow43929359054 at e037a234 passed remembered-context focus, TypeScript, API inventory and capability crosswalk. Remaining failure: stale Biology inventory. Reviewed19-line public-source audit update;523 identities and DRAFT scientific status unchanged. All four exact checks now pass in fail-fast sequence,5 Biology tests PASS. Earlier local “all audits passed” report corrected: shell had continued after failure. Status `ENGINEERING_TESTED_FULL_CI_PENDING`; fresh workflow after metadata follow-up still required.
+
 ## P1 current CI repair — focused local verification complete
 
 Actual43888567422 logs identify initial answer-select focus readiness;43882686749 identifies stale API source inventory. Focus now waits for the enabled rendered control, with original assertions intact. Controlled readiness RED/GREEN, pinned original journey,6 source tests/types/audits/build PASS. Status `ENGINEERING_TESTED_FULL_CI_PENDING`; fresh exact-SHA full workflow/Neon lifecycle and Render checks remain. Source: `V06_CI_FOCUS_INVENTORY_20261116.json`. Preserve earlier diagnosis history; do not treat the old Bloodwork heading as current failure.
