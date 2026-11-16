@@ -1238,6 +1238,87 @@
         "Desktop donut is optional; mobile prioritizes partition bar and labels",
         "Actual QA at 320/390/768/1440, four themes, 200% zoom, keyboard, screen reader, forced color pending"
       ]
+    },
+    {
+      "id": "CHART-C03",
+      "name": "Microbiome report comparison: method, taxonomy and coverage-safe visual system",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Editable designer specimen delivered; Architect, Biology, UX, actual running application and accessibility acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C01",
+        "CHART-C02"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C03_Microbiome_Comparison_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C03_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C03_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-C03-contract.json",
+          "tokens/CHART-C03-comparison.css",
+          "svg/CHART-C03-comparison-symbols.svg",
+          "fixtures/CHART-C03-FICTIONAL-ONLY.json",
+          "editable/24 SVG masters",
+          "responsive/{320,390,768,1440}/96 SVG compositions",
+          "previews/5 PNG",
+          "handoff/CHART-C03-integration.md",
+          "accessibility/CHART-C03-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "comparable",
+        "method-mismatch",
+        "not-reported",
+        "revised-taxonomy",
+        "unknown-abundance",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 121/121",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 96,
+        "editableMasters": 24,
+        "previewPNGs": 5,
+        "mobileVisualReview": "320px and 390px static render inspected, label spacing adjusted",
+        "desktopVisualReview": "1440px Athlete Dark rendered and overlapping values corrected",
+        "application": "NOT_TESTED",
+        "scientificReview": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "targets": [
+          "client/src/pages/Microbiome.tsx",
+          "client/src/pages/MicrobialProfile.tsx"
+        ],
+        "importRule": "Scoped CSS under .app-shell[data-bloom-visual=premium] .bv-scientific-chart; all numeric bars and source labels generated dynamically",
+        "reference": "CHART-C02 composition source-aware denominator contract"
+      },
+      "constraints": [
+        "Only show derived change if methods, denominators, taxon identities and ranks are validated comparable",
+        "An unreported organism is not a measured zero or necessarily absent",
+        "Revised taxonomy requires reviewed crosswalk with original source names retained",
+        "Missing or unknown abundance has no bar; withdrawal removes cached details",
+        "Original report source dates, providers, assay, taxonomic rank/version and quantities retained",
+        "No microbiome health score, activity or causal effects inferred",
+        "Exact table, 44px touch, keyboard, reader and source-linked organism details required",
+        "390/1440 actual rendering plus 320/768 adaptation, zoom, four themes, forced-colors pending"
+      ]
     }
   ]
 }
