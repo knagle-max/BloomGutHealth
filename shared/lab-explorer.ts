@@ -10,7 +10,7 @@ export const labCategories=[
  {id:'liver',name:'Liver & biliary'}, {id:'kidney',name:'Kidney & electrolytes'},
  {id:'blood-count',name:'Complete blood count'}, {id:'nutrients',name:'Iron & blood nutrients'},
  {id:'hormones',name:'Hormones & thyroid'}, {id:'inflammation',name:'Inflammation & immunity'},
- {id:'bone',name:'Bone & micronutrients'}, {id:'other',name:'Other / needs identification'},
+ {id:'bone',name:'Bone & micronutrients'}, {id:'other',name:'Other'},
 ]as const;
 export type LabCategoryId=typeof labCategories[number]['id'];
 const addedNavigation=Object.fromEntries(additionalLabMarkers.map(marker=>[marker.id,marker.categories])) as unknown as Record<AdditionalLabMarkerId,readonly LabCategoryId[]>;

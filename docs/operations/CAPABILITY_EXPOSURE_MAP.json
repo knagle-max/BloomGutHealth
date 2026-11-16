@@ -2073,7 +2073,7 @@
     "shared/health-ingestion.ts": "74112fba6caf7f24e769aa48ddb71d81206966b3743375bafa568b6a4fed2f5f",
     "shared/ingredient-mass-capture.ts": "0fcd4bf37628fb2b4a57537982cdeeb738d14203991e360eec0730e654628ded",
     "shared/ingredient-mass-entry.ts": "85523bb5d76e0e8b42c90f6c5c0701bd47793b9f9b4917deefafaf6c0279e78c",
-    "shared/lab-explorer.ts": "2a4fe851656497dd82b28c24941348f3c78c592c2946eca7a0d4d95638e21ed8",
+    "shared/lab-explorer.ts": "863fadf30f86dcf5deb08198f0bc7ac296a6a58ebf6e921a2b3d03969685e051",
     "shared/lab-history.ts": "4080fb8a86b291c6500846d76a0a15b6de2cb313a0191e258d983ee1306bee6f",
     "shared/lab-image-file.ts": "63b696d30e906fbacba155218bfc0b86506fcbd30e3089e9af476d59a838860f",
     "shared/lab-paste.ts": "bac3247011efe1af98699fe5a621c72fe0bd042097b3aa18e4eca51d21f6bbfb",
