@@ -1,3 +1,9 @@
+## OWNER IMAGE REGRESSION — native Viome plural provider groups
+
+T1e revised: native importer emits Bacteria/Viruses/Eukaryotes; artwork check expected Bacterium/Virus/Eukaryote. Actual importer regression reproduced RED then fixed with explicit group aliases.14 tests,94-row native App/list/profile coverage and prior morphology QA/types/build PASS. Publish and verify exact Render SHA; receipt `V06_VIOME_MORPHOLOGY_PROVIDER_GROUP_20261116.json`. No actual private account query or hosted screenshot claimed. Then resume T2b. Pending lifecycle/context service is preserved in Git stash named `codex pending recalled-context lifecycle service before owner image regression`; restore only after this coherent correction is pushed.
+
+---
+
 ## ACTIVE ENGINEERING — T2b whole-panel Response #15
 
 Current slice: source-linked recalled context for Response#15. Reader/schema/private export/erasure compatibility and generic write denial pass actual HTTP/encrypted SQL plus types/build. Publish reader first; then dedicated source-current CAS/idempotent save/delete and ordinary UI, timing-aware evidence and revised cited conditional actions. Receipt: `V06_LAB_RESPONSE_CONTEXT_READER_20261116.json`.

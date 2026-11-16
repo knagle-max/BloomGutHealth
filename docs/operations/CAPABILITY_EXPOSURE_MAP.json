@@ -2124,7 +2124,7 @@
     "shared/schema-management.ts": "5d25b91f2818f2cbecffa3eeb02450713987c34b950b132f182207eb6a5f80dc",
     "shared/schema.ts": "3a5a433f8354427676c872bbefe79f4528de92fd63f8d26ea470a80cc0c678d1",
     "shared/scientific-contracts.ts": "750a113cdce24ec2cd4ce464d5f0c3d7a194f7253ae2091b9fd5d7eaaf1ea5a6",
-    "shared/scientific-visuals.ts": "1d491090d9c268be848535a72ec78ec0091b21846f38d7d11ce676df16d4e7dc",
+    "shared/scientific-visuals.ts": "d971daf71934c4160020223398f8df8d6ff6b5f91669518a7333f4a85604787c",
     "shared/structured-report.ts": "081443badc0ea9ec62000500e7821daf89b53981be03038b30bf559cfcf46d73",
     "shared/synthetic-molecular.ts": "eb7aa920c087a6bf0f42d126afd41e8e1ed8ad39a9257385c487e30f3ccc6885",
     "shared/today-focus.ts": "0400d0922ebb147475b8becc82fa0e92483ff9991c82cf767c6b5c74229a88cf",

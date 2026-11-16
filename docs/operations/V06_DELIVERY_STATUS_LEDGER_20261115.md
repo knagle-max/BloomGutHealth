@@ -1,3 +1,9 @@
+## 2026-11-16 REVISED — native Viome group spelling mismatch reproduced
+
+Later owner screenshot still shows U00. Root cause reproduced through **actual native import parser**: it emits plural provider headings Bacteria/Viruses/Eukaryotes; art crosswalk uses singular group labels. Exact group equality caused U00 despite unique mapped names. Existing resolver now aliases these explicit equivalent headings only; conflicts/unknowns/foreign scope/duplicates remain neutral.14 focused tests and actual94-row native list/profile browser coverage plus original morphology regression/types/build PASS. Status `ENGINEERING_TESTED_PENDING_DEPLOY`; see `V06_VIOME_MORPHOLOGY_PROVIDER_GROUP_20261116.json`. Earlier bf13 deployment alone did not close this native-import boundary. No actual-account/hosted visual or final RC acceptance claimed.
+
+---
+
 ## 2026-11-16 owner screenshot: actual 94-name morphology mapping not applied
 
 Owner's live mobile screenshot shows *Bacteroides vulgatus ATCC 8482*, *Bifidobacterium pseudocatenulatum*, *Blautia sp. SC05B48* and other exact mapped names sharing the neutral U00 image. **Code and supplied crosswalk verified:** names map C03, C05, C02 respectively, but `shared/scientific-visuals.ts` demands matching source ordinal/source ID/rank before resolving style; `shared/reported-taxa.ts` can legitimately omit ordinal for composition records. Specific unmet condition in the owner's actual authenticated source has **not** been independently inspected. Status: **ART IMPORT ENGINEERING_TESTED; LIVE NAME-TO-STYLE MAPPING FAILS OWNER OBSERVATION; NOT DONE**. [Narrow Codex implementation correction](../architecture/MICROBIOME_MORPHOLOGY_LIVE_SOURCE_MATCH_FIX_20261116.md) calls for unique exact-name lookup when ordinal unavailable/incompatible, conflict/duplicate U00 safeguards, same thumbnail/portrait style and actual hosted verification. Do not mark complete based on fixture-only 94-row test.

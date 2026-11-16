@@ -6,6 +6,8 @@ import crosswalk from '../shared/data/microbe-morphology-crosswalk-v1.json';
 import manifest from '../design/visual-system/morphology-v1/DELIVERY_MANIFEST.json';
 import {organismIllustration,type OrganismArtworkSource} from '../shared/scientific-visuals';
 import {reportedTaxa} from '../shared/reported-taxa';
+import {parseStructuredReport} from '../shared/structured-report';
+import {VIOME_FINDINGS_VERSION} from '../shared/viome-findings';
 const sample={id:'synthetic-morphology-source',structuredData:{schemaVersion:'bloom-report-v2',organisms:crosswalk.entries.map(entry=>({name:entry.reportedName,reportedStatus:null,reportedAbundance:'Not quantified',notes:`Provider group: ${entry.reportedGroup}`}))}};
 const observations=reportedTaxa(sample,[]);
 const source=(index:number):OrganismArtworkSource=>({reportId:sample.id,observationId:observations[index].id,observations});
@@ -66,4 +68,12 @@ test('conflicting crosswalk rows fail neutral rather than silently choose a repl
  const original=crosswalk.entries.length,name=observations[0].bacterialName;
  try{crosswalk.entries.push({...crosswalk.entries[0],artworkStyleId:'C05'});assert.equal(organismIllustration(name,'thumbnail',source(0)).styleId,'U00');}
  finally{crosswalk.entries.splice(original);}
+});
+test('actual Viome import provider plurals retain every reviewed morphology style in list and profile',()=>{
+ const groups:Record<string,string>={Bacterium:'Bacteria',Virus:'Viruses',Eukaryote:'Eukaryotes'};
+ const input={schemaVersion:VIOME_FINDINGS_VERSION,provider:'Viome',documentKind:'active-gut-microbes',specimenType:'fecal',method:'qualitative RNA',biologicalDates:{},reviewConfirmed:true,organisms:crosswalk.entries.map((entry,index)=>({name:entry.reportedName,reportedGroup:groups[entry.reportedGroup],reportedStatus:'reported_present',position:{page:2,column:1,row:index+1}})),assessments:[],foods:[]};
+ const imported={id:'synthetic-real-viome-parser',structuredData:parseStructuredReport(input)},rows=reportedTaxa(imported,[]),before=JSON.stringify(imported);
+ for(const [index,row] of rows.entries())for(const size of ['thumbnail','portrait'] as const){assert.equal(organismIllustration(row.bacterialName,size,{reportId:imported.id,observationId:row.id,observations:rows}).styleId,crosswalk.entries[index].artworkStyleId,row.bacterialName);}
+ assert.equal(JSON.stringify(imported),before);assert.equal(rows[0].taxonomyLevel,null);assert.equal(rows[0].abundance,null);
+ const first=rows[0];for(const reportedGroup of ['Viruses','Eukaryotes','Unknown','bacterial-looking'])assert.equal(organismIllustration(first.bacterialName,'thumbnail',{reportId:imported.id,observationId:first.id,observations:[{...first,reportedGroup},...rows.slice(1)]}).styleId,'U00');
 });

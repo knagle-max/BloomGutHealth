@@ -24,6 +24,9 @@ export function legacyOrganismIllustration(sourceName:string|undefined,size:'thu
 }
 
 export type OrganismArtworkSource={reportId:string;observationId:string;observations:readonly ReportedTaxon[]};
+/** The existing Viome importer uses plural provider headings; the delivered
+ * crosswalk uses singular group names. Explicit spelling aliases only. */
+const morphologyGroup=(value:string)=>({bacterium:'bacterium',bacteria:'bacterium',virus:'virus',viruses:'virus',eukaryote:'eukaryote',eukaryotes:'eukaryote'} as Record<string,string>)[value.trim().toLowerCase()]||null;
 /** An exact unique name selects reviewed conceptual art within the current
  * report. Provider ordinals and taxonomic rank do not verify measured shape. */
 export function organismIllustration(sourceName:string|undefined,size:'thumbnail'|'portrait',source?:OrganismArtworkSource){
@@ -33,9 +36,9 @@ export function organismIllustration(sourceName:string|undefined,size:'thumbnail
   const row=matches.length===1?matches[0]:undefined;
   const uniqueName=source.observations.filter(value=>value.bacterialName===sourceName).length===1;
   const entries=morphology.entries.filter(entry=>entry.reportedName===sourceName);
-  const reportedGroups=[row?.reportedGroup,row?.reportedNotes?.match(/^Provider group: ([^;]+)(?:;|$)/)?.[1]].filter((value):value is string=>!!value).map(value=>value.trim().toLowerCase());
+  const reportedGroups=[row?.reportedGroup,row?.reportedNotes?.match(/^Provider group: ([^;]+)(?:;|$)/)?.[1]].filter((value):value is string=>!!value).map(morphologyGroup);
   const currentScope=row?.sampleId===undefined||row.sampleId===source.reportId;
-  if(row?.bacterialName===sourceName&&currentScope&&uniqueName&&entries.length===1&&reportedGroups.every(group=>group===entries[0].reportedGroup.toLowerCase()))styleId=entries[0].artworkStyleId;
+  if(row?.bacterialName===sourceName&&currentScope&&uniqueName&&entries.length===1&&reportedGroups.every(group=>group!==null&&group===morphologyGroup(entries[0].reportedGroup)))styleId=entries[0].artworkStyleId;
  }
  const style=morphology.styles.find(value=>value.id===styleId)||morphology.styles.find(value=>value.id==='U00')!;
  const asset=style[size];
