@@ -1487,6 +1487,94 @@
         "Accessible source provenance and keyboard/tap action 44px",
         "Four themes and 320/390/768/1440 real browser/zoom/forced-color QA pending"
       ]
+    },
+    {
+      "id": "CHART-C06",
+      "name": "Scientific evidence key — seven non-color-only semantic classes",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate; science, Architect, UX and live app accessibility approval pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C01",
+        "CHART-C02",
+        "CHART-C03",
+        "CHART-C04",
+        "CHART-C05"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C06_Scientific_Evidence_Key_2026-11-15(1).zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C06_Readme_2026-11-15(1).md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C06_Manifest_2026-11-15(1).json",
+        "contents": [
+          "svg/7 separate 24x24 SVG symbols plus combined symbol sprite",
+          "tokens/CHART-C06-evidence-contract.json",
+          "tokens/CHART-C06-evidence.css",
+          "responsive/320,390,768,1440/16 editable SVG specimens",
+          "editable/8 SVG masters and compact symbol examples",
+          "previews/5 PNG images",
+          "handoff/CHART-C06-implementation.md",
+          "accessibility/CHART-C06-QA.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "states": [
+        "measured",
+        "reported",
+        "calculated",
+        "population",
+        "hypothesis",
+        "simulation",
+        "unknown"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 32/32",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "editableMasters": 8,
+        "previewPNGs": 5,
+        "mobileStaticReview": "320px Everyday Light visually inspected",
+        "desktopStaticReview": "1440px Athlete Dark visually inspected",
+        "actualApplication": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "targets": [
+          "Biology",
+          "Gut Reports",
+          "Genetics",
+          "Explore",
+          "Scientific pathway detail"
+        ],
+        "importRule": "Scoped additive CSS under premium app-shell; use A01 tokens, bind evidence and source to actual record DOM text"
+      },
+      "constraints": [
+        "Seven evidence roles are semantic, not levels of certainty, severity, or clinical utility",
+        "Measured not synonymous with clinically meaningful",
+        "Source-reported not independently verified",
+        "Calculated requires inputs and rule",
+        "Population associations do not imply personal prediction or causality",
+        "Modelled/experimental never presented as patient measurement",
+        "Unknown never zero or normal",
+        "No withdrawn source display",
+        "Visible labels beyond colour, keyboard and 44px interaction targets",
+        "320/390/768/1440 and 200% zoom, forced-colors, screen-reader actual app QA pending"
+      ],
+      "notes": "Shared Library assigned (1) suffix to this delivery; registry points to exact confirmed paths, not an earlier namesake."
     }
   ]
 }
