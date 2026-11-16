@@ -586,6 +586,89 @@
         "Exact value table always available",
         "Mobile/desktop four-theme rendered implementation screenshots and scientific QA pending"
       ]
+    },
+    {
+      "id": "CHART-B01",
+      "name": "Source-aware longitudinal trend composition family",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate published; Architect, scientific, UX and actual browser acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B01_Longitudinal_Trends_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B01_Longitudinal_Trends_README_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_B01_Longitudinal_Trends_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-B01-longitudinal.css",
+          "tokens/CHART-B01-contract.json",
+          "specimen-fixtures.json",
+          "responsive/{320,390,768,1440}/",
+          "editable/CHART-B01-*-master.svg",
+          "previews/",
+          "handoff/CHART-B01-implementation.md",
+          "accessibility/CHART-B01-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "fixtures": [
+        "one",
+        "two",
+        "four",
+        "twelve",
+        "gap",
+        "outlier"
+      ],
+      "responsiveWidths": [
+        320,
+        390,
+        768,
+        1440
+      ],
+      "validation": {
+        "xml": "PASS 64/64 SVG",
+        "archive": "ZIP integrity PASS",
+        "fullCompositionVariants": "48 at 390 and 1440, across six fixtures and four themes",
+        "additionalAdaptationVariants": "8 at 320 and 768 across four themes",
+        "editableMasterSVG": "8",
+        "previewPNG": "6 included",
+        "mobileReview": "320 and 390 manually inspected; layout clipping corrected",
+        "desktopReview": "1440 Athlete Dark manually inspected; overlapping note corrected",
+        "actualApplication": "NOT_TESTED",
+        "sourceProvenanceRuntime": "NOT_TESTED",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "secondary": "client/src/pages/Progress.tsx",
+        "importRule": "Reuse A01-A08 and component-local scoped B01 CSS; data-bound chart generated in runtime, no flattened plots"
+      },
+      "constraints": [
+        "Fixture numbers and example interval are fictional and must not appear as personal measurements",
+        "Irregular chronology uses proportional timestamps",
+        "No line for one observation",
+        "Separate incompatible groups only where source evidence supports",
+        "Outlier is an ordinary observed point, not automatic diagnostic warning",
+        "Exact original date/unit/value, assay, source provider, corrections and interval provenance remain retrievable",
+        "44px interactive targets and exact-value table alternative needed",
+        "320/390/768/1440, 200 percent zoom, four themes, keyboard and screen-reader QA pending"
+      ]
     }
   ]
 }
