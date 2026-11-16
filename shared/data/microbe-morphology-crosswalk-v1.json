@@ -302,7 +302,7 @@
       "thumbnail": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
         "archive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
-        "archiveMember": "webp/thumbnail/U00-BVA-0047-thumbnail.webp",
+        "archiveMember": "webp/thumbnail/U00-U00-thumbnail.webp",
         "dimensions": [
           256,
           256
@@ -311,7 +311,7 @@
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
         "archive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
-        "archiveMember": "webp/portrait/U00-BVA-0047-portrait.webp",
+        "archiveMember": "webp/portrait/U00-U00-portrait.webp",
         "dimensions": [
           1024,
           1024
@@ -1009,5 +1009,6 @@
   },
   "legacyAssetPolicy": "20 legacy named SVG portraits deprecated pending replacement; no removal until new files imported, tests and actual user-reviewed screenshots pass",
   "U00ArtSelection": "BVA-0047 neutral green organic background; preserve original bloom-neutral-microorganism-v1 as technical fallback if image fails",
-  "generatedImagesManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+  "generatedImagesManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+  "sourceArchiveFilenameCorrection": "In original ZIP+manifest U00 files use U00-U00-*.webp, even though master registry permanent ID is BVA-0047. Use actual ZIP names for extraction; optionally rename output published files U00-BVA-0047-*.webp. Do not create another asset ID."
 }
