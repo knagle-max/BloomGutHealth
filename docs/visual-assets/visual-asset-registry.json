@@ -3606,9 +3606,649 @@
         "BVA-0013"
       ],
       "notes": "Use exclusively for Complete blood count; Iron & blood nutrients retains its separate BVA-0013 asset. Preserve counts, source details, navigation, accessible text, and dark/light layouts."
+    },
+    {
+      "id": "BVA-0037",
+      "name": "Microbe morphology C01 — Cocci in chains or pairs",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Short loose arrangements of rounded cells; no false defined chain length",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "C01",
+      "mappedFixtureObservations": 10,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Bloom-grade tactile rounded cell morphology, soft sage warm highlights, distinct pair/short-chain composition"
+    },
+    {
+      "id": "BVA-0038",
+      "name": "Microbe morphology C02 — Round or oval cocci",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Separate rounded to oval cells clustered loosely; no colony or sampled species claim",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "C02",
+      "mappedFixtureObservations": 6,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Materially distinctive round/oval cells in floating shallow-focus arrangement"
+    },
+    {
+      "id": "BVA-0039",
+      "name": "Microbe morphology C03 — Short / oval bacterial rods",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Multiple short soft capsules or oval rods; neither scale image nor Gram stain",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "C03",
+      "mappedFixtureObservations": 35,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Compact short forms with organic surface texture and depth, no invented appendages"
+    },
+    {
+      "id": "BVA-0040",
+      "name": "Microbe morphology C04 — Elongated bacterial rods",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Several elongated cells; no invented spores or flagella",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "C04",
+      "mappedFixtureObservations": 21,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Long cylinders/capsules with believable biological silhouette, not mechanical tubes"
+    },
+    {
+      "id": "BVA-0041",
+      "name": "Microbe morphology C05 — Branched / irregular bacterial rods",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Branching or Y-shaped rods; general bifidobacterial shape only",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "C05",
+      "mappedFixtureObservations": 1,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Organic irregular connected/Y-like cells, neither deterministic strain portrait nor trademark shape"
+    },
+    {
+      "id": "BVA-0042",
+      "name": "Microbe morphology F01 — Dark yeast-like fungi",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Bud-like dark yeast forms; no bacterial styling",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "F01",
+      "mappedFixtureObservations": 2,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Budding darker pigmented eukaryotic cells, morphological cues visible at small crop"
+    },
+    {
+      "id": "BVA-0043",
+      "name": "Microbe morphology F02 — Filamentous fungi",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Natural intertwined hyphae and mycelial threads",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "F02",
+      "mappedFixtureObservations": 3,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Elegant genuinely filamentous geometry, no plant roots or synthetic hairs"
+    },
+    {
+      "id": "BVA-0044",
+      "name": "Microbe morphology V01 — Rigid rod-shaped plant viruses",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Generic rod or helical capsid; distinct from bacterial rod",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "V01",
+      "mappedFixtureObservations": 4,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Fine structured rigid particles arranged with convincing narrow rod silhouette; no host infection claim"
+    },
+    {
+      "id": "BVA-0045",
+      "name": "Microbe morphology V02 — Head-and-tail bacteriophages",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Geometric head with long tail; simplified, do not claim named virion",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "V02",
+      "mappedFixtureObservations": 2,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Simple bacteriophage capsid/tail forms, strong recognisable silhouette and correct geometry"
+    },
+    {
+      "id": "BVA-0046",
+      "name": "Microbe morphology V03 — Enveloped spherical virus",
+      "route": "/microbiome",
+      "component": "Organism list and organism detail sheet",
+      "purpose": "Reusable morphology class illustration for source-associated organisms; same artwork identity in thumbnail and portrait",
+      "category": "scientific-illustration-family",
+      "subject": "Spherical envelope with small surface glycoprotein projections",
+      "composition": "One coherent premium illustration style per archetype, with individually reviewable 36–48px and 160–200px crops; dark/light mobile and desktop",
+      "scientificAccuracy": "Broad illustrative morphology only. This is not a taxonomic family, observed cell image, species or strain identity, abundance, function, pathogenicity, or measured biological finding.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "textPlacement": "All organism names, report counts, source labels and caveats external to image",
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 1024,
+        "height": 1024
+      },
+      "responsiveVariants": [
+        "thumbnail 36px display",
+        "portrait 180px display"
+      ],
+      "transparent": false,
+      "outputFormats": [
+        "png",
+        "webp"
+      ],
+      "priority": "P0",
+      "impact": "high",
+      "sourceRelation": {
+        "action": "reserved-pending-owner-supplied-artwork",
+        "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": null,
+        "existingArtifactByteVerified": false
+      },
+      "lifecycle": "Briefed",
+      "productionStatus": "Reserved, no image created; mapping registered for 94 fixture observations, scientific/UX approval pending",
+      "filePaths": [],
+      "artworkStyleId": "V03",
+      "mappedFixtureObservations": 1,
+      "assetStatus": "not-created",
+      "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
+      "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
+      "integration": {
+        "state": "Not started; awaiting user-supplied image then Science/Design review, Codex integration and screenshots",
+        "verified": false,
+        "componentAssetIdReferenced": false
+      },
+      "review": {
+        "design": "pending user-supplied art",
+        "scientific": "mapping provisional; depiction pending review",
+        "rights": "pending image provenance",
+        "rendered": "not tested"
+      },
+      "delivery": {
+        "thumbnail": null,
+        "portrait": null,
+        "sha256": null
+      },
+      "designNotes": "Dimensional spherical enveloped particle, restrained short projections, no disease implication"
     }
   ],
-  "lastDesignerDelivery": "2026-11-15: BVA-0036 CBC thumbnail published to Shared Library and registered in GitHub; binary import and rendered review pending.",
+  "lastDesignerDelivery": "2026-11-15: 10 reserved morphology artwork IDs BVA-0037–0046; 94-fixture exact crosswalk, U00 fallback, legacy portraits marked as future-retired; NO ASSETS generated or live integration.",
   "retiredAssetIds": [],
   "ownerPublicationGate": {
     "rule": "No per-image owner approval for generation, integration, development/review-branch publication, asset-library handoff or QA. Codex and specialists perform appropriate design/science/rights QA autonomously. Owner reviews imagery, UI and functionality together at an integrated release candidate; explicit owner correcting instructions reopen only affected assets. Protected public/production release and external legal/privacy/licensing/clinical permissions are separate.",
@@ -3636,5 +4276,155 @@
     "replacementStatus": "Briefed; Codex may generate/iterate/integrate replacement candidate autonomously with normal visual/scientific/rights QA; show as part of final integrated release candidate.",
     "originalVisuals": "rejected; do not publish or distribute"
   },
-  "codexDeliveryStatus": "PARTIAL:28 permanent IDs validated;8 existing editorial slots have typed delivery bindings and local failure/recovery evidence. Other20 assets and full new-theme adoption are not integrated or verified."
+  "codexDeliveryStatus": "PARTIAL:28 permanent IDs validated;8 existing editorial slots have typed delivery bindings and local failure/recovery evidence. Other20 assets and full new-theme adoption are not integrated or verified.",
+  "microbeMorphologyProgram": {
+    "version": "2026-11-15-morphology-10",
+    "status": "10 visual styles registered and mapped to all 94 source fixture entries; no new artwork generated, no activation",
+    "crosswalk": "shared/data/microbe-morphology-crosswalk-v1.json",
+    "mappingCount": 94,
+    "styleAssetIds": [
+      "BVA-0037",
+      "BVA-0038",
+      "BVA-0039",
+      "BVA-0040",
+      "BVA-0041",
+      "BVA-0042",
+      "BVA-0043",
+      "BVA-0044",
+      "BVA-0045",
+      "BVA-0046"
+    ],
+    "fallback": "bloom-neutral-microorganism-v1",
+    "fallbackStyle": "U00",
+    "fixtureOnly": true,
+    "liveReportNotVerified": true,
+    "retiredOldPresentationSet": {
+      "registry": "shared/data/scientific-visual-assets.json",
+      "oldNamedPortraitCount": 20,
+      "state": "DEPRECATED for future visual direction; not yet detached from runtime; preserve rollback until replacement assets available",
+      "entries": [
+        {
+          "sourceName": "Blautia wexlerae",
+          "slug": "blautia-wexlerae",
+          "portrait": "/science/organisms-v4/organisms/blautia-wexlerae.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/blautia-wexlerae.svg"
+        },
+        {
+          "sourceName": "Escherichia coli",
+          "slug": "escherichia-coli",
+          "portrait": "/science/organisms-v4/organisms/escherichia-coli.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/escherichia-coli.svg"
+        },
+        {
+          "sourceName": "Prevotella copri",
+          "slug": "prevotella-copri",
+          "portrait": "/science/organisms-v4/organisms/prevotella-copri.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/prevotella-copri.svg"
+        },
+        {
+          "sourceName": "Anaerostipes hadrus",
+          "slug": "anaerostipes-hadrus",
+          "portrait": "/science/organisms-v4/organisms/anaerostipes-hadrus.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/anaerostipes-hadrus.svg"
+        },
+        {
+          "sourceName": "Desulfovibrio piger",
+          "slug": "desulfovibrio-piger",
+          "portrait": "/science/organisms-v4/organisms/desulfovibrio-piger.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/desulfovibrio-piger.svg"
+        },
+        {
+          "sourceName": "Eubacterium rectale",
+          "slug": "eubacterium-rectale",
+          "portrait": "/science/organisms-v4/organisms/eubacterium-rectale.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/eubacterium-rectale.svg"
+        },
+        {
+          "sourceName": "Ruminococcus bromii",
+          "slug": "ruminococcus-bromii",
+          "portrait": "/science/organisms-v4/organisms/ruminococcus-bromii.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/ruminococcus-bromii.svg"
+        },
+        {
+          "sourceName": "Alistipes putredinis",
+          "slug": "alistipes-putredinis",
+          "portrait": "/science/organisms-v4/organisms/alistipes-putredinis.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/alistipes-putredinis.svg"
+        },
+        {
+          "sourceName": "Bacteroides vulgatus",
+          "slug": "bacteroides-vulgatus",
+          "portrait": "/science/organisms-v4/organisms/bacteroides-vulgatus.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/bacteroides-vulgatus.svg"
+        },
+        {
+          "sourceName": "Bacteroides uniformis",
+          "slug": "bacteroides-uniformis",
+          "portrait": "/science/organisms-v4/organisms/bacteroides-uniformis.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/bacteroides-uniformis.svg"
+        },
+        {
+          "sourceName": "Bilophila wadsworthia",
+          "slug": "bilophila-wadsworthia",
+          "portrait": "/science/organisms-v4/organisms/bilophila-wadsworthia.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/bilophila-wadsworthia.svg"
+        },
+        {
+          "sourceName": "Klebsiella pneumoniae",
+          "slug": "klebsiella-pneumoniae",
+          "portrait": "/science/organisms-v4/organisms/klebsiella-pneumoniae.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/klebsiella-pneumoniae.svg"
+        },
+        {
+          "sourceName": "Bifidobacterium longum",
+          "slug": "bifidobacterium-longum",
+          "portrait": "/science/organisms-v4/organisms/bifidobacterium-longum.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/bifidobacterium-longum.svg"
+        },
+        {
+          "sourceName": "Roseburia intestinalis",
+          "slug": "roseburia-intestinalis",
+          "portrait": "/science/organisms-v4/organisms/roseburia-intestinalis.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/roseburia-intestinalis.svg"
+        },
+        {
+          "sourceName": "Akkermansia muciniphila",
+          "slug": "akkermansia-muciniphila",
+          "portrait": "/science/organisms-v4/organisms/akkermansia-muciniphila.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/akkermansia-muciniphila.svg"
+        },
+        {
+          "sourceName": "Collinsella aerofaciens",
+          "slug": "collinsella-aerofaciens",
+          "portrait": "/science/organisms-v4/organisms/collinsella-aerofaciens.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/collinsella-aerofaciens.svg"
+        },
+        {
+          "sourceName": "Lactobacillus rhamnosus",
+          "slug": "lactobacillus-rhamnosus",
+          "portrait": "/science/organisms-v4/organisms/lactobacillus-rhamnosus.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/lactobacillus-rhamnosus.svg"
+        },
+        {
+          "sourceName": "Methanobrevibacter smithii",
+          "slug": "methanobrevibacter-smithii",
+          "portrait": "/science/organisms-v4/organisms/methanobrevibacter-smithii.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/methanobrevibacter-smithii.svg"
+        },
+        {
+          "sourceName": "Bifidobacterium adolescentis",
+          "slug": "bifidobacterium-adolescentis",
+          "portrait": "/science/organisms-v4/organisms/bifidobacterium-adolescentis.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/bifidobacterium-adolescentis.svg"
+        },
+        {
+          "sourceName": "Faecalibacterium prausnitzii",
+          "slug": "faecalibacterium-prausnitzii",
+          "portrait": "/science/organisms-v4/organisms/faecalibacterium-prausnitzii.svg",
+          "thumbnail": "/science/organisms-v4/thumbnails/faecalibacterium-prausnitzii.svg"
+        }
+      ]
+    },
+    "approval": "Architect/Science/UX approval required for map semantics; final actual mobile and desktop acceptance after assets received"
+  }
 }
