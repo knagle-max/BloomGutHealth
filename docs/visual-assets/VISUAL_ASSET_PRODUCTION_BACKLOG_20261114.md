@@ -115,6 +115,12 @@ The current canonical visual registry has **36 active permanent BVA requirements
 
 ---
 
+## Microbiome morphology artwork delivered and verified — BVA-0037–0047 (2026-11-15)
+
+Canonical registry now has **47 asset requirements**, and BVA-0037–0047 record eleven generated morphology visuals (10 archetypes + **U00** neutral). [Verified binary ZIP/source hashes and Codex thumbnail/portrait integration handoff](MICROBIOME_MORPHOLOGY_11_VERIFIED_DELIVERY_CODEX_20261115.md): shared WebP ZIP, original PNG ZIP, manifest, source 94-row mapping and Biology explanatory handoff **all exist in Library**; 33/33 WebPs and 11/11 PNG members match their individual hash, byte and dimensions. Small **256×256** image goes on Gut Reports list; corresponding **1024×1024** portrait in the individual organism detail, using same style and source report record; 1536×1024 wide variants optional. Crosswalk fixture has 94 unique ordinal/name entries, 82 bacteria / 7 viruses / 5 eukaryotes; **not yet proved current tester database**. **BVA-0047 neutral U00 filename discrepancy corrected in master registry and existing crosswalk**: ZIP U00-U00-*, canonical app output U00-BVA-0047-*. Don't invent 94 bespoke images or use morphology as taxonomic family/species proof. Source delivery verified, app integration and Render screenshots **not verified**; existing source records and SVG rollback to remain intact. Owner review at integrated RC.
+
+---
+
 ## Production definition-of-done for each asset
 `Identified → Briefed → Approved for Production → Generated → Design Reviewed → [Scientific Reviewed or N/A] → Approved → Integrated → Visually Verified`. Separate file existence, rights/prompt review, app placement and rendered tests. An image source mapping in old code does **not** advance lifecycle past an appropriately documented legacy reuse review. Preserve first-party file path/hash, approved prompt version, source/reference restrictions, responsive crop, fallback/alt text, scientific disclaimers, CSS and real screenshot evidence. Missing assets remain reserved in a dimensionally stable attractive placeholder tied to valid IDs. See Codex contract in `docs/architecture/VISUAL_ASSET_REGISTRY_CONTINUOUS_PRODUCTION_CODEX_HANDOFF_20261114.md`.
 
