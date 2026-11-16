@@ -1158,6 +1158,86 @@
         "Exact numbers and source evidence available in table and inspection",
         "320/390/768/1440 real app screenshots, four themes, zoom, keyboard and forced-colors QA pending"
       ]
+    },
+    {
+      "id": "CHART-C02",
+      "name": "Microbiome composition summary: validated partitions and optional radial overview",
+      "priority": "P1",
+      "lifecycle": "Generated",
+      "reviewStatus": "Editable Designer candidate delivered; Biology, UX, Architect and real-app visual QA pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A04",
+        "CHART-A06",
+        "CHART-A07",
+        "CHART-A08",
+        "CHART-C01"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C02_Microbiome_Composition_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C02_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_C02_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-C02-contract.json",
+          "tokens/CHART-C02-composition.css",
+          "svg/CHART-C02-primitives.svg",
+          "fixtures/CHART-C02-FICTIONAL-ONLY.json",
+          "editable/20 editable vector masters",
+          "responsive/{320,390,768,1440}/80 SVG designs",
+          "previews/5 PNG",
+          "handoff/CHART-C02-integration.md",
+          "accessibility/CHART-C02-review-matrix.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "scenarios": [
+        "complete",
+        "reported-partial",
+        "rank-mixed",
+        "unquantified",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "xml": "PASS 101/101 SVG",
+        "json": "PASS",
+        "zip": "PASS",
+        "responsiveSpecimens": 80,
+        "editableMasters": 20,
+        "previewPNGs": 5,
+        "mobileStaticReview": "390 complete and 320 mixed-rank reviewed, clipped footer corrected",
+        "desktopStaticReview": "1440 Athlete Dark reviewed, spacing corrected",
+        "actualApplication": "NOT_TESTED",
+        "science": "PENDING",
+        "accessibilityBrowser": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/pages/Microbiome.tsx",
+        "related": [
+          "client/src/pages/MicrobialProfile.tsx",
+          "Gut Reports selected source overview"
+        ],
+        "importRule": "CSS scoped to .app-shell[data-bloom-visual=premium] .bv-scientific-chart, dependent on CHART-A01; geometry and labels dynamically generated"
+      },
+      "constraints": [
+        "A composition or donut only when denominator and non-overlap validated within the same source method/rank",
+        "Never sum parent and child taxa or normalize incomplete records to 100%",
+        "Only source-defined Other/Unclassified can carry that label",
+        "Unquantified, unavailable or withdrawn never become zero/hidden cached values",
+        "No invented healthy gut score or metabolic activity inference",
+        "Keep original source rank, dates, method, reported quantities and exact table available",
+        "Original organism source-linked detail remains tappable",
+        "Desktop donut is optional; mobile prioritizes partition bar and labels",
+        "Actual QA at 320/390/768/1440, four themes, 200% zoom, keyboard, screen reader, forced color pending"
+      ]
     }
   ]
 }
