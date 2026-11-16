@@ -49,6 +49,71 @@
         "Preserve source-aware observation selection, source intervals, exact table alternatives",
         "Do not treat generated assets as an approved/deployed chart"
       ]
+    },
+    {
+      "id": "CHART-A02",
+      "name": "Observation marker kit",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate produced; UX/Science/Architect and live visual acceptance pending",
+      "dependsOn": "CHART-A01",
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A02_Observation_Markers_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A02_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A02_Manifest_2026-11-15.json",
+        "contents": [
+          "svg/markers/ (30 individual SVGs)",
+          "editable/CHART-A02-symbols.svg (30 symbol IDs)",
+          "editable/CHART-A02-four-theme-specimen.svg",
+          "tokens/CHART-A02-markers.css",
+          "handoff/CHART-A02-implementation.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "shapes": [
+        "circle",
+        "ring",
+        "precision-dot"
+      ],
+      "states": [
+        "ordinary",
+        "hover",
+        "selected",
+        "keyboard-focus",
+        "single-point",
+        "partial",
+        "provisional",
+        "incompatible",
+        "source-unknown",
+        "source-withdrawn"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 32/32 SVGs",
+        "editablePreview": "RENDERED",
+        "zipIntegrity": "PASS",
+        "touchTarget": "44px CSS contract, NOT YET BROWSER-TESTED",
+        "runtimeThemeCss": "pending browser tests",
+        "realApp": "NOT_INTEGRATED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "importRule": "Inherit CHART-A01 --bvc-* variables; chart scoped CSS, use inline SVG or CSS masks for dynamic theming; preserve data and source UX",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx"
+      },
+      "constraints": [
+        "Status symbols may not substitute source text/labels",
+        "Source withdrawn must never expose inaccessible personal data",
+        "Do not bridge missing observations with invented series points",
+        "Native keyboard, focus and table alternatives mandatory",
+        "No data or numerical values embedded"
+      ]
     }
   ]
 }
