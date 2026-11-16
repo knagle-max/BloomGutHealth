@@ -151,6 +151,13 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-report-management-journey.mjs
+      - name: Paired lipid direction context browser regression
+        timeout-minutes: 3
+        env:
+          BLOOM_LAB_DIRECTIONS: "1"
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-explorer-journey.mjs
       - name: Canadian comparison selection and ambiguity browser regression
         timeout-minutes: 4
         env:

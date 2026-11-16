@@ -5,7 +5,7 @@ import {sourceReferenceIntervalForPlot} from './lab-reference-interval';
 import {labReportGroupKey,labDateText} from './lab-history';
 import {goalGuidance} from './goal-guidance';
 
-export const LAB_PANEL_REVIEW_VERSION='recorded-panel-review-2026-11-16-v1';
+export const LAB_PANEL_REVIEW_VERSION='recorded-panel-review-2026-11-16-v2';
 type Point=PrecisionReport['trends'][number]['points'][number];
 export const labReviewFamilies=[
  {id:'lipids',name:'Lipids together',markers:['ldl','apob','hdl','triglycerides','non_hdl'],goals:['metabolic'],question:'Were any medicines changed before this collection?',context:'LDL, ApoB, HDL and triglycerides describe different aspects of the measured lipid picture. A lower triglyceride result alone does not establish an overall benefit.'},
@@ -63,7 +63,7 @@ export function recordedLabPanelReview(report:Pick<PrecisionReport,'trends'|'pen
   return{...family,members,cues,goalRelevant:(family.goals as readonly string[]).some(id=>goals.includes(id)),selected:cues.length>0};
  }).filter(family=>family.members.length).sort((a,b)=>Number(b.goalRelevant)-Number(a.goalRelevant)||a.name.localeCompare(b.name));
  const selected=families.filter(family=>family.selected),tg=assessments.find(row=>row.id==='triglycerides');
- const lipidTradeoffs=tg&&tg.change!==null&&tg.change<0?assessments.filter(row=>['ldl','apob'].includes(row.id)&&row.change!==null&&row.change>0&&row.position==='above'&&alignedReports(tg,row)).map(row=>({lower:tg.id,higher:row.id,sourceIds:[tg.previous!.id,tg.latest!.id,row.previous!.id,row.latest!.id],text:`Triglycerides decreased while ${row.name} increased and is outside its latest source upper bound. The paired reports align; an overall benefit or cause is not established.`})):[];
+ const lipidTradeoffs=tg&&tg.change!==null&&tg.change<0?assessments.filter(row=>['ldl','apob'].includes(row.id)&&row.change!==null&&row.change>0&&alignedReports(tg,row)).map(row=>({lower:tg.id,higher:row.id,sourceIds:[tg.previous!.id,tg.latest!.id,row.previous!.id,row.latest!.id],text:`Triglycerides decreased while ${row.name} increased. The paired reports align; an overall benefit or cause is not established.`})):[];
  const covered=new Set(families.flatMap(family=>family.members.map(row=>row.id)));
  const otherCues=assessments.filter(row=>!covered.has(row.id)&&(row.state==='source-bound'||row.state==='source-bound-transition'));
  return{version:LAB_PANEL_REVIEW_VERSION,assessments,families,selected,otherCues,sourceReview:assessments.filter(row=>row.state==='source-review'),notSelected:assessments.filter(row=>row.state==='not-selected'),lipidTradeoffs,originalRecords:new Set(entries.flatMap(entry=>[...(entry.trend?.points.map(point=>point.id)||[]),...entry.pending.map(row=>row.id),...entry.sourceOnly.map(row=>row.id)])).size,clinicalSignificance:'not-assessed' as const,personalAttribution:'not-assessed' as const};

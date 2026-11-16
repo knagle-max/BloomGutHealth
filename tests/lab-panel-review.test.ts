@@ -54,3 +54,9 @@ test('one-sided exclusive source threshold includes equality, with no fabricated
  const row=recordedLabPanelReview(report([at])).assessments[0];assert.equal(row.position,'above');assert.equal(row.state,'source-bound');
  assert.equal(recordedLabPanelReview(report([lab('alt',39,1,{sourceInput:at.payload.sourceInput})])).selected.length,0);
 });
+
+test('aligned opposing lipid directions stay visible without source bounds or a clinical worsening label',()=>{
+ const rows=[lab('triglycerides',2.1,0,{referenceHigh:null}),lab('triglycerides',0.6,1,{referenceHigh:null}),lab('ldl',2,0,{referenceHigh:5}),lab('ldl',2.5,1,{referenceHigh:5})];
+ const review=recordedLabPanelReview(report(rows));assert.equal(review.lipidTradeoffs.length,1);assert.equal(review.assessments.find(row=>row.id==='ldl')!.position,null);
+ assert.match(review.lipidTradeoffs[0].text,/Triglycerides decreased while LDL cholesterol increased/);assert.doesNotMatch(review.lipidTradeoffs[0].text,/outside|worsened|improved|normal|optimal/);assert.deepEqual(review.lipidTradeoffs[0].sourceIds,['triglycerides-0','triglycerides-1','ldl-0','ldl-1']);
+});

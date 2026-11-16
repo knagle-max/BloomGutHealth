@@ -30,5 +30,13 @@
     "/tmp/bloom-canadian-reference-types.log",
     "/tmp/bloom-canadian-reference-build.log"
   ],
-  "privacy": "Synthetic owned local data only, no actual private health-record query, clinical write, main merge or manual deployment; no physical VoiceOver or full RC claim"
+  "privacy": "Synthetic owned local data only, no actual private health-record query, clinical write, main merge or manual deployment; no physical VoiceOver or full RC claim",
+  "publication": {
+    "commit": "341ada7a32dca4773f7d2410d59bd368716183b2",
+    "workflowRun": 43966986850,
+    "workflowJob": 133648897037,
+    "status": "in_progress",
+    "pinnedHostedPersistence": "success",
+    "lastObservedStep": "Verify deployed navigation, media recovery and responsive layout"
+  }
 }
