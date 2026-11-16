@@ -12,23 +12,23 @@
     "independentlyApproved": 0
   },
   "counts": {
-    "totalIdentityRecords": 522,
+    "totalIdentityRecords": 523,
     "supportedMarkers": 49,
     "registryTaxa": 126,
     "researchContextProfiles": 56,
     "identityContextProfiles": 70,
-    "fixtureIdentityRecords": 347,
+    "fixtureIdentityRecords": 348,
     "fixtureCohorts": {
       "explicit-rank-mismatch-fixture": 3,
       "named-or-negative-identity-fixture": 68,
       "synthetic-or-unknown-fixture": 271,
-      "unsupported-assay-fixture": 5
+      "unsupported-assay-fixture": 6
     },
     "reviewed": 14,
     "limited": 197,
-    "unresolvedIdentity": 311,
-    "sourceFilesScanned": 740,
-    "relevantSourceFiles": 69,
+    "unresolvedIdentity": 312,
+    "sourceFilesScanned": 742,
+    "relevantSourceFiles": 70,
     "researchPathways": 7
   },
   "entries": [
@@ -10811,6 +10811,46 @@
           "file": "tests/structured-report-save.test.ts",
           "line": 105,
           "method": "literal composition dictionary key"
+        }
+      ]
+    },
+    {
+      "cohort": "unsupported-assay-fixture",
+      "uniqueId": "fixture:debdd42c4f9475de437c",
+      "kind": "source-only-analyte",
+      "sourceSpellings": [
+        "PSA"
+      ],
+      "taxonomicLevel": null,
+      "aliases": [],
+      "displayedSurfaces": [
+        "source-only laboratory observation"
+      ],
+      "profileRegistryId": null,
+      "evidenceLevel": "Unresolved source identity; no biological function inferred",
+      "coverageStatus": "unresolved identity",
+      "rawCoverageStatus": null,
+      "reviewStatus": "identity_not_established",
+      "reviewedOn": null,
+      "lastRevised": "biology-content-r4m1-2026-11-08.3+bloodwork-catalog-2026-11-09-v2",
+      "citations": [],
+      "unresolvedReason": "Uninterpreted source-only label; no assay, supported identity or clinical range inferred.",
+      "sources": [
+        {
+          "kind": "source-only-analyte",
+          "spelling": "PSA",
+          "rank": null,
+          "file": "tests/psa-family-display.test.ts",
+          "line": 27,
+          "method": "existing parser over explicit literal fixture"
+        },
+        {
+          "kind": "source-only-analyte",
+          "spelling": "PSA",
+          "rank": null,
+          "file": "tests/psa-family-display.test.ts",
+          "line": 28,
+          "method": "existing parser over explicit literal fixture"
         }
       ]
     },
@@ -24865,6 +24905,14 @@
       "reviewerNeed": "No literature writeup required for an intentional synthetic/negative fixture; preserve its unknown state."
     },
     {
+      "uniqueId": "fixture:debdd42c4f9475de437c",
+      "sourceSpellings": [
+        "PSA"
+      ],
+      "reason": "Uninterpreted source-only label; no assay, supported identity or clinical range inferred.",
+      "reviewerNeed": "Assay/source identity verification"
+    },
+    {
       "uniqueId": "fixture:dfbdb0b3c3894c6043c3",
       "sourceSpellings": [
         "Synthetic marker 35"
@@ -25406,6 +25454,7 @@
     "tests/microbiome-report-delete.test.ts": "20955c4c4ca491e707931e7d5e006be12e5e7c8e9ffdf73b344ab47e20e9c912",
     "tests/precision-nutrition.test.ts": "7aa18de5b7782e1788fc7cf9241fef3e6e888f425346135eaf75228b3c29a78a",
     "tests/provider-foods.test.ts": "987af5cec4f418de56edcd05c64317e3e75118a26ace0b4e4232b3899377ddea",
+    "tests/psa-family-display.test.ts": "8de8a85c71b6600e669cd6a3e6cc0a762bd73aceee726c09e3706ec90201a6ce",
     "tests/report-analysis.test.ts": "899fdc65e2477a7a9815beca1c75e65fa197e70ce4d2c510dd4f54d7d6f85989",
     "tests/report-dates.test.ts": "3bf52cfefaf731b9c958825cf1ab6e03715ff279a9be4b258071853ff0d6f5dc",
     "tests/report-explanations.test.ts": "7f248c23d398f9c5dcbefd5d6b30ce39b851edbe348178b63a37a18abdeb4842",

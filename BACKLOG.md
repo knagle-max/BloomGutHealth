@@ -1467,3 +1467,5 @@ Biology landing translates source-only to without an explanation and pending uni
 2026-11-16 | v0.6 owner Other label | IMPLEMENTED_AND_TESTED | Canonical display name Other; stable other category ID and source states preserved. Focused lab explorer tests PASS; no image bytes changed.
 
 2026-11-16 | v0.6 T2a prepared-mass transfer REVISED | IMPLEMENTED_AND_ENGINEERING_TESTED | Remaining practical/Athlete links preserve112.5g, matching prior Today/weekly correction. Actual browser+20 tests/types PASS.5 integrated source/range/report/context journeys qualified; receipt V06_PREPARED_MEAL_LINKS_20261116.json. Full Core/RC remains incomplete.
+
+2026-11-16 | v0.6 PSA analyte family source-only UX | IMPLEMENTED_AND_ENGINEERING_TESTED | Read-only known-family/unconfirmed-subtype projection, original0.5ug/L/date/IDs retained, optional explicit source review, no false total/free/ratio graph.16 focused tests+12-state App/types/build PASS; receipt V06_PSA_FAMILY_RECOGNITION_20261116.json. Exact CI/hosted pending; independent clinical/RC acceptance not claimed.

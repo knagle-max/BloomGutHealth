@@ -32,3 +32,23 @@ export function normalizedLabUnit(raw:string,units:readonly string[]):string|und
  if((/^M\//.test(raw)||key==='million/ul')&&units.includes('10^6/uL'))key='10^6/ul';
  return units.find(unit=>labUnitKey(unit)===key);
 }
+
+export type PsaSourceFamilyIdentity={
+ analyteFamily:'prostate-specific-antigen';name:'Prostate-specific antigen (PSA)';
+ confirmedMarkerId:null;assaySubtype:'unspecified'|'total'|'free'|'ratio'|'conflicting';status:string;
+};
+/** Read-only family recognition. Value, units, demographics and prevalence never
+ * choose a total/free fraction or authorize a canonical numeric trend. */
+export function labSourceAnalyteFamily(label:string,method?:string):PsaSourceFamilyIdentity|null{
+ const key=nameKey(label);
+ let assaySubtype:PsaSourceFamilyIdentity['assaySubtype'];
+ if(['psa','prostatespecificantigen','prostatespecificantigenpsa','psaprostatespecificantigen'].includes(key))assaySubtype='unspecified';
+ else if(additionalLabMarkers.some(marker=>marker.id==='psa_total'&&[marker.id,marker.name,...marker.aliases].some(alias=>nameKey(alias)===key)))assaySubtype='total';
+ else if(['psaratio','freetotalpsa','freetototalpsa','psafreetotalratio','psafreetototalratio','percentfreepsa','percentagefreepsa','freetotalpsaratio','freetototalpsaratio','freepsatotalpsaratio','freepsatototalpsaratio','prostatespecificantigenratio','prostatespecificantigenfreetotalratio','prostatespecificantigenfreetototalratio','psafreetotal','psafreetototal'].includes(key)||(['freepsa','psafree'].includes(key)&&label.includes('%')))assaySubtype='ratio';
+ else if(['freepsa','psafree','fpsa','freeprostatespecificantigen','prostatespecificantigenfree'].includes(key))assaySubtype='free';
+ else return null;
+ const methodText=(method||'').toLowerCase();
+ if(assaySubtype==='total'&&/\bfree[\s-]+(?:psa|prostate)|\bpsa[\s-]+free\b|\bfpsa\b|\bfreepsa\b|\b(?:psa[\s-]+ratio|free[\s/-]+to[\s/-]+total)\b/.test(methodText)||assaySubtype==='free'&&/\btotal[\s-]+(?:psa|prostate)|\bpsa[\s-]+total\b/.test(methodText))assaySubtype='conflicting';
+ const status=assaySubtype==='unspecified'?'Total/free assay type not confirmed':assaySubtype==='conflicting'?'Assay type conflicts in the source details':assaySubtype==='total'?'Total PSA reported; assay details need review':assaySubtype==='free'?'Free PSA reported; kept separate from total PSA':'PSA ratio reported; kept separate from total PSA';
+ return{analyteFamily:'prostate-specific-antigen',name:'Prostate-specific antigen (PSA)',confirmedMarkerId:null,assaySubtype,status};
+}

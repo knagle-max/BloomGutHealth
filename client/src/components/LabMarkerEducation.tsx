@@ -1,10 +1,12 @@
+import type {PsaSourceFamilyIdentity} from '@shared/lab-source-identity';
 import {labEditorialFor,labEditorialSources} from '@shared/biology-labs';
 import {supportedSourceIntervalPosition} from '@shared/biology-lab-observation';
 import {hasConfirmedLabIdentity} from '@shared/lab-assay-identity';
 import {markerDefinitions} from '@shared/precision-nutrition';
 import {resolveRecordedLabPoint} from '@shared/lab-history';
 import type {PrecisionReport} from '@shared/precision-nutrition';
-export default function LabMarkerEducation({markerId,points,selectedPointId}:{markerId:string;points:PrecisionReport['trends'][number]['points'];selectedPointId:string}){
+export default function LabMarkerEducation({markerId,points,selectedPointId,familyIdentity}:{familyIdentity?:PsaSourceFamilyIdentity;markerId:string;points:PrecisionReport['trends'][number]['points'];selectedPointId:string}){
+ if(familyIdentity){const totalProfile=labEditorialFor('psa_total');return <section className="lab-marker-education space-y-3" aria-label="PSA analyte family context"><h4>About PSA</h4><p>The source identifies the PSA analyte family. Total PSA, free PSA and free-to-total ratios are different measurements.</p><p className="panel-note">{familyIdentity.status}. The source observation remains available below; no total-PSA trend or interpretation is calculated from this unconfirmed source.</p>{totalProfile&&<details><summary>PSA background &amp; source</summary><p>General background does not confirm the assay type or diagnose a condition.</p>{labEditorialSources(totalProfile).map(source=><p key={source.id}><a className="text-link" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></p>)}</details>}</section>;}
  const profile=labEditorialFor(markerId);
  if(!profile)return <p className="lab-marker-education panel-note">The source label does not establish a supported analyte identity. Its original measurement and assay remain available below.</p>;
  const selected=resolveRecordedLabPoint(points,selectedPointId);
