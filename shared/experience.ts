@@ -1,5 +1,6 @@
 import {athleteReferenceEntrySourceSchema,sessionEntrySourceSchema,hydrationEntrySourceSchema,athleteEntrySourceMatches} from "./athlete-entry-source";
 import {restaurantRegions} from "./restaurant-entry";
+import {labResponseContextSchema} from './lab-response-context';
 import { z } from "zod";
 import { ingredientSchema } from "./meal-intelligence";
 export const dateKey = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v => !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v, "Use a real calendar date");
@@ -234,6 +235,7 @@ export const memorySchema = z.object({
   key: z.string().trim().min(1).max(2000), ingredients: z.array(ingredientSchema.strict()).min(1).max(20),
 }).strict();
 export const experienceEntrySchema = z.discriminatedUnion("kind", [
+  z.object({kind:z.literal('lab-response-context'),payload:labResponseContextSchema}).strict(),
   z.object({kind:z.literal("activity-routine"),payload:activityRoutineSchema}).strict(),
   z.object({kind:z.literal("wellness-choice"),payload:wellnessChoiceSchema}).strict(),
   z.object({kind:z.literal("activity"),payload:activitySchema}).strict(),

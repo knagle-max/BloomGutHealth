@@ -1,6 +1,6 @@
 {
   "task": "T2b-recorded-panel-review-overview",
-  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "ENGINEERING_TESTED_DEPLOYED_HOSTED_UI_UNVERIFIED",
   "authority": "docs/architecture/RESPONSE_INTELLIGENCE_V06_ARCHITECT_RECONCILIATION_20261114.md",
   "scope": [
     "Read-only assessment of every active owned canonical/pending/source-only marker using existing explorer, source bounds and comparability",
@@ -33,5 +33,13 @@
     "correction": "Reviewed affected navigation/display sources, registered overview surfaces, refreshed source fingerprints without permission promotion",
     "focusedRerun": "2/2 PASS",
     "additionalDatePrecisionRegression": "PASS after full-run snapshot"
+  },
+  "publication": {
+    "commit": "0cfc34d13677410cb8c4d8e26ec84d0b03e98a48",
+    "branch": "enhance/bloom-experience",
+    "renderDeploy": "dep-dbtgirm417fc738kr0gg",
+    "renderStatus": "live",
+    "finishedAt": "2026-11-16T13:49:08.394622Z",
+    "hostedUi": "Unverified: workspace public HTTPS proxy403; no private account inspection"
   }
 }

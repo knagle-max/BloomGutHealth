@@ -1,6 +1,8 @@
 ## ACTIVE ENGINEERING — T2b whole-panel Response #15
 
-Current slice: source-aware all-marker review overview in the existing Bloodwork Atlas. Model + 34-row browser, Atlas/reference regressions, types/build pass; publish and check exact review deployment. Broad757 tests:756PASS and one stale source fingerprint failure corrected with focused rerun. Full Response remains partial: next add smallest source-linked dated/recalled context annotation and revised cited conditional guidance using existing evidence/storage. Do not treat this overview as full Response completion. Receipt: `docs/verification/V06_RECORDED_PANEL_REVIEW_20261116.json`.
+Current slice: source-linked recalled context for Response#15. Reader/schema/private export/erasure compatibility and generic write denial pass actual HTTP/encrypted SQL plus types/build. Publish reader first; then dedicated source-current CAS/idempotent save/delete and ordinary UI, timing-aware evidence and revised cited conditional actions. Receipt: `V06_LAB_RESPONSE_CONTEXT_READER_20261116.json`.
+
+Prior panel overview:0cfc34d1, Render LIVE13:49:08UTC (`dep-dbtgirm417fc738kr0gg`). Full Response remains partial.34-row browser/Atlas/reference regressions/types/build pass; broad757 tests756PASS plus one stale fingerprint corrected with focused rerun. Hosted UI unverified (proxy403).
 
 Morphology correction `bf13da54` confirmed Render LIVE `dep-dbtg3vm8bjmc73fl35j0` at13:17:39 UTC; screenshot-name tests pushed `ff6383ad`. Actual-account visual coverage remains unverified; private-health read request unanswered and public proxy403. Do not repeat blocked access or rebuild imported images.
 

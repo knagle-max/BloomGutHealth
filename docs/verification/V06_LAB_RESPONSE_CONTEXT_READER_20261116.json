@@ -1,0 +1,24 @@
+{
+  "task": "T2b-lab-response-context-reader-before-writer",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "authority": "docs/architecture/RESPONSE_INTELLIGENCE_V06_ARCHITECT_RECONCILIATION_20261114.md",
+  "scope": [
+    "Strict recalled-context annotations reuse encrypted experience_records; no new table or laboratory ledger",
+    "Answered-at separate from remembered event date/range/unknown, original source review window and exact source ID/revision references",
+    "Yes/no/unknown/not-tracked/prefer-not-answer are distinct; unknown is not zero/no, unanswered cannot retain private notes",
+    "Existing owned reader/private export/full experience erasure support new kind; no clinical interpretation or automatic source-report edits",
+    "Generic POST/PUT/storage insert-update and individual delete cannot bypass forthcoming source-versioned dedicated controls; no writer or user-facing capture is enabled"
+  ],
+  "tests": [
+    "New schema and actual Express/encrypted PGlite reader tests2/2 PASS after correcting a JSONB-envelope assertion in the test",
+    "Existing experience API, encrypted storage/settings and wellness reader regressions PASS;9 relevant cases covered across scoped runs",
+    "Owner/auth/foreign-account reads, generic producers and delete denial, ciphertext, reload/private export, whole-workspace owner erasure and other-account preservation PASS",
+    "Ordinary weekly review remains0 observations/all unknown metrics; recalled answer cannot become actual activity or a health result",
+    "TypeScript/complete production build/source and built original media fingerprint audits PASS"
+  ],
+  "remaining": [
+    "Publish reader compatibility before any dedicated writer; verify current review deployment",
+    "Dedicated source-current atomic writer with idempotency/CAS, future-leak protection, deletion lifecycle and ordinary UI not implemented yet",
+    "Full Response15 still needs timing-aware evidence/applicability and revised cited conditional actions; no personal causal estimator authorized"
+  ]
+}

@@ -1001,19 +1001,22 @@
           "shared/biology-content.ts",
           "shared/lab-panel-review.ts",
           "shared/lab-comparability.ts",
-          "shared/lab-reference-interval.ts"
+          "shared/lab-reference-interval.ts",
+          "shared/lab-response-context.ts",
+          "shared/experience.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
           "server/storage.ts",
-          "shared/schema.ts"
+          "shared/schema.ts",
+          "server/experience-storage.ts"
         ],
         "cache": [
           "client/src/lib/auth.tsx",
           "client/src/lib/queryClient.ts"
         ]
       },
-      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Source-bound all-marker overview and related-family cues are display-only; no clinical significance ranking, causal attribution, new consent or execution authorization.",
+      "observation": "Existing preview paths; runtime and specialist authorization review remains required. Source-bound all-marker overview and related-family cues are display-only; no clinical significance ranking, causal attribution, new consent or execution authorization. Source-linked recalled-context reader preserves event precision and learned-at separately; generic producers are denied pending the dedicated versioned source-verified writer. No personal causal inference or research sharing.",
       "authorizationReview": "REVIEW_REQUIRED"
     },
     {
@@ -1990,8 +1993,8 @@
     "server/capability-access.ts": "a4af301a2d14d380a6906b1da60304d45560e46cb8e4d99daff48e30373e98a4",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
-    "server/experience-routes.ts": "e66b2f3ce646bac47e9e5fde23c9b73616429c03f0999fa89c14979bff45c9d7",
-    "server/experience-storage.ts": "d33885d668deb965fb6a4bb89b60d853e6431d027a17323b05ef53d6809a4e39",
+    "server/experience-routes.ts": "fd538866d97c27998421c6870b03991d48fa1bf061d250d947ac79a5721017fc",
+    "server/experience-storage.ts": "8805a12179b8a149e1e26964e7a23adcca0b073df280845251d50054fdc84287",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -2074,7 +2077,7 @@
     "shared/description-intelligence.ts": "d76fd822733c8bad2f5cbc786a9d9958d93a97f3b8ee1e514bf7a7b3acbd6baf",
     "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
-    "shared/experience.ts": "97b5483dd1ae524167f6775aed4b62af3168b7686c40502b8e6f02f79b94c5cd",
+    "shared/experience.ts": "fcaf1665f8b37e98d6ed93b4c2924205db4cf8d76bcbb15a75898551fdd2f362",
     "shared/experiment-review.ts": "fb4b1bc9ee0839a4a9bb448e1f55cd2cda0fa49283585660b1244eda4203a76f",
     "shared/feature-administration.ts": "e9c6c9e3f7f59910a5b137676e02edf88324d77585aaa06df1fb46638377b1c9",
     "shared/food-intelligence.ts": "4ad0deb199cd8a6e52b6bb844fd6679000659f766c64a304d25f6a680b6fb3d9",
@@ -2099,6 +2102,7 @@
     "shared/lab-pdf-file.ts": "87dd2c7403af24db72724da3306f6f812d733aa935c8d2b2b4c68ac353e92180",
     "shared/lab-reference-interval.ts": "1e29ffb34708605f24ff4d84ddf41af682f52a2e0083167dbd0d9e8401d623e1",
     "shared/lab-reimport.ts": "04b613fe84fc4a3fbfb4077ffe5b8b1f962ff9dc4d60147082baa148ffd72468",
+    "shared/lab-response-context.ts": "db7b075640c3ba7f3141fcb9e4427801d84ba1b3098c418f7ee921a539ff7305",
     "shared/lab-text-file.ts": "98dbba4f3b7300bd92571cdab259dacaeaa03844fd6807ed347d4a89befded22",
     "shared/manual-genetics.ts": "b64377f85b8f2a9696bd35b14a96a854a191d7a81e970e9eef0b4ec66a7d2cd2",
     "shared/meal-intelligence.ts": "b95247f5ad4ada8c79fa5483c0cd0e8d55e644eaf2bea35826cea837e35afea0",

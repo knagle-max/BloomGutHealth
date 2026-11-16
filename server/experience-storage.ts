@@ -166,6 +166,7 @@ export class ExperienceStorage {
   });
  }
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
+  if(entry.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="activity")throw Error("ACTIVITY_ACTION_REQUIRED");
   if(entry.kind==="activity-routine")throw new ActivityRoutineConflict(400,"Use the versioned routine action.");
@@ -192,6 +193,7 @@ export class ExperienceStorage {
   });
  }
  async updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry) {
+  if(entry.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
   if(entry.kind==="activity-routine")throw new ActivityRoutineConflict(400,"Use the versioned routine controls.");
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
@@ -247,6 +249,7 @@ export class ExperienceStorage {
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
    const [row]=await tx.select({kind:experienceRecords.kind}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id)));
    if(row?.kind==="wellness-choice")throw new WellnessChoiceConflict("dedicated-action");
+   if(row?.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
    const result=await tx.delete(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id))).returning({id:experienceRecords.id});return !!result.length;
   });
  }

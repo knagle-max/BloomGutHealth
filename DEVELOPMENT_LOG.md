@@ -1899,3 +1899,9 @@ Biology landing translates source-only to without an explanation and pending uni
 - Aligned paired-report TG/LDL/ApoB discordance retained; missing methods/fasting, ambiguous times, same date-only reported day and newer pending units abstain. Edits/deletes/owner/source withdrawal recompute from existing report. No new writes or ledger.
 - Eight model tests,34-row/31-marker browser,50-row illustrated Atlas,34-row actual SQL reference overlay with48 visual states, types and production build pass. Full757-test run passed756; stale source fingerprint failed, then reviewed/refreshed with2/2 focused crosswalk tests passing. No authorization state changed. Full suite not repeated for metadata-only correction.
 - Full Response#15 remains partial. Next: minimal source-linked dated/recalled context annotation, temporal/evidence applicability and revised conditional actions; no personal causal estimate or new signoff gate.
+
+
+### 2026-11-16 — T2b recalled-context reader before writer
+- Added strict private recalled-context reader on existing encrypted Experience records. Preserves source ID/revision references, source review window, remembered event precision and learned-at independently; yes/no/unknown/not-tracked/prefer-not-answer remain distinct. No actual behavior, medical cause or source edits inferred. Generic producers and individual delete deny this managed kind until dedicated source-current controls exist.
+-2 new schema/actual Express/encrypted SQL tests PASS;7 existing API/storage/wellness/source-map cases pass across scoped runs. Private export/reload/owner isolation/ciphertext/full experience erasure and other owner preservation tested. Ordinary activity/weekly totals unchanged; types/complete build/media audits PASS. No writer/UI enabled yet.
+- Prior overview0cfc34d1 confirmed Render live `dep-dbtgirm417fc738kr0gg`13:49:08UTC. Hosted UI remains unverified through403 proxy; no actual-owner health reads.
