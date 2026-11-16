@@ -119,3 +119,5 @@ The [autonomous development policy](docs/architecture/V06_AUTONOMOUS_DEVELOPMENT
 **Latest known entrypoint at this edit:** T0 publication/CI state is from dated 2026-11-15 progress text, **not independently certified here**. Codex shall inspect actual branch/working tree and not replay old tasks automatically.
 
 **Active ready-art installation (2026-11-16):** Exact Library IDs resolved transport.33 optimized originals (28 WebP+5 passive SVG;20 delivered BVA IDs) imported with source hashes;18 IDs bound to existing pages, Coach/pathway reference files staged without feature activation. Transparent Biology text uses continuous card gradient (136 contrast samples,min5.72).80 responsive states/28 media failures,50 source-row Atlas and high-DPI/OFF/reload PASS. Publish and verify exact hosted bytes/screens, then T2a concrete dinner journey/T2b uncovered Core.
+
+**Owner visual correction:** T1c-fit-and-reveal ENGINEERING_TESTED: full64/72px organ thumbnails and shorter Biology fade; min contrast5.45. Publish correction, verify latest source once, continue concrete Food/Core. Original artaf99a2f is live; no source-transfer blocker.

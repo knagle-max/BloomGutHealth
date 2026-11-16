@@ -17,9 +17,9 @@
 }
 .app-shell[data-bloom-visual="premium"] .biology-home-source::before {
  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
- background:linear-gradient(90deg,var(--bv-porcelain) 0%,var(--bv-porcelain) 58%,color-mix(in srgb,var(--bv-porcelain) 94%,transparent) 78%,transparent 100%);
+ background:linear-gradient(90deg,var(--bv-porcelain) 0%,var(--bv-porcelain) 26%,color-mix(in srgb,var(--bv-porcelain) 94%,transparent) 60%,transparent 76%);
 }
-.app-shell[data-bloom-visual="premium"] .biology-home-source > .biology-home-source-copy {flex:0 1 auto;min-width:0;max-width:78%;padding:.2rem .5rem .2rem 0;background:transparent;overflow-wrap:anywhere;}
+.app-shell[data-bloom-visual="premium"] .biology-home-source > .biology-home-source-copy {flex:0 1 auto;min-width:0;max-width:62%;padding:.2rem .5rem .2rem 0;background:transparent;overflow-wrap:anywhere;}
 .app-shell[data-bloom-visual="premium"] .biology-home-source strong {font-family:var(--font-display);font-size:clamp(1.25rem,2.8vw,1.65rem);font-weight:500;line-height:1.25;}
 .app-shell[data-bloom-visual="premium"] .biology-home-source small {color:var(--bv-secondary);line-height:1.5;}
 .app-shell[data-bloom-visual="premium"] .biology-home-source > svg {margin-left:auto;width:28px;height:28px;padding:4px;border-radius:50%;background:var(--bv-porcelain);flex-shrink:0;color:var(--bv-brand);}
