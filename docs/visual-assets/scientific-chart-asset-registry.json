@@ -487,6 +487,105 @@
         "Touch hitboxes 44×44, readable keyboard focus, reduced-motion and forced-color equivalents",
         "320/390/768/1440, 200% zoom, four themes and actual screenshot gates pending"
       ]
+    },
+    {
+      "id": "CHART-A08",
+      "name": "Legend, annotation, chart-state and motion kit",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate delivered; Architect, Science, UX and real-app visual acceptance pending",
+      "dependsOn": [
+        "CHART-A01",
+        "CHART-A02",
+        "CHART-A03",
+        "CHART-A04",
+        "CHART-A05",
+        "CHART-A06",
+        "CHART-A07"
+      ],
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A08_Legends_Annotations_States_Motion_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A08_Readme_2026-11-15.md",
+        "manifest": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A08_Manifest_2026-11-15.json",
+        "contents": [
+          "tokens/CHART-A08-legends-states-motion.json",
+          "tokens/CHART-A08-legends-states-motion.css",
+          "svg/CHART-A08-legend-symbols.svg",
+          "svg/CHART-A08-*.svg",
+          "editable/CHART-A08-*-specimen.svg",
+          "responsive/320",
+          "responsive/390",
+          "responsive/768",
+          "responsive/1440",
+          "interaction/CHART-A08-motion-state-matrix.md",
+          "handoff/CHART-A08-integration.md",
+          "accessibility/CHART-A08-review.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "legendTypes": [
+        "observed",
+        "comparison",
+        "source reference interval",
+        "selected-record interval",
+        "decision threshold",
+        "research association",
+        "modelled/provisional",
+        "partial coverage",
+        "unavailable",
+        "recorded event"
+      ],
+      "states": [
+        "loading",
+        "empty",
+        "one-point",
+        "error",
+        "source-unavailable",
+        "partial",
+        "no-comparable"
+      ],
+      "motion": [
+        "selection change",
+        "tooltip reveal",
+        "legend toggle",
+        "chart entrance",
+        "loading shimmer"
+      ],
+      "validation": {
+        "svgWellFormed": "PASS 43/43",
+        "jsonValid": "PASS",
+        "zipIntegrity": "PASS",
+        "responsiveSpecimens": 16,
+        "designPreview": "RENDERED AND INSPECTED 390px Everyday Light and 1440px Athlete Dark SVG",
+        "sourceHashes": "Every file listed with SHA-256 in manifest",
+        "actualApp": "NOT_TESTED",
+        "scientificApproval": "PENDING",
+        "screenReaderAndTouch": "NOT_TESTED"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "firstCodeTarget": "client/src/components/LabTrend.tsx",
+        "nextCodeTarget": "client/src/components/FoodProgress.tsx",
+        "importRule": "Once after CHART-A01–A07; CSS scoped to premium app-shell and .bv-scientific-chart"
+      },
+      "constraints": [
+        "All exact chart values, units, intervals and event timestamps supplied by runtime canonical data",
+        "Source reference and decision thresholds have visibly and semantically different marks",
+        "Observed and research/modelled evidence status never presented as equivalent",
+        "Unknown, unavailable and source-withdrawn values never treated as zero or displayed from revoked data",
+        "Single point has no trendline",
+        "No measurement interpolation or source-derived geometry animation",
+        "All interactive legend items require 44px touch targets and keyboard focus",
+        "Exact value table always available",
+        "Mobile/desktop four-theme rendered implementation screenshots and scientific QA pending"
+      ]
     }
   ]
 }
