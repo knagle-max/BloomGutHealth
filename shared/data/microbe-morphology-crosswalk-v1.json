@@ -4,7 +4,7 @@
   "fixture": "shared/data/biology-content-r4m1-v2.json",
   "fixtureBlobSha": "ecb54d3aa4622a1c97bef07b34757693e1a29c47",
   "scope": "94 fixture observations only; not authenticated current user report or global organism catalog",
-  "status": "Eleven selected images generated, optimized and published in Shared Library, not yet physically imported into app or scientifically/rendered approved",
+  "status": "22 original optimized thumbnail/portrait WebPs imported; morphology remains conceptual, no sample/strain verification. Independent final RC review pending.",
   "taxonomicCaveat": "artwork styles are morphological visual archetypes, NOT taxonomic families, taxon identities, measured shapes or strain portraits",
   "defaultStyleId": "U00",
   "allowedStyleIds": [
@@ -36,7 +36,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c01/C01-BVA-0037-thumbnail.webp",
+        "sha256": "7c5e334fef4a60cc351dc35cbca59fa9cd49dbe0a368d04df9368308a59f8f41",
+        "bytes": 10038
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -45,7 +48,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c01/C01-BVA-0037-portrait.webp",
+        "sha256": "505aa6e573c109ab977cbb149f9c244331542d64e837450169d37e5e83f171b0",
+        "bytes": 84384
       }
     },
     {
@@ -63,7 +69,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c02/C02-BVA-0038-thumbnail.webp",
+        "sha256": "3b5eaad6c14162bbd6946f1fdc2ee20246dd4b1259d3fb821f8072eb4ed6926a",
+        "bytes": 12588
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -72,7 +81,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c02/C02-BVA-0038-portrait.webp",
+        "sha256": "667d11b888f0c4f4a2b160a6a34e8797ec0f0130302167c5c5388b69a516fbec",
+        "bytes": 105736
       }
     },
     {
@@ -90,7 +102,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c03/C03-BVA-0039-thumbnail.webp",
+        "sha256": "be714faf40fb0b3cccae2357fee20be7816205160db431aa027d7bebc4560000",
+        "bytes": 12616
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -99,7 +114,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c03/C03-BVA-0039-portrait.webp",
+        "sha256": "b9f45837d9740876a43ab77413ed9b6514d46a0741b68531400d3df404fbaac7",
+        "bytes": 109338
       }
     },
     {
@@ -117,7 +135,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c04/C04-BVA-0040-thumbnail.webp",
+        "sha256": "1b5f9bde206adc3fe264a60fedf88a77251cce8329475180ddf58817d3445113",
+        "bytes": 13808
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -126,7 +147,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c04/C04-BVA-0040-portrait.webp",
+        "sha256": "d8d7452ba51bbb58ecb19bbcfb99110d5828cbf31cb9211f1c889e66ac239f8f",
+        "bytes": 118158
       }
     },
     {
@@ -144,7 +168,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c05/C05-BVA-0041-thumbnail.webp",
+        "sha256": "00e7e51624dac3f2c843e6294e079bbf2bb9e48785b6e9506dce7d205dad7746",
+        "bytes": 12320
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -153,7 +180,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/c05/C05-BVA-0041-portrait.webp",
+        "sha256": "0a58333b44c365c6ce053be7dc5e4b00b1d895765cab584f7022ede8e3f23622",
+        "bytes": 108028
       }
     },
     {
@@ -171,7 +201,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/f01/F01-BVA-0042-thumbnail.webp",
+        "sha256": "6917f00b974b9f3556aef90a0ea237a037040944fa8a3192ba351f45427c7c42",
+        "bytes": 11556
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -180,7 +213,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/f01/F01-BVA-0042-portrait.webp",
+        "sha256": "960f25285c0aea0c648a7a21b9a5ffbf4c250206857840723d709d077c3dbbcf",
+        "bytes": 102188
       }
     },
     {
@@ -198,7 +234,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/f02/F02-BVA-0043-thumbnail.webp",
+        "sha256": "d2f9bc8677c365b2ca7809dbccb110e849ca1fde189396810e1f5a3371064e19",
+        "bytes": 13956
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -207,7 +246,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/f02/F02-BVA-0043-portrait.webp",
+        "sha256": "813a82a17975ef30b9abaaff4998b00b727aa277e962d43e9e7f545ff4aa9fc8",
+        "bytes": 101676
       }
     },
     {
@@ -225,7 +267,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/v01/V01-BVA-0044-thumbnail.webp",
+        "sha256": "b2963871f2b2c2794aab8453038834e43f1315e07a7c089b2595ca5f7a3964ae",
+        "bytes": 15080
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -234,7 +279,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/v01/V01-BVA-0044-portrait.webp",
+        "sha256": "72b61981012fbd9f5e1308c378abfea09a0e5724b93ca2cf9d2e7f32cabf3258",
+        "bytes": 108782
       }
     },
     {
@@ -252,7 +300,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/v02/V02-BVA-0045-thumbnail.webp",
+        "sha256": "dcecfeeffd38be59d36b1dd0c1db644b58386d66db35b773a850cbf537e93510",
+        "bytes": 12298
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -261,7 +312,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/v02/V02-BVA-0045-portrait.webp",
+        "sha256": "2d1e513f7de8e452fe6487b8f9029028d00bff00b5a175ff2e9c70b455cb661d",
+        "bytes": 110208
       }
     },
     {
@@ -279,7 +333,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/v03/V03-BVA-0046-thumbnail.webp",
+        "sha256": "ad323ffef09b721947a67fdb472436408a0fff8bd5693892d2e38283c7f46be6",
+        "bytes": 14770
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -288,7 +345,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/v03/V03-BVA-0046-portrait.webp",
+        "sha256": "20b0bafa56ec1e085842ab7eedefa65b40de906af005c7ec3105caa0e913fde0",
+        "bytes": 130594
       }
     },
     {
@@ -306,7 +366,10 @@
         "dimensions": [
           256,
           256
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/u00/U00-BVA-0047-thumbnail.webp",
+        "sha256": "69a21d617ee01de3d0540f43cabda6c6e64bd1c80047e5b5f06223063440d2e5",
+        "bytes": 6094
       },
       "portrait": {
         "manifest": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
@@ -315,7 +378,10 @@
         "dimensions": [
           1024,
           1024
-        ]
+        ],
+        "publicPath": "/science/morphology-v1/u00/U00-BVA-0047-portrait.webp",
+        "sha256": "4879e39c1cf6063645ab695963dd098640493de4a879bfbd337012e464d73101",
+        "bytes": 48386
       }
     }
   ],

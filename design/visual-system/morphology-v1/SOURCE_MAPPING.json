@@ -1,0 +1,868 @@
+{
+  "schemaVersion": "bloom-morphology-archetypes-v1",
+  "mappingSource": "shared/data/biology-content-r4m1-v2.json",
+  "sourceRef": "enhance/bloom-experience",
+  "sourceBlobSHA": "ecb54d3aa4622a1c97bef07b34757693e1a29c47",
+  "sourceEntryCount": 94,
+  "categoryDefinitions": {
+    "C01": "Cocci in chains or pairs",
+    "C02": "Round or oval cocci",
+    "C03": "Short / oval bacterial rods",
+    "C04": "Elongated bacterial rods",
+    "C05": "Branched / irregular bacterial rods",
+    "F01": "Dark yeast-like fungi",
+    "F02": "Filamentous fungi",
+    "V01": "Rigid rod-shaped plant viruses",
+    "V02": "Head-and-tail bacteriophages",
+    "V03": "Enveloped spherical virus",
+    "U00": "Neutral microorganism \u2014 shape unverified"
+  },
+  "entries": [
+    {
+      "sourceOrdinal": 1,
+      "reportedName": "Abiotrophia defectiva",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 2,
+      "reportedName": "Alistipes communis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 3,
+      "reportedName": "Amedibacterium intestinale",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 4,
+      "reportedName": "Adlercreutzia sp. 8CFCBH1",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 5,
+      "reportedName": "Alistipes dispar",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 6,
+      "reportedName": "Anaerobutyricum hallii",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 7,
+      "reportedName": "Akkermansia muciniphila",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 8,
+      "reportedName": "Alistipes indistinctus",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 9,
+      "reportedName": "Anaerostipes hadrus",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 10,
+      "reportedName": "Anaerostipes rhamnosivorans",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 11,
+      "reportedName": "Bacteroides caecimuris",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 12,
+      "reportedName": "Bacteroides fragilis 638R",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 13,
+      "reportedName": "Bacteroides intestinalis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 14,
+      "reportedName": "Bacteroides sp. CACC 737",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 15,
+      "reportedName": "Bacteroides sp. HF-5141",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 16,
+      "reportedName": "Bacteroides uniformis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 17,
+      "reportedName": "Bacteroides zoogleoformans",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 18,
+      "reportedName": "Blautia sp. LZLJ-3",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C02",
+      "artworkCategory": "Round or oval cocci",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 19,
+      "reportedName": "Butyricimonas faecalis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 20,
+      "reportedName": "Bacillus thuringiensis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 21,
+      "reportedName": "Bacteroides cellulosilyticus",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 22,
+      "reportedName": "Bacteroides fragilis YCH46",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 23,
+      "reportedName": "Bacteroides ovatus V975",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 24,
+      "reportedName": "Bacteroides sp. CBA7301",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 25,
+      "reportedName": "Bacteroides sp. HF-5287",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 26,
+      "reportedName": "Bacteroides vulgatus ATCC 8482",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 27,
+      "reportedName": "Bifidobacterium pseudocatenulatum",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C05",
+      "artworkCategory": "Branched / irregular bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 28,
+      "reportedName": "Blautia sp. SC05B48",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C02",
+      "artworkCategory": "Round or oval cocci",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 29,
+      "reportedName": "Butyricimonas virosa",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 30,
+      "reportedName": "Bacteroides caccae",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 31,
+      "reportedName": "Bacteroides dorei CL03T12C01",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 32,
+      "reportedName": "Bacteroides heparinolyticus",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 33,
+      "reportedName": "Bacteroides sp. A1C1",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 34,
+      "reportedName": "Bacteroides sp. HF-162",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 35,
+      "reportedName": "Bacteroides thetaiotaomicron VPI-5482",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 36,
+      "reportedName": "Bacteroides xylanisolvens",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 37,
+      "reportedName": "Blautia argi",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C02",
+      "artworkCategory": "Round or oval cocci",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 38,
+      "reportedName": "Bordetella trematum",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 39,
+      "reportedName": "Christensenella minuta",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 40,
+      "reportedName": "Clostridium perfringens",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 41,
+      "reportedName": "Dysosmobacter welbionis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 42,
+      "reportedName": "Exophiala phaeomuriformis",
+      "reportedGroup": "Eukaryote",
+      "artworkId": "F01",
+      "artworkCategory": "Dark yeast-like fungi",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 43,
+      "reportedName": "Faecalibacterium prausnitzii A2-165",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 44,
+      "reportedName": "Haemophilus parainfluenzae T3T1",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 45,
+      "reportedName": "Lactobacillus curvatus JCM 1096 = DSM 20019",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 46,
+      "reportedName": "Latilactobacillus sakei",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 47,
+      "reportedName": "Longibaculum sp. KGMB06250",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 48,
+      "reportedName": "Odoribacter splanchnicus DSM 20712",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 49,
+      "reportedName": "Parabacteroides distasonis ATCC 8503",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 50,
+      "reportedName": "Coprobacter sp. 2CBH44",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 51,
+      "reportedName": "Enterocloster bolteae",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 52,
+      "reportedName": "Exophiala spinifera",
+      "reportedGroup": "Eukaryote",
+      "artworkId": "F01",
+      "artworkCategory": "Dark yeast-like fungi",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 53,
+      "reportedName": "Flavonifractor plautii",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 54,
+      "reportedName": "Lacticaseibacillus rhamnosus",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 55,
+      "reportedName": "Lactococcus cremoris",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 56,
+      "reportedName": "Limosilactobacillus fermentum",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 57,
+      "reportedName": "Massilistercora timonensis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 58,
+      "reportedName": "Oscillibacter sp. PEA192",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 59,
+      "reportedName": "Parabacteroides sp. CT06",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 60,
+      "reportedName": "Coprococcus comes",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C02",
+      "artworkCategory": "Round or oval cocci",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 61,
+      "reportedName": "Eptesicus fuscus gammaherpesvirus",
+      "reportedGroup": "Virus",
+      "artworkId": "V03",
+      "artworkCategory": "Enveloped spherical virus",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 62,
+      "reportedName": "Faecalibacillus intestinalis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 63,
+      "reportedName": "Gordonibacter urolithinfaciens",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 64,
+      "reportedName": "Lactiplantibacillus plantarum",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 65,
+      "reportedName": "Lactococcus phage 96603",
+      "reportedGroup": "Virus",
+      "artworkId": "V02",
+      "artworkCategory": "Head-and-tail bacteriophages",
+      "morphologyEvidence": "group_inferred",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 66,
+      "reportedName": "Loigolactobacillus backii",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 67,
+      "reportedName": "Mogibacterium diversum",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 68,
+      "reportedName": "Paprika mild mottle virus",
+      "reportedGroup": "Virus",
+      "artworkId": "V01",
+      "artworkCategory": "Rigid rod-shaped plant viruses",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 69,
+      "reportedName": "Pepper mild mottle virus",
+      "reportedGroup": "Virus",
+      "artworkId": "V01",
+      "artworkCategory": "Rigid rod-shaped plant viruses",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 70,
+      "reportedName": "Phocaeicola coprophilus",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 71,
+      "reportedName": "Roseburia hominis A2-183",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 72,
+      "reportedName": "Streptococcus pyogenes",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 73,
+      "reportedName": "Streptococcus sp. LPB0220",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 74,
+      "reportedName": "Streptococcus thermophilus ND03",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 75,
+      "reportedName": "Sutterella faecalis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 76,
+      "reportedName": "Tomato brown rugose fruit virus",
+      "reportedGroup": "Virus",
+      "artworkId": "V01",
+      "artworkCategory": "Rigid rod-shaped plant viruses",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 77,
+      "reportedName": "Ustilaginoidea virens",
+      "reportedGroup": "Eukaryote",
+      "artworkId": "F02",
+      "artworkCategory": "Filamentous fungi",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 78,
+      "reportedName": "[Clostridium] scindens",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 79,
+      "reportedName": "Pyrenophora tritici-repentis",
+      "reportedGroup": "Eukaryote",
+      "artworkId": "F02",
+      "artworkCategory": "Filamentous fungi",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 80,
+      "reportedName": "Ruminococcus bicirculans",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C02",
+      "artworkCategory": "Round or oval cocci",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 81,
+      "reportedName": "Streptococcus salivarius",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 82,
+      "reportedName": "Streptococcus thermophilus LMD-9",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 83,
+      "reportedName": "Streptococcus vestibularis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 84,
+      "reportedName": "Sutterella wadsworthensis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C03",
+      "artworkCategory": "Short / oval bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 85,
+      "reportedName": "Turicibacter sanguinis",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 86,
+      "reportedName": "Veillonella parvula",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C02",
+      "artworkCategory": "Round or oval cocci",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 87,
+      "reportedName": "Pyricularia grisea",
+      "reportedGroup": "Eukaryote",
+      "artworkId": "F02",
+      "artworkCategory": "Filamentous fungi",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 88,
+      "reportedName": "Ruthenibacterium lactatiformans",
+      "reportedGroup": "Bacterium",
+      "artworkId": "U00",
+      "artworkCategory": "Neutral microorganism \u2014 shape unverified",
+      "morphologyEvidence": "unverified",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 89,
+      "reportedName": "Streptococcus sp. FDAARGOS_192",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 90,
+      "reportedName": "Streptococcus thermophilus MN-ZLW-002",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C01",
+      "artworkCategory": "Cocci in chains or pairs",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 91,
+      "reportedName": "Streptococcus virus DT1",
+      "reportedGroup": "Virus",
+      "artworkId": "V02",
+      "artworkCategory": "Head-and-tail bacteriophages",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 92,
+      "reportedName": "Tobacco mild green mosaic virus",
+      "reportedGroup": "Virus",
+      "artworkId": "V01",
+      "artworkCategory": "Rigid rod-shaped plant viruses",
+      "morphologyEvidence": "reviewed_group",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 93,
+      "reportedName": "Turicibacter sp. H121",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    },
+    {
+      "sourceOrdinal": 94,
+      "reportedName": "[Clostridium] innocuum",
+      "reportedGroup": "Bacterium",
+      "artworkId": "C04",
+      "artworkCategory": "Elongated bacterial rods",
+      "morphologyEvidence": "genus_provisional",
+      "presentationNotice": "Illustrative morphology group, not an image of the reported strain. Source observation does not prove shape, quantity, or biological activity."
+    }
+  ]
+}

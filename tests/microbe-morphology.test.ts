@@ -1,0 +1,46 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import crosswalk from '../shared/data/microbe-morphology-crosswalk-v1.json';
+import manifest from '../design/visual-system/morphology-v1/DELIVERY_MANIFEST.json';
+import {organismIllustration,type OrganismArtworkSource} from '../shared/scientific-visuals';
+import {reportedTaxa} from '../shared/reported-taxa';
+const sample={id:'synthetic-morphology-source',structuredData:{schemaVersion:'bloom-report-v2',organisms:crosswalk.entries.map(entry=>({name:entry.reportedName,reportedStatus:null,reportedAbundance:'Not quantified',notes:`Provider group: ${entry.reportedGroup}`}))}};
+const observations=reportedTaxa(sample,[]);
+const source=(index:number):OrganismArtworkSource=>({reportId:sample.id,observationId:observations[index].id,observations});
+test('94 exact source observations retain original data and share all eleven thumbnail/portrait morphology identities',()=>{
+ const original=JSON.stringify(sample),groups:Record<string,number>={},styles=new Set();
+ assert.equal(new Set(crosswalk.entries.map(e=>e.sourceOrdinal)).size,94);assert.equal(new Set(crosswalk.entries.map(e=>e.reportedName)).size,94);
+ for(const [index,entry] of crosswalk.entries.entries()){
+  groups[entry.reportedGroup]=(groups[entry.reportedGroup]||0)+1;
+  const thumb=organismIllustration(entry.reportedName,'thumbnail',source(index)),portrait=organismIllustration(entry.reportedName,'portrait',source(index));
+  assert.equal(thumb.styleId,entry.artworkStyleId);assert.equal(portrait.assetId,thumb.assetId);assert.equal(portrait.styleId,thumb.styleId);styles.add(thumb.styleId);
+  assert.equal(thumb.label,entry.artworkStyleId==='U00'?crosswalk.disclosure.unknown:crosswalk.disclosure.group);
+  assert.equal(observations[index].abundance,null);assert.equal(observations[index].reportedAbundance,'Not quantified');
+ }
+ assert.deepEqual(groups,{Bacterium:82,Eukaryote:5,Virus:7});assert.equal(styles.size,11);assert.equal(JSON.stringify(sample),original);
+});
+test('absent, wrong report/ordinal, changed case, strain/rank and ambiguous source identities use U00 without alias or morphology inference',()=>{
+ const name=observations[0].bacterialName,ctx=source(0);
+ const unknown=(label:string|undefined,context?:OrganismArtworkSource)=>assert.equal(organismIllustration(label,'portrait',context).styleId,'U00');
+ unknown(name);unknown(undefined,ctx);unknown('Unknown source organism',ctx);unknown(name.toUpperCase(),ctx);unknown(name+' strain synthetic',ctx);
+ unknown(name,{...ctx,reportId:'other-report'});unknown(name,{...ctx,observationId:'other-observation'});
+ for(const row of [{...observations[0],reportedOrganismSourceId:`reported-organism:${sample.id}:1`},{...observations[0],reportedNotes:'Provider group: Virus'},{...observations[0],taxonomyLevel:'genus'},{...observations[0],taxonomyLevel:'strain'},{...observations[0],taxonomyLevel:'family'},{...observations[0],reportedOrganismSourceId:undefined}])unknown(name,{...ctx,observations:[row,...observations.slice(1)]});
+ unknown(name,{...ctx,observations:[...observations,{...observations[0],id:'duplicate-source-name'}]});
+ unknown(name,{...ctx,observations:[...observations,observations[0]]});
+});
+test('22 canonical optimized files preserve independently delivered bytes and dimensions; U00 output retains permanent BVA0047 identity',()=>{
+ const hash=(b:Buffer)=>createHash('sha256').update(b).digest('hex');
+ assert.equal(hash(readFileSync('design/visual-system/morphology-v1/DELIVERY_MANIFEST.json')),'f33739f2bf0bf7562ec482d20b6e2933ef6c1d23a6e20366ea8f32d05a36fbd6');
+ for(const style of crosswalk.styles){const asset=manifest.assets.find(row=>row.styleId===style.id)!;
+  for(const size of ['thumbnail','portrait'] as const){const file=style[size],bytes=readFileSync('client/public'+file.publicPath);assert.equal(hash(bytes),asset[size].sha256);assert.equal(bytes.length,asset[size].bytes);assert.deepEqual(file.dimensions,size==='thumbnail'?[256,256]:[1024,1024]);assert.ok(file.publicPath.includes(style.registryAssetId));}
+ }
+ const neutral=crosswalk.styles.find(style=>style.id==='U00')!;assert.equal(neutral.registryAssetId,'BVA-0047');assert.match(neutral.thumbnail.archiveMember,/U00-U00/);assert.match(neutral.thumbnail.publicPath,/U00-BVA-0047/);
+});
+test('all22 morphology files are normally public under the existing passive resource headers without accounts or feature flags',async()=>{
+ const {default:express}=await import('express');const {securityHeaders}=await import('../server/security');
+ const app=express();app.use(securityHeaders);app.use(express.static('client/public'));const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));
+ try{const port=(server.address() as {port:number}).port;for(const style of crosswalk.styles)for(const size of ['thumbnail','portrait'] as const){const response=await fetch(`http://127.0.0.1:${port}`+style[size].publicPath);assert.equal(response.status,200);assert.match(response.headers.get('content-type')!,/^image\/webp/);assert.equal(response.headers.get('set-cookie'),null);assert.equal(response.headers.get('x-content-type-options'),'nosniff');assert.match(response.headers.get('content-security-policy')!,/default-src 'none'/);assert.equal(createHash('sha256').update(Buffer.from(await response.arrayBuffer())).digest('hex'),style[size].sha256);}}
+ finally{await new Promise<void>(resolve=>server.close(()=>resolve()));}
+});

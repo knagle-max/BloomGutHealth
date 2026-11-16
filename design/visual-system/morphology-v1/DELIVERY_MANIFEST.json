@@ -1,0 +1,612 @@
+{
+  "schemaVersion": "1.0.0",
+  "batch": "morphology-10-plus-U00",
+  "dateUTC": "2026-11-16T02:22:34.329061+00:00",
+  "repository": "knagle-max/BloomGutHealth",
+  "branch": "enhance/bloom-experience",
+  "masterRegistry": "docs/visual-assets/visual-asset-registry.json",
+  "crosswalk": "shared/data/microbe-morphology-crosswalk-v1.json",
+  "originalsDelivery": "preserved generated original PNG files with no visual changes",
+  "optimizedDelivery": "WebP portrait 1024px square, thumbnail 256px square, and full-frame 1536x1024 landscape; no fabricated high-resolution upscaling",
+  "status": "Owner-selected artworks, packaged for Architect/Science review; not yet imported into app or approved for factual species depiction",
+  "scientificDisclaimer": "Illustrative broad microbial form, not a species image, cultured microscopy, actual user sample, strain observation, health result, or abundance.",
+  "U00Disclaimer": "Shape unverified; generic atmospheric background; no microorganism morphology depicted.",
+  "rights": "AI generated inside ChatGPT. Confirm applicable commercial-use terms and approve first-party redistribution per project process.",
+  "deprecations": "Current 20 named-organism SVG portraits remain deprecated for replacement, not deleted until new family art is live and quality-verified.",
+  "assets": [
+    {
+      "styleId": "C01",
+      "registryAssetId": "BVA-0037",
+      "name": "Cocci in chains or pairs",
+      "mappedFixtureEntries": 10,
+      "conceptualSubject": "biological morphology illustration, cocci in chains/pairs",
+      "sourceFilename": "a_clean_high_detail_macro_3d_scientific_illustrat.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/C01-BVA-0037-thumbnail.webp",
+        "sha256": "7c5e334fef4a60cc351dc35cbca59fa9cd49dbe0a368d04df9368308a59f8f41",
+        "bytes": 10038,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/C01-BVA-0037-portrait.webp",
+        "sha256": "505aa6e573c109ab977cbb149f9c244331542d64e837450169d37e5e83f171b0",
+        "bytes": 84384,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/C01-BVA-0037-full.webp",
+        "sha256": "fce1151960259734793942af45e8d8ee817803132bca468d2c40427a18fa5205",
+        "bytes": 107584,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/C01-BVA-0037-cocci-in-chains-or-pairs.png",
+        "sha256": "16fa7e0d53d15dbe96bfca899229569b243a9b94b4b82df4d23e97a7753c5f04",
+        "bytes": 2084744,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        248,
+        0,
+        1272,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "C02",
+      "registryAssetId": "BVA-0038",
+      "name": "Round or oval cocci",
+      "mappedFixtureEntries": 6,
+      "conceptualSubject": "biological morphology illustration, round or oval cocci",
+      "sourceFilename": "a_photorealistic_high_detail_3d_style_microscopic.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/C02-BVA-0038-thumbnail.webp",
+        "sha256": "3b5eaad6c14162bbd6946f1fdc2ee20246dd4b1259d3fb821f8072eb4ed6926a",
+        "bytes": 12588,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/C02-BVA-0038-portrait.webp",
+        "sha256": "667d11b888f0c4f4a2b160a6a34e8797ec0f0130302167c5c5388b69a516fbec",
+        "bytes": 105736,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/C02-BVA-0038-full.webp",
+        "sha256": "b6b6c6188ce472679aea8b9ee9713950217d05583b2b4717a09f07ea8b771dae",
+        "bytes": 123928,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/C02-BVA-0038-round-or-oval-cocci.png",
+        "sha256": "73142ada7552d46807762b10de7038d55f4ec041b86d98c131644152d33918ce",
+        "bytes": 2136985,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        238,
+        0,
+        1262,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "C03",
+      "registryAssetId": "BVA-0039",
+      "name": "Short / oval bacterial rods",
+      "mappedFixtureEntries": 35,
+      "conceptualSubject": "biological morphology illustration, short rods",
+      "sourceFilename": "a_high_detail_photorealistic_3d_biomedical_illust.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/C03-BVA-0039-thumbnail.webp",
+        "sha256": "be714faf40fb0b3cccae2357fee20be7816205160db431aa027d7bebc4560000",
+        "bytes": 12616,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/C03-BVA-0039-portrait.webp",
+        "sha256": "b9f45837d9740876a43ab77413ed9b6514d46a0741b68531400d3df404fbaac7",
+        "bytes": 109338,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/C03-BVA-0039-full.webp",
+        "sha256": "ecb94841a5d5442880b011e3175a046bb36c9b69749b9a3b52ea903650e7357d",
+        "bytes": 130672,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/C03-BVA-0039-short-oval-bacterial-rods.png",
+        "sha256": "4938c4508d4c996eb7959f3c213d1991820ee70f46ad9645bc6935e5107e6525",
+        "bytes": 2147924,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        248,
+        0,
+        1272,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "C04",
+      "registryAssetId": "BVA-0040",
+      "name": "Elongated bacterial rods",
+      "mappedFixtureEntries": 21,
+      "conceptualSubject": "biological morphology illustration, elongated rods",
+      "sourceFilename": "a_hyper_realistic_high_detail_scientific_illustra.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/C04-BVA-0040-thumbnail.webp",
+        "sha256": "1b5f9bde206adc3fe264a60fedf88a77251cce8329475180ddf58817d3445113",
+        "bytes": 13808,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/C04-BVA-0040-portrait.webp",
+        "sha256": "d8d7452ba51bbb58ecb19bbcfb99110d5828cbf31cb9211f1c889e66ac239f8f",
+        "bytes": 118158,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/C04-BVA-0040-full.webp",
+        "sha256": "82432cddc83909871fe4a14a0d59076edba8d72cebe16c78e3f9ef6cc4cdd74e",
+        "bytes": 143088,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/C04-BVA-0040-elongated-bacterial-rods.png",
+        "sha256": "d6fb65b4b073f7da4285d5b3b1f186cdb18b24bc3c17ace2ee7a5056d796d414",
+        "bytes": 2161968,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        258,
+        0,
+        1282,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "C05",
+      "registryAssetId": "BVA-0041",
+      "name": "Branched / irregular bacterial rods",
+      "mappedFixtureEntries": 1,
+      "conceptualSubject": "biological morphology illustration, branched rods",
+      "sourceFilename": "a_crisp_high_detail_3d_biomedical_style_close_up.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/C05-BVA-0041-thumbnail.webp",
+        "sha256": "00e7e51624dac3f2c843e6294e079bbf2bb9e48785b6e9506dce7d205dad7746",
+        "bytes": 12320,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/C05-BVA-0041-portrait.webp",
+        "sha256": "0a58333b44c365c6ce053be7dc5e4b00b1d895765cab584f7022ede8e3f23622",
+        "bytes": 108028,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/C05-BVA-0041-full.webp",
+        "sha256": "97ed0d257a253c74c7e67e363fda91e09883b649657a6450a0e8626dd099dbba",
+        "bytes": 128334,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/C05-BVA-0041-branched-irregular-bacterial-rods.png",
+        "sha256": "ccf09d64f3445f629e8e63d44864b6e6d8d6b125747642a203b38e397170c0c5",
+        "bytes": 2072363,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        218,
+        0,
+        1242,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "F01",
+      "registryAssetId": "BVA-0042",
+      "name": "Dark yeast-like fungi",
+      "mappedFixtureEntries": 2,
+      "conceptualSubject": "illustrative budding fungal cells",
+      "sourceFilename": "a_high_detail_realistic_microscopic_style_3d_rend.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/F01-BVA-0042-thumbnail.webp",
+        "sha256": "6917f00b974b9f3556aef90a0ea237a037040944fa8a3192ba351f45427c7c42",
+        "bytes": 11556,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/F01-BVA-0042-portrait.webp",
+        "sha256": "960f25285c0aea0c648a7a21b9a5ffbf4c250206857840723d709d077c3dbbcf",
+        "bytes": 102188,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/F01-BVA-0042-full.webp",
+        "sha256": "41001cc38fa355973d6e7747de3c37caade126fed69f780472ddaddfc9bd1c62",
+        "bytes": 126236,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/F01-BVA-0042-dark-yeast-like-fungi.png",
+        "sha256": "2aba0c8bec0f37d0df8e81e7676ece69b1266cd81530af411abe0b15c94c39b0",
+        "bytes": 2179503,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        253,
+        0,
+        1277,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "F02",
+      "registryAssetId": "BVA-0043",
+      "name": "Filamentous fungi",
+      "mappedFixtureEntries": 3,
+      "conceptualSubject": "illustrative branching fungal hyphae",
+      "sourceFilename": "a_highly_detailed_realistic_macro_3d_rendered_clo.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/F02-BVA-0043-thumbnail.webp",
+        "sha256": "d2f9bc8677c365b2ca7809dbccb110e849ca1fde189396810e1f5a3371064e19",
+        "bytes": 13956,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/F02-BVA-0043-portrait.webp",
+        "sha256": "813a82a17975ef30b9abaaff4998b00b727aa277e962d43e9e7f545ff4aa9fc8",
+        "bytes": 101676,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/F02-BVA-0043-full.webp",
+        "sha256": "300156f300c83c18abb9baaa83ff5cf353f065d105352aea5eab26bb9575f34e",
+        "bytes": 132600,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/F02-BVA-0043-filamentous-fungi.png",
+        "sha256": "39c449ca7c01c518db33ccc82d24197d5c54e497a0686dddf328132e58ee93ae",
+        "bytes": 2189158,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        233,
+        0,
+        1257,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "V01",
+      "registryAssetId": "BVA-0044",
+      "name": "Rigid rod-shaped plant viruses",
+      "mappedFixtureEntries": 4,
+      "conceptualSubject": "illustrative helical rod-shaped plant viral particles",
+      "sourceFilename": "a_detailed_realistic_3d_scientific_illustration_o.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/V01-BVA-0044-thumbnail.webp",
+        "sha256": "b2963871f2b2c2794aab8453038834e43f1315e07a7c089b2595ca5f7a3964ae",
+        "bytes": 15080,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/V01-BVA-0044-portrait.webp",
+        "sha256": "72b61981012fbd9f5e1308c378abfea09a0e5724b93ca2cf9d2e7f32cabf3258",
+        "bytes": 108782,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/V01-BVA-0044-full.webp",
+        "sha256": "440be4337e5f82954d06e75bad7d5ffcfa2f490a7f95c1061e19c605a17efbbf",
+        "bytes": 144828,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/V01-BVA-0044-rigid-rod-shaped-plant-viruses.png",
+        "sha256": "0cb4ceffdf4ea514b70d391a9164496d0b9ddb5790051c2df417a23292187161",
+        "bytes": 2223667,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        288,
+        0,
+        1312,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "V02",
+      "registryAssetId": "BVA-0045",
+      "name": "Head-and-tail bacteriophages",
+      "mappedFixtureEntries": 2,
+      "conceptualSubject": "illustrative bacteriophage with head, tail and appendages",
+      "sourceFilename": "a_high_detail_realistic_3d_style_close_up_scienti.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/V02-BVA-0045-thumbnail.webp",
+        "sha256": "dcecfeeffd38be59d36b1dd0c1db644b58386d66db35b773a850cbf537e93510",
+        "bytes": 12298,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/V02-BVA-0045-portrait.webp",
+        "sha256": "2d1e513f7de8e452fe6487b8f9029028d00bff00b5a175ff2e9c70b455cb661d",
+        "bytes": 110208,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/V02-BVA-0045-full.webp",
+        "sha256": "7681bc9d61c176c45207403bcaba0c5642fd6024d1893cdd8630b0a0c6428f12",
+        "bytes": 136456,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/V02-BVA-0045-head-and-tail-bacteriophages.png",
+        "sha256": "b9871af5febd7adc4617c54919e0ea0c26c09135f0f66ee6d46e5eb6be0d750c",
+        "bytes": 2137968,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        243,
+        0,
+        1267,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "V03",
+      "registryAssetId": "BVA-0046",
+      "name": "Enveloped spherical virus",
+      "mappedFixtureEntries": 1,
+      "conceptualSubject": "illustrative enveloped spherical virus with short projections",
+      "sourceFilename": "a_highly_detailed_realistic_3d_medical_style_macr.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/V03-BVA-0046-thumbnail.webp",
+        "sha256": "ad323ffef09b721947a67fdb472436408a0fff8bd5693892d2e38283c7f46be6",
+        "bytes": 14770,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/V03-BVA-0046-portrait.webp",
+        "sha256": "20b0bafa56ec1e085842ab7eedefa65b40de906af005c7ec3105caa0e913fde0",
+        "bytes": 130594,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/V03-BVA-0046-full.webp",
+        "sha256": "63e83400d58e38d50be42465008a2c980c5eb89d42aa8dc24d63a9d97d160d03",
+        "bytes": 151928,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/V03-BVA-0046-enveloped-spherical-virus.png",
+        "sha256": "2ac5aafd0c5a366623b68a424ddf9bcc1315d2b0836130c326334b9c9a0084df",
+        "bytes": 2255755,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        238,
+        0,
+        1262,
+        1024
+      ],
+      "role": "shared morphology archetype",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "Representative illustration of a broad microbial morphology; not the reported organism or strain.",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    },
+    {
+      "styleId": "U00",
+      "registryAssetId": "U00",
+      "name": "Shape unverified — neutral backdrop",
+      "mappedFixtureEntries": 9,
+      "conceptualSubject": "atmospheric background without organism or morphology",
+      "sourceFilename": "a_photorealistic_cinematic_abstract_macro_backgro.png",
+      "sourceTool": "OpenAI image generation via ChatGPT; exact model build not specified by image tool",
+      "sourceImageSize": [
+        1536,
+        1024
+      ],
+      "thumbnail": {
+        "path": "webp/thumbnail/U00-U00-thumbnail.webp",
+        "sha256": "69a21d617ee01de3d0540f43cabda6c6e64bd1c80047e5b5f06223063440d2e5",
+        "bytes": 6094,
+        "width": 256,
+        "height": 256
+      },
+      "portrait": {
+        "path": "webp/portrait/U00-U00-portrait.webp",
+        "sha256": "4879e39c1cf6063645ab695963dd098640493de4a879bfbd337012e464d73101",
+        "bytes": 48386,
+        "width": 1024,
+        "height": 1024
+      },
+      "full": {
+        "path": "webp/full/U00-U00-full.webp",
+        "sha256": "569a307656e0e87b345e3642665738e83d35473e21a2771a64918f2cdc857f23",
+        "bytes": 67166,
+        "width": 1536,
+        "height": 1024
+      },
+      "original": {
+        "path": "originals/U00-U00-shape-unverified-neutral-backdrop.png",
+        "sha256": "a680e710ed4539c15093ba3976d495976460b5b2d280938fba22d7b14898e448",
+        "bytes": 1804595,
+        "width": 1536,
+        "height": 1024
+      },
+      "portraitCrop": [
+        248,
+        0,
+        1272,
+        1024
+      ],
+      "role": "neutral unknown fallback visual",
+      "biologicalReview": "Required; especially V01/V02 capsid geometry, F02 fertile branching forms, bacterial shape simplification",
+      "designReview": "Owner-selected image; actual 36px list/180px portrait/mobile/desktop validation pending",
+      "alt": "decorative",
+      "lifecycle": "Generated; review pending",
+      "currentlyServing": false,
+      "sourceReportsChanged": false
+    }
+  ]
+}

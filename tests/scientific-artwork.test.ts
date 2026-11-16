@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import registry from '../shared/data/scientific-visual-assets.json';
-import {organismIllustration,labCategoryIllustration,molecularIllustration,GENERIC_MORPHOLOGY_LABEL,REPRESENTATIVE_ILLUSTRATION_LABEL} from '../shared/scientific-visuals';
+import {legacyOrganismIllustration as organismIllustration,labCategoryIllustration,molecularIllustration,GENERIC_MORPHOLOGY_LABEL,REPRESENTATIVE_ILLUSTRATION_LABEL} from '../shared/scientific-visuals';
 import {assertScientificArtworkSvg,escapeBareSvgAmpersands} from '../scripts/lib/scientific-artwork-svg.mjs';
 test('all20 public representative portraits and thumbnails preserve exact40 original blobs and honest five-generic labels',()=>{
  assert.equal(registry.organismIllustrations.length,20);assert.equal(registry.organismIllustrations.filter(entry=>entry.genericMorphology).length,5);

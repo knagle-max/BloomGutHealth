@@ -3645,24 +3645,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/c01/C01-BVA-0037-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/c01/C01-BVA-0037-thumbnail.webp",
+        "/science/morphology-v1/c01/C01-BVA-0037-portrait.webp"
+      ],
       "artworkStyleId": "C01",
       "mappedFixtureObservations": 10,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -3742,24 +3746,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/c02/C02-BVA-0038-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/c02/C02-BVA-0038-thumbnail.webp",
+        "/science/morphology-v1/c02/C02-BVA-0038-portrait.webp"
+      ],
       "artworkStyleId": "C02",
       "mappedFixtureObservations": 6,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -3839,24 +3847,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/c03/C03-BVA-0039-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/c03/C03-BVA-0039-thumbnail.webp",
+        "/science/morphology-v1/c03/C03-BVA-0039-portrait.webp"
+      ],
       "artworkStyleId": "C03",
       "mappedFixtureObservations": 35,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -3936,24 +3948,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/c04/C04-BVA-0040-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/c04/C04-BVA-0040-thumbnail.webp",
+        "/science/morphology-v1/c04/C04-BVA-0040-portrait.webp"
+      ],
       "artworkStyleId": "C04",
       "mappedFixtureObservations": 21,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4033,24 +4049,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/c05/C05-BVA-0041-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/c05/C05-BVA-0041-thumbnail.webp",
+        "/science/morphology-v1/c05/C05-BVA-0041-portrait.webp"
+      ],
       "artworkStyleId": "C05",
       "mappedFixtureObservations": 1,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4130,24 +4150,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/f01/F01-BVA-0042-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/f01/F01-BVA-0042-thumbnail.webp",
+        "/science/morphology-v1/f01/F01-BVA-0042-portrait.webp"
+      ],
       "artworkStyleId": "F01",
       "mappedFixtureObservations": 2,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4227,24 +4251,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/f02/F02-BVA-0043-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/f02/F02-BVA-0043-thumbnail.webp",
+        "/science/morphology-v1/f02/F02-BVA-0043-portrait.webp"
+      ],
       "artworkStyleId": "F02",
       "mappedFixtureObservations": 3,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4324,24 +4352,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/v01/V01-BVA-0044-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/v01/V01-BVA-0044-thumbnail.webp",
+        "/science/morphology-v1/v01/V01-BVA-0044-portrait.webp"
+      ],
       "artworkStyleId": "V01",
       "mappedFixtureObservations": 4,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4421,24 +4453,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/v02/V02-BVA-0045-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/v02/V02-BVA-0045-thumbnail.webp",
+        "/science/morphology-v1/v02/V02-BVA-0045-portrait.webp"
+      ],
       "artworkStyleId": "V02",
       "mappedFixtureObservations": 2,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4518,24 +4554,28 @@
         "action": "owner-selected-generated-published-in-shared-library",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
         "existingSlot": "Organism list + detail portrait",
-        "existingPath": null,
+        "existingPath": "/science/morphology-v1/v03/V03-BVA-0046-portrait.webp",
         "existingArtifactByteVerified": true,
         "deliveryArchive": "Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
-        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json"
+        "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
+        "integrationSourceByteVerified": true
       },
-      "lifecycle": "Generated",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
-      "filePaths": [],
+      "lifecycle": "Integrated",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
+      "filePaths": [
+        "/science/morphology-v1/v03/V03-BVA-0046-thumbnail.webp",
+        "/science/morphology-v1/v03/V03-BVA-0046-portrait.webp"
+      ],
       "artworkStyleId": "V03",
       "mappedFixtureObservations": 1,
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
       "mappingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
       "presentationDisclaimer": "Illustration of a broad microbial form, not an image of this organism or strain.",
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",
@@ -4615,9 +4655,9 @@
       "artworkStyleId": "U00",
       "mappedFixtureObservations": 9,
       "legacyFallbackId": "bloom-neutral-microorganism-v1",
-      "lifecycle": "Generated",
+      "lifecycle": "Integrated",
       "assetStatus": "owner-selected-images-delivered-scientific-and-rendered-review-pending",
-      "productionStatus": "User-selected image physically available in Shared Library archives with SHA-256; NOT yet imported in app or given science/UX actual-rendering acceptance.",
+      "productionStatus": "Imported first-party optimized originals and bound in existing list/detail; independent final RC review pending.",
       "sourceRelation": {
         "action": "owner-selected-generated-published-in-shared-library",
         "existingArtifactByteVerified": true,
@@ -4625,7 +4665,9 @@
         "deliveryOriginals": "Bloom_Morphology_11_Original_PNG_2026-11-15.zip",
         "deliveryManifest": "Bloom_Morphology_11_Production_Manifest_2026-11-15.json",
         "existingRegistry": "shared/data/microbe-morphology-crosswalk-v1.json",
-        "existingSlot": "Organism list + detail portrait"
+        "existingSlot": "Organism list + detail portrait",
+        "existingPath": "/science/morphology-v1/u00/U00-BVA-0047-portrait.webp",
+        "integrationSourceByteVerified": true
       },
       "delivery": {
         "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_Morphology_11_WebP_Production_2026-11-15.zip",
@@ -4659,11 +4701,14 @@
         "status": "published Shared Library; not yet imported into GitHub public directory",
         "archiveFilenameCorrection": "2026-11-15 source verification: source ZIP and original manifest use U00-U00-{thumbnail,portrait,full}.webp for the neutral fallback (manifest asset registryAssetId says U00). This registry ID remains BVA-0047. At app import rename to U00-BVA-0047-{variant}.webp so published first-party paths are permanent-ID canonical; source SHA hashes unchanged."
       },
-      "filePaths": [],
+      "filePaths": [
+        "/science/morphology-v1/u00/U00-BVA-0047-thumbnail.webp",
+        "/science/morphology-v1/u00/U00-BVA-0047-portrait.webp"
+      ],
       "integration": {
-        "state": "NOT_INTEGRATED; Codex to import image files and update single shared resolver after review",
+        "state": "Original optimized thumbnail/portrait imported; strict current-source ordinal/name selection, U00 unknown and retained SVG fallback. Actual synthetic App QA passed; current Tester1 report coverage not yet established.",
         "verified": false,
-        "componentAssetIdReferenced": false
+        "componentAssetIdReferenced": true
       },
       "review": {
         "design": "owner-selected art direction, small-format private crop QA performed; actual UI screenshots pending",

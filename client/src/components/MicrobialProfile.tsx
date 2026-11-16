@@ -1,3 +1,4 @@
+import type {OrganismArtworkSource} from '@shared/scientific-visuals';
 import {functionalResearchFor} from "@shared/functional-microbiome";
 import {organismBiography} from "@shared/biology-content";
 import {explainOrganism} from "@shared/report-explanations";
@@ -11,8 +12,8 @@ import { reportDateText } from "@shared/report-dates";
 import { type ReportedTaxon, reportedTaxonAmount } from "@shared/reported-taxa";
 
 const sections = ["What research has studied", "Nutrients & molecules", "Food research", "Sources & limitations"];
-export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocus }: {
-  taxon: ReportedTaxon | null; sample: any; onClose: () => void; onRestoreFocus: () => void;
+export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocus, artworkSource }: {
+  taxon: ReportedTaxon | null; sample: any; artworkSource?:OrganismArtworkSource; onClose: () => void; onRestoreFocus: () => void;
 }) {
   const [expanded, setExpanded] = useState<string | null>(null);
   useEffect(() => setExpanded(null), [taxon?.id,taxon?.bacterialName,taxon?.taxonomyLevel,sample?.id]);
@@ -34,7 +35,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
         <Dialog.Title className="microbial-profile-title"><i>{taxon?.bacterialName}</i></Dialog.Title>
         <Dialog.Description>The organism name comes from your report.</Dialog.Description>
         {taxon && <>
-          <OrganismPortrait size="portrait" sourceName={taxon.bacterialName}/>
+          <OrganismPortrait size="portrait" sourceName={taxon.bacterialName} source={artworkSource}/>
           <p className="inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
           {reportedTaxonAmount(taxon)!=="Not reported"&&<p>Source-reported amount: {reportedTaxonAmount(taxon)}</p>}
           <section className="microbial-organism-intro"><h3>What this organism is</h3>

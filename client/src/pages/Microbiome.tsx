@@ -122,7 +122,7 @@ export default function Microbiome() {
           )}
         </section>
       )}
-      {!!sorted.length&&<nav aria-label="Microbiome sections" className="precision-tabs">{[["results","Latest results"],["bacteria","Bacteria"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav>}
+      {!!sorted.length&&<nav aria-label="Microbiome sections" className="precision-tabs">{[["results","Latest results"],["bacteria","Organisms"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav>}
       <details className="workspace-disclosure gut-report-exploration"><summary>Explore food patterns & research</summary><p className="panel-note">Food-journal observations and research context are separate from measurements in your report.</p><nav aria-label="Related food and research views" className="precision-tabs">{[["diet","Diet insights"],["molecules","Molecules"],["cohorts","Cohorts"]].map(([id,label])=><Button key={id} variant={tab===id?"default":"outline"} aria-pressed={tab===id} onClick={()=>setTab(id)}>{label}</Button>)}</nav></details>
       {currentId && (results.isPending||results.fetchStatus!=="idle") && (
         <p role="status">Loading composition…</p>
@@ -213,7 +213,7 @@ export default function Microbiome() {
                     return (
                       <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
                         <td className="p-2">
-                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-description={organismIllustration(b.bacterialName,"thumbnail")?.label||MICROORGANISM_SYMBOL_LABEL} aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><OrganismPortrait size="thumbnail" sourceName={b.bacterialName}/><span className="microbial-composition-name"><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
+                          <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-description={organismIllustration(b.bacterialName,"thumbnail",{reportId:currentId,observationId:b.id,observations:taxa})?.label||MICROORGANISM_SYMBOL_LABEL} aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><OrganismPortrait size="thumbnail" sourceName={b.bacterialName} source={{reportId:currentId,observationId:b.id,observations:taxa}}/><span className="microbial-composition-name"><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
                         </td>
                         <td className="p-2">{reportedTaxonAmount(b)}</td>
                         {comparisonId && (
@@ -387,7 +387,7 @@ export default function Microbiome() {
           ))}
         </section>
       )}
-      <MicrobialProfile taxon={activeTaxon} sample={currentResults?.sample} onClose={closeProfile} onRestoreFocus={()=>taxonTrigger.current?.isConnected&&taxonTrigger.current.focus({preventScroll:true})}/>
+      <MicrobialProfile artworkSource={activeTaxon?{reportId:currentId,observationId:activeTaxon.id,observations:taxa}:undefined} taxon={activeTaxon} sample={currentResults?.sample} onClose={closeProfile} onRestoreFocus={()=>taxonTrigger.current?.isConnected&&taxonTrigger.current.focus({preventScroll:true})}/>
     </main>
   );
 }

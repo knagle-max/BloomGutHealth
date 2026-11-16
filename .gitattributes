@@ -4,3 +4,5 @@ client/public/images/editorial/explore/pathway-kit/*.svg -text
 design/visual-system/ready-20261115/**/DELIVERY_MANIFEST.json -text
 design/visual-system/biology-text-safe/DELIVERY_MANIFEST.json -text
 design/visual-system/biology-text-safe/README.md -text
+client/public/science/morphology-v1/**/*.webp -text
+design/visual-system/morphology-v1/*.json -text

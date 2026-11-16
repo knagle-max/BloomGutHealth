@@ -17,7 +17,7 @@ await page.route('**/api/**',async route=>{
  await route.fulfill({json});
 });
 try{
- await page.goto('http://127.0.0.1:5219/microbiome');await page.getByRole('button',{name:'Bacteria',exact:true}).click();
+ await page.goto('http://127.0.0.1:5219/microbiome');await page.getByRole('button',{name:'Organisms',exact:true}).click();
  assert.equal(await page.locator('.microbial-composition-row').count(),5);
  await page.getByText('Explore functions',{exact:true}).click();
  const group=page.getByRole('button',{name:'Resistant-starch research · 1 listed observation',exact:true});
