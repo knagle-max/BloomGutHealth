@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "1.0.0",
+  "program": "Bloom scientific data visualization",
+  "scope": "CHART-A01 through CHART-E05; file and code reviews tracked independently of media BVA registry",
+  "created": "2026-11-15",
+  "items": [
+    {
+      "id": "CHART-A01",
+      "name": "Four-theme scientific chart tokens",
+      "priority": "P0",
+      "lifecycle": "Generated",
+      "reviewStatus": "Designer candidate; Architect/UX/Science/visual browser review pending",
+      "sourceHandoff": "Bloom_Scientific_Data_Visualization_Designer_Asset_Handoff_2026-11-15.md",
+      "delivery": {
+        "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A01_Four_Theme_Tokens_2026-11-15.zip",
+        "readme": "/Bloom gut health/Agent Handoffs/Bloom_CHART_A01_Readme_2026-11-15.md",
+        "files": [
+          "tokens/scientific-chart-tokens.json",
+          "tokens/scientific-chart-tokens.css",
+          "editable/CHART-A01-four-theme-token-map.svg",
+          "accessibility/contrast-matrix.json",
+          "accessibility/contrast-matrix.md",
+          "handoff/integration-contract.md",
+          "manifest.json"
+        ]
+      },
+      "themes": [
+        "everyday-light",
+        "everyday-dark",
+        "athlete-light",
+        "athlete-dark"
+      ],
+      "validation": {
+        "svgXml": "PASS",
+        "wcagStaticPairs": "44/44 PASS against solid chart surfaces",
+        "packageZip": "PASS",
+        "renderedInRunningApp": "NOT_TESTED",
+        "darkAthleteCrossMode": "STATIC_ONLY"
+      },
+      "integration": {
+        "status": "NOT_INTEGRATED",
+        "importRule": "Single opt-in CSS import once after canonical Bloom visual CSS, no competing global overrides",
+        "suggestedTarget": "design/visual-system/scientific-charts/v1/",
+        "targetFirst": "client/src/components/LabTrend.tsx"
+      },
+      "importantConstraints": [
+        "No invented numeric data or baked-in plots",
+        "Reference and uncertainty semantically qualified, not purely by color",
+        "Preserve source-aware observation selection, source intervals, exact table alternatives",
+        "Do not treat generated assets as an approved/deployed chart"
+      ]
+    }
+  ]
+}
