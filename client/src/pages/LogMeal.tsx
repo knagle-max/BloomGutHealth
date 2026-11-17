@@ -182,11 +182,12 @@ export default function LogMeal() {
     setPhotoVisited(false);setMethodNotice("");setRestaurant("");setMarket("Canada");setRestaurantVisited(false);setPickerVisited(false);changeMethod(null);setToolsOpen(false);window.history.replaceState(null,"","/log-meal");setCatalogueEnabled(false);
   },onError:error=>{if(error instanceof ApiRequestError&&error.status===409)setReviewRejected(true);},onSettled:refreshMealSources});
   const saveUnknown=save.isError&&(!(save.error instanceof ApiRequestError)||save.error.status>=500);
+  const saveDeleted=save.isError&&save.error instanceof ApiRequestError&&save.error.code==='MEAL_SAVE_DELETED';
   const inputFrozen=save.isPending||reviewMeal.isPending||saveUnknown;
   useEffect(()=>{marketInitialized.current=false;setMarketTouched(false);setMarket("Canada");},[user?.id]);
   useEffect(()=>{if(settingsReady&&!marketInitialized.current&&!marketTouched&&!inputFrozen&&!review){setMarket(settings.practical.region||"Canada");marketInitialized.current=true;}},[settingsReady,settings.practical.region,marketTouched,inputFrozen,review]);
   const sameReview=!!review&&review.basis===basis&&review.owner===user?.id;
-  const reviewCurrent=sameReview&&!reviewDirty&&!reviewRejected&&!reviewMeal.isPending&&!reviewMeal.isError;
+  const reviewCurrent=sameReview&&!saveDeleted&&!reviewDirty&&!reviewRejected&&!reviewMeal.isPending&&!reviewMeal.isError;
   const reconnect=useReconnectRetry({actorId:user?.id,attemptKey:save.variables?.key,eligible:saveUnknown&&sameReview&&saveAttempt.current?.key===save.variables?.key&&save.variables?.snapshot.owner===user?.id,retry:()=>{const attempt=save.variables;if(attempt&&mounted.current&&actor.current===attempt.snapshot.owner&&saveAttempt.current?.key===attempt.key)save.mutate(attempt);}});
   const previewNutrition=review?mealNutritionSummary([review.analysis]):null;
   const savedNutrition=savedMeal?mealNutritionSummary([savedMeal]):null;
@@ -353,13 +354,14 @@ export default function LogMeal() {
             <div role="alert" className="space-y-2">
               <p className="font-semibold">{saveUnknown?"We couldn’t confirm your meal was saved.":"Your meal could not be saved."}</p>
               <p>{save.error.message}</p>
-              <p>{saveUnknown?"Your details are locked while this page stays open. Retry this same reviewed entry to recover the save without a duplicate, or check your journal in case it arrived.":"Your details are retained. Review the current source again before confirming."}</p>
+              <p>{saveDeleted?"The deleted meal will stay deleted. You can use this draft to review and confirm a separate new entry.":saveUnknown?"Your details are locked while this page stays open. Retry this same reviewed entry to recover the save without a duplicate, or check your journal in case it arrived.":"Your details are retained. Review the current source again before confirming."}</p>
+              {saveDeleted&&<Button type="button" variant="outline" onClick={()=>{saveAttempt.current=null;setReview(null);setReviewRejected(false);save.reset();requestAnimationFrame(()=>document.getElementById('food-input')?.focus());}}>Start a new entry from this draft</Button>}
               <Link href="/nutrition" className="text-link" target="_blank" rel="noopener">Check journal in a new tab</Link>
             </div>
           )}
           {reviewMeal.isError&&<p role="alert">{reviewMeal.error.message}</p>}
           {reviewMeal.isPaused&&<p role="status">Waiting for a connection to review this draft. Keep this page open.</p>}
-          <Button className="w-full h-12" disabled={(!description.trim()&&!products.length&&!(catalogueEnabled&&catalogueSelection.data))||(catalogueEnabled&&!catalogueSelection.data)||inputFrozen||!user} data-testid="button-review-meal">{reviewMeal.isPaused?"Waiting to review…":reviewMeal.isPending?"Reviewing meal…":"Review meal"}</Button>
+          <Button className="w-full h-12" disabled={saveDeleted||(!description.trim()&&!products.length&&!(catalogueEnabled&&catalogueSelection.data))||(catalogueEnabled&&!catalogueSelection.data)||inputFrozen||!user} data-testid="button-review-meal">{reviewMeal.isPaused?"Waiting to review…":reviewMeal.isPending?"Reviewing meal…":"Review meal"}</Button>
         </fieldset>
       </form>}
       {!savedMeal&&<details className="bloom-panel bloom-food-tools" open={toolsOpen} onToggle={event=>setToolsOpen(event.currentTarget.open)}><summary>Add food another way</summary>{sourceDraftIncomplete&&<p role="status">Finish the food name and amount fields before adding another source. Your ingredient draft is retained below.</p>}      <fieldset hidden={!!savedMeal} disabled={inputFrozen||sourceDraftIncomplete} className="space-y-3">
@@ -417,10 +419,10 @@ export default function LogMeal() {
       {review&&sameReview&&<section className="bloom-panel space-y-4 meal-review bloom-food-review" aria-labelledby="meal-review-heading">
         <h2 id="meal-review-heading" ref={reviewHeading} tabIndex={-1}>Review your meal</h2>
         <Button type="button" variant="outline" disabled={inputFrozen} onClick={()=>{const input=document.getElementById('food-input');input?.scrollIntoView({block:'center'});input?.focus();}}>Back to meal details</Button>
-        <p role="status">{save.isPaused?"Waiting for a connection. Keep this page open to finish saving this reviewed meal.":saveUnknown?"The save is not confirmed. Retry the same entry or check your journal.":"Not saved yet. Check the foods and portions."}</p>
-        <MealAnalysis analysis={review.analysis.intelligence} nutritionSummary={reviewCurrent&&previewNutrition?<>{nutritionOverview(previewNutrition)}<p className="panel-note">Estimates may be incomplete. Missing nutrients stay unavailable.</p></>:null} preview onDraftChange={(dirty,ingredients)=>{setReviewDirty(dirty);if(dirty&&ingredients&&reviewedDraft.current?.owner===user?.id)reviewedDraft.current={...reviewedDraft.current,ingredients};}} onRecalculate={(ingredients,options)=>{if(!inputFrozen&&user)reviewMeal.mutate({payload:{...review.payload,ingredients,aiConsent:false},basis,owner:user.id,keepItemFocus:options?.keepItemFocus});}} pending={reviewMeal.isPending} disabled={save.isPending||saveUnknown} current={reviewCurrent}/>
+        <p role="status">{saveDeleted?"This entry was deleted. Start a new entry from the draft above if needed.":save.isPaused?"Waiting for a connection. Keep this page open to finish saving this reviewed meal.":saveUnknown?"The save is not confirmed. Retry the same entry or check your journal.":"Not saved yet. Check the foods and portions."}</p>
+        <MealAnalysis analysis={review.analysis.intelligence} nutritionSummary={reviewCurrent&&previewNutrition?<>{nutritionOverview(previewNutrition)}<p className="panel-note">Estimates may be incomplete. Missing nutrients stay unavailable.</p></>:null} preview onDraftChange={(dirty,ingredients)=>{setReviewDirty(dirty);if(dirty&&ingredients&&reviewedDraft.current?.owner===user?.id)reviewedDraft.current={...reviewedDraft.current,ingredients};}} onRecalculate={(ingredients,options)=>{if(!inputFrozen&&!saveDeleted&&user)reviewMeal.mutate({payload:{...review.payload,ingredients,aiConsent:false},basis,owner:user.id,keepItemFocus:options?.keepItemFocus});}} pending={reviewMeal.isPending} disabled={save.isPending||saveUnknown||saveDeleted} current={reviewCurrent}/>
         {reviewDirty&&<p role="status">Update the ingredient review before saving this meal.</p>}
-        {reviewRejected&&<><p role="alert">The source changed. Update the review before saving.</p>{editState&&<Button type="button" variant="outline" onClick={async()=>{const result=await editSource.refetch();if(result.isSuccess){setEditState(null);setReview(null);setReviewRejected(false);}}}>Reload saved meal (replace this draft)</Button>}</>}
+        {reviewRejected&&!saveDeleted&&<><p role="alert">The source changed. Update the review before saving.</p>{editState&&<Button type="button" variant="outline" onClick={async()=>{const result=await editSource.refetch();if(result.isSuccess){setEditState(null);setReview(null);setReviewRejected(false);}}}>Reload saved meal (replace this draft)</Button>}</>}
         <Button type="button" className="w-full h-12" disabled={!reviewCurrent||save.isPending} onClick={confirmReview} data-testid="button-save-meal">{save.isPaused?"Waiting for connection…":save.isPending?"Saving your meal…":saveUnknown?"Retry saving my meal":editState?"Save changes":"Save meal"}</Button>
         {saveUnknown&&!reconnect.online&&<div className="space-y-2"><label className="flex items-start gap-2"><input type="checkbox" checked={reconnect.enabled} onChange={e=>reconnect.arm(e.target.checked)}/>Retry this reviewed save when the connection returns</label><p className="panel-note">Keep this page open. This option retains the same save for this account during this visit.</p></div>}
       </section>}

@@ -12,7 +12,7 @@ import {readProfileMeasurementSource} from "./profile-measurement-source";
 import type {ProfileMeasurementWrite,ProfileMeasurementSource} from "../shared/profile-measurement-source";
 import{PrivateProductStorage}from"./private-product-storage";
 import { getOwnedSample,updateOwnedSample,getOwnedComposition,getOwnedAnalyses,insertOwnedComposition,insertOwnedAnalysis,type SampleUpdates } from "./report-records";
-import { getOwnedMeal,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
+import { getOwnedMeal,getOwnedMealSaveRecord,getOwnedMeals,updateOwnedMeal,deleteOwnedMeal,type MealUpdates } from "./meal-records";
 import {updateMealWithReview,type MealEditReceipt} from './meal-edit';
 import {importStructuredReportWithReceipt,deleteOwnedMicrobiomeReport,changeOwnedViomeRelationship} from "./structured-report-storage";
 import type {StructuredReport,ReportImportFields,ReportSaveResult} from "../shared/structured-report";
@@ -90,6 +90,8 @@ export interface IStorage extends ExperienceStore {
 
 
   getMeal(id: string,userId:string): Promise<Meal | undefined>;
+  /** Internal recovery read including spent intents; never expose directly. */
+  getMealSaveRecord?(id:string,userId:string):Promise<Meal|undefined>;
   getMeals(userId: string): Promise<Meal[]>;
   insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal>;
   updateMeal(id: string, updates: MealUpdates,userId:string): Promise<Meal|undefined>;
@@ -197,13 +199,10 @@ export class DatabaseStorage implements IStorage {
   insertMlAnalysis(analysis:InsertMlAnalysis,userId:string) { return insertOwnedAnalysis(db,analysis,userId); }
 
   getMeal(id:string,userId:string) { return getOwnedMeal(db,id,userId); }
+  getMealSaveRecord(id:string,userId:string) { return getOwnedMealSaveRecord(db,id,userId); }
 
   async getMeals(userId: string): Promise<Meal[]> {
-    return await db
-      .select()
-      .from(meals)
-      .where(eq(meals.userId, userId))
-      .orderBy(desc(meals.loggedAt));
+    return getOwnedMeals(db,userId);
   }
 
   async insertMeal(meal: InsertMeal, receipt?: MealSaveReceipt): Promise<Meal> {

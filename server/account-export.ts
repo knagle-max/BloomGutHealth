@@ -3,7 +3,8 @@ import {readProfileMeasurementSource} from "./profile-measurement-source";
 import {labReportMetadataSchema} from "../shared/lab-report-metadata";
 import {historicalPlanRecord} from "./plan-history";
 import {historicalAnalysisMetadata,historicalDerivedMetadata} from "./analysis-boundary";
-import { eq, sql } from "drizzle-orm";
+import { and,eq, sql } from "drizzle-orm";
+import {activeMealPredicate} from './meal-save-state';
 import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords,labReportMetadataVersions, nutritionProducts, experienceSettings, experienceRecords,experimentVersions, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
 import { decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
@@ -26,7 +27,7 @@ export class AccountExportStorage {
         return rows;
       };
       stage="journal";
-      const journal = checked(await tx.select().from(meals).where(eq(meals.userId,userId)).limit(50001));
+      const journal = checked(await tx.select().from(meals).where(and(eq(meals.userId,userId),activeMealPredicate())).limit(50001));
       stage="gut-samples";
       const samples = checked(await tx.select({id:microbiomeSamples.id,testDate:microbiomeSamples.testDate,testingCompany:microbiomeSamples.testingCompany,testId:microbiomeSamples.testId,structuredData:microbiomeSamples.structuredData,notes:microbiomeSamples.notes,processingStatus:microbiomeSamples.processingStatus,diversityIndex:microbiomeSamples.diversityIndex,uploadedAt:microbiomeSamples.uploadedAt}).from(microbiomeSamples).where(eq(microbiomeSamples.userId,userId)).limit(50001));
       stage="gut-bacteria";

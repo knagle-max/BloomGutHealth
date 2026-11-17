@@ -1,4 +1,5 @@
 import {optionalWellnessSourceReadable} from './wellness-source-readiness';
+import {activeMealPredicate} from './meal-save-state';
 import {checkinSourceObservations,type OwnedCheckinRow} from './wellness-checkin-observations';
 import {randomUUID} from "node:crypto";
 import {and,eq,desc,inArray,sql,gte,lt} from "drizzle-orm";
@@ -41,7 +42,7 @@ export class WellnessChoiceStorage {
   let food:{records:typeof meals.$inferSelect[];limited:boolean}|null=null;
   if(await optionalWellnessSourceReadable(sourceDb,'meals')){
    const start=new Date(Date.parse(day.date+'T00:00:00Z')+day.timezoneOffset*60000),end=new Date(+start+86400000);
-   const journal=await tx.select().from(meals).where(and(eq(meals.userId,userId),gte(meals.loggedAt,start),lt(meals.loggedAt,end))).orderBy(desc(meals.loggedAt),desc(meals.id)).limit(201);
+   const journal=await tx.select().from(meals).where(and(eq(meals.userId,userId),activeMealPredicate(),gte(meals.loggedAt,start),lt(meals.loggedAt,end))).orderBy(desc(meals.loggedAt),desc(meals.id)).limit(201);
    food={records:journal.slice(0,200),limited:journal.length>200};
   }
   const context=buildWellnessContext(userId,profile?decryptPrecision(profile.encryptedContext,userId):undefined,actor,this.now());

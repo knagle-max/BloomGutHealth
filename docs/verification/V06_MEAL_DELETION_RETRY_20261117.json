@@ -1,0 +1,39 @@
+{
+  "task": "V06-MEAL-DELETE-RETRY",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "baseCommit": "f16fb32a7ccb1c04ac670ef48578cd95d264598e",
+  "defect": "A committed save followed by deletion and an old idempotent retry recreated the deleted meal. Reproduced with actual PGlite SQL, not inferred from a fixture.",
+  "redEvidence": "/workspace/bloom-meal-delete-red.log: missing expected rejection before repair",
+  "implementation": {
+    "storage": "Existing canonical meals row and primary key; no schema, migration or parallel intake/source store.",
+    "deletedContent": "Erase meal text/type, original intake date, all nutrients/analysis/source content, symptoms/context and original save/edit payload fingerprints. Retain opaque spent intent ID, owner, internal boolean and technical deletion timestamp only.",
+    "concurrency": "Owned row lock for deletion; stale generic/reviewed updates exclude spent intents. Primary-key conflict prevents retry resurrection in either arrival order.",
+    "projections": "Filter internal intents in SQL before journal/export/day-source ordering and bounds. Account erasure still physically deletes all owned rows.",
+    "api": "Owner-scoped receipt recovery returns terminal409 MEAL_SAVE_DELETED before analysis/budget/source lookup; new intentional save requires distinct receipt.",
+    "ui": "Retain draft, withdraw rejected review totals, disable save/reconnect/recalculation of deleted entry. Explicit new-entry action discards only old attempt and requires fresh review + confirmation, preserving unknown-response retry for other saves."
+  },
+  "verification": {
+    "focused": "Final deletion/HTTP + actual account-erasure4/4 PASS, including both retry/delete arrival orders; earlier original save/edit/owner7/7 PASS and source/export/erasure6/6 PASS.",
+    "projections": "6 export/erasure/day-source tests PASS; extended actual export omits spent intents and day-source excludes them.",
+    "browser": "Actual App + production planner handlers + PGlite: committed response lost, external delete, exact same retry409, no reconnect resave, explicit keyboard fresh review/new key and only1 active row;20 widths/theme/text states PASS.",
+    "fullRegression": {
+      "tests": 824,
+      "pass": 823,
+      "fail": 1,
+      "skipped": 0,
+      "failure": "Repository crosswalk snapshot was read before the final source fingerprint refresh. Full command exited1; not reported as a green full run.",
+      "resolution": "Refresh reviewed source hashes; targeted capability-crosswalk + Biology inventory4/4 PASS; all API/capability/Biology check commands PASS. Fresh exact-SHA CI remains required."
+    },
+    "types": "Final npm run check PASS",
+    "build": "Final npm run build PASS, including original asset verifiers",
+    "sourceAudits": "API134 declarations/13 unresolved, canonical52 registry IDs and782 scanned source files; only reviewed source hashes/line offsets/count refreshed. No new routes or authorization promotions."
+  },
+  "boundaries": [
+    "No production health data read or written",
+    "No main merge or manual deployment",
+    "No original visual assets, biological records, reference overlays or science changed",
+    "This repairs future deletion semantics; no fabricated retroactive barrier for meals deleted before this code",
+    "Full v0.6 RC remains unfinished"
+  ],
+  "next": "Publish verified bounded repair, qualify exact CI/Render, resume approved M2/M3 and Core work."
+}

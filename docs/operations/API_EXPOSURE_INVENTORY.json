@@ -23,7 +23,7 @@
     "server/lab-response-context-routes.ts": "a027dfe9e8feac6218d545dbb17515fdeb21aaacdd2ccf67a04dbcbb64244b5e",
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
-    "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
+    "server/planner-routes.ts": "6c3c9964822e0c731f0f1943a1b831cd9e8cac8911851c146e67ca4afe19145e",
     "server/precision-routes.ts": "dcf1f06f261034c0c92c302c00c991d9c40b35e2a9d1d92f68c24ae3b377cab3",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
     "server/profile-routes.ts": "3fce060222d532bc0214447a467b4697ca0fdf99ace823da7ee6ec632a53bc82",
@@ -709,7 +709,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 297,
+      "line": 299,
       "method": "POST",
       "path": "/api/meals",
       "declaredMiddleware": [
@@ -719,7 +719,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 298,
+      "line": 300,
       "method": "POST",
       "path": "/api/meals/confirm",
       "declaredMiddleware": [
@@ -729,7 +729,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 299,
+      "line": 301,
       "method": "GET",
       "path": "/api/meals/:mealId/composer",
       "declaredMiddleware": [
@@ -739,7 +739,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 308,
+      "line": 310,
       "method": "PUT",
       "path": "/api/meals/:mealId/confirm",
       "declaredMiddleware": [
@@ -749,7 +749,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 338,
+      "line": 340,
       "method": "PUT",
       "path": "/api/meals/:mealId",
       "declaredMiddleware": [
@@ -760,7 +760,7 @@
     },
     {
       "file": "server/planner-routes.ts",
-      "line": 398,
+      "line": 400,
       "method": "GET",
       "path": "/api/meal-planner/progress",
       "declaredMiddleware": [

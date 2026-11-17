@@ -1,6 +1,6 @@
 {
   "task": "V06-C3-PUBLIC-ADAPTER-COVERAGE",
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "408cc4fd62ad2c61a885f3f925cd31305c982e55",
   "scope": "Read-only current public local food source arrays and installed FNDDS catalogue; not private account/cohort coverage, live branded provider verification or a complete35-source matrix.",
   "implementation": [
@@ -52,5 +52,15 @@
     "notClaimed": "No archive/hash/rows/relational joins/source rights or real CNF pilot imported/verified. No substitute or historical2007b fixture relabelled2026.",
     "resumeWhen": "Official archive becomes mounted/downloadable and actual edition/schema/terms can be checked. Do not repeat unchanged download probes; continue other Core work."
   },
-  "remaining": "N01 release/live-provider evidence and N02 actual Canadian material/joins, Canadian DRI/LOINC/UCUM/source-specific permissions remain scoped tasks. Existing USDA/manual food paths continue; C3/full RC not complete."
+  "remaining": "N01 release/live-provider evidence and N02 actual Canadian material/joins, Canadian DRI/LOINC/UCUM/source-specific permissions remain scoped tasks. Existing USDA/manual food paths continue; C3/full RC not complete.",
+  "qualification": {
+    "commit": "f16fb32a7ccb1c04ac670ef48578cd95d264598e",
+    "workflowRun": 44164157369,
+    "job": 134325607444,
+    "result": "SUCCESS including full unit/SQL, production build, all exact hosted checks, isolated Neon persistence and cleanup",
+    "renderDeploy": "dep-dbub3ae1egvs73ahe7u0",
+    "renderStatus": "LIVE",
+    "renderFinishedAt": "2026-11-17T19:59:17.575326Z",
+    "scope": "Engineering qualification of this bounded source/reference-information slice; no full M2/M3 or integrated RC/scientific approval inferred."
+  }
 }

@@ -1,6 +1,6 @@
 {
   "task": "V06-C3-N03-DIETARY-REFERENCE-SUBSET",
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "035be673efb71149a3dd192f91381b5bdf3f5c38",
   "scope": "Initial general reference-information vertical slice within approved M2, not personal reference eligibility/intake assessment, complete DRI coverage or full M2 acceptance.",
   "material": {
@@ -64,5 +64,15 @@
     "Broader DRI/AI/CDRR/ND coverage, B6 authority divergence, form-specific conversions/safety and confirmed supplement contribution remain scoped M2/M3 work.",
     "Official CNF2026 ZIP acquisition remains blocked by403 as recorded separately; no source substitutions or corpus-rights claim. Full v0.6/RC remains unfinished."
   ],
-  "privacy": "Only synthetic local records and public primary-source reading. No private health query, production write, main merge/manual deployment or external message."
+  "privacy": "Only synthetic local records and public primary-source reading. No private health query, production write, main merge/manual deployment or external message.",
+  "qualification": {
+    "commit": "f16fb32a7ccb1c04ac670ef48578cd95d264598e",
+    "workflowRun": 44164157369,
+    "job": 134325607444,
+    "result": "SUCCESS including full unit/SQL, production build, all exact hosted checks, isolated Neon persistence and cleanup",
+    "renderDeploy": "dep-dbub3ae1egvs73ahe7u0",
+    "renderStatus": "LIVE",
+    "renderFinishedAt": "2026-11-17T19:59:17.575326Z",
+    "scope": "Engineering qualification of this bounded source/reference-information slice; no full M2/M3 or integrated RC/scientific approval inferred."
+  }
 }

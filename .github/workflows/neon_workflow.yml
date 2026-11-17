@@ -334,6 +334,13 @@ jobs:
           BLOOM_HOSTED_RC_ISOLATED: "true"
           BLOOM_HOSTED_RC_EXPECTED_COMMIT: ${{ github.event.pull_request.head.sha }}
         run: node --import tsx scripts/qa/hosted-rc-persistence.mjs
+      - name: Deleted meal save retry and explicit new-entry recovery
+        timeout-minutes: 3
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+          BLOOM_RECONNECT_CASE: deleted
+        run: node --import tsx scripts/qa/meal-presave-review-journey.mjs
       - name: Unit and embedded PostgreSQL tests
         run: npm test
       - name: Production build
