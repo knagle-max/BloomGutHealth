@@ -47,6 +47,7 @@
   color: var(--bvc-ink);
   background: var(--bvc-surface);
   font-variant-numeric: tabular-nums;
+  transform:translateY(calc(-100% - 8px));
 }
 .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-timeline-reveal {
   background: var(--bvc-surface-muted);
@@ -69,8 +70,10 @@
   .app-shell[data-bloom-visual="premium"] .bv-scientific-chart * { animation: none !important; transition: none !important; }
 }
 
-.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-source-one-sided { stroke-dasharray: 5 4; }
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-source-one-sided {stroke-width:2;stroke-dasharray:8 4 2 4;}
 
 .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-reference-key { background: var(--bvc-reference-band); border: 1.5px solid var(--bvc-reference-line); }
 .app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-reference-kind="comparison"] .lab-reference-key { border-color: var(--bvc-uncertainty); border-style: dotted; }
 .app-shell[data-bloom-visual="premium"] .bv-scientific-chart[data-reference-shape="limit"] .lab-reference-key { height: 0; background: transparent; border: 0; border-top: 2px dashed var(--bvc-reference-line); vertical-align: middle; }
+
+.app-shell[data-bloom-visual="premium"] .bv-laboratory-biomarker .bvc-published-one-sided {stroke-width:2;stroke-dasharray:2 4;}

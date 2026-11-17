@@ -1,6 +1,6 @@
 {
   "task": "V06-P1-PROFILE-HISTORICAL-LAB-RANGES",
-  "status": "RUNTIME_LIVE_PENDING_EXACT_CI",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_PARTIAL_SCOPE",
   "baseCommit": "e9c6c83c0c3855fc0a82288802eda68a5dc6ffdf",
   "authority": [
     "Owner2026-11-17: make chart ranges available and use Profile sex/age defaults",
@@ -35,7 +35,6 @@
     "/tmp/bloom-profile-birthyear-build.log"
   ],
   "pending": [
-    "Exact candidate full CI qualification; runtime LIVE confirmed by Render connector. Hosted physical/user account screenshot not claimed.",
     "Physical VoiceOver/mobile Safari and independent final human/clinical RC NOT TESTED",
     "Published coverage remains finite: no invented normal interval when neither report bounds nor an applicable installed comparison exists"
   ],
@@ -43,9 +42,18 @@
   "publication": {
     "commit": "3d3d169d7349eba5b0ea55b04c00d2b9016b4a9e",
     "workflow": "44006499839",
-    "ciStatus": "in_progress",
+    "ciStatus": "failure_exact_hosted_binding_after_runtime_advanced",
     "deploy": "dep-dbts49dckfvc73bsl330",
     "deployStatus": "live",
     "finishedAt": "2026-11-17T02:57:10.687231Z"
+  },
+  "qualification": {
+    "commit": "65035f8b54c438a3ad1814f42a2ceda597d4a6c5",
+    "workflow": 44010317650,
+    "ciStatus": "success",
+    "runtimeDescendant": "7174a08200438f316996dd9b8ced92576a7ddb18",
+    "deploy": "dep-dbtutt34qj3s73cc15l0",
+    "deployStatus": "live",
+    "finishedAt": "2026-11-17T06:09:46.798161Z"
   }
 }

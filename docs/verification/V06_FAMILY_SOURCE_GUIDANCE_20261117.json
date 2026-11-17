@@ -1,6 +1,6 @@
 {
   "task": "V06-T2B-FAMILY-SOURCE-GUIDANCE",
-  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION_PARTIAL_RESPONSE",
+  "status": "VERIFIED_ON_REVIEW_BRANCH_PARTIAL_SCOPE",
   "baseCommit": "978cdf7f14efb45c80ffd3fdd49c5a29d1e18ed4",
   "implementation": [
     "Existing selected report families now expose marker-specific general discussion prompts, citation design/scope and limitations directly from the immutable canonical Biology registry. No new scientific text/database or personal causal/clinical claim.",
@@ -22,9 +22,17 @@
     "/tmp/bloom-family-guidance-final-build.log"
   ],
   "pending": [
-    "Commit/push and exact CI/Render qualification",
-    "Latest owner/Architect31-line one-sided line visibility and historically applicable full-width band refinements are received at978cdf7f and NEXT P1; source stylesheet/range-scope correction not yet implemented.",
+    "Latest owner/Architect31-line one-sided line visibility and historically applicable full-width band refinements are received at978cdf7f; implementation is tracked separately in V06_REFERENCE_VISIBILITY_HISTORY_20261117.json.",
     "Full Response contributor/conditional-action/model acceptance remains partial; physical VoiceOver and independent human/clinical RC not claimed."
   ],
-  "privacy": "Only synthetic local data; no private account query, manual production writes/deploy/main merge. General canonical evidence is separate from personal measurements."
+  "privacy": "Only synthetic local data; no private account query, manual production writes/deploy/main merge. General canonical evidence is separate from personal measurements.",
+  "qualification": {
+    "commit": "65035f8b54c438a3ad1814f42a2ceda597d4a6c5",
+    "workflow": 44010317650,
+    "ciStatus": "success",
+    "runtimeDescendant": "7174a08200438f316996dd9b8ced92576a7ddb18",
+    "deploy": "dep-dbtutt34qj3s73cc15l0",
+    "deployStatus": "live",
+    "finishedAt": "2026-11-17T06:09:46.798161Z"
+  }
 }

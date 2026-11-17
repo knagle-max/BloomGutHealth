@@ -81,7 +81,7 @@ export function providerContextMatchesSource(point:{date:string;method:string;fa
  return known(point.method)&&key(point.method)===key(context.method)&&z.iso.date().safeParse(collectionDate).success&&context.collectedOn===collectionDate&&context.fasting===(point.fasting??'unknown');
 }
 
-type PublishedMatch=ReturnType<typeof matchProviderRanges>[number];
+export type PublishedMatch=ReturnType<typeof matchProviderRanges>[number];
 export type CanadianReferenceResolution={status:'laboratory'|'harmonized'|'provisional'|'ambiguous'|'limits-only'|'unavailable';selected:PublishedMatch|null;candidates:PublishedMatch[];limits:PublishedMatch[];reasons:string[]};
 /** Source-class priority over the existing deterministic matcher. There is
  * intentionally no measured value, reported flag, current Profile or geography

@@ -1,0 +1,85 @@
+{
+  "task": "V06-P1-REFERENCE-VISIBILITY-HISTORY",
+  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "baseCommit": "7174a08200438f316996dd9b8ced92576a7ddb18",
+  "authority": [
+    "Latest one-sided rule visibility and historical applicability sections in BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
+    "Owner historical ages derive from Profile birth year; original source priority retained"
+  ],
+  "implementation": [
+    "Existing SVG retained. One-sided labels sit above visibly thicker differentiated horizontal rules; local one-sided rules have enough width to remain discernible on mobile. No invented opposite bound or one-sided fill. Original axes/date/caption transforms unchanged.",
+    "Pure source applicability projection allows full history across independently dated source reports only when each supports identical bounds and known matching laboratory/method/fasting/canonical-unit context. Scientific comparability and original records are unchanged.",
+    "Contiguous independently supported periods are labelled and leave unsupported gaps uncovered. Unknown or incompatible evidence remains selected-only. Current per-fact corrections break global original coverage even when another result is selected; removing corrections restores eligibility.",
+    "Provisional/Profile-matched published comparisons remain selected-only. Verified published coverage requires independently reviewed per-source context and exact installed version/rights. Original intervals and saved None retain priority. Provider catalogue and all source artwork bytes unchanged."
+  ],
+  "validation": [
+    "17 focused source-history/interval/segment/Profile tests PASS, including per-fact correction exclusion/restoration.",
+    "Actual screenshot pixels PASS across20 Everyday/Athlete light/dark320/390/768/1024/1440 states plus forced colors. Upper65 and lower.99 one-sided rules have no fill/opposite bound; full135\u2013170 source band has visible fill and edges; gaps/different labs/provisional Profile matches remain scoped; selected-only rule passes320px pixel visibility.",
+    "Full92labels\u00d76records App explorer/source selection/Timeline/assay/owner/network/offline/zero/source units PASS. Chart-first one/multiple/tied source/bounds/None/control/keyboard/200% regression PASS.",
+    "Actual App \u2192 authenticated HTTP \u2192 encrypted SQL source correction/retry/concurrency/removal/None/48-state and34-result import/reference/source deletion/account withdrawal PASS. Canadian provisional and synthetic verified/national selection/48states PASS;37 real provisional rows unchanged.",
+    "Actual Profile/year save/reload and historical2025age29 vs2026age30 reference boundary change, source priority/manual override/owner isolation PASS. No current-age substitution without birth year.",
+    "Typecheck, API/capability/Biology source audits and production build PASS. Original media verified by existing build checks."
+  ],
+  "evidenceDirectory": "/workspace/bloom-reference-pixels",
+  "acceptance": {
+    "chartRules": "PASS \u2014 actual screenshot pixel checks for line width/coverage and full-band left/middle/right contrast",
+    "functional": "PASS \u2014 original current App/HTTP/encrypted SQL source correction, deletion, None, Profile historical ages, Canadian comparisons and 92\u00d76 source journeys",
+    "scientific": "PASS focused history/interval/segment/Profile cases; no comparer or numeric catalogue change",
+    "editorialReferenceFidelity": "NOT TESTED \u2014 separate Ferritin/LDL composition correction follows; this slice only repairs existing plot reference display",
+    "physicalVoiceOver": "NOT TESTED"
+  },
+  "pending": [
+    "Exact candidate full CI and Render qualification",
+    "Separate Ferritin/LDL editorial visual correction and integrated v0.6 RC remain open"
+  ],
+  "privacy": "Synthetic local/isolated accounts only. No private health query, production data write, manual deployment or main merge.",
+  "screenshots": {
+    "ggt-everyday-light-390.png": {
+      "path": "/workspace/bloom-reference-pixels/ggt-everyday-light-390.png",
+      "sha256": "f76c57e4ba0e61f95c7740c5ac9f6622d99824f2b0ee2f559ba0fd23301aa63e"
+    },
+    "ggt-everyday-dark-390.png": {
+      "path": "/workspace/bloom-reference-pixels/ggt-everyday-dark-390.png",
+      "sha256": "11b01b0ce668b6d3b03f75dbb03ace9d2795d6c6190378387b284b28b0a2bc36"
+    },
+    "ggt-everyday-dark-320.png": {
+      "path": "/workspace/bloom-reference-pixels/ggt-everyday-dark-320.png",
+      "sha256": "ba4c6845122f1f394f3a0d4d7e6983fb1f5179c5522531c0592fbac697b53fbe"
+    },
+    "hemoglobin-full.png": {
+      "path": "/workspace/bloom-reference-pixels/hemoglobin-full.png",
+      "sha256": "6c1cba3504dea2bea66129888c20f14bd93dbed7eed253254e504832eb20c8c7"
+    },
+    "ggt-source-periods.png": {
+      "path": "/workspace/bloom-reference-pixels/ggt-source-periods.png",
+      "sha256": "89ba67a168b6d86e176e7865ad90f033ac8b1bc186e6aa03ad0142dc2195ffeb"
+    },
+    "ggt-selected-only-320.png": {
+      "path": "/workspace/bloom-reference-pixels/ggt-selected-only-320.png",
+      "sha256": "89b6e08663305e9ef82f6d9e42506b526639c728779753196202a107f7c117ea"
+    },
+    "ggt-forced-colors.png": {
+      "path": "/workspace/bloom-reference-pixels/ggt-forced-colors.png",
+      "sha256": "9a6d61352a119d923c36dde887b47ce9c2d78ebd50346833dfe85d4f4a370e8a"
+    }
+  },
+  "before": {
+    "sourceCommit": "65035f8b",
+    "path": "/workspace/bloom-reference-before/before-ggt.png",
+    "sha256": "c8bab5b00a6f138e44fb8c387885eb28e1fe91a27a8727b66305097f5c4db27c",
+    "comparison": "Same GGT source fixture; before light390 has tiny local rule obscured by label; after light390 has visible full supported history rule. Original values unchanged."
+  },
+  "logs": [
+    "/workspace/bloom-history-unit-check.log",
+    "/workspace/bloom-history-explorer-check.log",
+    "/workspace/bloom-history-chartfirst-check.log",
+    "/workspace/bloom-history-pixels-check.log",
+    "/workspace/bloom-history-before-check.log",
+    "/workspace/bloom-history-correction-check.log",
+    "/workspace/bloom-history-profile-check.log",
+    "/workspace/bloom-history-overlay-check.log",
+    "/workspace/bloom-history-canadian-check.log",
+    "/workspace/bloom-history-types-check.log",
+    "/workspace/bloom-history-build-check.log"
+  ]
+}

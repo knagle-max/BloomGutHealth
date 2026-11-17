@@ -45,6 +45,18 @@ jobs:
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
           BLOOM_CHART_FIRST_RANGES: "1"
         run: node --import tsx scripts/qa/lab-explorer-journey.mjs
+      - name: Install reference screenshot analysis dependency
+        run: |
+          python3 -m venv /tmp/bloom-reference-pixels
+          /tmp/bloom-reference-pixels/bin/pip install Pillow==12.3.0
+      - name: Reference rules and historical scope pixel regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PIXEL_PYTHON: /tmp/bloom-reference-pixels/bin/python
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+          BLOOM_REFERENCE_VISIBILITY: "1"
+        run: node --import tsx scripts/qa/lab-explorer-journey.mjs
       - name: Scientific chart density, source dates and four-theme regression
         timeout-minutes: 4
         env:
