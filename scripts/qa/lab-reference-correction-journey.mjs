@@ -1,3 +1,4 @@
+import {openLabReferences} from './open-lab-references.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,mkdirSync} from 'node:fs';
 import {randomBytes,randomUUID} from 'node:crypto';
@@ -38,7 +39,7 @@ await page.route('**/api/**',async route=>{const request=route.request(),url=new
 try{
  const fact=(await store.getPrecisionRecords('report-a')).find(row=>row.payload.marker==='alt'&&row.payload.sourceReport?.enteredDate==='2026-05-09');assert.ok(fact);
  const url='http://127.0.0.1:5299/precision?tab=labs&marker=alt';
- await page.goto(url);const marker=page.locator('[data-lab-marker="alt"]'),references=marker.getByRole('region',{name:'ALT chart references',exact:true});
+ await page.goto(url);await openLabReferences(page);const marker=page.locator('[data-lab-marker="alt"]'),references=marker.getByRole('region',{name:'ALT chart references',exact:true});
  await references.getByRole('button',{name:'Use my laboratory’s range',exact:true}).click();const dialog=page.getByRole('dialog',{name:'Use my laboratory’s range',exact:true});await dialog.waitFor();
  assert.equal(await dialog.getByLabel('Lower bound (blank if absent)',{exact:true}).inputValue(),'');assert.equal(await dialog.getByLabel('Upper bound (blank if absent)',{exact:true}).inputValue(),'');
  await dialog.getByLabel('Upper bound (blank if absent)',{exact:true}).fill('45');await dialog.getByLabel('Upper bound operator',{exact:true}).selectOption('<');await dialog.locator('summary').filter({hasText:'Report details (optional)'}).click();await dialog.getByLabel('Method',{exact:true}).fill('Conflicting synthetic method');await dialog.getByRole('checkbox').check();await dialog.getByRole('button',{name:'Save laboratory range',exact:true}).click();await dialog.getByRole('alert').filter({hasText:'differs from this saved source'}).waitFor();assert.equal(await dialog.getByLabel('Method',{exact:true}).inputValue(),'Conflicting synthetic method');assert.equal(await dialog.getByLabel('Method',{exact:true}).isEnabled(),true,'A rejected draft stays editable');await dialog.getByLabel('Method',{exact:true}).fill('');await dialog.getByRole('checkbox').check();
@@ -49,9 +50,9 @@ try{
  assert.equal(JSON.stringify((await pg.query("SELECT id,encrypted_payload FROM precision_records WHERE kind='lab' ORDER BY id")).rows),before);
  await dialog.getByRole('button',{name:'Close range editor',exact:true}).click();await marker.getByText(/User-confirmed laboratory correction.*<45 U\/L; lower limit not supplied/).waitFor();assert.equal(await marker.locator('[data-reference-origin="user-correction"]').count(),1);
  await references.getByLabel('Reference source',{exact:true}).selectOption('none');assert.equal(await marker.locator('[data-reference-origin]').count(),0);await references.getByLabel('Reference source',{exact:true}).selectOption('original-report');await marker.locator('[data-reference-origin="user-correction"]').waitFor({state:'attached'});
- await page.reload();await marker.locator('[data-reference-origin="user-correction"]').waitFor({state:'attached'});
+ await page.reload();await openLabReferences(page);await marker.locator('[data-reference-origin="user-correction"]').waitFor({state:'attached'});
  for(const mode of['everyday','athlete']){
-  await experience.putExperienceSettings('report-a',{mode});await page.reload();await marker.locator('[data-reference-origin="user-correction"]').waitFor({state:'attached'});
+  await experience.putExperienceSettings('report-a',{mode});await page.reload();await openLabReferences(page);await marker.locator('[data-reference-origin="user-correction"]').waitFor({state:'attached'});
   for(const theme of['light','dark']){
    await setAppTheme(page,theme);await references.getByRole('button',{name:'Use my laboratory’s range',exact:true}).click();await dialog.waitFor();assert.equal(await dialog.getByLabel('Upper bound (blank if absent)',{exact:true}).inputValue(),'45');
    for(const width of[320,390,768,1440])for(const scale of[{font:'',zoom:'1'},{font:'',zoom:'2'},{font:'200%',zoom:'1'}]){await page.setViewportSize({width,height:1000});await page.evaluate(({font,zoom})=>{document.documentElement.style.zoom=zoom;document.documentElement.style.fontSize=font;},scale);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+2),true,JSON.stringify({mode,theme,width,scale}));assert.equal(await dialog.evaluate(el=>el.scrollWidth<=el.clientWidth+2),true,'Dialog content fits at 200%');}

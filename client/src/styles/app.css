@@ -19,3 +19,5 @@
 @import "./scientific-chart-laboratory.css" layer(bloom-premium);
 @import "./scientific-chart-comparison.css" layer(bloom-premium);
 @import "./scientific-chart-integration.css" layer(bloom-premium);
+
+@import "./lab-marker-editorial.css" layer(bloom-premium);

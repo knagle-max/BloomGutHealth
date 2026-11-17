@@ -4721,6 +4721,104 @@
         "auditedFrom": "Eleven original files and distinct optimized WebP derivatives verified locally, packaged and published to Shared Library"
       },
       "presentationDisclaimer": "Shape not verified for this report entry."
+    },
+    {
+      "id": "BVA-0048",
+      "name": "What is LDL cholesterol? educational thumbnail",
+      "route": "/precision?tab=labs&marker=ldl",
+      "component": "LabMarkerEducation",
+      "purpose": "What is LDL cholesterol? educational thumbnail",
+      "category": "marker-education-thumbnail",
+      "subject": "Scientifically reviewed conceptual LDL lipoprotein particle, not a micrograph or personal measurement",
+      "composition": "Small square vignette next to essential readable text; no embedded labels; quiet forest/ivory palette",
+      "scientificAccuracy": "Conceptual educational art only; independent science/content review required before depicting biomedical detail. Not patient data.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 320,
+        "height": 320
+      },
+      "responsiveVariants": [
+        "modest88px educational thumbnail",
+        "narrow/zoom text-first fallback"
+      ],
+      "accessibility": "decorative; adjacent visible reviewed text supplies all meaning",
+      "lifecycle": "Briefed",
+      "assetStatus": "requested; no source bytes or approval claimed",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "lab-detail-ldl-particle",
+        "action": "additive requested slot; no existing art replaced"
+      },
+      "integration": {
+        "verified": false,
+        "state": "Reserved surface with existing licensed lucide icon; source image not delivered"
+      },
+      "review": {
+        "design": "requested",
+        "scientific": "not reviewed",
+        "rights": "no source file/licence yet",
+        "rendered": "reserved fallback engineering testing pending"
+      },
+      "authority": "BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
+      "fallback": "reserved-surface and existing-icon"
+    },
+    {
+      "id": "BVA-0049",
+      "name": "Why does it matter? educational thumbnail",
+      "route": "/precision?tab=labs&marker=ldl",
+      "component": "LabMarkerEducation",
+      "purpose": "Why does it matter? educational thumbnail",
+      "category": "marker-education-thumbnail",
+      "subject": "Scientifically reviewed conceptual arterial wall and lipoprotein context, not a representation of personal plaque or pathology",
+      "composition": "Small square vignette next to essential readable text; no embedded labels; quiet forest/ivory palette",
+      "scientificAccuracy": "Conceptual educational art only; independent science/content review required before depicting biomedical detail. Not patient data.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 320,
+        "height": 320
+      },
+      "responsiveVariants": [
+        "modest88px educational thumbnail",
+        "narrow/zoom text-first fallback"
+      ],
+      "accessibility": "decorative; adjacent visible reviewed text supplies all meaning",
+      "lifecycle": "Briefed",
+      "assetStatus": "requested; no source bytes or approval claimed",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "lab-detail-ldl-artery",
+        "action": "additive requested slot; no existing art replaced"
+      },
+      "integration": {
+        "verified": false,
+        "state": "Reserved surface with existing licensed lucide icon; source image not delivered"
+      },
+      "review": {
+        "design": "requested",
+        "scientific": "not reviewed",
+        "rights": "no source file/licence yet",
+        "rendered": "reserved fallback engineering testing pending"
+      },
+      "authority": "BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
+      "fallback": "reserved-surface and existing-icon"
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",

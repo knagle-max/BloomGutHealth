@@ -9,6 +9,8 @@ export interface EditorialMediaAsset {
   reserved?: { width: number; height: number; conceptual: boolean };
 }
 export const editorialMedia = {
+  "lab-detail-ldl-particle": {mode:"conceptual",placement:"marker-education-what",reserved:{width:160,height:160,conceptual:true}},
+  "lab-detail-ldl-artery": {mode:"conceptual",placement:"marker-education-why",reserved:{width:160,height:160,conceptual:true}},
   "today": {
     "placement": "today-hero",
     "mode": "banner",

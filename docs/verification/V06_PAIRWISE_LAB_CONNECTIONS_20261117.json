@@ -39,5 +39,13 @@
     "Physical VoiceOver/human novice teach-back/independent design or clinical acceptance NOT TESTED; integrated RC remains unfinished.",
     "Historical lab-source-context journey stops at obsolete Bloodwork over time heading before chart assertions; current full explorer/source lifecycle and correction/report overlay suites are the maintained relevant regressions. No stale test was treated as PASS."
   ],
-  "privacy": "Synthetic local fixtures only. No real Tester1 health query, production write, main merge or manual deployment."
+  "privacy": "Synthetic local fixtures only. No real Tester1 health query, production write, main merge or manual deployment.",
+  "publication": {
+    "commit": "1e7254bd998fec7ccdd49037fbe857d8da9ebcf6",
+    "workflow": "43998156113",
+    "ciStatus": "in_progress; no failed steps at latest check",
+    "deploy": "dep-dbtr4367bikc7399jb80",
+    "deployStatus": "live",
+    "finishedAt": "2026-11-17T01:48:29.925901Z"
+  }
 }
