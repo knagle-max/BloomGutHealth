@@ -161,6 +161,20 @@ The illustrative helper names **are not instructions to introduce duplicate help
 
 These are **drafts** until Biology approval; source and personal risk wording cannot exceed reviewed clinical authority. For unsupported/unidentified markers, show the source-native label and data, and abstain from borrowed marker education rather than filling text with generic invented science.
 
+## Mandatory chart visibility correction — one-sided reference bounds (Owner directive, 2026-11-16)
+
+**Acceptance P1 for the currently displayed GGT result, and for any marker with a valid single reported reference boundary:** A source-valid lower-only or upper-only reference boundary must render as a **visibly discernible horizontal reference line** on the existing `LabTrend` plot when reference display is enabled, accompanied by an unambiguous label (e.g., “Upper reference limit: 65 U/L” for a source-confirmed upper limit of 65 U/L). A numeric label with no visible line fails acceptance. Do not invent or presume an unreported opposite bound, represent a one-sided limit as a two-sided normal interval, or shade a fabricated full interval.
+
+**Diagnose rather than replace:** `LabTrend.tsx` already branches on `commonInterval.low` and `commonInterval.high` to render boundary `<line>` SVG elements, while the existing `<rect>` band is intentionally limited to two-sided intervals. Codex must inspect actual rendered CSS, SVG coordinate placement, clipping, stroke/contrast and current reference source eligibility before changing anything. A line in the DOM or a boundary label alone is insufficient: browser screenshot/pixel and interaction checks must confirm a continuous, clearly visible rule on mobile and desktop, including dark/light and high-contrast/forced-colors modes.
+
+- The visual line should align with the actual bound's vertical numeric position on the existing plot; use an appropriate contrasting stroke/weight/pattern from existing Bloom tokens. Do not confuse it with the recorded sample series or a clinical decision/risk threshold, which must be distinguished by labels/styles.
+- The plot extent must include a valid reference limit where the relevant current source/assay and plot unit qualify. Do not force a line for an invalid, incompatible, unreviewed or unavailable bound. If no valid bound exists, say so rather than using the screenshot's 65 U/L as data.
+- A two-sided interval may retain its **existing** shading and both boundary lines. One-sided intervals require one visible bound line and no invented other boundary.
+- Preserve all current chart code/data, measured points, axis semantics, source provenance, unit/assay safeguards, chart assets, original records, point/source selection, edit/retraction and access behavior. Apply the narrowest display/style correction; do not introduce a replacement chart or art.
+- Test: source-confirmed upper-only GGT (including a bound falling within plot extent), lower-only marker, genuine two-sided interval, missing/invalid bound, boundary close to a plotted value or canvas edge, corrected/deleted source, account switch, 320/390/768/1440 CSS px, light/dark and forced-colors. In each valid one-sided case assert **both** source-matched text and visible full chart reference rule; in missing cases assert no misleading line.
+
+This requirement is an explicit **working-chart refinement**, not authorization to replace or redraw chart assets, force published provincial ranges, apply invented clinical cutoffs or change the standing cross-page preservation rule.
+
 ## 7. Responsive/state and safety acceptance
 
 **Required journeys (map to UT-LAB-5801–5819 without expanding scope):**
