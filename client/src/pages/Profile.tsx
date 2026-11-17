@@ -1,3 +1,4 @@
+import {ageInYear} from '@shared/profile-demographics';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import MicrobiomeFoodPreferences from"@/components/MicrobiomeFoodPreferences";
@@ -43,12 +44,13 @@ export default function Profile({
   const [dirty,setDirty]=useState(false);
   const sourceBasis=useRef<string|null>(null);
   const sourceRevision=useRef<string|null>(null);
-  const profileBasis=(value:any)=>JSON.stringify([user?.id,value?.sex??null,value?.age??null,value?.heightCm??null,value?.weightKg??null,value?.activityLevel??null,value?.measurementSource?.revision??null]);
+  const profileBasis=(value:any)=>JSON.stringify([user?.id,value?.sex??null,value?.age??null,value?.birthYear??null,value?.heightCm??null,value?.weightKg??null,value?.activityLevel??null,value?.measurementSource?.revision??null]);
   const sourceChanged=dirty&&sourceBasis.current!==null&&!!profile.data&&profileBasis(profile.data)!==sourceBasis.current;
   useEffect(()=>{sourceBasis.current=null;sourceRevision.current=null;setDirty(false);},[user?.id]);
   const [form, setForm] = useState({
     sex: "",
     age: "",
+    birthYear: "",
     heightCm: "",
     weightKg: "",
     activityLevel: "moderate",
@@ -60,6 +62,7 @@ export default function Profile({
       setForm({
         sex: profile.data.sex || "",
         age: profile.data.age?.toString() || "",
+        birthYear: profile.data.birthYear?.toString() || "",
         heightCm: profile.data.heightCm?.toString() || "",
         weightKg: profile.data.weightKg?.toString() || "",
         activityLevel: profile.data.activityLevel || "moderate",
@@ -71,7 +74,8 @@ export default function Profile({
     mutationFn: async () => {
       const data = {
         sex: form.sex || null,
-        age: form.age ? Number(form.age) : null,
+        age: form.birthYear?(ageInYear(Number(form.birthYear),new Date().getUTCFullYear())||null):form.age ? Number(form.age) : null,
+        ...(profile.data?.birthYearSupported?{birthYear:form.birthYear?Number(form.birthYear):null}:{}),
         heightCm: heightParsed.kind==="valid" ? heightParsed.canonical : null,
         weightKg: massParsed.kind==="valid" ? massParsed.canonical : null,
         activityLevel: form.activityLevel,
@@ -174,9 +178,10 @@ export default function Profile({
         ) : (
           <>
             <div className="profile-basics-grid"><label className="block">
-              Sex used in energy equation
+              Sex used for reference ranges and energy equation
               <select
                 className="bloom-input"
+                aria-label="Sex used for reference ranges and energy equation"
                 value={form.sex}
                 onChange={(e) => setForm({ ...form, sex: e.target.value })}
               >
@@ -185,8 +190,13 @@ export default function Profile({
                 <option value="female">Female</option>
               </select>
             </label>
+            <label className="block">Birth year
+              <input className="bloom-input w-full" type="number" aria-label="Birth year" min={new Date().getUTCFullYear()-120} max={new Date().getUTCFullYear()} step="1" value={form.birthYear} disabled={!profile.data?.birthYearSupported} onChange={e=>setForm({...form,birthYear:e.target.value})}/>
+              <span className="panel-note">Used to calculate age in each historical result’s year. Birthday is not collected, so this is a calendar-year age.</span>
+            </label>
             <label className="block">Age
-              <input className="bloom-input w-full" type="number" min="1" max="120" value={form.age} onChange={e=>setForm({...form,age:e.target.value})}/>
+              <input className="bloom-input w-full" type="number" aria-label="Age" min="1" max="120" readOnly={!!form.birthYear} value={form.birthYear?(ageInYear(Number(form.birthYear),new Date().getUTCFullYear())??''):form.age} onChange={e=>setForm({...form,age:e.target.value})}/>
+              {!form.birthYear&&<span className="panel-note">Add your birth year to calculate ages for historical lab results.</span>}
             </label>
 
             <div className="space-y-2"><span className="font-medium">Height ({heightEntry.unit==="ft-in"?"feet + inches":heightEntry.unit})</span>

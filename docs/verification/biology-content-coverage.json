@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 312,
-    "sourceFilesScanned": 766,
+    "sourceFilesScanned": 768,
     "relevantSourceFiles": 72,
     "researchPathways": 7
   },
@@ -25302,7 +25302,7 @@
     },
     {
       "file": "shared/schema.ts",
-      "line": 109,
+      "line": 111,
       "field": "bacterialName",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25451,7 +25451,7 @@
     "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
     "shared/precision-nutrition.ts": "3fd8f3ded08f4e36af0fda787aec1e5c2a0efecbe2004af52293fd291cbc424b",
     "shared/reported-taxa.ts": "c5b88f64766609a14631ef97461c332702c147caad780bdb78c2ae0b4ca2bf55",
-    "shared/schema.ts": "3a5a433f8354427676c872bbefe79f4528de92fd63f8d26ea470a80cc0c678d1",
+    "shared/schema.ts": "f0944dca7bf5bf23fb1e98e72738d725b87dc5e3ce3c83ff38c7be479573048b",
     "tests/account-erasure.test.ts": "c58aff3d9c8cee02f8cbceed84a11d6e0033311f45968ffcdf4632d60976094e",
     "tests/account-export.test.ts": "51ef7bd4293a993c3dd3afe7b3b50465be86eeceff0169c5efd2210a7d4604e9",
     "tests/biological-report-management.test.ts": "42707f79920630022da35f21fcb431c0ce1c1319e769d932d99275eca25bbf8b",

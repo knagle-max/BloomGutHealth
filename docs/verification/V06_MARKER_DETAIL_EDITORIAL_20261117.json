@@ -43,5 +43,10 @@
     "/tmp/bloom-marker-editorial-final-build.log"
   ],
   "interpretation": "The exact approved pairwise sequence display is preserved alongside the editorial layout. The editorial reference curve is illustrative; no smoothing, scientific promotion or connection through incompatible observations is introduced. Owner source screenshot bytes are not in the workspace; composition follows the consolidated exact written production contract, and independent image parity is not claimed.",
-  "privacy": "Synthetic local/isolated data only. No actual private health query, new exposure authorization, production write/main merge/manual deployment."
+  "privacy": "Synthetic local/isolated data only. No actual private health query, new exposure authorization, production write/main merge/manual deployment.",
+  "publication": {
+    "commit": "c24d04538ec3cff26a30746c47bbea6d03d51e28",
+    "workflow": "44001344457",
+    "status": "Exact isolated hosted binding check failed after deployed source advanced to descendant; no synthetic accounts created by failed gate. Not claimed green. Descendant qualification remains pending."
+  }
 }

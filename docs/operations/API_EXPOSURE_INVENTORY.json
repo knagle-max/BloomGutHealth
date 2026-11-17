@@ -26,7 +26,7 @@
     "server/planner-routes.ts": "bd5674371c4795244e5829269c3a426d7abe295dc1d84b15c034feddcfd2e293",
     "server/precision-routes.ts": "842f7c92adbc985bba696979dda6532ff1e29f8f52eeb8735641779d7e0d6488",
     "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
-    "server/profile-routes.ts": "3da2b5b82a13f63ed7af86dfb02e971331e7065e3ab3ad533d03b9b137258719",
+    "server/profile-routes.ts": "3fce060222d532bc0214447a467b4697ca0fdf99ace823da7ee6ec632a53bc82",
     "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
     "server/review-qualification.ts": "d9dca0b6ef903adaf167cac58188321e23fce81461c1aa52d123ee75cc412aab",
@@ -1062,7 +1062,7 @@
     },
     {
       "file": "server/profile-routes.ts",
-      "line": 9,
+      "line": 10,
       "method": "GET",
       "path": "/api/profile",
       "declaredMiddleware": [
@@ -1072,7 +1072,7 @@
     },
     {
       "file": "server/profile-routes.ts",
-      "line": 14,
+      "line": 15,
       "method": "PATCH",
       "path": "/api/user/:userId/profile",
       "declaredMiddleware": [

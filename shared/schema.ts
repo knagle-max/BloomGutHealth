@@ -1,3 +1,4 @@
+import {birthYearSchema} from './profile-demographics';
 import { sql } from "drizzle-orm";
 import {
   pgTable,
@@ -48,6 +49,7 @@ export const updateUserProfileSchema = createInsertSchema(users)
     dietaryPreferences: true,
   })
   .extend({
+    birthYear: birthYearSchema.refine(year=>year<=new Date().getUTCFullYear()&&new Date().getUTCFullYear()-year<=120,"Birth year must correspond to an age from 0 to 120").nullable().optional(),
     sex: z.enum(["male", "female"]).nullable().optional(),
     age: z.number().int().min(1).max(120).nullable().optional(),
     heightCm: z.number().positive().max(250).nullable().optional(),

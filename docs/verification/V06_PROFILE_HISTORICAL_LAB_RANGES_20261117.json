@@ -1,0 +1,43 @@
+{
+  "task": "V06-P1-PROFILE-HISTORICAL-LAB-RANGES",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "baseCommit": "e9c6c83c0c3855fc0a82288802eda68a5dc6ffdf",
+  "authority": [
+    "Owner2026-11-17: make chart ranges available and use Profile sex/age defaults",
+    "Owner2026-11-17: derive historical age from birth year"
+  ],
+  "implementation": [
+    "Profile birth year is persisted with revision/CAS and account ownership in the existing encrypted profile_measurement_sources row. No new table/schema reset/user replacement or production data write. Old original height/weight tokens and legacy Profile saves preserve the year. Reads derive current calendar-year age; historical comparisons use the source collection year, or explicitly labelled recorded year if collection date is absent.",
+    "No birthday is invented. Year-based age is labelled approximate; current Profile age is never copied into historical observations without birth year. Source original/corrected intervals retain priority and original values/flags/units remain unchanged.",
+    "Profile sex maps to editable published reference category. Explicit source-specific age/sex overrides, including deliberate unknown, are retained during Profile refresh; Use Profile defaults clears the override intentionally.",
+    "A unique provisional published comparison for the actual known laboratory/province now draws by default without a manual preview approval. Missing provider/region/assay or ambiguous source categories do not become invented ranges. Existing provider/province/unit/assay/source and saved None safeguards remain.",
+    "Visible chart-side range on/off control, clear missing-source action, Profile-year/sex provenance, one-sided reference and individually labelled decision limits. Reference intervals, decision limits and personal treatment targets remain distinct. No provider numeric rows changed."
+  ],
+  "validation": [
+    "21 focused Profile/birth-year/revision/encryption/preference/provider tests PASS, including earlier source-year ages, impossible dates, no guessed birthday/current-age substitution, stale concurrent year writes and old saves preserving year.",
+    "Actual App/Profile UI/authenticated HTTP/encrypted local PostgreSQL save and reload PASS. Historical LDL source2025 age29 upper3 vs2026 age30 upper3.4; Profile edit and sex change affect appropriate categories; explicit per-source override survives Profile refresh and Use Profile defaults restores calculated age; original report priority and laboratory ciphertext unchanged, other owner withdrawn.48 width/theme/mode/zoom/text states and8 screenshots.",
+    "Actual Profile original units/precision and birth-year save/reload/readonly age/keyboard/320\u20131440/missing-storage disclosure PASS; dirty Profile draft/lost-response regression PASS.",
+    "Actual laboratory correction, Canadian comparison and34-result report import regressions PASS, including source original/correction precedence, saved None/no hydration flash, account isolation and48 layouts. Final birth-year-only historical/sex/override and Canadian browser reruns PASS.",
+    "Final TypeScript/API source inventory/capability/Biology audits and production original/built media checks PASS. Static API inventory changes are the existing Profile route source hash and line numbers only; no new endpoint or relaxed authentication."
+  ],
+  "evidence": [
+    "/tmp/bloom-profile-birthyear-final-unit.log",
+    "/tmp/bloom-profile-historical-final.log",
+    "/tmp/bloom-profile-year-ui.log",
+    "/tmp/bloom-profile-year-draft-regression.log",
+    "/tmp/bloom-profile-default-correction-regression.log",
+    "/tmp/bloom-profile-canadian-regression.log",
+    "/tmp/bloom-profile-overlay-regression.log",
+    "/tmp/bloom-profile-ranges/",
+    "/tmp/bloom-profile-birthyear-final-unit.log",
+    "/tmp/bloom-profile-birthyear-final-browser.log",
+    "/tmp/bloom-profile-birthyear-final-canadian.log",
+    "/tmp/bloom-profile-birthyear-build.log"
+  ],
+  "pending": [
+    "Commit/push and exact candidate CI/Render qualification; older c24 hosted binding failed after runtime advanced, no accounts created and not treated as PASS.",
+    "Physical VoiceOver/mobile Safari and independent final human/clinical RC NOT TESTED",
+    "Published coverage remains finite: no invented normal interval when neither report bounds nor an applicable installed comparison exists"
+  ],
+  "privacy": "Only synthetic local/isolated accounts tested; original lab records never rewritten by Profile defaults. No actual private account query, production data writes, main merge/manual deploy."
+}

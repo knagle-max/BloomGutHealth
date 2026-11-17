@@ -1,6 +1,6 @@
 import type {ProviderRangeContext} from './lab-provider-ranges';
 export type LabOverlayPreference={provider:'original-report'|'LifeLabs'|'other'|'none';province:string;otherProvider:string};
-export type LabOverlayChoice=LabOverlayPreference&{context:Pick<ProviderRangeContext,'specimen'|'assay'|'method'|'ageAtCollection'|'sexReferenceCategory'|'fasting'|'collectedOn'|'comparisonFasting'>;confirmed:boolean};
+export type LabOverlayChoice=LabOverlayPreference&{context:Pick<ProviderRangeContext,'specimen'|'assay'|'method'|'ageAtCollection'|'sexReferenceCategory'|'fasting'|'collectedOn'|'comparisonFasting'>&{ageFromProfile?:boolean;sexFromProfile?:boolean};confirmed:boolean};
 export const emptyLabOverlayChoice=():LabOverlayChoice=>({provider:'original-report',province:'',otherProvider:'',context:{specimen:'',assay:'',method:'',ageAtCollection:null,sexReferenceCategory:null,fasting:'unknown',collectedOn:''},confirmed:false});
 /** A confirmation is invalidated by any source revision; display context never
  * changes the stored source. Private source details stay in account memory only. */
