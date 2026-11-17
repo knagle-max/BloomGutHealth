@@ -11,6 +11,10 @@ Read the later [application-wide visual DNA and selective preservation decision]
 
 ---
 
+## Image-delivery requirement for visual references (2026-11-17)
+
+An owner-provided mockup/screenshot is a required *real-file* input to visual design QA. Commit original or losslessly converted bytes under `docs/design-references/<feature>/` (or another persistent Codex-readable approved location), with stable filename, upload date, dimensions and content SHA. Add direct file link to the relevant page/design handoff, verify the binary exists at the exact branch/path and can be opened as an image, and compare real rendered app screenshots with that actual reference. Descriptions, proposed paths and user-conversation pointers are **not** a delivered image; until bytes are verified mark comparison `NOT_TESTED`. Approved LDL path and delivery status: [Bloodwork design-reference manifest](../design-references/bloodwork/README.md). Do not insert reference screenshot into the runtime UI or treat depicted illustration as licensed production artwork.
+
 ## 1. Existing work is the starting point, not disposable material
 
 Before substantial UI changes Codex must inventory the current page/component, chart implementations, original asset bytes and paths, registry IDs, accessibility semantics, scientific/clinical meaning, state, actions, data workflows and relevant passed tests. **Keep already completed meaningful work and assets**: do not replace, remove, redraw, rename, regenerate, reimport, or casually refactor an existing hero, image, chart, icon, illustration, media slot, navigation, or functional interaction merely to resemble a fresh design example. Preserve category/parent layouts unless the owner explicitly includes them in scope.
