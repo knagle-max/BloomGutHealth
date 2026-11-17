@@ -6,6 +6,10 @@
 **Implementation owner:** Codex; execute under `AGENTS.md` and current `NEXT_ACTIONS.md` ordering  
 **Reference:** the owner-approved mobile LDL reference supplied in conversation 2026-11-16; original Bloodwork user-testing handoff `UT-LAB-UX-5801-R3` and `UT-LAB-5801–5819`; [original expanded-marker architecture](BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md). Current rendered Ferritin is owner-reported visually below reference, but this architect document does not claim an independent screenshot/pixel audit of that Ferritin state.
 
+## Mandatory pixel reference: actual owner image (2026-11-17)
+
+**Canonical target path:** `docs/design-references/bloodwork/approved-ldl-editorial-reference.png`. See [reference manifest](../design-references/bloodwork/README.md) for original submission details, expected dimensions and SHA-256. The **actual image bytes**, not this handoff's prose or a substitute generated image, are required for direct visual acceptance. Codex must confirm the binary exists in the development branch, open/render it, verify file hash/dimensions, and compare actual Ferritin/LDL screenshots directly to its composition, imagery, lettering, hierarchy, chart, spacing and materials. When binary delivery is incomplete, mark **DIRECT_VISUAL_COMPARISON_NOT_TESTED**, explicitly resolve attachment/transfer, and never claim visual fidelity PASS. This target is design reference, *not* a production image to paste into the app.
+
 ## 1. Binding decision and explicit override scope
 
 **Treat the approved LDL reference as a real visual acceptance target, not a merely inspirational example or permission to leave a generic clinical dashboard behind a forest-green background.** A technically correct collection of sections is not sufficient if the rendered result lacks reference-level quality.
