@@ -157,6 +157,13 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-question-reader-journey.mjs
+      - name: Pairwise lab chart connections browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_LAB_SEGMENTS: "1"
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/lab-explorer-journey.mjs
       - name: Paired lipid direction context browser regression
         timeout-minutes: 3
         env:

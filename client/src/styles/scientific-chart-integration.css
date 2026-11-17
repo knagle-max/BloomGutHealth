@@ -14,6 +14,14 @@
   stroke: var(--bvc-series-primary);
   stroke-width: var(--bvc-line-width);
 }
+.app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-recorded-series-dashed { stroke-dasharray: 6 4; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-legend { display:flex; flex-wrap:wrap; gap:8px 20px; list-style:none; padding:0; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-legend li { display:flex; align-items:center; gap:8px; min-width:0; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-key { flex:none; width:28px; height:0; border-top:2px solid var(--bvc-series-primary); }
+.app-shell[data-bloom-visual="premium"] .lab-segment-key-dashed { border-top-style:dashed; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-key-disconnected { height:8px; border:0; background:linear-gradient(to right,currentColor 0 25%,transparent 25% 75%,currentColor 75% 100%) center/100% 2px no-repeat; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-context { overflow-wrap:anywhere; }
+.app-shell[data-bloom-visual="premium"] .lab-segment-context button { margin:4px; max-width:100%; white-space:normal; }
 .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button {
   color: var(--bvc-observed);
   min-width: var(--bvc-touch-target);
@@ -50,6 +58,8 @@
 @media (forced-colors: active) {
   .app-shell[data-bloom-visual="premium"] .bv-scientific-chart :is(.lab-chart,.lab-point-button,.lab-reference-boundary-label) { color: CanvasText; }
   .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-recorded-series { stroke: CanvasText; }
+  .app-shell[data-bloom-visual="premium"] .lab-segment-key { border-color:CanvasText; }
+  .app-shell[data-bloom-visual="premium"] .lab-segment-key-disconnected { background:none; border-inline:6px solid CanvasText; width:28px; height:2px; }
   .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .bvc-b02-published-comparison { stroke: CanvasText; stroke-dasharray: 2 5; }
   .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-reference-boundary-label { background: Canvas; }
   .app-shell[data-bloom-visual="premium"] .bv-scientific-chart .lab-point-button > span { background: CanvasText; border-color: Canvas; }

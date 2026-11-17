@@ -1,6 +1,6 @@
 {
   "task": "V06-T2B-QUESTION-SEMANTICS-READER",
-  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "PUBLISHED_RUNTIME_COMPATIBLE_PENDING_EXACT_CI",
   "baseCommit": "cacf81c30242f159453cb23be1df8a36b8d4075a",
   "implementation": [
     "Compatible immutable question-ID catalogue for B12/CBC and existing families; old question meanings unchanged; current writers still ask their legacy family question",
@@ -24,9 +24,15 @@
     "/tmp/bloom-context-question-reader-build.log"
   ],
   "pending": [
-    "Commit/push compatible reader and verify runtime deployment floor",
     "Only after compatible reader is live, activate source-derived B12/CBC/iron questions. Require (expectedQuestion ?? legacyQuestion) to equal the server-derived actual target, including old clients; preserve historical receipts and deletion fences",
     "Then source-cited per-family context/next actions; full Response#15 and RC remain partial"
   ],
-  "privacy": "Only synthetic local/isolated data. No actual private health query, production data write, main merge/manual deployment or physical VoiceOver claim."
+  "privacy": "Only synthetic local/isolated data. No actual private health query, production data write, main merge/manual deployment or physical VoiceOver claim.",
+  "publication": {
+    "commit": "31d23853d015dd27bdcbfcbf403df8ff451fcbd4",
+    "runtimeDescendant": "baa52b9fd3a74eea9e4f33c3bd779b9baa688101",
+    "deploy": "dep-dbtqtc9evqrc73f9oaeg",
+    "liveAt": "2026-11-17T01:35:39.17841Z",
+    "ci": "43996452281 in_progress at check"
+  }
 }

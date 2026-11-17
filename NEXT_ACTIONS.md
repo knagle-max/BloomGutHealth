@@ -2,9 +2,11 @@
 
 `AGENTS.md` governs execution. Authorized branch: `enhance/bloom-experience`; no main merge/manual production deployment/private health queries. v0.5 remains accepted; v0.6 RC is unfinished. Exact earlier queue text is preserved in [snapshot](docs/operations/history/NEXT_ACTIONS_SNAPSHOT_20261116T1440.md); historical “publish next” instructions do not reopen published work.
 
-## Active Core — report-wide Response Intelligence (T2b / #15)
+## Active P1 — pairwise Bloodwork chart connections
 
-**Current bounded slice:** remembered-context question reader compatibility ENGINEERING_TESTED.10 tests + actual future-B12 row/target DTO SQL+HTTP+App/48 layouts/draft provenance/old-client reload and full original context lifecycle journey PASS; final types/audits/build PASS. New protocol is semantic compatibility, not an access grant. Current writers remain legacy. Publish compatible reader next, verify runtime floor. Receipt `V06_CONTEXT_QUESTION_READER_20261116.json`.
+**Current bounded slice:** same existing chart-first P1; latest binding pairwise extension in `docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md`. Existing SVG now uses independent adjacent solid/dashed/disconnected segments with exact source/time/unit/assay guards. Scientific comparer, numeric eligibility and reference interval applicability remain separate. Focused27 tests/types/build/source audits and initial48-state browser PASS; final mixed/source-index, full92×6 explorer/scientific difference, source/range/correction regressions PASS. Publish and qualify exact candidate CI/Render next. No new chart engine or media replacement. Receipt `V06_PAIRWISE_LAB_CONNECTIONS_20261117.json`.
+
+**Compatible question reader is published:**31d23853 is an ancestor of current Render LIVE baa52b9f (`dep-dbtqtc9evqrc73f9oaeg`,01:35:39UTC); writer remains legacy. Next P1: implement bounded expanded-marker editorial structure from `BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md`, preserving parent media/navigation and this chart. Then activate source-aware B12/CBC questions using the live reader. Do not repeat reader publication.
 
 **Next producer activation:** reuse `labResponseQuestionForMarkers`; B12/CBC gets its own question instead of unrelated iron context. Server view/prepare must derive target from exact owned valid selected facts (fall back to retained saved question when sources are absent). Save must compare `(expectedQuestion ?? legacy family question)` with the server-derived target after historical receipt handling; no old client may silently answer a changed question. Keep source-currentness, nonce/CAS/generation/delete, immutable history/export and unknown/decline semantics. Reader already pins drafts and labels historical actual questions. No new table/cache/clinical model. Then source-cited per-family next actions and other Response/Food Core.
 
@@ -51,6 +53,6 @@ Saved independent direction refinement: `/tmp/bloom-response-directions-pending-
 
 ## True scoped blockers
 
-- Actual Tester1 aggregate microbiome inspection remains `BLOCKED_USER_INPUT`: automatic approval review rejected unauthorized health-record inspection; separate scoped read-only question has no answer. Never retry through another route. Standing synthetic-preview account access itself is already approved/implemented, without expiry.
+- Prior private Tester1 aggregate query was rejected by automatic approval review; no data returned. Owner subsequently confirmed organism images work, so the query need was withdrawn. No private-query approval or image blocker remains. Standing synthetic-preview access is already implemented without expiry.
 - Hosted public browser access/current external Render docs unavailable through workspace proxy403; Render connector deployment status works. Previous older clone stalled33min, then cleared; **image correction now live**, no remaining queue hold for that commit. Do not manually trigger duplicate deploys or repeat unchanged proxy failures.
 - Optional external paid/provider, real-user consequential medical/research, native signing/device and independent final acceptance restrictions stay feature scoped. Continue all independent approved work.
