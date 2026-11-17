@@ -82,7 +82,14 @@ try{
      assert.ok((await link.boundingBox()).height>=44,label+' touch target');
     }
    }
-   if(m1){
+   if(m1&&name==='gut'){
+    const hero=page.locator('.microbiome-editorial-hero');await hero.waitFor();
+    const media=hero.locator('.bv-media[data-slot="microbiome-overview-hero"]');await media.waitFor({state:'attached'});
+    assert.equal(await hero.locator('img').count(),0,'Dedicated owner-approved reserved hero must not reuse existing art');
+    assert.equal(await page.locator('.bv-media[data-slot="gut-report-hero"]').count(),0,'Old category hero is not the new overview hero');
+    await hero.getByRole('heading',{name:'Your microbiome',exact:true}).waitFor();
+   }
+   if(m1&&name!=='gut'){
     const slot={today:'today',food:'food',biology:'biology',explore:'explore-atlas',progress:'progress-scene',profile:'profile',athlete:'athlete',journal:'food',gut:'gut-report-hero',recovery:'athlete-recovery'}[name];
     const media=page.locator(`.bv-media[data-slot="${slot}"]`).first();
     await media.waitFor({state:'attached'});

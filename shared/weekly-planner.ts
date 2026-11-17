@@ -46,6 +46,7 @@ export const recipeProposalSchema = z
   })
   .strict();
 export type RecipeProposal = z.infer<typeof recipeProposalSchema>;
+export const plannedMealChoiceSchema=z.object({recipeId:z.string().max(100),portion:z.number().min(0.5).max(2)}).strict();
 export const weeklyRequestSchema = z
   .object({
     name: z.string().trim().min(1).max(100).default("My weekly plan"),
@@ -72,12 +73,7 @@ export const weeklyRequestSchema = z
     locked: z
       .record(
         z.string(),
-        z
-          .object({
-            recipeId: z.string().max(100),
-            portion: z.number().min(0.5).max(2),
-          })
-          .strict(),
+        plannedMealChoiceSchema,
       )
       .refine((v) => Object.keys(v).length <= 28)
       .prefault({}),

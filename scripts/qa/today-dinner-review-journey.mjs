@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
-import {readFileSync} from 'node:fs';
+import {readFileSync,mkdirSync} from 'node:fs';
+import {setAppTheme} from './set-app-theme.mjs';
 import {randomBytes} from 'node:crypto';
 import express from 'express';
 import {PGlite} from '@electric-sql/pglite';
@@ -66,8 +67,47 @@ try{
  const optional=today.getByText('Carbohydrate, fat & micronutrient targets',{exact:true});await optional.click();
  const extra=optional.locator('..').getByRole('spinbutton');for(const input of await extra.all())if(await input.inputValue())await input.fill('');
  await today.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();
+ // Invalid drafts must remain editable after a rejected check.
+ await today.getByText('Review daily targets',{exact:true}).click();
+ await today.getByLabel('Energy (kcal)',{exact:true}).fill('20');
+ await today.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();
+ await today.getByRole('alert').filter({hasText:'Choose a valid local day'}).waitFor();
+ await today.getByText('Review daily targets',{exact:true}).click();
+ await today.getByLabel('Energy (kcal)',{exact:true}).fill('1500');
+ await today.getByRole('button',{name:'Check edited targets again',exact:true}).click();
  const dinner=today.locator('.meal-suggestion').filter({has:page.getByRole('heading',{name:/^dinner:/i})});await dinner.waitFor();
- const choice=planned.meals.find(meal=>meal.slot==='dinner');assert.ok(choice);assert.ok(choice.recipe.foodIngredients.length>=2);
+ let choice=planned.meals.find(meal=>meal.slot==='dinner');assert.ok(choice);
+ // Exercise a different sourced recipe through the actual API before selecting it in the UI.
+ let alternative;
+ for(const recipe of planned.availableChoices.filter(recipe=>recipe.mealType==='main'&&recipe.id!==choice.recipe.id)){
+  const response=await fetch(base+'/api/precision/today-plan',{method:'POST',headers:{'content-type':'application/json','x-test-owner':actor},body:JSON.stringify({date:day,timezoneOffset:0,hour:new Date().getUTCHours(),plan:planned.request,choices:{dinner:{recipeId:recipe.id,portion:.75}}})});
+  const checked=await response.json();if(checked.meals?.some(meal=>meal.slot==='dinner'&&meal.recipe.id===recipe.id)){alternative=recipe;break;}
+ }
+ assert.ok(alternative,'An eligible alternative fits the same targets');
+ await today.getByText('Choose meals & portions',{exact:true}).click();
+ await today.getByLabel('Meal for dinner',{exact:true}).selectOption(alternative.id);
+ await today.getByLabel('Recipe portion for dinner',{exact:true}).selectOption('0.75');
+ await today.getByText('Check changes before review',{exact:true}).first().waitFor();
+ assert.equal(await dinner.getByRole('link',{name:'Review and log this meal',exact:true}).count(),0,'Unchecked choice cannot enter review');
+ await today.getByRole('button',{name:'Check meal changes',exact:true}).click();
+ await dinner.getByRole('link',{name:'Review and log this meal',exact:true}).waitFor();
+ choice=planned.meals.find(meal=>meal.slot==='dinner');assert.equal(choice.recipe.id,alternative.id);assert.equal(choice.portion,.75);
+ assert.deepEqual(planned.requestedChoices,{dinner:{recipeId:alternative.id,portion:.75}});
+ for(const check of planned.checks)if(check.max!==null&&check.projected!==null)assert.ok(check.projected<=check.max+1e-6,check.key);
+ assert.equal((await store.getMeals(actor)).length,2,'Rechecking choices never logs consumption');
+ await today.getByText('Choose meals & portions',{exact:true}).click();
+ const artifact='/workspace/bloom-today-meal-choices';mkdirSync(artifact,{recursive:true});
+ for(const width of [320,390,768,1024,1440])for(const theme of ['light','dark']){
+  await page.setViewportSize({width,height:1000});await setAppTheme(page,theme);
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${width} ${theme} reflow`);
+  await today.getByText('Choose meals & portions',{exact:true}).scrollIntoViewIfNeeded();
+  await page.screenshot({path:`${artifact}/choices-${width}-${theme}.png`});
+ }
+ await page.setViewportSize({width:390,height:1000});await page.evaluate(()=>document.documentElement.style.fontSize='200%');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'200% text reflow');
+ await page.screenshot({path:`${artifact}/choices-390-dark-200text.png`});await page.evaluate(()=>document.documentElement.style.fontSize='');
+
+assert.ok(choice.recipe.foodIngredients.length>=2);
  assert.equal(choice.recipe.ingredients.some(ingredient=>ingredient.tags.includes('seafood')),false);assert.equal((await store.getMeals(actor)).length,2,'Planning is not consumption');
  await dinner.getByText('Ingredients, recipe & evidence',{exact:true}).click();await dinner.getByText('Shopping & ingredients',{exact:true}).waitFor();
  const link=dinner.getByRole('link',{name:'Review and log this meal',exact:true}),target=new URL(await link.getAttribute('href'),'http://127.0.0.1:5257');

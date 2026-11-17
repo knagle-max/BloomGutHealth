@@ -1,3 +1,4 @@
+import {z} from 'zod';
 import {
   nutrientDefinitions,
   type DietaryPreferences,
@@ -5,11 +6,17 @@ import {
 import { mealNutritionSummary } from "./nutrition-summary";
 import {
   eligiblePlanningRecipes,
+  plannedMealChoiceSchema,
   recipeNutrients,
   type WeeklyRequest,
 } from "./weekly-planner";
 import { goalMealFit } from "./goal-guidance";
 import type { PrecisionReport } from "./precision-nutrition";
+export const todayMealSlots=['breakfast','lunch','dinner','snack'] as const;
+export const todayMealChoicesSchema=z.partialRecord(z.enum(todayMealSlots),plannedMealChoiceSchema).prefault({});
+export type TodayMealChoices=z.infer<typeof todayMealChoicesSchema>;
+export class TodayMealChoiceError extends Error{constructor(message:string){super(message);this.name='TodayMealChoiceError';}}
+const mealTypeForSlot=(slot:string)=>slot==='breakfast'?'breakfast':slot==='snack'?'snack':'main';
 const aliases: Record<string, string> = {
   protein_g: "protein",
   carbohydrates_total_g: "carbs",
@@ -26,7 +33,7 @@ export function remainingSlots(
 ) {
   const eaten = new Set(meals.map((m) => m.mealType));
   // Clock windows only suppress slots; they never assume that an unlogged meal was eaten.
-  return (["breakfast", "lunch", "dinner", "snack"] as const).filter(
+  return todayMealSlots.filter(
     (s) =>
       s === "snack" ||
       (!eaten.has(s) &&
@@ -39,7 +46,9 @@ export function buildTodayPlan(
   prefs: DietaryPreferences,
   report: PrecisionReport,
   request: WeeklyRequest,
+  choices: TodayMealChoices = {},
 ) {
+  const requestedChoices=todayMealChoicesSchema.parse(choices);
   const summary = mealNutritionSummary(meals),
     slots = remainingSlots(hour, meals);
   const consumed = Object.fromEntries(
@@ -83,6 +92,11 @@ export function buildTodayPlan(
         c,
       ),
     );
+  if(!blocked)for(const [slot,choice]of Object.entries(requestedChoices)){
+    if(!slots.includes(slot as typeof todayMealSlots[number]))throw new TodayMealChoiceError('This meal slot is no longer remaining. Clear meal choices and check today again.');
+    const recipe=menu.recipes.find(recipe=>recipe.id===choice.recipeId);
+    if(!recipe||recipe.mealType!==mealTypeForSlot(slot))throw new TodayMealChoiceError('This meal is no longer eligible for the selected slot. Clear choices and review current food preferences.');
+  }
   const warnings = [
     ...(menu.unknownAllergies.length
       ? [
@@ -148,19 +162,14 @@ export function buildTodayPlan(
       n: recipeNutrients(recipe, portion),
     })),
   );
+  // Reserve explicit meals first: automatic choices must not consume their
+  // budget. Final presentation is restored to chronological slot order below.
   if (!blocked)
-    for (const slot of slots) {
-      const next = states.map((s) => ({ ...s })); // Leaving a slot empty is preferable to violating a known limit.
-      const options = candidates
-        .filter(
-          (c) =>
-            c.recipe.mealType ===
-            (slot === "breakfast"
-              ? "breakfast"
-              : slot === "snack"
-                ? "snack"
-                : "main"),
-        )
+    for (const slot of [...slots.filter(slot=>requestedChoices[slot]),...slots.filter(slot=>!requestedChoices[slot])]) {
+      const choice=requestedChoices[slot];
+      const next = choice?[]:states.map((s) => ({ ...s })); // Leaving a slot empty is preferable to violating a known limit.
+      const options = (choice?[{recipe:menu.recipes.find(recipe=>recipe.id===choice.recipeId)!,portion:choice.portion,n:recipeNutrients(menu.recipes.find(recipe=>recipe.id===choice.recipeId)!,choice.portion)}]:candidates)
+        .filter(c=>c.recipe.mealType===mealTypeForSlot(slot))
         .sort(
           (a, b) =>
             objective(a.n) - objective(b.n) ||
@@ -169,7 +178,7 @@ export function buildTodayPlan(
         .slice(0, 120);
       for (const state of states)
         for (const { recipe, portion, n } of options) {
-          if (state.meals.some((m) => m.recipe.id === recipe.id)) continue;
+          if (!choice&&state.meals.some((m) => m.recipe.id === recipe.id)) continue;
           const added = Object.fromEntries(
             nutrientDefinitions.map(([k]) => [
               k,
@@ -239,8 +248,9 @@ export function buildTodayPlan(
       states = next
         .sort((a, b) => a.score - b.score || a.meals.length - b.meals.length)
         .slice(0, 12);
+      if(!states.length)break;
     }
-  const best = states[0],
+  const best = states[0]||{meals:[] as Picked[],added:Object.fromEntries(nutrientDefinitions.map(([key])=>[key,0])) as Record<string,number|null>,score:objective({})},
     projected = total(best.added);
   const checks = nutrientDefinitions
     .filter(([key]) => constraints[key])
@@ -274,12 +284,17 @@ export function buildTodayPlan(
               : "Gap remains",
       };
     });
+  const unappliedChoices=Object.keys(requestedChoices).filter(slot=>!best.meals.some(meal=>meal.slot===slot&&meal.recipe.id===requestedChoices[slot as keyof TodayMealChoices]?.recipeId&&meal.portion===requestedChoices[slot as keyof TodayMealChoices]?.portion));
+  if(!blocked&&unappliedChoices.length)warnings.push('No searched combination with these meal choices fits the current constraints. Try another meal or portion; no limits were relaxed and no substitute was silently applied.');
   return {
+    requestedChoices,
+    unappliedChoices,
+    availableChoices:blocked?[]:menu.recipes.map(recipe=>({id:recipe.id,name:recipe.name,mealType:recipe.mealType})),
     slots,
     eatenMeals: meals.length,
     consumed,
     coverage,
-    meals: best.meals,
+    meals: [...best.meals].sort((a,b)=>slots.indexOf(a.slot as typeof todayMealSlots[number])-slots.indexOf(b.slot as typeof todayMealSlots[number])),
     checks,
     tradeoffs: !blocked && checks.some(check=>check.status==="Gap remains") ? {
       unmetMinimums: checks.filter(check=>check.status==="Gap remains").map(check=>check.name),

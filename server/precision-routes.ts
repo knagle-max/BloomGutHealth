@@ -14,7 +14,7 @@ import {resolvePlanningContext} from "./planning-context";
 import {historicalPlanRecord} from "./plan-history";
 import {aiExecutionContext} from "./metered-ai";
 import { requireRestrictedCapability } from "./capability-policy";
-import { buildTodayPlan } from "../shared/today-planner";
+import { buildTodayPlan,todayMealChoicesSchema,TodayMealChoiceError,type TodayMealChoices } from "../shared/today-planner";
 import { localDayBounds } from "../shared/nutrition-summary";
 import type { Express, RequestHandler } from "express";
 import { z } from "zod";
@@ -234,7 +234,7 @@ export function registerPrecisionRoutes(
       unavailable(res, e);
     }
   });
-  async function todayPlanFor(userId: string, input: { date: string; timezoneOffset: number; hour: number; plan?: import("../shared/weekly-planner").WeeklyRequest }) {
+  async function todayPlanFor(userId: string, input: { date: string; timezoneOffset: number; hour: number; plan?: import("../shared/weekly-planner").WeeklyRequest; choices?:TodayMealChoices }) {
     const bounds = localDayBounds(input.date, input.timezoneOffset);
       const id = userId,
         [user, records, meals, report] = await Promise.all([
@@ -301,6 +301,7 @@ export function registerPrecisionRoutes(
         prefs.success ? prefs.data : defaultPreferences,
         report,
         request,
+        input.choices,
       );
       if (!input.plan && !saved.success && !profileComplete) {
         result.meals = [];
@@ -318,6 +319,7 @@ export function registerPrecisionRoutes(
         timezoneOffset: z.number().int(),
         hour: z.number().int().min(0).max(23),
         plan: weeklyRequestSchema.optional(),
+        choices:todayMealChoicesSchema.optional(),
       })
       .strict()
       .safeParse(req.body);
@@ -336,6 +338,7 @@ export function registerPrecisionRoutes(
     try {
       res.json(await todayPlanFor(req.session.userId!, parsed.data));
     } catch (e) {
+      if(e instanceof TodayMealChoiceError)return res.status(400).json({error:e.message});
       unavailable(res, e);
     }
   });

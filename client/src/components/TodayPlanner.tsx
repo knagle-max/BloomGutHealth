@@ -1,3 +1,5 @@
+import {useAuth} from '@/lib/auth';
+import {todayMealSlots,type TodayMealChoices} from '@shared/today-planner';
 import {quantityFromCanonical,quantityToCanonical} from "@shared/display-units";
 import {useLocalClock} from '@/lib/use-local-clock';
 import { useExperience } from "@/lib/experience";
@@ -15,30 +17,37 @@ import { recipePreparation } from "@shared/recipe-preparation";
 const round = (v: number | null) =>
   v === null ? "Unknown" : Number(v.toFixed(1));
 export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?: () => void } = {}) {
+  const {user}=useAuth();
   const { settings } = useExperience();
   const units = settings.displayUnits;
-  const [edited, setEdited] = useState<WeeklyRequest | null>(null),
+  const [editedState, setEditedState] = useState<{owner:string;plan:WeeklyRequest} | null>(null),
     [result, setResult] = useState<
       {scope:string;plan:TodayPlan & { targetSource: string }} | null
     >(null);
+  const edited=editedState && editedState.owner===user?.id?editedState.plan:null;
+  const setEdited=(plan:WeeklyRequest)=>setEditedState({owner:user!.id,plan});
+  const [choiceDraft,setChoiceDraft]=useState<{scope:string;values:TodayMealChoices}|null>(null);
   const clock = useLocalClock(),
     day = new Date(+clock - clock.getTimezoneOffset() * 60000)
       .toISOString()
       .slice(0, 10),
     hour = clock.getHours(),timezoneOffset=clock.getTimezoneOffset(),
-    scope=`${day}|${hour}|${timezoneOffset}`;
+    scope=`${user?.id}|${day}|${hour}|${timezoneOffset}`;
+  const choiceScope=`${user?.id}|${day}|${timezoneOffset}`,choices=choiceDraft?.scope===choiceScope?choiceDraft.values:{};
   const currentResult=result?.scope===scope?result.plan:null;
-  const fetchPlan = async (plan?: WeeklyRequest) =>
+  const fetchPlan = async (plan?: WeeklyRequest,selectedChoices:TodayMealChoices=choices) =>
     (
       await apiRequest("POST", "/api/precision/today-plan", {
         date: day,
         timezoneOffset,
         hour,
         ...(plan ? { plan } : {}),
+        ...(Object.keys(selectedChoices).length?{choices:selectedChoices}:{}),
       })
     ).json() as Promise<TodayPlan & { targetSource: string }>;
   const initial = useQuery({
-    queryKey: ["/api/precision/today-plan", day, hour,timezoneOffset],
+    queryKey: ["/api/precision/today-plan", user?.id,day,hour,timezoneOffset],
+    enabled:!!user?.id,
     queryFn: () => fetchPlan(edited || undefined),
     staleTime: 60000,
   });
@@ -46,34 +55,18 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
     setResult(null);
   }, [initial.dataUpdatedAt]);
   const build = useMutation({
-    mutationFn: async () => ({scope,plan:await fetchPlan(edited || (currentResult || initial.data)!.request)}),
+    mutationFn: async (override?:TodayMealChoices) => ({scope,plan:await fetchPlan(edited || (currentResult || initial.data)!.request,override??choices)}),
     onSuccess: (r) => setResult(r),
   });
   const checking = initial.isPending || initial.fetchStatus !== "idle" || build.isPending;
   // A failed or unfinished current-context check cannot fall back to a
   // previous suggestion set. Keep the draft targets for an explicit retry.
   const r = checking || initial.isError || build.isError ? null : currentResult || initial.data,
-    request = edited || r?.request;
-  return (
-    <section className="bloom-panel space-y-4">
-      <h2>What to eat for the rest of today</h2>
-      <p>
-        Suggestions use today’s logged meals, your local time, saved food
-        preferences and the targets below. Refresh after logging a meal.
-      </p>
-      {checking && <p role="status">Checking today’s intake and current context…</p>}
-      {(initial.isError || build.isError) && (
-        <div>
-          <p role="alert">{(build.error || initial.error)?.message}</p>
-          <p className="panel-note">Current suggestions are unavailable until the check succeeds. Your edited targets are retained for retry.</p>
-          <Button type="button" disabled={checking} onClick={() => initial.isError ? initial.refetch() : build.mutate()}>Retry suggestions</Button>
-        </div>
-      )}
-      {r && request && (
-        <>
-          <div className="planner-status"><span>{r.eatenMeals} meals logged today</span><span>Still to plan: {r.slots.join(", ") || "no remaining meals"}</span></div>
-          <p className="panel-note">Targets: {r.targetSource}.</p>
-          <details>
+    request = edited || r?.request || initial.data?.request;
+  const choicesDirty=!!r&&todayMealSlots.some(slot=>choices[slot]?.recipeId!==(r.requestedChoices||{})[slot]?.recipeId||choices[slot]?.portion!==(r.requestedChoices||{})[slot]?.portion);
+  const pendingChanges=!!r&&(choicesDirty||JSON.stringify(request)!==JSON.stringify(r.request));
+  const checkChanges=()=>{setResult(null);build.mutate(undefined);};
+  const targetEditor=request?(<details>
             <summary>Review daily targets</summary>
             <p className="panel-note">
               Energy entry uses your saved display unit; other targets use the nutrient units shown.
@@ -173,20 +166,41 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                   </div>
                 ))}
             </details>
-          </details>
+          </details>):null;
+  return (
+    <section className="bloom-panel space-y-4">
+      <h2>What to eat for the rest of today</h2>
+      <p>
+        Suggestions use today’s logged meals, your local time, saved food
+        preferences and the targets below. Refresh after logging a meal.
+      </p>
+      {checking && <p role="status">Checking today’s intake and current context…</p>}
+      {(initial.isError || build.isError) && (
+        <div>
+          <p role="alert">{(build.error || initial.error)?.message}</p>
+          <p className="panel-note">Current suggestions are unavailable until the check succeeds. Your edited targets are retained for retry.</p>
+          <Button type="button" disabled={checking} onClick={() => initial.isError ? initial.refetch() : build.mutate(undefined)}>Retry suggestions</Button>
+        </div>
+      )}
+      {!r&&request&&<>{targetEditor}<Button type="button" disabled={checking} onClick={checkChanges}>Check edited targets again</Button></>}
+      {Object.keys(choices).length>0&&<Button type="button" variant="outline" disabled={checking} onClick={()=>{setChoiceDraft({scope:choiceScope,values:{}});setResult(null);build.mutate({});}}>Clear meal choices and retry</Button>}
+      {r && request && (
+        <>
+          <div className="planner-status"><span>{r.eatenMeals} meals logged today</span><span>Still to plan: {r.slots.join(", ") || "no remaining meals"}</span></div>
+          <p className="panel-note">Targets: {r.targetSource}.</p>
+          {targetEditor}
           <Button
             className="whitespace-normal h-auto max-w-full"
             type="button"
             disabled={build.isPending}
-            onClick={() => {
-              setResult(null);
-              build.mutate();
-            }}
+            onClick={checkChanges}
           >
             {build.isPending
               ? "Finding meals…"
               : "Update suggestions with these targets"}
           </Button>
+          {pendingChanges&&<p role="status">Changes have not been checked. The amounts below belong to the last checked plan; check changes before reviewing a suggested meal.</p>}
+          {!!r.availableChoices?.length&&<details className="today-meal-choices"><summary>Choose meals &amp; portions</summary><p className="panel-note">Choose a different eligible recipe or portion, then check the remaining day. Other suggestions may change to protect the same constraints. No food is logged by planning.</p>{r.slots.map(slot=>{const selected=choices[slot],current=r.meals.find(meal=>meal.slot===slot),kind=slot==='breakfast'?'breakfast':slot==='snack'?'snack':'main';return <div className="precision-grid" key={slot}><label className="min-w-0">Meal for {slot}<select className="bloom-input w-full" aria-label={`Meal for ${slot}`} value={selected?.recipeId||''} onChange={event=>{const next={...choices};if(event.target.value)next[slot]={recipeId:event.target.value,portion:selected?.portion??current?.portion??1};else delete next[slot];setChoiceDraft({scope:choiceScope,values:next});}}><option value="">Let Bloom choose</option>{r.availableChoices.filter(recipe=>recipe.mealType===kind).map(recipe=><option key={recipe.id} value={recipe.id}>{recipeDisplayName(recipe.name)}</option>)}</select></label><label>Recipe portion for {slot}<select className="bloom-input w-full" aria-label={`Recipe portion for ${slot}`} value={selected?.portion??current?.portion??1} disabled={!selected&&!current} onChange={event=>{const recipeId=selected?.recipeId||current?.recipe.id;if(recipeId)setChoiceDraft({scope:choiceScope,values:{...choices,[slot]:{recipeId,portion:Number(event.target.value)}}});}}>{[.5,.75,1,1.25,1.5,1.75,2].map(portion=><option key={portion} value={portion}>{portion} × recipe</option>)}</select></label></div>;})}<Button type="button" disabled={checking} onClick={checkChanges}>Check meal changes</Button></details>}
           <details>
             <summary>How your preferences affect these meals</summary>
             <p>
@@ -265,9 +279,8 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                 <details>
                   <summary>Why this fits today</summary>
                   <p>
-                    Chosen to reduce the remaining nutrient gaps while keeping
-                    known intake plus planned food below your selected upper
-                    limits.
+                    Checked against logged intake and selected constraints.
+                    Missing nutrients and any remaining gaps are shown in the daily checks.
                   </p>
                   <ul>
                     {m.reasons.map((s, i) => (
@@ -275,7 +288,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                     ))}
                   </ul>
                 </details>
-                <Link
+                {pendingChanges?<Button type="button" disabled>Check changes before review</Button>:<Link
                   className="text-link"
                   href={
                     "/log-meal?description=" +
@@ -292,7 +305,7 @@ export default function TodayPlanner({ onEditPreferences }: { onEditPreferences?
                   }
                 >
                   Review and log this meal
-                </Link>
+                </Link>}
               </article>
             );
           })}
