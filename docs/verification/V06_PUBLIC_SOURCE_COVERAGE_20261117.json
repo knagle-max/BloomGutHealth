@@ -1,0 +1,56 @@
+{
+  "task": "V06-C3-PUBLIC-ADAPTER-COVERAGE",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "baseCommit": "408cc4fd62ad2c61a885f3f925cd31305c982e55",
+  "scope": "Read-only current public local food source arrays and installed FNDDS catalogue; not private account/cohort coverage, live branded provider verification or a complete35-source matrix.",
+  "implementation": [
+    "CLI loads actual planning/logging arrays, installed server-only FNDDS2021\u20132023 catalogue and unchanged21-field definitions. Reports separate row/unique-source denominators and native positive/source-zero/missing/invalid fields; no combined food/population completeness ratio, intake total, adequacy or clinical approval.",
+    "All33 local prepared-food rows use existing100g nutrition lookup. Installed5431-row FNDDS catalogue is inventoried in full and compressed bytes/count checked against its existing edition manifest; four deterministic source-ID nutrition lookups include pizza and capture21fields. Original upstream ZIP digest is declared, not freshly reverified. Exact10 input/code hashes recorded; no database/credentials/model/provider request.",
+    "Optional --verify rejects invalid source metadata/numbers or a failed exact source join; missing fields stay permitted and unknown. CI runs this check without changing any source data, references, account fields or frontend."
+  ],
+  "observed": {
+    "sourceRows": 33,
+    "planning": 27,
+    "logging": 6,
+    "uniqueVersionedSourceIdentities": 33,
+    "supportedNutrientFields": 21,
+    "cnfMappedFields": 0,
+    "metadataIssues": 0,
+    "exactAdapterMatches": 33,
+    "capturedFieldsPerMatch": 21,
+    "sourceType": "SR Legacy",
+    "liveProviderAndCommercialRightsVerification": "NOT_PERFORMED",
+    "fndds": {
+      "sourceRows": 5431,
+      "edition": "2021\u20132023",
+      "catalogueCompressedDigestMatchesManifest": true,
+      "countMatchesManifest": true,
+      "sampledAdapterSourceMatches": 4,
+      "sampleCapturedFields": 21,
+      "originalUpstreamZipReverified": false
+    }
+  },
+  "validation": [
+    "12 source coverage/definitions/immutable snapshot/recorded-observation/actual review-confirm SQL tests PASS; includes source zero vs missing/invalid, duplicate identities, invalid provenance, current adapter joins/hashes, source-stale save rejection, exact replay and owner isolation.",
+    "TypeScript PASS; actual CLI --verify run produced PUBLIC_FOOD_SOURCE_COVERAGE_20261117.json.",
+    "No frontend/runtime nutrition calculation changed; prior408cc4 source build/local80-state navigation/media proof is retained, not rerun as a CLI visual acceptance claim.",
+    "Existing pinned FNDDS local material is ALREADY_VERIFIED for this local digest/count scope; no redownload, source replacement or claim that every catalogue recipe has been clinically validated."
+  ],
+  "artifacts": [
+    "docs/verification/PUBLIC_FOOD_SOURCE_COVERAGE_20261117.json",
+    "/workspace/bloom-source-coverage-unit.log",
+    "/workspace/bloom-source-coverage-types.log"
+  ],
+  "cnfDependency": {
+    "status": "BLOCKED_TECHNICAL",
+    "source": "https://open.canada.ca/data/en/dataset/1b6139bd-ed7e-4043-bc28-ff00e10f3109",
+    "officialZip": "https://open.canada.ca/data/dataset/1b6139bd-ed7e-4043-bc28-ff00e10f3109/resource/019f2a90-e3a9-489d-b6e1-f74f4ba1d006/download/cnf_fcen_all-files-data_2026.zip",
+    "attempts": [
+      "Web fetch of official dataset page:403 Forbidden; search discovery identifies the official edition/links but does not deliver bytes.",
+      "Bounded curl --fail --location --max-time45 --max-filesize30000000 of official ZIP:HTTP403, exit22; no artifact created."
+    ],
+    "notClaimed": "No archive/hash/rows/relational joins/source rights or real CNF pilot imported/verified. No substitute or historical2007b fixture relabelled2026.",
+    "resumeWhen": "Official archive becomes mounted/downloadable and actual edition/schema/terms can be checked. Do not repeat unchanged download probes; continue other Core work."
+  },
+  "remaining": "N01 release/live-provider evidence and N02 actual Canadian material/joins, Canadian DRI/LOINC/UCUM/source-specific permissions remain scoped tasks. Existing USDA/manual food paths continue; C3/full RC not complete."
+}

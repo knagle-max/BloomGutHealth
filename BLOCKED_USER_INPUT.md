@@ -1,3 +1,9 @@
+## 2026-11-17 — N02 actual CNF2026 archive access (feature-scoped technical dependency)
+
+Official dataset page and bounded official-ZIP download both return403; the exact archive is absent. Search-index text is not material acquisition. Receipt: `docs/verification/V06_PUBLIC_SOURCE_COVERAGE_20261117.json`. No CNF rows/rights/edition are claimed verified; original USDA/manual food paths remain usable.
+
+Question recorded for when source access is addressed: Can the official `cnf_fcen_all-files-data_2026.zip` and its edition/terms documents be made available in the workspace? Options: **recommended**, mount the original public download bytes in a stable Codex-readable location; or restore access to the exact official Open Government download. This is access to a source artifact, not an approval to change a feature, use private health data or publish a corpus. Dependencies: actual hash/edition/schema/key joins and permitted-use verification before CNF integration. Resume only when bytes/access changes; continue independent source/reference/Core work now.
+
 T1b-bloodwork-atlas: no owner input/approval needed. Six approved/generated archive originals are not locally readable, so existing renderer uses registered decorative reserved frames; full layout/source navigation is implemented/tested. Art-byte import remains scoped; ordinary Core/UI work proceeds. Latest owner policy removes individual-image approval gates.
 
 ## Parent qualification and control fixes require no input — 2026-11-15

@@ -325,6 +325,7 @@ jobs:
         run: |
           npm run check
           node --import tsx scripts/api-exposure-inventory.ts --check
+          node --import tsx scripts/source-coverage.ts --verify --output /tmp/bloom-public-food-source-coverage.json
           node --import tsx scripts/capability-crosswalk.ts --check
           node --import tsx scripts/biology-content-coverage.ts --check
       - name: Verify exact isolated hosted review persistence
