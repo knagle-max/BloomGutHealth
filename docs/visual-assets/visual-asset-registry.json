@@ -4819,6 +4819,55 @@
       },
       "authority": "BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
       "fallback": "reserved-surface and existing-icon"
+    },
+    {
+      "id": "BVA-0050",
+      "name": "LDL editorial arterial atmosphere",
+      "route": "/precision?tab=labs&marker=ldl",
+      "component": "LabTrend",
+      "purpose": "Illustrated expanded LDL header matching owner original reference supplied2026-11-17",
+      "category": "marker-editorial-hero",
+      "subject": "Conceptual artery cross-section with lipoprotein/cholesterol context, never the user’s anatomy or a clinical result",
+      "composition": "Wide quiet forest/ivory botanical science scene, artery on the right, left text-safe space; no embedded text, numerical data or patient claim",
+      "scientificAccuracy": "Conceptual educational art only; independent science/content review required before depicting biomedical detail. Not patient data.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "2:1",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 800
+      },
+      "responsiveVariants": [
+        "right-anchored mobile scene",
+        "wide desktop context header"
+      ],
+      "accessibility": "decorative; visible marker/category/count text supplies meaning",
+      "lifecycle": "Briefed",
+      "assetStatus": "requested; no source bytes or approval claimed",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "lab-detail-ldl-hero",
+        "action": "additive requested hero; existing original category art is truthful current fallback"
+      },
+      "integration": {
+        "verified": false,
+        "state": "Reserved scene; existing registered cardiovascular category artwork reused as context, not claimed arterial delivery"
+      },
+      "review": {
+        "design": "requested",
+        "scientific": "not reviewed",
+        "rights": "no source file/licence yet",
+        "rendered": "reserved fallback engineering testing pending"
+      },
+      "authority": "Owner original LDL screenshot supplied2026-11-17; BLOOM_BLOODWORK_EDITORIAL_VISUAL_FIDELITY_CORRECTION_20261116.md",
+      "fallback": "existing original category artwork and canonical surface; no embedded reference image copied"
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",

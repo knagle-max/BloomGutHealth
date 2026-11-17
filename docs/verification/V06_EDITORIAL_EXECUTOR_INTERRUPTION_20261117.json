@@ -31,13 +31,13 @@
     "visualInput": "LDL reference visible in conversation; use its illustrated hero, separate latest/history panels, compact reference context, image-led primer and About this measurement composition.",
     "manifest": "docs/design-references/bloodwork/README.md",
     "requiredBinary": "docs/design-references/bloodwork/approved-ldl-editorial-reference.png",
-    "binaryAtInspection": "NOT PRESENT — directory has README.md only",
+    "binaryAtInspection": "NOT PRESENT \u2014 directory has README.md only",
     "expectedPngDimensions": [
       864,
       1536
     ],
     "expectedPngSha256": "98d2bcbda8a8af7c97663943652f83fa4ab76d749c1edb932bd3fa6967b991fb",
-    "directVisualAcceptance": "NOT TESTED — latest Architect authority requires actual persisted binary verification, not conversation visibility or guessed bytes. Do not paste reference into runtime or assume embedded art licence."
+    "directVisualAcceptance": "NOT TESTED \u2014 latest Architect authority requires actual persisted binary verification, not conversation visibility or guessed bytes. Do not paste reference into runtime or assume embedded art licence."
   },
   "localWorktree": {
     "baseCommit": "19c7d1eb59e8ef8fd89e7e68b1169fa41e658040",
@@ -69,11 +69,11 @@
     "warning": "Do not report latest reference-matching composition as committed, fully tested or visually accepted. Last shell commands were interrupted by executor loss."
   },
   "validation": {
-    "publishedRangeFix": "17 focused units, actual20 pixel/layout states plus forced colors, full92labels×6source explorer, chart-first, actual SQL correction/Profile/Canadian/import/source deletion/None/owner and types/audits/build PASS before19c7 push.",
+    "publishedRangeFix": "17 focused units, actual20 pixel/layout states plus forced colors, full92labels\u00d76source explorer, chart-first, actual SQL correction/Profile/Canadian/import/source deletion/None/owner and types/audits/build PASS before19c7 push.",
     "editorialEarlierPasses": [
       "Both LDL and Ferritin60 responsive states at320/390/768/1024/1440, light/dark and Everyday/Athlete plus200% text/page zoom passed before latest reference-driven panel composition.",
       "Ferritin one-sided unknown-method synthetic case captured10 actual light/dark screenshots, selected-only444 upper bound, dashed final segment, no falsely global band, wrapped labels contained after fixes.",
-      "Actual App→HTTP→encrypted SQL correction/retry/CAS/removal/None/48 layouts and34-result imported report/source deletion/owner regression passed earlier editorial version.",
+      "Actual App\u2192HTTP\u2192encrypted SQL correction/retry/CAS/removal/None/48 layouts and34-result imported report/source deletion/owner regression passed earlier editorial version.",
       "17 focused Biology/source-history/comparability tests passed. Previous typecheck/build/source audits passed before final reference-led header/panels."
     ],
     "latestChecksPending": [
@@ -98,5 +98,12 @@
     "Verify actual reference binary if attachment/artifact becomes available; persist exact pixels/hash/dimensions. Conversation source is visible but canonical binary absent at this inspection; do not ask owner to repeat unchanged approval.",
     "Complete/fix final rendered-source tests, separate brand/experience/science/functional/security/accessibility review, update canonical BACKLOG/DEVELOPMENT_LOG/NEXT/receipt at meaningful checkpoint, commit/push coherent UI candidate to enhance/bloom-experience.",
     "Qualify exact next CI/runtime source once, record mismatch accurately; continue approved Core Food12/Response15 without reopening already verified source/dinner foundations. Full v0.6 RC is unfinished."
-  ]
+  ],
+  "recovery": {
+    "status": "RECOVERED",
+    "workspaceEditsRetained": true,
+    "incomingDocsFastForwardedTo": "c48b70d67cb18c08b383e38e2d52c67bb658cb56",
+    "originalOwnerReference": "Now found in attachment path, copied byte-for-byte with actual720\u00d71280 identity and lossless PNG equivalent. See docs/design-references/bloodwork/reference-manifest.json.",
+    "nextReceipt": "V06_MARKER_EDITORIAL_FIDELITY_20261117.json"
+  }
 }

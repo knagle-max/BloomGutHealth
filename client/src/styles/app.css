@@ -20,4 +20,5 @@
 @import "./scientific-chart-comparison.css" layer(bloom-premium);
 @import "./scientific-chart-integration.css" layer(bloom-premium);
 
-@import "./lab-marker-editorial.css" layer(bloom-premium);
+/* Scoped component overrides must outrank unlayered legacy relationship-card rules. */
+@import "./lab-marker-editorial.css";

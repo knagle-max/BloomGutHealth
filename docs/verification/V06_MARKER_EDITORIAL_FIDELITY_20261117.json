@@ -1,0 +1,55 @@
+{
+  "task": "V06-P1-EXPANDED-MARKER-EDITORIAL-FIDELITY",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION_AND_INTEGRATED_VISUAL_ACCEPTANCE",
+  "baseCommit": "c48b70d67cb18c08b383e38e2d52c67bb658cb56",
+  "reference": {
+    "path": "docs/design-references/bloodwork/approved-ldl-editorial-reference.png",
+    "manifest": "docs/design-references/bloodwork/reference-manifest.json",
+    "dimensions": [
+      720,
+      1280
+    ],
+    "pngSha256": "fffd6a3e66a967d19758e72bd6d806b3ad5b14419842f3936551113185377f76",
+    "sourceJpegBytesPreserved": true,
+    "openedAsImage": true,
+    "prior864Duplicate": "Not falsely claimed; actual latest owner attachment720\u00d71280 imported and pixels preserved"
+  },
+  "implementation": [
+    "Legacy unlayered card CSS had suppressed intended editorial typography/materials. Corrected only the scoped expanded marker styles; no theme/chart replacement.",
+    "Same source/state owner, presentation-only wrappers and optional heading; illustrated category header and dynamic count, separate dominant latest-result/history surfaces, visible primer, reference context, About this measurement and secondary source/compare/education disclosures.",
+    "Container-sized tablet education columns and wide chart/context composition with shared DOM/data. Both modes and themes preserve their canonical identities; touch/keyboard/source focus and existing controls retained.",
+    "Original Ferritin blood-cell artwork reused with a conceptual/not-measurement caption and correctly fitted thumbnail. Original category artwork is current LDL header context. LDL-specific particle/artery assets48/49 and new hero50 remain requested/reserved, not falsely delivered or scientifically approved.",
+    "Wrapping one-sided labels have actual clip headroom without shifting axes relative to points. Reference source applicability/math and original records unchanged.",
+    "All actual owner reference image bytes are persisted; new overview/organism reference JPEGs also imported with manifest for next owner-requested microbiome slice."
+  ],
+  "validation": [
+    "12 focused registry/editorial/Biology/history tests PASS; earlier17 source/biology/comparability cases PASS.",
+    "Actual LDL and Ferritin60 responsive/200% states each at320/390/768/1024/1440 in Everyday/Athlete light/dark PASS. Source focus/link/back restoration/None/single chart/unchanged records/account withdrawal plus dominant value/serif/wide grid assertions retained.",
+    "Ferritin unknown-method one-sided source444 scenario:10 additional actual captures, localized upper limit, dashed source segment, no falsely global band, numeric labels remain inside clip.",
+    "20 actual reference SVG/pixel states plus forced colors PASS with full-source bands/one-sided limits/period gaps/selected-only/missing bounds/owner isolation.",
+    "Actual App\u2192authenticated HTTP\u2192encrypted SQL correction/retry/concurrency/removal/None/source dialogs48states PASS; full34-result import/report preferences/None/no hydration flash/source deletion/account withdrawal regression PASS.",
+    "Final typecheck, source audits and production build PASS. Existing media build checks preserve original source bytes/paths."
+  ],
+  "visualReview": {
+    "reviewer": "Codex implementation render review, not independent human/clinical acceptance",
+    "comparisonBasis": "Actual persisted owner image opened; actual synthetic app screenshots, never a static runtime mockup.",
+    "brandCoherence": "PASS for canonical serif/sans hierarchy, layered source/history materials, botanical source art context and preserved Athlete blue.",
+    "purposeSpecificExperience": "PASS for tested adaptive source/result/history/visible primer flow and reachable scientific/source actions.",
+    "exactArtworkFidelity": "FAIL \u2014 original reference arterial scene/LDL particle/artery thumbnails are not delivered production files. BVA48/49/50 truthfully requested; current header uses registered category context and education has reserved fallbacks.",
+    "directComparison": "Performed against actual supplied720\u00d71280 file. Overall visual acceptance remains PARTIAL; no exact pixel equivalence claim.",
+    "scientificDifferences": "Real synthetic counts/values/units/dates used; no hardcoded3.58,9Aug2026 or5records. Original source-qualified straight segments retained rather than copying illustrative smoothed chart or false continuous measurements. Canonical reviewed primer/qualifications retained rather than borrowing new clinical text.",
+    "physicalVoiceOver": "NOT_TESTED",
+    "independentFinalDesignReview": "NOT_TESTED"
+  },
+  "evidenceDirectories": [
+    "/workspace/bloom-editorial-before",
+    "/workspace/bloom-editorial-final",
+    "/workspace/bloom-editorial-reference-pixels"
+  ],
+  "next": [
+    "Publish this coherent engineering slice and qualify exact CI/Render source. Preserve earlier exact-binding failure honestly.",
+    "Next owner-priority microbiome overview/organism layout, original references already imported. New dedicated placeholder hero, never reuse existing imagery for that hero.",
+    "LDL-specific art production and integrated visual/physical-user/RC acceptance remain open; full v0.6 is not declared complete."
+  ],
+  "privacy": "Only synthetic local/isolated records tested; no actual private health query, production data writes, manual deploy or main merge."
+}

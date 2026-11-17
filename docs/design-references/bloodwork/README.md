@@ -1,3 +1,13 @@
+# Approved LDL Editorial Reference — verified owner upload
+
+The owner supplied the original reference on2026-11-17. The actual attached file is **720×1280**; its original JPEG bytes are preserved in [approved-ldl-editorial-reference.jpg](approved-ldl-editorial-reference.jpg). The canonical [PNG comparison file](approved-ldl-editorial-reference.png) preserves the decoded pixels exactly, with no resize, crop or content edits. Opened and verified locally.
+
+SHA-256/dimensions/provenance: [reference-manifest.json](reference-manifest.json). The older864×1536 expected hashes below identify a different, unavailable duplicate; they are not falsely assigned to this latest upload. No upscaling is performed.
+
+Use only for real rendered layout comparison. Never copy the screenshot or its embedded artwork into runtime assets. Existing art IDs/rights/science/source logic remain protected. Final visual review must identify differences explicitly.
+
+## Historical manifest before actual binary import
+
 # Approved LDL Editorial Reference — required visual acceptance asset
 
 **Owner-approved reference:** November 16–17, 2026, supplied as an uploaded 864×1536 JPEG screenshot (latest duplicate upload November 17). This README is a **source manifest**, not the image. The reference contains the full mockup: atmospheric arterial/LDL hero, branded top bar, “Heart & cholesterol” category, expressive LDL title, oversized latest-result glass card, history chart, reference context, illustrated *What is LDL?* and *Why does it matter?* rows, and an “About this measurement” lower panel.

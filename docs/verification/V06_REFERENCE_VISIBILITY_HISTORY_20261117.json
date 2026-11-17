@@ -1,6 +1,6 @@
 {
   "task": "V06-P1-REFERENCE-VISIBILITY-HISTORY",
-  "status": "ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "status": "RUNTIME_LIVE_DOC_DESCENDANT_EXACT_CI_BINDING_FAILED",
   "baseCommit": "7174a08200438f316996dd9b8ced92576a7ddb18",
   "authority": [
     "Latest one-sided rule visibility and historical applicability sections in BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md",
@@ -81,5 +81,15 @@
     "/workspace/bloom-history-canadian-check.log",
     "/workspace/bloom-history-types-check.log",
     "/workspace/bloom-history-build-check.log"
-  ]
+  ],
+  "publication": {
+    "commit": "19c7d1eb59e8ef8fd89e7e68b1169fa41e658040",
+    "workflow": 44094520084,
+    "conclusion": "failure",
+    "failedStep": "Verify exact isolated hosted review persistence",
+    "reason": "Expected exact source binding no longer matched after six documentation-only descendants. No accounts created.",
+    "runtimeDescendant": "c8e628de00c8baac29db96a262c113192c3bf3a9",
+    "deploy": "dep-dbu5ir4astbc7398jtf0",
+    "deployStatus": "live"
+  }
 }
