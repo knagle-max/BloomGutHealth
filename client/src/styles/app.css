@@ -22,3 +22,4 @@
 
 /* Scoped component overrides must outrank unlayered legacy relationship-card rules. */
 @import "./lab-marker-editorial.css";
+@import "./microbiome-editorial.css";

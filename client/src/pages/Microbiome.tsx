@@ -1,4 +1,4 @@
-import EditorialMedia from "@/components/EditorialMedia";
+import MicrobiomeEditorial,{MicrobiomeEditorialHero} from "@/components/MicrobiomeEditorial";
 import {functionalResearchGroups} from "@shared/functional-microbiome";
 import MicrobiomeReportManagement from"@/components/MicrobiomeReportManagement";
 import OrganismPortrait from "@/components/OrganismPortrait";
@@ -62,20 +62,24 @@ export default function Microbiome() {
   const groupedTaxa=activeResearch?taxa.filter(t=>activeResearch.observationIds.includes(t.id)):taxa;
   const visibleTaxa=taxonQuery.trim()?groupedTaxa.filter(taxon=>taxon.bacterialName.toLowerCase().includes(taxonQuery.trim().toLowerCase())):groupedTaxa;
   const activeTaxon:ReportedTaxon|null=selectedTaxon&&selectedTaxon.owner===user?.id&&selectedTaxon.sample===currentId&&currentResults?taxa.find(b=>b.id===selectedTaxon.id)||null:null;
+  const openTaxon=(taxon:ReportedTaxon,trigger:HTMLButtonElement)=>{if(!currentId||!user?.id)return;profileClosing.current=false;taxonTrigger.current=trigger;window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:taxon.id,sample:currentId,owner:user.id});};
+  const browseReported=()=>{setTab("bacteria");requestAnimationFrame(()=>{const heading=document.getElementById("reported-organisms-heading");heading?.focus();heading?.scrollIntoView({block:"start"});});};
+  const showReport=()=>{setTab("results");requestAnimationFrame(()=>{const heading=document.getElementById("selected-microbiome-report-heading");heading?.focus();heading?.scrollIntoView({block:"start"});});};
   const closeProfile=()=>{if(profileClosing.current)return;profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile)window.history.back();};
   useEffect(()=>{const closeOnBack=()=>{profileClosing.current=true;setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}};window.addEventListener('popstate',closeOnBack);return()=>window.removeEventListener('popstate',closeOnBack);},[]);
   useEffect(()=>{if(selectedTaxon&&!activeTaxon){setSelectedTaxon(null);if(window.history.state?.bloomMicrobialProfile){const{bloomMicrobialProfile,...state}=window.history.state;window.history.replaceState(state,'');}}},[selectedTaxon,activeTaxon]);
   return (
-    <main className="science-page gut-reports-workspace space-y-5">
-      <EditorialMedia slot="gut-report-hero" sizes="(max-width:767px) 100vw, 1000px" />
+    <main className="science-page gut-reports-workspace microbiome-editorial space-y-5">
+      <MicrobiomeEditorialHero count={currentResults?taxa.length:undefined}/>
+      {tab==="bacteria"&&currentResults&&<MicrobiomeEditorial sample={currentResults.sample} taxa={taxa} onOpen={openTaxon} onReport={showReport} onBrowse={browseReported}/>}
       <div className="science-heading">
         <p className="eyebrow">REPORTS & RESEARCH</p>
-        <h1>Gut reports</h1>
+        <h2>Reports &amp; source tools</h2>
         <p>
           Review your source values and what is missing. A gut report is optional.
         </p>
         <div className="flex flex-wrap gap-3">
-          {sorted.length>0&&<Button type="button" variant="outline" onClick={()=>{setTab("bacteria");requestAnimationFrame(()=>{const heading=document.getElementById("reported-organisms-heading");heading?.focus();heading?.scrollIntoView({block:"start"});});}}>Browse reported organisms</Button>}
+          {sorted.length>0&&<Button type="button" variant="outline" onClick={browseReported}>Browse reported organisms</Button>}
           {(!currentSamples||sorted.length>0)&&<Link className="text-link" href="/upload">Upload or enter a report</Link>}
           <details className="workspace-disclosure"><summary>Related tools</summary><div className="flex flex-wrap gap-3 pt-3"><Link className="text-link" href="/progress">Recorded progress</Link><Link className="text-link" href="/meal-planner">Goal-based meals</Link></div></details>
         </div>
@@ -136,7 +140,7 @@ export default function Microbiome() {
       {sampleId && currentSamples && !currentId && <p role="alert">The requested report is not available in this account. Select another saved report.</p>}
       {tab === "results" && currentResults && (
         <section className="bloom-panel">
-          <h2>Selected report</h2>
+          <h2 id="selected-microbiome-report-heading" tabIndex={-1}>Selected report</h2>
           <p>
             {currentResults.sample.testingCompany} ·{" "}
             {reportDateText(currentResults.sample)} ·{" "}
@@ -211,7 +215,7 @@ export default function Microbiome() {
                   {visibleTaxa.map(b => {
                     const previous = matchReportedTaxon(b,taxa,comparisonTaxa);
                     return (
-                      <tr key={b.id} className="microbial-composition-row" onClick={e=>{profileClosing.current=false;taxonTrigger.current=e.currentTarget.querySelector('button');window.history.pushState({...window.history.state,bloomMicrobialProfile:true},'');setSelectedTaxon({id:b.id,sample:currentId,owner:user!.id});}}>
+                      <tr key={b.id} className="microbial-composition-row" onClick={e=>{const trigger=e.currentTarget.querySelector<HTMLButtonElement>('button');if(trigger)openTaxon(b,trigger);}}>
                         <td className="p-2">
                           <button type="button" className="microbial-composition-trigger" aria-haspopup="dialog" aria-description={organismIllustration(b.bacterialName,"thumbnail",{reportId:currentId,observationId:b.id,observations:taxa})?.label||MICROORGANISM_SYMBOL_LABEL} aria-label={`${b.bacterialName}, ${reportedTaxonAmount(b)}, ${b.taxonomyLevel||"resolution not reported"}, open organism profile`}><OrganismPortrait size="thumbnail" sourceName={b.bacterialName} source={{reportId:currentId,observationId:b.id,observations:taxa}}/><span className="microbial-composition-name"><i>{b.bacterialName}</i><small>{b.taxonomyLevel||"Resolution not reported"}</small></span><span aria-hidden="true">›</span></button>
                         </td>

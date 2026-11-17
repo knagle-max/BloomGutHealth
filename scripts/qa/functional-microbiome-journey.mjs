@@ -27,7 +27,7 @@ try{
  await page.getByRole('button',{name:'Clear search',exact:true}).click();
  const trigger=page.getByRole('button',{name:'Ruminococcus bromii, 0%',exact:false});await trigger.click();
  const sheet=page.getByRole('dialog');await sheet.getByText(/Researchers have studied this bacterium/).waitFor();
- await sheet.getByText('What research has studied',{exact:true}).click();await sheet.getByText(/Study setting: Human-derived bacterial cultures/).waitFor();
+ await sheet.getByText('Research context',{exact:true}).click();await sheet.getByText('What research has studied',{exact:true}).click();await sheet.getByText(/Study setting: Human-derived bacterial cultures/).waitFor();
  await sheet.getByText('Nutrients & molecules',{exact:true}).click();await sheet.getByText(/Studied substrate: Resistant starch/).waitFor();
  await sheet.getByText('Sources & limitations',{exact:true}).click();
  assert.equal(await sheet.getByRole('link',{name:/Ruminococcus bromii is a keystone/}).getAttribute('href'),'https://www.nature.com/articles/ismej20124');
@@ -48,7 +48,7 @@ try{
   ['Lactate research','Veillonella atypica','This record does not measure lactate consumption, propionate production or exercise performance effects in you.','https://pubmed.ncbi.nlm.nih.gov/31235964/'],
   ['Bile-acid research','Odoribacteraceae','This record does not identify the studied isolates, their genes, or bile-acid production, consumption or host concentrations in you.','https://pubmed.ncbi.nlm.nih.gov/34325466/']]){
   await page.getByRole('button',{name:groupName+' · 1 listed observation',exact:true}).click();assert.equal(await page.locator('.microbial-composition-row').count(),1);
-  await page.getByRole('button',{name:organism+',',exact:false}).click();await sheet.getByText('Nutrients & molecules',{exact:true}).click();await sheet.getByText(measurement+' No producer–consumer interaction is inferred from the organisms listed together.',{exact:true}).waitFor();
+  await page.getByRole('button',{name:organism+',',exact:false}).click();await sheet.getByText('Research context',{exact:true}).click();await sheet.getByText('Nutrients & molecules',{exact:true}).click();await sheet.getByText(measurement+' No producer–consumer interaction is inferred from the organisms listed together.',{exact:true}).waitFor();
   if(organism==='Odoribacteraceae')await sheet.getByText(/family name in your report does not identify those isolates/).waitFor();
   await sheet.getByText('Sources & limitations',{exact:true}).click();assert.equal(await sheet.locator('a').getAttribute('href'),sourceHref);
   await page.keyboard.press('Escape');await sheet.waitFor({state:'hidden'});await page.waitForFunction(()=>!history.state?.bloomMicrobialProfile);

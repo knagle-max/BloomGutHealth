@@ -1,3 +1,4 @@
+import OrganismPrimer from "./OrganismPrimer";
 import type {OrganismArtworkSource} from '@shared/scientific-visuals';
 import {functionalResearchFor} from "@shared/functional-microbiome";
 import {organismBiography} from "@shared/biology-content";
@@ -5,7 +6,7 @@ import {explainOrganism} from "@shared/report-explanations";
 import OrganismPortrait from "./OrganismPortrait";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { X,BookOpen,FileText,ChevronRight,Layers } from "lucide-react";
 import { microbiomeSourceFacts } from "@shared/structured-report";
 import { reportDateText } from "@shared/report-dates";
 
@@ -25,24 +26,22 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
   const usefulContext=existingContext?.label!=="Identity unresolved"?existingContext:undefined;
   const contextOnly=biography?.presentation==='identity-context';
   const origin = sample?.structuredData?.dataOrigin;
+  const sourceGroups=Array.from(new Set([taxon?.reportedGroup,taxon?.reportedNotes?.match(/^Provider group: ([^;]+)(?:;|$)/)?.[1]].filter((value):value is string=>!!value?.trim())));
   return <Dialog.Root open={!!taxon} onOpenChange={open => { if (!open) onClose(); }}>
     <Dialog.Portal>
       <Dialog.Overlay className="microbial-profile-overlay" />
-      <Dialog.Content className="microbial-profile-sheet" onKeyDownCapture={e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();onClose();}}} onCloseAutoFocus={e => { e.preventDefault(); onRestoreFocus(); }}>
+      <Dialog.Content className="microbial-profile-sheet" data-editorial-profile="true" onKeyDownCapture={e=>{if(e.key==="Escape"){e.preventDefault();e.stopPropagation();onClose();}}} onCloseAutoFocus={e => { e.preventDefault(); onRestoreFocus(); }}>
         <div className="microbial-profile-handle" aria-hidden="true" />
         <Dialog.Close className="microbial-profile-close" aria-label="Close organism profile"><X aria-hidden="true" size={22}/></Dialog.Close>
-        <p className="eyebrow">YOUR REPORT · ORGANISM</p>
+        {taxon&&<OrganismPortrait size="portrait" captionPlacement="footer" sourceName={taxon.bacterialName} source={artworkSource}/>}
         <Dialog.Title className="microbial-profile-title"><i>{taxon?.bacterialName}</i></Dialog.Title>
         <Dialog.Description>The organism name comes from your report.</Dialog.Description>
         {taxon && <>
-          <OrganismPortrait size="portrait" sourceName={taxon.bacterialName} source={artworkSource}/>
-          <p className="inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
+          <p className="microbial-listed-badge inline-flex rounded-full border border-border px-3 py-1 my-3 text-sm">Listed in your report</p>
           {reportedTaxonAmount(taxon)!=="Not reported"&&<p>Source-reported amount: {reportedTaxonAmount(taxon)}</p>}
-          <section className="microbial-organism-intro"><h3>What this organism is</h3>
-            {biography?<><p>{biography.firstLayer.meetThisOrganism}</p>{!contextOnly&&<><h3>Why researchers study it</h3><p>{biography.firstLayer.whyResearchersStudyIt}</p><h3>Food and metabolism</h3><p>{biography.firstLayer.foodMetabolicConnections}</p></>}</>:usefulContext?<><p>{usefulContext.meaning}</p><p>{usefulContext.why}</p><p>{usefulContext.takeaway}</p></>:research?<p>{research.introduction}</p>:<p>{existingContext?.meaning}</p>}
-
-          </section>
-          <details className="microbial-observation"><summary className="min-h-11 py-2 cursor-pointer focus-visible:outline focus-visible:outline-2">Your report</summary>
+          <div className="microbial-identity-chips" aria-label="Reported identity context"><span><Layers size={16} aria-hidden="true"/>Resolution: {taxon.taxonomyLevel||"Not reported"}</span><span>Group: {sourceGroups.length?sourceGroups.join(" / "):"Not reported"}</span><span>Report-listed</span></div>
+          <OrganismPrimer taxon={taxon}/>
+          <details className="microbial-observation"><summary className="microbial-profile-action"><FileText aria-hidden="true"/><span><strong>Your report</strong><small>See this organism’s original source record.</small></span><ChevronRight aria-hidden="true"/></summary>
           <section aria-label="Reported observation">
             <h3>Your reported observation</h3>
             <dl>
@@ -63,7 +62,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
             </dl>
             {/^(escherichia coli|klebsiella pneumoniae)$/i.test(taxon.bacterialName.trim()) && <p>Species detection does not establish a virulent strain.</p>}
           </section></details>
-          <div className="microbial-profile-disclosures">{(research?sections:biography||usefulContext?['Sources & limitations']:[]).map(title => <details key={title} open={expanded === title}>
+          <details className="microbial-research-context"><summary className="microbial-profile-action"><BookOpen aria-hidden="true"/><span><strong>Research context</strong><small>Explore the available studies and their limits.</small></span><ChevronRight aria-hidden="true"/></summary>{biography&&!contextOnly&&<section><h3>Food and metabolism</h3><p>{biography.firstLayer.foodMetabolicConnections}</p></section>}{!research&&!biography&&!usefulContext&&<p>Species-specific findings cannot be established from this report label alone.</p>}<div className="microbial-profile-disclosures">{(research?sections:biography||usefulContext?['Sources & limitations']:[]).map(title => <details key={title} open={expanded === title}>
             <summary onClick={e => { e.preventDefault(); setExpanded(value => value === title ? null : title); }}>{title}</summary>
             {research&&title==="What research has studied"?<>
               <p>{research.source.finding}</p><p className="panel-note">{research.scopeLabel}. Study setting: {research.source.design}. Strain details are not specified in Bloom’s source summary; compatibility with your reported organism has not been established.</p>
@@ -82,7 +81,7 @@ export default function MicrobialProfile({ taxon, sample, onClose, onRestoreFocu
               <p>Relative abundance does not measure gene expression, butyrate, methane, toxins, infection or disease risk. Missing percentages stay unknown. There is no personal optimal percentage or treatment recommendation from this record.</p>
               <p>Assay compatibility and strain resolution have not been established. Cross-report differences are not interpreted as health changes.</p>
             </>}
-          </details>)}</div>
+          </details>)}</div></details>
         </>}
       </Dialog.Content>
     </Dialog.Portal>

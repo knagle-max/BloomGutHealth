@@ -4868,6 +4868,64 @@
       },
       "authority": "Owner original LDL screenshot supplied2026-11-17; BLOOM_BLOODWORK_EDITORIAL_VISUAL_FIDELITY_CORRECTION_20261116.md",
       "fallback": "existing original category artwork and canonical surface; no embedded reference image copied"
+    },
+    {
+      "id": "BVA-0051",
+      "name": "Microbiome editorial overview hero",
+      "route": "/microbiome",
+      "component": "MicrobiomeEditorialHero",
+      "purpose": "Owner-provided2026-11-17 microbiome overview composition, new hero artwork only",
+      "category": "marker-editorial-hero",
+      "subject": "Conceptual broad microbial ecosystem scene, not a named species, exact strain, sample, abundance or diagnostic finding",
+      "composition": "Wide quiet botanical/scientific atmosphere with right-focused microbial forms and left text-safe space; no embedded UI or quantitative values",
+      "scientificAccuracy": "Representative educational art only; no species/strain morphology or personal function claim. Science review required for specific biological detail.",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "2:1",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 800
+      },
+      "responsiveVariants": [
+        "right-anchored mobile scene",
+        "wide desktop context header"
+      ],
+      "accessibility": "decorative; visible marker/category/count text supplies meaning",
+      "lifecycle": "Briefed",
+      "assetStatus": "requested; no source bytes or approval claimed",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "client/src/content/editorial-media.ts",
+        "existingSlot": "microbiome-overview-hero",
+        "action": "New dedicated requested/reserved hero. Explicit owner instruction: do not reuse existing imagery."
+      },
+      "integration": {
+        "verified": false,
+        "state": "Intentional reserved placeholder only. No existing image reused; no new image bytes or approval claimed."
+      },
+      "review": {
+        "design": "requested",
+        "scientific": "not reviewed",
+        "rights": "no source file/licence yet",
+        "rendered": "reserved fallback engineering testing pending"
+      },
+      "authority": "Owner2026-11-17 microbiome overview and organism detail reference; docs/design-references/microbiome/",
+      "fallback": "new reserved surface only; no existing hero or other image reuse",
+      "descriptiveBrief": {
+        "sceneDescription": "An original, quiet conceptual gut-microbial ecosystem scene. A small group of broad rounded and rod-like microbial forms sits on a softly folded, unlabeled biological surface on the right. Muted violet forms and restrained sage highlights inhabit a deep forest atmosphere. This is representative science artwork, not a depiction of any named organism, strain or the person’s sample.",
+        "opticsLightingMaterials": "Conceptual macro perspective with shallow depth and soft raking warm light; fine restrained surface texture, organic matte/translucent materials and soft background falloff. No clinical microscope, instrument calibration or actual microscopy claim; no plastic neon shine.",
+        "framingAndUsage": "2:1 landscape 1600×800. Put the focal forms in the right 60%; keep the left 45% quiet for the existing live title/count. Support intentional mobile crops without losing the principal subject or overlay contrast. No embedded text, UI, dates, percentages or labels.",
+        "accuracyAndExclusions": "Do not imply a specific species morphology, strain identity, beneficial/harmful status, microbial function, gene expression, disease, measured abundance or personal physiology. No arrows, inferred interactions, fake scale bars, scores or species labels. Scientific review remains required for actual biological detail.",
+        "existingAssetAndApprovalHandling": "Owner explicitly requires a new hero and forbids reusing existing imagery for this slot. Do not recolor, crop, composite or overwrite any current hero or organism art. Current implementation is a reserved placeholder; original organism image IDs/bytes stay unchanged. Requested is not delivered, licensed, generated or scientifically approved.",
+        "deliverableNotes": "Original standalone source art and optimized WebP, landscape 1600×800, suitable mobile right-focused crop, light/dark readability and Everyday/Athlete modes. Preserve original production bytes and record actual hashes and rights only when files exist. Owner review is integrated RC, no new per-image approval checkpoint.",
+        "generationInstruction": "Create an original premium Bloom conceptual microbial-ecosystem editorial scene: a restrained group of broad rounded and rod-like forms on softly folded biological terrain, clustered on the right 60%, with a quiet forest background across the left 45% for live typography. Use muted violet, sage and warm ivory accents, matte fine texture, soft raking light and shallow conceptual macro depth. Use a 2:1 landscape 1600×800 composition and preserve the subject in mobile crops. Do not depict a named species or a person’s sample; do not imply active functions, healthy/harmful amounts or a clinical result. No embedded text, UI, labels, numbers, scale bars, arrows, watermarks or third-party branding. This must be new artwork: never reuse, recolor or composite existing Bloom imagery or the owner’s reference screenshot."
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",

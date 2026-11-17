@@ -16,7 +16,9 @@ jobs:
     name: Create Neon branch and verify Bloom
     if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Browser/source/hosted checks and the full unit suite now need more than 30 minutes
+    # before the final isolated Neon smoke checks. Keep every gate enabled.
+    timeout-minutes: 45
     steps:
       - name: Check out the pull request
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -102,6 +104,13 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/planned-meal-transfer-journey.mjs
+      - name: Owner microbiome overview and organism layout browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+          BLOOM_MICROBIOME_EDITORIAL: "1"
+        run: node --import tsx scripts/qa/microbial-profile-journey.mjs
       - name: Source-scoped morphology thumbnails and portraits browser regression
         timeout-minutes: 4
         env:

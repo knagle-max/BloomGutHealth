@@ -1,6 +1,6 @@
 {
   "task": "V06-P1-EXPANDED-MARKER-EDITORIAL-FIDELITY",
-  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION_AND_INTEGRATED_VISUAL_ACCEPTANCE",
+  "status": "RUNTIME_LIVE_EXACT_HOSTED_VERIFIED_FULL_CI_CANCELLED",
   "baseCommit": "c48b70d67cb18c08b383e38e2d52c67bb658cb56",
   "reference": {
     "path": "docs/design-references/bloodwork/approved-ldl-editorial-reference.png",
@@ -51,5 +51,19 @@
     "Next owner-priority microbiome overview/organism layout, original references already imported. New dedicated placeholder hero, never reuse existing imagery for that hero.",
     "LDL-specific art production and integrated visual/physical-user/RC acceptance remain open; full v0.6 is not declared complete."
   ],
-  "privacy": "Only synthetic local/isolated records tested; no actual private health query, production data writes, manual deploy or main merge."
+  "privacy": "Only synthetic local/isolated records tested; no actual private health query, production data writes, manual deploy or main merge.",
+  "publication": {
+    "commit": "f94f1a1e4b9644288058a37719bf86effdac31aa",
+    "workflow": 44099793663,
+    "conclusion": "cancelled",
+    "unitTests": {
+      "pass": 803,
+      "fail": 0
+    },
+    "exactHostedChecks": "all3 success",
+    "finalNeonStep": "cancelled after successful startup/athlete persistence/routine correction/reference-registry checks; full completion not claimed",
+    "deploy": "dep-dbu5vfoae00c73abinu0",
+    "deployStatus": "live",
+    "finishedAt": "2026-11-17T14:09:51.135804Z"
+  }
 }

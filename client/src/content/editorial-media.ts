@@ -9,6 +9,7 @@ export interface EditorialMediaAsset {
   reserved?: { width: number; height: number; conceptual: boolean };
 }
 export const editorialMedia = {
+  "microbiome-overview-hero": {mode:"conceptual",placement:"microbiome-editorial-hero",reserved:{width:1600,height:800,conceptual:true}},
   "lab-detail-ldl-hero": {mode:"conceptual",placement:"marker-editorial-hero",reserved:{width:1600,height:800,conceptual:true}},
   "lab-detail-ldl-particle": {mode:"conceptual",placement:"marker-education-what",reserved:{width:160,height:160,conceptual:true}},
   "lab-detail-ldl-artery": {mode:"conceptual",placement:"marker-education-why",reserved:{width:160,height:160,conceptual:true}},
