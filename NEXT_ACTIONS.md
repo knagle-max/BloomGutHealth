@@ -2,11 +2,15 @@
 
 `AGENTS.md` governs execution. Authorized branch: `enhance/bloom-experience`; no main merge/manual production deployment/private health queries. v0.5 remains accepted; v0.6 RC is unfinished. Exact earlier queue text is preserved in [snapshot](docs/operations/history/NEXT_ACTIONS_SNAPSHOT_20261116T1440.md); historical “publish next” instructions do not reopen published work.
 
-## Active P1 — expanded Bloodwork marker editorial UX
+## Active P1 — chart ranges and Profile-derived historical age
 
-**Current bounded slice:** `BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md`: selected child only; identity/latest result → existing history → two visible reviewed primers → source-aware context and optional science/reference administration. Parent category artwork/navigation and original SVG engine/assay/source/range controls remain intact. Additive LDL educational thumbnail requests use the existing media registry with reserved fallbacks, no invented image bytes. Engineering checks PASS:22 units,48-state actual UI, correction/Canadian/34-result import/deletion/92×6 explorer source/owner journeys, types/audits/build and original47 registry object preservation. Commit/push and exact CI/Render qualification next; no approval pause.
+**Latest owner direction (2026-11-17):** ranges should be visible on charts and use Profile sex and birth year to derive historical age. Trace original bounds/None/provider applicability, preserve source intervals and values; add birth-year Profile storage/UI, year-based historical age and clear provenance/override. Do not guess a laboratory province or convert a treatment target into a normal band. Safe pending source-aware context slice is verified and being published; then implement this owner-priority correction.
 
-**Published pairwise repair:**1e7254bd;27 tests/types/audits/build + final mixed48 layouts and full92×6 explorer/science/source/owner + actual range-correction/import/None regressions PASS. Exact new CI/Render pending; receipt `V06_PAIRWISE_LAB_CONNECTIONS_20261117.json`. Do not reimplement the line classifier or weaken it for an illustrative smooth curve in the editorial reference; dashed sequence display never authorizes a scientific/clinical comparison.
+**Source-aware remembered questions:**11 units +actual B12/legacy compatibility48 layouts and original lifecycle/types/audits/build PASS; receipt `V06_SOURCE_AWARE_CONTEXT_QUESTIONS_20261117.json`. No new table/migration. Publication qualification pending; per-family contributor/action work remains queued.
+
+**Published editorial UI:**c24d0453;22 units/types/audits/build, actual48-state UI and correction/Canadian/34-result import/source deletion/92×6 explorer PASS. Original47 asset registry objects unchanged;2 requested LDL thumbnail slots have neutral fallbacks and no delivered bytes. Exact new CI/Render pending; receipt `V06_MARKER_DETAIL_EDITORIAL_20261117.json`.
+
+**Published pairwise chart:**1e7254bd, Render LIVE dep-dbtr4367bikc7399jb80 at01:48:29UTC. CI43998156113 in progress, exact isolated hosted persistence already passed.27 units +full science/source/reference/mobile regressions PASS. Do not reimplement it for the editorial reference curve.
 
 **Compatible question reader is published:**31d23853 is an ancestor of current Render LIVE baa52b9f (`dep-dbtqtc9evqrc73f9oaeg`,01:35:39UTC); writer remains legacy. Next P1: implement bounded expanded-marker editorial structure from `BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md`, preserving parent media/navigation and this chart. Then activate source-aware B12/CBC questions using the live reader. Do not repeat reader publication.
 

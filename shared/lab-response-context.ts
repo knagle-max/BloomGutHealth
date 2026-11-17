@@ -15,8 +15,8 @@ export const labResponseQuestionText:Record<LabResponseQuestionId,string>={
  'b12-products':'Were vitamin B12-containing products changed before this collection?',
 };
 export function labResponseQuestionAllowed(family:keyof typeof labResponseQuestions,question:LabResponseQuestionId){return family==='iron-cbc'?['iron-products','b12-products','acute-illness'].includes(question):labResponseQuestions[family].id===question;}
-/** Selection contract for the next producer version. The compatible reader
- * ships first; current writers continue using their original family question. */
+/** Source-aware question contract. The deployed compatible reader retains each
+ * historical question; exact owned current facts determine a fresh target. */
 export function labResponseQuestionForMarkers(family:keyof typeof labResponseQuestions,markers:readonly string[]):LabResponseQuestionId{
  if(family!=='iron-cbc')return labResponseQuestions[family].id;
  if(markers.some(marker=>['ferritin','iron','tibc','transferrin','iron_saturation'].includes(marker)))return'iron-products';

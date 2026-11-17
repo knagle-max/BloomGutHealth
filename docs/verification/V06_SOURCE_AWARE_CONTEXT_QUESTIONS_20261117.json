@@ -1,0 +1,27 @@
+{
+  "task": "V06-SOURCE-AWARE-REMEMBERED-QUESTIONS",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "baseCommit": "c24d0453",
+  "implementation": [
+    "Exact owned active canonical source IDs select B12/CBC/iron question; Profile and historical answer never determine a fresh question.",
+    "Retained question labels/export/receipts unchanged; missing/withdrawn sources fall back to retained question without making recollection source-current. Fresh commands require their reviewed target, including legacy clients with no expectedQuestion.",
+    "Existing protocol/CAS/generation/source lock/delete fences retained. Save success also requires latest record ID and question match. No new table/migration or medical inference."
+  ],
+  "validation": [
+    "11 real SQL/HTTP/schema/ownership/source/retry/delete tests PASS, including B12/CBC/mixed iron and legacy receipt/immutable history.",
+    "Actual App/HTTP/encrypted SQL compatibility journey PASS:48 layouts, B12 actual writer, old target DTO rejected, draft question pinned, historical labels/records unchanged, owner withdrawal.",
+    "Full original remembered context lifecycle App/HTTP/SQL PASS: lost response, reload, decline clears notes, source correction/deletion and private deletion.",
+    "Types/API/capability/Biology audits and production source/media build PASS."
+  ],
+  "evidence": [
+    "/tmp/bloom-source-question-unit.log",
+    "/tmp/bloom-source-question-browser.log",
+    "/tmp/bloom-source-question-lifecycle.log",
+    "/tmp/bloom-source-question-build.log"
+  ],
+  "pending": [
+    "Exact CI/Render publication verification",
+    "Full Response per-family sourced contributors/actions and RC remain partial"
+  ],
+  "privacy": "Synthetic isolated/local data only; no private health query or production data write."
+}

@@ -9,9 +9,10 @@ import {PrecisionStorage} from '../server/precision-storage';
 import {ExperienceStorage} from '../server/experience-storage';
 import {LabResponseContextStorage,LabResponseContextError} from '../server/lab-response-context-storage';
 import {registerLabResponseContextRoutes} from '../server/lab-response-context-routes';
-import {labSchema} from '../shared/precision-nutrition';
+import {labSchema,markerDefinitions} from '../shared/precision-nutrition';
 import {labReviewRevisionText} from '../shared/lab-source-review';
-import type {LabResponseContextSave} from '../shared/lab-response-context';
+import {encryptPrecision,decryptPrecision} from '../server/precision-crypto';
+import {recalledLabResponseContextSchema,type LabResponseContextSave} from '../shared/lab-response-context';
 const revision=(payload:unknown)=>createHash('sha256').update(labReviewRevisionText(payload as any)).digest('hex');
 const rejects=(promise:Promise<unknown>,status:number)=>assert.rejects(promise,error=>error instanceof LabResponseContextError&&error.status===status);
 async function fixture(run:(data:any)=>Promise<void>){
@@ -84,4 +85,22 @@ test('real HTTP derives signed account, validates source commands, preserves rec
   assert.equal((await send('',deletion,'a','DELETE',{'X-Bloom-Confirm':'delete-lab-response-context-history'})).status,204);
   assert.equal((await send('/save',request)).status,409);assert.equal((await(await send('/view',selection)).json()).latest,null);
  }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
+}));
+
+test('fresh B12/CBC/iron questions derive from exact owned sources while old receipt and immutable meaning survive activation',()=>fixture(async({pg,precision,experience,storage}:any)=>{
+ const rows=new Map<string,any>();for(const marker of ['b12','hemoglobin','ferritin']){const payload=labSchema.parse({marker,value:10,unit:markerDefinitions.find(row=>row.id===marker)!.units[0],measuredAt:'2026-09-01T12:00:00Z',laboratory:'Synthetic owned source',method:'Synthetic assay',fasting:'unknown',referenceLow:null,referenceHigh:null});rows.set(marker,await precision.insertPrecisionRecord('a','lab',payload));}
+ const original=JSON.stringify((await pg.query('SELECT id,encrypted_payload FROM precision_records ORDER BY id')).rows);
+ const commandFor=async(markers:string[])=>{const selected=markers.map(marker=>rows.get(marker)),sourceReferences=selected.map(row=>({id:row.id,revision:revision(row.payload)})),selection={family:'iron-cbc',sourceIds:selected.map(row=>row.id)},prepare={family:'iron-cbc',sourceReferences},view=await storage.prepare('a',prepare);return{selection,prepare,view,request:{...prepare,intentId:randomUUID(),generationId:view.generationId,expectedCurrentId:view.latest?.record.id||null,answer:'unknown',eventWindow:null,datePrecision:'not-applicable',notes:''}};};
+ for(const [markers,target]of [[['b12'],'b12-products'],[['hemoglobin'],'acute-illness'],[['ferritin','b12','hemoglobin'],'iron-products']]as const){const selected=await commandFor([...markers]);assert.equal(selected.view.questionId,target);const aware=await storage.save('a',{...selected.request,expectedQuestion:target});assert.equal(aware.record.payload.question,target);assert.equal((await storage.view('a',selected.selection)).questionId,target);}
+ // An older iron answer on B12 sources is an actual retained historical meaning,
+ // never rewritten into the new question or used as a B12 draft.
+ const selected=await commandFor(['b12','hemoglobin']),legacyIntent=randomUUID(),legacyId=createHash('sha256').update(JSON.stringify(['lab-context-answer-v1','a',legacyIntent])).digest('hex');
+ const oldRequest={...selected.request,intentId:legacyIntent,answer:'no'},legacy=recalledLabResponseContextSchema.parse({version:1,valueKind:'recalled-context',intentId:legacyIntent,family:'iron-cbc',sourceReferences:selected.prepare.sourceReferences,answer:'no',eventWindow:null,datePrecision:'not-applicable',notes:'',question:'iron-products',recordedAt:'2026-11-16T12:00:00.000Z',reviewWindow:{from:null,to:'2026-09-01',basis:'stored-timestamp'},supersedes:null});
+ await pg.query('INSERT INTO experience_records(id,user_id,kind,encrypted_payload) VALUES($1,$2,$3,$4)',[legacyId,'a','lab-response-context',encryptPrecision(legacy,'a')]);
+ const view=await storage.view('a',selected.selection);assert.equal(view.questionId,'b12-products');assert.equal(view.latest.record.payload.question,'iron-products');assert.equal(view.latest.sourceCurrent,true);assert.equal((await storage.save('a',oldRequest)).record.id,legacyId,'Original legacy receipt remains exact and does not change question');
+ const fresh={...selected.request,intentId:randomUUID(),expectedCurrentId:legacyId};await rejects(storage.save('a',fresh),409);await rejects(storage.save('a',{...fresh,expectedQuestion:'iron-products'}),409);assert.equal((await storage.view('a',selected.selection)).historyCount,1);
+ const saved=await storage.save('a',{...fresh,expectedQuestion:'b12-products'});assert.equal(saved.record.payload.question,'b12-products');assert.equal((await storage.save('a',oldRequest)).isLatest,false);assert.deepEqual(decryptPrecision((await pg.query('SELECT encrypted_payload FROM experience_records WHERE id=$1',[legacyId])).rows[0].encrypted_payload,'a'),legacy);
+ const other=await storage.view('b',selected.selection);assert.equal(other.latest,null);assert.deepEqual(await storage.history('b'),[]);assert.equal(JSON.stringify((await pg.query('SELECT id,encrypted_payload FROM precision_records ORDER BY id')).rows),original);
+ await precision.deleteLabEntry('a',rows.get('b12').id);const removed=await storage.view('a',selected.selection);assert.equal(removed.questionId,'b12-products');assert.equal(removed.latest.sourceCurrent,false);assert.equal((await experience.exportExperience('a')).records.filter((row:any)=>row.payload.valueKind==='recalled-context'&&row.payload.sourceReferences.some((ref:any)=>ref.id===rows.get('b12').id)).length,4);
+ await storage.deleteHistory('a',{...selected.selection,generationId:removed.generationId,expectedHistoryRevision:removed.historyRevision,intentId:randomUUID()});assert.equal((await storage.view('a',selected.selection)).historyCount,0);await rejects(storage.save('a',{...fresh,expectedQuestion:'b12-products'}),409);
 }));

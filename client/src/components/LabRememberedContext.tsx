@@ -56,7 +56,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
     command=parsed.data;attempt.current={key,command};
    }
    const saved=await request('POST','/save',command),view:LabResponseContextView=await request('POST','/view',selection);attempt.current=null;
-   focusWhenReady.current='heading';patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});
+   focusWhenReady.current='heading';patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent&&view.latest.record.id===saved.record.id&&view.latest.record.payload.question===(view.questionId??labResponseQuestions[family].id)?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});
    notifyLabContextChanged(id,view.scopeHash);
   });
  };

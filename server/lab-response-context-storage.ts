@@ -6,7 +6,7 @@ import {labReviewRevisionText} from '../shared/lab-source-review';
 import {labDateText} from '../shared/lab-history';
 import {hasConfirmedLabIdentity} from '../shared/lab-assay-identity';
 import {labReviewFamilies} from '../shared/lab-panel-review';
-import {labResponseQuestions,labResponseContextSchema,recalledLabResponseContextSchema,labResponseContextLifecycleSchema,labResponseContextSelectionSchema,labResponseContextPrepareSchema,labResponseContextSaveSchema,labResponseContextDeleteSchema,type LabResponseContext,type LabResponseContextRecord,type LabResponseContextView,type LabResponseContextHistory,type LabResponseContextSelection,type LabResponseContextPrepare,type LabResponseContextSave,type LabResponseContextDelete} from '../shared/lab-response-context';
+import {labResponseQuestionForMarkers,labResponseQuestions,labResponseContextSchema,recalledLabResponseContextSchema,labResponseContextLifecycleSchema,labResponseContextSelectionSchema,labResponseContextPrepareSchema,labResponseContextSaveSchema,labResponseContextDeleteSchema,type LabResponseContext,type LabResponseContextRecord,type LabResponseContextView,type LabResponseContextHistory,type LabResponseContextSelection,type LabResponseContextPrepare,type LabResponseContextSave,type LabResponseContextDelete} from '../shared/lab-response-context';
 import {encryptPrecision,decryptPrecision} from './precision-crypto';
 import type {db as appDatabase} from './db';
 type Database=Pick<typeof appDatabase,'select'|'insert'|'update'|'delete'|'transaction'>;
@@ -55,6 +55,14 @@ export class LabResponseContextStorage{
   if(dates.at(-1)! >new Date(now.getTime()+14*60*60*1000).toISOString().slice(0,10))throw new LabResponseContextError(400,'Review the source date before adding retrospective context.');
   return{from:dates.length>1&&dates[0]!==dates.at(-1)?dates[0]:null,to:dates.at(-1)!,basis:reported===selected.length?'source-date' as const:reported===0?'stored-timestamp' as const:'mixed-or-unknown' as const};
  }
+ /** Derive only from the exact current owned selection, never profile values or
+  * a retained answer's label. A missing/withdrawn source keeps history readable. */
+ private sourceQuestion(family:LabResponseContextSelection['family'],sourceIds:readonly string[],facts:Fact[]){
+  const supported=labReviewFamilies.find(row=>row.id===family)!;
+  const selected=sourceIds.map(id=>facts.find(row=>row.id===id));
+  if(selected.some(fact=>!fact||'sourceOnly'in fact||fact.unitReview?.status==='pending'||!hasConfirmedLabIdentity(fact.marker,fact)||!(supported.markers as readonly string[]).includes(fact.marker)))return null;
+  return labResponseQuestionForMarkers(family,selected.map(fact=>(fact as Lab).marker));
+ }
  private async rows(tx:Database,userId:string):Promise<ContextRows>{
   const stored=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'lab-response-context'))).limit(2001);
   if(stored.length>2000)throw unavailable();
@@ -71,10 +79,10 @@ export class LabResponseContextStorage{
   if(visited.size!==answers.length)throw unavailable();
   const epoch=epochs[0]?.payload||null;
   const historyRevision=hash(['lab-context-history-v1',userId,scope,epoch,answers.map(row=>({id:row.id,payload:row.payload})).sort((a,b)=>a.id.localeCompare(b.id))]);
-  return{family:selection.family,scope,epoch,answers,head:heads[0]||null,historyRevision,stored};
+  return{family:selection.family,sourceIds:selection.sourceIds,scope,epoch,answers,head:heads[0]||null,historyRevision,stored};
  }
  private async quota(tx:Database,userId:string){const[count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,'wellness-choice')));if(count.count>=2000)throw new LabResponseContextError(422,'Your workspace has reached its record limit. Export and remove old entries before adding context.');}
- private viewOf(inventory:Awaited<ReturnType<LabResponseContextStorage['inventory']>>,facts:Fact[],now:Date,versions=this.versions(facts)):LabResponseContextView{return{questionId:labResponseQuestions[inventory.family].id,scopeHash:inventory.scope,generationId:inventory.epoch?.generationId||null,historyRevision:inventory.historyRevision,historyCount:inventory.answers.length,latest:inventory.head?{record:inventory.head,sourceCurrent:this.current(inventory.head.payload,facts,versions)}:null,asOf:now.toISOString()};}
+ private viewOf(inventory:Awaited<ReturnType<LabResponseContextStorage['inventory']>>,facts:Fact[],now:Date,versions=this.versions(facts)):LabResponseContextView{return{questionId:this.sourceQuestion(inventory.family,inventory.sourceIds,facts)??inventory.head?.payload.question??labResponseQuestions[inventory.family].id,scopeHash:inventory.scope,generationId:inventory.epoch?.generationId||null,historyRevision:inventory.historyRevision,historyCount:inventory.answers.length,latest:inventory.head?{record:inventory.head,sourceCurrent:this.current(inventory.head.payload,facts,versions)}:null,asOf:now.toISOString()};}
  async history(userId:string):Promise<LabResponseContextHistory>{return this.db.transaction(async tx=>{
   await tx.execute(sql`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY`);const dataset=await this.rows(tx,userId),facts=await this.facts(tx,userId),versions=this.versions(facts),now=this.now(),selections=new Map<string,LabResponseContextSelection>();
   for(const item of dataset.decoded)if(item.payload.valueKind==='recalled-context')selections.set(item.scope,scopeSelection(item.payload));
@@ -97,8 +105,9 @@ export class LabResponseContextStorage{
    if(hash(requested)!==hash(recorded))throw changed();return{record:{id,payload,createdAt:existing.createdAt.toISOString(),updatedAt:existing.updatedAt.toISOString()},sourceCurrent:this.current(payload,facts),replayed:true,isLatest:inventory.head?.id===id};
   }
   if(!inventory.epoch||inventory.epoch.generationId!==command.generationId||(inventory.head?.id||null)!==command.expectedCurrentId)throw changed();
-  if(command.expectedQuestion&&command.expectedQuestion!==labResponseQuestions[command.family].id)throw changed();
-  const reviewWindow=this.sources(command,facts,now),parsed=recalledLabResponseContextSchema.safeParse({version:1,valueKind:'recalled-context',intentId:command.intentId,family:command.family,question:labResponseQuestions[command.family].id,answer:command.answer,reviewWindow,eventWindow:command.eventWindow,datePrecision:command.datePrecision,recordedAt:now.toISOString(),sourceReferences:refs(command.sourceReferences),supersedes:inventory.head?.id||null,notes:command.notes});
+  const reviewWindow=this.sources(command,facts,now),question=this.sourceQuestion(command.family,selection.sourceIds,facts);
+  if(!question||(command.expectedQuestion??labResponseQuestions[command.family].id)!==question)throw changed();
+  const parsed=recalledLabResponseContextSchema.safeParse({version:1,valueKind:'recalled-context',intentId:command.intentId,family:command.family,question,answer:command.answer,reviewWindow,eventWindow:command.eventWindow,datePrecision:command.datePrecision,recordedAt:now.toISOString(),sourceReferences:refs(command.sourceReferences),supersedes:inventory.head?.id||null,notes:command.notes});
   if(!parsed.success)throw new LabResponseContextError(400,'Review the answer and remembered date precision. A pre-test event cannot be placed after the source date.');await this.quota(tx,userId);
   const payload=parsed.data,[row]=await tx.insert(experienceRecords).values({id,userId,kind:'lab-response-context',encryptedPayload:encryptPrecision(payload,userId)}).returning();
   return{record:{id:row.id,payload,createdAt:row.createdAt.toISOString(),updatedAt:row.updatedAt.toISOString()},sourceCurrent:true,replayed:false,isLatest:true};
