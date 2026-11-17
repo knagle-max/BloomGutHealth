@@ -96,7 +96,7 @@ try{
  for(const check of planned.checks)if(check.max!==null&&check.projected!==null)assert.ok(check.projected<=check.max+1e-6,check.key);
  assert.equal((await store.getMeals(actor)).length,2,'Rechecking choices never logs consumption');
  await today.getByText('Choose meals & portions',{exact:true}).click();
- const artifact='/workspace/bloom-today-meal-choices';mkdirSync(artifact,{recursive:true});
+ const artifact=process.env.BLOOM_TODAY_CHOICES_ARTIFACTS||'/tmp/bloom-today-meal-choices';mkdirSync(artifact,{recursive:true});
  for(const width of [320,390,768,1024,1440])for(const theme of ['light','dark']){
   await page.setViewportSize({width,height:1000});await setAppTheme(page,theme);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,`${width} ${theme} reflow`);

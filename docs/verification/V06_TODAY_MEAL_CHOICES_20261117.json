@@ -33,5 +33,14 @@
     "incomingDocs": "Four Architect documentation commits preserved by fast-forward; requested BVA52 generated ID projection refreshed without changing asset metadata or images. Render9ac0faa0 build failed at stale generated registry projection; current production build PASS with corrected projection."
   },
   "scope": "Closes the explicit Food12 substitution/recheck gap over existing planning/review/save. Remaining Core and integrated RC requirements continue; no full RC, clinical effect or independent human acceptance claim.",
-  "privacy": "Synthetic local accounts/data only. No manual production writes, main merge, manual deployment, private health query or message to others."
+  "privacy": "Synthetic local accounts/data only. No manual production writes, main merge, manual deployment, private health query or message to others.",
+  "qualification": {
+    "commit": "3f11179b990325be05e3a683d923648c50fc4e21",
+    "runtime": "live",
+    "deploy": "dep-dbu9shu1egvs739g8idg",
+    "liveAt": "2026-11-17T18:37:10Z",
+    "workflow": 44149387207,
+    "ci": "FAILED_QA_ARTIFACT_PATH",
+    "reason": "Real dinner choice/recheck reached the expected result; screenshot mkdir used local /workspace path unavailable on GitHub runner. Fixed default to portable /tmp with optional explicit artifact directory. No assertion removed; exact rerun pending."
+  }
 }
