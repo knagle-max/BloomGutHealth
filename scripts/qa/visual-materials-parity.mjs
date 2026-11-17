@@ -116,22 +116,22 @@ try{
    const svgGeometry=[];
    for(const figure of await page.locator('figure.bv-media:visible').all()){
     await figure.scrollIntoViewIfNeeded();const slot=await figure.getAttribute('data-slot');
-    const expectedPhase=editorialMedia[slot].svg?'svg':'failed';await page.waitForFunction(({slot,expectedPhase})=>document.querySelector(`figure.bv-media[data-slot="${slot}"]`)?.dataset.mediaSource===expectedPhase,{slot,expectedPhase});
+    const reserved=!editorialMedia[slot].svg&&!editorialMedia[slot].raster,expectedPhase=editorialMedia[slot].svg?'svg':reserved?'reserved':'failed';await page.waitForFunction(({slot,expectedPhase})=>document.querySelector(`figure.bv-media[data-slot="${slot}"]`)?.dataset.mediaSource===expectedPhase,{slot,expectedPhase});
     if(expectedPhase==='svg')await page.waitForFunction(slot=>{const image=document.querySelector(`figure.bv-media[data-slot="${slot}"] img`);return image?.complete&&image.naturalWidth>0;},slot);else assert.equal(await figure.locator('img').count(),0,'Single-source raster failure uses its reserved frame');
-    const box=await figure.boundingBox();svgGeometry.push({slot,width:box.width,height:box.height});
+    const box=await figure.boundingBox();svgGeometry.push({slot,width:box.width,height:box.height,reserved});
    }
    const semantics=rows=>rows.map(({tag,text,href,role})=>({tag,text,href,role}));const before=semantics(await structure());
    mediaFailureMode='all';await page.reload();await page.waitForLoadState('networkidle');await paint(true);
    for(const prior of svgGeometry){
     const figure=page.locator(`figure.bv-media[data-slot="${prior.slot}"]`);await figure.scrollIntoViewIfNeeded();await figure.locator('.bv-media-placeholder').waitFor();
-    assert.equal(await figure.getAttribute('data-media-source'),'failed');assert.equal(await figure.getAttribute('data-bloom-asset-id'),editorialVisualAssetIds[prior.slot]);
+    assert.equal(await figure.getAttribute('data-media-source'),prior.reserved?'reserved':'failed');assert.equal(await figure.getAttribute('data-bloom-asset-id'),editorialVisualAssetIds[prior.slot]);
     assert.equal(await figure.locator('img').count(),0,'Failed images never leave broken-image icons');assert.equal(await figure.locator('.bv-media-placeholder').getAttribute('aria-hidden'),'true');
     const box=await figure.boundingBox();assert.ok(Math.abs(box.width-prior.width)<=1&&Math.abs(box.height-prior.height)<=1,JSON.stringify({name,theme,prior,box}));
     mediaFailureEvidence.push({name,theme,slot:prior.slot,id:editorialVisualAssetIds[prior.slot],geometry:'preserved',actions:'unchanged'});
    }
    assert.deepEqual(semantics(await structure()),before,name+' terminal media failure retains visible controls and reading order');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
    mediaFailureMode='none';await page.reload();await page.waitForLoadState('networkidle');await paint(true);
-   for(const prior of svgGeometry){const figure=page.locator(`figure.bv-media[data-slot="${prior.slot}"]`);await figure.scrollIntoViewIfNeeded();await figure.locator('img').waitFor();assert.equal(await figure.locator('.bv-media-placeholder').count(),0,'Fresh source lifecycle recovers original art');}
+   for(const prior of svgGeometry){const figure=page.locator(`figure.bv-media[data-slot="${prior.slot}"]`);await figure.scrollIntoViewIfNeeded();if(prior.reserved){assert.equal(await figure.getAttribute('data-media-source'),'reserved');assert.equal(await figure.locator('img').count(),0,'A reserved slot never borrows recovery artwork');assert.equal(await figure.locator('.bv-media-placeholder').count(),1);}else{await figure.locator('img').waitFor();assert.equal(await figure.locator('.bv-media-placeholder').count(),0,'Fresh source lifecycle recovers original art');}}
   }
  }
 

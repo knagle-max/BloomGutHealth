@@ -1,6 +1,6 @@
 /* Existing Bloom palette roles; real results/navigation remain owned by the
    precision report and grouped explorer. Reserved art is decorative only. */
-.app-shell[data-bloom-visual="premium"] .bloodwork-atlas {min-width:0;display:grid;gap:1rem;}
+.app-shell[data-bloom-visual="premium"] .bloodwork-atlas {min-width:0;display:grid;gap:1rem;container: bloodwork-atlas / inline-size;}
 .app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero {
  --bloodwork-hero-bg:#102B25;--bloodwork-hero-ink:#F5F3EB;
  position:relative;isolation:isolate;overflow:hidden;min-width:0;
@@ -37,7 +37,8 @@
 .app-shell[data-bloom-visual="premium"] .bloodwork-system-link .bv-media-placeholder {position:absolute;inset:0;block-size:100%;}
 .app-shell[data-bloom-visual="premium"] .bloodwork-system-link:focus-visible {outline:3px solid var(--bv-focus);outline-offset:3px;}
 .app-shell[data-bloom-visual="premium"] .bloodwork-system-link:hover {background:var(--bv-mist);}
-@media(min-width:960px){.app-shell[data-bloom-visual="premium"] .bloodwork-system-list {grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* Use actual content space, including browser zoom and the desktop sidebar. */
+@container bloodwork-atlas (min-width:42rem){.app-shell[data-bloom-visual="premium"] .bloodwork-system-list {grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:360px){.app-shell[data-bloom-visual="premium"] .bloodwork-system-link {grid-template-columns:64px minmax(0,1fr) 18px;gap:.65rem;padding:.85rem;}.app-shell[data-bloom-visual="premium"] .bloodwork-system-link > :is(.bv-media,.lab-category-icon){width:64px;height:64px;}}
 @media(forced-colors:active){.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero {background:Canvas;color:CanvasText;border:1px solid CanvasText;}.app-shell[data-bloom-visual="premium"] .bloodwork-atlas-hero > .bv-media {display:none;}.app-shell[data-bloom-visual="premium"] .bloodwork-system-link {background:Canvas;color:LinkText;border-color:CanvasText;}}
 

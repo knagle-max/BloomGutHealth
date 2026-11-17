@@ -41,6 +41,16 @@
     "liveAt": "2026-11-17T18:37:10Z",
     "workflow": 44149387207,
     "ci": "FAILED_QA_ARTIFACT_PATH",
-    "reason": "Real dinner choice/recheck reached the expected result; screenshot mkdir used local /workspace path unavailable on GitHub runner. Fixed default to portable /tmp with optional explicit artifact directory. No assertion removed; exact rerun pending."
+    "reason": "Real dinner choice/recheck reached the expected result; screenshot mkdir used local /workspace path unavailable on GitHub runner. Fixed default to portable /tmp with optional explicit artifact directory. No assertion removed; exact rerun pending.",
+    "followup": {
+      "commit": "7d3f88a664ce4cea4966dceca101a6634b66ad8c",
+      "runtime": "live",
+      "deploy": "dep-dbu9v8h5efls73c90ae0",
+      "workflow": 44150421590,
+      "dinnerStep": "PASS",
+      "unitsAndBuild": "PASS",
+      "exactIsolatedPersistence": "PASS",
+      "failure": "Hosted media harness expected failed instead of reserved for no-source microbiome hero; repaired with full local80-state/28-case proof in V06_ACTIVITY_SOURCE_DISCUSSION_20261117.json. Full exact next CI pending."
+    }
   }
 }

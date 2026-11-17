@@ -5,11 +5,11 @@ import {buildPrecisionReport,contextSchema,labSchema} from '../shared/precision-
 import {defaultPreferences} from '../shared/meal-intelligence';
 import {recordedLabPanelReview} from '../shared/lab-panel-review';
 import {activitySchema,activityRoutinePlanSchema,type ExperienceRecord} from '../shared/experience';
-import {labActivityContext} from '../shared/lab-response-events';
+import {labActivityContext,labActivityDiscussion} from '../shared/lab-response-events';
 
 const now=Date.parse('2026-11-16T12:00:00Z');
-function pair(marker='triglycerides'){
- const records=['2026-09-01','2026-10-01'].map((date,index)=>({id:'lab-'+index,kind:'lab',payload:labSchema.parse({marker,value:marker==='triglycerides'?(index?0.6:2.1):(index?20:10),unit:marker==='triglycerides'?'mmol/L':'U/L',measuredAt:date+'T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'yes',referenceLow:null,referenceHigh:null,sourceReport:{importId:randomUUID(),enteredDate:date}})}));
+function pair(marker='triglycerides',latestValue?:number){
+ const records=['2026-09-01','2026-10-01'].map((date,index)=>({id:'lab-'+index,kind:'lab',payload:labSchema.parse({marker,value:marker==='triglycerides'?(index?(latestValue??0.6):2.1):(index?20:10),unit:marker==='triglycerides'?'mmol/L':'U/L',measuredAt:date+'T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'yes',referenceLow:null,referenceHigh:null,sourceReport:{importId:randomUUID(),enteredDate:date}})}));
  return recordedLabPanelReview(buildPrecisionReport(records,contextSchema.parse({}),defaultPreferences,null)).assessments[0];
 }
 function activity(id:string,date='2026-09-10',patch:Record<string,unknown>={}):ExperienceRecord{
@@ -53,4 +53,34 @@ test('mixed activities never relabel the entire recorded duration as walking',()
  const row=activity('mixed','2026-09-10',{minutes:30,components:{version:1,items:[{id:randomUUID(),title:'Walk',activityId:'walk',match:'reported',minutes:10,distanceM:null},{id:randomUUID(),title:'Run',activityId:'run',match:'reported',minutes:20,distanceM:null}]}});
  const view=labActivityContext(pair(),[row],now);
  assert.equal(view.observations[0].kind,'activity');assert.equal(view.observations[0].minutes,30);
+});
+
+test('activity discussion preserves exact current source/event provenance and actual cited general evidence without an efficacy claim',()=>{
+ const p=pair(),events=[activity('walk')],context=labActivityContext(p,events,now),before=structuredClone({p,context});
+ const discussion=labActivityDiscussion(p,context)!;
+ assert.ok(discussion);assert.equal(discussion.kind,'general-discussion-context');assert.deepEqual(discussion.sourceIds,['lab-0','lab-1']);assert.deepEqual(discussion.activityIds,['walk']);
+ assert.equal(discussion.evidence.url,'https://medlineplus.gov/lab-tests/triglycerides-test/');
+ assert.match(discussion.generalContext,/general association does not tell us/);assert.match(discussion.personalContext,/do not show that activity increased/);assert.equal(discussion.attribution,'not-established');assert.equal(discussion.counterContext,null);
+ assert.match(discussion.nextStep,/no new exercise dose/);assert.deepEqual({p,context},before);
+});
+test('no logged activity stays unknown, while unchanged or rising TG explicitly limits a simplistic success story',()=>{
+ const p=pair(),empty=labActivityDiscussion(p,labActivityContext(p,[],now))!;
+ assert.deepEqual(empty.activityIds,[]);assert.match(empty.personalContext,/no inactivity or personal contribution is inferred/);
+ for(const change of [0,1]){
+  const modified=pair('triglycerides',2.1+change);const discussion=labActivityDiscussion(modified,labActivityContext(modified,[activity('walk')],now))!;
+  assert.match(discussion.counterContext!,/did not decrease/);assert.equal(discussion.attribution,'not-established');
+ }
+});
+test('non-TG activity context uses ALT-specific evidence without classifying intensity or claiming liver recovery',()=>{
+ const p=pair('alt'),discussion=labActivityDiscussion(p,labActivityContext(p,[activity('walk')],now))!;
+ assert.equal(discussion.evidence.url,'https://medlineplus.gov/lab-tests/alt-blood-test/');assert.equal(discussion.markerId,'alt');
+ assert.match(discussion.generalContext,/does not assess exercise intensity/);assert.equal(discussion.counterContext,null);
+ const unsupported={...p,id:'hba1c'};assert.equal(labActivityDiscussion(unsupported,labActivityContext(unsupported,[activity('walk')],now)),null);
+});
+test('source-date/identity correction, absent sources, mismatched chronology and failed comparability withdraw activity discussion',()=>{
+ const p=pair(),context=labActivityContext(p,[activity('walk')],now);
+ assert.equal(labActivityDiscussion({...p,latest:null},context),null);assert.equal(labActivityDiscussion({...p,comparable:false},context),null);
+ assert.equal(labActivityDiscussion(p,{...context,sourceIds:['other-owner','lab-1']}),null);
+ assert.equal(labActivityDiscussion(p,{...context,window:{from:'2026-08-01',to:'2026-10-01',basis:'recorded-calendar-dates'}}),null);
+ assert.equal(labActivityDiscussion(p,{...context,status:'source-review'}),null);
 });
