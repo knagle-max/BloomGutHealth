@@ -4,6 +4,20 @@
 **Repository:** `knagle-max/BloomGutHealth` · authorized development branch `enhance/bloom-experience`  
 **Authority and relationship:** Direct owner directive; complements `AGENTS.md`, `BLOOM_CROSS_PAGE_VISUAL_PRESERVATION_AND_ASSET_ADDITION_POLICY_20261116.md`, existing design tokens, `V06_HANDOFF.md`, approved layout/UX work and `NEXT_ACTIONS.md`. No duplicate task queue, app-wide rewrite, mobile/desktop duplicate applications, additional platform migration or new owner approval cycle.
 
+## Owner clarification — mobile Biology/Bloodwork/Microbiome baseline is preserved; desktop is the improvement target (2026-11-16)
+
+**Highest-precedence scope clarification for this adaptive UX directive:** The product owner primarily reviews and specifies features on a phone. The **existing mobile Biology, Bloodwork and Microbiome pages have been iteratively optimized based on that phone experience and are the accepted presentation baseline**. **Do not redesign, reorganize, restyle, replace artwork, adjust chart presentation, or otherwise change those mobile layouts merely to satisfy this desktop-adaptation directive.** The visible owner-observed desktop problem is that desktop pages resemble enlarged mobile pages. **Prioritize genuinely desktop-specific composition and space usage** on those experiences. Tablet may receive deliberate intermediate adaptation, but must not force changes to the established mobile UX.
+
+**Exception scope:** A later explicit owner-requested mobile change (including a targeted mobile Bloodwork/chart requirement), a confirmed correctness/security/safety/accessibility defect, or an unavoidable shared bug fix may change the affected mobile portion **only to the minimal necessary extent**. This preservation instruction does **not** cancel earlier explicit owner-directed mobile Bloodwork improvements or ongoing active fixes; those remain in their separately scoped handoffs and `NEXT_ACTIONS.md`. Do not interpret desktop work as permission to reopen other completed mobile decisions.
+
+**Desktop target:** Maintain the exact same source/marker/organism/illustration records, chart engines, semantics, selected-state controls and scientific evidence. At desktop content widths, restructure **presentation** (e.g. balanced multi-column editorial layouts, side-by-side chart and explanations, contextual side rail, readable-width copy, larger use of existing science media, persistent navigation as appropriate) without simply widening a narrow column or stretching cards. Start from current responsive components and styling; add desktop-specific wrappers/layout containers only when needed, keeping all domain logic shared. Never replace existing assets or clone feature implementations.
+
+**Regression rule:** Before/after desktop screenshots must demonstrate meaningful improved use of available width at 1024 and 1440px. Paired 320/390px reference screenshots of existing Biology/Bloodwork/Microbiome must remain visually/functionally equivalent **except the narrowly authorized, separately tracked mobile changes**. Check touch, chart history, source correction, organism profiles, data authorization, focus/selection, light/dark, tablet/zoom and image fallbacks. Record any authorized mobile diff explicitly rather than treating unintended visual drift as acceptable.
+
+**Other pages:** Continue device-appropriate work incrementally for Today, Food, Explore, Progress and Athlete, applying the same principle of preserving already owner-refined mobile experiences unless separately requested.
+
+---
+
 ## 1. Binding architectural principle
 
 Bloom must provide **two equally intentional web experiences** (mobile and desktop), plus a deliberate intermediate tablet presentation. Neither web experience should feel like a stretched or compressed copy of the other. **Share everything that should be consistent; separate only presentation and interaction patterns that benefit materially from being different.**
