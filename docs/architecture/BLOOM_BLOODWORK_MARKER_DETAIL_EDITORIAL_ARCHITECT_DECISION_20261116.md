@@ -2,26 +2,17 @@
 
 **Date:** 2026-11-16  
 **Owner:** Chief Architect & Integration Lead  
-**Status:** APPROVED design direction / Codex-ready bounded v0.6 P1 implementation handoff; **not** implemented, independently reviewed, or deployment verified.  
+**Status:** CLEAN CONSOLIDATED OWNER REVISION / APPROVED design direction / Codex-ready bounded v0.6 P1 implementation handoff; **not** implemented, independently reviewed, or deployment verified.  
 **Target repository:** `knagle-max/BloomGutHealth`, branch `enhance/bloom-experience`  
 **Source review:** `Bloom_Bloodwork_Results_Experience_Redesign_User_Testing_Handoff_2026-11-16.md`, `UT-LAB-UX-5801-R3`, `UT-LAB-5801–5819` (accessible source review), owner-provided LDL mobile image 2026-11-16, existing `V06_CORE_ADVANCED_EXECUTION_CLASSIFICATION_20261114.md`, `CROSS_DOMAIN_PRIORITY_INTELLIGENCE_V06_ARCHITECT_ADDENDUM_20261114.md`. Source inspection: `client/src/components/LabExplorer.tsx`, `LabTrend.tsx`, `LabMarkerEducation.tsx`, `LabCategoryIcon.tsx`, `EditorialMedia.tsx`, and existing visual registry references. Review is **not** live screenshot QA or clinical approval.
 
-## Owner amendment — Preserve existing chart and every existing asset (2026-11-16; highest precedence)
-
-**Binding correction to this handoff:** The owner's approved visual reference is **for editorial composition and information hierarchy only**. Codex must preserve the already implemented `LabTrend` chart and all approved/current visuals exactly as assets. **Do not replace, regenerate, redraw, swap, rename, or reimport any existing asset**, including bloodwork category art, marker art, chart resources, icons, illustrations, media slots or the current graphical chart implementation. Do not substitute reference screenshot artwork for production artwork.
-
-1. **Chart preservation:** Reuse the existing `LabTrend.tsx` and source/comparability logic, actual points, scale, axes, intervals, selections, point-to-source links, comparisons, accessible alternatives, correction history, responsive behavior, and chart-related assets. Reorganize its *placement and surrounding editorial framing* only; do not build a competing chart component or rewrite the graph. Preserve exact behavior after layout changes, with tests.
-2. **Optional micro-adjustments only:** A small configurable styling choice such as straight versus curved connecting segments is acceptable **only if** the current chart technology supports it as a native setting or narrowly scoped styling option, with no asset replacement, no new plotting engine or new drawn geometry implementation. It is *not required*. Do not introduce a smoothing dependency. Apply only to confirmed source-comparable sequential observations, never extrapolate, overshoot or obscure actual measurements; if any doubt, retain the existing straight/unconnected display without alteration. Existing scientifically safe plot semantics take priority over matching the screenshot.
-3. **Existing media preservation:** Preserve all existing category art and any already available marker/science visual media and registry entries with unchanged paths and original bytes. No replacement even if the screenshot shows a different artery or particle image. The existing asset set is authoritative.
-4. **New missing imagery:** The earlier `LAB-DETAIL-ART-01…04` table is hereby **deferred and non-executable**. Do **not** generate, request, produce, add, or register new art as part of this UX handoff, and do not create placeholders masquerading as needed assets. Use already-approved visuals where currently available; otherwise use the existing theme/background/surfaces and text. A separate explicit future owner authorization would be required for new art. This reverses the earlier suggestion that missing visuals should be added to the registry.
-5. **Scope allowed now:** Header hierarchy, result prominence, spacing, typography, background/surface treatment using existing theme tokens, education directly after history, progressive disclosure of secondary source settings, and reducing repetitive labels — without replacing underlying source/chart/asset components.
-6. **Codex acceptance:** Provide before/after exact-SHA checks proving unchanged existing image assets (paths/checksums), chart functionality and source-safe comparability behavior. Tests cover comparable/unverified points, selections and source drilldown, correction invalidation, mobile/accessibility, all current image fallbacks. No new asset ledger entries in this work; any change to asset inventory or chart implementation requires explicit explanation as a bug fix, not design substitution.
-
-**Precedence:** This owner amendment supersedes any contradictory language below, especially §3's spline preference, §4 artwork proposals, §5 asset-slot instruction, §7 image-dependent tests and §8 missing-image registration. Interpret those older passages as historical design suggestions **not authorized for implementation**. **Codex: do not delete this existing handoff's earlier proposal text; the amendment is the controlling decision.**
-
----
-
 ## 1. Binding owner intent and scope
+
+**Controlling cross-page standard:** [Bloom Cross-Page Visual Preservation, Reference Fidelity & Additive Asset Policy](BLOOM_CROSS_PAGE_VISUAL_PRESERVATION_AND_ASSET_ADDITION_POLICY_20261116.md), also incorporated into `AGENTS.md`. Preserve all existing chart and art work, use the supplied image as the composition reference for the expanded detail only, and permit *additive* new images where useful. No earlier blanket “defer all artwork” instruction survives this consolidated revision. This is the single controlling version; no superseding amendment appendix or contradictory asset policy.
+
+**Explicit preservation:** No replacement, redesign, deletion, reimport, renaming or regeneration of existing category/marker images, icons, illustrations, graphic assets, media registry entries, chart implementation, axes, point selection or source-report workflows. Existing source data and science logic remain authoritative. Small styling changes to the existing chart are optional, not a chart rebuild.
+
+
 
 Keep the **parent Bloodwork category selector** (e.g., Heart & cholesterol) with its **existing image, composition, layout, navigation and grouping**. Do not replace category-card art with the reference screenshot. When the user expands/selects a **specific marker** (e.g., LDL cholesterol), give that detail surface the supplied premium editorial treatment. This is an **inside-the-existing-explorer** marker-detail redesign, not a standalone clinical dashboard, not a new route by default, and not a replacement of original sources, corrections, report/history, reference-range management or existing state/permissions. Keep the selected marker in context: back/close returns to the same expanded parent group; search, marker selection, scroll and focus restore as appropriate.
 
@@ -48,7 +39,7 @@ The reference screenshot is a **visual and structural target, not factual test d
 
 **Latest result:** a single focal soft-glass/ink/forest surface with prominent numeric value and smaller aligned unit; concise locale-formatted actual collection date and truthful source provenance. Avoid dark text over busy photography. Use overlay or flat opaque fallback where contrast is uncertain; no misleading green/red status hue without approved basis. No hardcoded clinical grade, range band, or source availability label when source isn't accessible.
 
-**History:** generous, readable responsive chart, with discreet axis/grid, circular point markers, clear dates, unit and a short comparability notice. The screenshot's visually smooth spline is **not universally valid**; enforce the canonical `lab-comparability` and assay/units/time rules. For confirmed commensurate points, prefer straight segments or a shape-preserving monotonic interpolation that cannot overshoot observed values and is labelled a visual guide only. For **unverified** comparability, render separate points **with no joining curve or smoothed line**. Same-time distinct specimen/occurrence points must remain separate; never invent spacing/order. Keep chart interaction, accessible point labels and a fully equivalent tabular/list view. A single point is not a trend. A corrected date invalidates and redraws the series.
+**History:** retain the existing `LabTrend.tsx` graph implementation, all chart/point assets, data values, axes, source selections, point/source drilldown, keyboard/list alternatives, comparability guard, report range behavior, date/unit/assay revisions and tested functionality. Place it in a generous readable editorial setting, with discreet axis/grid, circular point markers, clear dates, unit and a short comparability notice. The screenshot's visually smooth spline is **not universally valid**; enforce the canonical `lab-comparability` and assay/units/time rules. Keep the **existing chart's current straight/connected rendering**; a slight change to curvature, stroke, point appearance or spacing is permitted only if achievable through an existing supported chart setting or a narrowly scoped non-destructive style adjustment, without replacing chart code/assets or inventing new interpolation. This is optional rather than a required spline; never interpolate outside measured values or connect unverified comparisons. For **unverified** comparability, render separate points **with no joining curve or smoothed line**. Same-time distinct specimen/occurrence points must remain separate; never invent spacing/order. Keep chart interaction, accessible point labels and a fully equivalent tabular/list view. A single point is not a trend. A corrected date invalidates and redraws the series.
 
 **Essential education:** two clearly separated editorial rows directly below chart and adjacent context. Small meaningful illustration/photographic vignette at left on suitable screen widths; always-visible heading + one/two concise Biology-reviewed sentences at right. At mobile, size media to a modest square/thumb and preserve reading priority; on narrow/zoom the image can become a small accent or disappear **without hiding text**. Avoid a giant artery image dominating first-party measurements. Scientific imagery is conceptual and carries no personal-data implication.
 
@@ -58,22 +49,46 @@ The reference screenshot is a **visual and structural target, not factual test d
 
 **Motion/accessibility:** reduced-motion honours no chart animation/parallax; forced colors/high-contrast and reduced transparency get solid surfaces; no text on image-only contrast; no layout shift; 44px+ touch targets; keyboard chart focus, accessible labels/list; readable 200% zoom; no horizontal overflow or footer collision; localised dates and units; decorative images `alt=""` with adjacent visible scientific explanation. Screen-reader DOM order exactly follows the R3 order.
 
-## 4. Artwork and asset registry: proposed assets only (not produced)
+## 4. Preserve existing assets; add useful new visuals through the canonical registry
 
-Integrate **only** via the existing canonical visual/asset registry and `EditorialMedia` (or `shared/scientific-visuals.ts` when the existing registry owns this kind of scientific illustration). Inspect HEAD to select the true canonical registry; **do not create a competing registry or silently point to missing files**. All new media gets registry identifier, placement, concept, proposed filename/format, aspect ratio, light/dark strategy, real source/licence/rights review, SHA-256 when imported, dimensions, fallback, conceptual label, and accessibility semantics. No invented checksum or source status.
+**No existing asset may be replaced, redrawn, renamed, silently reimported, deleted or superseded for this redesign.** Keep parent `LabCategoryArt`, `LabCategoryIcon`, approved science imagery, original byte hashes/paths, visual assets, media fallbacks and chart assets as currently implemented. Inspect both `client/src/content/editorial-media.ts`/`visual-asset-ids.ts` and `shared/scientific-visuals.ts`/`shared/data/scientific-visual-assets.json` to choose the actual canonical owning registry. Do not create a second registry. Reuse a suitable existing reviewed image before requesting a new one, without altering that image.
 
-| Proposed asset ID | Target / placement | Suggested visual | State and fallback |
+**New assets are additive and permitted when a location benefits from visual reinforcement.** Large/signature images should have meaningful reserved footprints, intentional placeholders, source and scientific briefs, and additive **requested** registry records; do not claim actual art exists. A placeholder is a reserved presentation region, not a fake broken image or fabricated file path. The user especially wants illustrative thumbnails beside the visible education about what the marker is and why it matters. Codex may create high-quality **small** icons or other supporting visuals directly when appropriate and consistent with Bloom; use existing design tokens/icon primitives first, and register new standalone media where applicable. Small CSS decoration does not need fake asset records.
+
+| Additive proposed ID | Location | Direction | Delivery and fallback |
 |---|---|---|---|
-| `LAB-DETAIL-ART-01` | Optional expanded-marker hero background only | Macro editorial arterial lumen / LDL plaque **conceptual**, earthy reds/gold and forest tones; not an individual's arteries | **Requested, not supplied**. Default to readable botanical gradient/no media until independently created, reviewed and licensed; content must stand alone. |
-| `LAB-DETAIL-ART-02` | LDL “What is it?” thumbnail | Faithful, clearly conceptual LDL lipoprotein particle depiction (do not imply microscopic photograph) | **Requested, not supplied**. Existing suitable reviewed science visual if available; else decorative neutral motif with text, no broken image. |
-| `LAB-DETAIL-ART-03` | LDL “Why does it matter?” thumbnail | Conceptual cross-section of atherosclerotic plaque, anatomically restrained and not frightening | **Requested, not supplied**. Reuse suitable reviewed illustration or omit art; never invent personalized pathology. |
-| `LAB-DETAIL-ART-04` | Generalized biomarker class placeholders | Curated organ/molecule/cell-themed editorial scientific vignette by reviewed marker class (lipids, liver, kidney, CBC, nutrients, etc.) | **Optional later**. No one-off art gate for each of 30+ lab analytes; use a finite reviewed category-family set with consistent safe fallback. |
+| `LAB-DETAIL-ART-01` | Optional LDL expanded-detail atmospheric hero | Premium, conceptual arterial/lipoprotein imagery, warm-earth/forest palette; subordinate to legible value and current original chart | Large art: create reserved ratio slot plus **requested** entry if needed; keep existing visuals untouched. Show refined existing-surface fallback until licensed/reviewed file delivered |
+| `LAB-DETAIL-ART-02` | Immediately alongside “What is LDL cholesterol?” | Scientifically plausible conceptual lipoprotein particle thumbnail, not a photomicrograph or patient result | Prefer existing suitable approved art unchanged; otherwise add reserved thumbnail and registry request, with text visible and neutral meaningful fallback |
+| `LAB-DETAIL-ART-03` | Immediately alongside “Why does it matter?” | Accurate conceptual arterial wall/plaque illustration, never a claim of personal pathology | Prefer existing reviewed artwork; otherwise add reserved thumbnail and registry request; maintain the explanation without art |
+| `LAB-DETAIL-ART-04` | Other marker families as appropriate | Reusable reviewed thumbnails by actual biological topic (liver, kidneys, cells, hormones, nutrients) rather than hundreds of unrelated decorative images | Finite additive family slots where needed; preserve existing categories and imagery |
+| `LAB-DETAIL-ICON-CONTEXT` etc. | Optional reference context, about measurement, units, history, comparability, original report/provenance | Small premium, restrained icons with correct semantics and consistent geometry/stroke/material; use `lucide-react` or already licensed symbols first | Codex may create suitable new compact SVG or CSS/icon-library visuals; register independent new media only, never overwrite old originals. Omit needless art |
 
-**Do not use screenshots as user-facing art assets.** If the source screenshot was user-generated, it still only establishes visual direction, not third-party art rights for inclusion in Bloom. Parent category image stays unchanged. First functional visual pass must not block on missing assets. If design produces missing art, Codex imports exact approved bytes with verified manifest and no external runtime image dependency.
+**Asset registry contract (illustrative additive metadata, not an instruction to invent missing file paths):**
+
+```ts
+type MarkerDetailAssetRequest = {
+  id: string;                          // new stable ID only
+  placement: "marker-hero" | "what-it-is" | "why-it-matters" | "context" | "metadata";
+  markerId: string | null;             // null only for reusable/family art
+  intent: string;                      // scientifically meaningful art brief
+  lifecycle: "requested" | "review" | "approved";
+  requestedAspectRatio: number | null;
+  sourceAssetId: string | null;        // existing asset reused WITHOUT replacement
+  filePath: string | null;             // null until actual file exists
+  sha256: string | null;               // null until bytes verified
+  conceptual: boolean;
+  accessibility: "decorative" | "informative";
+  fallback: "existing-art" | "reserved-surface" | "existing-icon" | "text-only";
+};
+```
+
+Map the proposed schema to the actual existing registry rather than force a parallel implementation. Asset requests are implementation-ready metadata, **not generated images**. Only assign real license/source/rights/sha after acquisition. A large, important asset must have an explicit requested slot and visual fallback; smaller supporting assets may be produced by Codex where appropriate. No external runtime photo URL dependency, invented artwork/licence/checksum, or blocked basic page while imagery is missing.
+
+**Scientific and UX quality:** Images support written explanations; if a thumbnail cannot be scientifically described confidently, omit or reserve it rather than supply incorrect anatomy. Concept art must not masquerade as the user's measured blood, actual microscopic evidence, or a clinical outcome. Follow original responsive/theming/reduced-motion/alt/decorative constraints. The reference image supplies artistic direction only, not permission to copy its embedded artwork.
 
 ## 5. Component/data boundaries and proposed code contract
 
-`LabExplorer.tsx` currently renders `LabMarkerEducation` before `LabTrend` inside the expanded marker. Reorder via a **single cohesive detail presenter**, with `LabTrend` preserving existing analytic/source logic. `LabMarkerEducation` should expose a simple primer independent from expanded deeper sections. Avoid rewriting canonical `PrecisionReport`, source record, assay or source-revision model; the new view model is a derived presentation projection from those existing contracts.
+`LabExplorer.tsx` currently renders `LabMarkerEducation` before `LabTrend` inside the expanded marker. Reorder via a **single cohesive detail presenter**, with `LabTrend` **preserving its existing chart implementation, assets, selectors, scales, source links and analytic/source logic**. `LabMarkerEducation` should expose a simple primer independent from expanded deeper sections. Avoid rewriting canonical `PrecisionReport`, source record, assay or source-revision model; the new view model is a derived presentation projection from those existing contracts.
 
 **Illustrative TypeScript design contract (Codex must reconcile with HEAD types):**
 
@@ -133,7 +148,7 @@ function buildMarkerDetail(report: PrecisionReport, markerId: string): LabMarker
 }
 ```
 
-The illustrative helper names **are not instructions to introduce duplicate helper services**. Prefer modifying current `LabExplorer`, `LabTrend` and `LabMarkerEducation` directly or adding a small presentational `LabResultOverview` when useful. `LabTrend` already owns real plot/comparison/source selection and should retain it. `LabSourceHistory` and existing source manager remain authoritative for source records/corrections. Code that determines labels/units/dates must reuse canonical formatters and owner permissions. New asset slot identifiers should be registered within the existing asset schemas only after verifying compatibility, with truthful `requested`/`fallback` state.
+The illustrative helper names **are not instructions to introduce duplicate helper services**. Prefer modifying current `LabExplorer`, `LabTrend` and `LabMarkerEducation` directly or adding a small presentational `LabResultOverview` when useful. `LabTrend` already owns real plot/comparison/source selection and should retain it. `LabSourceHistory` and existing source manager remain authoritative for source records/corrections. Code that determines labels/units/dates must reuse canonical formatters and owner permissions. New asset requests and successfully created small original assets are additive entries within the existing owning registry after checking compatibility; preserve all old paths, identifiers and hash values.
 
 ## 6. UX copy (proposed; Biology review required)
 
@@ -160,21 +175,25 @@ These are **drafts** until Biology approval; source and personal risk wording ca
 8. Selected published provisional reference: only sourced, applicability-labelled inside optional administration; original source preserved; preview ≠ saved.
 9. Unit/assay ambiguity and source-only analytes: original value retained; no falsely confirmed trend or educational model.
 10. Source correction/deletion/consent withdrawal/account switch: no stale value, cached art-dependent content, or cross-account view; focus safely resets.
-11. Image absent, 404, slow/offline, forced-colors and reduced transparency: text-first functional fallback, no contrast failure or layout shift.
+11. Requested hero/educational image absent, 404, slow/offline, forced-colors and reduced transparency: visible reserved or existing visual fallback with all text and source tasks intact, no contrast failure or layout shift; independently test newly produced small icons.
 12. Keyboard, VoiceOver, touch, zoom, mobile Safari and accessible chart list alternative preserve task parity; screen-reader order result/history/primer.
 13. Real original report/source/correction reachable in 1–2 intentional interactions; `Compare two` remains available but not visually dominant.
 14. Clinically reviewed critical message (if already supported) not hidden by collapse or overlay; no newly fabricated threshold.
-15. Novice teach-back: can explain measurement and relevance without tapping any educational disclosure, can identify latest value and tell if timeline comparison is confirmed.
+15. Novice teach-back: can explain measurement and relevance without tapping any educational disclosure, can identify latest value and tell if timeline comparison is confirmed.\n16. Existing-asset preservation: exact paths/hashes of existing imagery and original registry IDs remain unchanged, plus visual/fallback behavior tested; additive new entries never shadow originals.\n17. Existing chart preservation: before/after actual point selection, axis/reference/assay semantics, source drilldown, keyboard and value comparison regressions pass; optional curvature is small, settings-based and medically honest.\n18. Added image slots: visually appropriate requested registry entries and working placeholders next to novice educational sections where necessary; new small Codex icons high-quality and contextually valid; no fictional image file or checksum.
 
 **Evidence reporting:** exact branch SHA, automated test receipts, current screenshot(s) at same SHA for 320/390/768/1440 in light/dark and Everyday/Athlete as appropriate; accessibility checks, source/account/API/correction tests, Render preview deployed SHA, independent human/clinical review explicitly PASS / FAIL / NOT TESTED. Tests must verify **actual rendered output**, not CSS selectors alone. Avoid creating fabricated verification or clinical acceptance.
 
 ## 8. Codex delivery/queue instructions
 
 - This is **v0.6 P1 visual/structural UX**, to be integrated with ongoing C2 Bloodwork/Response and source fidelity work. The existing `NEXT_ACTIONS.md` and `V06_DEPENDENCY_BACKLOG.md` continue to govern ordering; no interruption of active P0 C2 engineering and no new approval cycle.
-- Codex should implement the *presentation layer first* and preserve existing data and scientific functions. Reuse canonical media registry and current design tokens. Missing images become registered requested assets/fallbacks, not blockers or unsupported runtime URLs.
+- Codex should implement the *presentation layer first* and preserve existing data and scientific functions. Reuse canonical media registry and current design tokens. Missing **new** large images receive additional requested registry entries and good reserved fallbacks; useful new small icons can be created/registered by Codex. Existing images/graphics and chart assets are immutable for this design pass.
 - Do not merge `main`, change production databases, add paid services, activate clinical claims or expose new data without corresponding authorization.
 - Owner must receive exact implementation SHA, active review URL, working states, test evidence and truthful remaining exceptions; this document itself is not runtime acceptance.
 
 ## 9. Code-preservation/publication policy
+
+**Cross-page applicability:** This handoff inherits the [standing preservation, reference fidelity and additive asset policy](BLOOM_CROSS_PAGE_VISUAL_PRESERVATION_AND_ASSET_ADDITION_POLICY_20261116.md). Codex must respect current work and current priorities, use owner visual examples for the scoped screen, request/placeholder large missing visuals, create high-quality small contextual art where useful, and never modify already-complete graphic assets without explicit owner scope or necessary corrective justification.
+
+
 
 This handoff preserves actionable UX source logic and includes a proposed versioned view contract and pseudocode. If specialists supply code in later handoffs, retain it verbatim as a source appendix or cite its exact file/revision and provide explicit amendments; do not silently omit code. Publish architect-approved Codex handoffs in the authorized GitHub branch under `docs/architecture/`, verify remote bytes, and link the commit. Local artifacts are supplementary.
