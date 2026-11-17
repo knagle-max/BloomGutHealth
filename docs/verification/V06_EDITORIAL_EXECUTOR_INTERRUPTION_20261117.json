@@ -1,0 +1,102 @@
+{
+  "task": "V06-P1-EDITORIAL-REFERENCE-IMPLEMENTATION",
+  "status": "IMPLEMENTATION_IN_LOCAL_WORKTREE_EXECUTOR_UNAVAILABLE",
+  "publishedRuntimeSource": "19c7d1eb59e8ef8fd89e7e68b1169fa41e658040",
+  "publishedRangeFix": {
+    "commit": "19c7d1eb59e8ef8fd89e7e68b1169fa41e658040",
+    "workflow": 44094520084,
+    "conclusion": "failure",
+    "failedStep": "Verify exact isolated hosted review persistence",
+    "failure": "Exact hosted review build/binding not ready; no accounts created",
+    "runtimeAtInspection": "c8e628de00c8baac29db96a262c113192c3bf3a9",
+    "runtimeDeploy": "dep-dbu5ir4astbc7398jtf0",
+    "runtimeStatus": "live",
+    "runtimeFinishedAt": "2026-11-17T13:44:12.416151Z",
+    "difference": "19c7d1eb..c8e628de is six documentation commits only; original runtime source code unchanged. Do not loosen exact hosted binding; qualify next coherent candidate."
+  },
+  "executor": {
+    "environmentId": "ccarenv_b64_Y2NhcmVudl83NWRhODA0ZjdiYTg4MTkxOGU3Zjk2NzdkZGNmNWJjMQ",
+    "attachedStatus": "unavailable",
+    "errors": [
+      "exec-server transport disconnected",
+      "recovery timed out after45s",
+      "No usable execution environment is available"
+    ],
+    "connectorStatus": "Environment status connector reports running/connected, but this thread has no usable execution executor",
+    "alternateDocumentSessions": "none found",
+    "boundary": "No production data, main merge, manual deployment, new approval or private health-record query."
+  },
+  "ownerReference": {
+    "latestOwnerMessage": "This is the original source",
+    "visualInput": "LDL reference visible in conversation; use its illustrated hero, separate latest/history panels, compact reference context, image-led primer and About this measurement composition.",
+    "manifest": "docs/design-references/bloodwork/README.md",
+    "requiredBinary": "docs/design-references/bloodwork/approved-ldl-editorial-reference.png",
+    "binaryAtInspection": "NOT PRESENT — directory has README.md only",
+    "expectedPngDimensions": [
+      864,
+      1536
+    ],
+    "expectedPngSha256": "98d2bcbda8a8af7c97663943652f83fa4ab76d749c1edb932bd3fa6967b991fb",
+    "directVisualAcceptance": "NOT TESTED — latest Architect authority requires actual persisted binary verification, not conversation visibility or guessed bytes. Do not paste reference into runtime or assume embedded art licence."
+  },
+  "localWorktree": {
+    "baseCommit": "19c7d1eb59e8ef8fd89e7e68b1169fa41e658040",
+    "published": false,
+    "changedFiles": [
+      "client/src/components/LabTrend.tsx",
+      "client/src/components/LabExplorer.tsx",
+      "client/src/components/LabMarkerEducation.tsx",
+      "client/src/components/EvidenceInsight.tsx",
+      "client/src/styles/app.css",
+      "client/src/styles/lab-marker-editorial.css",
+      "client/src/content/editorial-media.ts",
+      "client/src/content/visual-asset-ids.ts",
+      "docs/visual-assets/visual-asset-registry.json",
+      "scripts/qa/lab-explorer-journey.mjs",
+      ".github/workflows/neon_workflow.yml",
+      "docs/operations/CAPABILITY_EXPOSURE_MAP.json",
+      "docs/verification/biology-content-coverage.json"
+    ],
+    "details": [
+      "Fixed legacy unlayered card CSS overriding scoped editorial styles; scoped component stylesheet now unlayered, all selectors remain expanded-marker-only.",
+      "One-owner presentation wrappers allow actual container-size-based chart/education composition. Original chart math, source controls, state, parent navigation and original art bytes remain.",
+      "Actual Ferritin and LDL60-state cases each, source focus/None/owner/source links and measured value/serif/grid assertions added to existing App QA.",
+      "Reused original BVA blood-cell art in Ferritin why context, explicit conceptual/not-measurement caption; corrected generic120px media size clipping the small frame.",
+      "Reserved actual room for wrapping one-sided boundary labels inside horizontal-scroll plot clips, without shifting axes relative to data.",
+      "Latest owner reference prompted further uncommitted composition: optional EvidenceInsight heading, source-specific illustrated category header, separate latest/history material panels, visible history title and reference context, About this measurement from current units/count/comparability.",
+      "BVA-0050 additive requested LDL hero, reserved metadata and generated binding; all49 pre-existing registry objects preserved, no new image bytes, rights or scientific approvals invented. Existing original category artwork is current contextual fallback; LDL particle/artery slots48/49 remain requested."
+    ],
+    "warning": "Do not report latest reference-matching composition as committed, fully tested or visually accepted. Last shell commands were interrupted by executor loss."
+  },
+  "validation": {
+    "publishedRangeFix": "17 focused units, actual20 pixel/layout states plus forced colors, full92labels×6source explorer, chart-first, actual SQL correction/Profile/Canadian/import/source deletion/None/owner and types/audits/build PASS before19c7 push.",
+    "editorialEarlierPasses": [
+      "Both LDL and Ferritin60 responsive states at320/390/768/1024/1440, light/dark and Everyday/Athlete plus200% text/page zoom passed before latest reference-driven panel composition.",
+      "Ferritin one-sided unknown-method synthetic case captured10 actual light/dark screenshots, selected-only444 upper bound, dashed final segment, no falsely global band, wrapped labels contained after fixes.",
+      "Actual App→HTTP→encrypted SQL correction/retry/CAS/removal/None/48 layouts and34-result imported report/source deletion/owner regression passed earlier editorial version.",
+      "17 focused Biology/source-history/comparability tests passed. Previous typecheck/build/source audits passed before final reference-led header/panels."
+    ],
+    "latestChecksPending": [
+      "Session33165: typecheck then actual LDL/Ferritin final composition captures; inspect /workspace/bloom-editorial-reference-match-ldl.log and -ferritin.log before repeating.",
+      "Session24107: visual registry/editorial static/Biology/history unit logs /workspace/bloom-editorial-final-unit.log; inspect result.",
+      "Final About this measurement addition followed session33165 start; rerun focused App captures against final frozen source.",
+      "Regenerate source audits, final build, original media and per-source correction/None checks as appropriate; preserve required assertions."
+    ],
+    "evidenceDirectories": [
+      "/workspace/bloom-editorial-before/ldl",
+      "/workspace/bloom-editorial-before/ferritin",
+      "/workspace/bloom-editorial-qualified/ldl",
+      "/workspace/bloom-editorial-qualified/ferritin",
+      "/workspace/bloom-editorial-reference-match",
+      "/workspace/bloom-editorial-reference-pixels",
+      "/workspace/bloom-reference-pixels"
+    ]
+  },
+  "resume": [
+    "Recover exact existing workspace and inspect git status/log/retained logs before repeating interrupted commands or reapplying edits.",
+    "Fetch and normal fast-forward incoming documentation commits; preserve all local owner-directed code and contributors. No reset/overwrite.",
+    "Verify actual reference binary if attachment/artifact becomes available; persist exact pixels/hash/dimensions. Conversation source is visible but canonical binary absent at this inspection; do not ask owner to repeat unchanged approval.",
+    "Complete/fix final rendered-source tests, separate brand/experience/science/functional/security/accessibility review, update canonical BACKLOG/DEVELOPMENT_LOG/NEXT/receipt at meaningful checkpoint, commit/push coherent UI candidate to enhance/bloom-experience.",
+    "Qualify exact next CI/runtime source once, record mismatch accurately; continue approved Core Food12/Response15 without reopening already verified source/dinner foundations. Full v0.6 RC is unfinished."
+  ]
+}
