@@ -6,6 +6,10 @@
 **Target repository:** `knagle-max/BloomGutHealth`, branch `enhance/bloom-experience`  
 **Source review:** `Bloom_Bloodwork_Results_Experience_Redesign_User_Testing_Handoff_2026-11-16.md`, `UT-LAB-UX-5801-R3`, `UT-LAB-5801–5819` (accessible source review), owner-provided LDL mobile image 2026-11-16, existing `V06_CORE_ADVANCED_EXECUTION_CLASSIFICATION_20261114.md`, `CROSS_DOMAIN_PRIORITY_INTELLIGENCE_V06_ARCHITECT_ADDENDUM_20261114.md`. Source inspection: `client/src/components/LabExplorer.tsx`, `LabTrend.tsx`, `LabMarkerEducation.tsx`, `LabCategoryIcon.tsx`, `EditorialMedia.tsx`, and existing visual registry references. Review is **not** live screenshot QA or clinical approval.
 
+## Actual LDL mockup image is a required comparison fixture (2026-11-17)
+
+**Reference target:** `docs/design-references/bloodwork/approved-ldl-editorial-reference.png`; [reference manifest](../design-references/bloodwork/README.md). Written descriptions alone are insufficient. Before claiming visual completion, inspect the actual repository binary, dimensions and SHA, then review rendered Ferritin/LDL screens against its *visual composition and art positions*. If file not committed/verified, record `REFERENCE_IMAGE_NOT_DELIVERED` and `VISUAL_COMPARISON_NOT_TESTED` rather than asserting image receipt or mockup fidelity. The mockup does not authorize substituting original approved app assets or hardcoding sample values.
+
 ## 1. Binding owner intent and scope
 
 **Controlling cross-page standard:** [Bloom Cross-Page Visual Preservation, Reference Fidelity & Additive Asset Policy](BLOOM_CROSS_PAGE_VISUAL_PRESERVATION_AND_ASSET_ADDITION_POLICY_20261116.md), also incorporated into `AGENTS.md`. Preserve all existing chart and art work, use the supplied image as the composition reference for the expanded detail only, and permit *additive* new images where useful. No earlier blanket “defer all artwork” instruction survives this consolidated revision. This is the single controlling version; no superseding amendment appendix or contradictory asset policy.
