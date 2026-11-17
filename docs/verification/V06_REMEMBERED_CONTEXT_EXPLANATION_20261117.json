@@ -25,5 +25,17 @@
     "/workspace/bloom-core-integrated-20261117-unit.log"
   ],
   "scope": "This closes the saved-answer\u2192revised explanation gap. Full Response15 actual-exposure contributors, supported population evidence/action utility and report-wide clinical relevance remain partial; no claim that this is a causal or full Response model. Continue approved Core after publication.",
-  "privacy": "Synthetic local accounts only. Original server rights/source revision/replay/erasure boundaries reused. No production data changes, private query, merge, manual deployment or external messaging."
+  "privacy": "Synthetic local accounts only. Original server rights/source revision/replay/erasure boundaries reused. No production data changes, private query, merge, manual deployment or external messaging.",
+  "qualification": {
+    "commit": "408cc4fd62ad2c61a885f3f925cd31305c982e55",
+    "workflow": 44155187400,
+    "conclusion": "success",
+    "unitTests": 815,
+    "unitFail": 0,
+    "unitSkipped": 0,
+    "exactHostedChecks": "All3 PASS: isolated persistence, navigation/media and Biology media/source recovery",
+    "render": "live",
+    "deploy": "dep-dbuabru1egvs739h4j40",
+    "liveAt": "2026-11-17T19:09:56Z"
+  }
 }

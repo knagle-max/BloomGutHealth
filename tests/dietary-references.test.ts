@@ -1,0 +1,27 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {dietaryReferenceSubset,dietaryReferencesFor,dietaryReferenceRowSchema} from '../shared/dietary-references';
+test('curated Health Canada source facts preserve separate adult EAR/RDA/UL, sex/age categories and source-specific scope',()=>{
+ assert.equal(dietaryReferenceSubset.rows.length,14);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-17');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
+ const rda=(nutrient:string,sex:string,ageMin:number)=>dietaryReferencesFor(nutrient).find(row=>row.kind==='RDA'&&row.sexReferenceCategory===sex&&row.ageMinYears===ageMin)!;
+ assert.equal(rda('vitamin_c_mg','M',19).amount,90);assert.equal(rda('vitamin_c_mg','F',19).amount,75);
+ for(const [sex,age,value]of [['M',19,400],['M',31,420],['F',19,310],['F',31,320]]as const)assert.equal(rda('magnesium_mg',sex,age).amount,value);
+ assert.equal(dietaryReferencesFor('magnesium_mg').find(row=>row.kind==='UL')!.amount,350);assert.equal(dietaryReferencesFor('magnesium_mg').find(row=>row.kind==='UL')!.intakeScope,'pharmacological-only');
+ assert.equal(dietaryReferencesFor('vitamin_c_mg').find(row=>row.kind==='UL')!.amount,2000);assert.equal(dietaryReferencesFor('vitamin_c_mg').find(row=>row.kind==='UL')!.smokingApplicability,'not-specific');
+ assert.ok(dietaryReferenceSubset.rows.every(row=>row.lifeStage==='nonpregnant-nonlactating-adult'&&row.referencePeriod==='usual-daily-intake'&&row.referenceVersion===dietaryReferenceSubset.version));
+ assert.ok(dietaryReferenceSubset.sources.every(source=>source.url.startsWith('https://www.canada.ca/en/health-canada/')&&source.location.includes('Table 2')));
+});
+test('schema rejects a magnesium food UL, altered source/form basis, invalid units/amounts and child/reversed age rows',()=>{
+ const {referenceVersion:ulVersion,...ul}=dietaryReferencesFor('magnesium_mg').find(row=>row.kind==='UL')!;
+ const {referenceVersion:cVersion,...c}=dietaryReferencesFor('vitamin_c_mg').find(row=>row.kind==='RDA')!;
+ assert.equal(ulVersion,cVersion);assert.equal(dietaryReferenceRowSchema.safeParse(ul).success,true);assert.equal(dietaryReferenceRowSchema.safeParse(c).success,true);
+ for(const patch of [{intakeScope:'total-intake'},{amount:0},{amount:null},{amount:NaN},{amount:Infinity},{unit:'µg/day'},{ageMinYears:18},{ageMaxYears:18},{sourceId:'hc-vitamins'},{kind:'normal'},{lifeStage:'pregnancy'},{referencePeriod:'single-meal'}])assert.equal(dietaryReferenceRowSchema.safeParse({...ul,...patch}).success,false,JSON.stringify(patch));
+ assert.equal(dietaryReferenceRowSchema.safeParse({...c,smokingApplicability:'not-specific'}).success,false);
+ assert.equal(dietaryReferenceRowSchema.safeParse({...c,intakeScope:'pharmacological-only'}).success,false);
+});
+test('unsupported nutrients stay absent and reference reads never mutate source facts or generate an intake/adequacy assessment',()=>{
+ const before=JSON.stringify(dietaryReferenceSubset);
+ for(const key of ['vitamin_b6_mg','ferritin','iodine_ug','unknown'])assert.deepEqual(dietaryReferencesFor(key),[]);
+ const rows=dietaryReferencesFor('magnesium_mg');assert.equal(Object.isFrozen(rows[0]),true);assert.equal(Object.isFrozen(dietaryReferenceSubset),true);assert.equal(Object.isFrozen(dietaryReferenceSubset.sources[0]),true);
+ assert.equal(rows.some(row=>'adequacy' in row||'target' in row||'normalLow' in row),false);assert.equal(JSON.stringify(dietaryReferenceSubset),before);
+});

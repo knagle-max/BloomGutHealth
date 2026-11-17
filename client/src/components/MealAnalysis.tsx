@@ -1,3 +1,4 @@
+import DietaryReferenceDisclosure from './DietaryReferenceDisclosure';
 import type {RecordedFoodRecord} from "@shared/nutrient-observations";
 import {captureIngredientMassEntry} from "@shared/ingredient-mass-capture";
 import IngredientMassEntry from "./IngredientMassEntry";
@@ -312,6 +313,7 @@ export default function MealAnalysis({
         </div>
       </details>
       <NutrientDefinitionDisclosure analysis={analysis} recordedMeal={recordedMeal}/>
+      <DietaryReferenceDisclosure recordedMeal={recordedMeal}/>
       {analysis.productDetails?.some(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote)&&<details>
         <summary>Recorded source context</summary>
         {analysis.productDetails.filter(p=>p.labelSnapshot?.source==="manual"&&p.labelSnapshot.sourceNote).map((p,i)=><div key={i}><h3>{p.name}</h3><p className="panel-note break-words">{p.labelSnapshot!.sourceNote}</p></div>)}

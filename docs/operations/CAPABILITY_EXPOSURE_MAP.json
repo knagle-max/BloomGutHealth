@@ -1927,7 +1927,7 @@
     "client/src/components/LabTrend.tsx": "fd42cd30e71d47bdd73579fdc3bbdc59c5cacc33106bcb6edc9394b7027633bf",
     "client/src/components/LabUnitReview.tsx": "603ed3609f9c2b4d9874cbaacd785d7a0d178d7415d4abe5684f0b0de571aac2",
     "client/src/components/ManualGenetics.tsx": "fa7433c9d1b25363cc3dfe0e08d24200e0c86362323a1cec8441ff30373cf96e",
-    "client/src/components/MealAnalysis.tsx": "8502b760123e28cb6a26ddcee4b4223c0714be347645ac609692c8e98fc44185",
+    "client/src/components/MealAnalysis.tsx": "5948d2aae477159144c48055e0a3ab933e7a159f25b0b06b816e2ee00b1d3cfa",
     "client/src/components/MealChoiceConstraints.tsx": "a64b3e29abc356e4d3eacd6ca3b0d04ecd417135e98c2d00f06bfb935aa5d60f",
     "client/src/components/MetaboliteResearch.tsx": "03aa2d1562a6c7615124099f0d8eda88499ed2805981eb12561414aa0fcdfef9",
     "client/src/components/MicrobialProfile.tsx": "044cd974b1f1dbb923c866fa24bd167a385bbd9971d838d8ad52120934683534",

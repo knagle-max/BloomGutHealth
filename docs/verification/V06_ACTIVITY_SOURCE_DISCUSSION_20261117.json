@@ -75,5 +75,17 @@
     "workflow": 44150421590,
     "result": "Full local CI browser steps, unit step, build and exact isolated hosted persistence passed; deployed media harness failed at its obsolete assumption that a no-source reserved hero enters failed state.",
     "repair": "Use actual source-aware reserved/svg/failed lifecycle in forced raster/all/recovery checks. Preserve original image failure/recovery assertions, geometry, semantic ordering, all IDs and no borrowed art. Full local80-state/28-case harness PASS; next exact hosted CI pending."
+  },
+  "qualification": {
+    "commit": "408cc4fd62ad2c61a885f3f925cd31305c982e55",
+    "workflow": 44155187400,
+    "conclusion": "success",
+    "unitTests": 815,
+    "unitFail": 0,
+    "unitSkipped": 0,
+    "exactHostedChecks": "All3 PASS: isolated persistence, navigation/media and Biology media/source recovery",
+    "render": "live",
+    "deploy": "dep-dbuabru1egvs739h4j40",
+    "liveAt": "2026-11-17T19:09:56Z"
   }
 }
