@@ -6,6 +6,10 @@
 **Status:** Architecture/quality requirements approved; not proof of implemented page redesigns or reference-comparison acceptance  
 **Companion decisions:** [Cross-page preservation and additive assets](BLOOM_CROSS_PAGE_VISUAL_PRESERVATION_AND_ASSET_ADDITION_POLICY_20261116.md), [adaptive mobile/desktop](BLOOM_ADAPTIVE_MOBILE_DESKTOP_EXPERIENCE_ARCHITECT_DECISION_20261116.md), [Bloodwork visual fidelity correction](BLOOM_BLOODWORK_EDITORIAL_VISUAL_FIDELITY_CORRECTION_20261116.md), [Bloodwork expanded marker details](BLOOM_BLOODWORK_MARKER_DETAIL_EDITORIAL_ARCHITECT_DECISION_20261116.md).
 
+## Canonical owner-provided visual fixture (2026-11-17)
+
+The exact approved LDL mockup must be available to Codex as **real image pixels**, not merely described in a handoff. Target path `docs/design-references/bloodwork/approved-ldl-editorial-reference.png`, with [reference manifest](../design-references/bloodwork/README.md). Codex must verify binary delivery before treating side-by-side visual evaluation as completed; an unavailable reference is `NOT_TESTED`, never an assumed visual PASS. Future owner-provided layout images must likewise be committed under stable `docs/design-references/<feature>/` paths (or an equivalently Codex-readable approved file location), directly linked in decisions and subjected to visual comparison. Reference images are design guidance, not copied runtime artwork.
+
 ## 1. Binding owner direction and conflict resolution
 
 **One consistent visual language, many purpose-built experiences.** Biology, Microbiome and especially the approved LDL Bloodwork editorial reference define the premium Bloom visual DNA. The owner-supplied LDL mockup is the **quality and craft benchmark**, not the existing partially implemented Ferritin/Bloodwork screen. It is **not** a universal page blueprint. Today, Food, Activity, Explore, Progress, Athlete and future experiences should clearly belong to the same visual world while using compositions and interactions appropriate to their different jobs.
