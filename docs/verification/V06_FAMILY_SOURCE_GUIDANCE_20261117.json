@@ -1,0 +1,30 @@
+{
+  "task": "V06-T2B-FAMILY-SOURCE-GUIDANCE",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION_PARTIAL_RESPONSE",
+  "baseCommit": "978cdf7f14efb45c80ffd3fdd49c5a29d1e18ed4",
+  "implementation": [
+    "Existing selected report families now expose marker-specific general discussion prompts, citation design/scope and limitations directly from the immutable canonical Biology registry. No new scientific text/database or personal causal/clinical claim.",
+    "One direct source-record action follows existing source-bound cue ordering; unresolved assay identity, unavailable latest occurrence and source-review states abstain from borrowed marker-specific guidance.",
+    "Published interval and decision-limit labels now visibly include provider/province/publication date at the plot, retaining separate source-original/provisional/verified kinds.",
+    "Existing account export is explicitly tested to retain each owner\u2019s new encrypted Profile birth year through the existing metadata export. No additional export field/service or account mutation introduced."
+  ],
+  "validation": [
+    "15 focused family/source/scientific comparison/context reader tests PASS. Additional13 source/family/account-export tests PASS including1970vs1990 owner birth-year exports, no auth material, no source data mutation.",
+    "Actual App/authenticated HTTP/encrypted SQL B12-only guidance, canonical prompts/citations and direct source action, legacy question semantics/draft guard,48 responsive states and owner withdrawal PASS. Four source-disclosure screenshots captured at320/390 light/dark.",
+    "Actual Profile historical age/sex/override/reference provenance browser rerun PASS; final TypeScript/source audits/build/original media checks PASS."
+  ],
+  "evidence": [
+    "/tmp/bloom-family-guidance-unit.log",
+    "/tmp/bloom-family-guidance-source-unit.log",
+    "/tmp/bloom-family-guidance-final-browser.log",
+    "/tmp/bloom-family-guidance/",
+    "/tmp/bloom-family-guidance-range-provenance.log",
+    "/tmp/bloom-family-guidance-final-build.log"
+  ],
+  "pending": [
+    "Commit/push and exact CI/Render qualification",
+    "Latest owner/Architect31-line one-sided line visibility and historically applicable full-width band refinements are received at978cdf7f and NEXT P1; source stylesheet/range-scope correction not yet implemented.",
+    "Full Response contributor/conditional-action/model acceptance remains partial; physical VoiceOver and independent human/clinical RC not claimed."
+  ],
+  "privacy": "Only synthetic local data; no private account query, manual production writes/deploy/main merge. General canonical evidence is separate from personal measurements."
+}

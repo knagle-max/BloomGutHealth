@@ -1,3 +1,4 @@
+import LabFamilyGuidance from './LabFamilyGuidance';
 import type {PrecisionReport} from '@shared/precision-nutrition';
 import LabRememberedContext from './LabRememberedContext';
 import LabActivityContextReview from './LabActivityContextReview';
@@ -36,6 +37,7 @@ export default function LabPanelReview({report,onSelect}:{report:PrecisionReport
    <p>{family.context}</p>
    <ul className="lab-panel-review-list">{family.cues.map(observation)}</ul>
    {family.members.some(row=>!family.cues.includes(row))&&<details><summary>Other recorded markers in this family</summary><ul className="lab-panel-review-list">{family.members.filter(row=>!family.cues.includes(row)).map(observation)}</ul></details>}
+   <LabFamilyGuidance family={family}/>
    <LabRememberedContext family={family.id} sources={report.labHistory.filter(row=>family.members.some(member=>member.latest?.id===row.id||member.previous?.id===row.id)&&hasConfirmedLabIdentity(row.marker,row))}/>
    <p>Review the original reports and collection context with your clinician if you have questions about these findings. Do not change medicine or supplement doses based on this view.</p>
   </details>)}

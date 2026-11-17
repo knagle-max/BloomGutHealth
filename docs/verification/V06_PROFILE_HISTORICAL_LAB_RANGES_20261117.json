@@ -1,6 +1,6 @@
 {
   "task": "V06-P1-PROFILE-HISTORICAL-LAB-RANGES",
-  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "status": "RUNTIME_LIVE_PENDING_EXACT_CI",
   "baseCommit": "e9c6c83c0c3855fc0a82288802eda68a5dc6ffdf",
   "authority": [
     "Owner2026-11-17: make chart ranges available and use Profile sex/age defaults",
@@ -35,9 +35,17 @@
     "/tmp/bloom-profile-birthyear-build.log"
   ],
   "pending": [
-    "Commit/push and exact candidate CI/Render qualification; older c24 hosted binding failed after runtime advanced, no accounts created and not treated as PASS.",
+    "Exact candidate full CI qualification; runtime LIVE confirmed by Render connector. Hosted physical/user account screenshot not claimed.",
     "Physical VoiceOver/mobile Safari and independent final human/clinical RC NOT TESTED",
     "Published coverage remains finite: no invented normal interval when neither report bounds nor an applicable installed comparison exists"
   ],
-  "privacy": "Only synthetic local/isolated accounts tested; original lab records never rewritten by Profile defaults. No actual private account query, production data writes, main merge/manual deploy."
+  "privacy": "Only synthetic local/isolated accounts tested; original lab records never rewritten by Profile defaults. No actual private account query, production data writes, main merge/manual deploy.",
+  "publication": {
+    "commit": "3d3d169d7349eba5b0ea55b04c00d2b9016b4a9e",
+    "workflow": "44006499839",
+    "ciStatus": "in_progress",
+    "deploy": "dep-dbts49dckfvc73bsl330",
+    "deployStatus": "live",
+    "finishedAt": "2026-11-17T02:57:10.687231Z"
+  }
 }
