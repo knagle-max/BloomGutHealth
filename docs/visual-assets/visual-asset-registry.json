@@ -4926,6 +4926,59 @@
         "deliverableNotes": "Original standalone source art and optimized WebP, landscape 1600×800, suitable mobile right-focused crop, light/dark readability and Everyday/Athlete modes. Preserve original production bytes and record actual hashes and rights only when files exist. Owner review is integrated RC, no new per-image approval checkpoint.",
         "generationInstruction": "Create an original premium Bloom conceptual microbial-ecosystem editorial scene: a restrained group of broad rounded and rod-like forms on softly folded biological terrain, clustered on the right 60%, with a quiet forest background across the left 45% for live typography. Use muted violet, sage and warm ivory accents, matte fine texture, soft raking light and shallow conceptual macro depth. Use a 2:1 landscape 1600×800 composition and preserve the subject in mobile crops. Do not depict a named species or a person’s sample; do not imply active functions, healthy/harmful amounts or a clinical result. No embedded text, UI, labels, numbers, scale bars, arrows, watermarks or third-party branding. This must be new artwork: never reuse, recolor or composite existing Bloom imagery or the owner’s reference screenshot."
       }
+    },
+    {
+      "id": "BVA-0052",
+      "name": "Activity Log editorial page hero",
+      "route": "/activity",
+      "component": "CanonicalBloomPageHero / Activity Log",
+      "purpose": "Owner-approved application-wide image-backed page header for Activity Log; source image needed only if no already approved suitable asset",
+      "category": "hero",
+      "subject": "Original premium editorial image of approachable everyday movement and natural wellness, not performance/Athlete intensity",
+      "composition": "Quiet text-safe left portion, right-weighted natural subject, restrained forest and warm light, tonal overlays supplied in UI not baked in",
+      "scientificAccuracy": "Decorative only; no personal steps, calories, heart rate, body outcomes or diagnoses implied",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark"
+      ],
+      "aspectRatio": "16:9",
+      "targetDimensions": {
+        "width": 1600,
+        "height": 900
+      },
+      "responsiveVariants": [
+        "mobile portrait-safe crop",
+        "desktop landscape hero"
+      ],
+      "accessibility": "decorative; all headings, counts and actions rendered as live accessible elements",
+      "lifecycle": "Briefed",
+      "assetStatus": "requested; zero real artwork, licensing or approval claimed",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": null,
+        "action": "New editorial hero only if asset inventory confirms no suitable approved existing artwork"
+      },
+      "integration": {
+        "verified": false,
+        "state": "Reserved requested asset; Codex to add compatible existing editorial-media mapping/fallback when implementing Activity Log; no broken placeholder URL"
+      },
+      "review": {
+        "design": "requested",
+        "scientific": "not yet reviewed if anatomy used",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 image-backed page hero directive; docs/architecture/BLOOM_CANONICAL_PAGE_HERO_HEADER_STANDARD_20261117.md",
+      "fallback": "Text-safe organic tinted hero surface until original reviewed artwork available",
+      "descriptiveBrief": {
+        "sceneDescription": "Warm premium understated organic movement landscape with person or implied trail on right, rich physical material and botanically coherent layers",
+        "framingAndUsage": "Headline on quiet left, image responsive mobile and desktop, no baked-in text",
+        "accuracyAndExclusions": "No invented physiological outcomes, false sport intensity or unsupported medical visuals, no third-party brand, text or watermark",
+        "existingAssetAndApprovalHandling": "Search approved assets before commissioning. Preserve all existing original art/IDs; use BVA-0052 only if a genuinely distinct original asset is needed."
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
