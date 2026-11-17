@@ -1,3 +1,5 @@
+import {Link} from 'wouter';
+import {rememberedLabGuidance} from '@shared/lab-family-guidance';
 import {useEffect,useId,useRef,useState} from 'react';
 import {useAuth} from '@/lib/auth';
 import {apiRequest,ApiRequestError} from '@/lib/queryClient';
@@ -80,6 +82,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
   window.addEventListener(LAB_CONTEXT_CHANGED,changed);return()=>window.removeEventListener(LAB_CONTEXT_CHANGED,changed);
  },[key,active.expanded,active.form,active.pending,active.view?.scopeHash]);
  const latest=active.view?.latest,record=latest?.record.payload,busy=active.pending!==null,questionId=active.form&&active.draftQuestion?active.draftQuestion:active.view?.questionId??labResponseQuestions[family].id;
+ const explanation=!active.pending&&!active.error&&!active.form?rememberedLabGuidance(family,sources,active.view):null;
  const questionChanged=active.form&&active.draftQuestion!==(active.view?.questionId??labResponseQuestions[family].id);
  if(!user||!sources.length)return null;
  return <section className="lab-remembered-context" aria-label="Remembered context">
@@ -100,6 +103,17 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
     <p className="panel-note">Review dates: {record.reviewWindow.from?record.reviewWindow.from+' to ':''}{record.reviewWindow.to}. {record.reviewWindow.basis==='source-date'?'Dates recorded with the source.':'Collection dates are not confirmed; stored or mixed source dates are retained.'}</p>
     {record.notes&&<p className="whitespace-pre-wrap break-words">{record.notes}</p>}
    </div>}
+   {explanation&&<section className="bloom-panel space-y-3 my-3" aria-label="Updated context explanation">
+    <h4>What your saved context adds</h4><p>{explanation.summary}</p>
+    {explanation.timingText&&<p className="panel-note">{explanation.timingText}</p>}
+    <h4>A next step</h4><p>{explanation.nextStep}</p>
+    <Link className="text-link inline-flex min-h-11 items-center" href={explanation.action.href}>{explanation.action.label}</Link>
+    <details><summary className="min-h-11">Relevant general evidence &amp; explanation details</summary>
+     <p className="panel-note">These unchanged educational sources are general context, not evidence that your recalled event caused a result. Other changes, measurement variation and missing history remain possible.</p>
+     {explanation.profiles.map(profile=><section key={profile.markerId} className="space-y-2 py-3"><h4>{profile.name}</h4><p>{profile.discussion}</p>{profile.limitations.map(text=><p className="panel-note" key={text}>{text}</p>)}{profile.citations.map(source=><article key={source.id}><a className="text-link inline-flex min-h-11 items-center" href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a><p className="panel-note">{source.design} · {source.scopeLimit}{source.verification==='citation-not-retrieved'?' · Citation retrieval and independent review pending.':''}</p></article>)}</section>)}
+     <p className="panel-note">Derived from saved answer {explanation.revision.answerId}, added {explanation.revision.recordedAt.slice(0,10)}; guidance {explanation.revision.guidanceVersion}. Recomputed for these exact current source records; original measurements remain unchanged.</p>
+    </details>
+   </section>}
    <div className="flex flex-wrap gap-3">
     <button type="button" className="text-link inline-flex min-h-11 items-center" disabled={busy} onClick={()=>void load()}>Reload saved context</button>
     {!active.form&&<button type="button" className="hero-button min-h-11" disabled={busy||!active.view} onClick={()=>void begin()}>{record?'Review or update answer':'Add an answer'}</button>}

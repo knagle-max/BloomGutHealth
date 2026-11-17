@@ -1,0 +1,29 @@
+{
+  "task": "V06-C2-SAVED-CONTEXT-EXPLANATION",
+  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "baseCommit": "7d3f88a664ce4cea4966dceca101a6634b66ad8c",
+  "change": [
+    "Current saved recalled context now produces a transparent updated explanation, an actual original-result action and unchanged canonical marker-specific discussion/citations/limitations. No free-text interpretation, inferred exposure or personal causal effect.",
+    "Yes/no/unknown/not-tracked/declined answers remain distinct. Original collection window vs recalled event and learned-at dates are separate; upload/mixed/missing dates, same-day or outside-window events never become verified exposure timing.",
+    "Explanation is bound to exact current source IDs, server source revision validation, current family/question and immutable saved-answer ID plus guidance version. Source/answer deletion, correction, question change, request errors, unsaved edits and account withdrawal retract it; no new table, API, write or stored duplicate explanation.",
+    "B12, iron/CBC, liver and actual glucose use their own relevant current prompts/education. HbA1c alone cannot acquire a nonexistent glucose-report action."
+  ],
+  "validation": [
+    "17 focused family/remembered-guidance/compatible-reader/activity-context tests PASS: all answer states and family prompts, original science text/citations, source/question/identity/malformed withdrawal, date uncertainty, immutable inputs and no free-text inference.",
+    "TypeScript/source capability crosswalk/Biology coverage and production build PASS. Original science and all original asset byte/build parity retained.",
+    "Actual mounted App/authenticated HTTP/encrypted PGlite SQL lifecycle PASS: lost-response exact save replay, reload updated explanation, changed answer recomputes, prefer-not-answer clears notes, answer deletion withdraws explanation, source correction/deletion and owner isolation, original labs unchanged by context writes.",
+    "20 current explanation layouts at320/390/768/1024/1440 across Everyday/Athlete and light/dark PASS, plus200% text. Existing remembered form checks remain. Actual screenshots opened for engineering review; physical VoiceOver/device and independent design NOT TESTED.",
+    "Full integrated local unit/embedded PostgreSQL suite PASS811/811,0fail,0skip; source snapshot includes C1 choice + C2 saved explanation. Actual keyboard source action reaches its exact owned source row and Back/reload retains the saved explanation."
+  ],
+  "artifacts": [
+    "/workspace/bloom-response-explanation-unit.log",
+    "/workspace/bloom-response-explanation-types.log",
+    "/workspace/bloom-response-explanation-browser.log",
+    "/tmp/bloom-remembered-context/",
+    "/workspace/bloom-response-explanation-build.log",
+    "/workspace/bloom-response-explanation-audits.log",
+    "/workspace/bloom-core-integrated-20261117-unit.log"
+  ],
+  "scope": "This closes the saved-answer\u2192revised explanation gap. Full Response15 actual-exposure contributors, supported population evidence/action utility and report-wide clinical relevance remain partial; no claim that this is a causal or full Response model. Continue approved Core after publication.",
+  "privacy": "Synthetic local accounts only. Original server rights/source revision/replay/erasure boundaries reused. No production data changes, private query, merge, manual deployment or external messaging."
+}
