@@ -27,5 +27,13 @@
   "limits": [
     "Current HbA1c-only prompt correction remains incomplete until producer transition; do not claim full feature/RC.",
     "No actual-owner data, clinical/independent human/device acceptance or manual production deployment."
-  ]
+  ],
+  "publicationObservation": {
+    "commit": "750b3da8bf42fc516ef790d1236b4b26db3ec015",
+    "workflow": 44347757468,
+    "job": 134954716659,
+    "conclusion": "failure",
+    "reason": "Unrelated common-source browser assertion retained the capitalized sentence Your recorded intake is not assessed; life-stage paragraph lowercased it. Restore the exact sentence, no assertion weakened. Full common source/meal/zero/unknown/owner browser regression passes locally.",
+    "compatibleRuntime": "Latest Architect docs descendant454c4c55 RenderLIVE dep-dbuu1bj9f4gs73c6gtag17:33:28UTC. Exact full CI still pending repair qualification; new HbA1c producer not activated."
+  }
 }
