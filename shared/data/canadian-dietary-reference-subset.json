@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v3",
+  "version": "hc-dietary-reference-subset-2026-11-18-v4",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -10,9 +10,9 @@
       "id": "hc-vitamins",
       "title": "Health Canada: Dietary reference values for vitamins",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
-      "location": "Table 2, Vitamin C adult male/female rows and footnote 8",
+      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4",
       "note": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
-      "retrievedOn": "2026-11-17"
+      "retrievedOn": "2026-11-18"
     },
     {
       "id": "hc-elements",
@@ -413,12 +413,73 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_d_ug-all-19-ear",
+      "nutrientKey": "vitamin_d_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 10,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_d_ug-all-19-rda",
+      "nutrientKey": "vitamin_d_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": 70,
+      "kind": "RDA",
+      "amount": 15,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_d_ug-all-71-rda",
+      "nutrientKey": "vitamin_d_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 71,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 20,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_d_ug-all-19-ul",
+      "nutrientKey": "vitamin_d_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "UL",
+      "amount": 100,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
     "vitamin_c_mg": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
     "magnesium_mg": "The magnesium UL covers pharmacological agents only and excludes food and water.",
     "calcium_mg": "Health Canada uses the 2011 calcium reference values, which supersede 1997 values. Equal adjacent age bands are coalesced only when sex, reference type, amount and intake scope all agree.",
-    "potassium_mg": "Health Canada uses the 2019 potassium values. These are Adequate Intakes (AI), not EARs or RDAs. Intake below an AI does not establish inadequacy. No potassium UL or CDRR is established in this source; that does not mean unlimited intake is safe. These general references are not a treatment target."
+    "potassium_mg": "Health Canada uses the 2019 potassium values. These are Adequate Intakes (AI), not EARs or RDAs. Intake below an AI does not establish inadequacy. No potassium UL or CDRR is established in this source; that does not mean unlimited intake is safe. These general references are not a treatment target.",
+    "vitamin_d_ug": "Health Canada uses the 2011 vitamin D values, assuming minimal sun exposure. These are dietary amounts in micrograms per day, not blood vitamin D measurements or a treatment dose. No IU, blood-level or D2/D3-form conversion is calculated here. The UL covers total intake and is not an intake goal."
   }
 }

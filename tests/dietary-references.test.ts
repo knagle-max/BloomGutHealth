@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {dietaryReferenceSubset,dietaryReferencesFor,dietaryReferenceRowSchema} from '../shared/dietary-references';
 test('curated Health Canada source facts preserve separate adult EAR/RDA/UL, sex/age categories and source-specific scope',()=>{
- assert.equal(dietaryReferenceSubset.rows.length,26);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['AI','EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
+ assert.equal(dietaryReferenceSubset.rows.length,30);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['AI','EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
  const rda=(nutrient:string,sex:string,ageMin:number)=>dietaryReferencesFor(nutrient).find(row=>row.kind==='RDA'&&row.sexReferenceCategory===sex&&row.ageMinYears===ageMin)!;
  assert.equal(rda('vitamin_c_mg','M',19).amount,90);assert.equal(rda('vitamin_c_mg','F',19).amount,75);
  for(const [sex,age,value]of [['M',19,400],['M',31,420],['F',19,310],['F',31,320]]as const)assert.equal(rda('magnesium_mg',sex,age).amount,value);
@@ -37,4 +37,10 @@ test('potassium preserves 2019 AI and explicitly absent EAR/RDA/UL/CDRR without 
  const rows=dietaryReferencesFor('potassium_mg');assert.deepEqual(rows.map(row=>[row.sexReferenceCategory,row.kind,row.amount,row.unit]),[['M','AI',3400,'mg/day'],['F','AI',2600,'mg/day']]);
  const {referenceVersion,...row}=rows[0];for(const kind of ['EAR','RDA','UL','CDRR'])assert.equal(dietaryReferenceRowSchema.safeParse({...row,kind}).success,false);
  assert.match(dietaryReferenceSubset.nutrientNotes.potassium_mg,/below an AI does not establish inadequacy/);assert.match(dietaryReferenceSubset.nutrientNotes.potassium_mg,/does not mean unlimited intake is safe/);
+});
+
+test('dietary vitamin D keeps micrograms/day, 2011 adult age-dependent RDA and total-intake UL separate from IU and blood analytes',()=>{
+ const rows=dietaryReferencesFor('vitamin_d_ug');assert.deepEqual(rows.map(row=>[row.kind,row.ageMinYears,row.ageMaxYears,row.amount,row.unit]),[['EAR',19,null,10,'µg/day'],['RDA',19,70,15,'µg/day'],['RDA',71,null,20,'µg/day'],['UL',19,null,100,'µg/day']]);
+ const {referenceVersion,...row}=rows[0];for(const unit of ['mg/day','IU/day','nmol/L','pmol/L'])assert.equal(dietaryReferenceRowSchema.safeParse({...row,unit}).success,false);assert.equal(dietaryReferenceRowSchema.safeParse({...row,sourceId:'hc-elements'}).success,false);
+ assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_d_ug,/minimal sun exposure/);assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_d_ug,/not blood vitamin D measurements/);assert.equal(rows.some(row=>'bloodLevel' in row||'dose' in row),false);
 });
