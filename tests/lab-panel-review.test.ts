@@ -64,7 +64,7 @@ test('aligned opposing lipid directions stay visible without source bounds or a 
 const glycemicRows=()=>[lab('hba1c',6.2,1,{unit:'%',referenceLow:4.5,referenceHigh:5.9}),lab('glucose',5,1,{referenceLow:3.3,referenceHigh:5.5})];
 test('BIO-VALUE03: same-report source discrepancy explains different glycemic timescales with evidence and an original-result path, without clinical promotion',()=>{
  const rows=glycemicRows(),r=report(rows),before=JSON.stringify(r),finding=recordedLabPanelReview(r).glycemicDiscrepancy!;
- assert.ok(finding);assert.deepEqual(finding.sourceIds,['hba1c-1','glucose-1']);assert.match(finding.meaning,/does not cancel/);assert.match(finding.meaning,/two to three months/);assert.equal(finding.releaseState,'detail-only');assert.equal(finding.clinicalSignificance,'not-assessed');assert.ok(finding.citations.length>=2);assert.match(finding.action.href,/hba1c-1/);assert.equal(JSON.stringify(r),before);
+ assert.ok(finding);assert.deepEqual(finding.sourceIds,['hba1c-1','glucose-1']);assert.match(finding.meaning,/does not cancel/);assert.match(finding.meaning,/two to three months/);assert.equal(finding.releaseState,'feature-eligible');assert.equal(finding.clinicalSignificance,'not-assessed');assert.ok(finding.citations.length>=2);assert.match(finding.action.href,/hba1c-1/);assert.equal(JSON.stringify(r),before);
 });
 test('BIO-VALUE01/06: normal noise, missing bounds/fasting, random glucose, different reports and unresolved units do not acquire glycemic discrepancy interpretation',()=>{
  const [a,g]=glycemicRows();
@@ -74,4 +74,14 @@ test('BIO-VALUE07/13: source corrections change the glycemic dependency token an
  const [a,g]=glycemicRows(),initial=recordedLabPanelReview(report([a,g])).glycemicDiscrepancy!;
  const changed=recordedLabPanelReview(report([{...a,payload:{...a.payload,value:6.3}},g])).glycemicDiscrepancy!;
  assert.notEqual(initial.sourceEpoch,changed.sourceEpoch);assert.equal(recordedLabPanelReview(report([{...a,payload:{...a.payload,value:5.5}},g])).glycemicDiscrepancy,null);assert.equal(recordedLabPanelReview(report([g])).glycemicDiscrepancy,null);
+});
+
+test('BIO-VALUE01: an opposing in-range lipid change stays a detailed fact, without a default concern or invented overall benefit',()=>{
+ const rows=[lab('triglycerides',1.5,0,{referenceHigh:2}),lab('triglycerides',1.49,1,{referenceHigh:2}),lab('ldl',2,0,{referenceHigh:3}),lab('ldl',2.01,1,{referenceHigh:3})],review=recordedLabPanelReview(report(rows));assert.equal(review.lipidTradeoffs.length,1);assert.equal(review.lipidSourceDiscrepancy,null);
+ const noBounds=rows.map(row=>({...row,payload:{...row.payload,referenceHigh:null}}));assert.equal(recordedLabPanelReview(report(noBounds)).lipidSourceDiscrepancy,null);
+});
+test('BIO-VALUE02/03: source-bound lipid discrepancy explains why a triglyceride fall does not cancel other above-bound results, with original evidence and no risk score',()=>{
+ const rows=[lab('triglycerides',3,0),lab('triglycerides',1),lab('ldl',2,0),lab('ldl',4),lab('apob',1,0),lab('apob',1.5)],review=recordedLabPanelReview(report(rows)),finding=review.lipidSourceDiscrepancy!;
+ assert.ok(finding);assert.match(finding.finding,/LDL cholesterol and ApoB/);assert.match(finding.meaning,/different parts/);assert.ok(finding.citations.length>0);assert.equal(finding.clinicalSignificance,'not-assessed');assert.equal(finding.sourceIds.length,6);assert.match(finding.action.href,/ldl-1/);
+ assert.equal(recordedLabPanelReview(report(rows.filter(row=>!['ldl','apob'].includes(row.payload.marker)))).lipidSourceDiscrepancy,null);
 });

@@ -7,7 +7,7 @@ import {hasConfirmedLabIdentity} from './lab-assay-identity';
 import {labEditorialFor,labEditorialSources} from './biology-labs';
 import {goalGuidance} from './goal-guidance';
 
-export const LAB_PANEL_REVIEW_VERSION='recorded-panel-review-2026-11-18-v3';
+export const LAB_PANEL_REVIEW_VERSION='recorded-panel-review-2026-11-18-v4';
 type Point=PrecisionReport['trends'][number]['points'][number];
 export const labReviewFamilies=[
  {id:'lipids',name:'Lipids together',markers:['ldl','apob','hdl','triglycerides','non_hdl'],goals:['metabolic'],question:'Were any medicines changed before this collection?',context:'LDL, ApoB, HDL and triglycerides describe different aspects of the measured lipid picture. A lower triglyceride result alone does not establish an overall benefit.'},
@@ -56,8 +56,8 @@ function alignedReports(a:LabPanelAssessment,b:LabPanelAssessment){
  return !!before&&!!after&&before!==after&&before===labReportGroupKey(b.previous.sourceReport)&&after===labReportGroupKey(b.latest.sourceReport)&&a.previous.date===b.previous.date&&a.latest.date===b.latest.date;
 }
 /** Source-interval discrepancy, not a diagnostic threshold or proof that HbA1c
- * accurately represents this person's glucose. Keep inside existing family
- * detail pending independent interpretation acceptance. */
+ * accurately represents this person's glucose. This bounded educational
+ * source explanation does not establish personal clinical significance. */
 function glycemicSourceDiscrepancy(assessments:LabPanelAssessment[]){
  const a1c=assessments.find(row=>row.id==='hba1c'),glucose=assessments.find(row=>row.id==='glucose');
  if(!a1c?.latest||!glucose?.latest||a1c.state==='source-review'||glucose.state==='source-review')return null;
@@ -67,11 +67,11 @@ function glycemicSourceDiscrepancy(assessments:LabPanelAssessment[]){
  // Both glucose bounds must actually be supplied; no one-sided value becomes
  // a complete interval. Never compare either analyte against the other's units.
  if(!ar||!gr||gr.low===null||gr.high===null||a1c.position!=='above'||glucose.position!==null)return null;
- const profiles=['hba1c','glucose'].map(id=>labEditorialFor(id));if(profiles.some(profile=>!profile))return null;
+ const profiles=['hba1c','glucose'].map(id=>labEditorialFor(id));if(profiles.some(profile=>!profile||!labEditorialSources(profile).length))return null;
  const citations=Array.from(new Map(profiles.flatMap(profile=>labEditorialSources(profile!)).map(source=>[source.id,source])).values());
- return{id:'glycemic-source-discrepancy',releaseState:'detail-only' as const,evidenceClass:'source-bound-educational-context' as const,
+ return{id:'glycemic-source-discrepancy',releaseState:'feature-eligible' as const,evidenceClass:'source-bound-educational-context' as const,
   finding:'HbA1c is above its source upper bound while fasting glucose from the same report is within its supplied bounds.',
-  meaning:'A fasting glucose result describes the collection moment; HbA1c reflects roughly the preceding two to three months. This glucose result does not cancel the HbA1c finding, and the discrepancy does not establish its cause.',
+  meaning:'A fasting glucose result describes the collection moment; HbA1c usually reflects roughly the preceding two to three months. Red-cell turnover and some conditions can make HbA1c less representative. This glucose result does not cancel the HbA1c finding, and the discrepancy does not establish its cause.',
   limitations:'Red-cell turnover, anemia, hemoglobin variants, pregnancy and some medical conditions can affect HbA1c. Their presence is not inferred from this pattern. Source bounds are not a diabetes diagnosis or a treatment target.',
   sourceIds:[a.id,g.id],citations,
   action:{label:'Review original HbA1c result',href:`/precision?tab=labs&labResult=${encodeURIComponent(a.id)}`},
@@ -90,7 +90,24 @@ export function recordedLabPanelReview(report:Pick<PrecisionReport,'trends'|'pen
  const glycemicDiscrepancy=glycemicSourceDiscrepancy(assessments);
  const selected=families.filter(family=>family.selected),tg=assessments.find(row=>row.id==='triglycerides');
  const lipidTradeoffs=tg&&tg.change!==null&&tg.change<0?assessments.filter(row=>['ldl','apob'].includes(row.id)&&row.change!==null&&row.change>0&&alignedReports(tg,row)).map(row=>({lower:tg.id,higher:row.id,sourceIds:[tg.previous!.id,tg.latest!.id,row.previous!.id,row.latest!.id],text:`Triglycerides decreased while ${row.name} increased. The paired reports align; an overall benefit or cause is not established.`})):[];
+ // Direction differences remain inspectable facts. Only an aligned opposing
+ // pattern with an actual latest above-source bound merits this explanation;
+ // tiny in-range noise cannot become a main-surface concern.
+ const lipidBoundMembers=lipidTradeoffs.map(tradeoff=>assessments.find(row=>row.id===tradeoff.higher)!).filter(row=>row.state==='source-bound'&&row.position==='above');
+ const lipidProfiles=lipidBoundMembers.flatMap(row=>{const profile=labEditorialFor(row.id);return profile?[profile]:[];});
+ const lipidSourceDiscrepancy=lipidBoundMembers.length&&lipidProfiles.length===lipidBoundMembers.length&&lipidProfiles.every(profile=>labEditorialSources(profile).length>0)?{
+  id:'lipid-source-discrepancy',releaseState:'feature-eligible' as const,
+  finding:`Read the triglyceride decrease alongside ${lipidBoundMembers.map(row=>row.name).join(' and ')} results above their reported upper bounds.`,
+  meaning:'These markers describe different parts of the lipid picture. An overall benefit cannot be concluded from the triglyceride change while these other observations are above their own supplied upper bounds.',
+  limitations:'This is an aligned source pattern, not a diagnosis, risk score, proof of a clinically meaningful change or evidence of its cause. Source intervals are not individualized treatment targets.',
+  sourceIds:Array.from(new Set(lipidTradeoffs.filter(tradeoff=>lipidBoundMembers.some(row=>row.id===tradeoff.higher)).flatMap(row=>row.sourceIds))),
+  citations:Array.from(new Map(lipidProfiles.flatMap(profile=>labEditorialSources(profile)).map(source=>[source.id,source])).values()),
+  action:{label:'Review original lipid result',href:`/precision?tab=labs&labResult=${encodeURIComponent(lipidBoundMembers[0].latest!.id)}`},
+  discussion:'Review the paired reports and overall cardiovascular context with your clinician before treating a triglyceride decrease as an overall improvement.',
+  sourceEpoch:JSON.stringify([LAB_PANEL_REVIEW_VERSION,tg?.previous,tg?.latest,...lipidBoundMembers.flatMap(row=>[row.previous,row.latest])]),
+  clinicalSignificance:'not-assessed' as const,personalAttribution:'not-assessed' as const,
+ }:null;
  const covered=new Set(families.flatMap(family=>family.members.map(row=>row.id)));
  const otherCues=assessments.filter(row=>!covered.has(row.id)&&(row.state==='source-bound'||row.state==='source-bound-transition'));
- return{version:LAB_PANEL_REVIEW_VERSION,glycemicDiscrepancy,assessments,families,selected,otherCues,sourceReview:assessments.filter(row=>row.state==='source-review'),notSelected:assessments.filter(row=>row.state==='not-selected'),lipidTradeoffs,originalRecords:new Set(entries.flatMap(entry=>[...(entry.trend?.points.map(point=>point.id)||[]),...entry.pending.map(row=>row.id),...entry.sourceOnly.map(row=>row.id)])).size,clinicalSignificance:'not-assessed' as const,personalAttribution:'not-assessed' as const};
+ return{version:LAB_PANEL_REVIEW_VERSION,lipidSourceDiscrepancy,glycemicDiscrepancy,assessments,families,selected,otherCues,sourceReview:assessments.filter(row=>row.state==='source-review'),notSelected:assessments.filter(row=>row.state==='not-selected'),lipidTradeoffs,originalRecords:new Set(entries.flatMap(entry=>[...(entry.trend?.points.map(point=>point.id)||[]),...entry.pending.map(row=>row.id),...entry.sourceOnly.map(row=>row.id)])).size,clinicalSignificance:'not-assessed' as const,personalAttribution:'not-assessed' as const};
 }

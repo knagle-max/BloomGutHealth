@@ -32,18 +32,16 @@ export default function LabPanelReview({report,onSelect}:{report:PrecisionReport
   <p className="panel-note">Cues use original source bounds, not medical urgency, diagnosis or treatment response.</p>
   <LabActivityContextReview pairs={review.assessments}/>
   <LabWeightContextReview pairs={review.assessments} observations={report.checkins}/>
-  {review.lipidTradeoffs.length>0&&<p className="lab-panel-review-tradeoff">Triglycerides decreased while {review.lipidTradeoffs.map(tradeoff=>review.assessments.find(row=>row.id===tradeoff.higher)!.name).join(' and ')} increased. The paired reports align; an overall benefit or cause is not established.</p>}
+  {[review.glycemicDiscrepancy,review.lipidSourceDiscrepancy].filter(value=>value!==null).map(finding=><section key={finding.id} className="space-y-2 my-4" aria-label={finding.id==='glycemic-source-discrepancy'?'Glucose and HbA1c source discrepancy':'Lipid source discrepancy'}>
+   <h3>{finding.id==='glycemic-source-discrepancy'?'Why these glucose results can differ':'Read these lipids together'}</h3>
+   <p>{finding.finding}</p><p>{finding.meaning}</p><p>{finding.discussion}</p>
+   <a className="text-link inline-flex min-h-11 items-center" href={finding.action.href}>{finding.action.label}</a>
+   <details><summary className="min-h-11 cursor-pointer">Evidence and interpretation limits</summary><p>{finding.limitations}</p><ul>{finding.citations.map(source=><li key={source.id}><a className="text-link" href={source.url} target="_blank" rel="noreferrer">{source.title}</a></li>)}</ul></details>
+  </section>)}
   {review.selected.length===0&&review.otherCues.length===0&&<p>No source-bound review cues were assigned. Missing bounds or unresolved source details can limit this review; this does not mean all results are normal.</p>}
   {review.selected.map(family=><details key={family.id} className="lab-panel-review-family">
    <summary>{family.name} · {family.cues.length} review {family.cues.length===1?'cue':'cues'}{family.goalRelevant?' · related to a recorded goal':''}</summary>
    <p>{family.context}</p>
-   {family.id==='glycemic'&&review.glycemicDiscrepancy&&<section aria-label="Glucose and HbA1c source discrepancy">
-    <h3>Why these results can differ</h3>
-    <p>{review.glycemicDiscrepancy.finding}</p><p>{review.glycemicDiscrepancy.meaning}</p>
-    <p>{review.glycemicDiscrepancy.discussion}</p>
-    <a className="text-link inline-flex min-h-11 items-center" href={review.glycemicDiscrepancy.action.href}>{review.glycemicDiscrepancy.action.label}</a>
-    <details><summary>Evidence and interpretation limits</summary><p>{review.glycemicDiscrepancy.limitations}</p><ul>{review.glycemicDiscrepancy.citations.map(source=><li key={source.id}><a className="text-link" href={source.url} target="_blank" rel="noreferrer">{source.title}</a></li>)}</ul></details>
-   </section>}
    <ul className="lab-panel-review-list">{family.cues.map(observation)}</ul>
    {family.members.some(row=>!family.cues.includes(row))&&<details><summary>Other recorded markers in this family</summary><ul className="lab-panel-review-list">{family.members.filter(row=>!family.cues.includes(row)).map(observation)}</ul></details>}
    <LabFamilyGuidance family={family}/>
@@ -51,7 +49,7 @@ export default function LabPanelReview({report,onSelect}:{report:PrecisionReport
    <p>Review the original reports and collection context with your clinician if you have questions about these findings. Do not change medicine or supplement doses based on this view.</p>
   </details>)}
   {review.otherCues.length>0&&<details><summary>Other source-bound review cues · {review.otherCues.length}</summary><ul className="lab-panel-review-list">{review.otherCues.map(observation)}</ul></details>}
-  <details><summary>How each marker was reviewed</summary>
+  <details><summary>How each marker was reviewed</summary>{review.lipidTradeoffs.length>0&&<p className="lab-panel-review-tradeoff">Triglycerides decreased while {review.lipidTradeoffs.map(tradeoff=>review.assessments.find(row=>row.id===tradeoff.higher)!.name).join(' and ')} increased. The paired reports align; an overall benefit or cause is not established.</p>}
    <p className="panel-note">Every recorded marker or source label is listed. Related families appear together; families relevant to recorded goals appear first, followed alphabetically. No percentage-change leaderboard or personal cause is inferred. Original records, assay context and educational sources are available through each marker.</p>
    <ul className="lab-panel-review-list">{review.assessments.map(observation)}</ul>
   </details>
