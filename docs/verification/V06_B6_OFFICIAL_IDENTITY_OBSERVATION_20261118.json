@@ -1,0 +1,31 @@
+{
+  "task": "V06-B6-OFFICIAL-METADATA-OBSERVATION",
+  "status": "PRIMARY_IDENTITY_OBSERVED",
+  "commit": "064df517351dafd9307510269b5951e2358d31fe",
+  "workflow": 44331491020,
+  "job": 134896792996,
+  "observation": {
+    "kind": "public-fdc-b6-identity-observation",
+    "checkedAt": "2026-11-18T15:16:47.858Z",
+    "sourceEndpoint": "https://api.nal.usda.gov/fdc/v1/food/171688",
+    "access": "documented public USDA demo access; no private credentials",
+    "witnessFoodId": 171688,
+    "status": "identity-observed",
+    "reason": null,
+    "identities": [
+      {
+        "id": 1175,
+        "name": "Vitamin B-6",
+        "unitName": "mg",
+        "number": "415"
+      }
+    ],
+    "limitations": "One bounded public metadata observation only. No food composition/catalogue coverage, original-byte hash, private intake, clinical assessment or runtime mapping change is asserted."
+  },
+  "qualification": "Metadata and preceding browser/source checks passed. Run later failed exact hosted binding after Render advanced to90641664; no accounts created. This does not invalidate the independent public metadata observation.",
+  "limitations": [
+    "No food composition values or installed catalogue B6 coverage acquired; original21 generic producer unchanged.",
+    "No original response-byte hash, private credential or patient data claimed.",
+    "No additional probe needed for unchanged identity."
+  ]
+}

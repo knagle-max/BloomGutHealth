@@ -50,3 +50,8 @@ test('vitamin A matches source sex/age context while preserving preformed-only U
 test('folate and E profile applicability retains synthetic scope without calculating personal source-form amounts',()=>{
  for(const key of ['folate_ug','vitamin_e_mg']){const view=dietaryReferenceEligibility({...base,nutrientKey:key});assert.equal(view.rows.filter(row=>row.eligible).length,3);assert.equal(view.rows.find(row=>row.reference.kind==='UL')!.reference.intakeScope.startsWith('synthetic-'),true);assert.equal(view.adequacyAssessment,false);assert.equal(dietaryReferenceEligibility({...base,nutrientKey:key,healthContext:{...base.healthContext,pregnancy:'yes'}}).rows.some(row=>row.eligible),false);}
 });
+
+test('iron never infers menstruation or menopause from female Profile age; all general source values remain available',()=>{
+ assert.deepEqual(eligible({...base,nutrientKey:'iron_mg'}),[['EAR',6],['RDA',8],['UL',45]]);
+ for(const age of [36,51,72]){const view=dietaryReferenceEligibility({...base,nutrientKey:'iron_mg',profile:{id:'a',sex:'female'},birthYear:2026-age});assert.equal(view.rows.length,7);assert.deepEqual(view.rows.filter(row=>row.eligible).map(row=>[row.reference.kind,row.reference.amount]),[['UL',45]]);assert.ok(view.rows.filter(row=>row.reference.menstrualBasis).every(row=>row.reasons.includes('menstrual-context-not-established')));assert.equal(view.adequacyAssessment,false);}
+});

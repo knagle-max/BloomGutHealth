@@ -2,12 +2,15 @@ export {vitaminB6ReferenceContext} from './supplement-reference-context';
 import {z} from 'zod';
 import data from './data/canadian-dietary-reference-subset.json';
 export const dietaryReferenceRowSchema=z.object({
- id:z.string().min(1),nutrientKey:z.enum(['vitamin_c_mg','magnesium_mg','calcium_mg','potassium_mg','vitamin_d_ug','vitamin_a_ug','folate_ug','vitamin_e_mg']),
+ id:z.string().min(1),nutrientKey:z.enum(['vitamin_c_mg','magnesium_mg','calcium_mg','potassium_mg','vitamin_d_ug','vitamin_a_ug','folate_ug','vitamin_e_mg','iron_mg']),
  sexReferenceCategory:z.enum(['M','F','all']),ageMinYears:z.number().int().min(19),ageMaxYears:z.number().int().min(19).nullable(),
  kind:z.enum(['EAR','RDA','AI','UL','CDRR']),amount:z.number().finite().positive(),unit:z.enum(['mg/day','µg/day','µg RAE/day','µg DFE/day','µg folic acid/day']),
  lifeStage:z.literal('nonpregnant-nonlactating-adult'),referencePeriod:z.literal('usual-daily-intake'),
+ menstrualBasis:z.enum(['source-assumed-menstruating','source-assumed-postmenopausal']).optional(),
  sourceId:z.enum(['hc-vitamins','hc-elements']),intakeScope:z.enum(['total-intake','pharmacological-only','preformed-vitamin-a-only','synthetic-folic-acid-only','synthetic-vitamin-e-only']),smokingApplicability:z.enum(['non-smoker','not-specific']),
 }).strict().superRefine((row,ctx)=>{
+ const ironFemaleRequirement=row.nutrientKey==='iron_mg'&&row.sexReferenceCategory==='F'&&(row.kind==='EAR'||row.kind==='RDA');
+ if(ironFemaleRequirement?row.menstrualBasis!==(row.ageMinYears===19&&row.ageMaxYears===50?'source-assumed-menstruating':row.ageMinYears===51&&row.ageMaxYears===null?'source-assumed-postmenopausal':null):row.menstrualBasis!==undefined)ctx.addIssue({code:'custom',message:'Keep source iron menstrual assumptions explicit and separate from individual status'});
  if(row.nutrientKey==='potassium_mg'&&row.kind!=='AI')ctx.addIssue({code:'custom',message:'The source establishes potassium AI, not EAR/RDA/UL/CDRR'});
  if((row.nutrientKey==='vitamin_a_ug'&&row.kind==='UL')!==(row.intakeScope==='preformed-vitamin-a-only'))ctx.addIssue({code:'custom',message:'Vitamin A UL applies only to preformed vitamin A'});
  for(const[key,scope]of [['folate_ug','synthetic-folic-acid-only'],['vitamin_e_mg','synthetic-vitamin-e-only']]as const)if((row.nutrientKey===key&&row.kind==='UL')!==(row.intakeScope===scope))ctx.addIssue({code:'custom',message:'Keep synthetic folic acid and vitamin E upper limits separate from natural food forms'});
@@ -26,4 +29,4 @@ export const dietaryReferenceSubset=Object.freeze({...data,rows,sources:Object.f
 export function dietaryReferencesFor(nutrientKey:string){return dietaryReferenceSubset.rows.filter(row=>row.nutrientKey===nutrientKey);}
 export const dietaryReferenceKinds={EAR:'Estimated average requirement',RDA:'Recommended dietary allowance',AI:'Adequate intake',UL:'Tolerable upper intake level',CDRR:'Chronic disease risk reduction intake'} as const;
 
-export const dietaryReferenceNutrients=Object.freeze([{key:'vitamin_c_mg',name:'Vitamin C'},{key:'magnesium_mg',name:'Magnesium'},{key:'calcium_mg',name:'Calcium'},{key:'potassium_mg',name:'Potassium'},{key:'vitamin_d_ug',name:'Vitamin D'},{key:'vitamin_a_ug',name:'Vitamin A'},{key:'folate_ug',name:'Folate'},{key:'vitamin_e_mg',name:'Vitamin E'}]);
+export const dietaryReferenceNutrients=Object.freeze([{key:'vitamin_c_mg',name:'Vitamin C'},{key:'magnesium_mg',name:'Magnesium'},{key:'calcium_mg',name:'Calcium'},{key:'potassium_mg',name:'Potassium'},{key:'vitamin_d_ug',name:'Vitamin D'},{key:'vitamin_a_ug',name:'Vitamin A'},{key:'folate_ug',name:'Folate'},{key:'vitamin_e_mg',name:'Vitamin E'},{key:'iron_mg',name:'Iron'}]);

@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v6",
+  "version": "hc-dietary-reference-subset-2026-11-18-v7",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -18,7 +18,7 @@
       "id": "hc-elements",
       "title": "Health Canada: Dietary reference values for elements",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
-      "location": "Table 1 Calcium adult rows and footnote ** (2011 revision); Table 2 Magnesium adult rows and footnote 19; Table 3 Potassium adult rows and footnotes ***, 24 and 25",
+      "location": "Table 1 Calcium adult rows and footnote ** (2011 revision); Table 2 Magnesium adult rows and footnote 19; Table 3 Potassium adult rows and footnotes ***, 24 and 25; Table 2 Iron adult rows and footnotes18/g",
       "note": "Magnesium UL covers pharmacological agents and excludes food and water. Calcium uses the 2011 reference values; equal adjacent adult age bands are coalesced only within the same sex/reference kind/value/scope.",
       "retrievedOn": "2026-11-18"
     }
@@ -638,6 +638,115 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-iron_mg-M-19-ear",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 6,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-iron_mg-M-19-rda",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 8,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-iron_mg-F-19-ear",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": 50,
+      "kind": "EAR",
+      "amount": 8.1,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "menstrualBasis": "source-assumed-menstruating"
+    },
+    {
+      "id": "hc-iron_mg-F-19-rda",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": 50,
+      "kind": "RDA",
+      "amount": 18,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "menstrualBasis": "source-assumed-menstruating"
+    },
+    {
+      "id": "hc-iron_mg-F-51-ear",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 51,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 5,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "menstrualBasis": "source-assumed-postmenopausal"
+    },
+    {
+      "id": "hc-iron_mg-F-51-rda",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 51,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 8,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "menstrualBasis": "source-assumed-postmenopausal"
+    },
+    {
+      "id": "hc-iron_mg-all-19-ul",
+      "nutrientKey": "iron_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "UL",
+      "amount": 45,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
@@ -648,6 +757,7 @@
     "vitamin_d_ug": "Health Canada uses the 2011 vitamin D values, assuming minimal sun exposure. These are dietary amounts in micrograms per day, not blood vitamin D measurements or a treatment dose. No IU, blood-level or D2/D3-form conversion is calculated here. The UL covers total intake and is not an intake goal.",
     "vitamin_a_ug": "Vitamin A requirements are expressed as retinol activity equivalents (RAE). The upper limit applies to preformed vitamin A only, not all carotenoids. A total RAE food value or a label with unknown form does not establish the preformed amount. No retinol/carotenoid/IU conversion or comparison to your intake is calculated here.",
     "folate_ug": "Folate requirements use dietary folate equivalents (DFE). The upper limit uses micrograms of folic acid from supplements and fortified foods, not DFE or naturally occurring food folate. Existing total-folate food fields and labels with unknown form do not establish DFE or the synthetic amount. No conversion, pregnancy/preconception dose or intake assessment is calculated here.",
-    "vitamin_e_mg": "Vitamin E requirements refer to alpha-tocopherol in 2R-stereoisomeric forms. The upper limit applies only to synthetic vitamin E from supplements and fortified foods. A source field without stereoisomer or formulation details does not establish either basis. No IU/activity conversion or intake assessment is calculated here."
+    "vitamin_e_mg": "Vitamin E requirements refer to alpha-tocopherol in 2R-stereoisomeric forms. The upper limit applies only to synthetic vitamin E from supplements and fortified foods. A source field without stereoisomer or formulation details does not establish either basis. No IU/activity conversion or intake assessment is calculated here.",
+    "iron_mg": "The source female iron requirements assume menstruation before age 51 and post-menopause from age 51. Profile sex and birth year do not establish either status for an individual. The source also reports higher requirements for vegetarian diets; no personal adjustment is calculated. These reference facts do not estimate absorption or individual inadequacy probability, particularly with menstrual losses. The UL is not a treatment dose."
   }
 }
