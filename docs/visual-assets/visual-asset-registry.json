@@ -4979,6 +4979,1506 @@
         "accuracyAndExclusions": "No invented physiological outcomes, false sport intensity or unsupported medical visuals, no third-party brand, text or watermark",
         "existingAssetAndApprovalHandling": "Search approved assets before commissioning. Preserve all existing original art/IDs; use BVA-0052 only if a genuinely distinct original asset is needed."
       }
+    },
+    {
+      "id": "BVA-0053",
+      "name": "Microorganism candidate — Amedibacterium intestinale",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-amedibacterium-intestinale",
+      "reportedName": "Amedibacterium intestinale",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Amedibacterium intestinale, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Amedibacterium intestinale using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0054",
+      "name": "Microorganism candidate — Adlercreutzia sp. 8CFCBH1",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-adlercreutzia-sp-8cfcbh1",
+      "reportedName": "Adlercreutzia sp. 8CFCBH1",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Adlercreutzia sp. 8CFCBH1, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Adlercreutzia sp. 8CFCBH1 using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0055",
+      "name": "Microorganism candidate — Dysosmobacter welbionis",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-dysosmobacter-welbionis",
+      "reportedName": "Dysosmobacter welbionis",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Dysosmobacter welbionis, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Dysosmobacter welbionis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0056",
+      "name": "Microorganism candidate — Longibaculum sp. KGMB06250",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-longibaculum-sp-kgmb06250",
+      "reportedName": "Longibaculum sp. KGMB06250",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Longibaculum sp. KGMB06250, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Longibaculum sp. KGMB06250 using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0057",
+      "name": "Microorganism candidate — Massilistercora timonensis",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-massilistercora-timonensis",
+      "reportedName": "Massilistercora timonensis",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Massilistercora timonensis, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Massilistercora timonensis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0058",
+      "name": "Microorganism candidate — Oscillibacter sp. PEA192",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-oscillibacter-sp-pea192",
+      "reportedName": "Oscillibacter sp. PEA192",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Oscillibacter sp. PEA192, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Oscillibacter sp. PEA192 using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0059",
+      "name": "Microorganism candidate — Gordonibacter urolithinfaciens",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-gordonibacter-urolithinfaciens",
+      "reportedName": "Gordonibacter urolithinfaciens",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Gordonibacter urolithinfaciens, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Gordonibacter urolithinfaciens using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0060",
+      "name": "Microorganism candidate — Mogibacterium diversum",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-mogibacterium-diversum",
+      "reportedName": "Mogibacterium diversum",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Mogibacterium diversum, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Mogibacterium diversum using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0061",
+      "name": "Microorganism candidate — Ruthenibacterium lactatiformans",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-ruthenibacterium-lactatiformans",
+      "reportedName": "Ruthenibacterium lactatiformans",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Ruthenibacterium lactatiformans, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Ruthenibacterium lactatiformans using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0062",
+      "name": "Microorganism candidate — Agathobacter rectalis",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-agathobacter-rectalis",
+      "reportedName": "Agathobacter rectalis",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Agathobacter rectalis, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Agathobacter rectalis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0063",
+      "name": "Microorganism candidate — Eubacterium rectale",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-eubacterium-rectale",
+      "reportedName": "Eubacterium rectale",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Eubacterium rectale, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Eubacterium rectale using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0064",
+      "name": "Microorganism candidate — Mediterraneibacter gnavus",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-mediterraneibacter-gnavus",
+      "reportedName": "Mediterraneibacter gnavus",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Mediterraneibacter gnavus, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Mediterraneibacter gnavus using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0065",
+      "name": "Microorganism candidate — Butyricicoccus pullicaecorum",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-butyricicoccus-pullicaecorum",
+      "reportedName": "Butyricicoccus pullicaecorum",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Butyricicoccus pullicaecorum, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Butyricicoccus pullicaecorum using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0066",
+      "name": "Microorganism candidate — Subdoligranulum variabile",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-subdoligranulum-variabile",
+      "reportedName": "Subdoligranulum variabile",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Subdoligranulum variabile, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Subdoligranulum variabile using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0067",
+      "name": "Microorganism candidate — Dorea longicatena",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-dorea-longicatena",
+      "reportedName": "Dorea longicatena",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Dorea longicatena, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Dorea longicatena using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0068",
+      "name": "Microorganism candidate — Dorea formicigenerans",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-dorea-formicigenerans",
+      "reportedName": "Dorea formicigenerans",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Dorea formicigenerans, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Dorea formicigenerans using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0069",
+      "name": "Microorganism candidate — Oscillibacter valericigenes",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-oscillibacter-valericigenes",
+      "reportedName": "Oscillibacter valericigenes",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Oscillibacter valericigenes, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Oscillibacter valericigenes using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0070",
+      "name": "Microorganism candidate — Phascolarctobacterium succinatutens",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-phascolarctobacterium-succinatutens",
+      "reportedName": "Phascolarctobacterium succinatutens",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Phascolarctobacterium succinatutens, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Phascolarctobacterium succinatutens using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0071",
+      "name": "Microorganism candidate — Phascolarctobacterium faecium",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-phascolarctobacterium-faecium",
+      "reportedName": "Phascolarctobacterium faecium",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Phascolarctobacterium faecium, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Phascolarctobacterium faecium using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0072",
+      "name": "Microorganism candidate — Dialister invisus",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-dialister-invisus",
+      "reportedName": "Dialister invisus",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Dialister invisus, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Dialister invisus using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0073",
+      "name": "Microorganism candidate — Dialister succinatiphilus",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-dialister-succinatiphilus",
+      "reportedName": "Dialister succinatiphilus",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Dialister succinatiphilus, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Dialister succinatiphilus using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0074",
+      "name": "Microorganism candidate — Sutterella stercoricanis",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-sutterella-stercoricanis",
+      "reportedName": "Sutterella stercoricanis",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Sutterella stercoricanis, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Sutterella stercoricanis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0075",
+      "name": "Microorganism candidate — Bilophila wadsworthia",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-bilophila-wadsworthia",
+      "reportedName": "Bilophila wadsworthia",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Bilophila wadsworthia, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Bilophila wadsworthia using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0076",
+      "name": "Microorganism candidate — Gordonibacter pamelaeae",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-gordonibacter-pamelaeae",
+      "reportedName": "Gordonibacter pamelaeae",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Gordonibacter pamelaeae, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Gordonibacter pamelaeae using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
+    },
+    {
+      "id": "BVA-0077",
+      "name": "Microorganism candidate — Christensenella massiliensis",
+      "route": "/microbiome | /explore/microorganisms",
+      "component": "OrganismPortrait / Explore Microorganism catalogue",
+      "category": "scientific-illustration-request",
+      "purpose": "Conditional dedicated concept-art request for catalogue bacterium currently mapped to neutral U00; curate taxonomy and morphology first, then reuse existing C01–C05 if scientifically suitable, otherwise create a distinct original asset",
+      "organismId": "org-christensenella-massiliensis",
+      "reportedName": "Christensenella massiliensis",
+      "domain": "Bacteria",
+      "imageKey": "U00",
+      "imageMappingEvidence": "broad_visual_archetype_unverified",
+      "taxonomyReviewStatus": "unverified_registry_identity",
+      "subject": "Scientifically defensible representative morphology for Christensenella massiliensis, if confirmed distinct from existing morphology families",
+      "composition": "Premium tactile conceptual science art in established Bloom organism illustration style; reusable 48px thumbnail and 180px portrait; neutral backdrop and accurate silhouettes; no simulated microscopy",
+      "scientificAccuracy": "Morphology and taxonomic identity pending authority review; do not imply verified species-specific image, true personal sample or diagnosis; no invented fine structure",
+      "mode": [
+        "everyday-green-light",
+        "everyday-green-dark",
+        "athlete-blue-light",
+        "athlete-blue-dark"
+      ],
+      "aspectRatio": "1:1",
+      "targetDimensions": {
+        "width": 512,
+        "height": 512
+      },
+      "responsiveVariants": [
+        "thumbnail",
+        "portrait"
+      ],
+      "accessibility": "Representative scientific illustration, not species-diagnostic or an image of user's sample",
+      "lifecycle": "Briefed",
+      "assetStatus": "conditional-request-pending-morphology-review; no image produced, license, scientific approval or hash",
+      "filePaths": [],
+      "sha256": null,
+      "license": null,
+      "sourceRelation": {
+        "existingRegistry": "docs/visual-assets/visual-asset-registry.json",
+        "existingSlot": "U00 neutral fallback",
+        "action": "Check existing C01–C05, approved original organism art and reviewed taxonomy; if none adequately depicts organism's known morphology, produce new art under this permanent ID. Never overwrite original assets."
+      },
+      "integration": {
+        "verified": false,
+        "state": "No new runtime art assigned. Continue U00 neutral fallback and clear morphology-unknown disclosure until reviewed asset exists."
+      },
+      "review": {
+        "design": "conditional requested",
+        "scientific": "pending taxon/morphology review",
+        "rights": "not delivered",
+        "rendered": "not tested"
+      },
+      "authority": "Owner 2026-11-17 per-uncategorized-bacterium asset request; docs/architecture/BLOOM_MICROORGANISM_CATALOGUE_ARCHITECT_DECISION_20261117.md",
+      "fallback": "Current neutral U00; no unverified species silhouette",
+      "descriptiveBrief": {
+        "sceneDescription": "Only after authoritative morphology review, depict Christensenella massiliensis using the canonical Bloom natural science visual grammar; if existing C01–C05 or existing original organism art fits, reuse it and mark this request resolved-without-new-art.",
+        "accuracyAndExclusions": "Original artwork, no fake microscopy, clinical/benefit claims, invented cell walls/flagella/strain traits, counts, sample labels, scale bars, numbers or text.",
+        "reviewHandling": "No automated AI hallucinated anatomy. Taxonomy and morphology review before actual asset brief. Each organism retains independent requested identity and audit, even if ultimately mapped to a shared existing family."
+      }
     }
   ],
   "lastDesignerDelivery": "2026-11-15: eleven owner-selected microbiome morphology images, 11 original PNG + 33 WebP variants, hashes and archives in Agent Handoffs; BVA-0037..0047 updated; app integration pending.",
