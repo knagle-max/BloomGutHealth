@@ -41,6 +41,79 @@ This is **a feature discovery/use eligibility condition based on the user's sele
 
 **Distinct permissions:** A user selecting female is only *eligible* to see the voluntary offer; separately consent for recording, private-insight reuse, optional reminders, external AI, and research/training. Sexual wellbeing needs its own adult age/eligibility and purpose grant. Never infer these from profile sex.
 
+## 1A. Owner refinement — context-aware availability and relevance (2026-11-17)
+
+**Binding product requirement:** After the mandatory **saved Profile `sex === "female"` availability gate** is satisfied, Bloom should **prioritize or de-emphasize** female reproductive features according to voluntary, reliable individual context. **Never use age alone as a prohibition, diagnosis, recorded life stage, or consent substitute.** Reuse existing Profile age/birth year, topic-specific user goals and context, explicitly recorded cycle history, source-qualified life-stage reports, pregnancy/postpartum/lactation context, relevant treatment/surgery and explicitly chosen topic preferences. Do not infer pregnancy, fertility intent, ovulation, sexual activity, menopause or a diagnosis from demographics, laboratory values, medication lists, or missing periods.
+
+### Two distinct decisions, implemented in existing capability/navigation service
+
+1. **Eligible/available:** The female reproductive module appears available only when current authenticated saved Profile `sex === "female"` (and released feature/current authorization requirements pass). Other selections do not receive female reproductive UI, deep-link access or active data/insight processing. General hormone Bloodwork and separately adult-consented sexual wellbeing remain independent.
+2. **Recommended/display prominence:** Among *already eligible* topics, select what appears initially, which shortcuts lead, which educational modules are highlighted and whether an optional related topic teaser is shown. Use explicit selected topic, user-reported stage and active context first; age is a **soft low-confidence prior** for initial menu order only. Preserve `All topics` / `Explore other topics` in the private hub and user-chosen pinned/favorite topics. Never erase history, withdraw consent, delete a category or block a relevant action solely due to age or stage.
+
+| User context (illustrative) | Higher prominence | Still discoverable / not auto-disabled |
+|---|---|---|
+| 18–25 with no other source context | Cycle events and symptom tracking, general reproductive education | Menopause/transition content if selected or medically relevant |
+| 30–40 with explicit “trying to conceive” goal | Cycle observation, personal context, fertility education without conception probability | Menopause or hormone discussions; no pregnancy diagnosis |
+| 40–50 with **self-reported** perimenopause or hot flashes | Transition symptoms, sleep, changing cycle history, bounded guidance | Conception/contraception context still reachable; no claim of infertility |
+| Self-/clinician-reported postmenopause | Menopause symptoms, bone and cardiovascular health education, general sexual wellbeing if separately consented | Cycle records/history, chosen fertility-related questions and assisted-reproduction education as appropriate |
+| Explicit postpartum or lactation context | User-selected recovery and symptoms, sleep, dated pregnancy/lactation context | Other topics accessible; do not infer natural menstrual stage from absent periods |
+
+**Medical caution:** Early menopause/POI are possible under 40, and perimenopause may coexist with pregnancy potential. Never hide symptoms or clinician-discussion pathways for young users merely because the topic is uncommon. Age 45 or any age alone does not diagnose stage; use only explicitly reported/clinician-confirmed stage source with proper qualifiers. No algorithmic fertility status or contraception clearance. References: [NICE NG23](https://www.nice.org.uk/guidance/ng23/chapter/recommendations), [ASRM/ESHRE POI](https://www.asrm.org/practice-guidance/practice-committee-documents/evidence-based-guideline-premature-ovarian-insufficiency--2024/), [WHO Menopause](https://www.who.int/news-room/fact-sheets/detail/menopause/).
+
+### Relevance logic and UX contract
+
+- First experience: selected female + no RH consent receives a short **optional** topic chooser; present a few most plausibly useful topics based on age **without asking users to declare stage or fertility intent**, with `Explore all topics` and `Skip`. Decline stays declined. No intrusive reminders.
+- Once opted in, **explicit goals and user-pinned preferences outrank demographic defaults**. Current, source-qualified self-/clinician-reported stage and context guide ordering but do not lock or diagnose. Preference corrections should improve ordering, not infer anatomy or clinical status.
+- A user can select `Not relevant`, `Pin this topic`, `Explore other topics` or `Change my focus`. Do not quietly re-enable declined categories, silently create observations, presume absence of symptoms on unlogged days or equate a self-reported stage to a medically verified stage.
+- Treat *stage*, *pregnancy*, *postpartum*, *lactation*, *surgery*, *contraception*, *topic preference* and *goal* as independent time-varying dimensions; do not compress them into a single mutually exclusive age-category enum. A former stage record remains historically accurate when the user's current emphasis changes.
+- Keep age-based organization discreet and transparent (“Suggested topics for you” / “See all topics”), never “You are too young for menopause” or “You cannot become pregnant.” Relevance should not become a prediction of fertility, diagnosis or treatment.
+- All topic/data access, private source overlays, server-side consent and sex gate **remain enforceable independently of ranking**. An invitation to explore a topic is not consent to collect or process new sensitive facts.
+- Integrate with existing low-input / personal learning selector only at presentation/preference level, not another AI orchestration engine; deterministic versioned method + user correction first, with no LLM needed. Avoid using sexual/reproductive history in generic Home/Today personalization or analytics without distinct purpose permission.
+
+### Conceptual shared relevance contract (illustrative, not a new parallel engine)
+
+```ts
+type FemaleReproductiveTopic = "cycle" | "symptoms" | "life-stage"
+  | "pregnancy-context" | "postpartum-lactation" | "menopause"
+  | "fertility-education";
+type ReproductiveTopicPlacement = "featured" | "ordinary" | "explore";
+type TopicRelevance = {
+  topic: FemaleReproductiveTopic;
+  placement: ReproductiveTopicPlacement;
+  basis: Array<"user-selected" | "user-reported-context"
+    | "clinician-reported-context" | "age-soft-prior">;
+  reasonText: string | null;
+};
+function projectEligibleReproductiveTopics(
+  currentSavedProfile: {sex: "female" | "male" | null; revision: string},
+  enabledPurposes: PurposeScopedGrantSet,
+  explicitlyChosenFocus: string[],
+  qualifiedTimeVaryingContext: unknown
+): TopicRelevance[] {
+  // First reuse authoritative server eligibility and consent.
+  // If Profile sex !== female, return no female reproductive topics.
+  // Explicit user focus outranks age-soft-prior. Unknown context stays unknown.
+  // Return all permitted topics with varying presentation prominence;
+  // exclude only by lack of release, authorization or user-chosen opt-out.
+  return existingCanonicalTopicProjection(/* ... */);
+}
+```
+
+**Additional acceptance IDs:**
+- `RH-CONTEXT-01`: Female age 22, no context -> cycle/symptoms featured, menopause available in Explore; user can deliberately choose menopause without clinical inference.
+- `RH-CONTEXT-02`: Female under 40 with relevant self-reported symptoms or diagnosed POI -> menopause-related education visible when chosen; no “too young” hard blocker or automated clinical label.
+- `RH-CONTEXT-03`: Female 48, self-reported perimenopause -> transition symptom tools featured; conception-related topics remain reachable and no infertility statement.
+- `RH-CONTEXT-04`: Female postmenopause -> menopause-related topics featured, routine cycle/conception prompts de-emphasized, past cycle observations intact.
+- `RH-CONTEXT-05`: Female postpartum plus lactation -> correct independent context, appropriate relevant topic prominence; never auto-mark menopause because bleeding absent.
+- `RH-CONTEXT-06`: Explicit user-selected trying-to-conceive / menopause focus takes precedence over age-soft-prior; “Not relevant” and pinned topics persist.
+- `RH-CONTEXT-07`: Male/null Profile still yields **no female reproductive topics** regardless of age, hormone assays, previously saved stage, direct URL or preference rankings.
+- `RH-CONTEXT-08`: Age/birth year missing/changed, goal corrected, stage corrected, pregnancy context ended, consent revoked, account switched -> scoped recomposition, no stale disclosure or silent loss of original data.
+- `RH-CONTEXT-09`: Declined RH user sees no new age-triggered opt-in nag, reminders, generic Today preview or hidden collection.
+- `RH-CONTEXT-10`: Adult sexual wellbeing remains separately opted-in and general hormone Bloodwork unaffected by reproductive topics' sorting.
+- `RH-CONTEXT-11`: Multiple independent overlapping contexts do not collapse into a single fake inferred reproductive stage, and sparse reports don't yield ovulation or hormone-level predictions.
+
+**Phasing:** Bind to the future initial RH topic picker/hub when that feature is scheduled; do not create an upfront AI model, a new background task system or a new v0.6 Core dependency. Existing `NEXT_ACTIONS.md`, Food #12 and Response #15 priorities remain authoritative. Record visual and functional actual-device tests under `PASS/FAIL/NOT_TESTED`.
+
 ## 2. Scope and canonical architecture
 
 **Approve the Biology/Science goal**: optional private self-reported life stage, bleeding/cycle, symptoms, adult desire/libido and distress, compatible medical/hormone context, descriptive histories and cautious education—**not** a fertility app, hormone scoring engine or clinical therapy manager.
