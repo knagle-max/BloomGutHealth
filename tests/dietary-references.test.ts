@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {dietaryReferenceSubset,dietaryReferencesFor,dietaryReferenceRowSchema} from '../shared/dietary-references';
 test('curated Health Canada source facts preserve separate adult EAR/RDA/UL, sex/age categories and source-specific scope',()=>{
- assert.equal(dietaryReferenceSubset.rows.length,48);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['AI','EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
+ assert.equal(dietaryReferenceSubset.rows.length,50);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['AI','EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
  const rda=(nutrient:string,sex:string,ageMin:number)=>dietaryReferencesFor(nutrient).find(row=>row.kind==='RDA'&&row.sexReferenceCategory===sex&&row.ageMinYears===ageMin)!;
  assert.equal(rda('vitamin_c_mg','M',19).amount,90);assert.equal(rda('vitamin_c_mg','F',19).amount,75);
  for(const [sex,age,value]of [['M',19,400],['M',31,420],['F',19,310],['F',31,320]]as const)assert.equal(rda('magnesium_mg',sex,age).amount,value);
@@ -60,4 +60,8 @@ test('iron retains explicit female source menstrual assumptions and never invent
  const rows=dietaryReferencesFor('iron_mg');assert.equal(rows.length,7);assert.deepEqual(rows.map(row=>[row.sexReferenceCategory,row.ageMinYears,row.kind,row.amount,row.menstrualBasis??null]),[['M',19,'EAR',6,null],['M',19,'RDA',8,null],['F',19,'EAR',8.1,'source-assumed-menstruating'],['F',19,'RDA',18,'source-assumed-menstruating'],['F',51,'EAR',5,'source-assumed-postmenopausal'],['F',51,'RDA',8,'source-assumed-postmenopausal'],['all',19,'UL',45,null]]);
  const{referenceVersion,...female}=rows[2];for(const patch of [{menstrualBasis:undefined},{menstrualBasis:'source-assumed-postmenopausal'},{ageMaxYears:null}])assert.equal(dietaryReferenceRowSchema.safeParse({...female,...patch}).success,false);
  const{referenceVersion:v,...male}=rows[0];assert.equal(dietaryReferenceRowSchema.safeParse({...male,menstrualBasis:'source-assumed-menstruating'}).success,false);assert.match(dietaryReferenceSubset.nutrientNotes.iron_mg,/do not establish either status/);
+});
+
+test('B12 retains adult microgram EAR/RDA and no invented UL, blood status or absorbed amount',()=>{
+ const rows=dietaryReferencesFor('vitamin_b12_ug');assert.deepEqual(rows.map(row=>[row.kind,row.amount,row.unit,row.ageMinYears,row.ageMaxYears]),[['EAR',2,'µg/day',19,null],['RDA',2.4,'µg/day',19,null]]);const{referenceVersion,...row}=rows[0];for(const kind of ['UL','AI','CDRR'])assert.equal(dietaryReferenceRowSchema.safeParse({...row,kind}).success,false);for(const unit of ['mg/day','pmol/L'])assert.equal(dietaryReferenceRowSchema.safeParse({...row,unit}).success,false);assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_b12_ug,/does not mean unlimited intake is safe/);assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_b12_ug,/not an inferred personal absorption problem/);
 });

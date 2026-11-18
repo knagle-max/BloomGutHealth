@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v7",
+  "version": "hc-dietary-reference-subset-2026-11-18-v8",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -10,7 +10,7 @@
       "id": "hc-vitamins",
       "title": "Health Canada: Dietary reference values for vitamins",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
-      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133; Table 3 Folate adult rows/footnotes12\u201313; Table 1 Vitamin E adult rows/footnotes5\u20136",
+      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133; Table 3 Folate adult rows/footnotes12\u201313; Table 1 Vitamin E adult rows/footnotes5\u20136; Table 3 Vitamin B12 adult rows and footnotes14/f",
       "note": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
       "retrievedOn": "2026-11-18"
     },
@@ -747,6 +747,36 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_b12_ug-all-19-ear",
+      "nutrientKey": "vitamin_b12_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 2,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_b12_ug-all-19-rda",
+      "nutrientKey": "vitamin_b12_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 2.4,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
@@ -758,6 +788,7 @@
     "vitamin_a_ug": "Vitamin A requirements are expressed as retinol activity equivalents (RAE). The upper limit applies to preformed vitamin A only, not all carotenoids. A total RAE food value or a label with unknown form does not establish the preformed amount. No retinol/carotenoid/IU conversion or comparison to your intake is calculated here.",
     "folate_ug": "Folate requirements use dietary folate equivalents (DFE). The upper limit uses micrograms of folic acid from supplements and fortified foods, not DFE or naturally occurring food folate. Existing total-folate food fields and labels with unknown form do not establish DFE or the synthetic amount. No conversion, pregnancy/preconception dose or intake assessment is calculated here.",
     "vitamin_e_mg": "Vitamin E requirements refer to alpha-tocopherol in 2R-stereoisomeric forms. The upper limit applies only to synthetic vitamin E from supplements and fortified foods. A source field without stereoisomer or formulation details does not establish either basis. No IU/activity conversion or intake assessment is calculated here.",
-    "iron_mg": "The source female iron requirements assume menstruation before age 51 and post-menopause from age 51. Profile sex and birth year do not establish either status for an individual. The source also reports higher requirements for vegetarian diets; no personal adjustment is calculated. These reference facts do not estimate absorption or individual inadequacy probability, particularly with menstrual losses. The UL is not a treatment dose."
+    "iron_mg": "The source female iron requirements assume menstruation before age 51 and post-menopause from age 51. Profile sex and birth year do not establish either status for an individual. The source also reports higher requirements for vegetarian diets; no personal adjustment is calculated. These reference facts do not estimate absorption or individual inadequacy probability, particularly with menstrual losses. The UL is not a treatment dose.",
+    "vitamin_b12_ug": "Vitamin B12 has no established UL in this source; that does not mean unlimited intake is safe. Dietary amounts do not establish absorption or blood B12 status. The source notes that food-bound B12 absorption can be reduced in older adults and discusses fortified foods or supplements for those over 50. This is general source context, not an inferred personal absorption problem or a supplemental dose recommendation."
   }
 }
