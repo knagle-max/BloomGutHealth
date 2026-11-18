@@ -96,6 +96,55 @@ Reuse existing `lab-history`, `lab-display-segments`, `lab-comparability`, biolo
 
 **This is the corrected definition of value.** A numerical difference is a raw input. The user-facing product is the *qualified interpretation, longer-term context and what to watch or do*, within reviewed medical safeguards.
 
+## 3B. Owner clarification — genuinely dynamic interpretation, not prewritten per-result paragraphs (2026-11-18)
+
+**Binding clarification:** The example four-point lymphocyte prose in §3A is an **illustrative test fixture** only. Neither the author's historical values nor the exact example wording may be hardcoded as Bloom's production result. **Every user's explanation must be generated from their own authorized, source-qualified current and longitudinal observations** and applicable reviewed scientific evidence. Never select a static paragraph solely by marker ID, “up”, “down”, age bracket or one threshold. Maintain static, reviewed **marker background** (what lymphocytes are, biological importance, general meaningful high/low possibilities) separately from the **dynamic case-specific interpretation** (this user's values, time span, pattern, context, implications and reasonable next step).
+
+### Required fact-first architecture
+
+1. **Resolve the case** server-side from current authenticated account and approved-purpose sources: analyte/test identity; **all** source-relevant dated observations across compatible assays and units (and count/time coverage); source/protocol and report intervals; sex/age-at-test only where legitimately applicable; consented medication, symptoms and clinical context; source versions and missingness. Cross-account context, future profile facts projected into past dates, and guessed lab method are prohibited.
+2. **Compute structured findings deterministically** using reviewed marker-specific science: current placement relative to confirmed applicable interval *if available*, robust trajectory across available valid points (stable / sustained increase / sustained decrease / fluctuating / insufficient), size/measurement uncertainty, pattern persistence, material crossing of source-qualified thresholds when reviewed, competing conditions, notable red flags and whether clinical interpretation is supported, limited or requires abstention. No “improving/deteriorating” just because direction is up/down; some markers have U-shaped relationships, context-conditional risks or treatment-dependent targets. Don't infer clinical severity from a generic reference range, or immune-function impairment from absolute lymphocyte count.
+3. **Evidence/decision gate:** Attach reviewed evidence and rule IDs, source facts, applicable population/measurement context, missing facts, clear allowed implications and prohibited conclusions. The engine—not the LLM—defines permissible urgency, follow-up choices, “within reference” statements, diagnoses not allowed and reasonable next actions. If evidence cannot support a useful conclusion, show honest limited insight, optionally ask one high-value question, never hallucinate.
+4. **Generate wording dynamically** from the structured case using a constrained, versioned **LLM explanation adapter where available, authorized and validated**, or a **compositional deterministic language renderer** for privacy/offline/failure cases. The LLM is permitted to rearrange/summarize **allowed verified facts and reviewed interpretation possibilities** in clear, context-specific prose; it must **not** introduce new diagnoses, thresholds, associations, medication changes, clinical risk labels or unsupported causes. Static general biological facts can be referenced; the personal conclusion cannot be a marker-keyed fixed paragraph.
+5. **Validate every output before display**: referenced source IDs/versions and facts match case; numerical values, dates, trends and laboratory reference claims are consistent; any conditionality, limitations or explicit red flags are retained; actions are authorized; no invented labs, symptoms, drug use, age, source or physician diagnosis. Reject/rewrite unsupported AI output **or fall back to a reliable deterministic synopsis**, not an empty panel or confident invention.
+6. **Cache by account/purpose/context revision, evidence/rule version, renderer/model version**, not only marker ID. Automatically invalidate/recompute after a new result, correction/reimport, source deletion, medication/symptom consent change, new lab metadata or evidence withdrawal. Do not send personal health data to an external LLM without applicable explicit user grant, rights, security and deployment approval; on-device/internal alternative only when actually available. A user's reviewed edits to wording/preferences are not medical ground truth and must not update scientific rule thresholds.
+
+**Minimal, illustrative typed contract (Codex chooses actual locations and types):**
+```ts
+type MarkerCaseFacts = {
+  markerId: string; observationSourceRevisions: readonly string[];
+  eligibleObservations: readonly { date:string; value:number; unit:string; sourceId:string }[];
+  referenceContext: { verified:boolean; lower?:number; upper?:number; sourceId?:string };
+  relevantAuthorizedContext: readonly string[];
+  missingRelevantContext: readonly string[];
+};
+type MarkerCaseInterpretation = {
+  currentMeaning: string | null;  // reviewed source-backed clinical significance, qualified
+  longitudinalPattern: "rising" | "falling" | "stable" | "variable" | "insufficient";
+  patternMeaning: string | null;
+  contextPossibilities: readonly { statement:string; evidenceId:string; qualification:string }[];
+  watchFor: readonly { statement:string; evidenceId:string }[];
+  followUp: { statement:string; clinicalReleaseId:string } | null;
+  prohibitedClaims: readonly string[];
+  abstainReason: string | null;
+  citations: readonly string[];
+};
+```
+
+**Crucial design:** Interpretation is a **bounded scientific reasoning operation**, not an unrestricted AI diagnosis or a handful of result-specific prose templates. An LLM is optional for presentation, not mandatory for safe operation. Do not assume the existing LLM provider, model registry or user privacy grant already makes this safe; reuse authorized infrastructure when verified.
+
+### Dynamic scenario tests (must use synthetic distinct identities, not developer's personal history)
+- `BLOOD-DYN-01`: lymphocyte sequences 1.9→1.6→1.5→1.4, 1.4→1.5→1.7→1.9, 1.5→1.6→1.4→1.5, and 1.8→0.7→0.6 produce **different clinically qualified case insights**, not the same template plus swapped values.
+- `BLOOD-DYN-02`: same values with laboratory ranges that differ, with/without reviewed medications or symptoms, and with different intervals/assays produce appropriately revised meaning and uncertainty; absence of context is not filled by model imagination.
+- `BLOOD-DYN-03`: one observation or poor temporal coverage never yields “sustained trend”; missing historical results and inconsistent assay identity lead to abstention/qualified notes, not invented long-term history.
+- `BLOOD-DYN-04`: one new result, corrected date/value, report lab confirmation, source removal, consent revocation or updated evidence recalculates insight automatically and only for affected authorized account/context; cache isolation and stale async response suppression.
+- `BLOOD-DYN-05`: LLM introduces an unsupported clinical condition/threshold/causal explanation/medication action or alters numeric facts → reject or safe fallback. Turn off LLM/provider → still useful evidence-backed deterministic explanation; no new private data export.
+- `BLOOD-DYN-06`: different marker families (CBC, lipid, liver, renal, iron, hormone) use their own reviewed significance/meaning and directional rules. No universal “falling is bad” formula.
+- `BLOOD-DYN-07`: consumer output answers actual biological/clinical so-what, longitudinal meaning, contextual uncertainty and relevant follow-up **without overwhelming cards**, with Level-2/3 original history, evidence and measurement nuance accessible.
+- `BLOOD-DYN-08`: explicitly run new held-out sequences/contexts not included in illustrative fixtures and record meaningful correct changes in the result; changing numeric values or a prewritten example must not be the only dynamic behavior.
+
+**Delivery status:** this section is a **specification**. Existing `shared/biology-labs.ts` still projects largely static marker editorial profiles and `client/src/components/LabTrend.tsx` mostly displays arithmetic delta and comparability notes. A fully validated personal-context narrative generation service is **not demonstrated to exist yet**. Codex must implement and verify the pipeline rather than claim an existing generic AI explanation makes it dynamic. Preserve privacy/science/release gates and the active `NEXT_ACTIONS.md` workstream.
+
 ## 4. Trend UX — separate observable numeric change from interpretation confidence
 
 **Do not block basic arithmetic comparison simply because a laboratory or method name is missing**, when the *actual marker identity* is sufficiently established, valid dates differ and units are correctly comparable with established conversion. A recorded difference is a mathematical observation, **not an approved clinical interpretation**, and may be shown with a short qualifier where needed:
