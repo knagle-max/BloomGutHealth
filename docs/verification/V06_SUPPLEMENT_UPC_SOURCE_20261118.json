@@ -1,7 +1,7 @@
 {
   "task": "V06-M3-SB-UPC-01-15",
   "phase": "Exact lookup/native source/private fallback; catalogue receipt reader before later producer",
-  "status": "ENGINEERING_TESTED_RENDERED_PUBLISHED_CI_REFLOW_FAILURE",
+  "status": "VERIFIED_IN_D357_ANCESTRY",
   "baseCommit": "2c4e56db9f6532dad15a783a854c9f980fb7c273",
   "handoff": "docs/architecture/BLOOM_SUPPLEMENT_BARCODE_LOOKUP_DEFECT_CODEX_HANDOFF_20261117.md",
   "implementation": [
@@ -44,5 +44,16 @@
     "ciRun": 44259741600,
     "ciStatus": "FAILURE",
     "failure": "Saved nutrient source/contribution browser: scoped supplement dialog at Athlete/light/320px/page zoom200%; public UPC probe not reached. Fix and full120-state rerun pass in follow-up label-save slice."
+  },
+  "latestQualification": {
+    "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+    "ciRun": 44267810669,
+    "jobId": 134677682928,
+    "status": "SUCCESS",
+    "testsPassed": 851,
+    "failed": 0,
+    "allHostedAndNeonGates": "PASS",
+    "publicProbe": "V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json",
+    "coverage": "Four no-authoritative-match outcomes; private fallback verified, no actual product identity or universal absence claim."
   }
 }

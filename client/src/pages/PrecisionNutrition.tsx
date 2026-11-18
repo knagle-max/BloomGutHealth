@@ -253,13 +253,11 @@ export default function PrecisionNutrition() {
         )
       ).json(),
   });
-  const [context, setContext] = useState(contextSchema.parse({}));
+  const context=result.data?.context??contextSchema.parse({});
   const goalsDisclosure=useRef<HTMLDetailsElement>(null),goalEditOpened=useRef(false);
-  const editGoals=new URLSearchParams(search).get("edit")==="goals";
-  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLInputElement>('input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,result.data,result.fetchStatus,result.isError,context]);
-  useEffect(() => {
-    if (result.data) setContext(result.data.context);
-  }, [result.data]);
+  const requestedEdit=new URLSearchParams(search).get("edit"),editGoals=requestedEdit==="goals"||requestedEdit==="health-context";
+  useEffect(()=>{if(editGoals&&result.fetchStatus==="idle"&&!result.isError&&result.data&&context===result.data.context&&!goalEditOpened.current&&goalsDisclosure.current){goalsDisclosure.current.open=true;goalsDisclosure.current.querySelector<HTMLElement>(requestedEdit==='health-context'?'select[name="pregnancy"]':'input[name="goals"]')?.focus();goalEditOpened.current=true;}},[editGoals,requestedEdit,result.data,result.fetchStatus,result.isError,context]);
+
   const mutation = useMutation({
     mutationFn: async ({
       url,

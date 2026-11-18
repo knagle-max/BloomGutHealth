@@ -1,3 +1,5 @@
+2026-11-18 — Public supplement source access observation updated: exact d357 CI job134677682928 reached official NIH source08:45:40UTC and returned no-authoritative-match for all4owner codes; no live product identity was verified. V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json. Earlier workspace network-unavailable result stays historical, not a current global access blocker. No user question/approval needed; private catalogue fallback is qualified and no unchanged source re-probe is needed.
+
 2026-11-18 scoped technical dependency — NIH live UPC/source-shape verification: official guide/API urllib hits proxy tunnel403; production Node public probe records provider-unavailable/network for all4codes (V06_SUPPLEMENT_UPC_PUBLIC_SOURCE_OBSERVATION_20261118.json). No user question/approval required. One-time opt-in CI probe may obtain permitted public source evidence; no unchanged workspace retries. Independent private fallback and catalogue receipt work continues; source absence/clinical validity is not inferred.
 
 ## 2026-11-17 — N02 actual CNF2026 archive access (feature-scoped technical dependency)

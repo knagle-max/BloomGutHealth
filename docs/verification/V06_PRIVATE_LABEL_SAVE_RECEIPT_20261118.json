@@ -1,6 +1,6 @@
 {
   "task": "V06-M3-SB-UPC-10",
-  "status": "ENGINEERING_TESTED_RENDERED_PUBLISHED_CI_PENDING",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "scope": "Reusable private catalogue label receipt; saving a label is not consumption.",
   "compatibilityPrerequisite": {
     "source": "dbe83bce3605776445980cc372a4c662b3b52ac4",
@@ -29,9 +29,8 @@
     "confirmationTime": "RED reproduced actual HTTP200 after slow source advanced a future claim; fix passes9/9 timing/storage/API/reader tests. Future create/correction0 writes/lookups; valid slow create/correction pin confirmation time and replay once."
   },
   "limitations": [
-    "Exact new SHA CI/Render qualification pending.",
-    "Actual public NIH source unavailable from workspace; prior CI failed before one-time probe. No live match/no-match coverage claim.",
-    "Full M2/M3/Food12/Response15/RC and independent science/device acceptance remain open."
+    "Full M2/M3/Food12/Response15/RC and independent science/device acceptance remain open.",
+    "Actual CI public NIH search returned no-authoritative-match for4codes; no product identity/absence or clinical verification inferred. Earlier workspace probe remains separate."
   ],
   "sourceCommit": "3b65e3bd2ebf152629a221899b67487abd2bd03d",
   "publication": {
@@ -41,5 +40,21 @@
     "ciRun": 44267196044,
     "ciStatus": "pending",
     "rebasedVerification": "11/11 relevant source/audit/timing tests and types PASS after preserving incoming standalone Advanced research code/docs. No manual deployment."
+  },
+  "qualifiedAncestry": {
+    "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+    "ciRun": 44267810669,
+    "jobId": 134677682928,
+    "status": "SUCCESS",
+    "fullTests": {
+      "passed": 851,
+      "failed": 0,
+      "skipped": 0
+    },
+    "allRequiredHostedAndIsolatedNeonChecks": "PASS",
+    "renderDeploy": "dep-dbum4vijnfac73bo68o0",
+    "renderStatus": "LIVE",
+    "liveAt": "2026-11-18T08:33:37.046984Z",
+    "publicSourceObservation": "V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json"
   }
 }

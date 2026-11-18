@@ -1,6 +1,6 @@
 {
   "task": "V06-M1-M3-KNOWN-SOURCE-SUBTOTALS",
-  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "3b65e3bd2ebf152629a221899b67487abd2bd03d",
   "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
   "implementation": [
@@ -16,7 +16,23 @@
     "buildAndOriginalMedia": "PASS"
   },
   "remaining": [
-    "Exact new SHA CI/Render pending; previous source3b65 live08:29:20UTC, CI44267196044 pending.",
     "Full M2 Canadian life-stage/form/UL/B6 and M3 coverage remain unfinished; no clinical/independent science/device acceptance inferred."
-  ]
+  ],
+  "qualifiedAncestry": {
+    "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+    "ciRun": 44267810669,
+    "jobId": 134677682928,
+    "status": "SUCCESS",
+    "fullTests": {
+      "passed": 851,
+      "failed": 0,
+      "skipped": 0
+    },
+    "allRequiredHostedAndIsolatedNeonChecks": "PASS",
+    "renderDeploy": "dep-dbum4vijnfac73bo68o0",
+    "renderStatus": "LIVE",
+    "liveAt": "2026-11-18T08:33:37.046984Z",
+    "publicSourceObservation": "V06_SUPPLEMENT_UPC_CI_SOURCE_OBSERVATION_20261118.json"
+  },
+  "sourceCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be"
 }

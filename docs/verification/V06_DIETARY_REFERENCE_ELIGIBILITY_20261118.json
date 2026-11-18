@@ -1,0 +1,28 @@
+{
+  "task": "V06-M2-CURRENT-REFERENCE-ELIGIBILITY-SUBSET",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "baseCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
+  "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
+  "scope": "Current context matching of existing14 Health Canada vitamin C/magnesium EAR/RDA/UL facts; general source values remain available independently. Full M2 remains incomplete.",
+  "implementation": [
+    "Pure typed eligibility over the existing source rows. Birth year yields a possible age range, not an invented birthday; a boundary30\u201331 does not select either magnesium RDA. Profile reference sex and existing combined pregnancy/breastfeeding/planning answer reused; no male implies nonpregnant inference.",
+    "Missing birth year/sex, unreviewed/unknown/clinical context or incompatible age abstain per row. Canonical smoking status is absent, so vitamin C nonsmoking EAR/RDA are not personally matched. General values remain visible. Magnesium UL stays pharmacological-only and never becomes a total-intake target.",
+    "Existing encrypted Profile measurement source and precision context read in one account-scoped repeatable-read/read-only transaction. No new store/table/migration, provider request, health/consumption write or raw context/birth-year response. Source/profile corrections and erasure withdraw matches.",
+    "Current health/life-stage context and source-effective dates are not established for historical days, so historical matching abstains while year-specific possible age remains explicit. No usual-intake, absorption, deficiency, dose or adequacy calculation.",
+    "Existing Canadian reference disclosure reused alongside selected recorded nutrient; keeps open across nutrient refresh. General tables stay visible during profile read failure. Owner/date/version/source and global actor checks reject stale or mismatched responses; canonical input cache invalidation refreshes matching.",
+    "Direct shared-context action opens/focuses existing answer. Actual browser RED found uncontrolled form initialized with unknown before remote context loaded; deriving context directly from the loaded result fixes source prepopulation across the existing form. No replacement page, art or screenshots."
+  ],
+  "verification": {
+    "focused": "21/21 source eligibility/actual encrypted SQL HTTP/Canadian source facts/wellness/API inventory/crosswalk tests PASS; final source inventory refresh and rerun PASS.",
+    "actualApp": "App\u2192new HTTP endpoint\u2192existing encrypted PostgreSQL fixture: male/female corrections, birth-year30\u201331 boundary, source-specific UL, unknown smoking, pregnancy/breastfeeding/planning yes, historical abstention, outage/retry/cache withdrawal, A/B scope,32 mode/theme/mobile/tablet/desktop100\u2013200% page-zoom states and keyboard PASS; direct context link preserves/focuses saved yes;0intake/meal creation.",
+    "commonRegression": "Actual food/manual label/generic source + supplement/source20\u219210mg/current correction/deletion/lost-reply/reload/unknown/zero/account flows and source60+dialog60 responsive states PASS.",
+    "types": "PASS",
+    "buildAndOriginalMedia": "PASS",
+    "independentPhysicalVoiceOverScienceClinicalAcceptance": "NOT_TESTED_NOT_INFERRED"
+  },
+  "remaining": [
+    "Exact publication SHA CI/Render qualification next.",
+    "Full Canadian reference population/chemical-form coverage, dated B6/NASEM/EFSA comparison and representative-usual-intake methods remain open. Unsupported references stay absent; no fake edition/clinical target.",
+    "Historical life-stage/source-era applicability and canonical smoking data are unavailable; general references are not gated."
+  ]
+}

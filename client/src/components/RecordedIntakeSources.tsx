@@ -1,3 +1,4 @@
+import DietaryReferenceDisclosure from './DietaryReferenceDisclosure';
 import {accountContextGuard} from '@/lib/request-actor';
 import {knownNutrientCoverage} from '@shared/nutrient-coverage';
 import {useEffect,useState} from 'react';
@@ -34,6 +35,7 @@ export default function RecordedIntakeSources(){
   {!valid&&<p role="status">Choose a valid date and named time zone, such as America/Regina. Source timestamps are preserved.</p>}
   {view.isFetching&&<p role="status">Checking saved nutrient sources…</p>}
   {view.isError&&<div role="alert"><p>Recorded sources could not load. This does not mean no intake was recorded.</p><Button className="min-h-11" onClick={()=>void view.refetch()}>Retry recorded nutrient sources</Button></div>}
+  {valid&&['vitamin_c_mg','magnesium_mg'].includes(nutrientKey)&&<DietaryReferenceDisclosure nutrientKey={nutrientKey} date={date} timeZone={timeZone}/>}
   {data&&<><h3>{selected.key==='vitamin_a_ug'?'Vitamin A':selected.key==='folate_ug'?'Folate':selected.name} · recorded sources</h3><p className="panel-note">{data.events.length} dated {data.events.length===1?'event':'events'} · {data.timeZone}. Unlogged foods or supplements remain unknown. This is not a measure of absorption, usual intake or adequacy.</p>
    {!data.events.length&&<p>No source events are available for this day. Unlogged or unavailable intake is unknown.</p>}
    {!!data.coverage.groups.length&&<section aria-label="Known recorded subtotals" className="space-y-2"><h4>Known recorded subtotals</h4><p className="panel-note">Sources and measurement bases are kept separate. Missing amounts are not counted as zero.</p><ul className="space-y-2">{data.coverage.groups.map((group,index)=><li key={index} className="min-w-0"><p>{sourceNames[group.sourceKind]}: <strong>{group.knownSubtotal===null?'No compatible subtotal':`${formatNutrientAmount(group.knownSubtotal)} ${group.activityUnit??group.unit}`}</strong>{group.chemicalForm?` · ${group.chemicalForm}`:''}</p><p className="panel-note">{group.knownRows} known source {group.knownRows===1?'amount':'amounts'}{group.zeroRows?` (${group.zeroRows} source-reported zero)`:''}{group.unknownRows?` · ${group.unknownRows} unknown`:''}{group.incompatibleRows?` · ${group.incompatibleRows} excluded: measurement basis unresolved or incompatible`:''}</p></li>)}</ul></section>}

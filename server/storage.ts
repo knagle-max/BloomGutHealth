@@ -1,3 +1,4 @@
+import {readDietaryReferenceInputs,type DietaryReferenceInputs} from './dietary-reference-context';
 import type {LabReferenceCorrectionCommand} from '../shared/lab-reference-correction';
 import type {LabReportMetadataCommand} from '../shared/lab-report-metadata';
 import type {LabSourceReview} from '../shared/lab-source-review';
@@ -57,6 +58,7 @@ export interface IStorage extends ExperienceStore {
   getNutritionProducts(userId: string): Promise<Product[]>;
   insertNutritionProduct(userId: string, label: LabelInput,intentId?:string): Promise<Product>;
   deleteNutritionProduct(userId: string, id: string): Promise<boolean>;
+  getDietaryReferenceInputs?(id:string):Promise<DietaryReferenceInputs>;
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
@@ -128,6 +130,7 @@ export interface IStorage extends ExperienceStore {
 }
 
 export class DatabaseStorage implements IStorage {
+  getDietaryReferenceInputs(id:string){return readDietaryReferenceInputs(db,id);}
   readonly supplementIntakes=new SupplementIntakeStorage(db);
   readonly labResponseContext=new LabResponseContextStorage(db);
   private biology = new BiologyStorage(db);

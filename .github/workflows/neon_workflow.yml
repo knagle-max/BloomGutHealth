@@ -232,6 +232,11 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: BLOOM_SUPPLEMENT_INTAKE=1 node --import tsx scripts/qa/private-source-context-journey.mjs
+      - name: Canadian dietary reference Profile context browser regression
+        env:
+          BLOOM_REFERENCE_CONTEXT_ONLY: "1"
+        run: node --import tsx scripts/qa/private-source-context-journey.mjs
+        timeout-minutes: 4
       - name: Supplement barcode and private-label fallback browser regression
         timeout-minutes: 4
         env:
