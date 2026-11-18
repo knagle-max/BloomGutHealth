@@ -17,7 +17,7 @@ export function labFamilyGuidance(family:Family){
  return{rows,action:target?.latest?{label:`Check ${target.name} source context`,href:`/precision?tab=labs&labResult=${encodeURIComponent(target.latest.id)}`} :null};
 }
 
-export const REMEMBERED_LAB_GUIDANCE_VERSION='recalled-source-guidance-2026-11-17-v1';
+export const REMEMBERED_LAB_GUIDANCE_VERSION='recalled-source-guidance-2026-11-18-v2';
 
 /** Recompute a transparent explanation from the current server-validated saved
  * answer. Never parse free text into exposures or replace laboratory facts. */

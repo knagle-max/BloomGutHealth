@@ -7,7 +7,7 @@ import {apiRequest,ApiRequestError} from '@/lib/queryClient';
 import {accountContextGuard} from '@/lib/request-actor';
 import {LAB_CONTEXT_CHANGED,notifyLabContextChanged} from '@/lib/lab-context-events';
 import {labReviewRevision,labReviewRevisionText} from '@shared/lab-source-review';
-import {labResponseQuestions,labResponseQuestionText,labResponseContextSaveSchema,type LabResponseQuestionId,type LabResponseContextView,type LabResponseContextSave,type LabResponseContextDelete,type RecalledLabResponseContext} from '@shared/lab-response-context';
+import {labResponseQuestions,labResponseQuestionForMarkers,labResponseQuestionText,labResponseContextSaveSchema,type LabResponseQuestionId,type LabResponseContextView,type LabResponseContextSave,type LabResponseContextDelete,type RecalledLabResponseContext} from '@shared/lab-response-context';
 import type {Lab} from '@shared/precision-nutrition';
 
 type Family=keyof typeof labResponseQuestions;
@@ -19,6 +19,7 @@ type State={key:string;expanded:boolean;form:boolean;view:LabResponseContextView
  * and never establish performed behavior or an individual cause. */
 export default function LabRememberedContext({family,sources}:{family:Family;sources:Array<Lab&{id:string}>}){
  const {user}=useAuth(),id=useId(),heading=useRef<HTMLHeadingElement>(null),opener=useRef<HTMLButtonElement>(null),answerInput=useRef<HTMLSelectElement>(null);
+ const sourceQuestion=labResponseQuestionForMarkers(family,sources.map(source=>source.marker));
  const key=JSON.stringify([user?.id,family,sources.map(source=>[source.id,labReviewRevisionText(source)])]);
  const currentKey=useRef(key);currentKey.current=key;
  const initial=():State=>({key,expanded:false,form:false,view:null,draft:blank(),draftQuestion:null,pending:null,error:'',status:'',confirmDelete:false});
@@ -41,12 +42,12 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
  const begin=()=>run('preparing',async(request,assertCurrent)=>{
   const sourceReferences=await Promise.all(sources.map(async source=>({id:source.id,revision:await labReviewRevision(source)})));assertCurrent();
   const view:LabResponseContextView=await request('POST','/prepare',{family,sourceReferences});attempt.current=null;
-  const target=view.questionId??labResponseQuestions[family].id;
+  const target=view.questionId??sourceQuestion;
   focusWhenReady.current='answer';patch({view,form:true,draftQuestion:target,confirmDelete:false,status:'',draft:active.form&&active.draftQuestion===target?active.draft:view.latest?.sourceCurrent&&view.latest.record.payload.question===target?remembered(view.latest.record.payload):blank()});
  });
  const edit=(value:Partial<Draft>)=>{attempt.current=null;patch({draft:{...active.draft,...value},error:'',status:''});};
  const save=()=>{
-  if(active.draftQuestion!==(active.view?.questionId??labResponseQuestions[family].id)){patch({error:'The question changed. Review it before saving this answer.'});return;}
+  if(active.draftQuestion!==(active.view?.questionId??sourceQuestion)){patch({error:'The question changed. Review it before saving this answer.'});return;}
   if(!active.draft.answer){patch({error:'Choose an answer before saving.'});answerInput.current?.focus();return;}
   if(!active.view?.generationId){patch({error:'Review the current sources before saving this draft.'});return;}
   void run('saving',async(request,assertCurrent)=>{
@@ -59,7 +60,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
     command=parsed.data;attempt.current={key,command};
    }
    const saved=await request('POST','/save',command),view:LabResponseContextView=await request('POST','/view',selection);attempt.current=null;
-   focusWhenReady.current='heading';patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent&&view.latest.record.id===saved.record.id&&view.latest.record.payload.question===(view.questionId??labResponseQuestions[family].id)?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});
+   focusWhenReady.current='heading';patch({view,form:false,status:saved.isLatest&&view.latest?.sourceCurrent&&view.latest.record.id===saved.record.id&&view.latest.record.payload.question===(view.questionId??sourceQuestion)?'Remembered context saved. It does not establish what caused a result.':'Your answer was recorded. Review the latest source and context before using it.'});
    notifyLabContextChanged(id,view.scopeHash);
   });
  };
@@ -82,9 +83,9 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
   const changed=(event:Event)=>{const detail=(event as CustomEvent).detail;if(!active.expanded||detail?.origin===id||active.view&&detail?.scopeHash!==active.view.scopeHash)return;if(active.pending){changedDuringRequest.current=true;return;}if(active.form){attempt.current=null;patch({view:null,error:'Saved context changed elsewhere. Your draft is retained; reload and review before saving.'});}else void load();};
   window.addEventListener(LAB_CONTEXT_CHANGED,changed);return()=>window.removeEventListener(LAB_CONTEXT_CHANGED,changed);
  },[key,active.expanded,active.form,active.pending,active.view?.scopeHash]);
- const latest=active.view?.latest,record=latest?.record.payload,busy=active.pending!==null,questionId=active.form&&active.draftQuestion?active.draftQuestion:active.view?.questionId??labResponseQuestions[family].id;
+ const latest=active.view?.latest,record=latest?.record.payload,busy=active.pending!==null,questionId=active.form&&active.draftQuestion?active.draftQuestion:active.view?.questionId??sourceQuestion;
  const explanation=!active.pending&&!active.error&&!active.form?rememberedLabGuidance(family,sources,active.view):null;
- const questionChanged=active.form&&active.draftQuestion!==(active.view?.questionId??labResponseQuestions[family].id);
+ const questionChanged=active.form&&active.draftQuestion!==(active.view?.questionId??sourceQuestion);
  if(!user||!sources.length)return null;
  return <section className="lab-remembered-context" aria-label="Remembered context">
   <button ref={opener} type="button" className="text-link inline-flex min-h-11 items-center" aria-expanded={active.expanded} aria-controls={id} onClick={()=>{if(active.expanded){serial.current++;controller.current?.abort();patch({expanded:false,pending:null});opener.current?.focus();}else void load();}}>Review remembered context</button>

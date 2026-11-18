@@ -1,0 +1,30 @@
+{
+  "task": "V06-C2-HbA1c-source-question-producer",
+  "date": "2026-11-18",
+  "status": "ENGINEERING_TESTED_PENDING_PUBLICATION",
+  "dependency": {
+    "compatibleReaderCommit": "50c32e4699b2febc29532685d9d3580f3b9c3ccd",
+    "CI": 44382591347,
+    "tests": "885/885 PASS; all exact hosted/media/Neon gates",
+    "Render": "LIVE dep-dbuvrg142hec73apgob0 at2026-11-18T19:36:04.960792Z"
+  },
+  "change": "Exact owned HbA1c-only source selections now target the existing medication-change question; selections containing glucose retain fasting-context. Legacy global glycemic question remains fasting for original receipt compatibility. Client uses current source question while the server response loads; prepare/save still require the authoritative current source proof.",
+  "sourceReview": {
+    "reusedPriorInspectedSources": [
+      "https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/",
+      "https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test"
+    ],
+    "scope": "HbA1c does not require fasting; medicines may affect results. A remembered change does not establish actual exposure, cause, effect or a medication action."
+  },
+  "verification": [
+    "18focused reader/protocol/encrypted storage/guidance tests PASS, including original no-question and explicit fasting receipt replay, new-intent fasting rejection, immutable old payload, explicit new medication answer, glucose-only/mixed sources, owner isolation",
+    "Actual App/authenticated HTTP/encrypted SQL browser PASS: deliberate delayed view shows correct HbA1c question before response; retained old fasting No labelled separately, no explanation/prefill under new question; explicit medicine yes/range save lost reply recovers same intent201\u2192200 exactly once; reload and distinct remembered/recorded dates;16responsive modes/themes/320/390/768/1440/200%; unchanged lab/old answer; glucose-containing scope remains fasting with blank draft; legacy reader409 and old receipt replay preserve immutable meaning; owner withdrawal",
+    "Unchanged actual B12/CBC compatibility/draft provenance browser regression PASS48states, original source/earlier question history retained; no ordinary screenshots generated",
+    "Typecheck and production build PASS"
+  ],
+  "limits": [
+    "No source lab/clinical diagnosis, ingestion or exposure verification, dose adjustment or causal inference",
+    "Independent clinical/science/device acceptance not claimed; full RC unfinished",
+    "Current published source remains fd70aa87b7ab9ebb015adbc9053ee047e4eb0af8, CI44389390514 running; hold publication stable through exact hosted qualification while coding locally"
+  ]
+}

@@ -184,6 +184,12 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-question-reader-journey.mjs
+      - name: HbA1c source question and immutable fasting history browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/hba1c-source-question-journey.mjs
       - name: Profile birth year and historical reference categories browser regression
         timeout-minutes: 4
         env:

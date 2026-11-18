@@ -1,7 +1,6 @@
 import {z} from 'zod';
 
-// Version2 can read the existing medication question in a glycemic family.
-// Source-target selection remains unchanged until compatible readers are live.
+// Version2 retains historical question meaning and supports source-aware targets.
 export const LAB_RESPONSE_CONTEXT_PROTOCOL='2';
 export const labResponseQuestions={
  lipids:{id:'medication-change',text:'Were any medicines changed before this collection?'},
@@ -21,6 +20,7 @@ export function labResponseQuestionAllowed(family:keyof typeof labResponseQuesti
 /** Source-aware question contract. The deployed compatible reader retains each
  * historical question; exact owned current facts determine a fresh target. */
 export function labResponseQuestionForMarkers(family:keyof typeof labResponseQuestions,markers:readonly string[]):LabResponseQuestionId{
+ if(family==='glycemic'&&markers.includes('hba1c')&&!markers.includes('glucose'))return'medication-change';
  if(family!=='iron-cbc')return labResponseQuestions[family].id;
  if(markers.some(marker=>['ferritin','iron','tibc','transferrin','iron_saturation'].includes(marker)))return'iron-products';
  return markers.includes('b12')?'b12-products':'acute-illness';
