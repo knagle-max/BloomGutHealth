@@ -13,7 +13,7 @@ test('numeric identifiers never fall through to fuzzy product or supplement sear
  const service=new ProductService(async(url)=>{calls.push(url);if(url.includes('foods/search'))return {foods:[fixture]};return {hits:[{_id:'99',_source:{fullName:'Unrelated supplement',brandName:'Synthetic'}}]};},()=>false,()=> 'synthetic-key');
  const store:any={getNutritionProducts:async()=>[]};
  const invalid=await service.search('00012345678906','all',store,'a');assert.equal(invalid.products.length,0);assert.equal(calls.length,0,'Invalid identifier must not spend provider budget or become a name query');assert.ok(invalid.warnings.some(w=>/barcode|identifier/i.test(w)));
- const exact=await service.search('00012345678905','all',store,'a');assert.equal(exact.products.length,1);assert.equal(exact.products[0].source,'usda-branded');assert.equal(calls.length,1);assert.ok(calls.every(url=>url.includes('api.nal.usda.gov')));
+ const exact=await service.search('00012345678905','all',store,'a');assert.equal(exact.products.length,1);assert.equal(exact.products[0].source,'usda-branded');assert.equal(calls.length,3);const dsld=calls.filter(url=>url.includes('api.ods.od.nih.gov'));assert.equal(dsld.length,2);assert.equal(new URL(dsld[0]).searchParams.get('q'),'\"00012345678905\"');assert.ok(dsld[1].endsWith('/label/99'));assert.equal(exact.products.some(product=>product.source==='dsld'),false,'A candidate name cannot substitute for authoritative barcode verification');
 });
 test('homemade retrieval exposes real generic estimates without inventing preparation or losing brand intent',async()=>{
  const fixture={fdcId:202,dataType:'Branded',description:'Chicken noodle soup',brandOwner:"Campbell's",servingSize:100,servingSizeUnit:'g',foodNutrients:[]};

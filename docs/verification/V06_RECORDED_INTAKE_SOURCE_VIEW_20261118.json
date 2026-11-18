@@ -1,6 +1,6 @@
 {
   "task": "V06-M3-RECORDED-INTAKE-SOURCE-VIEW",
-  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "dd3d2321eeb86f4ec0d053272de0955b76aedb99",
   "scope": "Source-wise current confirmed food/supplement observations in the existing Nutrition History; not full M3/M2 or RC.",
   "handoff": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
@@ -33,5 +33,14 @@
     "Known subtotal/coverage only across demonstrably compatible source and form bases; no blanket native-label plus RAE/DFE/equivalent sums.",
     "M2 Canadian applicability/reference/form-specific UL/B6 context, representative-history/usable food choices and remaining Core/Response; independent integrated RC acceptance."
   ],
-  "nextTask": "Scoped exact supplement UPC defect per BLOOM_SUPPLEMENT_BARCODE_LOOKUP_DEFECT_CODEX_HANDOFF_20261117.md, within existing M3; then compatible subtotal/coverage and remaining M2/Core."
+  "nextTask": "Scoped exact supplement UPC defect per BLOOM_SUPPLEMENT_BARCODE_LOOKUP_DEFECT_CODEX_HANDOFF_20261117.md, within existing M3; then compatible subtotal/coverage and remaining M2/Core.",
+  "publication": {
+    "commit": "2c4e56db9f6532dad15a783a854c9f980fb7c273",
+    "exactCi": {
+      "run": 44248177191,
+      "job": 134614567552,
+      "conclusion": "success"
+    },
+    "hosted": "All required exact hosted/source-recovery and isolated Neon persistence gates PASS in that CI. Current Renderfd5e74c6 is a documentation descendant; no authenticated private-user query performed."
+  }
 }

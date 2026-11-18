@@ -18,7 +18,7 @@ export function readLabelNutrientSources(input:unknown){
   return [{index,id:snapshot.id,provider:snapshot.source,name:snapshot.name,brand:snapshot.brand,servingDescription:snapshot.servingDescription||null,servingGrams:snapshot.servingGrams,retrievedAt:z.iso.datetime({offset:true}).safeParse(snapshot.retrievedAt).success?snapshot.retrievedAt:null,url:snapshot.url,
    fields:definitions.map(def=>({key:def.key,name:def.key==='vitamin_a_ug'?'Vitamin A (basis unconfirmed)':def.key==='folate_ug'?'Folate (basis unconfirmed)':def.name,unit:def.amountUnit,amount:snapshot.perServing[def.key]??null,sourceReportsZero:snapshot.perServing[def.key]===undefined?null:snapshot.perServing[def.key]===0})),
    unmappedFields:Object.entries(snapshot.perServing).filter(([key])=>!definitions.some(def=>def.key===key)).map(([key,amount])=>({key,amount,unit:null})),
-   otherIngredients:snapshot.otherNutrients??[],
+   otherIngredients:snapshot.otherNutrients??[],declarations:snapshot.labelDeclarations??[],
   }];
  });
  return {status:sources.length?(missing||unsupported?'partial' as const:'available' as const):unsupported?'unsupported' as const:'not-captured' as const,sources,missing,unsupported};

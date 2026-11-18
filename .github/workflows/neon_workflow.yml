@@ -232,6 +232,22 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: BLOOM_SUPPLEMENT_INTAKE=1 node --import tsx scripts/qa/private-source-context-journey.mjs
+      - name: Supplement barcode and private-label fallback browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: BLOOM_SUPPLEMENT_BARCODE_ONLY=1 node --import tsx scripts/qa/private-source-context-journey.mjs
+      - name: Requested public supplement UPC source contract observation
+        timeout-minutes: 2
+        env:
+          BLOOM_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if git show -s --format=%B "$BLOOM_SOURCE_SHA" | grep -Fq '[verify-supplement-upcs]'; then
+            node --import tsx scripts/qa/supplement-upc-source-probe.mjs
+          else
+            echo "Public UPC probe not requested for this source commit."
+          fi
       - name: Saved wellness choices and food source context browser regression
         timeout-minutes: 6
         env:

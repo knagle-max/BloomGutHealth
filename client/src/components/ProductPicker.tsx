@@ -10,7 +10,7 @@ import {
 import { productResponseSchema, productListResponseSchema, productSearchResponseSchema, readProductResponse, productIngredient, replacementLabelAmount, type Product } from "@shared/products";
 import { productMatchStatus, homePreparedQuery, isHomePreparedSource } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
-import { productSearchText, normalizeBarcode, canonicalBarcode } from "@shared/barcodes";
+import { productSearchText, normalizeBarcode, canonicalBarcode, isBarcodeSearch } from "@shared/barcodes";
 export default function ProductPicker({
   onPick,
   initialQuery = "",
@@ -18,6 +18,7 @@ export default function ProductPicker({
   autoSearch = false,
   confirmLabel = "Use selected product & amount",
   pending = false,
+  servingsLabel = "Servings eaten",
   startScanner = false,
   active = true,
   showBarcode = true,
@@ -30,6 +31,7 @@ export default function ProductPicker({
   autoSearch?: boolean;
   confirmLabel?: string;
   pending?: boolean;
+  servingsLabel?: string;
   startScanner?: boolean;
   active?: boolean;
   showBarcode?: boolean;
@@ -43,6 +45,7 @@ export default function ProductPicker({
     [servings, setServings] = useState(1),
     [manual, setManual] = useState(false),
     [error, setError] = useState("");
+  const [manualFields,setManualFields]=useState<string[]>([]),[manualField,setManualField]=useState("");
   const [amountReviewRequired,setAmountReviewRequired]=useState(false),[amountReviewed,setAmountReviewed]=useState(false);
   const [amountBasis,setAmountBasis]=useState(initialGrams);
   function initialiseAmount(product:Product|null){
@@ -61,6 +64,7 @@ export default function ProductPicker({
   useEffect(()=>{if(manual)manualForm.current?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();},[manual]);
   const search = useMutation({
     mutationFn: async (override?:string)=>{
+      resolve.reset();
       const submitted=override||query,epoch=++lookupEpoch.current,owner=user?.id;
       setSubmittedQuery(submitted);setVariants([]);chooseProduct(null);setError("");
       const response=await apiRequest("GET","/api/products/search?"+new URLSearchParams({q:submitted,kind}));
@@ -77,7 +81,7 @@ export default function ProductPicker({
   const resolve = useMutation({
     mutationFn:async(p:Product)=>{
       const epoch=lookupEpoch.current,owner=user?.id;setVariants([]);chooseProduct(null);setError("");
-      const response=await apiRequest("GET",`/api/products/${p.source}/${encodeURIComponent(p.id)}`);
+      const response=await apiRequest("GET",`/api/products/${p.source}/${encodeURIComponent(p.id)}${p.source==='dsld'&&p.barcode?'?'+new URLSearchParams({barcode:p.barcode}):''}`);
       return {...readProductResponse(productListResponseSchema,await response.json()),epoch,owner};
     },
     onSuccess:result=>{
@@ -86,6 +90,10 @@ export default function ProductPicker({
       setError(result.products.length?"":"This source has no supported serving on this label. Enter your package label below.");
     },
   });
+  const barcodeIntent=isBarcodeSearch(resultQuery||query);
+  const barcodeUnresolved=barcodeIntent&&(search.isError||resolve.isError||!!error||!!searchResult&&!searchResult.products.length);
+  const barcodeStatus=searchResult?.barcodeLookup?.status;
+  const manualBarcode=normalizeBarcode(query)||(isBarcodeSearch(query)?query.trim().replace(/[\s-]/g,''):'');
   const saved=useQuery<Product[]>({queryKey:["/api/products/saved",user?.id],enabled:!!user,queryFn:async()=>readProductResponse(productResponseSchema.array(),await(await apiRequest("GET","/api/products/saved")).json())});
   useEffect(()=>{if(autoSearch&&!started.current&&query.length>=2){started.current=true;search.mutate(undefined);}},[]);
   const create = useMutation({
@@ -126,13 +134,14 @@ export default function ProductPicker({
     onSuccess: ({product:p,epoch,owner}) => {
       queryClient.invalidateQueries({ queryKey: ["/api/products/saved",owner] });
       if(epoch!==lookupEpoch.current||owner!==actor.current)return;
+      search.reset();resolve.reset();setError("");
       chooseProduct(p);
       setVariants([p]);
       setManual(false);
     },
   });
   const previousOwner=useRef(user?.id);
-  useEffect(()=>{if(previousOwner.current===user?.id)return;previousOwner.current=user?.id;lookupEpoch.current++;setChoice(null);setVariants([]);search.reset();resolve.reset();create.reset();},[user?.id]);
+  useEffect(()=>{if(previousOwner.current===user?.id)return;previousOwner.current=user?.id;lookupEpoch.current++;setChoice(null);setVariants([]);setManual(false);setError("");search.reset();resolve.reset();create.reset();},[user?.id]);
   const remove = useMutation({
     mutationFn: async (id: string) => {
       const owner=user?.id;
@@ -149,8 +158,9 @@ export default function ProductPicker({
       void queryClient.invalidateQueries({ queryKey: ["/api/products/saved"] });
     },
   });
+  if(previousOwner.current!==user?.id)return <p role="status">Checking label sources for the current account…</p>;
   return (
-    <div className="space-y-3 border rounded-xl p-3 min-w-0 break-words">
+    <div className="space-y-3 border rounded-xl p-3 min-w-0 break-words [overflow-wrap:anywhere]">
       <h3>Find a food or supplement</h3>
       {showBarcode&&<BarcodeScanner active={active&&!remove.isPending} startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>}
       <p className="panel-note">
@@ -165,7 +175,7 @@ export default function ProductPicker({
             className="bloom-input w-full"
             maxLength={120}
             value={query}
-            onChange={(e) => {lookupEpoch.current++;setQuery(e.target.value);setVariants([]);chooseProduct(null);}}
+            onChange={(e) => {lookupEpoch.current++;search.reset();resolve.reset();setError("");setQuery(e.target.value);setVariants([]);chooseProduct(null);}}
           />
         </label>
         <label>
@@ -189,21 +199,21 @@ export default function ProductPicker({
       >
         {search.isPending ? "Searching…" : "Search products"}
       </Button>
-      {[search.error, resolve.error, create.error, remove.error, saved.error]
+      {[(barcodeUnresolved?null:search.error), (barcodeUnresolved?null:resolve.error), create.error, remove.error, saved.error]
         .filter(Boolean)
         .map((e, i) => (
           <p role="alert" key={i}>
             {e!.message}
           </p>
         ))}
-      {error && <p role="alert">{error}</p>}
-      {(search.error || (searchResult && !searchResult.products.some(p=>["usda-branded","off","manual"].includes(p.source))))&&<div className="report-context space-y-2">
+      {error&&!barcodeUnresolved && <p role="alert">{error}</p>}
+      {barcodeUnresolved?<div className="report-context space-y-2"><p>{barcodeStatus==='invalid-barcode'?'Check the barcode length and check digit. You can correct it in your private label entry.':barcodeStatus==='provider-unavailable'||search.isError||resolve.isError||!!error?'Barcode verification could not complete. Keep the code and enter your package label.':barcodeStatus==='possible-not-verified'?'The checked sources did not provide a usable verified label for this barcode. Enter the label on your package.':'No exact source label was found for this barcode. You can save your own package label.'}</p>{!manual&&<Button type="button" variant="outline" onClick={()=>setManual(true)}>Save my package label</Button>}</div>:(search.error || (searchResult && !searchResult.products.some(p=>["usda-branded","off","manual","dsld"].includes(p.source))))&&<div className="report-context space-y-2">
         <p>No verified package match is available for “{query}”. A generic estimate is not the same product. You can still log the nutrition printed on your package; unlisted values stay unknown.</p>
         <Button type="button" variant="outline" onClick={()=>setManual(true)}>Enter package nutrition</Button>
       </div>}
       {searchResult && (
         <div>
-          {searchResult.warnings.map((s, i) => (
+          {barcodeIntent&&searchResult.warnings.length>0?<details><summary className="min-h-11 cursor-pointer">Source lookup details</summary>{searchResult.warnings.map((warning,index)=><p key={index} className="panel-note">{warning}</p>)}</details>:searchResult.warnings.map((s, i) => (
             <p className="panel-note" key={i}>
               {s}
             </p>
@@ -212,14 +222,14 @@ export default function ProductPicker({
             <p>For your own recipe, enter the individual foods and amounts. Existing meal details and selected products stay in your draft.</p>
             <Button type="button" variant="outline" disabled={pending} onClick={onDescribeIngredients}>Build from individual ingredients</Button>
           </div>}
-          {!searchResult.products.length && (
+          {!barcodeIntent&&!searchResult.products.length && (
             <p>
               No matching records found. Try the barcode, a different spelling,
               or enter the label below.
             </p>
           )}
           {allPossible&&<p className="panel-note">Possible matches for your search. Choose the product and variety on your package before confirming the amount.</p>}
-          <ul className="space-y-2 max-h-80 overflow-y-auto">
+          {!barcodeUnresolved&&<ul className="space-y-2 max-h-80 overflow-y-auto">
             {searchResult.products.map((p,index) => (
               <li key={p.source + p.id}>
                 <Button
@@ -247,11 +257,12 @@ export default function ProductPicker({
                   {p.servingDescription}{p.provenance?.marketCountry?` · ${p.provenance.marketCountry}`:""}
                   {p.perServing.calories!==undefined?` · ${Number(p.perServing.calories.toFixed(1))} kcal per source serving`:""}
                   {p.perServing.protein_g!==undefined?` · ${Number(p.perServing.protein_g.toFixed(1))} g protein per source serving`:""}
+                  {p.source==='dsld'&&p.notes.filter(note=>/^(Label entered:|This label may be historical)/.test(note)).map((note,index)=><span className="block" key={index}>{note}</span>)}
                   <span className="sr-only"> Source record {p.id}.</span>
                 </p>
               </li>
             ))}
-          </ul>
+          </ul>}
           <p className="panel-note">{searchResult.attribution}</p>
         </div>
       )}
@@ -281,7 +292,7 @@ export default function ProductPicker({
             </label>
           )}
           <label className="block">
-            Servings eaten · 1 serving = {choice.servingDescription}
+            {servingsLabel} · 1 serving = {choice.servingDescription}
             <input
               className="bloom-input w-full"
               type="number"
@@ -339,6 +350,7 @@ export default function ProductPicker({
               {n}
             </p>
           ))}
+          {!!choice.labelDeclarations?.length&&<details><summary className="min-h-11 cursor-pointer">Original declared ingredient amounts</summary><p className="panel-note">Source label values for this serving, before app-unit conversion. Activity units and chemical names are preserved; missing forms stay unknown.</p><ul>{choice.labelDeclarations.map((row,index)=><li key={index}>{row.name}: {row.operator} {row.amount} {row.unit}</li>)}</ul></details>}
           {choice.provenance&&<details><summary>Source record & formulation</summary><p>Market country: {choice.provenance.marketCountry||"Not supplied; Canadian formulation is not confirmed"}</p><p>Source barcode: {choice.provenance.gtin||"Not supplied"}</p><p>Published: {choice.provenance.publishedDate||"Not supplied"} · Updated: {choice.provenance.modifiedDate||"Not supplied"}</p>{choice.provenance.ingredients&&<p>Source ingredients: {choice.provenance.ingredients}</p>}</details>}
           {choice.url && (
             <a
@@ -396,7 +408,7 @@ export default function ProductPicker({
           </div>
         ))}
       </details>
-      <Button
+      {(!barcodeUnresolved||manual)&&<Button
         className="whitespace-normal h-auto max-w-full"
         type="button"
         variant="outline"
@@ -405,7 +417,7 @@ export default function ProductPicker({
         {manual
           ? "Close label entry"
           : "Product missing? Enter and save its label"}
-      </Button>
+      </Button>}
       {manual && (
         <form
           ref={manualForm}
@@ -428,11 +440,11 @@ export default function ProductPicker({
                 className="bloom-input w-full"
                 name="name"
                 maxLength={120}
-                defaultValue={normalizeBarcode(query) ? "" : query}
+                defaultValue={isBarcodeSearch(query) ? "" : query}
                 required
               />
             </label>
-            <label>Package barcode (optional)<input className="bloom-input w-full" name="barcode" inputMode="numeric" maxLength={14} defaultValue={normalizeBarcode(query)||""}/></label>
+            <label>Package barcode (optional)<input className="bloom-input w-full" name="barcode" inputMode="numeric" maxLength={14} defaultValue={manualBarcode}/></label>
             <label>
               Brand (optional)
               <input
@@ -463,9 +475,10 @@ export default function ProductPicker({
               />
             </label>
           </div>
+          {kind==='supplement'&&<div className="space-y-2"><p>Add only amounts printed on your label. Other ingredients or activity units can be entered below.</p><label className="block">Label nutrient to add<select aria-label="Label nutrient to add" className="bloom-input w-full" value={manualField} onChange={event=>setManualField(event.target.value)}><option value="">Choose a nutrient</option>{nutrientDefinitions.filter(([key])=>!manualFields.includes(key)).map(([key,name,unit])=><option key={key} value={key}>{name} ({unit})</option>)}</select></label><Button type="button" variant="outline" disabled={!manualField} onClick={()=>{setManualFields(fields=>[...fields,manualField]);const key=manualField;setManualField("");requestAnimationFrame(()=>manualForm.current?.querySelector<HTMLInputElement>(`input[name="${key}"]`)?.focus());}}>Add label nutrient</Button></div>}
           <div className="precision-grid">
             {nutrientDefinitions.map(([k, name, unit]) => (
-              <label key={k}>
+              <label key={k} hidden={kind==='supplement'&&!manualFields.includes(k)} style={{display:kind==='supplement'&&!manualFields.includes(k)?'none':undefined}}>
                 {name} per serving ({unit})
                 <input
                   className="bloom-input w-full"

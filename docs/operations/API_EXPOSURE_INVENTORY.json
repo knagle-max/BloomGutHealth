@@ -19,13 +19,13 @@
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
-    "server/index.ts": "e14f9da38f7ffb5316c1876b31b9fd726e96bf4c76b966f613dc005e28776aad",
+    "server/index.ts": "9e7a159b3c8f1e4ea638e912376e121439c581c4c367967c47cd478f62db1fb2",
     "server/lab-response-context-routes.ts": "a027dfe9e8feac6218d545dbb17515fdeb21aaacdd2ccf67a04dbcbb64244b5e",
     "server/nutrition-history.ts": "da09d7a3720207dd9345eddf0af56ef9afa5c1a2ee3d7a6070e2a5daa55614cb",
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "6c3c9964822e0c731f0f1943a1b831cd9e8cac8911851c146e67ca4afe19145e",
     "server/precision-routes.ts": "dcf1f06f261034c0c92c302c00c991d9c40b35e2a9d1d92f68c24ae3b377cab3",
-    "server/products.ts": "2ae7de636af6b1f299d0cd1fd0f55a837afedae59b30f3ad3320987c3aab9b68",
+    "server/products.ts": "3ba7a022f6ca6dba61ce7afe522ff34f0e8e63309d1dec97744db73dfec7afb2",
     "server/profile-routes.ts": "3fce060222d532bc0214447a467b4697ca0fdf99ace823da7ee6ec632a53bc82",
     "server/recorded-intake-sources.ts": "6406708323799225293423ee5b66a5aec5c7c200a63889ddcd25d2816bae9af4",
     "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
@@ -1008,7 +1008,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 632,
+      "line": 687,
       "method": "USE",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -1018,7 +1018,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 636,
+      "line": 691,
       "method": "GET",
       "path": "/api/products/search",
       "declaredMiddleware": [
@@ -1028,7 +1028,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 658,
+      "line": 713,
       "method": "GET",
       "path": "/api/products/saved",
       "declaredMiddleware": [],
@@ -1036,7 +1036,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 665,
+      "line": 720,
       "method": "GET",
       "path": "/api/products/:source/:id",
       "declaredMiddleware": [
@@ -1046,7 +1046,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 680,
+      "line": 736,
       "method": "POST",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -1056,7 +1056,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 705,
+      "line": 761,
       "method": "DELETE",
       "path": "/api/products/:id",
       "declaredMiddleware": [],

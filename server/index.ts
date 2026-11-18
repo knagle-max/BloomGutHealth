@@ -71,7 +71,7 @@ app.use((req, res, next) => {
   const schemaAudit=await schemaReadinessAudit(pgPool);
   log(JSON.stringify(runtimeAudit));
   log(JSON.stringify(schemaAudit));
-  productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",usdaSharedRequestLimit(),60));
+  productService.setSharedSourceBudget(source=>budgets.consume("provider:"+source,"shared",source==="dsld"?12:usdaSharedRequestLimit(),60));
   app.use(budgets.middleware());
   registerReviewQualification(app,runtimeAudit,schemaAudit);
   const budgetCleanup = setInterval(() => { void budgets.prune().catch(() => {}); }, 60_000);
