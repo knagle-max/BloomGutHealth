@@ -11,6 +11,7 @@
  */
 import { createHash } from "node:crypto";
 import { z } from "zod";
+import type { SpendLedger, SpendLimits } from "./spend-ledger";
 
 export const geminiScienceSourceSchema = z.object({
   sourceId: z.string().min(1).max(128),
@@ -62,6 +63,16 @@ export type GeminiScienceOptions = {
   env?: Record<string, string | undefined>;
   fetcher?: typeof fetch;
   timeoutMs?: number;
+  /** Existing DB-backed atomic spend ledger; no in-memory budget bypass. */
+  ledger?: Pick<SpendLedger,"reserve"|"settle"|"releaseBeforeExecution">;
+  /** Server-generated stable idempotency token, never an LLM-provided ID. */
+  requestId?: string;
+};
+const RESERVED_CALL_MICRO_USD = 10_000; // $0.01 conservative per-call research reservation.
+const RESEARCH_LIMITS: SpendLimits = {
+  accountDaily: 50_000, accountMonthly: 250_000,
+  featureDaily: 50_000, providerMonthly: 250_000,
+  platformMonthly: 500_000, accountConcurrency: 1, platformConcurrency: 1,
 };
 const allowedModels = new Set(["gemini-2.5-flash", "gemini-2.5-flash-lite"]);
 const endpointRoot = "https://generativelanguage.googleapis.com/v1beta/models/";
@@ -74,6 +85,9 @@ export async function investigatePublishedScienceWithGemini(
   if (env.BLOOM_GEMINI_PUBLIC_SCIENCE_ENABLED !== "true" || !env.GEMINI_API_KEY) {
     throw new GeminiResearchUnavailable();
   }
+  // Explicit independent spend guard is mandatory. Key+flag alone cannot spend.
+  if (!options.ledger || !options.requestId || !/^[a-zA-Z0-9_-]{12,90}$/.test(options.requestId))
+    throw new GeminiResearchUnavailable("Server-side spend ledger and idempotency ID are required.");
   const model = env.BLOOM_GEMINI_RESEARCH_MODEL ?? "gemini-2.5-flash";
   if (!allowedModels.has(model)) throw new GeminiResearchUnavailable("Model is not on the reviewed allowlist.");
   const parsed = geminiScienceResearchRequestSchema.safeParse(untrusted);
@@ -110,10 +124,20 @@ export async function investigatePublishedScienceWithGemini(
     generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:1300},
   };
   if (Buffer.byteLength(JSON.stringify(payload),"utf8") > 25_000) throw new GeminiResearchUnavailable("Research request exceeds byte limit.");
+  const account = "bloom-nonpersonal-research";
+  const reservation = await options.ledger.reserve({
+    userId:account,requestId:options.requestId,feature:"gemini-science-research",
+    provider:"google-gemini",model,tariffReference:"conservative-ceiling-20261118",
+    maximumMicroUsd:RESERVED_CALL_MICRO_USD,
+  },RESEARCH_LIMITS);
+  if (!reservation.allowed || reservation.replay || reservation.state !== "reserved")
+    throw new GeminiResearchUnavailable("Research spend limit or duplicate request.");
   const controller = new AbortController();
   const timeoutMs = Math.min(Math.max(options.timeoutMs ?? 12_000,1000),20_000);
   const deadline = setTimeout(()=>controller.abort(),timeoutMs);
+  let providerStarted = false;
   try {
+    providerStarted = true;
     const response = await (options.fetcher ?? fetch)(
       endpointRoot + encodeURIComponent(model) + ":generateContent",
       {method:"POST",redirect:"error",signal:controller.signal,headers:{
@@ -144,6 +168,10 @@ export async function investigatePublishedScienceWithGemini(
       if (!claim.evidenceSourceIds.every(id=>sourceIds.has(id)))
         throw new GeminiResearchUnavailable("Candidate cited an unknown scientific source.");
     }
+    // Conservative estimated ceiling is settled even if free-tier cost was zero.
+    // A paid account must not mistake this estimate for an actual provider invoice.
+    const settled = await options.ledger.settle(account,options.requestId,RESERVED_CALL_MICRO_USD,"estimated");
+    if (!settled) throw new GeminiResearchUnavailable("Could not settle Gemini spend reservation.");
     return {
       status:"candidate_unreviewed",provider:"google-gemini",model,sourceSetSha256:sourceDigest,
       taskId:request.taskId,claims:candidate.data,
@@ -153,5 +181,9 @@ export async function investigatePublishedScienceWithGemini(
   } catch (error) {
     if (error instanceof GeminiResearchUnavailable) throw error;
     throw new GeminiResearchUnavailable("Gemini transport unavailable.");
-  } finally {clearTimeout(deadline);}
+  } finally {
+    clearTimeout(deadline);
+    if (!providerStarted) await options.ledger.releaseBeforeExecution(account,options.requestId).catch(()=>{});
+    // Provider errors after invocation are deliberately left reserved because billing is uncertain.
+  }
 }
