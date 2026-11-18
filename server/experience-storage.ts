@@ -13,8 +13,8 @@ import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFe
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
 import { and, eq, notInArray, desc, sql } from "drizzle-orm";
-import { experienceSettings, experienceRecords,experimentVersions } from "../shared/schema";
-import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema,settingsPatchSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
+import { experienceSettings, experienceRecords,experimentVersions,users } from "../shared/schema";
+import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceLifecycleSchema,experienceSettingsSchema,settingsPatchSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
 import type { db as appDatabase } from "./db";
 type Database = Pick<typeof appDatabase,"select"|"insert"|"update"|"delete"|"transaction">;
@@ -27,6 +27,22 @@ export class ExperienceStorage {
  }
  async putExperienceSettings(userId:string,patch:ExperienceSettingsPatch){return this.writeSettings(userId,patch);}
  async putExperienceSettingsIfCurrent(userId:string,patch:ExperienceSettingsPatch,revision:string){return this.writeSettings(userId,patch,revision);}
+ /** Append only an opaque epoch. Never reinterpret or reset preferences. */
+ async ensureExperienceLifecycle(userId:string):Promise<string>{
+  if(typeof userId!=='string'||!userId)throw Error('ACCOUNT_REQUIRED');
+  return this.db.transaction(async tx=>{
+   await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
+   const[actor]=await tx.select({id:users.id}).from(users).where(eq(users.id,userId)).for('key share');
+   if(!actor)throw Error('ACCOUNT_REQUIRED');
+   const[row]=await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
+   const raw=row?decryptPrecision(row.encryptedPayload,userId):experienceSettingsSchema.parse({});
+   const metadata=experienceLifecycleSchema.parse(raw);
+   if(metadata.lifecycleId)return metadata.lifecycleId;
+   const lifecycleId=randomUUID(),payload={...metadata,lifecycleId};
+   await tx.insert(experienceSettings).values({userId,encryptedPayload:encryptPrecision(payload,userId)}).onConflictDoUpdate({target:experienceSettings.userId,set:{encryptedPayload:encryptPrecision(payload,userId),updatedAt:new Date()}});
+   return lifecycleId;
+  });
+ }
  private async writeSettings(userId:string, patch:ExperienceSettingsPatch,expectedRevision?:string) {
   patch=settingsPatchSchema.parse(patch);
   return this.db.transaction(async tx=>{

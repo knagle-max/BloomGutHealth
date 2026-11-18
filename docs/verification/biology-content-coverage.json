@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 312,
-    "sourceFilesScanned": 785,
+    "sourceFilesScanned": 790,
     "relevantSourceFiles": 73,
     "researchPathways": 7
   },
@@ -25308,7 +25308,7 @@
     },
     {
       "file": "shared/supplement-intake.ts",
-      "line": 61,
+      "line": 64,
       "field": "reportedName",
       "reason": "Dynamic source expression; names are inventoried separately when present in a literal pool or generated fixture."
     },
@@ -25458,7 +25458,7 @@
     "shared/precision-nutrition.ts": "3fd8f3ded08f4e36af0fda787aec1e5c2a0efecbe2004af52293fd291cbc424b",
     "shared/reported-taxa.ts": "c5b88f64766609a14631ef97461c332702c147caad780bdb78c2ae0b4ca2bf55",
     "shared/schema.ts": "f0944dca7bf5bf23fb1e98e72738d725b87dc5e3ce3c83ff38c7be479573048b",
-    "shared/supplement-intake.ts": "3aab2b02e56df2d3c7897caf3e08a53779f55314a39422371215571b34072e3f",
+    "shared/supplement-intake.ts": "95dd42d326e3387234d4ad46095a1f2b5d095bca0cb6e10a8804a26f5b18ad97",
     "tests/account-erasure.test.ts": "88df1a3dc99e9c20d917981d0fafa453eb8383a54dca81a7f6d2ec912ad438e0",
     "tests/account-export.test.ts": "540d55a5a53d824ffd590035b5a9f155bfb0dfd6d7c3136e35ac30b69585f7a8",
     "tests/biological-report-management.test.ts": "42707f79920630022da35f21fcb431c0ce1c1319e769d932d99275eca25bbf8b",

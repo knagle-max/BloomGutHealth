@@ -9,6 +9,7 @@ import { useExperience } from "@/lib/experience";
 import { energyAmount, formatNutrientAmount } from "@shared/nutrition-display";
 import { SaveMealButton } from "@/components/SavedMeals";
 import MealAnalysis from "@/components/MealAnalysis";
+import SupplementIntakes from '@/components/SupplementIntakes';
 import { explainFoods } from "@shared/meal-intelligence";
 import { type MealIntelligence } from "@shared/meal-intelligence";
 import { useEffect, useRef, useState } from "react";
@@ -643,6 +644,7 @@ export default function NutritionHistory() {
         </CardContent>)}
       </Card>
 
+      <SupplementIntakes/>
       <div className="mb-6">
         <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
           <h2 className="text-lg font-semibold flex items-center gap-2">

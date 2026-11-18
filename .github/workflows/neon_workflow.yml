@@ -231,7 +231,7 @@ jobs:
         env:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
-        run: node --import tsx scripts/qa/private-source-context-journey.mjs
+        run: BLOOM_SUPPLEMENT_INTAKE=1 node --import tsx scripts/qa/private-source-context-journey.mjs
       - name: Saved wellness choices and food source context browser regression
         timeout-minutes: 6
         env:

@@ -24,6 +24,7 @@ import { BiologyStorage } from "./biology-storage";
 import { insertMealWithReceipt, type MealSaveReceipt } from "./meal-save";
 import type { BiologicalRegistry } from "../shared/biological-model";
 import { ExperienceStorage, type ExperienceStore } from "./experience-storage";
+import {SupplementIntakeStorage} from './supplement-intake-storage';
 import type { LabelInput, Product } from "../shared/products";
 import {
   type User,
@@ -50,6 +51,7 @@ import type {
 import { eq, and, sql, desc } from "drizzle-orm";
 
 export interface IStorage extends ExperienceStore {
+  supplementIntakes?:SupplementIntakeStorage;
   labResponseContext?:Pick<LabResponseContextStorage,'history'|'view'|'prepare'|'save'|'deleteHistory'>;
   getBiologicalRegistry(): Promise<BiologicalRegistry>;
   getNutritionProducts(userId: string): Promise<Product[]>;
@@ -126,6 +128,7 @@ export interface IStorage extends ExperienceStore {
 }
 
 export class DatabaseStorage implements IStorage {
+  readonly supplementIntakes=new SupplementIntakeStorage(db);
   readonly labResponseContext=new LabResponseContextStorage(db);
   private biology = new BiologyStorage(db);
   getBiologicalRegistry(){return this.biology.getBiologicalRegistry();}

@@ -4,6 +4,9 @@ import {labResponseContextSchema} from './lab-response-context';
 import {supplementIntakeSchema} from './supplement-intake';
 import { z } from "zod";
 import { ingredientSchema } from "./meal-intelligence";
+/** Opaque request invalidation only. This does not validate preferences,
+ * clinical eligibility or consent and must never grant domain permissions. */
+export const experienceLifecycleSchema=z.object({lifecycleId:z.uuid().transform(value=>value.toLowerCase()).optional()}).passthrough();
 export const dateKey = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine(v => !Number.isNaN(Date.parse(v)) && new Date(v).toISOString().slice(0,10) === v, "Use a real calendar date");
 /** A user choice is an intention, never evidence that food/exercise occurred. */
 export const wellnessChoiceSchema=z.object({

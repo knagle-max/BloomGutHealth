@@ -45,6 +45,9 @@ export const supplementIntakeSchema=z.object({
  }
 });
 export type SupplementIntake=z.infer<typeof supplementIntakeSchema>;
+export const supplementIntakeRecordSchema=z.object({id:z.string().regex(/^[a-f0-9]{64}$/),userId:z.string().min(1),kind:z.literal('supplement-intake'),payload:supplementIntakeSchema,createdAt:timestamp,updatedAt:timestamp}).strict();
+export type SupplementIntakeRecord=z.infer<typeof supplementIntakeRecordSchema>;
+export const supplementIntakePageSchema=z.object({userId:z.string().min(1),records:z.array(supplementIntakeRecordSchema),total:z.number().int().nonnegative(),offset:z.number().int().nonnegative(),limit:z.number().int().positive(),hasMore:z.boolean(),order:z.literal('updated-descending')}).strict();
 
 /** Projection of one owned canonical event. Original and correction snapshots
  * explain provenance; only its current value can contribute, exactly once. */

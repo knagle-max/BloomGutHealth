@@ -24,7 +24,7 @@ export default function ProductPicker({
   initialGrams,
   onDescribeIngredients,
 }: {
-  onPick: (i: Ingredient) => void;
+  onPick: (i: Ingredient,source?:Product) => void;
   initialQuery?: string;
   initialKind?: "all"|"food"|"supplement";
   autoSearch?: boolean;
@@ -358,7 +358,7 @@ export default function ProductPicker({
             }
             onClick={() => {
               const ingredient=productIngredient(choice,servings);
-              onPick({...ingredient,product:{...ingredient.product,query:searchResult?.query?.original||query}});
+              onPick({...ingredient,product:{...ingredient.product,query:searchResult?.query?.original||query}},structuredClone(choice));
               setChoice(null);
               setVariants([]);
             }}

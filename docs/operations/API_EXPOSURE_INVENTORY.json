@@ -15,7 +15,7 @@
     "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
     "server/capability-access.ts": "a4af301a2d14d380a6906b1da60304d45560e46cb8e4d99daff48e30373e98a4",
     "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
-    "server/experience-routes.ts": "c2b52a1bad6ae4d81422f4245fd0e347a9c99a74a44feba772c0d374546b545a",
+    "server/experience-routes.ts": "ba9f583dca2f1ff8d375426c7ff7ed20b7d40ea329dd60ff76f3386ae4c1e1ce",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/health-source-routes.ts": "e0605def9f71c72e285a85277f489b257e932fdcd78516fba8b36a8442293ad0",
@@ -32,6 +32,7 @@
     "server/review-qualification.ts": "d9dca0b6ef903adaf167cac58188321e23fce81461c1aa52d123ee75cc412aab",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
+    "server/supplement-intake-routes.ts": "ad2b305aef9d01f7cefe5de8ae652612fb89ff77586f6d6b4b0cb29256fc001d",
     "server/vite.ts": "ade8d79bc6dfdb3870f7903dd2a5433be0c902715a7be86e32757fea55ef3025"
   },
   "entries": [
@@ -189,7 +190,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 32,
+      "line": 33,
       "method": "USE",
       "path": "/api/experience",
       "declaredMiddleware": [
@@ -199,7 +200,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 41,
+      "line": 43,
       "method": "GET",
       "path": "/api/experience/settings",
       "declaredMiddleware": [],
@@ -207,7 +208,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 42,
+      "line": 44,
       "method": "PATCH",
       "path": "/api/experience/settings",
       "declaredMiddleware": [
@@ -217,7 +218,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 43,
+      "line": 45,
       "method": "GET",
       "path": "/api/experience/records/:id/history",
       "declaredMiddleware": [],
@@ -225,7 +226,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 49,
+      "line": 51,
       "method": "GET",
       "path": "/api/experience/wellness-actions",
       "declaredMiddleware": [],
@@ -233,7 +234,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 55,
+      "line": 57,
       "method": "POST",
       "path": "/api/experience/wellness-choices",
       "declaredMiddleware": [
@@ -243,7 +244,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 61,
+      "line": 63,
       "method": "DELETE",
       "path": "/api/experience/wellness-choices",
       "declaredMiddleware": [
@@ -253,7 +254,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 68,
+      "line": 70,
       "method": "POST",
       "path": "/api/experience/activity-routines",
       "declaredMiddleware": [
@@ -263,7 +264,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 73,
+      "line": 75,
       "method": "PUT",
       "path": "/api/experience/activity-routines/:id",
       "declaredMiddleware": [
@@ -273,7 +274,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 78,
+      "line": 80,
       "method": "PUT",
       "path": "/api/experience/activity-routines/:id/occurrences/:date",
       "declaredMiddleware": [
@@ -283,7 +284,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 83,
+      "line": 85,
       "method": "GET",
       "path": "/api/experience/records",
       "declaredMiddleware": [],
@@ -291,7 +292,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 84,
+      "line": 86,
       "method": "GET",
       "path": "/api/experience/checkins/:id/source",
       "declaredMiddleware": [],
@@ -299,7 +300,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 93,
+      "line": 95,
       "method": "GET",
       "path": "/api/experience/checkins/:id/feedback",
       "declaredMiddleware": [],
@@ -307,7 +308,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 101,
+      "line": 103,
       "method": "POST",
       "path": "/api/experience/checkins/:id/feedback",
       "declaredMiddleware": [
@@ -317,7 +318,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 115,
+      "line": 117,
       "method": "POST",
       "path": "/api/experience/sessions",
       "declaredMiddleware": [
@@ -327,7 +328,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 123,
+      "line": 125,
       "method": "POST",
       "path": "/api/experience/activities",
       "declaredMiddleware": [
@@ -337,7 +338,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 131,
+      "line": 133,
       "method": "POST",
       "path": "/api/experience/records",
       "declaredMiddleware": [
@@ -347,7 +348,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 132,
+      "line": 134,
       "method": "PUT",
       "path": "/api/experience/records/:id",
       "declaredMiddleware": [
@@ -357,7 +358,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 133,
+      "line": 135,
       "method": "DELETE",
       "path": "/api/experience/records/:id",
       "declaredMiddleware": [
@@ -367,7 +368,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 134,
+      "line": 136,
       "method": "GET",
       "path": "/api/experience/export",
       "declaredMiddleware": [],
@@ -375,7 +376,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 135,
+      "line": 137,
       "method": "DELETE",
       "path": "/api/experience",
       "declaredMiddleware": [
@@ -385,7 +386,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 136,
+      "line": 138,
       "method": "POST",
       "path": "/api/experience/athlete-day",
       "declaredMiddleware": [
@@ -395,7 +396,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 143,
+      "line": 145,
       "method": "POST",
       "path": "/api/experience/day-choices",
       "declaredMiddleware": [
@@ -405,7 +406,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 144,
+      "line": 146,
       "method": "GET",
       "path": "/api/experience/review",
       "declaredMiddleware": [],
@@ -413,7 +414,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 145,
+      "line": 147,
       "method": "POST",
       "path": "/api/experience/templates/from-meal",
       "declaredMiddleware": [
@@ -423,7 +424,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 146,
+      "line": 148,
       "method": "POST",
       "path": "/api/experience/templates/:id/log",
       "declaredMiddleware": [],
@@ -431,7 +432,7 @@
     },
     {
       "file": "server/experience-routes.ts",
-      "line": 177,
+      "line": 179,
       "method": "POST",
       "path": "/api/experience/scan",
       "declaredMiddleware": [
@@ -1264,6 +1265,62 @@
       "path": "/api/science/plan",
       "declaredMiddleware": [
         "dependencies.requireAuth"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/supplement-intake-routes.ts",
+      "line": 29,
+      "method": "GET",
+      "path": "/api/experience/supplement-intakes",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/supplement-intake-routes.ts",
+      "line": 35,
+      "method": "GET",
+      "path": "/api/experience/supplement-intakes/:id",
+      "declaredMiddleware": [],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/supplement-intake-routes.ts",
+      "line": 39,
+      "method": "POST",
+      "path": "/api/experience/supplement-intakes/review",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/supplement-intake-routes.ts",
+      "line": 49,
+      "method": "POST",
+      "path": "/api/experience/supplement-intakes/confirm",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/supplement-intake-routes.ts",
+      "line": 59,
+      "method": "PUT",
+      "path": "/api/experience/supplement-intakes/:id/confirm",
+      "declaredMiddleware": [
+        "limit"
+      ],
+      "review": "REVIEW_REQUIRED"
+    },
+    {
+      "file": "server/supplement-intake-routes.ts",
+      "line": 75,
+      "method": "DELETE",
+      "path": "/api/experience/supplement-intakes/:id",
+      "declaredMiddleware": [
+        "limit"
       ],
       "review": "REVIEW_REQUIRED"
     }
