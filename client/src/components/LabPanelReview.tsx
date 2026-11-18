@@ -37,6 +37,13 @@ export default function LabPanelReview({report,onSelect}:{report:PrecisionReport
   {review.selected.map(family=><details key={family.id} className="lab-panel-review-family">
    <summary>{family.name} · {family.cues.length} review {family.cues.length===1?'cue':'cues'}{family.goalRelevant?' · related to a recorded goal':''}</summary>
    <p>{family.context}</p>
+   {family.id==='glycemic'&&review.glycemicDiscrepancy&&<section aria-label="Glucose and HbA1c source discrepancy">
+    <h3>Why these results can differ</h3>
+    <p>{review.glycemicDiscrepancy.finding}</p><p>{review.glycemicDiscrepancy.meaning}</p>
+    <p>{review.glycemicDiscrepancy.discussion}</p>
+    <a className="text-link inline-flex min-h-11 items-center" href={review.glycemicDiscrepancy.action.href}>{review.glycemicDiscrepancy.action.label}</a>
+    <details><summary>Evidence and interpretation limits</summary><p>{review.glycemicDiscrepancy.limitations}</p><ul>{review.glycemicDiscrepancy.citations.map(source=><li key={source.id}><a className="text-link" href={source.url} target="_blank" rel="noreferrer">{source.title}</a></li>)}</ul></details>
+   </section>}
    <ul className="lab-panel-review-list">{family.cues.map(observation)}</ul>
    {family.members.some(row=>!family.cues.includes(row))&&<details><summary>Other recorded markers in this family</summary><ul className="lab-panel-review-list">{family.members.filter(row=>!family.cues.includes(row)).map(observation)}</ul></details>}
    <LabFamilyGuidance family={family}/>

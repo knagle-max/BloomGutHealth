@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 312,
-    "sourceFilesScanned": 818,
+    "sourceFilesScanned": 819,
     "relevantSourceFiles": 73,
     "researchPathways": 7
   },
@@ -25475,7 +25475,7 @@
     "tests/lab-explorer.test.ts": "caf583b6b822f9e44b1bc59a70cb8ca1e1eb8709a9df5ba0a8d975b789dd8e20",
     "tests/lab-history.test.ts": "b0e559a5d68159f123f86e332d165c59db5d50838b979a5298f21df93a79c31a",
     "tests/lab-import-review.test.ts": "390b8323b3435a56861b999684c41ebd7b0e711e4e95a0c5f79f33ad7cb061c1",
-    "tests/lab-panel-review.test.ts": "95cb4d8617123d608c6d4b4e2cc52ce83c18b6369c2473a9e7fd2a10bdf90f27",
+    "tests/lab-panel-review.test.ts": "0f2c1ace750cc66f374ee75b4062f8bdd186fe983e979e7b634eca6eb2c5eb4a",
     "tests/lab-paste-workflow.test.ts": "5dd52ffd52a325d10d8f3a599f201c1f74101b6db2cf8a96b42f296227484c42",
     "tests/lab-reimport.test.ts": "f49d8dd68f85d12861798f6eacd6d5ffaa99df49b8db73f940e8a551e87569b0",
     "tests/lab-review.test.ts": "731f962d82ff9886da23749e12e9c815e9254a57319363cf484149caa402294e",

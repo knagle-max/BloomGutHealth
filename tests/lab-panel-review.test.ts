@@ -60,3 +60,18 @@ test('aligned opposing lipid directions stay visible without source bounds or a 
  const review=recordedLabPanelReview(report(rows));assert.equal(review.lipidTradeoffs.length,1);assert.equal(review.assessments.find(row=>row.id==='ldl')!.position,null);
  assert.match(review.lipidTradeoffs[0].text,/Triglycerides decreased while LDL cholesterol increased/);assert.doesNotMatch(review.lipidTradeoffs[0].text,/outside|worsened|improved|normal|optimal/);assert.deepEqual(review.lipidTradeoffs[0].sourceIds,['triglycerides-0','triglycerides-1','ldl-0','ldl-1']);
 });
+
+const glycemicRows=()=>[lab('hba1c',6.2,1,{unit:'%',referenceLow:4.5,referenceHigh:5.9}),lab('glucose',5,1,{referenceLow:3.3,referenceHigh:5.5})];
+test('BIO-VALUE03: same-report source discrepancy explains different glycemic timescales with evidence and an original-result path, without clinical promotion',()=>{
+ const rows=glycemicRows(),r=report(rows),before=JSON.stringify(r),finding=recordedLabPanelReview(r).glycemicDiscrepancy!;
+ assert.ok(finding);assert.deepEqual(finding.sourceIds,['hba1c-1','glucose-1']);assert.match(finding.meaning,/does not cancel/);assert.match(finding.meaning,/two to three months/);assert.equal(finding.releaseState,'detail-only');assert.equal(finding.clinicalSignificance,'not-assessed');assert.ok(finding.citations.length>=2);assert.match(finding.action.href,/hba1c-1/);assert.equal(JSON.stringify(r),before);
+});
+test('BIO-VALUE01/06: normal noise, missing bounds/fasting, random glucose, different reports and unresolved units do not acquire glycemic discrepancy interpretation',()=>{
+ const [a,g]=glycemicRows();
+ for(const rows of [[a],[g],[{...a,payload:{...a.payload,value:5.8}},g],[a,{...g,payload:{...g.payload,referenceLow:null}}],[a,{...g,payload:{...g.payload,fasting:'unknown'}}],[a,{...g,payload:{...g.payload,fasting:'no'}}],[a,{...g,payload:{...g.payload,sourceReport:{importId:'00000000-0000-4000-8000-000000000009'}}}],[a,{...g,payload:{...g.payload,measuredAt:dates[0]}}],[a,{...g,payload:{...g.payload,value:8}}]])assert.equal(recordedLabPanelReview(report(rows)).glycemicDiscrepancy,null);
+});
+test('BIO-VALUE07/13: source corrections change the glycemic dependency token and removing or correcting the affected source retracts the finding',()=>{
+ const [a,g]=glycemicRows(),initial=recordedLabPanelReview(report([a,g])).glycemicDiscrepancy!;
+ const changed=recordedLabPanelReview(report([{...a,payload:{...a.payload,value:6.3}},g])).glycemicDiscrepancy!;
+ assert.notEqual(initial.sourceEpoch,changed.sourceEpoch);assert.equal(recordedLabPanelReview(report([{...a,payload:{...a.payload,value:5.5}},g])).glycemicDiscrepancy,null);assert.equal(recordedLabPanelReview(report([g])).glycemicDiscrepancy,null);
+});

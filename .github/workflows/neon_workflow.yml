@@ -136,6 +136,12 @@ jobs:
           BLOOM_PLAYWRIGHT_MODULE: playwright-core
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
         run: node --import tsx scripts/qa/lab-panel-review-journey.mjs
+      - name: Glycemic source discrepancy and owner lifecycle browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/glycemic-source-discrepancy-journey.mjs
       - name: Remembered laboratory context source and privacy browser regression
         timeout-minutes: 4
         env:
