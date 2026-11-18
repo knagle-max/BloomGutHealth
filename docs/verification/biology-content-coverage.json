@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 312,
-    "sourceFilesScanned": 783,
+    "sourceFilesScanned": 785,
     "relevantSourceFiles": 72,
     "researchPathways": 7
   },
@@ -25453,7 +25453,7 @@
     "shared/reported-taxa.ts": "c5b88f64766609a14631ef97461c332702c147caad780bdb78c2ae0b4ca2bf55",
     "shared/schema.ts": "f0944dca7bf5bf23fb1e98e72738d725b87dc5e3ce3c83ff38c7be479573048b",
     "tests/account-erasure.test.ts": "88df1a3dc99e9c20d917981d0fafa453eb8383a54dca81a7f6d2ec912ad438e0",
-    "tests/account-export.test.ts": "5ac2c0196a63e8e68a493e9b4bd84a88c12307a6ad13a8cf3133f2b7ecb2c04f",
+    "tests/account-export.test.ts": "540d55a5a53d824ffd590035b5a9f155bfb0dfd6d7c3136e35ac30b69585f7a8",
     "tests/biological-report-management.test.ts": "42707f79920630022da35f21fcb431c0ce1c1319e769d932d99275eca25bbf8b",
     "tests/biology-content-registry.test.ts": "20e7e895240ba9892b6bdce7b3be85f68e087380ac3f43ccfe28ebff9a497d88",
     "tests/biology-source-inventory.test.ts": "1e70668b1771a4b26739f46ed663a247031c5a58d47ef4b2f50d51e41114f7c0",

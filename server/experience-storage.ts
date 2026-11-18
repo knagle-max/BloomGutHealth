@@ -12,7 +12,7 @@ import {createHash,randomUUID} from "node:crypto";
 import {checkinFeedbackView,preserveFocusFeedback,focusFeedbackReceipt,CheckinFeedbackConflict,CheckinFeedbackInvalid} from "./checkin-feedback-source";
 import {settingsRevision,SettingsRevisionConflict} from "./settings-source";
 import {invalidateAthleteReview} from "../shared/athlete-review";
-import { and, eq, ne, desc, sql } from "drizzle-orm";
+import { and, eq, notInArray, desc, sql } from "drizzle-orm";
 import { experienceSettings, experienceRecords,experimentVersions } from "../shared/schema";
 import { athleteProfileSchema,hydrationSchema,experimentSchema,type ExperimentHistory,activitySchema,type Activity,trainingSessionSchema,type TrainingSession,checkinSchema,focusFeedbackRequestSchema,type FocusFeedbackRequest,experienceSettingsSchema,settingsPatchSchema, experienceEntrySchema, type ExperienceSettings, type ExperienceSettingsPatch, type ExperienceEntry, type ExperienceRecord,type CheckinFeedbackView } from "../shared/experience";
 import { encryptPrecision, decryptPrecision } from "./precision-crypto";
@@ -47,7 +47,9 @@ export class ExperienceStorage {
   });
  }
  async getExperienceRecords(userId:string, kind?:ExperienceEntry["kind"]) {
-  const query=this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice")));
+  // These source events are read explicitly, never as activities, check-ins,
+  // quality reviews or inferred consumed meals by an older generic consumer.
+  const query=this.db.select().from(experienceRecords).where(kind?and(eq(experienceRecords.userId,userId),eq(experienceRecords.kind,kind)):and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intake','supplement-intent'])));
   const rows=kind==="wellness-choice"?await query.orderBy(desc(experienceRecords.createdAt),desc(experienceRecords.id)).limit(2000):await query.orderBy(desc(experienceRecords.updatedAt)).limit(2000);
   return rows.map(r=>decode(r,userId));
  }
@@ -55,7 +57,7 @@ export class ExperienceStorage {
   await tx.execute(sql`SET TRANSACTION ISOLATION LEVEL REPEATABLE READ, READ ONLY`);
   await tx.execute(sql`SET LOCAL statement_timeout = '20s'`);
   const source=new ExperienceStorage(tx as unknown as Database);
-  return{settings:await source.getExperienceSettings(userId),records:[...await source.getExperienceRecords(userId),...await source.getExperienceRecords(userId,"wellness-choice")],history:await source.getExperimentHistory(userId)};
+  return{settings:await source.getExperienceSettings(userId),records:[...await source.getExperienceRecords(userId),...await source.getExperienceRecords(userId,"wellness-choice"),...await source.getExperienceRecords(userId,'supplement-intake')],history:await source.getExperimentHistory(userId)};
  });}
  async getExperimentHistory(userId:string,recordId?:string):Promise<ExperimentHistory|null>{
   if(recordId){const[parent]=await this.db.select({id:experienceRecords.id}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,recordId),eq(experienceRecords.kind,"experiment")));if(!parent)return null;}
@@ -103,7 +105,7 @@ export class ExperienceStorage {
    const [existing]=await tx.select().from(experienceRecords).where(and(eq(experienceRecords.id,id),eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'activity-routine')));
    if(existing){const row=decode(existing,userId);if(row.kind!=='activity-routine'||JSON.stringify(row.payload.plan)!==JSON.stringify(plan)||row.payload.sourceActivityId!==sourceActivityId)throw new ActivityRoutineConflict(409,'This routine save already has different details. Review the saved routine.');return row;}
    if(sourceActivityId){const [source]=await tx.select({id:experienceRecords.id}).from(experienceRecords).where(and(eq(experienceRecords.id,sourceActivityId),eq(experienceRecords.userId,userId),eq(experienceRecords.kind,'activity')));if(!source)throw new ActivityRoutineConflict(404,'Source activity not found in your account.');}
-   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,'wellness-choice')));if(count.count>=2000)throw Error('EXPERIENCE_LIMIT');
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent'])));if(count.count>=2000)throw Error('EXPERIENCE_LIMIT');
    const payload=activityRoutineSchema.parse({plan,sourceActivityId,acknowledgedOccurrences:{}});
    const [row]=await tx.insert(experienceRecords).values({id,userId,kind:'activity-routine',encryptedPayload:encryptPrecision(payload,userId)}).returning();return decode(row,userId);
   });
@@ -158,7 +160,7 @@ export class ExperienceStorage {
     if(!routineSourceMatches(payload as Activity,saved.plan,new Date(),saved.occurrenceOverrides))throw new ActivityRoutineConflict(409,'Review the current routine, local date and explicit completion before saving.');
     routine={id:source.id,payload:saved};
    }
-   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice")));
+   const [count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent'])));
    if(count.count>=2000)throw Error("EXPERIENCE_LIMIT");
    const [row]=await tx.insert(experienceRecords).values({id,userId,kind,encryptedPayload:encryptPrecision(payload,userId)}).returning();
    if(routine&&routineSource){const next=activityRoutineSchema.parse({...routine.payload,acknowledgedOccurrences:{...routine.payload.acknowledgedOccurrences,[routineSource.scheduledDate]:{activityId:id,revision:routineSource.revision,receiptHash:createHash('sha256').update(JSON.stringify([id,payload])).digest('hex')}}});await tx.update(experienceRecords).set({encryptedPayload:encryptPrecision(next,userId),updatedAt:new Date()}).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,routine.id),eq(experienceRecords.kind,'activity-routine')));}
@@ -166,6 +168,7 @@ export class ExperienceStorage {
   });
  }
  async insertExperienceRecord(userId:string, entry:ExperienceEntry) {
+  if(entry.kind==='supplement-intake')throw Error('SUPPLEMENT_INTAKE_ACTION_REQUIRED');
   if(entry.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
   if(entry.kind==="activity")throw Error("ACTIVITY_ACTION_REQUIRED");
@@ -173,7 +176,7 @@ export class ExperienceStorage {
   if(entry.kind==="checkin"&&entry.payload.focusFeedback!==undefined)throw Error("CHECKIN_FEEDBACK_ACTION_REQUIRED");
   return this.db.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId}, 1))`);
-   const rows=await tx.select({id:experienceRecords.id,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,"wellness-choice"))).orderBy(desc(experienceRecords.createdAt));
+   const rows=await tx.select({id:experienceRecords.id,kind:experienceRecords.kind,encryptedPayload:experienceRecords.encryptedPayload,createdAt:experienceRecords.createdAt}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent']))).orderBy(desc(experienceRecords.createdAt));
    // Exact-description memories are one record per key, scoped to the owner.
    if(entry.kind==="food-memory" || entry.kind==="checkin") {
     const found=rows.find(r=>{
@@ -193,6 +196,7 @@ export class ExperienceStorage {
   });
  }
  async updateExperienceRecord(userId:string,id:string,entry:ExperienceEntry) {
+  if(entry.kind==='supplement-intake')throw Error('SUPPLEMENT_INTAKE_ACTION_REQUIRED');
   if(entry.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
   if(entry.kind==="activity-routine")throw new ActivityRoutineConflict(400,"Use the versioned routine controls.");
   if(entry.kind==="wellness-choice")throw Error("WELLNESS_CHOICE_ACTION_REQUIRED");
@@ -250,6 +254,7 @@ export class ExperienceStorage {
    const [row]=await tx.select({kind:experienceRecords.kind}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id)));
    if(row?.kind==="wellness-choice")throw new WellnessChoiceConflict("dedicated-action");
    if(row?.kind==='lab-response-context')throw Error('LAB_CONTEXT_ACTION_REQUIRED');
+    if(row?.kind==='supplement-intake'||row?.kind==='supplement-intent')throw Error('SUPPLEMENT_INTAKE_ACTION_REQUIRED');
    const result=await tx.delete(experienceRecords).where(and(eq(experienceRecords.userId,userId),eq(experienceRecords.id,id))).returning({id:experienceRecords.id});return !!result.length;
   });
  }

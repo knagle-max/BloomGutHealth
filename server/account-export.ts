@@ -3,7 +3,7 @@ import {readProfileMeasurementSource} from "./profile-measurement-source";
 import {labReportMetadataSchema} from "../shared/lab-report-metadata";
 import {historicalPlanRecord} from "./plan-history";
 import {historicalAnalysisMetadata,historicalDerivedMetadata} from "./analysis-boundary";
-import { and,eq, sql } from "drizzle-orm";
+import { and,eq,ne, sql } from "drizzle-orm";
 import {activeMealPredicate} from './meal-save-state';
 import { users, meals, microbiomeSamples, bacterialComposition, metabolites, healthImpacts, mlAnalyses, recommendations, precisionProfiles, precisionRecords,labReportMetadataVersions, nutritionProducts, experienceSettings, experienceRecords,experimentVersions, healthSourceConsents, healthObservations, capabilityPreferences } from "../shared/schema";
 import { decryptPrecision } from "./precision-crypto";
@@ -60,7 +60,7 @@ export class AccountExportStorage {
       stage="experience-settings";
       const [settings] = await tx.select().from(experienceSettings).where(eq(experienceSettings.userId,userId));
       stage="experience-records";
-      const experience = checked(await tx.select().from(experienceRecords).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
+      const experience = checked(await tx.select().from(experienceRecords).where(and(eq(experienceRecords.userId,userId),ne(experienceRecords.kind,'supplement-intent'))).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)}));
       stage="experience-history";
       const historyTable=await tx.execute<{history_table:string|null}>(sql`SELECT to_regclass('experiment_versions')::text AS history_table`);
       const history=historyTable.rows[0]?.history_table?checked(await tx.select({id:experimentVersions.id,recordId:experimentVersions.recordId,encryptedPayload:experimentVersions.encryptedPayload,sourceCreatedAt:experimentVersions.sourceCreatedAt,sourceUpdatedAt:experimentVersions.sourceUpdatedAt,supersededAt:experimentVersions.supersededAt}).from(experimentVersions).innerJoin(experienceRecords,eq(experimentVersions.recordId,experienceRecords.id)).where(eq(experienceRecords.userId,userId)).limit(50001)).map(({encryptedPayload,...r})=>({...r,payload:decryptPrecision(encryptedPayload,userId)})):null;
