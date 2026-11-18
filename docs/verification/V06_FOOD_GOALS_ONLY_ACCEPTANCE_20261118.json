@@ -1,0 +1,19 @@
+{
+  "task": "V06-C1-FOOD12-GOALS-ONLY-ACCEPTANCE",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_EXACT_CI",
+  "baseCommit": "95da7364eb85a48d57978df4fc352b5316e35fe0",
+  "change": "Extend the existing actual Today/Food browser journey to begin before any meals are seeded. Wait for the explicit1500kcal target request before assessing its response; then preserve the entire existing two-meal dinner/substitution/review/save/retry/owner path. No production app or source data change.",
+  "verification": {
+    "browser": "PASS goals plus existing reviewed ordinary context and seafood exclusion, no labs/omics/prior meals: at least one sourced positive-gram/portion meal, known maxima respected, zero consumption writes. Then real breakfast/lunch import and existing specific dinner/alternate recipe/fractional prepared grams/single ingredient edit/single confirmed consumed save/lost-response same-intent retry/reload/foreign404 path PASS.10layout states and200% text retained.",
+    "unit": "21/21 Today/weekly/goal focused tests PASS.",
+    "environment": "Actual React App, authenticated HTTP and encrypted isolated PGlite; optional external AI/provider unavailable. Synthetic fixtures only."
+  },
+  "coverage": [
+    "C1 goals-only concrete proposal acceptance now directly exercised.",
+    "C1 two-meal sourced dinner/edit/substitution/confirmed consumption remains exercised by the same journey."
+  ],
+  "limits": [
+    "Existing reviewed ordinary health context is required; no claim that unknown clinical context is safe.",
+    "Does not establish independent human/device acceptance, clinical benefit or full v0.6 RC completion. Exact CI/Render pending."
+  ]
+}

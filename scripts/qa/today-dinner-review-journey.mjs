@@ -34,8 +34,9 @@ const store={
  insertMeal:(meal,receipt)=>insertMealWithReceipt(database,meal,receipt),
 };
 const now=new Date(),day=now.toISOString().slice(0,10),dayStart=Date.parse(day+'T00:00:00Z');
-for(const [mealType,text,earlier] of [['breakfast','100 g oats, 100 g banana',7200000],['lunch','150 g cooked chicken breast, 150 g cooked potato, 100 g broccoli',3600000]]){
+async function seedBreakfastLunch(){for(const [mealType,text,earlier] of [['breakfast','100 g oats, 100 g banana',7200000],['lunch','150 g cooked chicken breast, 150 g cooked potato, 100 g broccoli',3600000]]){
  const analysis=await analyzeMeal(text,false);await store.insertMeal({userId:'dinner-owner',mealText:text,mealType,loggedAt:new Date(Math.max(dayStart,+now-earlier)),intelligence:analysis.intelligence,nutritionalData:analysis.nutritionalData,...nutritionTotals(analysis.nutritionalData)});
+}
 }
 let actor='dinner-owner',lose=false,sourceUnavailable=false,planned;
 const requests=[],errors=[];
@@ -62,11 +63,21 @@ await page.route('**/api/**',async route=>{
 });
 try{
  await page.goto('http://127.0.0.1:5257/meal-planner');const today=page.getByRole('tabpanel',{name:'Rest of today',exact:true});
- await today.getByText('2 meals logged today',{exact:true}).waitFor();assert.equal((await store.getMeals(actor)).length,2);
+ await today.getByText('0 meals logged today',{exact:true}).waitFor();assert.equal((await store.getMeals(actor)).length,0);
  await today.getByText('Review daily targets',{exact:true}).click();await today.getByLabel('Energy (kcal)',{exact:true}).fill('1500');
  const optional=today.getByText('Carbohydrate, fat & micronutrient targets',{exact:true});await optional.click();
  const extra=optional.locator('..').getByRole('spinbutton');for(const input of await extra.all())if(await input.inputValue())await input.fill('');
- await today.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();
+ const goalsOnlyResponse=page.waitForResponse(response=>new URL(response.url()).pathname==='/api/precision/today-plan'&&response.request().method()==='POST'&&response.request().postDataJSON()?.plan?.targets?.calories===1500);
+ await today.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();await goalsOnlyResponse;
+ // Goals-only acceptance uses the real planner with no observations or omics.
+ await today.locator('.meal-suggestion').first().waitFor();
+ assert.equal(planned.request.targets.calories,1500);assert.equal(planned.eatenMeals,0);
+ assert.ok(planned.meals.length>0,'Goals and reviewed ordinary context produce a concrete meal without labs or prior logs');
+ for(const meal of planned.meals){assert.ok(meal.recipe.foodIngredients.length>0);assert.ok(meal.recipe.ingredients.every(ingredient=>Number.isFinite(ingredient.grams)&&ingredient.grams>0&&!ingredient.tags.includes('seafood')));assert.ok(meal.portion>0);}
+ for(const check of planned.checks)if(check.max!==null&&check.projected!==null)assert.ok(check.projected<=check.max+1e-6,check.key);
+ assert.equal((await store.getMeals(actor)).length,0,'Goals-only proposals never write consumption');
+ await seedBreakfastLunch();await page.reload();await today.getByText('2 meals logged today',{exact:true}).waitFor();assert.equal((await store.getMeals(actor)).length,2);
+ await today.getByText('Review daily targets',{exact:true}).click();await today.getByLabel('Energy (kcal)',{exact:true}).fill('1500');await optional.click();for(const input of await extra.all())if(await input.inputValue())await input.fill('');await today.getByRole('button',{name:'Update suggestions with these targets',exact:true}).click();
  // Invalid drafts must remain editable after a rejected check.
  await today.getByText('Review daily targets',{exact:true}).click();
  await today.getByLabel('Energy (kcal)',{exact:true}).fill('20');
@@ -128,6 +139,6 @@ assert.ok(choice.recipe.foodIngredients.length>=2);
  await page.reload();assert.equal((await store.getMeals(actor)).length,3);assert.equal((await store.getMeals('other-owner')).length,0);
  const denied=await fetch(base+'/api/meals/'+saved.id+'/composer',{headers:{'x-test-owner':'other-owner'}});assert.equal(denied.status,404);
  actor='other-owner';await page.goto('http://127.0.0.1:5257/meal-planner');await today.getByText('0 meals logged today',{exact:true}).waitFor();assert.equal((await store.getMeals(actor)).length,0);
- assert.deepEqual(errors,[]);console.log('PASS actual Today-plan HTTP/SQL: two logged meals+saved goals/exclusions→specific sourced dinner→exact prepared grams→independent correction→reviewed single consumed save with lost-response retry→reload/owner isolation. Synthetic non-patient data; no external model or provider.');
+ assert.deepEqual(errors,[]);console.log('PASS actual Today-plan HTTP/SQL: goals-only sourced proposal without logs/labs/omics or consumption write; then two logged meals+saved goals/exclusions→specific sourced dinner→exact prepared grams→independent correction→reviewed single consumed save with lost-response retry→reload/owner isolation. Synthetic non-patient data; no external model or provider.');
 }catch(error){console.error({errors,planned:planned?{eatenMeals:planned.eatenMeals,meals:planned.meals?.map(meal=>({slot:meal.slot,id:meal.recipe.id,portion:meal.portion}))}:null,body:(await page.locator('body').innerText()).slice(-3500)});throw error;}
 finally{await browser.close();await vite.close();api.closeAllConnections();await new Promise(resolve=>api.close(resolve));await pg.close();if(previousKey===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previousKey;}
