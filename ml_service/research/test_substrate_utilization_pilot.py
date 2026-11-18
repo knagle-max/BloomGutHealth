@@ -1,4 +1,8 @@
-"""Synthetic software contract tests: NOT an experimental prediction benchmark."""
+"""Synthetic software contract tests: NOT an experimental prediction benchmark.
+
+Tests call the unpromoted algorithm functions on synthetic inputs; the public
+training/CLI loader explicitly rejects these same synthetic source records.
+"""
 import hashlib
 import json
 import tempfile
@@ -62,6 +66,17 @@ class SubstrateUtilizationSoftwareTests(unittest.TestCase):
         with self.assertRaises(PermissionError):
             load(self.data, self.meta, training=True)
 
+    def test_synthetic_data_remains_blocked_even_if_rights_flag_is_fake(self):
+        self.manifest.update({
+            "commercialTrainingRights": "approved",
+            "dataOrigin": "verified_experimental",
+            "originalExperimentSource": "synthetic-placeholder",
+            "upstreamRightsStatus": "approved",
+        })
+        self.meta.write_text(json.dumps(self.manifest))
+        with self.assertRaises(PermissionError):
+            load(self.data, self.meta, training=True)
+
     def test_raw_source_byte_change_invalidates_manifest(self):
         self.data.write_bytes(self.data.read_bytes() + b"\n")
         with self.assertRaises(ValueError):
@@ -73,12 +88,12 @@ class SubstrateUtilizationSoftwareTests(unittest.TestCase):
         frame.to_csv(self.data, sep="\t", index=False)
         self.manifest["sourceSha256"] = hashlib.sha256(self.data.read_bytes()).hexdigest()
         self.meta.write_text(json.dumps(self.manifest))
-        _, _, report = load(self.data, self.meta, training=True)
+        _, _, report = load(self.data, self.meta, training=False)
         self.assertEqual(report["eligibleMeasuredRows"], 79)
         self.assertEqual(report["excludedUnresolvedLabels"]["not_measured"], 1)
 
     def test_connected_studies_do_not_cross_holdout(self):
-        df, _, report = load(self.data, self.meta, training=True)
+        df, _, report = load(self.data, self.meta, training=False)
         split = freeze(df, report)
         labels = pd.Series(split["assignments"])
         self.assertEqual(len(labels), len(df))
@@ -96,7 +111,7 @@ class SubstrateUtilizationSoftwareTests(unittest.TestCase):
             run_benchmark(df, report, broken)
 
     def test_synthetic_fixture_scores_are_never_real_science(self):
-        df, _, report = load(self.data, self.meta, training=True)
+        df, _, report = load(self.data, self.meta, training=False)
         split = freeze(df, report)
         scores = run_benchmark(df, report, split)
         self.assertEqual([r["model"] for r in scores],
