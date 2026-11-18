@@ -1,7 +1,7 @@
 {
   "schemaVersion": "bloom-scientific-model-tasks-v1",
   "createdDate": "2026-11-18",
-  "authority": "docs/architecture/BLOOM_SCIENTIFIC_AI_MODEL_PROGRAM_ARCHITECT_DECISION_20261118.md",
+  "authority": "docs/architecture/BLOOM_SCIENTIFIC_AI_MODEL_DEVELOPMENT_PROGRAM_ARCHITECT_DECISION_20261118.md",
   "owner": "Chief Architect; Codex sole implementer",
   "noPersonalTraining": true,
   "activeQueueAuthority": "NEXT_ACTIONS.md",
@@ -11,7 +11,7 @@
     {
       "id": "MICROBE-SUBSTRATE-UTIL-V1",
       "title": "Microbial substrate utilization classification",
-      "status": "proposed_first_benchmark",
+      "status": "pilot_code_present_data_not_qualified",
       "inputs": "strain/experiment/substrate/medium/condition",
       "target": "observed growth or non-growth on specified substrate, label and assay provenance",
       "split": "study-held-out, strain-held-out, substrate-family-held-out when enough groups",
@@ -28,7 +28,12 @@
         "unresolved"
       ],
       "deployment": "research_only_unless_separate_review",
-      "releasePermission": "not_approved"
+      "releasePermission": "not_approved",
+      "trainingStarted": false,
+      "independentlyEvaluated": false,
+      "experimentStatusReport": "docs/scientific-models/substrate-utilization-first-pilot-status-20261118.md",
+      "executableCode": "ml_service/research/substrate_utilization_pilot.py",
+      "syntheticContractTests": "ml_service/research/test_substrate_utilization_pilot.py"
     },
     {
       "id": "MICROBE-FUNCTION-V1",
@@ -162,5 +167,7 @@
       "deployment": "research_only_unless_separate_review",
       "releasePermission": "not_approved"
     }
-  ]
+  ],
+  "researchOnly": true,
+  "currentBlocker": "Source-specific commercial rights and actual normalized measured observations not yet verified/downloaded"
 }
