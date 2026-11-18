@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v4",
+  "version": "hc-dietary-reference-subset-2026-11-18-v5",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -10,7 +10,7 @@
       "id": "hc-vitamins",
       "title": "Health Canada: Dietary reference values for vitamins",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
-      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4",
+      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133",
       "note": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
       "retrievedOn": "2026-11-18"
     },
@@ -473,6 +473,81 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_a_ug-M-19-ear",
+      "nutrientKey": "vitamin_a_ug",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 625,
+      "unit": "\u00b5g RAE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_a_ug-M-19-rda",
+      "nutrientKey": "vitamin_a_ug",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 900,
+      "unit": "\u00b5g RAE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_a_ug-F-19-ear",
+      "nutrientKey": "vitamin_a_ug",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 500,
+      "unit": "\u00b5g RAE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_a_ug-F-19-rda",
+      "nutrientKey": "vitamin_a_ug",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 700,
+      "unit": "\u00b5g RAE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_a_ug-all-19-ul",
+      "nutrientKey": "vitamin_a_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "UL",
+      "amount": 3000,
+      "unit": "\u00b5g RAE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "preformed-vitamin-a-only",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
@@ -480,6 +555,7 @@
     "magnesium_mg": "The magnesium UL covers pharmacological agents only and excludes food and water.",
     "calcium_mg": "Health Canada uses the 2011 calcium reference values, which supersede 1997 values. Equal adjacent age bands are coalesced only when sex, reference type, amount and intake scope all agree.",
     "potassium_mg": "Health Canada uses the 2019 potassium values. These are Adequate Intakes (AI), not EARs or RDAs. Intake below an AI does not establish inadequacy. No potassium UL or CDRR is established in this source; that does not mean unlimited intake is safe. These general references are not a treatment target.",
-    "vitamin_d_ug": "Health Canada uses the 2011 vitamin D values, assuming minimal sun exposure. These are dietary amounts in micrograms per day, not blood vitamin D measurements or a treatment dose. No IU, blood-level or D2/D3-form conversion is calculated here. The UL covers total intake and is not an intake goal."
+    "vitamin_d_ug": "Health Canada uses the 2011 vitamin D values, assuming minimal sun exposure. These are dietary amounts in micrograms per day, not blood vitamin D measurements or a treatment dose. No IU, blood-level or D2/D3-form conversion is calculated here. The UL covers total intake and is not an intake goal.",
+    "vitamin_a_ug": "Vitamin A requirements are expressed as retinol activity equivalents (RAE). The upper limit applies to preformed vitamin A only, not all carotenoids. A total RAE food value or a label with unknown form does not establish the preformed amount. No retinol/carotenoid/IU conversion or comparison to your intake is calculated here."
   }
 }

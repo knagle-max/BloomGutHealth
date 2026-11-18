@@ -1,0 +1,23 @@
+{
+  "task": "V06-M2-VITAMIN-A-PREFORMED-SCOPE",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_EXACT_CI",
+  "baseCommit": "c6e1ed0d",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+  "retrievedOn": "2026-11-18",
+  "location": "Table1 adult Vitamin A rows and footnotes1\u20133",
+  "change": [
+    "Source RAE units: adult male EAR625/RDA900, female EAR500/RDA700 and shared UL3000\u00b5g RAE/day. Equal adult ages coalesced.",
+    "New explicit preformed-vitamin-a-only scope required for A UL and forbidden for all other references; native RAE unit required. Requirements retain total-intake scope.",
+    "Existing UI labels preformed-only/carotenoid exclusion and explains that total RAE food or unknown label form does not determine preformed amount. No conversion, intake comparison, clinical dose or source mutation."
+  ],
+  "verification": {
+    "sourceEligibility": "14/14 source/schema/profile tests PASS, including incompatible unit/scope rejection and male/female/unknown reference-sex selection.",
+    "apiAudits": "9/9 owned encrypted-context API and API/capability/Biology audit tests PASS.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile male RDA900\u2192female700\u00b5g RAE/day; exact preformed-only UL label and unknown-form explanation. Existing all nutrient/date/uncertainty/outage/owner/deep-link and32mode/theme/width/zoom states PASS,0intakes/meals.",
+    "typesBuild": "TypeScript and production build/original media PASS."
+  },
+  "limits": [
+    "Exact CI/Render qualification pending; full M2/Response/Core/RC remains open.",
+    "No production data access/manual deployment, causal or clinical dose/adequacy claim."
+  ]
+}

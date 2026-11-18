@@ -42,3 +42,7 @@ test('potassium matches only the published adult sex-specific AI and keeps clini
 test('dietary vitamin D preserves shared sex categories and abstains only for the birthday-dependent RDA at70–71',()=>{
  const run=(age:number,sex='male')=>eligible({...base,nutrientKey:'vitamin_d_ug',birthYear:2026-age,profile:{id:'a',sex}});assert.deepEqual(run(36),[['EAR',10],['RDA',15],['UL',100]]);assert.deepEqual(run(72,'female'),[['EAR',10],['RDA',20],['UL',100]]);assert.deepEqual(run(71),[['EAR',10],['UL',100]]);assert.deepEqual(run(36,'unknown'),[['EAR',10],['RDA',15],['UL',100]]);
 });
+
+test('vitamin A matches source sex/age context while preserving preformed-only UL and no amount or form inference',()=>{
+ const run=(sex:string)=>dietaryReferenceEligibility({...base,nutrientKey:'vitamin_a_ug',profile:{id:'a',sex}});assert.deepEqual(eligible({...base,nutrientKey:'vitamin_a_ug'}),[['EAR',625],['RDA',900],['UL',3000]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_a_ug',profile:{id:'a',sex:'female'}}),[['EAR',500],['RDA',700],['UL',3000]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_a_ug',profile:{id:'a',sex:'unknown'}}),[['UL',3000]]);assert.equal(run('male').rows.find(row=>row.reference.kind==='UL')!.reference.intakeScope,'preformed-vitamin-a-only');assert.equal(run('male').adequacyAssessment,false);
+});
