@@ -1,3 +1,4 @@
+import {Link} from 'wouter';
 import B6OverlapReferenceReview from './B6OverlapReferenceReview';
 import VitaminB6ReferenceContext from './VitaminB6ReferenceContext';
 import {dietaryReferenceNutrients} from '@shared/dietary-references';
@@ -20,19 +21,25 @@ const localDate=()=>{const now=new Date();return new Date(+now-now.getTimezoneOf
 const sourceNames={'generic-food':'Food composition estimate','food-label':'Saved food label','supplement-label':'Confirmed supplement label'};
 /** One on-demand view of the existing saved sources. No new intake store,
  * chart, clinical target or chemical-equivalent calculation. */
-export default function RecordedIntakeSources(){
- const {user}=useAuth(),[open,setOpen]=useState(false),[date,setDate]=useState(localDate),[timeZone,setTimeZone]=useState(()=>currentMealTimeZone()??''),[nutrientKey,setNutrientKey]=useState('iron_mg'),[visible,setVisible]=useState(25);
+const micronutrientKeys=new Set<string>(dietaryReferenceNutrients.map(row=>row.key));
+type SourceViewProps={showCorrectionLinks?:boolean;active?:boolean;summaryLabel?:string;defaultOpen?:boolean;micronutrientsOnly?:boolean;initialDate?:string;initialTimeZone?:string;initialNutrientKey?:string};
+export default function RecordedIntakeSources({showCorrectionLinks=false,active=true,summaryLabel='Recorded nutrients from foods & supplements',defaultOpen=false,micronutrientsOnly=false,initialDate,initialTimeZone,initialNutrientKey}:SourceViewProps={}){
+ const definitions=recordedNutrientDefinitionDetails().filter(row=>!micronutrientsOnly||micronutrientKeys.has(row.key));
+ const {user}=useAuth(),[open,setOpen]=useState(defaultOpen),[date,setDate]=useState(()=>dateKey.safeParse(initialDate).success?initialDate!:localDate()),[timeZone,setTimeZone]=useState(()=>initialTimeZone&&recognizedMealTimeZone(initialTimeZone)?initialTimeZone:currentMealTimeZone()??''),[nutrientKey,setNutrientKey]=useState(()=>definitions.some(row=>row.key===initialNutrientKey)?initialNutrientKey!:'iron_mg'),[visible,setVisible]=useState(25),[search,setSearch]=useState('');
  const valid=dateKey.safeParse(date).success&&recognizedMealTimeZone(timeZone);
- const view=useQuery({queryKey:[recordedIntakeSourcePath,user?.id,date,timeZone,nutrientKey,NUTRIENT_COVERAGE_VERSION],enabled:open&&!!user&&valid,queryFn:async({signal})=>{
+ const view=useQuery({queryKey:[recordedIntakeSourcePath,user?.id,date,timeZone,nutrientKey,NUTRIENT_COVERAGE_VERSION],enabled:active&&open&&!!user&&valid,queryFn:async({signal})=>{
   const owner=user!.id,assertCurrent=accountContextGuard(owner),query=new URLSearchParams({date,timeZone,nutrientKey});assertCurrent();
   const result=recordedIntakeViewSchema.parse(await(await apiRequest('GET',recordedIntakeSourcePath+'?'+query,undefined,undefined,signal)).json());
   if(result.userId!==owner||result.date!==date||result.timeZone!==timeZone||result.events.some(event=>event.rows.some(row=>row.nutrientKey!==nutrientKey)))throw Error('These sources could not be verified for this account and date.');
   assertCurrent();return {...result,coverage:knownNutrientCoverage(result,owner,nutrientKey)};
  }});
  useEffect(()=>setVisible(25),[user?.id,date,timeZone,nutrientKey]);
- const data=!view.isError&&!view.isFetching&&!view.isStale?view.data:undefined,definitions=recordedNutrientDefinitionDetails(),selected=definitions.find(def=>def.key===nutrientKey)!;
- return <details className="bloom-panel min-w-0" onToggle={event=>setOpen(event.currentTarget.open)}><summary className="min-h-11 cursor-pointer font-semibold">Recorded nutrients from foods & supplements</summary>{open&&<section aria-label="Recorded nutrient sources" className="space-y-4 pt-4 min-w-0 [overflow-wrap:anywhere]">
+ const data=!view.isError&&!view.isFetching&&!view.isStale?view.data:undefined,selected=definitions.find(def=>def.key===nutrientKey)!;
+ const matches=search.trim()?definitions.filter(row=>[row.name,row.key,row.chemicalForm,row.activityUnit].filter(Boolean).join(' ').normalize('NFKC').toLowerCase().includes(search.normalize('NFKC').trim().toLowerCase())):[];
+ return <details className="bloom-panel min-w-0" open={open} onToggle={event=>setOpen(event.currentTarget.open)}><summary className="min-h-11 cursor-pointer font-semibold">{summaryLabel}</summary>{open&&active&&<section aria-label="Recorded nutrient sources" className="space-y-4 pt-4 min-w-0 [overflow-wrap:anywhere]">
   <p>Saved source contributions, with missing amounts and chemical forms kept explicit.</p>
+  <label className="block">Find a nutrient<input type="search" aria-label="Search nutrients" className="bloom-input min-h-11 w-full min-w-0" placeholder="Search by name, such as vitamin B12" value={search} onChange={event=>setSearch(event.target.value)}/></label>
+  {search.trim()&&<div><p role="status">{matches.length?`${matches.length} matching ${matches.length===1?'nutrient':'nutrients'}.`:'No supported nutrients match.'}</p>{!!matches.length&&<ul aria-label="Matching nutrients" className="flex flex-wrap gap-2">{matches.map(row=><li key={row.key}><button type="button" className="text-link min-h-11 text-left" onClick={()=>{setNutrientKey(row.key);setSearch('');}}>{row.key==='vitamin_a_ug'?'Vitamin A (source-specific basis)':row.key==='folate_ug'?'Folate (source-specific basis)':row.name}</button></li>)}</ul>}</div>}
   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2"><label>Recorded source date<input type="date" className="bloom-input min-h-11 w-full min-w-0" value={date} onChange={event=>setDate(event.target.value)}/></label><label>Nutrient<select aria-label="Nutrient" className="bloom-input min-h-11 w-full min-w-0" value={nutrientKey} onChange={event=>setNutrientKey(event.target.value)}>{definitions.map(def=><option key={def.key} value={def.key}>{def.key==='vitamin_a_ug'?'Vitamin A (source-specific basis)':def.key==='folate_ug'?'Folate (source-specific basis)':def.name}</option>)}</select></label></div>
   <details><summary className="min-h-11 cursor-pointer">Change view time zone</summary><label>View time zone<input className="bloom-input min-h-11 w-full min-w-0" value={timeZone} onChange={event=>setTimeZone(event.target.value)} autoComplete="off"/></label></details>
   {!valid&&<p role="status">Choose a valid date and named time zone, such as America/Regina. Source timestamps are preserved.</p>}
@@ -62,5 +69,6 @@ export default function RecordedIntakeSources(){
    </article>)}</div>
    {visible<data.events.length&&<Button variant="outline" className="min-h-11" onClick={()=>setVisible(count=>count+25)}>Show more recorded events</Button>}
   </>}
+ {showCorrectionLinks&&<div className="flex flex-wrap gap-3"><Link className="text-link inline-flex min-h-11 items-center" href="/nutrition">Review or correct food journal</Link><Link className="text-link inline-flex min-h-11 items-center" href="/nutrition#supplement-intakes">Review confirmed supplements</Link></div>}
  </section>}</details>;
 }

@@ -1,3 +1,4 @@
+import RecordedIntakeSources from '@/components/RecordedIntakeSources';
 import EditorialMedia from "@/components/EditorialMedia";
 import { bloomCopy } from "@/content/bloomCopy";
 import CheckinEntrySource from "@/components/CheckinEntrySource";
@@ -52,13 +53,14 @@ export default function Progress() {
           {bloomCopy.progress.takeaway}
         </p>
       </div>
-      <Tabs value={activeView} onValueChange={view => navigate(`/progress?view=${view}`)} className="space-y-5">
+      <Tabs value={activeView} onValueChange={view => {const next=new URLSearchParams(params);next.set('view',view);navigate('/progress?'+next.toString());}} className="space-y-5">
         <TabsList aria-label="Progress view" className="progress-domain-tabs">
           <TabsTrigger value="nutrition">Nutrition</TabsTrigger>
           <TabsTrigger value="activity">{mode === "athlete" ? "Training" : "Activity"}</TabsTrigger>
           <TabsTrigger value="biology">Biology</TabsTrigger>
         </TabsList>
         <TabsContent value="nutrition" forceMount className="space-y-5 data-[state=inactive]:hidden">
+          <RecordedIntakeSources key={JSON.stringify([params.get('nutrient'),params.get('sourceDate'),params.get('sourceZone')])} summaryLabel="Micronutrients" showCorrectionLinks active={activeView==='nutrition'} micronutrientsOnly defaultOpen={!!params.get('nutrient')} initialNutrientKey={params.get('nutrient')??undefined} initialDate={params.get('sourceDate')??undefined} initialTimeZone={params.get('sourceZone')??undefined}/>
           <FoodProgress />
         </TabsContent>
         <TabsContent value="activity" forceMount className="space-y-5 data-[state=inactive]:hidden">

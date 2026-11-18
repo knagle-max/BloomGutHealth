@@ -59,5 +59,21 @@
       "finishedAt": "2026-11-18T19:36:04.960792Z"
     },
     "scope": "Compatible glycemic protocol2 reader, general life-stage reference views and case-sensitive copy repair; no HbA1c producer activation yet"
+  },
+  "latestM2ConsumerQualification": {
+    "commit": "fd70aa87b7ab9ebb015adbc9053ee047e4eb0af8",
+    "workflowRun": 44389390514,
+    "job": 135102576614,
+    "conclusion": "SUCCESS",
+    "tests": 895,
+    "pass": 895,
+    "fail": 0,
+    "skipped": 0,
+    "hosted": "All required exact hosted recovery/navigation/media bytes and isolated Neon persistence/control gates PASS",
+    "render": {
+      "id": "dep-dbv0femi0phs73c2i68g",
+      "finishedAt": "2026-11-18T20:18:44.895461Z",
+      "observation": "Was LIVE; now deactivated by newer docs-only descendants. Latest docs590fee84 queued at observation; no manual deployment."
+    }
   }
 }

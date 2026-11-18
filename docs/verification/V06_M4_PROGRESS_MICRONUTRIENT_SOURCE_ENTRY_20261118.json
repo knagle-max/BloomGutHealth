@@ -1,0 +1,31 @@
+{
+  "task": "V06-M4-progress-micronutrient-source-entry",
+  "date": "2026-11-18",
+  "status": "ENGINEERING_TESTED_PARTIAL",
+  "requirement": "Existing Progress \u2192 Nutrition \u2192 Micronutrients, searchable current source contributions/coverage/reference; no new dashboard/store. Remaining M4 Today cue/eligible food choices are not claimed complete.",
+  "outcome": "One keyboard-accessible lazy disclosure reuses RecordedIntakeSources,14 supported micronutrients, explicit name search that never changes a selection on an unsupported search, direct nutrient/date/named-zone entry and preserved route state across tabs/reload/modes. Inactive Nutrition does not expose or fetch its source body. Existing source corrections/removal/ref/privacy semantics reused.",
+  "reuse": "Same query keys, actor guards, owned source API, source/coverage/reference components, supplement invalidation and canonical Nutrition History correction controls. Source amount aggregation untouched; generic21-field food producer unchanged.",
+  "verification": [
+    "Actual App\u2192HTTP\u2192encrypted SQL Progress flow PASS: closed lazy entry has0source requests, keyboard open/search,B6 selected,14options/unsupported iodine preserves B6, direct date/zone/nutrient and reload/tab/mode state",
+    "Known confirmed75\u2192125\u219250mg from2known+1unknown portions; saved-only200mg label not counted; real canonical correction/delete reflected once using the same scoped source-query invalidation as the existing editor; current matched B6 reference context inherited",
+    "Source503 retracts fact rows/subtotal; retry recovers; accountB has no A facts; zero browser writes/food meals/deficiency inference. Existing Review confirmed supplements link reaches actual owned source controls",
+    "16responsive320/390/768/1440 light/dark/mode200% states PASS, no screenshots",
+    "Existing complete reference Nutrition History App/HTTP/encrypted Profile regression PASS32generic+8B6 states, current/historical/sex/age/life-stage/outage/owner; types and production build PASS"
+  ],
+  "limits": [
+    "M4 is partial: max-one eligible Today nutrient cue and2\u20133 defensible feasible food options (zero where unsupported) remain actionable next.",
+    "No inferred deficiency, complete-day/usual intake, source equivalent conversion, diagnosis or independent physical VoiceOver/design/science acceptance",
+    "Initial fixture used Profile/planning invalidation for an intake edit; corrected to the actual editor\u2019s account-scoped supplement/source invalidation, retaining125mg assertion. No production cache guard weakened.",
+    "New incoming590fee84 Architect durable-science/LLM handoff inspected: retain current M2/Response/Core priority; Advanced release engineering is later, no new implementation lane. Preserve all4source docs on integration."
+  ],
+  "integration": {
+    "incomingDocsTip": "e79e2814",
+    "preservedLocalBranch": "codex/preserved-core-m4-20261118",
+    "rebase": "Only own3unpublished commits; tested client/shared/server/scripts/workflow trees identical. All5new source/decision docs and AGENTS preserved.",
+    "rebasedSourceCommits": {
+      "question": "a2525b94",
+      "panel": "e51db059",
+      "M4": "commit containing this receipt"
+    }
+  }
+}

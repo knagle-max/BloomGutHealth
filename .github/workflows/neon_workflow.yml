@@ -130,6 +130,13 @@ jobs:
           BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
           BLOOM_ATLAS_DEFER_OFFSCREEN_IMAGES: "1"
         run: node --import tsx scripts/qa/bloodwork-atlas-journey.mjs
+      - name: Progress micronutrient source navigation and correction browser regression
+        timeout-minutes: 4
+        env:
+          BLOOM_MICRONUTRIENT_PROGRESS_ONLY: "1"
+          BLOOM_PLAYWRIGHT_MODULE: playwright-core
+          BLOOM_CHROMIUM_EXECUTABLE: /usr/bin/google-chrome
+        run: node --import tsx scripts/qa/private-source-context-journey.mjs
       - name: Whole-panel source review browser regression
         timeout-minutes: 4
         env:

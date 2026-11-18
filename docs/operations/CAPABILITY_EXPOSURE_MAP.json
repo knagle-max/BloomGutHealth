@@ -1993,7 +1993,7 @@
     "client/src/pages/PlanDay.tsx": "8fdb764170a8b00c3af9cdadc6ec64d35cf94f4fab291f234f76f8d461daa474",
     "client/src/pages/PrecisionNutrition.tsx": "eb3eb5ab90e978e2b7f88d90edac567d449bb498cd7abddebb07ad59d492d79f",
     "client/src/pages/Profile.tsx": "ba14414d130341418df66fac049a2edd7ea3c1fb16da2b82e9cc8fd001180c08",
-    "client/src/pages/Progress.tsx": "2182b5a30c0339b38b3b2cccac00bbc7f3e63d06bd7eaf0188af2f600d70963b",
+    "client/src/pages/Progress.tsx": "41ca8552d40f1eb7550f95f741a863e67a3d6f7acde7215e7b83723da83e40f5",
     "client/src/pages/ReportManagement.tsx": "4bc41c20cf7bed768b591b9ce059ec3c4ce96f75e10be297b97ed35b0a88031c",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
     "client/src/pages/Upload.tsx": "bceb13cffb48c18161b96799f86a04a4db51bffd10a18ac2cd24bc0ae8a27df7",
