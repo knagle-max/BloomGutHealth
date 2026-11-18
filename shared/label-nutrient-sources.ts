@@ -37,7 +37,7 @@ export function recordedLabelContributions(input:unknown,meal:RecordedFoodRecord
   // A mismatched detail identity is not proof for the frozen source label.
   const identityMatches=detail?.source===source.provider&&detail?.name===source.name;
   const servings=portion.success&&identityMatches?portion.data.servings:null;
-  return {sourceIndex:source.index,mealId:meal.id,occurredAt,dateBasis:occurredAt?'meal-record-time' as const:'not-recorded' as const,
+  return {sourceIndex:source.index,sourceId:source.id,provider:source.provider,sourceName:source.name,sourceUrl:source.url,sourceRetrievedAt:source.retrievedAt,mealId:meal.id,occurredAt,dateBasis:occurredAt?'meal-record-time' as const:'not-recorded' as const,
    servings,portionStatus:servings===null?'not-confirmed' as const:'captured' as const,
    fields:source.fields.map(field=>({...field,nativeAmountPerServing:field.amount,
     amount:servings===null?null:scaleLabelAmount(field.amount,servings),

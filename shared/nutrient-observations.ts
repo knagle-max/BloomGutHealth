@@ -17,7 +17,7 @@ export interface NutrientObservation {
 /** Projection of an already saved owned food event. Reuse the existing nutrient
  * calculation on frozen source inputs; no new store, summed intake or targets.
  * The UI owner check is not a replacement for server record authorization. */
-export function recordedNutrientObservations(analysis:MealIntelligence,meal:RecordedFoodRecord,accountScope:string|undefined){
+export function recordedNutrientObservations(analysis:Pick<MealIntelligence,"nutrientSourceSnapshots">,meal:RecordedFoodRecord,accountScope:string|undefined){
  if(!accountScope||meal.userId!==accountScope||!meal.id)return{status:"scope-unavailable" as const,observations:[] as NutrientObservation[]};
  const captured=readNutrientSourceSnapshots(analysis.nutrientSourceSnapshots);
  if(captured.status!=="available")return{status:captured.status,observations:[] as NutrientObservation[]};

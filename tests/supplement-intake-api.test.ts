@@ -17,8 +17,9 @@ test('actual private HTTP review/confirm/correct/remove separates product plans,
   await pg.exec("CREATE TABLE users(id varchar PRIMARY KEY);INSERT INTO users VALUES('a'),('b');");
   for(const file of ['0003_nutrition_products.sql','0004_experience.sql'])await pg.exec(readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8'));
   const database=drizzle(pg),experience=new ExperienceStorage(database as any),labels=new PrivateProductStorage(database as any),intakes=new SupplementIntakeStorage(database as any,()=>new Date('2026-11-18T12:00:00Z'));
+  await pg.exec('CREATE TABLE meals(id varchar PRIMARY KEY,user_id varchar NOT NULL,meal_text text NOT NULL,meal_type text,logged_at timestamp NOT NULL DEFAULT now(),nutritional_data jsonb,meal_context jsonb,intelligence jsonb,total_calories real,total_protein real,total_carbs real,total_fat real)');
   let lookups=0,outage=false;
-  const store=new Proxy(experience,{get(target,key){if(key==='supplementIntakes')return intakes;if(key==='getNutritionProducts')return async(actor:string)=>{lookups++;if(outage)throw Error('Synthetic source outage');return labels.getNutritionProducts(actor);};const value=Reflect.get(target,key);return typeof value==='function'?value.bind(target):value;}});
+  const store=new Proxy(experience,{get(target,key){if(key==='getMeals')return async()=>[];if(key==='supplementIntakes')return intakes;if(key==='getNutritionProducts')return async(actor:string)=>{lookups++;if(outage)throw Error('Synthetic source outage');return labels.getNutritionProducts(actor);};const value=Reflect.get(target,key);return typeof value==='function'?value.bind(target):value;}});
   const app=express();app.use(express.json());registerExperienceRoutes(app,((req:any,res:any,next:any)=>{const actor=req.get('x-synthetic-owner');if(!['a','b'].includes(actor))return res.sendStatus(401);req.session={userId:actor};next();})as any,store as any,undefined as any);
   server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server!.once('listening',r));const root=`http://127.0.0.1:${(server.address()as any).port}/api/experience`;
   const request=async(path:string,method='GET',body?:unknown,actor='a',extra:Record<string,string>={})=>{
@@ -26,6 +27,10 @@ test('actual private HTTP review/confirm/correct/remove separates product plans,
    return{status:response.status,headers:response.headers,data:await response.json().catch(()=>null)};
   };
   assert.equal((await request('/supplement-intakes','GET',undefined,'')).status,401);
+  assert.equal((await request('/recorded-intake-sources?date=2026-11-18&timeZone=UTC&nutrientKey=iron_mg','GET',undefined,'')).status,401);
+  assert.equal((await request('/recorded-intake-sources?date=2026-02-30&timeZone=UTC&nutrientKey=iron_mg')).status,400);
+  assert.equal((await request('/recorded-intake-sources?date=2026-11-18&timeZone=UTC&nutrientKey=iron_mg&userId=b')).status,400);
+  const emptySources=await request('/recorded-intake-sources?date=2026-11-18&timeZone=UTC&nutrientKey=iron_mg');assert.equal(emptySources.status,200);assert.equal(emptySources.data.userId,'a');assert.deepEqual(emptySources.data.events,[]);assert.equal(emptySources.headers.get('cache-control'),'no-store');
   const label=await labels.insertNutritionProduct('a',{name:'Synthetic exact label',brand:'Synthetic',servingDescription:'1 tablet',servingGrams:null,perServing:{iron_mg:10,vitamin_c_mg:30}});
   assert.equal((await request('/records','POST',{kind:'supplement-review',payload:{name:'Planned product; not taken'}})).status,201);
   const empty=await request('/supplement-intakes');assert.equal(empty.data.total,0);assert.equal(empty.headers.get('x-bloom-supplement-reader'),'supplement-intake-v1');assert.equal(empty.headers.get('cache-control'),'no-store');

@@ -1,0 +1,37 @@
+{
+  "task": "V06-M3-RECORDED-INTAKE-SOURCE-VIEW",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "baseCommit": "dd3d2321eeb86f4ec0d053272de0955b76aedb99",
+  "scope": "Source-wise current confirmed food/supplement observations in the existing Nutrition History; not full M3/M2 or RC.",
+  "handoff": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
+  "acceptanceCrosswalk": [
+    "BIO-MICRO-01/07/08/13/15 source/known-unknown/current-event portions",
+    "UX-MICRO-2101/2102/2104/2108/2109 source/explicit-taken/source-disclosure portions",
+    "UT-MICRONUT-4901/4902/4904/4905/4908/4912 source/lifecycle/owner portions; not full fixture collection closure"
+  ],
+  "implementation": [
+    "Compose existing recordedNutrientObservations, recordedLabelContributions and supplementSourceContributions. No lookup/provider, new store, second nutrition calculator, form conversion, cross-form sum, adequacy or usual-intake inference.",
+    "One current event per owned canonical identity; exact duplicate feeds collapse, conflicting revisions/record aliases abstain before date filtering, so a moved-date correction cannot leave its old event behind. Original/history/reviews are not additional intake.",
+    "Named-zone historical calendar filtering including DST; original source times unchanged. Undated, unsupported/conflicting and future observations remain explicit rather than zero. Source kind, captured source/app units and chemical activity basis/mineral distinction/version versus retrieval date retained.",
+    "Private no-store Experience API selects one validated nutrient in a bounded response. Owned canonical storage only, account response tags and foreign-feed/outage failure. Existing2000-row truncation boundary abstains. No user-supplied account identity.",
+    "On-demand Nutrition History source view, date/nutrient selection, secondary time-zone correction, source/provenance disclosures and honest unknowns. Mode tokens and existing art/charts preserved. Source invalidations connect meal and intake save/edit/remove including uncertain write outcomes; stale/error cache withheld.",
+    "CI artifact defect repaired. Incoming owner directive4161aef2 supersedes routine screenshots: removed helper screenshot collection/mkdir entirely, preserving every functional/source/geometry assertion. Earlier tmpdir portability validation passed before this later simplification; no screenshots required by CI."
+  ],
+  "verification": {
+    "sourceRegression": "17/17 nutrient/source/API/old summary tests PASS before final future-confirmation guard; final source + API + real inventory audit12/12 PASS, including that guard. Runs overlap, not29 distinct cases.",
+    "browser": "Combined existing food-source + intake App\u2192HTTP\u2192encrypted PGlite PASS: existing saved label meal protein0 appears once, exactly2 confirmed supplement events vs a review,20\u219210mg one-row correction/current-only view, removed source withdrawn, saved unknown composition retained, GET outage/error withdraws cached values/retry restores, no extra meal contribution, owners/mode/source-keyboard preserved.",
+    "responsive": "Existing label/generic source matrix plus60 modal and60 joined-source states at320/390/768/1024/1440, light/dark, Everyday/Athlete,100/200% text/page zoom PASS. Actual390px and1440px source views personally inspected; optional time-zone editing moved behind disclosure and event names retained for clarity. Physical VoiceOver and independent final visual/scientific acceptance NOT TESTED.",
+    "portableArtifactPath": "Earlier tmpdir repair PASS; latest owner directive now removes routine screenshot IO completely. Functional checks retained; no screenshot fixture or image-vision cost in normal helper.",
+    "types": "Final npm run check PASS",
+    "build": "npm run build PASS including all original media/hash/built verifiers",
+    "sourceAudits": "Actual API, capability and Biology inventories refreshed and checks PASS; scientific/authorization review states unchanged.",
+    "broaderMilestone": "Parent source/write checkpoint834/834 full regression PASS. No repeat full run for this read-only composition; focused common nutrient/source/summary/ownership regressions and actual user flows executed.",
+    "productionData": "None queried or changed; isolated synthetic fixtures only."
+  },
+  "remaining": [
+    "Publish coherent source view and inspect exact CI/Render; prior writer CI needs portable artifact-path repair qualification.",
+    "Known subtotal/coverage only across demonstrably compatible source and form bases; no blanket native-label plus RAE/DFE/equivalent sums.",
+    "M2 Canadian applicability/reference/form-specific UL/B6 context, representative-history/usable food choices and remaining Core/Response; independent integrated RC acceptance."
+  ],
+  "nextTask": "Scoped exact supplement UPC defect per BLOOM_SUPPLEMENT_BARCODE_LOOKUP_DEFECT_CODEX_HANDOFF_20261117.md, within existing M3; then compatible subtotal/coverage and remaining M2/Core."
+}

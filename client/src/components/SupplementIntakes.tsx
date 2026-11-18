@@ -7,6 +7,7 @@ import {Button} from '@/components/ui/button';
 import {Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle} from '@/components/ui/dialog';
 import {AlertDialog,AlertDialogContent,AlertDialogHeader,AlertDialogTitle,AlertDialogDescription,AlertDialogFooter,AlertDialogCancel} from '@/components/ui/alert-dialog';
 import ProductPicker from './ProductPicker';
+import {recordedIntakeSourcePath} from './RecordedIntakeSources';
 import {productResponseSchema,type Product} from '@shared/products';
 import {supplementDraftSchema,type SupplementDraft} from '@shared/supplement-commands';
 import {supplementIntakeRecordSchema,supplementIntakePageSchema,supplementSourceContributions,type SupplementIntakeRecord,type SupplementIntake} from '@shared/supplement-intake';
@@ -55,7 +56,7 @@ export default function SupplementIntakes(){
   if(response.headers.get('X-Bloom-Supplement-Reader')!=='supplement-intake-v1')throw Error('Supplement records are unavailable in this app version. Retry after the update.');
   const result=supplementIntakePageSchema.parse(await response.json());if(result.userId!==owner||result.records.some(row=>row.userId!==owner))throw Error('Supplement records could not be verified for this account.');return result;
  }});
- const invalidate=(owner:string)=>{void client.invalidateQueries({queryKey:[root,owner]});};
+ const invalidate=(owner:string)=>{void client.invalidateQueries({queryKey:[root,owner]});void client.invalidateQueries({queryKey:[recordedIntakeSourcePath,owner]});};
  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
  useEffect(()=>{setOpen(false);setRemoveTarget(null);setTarget(null);setSaved(null);setReview(null);setPage(0);attempt.current=null;},[user?.id]);
  useEffect(()=>{setConfirmed(false);},[formBasis]);
