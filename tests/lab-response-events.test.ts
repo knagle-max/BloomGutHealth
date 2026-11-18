@@ -9,7 +9,7 @@ import {labActivityContext,labActivityDiscussion} from '../shared/lab-response-e
 
 const now=Date.parse('2026-11-16T12:00:00Z');
 function pair(marker='triglycerides',latestValue?:number){
- const records=['2026-09-01','2026-10-01'].map((date,index)=>({id:'lab-'+index,kind:'lab',payload:labSchema.parse({marker,value:marker==='triglycerides'?(index?(latestValue??0.6):2.1):(index?20:10),unit:marker==='triglycerides'?'mmol/L':'U/L',measuredAt:date+'T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'yes',referenceLow:null,referenceHigh:null,sourceReport:{importId:randomUUID(),enteredDate:date}})}));
+ const records=['2026-09-01','2026-10-01'].map((date,index)=>({id:'lab-'+index,kind:'lab',payload:labSchema.parse({marker,value:marker==='triglycerides'?(index?(latestValue??0.6):2.1):marker==='ldl'?(index?(latestValue??3.0):3.8):(index?20:10),unit:marker==='triglycerides'||marker==='ldl'?'mmol/L':'U/L',measuredAt:date+'T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'yes',referenceLow:null,referenceHigh:null,sourceReport:{importId:randomUUID(),enteredDate:date}})}));
  return recordedLabPanelReview(buildPrecisionReport(records,contextSchema.parse({}),defaultPreferences,null)).assessments[0];
 }
 function activity(id:string,date='2026-09-10',patch:Record<string,unknown>={}):ExperienceRecord{
@@ -83,4 +83,12 @@ test('source-date/identity correction, absent sources, mismatched chronology and
  assert.equal(labActivityDiscussion(p,{...context,sourceIds:['other-owner','lab-1']}),null);
  assert.equal(labActivityDiscussion(p,{...context,window:{from:'2026-08-01',to:'2026-10-01',basis:'recorded-calendar-dates'}}),null);
  assert.equal(labActivityDiscussion(p,{...context,status:'source-review'}),null);
+});
+
+test('LDL discussion uses its own cholesterol citation, preserves source events and never converts logged activity into individual LDL efficacy',()=>{
+ const p=pair('ldl'),context=labActivityContext(p,[activity('walk')],now),before=structuredClone({p,context}),view=labActivityDiscussion(p,context)!;
+ assert.ok(view);assert.equal(view.evidence.url,'https://medlineplus.gov/lab-tests/cholesterol-levels/');assert.equal(view.markerId,'ldl');assert.deepEqual(view.activityIds,['walk']);assert.deepEqual(view.sourceIds,['lab-0','lab-1']);assert.match(view.generalContext,/do not establish regular activity, an individual LDL response/);assert.equal(view.counterContext,null);assert.equal(view.attribution,'not-established');assert.deepEqual({p,context},before);
+ for(const value of [3.8,4.2]){const p=pair('ldl',value),view=labActivityDiscussion(p,labActivityContext(p,[activity('walk')],now))!;assert.match(view.counterContext!,/^LDL cholesterol did not decrease/);assert.doesNotMatch(view.counterContext!,/Triglycerides/);}
+ const empty=labActivityDiscussion(p,labActivityContext(p,[],now))!;assert.deepEqual(empty.activityIds,[]);assert.match(empty.personalContext,/no inactivity or personal contribution is inferred/);
+ assert.equal(labActivityDiscussion({...p,id:'apob'},context),null,'LDL evidence is not borrowed for ApoB');assert.equal(labActivityDiscussion({...p,comparable:false},context),null);assert.equal(labActivityDiscussion(p,{...context,sourceIds:['other','lab-1']}),null);
 });
