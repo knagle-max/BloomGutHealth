@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v5",
+  "version": "hc-dietary-reference-subset-2026-11-18-v6",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -10,7 +10,7 @@
       "id": "hc-vitamins",
       "title": "Health Canada: Dietary reference values for vitamins",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
-      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133",
+      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133; Table 3 Folate adult rows/footnotes12\u201313; Table 1 Vitamin E adult rows/footnotes5\u20136",
       "note": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
       "retrievedOn": "2026-11-18"
     },
@@ -548,6 +548,96 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-folate_ug-all-19-ear",
+      "nutrientKey": "folate_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 320,
+      "unit": "\u00b5g DFE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-folate_ug-all-19-rda",
+      "nutrientKey": "folate_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 400,
+      "unit": "\u00b5g DFE/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-folate_ug-all-19-ul",
+      "nutrientKey": "folate_ug",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "UL",
+      "amount": 1000,
+      "unit": "\u00b5g folic acid/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "synthetic-folic-acid-only",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_e_mg-all-19-ear",
+      "nutrientKey": "vitamin_e_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 12,
+      "unit": "mg/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_e_mg-all-19-rda",
+      "nutrientKey": "vitamin_e_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 15,
+      "unit": "mg/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_e_mg-all-19-ul",
+      "nutrientKey": "vitamin_e_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "UL",
+      "amount": 1000,
+      "unit": "mg/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "synthetic-vitamin-e-only",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
@@ -556,6 +646,8 @@
     "calcium_mg": "Health Canada uses the 2011 calcium reference values, which supersede 1997 values. Equal adjacent age bands are coalesced only when sex, reference type, amount and intake scope all agree.",
     "potassium_mg": "Health Canada uses the 2019 potassium values. These are Adequate Intakes (AI), not EARs or RDAs. Intake below an AI does not establish inadequacy. No potassium UL or CDRR is established in this source; that does not mean unlimited intake is safe. These general references are not a treatment target.",
     "vitamin_d_ug": "Health Canada uses the 2011 vitamin D values, assuming minimal sun exposure. These are dietary amounts in micrograms per day, not blood vitamin D measurements or a treatment dose. No IU, blood-level or D2/D3-form conversion is calculated here. The UL covers total intake and is not an intake goal.",
-    "vitamin_a_ug": "Vitamin A requirements are expressed as retinol activity equivalents (RAE). The upper limit applies to preformed vitamin A only, not all carotenoids. A total RAE food value or a label with unknown form does not establish the preformed amount. No retinol/carotenoid/IU conversion or comparison to your intake is calculated here."
+    "vitamin_a_ug": "Vitamin A requirements are expressed as retinol activity equivalents (RAE). The upper limit applies to preformed vitamin A only, not all carotenoids. A total RAE food value or a label with unknown form does not establish the preformed amount. No retinol/carotenoid/IU conversion or comparison to your intake is calculated here.",
+    "folate_ug": "Folate requirements use dietary folate equivalents (DFE). The upper limit uses micrograms of folic acid from supplements and fortified foods, not DFE or naturally occurring food folate. Existing total-folate food fields and labels with unknown form do not establish DFE or the synthetic amount. No conversion, pregnancy/preconception dose or intake assessment is calculated here.",
+    "vitamin_e_mg": "Vitamin E requirements refer to alpha-tocopherol in 2R-stereoisomeric forms. The upper limit applies only to synthetic vitamin E from supplements and fortified foods. A source field without stereoisomer or formulation details does not establish either basis. No IU/activity conversion or intake assessment is calculated here."
   }
 }

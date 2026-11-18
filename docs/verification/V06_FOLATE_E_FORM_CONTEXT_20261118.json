@@ -1,0 +1,24 @@
+{
+  "task": "V06-M2-FOLATE-E-SOURCE-FORM-CONTEXT",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_EXACT_CI",
+  "baseCommit": "897802b0",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+  "retrievedOn": "2026-11-18",
+  "location": "Table3 folate adult rows/footnotes12\u201313 and Table1 vitaminE adult rows/footnotes5\u20136",
+  "change": [
+    "Adult folate EAR320/RDA400\u00b5g DFE/day; UL1000\u00b5g folic acid/day applies to synthetic forms from supplements/fortified foods, excluding natural food folate.",
+    "Adult vitaminE EAR12/RDA15mg/day uses alpha-tocopherol 2R-stereoisomeric forms; UL1000mg/day applies only to synthetic supplement/fortified-food forms.",
+    "Schema preserves distinct per-kind units and requires each synthetic-only UL scope, rejects total-food scope or applying it to another kind/nutrient. Existing total-folate/alpha-tocopherol records are not converted, assessed or rewritten.",
+    "Reuse general source disclosure and current population-context matcher. Explain unknown DFE/synthetic/stereoisomer basis explicitly, no source-form amount inferred. No pregnancy/preconception or clinical dose/target calculated."
+  ],
+  "verification": {
+    "focused": "16/16 source/schema/profile tests PASS including DFE-vs-folic-acid units, synthetic-only scope and pregnancy abstention.",
+    "apiAudits": "9/9 owned encrypted-context API and API/capability/Biology audit tests PASS.",
+    "browser": "Actual App/authenticated HTTP/encrypted Profile: folate400DFE vs UL1000folic-acid, E15 and synthetic-only/source-form wording.32mode/theme/width/zoom matrix now exercises longer folate units/scope; original C/Mg/Ca/K/D/A, date/history/outage/account/deep-link checks retained,0intakes/meals.",
+    "typesBuild": "TypeScript and production build/original media PASS."
+  },
+  "limits": [
+    "Exact CI/Render pending. Full M2/C2/Core/RC remains open.",
+    "No original source intake conversion, adequacy or clinical assessment, production data access/manual deployment or independent human/device claim."
+  ]
+}

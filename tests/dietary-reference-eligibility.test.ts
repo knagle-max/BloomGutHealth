@@ -46,3 +46,7 @@ test('dietary vitamin D preserves shared sex categories and abstains only for th
 test('vitamin A matches source sex/age context while preserving preformed-only UL and no amount or form inference',()=>{
  const run=(sex:string)=>dietaryReferenceEligibility({...base,nutrientKey:'vitamin_a_ug',profile:{id:'a',sex}});assert.deepEqual(eligible({...base,nutrientKey:'vitamin_a_ug'}),[['EAR',625],['RDA',900],['UL',3000]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_a_ug',profile:{id:'a',sex:'female'}}),[['EAR',500],['RDA',700],['UL',3000]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_a_ug',profile:{id:'a',sex:'unknown'}}),[['UL',3000]]);assert.equal(run('male').rows.find(row=>row.reference.kind==='UL')!.reference.intakeScope,'preformed-vitamin-a-only');assert.equal(run('male').adequacyAssessment,false);
 });
+
+test('folate and E profile applicability retains synthetic scope without calculating personal source-form amounts',()=>{
+ for(const key of ['folate_ug','vitamin_e_mg']){const view=dietaryReferenceEligibility({...base,nutrientKey:key});assert.equal(view.rows.filter(row=>row.eligible).length,3);assert.equal(view.rows.find(row=>row.reference.kind==='UL')!.reference.intakeScope.startsWith('synthetic-'),true);assert.equal(view.adequacyAssessment,false);assert.equal(dietaryReferenceEligibility({...base,nutrientKey:key,healthContext:{...base.healthContext,pregnancy:'yes'}}).rows.some(row=>row.eligible),false);}
+});
