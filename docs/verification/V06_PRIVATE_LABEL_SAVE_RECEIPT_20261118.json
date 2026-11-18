@@ -1,6 +1,6 @@
 {
   "task": "V06-M3-SB-UPC-10",
-  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "status": "ENGINEERING_TESTED_RENDERED_PUBLISHED_CI_PENDING",
   "scope": "Reusable private catalogue label receipt; saving a label is not consumption.",
   "compatibilityPrerequisite": {
     "source": "dbe83bce3605776445980cc372a4c662b3b52ac4",
@@ -32,5 +32,14 @@
     "Exact new SHA CI/Render qualification pending.",
     "Actual public NIH source unavailable from workspace; prior CI failed before one-time probe. No live match/no-match coverage claim.",
     "Full M2/M3/Food12/Response15/RC and independent science/device acceptance remain open."
-  ]
+  ],
+  "sourceCommit": "3b65e3bd2ebf152629a221899b67487abd2bd03d",
+  "publication": {
+    "renderStatus": "LIVE",
+    "deploy": "dep-dbum3149v7es738cp0ng",
+    "finishedAt": "2026-11-18T08:29:20.941665Z",
+    "ciRun": 44267196044,
+    "ciStatus": "pending",
+    "rebasedVerification": "11/11 relevant source/audit/timing tests and types PASS after preserving incoming standalone Advanced research code/docs. No manual deployment."
+  }
 }

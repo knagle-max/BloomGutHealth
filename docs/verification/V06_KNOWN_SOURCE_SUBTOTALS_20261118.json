@@ -1,0 +1,22 @@
+{
+  "task": "V06-M1-M3-KNOWN-SOURCE-SUBTOTALS",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "baseCommit": "3b65e3bd2ebf152629a221899b67487abd2bd03d",
+  "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
+  "implementation": [
+    "One pure read-only rollup over existing canonical owned current source view. No new store, ingredient scaling engine, chart, target or network call.",
+    "Source classes and exact chemical/activity/mineral bases remain separate; original source rows/revisions/units remain inspectable. No combined daily grand total, coverage percentage, usual intake, absorption or adequacy claim.",
+    "Unknown amount/no captured source remains unavailable, not zero; incompatible units/conflicts and unresolved equivalent/elemental bases do not contribute. Source-confirmed zero remains distinct. Overflow and malformed duplicate/aliased projections abstain.",
+    "Compact known subtotals appear before existing exact event/source disclosures. Source/correction/deletion/outage and account context guards withdraw cached values. No new screenshots or images."
+  ],
+  "verification": {
+    "focused": "17/17 final integrated source coverage/canonical reader/owned encrypted reader/API inventory/crosswalk tests PASS.",
+    "actualBrowser": "App\u2192HTTP\u2192encrypted SQL: confirmed20\u219210mg correction updates source subtotal once; compound magnesium excluded; source0; missing amount; deletion/outage/recovery/account/mode; keyboard source disclosure/Escape; source60+dialog60 layouts across5widths/light-dark/Everyday-Athlete/100\u2013200% text/page zoom PASS. Common generic/manual-label source and saved meal journeys also PASS.",
+    "types": "PASS",
+    "buildAndOriginalMedia": "PASS"
+  },
+  "remaining": [
+    "Exact new SHA CI/Render pending; previous source3b65 live08:29:20UTC, CI44267196044 pending.",
+    "Full M2 Canadian life-stage/form/UL/B6 and M3 coverage remain unfinished; no clinical/independent science/device acceptance inferred."
+  ]
+}

@@ -1,3 +1,5 @@
+import {accountContextGuard} from '@/lib/request-actor';
+import {knownNutrientCoverage} from '@shared/nutrient-coverage';
 import {useEffect,useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {useAuth} from '@/lib/auth';
@@ -18,10 +20,10 @@ export default function RecordedIntakeSources(){
  const {user}=useAuth(),[open,setOpen]=useState(false),[date,setDate]=useState(localDate),[timeZone,setTimeZone]=useState(()=>currentMealTimeZone()??''),[nutrientKey,setNutrientKey]=useState('iron_mg'),[visible,setVisible]=useState(25);
  const valid=dateKey.safeParse(date).success&&recognizedMealTimeZone(timeZone);
  const view=useQuery({queryKey:[recordedIntakeSourcePath,user?.id,date,timeZone,nutrientKey],enabled:open&&!!user&&valid,queryFn:async({signal})=>{
-  const owner=user!.id,query=new URLSearchParams({date,timeZone,nutrientKey});
+  const owner=user!.id,assertCurrent=accountContextGuard(owner),query=new URLSearchParams({date,timeZone,nutrientKey});assertCurrent();
   const result=recordedIntakeViewSchema.parse(await(await apiRequest('GET',recordedIntakeSourcePath+'?'+query,undefined,undefined,signal)).json());
   if(result.userId!==owner||result.date!==date||result.timeZone!==timeZone||result.events.some(event=>event.rows.some(row=>row.nutrientKey!==nutrientKey)))throw Error('These sources could not be verified for this account and date.');
-  return result;
+  assertCurrent();return {...result,coverage:knownNutrientCoverage(result,owner,nutrientKey)};
  }});
  useEffect(()=>setVisible(25),[user?.id,date,timeZone,nutrientKey]);
  const data=!view.isError&&!view.isFetching&&!view.isStale?view.data:undefined,definitions=nutrientDefinitionDetails(),selected=definitions.find(def=>def.key===nutrientKey)!;
@@ -34,6 +36,9 @@ export default function RecordedIntakeSources(){
   {view.isError&&<div role="alert"><p>Recorded sources could not load. This does not mean no intake was recorded.</p><Button className="min-h-11" onClick={()=>void view.refetch()}>Retry recorded nutrient sources</Button></div>}
   {data&&<><h3>{selected.key==='vitamin_a_ug'?'Vitamin A':selected.key==='folate_ug'?'Folate':selected.name} · recorded sources</h3><p className="panel-note">{data.events.length} dated {data.events.length===1?'event':'events'} · {data.timeZone}. Unlogged foods or supplements remain unknown. This is not a measure of absorption, usual intake or adequacy.</p>
    {!data.events.length&&<p>No source events are available for this day. Unlogged or unavailable intake is unknown.</p>}
+   {!!data.coverage.groups.length&&<section aria-label="Known recorded subtotals" className="space-y-2"><h4>Known recorded subtotals</h4><p className="panel-note">Sources and measurement bases are kept separate. Missing amounts are not counted as zero.</p><ul className="space-y-2">{data.coverage.groups.map((group,index)=><li key={index} className="min-w-0"><p>{sourceNames[group.sourceKind]}: <strong>{group.knownSubtotal===null?'No compatible subtotal':`${formatNutrientAmount(group.knownSubtotal)} ${group.activityUnit??group.unit}`}</strong>{group.chemicalForm?` · ${group.chemicalForm}`:''}</p><p className="panel-note">{group.knownRows} known source {group.knownRows===1?'amount':'amounts'}{group.zeroRows?` (${group.zeroRows} source-reported zero)`:''}{group.unknownRows?` · ${group.unknownRows} unknown`:''}{group.incompatibleRows?` · ${group.incompatibleRows} excluded: measurement basis unresolved or incompatible`:''}</p></li>)}</ul></section>}
+   {!!data.coverage.unavailableEvents&&<p role="status">{data.coverage.unavailableEvents} recorded {data.coverage.unavailableEvents===1?'event has':'events have'} no captured amount for this nutrient.</p>}
+
    {!!(data.undatedEvents+data.unsupportedEvents+data.conflictingEvents+data.futureEvents)&&<p role="status">Some records cannot contribute to this view: {data.undatedEvents} undated, {data.unsupportedEvents} unsupported, {data.conflictingEvents} conflicting, {data.futureEvents} later than this check. Their absence is not a measured zero.</p>}
    <div className="space-y-3">{data.events.slice(0,visible).map(event=><article key={event.key} className="border rounded-xl p-3 min-w-0 space-y-2" aria-label={`${event.kind==='food'?'Food':'Supplement'} source event ${event.recordId}`}><h4>{event.name} · {new Date(event.occurredAt).toLocaleTimeString(undefined,{timeZone:data.timeZone,hour:'numeric',minute:'2-digit'})}</h4>
     {!event.rows.length&&<p>Amount unknown — source composition was not captured or could not be verified.</p>}
