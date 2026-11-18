@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {dietaryReferenceSubset,dietaryReferencesFor,dietaryReferenceRowSchema} from '../shared/dietary-references';
 test('curated Health Canada source facts preserve separate adult EAR/RDA/UL, sex/age categories and source-specific scope',()=>{
- assert.equal(dietaryReferenceSubset.rows.length,14);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-17');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
+ assert.equal(dietaryReferenceSubset.rows.length,24);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
  const rda=(nutrient:string,sex:string,ageMin:number)=>dietaryReferencesFor(nutrient).find(row=>row.kind==='RDA'&&row.sexReferenceCategory===sex&&row.ageMinYears===ageMin)!;
  assert.equal(rda('vitamin_c_mg','M',19).amount,90);assert.equal(rda('vitamin_c_mg','F',19).amount,75);
  for(const [sex,age,value]of [['M',19,400],['M',31,420],['F',19,310],['F',31,320]]as const)assert.equal(rda('magnesium_mg',sex,age).amount,value);
@@ -24,4 +24,11 @@ test('unsupported nutrients stay absent and reference reads never mutate source 
  for(const key of ['vitamin_b6_mg','ferritin','iodine_ug','unknown'])assert.deepEqual(dietaryReferencesFor(key),[]);
  const rows=dietaryReferencesFor('magnesium_mg');assert.equal(Object.isFrozen(rows[0]),true);assert.equal(Object.isFrozen(dietaryReferenceSubset),true);assert.equal(Object.isFrozen(dietaryReferenceSubset.sources[0]),true);
  assert.equal(rows.some(row=>'adequacy' in row||'target' in row||'normalLow' in row),false);assert.equal(JSON.stringify(dietaryReferenceSubset),before);
+});
+
+test('calcium retains 2011 source-specific adult sex/age requirements and age-dependent total-intake UL, without changing the C/Mg subset',()=>{
+ const calcium=dietaryReferencesFor('calcium_mg');assert.equal(calcium.length,10);
+ for(const[sex,age,ear,rda]of [['M',19,800,1000],['M',71,1000,1200],['F',19,800,1000],['F',51,1000,1200]]as const){assert.equal(calcium.find(row=>row.sexReferenceCategory===sex&&row.ageMinYears===age&&row.kind==='EAR')!.amount,ear);assert.equal(calcium.find(row=>row.sexReferenceCategory===sex&&row.ageMinYears===age&&row.kind==='RDA')!.amount,rda);}
+ assert.deepEqual(calcium.filter(row=>row.kind==='UL').map(row=>[row.ageMinYears,row.ageMaxYears,row.amount,row.intakeScope]),[[19,50,2500,'total-intake'],[51,null,2000,'total-intake']]);
+ assert.equal(dietaryReferencesFor('vitamin_c_mg').length+dietaryReferencesFor('magnesium_mg').length,14);assert.match(dietaryReferenceSubset.sources.find(source=>source.id==='hc-elements')!.note,/2011/);
 });

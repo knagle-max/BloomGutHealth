@@ -1944,7 +1944,7 @@
     "client/src/components/NutrientDefinitionDisclosure.tsx": "97486e8500d1446384069a4466fb0f0d878d0787ab0e75592d0413d5fefde5bc",
     "client/src/components/OrganismPortrait.tsx": "70a258215f0f0a08eeb7c84ccea685da2d9d8834215a3dd01a682151759467de",
     "client/src/components/PremiumIcon.tsx": "29781821b893c047b1e31193a55cd680d57df55ee2763047b49ec93952cf03b4",
-    "client/src/components/ProductPicker.tsx": "64e4b1f2908a96dd3dc5c9943d9983f59db4a6e20124623b2d183438d839c5d2",
+    "client/src/components/ProductPicker.tsx": "6553d82d624b83d4705c7b3a49a4b7f37939bff5b1f91f140f1f051f277b06ed",
     "client/src/components/ProviderFoodSuggestions.tsx": "7af2c558458edfceb1276fb63ae737ac29eb310dbe543b033598a3855dd79438",
     "client/src/components/QuickLabEntry.tsx": "b3aecee8acecefb7b58d48e226097106f70f6d659e4819efe3a2433339cef5d3",
     "client/src/components/RecentMealSource.tsx": "d8488bbcff4c06378fd3e68eb75a1b8143fda6f3ebd7d53a9b9347208d06f7ef",

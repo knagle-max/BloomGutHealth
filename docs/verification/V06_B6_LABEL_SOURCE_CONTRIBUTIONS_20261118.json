@@ -1,6 +1,6 @@
 {
   "task": "V06-M1-M3-B6-LABEL-SOURCE-CONTRIBUTIONS",
-  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "status": "IMPLEMENTED_PENDING_CI_REGRESSION_REPAIR",
   "baseCommit": "266e77f7e8fcb735d9d4033ae732e1cc511fed91",
   "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
   "scope": "Read-only source-specific B6 contributions from original explicit Vitamin B6 nutrient declarations in mg; does not enable generic-food or canonical21-field producers.",
@@ -32,5 +32,12 @@
   "remaining": [
     "Generic-food B6 mapping and actual composition acquisition require authority evidence; no values may be copied across foods or backfilled into original snapshots.",
     "Full Canadian reference/form/UL eligibility, source-native units/chemical equivalence beyond the inspected mg declaration basis, usual-intake assessment and full M2/M3/Food12/Response15/RC remain unfinished."
-  ]
+  ],
+  "publishedCommit": "44a6618d0f4817c6032f1f61cc3f642145cbe814",
+  "ci": {
+    "run": 44326709932,
+    "job": 134879839562,
+    "result": "FAILURE",
+    "detail": "New reference and B6 browser steps passed; existing barcode fallback assertion caught a lost protein zero before save. Delayed add-field focus repaired in next slice; assertion retained. Optional B6 identity probe not reached."
+  }
 }

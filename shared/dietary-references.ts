@@ -2,7 +2,7 @@ export {vitaminB6ReferenceContext} from './supplement-reference-context';
 import {z} from 'zod';
 import data from './data/canadian-dietary-reference-subset.json';
 export const dietaryReferenceRowSchema=z.object({
- id:z.string().min(1),nutrientKey:z.enum(['vitamin_c_mg','magnesium_mg']),
+ id:z.string().min(1),nutrientKey:z.enum(['vitamin_c_mg','magnesium_mg','calcium_mg']),
  sexReferenceCategory:z.enum(['M','F','all']),ageMinYears:z.number().int().min(19),ageMaxYears:z.number().int().min(19).nullable(),
  kind:z.enum(['EAR','RDA','AI','UL','CDRR']),amount:z.number().finite().positive(),unit:z.literal('mg/day'),
  lifeStage:z.literal('nonpregnant-nonlactating-adult'),referencePeriod:z.literal('usual-daily-intake'),
@@ -21,3 +21,5 @@ export const dietaryReferenceSubset=Object.freeze({...data,rows,sources:Object.f
  * changes a saved target, interprets a lab result or manufactures a missing DRI. */
 export function dietaryReferencesFor(nutrientKey:string){return dietaryReferenceSubset.rows.filter(row=>row.nutrientKey===nutrientKey);}
 export const dietaryReferenceKinds={EAR:'Estimated average requirement',RDA:'Recommended dietary allowance',AI:'Adequate intake',UL:'Tolerable upper intake level',CDRR:'Chronic disease risk reduction intake'} as const;
+
+export const dietaryReferenceNutrients=Object.freeze([{key:'vitamin_c_mg',name:'Vitamin C'},{key:'magnesium_mg',name:'Magnesium'},{key:'calcium_mg',name:'Calcium'}]);

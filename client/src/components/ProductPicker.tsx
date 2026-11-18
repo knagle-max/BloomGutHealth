@@ -1,6 +1,6 @@
 import {accountContextGuard,AccountContextChangedError} from "@/lib/request-actor";
 import {useAuth} from "@/lib/auth";
-import { useState, useEffect, useRef, useId } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useId } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { apiRequest, ApiRequestError, queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
@@ -66,7 +66,10 @@ export default function ProductPicker({
   useEffect(()=>()=>{lookupEpoch.current++;},[]);
   const resultId=useId();
   const [submittedQuery,setSubmittedQuery]=useState(initialQuery);
-  const manualForm=useRef<HTMLFormElement>(null);
+  const manualForm=useRef<HTMLFormElement>(null),pendingManualFocus=useRef<string|null>(null);
+  // Focus at the same DOM commit that exposes the field. A delayed animation
+  // callback can otherwise steal focus after typing has begun in another input.
+  useLayoutEffect(()=>{const key=pendingManualFocus.current;if(!key)return;pendingManualFocus.current=null;manualForm.current?.querySelector<HTMLInputElement>(`input[name="${key}"]`)?.focus();},[manualFields]);
   useEffect(()=>{if(manual)manualForm.current?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();},[manual]);
   const search = useMutation({
     mutationFn: async (override?:string)=>{
@@ -509,7 +512,7 @@ export default function ProductPicker({
               />
             </label>
           </div>
-          {kind==='supplement'&&<div className="space-y-2"><p>Add only amounts printed on your label. Other ingredients or activity units can be entered below.</p><label className="block">Label nutrient to add<select aria-label="Label nutrient to add" className="bloom-input w-full" value={manualField} onChange={event=>setManualField(event.target.value)}><option value="">Choose a nutrient</option>{nutrientDefinitions.filter(([key])=>!manualFields.includes(key)).map(([key,name,unit])=><option key={key} value={key}>{name} ({unit})</option>)}</select></label><Button type="button" variant="outline" disabled={!manualField} onClick={()=>{setManualFields(fields=>[...fields,manualField]);const key=manualField;setManualField("");requestAnimationFrame(()=>manualForm.current?.querySelector<HTMLInputElement>(`input[name="${key}"]`)?.focus());}}>Add label nutrient</Button></div>}
+          {kind==='supplement'&&<div className="space-y-2"><p>Add only amounts printed on your label. Other ingredients or activity units can be entered below.</p><label className="block">Label nutrient to add<select aria-label="Label nutrient to add" className="bloom-input w-full" value={manualField} onChange={event=>setManualField(event.target.value)}><option value="">Choose a nutrient</option>{nutrientDefinitions.filter(([key])=>!manualFields.includes(key)).map(([key,name,unit])=><option key={key} value={key}>{name} ({unit})</option>)}</select></label><Button type="button" variant="outline" disabled={!manualField} onClick={()=>{pendingManualFocus.current=manualField;setManualFields(fields=>[...fields,manualField]);setManualField("");}}>Add label nutrient</Button></div>}
           <div className="precision-grid">
             {nutrientDefinitions.map(([k, name, unit]) => (
               <label key={k} hidden={kind==='supplement'&&!manualFields.includes(k)} style={{display:kind==='supplement'&&!manualFields.includes(k)?'none':undefined}}>

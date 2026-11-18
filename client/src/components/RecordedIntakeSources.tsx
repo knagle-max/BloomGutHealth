@@ -36,7 +36,7 @@ export default function RecordedIntakeSources(){
   {!valid&&<p role="status">Choose a valid date and named time zone, such as America/Regina. Source timestamps are preserved.</p>}
   {view.isFetching&&<p role="status">Checking saved nutrient sources…</p>}
   {view.isError&&<div role="alert"><p>Recorded sources could not load. This does not mean no intake was recorded.</p><Button className="min-h-11" onClick={()=>void view.refetch()}>Retry recorded nutrient sources</Button></div>}
-  {valid&&['vitamin_c_mg','magnesium_mg'].includes(nutrientKey)&&<DietaryReferenceDisclosure nutrientKey={nutrientKey} date={date} timeZone={timeZone}/>}
+  {valid&&['vitamin_c_mg','magnesium_mg','calcium_mg'].includes(nutrientKey)&&<DietaryReferenceDisclosure nutrientKey={nutrientKey} date={date} timeZone={timeZone}/>}
   {valid&&nutrientKey==='vitamin_b6_mg'&&<VitaminB6ReferenceContext/>}
   {data&&<><h3>{selected.key==='vitamin_a_ug'?'Vitamin A':selected.key==='folate_ug'?'Folate':selected.name} · recorded sources</h3><p className="panel-note">{data.events.length} dated {data.events.length===1?'event':'events'} · {data.timeZone}. Unlogged foods or supplements remain unknown. This is not a measure of absorption, usual intake or adequacy.</p>
    {!data.events.length&&<p>No source events are available for this day. Unlogged or unavailable intake is unknown.</p>}

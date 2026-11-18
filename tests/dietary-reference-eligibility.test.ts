@@ -25,3 +25,12 @@ test('no smoking assumption, no historical stage/era projection, no invented B6 
  assert.deepEqual(dietaryReferenceEligibility({...base,nutrientKey:'vitamin_b6_mg'}).rows,[]);
  for(const patch of [{date:'2026-02-30'},{timeZone:'invented'},{asOf:'not-a-date'}])assert.throws(()=>dietaryReferenceEligibility({...base,...patch}),/WINDOW/);
 });
+
+test('calcium handles different female/male requirement ages, shared upper limits and uncertain 50–51/70–71 boundaries without fake birthdays',()=>{
+ const run=(sex:string,age:number)=>dietaryReferenceEligibility({...base,profile:{id:'a',sex},birthYear:2026-age,nutrientKey:'calcium_mg'}).rows.filter(row=>row.eligible).map(row=>[row.reference.kind,row.reference.amount]);
+ assert.deepEqual(run('male',36),[['EAR',800],['RDA',1000],['UL',2500]]);assert.deepEqual(run('female',55),[['EAR',1000],['RDA',1200],['UL',2000]]);
+ assert.deepEqual(run('male',55),[['EAR',800],['RDA',1000],['UL',2000]]);
+ assert.deepEqual(run('male',51),[['EAR',800],['RDA',1000]],'A possible50–51 age has no common UL category but the male requirement is unchanged');
+ assert.deepEqual(run('female',51),[],'Both the requirement and UL vary across50–51');assert.deepEqual(run('male',71),[['UL',2000]],'A possible70–71 age cannot pick an RDA');
+ assert.deepEqual(run('unknown',36),[['UL',2500]]);
+});

@@ -1,0 +1,23 @@
+{
+  "task": "V06-M2-CALCIUM-REFERENCE-COVERAGE",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "baseCommit": "44a6618d0f4817c6032f1f61cc3f642145cbe814",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
+  "sourceRetrievedOn": "2026-11-18",
+  "scope": [
+    "Add ten adult calcium EAR/RDA/total-intake UL rows from official Table 1. Equal adjacent age cohorts coalesced only within identical sex/kind/value/scope. Original fourteen C/Mg rows unchanged.",
+    "Reuse current profile possible-age eligibility and existing disclosure; boundary ambiguity abstains only where values differ. Historical applicability remains unknown without source-era context.",
+    "Preserve nutrient-specific source notes/retrieval dates; no adequacy/dose target, new profile field, store or source mutation."
+  ],
+  "verification": {
+    "focused": "17/17 integrated source/schema/eligibility/API/audit tests PASS before final audit refresh.",
+    "browser": "Actual App/HTTP/encrypted profile: male36 RDA1000, female55 RDA1200/UL2000, age50\u201351/70\u201371 ambiguity, identical30\u201331 cohort, saved context/deep link, account isolation and32mode/theme/width/zoom states PASS.",
+    "typesBuild": "Typecheck and production build/media verification PASS.",
+    "regressionRepair": "CI44326709932 caught protein zero disappearing before save. Replace delayed animation-frame add-field focus with synchronous layout-commit focus. Existing exact zero assertions retained; complete synthetic barcode/private-label/camera/retry/actor/browser flow PASS."
+  },
+  "limits": [
+    "Full v0.6 RC remains unfinished.",
+    "No production data access/manual deployment or clinical adequacy interpretation.",
+    "Exact next-commit CI/Render verification pending."
+  ]
+}
