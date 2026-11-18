@@ -1,6 +1,24 @@
 import { z } from "zod";
 import type { BiologicalRegistry, KnowledgeRelationship } from "./biological-model";
 
+/** Output admission boundary for existing source/Response projections, not a
+ * second inference service. Source arithmetic alone cannot release clinical
+ * interpretation or an unsolicited Today action. */
+export interface ConsumerValueCandidate {
+  candidateId:string;
+  findingType:'source-observed'|'reviewed-interpreted'|'cross-domain-qualified'|'safety-critical';
+  observationRefs:ReadonlyArray<{sourceId:string;revision:string;date?:string}>;
+  relevantUserGoalIds:readonly string[];
+  finding:string;biologicalMeaning:string|null;
+  evidenceRuleIds:readonly string[];
+  applicability:'supported'|'conditional'|'insufficient';
+  practicalNextStepId:string|null;
+  materialUnknowns:readonly string[];prohibitedClaims:readonly string[];
+  priorityReason:string|null;
+  releaseState:'feature-eligible'|'detail-only'|'abstain'|'safety-critical';
+  sourceEpoch:string;
+}
+
 /** Shared claim vocabulary. Entered lab values retain reported/unverified provenance;
  * a category never upgrades the quality of an observation or validates a model. */
 export const claimKindSchema = z.enum(["measured", "modelled-with-validation", "inferred-association", "experimental", "unknown"]);

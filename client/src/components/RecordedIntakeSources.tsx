@@ -2,7 +2,7 @@ import VitaminB6ReferenceContext from './VitaminB6ReferenceContext';
 import {dietaryReferenceNutrients} from '@shared/dietary-references';
 import DietaryReferenceDisclosure from './DietaryReferenceDisclosure';
 import {accountContextGuard} from '@/lib/request-actor';
-import {knownNutrientCoverage} from '@shared/nutrient-coverage';
+import {knownNutrientCoverage,NUTRIENT_COVERAGE_VERSION} from '@shared/nutrient-coverage';
 import {useEffect,useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {useAuth} from '@/lib/auth';
@@ -22,7 +22,7 @@ const sourceNames={'generic-food':'Food composition estimate','food-label':'Save
 export default function RecordedIntakeSources(){
  const {user}=useAuth(),[open,setOpen]=useState(false),[date,setDate]=useState(localDate),[timeZone,setTimeZone]=useState(()=>currentMealTimeZone()??''),[nutrientKey,setNutrientKey]=useState('iron_mg'),[visible,setVisible]=useState(25);
  const valid=dateKey.safeParse(date).success&&recognizedMealTimeZone(timeZone);
- const view=useQuery({queryKey:[recordedIntakeSourcePath,user?.id,date,timeZone,nutrientKey],enabled:open&&!!user&&valid,queryFn:async({signal})=>{
+ const view=useQuery({queryKey:[recordedIntakeSourcePath,user?.id,date,timeZone,nutrientKey,NUTRIENT_COVERAGE_VERSION],enabled:open&&!!user&&valid,queryFn:async({signal})=>{
   const owner=user!.id,assertCurrent=accountContextGuard(owner),query=new URLSearchParams({date,timeZone,nutrientKey});assertCurrent();
   const result=recordedIntakeViewSchema.parse(await(await apiRequest('GET',recordedIntakeSourcePath+'?'+query,undefined,undefined,signal)).json());
   if(result.userId!==owner||result.date!==date||result.timeZone!==timeZone||result.events.some(event=>event.rows.some(row=>row.nutrientKey!==nutrientKey)))throw Error('These sources could not be verified for this account and date.');
@@ -41,6 +41,13 @@ export default function RecordedIntakeSources(){
   {valid&&nutrientKey==='vitamin_b6_mg'&&<VitaminB6ReferenceContext/>}
   {data&&<><h3>{selected.key==='vitamin_a_ug'?'Vitamin A':selected.key==='folate_ug'?'Folate':selected.name} · recorded sources</h3><p className="panel-note">{data.events.length} dated {data.events.length===1?'event':'events'} · {data.timeZone}. Unlogged foods or supplements remain unknown. This is not a measure of absorption, usual intake or adequacy.</p>
    {!data.events.length&&<p>No source events are available for this day. Unlogged or unavailable intake is unknown.</p>}
+   {data.coverage.overlap&&<section aria-label="Recorded B6 label overlap" className="space-y-2">
+    <h4>B6 repeats across taken entries</h4><p>{data.coverage.overlap.finding}</p>
+    <p>Known supplemental B6 from these entries: <strong>{formatNutrientAmount(data.coverage.overlap.knownSupplementalMg)} mg</strong>.</p>
+    <p>{data.coverage.overlap.biologicalMeaning}</p>
+    <p className="panel-note">Known supplement contributions only; food and unrecorded intake are not included. Personal reference applicability and clinical significance are not established.</p>
+    <details><summary className="min-h-11 cursor-pointer">Review contributing taken entries</summary><ul className="space-y-2">{data.coverage.overlap.members.map(member=><li key={member.eventKey}><strong>{member.name}: {formatNutrientAmount(member.amountMg)} mg</strong><p className="panel-note">{member.occurredAt} · saved label {member.labelId} · version {member.labelVersion??'Not supplied'}</p></li>)}</ul>{data.coverage.overlap.unknownSupplementEntries>0&&<p>{data.coverage.overlap.unknownSupplementEntries} other recorded supplement {data.coverage.overlap.unknownSupplementEntries===1?'entry has':'entries have'} no compatible known B6 amount.</p>}<p className="panel-note">Review the declarations together when reviewing these supplement entries. This source finding does not change prescribed use or establish toxicity.</p></details>
+   </section>}
    {!!data.coverage.groups.length&&<section aria-label="Known recorded subtotals" className="space-y-2"><h4>Known recorded subtotals</h4><p className="panel-note">Sources and measurement bases are kept separate. Missing amounts are not counted as zero.</p><ul className="space-y-2">{data.coverage.groups.map((group,index)=><li key={index} className="min-w-0"><p>{sourceNames[group.sourceKind]}: <strong>{group.knownSubtotal===null?'No compatible subtotal':`${formatNutrientAmount(group.knownSubtotal)} ${group.activityUnit??group.unit}`}</strong>{group.chemicalForm?` · ${group.chemicalForm}`:''}</p><p className="panel-note">{group.knownRows} known source {group.knownRows===1?'amount':'amounts'}{group.zeroRows?` (${group.zeroRows} source-reported zero)`:''}{group.unknownRows?` · ${group.unknownRows} unknown`:''}{group.incompatibleRows?` · ${group.incompatibleRows} excluded: measurement basis unresolved or incompatible`:''}</p></li>)}</ul></section>}
    {!!data.coverage.unavailableEvents&&<p role="status">{data.coverage.unavailableEvents} recorded {data.coverage.unavailableEvents===1?'event has':'events have'} no captured amount for this nutrient.</p>}
 
