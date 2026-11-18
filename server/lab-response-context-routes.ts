@@ -1,6 +1,6 @@
 import type {Express,Request,RequestHandler} from 'express';
 import {z} from 'zod';
-import {labResponseQuestions,labResponseContextSelectionSchema,labResponseContextPrepareSchema,labResponseContextSaveSchema,labResponseContextDeleteSchema,type LabResponseContextView} from '../shared/lab-response-context';
+import {LAB_RESPONSE_CONTEXT_PROTOCOL,labResponseQuestions,labResponseContextSelectionSchema,labResponseContextPrepareSchema,labResponseContextSaveSchema,labResponseContextDeleteSchema,type LabResponseContextView} from '../shared/lab-response-context';
 import {LabResponseContextError,type LabResponseContextStorage} from './lab-response-context-storage';
 
 /** Signed-account controls use the same canonical source proofs and transaction
@@ -10,10 +10,12 @@ export function registerLabResponseContextRoutes(app:Express,auth:RequestHandler
  // A stale browser must not display a new answer beneath its old question.
  // This is a semantic compatibility check; account/source permissions are
  // still enforced by the existing authenticated storage boundary.
- const checkReader=(req:Request,family:keyof typeof labResponseQuestions,view:LabResponseContextView)=>{
-  const legacy=labResponseQuestions[family].id;
-  if(req.get('X-Bloom-Lab-Question-Protocol')!=='1'&&(view.questionId&&view.questionId!==legacy||view.latest&&view.latest.record.payload.question!==legacy))throw new LabResponseContextError(409,'These questions were updated. Reload Bloom to review the current question before answering.');
+ const checkQuestions=(req:Request,family:keyof typeof labResponseQuestions,questions:Array<string|undefined>)=>{
+  const protocol=req.get('X-Bloom-Lab-Question-Protocol'),legacy=labResponseQuestions[family].id;
+  const requiresVersion2=family==='glycemic'&&questions.includes('medication-change'),knownReader=protocol==='1'||protocol===LAB_RESPONSE_CONTEXT_PROTOCOL;
+  if((requiresVersion2&&protocol!==LAB_RESPONSE_CONTEXT_PROTOCOL)||(!knownReader&&questions.some(question=>question&&question!==legacy)))throw new LabResponseContextError(409,'These questions were updated. Reload Bloom to review the current question before answering.');
  };
+ const checkReader=(req:Request,family:keyof typeof labResponseQuestions,view:LabResponseContextView)=>checkQuestions(req,family,[view.questionId,view.latest?.record.payload.question]);
  const fail=(res:any,error:unknown)=>error instanceof LabResponseContextError?res.status(error.status).json({error:error.message}):res.status(503).json({error:'Lab context is unavailable. Your source results and ordinary logging are unchanged.'});
  app.post('/api/experience/lab-response-context/history',limit,async(req,res)=>{
   if(!z.object({}).strict().safeParse(req.body).success||Object.keys(req.query).length)return void res.status(400).json({error:'Open remembered context from the signed-in account.'});
@@ -29,7 +31,7 @@ export function registerLabResponseContextRoutes(app:Express,auth:RequestHandler
  });
  app.post('/api/experience/lab-response-context/save',limit,async(req,res)=>{
   const input=labResponseContextSaveSchema.safeParse(req.body);if(!input.success||Object.keys(req.query).length)return void res.status(400).json({error:'Review the answer, remembered dates and current source records.'});
-  try{const saved=await store.save(req.session.userId!,input.data);res.status(saved.replayed?200:201).json(saved);}catch(error){fail(res,error);}
+  try{checkQuestions(req,input.data.family,[input.data.expectedQuestion??labResponseQuestions[input.data.family].id]);const saved=await store.save(req.session.userId!,input.data);res.status(saved.replayed?200:201).json(saved);}catch(error){fail(res,error);}
  });
  app.delete('/api/experience/lab-response-context',limit,async(req,res)=>{
   const input=labResponseContextDeleteSchema.safeParse(req.body);if(!input.success||Object.keys(req.query).length||req.get('X-Bloom-Confirm')!=='delete-lab-response-context-history')return void res.status(400).json({error:'Confirm the exact remembered context history before deleting.'});

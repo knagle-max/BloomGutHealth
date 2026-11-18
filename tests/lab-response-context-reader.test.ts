@@ -80,3 +80,17 @@ test('encrypted context reader survives reload/export, remains owned and cannot 
 
  }finally{server?.closeAllConnections();if(server)await new Promise<void>(resolve=>server!.close(()=>resolve()));await pg.close();if(previous===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=previous;}
 });
+
+test('version2 glycemic readers preserve medication-question meaning while old clients cannot receive or submit that context',async()=>{
+ const futurePayload={...payload,family:'glycemic' as const,question:'medication-change' as const};assert.deepEqual(labResponseContextSchema.parse(futurePayload),futurePayload);assert.equal(labResponseQuestionForMarkers('glycemic',['hba1c']),'fasting-context','Compatibility reader does not activate a new source-target writer');
+ const old={...futurePayload,question:'fasting-context' as const};assert.deepEqual(labResponseContextSchema.parse(old),old);assert.match(labResponseQuestionText['fasting-context'],/glucose collection/);
+ const view={questionId:'medication-change',scopeHash:'a'.repeat(64),generationId:lifecycle.generationId,historyRevision:'b'.repeat(64),historyCount:1,latest:{record:{id:'future-glycemic',payload:futurePayload,createdAt:payload.recordedAt,updatedAt:payload.recordedAt},sourceCurrent:true},asOf:payload.recordedAt};const selection={family:'glycemic',sourceIds:payload.sourceReferences.map(row=>row.id)},prepare={family:'glycemic',sourceReferences:payload.sourceReferences};let saves=0;
+ const app=express();app.use(express.json());registerLabResponseContextRoutes(app,((req:any,res:any,next:any)=>{if(!req.get('x-user'))return res.sendStatus(401);req.session={userId:req.get('x-user')};next();})as any,((_req:any,_res:any,next:any)=>next())as any,{view:async()=>view,prepare:async()=>view,history:async()=>[{selection,view}],save:async()=>{saves++;return{record:view.latest.record,replayed:false};},deleteHistory:async()=>{}}as any);
+ const server=app.listen(0,'127.0.0.1');await new Promise<void>(resolve=>server.once('listening',resolve));try{
+  const send=(path:string,body:unknown,protocol?:string)=>fetch(`http://127.0.0.1:${(server.address()as any).port}/api/experience/lab-response-context/${path}`,{method:'POST',headers:{'content-type':'application/json','x-user':'a',...(protocol?{'X-Bloom-Lab-Question-Protocol':protocol}:{})},body:JSON.stringify(body)});
+  const command={...prepare,expectedQuestion:'medication-change',intentId:payload.intentId,generationId:lifecycle.generationId,expectedCurrentId:null,answer:payload.answer,eventWindow:payload.eventWindow,datePrecision:payload.datePrecision,notes:payload.notes};
+  for(const protocol of [undefined,'1','99'])for(const[path,body]of [['view',selection],['prepare',prepare],['history',{}],['save',command]]as const){const response=await send(path,body,protocol);assert.equal(response.status,409);assert.equal(response.headers.get('cache-control'),'no-store');assert.doesNotMatch(await response.text(),/Synthetic recollection|future-glycemic/);}assert.equal(saves,0,'Unsupported question versions cannot reach the answer writer');
+  for(const[path,body]of [['view',selection],['prepare',prepare],['history',{}]]as const)assert.equal((await send(path,body,'2')).status,200);
+  const received=await(await send('view',selection,'2')).json();assert.equal(received.latest.record.payload.question,'medication-change');assert.equal(received.latest.record.payload.family,'glycemic');
+ }finally{server.closeAllConnections();await new Promise<void>(resolve=>server.close(()=>resolve()));}
+});

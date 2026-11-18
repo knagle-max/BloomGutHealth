@@ -1,3 +1,4 @@
+import {LAB_RESPONSE_CONTEXT_PROTOCOL} from '@shared/lab-response-context';
 import {Link} from 'wouter';
 import {rememberedLabGuidance} from '@shared/lab-family-guidance';
 import {useEffect,useId,useRef,useState} from 'react';
@@ -32,7 +33,7 @@ export default function LabRememberedContext({family,sources}:{family:Family;sou
   const same=()=>currentKey.current===key&&serial.current===ticket;
   try{
    const actor=accountContextGuard(user?.id),assertCurrent=()=>{actor();if(!same())throw Error('Context changed');};assertCurrent();
-   const request=async(method:string,suffix:string,body:unknown,headers?:Record<string,string>)=>{assertCurrent();const response=await apiRequest(method,path+suffix,body,{'X-Bloom-Lab-Question-Protocol':'1',...headers},abort.signal);const data=response.status===204?null:await response.json();assertCurrent();return data;};
+   const request=async(method:string,suffix:string,body:unknown,headers?:Record<string,string>)=>{assertCurrent();const response=await apiRequest(method,path+suffix,body,{'X-Bloom-Lab-Question-Protocol':LAB_RESPONSE_CONTEXT_PROTOCOL,...headers},abort.signal);const data=response.status===204?null:await response.json();assertCurrent();return data;};
    await work(request,assertCurrent);if(same())patch({pending:null,...(changedDuringRequest.current?{view:null,error:'Saved context changed elsewhere. Reload and review it before saving.'}:{})});
   }catch(error){if(same())patch({pending:null,error:error instanceof ApiRequestError?error.message:'Context could not be confirmed. Your draft is retained.',...(stage==='loading'||error instanceof ApiRequestError&&[404,409].includes(error.status)?{view:null}:{})});}
  };

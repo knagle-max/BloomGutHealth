@@ -1,5 +1,8 @@
 import {z} from 'zod';
 
+// Version2 can read the existing medication question in a glycemic family.
+// Source-target selection remains unchanged until compatible readers are live.
+export const LAB_RESPONSE_CONTEXT_PROTOCOL='2';
 export const labResponseQuestions={
  lipids:{id:'medication-change',text:'Were any medicines changed before this collection?'},
  glycemic:{id:'fasting-context',text:'Was the glucose collection fasting?'},
@@ -14,7 +17,7 @@ export const labResponseQuestionText:Record<LabResponseQuestionId,string>={
  'acute-illness':labResponseQuestions.liver.text,'iron-products':labResponseQuestions['iron-cbc'].text,
  'b12-products':'Were vitamin B12-containing products changed before this collection?',
 };
-export function labResponseQuestionAllowed(family:keyof typeof labResponseQuestions,question:LabResponseQuestionId){return family==='iron-cbc'?['iron-products','b12-products','acute-illness'].includes(question):labResponseQuestions[family].id===question;}
+export function labResponseQuestionAllowed(family:keyof typeof labResponseQuestions,question:LabResponseQuestionId){return family==='glycemic'?['fasting-context','medication-change'].includes(question):family==='iron-cbc'?['iron-products','b12-products','acute-illness'].includes(question):labResponseQuestions[family].id===question;}
 /** Source-aware question contract. The deployed compatible reader retains each
  * historical question; exact owned current facts determine a fresh target. */
 export function labResponseQuestionForMarkers(family:keyof typeof labResponseQuestions,markers:readonly string[]):LabResponseQuestionId{

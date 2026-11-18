@@ -104,3 +104,10 @@ test('fresh B12/CBC/iron questions derive from exact owned sources while old rec
  await precision.deleteLabEntry('a',rows.get('b12').id);const removed=await storage.view('a',selected.selection);assert.equal(removed.questionId,'b12-products');assert.equal(removed.latest.sourceCurrent,false);assert.equal((await experience.exportExperience('a')).records.filter((row:any)=>row.payload.valueKind==='recalled-context'&&row.payload.sourceReferences.some((ref:any)=>ref.id===rows.get('b12').id)).length,4);
  await storage.deleteHistory('a',{...selected.selection,generationId:removed.generationId,expectedHistoryRevision:removed.historyRevision,intentId:randomUUID()});assert.equal((await storage.view('a',selected.selection)).historyCount,0);await rejects(storage.save('a',{...fresh,expectedQuestion:'b12-products'}),409);
 }));
+
+test('glycemic reader compatibility does not enable an HbA1c medication-question producer before its source-target transition',()=>fixture(async({storage,precision,command}:any)=>{
+ const rows=[];for(const[date,value]of [['2026-09-01',5.9],['2026-10-01',5.7]]as const){const lab=await precision.insertPrecisionRecord('a','lab',labSchema.parse({marker:'hba1c',value,unit:'%',measuredAt:date+'T12:00:00Z',laboratory:'Synthetic lab',method:'Synthetic A1c method',fasting:'unknown',referenceLow:null,referenceHigh:null,sourceReport:{importId:randomUUID(),enteredDate:date}}));rows.push(lab);}
+ const request={family:'glycemic' as const,sourceReferences:rows.map(row=>({id:row.id,revision:revision(row.payload)}))},selection={family:'glycemic' as const,sourceIds:rows.map(row=>row.id)},prepared=await storage.prepare('a',request);assert.equal(prepared.questionId,'fasting-context');
+ await rejects(storage.save('a',command(prepared,{...request,expectedQuestion:'medication-change'})),409);assert.equal((await storage.view('a',selection)).latest,null,'No premature recalled answer is stored');
+ const legacy=await storage.save('a',command(prepared,{...request,expectedQuestion:'fasting-context'}));assert.equal(legacy.record.payload.question,'fasting-context');assert.equal(legacy.record.payload.family,'glycemic');
+}));

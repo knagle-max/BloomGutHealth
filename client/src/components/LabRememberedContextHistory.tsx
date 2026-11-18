@@ -1,3 +1,4 @@
+import {LAB_RESPONSE_CONTEXT_PROTOCOL} from '@shared/lab-response-context';
 import {useEffect,useId,useRef,useState} from 'react';
 import {useAuth} from '@/lib/auth';
 import {apiRequest,ApiRequestError} from '@/lib/queryClient';
@@ -17,7 +18,7 @@ export default function LabRememberedContextHistory({sourceKey}:{sourceKey:strin
  const run=async(work:(request:(method:string,path:string,body:unknown,headers?:Record<string,string>)=>Promise<any>)=>Promise<void>)=>{
   const ticket=++serial.current;dirty.current=false;abort.current?.abort();const controller=new AbortController();abort.current=controller;patch({open:true,pending:true,error:''});
   const same=()=>current.current===key&&serial.current===ticket;
-  try{const actor=accountContextGuard(user?.id),request=async(method:string,path:string,body:unknown,headers?:Record<string,string>)=>{actor();if(!same())throw Error('Context changed');const response=await apiRequest(method,'/api/experience/lab-response-context'+path,body,{'X-Bloom-Lab-Question-Protocol':'1',...headers},controller.signal);const value=response.status===204?null:await response.json();actor();if(!same())throw Error('Context changed');return value;};await work(request);if(same())patch({pending:false,...(dirty.current?{rows:[],error:'Remembered context changed. Reload the history.'}:{})});}
+  try{const actor=accountContextGuard(user?.id),request=async(method:string,path:string,body:unknown,headers?:Record<string,string>)=>{actor();if(!same())throw Error('Context changed');const response=await apiRequest(method,'/api/experience/lab-response-context'+path,body,{'X-Bloom-Lab-Question-Protocol':LAB_RESPONSE_CONTEXT_PROTOCOL,...headers},controller.signal);const value=response.status===204?null:await response.json();actor();if(!same())throw Error('Context changed');return value;};await work(request);if(same())patch({pending:false,...(dirty.current?{rows:[],error:'Remembered context changed. Reload the history.'}:{})});}
   catch(error){if(same())patch({pending:false,rows:[],error:error instanceof ApiRequestError?error.message:'History could not be confirmed. Reload before using it.'});}
  };
  const load=()=>run(async request=>{const rows=await request('POST','/history',{});patch({rows,status:'',confirm:null});});

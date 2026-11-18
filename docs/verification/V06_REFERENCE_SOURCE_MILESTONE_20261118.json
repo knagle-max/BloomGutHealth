@@ -1,8 +1,37 @@
 {
   "task": "V06-REFERENCE-SOURCE-MILESTONE",
   "status": "ALREADY_VERIFIED",
-  "commit": "906416646518377e3d1db6a263308b50a478bfc7",
+  "commit": "683b8bc67f7777ab9d1a6d6ef04248982fdc45aa",
   "qualification": {
+    "commit": "683b8bc67f7777ab9d1a6d6ef04248982fdc45aa",
+    "workflow": 44341737935,
+    "job": 134933271155,
+    "conclusion": "success",
+    "unit": "881/881PASS0failed/skipped",
+    "hosted": "All exact binding/privacy/recovery/navigation/media gates PASS",
+    "neon": "All required isolated live schema/persistence/ownership/control gates PASS",
+    "render": "dep-dbusm5m0tbcc73ddt530",
+    "liveAt": "2026-11-18T15:59:50.83237Z"
+  },
+  "includedSlices": [
+    "064df517 calcium and manual-label focus/zero repair",
+    "95da7364 potassiumAI/noUL",
+    "a94a8656 goals-only sourced Food acceptance",
+    "140e10b3 LDL activity context",
+    "c6e1ed0d dietaryD source units",
+    "897802b0 preformedA UL scope",
+    "90641664 folateDFE/synthetic-folic-acid and vitaminE source scopes",
+    "13690ce8 iron source menstrual assumptions and USDA B6 metadata witness",
+    "49b4e704 B12 requirements/noUL",
+    "d3243edd recorded weight/lipid context",
+    "683b8bc6 zinc/vitaminK/sodium source scopes and iron dietary assumptions"
+  ],
+  "limits": [
+    "Does not qualify later local general pregnancy/lactation views or protocol2 reader/next HbA1c producer.",
+    "Older064 exact hosted mismatch is preserved historical evidence; source binding was never relaxed.",
+    "Full M2/C2/Core/RC remains unfinished; no independent final review claim."
+  ],
+  "previousQualification": {
     "commit": "906416646518377e3d1db6a263308b50a478bfc7",
     "workflow": 44335001853,
     "job": 134909272392,
@@ -12,19 +41,5 @@
     "neon": "All required isolated live schema/persistence/ownership/control gates PASS",
     "render": "dep-dbus5ke1egvs73b95vi0",
     "liveAt": "2026-11-18T15:24:39.246874Z"
-  },
-  "includedSlices": [
-    "064df517 calcium and manual-label focus/zero repair",
-    "95da7364 potassiumAI/noUL",
-    "a94a8656 goals-only sourced Food acceptance",
-    "140e10b3 LDL activity context",
-    "c6e1ed0d dietaryD source units",
-    "897802b0 preformedA UL scope",
-    "90641664 folateDFE/synthetic-folic-acid and vitaminE source scopes"
-  ],
-  "limits": [
-    "Does not qualify later local iron/B12/weight/zinc/K/sodium changes.",
-    "Earlier064 failed exact hosted mismatch after advancing review deploy;906 complete SUCCESS is the actual qualified descendant.",
-    "No whole v0.6 RC or independent final review claim."
-  ]
+  }
 }
