@@ -9,6 +9,25 @@ const env = {
   GEMINI_API_KEY:"fixture-do-not-use",
   BLOOM_GEMINI_RESEARCH_MODEL:"gemini-2.5-flash",
 };
+function testLedger() {
+  let reserved=0,settled=0;
+  return {
+    get reserved(){return reserved;},
+    get settled(){return settled;},
+    reserve:async (_request:unknown,limits:unknown)=>{
+      assert.ok(limits);
+      reserved++;
+      return {allowed:true as const,state:"reserved" as const,replay:false};
+    },
+    settle:async (_account:string,_request:string,_amount:number,basis:"actual"|"estimated")=>{
+      assert.equal(basis,"estimated");
+      settled++;
+      return true;
+    },
+    releaseBeforeExecution:async()=>true,
+  };
+}
+const token="test-gemini-request-0001";
 const request = {
   question:"What source-supported hypotheses could explain differences in microbial bile acid processing?",
   taskId:"microbial-bile-acid-review",
@@ -53,7 +72,7 @@ test("unreviewed sources and any extra personal fields fail closed",async()=>{
   assert.equal(called,false);
 });
 test("valid verified-source hypothesis is only a candidate, never knowledge",async()=>{
-  const output=await investigatePublishedScienceWithGemini(request,{env,fetcher:mockResponse(candidate) as typeof fetch});
+  const output=await investigatePublishedScienceWithGemini(request,{env,fetcher:mockResponse(candidate) as typeof fetch,ledger:testLedger(),requestId:token});
   assert.equal(output.status,"candidate_unreviewed");
   assert.equal(output.noKnowledgePromotion,true);
   assert.equal(output.provider,"google-gemini");
@@ -64,9 +83,24 @@ test("valid verified-source hypothesis is only a candidate, never knowledge",asy
 });
 test("invented citation ID causes result to be rejected",async()=>{
   const wrong={...candidate,hypotheses:[{...candidate.hypotheses[0],evidenceSourceIds:["DOI:invented"]}]};
-  await assert.rejects(investigatePublishedScienceWithGemini(request,{env,fetcher:mockResponse(wrong) as typeof fetch}),GeminiResearchUnavailable);
+  await assert.rejects(investigatePublishedScienceWithGemini(request,{env,fetcher:mockResponse(wrong) as typeof fetch,ledger:testLedger(),requestId:token}),GeminiResearchUnavailable);
 });
 test("provider error does not become evidence or a valid candidate",async()=>{
   const unavailable=(async()=>new Response("not available",{status:429})) as typeof fetch;
-  await assert.rejects(investigatePublishedScienceWithGemini(request,{env,fetcher:unavailable}),GeminiResearchUnavailable);
+  await assert.rejects(investigatePublishedScienceWithGemini(request,{env,fetcher:unavailable,ledger:testLedger(),requestId:token}),GeminiResearchUnavailable);
+});
+
+test("enabled key without existing atomic ledger cannot call Gemini",async()=>{
+  let called=false;
+  await assert.rejects(investigatePublishedScienceWithGemini(request,{
+    env,fetcher:(async()=>{called=true;throw Error("should not call")}) as typeof fetch,
+  }),GeminiResearchUnavailable);
+  assert.equal(called,false);
+});
+test("successful candidate reserves and settles existing spend ledger",async()=>{
+  const ledger=testLedger();
+  const output=await investigatePublishedScienceWithGemini(request,{env,fetcher:mockResponse(candidate) as typeof fetch,ledger,requestId:token});
+  assert.equal(ledger.reserved,1);
+  assert.equal(ledger.settled,1);
+  assert.equal(output.status,"candidate_unreviewed");
 });
