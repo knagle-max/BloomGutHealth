@@ -4,6 +4,8 @@
 **Execution:** Codex remains sole implementer on `enhance/bloom-experience`; `AGENTS.md` governs how, `NEXT_ACTIONS.md` governs active task selection. No second insight engine, separate scientific graph, redundant recommendation service or UI redesign. Reuse existing v0.6 M2/M3 source, micronutrient and Response work and scientific evidence/permission systems.  
 **Status:** SPECIFICATION / INTEGRATION CONTRACT. No claim of feature implementation or clinical validation.
 
+**LATEST IMPLEMENTATION METHOD OVERRIDE (2026-11-18):** [Evidence-Grounded AI Biological Investigation implementation decision](BLOOM_EVIDENCE_GROUNDED_AI_BIOLOGICAL_INVESTIGATION_IMPLEMENTATION_DECISION_20261118.md) supersedes any interpretation that this document requires enumerating every biologically meaningful scenario in deterministic rule code. The `BIO-VALUE` consumer and safety tests remain binding. Use validated deterministic facts/safety, but allow bounded LLM-generated and independently checked novel hypotheses on unfamiliar cases. Do not use case-specific canned answer branches as the default engineering path.
+
 ## 1. Product outcome and priority rule
 
 The primary user-facing value of Bloom is **scientifically defensible investigation of the user's actual situation**, not rephrasing numerical changes, reading reference labels aloud or emitting generic disclaimers. Every candidate featured insight must answer:
