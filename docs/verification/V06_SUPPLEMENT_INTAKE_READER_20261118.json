@@ -34,5 +34,17 @@
     "All new writes must bind current account/settings lifecycle: explicit all-Experience erasure destroys that epoch, so stale requests cannot recreate erased intake. Individual deletion must scrub source/health content and retain only spent opaque intent.",
     "Join consumed contributions once by canonical event identity; never count review/schedule/original/history as extra intake or infer duplicate events from product similarity.",
     "Actual UI/HTTP/SQL two-intake/correction/delete/retry/clear/owner and 320/390/tablet/desktop/theme/zoom/keyboard tests; M2 scientific reference eligibility/form applicability, broader B6 source/divergence and final RC remain open."
-  ]
+  ],
+  "publication": {
+    "readerCommit": "070c739b69fa8b38c940f4afc4274295af4376b1",
+    "status": "PUSHED_PENDING_EXACT_CI_DEPLOY"
+  },
+  "unknownSourceAmendment": {
+    "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_PUBLICATION",
+    "reason": "Actual ingestion must remain recordable when dose quantity or source composition is unknown; never force a fabricated amount/zero/label.",
+    "contract": "Nullable servings and label; missing label requires explicit user-reported name/optional unit with mineral basis unknown. Unknown quantity yields unknown contribution even for source-reported zero. Source-unavailable differs from an unsupported/corrupt record.",
+    "readerProtocolHeader": "X-Bloom-Supplement-Reader: supplement-intake-v1 on authenticated explicit-kind reads",
+    "verification": "8 focused source/API/audit tests + types/build PASS; actual encrypted SQL/HTTP/export/reload preserves an unlabelled null-quantity event and hides it from generic consumers.",
+    "writers": "Still inactive; deployed broader reader required before actual control activation."
+  }
 }

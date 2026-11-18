@@ -52,6 +52,19 @@ test('only a confirmed current source contributes; original/corrected values, ze
  assert.deepEqual(record,before);
 });
 
+test('confirmed ingestion can retain unknown amount or an unavailable label without inventing composition, serving units or mineral basis',()=>{
+ const base=payload(),unknownAmount={...base.current,servings:null};
+ const quantity=supplementSourceContributions({id:'unknown-amount',userId:'a',payload:{...base,current:unknownAmount,corrections:[{...base.corrections[0],value:unknownAmount}]}},'a');
+ assert.equal(quantity.status,'available');assert.ok(quantity.observations.every(row=>row.amount===null));
+ assert.equal(quantity.observations.find(row=>row.nutrientKey==='protein_g')!.nativeAmountPerServing,0);
+ const missingLabel={...original,label:null,servings:null,unlabelled:{name:'User-reported supplement',servingDescription:null},mineralBasis:{iron_mg:'unknown',magnesium_mg:'unknown',zinc_mg:'unknown'}};
+ const unknown=supplementIntakeSchema.parse({...base,revision:base.intentId,original:missingLabel,current:missingLabel,corrections:[]});
+ const view=supplementSourceContributions({id:'no-label',userId:'a',payload:unknown},'a');
+ assert.equal(view.status,'source-unavailable');assert.deepEqual(view.observations,[]);
+ if(view.status==='source-unavailable'){assert.equal(view.servings,null);assert.equal(view.reportedServing,null);assert.equal(view.reportedName,'User-reported supplement');}
+ assert.equal(supplementIntakeSchema.safeParse({...unknown,current:{...unknown.current,mineralBasis:{...unknown.current.mineralBasis,iron_mg:'elemental-label'}}}).success,false);
+});
+
 test('encrypted explicit reader/export stays owned, generic consumers cannot count it, and every generic producer is denied',async()=>{
  const pg=new PGlite(),prior=process.env.PRECISION_DATA_KEY;process.env.PRECISION_DATA_KEY=randomBytes(32).toString('base64');
  let server:ReturnType<ReturnType<typeof express>['listen']>|undefined;
@@ -65,6 +78,11 @@ test('encrypted explicit reader/export stays owned, generic consumers cannot cou
   const [saved]=await store.getExperienceRecords('a','supplement-intake');assert.equal(saved.kind,'supplement-intake');assert.deepEqual(saved.payload,entry.payload);
   assert.equal(weeklyReview([saved],'everyday','2026-11-16').entries,0,'Intake is not an activity or wellbeing outcome');
   const exported=await store.exportExperience('a');assert.deepEqual(exported.records.map(row=>row.id),['actual-intake']);
+  const unlabelled={...original,label:null,servings:null,unlabelled:{name:'Unknown label formulation',servingDescription:null},mineralBasis:{iron_mg:'unknown',magnesium_mg:'unknown',zinc_mg:'unknown'}};
+  const unknownPayload=supplementIntakeSchema.parse({...payload(),intentId:'44444444-4444-4444-8444-444444444444',revision:'44444444-4444-4444-8444-444444444444',original:unlabelled,current:unlabelled,corrections:[]});
+  await database.insert(experienceRecords).values({id:'unknown-intake',userId:'a',kind:'supplement-intake',encryptedPayload:encryptPrecision(unknownPayload,'a')});
+  assert.deepEqual(await store.getExperienceRecords('a'),[]);
+  assert.deepEqual((await store.exportExperience('a')).records.find(row=>row.id==='unknown-intake')?.payload,unknownPayload);
   assert.equal(JSON.stringify((await pg.query('SELECT encrypted_payload FROM experience_records')).rows).includes(original.label.name),false);
   await assert.rejects(store.insertExperienceRecord('a',entry),/SUPPLEMENT_INTAKE_ACTION_REQUIRED/);
   await assert.rejects(store.updateExperienceRecord('a',saved.id,entry),/SUPPLEMENT_INTAKE_ACTION_REQUIRED/);
@@ -77,12 +95,12 @@ test('encrypted explicit reader/export stays owned, generic consumers cannot cou
   server=app.listen(0,'127.0.0.1');await new Promise<void>(r=>server!.once('listening',r));const root=`http://127.0.0.1:${(server.address()as any).port}/api/experience/records`;
   assert.equal((await fetch(root+'?kind=supplement-intake')).status,401);
   const headers={'x-synthetic-owner':'a','content-type':'application/json'};
-  const read=await fetch(root+'?kind=supplement-intake',{headers});assert.equal(read.status,200);assert.equal(read.headers.get('cache-control'),'no-store');assert.equal((await read.json()).length,1);
+  const read=await fetch(root+'?kind=supplement-intake',{headers});assert.equal(read.status,200);assert.equal(read.headers.get('cache-control'),'no-store');assert.equal(read.headers.get('x-bloom-supplement-reader'),'supplement-intake-v1');const received=await read.json();assert.equal(received.length,2);assert.equal(received.find((row:any)=>row.id==='unknown-intake').payload.current.label,null);
   assert.deepEqual(await(await fetch(root+'?kind=supplement-intake',{headers:{'x-synthetic-owner':'b'}})).json(),[]);
   for(const method of ['POST','PUT','DELETE']){
    const response=await fetch(root+(method==='POST'?'':'/actual-intake'),{method,headers,...(method!=='DELETE'?{body:JSON.stringify(entry)}:{})});assert.equal(response.status,400);
   }
-  assert.equal((await new ExperienceStorage(database as any).getExperienceRecords('a','supplement-intake')).length,1);
+  assert.equal((await new ExperienceStorage(database as any).getExperienceRecords('a','supplement-intake')).length,2);
   await store.clearExperienceData('a');assert.deepEqual(await store.getExperienceRecords('a','supplement-intake'),[]);
  }finally{server?.closeAllConnections();if(server)await new Promise<void>(r=>server!.close(()=>r()));await pg.close();if(prior===undefined)delete process.env.PRECISION_DATA_KEY;else process.env.PRECISION_DATA_KEY=prior;}
 });

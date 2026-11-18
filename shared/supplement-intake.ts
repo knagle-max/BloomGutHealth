@@ -15,12 +15,17 @@ const sameValue=(a:unknown,b:unknown)=>JSON.stringify(canonical(a))===JSON.strin
  * Chemical equivalents and dose/safety interpretation are outside this record. */
 export const supplementIntakeValueSchema=z.object({
  takenAt:timestamp,confirmedAt:timestamp,confirmedTaken:z.literal(true),
- servings:z.number().finite().positive().max(100),
+ servings:z.number().finite().positive().max(100).nullable(),
  label:productResponseSchema.refine(p=>p.source!=='usda-local','A generic food estimate is not a supplement label')
-  .refine(p=>JSON.stringify(p).length<=32000,'Label snapshot exceeds the supported size'),
+  .refine(p=>JSON.stringify(p).length<=32000,'Label snapshot exceeds the supported size').nullable(),
+ unlabelled:z.object({name:z.string().trim().min(1).max(160),servingDescription:z.string().trim().min(1).max(120).nullable()}).strict().optional(),
  mineralBasis:z.object({iron_mg:mineralBasis,magnesium_mg:mineralBasis,zinc_mg:mineralBasis}).strict(),
  formulation:z.object({labelVersion:z.string().trim().min(1).max(160).nullable(),batch:z.string().trim().min(1).max(100).nullable()}).strict(),
-}).strict();
+}).strict().superRefine((value,ctx)=>{
+ if(value.label===null&&!value.unlabelled)ctx.addIssue({code:'custom',message:'Describe the supplement when its label is unavailable'});
+ if(value.label!==null&&value.unlabelled)ctx.addIssue({code:'custom',message:'Use one source description for this intake'});
+ if(value.label===null&&Object.values(value.mineralBasis).some(basis=>basis!=='unknown'))ctx.addIssue({code:'custom',message:'Mineral label basis is unknown without a label'});
+});
 export const supplementIntakeSchema=z.object({
  version:z.literal(1),valueKind:z.literal('confirmed-supplement-consumption'),
  intentId:z.uuid(),revision:z.uuid(),lifecycleId:z.uuid(),
@@ -51,6 +56,9 @@ export function supplementSourceContributions(record:{id:string;userId:string;pa
  // A prospective claim must never turn into confirmed ingestion just because
  // time passed. Dedicated writers must require confirmation after takenAt.
  if(Date.parse(value.takenAt)>Date.parse(value.confirmedAt))return{status:'confirmation-before-intake' as const,observations:[]};
+ if(value.label===null)return{status:'source-unavailable' as const,intakeId:parsed.data.intentId,revision:parsed.data.revision,
+  occurredAt:value.takenAt,confirmedAt:value.confirmedAt,servings:value.servings,
+  reportedName:value.unlabelled!.name,reportedServing:value.unlabelled!.servingDescription,observations:[]};
  const source=readLabelNutrientSources([{labelSnapshot:value.label}]).sources[0];
  if(!source)return{status:'unsupported' as const,observations:[]};
  return{status:'available' as const,intakeId:parsed.data.intentId,revision:parsed.data.revision,

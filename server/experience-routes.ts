@@ -80,7 +80,7 @@ export function registerExperienceRoutes(app:Express, auth:RequestHandler, store
   if(!input.success||!dateKey.safeParse(req.params.date).success||req.params.id.length>100)return res.status(400).json({error:'Review the exact scheduled day and occurrence change.'});
   try{if(!store.changeRoutineOccurrence)return res.status(503).json({error:'Occurrence changes are unavailable. No activity was recorded.'});const row=await store.changeRoutineOccurrence(req.session.userId!,req.params.id,req.params.date,input.data.expectedPlanRevision,input.data.expectedRevision,input.data.next);if(!row)return res.status(404).json({error:'Routine not found in your account.'});res.json(row);}catch(error){fail(res,error);}
  });
- app.get("/api/experience/records",async(req,res)=>{if(req.query.kind!==undefined&&!kindSchema.includes(req.query.kind as any))return res.status(400).json({error:"Choose a supported record type."});try{res.json(await store.getExperienceRecords(req.session.userId!,req.query.kind as ExperienceEntry["kind"]|undefined));}catch(e){fail(res,e);}});
+ app.get("/api/experience/records",async(req,res)=>{if(req.query.kind==="supplement-intake")res.setHeader("X-Bloom-Supplement-Reader","supplement-intake-v1");if(req.query.kind!==undefined&&!kindSchema.includes(req.query.kind as any))return res.status(400).json({error:"Choose a supported record type."});try{res.json(await store.getExperienceRecords(req.session.userId!,req.query.kind as ExperienceEntry["kind"]|undefined));}catch(e){fail(res,e);}});
  app.get("/api/experience/checkins/:id/source",async(req,res)=>{
   if(!req.params.id||req.params.id.length>100)return res.status(400).json({error:"Choose a saved check-in."});
   try{
