@@ -1,6 +1,6 @@
 {
   "task": "V06-MEAL-DELETE-RETRY",
-  "status": "IMPLEMENTED_AND_ENGINEERING_TESTED_PENDING_EXACT_CI_DEPLOY",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "f16fb32a7ccb1c04ac670ef48578cd95d264598e",
   "defect": "A committed save followed by deletion and an old idempotent retry recreated the deleted meal. Reproduced with actual PGlite SQL, not inferred from a fixture.",
   "redEvidence": "/workspace/bloom-meal-delete-red.log: missing expected rejection before repair",
@@ -35,5 +35,16 @@
     "This repairs future deletion semantics; no fabricated retroactive barrier for meals deleted before this code",
     "Full v0.6 RC remains unfinished"
   ],
-  "next": "Publish verified bounded repair, qualify exact CI/Render, resume approved M2/M3 and Core work."
+  "next": "Publish verified bounded repair, qualify exact CI/Render, resume approved M2/M3 and Core work.",
+  "qualification": {
+    "commit": "6a0eb527f63688879cced48462598b1792338084",
+    "workflowRun": 44169451142,
+    "job": 134344302906,
+    "result": "SUCCESS, full current-source unit/SQL + new actual browser recovery + all exact hosted checks + isolated Neon persistence",
+    "runtimeCommit": "fd06e868cae61275ec9a8d1145446b7d1a5fb687",
+    "runtimeScope": "docs-only descendant; original repair code unchanged",
+    "renderDeploy": "dep-dbuf31i39q4c738h16k0",
+    "renderFinishedAt": "2026-11-18T00:33:09.834217Z",
+    "renderStatus": "LIVE"
+  }
 }

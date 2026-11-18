@@ -25,7 +25,7 @@
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "6c3c9964822e0c731f0f1943a1b831cd9e8cac8911851c146e67ca4afe19145e",
     "server/precision-routes.ts": "dcf1f06f261034c0c92c302c00c991d9c40b35e2a9d1d92f68c24ae3b377cab3",
-    "server/products.ts": "20cb8c51684e26974166bb3ca31d1ab8e335b9c442be691aeb67d830957099e2",
+    "server/products.ts": "2ae7de636af6b1f299d0cd1fd0f55a837afedae59b30f3ad3320987c3aab9b68",
     "server/profile-routes.ts": "3fce060222d532bc0214447a467b4697ca0fdf99ace823da7ee6ec632a53bc82",
     "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
     "server/retired-health-routes.ts": "93f485fbb633f63ac98a8e7b02634e21c3fe86d0a31a1cd2c21b2850d60ac4cb",
@@ -1006,7 +1006,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 629,
+      "line": 632,
       "method": "USE",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -1016,7 +1016,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 633,
+      "line": 636,
       "method": "GET",
       "path": "/api/products/search",
       "declaredMiddleware": [
@@ -1026,7 +1026,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 655,
+      "line": 658,
       "method": "GET",
       "path": "/api/products/saved",
       "declaredMiddleware": [],
@@ -1034,7 +1034,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 662,
+      "line": 665,
       "method": "GET",
       "path": "/api/products/:source/:id",
       "declaredMiddleware": [
@@ -1044,7 +1044,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 677,
+      "line": 680,
       "method": "POST",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -1054,7 +1054,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 702,
+      "line": 705,
       "method": "DELETE",
       "path": "/api/products/:id",
       "declaredMiddleware": [],

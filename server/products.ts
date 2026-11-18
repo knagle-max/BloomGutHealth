@@ -1,4 +1,5 @@
 import { canonicalBarcode, isBarcodeSearch } from "../shared/barcodes";
+import {scaleLabelAmount} from '../shared/label-portion';
 import { normalizeProductQuery, brandedSearchQuery, rankProducts, homePreparedQuery, isHomePreparedSource } from "../shared/product-search";
 import { normalizeUSDABranded } from "./usda-branded";
 import {
@@ -562,13 +563,15 @@ export async function lookupProductNutrition(
       i.assumption = `${servings} × ${p.servingDescription}; ${p.source === "manual" ? "your saved label" : "database label; verify the formula and market"}. Missing nutrients are unknown.`;
       for (const n of nutrients)
         if (num(p.perServing[n.key])) {
-          n.amount = (n.amount ?? 0) + p.perServing[n.key] * servings;
-          counts[n.key] = (counts[n.key] || 0) + 1;
+          const amount=scaleLabelAmount(p.perServing[n.key],servings);
+          if(amount!==null){n.amount = (n.amount ?? 0) + amount;
+          counts[n.key] = (counts[n.key] || 0) + 1;}
         }
       // Do not retain references into a mutable provider/cache or private-label object.
       const labelSnapshot=structuredClone(p);
       productDetails.push({
         labelSnapshot,
+        labelPortion:{version:'label-portion-v1',servings},
         name: p.name,
         serving: `${servings} × ${p.servingDescription}`,
         source: p.source,
