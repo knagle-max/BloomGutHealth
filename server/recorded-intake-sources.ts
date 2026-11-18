@@ -1,7 +1,7 @@
 import type {Express} from 'express';
 import {z} from 'zod';
 import {dateKey} from '../shared/experience';
-import {nutrientDefinitionDetails} from '../shared/nutrient-definitions';
+import {recordedNutrientDefinitionDetails} from '../shared/nutrient-definitions';
 import {recognizedMealTimeZone} from '../shared/meal-time';
 import {recordedIntakeSources,recordedIntakeViewSchema} from '../shared/recorded-intake-sources';
 import {mealRecordRevision} from './meal-edit';
@@ -10,7 +10,7 @@ import type {IStorage} from './storage';
 /** Mounted inside the existing active-account/no-store Experience family.
  * Read existing canonical owned sources only, never a provider or a new store. */
 export function registerRecordedIntakeSourceRoutes(app:Express,store:Pick<IStorage,'getMeals'|'getExperienceRecords'>,now=()=>new Date()){
- const query=z.object({date:dateKey,timeZone:z.string().max(100).refine(recognizedMealTimeZone),nutrientKey:z.string().refine(key=>nutrientDefinitionDetails().some(def=>def.key===key))}).strict();
+ const query=z.object({date:dateKey,timeZone:z.string().max(100).refine(recognizedMealTimeZone),nutrientKey:z.string().refine(key=>recordedNutrientDefinitionDetails().some(def=>def.key===key))}).strict();
  app.get('/api/experience/recorded-intake-sources',async(req,res)=>{
   const parsed=query.safeParse(req.query);if(!parsed.success)return res.status(400).json({error:'Choose a valid date, time zone and nutrient.'});
   try{

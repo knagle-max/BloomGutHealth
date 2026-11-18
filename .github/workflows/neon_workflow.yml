@@ -262,6 +262,16 @@ jobs:
           else
             echo "Public UPC probe not requested for this source commit."
           fi
+      - name: Requested public B6 nutrient identity observation
+        timeout-minutes: 2
+        env:
+          BLOOM_SOURCE_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if git show -s --format=%B "$BLOOM_SOURCE_SHA" | grep -Fq '[verify-b6-identity]'; then
+            node --import tsx scripts/qa/b6-food-identity-probe.mjs
+          else
+            echo "B6 identity observation not requested for this source commit."
+          fi
       - name: Saved wellness choices and food source context browser regression
         timeout-minutes: 6
         env:

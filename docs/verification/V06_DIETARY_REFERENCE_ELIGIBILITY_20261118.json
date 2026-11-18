@@ -1,6 +1,6 @@
 {
   "task": "V06-M2-CURRENT-REFERENCE-ELIGIBILITY-SUBSET",
-  "status": "ENGINEERING_TESTED_RENDERED_PUBLISHED_CI_BROWSER_CONFIG_FAILURE",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "d3570f66103f32649ed1e8bc2566f0c0bc1475be",
   "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
   "scope": "Current context matching of existing14 Health Canada vitamin C/magnesium EAR/RDA/UL facts; general source values remain available independently. Full M2 remains incomplete.",
@@ -31,5 +31,16 @@
     "jobId": 134832260689,
     "status": "FAILURE",
     "failure": "New Canadian reference browser step lacked the established playwright-core/browser executable environment; failed before launching the app. Earlier common source120-state browser step passed. Both new reference and B6 steps now use the passing baseline environment; YAML parity check PASS. No gates removed."
+  },
+  "latestQualification": {
+    "sourceCommit": "266e77f7e8fcb735d9d4033ae732e1cc511fed91",
+    "ciRun": 44316783238,
+    "jobId": 134844887457,
+    "status": "SUCCESS",
+    "allRequiredHostedAndIsolatedNeonChecks": "PASS",
+    "referenceContextAndB6BrowserSteps": "PASS",
+    "renderDeploy": "dep-dbuqndlg1s2s73d3tnpg",
+    "renderStatus": "LIVE",
+    "liveAt": "2026-11-18T13:46:15.998804Z"
   }
 }

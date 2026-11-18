@@ -72,7 +72,7 @@ export function supplementSourceContributions(record:{id:string;userId:string;pa
     occurredAt:value.takenAt,confirmedAt:value.confirmedAt,sourceId:source.id,provider:source.provider,
     sourceRetrievedAt:source.retrievedAt,nutrientKey:field.key,name:field.name,unit:field.unit,
     nativeAmountPerServing:field.amount,servings:value.servings,sourceReportsZero:field.sourceReportsZero,
-    portionBasisCaptured,
+    portionBasisCaptured,state:field.state,
     amount:!portionBasisCaptured||(basis!==null&&basis!=='elemental-label')?null:scaleLabelAmount(field.amount,value.servings),
     mineralBasis:basis,chemicalForm:null,activityUnit:null,adequacyAssessment:false as const,
    };

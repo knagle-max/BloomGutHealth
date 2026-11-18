@@ -1,5 +1,6 @@
 import {productResponseSchema} from './products';
-import {nutrientDefinitionDetails} from './nutrient-definitions';
+import {readLabelVitaminB6} from './label-vitamin-b6';
+import {labelVitaminB6Definition,nutrientDefinitionDetails} from './nutrient-definitions';
 import {z} from 'zod';
 import {labelPortionSchema,scaleLabelAmount} from './label-portion';
 import type {RecordedFoodRecord} from './nutrient-observations';
@@ -14,10 +15,12 @@ export function readLabelNutrientSources(input:unknown){
   if(!detail||typeof detail!=='object'){unsupported++;return[];}
   if(!('labelSnapshot'in detail)||detail.labelSnapshot===undefined){missing++;return[];}
   const parsed=productResponseSchema.safeParse(detail.labelSnapshot);if(!parsed.success){unsupported++;return[];}
-  const snapshot=parsed.data;
+  const snapshot=parsed.data,b6=readLabelVitaminB6(snapshot);
+  const fields:{key:string;name:string;unit:string;amount:number|null;sourceReportsZero:boolean|null;state:'unknown'|'label-reported'|'conflicting'}[]=definitions.map(def=>({key:def.key,name:def.key==='vitamin_a_ug'?'Vitamin A (basis unconfirmed)':def.key==='folate_ug'?'Folate (basis unconfirmed)':def.name,unit:def.amountUnit,amount:snapshot.perServing[def.key]??null,sourceReportsZero:snapshot.perServing[def.key]===undefined?null:snapshot.perServing[def.key]===0,state:snapshot.perServing[def.key]===undefined?'unknown' as const:'label-reported' as const}));
+  if(b6)fields.push({key:labelVitaminB6Definition.key,name:labelVitaminB6Definition.name,unit:labelVitaminB6Definition.amountUnit,...b6});
   return [{index,id:snapshot.id,provider:snapshot.source,name:snapshot.name,brand:snapshot.brand,servingDescription:snapshot.servingDescription||null,servingGrams:snapshot.servingGrams,retrievedAt:z.iso.datetime({offset:true}).safeParse(snapshot.retrievedAt).success?snapshot.retrievedAt:null,url:snapshot.url,
-   fields:definitions.map(def=>({key:def.key,name:def.key==='vitamin_a_ug'?'Vitamin A (basis unconfirmed)':def.key==='folate_ug'?'Folate (basis unconfirmed)':def.name,unit:def.amountUnit,amount:snapshot.perServing[def.key]??null,sourceReportsZero:snapshot.perServing[def.key]===undefined?null:snapshot.perServing[def.key]===0})),
-   unmappedFields:Object.entries(snapshot.perServing).filter(([key])=>!definitions.some(def=>def.key===key)).map(([key,amount])=>({key,amount,unit:null})),
+   fields,
+   unmappedFields:Object.entries(snapshot.perServing).filter(([key])=>!definitions.some(def=>def.key===key)&&!(key==='vitamin_b6_mg'&&b6?.state==='label-reported')).map(([key,amount])=>({key,amount,unit:null})),
    otherIngredients:snapshot.otherNutrients??[],declarations:snapshot.labelDeclarations??[],
   }];
  });

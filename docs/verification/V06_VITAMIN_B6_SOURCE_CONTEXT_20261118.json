@@ -1,6 +1,6 @@
 {
   "task": "V06-M2-B6-PUBLISHED-SOURCE-CONTEXT",
-  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "status": "VERIFIED_ON_REVIEW_BRANCH",
   "baseCommit": "f85e36b72eba3573453c05101cd5c27ddf0be86f",
   "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
   "scope": "Dated reference/health-product/proposal differences alongside original saved B6 declarations. No inferred daily exposure, chemical-equivalent dose, safety grade or toxicity diagnosis. Full B6 intake/assessment remains unfinished.",
@@ -64,5 +64,16 @@
   "remaining": [
     "Full B6 canonical identity/known daily source subtotal, compatible source-version readers/producers and form/period-specific assessment remain open. Native per-label-serving values are not complete usual intake.",
     "Full Canadian DRI population/form coverage and Food12/Response15/RC remain actionable. No full M2/M3 acceptance claim."
-  ]
+  ],
+  "latestQualification": {
+    "sourceCommit": "266e77f7e8fcb735d9d4033ae732e1cc511fed91",
+    "ciRun": 44316783238,
+    "jobId": 134844887457,
+    "status": "SUCCESS",
+    "allRequiredHostedAndIsolatedNeonChecks": "PASS",
+    "referenceContextAndB6BrowserSteps": "PASS",
+    "renderDeploy": "dep-dbuqndlg1s2s73d3tnpg",
+    "renderStatus": "LIVE",
+    "liveAt": "2026-11-18T13:46:15.998804Z"
+  }
 }

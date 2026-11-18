@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {nutrientDefinitionDetails} from './nutrient-definitions';
+import {recordedNutrientDefinitionDetails} from './nutrient-definitions';
 import {recognizedMealTimeZone} from './meal-time';
 import {recordedNutrientObservations,type RecordedFoodRecord} from './nutrient-observations';
 import {recordedLabelContributions} from './label-nutrient-sources';
@@ -11,7 +11,7 @@ export interface RecordedFoodSource extends RecordedFoodRecord {
  analysis:Pick<MealIntelligence,'nutrientSourceSnapshots'|'productDetails'>|null;
 }
 const timestamp=z.iso.datetime({offset:true});
-const nutrientNames=new Map(nutrientDefinitionDetails().map(def=>[def.key,def.name]));
+const nutrientNames=new Map(recordedNutrientDefinitionDetails().map(def=>[def.key,def.name]));
 function instant(value:unknown):string|null {
  if(value instanceof Date)return Number.isFinite(+value)?value.toISOString():null;
  return timestamp.safeParse(value).success?new Date(value as string).toISOString():null;
@@ -69,7 +69,7 @@ export function recordedIntakeSources(input:{actor:string;date:string;timeZone:s
    const generic=recordedNutrientObservations(food.analysis??{},food,actor);
    const labels=recordedLabelContributions(food.analysis?.productDetails,food,actor);
    const rows:IntakeSourceRow[]=[...generic.observations.map(row=>({...common,sourceKind:'generic-food' as const,sourceIndex:row.sourceIndex,nutrientKey:row.nutrientKey,name:nutrientNames.get(row.nutrientKey)??row.nutrientKey,unit:row.unit,amount:row.amount,sourceReportedZero:row.sourceReportsZero,state:row.state==='conflicting'?'conflicting' as const:row.amount===null?'unknown' as const:'estimated' as const,chemicalForm:row.chemicalForm,activityUnit:row.activityUnit,mineralBasis:null,source:{id:row.source.id,version:row.source.version,retrievedAt:null,url:row.source.url}})),
-    ...labels.sources.flatMap(source=>source.fields.map(row=>({...common,sourceKind:'food-label' as const,sourceIndex:source.sourceIndex,nutrientKey:row.key,name:row.name,unit:row.unit,amount:row.amount,sourceReportedZero:row.sourceReportsZero,state:row.amount===null?'unknown' as const:'label-reported' as const,chemicalForm:null,activityUnit:null,mineralBasis:null,source:{id:source.sourceId,version:null,retrievedAt:source.sourceRetrievedAt,url:source.sourceUrl}})))];
+    ...labels.sources.flatMap(source=>source.fields.map(row=>({...common,sourceKind:'food-label' as const,sourceIndex:source.sourceIndex,nutrientKey:row.key,name:row.name,unit:row.unit,amount:row.amount,sourceReportedZero:row.sourceReportsZero,state:row.state==='conflicting'?'conflicting' as const:row.amount===null?'unknown' as const:'label-reported' as const,chemicalForm:null,activityUnit:null,mineralBasis:null,source:{id:source.sourceId,version:null,retrievedAt:source.sourceRetrievedAt,url:source.sourceUrl}})))];
    return{key,recordId:food.id,revision:food.revision,name:food.name?.trim()||'Saved meal',kind:'food',occurredAt,sourceStatus:rows.length?(generic.status==='unsupported'||labels.status==='unsupported'||labels.status==='partial'?'partial':'available'):'unavailable',rows};
   }});
  }
@@ -82,7 +82,7 @@ export function recordedIntakeSources(input:{actor:string;date:string;timeZone:s
   candidates.push({key,signature:JSON.stringify(record),build:()=>{
    const source=supplementSourceContributions(record,actor);
    if(source.status==='confirmation-before-intake'){unsupportedEvents++;return null;}
-   const rows:IntakeSourceRow[]=source.observations.map(row=>({eventKey:key,recordId:record.id,revision:record.payload.revision,eventKind:'supplement',sourceKind:'supplement-label',sourceIndex:0,occurredAt,nutrientKey:row.nutrientKey,name:row.name,unit:row.unit,amount:row.amount,sourceReportedZero:row.sourceReportsZero,state:row.amount===null?'unknown':'label-reported',chemicalForm:row.chemicalForm,activityUnit:row.activityUnit,mineralBasis:row.mineralBasis,source:{id:row.sourceId,version:record.payload.current.formulation.labelVersion,retrievedAt:row.sourceRetrievedAt,url:record.payload.current.label?.url??null}}));
+   const rows:IntakeSourceRow[]=source.observations.map(row=>({eventKey:key,recordId:record.id,revision:record.payload.revision,eventKind:'supplement',sourceKind:'supplement-label',sourceIndex:0,occurredAt,nutrientKey:row.nutrientKey,name:row.name,unit:row.unit,amount:row.amount,sourceReportedZero:row.sourceReportsZero,state:row.state==='conflicting'?'conflicting':row.amount===null?'unknown':'label-reported',chemicalForm:row.chemicalForm,activityUnit:row.activityUnit,mineralBasis:row.mineralBasis,source:{id:row.sourceId,version:record.payload.current.formulation.labelVersion,retrievedAt:row.sourceRetrievedAt,url:record.payload.current.label?.url??null}}));
    return{key,recordId:record.id,revision:record.payload.revision,name:record.payload.current.label?.name??record.payload.current.unlabelled?.name??'Supplement',kind:'supplement',occurredAt,sourceStatus:source.status==='available'?'available':'unavailable',rows};
   }});
  }

@@ -1,5 +1,5 @@
 import type {z} from 'zod';
-import {nutrientDefinitionDetails} from './nutrient-definitions';
+import {recordedNutrientDefinitionDetails} from './nutrient-definitions';
 import type {recordedIntakeViewSchema,IntakeSourceRow} from './recorded-intake-sources';
 
 type SourceView=z.infer<typeof recordedIntakeViewSchema>;
@@ -15,7 +15,7 @@ const minerals=new Set(['iron_mg','magnesium_mg','zinc_mg']);
  * This describes recorded sources, not missing meals or nutritional adequacy. */
 export function knownNutrientCoverage(view:SourceView,actor:string,nutrientKey:string){
  if(!actor||view.userId!==actor)throw Error('INTAKE_SCOPE_UNAVAILABLE');
- const definition=nutrientDefinitionDetails().find(item=>item.key===nutrientKey);
+ const definition=recordedNutrientDefinitionDetails().find(item=>item.key===nutrientKey);
  if(!definition)throw Error('UNSUPPORTED_NUTRIENT');
  const groups=new Map<string,KnownSourceSubtotal>(),seenEvents=new Set<string>();
  let unavailableEvents=0;
@@ -33,7 +33,7 @@ export function knownNutrientCoverage(view:SourceView,actor:string,nutrientKey:s
    let group=groups.get(key);if(!group){group={sourceKind:row.sourceKind,unit:row.unit,chemicalForm:row.chemicalForm,activityUnit:row.activityUnit,mineralBasis:row.mineralBasis,knownSubtotal:null,knownRows:0,zeroRows:0,unknownRows:0,incompatibleRows:0};groups.set(key,group);}
    const generic=row.sourceKind==='generic-food';
    const compatible=row.unit===definition.amountUnit&&row.state!=='conflicting'&&!!row.source.id.trim()&&
-    (generic?(row.chemicalForm===definition.chemicalForm&&row.activityUnit===definition.activityUnit):
+    (generic?(definition.sourceMappings.usda!==null&&row.chemicalForm===definition.chemicalForm&&row.activityUnit===definition.activityUnit):
      !formSensitive.has(nutrientKey)&&(!minerals.has(nutrientKey)||row.mineralBasis==='elemental-label'));
    if(row.unit!==definition.amountUnit||row.state==='conflicting'||!row.source.id.trim()){group.incompatibleRows++;continue;}
    if(row.amount===null||row.state==='unknown'){group.unknownRows++;continue;}

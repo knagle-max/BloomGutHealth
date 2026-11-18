@@ -1,0 +1,36 @@
+{
+  "task": "V06-M1-M3-B6-LABEL-SOURCE-CONTRIBUTIONS",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "baseCommit": "266e77f7e8fcb735d9d4033ae732e1cc511fed91",
+  "authority": "docs/architecture/MICRONUTRIENT_INTELLIGENCE_SCIENTIFIC_ARCHITECT_DECISION_2026-11-06.md",
+  "scope": "Read-only source-specific B6 contributions from original explicit Vitamin B6 nutrient declarations in mg; does not enable generic-food or canonical21-field producers.",
+  "implementation": [
+    "One additional stable source-view nutrient identity bloom:nutrient:vitamin-b6, definition label-b6-mg-2026-11-18.1; generic USDA/CNF mappings remain null. Original21 generic definitions/snapshot producer and all original IDs/units remain unchanged.",
+    "Read original captured manual/DSLD declarations only. Requires explicit Vitamin B6 nutrient name, mg unit, established label serving and exact operator where captured. Bare compound/salt masses, unsupported units/providers, unknown operators or unversioned app key without native evidence stay unknown. No mass/chemical equivalent or source identity guessed.",
+    "One exact native/otherNutrients mirror counts once. Multiple fields within one array or contradicting values abstain as conflicting; unknown quantity stays unknown and explicit source zero remains distinct. Raw values/source snapshots never changed.",
+    "Extend existing owned label/food/supplement readers and serving scaler, current event composition and source-kind subtotals; no second store/calculator, new ingestion, diagnosis, usual intake or adequacy estimate. Current corrections/deletions and source outages use existing invalidation/actor guards.",
+    "Selected B6 is discoverable in existing recorded-nutrients selector; original source rows, raw declarations and dated public source context retained. Conflicts explicitly remain unavailable. Source classes remain separate, not a grand total."
+  ],
+  "verification": {
+    "focused": "16/16 final source/label/reader/current-event/public metadata-contract tests PASS; previous15+3runs overlap.",
+    "actualApp": "App\u2192owned HTTP\u2192encrypted persisted explicit-taken fixtures:10/15/50/100mg source declarations plus unknown quantity; current known source175\u2192125\u219275mg after one CAS correction and one removal, stable original snapshot/id, unknown source excluded;32mode/theme/mobile/tablet/desktop100\u2013200%pagezoom/keyboard/reload/A-B states and0meals PASS. Existing real ingestion authorship flows are separately qualified; fixtures invoke canonical stores directly for setup/correction.",
+    "commonRegression": "Actual food/manual/generic source and supplement lifecycle, current source20\u219210mg/correction/deletion/outage/exact retries/unknown/zero/ownership and source60+dialog60 responsive states PASS.",
+    "types": "PASS",
+    "buildAndOriginalMedia": "PASS",
+    "fullRegression": {
+      "passed": 860,
+      "failed": 0,
+      "skipped": 0
+    },
+    "independentClinicalLegalPhysicalVoiceOverAcceptance": "NOT_TESTED_NOT_INFERRED"
+  },
+  "genericSourceBoundary": {
+    "installedFnddsCatalogue": "5431rows, original21nutrient IDs only; B6 values absent and not inferred.",
+    "metadataAccess": "One bounded workspace official public USDA demo request failed proxy403. Web official API view did not expose verifiable nutrient metadata; FHIR examples are not treated as authoritative USDA mapping. No numeric mapping assigned.",
+    "nextEvidence": "One optional CI-only public FDC identity observation, requested via [verify-b6-identity] commit marker, reuses bounded10sec/3MB reader; one public food witness, no private API key/account data, no runtime mapping or food-value change. No default repeated probes."
+  },
+  "remaining": [
+    "Generic-food B6 mapping and actual composition acquisition require authority evidence; no values may be copied across foods or backfilled into original snapshots.",
+    "Full Canadian reference/form/UL eligibility, source-native units/chemical equivalence beyond the inspected mg declaration basis, usual-intake assessment and full M2/M3/Food12/Response15/RC remain unfinished."
+  ]
+}
