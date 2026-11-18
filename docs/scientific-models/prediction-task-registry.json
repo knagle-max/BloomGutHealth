@@ -1,0 +1,166 @@
+{
+  "schemaVersion": "bloom-scientific-model-tasks-v1",
+  "createdDate": "2026-11-18",
+  "authority": "docs/architecture/BLOOM_SCIENTIFIC_AI_MODEL_PROGRAM_ARCHITECT_DECISION_20261118.md",
+  "owner": "Chief Architect; Codex sole implementer",
+  "noPersonalTraining": true,
+  "activeQueueAuthority": "NEXT_ACTIONS.md",
+  "selectedFirstTask": "MICROBE-SUBSTRATE-UTIL-V1",
+  "candidateNotTrained": true,
+  "taskDefinitions": [
+    {
+      "id": "MICROBE-SUBSTRATE-UTIL-V1",
+      "title": "Microbial substrate utilization classification",
+      "status": "proposed_first_benchmark",
+      "inputs": "strain/experiment/substrate/medium/condition",
+      "target": "observed growth or non-growth on specified substrate, label and assay provenance",
+      "split": "study-held-out, strain-held-out, substrate-family-held-out when enough groups",
+      "metrics": "balanced accuracy, macro F1, class recall, precision, calibration/Brier, OOD abstention",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    },
+    {
+      "id": "MICROBE-FUNCTION-V1",
+      "title": "Strain-level functional capacity",
+      "status": "future",
+      "inputs": "validated genome/protein/experimental annotations",
+      "target": "experimentally verified enzyme activity, not gene presence alone",
+      "split": "protein-family and sequence-identity-cluster held out",
+      "metrics": "precision/recall, calibration, novel-family OOD",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    },
+    {
+      "id": "MICROBE-METABOLITE-V1",
+      "title": "Measured extracellular metabolite outcomes",
+      "status": "after_first_pilot_if_measured_labels_sufficient",
+      "inputs": "organism/strain substrate, medium, time and validated assay",
+      "target": "measured secretion or uptake under culture conditions, unit-qualified",
+      "split": "experiment and study held out; avoid shared culture replicate leakage",
+      "metrics": "MAE/RMSE/direction, coverage, mass-balance violation rate",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    },
+    {
+      "id": "MICROBE-COMMUNITY-V1",
+      "title": "Community growth and exchange",
+      "status": "future",
+      "inputs": "co-culture composition, medium, conditions, community reconstructions",
+      "target": "measured co-culture growth/exchange where available",
+      "split": "community/experiment/study held out",
+      "metrics": "error, calibration, ecological validity",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    },
+    {
+      "id": "HOST-MICROBE-V1",
+      "title": "Host receptor/pathway experimental response",
+      "status": "future",
+      "inputs": "defined metabolite/dose/tissue/assay",
+      "target": "measured molecular response in explicit species/tissue",
+      "split": "study/lab/compound-family held out",
+      "metrics": "task-specific error/abstention",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    },
+    {
+      "id": "HUMAN-INTERVENTION-V1",
+      "title": "Specific intervention endpoint response",
+      "status": "future",
+      "inputs": "actual baseline, formulation/dose, intervention trial, context",
+      "target": "individual or group measured endpoint with randomized treatment and comparator as available",
+      "split": "participant/study/site/time held out with causal-identification checks",
+      "metrics": "error, calibration, transportability, subgroup",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    },
+    {
+      "id": "PERSONAL-CALIBRATION-V1",
+      "title": "Account-local response calibration",
+      "status": "future_account_local",
+      "inputs": "consented original source history and actual exposures",
+      "target": "source-confirmed within-person endpoint, never shared label",
+      "split": "within-account temporal holdout; baseline no-personalization",
+      "metrics": "coverage, calibration, no-worse-than-baseline, privacy",
+      "approvedGroundTruth": [
+        "direct_experimental_measurement",
+        "verified_experimental_annotation"
+      ],
+      "excludedAsGroundTruth": [
+        "inferred_function",
+        "LLM_extracted_unreviewed",
+        "synthetic_simulation",
+        "user_report_for_shared_model",
+        "unresolved"
+      ],
+      "deployment": "research_only_unless_separate_review",
+      "releasePermission": "not_approved"
+    }
+  ]
+}
