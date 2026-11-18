@@ -1,3 +1,4 @@
+import {PrivateLabelSaveError} from './private-product-storage';
 import { canonicalBarcode, normalizeBarcode, isBarcodeSearch } from "../shared/barcodes";
 import {scaleLabelAmount} from '../shared/label-portion';
 import { normalizeProductQuery, brandedSearchQuery, rankProducts, homePreparedQuery, isHomePreparedSource } from "../shared/product-search";
@@ -8,7 +9,7 @@ import {
   type MealIntelligence,
 } from "../shared/meal-intelligence";
 import {
-  labelInputSchema,
+  labelInputSchema,privateLabelSaveCommandSchema,
   productIngredient,
   type Product,
   type ProductRef,
@@ -734,7 +735,8 @@ export function registerProductRoutes(
     }
   });
   app.post("/api/products", limit, async (req, res) => {
-    const p = labelInputSchema.safeParse(req.body);
+    const command=privateLabelSaveCommandSchema.safeParse(req.body);
+    const p=command.success?{success:true as const,data:command.data.label}:labelInputSchema.safeParse(req.body);
     if (
       !p.success ||
       (p.success &&
@@ -746,15 +748,16 @@ export function registerProductRoutes(
         error: "Check the label name, serving size, nutrient values and units.",
       });
     try {
-      if ((await store.getNutritionProducts(req.session.userId!)).length >= 200)
+      if (!command.success&&(await store.getNutritionProducts(req.session.userId!)).length >= 200)
         return res.status(400).json({
           error:
             "Your saved-product list is full. Remove an unused label first.",
         });
       res
         .status(201)
-        .json(await store.insertNutritionProduct(req.session.userId!, p.data));
-    } catch {
+        .json(await store.insertNutritionProduct(req.session.userId!, p.data,command.success?command.data.intentId:undefined));
+    } catch(error) {
+      if(error instanceof PrivateLabelSaveError)return res.status(error.status).json({error:error.message,code:error.code});
       res.status(503).json({ error: "Product label could not save." });
     }
   });

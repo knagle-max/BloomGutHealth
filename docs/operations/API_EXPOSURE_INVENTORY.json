@@ -25,7 +25,7 @@
     "server/nutrition-targets.ts": "5320f8fb455e5c28fa1bf9d09af60e65e20c4de3f78da721393bd5f5265d4c4d",
     "server/planner-routes.ts": "6c3c9964822e0c731f0f1943a1b831cd9e8cac8911851c146e67ca4afe19145e",
     "server/precision-routes.ts": "dcf1f06f261034c0c92c302c00c991d9c40b35e2a9d1d92f68c24ae3b377cab3",
-    "server/products.ts": "3ba7a022f6ca6dba61ce7afe522ff34f0e8e63309d1dec97744db73dfec7afb2",
+    "server/products.ts": "e30af2ebab6794a59ac1b202471cf47ab7a708b48fe57bc338c8f34adb9f4710",
     "server/profile-routes.ts": "3fce060222d532bc0214447a467b4697ca0fdf99ace823da7ee6ec632a53bc82",
     "server/recorded-intake-sources.ts": "6406708323799225293423ee5b66a5aec5c7c200a63889ddcd25d2816bae9af4",
     "server/report-routes.ts": "41618d00c22baa641ddb5744c576e32a9df53e4ed3e602fb63776a3fef3d67c4",
@@ -33,7 +33,7 @@
     "server/review-qualification.ts": "d9dca0b6ef903adaf167cac58188321e23fce81461c1aa52d123ee75cc412aab",
     "server/routes.ts": "53139a0dd07c783ca0bd16ac6c05151be506672bdf297c94b51b61944f6c68ad",
     "server/science-coach.ts": "74fe315d8d43398529a8bb4697d002428deece956e86117f154afcc149b9442e",
-    "server/supplement-intake-routes.ts": "ad2b305aef9d01f7cefe5de8ae652612fb89ff77586f6d6b4b0cb29256fc001d",
+    "server/supplement-intake-routes.ts": "88c576dc6ed5adfd143990ce57e4d03450b4991f58c4bbe6c7e31a5f55fa7916",
     "server/vite.ts": "ade8d79bc6dfdb3870f7903dd2a5433be0c902715a7be86e32757fea55ef3025"
   },
   "entries": [
@@ -1008,7 +1008,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 687,
+      "line": 688,
       "method": "USE",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -1018,7 +1018,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 691,
+      "line": 692,
       "method": "GET",
       "path": "/api/products/search",
       "declaredMiddleware": [
@@ -1028,7 +1028,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 713,
+      "line": 714,
       "method": "GET",
       "path": "/api/products/saved",
       "declaredMiddleware": [],
@@ -1036,7 +1036,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 720,
+      "line": 721,
       "method": "GET",
       "path": "/api/products/:source/:id",
       "declaredMiddleware": [
@@ -1046,7 +1046,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 736,
+      "line": 737,
       "method": "POST",
       "path": "/api/products",
       "declaredMiddleware": [
@@ -1056,7 +1056,7 @@
     },
     {
       "file": "server/products.ts",
-      "line": 761,
+      "line": 764,
       "method": "DELETE",
       "path": "/api/products/:id",
       "declaredMiddleware": [],
@@ -1315,7 +1315,7 @@
     },
     {
       "file": "server/supplement-intake-routes.ts",
-      "line": 59,
+      "line": 60,
       "method": "PUT",
       "path": "/api/experience/supplement-intakes/:id/confirm",
       "declaredMiddleware": [
@@ -1325,7 +1325,7 @@
     },
     {
       "file": "server/supplement-intake-routes.ts",
-      "line": 75,
+      "line": 77,
       "method": "DELETE",
       "path": "/api/experience/supplement-intakes/:id",
       "declaredMiddleware": [

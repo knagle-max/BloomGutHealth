@@ -49,11 +49,12 @@ export function registerSupplementIntakeRoutes(app:Express,store:IStorage,source
  app.post('/api/experience/supplement-intakes/confirm',limit,async(req,res)=>{
   const parsed=supplementCreateCommandSchema.safeParse(req.body);if(!parsed.success)return res.status(400).json({error:'Review the entry and explicitly confirm it was taken.'});
   try{
-   const userId=req.session.userId!,command=parsed.data,replay=await source.recoverCreate(userId,command);
+   const confirmedAt=source.confirmationTimestamp(),userId=req.session.userId!,command=parsed.data,replay=await source.recoverCreate(userId,command);
    if(replay)return res.json(replay);
+   source.assertTakenAt(command.draft,confirmedAt);
    await source.validateScope(userId,command.lifecycleId);
    const label=await material(userId,command.draft);
-   res.json(await source.create(userId,command,label));
+   res.json(await source.create(userId,command,label,confirmedAt));
   }catch(error){fail(res,error);}
  });
  app.put('/api/experience/supplement-intakes/:id/confirm',limit,async(req,res)=>{
@@ -61,15 +62,16 @@ export function registerSupplementIntakeRoutes(app:Express,store:IStorage,source
   const parsed=supplementEditCommandSchema.extend({refreshSource:z.boolean().default(false)}).safeParse(req.body);
   if(!parsed.success)return res.status(400).json({error:'Review the correction before confirming it.'});
   try{
-   const userId=req.session.userId!,{refreshSource,...command}=parsed.data,current=await source.get(userId,req.params.id);
+   const confirmedAt=source.confirmationTimestamp(),userId=req.session.userId!,{refreshSource,...command}=parsed.data,current=await source.get(userId,req.params.id);
    if(!current)return res.status(404).json({error:'This intake is not in your account.'});
    // A committed latest edit replays without re-fetching any removed source.
    if(current.payload.revision===command.editId)return res.json(await source.correct(userId,current.id,command));
+   source.assertTakenAt(command.draft,confirmedAt);
    await source.validateScope(userId,command.lifecycleId);
    const target={id:current.id,revision:command.expectedRevision},label=await material(userId,command.draft,target,refreshSource);
    const captured=current.payload.current.label;
    const retaining=!refreshSource&&command.draft.source.kind==='label'&&captured?.id===command.draft.source.product.id&&captured.source===command.draft.source.product.source;
-   res.json(await source.correct(userId,current.id,command,retaining?undefined:label));
+   res.json(await source.correct(userId,current.id,command,retaining?undefined:label,confirmedAt));
   }catch(error){fail(res,error);}
  });
  app.delete('/api/experience/supplement-intakes/:id',limit,async(req,res)=>{

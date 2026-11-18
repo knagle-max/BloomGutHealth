@@ -55,7 +55,7 @@ export interface IStorage extends ExperienceStore {
   labResponseContext?:Pick<LabResponseContextStorage,'history'|'view'|'prepare'|'save'|'deleteHistory'>;
   getBiologicalRegistry(): Promise<BiologicalRegistry>;
   getNutritionProducts(userId: string): Promise<Product[]>;
-  insertNutritionProduct(userId: string, label: LabelInput): Promise<Product>;
+  insertNutritionProduct(userId: string, label: LabelInput,intentId?:string): Promise<Product>;
   deleteNutritionProduct(userId: string, id: string): Promise<boolean>;
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -247,7 +247,7 @@ export class DatabaseStorage implements IStorage {
   }
   private readonly privateProducts=new PrivateProductStorage(db);
   getNutritionProducts(userId:string){return this.privateProducts.getNutritionProducts(userId);}
-  insertNutritionProduct(userId:string,label:LabelInput){return this.privateProducts.insertNutritionProduct(userId,label);}
+  insertNutritionProduct(userId:string,label:LabelInput,intentId?:string){return this.privateProducts.insertNutritionProduct(userId,label,intentId); }
   deleteNutritionProduct(userId:string,id:string){return this.privateProducts.deleteNutritionProduct(userId,id);}
   getPrecisionRecords(userId: string) {
     return this.precision.getPrecisionRecords(userId);

@@ -39,6 +39,9 @@ export const labelInputSchema = z
     "Enter at least one amount shown on the label.",
   );
 export type LabelInput = z.infer<typeof labelInputSchema>;
+/** New producer command: old servers reject this envelope before any write. */
+export const privateLabelSaveCommandSchema=z.object({version:z.literal('private-label-save-v1'),intentId:z.uuid().transform(value=>value.toLowerCase()),label:labelInputSchema}).strict();
+export type PrivateLabelSaveCommand=z.infer<typeof privateLabelSaveCommandSchema>;
 export type Product = {
   source: ProductRef["source"];
   id: string;

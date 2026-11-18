@@ -1,3 +1,4 @@
+import {accountContextGuard,AccountContextChangedError} from "@/lib/request-actor";
 import {useAuth} from "@/lib/auth";
 import { useState, useEffect, useRef, useId } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -7,10 +8,12 @@ import {
   nutrientDefinitions,
   type Ingredient,
 } from "@shared/meal-intelligence";
-import { productResponseSchema, productListResponseSchema, productSearchResponseSchema, readProductResponse, productIngredient, replacementLabelAmount, type Product } from "@shared/products";
+import { productResponseSchema, productListResponseSchema, productSearchResponseSchema, readProductResponse, productIngredient, replacementLabelAmount, privateLabelSaveCommandSchema,type PrivateLabelSaveCommand,type Product } from "@shared/products";
 import { productMatchStatus, homePreparedQuery, isHomePreparedSource } from "@shared/product-search";
 import BarcodeScanner from "./BarcodeScanner";
 import { productSearchText, normalizeBarcode, canonicalBarcode, isBarcodeSearch } from "@shared/barcodes";
+class LabelDraftError extends Error {}
+type LabelAttempt={owner:string;signature:string;command:PrivateLabelSaveCommand};
 export default function ProductPicker({
   onPick,
   initialQuery = "",
@@ -45,6 +48,9 @@ export default function ProductPicker({
     [servings, setServings] = useState(1),
     [manual, setManual] = useState(false),
     [error, setError] = useState("");
+  const labelAttempt=useRef<LabelAttempt|null>(null),mounted=useRef(true);
+  const[labelError,setLabelError]=useState(""),[labelUnknown,setLabelUnknown]=useState(false);
+  useEffect(()=>{mounted.current=true;return()=>{mounted.current=false;};},[]);
   const [manualFields,setManualFields]=useState<string[]>([]),[manualField,setManualField]=useState("");
   const [amountReviewRequired,setAmountReviewRequired]=useState(false),[amountReviewed,setAmountReviewed]=useState(false);
   const [amountBasis,setAmountBasis]=useState(initialGrams);
@@ -64,7 +70,7 @@ export default function ProductPicker({
   useEffect(()=>{if(manual)manualForm.current?.querySelector<HTMLInputElement>('input[name="name"]')?.focus();},[manual]);
   const search = useMutation({
     mutationFn: async (override?:string)=>{
-      resolve.reset();
+      accountContextGuard(user?.id??null)();resolve.reset();
       const submitted=override||query,epoch=++lookupEpoch.current,owner=user?.id;
       setSubmittedQuery(submitted);setVariants([]);chooseProduct(null);setError("");
       const response=await apiRequest("GET","/api/products/search?"+new URLSearchParams({q:submitted,kind}));
@@ -80,7 +86,7 @@ export default function ProductPicker({
   const allPossible=!!searchResult?.products.length&&searchResult.products.every(p=>productMatchStatus(p,resultQuery)==="possible");
   const resolve = useMutation({
     mutationFn:async(p:Product)=>{
-      const epoch=lookupEpoch.current,owner=user?.id;setVariants([]);chooseProduct(null);setError("");
+      const epoch=lookupEpoch.current,owner=user?.id;accountContextGuard(owner??null)();setVariants([]);chooseProduct(null);setError("");
       const response=await apiRequest("GET",`/api/products/${p.source}/${encodeURIComponent(p.id)}${p.source==='dsld'&&p.barcode?'?'+new URLSearchParams({barcode:p.barcode}):''}`);
       return {...readProductResponse(productListResponseSchema,await response.json()),epoch,owner};
     },
@@ -94,11 +100,12 @@ export default function ProductPicker({
   const barcodeUnresolved=barcodeIntent&&(search.isError||resolve.isError||!!error||!!searchResult&&!searchResult.products.length);
   const barcodeStatus=searchResult?.barcodeLookup?.status;
   const manualBarcode=normalizeBarcode(query)||(isBarcodeSearch(query)?query.trim().replace(/[\s-]/g,''):'');
-  const saved=useQuery<Product[]>({queryKey:["/api/products/saved",user?.id],enabled:!!user,queryFn:async()=>readProductResponse(productResponseSchema.array(),await(await apiRequest("GET","/api/products/saved")).json())});
+  const saved=useQuery<Product[]>({queryKey:["/api/products/saved",user?.id],enabled:!!user,queryFn:async()=>{accountContextGuard(user?.id??null)();return readProductResponse(productResponseSchema.array(),await(await apiRequest("GET","/api/products/saved")).json());}});
   useEffect(()=>{if(autoSearch&&!started.current&&query.length>=2){started.current=true;search.mutate(undefined);}},[]);
-  const create = useMutation({
-    mutationFn: async (form: HTMLFormElement) => {
-      const epoch=++lookupEpoch.current,owner=user?.id;setVariants([]);chooseProduct(null);
+  function submitLabel(form:HTMLFormElement){
+    if(!user||labelFrozen)return;
+    try{
+      accountContextGuard(user.id)();
       const d = new FormData(form),
         perServing: Record<string, number> = {};
       for (const [key] of nutrientDefinitions) {
@@ -107,7 +114,7 @@ export default function ProductPicker({
       }
       const activeName = String(d.get("activeName") || "").trim(),
         activeAmount = String(d.get("activeAmount") || "").trim();
-      const response=await apiRequest("POST", "/api/products", {
+      const input={
           name: String(d.get("name") || ""),
           ...(d.get("barcode") ? {barcode:String(d.get("barcode"))} : {}),
           brand: String(d.get("brand") || ""),
@@ -128,23 +135,43 @@ export default function ProductPicker({
                 ],
               }
             : {}),
-        });
-      return {product:readProductResponse(productResponseSchema,await response.json()),epoch,owner};
-    },
-    onSuccess: ({product:p,epoch,owner}) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/products/saved",owner] });
-      if(epoch!==lookupEpoch.current||owner!==actor.current)return;
-      search.reset();resolve.reset();setError("");
-      chooseProduct(p);
-      setVariants([p]);
-      setManual(false);
-    },
-  });
+        };
+
+      const parsed=privateLabelSaveCommandSchema.safeParse({version:'private-label-save-v1',intentId:labelAttempt.current?.command.intentId??crypto.randomUUID(),label:input});
+      if(!parsed.success)throw new LabelDraftError('Enter a label name, serving and at least one listed amount in the supported units.');
+      const signature=JSON.stringify(parsed.data.label);
+      if(!labelAttempt.current||labelAttempt.current.owner!==user.id||labelAttempt.current.signature!==signature)labelAttempt.current={owner:user.id,signature,command:{...parsed.data,intentId:crypto.randomUUID()}};
+      setLabelError('');runLabelSave(labelAttempt.current);
+    }catch(error){setLabelError(error instanceof Error?error.message:'Check the label details.');}
+  }
+  function runLabelSave(attempt:LabelAttempt){
+    if(create.isPending)return;
+    const epoch=++lookupEpoch.current;setVariants([]);chooseProduct(null);
+    create.mutate({...attempt,epoch});
+  }
+  const create=useMutation({mutationFn:async(input:LabelAttempt&{epoch:number})=>{
+    if(!mounted.current||actor.current!==input.owner)throw new LabelDraftError('Open this label in the current account before saving.');
+    const assertCurrent=accountContextGuard(input.owner);assertCurrent();
+    const response=await apiRequest('POST','/api/products',input.command);
+    const product=readProductResponse(productResponseSchema,await response.json());assertCurrent();
+    return{product,epoch:input.epoch,owner:input.owner};
+  },onSuccess:({product:p,epoch,owner})=>{
+    if(!mounted.current||epoch!==lookupEpoch.current||owner!==actor.current)return;
+    try{accountContextGuard(owner)();}catch{return;}
+    search.reset();resolve.reset();setError('');setLabelError('');setLabelUnknown(false);labelAttempt.current=null;
+    chooseProduct(p);setVariants([p]);setManual(false);
+  },onError:error=>{
+    if(error instanceof ApiRequestError&&['LABEL_SAVE_DELETED','LABEL_SAVE_CONFLICT'].includes(error.code??''))setLabelUnknown(false);
+    else if(!(error instanceof LabelDraftError)&&!(error instanceof AccountContextChangedError)&&(!(error instanceof ApiRequestError)||error.status>=500||error.status===408))setLabelUnknown(true);
+  },onSettled:(_data,_error,input)=>{void queryClient.invalidateQueries({queryKey:['/api/products/saved',input.owner]});}});
+  const labelUncertain=labelUnknown;
+  const labelFrozen=create.isPending||labelUncertain;
+  const labelTerminal=create.error instanceof ApiRequestError&&['LABEL_SAVE_DELETED','LABEL_SAVE_CONFLICT'].includes(create.error.code??'');
   const previousOwner=useRef(user?.id);
-  useEffect(()=>{if(previousOwner.current===user?.id)return;previousOwner.current=user?.id;lookupEpoch.current++;setChoice(null);setVariants([]);setManual(false);setError("");search.reset();resolve.reset();create.reset();},[user?.id]);
+  useEffect(()=>{if(previousOwner.current===user?.id)return;previousOwner.current=user?.id;lookupEpoch.current++;setChoice(null);setVariants([]);setManual(false);setError("");setLabelError("");setLabelUnknown(false);labelAttempt.current=null;search.reset();resolve.reset();create.reset();},[user?.id]);
   const remove = useMutation({
     mutationFn: async (id: string) => {
-      const owner=user?.id;
+      const owner=user?.id;accountContextGuard(owner??null)();
       try { await apiRequest("DELETE", "/api/products/" + encodeURIComponent(id)); }
       // A retry may find an already-removed label after the first reply was lost.
       catch(cause) { if(!(cause instanceof ApiRequestError&&cause.status===404))throw cause; }
@@ -162,7 +189,7 @@ export default function ProductPicker({
   return (
     <div className="space-y-3 border rounded-xl p-3 min-w-0 break-words [overflow-wrap:anywhere]">
       <h3>Find a food or supplement</h3>
-      {showBarcode&&<BarcodeScanner active={active&&!remove.isPending} startImmediately={startScanner} onScan={code=>{setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>}
+      {showBarcode&&<BarcodeScanner active={active&&!remove.isPending&&!labelFrozen} startImmediately={startScanner} onScan={code=>{if(labelFrozen)return;setQuery(code);setChoice(null);setVariants([]);search.mutate(code);}}/>}
       <p className="panel-note">
         Search by product name or barcode, then confirm the exact variant and
         serving. The search sends only this query to public product databases.
@@ -175,6 +202,7 @@ export default function ProductPicker({
             className="bloom-input w-full"
             maxLength={120}
             value={query}
+            disabled={labelFrozen}
             onChange={(e) => {lookupEpoch.current++;search.reset();resolve.reset();setError("");setQuery(e.target.value);setVariants([]);chooseProduct(null);}}
           />
         </label>
@@ -182,6 +210,7 @@ export default function ProductPicker({
           Search in
           <select
             aria-label="Search in"
+            disabled={labelFrozen}
             className="bloom-input w-full"
             value={kind}
             onChange={(e) => {lookupEpoch.current++;setKind(e.target.value as any);setVariants([]);chooseProduct(null);}}
@@ -194,12 +223,12 @@ export default function ProductPicker({
       </div>
       <Button
         type="button"
-        disabled={query.trim().length < 2 || remove.isPending || search.isPending || resolve.isPending || create.isPending}
+        disabled={labelFrozen || query.trim().length < 2 || remove.isPending || search.isPending || resolve.isPending || create.isPending}
         onClick={() => search.mutate(undefined)}
       >
         {search.isPending ? "Searching…" : "Search products"}
       </Button>
-      {[(barcodeUnresolved?null:search.error), (barcodeUnresolved?null:resolve.error), create.error, remove.error, saved.error]
+      {[(barcodeUnresolved?null:search.error), (barcodeUnresolved?null:resolve.error), (labelUncertain?null:create.error), remove.error, saved.error]
         .filter(Boolean)
         .map((e, i) => (
           <p role="alert" key={i}>
@@ -236,7 +265,7 @@ export default function ProductPicker({
                   className="whitespace-normal h-auto text-left"
                   variant="outline"
                   type="button"
-                  disabled={remove.isPending||resolve.isPending||search.isPending}
+                  disabled={labelFrozen||remove.isPending||resolve.isPending||search.isPending}
                   aria-describedby={`${resultId}-result-${index}`}
                   onClick={() => resolve.mutate(p)}
                 >
@@ -366,7 +395,7 @@ export default function ProductPicker({
             className="whitespace-normal h-auto max-w-full"
             type="button"
             disabled={
-              pending || remove.isPending || search.isPending || resolve.isPending || create.isPending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
+              pending || labelFrozen || remove.isPending || search.isPending || resolve.isPending || !Object.is(amountBasis,initialGrams) || amountReviewRequired&&!amountReviewed || !Number.isFinite(servings) || servings <= 0 || servings > 100
             }
             onClick={() => {
               const ingredient=productIngredient(choice,servings);
@@ -388,7 +417,7 @@ export default function ProductPicker({
               className="whitespace-normal h-auto max-w-full text-left"
               type="button"
               variant="outline"
-              disabled={remove.isPending||search.isPending||resolve.isPending}
+              disabled={labelFrozen||remove.isPending||search.isPending||resolve.isPending}
               onClick={() => {
                 lookupEpoch.current++;setVariants([p]);
                 chooseProduct(p);
@@ -400,7 +429,7 @@ export default function ProductPicker({
               type="button"
               variant="ghost"
               className="whitespace-normal h-auto max-w-full"
-              disabled={remove.isPending||create.isPending||search.isPending||resolve.isPending||pending}
+              disabled={labelFrozen||remove.isPending||search.isPending||resolve.isPending||pending}
               onClick={() => remove.mutate(p.id)}
             >
               Remove saved label
@@ -412,6 +441,7 @@ export default function ProductPicker({
         className="whitespace-normal h-auto max-w-full"
         type="button"
         variant="outline"
+        disabled={labelFrozen}
         onClick={() => setManual(!manual)}
       >
         {manual
@@ -424,9 +454,13 @@ export default function ProductPicker({
           className="space-y-3"
           onSubmit={(e) => {
             e.preventDefault();
-            create.mutate(e.currentTarget);
+            submitLabel(e.currentTarget);
           }}
         >
+          {labelError&&<p role="alert">{labelError}</p>}
+          {labelUncertain&&<div role="alert" className="space-y-2"><p>We could not confirm whether this label was saved. Your entries are held; retry this same save.</p><Button type="button" disabled={create.isPending} onClick={()=>{if(labelAttempt.current)runLabelSave(labelAttempt.current);}}>Retry this label save</Button></div>}
+          {labelTerminal&&<Button type="button" variant="outline" onClick={()=>{labelAttempt.current=null;setLabelUnknown(false);create.reset();setLabelError('');}}>Start a new label entry</Button>}
+          <fieldset className="space-y-3 min-w-0" disabled={labelFrozen}><legend className="sr-only">Private label details</legend>
           <p>
             Use the amounts per serving from your package or nutrition information
             you are recording yourself. Leave unlisted nutrients blank; enter 0
@@ -529,6 +563,7 @@ export default function ProductPicker({
           <Button type="submit" disabled={create.isPending||remove.isPending}>
             {create.isPending ? "Saving label…" : "Save my product label"}
           </Button>
+          </fieldset>
         </form>
       )}
       <p className="panel-note">

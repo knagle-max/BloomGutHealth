@@ -40,6 +40,11 @@ function replay(row:typeof experienceRecords.$inferSelect,userId:string,command:
  * workspace writes stay denied; callers supply reviewed source material. */
 export class SupplementIntakeStorage {
  constructor(private readonly database:Database,private readonly now:()=>Date=()=>new Date()){}
+ /** Server-only cutoff captured before any asynchronous source or transaction work. */
+ confirmationTimestamp(){return new Date(+this.now());}
+ assertTakenAt(draft:SupplementDraft,confirmedAt:Date){
+  if(!Number.isFinite(+confirmedAt)||Date.parse(draft.takenAt)>+confirmedAt)throw new SupplementIntakeError(400,'FUTURE_INTAKE','Confirm an intake only after it was taken.');
+ }
  async reviewScope(userId:string){
   owned(userId);
   const [actor]=await this.database.select({id:users.id}).from(users).where(eq(users.id,userId));
@@ -62,7 +67,7 @@ export class SupplementIntakeStorage {
   const settings=experienceLifecycleSchema.parse(row?decryptPrecision(row.encryptedPayload,userId):{});
   if(!settings.lifecycleId||settings.lifecycleId!==lifecycleId)throw conflict();
  }
- async create(userId:string,input:unknown,resolvedLabel:Product|null){
+ async create(userId:string,input:unknown,resolvedLabel:Product|null,confirmedAt=this.confirmationTimestamp()){
   owned(userId);const command=supplementCreateCommandSchema.parse(input);
   return this.database.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
@@ -85,11 +90,12 @@ export class SupplementIntakeStorage {
    }else if(label!==null)throw conflict();
    if(supplementReviewRevision(userId,command.lifecycleId,command.draft,label)!==command.reviewRevision)throw conflict();
    const now=this.now();
-   if(!Number.isFinite(+now)||Date.parse(command.draft.takenAt)>+now)throw new SupplementIntakeError(400,'FUTURE_INTAKE','Confirm an intake only after it was taken.');
+   this.assertTakenAt(command.draft,confirmedAt);
+   if(!Number.isFinite(+now)||+confirmedAt>+now)throw new SupplementIntakeError(400,'FUTURE_INTAKE','Confirm an intake only after it was taken.');
    const[count]=await tx.select({count:sql<number>`count(*)::int`}).from(experienceRecords).where(and(eq(experienceRecords.userId,userId),notInArray(experienceRecords.kind,['wellness-choice','supplement-intent'])));
    if(count.count>=2000)throw new SupplementIntakeError(422,'EXPERIENCE_LIMIT','Your workspace has reached its record limit. Export and remove old entries before adding more.');
    const draft=command.draft;
-   const value=supplementIntakeValueSchema.parse({takenAt:draft.takenAt,confirmedAt:now.toISOString(),confirmedTaken:true,
+   const value=supplementIntakeValueSchema.parse({takenAt:draft.takenAt,confirmedAt:confirmedAt.toISOString(),confirmedTaken:true,
     servings:draft.servings,mineralBasis:draft.mineralBasis,formulation:draft.formulation,label,
     ...(draft.source.kind==='unlabelled'?{unlabelled:draft.source.description}:{})});
    const payload=supplementIntakeSchema.parse({version:1,valueKind:'confirmed-supplement-consumption',intentId:command.intentId,
@@ -112,7 +118,7 @@ export class SupplementIntakeStorage {
   return{userId,records:rows.slice(0,limit).map(row=>view(row,supplementIntakeSchema.parse(decryptPrecision(row.encryptedPayload,userId)))),
    total:count.count,offset,limit,hasMore:rows.length>limit,order:'updated-descending' as const};
  }
- async correct(userId:string,id:string,input:unknown,resolvedLabel?:Product|null){
+ async correct(userId:string,id:string,input:unknown,resolvedLabel?:Product|null,confirmedAt=this.confirmationTimestamp()){
   owned(userId);const command=supplementEditCommandSchema.parse(input);
   return this.database.transaction(async tx=>{
    await tx.execute(sql`SELECT pg_advisory_xact_lock(hashtextextended(${userId},1))`);
@@ -156,8 +162,9 @@ export class SupplementIntakeStorage {
    }
    if(supplementReviewRevision(userId,command.lifecycleId,draft,label,{id,revision:command.expectedRevision})!==command.reviewRevision)throw conflict();
    const now=this.now();
-   if(!Number.isFinite(+now)||Date.parse(draft.takenAt)>+now)throw new SupplementIntakeError(400,'FUTURE_INTAKE','Confirm an intake only after it was taken.');
-   const value=supplementIntakeValueSchema.parse({takenAt:draft.takenAt,confirmedAt:now.toISOString(),confirmedTaken:true,servings:draft.servings,
+   this.assertTakenAt(draft,confirmedAt);
+   if(!Number.isFinite(+now)||+confirmedAt>+now)throw new SupplementIntakeError(400,'FUTURE_INTAKE','Confirm an intake only after it was taken.');
+   const value=supplementIntakeValueSchema.parse({takenAt:draft.takenAt,confirmedAt:confirmedAt.toISOString(),confirmedTaken:true,servings:draft.servings,
     mineralBasis:draft.mineralBasis,formulation:draft.formulation,label,...(draft.source.kind==='unlabelled'?{unlabelled:draft.source.description}:{})});
    const payload=supplementIntakeSchema.parse({...current,current:value,revision:command.editId,
     corrections:[...current.corrections,{revision:command.editId,changedAt:now.toISOString(),value}]});

@@ -1,7 +1,7 @@
 {
   "task": "V06-M3-SB-UPC-01-15",
   "phase": "Exact lookup/native source/private fallback; catalogue receipt reader before later producer",
-  "status": "ENGINEERING_TESTED_RENDERED_PENDING_PUBLICATION",
+  "status": "ENGINEERING_TESTED_RENDERED_PUBLISHED_CI_REFLOW_FAILURE",
   "baseCommit": "2c4e56db9f6532dad15a783a854c9f980fb7c273",
   "handoff": "docs/architecture/BLOOM_SUPPLEMENT_BARCODE_LOOKUP_DEFECT_CODEX_HANDOFF_20261117.md",
   "implementation": [
@@ -35,5 +35,14 @@
     "Finish SB-UPC-10: recover a reusable-label POST after committed lost response, conflict/replay/deleted intent and frozen explicit retry without duplicating/resurrecting the label. Confirmed-intake idempotence is already verified; it is distinct from catalogue save recovery.",
     "Observe actual provider query/body from permitted CI when available; unknown shape/coverage never becomes fake product or compulsory source gate. Canadian NPN integration not added without independent SKU linkage.",
     "Remaining compatible nutrient coverage/subtotals, M2 references/forms/UL/B6, Food/Response and integrated RC."
-  ]
+  ],
+  "sourceCommit": "dbe83bce3605776445980cc372a4c662b3b52ac4",
+  "publicationQualification": {
+    "compatibleReaderLiveCommit": "d4659078710b30dd439ff4da0512ac35799dfae6",
+    "renderDeploy": "dep-dbulcpglujjs73930lb0",
+    "liveAt": "2026-11-18T07:43:12Z",
+    "ciRun": 44259741600,
+    "ciStatus": "FAILURE",
+    "failure": "Saved nutrient source/contribution browser: scoped supplement dialog at Athlete/light/320px/page zoom200%; public UPC probe not reached. Fix and full120-state rerun pass in follow-up label-save slice."
+  }
 }
