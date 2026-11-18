@@ -52,10 +52,15 @@ test('folate and E profile applicability retains synthetic scope without calcula
 });
 
 test('iron never infers menstruation or menopause from female Profile age; all general source values remain available',()=>{
- assert.deepEqual(eligible({...base,nutrientKey:'iron_mg'}),[['EAR',6],['RDA',8],['UL',45]]);
+ assert.deepEqual(eligible({...base,nutrientKey:'iron_mg'}),[['UL',45]]);
  for(const age of [36,51,72]){const view=dietaryReferenceEligibility({...base,nutrientKey:'iron_mg',profile:{id:'a',sex:'female'},birthYear:2026-age});assert.equal(view.rows.length,7);assert.deepEqual(view.rows.filter(row=>row.eligible).map(row=>[row.reference.kind,row.reference.amount]),[['UL',45]]);assert.ok(view.rows.filter(row=>row.reference.menstrualBasis).every(row=>row.reasons.includes('menstrual-context-not-established')));assert.equal(view.adequacyAssessment,false);}
 });
 
 test('B12 adult shared reference categories do not infer an absorption status or manufacture a zero UL',()=>{
  for(const age of [36,51,72]){const view=dietaryReferenceEligibility({...base,nutrientKey:'vitamin_b12_ug',birthYear:2026-age});assert.deepEqual(view.rows.filter(row=>row.eligible).map(row=>[row.reference.kind,row.reference.amount]),[['EAR',2],['RDA',2.4]]);assert.equal(view.adequacyAssessment,false);assert.equal(view.rows.some(row=>row.reference.kind==='UL'),false);}
+});
+
+test('sodium and vitamin K match published demographic context while unknown actual iron/zinc diet withholds requirements only',()=>{
+ assert.deepEqual(eligible({...base,nutrientKey:'sodium_mg'}),[['AI',1500],['CDRR',2300]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_k_ug'}),[['AI',120]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_k_ug',profile:{id:'a',sex:'female'}}),[['AI',90]]);
+ for(const key of ['iron_mg','zinc_mg']){const view=dietaryReferenceEligibility({...base,nutrientKey:key});assert.deepEqual(view.rows.filter(row=>row.eligible).map(row=>row.reference.kind),['UL']);assert.ok(view.rows.filter(row=>row.reference.kind!=='UL').every(row=>row.reasons.includes('dietary-pattern-not-established')));assert.ok(view.rows.length>1);assert.equal(view.adequacyAssessment,false);}
 });

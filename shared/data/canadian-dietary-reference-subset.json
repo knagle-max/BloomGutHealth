@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v8",
+  "version": "hc-dietary-reference-subset-2026-11-18-v9",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -10,7 +10,7 @@
       "id": "hc-vitamins",
       "title": "Health Canada: Dietary reference values for vitamins",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
-      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133; Table 3 Folate adult rows/footnotes12\u201313; Table 1 Vitamin E adult rows/footnotes5\u20136; Table 3 Vitamin B12 adult rows and footnotes14/f",
+      "location": "Table 2, Vitamin C adult male/female rows and footnote 8; Table 1 Vitamin D adult rows and footnotes ** and 4; Table 1 Vitamin A adult rows and footnotes 1\u20133; Table 3 Folate adult rows/footnotes12\u201313; Table 1 Vitamin E adult rows/footnotes5\u20136; Table 3 Vitamin B12 adult rows and footnotes14/f; Table 1 Vitamin K adult rows and footnote7",
       "note": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
       "retrievedOn": "2026-11-18"
     },
@@ -18,7 +18,7 @@
       "id": "hc-elements",
       "title": "Health Canada: Dietary reference values for elements",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
-      "location": "Table 1 Calcium adult rows and footnote ** (2011 revision); Table 2 Magnesium adult rows and footnote 19; Table 3 Potassium adult rows and footnotes ***, 24 and 25; Table 2 Iron adult rows and footnotes18/g",
+      "location": "Table 1 Calcium adult rows and footnote ** (2011 revision); Table 2 Magnesium adult rows and footnote 19; Table 3 Potassium adult rows and footnotes ***, 24 and 25; Table 2 Iron adult rows and footnotes18/g; Table 3 Zinc/Sodium adult rows and footnotes***/23/27",
       "note": "Magnesium UL covers pharmacological agents and excludes food and water. Calcium uses the 2011 reference values; equal adjacent adult age bands are coalesced only within the same sex/reference kind/value/scope.",
       "retrievedOn": "2026-11-18"
     }
@@ -652,7 +652,8 @@
       "intakeScope": "total-intake",
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
-      "referencePeriod": "usual-daily-intake"
+      "referencePeriod": "usual-daily-intake",
+      "dietaryPatternBasis": "source-mixed-diet"
     },
     {
       "id": "hc-iron_mg-M-19-rda",
@@ -667,7 +668,8 @@
       "intakeScope": "total-intake",
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
-      "referencePeriod": "usual-daily-intake"
+      "referencePeriod": "usual-daily-intake",
+      "dietaryPatternBasis": "source-mixed-diet"
     },
     {
       "id": "hc-iron_mg-F-19-ear",
@@ -683,7 +685,8 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake",
-      "menstrualBasis": "source-assumed-menstruating"
+      "menstrualBasis": "source-assumed-menstruating",
+      "dietaryPatternBasis": "source-mixed-diet"
     },
     {
       "id": "hc-iron_mg-F-19-rda",
@@ -699,7 +702,8 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake",
-      "menstrualBasis": "source-assumed-menstruating"
+      "menstrualBasis": "source-assumed-menstruating",
+      "dietaryPatternBasis": "source-mixed-diet"
     },
     {
       "id": "hc-iron_mg-F-51-ear",
@@ -715,7 +719,8 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake",
-      "menstrualBasis": "source-assumed-postmenopausal"
+      "menstrualBasis": "source-assumed-postmenopausal",
+      "dietaryPatternBasis": "source-mixed-diet"
     },
     {
       "id": "hc-iron_mg-F-51-rda",
@@ -731,7 +736,8 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake",
-      "menstrualBasis": "source-assumed-postmenopausal"
+      "menstrualBasis": "source-assumed-postmenopausal",
+      "dietaryPatternBasis": "source-mixed-diet"
     },
     {
       "id": "hc-iron_mg-all-19-ul",
@@ -777,6 +783,145 @@
       "smokingApplicability": "not-specific",
       "lifeStage": "nonpregnant-nonlactating-adult",
       "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-sodium_mg-all-19-ai",
+      "nutrientKey": "sodium_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "AI",
+      "amount": 1500,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-sodium_mg-all-19-cdrr",
+      "nutrientKey": "sodium_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "CDRR",
+      "amount": 2300,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_k_ug-M-19-ai",
+      "nutrientKey": "vitamin_k_ug",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "AI",
+      "amount": 120,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-vitamin_k_ug-F-19-ai",
+      "nutrientKey": "vitamin_k_ug",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "AI",
+      "amount": 90,
+      "unit": "\u00b5g/day",
+      "sourceId": "hc-vitamins",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-zinc_mg-M-19-ear",
+      "nutrientKey": "zinc_mg",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 9.4,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "dietaryPatternBasis": "source-mixed-diet"
+    },
+    {
+      "id": "hc-zinc_mg-M-19-rda",
+      "nutrientKey": "zinc_mg",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 11,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "dietaryPatternBasis": "source-mixed-diet"
+    },
+    {
+      "id": "hc-zinc_mg-F-19-ear",
+      "nutrientKey": "zinc_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "EAR",
+      "amount": 6.8,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "dietaryPatternBasis": "source-mixed-diet"
+    },
+    {
+      "id": "hc-zinc_mg-F-19-rda",
+      "nutrientKey": "zinc_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "RDA",
+      "amount": 8,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake",
+      "dietaryPatternBasis": "source-mixed-diet"
+    },
+    {
+      "id": "hc-zinc_mg-all-19-ul",
+      "nutrientKey": "zinc_mg",
+      "sexReferenceCategory": "all",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "UL",
+      "amount": 40,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
@@ -789,6 +934,9 @@
     "folate_ug": "Folate requirements use dietary folate equivalents (DFE). The upper limit uses micrograms of folic acid from supplements and fortified foods, not DFE or naturally occurring food folate. Existing total-folate food fields and labels with unknown form do not establish DFE or the synthetic amount. No conversion, pregnancy/preconception dose or intake assessment is calculated here.",
     "vitamin_e_mg": "Vitamin E requirements refer to alpha-tocopherol in 2R-stereoisomeric forms. The upper limit applies only to synthetic vitamin E from supplements and fortified foods. A source field without stereoisomer or formulation details does not establish either basis. No IU/activity conversion or intake assessment is calculated here.",
     "iron_mg": "The source female iron requirements assume menstruation before age 51 and post-menopause from age 51. Profile sex and birth year do not establish either status for an individual. The source also reports higher requirements for vegetarian diets; no personal adjustment is calculated. These reference facts do not estimate absorption or individual inadequacy probability, particularly with menstrual losses. The UL is not a treatment dose.",
-    "vitamin_b12_ug": "Vitamin B12 has no established UL in this source; that does not mean unlimited intake is safe. Dietary amounts do not establish absorption or blood B12 status. The source notes that food-bound B12 absorption can be reduced in older adults and discusses fortified foods or supplements for those over 50. This is general source context, not an inferred personal absorption problem or a supplemental dose recommendation."
+    "vitamin_b12_ug": "Vitamin B12 has no established UL in this source; that does not mean unlimited intake is safe. Dietary amounts do not establish absorption or blood B12 status. The source notes that food-bound B12 absorption can be reduced in older adults and discusses fortified foods or supplements for those over 50. This is general source context, not an inferred personal absorption problem or a supplemental dose recommendation.",
+    "vitamin_k_ug": "The source publishes vitamin K Adequate Intakes (AI), with no established UL; that does not mean unlimited intake is safe. Intake below an AI does not establish inadequacy. The available generic food field reports phylloquinone, not all vitamin K forms. No conversion or personal clotting/medication assessment is calculated.",
+    "sodium_mg": "Health Canada uses the 2019 sodium values. AI and CDRR have different meanings: CDRR is the intake level above which reduction is expected to reduce chronic disease risk in an apparently healthy population. It is not a UL, a normal interval or a personal treatment target. No sodium UL is established in this source. These facts do not set or change your saved meal-planning targets.",
+    "zinc_mg": "The source reports higher zinc requirements for vegetarian diets, especially diets based mainly on grains and legumes. These published base requirements assume the source mixed-diet context; saved preferences or incomplete logs do not establish an actual dietary pattern. No personal adjustment, absorbed amount or compound-to-elemental conversion is calculated."
   }
 }

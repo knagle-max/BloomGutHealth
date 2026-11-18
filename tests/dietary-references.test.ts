@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {dietaryReferenceSubset,dietaryReferencesFor,dietaryReferenceRowSchema} from '../shared/dietary-references';
 test('curated Health Canada source facts preserve separate adult EAR/RDA/UL, sex/age categories and source-specific scope',()=>{
- assert.equal(dietaryReferenceSubset.rows.length,50);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['AI','EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
+ assert.equal(dietaryReferenceSubset.rows.length,59);assert.deepEqual(Array.from(new Set(dietaryReferenceSubset.rows.map(row=>row.kind))).sort(),['AI','CDRR','EAR','RDA','UL']);assert.equal(dietaryReferenceSubset.authority,'Health Canada');assert.equal(dietaryReferenceSubset.retrievedOn,'2026-11-18');assert.equal(dietaryReferenceSubset.sourcePublishedOn,null);assert.equal(dietaryReferenceSubset.effectiveFrom,null);
  const rda=(nutrient:string,sex:string,ageMin:number)=>dietaryReferencesFor(nutrient).find(row=>row.kind==='RDA'&&row.sexReferenceCategory===sex&&row.ageMinYears===ageMin)!;
  assert.equal(rda('vitamin_c_mg','M',19).amount,90);assert.equal(rda('vitamin_c_mg','F',19).amount,75);
  for(const [sex,age,value]of [['M',19,400],['M',31,420],['F',19,310],['F',31,320]]as const)assert.equal(rda('magnesium_mg',sex,age).amount,value);
@@ -64,4 +64,13 @@ test('iron retains explicit female source menstrual assumptions and never invent
 
 test('B12 retains adult microgram EAR/RDA and no invented UL, blood status or absorbed amount',()=>{
  const rows=dietaryReferencesFor('vitamin_b12_ug');assert.deepEqual(rows.map(row=>[row.kind,row.amount,row.unit,row.ageMinYears,row.ageMaxYears]),[['EAR',2,'µg/day',19,null],['RDA',2.4,'µg/day',19,null]]);const{referenceVersion,...row}=rows[0];for(const kind of ['UL','AI','CDRR'])assert.equal(dietaryReferenceRowSchema.safeParse({...row,kind}).success,false);for(const unit of ['mg/day','pmol/L'])assert.equal(dietaryReferenceRowSchema.safeParse({...row,unit}).success,false);assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_b12_ug,/does not mean unlimited intake is safe/);assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_b12_ug,/not an inferred personal absorption problem/);
+});
+
+test('sodium AI/CDRR and vitamin K AI never become normal intervals, upper limits or source-form intake assessments',()=>{
+ assert.deepEqual(dietaryReferencesFor('sodium_mg').map(row=>[row.kind,row.amount,row.unit]),[['AI',1500,'mg/day'],['CDRR',2300,'mg/day']]);assert.deepEqual(dietaryReferencesFor('vitamin_k_ug').map(row=>[row.sexReferenceCategory,row.kind,row.amount,row.unit]),[['M','AI',120,'µg/day'],['F','AI',90,'µg/day']]);
+ for(const key of ['sodium_mg','vitamin_k_ug']){const{referenceVersion,...row}=dietaryReferencesFor(key)[0];assert.equal(dietaryReferenceRowSchema.safeParse({...row,kind:'UL'}).success,false);}assert.match(dietaryReferenceSubset.nutrientNotes.sodium_mg,/not a UL, a normal interval or a personal treatment target/);assert.match(dietaryReferenceSubset.nutrientNotes.vitamin_k_ug,/phylloquinone, not all vitamin K forms/);
+});
+test('iron and zinc retain source mixed-diet assumptions without silently applying vegetarian multipliers',()=>{
+ const zinc=dietaryReferencesFor('zinc_mg');assert.deepEqual(zinc.map(row=>[row.sexReferenceCategory,row.kind,row.amount]),[['M','EAR',9.4],['M','RDA',11],['F','EAR',6.8],['F','RDA',8],['all','UL',40]]);
+ for(const key of ['iron_mg','zinc_mg'])for(const row of dietaryReferencesFor(key)){assert.equal(row.dietaryPatternBasis,row.kind==='UL'?undefined:'source-mixed-diet');if(row.kind!=='UL'){const{referenceVersion,...native}=row;assert.equal(dietaryReferenceRowSchema.safeParse({...native,dietaryPatternBasis:undefined}).success,false);}}
 });

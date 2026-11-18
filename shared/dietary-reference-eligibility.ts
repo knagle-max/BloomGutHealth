@@ -33,6 +33,7 @@ export function dietaryReferenceEligibility(input:{actor:string;profile:{id:stri
    else if(ageRange.min<row.ageMinYears||(row.ageMaxYears!==null&&ageRange.max>row.ageMaxYears))reasons.push('age-category-not-established');
   }
   if(row.sexReferenceCategory!=='all'&&row.sexReferenceCategory!==sex)reasons.push(sex?'different-reference-sex-category':'reference-sex-category-not-recorded');
+  if(row.dietaryPatternBasis)reasons.push('dietary-pattern-not-established');
   if(row.menstrualBasis)reasons.push('menstrual-context-not-established');
   if(row.smokingApplicability==='non-smoker')reasons.push('smoking-status-not-recorded');
   return{reference:row,eligible:reasons.length===0,reasons};

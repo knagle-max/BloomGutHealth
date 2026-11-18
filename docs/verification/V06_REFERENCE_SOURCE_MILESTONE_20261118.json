@@ -1,0 +1,30 @@
+{
+  "task": "V06-REFERENCE-SOURCE-MILESTONE",
+  "status": "ALREADY_VERIFIED",
+  "commit": "906416646518377e3d1db6a263308b50a478bfc7",
+  "qualification": {
+    "commit": "906416646518377e3d1db6a263308b50a478bfc7",
+    "workflow": 44335001853,
+    "job": 134909272392,
+    "conclusion": "success",
+    "unit": "871/871PASS0failed/skipped",
+    "hosted": "Exact binding/privacy/recovery and navigation/media PASS",
+    "neon": "All required isolated live schema/persistence/ownership/control gates PASS",
+    "render": "dep-dbus5ke1egvs73b95vi0",
+    "liveAt": "2026-11-18T15:24:39.246874Z"
+  },
+  "includedSlices": [
+    "064df517 calcium and manual-label focus/zero repair",
+    "95da7364 potassiumAI/noUL",
+    "a94a8656 goals-only sourced Food acceptance",
+    "140e10b3 LDL activity context",
+    "c6e1ed0d dietaryD source units",
+    "897802b0 preformedA UL scope",
+    "90641664 folateDFE/synthetic-folic-acid and vitaminE source scopes"
+  ],
+  "limits": [
+    "Does not qualify later local iron/B12/weight/zinc/K/sodium changes.",
+    "Earlier064 failed exact hosted mismatch after advancing review deploy;906 complete SUCCESS is the actual qualified descendant.",
+    "No whole v0.6 RC or independent final review claim."
+  ]
+}
