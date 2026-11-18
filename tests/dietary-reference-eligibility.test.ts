@@ -19,10 +19,10 @@ test('missing/conflicting/clinical/life-stage context never infers eligibility; 
  assert.deepEqual(eligible({...base,profile:{id:'a',sex:'unknown'}}),[['UL',350]],'An all-sex reference can retain eligibility when its other conditions are confirmed');
  assert.throws(()=>dietaryReferenceEligibility({...base,actor:'b'}),/SCOPE/);assert.throws(()=>dietaryReferenceEligibility({...base,healthContext:{pregnancy:'not-sure'}}),/CONTEXT/);
 });
-test('no smoking assumption, no historical stage/era projection, no invented B6 or missing references',()=>{
+test('no smoking assumption, no historical stage/era projection, no invented missing references',()=>{
  const vitamin=dietaryReferenceEligibility({...base,nutrientKey:'vitamin_c_mg'});assert.deepEqual(vitamin.rows.filter(row=>row.eligible).map(row=>row.reference.kind),['UL']);assert.ok(vitamin.rows.filter(row=>row.reference.kind!=='UL').every(row=>row.reasons.includes('smoking-status-not-recorded')));
  const historical=dietaryReferenceEligibility({...base,date:'2025-11-18'});assert.deepEqual(historical.ageRange,{min:34,max:35});assert.equal(historical.rows.some(row=>row.eligible),false);assert.ok(historical.rows.every(row=>row.reasons.includes('historical-life-stage-and-reference-era-not-established')));
- assert.deepEqual(dietaryReferenceEligibility({...base,nutrientKey:'vitamin_b6_mg'}).rows,[]);
+ assert.deepEqual(dietaryReferenceEligibility({...base,nutrientKey:'thiamin_mg'}).rows,[]);
  for(const patch of [{date:'2026-02-30'},{timeZone:'invented'},{asOf:'not-a-date'}])assert.throws(()=>dietaryReferenceEligibility({...base,...patch}),/WINDOW/);
 });
 
@@ -68,4 +68,13 @@ test('sodium and vitamin K match published demographic context while unknown act
 test('exploring pregnancy/lactation facts never turns the combined pregnancy/breastfeeding/planning answer into a confirmed personal stage',()=>{
  for(const lifeStage of ['pregnancy-adult','lactation-adult']as const)for(const pregnancy of ['yes','no','unknown']as const){const view=dietaryReferenceEligibility({...base,nutrientKey:'folate_ug',lifeStage,healthContext:{...base.healthContext,pregnancy}});assert.equal(view.rows.length,3);assert.ok(view.rows.every(row=>row.reference.lifeStage===lifeStage&&!row.eligible&&row.reasons.includes('specific-life-stage-not-established')));assert.equal(view.adequacyAssessment,false);assert.equal(view.usualIntakeAssessment,false);}
  const view=dietaryReferenceEligibility({...base,nutrientKey:'magnesium_mg',lifeStage:'pregnancy-adult',date:'2025-11-18'});assert.equal(view.rows.length,5);assert.ok(view.rows.every(row=>row.reasons.includes('historical-life-stage-and-reference-era-not-established')));
+});
+
+test('B6 uses birth-year category uncertainty and existing shared health context; no inferred birthday or personal safety assessment',()=>{
+ const run=(patch:Record<string,unknown>={})=>dietaryReferenceEligibility({...base,nutrientKey:'vitamin_b6_mg',...patch}).rows.filter(row=>row.eligible).map(row=>[row.reference.kind,row.reference.amount]);
+ assert.deepEqual(run(),[['EAR',1.1],['RDA',1.3],['UL',100]]);assert.deepEqual(run({profile:{id:'a',sex:'unknown'}}),[['EAR',1.1],['RDA',1.3],['UL',100]]);
+ assert.deepEqual(run({birthYear:1974}),[['EAR',1.4],['RDA',1.7],['UL',100]]);assert.deepEqual(run({birthYear:1974,profile:{id:'a',sex:'female'}}),[['EAR',1.3],['RDA',1.5],['UL',100]]);
+ assert.deepEqual(run({birthYear:1975}),[['UL',100]],'Possible50–51 cannot select a requirement across different source categories');assert.deepEqual(run({birthYear:1974,profile:{id:'a',sex:'unknown'}}),[['UL',100]]);
+ for(const patch of [{birthYear:2007},{birthYear:null},{date:'2025-11-18'},{healthContext:{...base.healthContext,pregnancy:'unknown'}},{healthContext:{...base.healthContext,medications:['Synthetic medicine']}}])assert.deepEqual(run(patch),[]);
+ const generic=dietaryReferenceEligibility({...base,nutrientKey:'vitamin_b6_mg',birthYear:null});assert.equal(generic.rows.length,7,'All source values remain available when personal matching is unknown');assert.equal(generic.adequacyAssessment,false);
 });

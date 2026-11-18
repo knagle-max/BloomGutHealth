@@ -1,0 +1,62 @@
+{
+  "task": "V06-M2-B6-Canadian-reference-matching",
+  "date": "2026-11-18",
+  "status": "ENGINEERING_TESTED",
+  "outcome": "B6 general Canadian source values are available through existing reference disclosure and matched to current account Profile/shared health context only where supported. Unknown profile inputs never hide general published values.",
+  "version": "hc-dietary-reference-subset-2026-11-18-v11",
+  "rows": {
+    "added": 13,
+    "total": 142,
+    "adult": 66,
+    "pregnancy": 38,
+    "lactation": 38
+  },
+  "source": {
+    "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html",
+    "location": "Table2 final three VitaminB6 mg/day columns, adult male/female and Pregnancy/Lactation rows; table note",
+    "inspectedOn": "2026-11-18",
+    "sourceOriginalBytesAcquired": false,
+    "publishedOn": null,
+    "effectiveFrom": null
+  },
+  "numeric_verification": {
+    "adult19to50": {
+      "EAR": 1.1,
+      "RDA": 1.3
+    },
+    "male51plus": {
+      "EAR": 1.4,
+      "RDA": 1.7
+    },
+    "female51plus": {
+      "EAR": 1.3,
+      "RDA": 1.5
+    },
+    "adultUL": 100,
+    "pregnancy19to50": {
+      "EAR": 1.6,
+      "RDA": 1.9,
+      "UL": 100
+    },
+    "lactation19to50": {
+      "EAR": 1.7,
+      "RDA": 2,
+      "UL": 100
+    },
+    "unit": "mg/day",
+    "scope": "total-intake",
+    "coalescing": "Only identical adjacent ages and sex categories; no younger/older life-stage extrapolation"
+  },
+  "verification": [
+    "33 focused reference/schema/API/eligibility/B6-source/overlap tests pass",
+    "Actual App\u2192HTTP\u2192encrypted Profile/context browser:1.3mg RDA age36;1.7male/1.5female age52; possible50\u201351 suppresses only unmatched requirements; same100mg UL retains applicability; pregnancy exploration not a personal status; outage withdraws matching while source values remain; retry restores",
+    "Eight B6-specific320/390/768/1440 light/dark200% text fit checks plus unchanged32 generic mode/theme/zoom/current/historical/owner/shared-context controls pass; no screenshots collected",
+    "Typecheck and production build pass"
+  ],
+  "limits": [
+    "Health Canada100mg/day and EFSA2023 12mg/day reference differences remain explicit and separately sourced; neither asserts personal safety",
+    "No new food composition values, generic producer fields, dose/compound conversions, complete-day total, adequacy or treatment inference",
+    "The overlap candidate has not yet joined this matching response or selected an individual safety conclusion; M2/BIO-VALUE work remains partial",
+    "Exact published CI/hosted verification pending; independent science acceptance not claimed"
+  ]
+}

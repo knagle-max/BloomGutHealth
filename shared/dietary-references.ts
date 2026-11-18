@@ -5,7 +5,7 @@ export const dietaryReferenceLifeStageSchema=z.enum(['nonpregnant-nonlactating-a
 export type DietaryReferenceLifeStage=z.infer<typeof dietaryReferenceLifeStageSchema>;
 export const dietaryReferenceLifeStages=[{key:'nonpregnant-nonlactating-adult',name:'Not pregnant or lactating'},{key:'pregnancy-adult',name:'Pregnancy'},{key:'lactation-adult',name:'Lactation'}] as const;
 export const dietaryReferenceRowSchema=z.object({
- id:z.string().min(1),nutrientKey:z.enum(['vitamin_c_mg','magnesium_mg','calcium_mg','potassium_mg','vitamin_d_ug','vitamin_a_ug','folate_ug','vitamin_e_mg','iron_mg','vitamin_b12_ug','vitamin_k_ug','sodium_mg','zinc_mg']),
+ id:z.string().min(1),nutrientKey:z.enum(['vitamin_c_mg','magnesium_mg','calcium_mg','potassium_mg','vitamin_d_ug','vitamin_a_ug','folate_ug','vitamin_e_mg','iron_mg','vitamin_b12_ug','vitamin_k_ug','sodium_mg','zinc_mg','vitamin_b6_mg']),
  sexReferenceCategory:z.enum(['M','F','all']),ageMinYears:z.number().int().min(19),ageMaxYears:z.number().int().min(19).nullable(),
  kind:z.enum(['EAR','RDA','AI','UL','CDRR']),amount:z.number().finite().positive(),unit:z.enum(['mg/day','µg/day','µg RAE/day','µg DFE/day','µg folic acid/day']),
  lifeStage:dietaryReferenceLifeStageSchema,referencePeriod:z.literal('usual-daily-intake'),
@@ -28,7 +28,7 @@ export const dietaryReferenceRowSchema=z.object({
  if(row.ageMaxYears!==null&&row.ageMaxYears<row.ageMinYears)ctx.addIssue({code:'custom',message:'Retain the published ordered age category'});
  if((row.nutrientKey==='magnesium_mg'&&row.kind==='UL')!==(row.intakeScope==='pharmacological-only'))ctx.addIssue({code:'custom',message:'Magnesium UL excludes food and water; other references keep total-intake scope'});
  if(row.nutrientKey==='vitamin_c_mg'&&row.kind!=='UL'&&row.smokingApplicability!=='non-smoker')ctx.addIssue({code:'custom',message:'Keep the source nonsmoking requirement basis; no smoking adjustment is inferred'});
- if(row.sourceId!==(['vitamin_c_mg','vitamin_d_ug','vitamin_a_ug','folate_ug','vitamin_e_mg','vitamin_b12_ug','vitamin_k_ug'].includes(row.nutrientKey)?'hc-vitamins':'hc-elements'))ctx.addIssue({code:'custom',message:'Keep each nutrient with its actual source'});
+ if(row.sourceId!==(['vitamin_c_mg','vitamin_d_ug','vitamin_a_ug','folate_ug','vitamin_e_mg','vitamin_b12_ug','vitamin_k_ug','vitamin_b6_mg'].includes(row.nutrientKey)?'hc-vitamins':'hc-elements'))ctx.addIssue({code:'custom',message:'Keep each nutrient with its actual source'});
 });
 const rows=Object.freeze(data.rows.map(row=>Object.freeze({...dietaryReferenceRowSchema.parse(row),referenceVersion:data.version})));
 if(new Set(rows.map(row=>row.id)).size!==rows.length)throw Error('Keep each published dietary reference identity unique');
@@ -39,4 +39,4 @@ export const dietaryReferenceSubset=Object.freeze({...data,rows,sources:Object.f
 export function dietaryReferencesFor(nutrientKey:string,lifeStage:DietaryReferenceLifeStage='nonpregnant-nonlactating-adult'){return dietaryReferenceSubset.rows.filter(row=>row.nutrientKey===nutrientKey&&row.lifeStage===lifeStage);}
 export const dietaryReferenceKinds={EAR:'Estimated average requirement',RDA:'Recommended dietary allowance',AI:'Adequate intake',UL:'Tolerable upper intake level',CDRR:'Chronic disease risk reduction intake'} as const;
 
-export const dietaryReferenceNutrients=Object.freeze([{key:'vitamin_c_mg',name:'Vitamin C'},{key:'magnesium_mg',name:'Magnesium'},{key:'calcium_mg',name:'Calcium'},{key:'potassium_mg',name:'Potassium'},{key:'vitamin_d_ug',name:'Vitamin D'},{key:'vitamin_a_ug',name:'Vitamin A'},{key:'folate_ug',name:'Folate'},{key:'vitamin_e_mg',name:'Vitamin E'},{key:'iron_mg',name:'Iron'},{key:'vitamin_b12_ug',name:'Vitamin B12'},{key:'vitamin_k_ug',name:'Vitamin K'},{key:'sodium_mg',name:'Sodium'},{key:'zinc_mg',name:'Zinc'}]);
+export const dietaryReferenceNutrients=Object.freeze([{key:'vitamin_c_mg',name:'Vitamin C'},{key:'magnesium_mg',name:'Magnesium'},{key:'calcium_mg',name:'Calcium'},{key:'potassium_mg',name:'Potassium'},{key:'vitamin_d_ug',name:'Vitamin D'},{key:'vitamin_a_ug',name:'Vitamin A'},{key:'folate_ug',name:'Folate'},{key:'vitamin_e_mg',name:'Vitamin E'},{key:'iron_mg',name:'Iron'},{key:'vitamin_b12_ug',name:'Vitamin B12'},{key:'vitamin_k_ug',name:'Vitamin K'},{key:'sodium_mg',name:'Sodium'},{key:'zinc_mg',name:'Zinc'},{key:'vitamin_b6_mg',name:'Vitamin B6'}]);
