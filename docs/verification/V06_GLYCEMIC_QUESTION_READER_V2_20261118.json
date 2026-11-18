@@ -35,5 +35,23 @@
     "conclusion": "failure",
     "reason": "Unrelated common-source browser assertion retained the capitalized sentence Your recorded intake is not assessed; life-stage paragraph lowercased it. Restore the exact sentence, no assertion weakened. Full common source/meal/zero/unknown/owner browser regression passes locally.",
     "compatibleRuntime": "Latest Architect docs descendant454c4c55 RenderLIVE dep-dbuu1bj9f4gs73c6gtag17:33:28UTC. Exact full CI still pending repair qualification; new HbA1c producer not activated."
+  },
+  "repairedPublicationQualification": {
+    "commit": "50c32e4699b2febc29532685d9d3580f3b9c3ccd",
+    "workflowRun": 44382591347,
+    "job": 135078578651,
+    "conclusion": "SUCCESS",
+    "tests": 885,
+    "pass": 885,
+    "fail": 0,
+    "skipped": 0,
+    "hosted": "All required exact binding/recovery/navigation/media/source-byte checks PASS",
+    "isolatedNeon": "All required persistence/account/atomicity/control gates PASS",
+    "render": {
+      "id": "dep-dbuvrg142hec73apgob0",
+      "status": "LIVE",
+      "finishedAt": "2026-11-18T19:36:04.960792Z"
+    },
+    "scope": "Compatible glycemic protocol2 reader, general life-stage reference views and case-sensitive copy repair; no HbA1c producer activation yet"
   }
 }

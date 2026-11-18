@@ -1,3 +1,4 @@
+import B6OverlapReferenceReview from './B6OverlapReferenceReview';
 import VitaminB6ReferenceContext from './VitaminB6ReferenceContext';
 import {dietaryReferenceNutrients} from '@shared/dietary-references';
 import DietaryReferenceDisclosure from './DietaryReferenceDisclosure';
@@ -44,7 +45,7 @@ export default function RecordedIntakeSources(){
    {data.coverage.overlap&&<section aria-label="Recorded B6 label overlap" className="space-y-2">
     <h4>B6 repeats across taken entries</h4><p>{data.coverage.overlap.finding}</p>
     <p>Known supplemental B6 from these entries: <strong>{formatNutrientAmount(data.coverage.overlap.knownSupplementalMg)} mg</strong>.</p>
-    <p>{data.coverage.overlap.biologicalMeaning}</p>
+    <p>{data.coverage.overlap.biologicalMeaning}</p><B6OverlapReferenceReview sources={data}/>
     <p className="panel-note">Known supplement contributions only; food and unrecorded intake are not included. Personal reference applicability and clinical significance are not established.</p>
     <details><summary className="min-h-11 cursor-pointer">Review contributing taken entries</summary><ul className="space-y-2">{data.coverage.overlap.members.map(member=><li key={member.eventKey}><strong>{member.name}: {formatNutrientAmount(member.amountMg)} mg</strong><p className="panel-note">{member.occurredAt} · saved label {member.labelId} · version {member.labelVersion??'Not supplied'}</p></li>)}</ul>{data.coverage.overlap.unknownSupplementEntries>0&&<p>{data.coverage.overlap.unknownSupplementEntries} other recorded supplement {data.coverage.overlap.unknownSupplementEntries===1?'entry has':'entries have'} no compatible known B6 amount.</p>}<p className="panel-note">Review the declarations together when reviewing these supplement entries. This source finding does not change prescribed use or establish toxicity.</p></details>
    </section>}

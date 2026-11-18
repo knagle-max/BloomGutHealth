@@ -1,3 +1,6 @@
+import {recordedB6ReferenceReview} from '../shared/recorded-b6-reference-review';
+import {dietaryReferenceEligibility} from '../shared/dietary-reference-eligibility';
+import {contextSchema} from '../shared/precision-nutrition';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID,createHash} from 'node:crypto';
@@ -25,4 +28,19 @@ test('BIO-VALUE07/13: current corrections/deletions change only current-source m
  const current=knownNutrientCoverage(read([corrected,b]),actor,'vitamin_b6_mg').overlap!;assert.equal(current.knownSupplementalMg,50);assert.notEqual(current.sourceEpoch,first.sourceEpoch);assert.deepEqual(corrected.payload.original,original);assert.equal(current.observationRefs[0].revision,revision);assert.equal(knownNutrientCoverage(read([b]),actor,'vitamin_b6_mg').overlap,null);
  assert.throws(()=>knownNutrientCoverage(read([a,b]),'b','vitamin_b6_mg'),/SCOPE/);
  const malformed=read([a,b]);malformed.events[0].rows.find(row=>row.nutrientKey==='vitamin_b6_mg')!.occurredAt='2026-11-17T10:00:00Z';assert.throws(()=>knownNutrientCoverage(malformed,actor,'vitamin_b6_mg'),/ROW_TIME/);
+});
+
+const reference=(patch:Record<string,unknown>={})=>({...dietaryReferenceEligibility({actor,profile:{id:actor,sex:'male'},birthYear:1990,healthContext:contextSchema.parse({pregnancy:'no',ageGroup:'adult',safetyReviewed:true}),nutrientKey:'vitamin_b6_mg',date,timeZone,asOf,...patch}),revision:'a'.repeat(64)});
+test('BIO-VALUE04: a known partial supplemental overlap can reach a matched total-intake limit without becoming complete-day exposure or a toxicity diagnosis',()=>{
+ const view=read([taken('a',50),taken('b',50),taken('c',20,null)]),before=structuredClone(view),review=recordedB6ReferenceReview(view,actor,reference())!;
+ assert.ok(review);assert.match(review.finding,/reaches/);assert.doesNotMatch(review.finding,/exceeds/);assert.equal(review.reference.amount,100);assert.equal(review.reference.intakeScope,'total-intake');assert.equal(review.releaseState,'feature-eligible');assert.equal(review.referenceApplicability,'matched-published-context');assert.equal(review.unknownSupplementEntries,1);assert.match(review.biologicalMeaning,/single recorded day does not establish usual exposure or harm/);assert.match(review.discussion,/do not change a prescribed dose/);assert.equal(review.practicalNextStepId,null);assert.deepEqual(view,before);
+ const higher=recordedB6ReferenceReview(read([taken('a',75),taken('b',50)]),actor,reference())!;assert.match(higher.finding,/exceeds/);assert.equal(recordedB6ReferenceReview(read([taken('a',50),taken('b',25)]),actor,reference()),null,'Below a limit cannot clear incomplete exposure');
+});
+test('BIO-VALUE06/07/13: missing/foreign/old/unmatched reference or substituted scope cannot produce a personalized B6 comparison; revisions change the dependency token',()=>{
+ const view=read([taken('a',75),taken('b',50)]),ref=reference();
+ for(const patch of [{birthYear:null},{date:'2025-11-18'},{healthContext:{pregnancy:'unknown',safetyReviewed:true}},{healthContext:{pregnancy:'no',safetyReviewed:true,medications:['Synthetic medicine']}}])assert.equal(recordedB6ReferenceReview(view,actor,reference(patch)),null);
+ for(const context of [null,{...ref,date:'2026-11-17'},{...ref,timeZone:'America/Regina'},{...ref,referenceVersion:'old'},{...ref,rows:ref.rows.map(row=>row.reference.kind==='UL'?{...row,reference:{...row.reference,amount:12}}:row)},{...ref,rows:ref.rows.filter(row=>row.reference.kind!=='UL')}])assert.equal(recordedB6ReferenceReview(view,actor,context),null);
+ assert.throws(()=>recordedB6ReferenceReview(view,actor,{...ref,userId:'b'}),/SCOPE/);assert.throws(()=>recordedB6ReferenceReview(view,'b',ref),/SCOPE/);
+ assert.notEqual(recordedB6ReferenceReview(view,actor,ref)!.sourceEpoch,recordedB6ReferenceReview(view,actor,{...ref,revision:'b'.repeat(64)})!.sourceEpoch);
+ assert.equal(recordedB6ReferenceReview(read([taken('a',125)]),actor,ref),null,'This rule specifically requires an actual distinct-label overlap');
 });

@@ -1,9 +1,6 @@
-import {useQuery} from '@tanstack/react-query';
-import {apiRequest} from '@/lib/queryClient';
-import {accountContextGuard} from '@/lib/request-actor';
+import {useDietaryReferenceContext} from '@/hooks/use-dietary-reference-context';
 import {currentMealTimeZone} from '@shared/meal-time';
 import {intakeCalendarDate} from '@shared/recorded-intake-sources';
-import {dietaryReferenceContextSchema} from '@shared/dietary-reference-eligibility';
 import {Button} from '@/components/ui/button';
 import {useAuth} from '@/lib/auth';
 import type {RecordedFoodRecord} from '@shared/nutrient-observations';
@@ -11,18 +8,13 @@ import {useState} from 'react';
 import {dietaryReferenceSubset,dietaryReferencesFor,dietaryReferenceKinds,dietaryReferenceNutrients,dietaryReferenceLifeStages,type DietaryReferenceLifeStage} from '@shared/dietary-references';
 /** General published facts alongside existing source context, without a second
  * intake calculator, inferred profile/life stage or target-setting control. */
-export const dietaryReferenceContextPath='/api/experience/dietary-reference-context';
+export {dietaryReferenceContextPath} from '@/hooks/use-dietary-reference-context';
 export default function DietaryReferenceDisclosure({recordedMeal,nutrientKey,date,timeZone}:{recordedMeal?:RecordedFoodRecord;nutrientKey?:string;date?:string;timeZone?:string}){
  const {user}=useAuth(),[open,setOpen]=useState(false),[lifeStage,setLifeStage]=useState<DietaryReferenceLifeStage>('nonpregnant-nonlactating-adult');
  const[chosenNutrient,setNutrient]=useState('vitamin_c_mg'),nutrient=nutrientKey??chosenNutrient,rows=dietaryReferencesFor(nutrient,lifeStage),source=dietaryReferenceSubset.sources.find(source=>source.id===rows[0]?.sourceId);
  const zone=timeZone??currentMealTimeZone(),rawMealDate=recordedMeal?.loggedAt,mealTimestamp=rawMealDate instanceof Date?(Number.isFinite(+rawMealDate)?rawMealDate.toISOString():null):rawMealDate;
  const referenceDate=date??(zone?intakeCalendarDate(recordedMeal?mealTimestamp??'':new Date().toISOString(),zone):null);
- const matching=useQuery({queryKey:[dietaryReferenceContextPath,user?.id,dietaryReferenceSubset.version,referenceDate,zone,nutrient,lifeStage],enabled:open&&!!user&&!!referenceDate&&!!zone&&rows.length>0,queryFn:async({signal})=>{
-  const owner=user!.id,assertCurrent=accountContextGuard(owner);assertCurrent();
-  const result=dietaryReferenceContextSchema.parse(await(await apiRequest('GET',dietaryReferenceContextPath+'?'+new URLSearchParams({date:referenceDate!,timeZone:zone!,nutrientKey:nutrient,lifeStage}),undefined,undefined,signal)).json());assertCurrent();
-  if(result.userId!==owner||result.date!==referenceDate||result.timeZone!==zone||result.referenceVersion!==dietaryReferenceSubset.version||result.rows.some(item=>JSON.stringify(item.reference)!==JSON.stringify(rows.find(row=>row.id===item.reference.id))))throw Error('Reference context does not match its source.');
-  return result;
- }});
+ const matching=useDietaryReferenceContext(nutrient,referenceDate,zone,lifeStage,open);
  const matched=!matching.isFetching&&!matching.isError&&!matching.isStale?matching.data:undefined,eligibleIds=new Set(matched?.rows.filter(row=>row.eligible).map(row=>row.reference.id)??[]);
  const reasons=Array.from(new Set(matched?.rows.filter(row=>!row.reasons.includes('different-reference-sex-category')).flatMap(row=>row.reasons).filter(reason=>reason!=='different-age-category')??[]));
  const descriptions:Record<string,string>={'specific-life-stage-not-established':'The combined pregnancy, breastfeeding and planning answer does not establish this specific life stage. Exploring published values does not change Profile.','dietary-pattern-not-established':'An actual dietary pattern is not established. Saved preferences or incomplete food logs do not confirm the source mixed-diet assumption.','menstrual-context-not-established':'The source menstrual-status assumption is not established by Profile sex or birth year.','adult-19plus-category-not-applicable':'Available personal reference categories begin at age 19.','historical-life-stage-and-reference-era-not-established':'Historical life stage and reference effective dates are not established.','birth-year-not-recorded':'Birth year is not recorded in Profile.','nonpregnant-nonlactating-context-not-confirmed':'The shared pregnancy, breastfeeding and planning context is not confirmed for this category.','health-context-not-reviewed':'Shared health context has not been reviewed.','clinical-context-not-assessed':'These general references do not assess your recorded conditions or medications.','age-sources-conflict':'Saved age sources conflict.','age-category-not-established':'Birth year alone does not establish every published age category.','reference-sex-category-not-recorded':'The reference sex category is not recorded in Profile.','smoking-status-not-recorded':'Smoking status is not captured; nonsmoking requirements cannot be matched.'};
