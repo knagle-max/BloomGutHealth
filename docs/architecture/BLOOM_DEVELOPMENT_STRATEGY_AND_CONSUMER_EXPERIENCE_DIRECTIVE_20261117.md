@@ -28,7 +28,7 @@ The **existing Chief Architect and Codex share accountability for consumer-exper
 - Independently decide ordinary screen hierarchy, disclosure, responsive behavior and integration; remove low-value default cards/labels/disclaimers; avoid excessive handoff/approval loops.
 - Render and personally inspect real screens on mobile/tablet/desktop, complete actual workflows, accessibility, data operations and scientific depth paths; correct material confusion/clutter rather than only rearranging cards.
 - Never simplify by deleting scientific observations, changing validated outputs, hiding material abnormal findings/contraindications/uncertainties, adding unreviewed health claims or breaking consent/source access.
-- Only report a screen as visually verified after rendered screenshots and actual user-flow evidence, not code compilation alone.
+- Only report a screen as visually verified after relevant rendered interaction/inspection and actual user-flow evidence, not code compilation alone. **Do not generate before/after screenshots or fixed viewport screenshot sets as routine evidence.**
 
 **Specialists:** Targeted assistance on actual science, design, rights, security or UX problems; no separate Consumer Experience Architect or compulsory serial per-page handoff.
 
@@ -90,7 +90,7 @@ For every new or substantially changed interface, verify:
 6. **Visual craft:** cohesive premium typography/material/spacing and approved imagery; appropriate mode and page-header grammar without wasteful tall hero; no generic replacements.
 7. **Functional integrity:** existing source acquisition, entry/edit/save/reload/correct/undo, account privacy, detailed source and consent management survive.
 8. **Accessibility:** intended mobile/tablet/desktop layout, keyboard, text zoom, contrast, screen readers, actual supported devices.
-9. **Rendered evidence:** real screens at relevant 320/390/768/1024/1440 widths, actionable user journeys, clear regression/NOT_TESTED status. Code tests and a beautiful static mockup are insufficient by themselves.
+9. **Rendered evidence:** focused real-screen and responsive interaction checks at relevant widths, actionable user journeys and clear regression/NOT_TESTED status, documented concisely in text. No routine screenshot capture, before/after pair, screenshot uploads or mandatory five-width image matrix. Code tests and a beautiful static mockup are insufficient by themselves.
 
 Useful spot checks: Can a new user identify the most meaningful item without scrolling through three irrelevant sections? Can they open source details without losing context? Is safety visible when it changes a decision? Does removing extra UI leave the same core science available? Do empty/unknown data states remain honest?
 
@@ -106,6 +106,9 @@ Progress updates must separately distinguish:
 - Actual third-party dependencies/blockers.
 
 Prioritize working software and validated source-to-action journeys, rather than expanding docs. **Success is not quantity of data displayed; it is reliable biological knowledge made understandable, useful, and appropriately personalized.**
+
+
+**Later owner clarification — efficient visual QA (2026-11-17):** Codex need not take before/after screenshots. The Product Owner is not reviewing screenshot pairs, and unnecessary capture/vision analysis consumes tokens. Inspect the real UI when needed, perform relevant responsive/accessibility and user-flow tests, and report concise text results. Use a temporary targeted screenshot only if Codex independently finds it necessary to diagnose a specific visual defect, not as an acceptance artifact or a routine owner deliverable. Preserve approved owner-supplied visual references and functional standards.
 
 ## 9. Alignment and explicit override scope
 
