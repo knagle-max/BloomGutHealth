@@ -1922,7 +1922,7 @@
     "client/src/components/LabCategoryIcon.tsx": "ab0460b7da1707222e8b635ede5fcf6e79a5b8a3030a662099ca7368e21d7caf",
     "client/src/components/LabExplorer.tsx": "a7b6adac36f8868b953d7c47c75639d6f0f4bd1ac360535a5b4b3f4e6de7d129",
     "client/src/components/LabMarkerEducation.tsx": "e11f0b36bc145d32edbc1bbaac551fa4d16ad9d269e1eece337216a13d1dcd77",
-    "client/src/components/LabPanelReview.tsx": "11cc64a30eff8af69e3290705c8107b3c2de4bb8383323532c7e4a526d9d94c8",
+    "client/src/components/LabPanelReview.tsx": "8b62dbf7fa31a84e27469add0dd3d8f350e1679ad8dc9b8cba34e46d3bb17080",
     "client/src/components/LabRangeSelector.tsx": "7ab754de78004a13f322f58c56a1d58db96a5618ea72c55d805d9a580ef348cc",
     "client/src/components/LabReferenceCorrectionEditor.tsx": "8b4bcf3789f940a7c3ff7a337a824568d3948e195a42c84469011b9738bb6943",
     "client/src/components/LabRememberedContext.tsx": "66b5e5f4f0b0f782939e6a3aecdd9f38b9242812bcf4e5337e7a8ed1a6148dc8",

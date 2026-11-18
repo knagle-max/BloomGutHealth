@@ -1,3 +1,4 @@
+import {checkinSchema,type PrecisionReport} from './precision-nutrition';
 import {activitySchema,type ExperienceRecord} from './experience';
 import {labDateText} from './lab-history';
 import type {LabPanelAssessment} from './lab-panel-review';
@@ -49,13 +50,9 @@ export function labActivityDiscussion(pair:LabPanelAssessment,context:LabActivit
  * pre-collection timing, regular adherence, increased activity or causation.
  * In particular a routine's log timestamp is not its occurrence timestamp. */
 export function labActivityContext(pair:LabPanelAssessment,records:readonly ExperienceRecord[],now=Date.now()):LabActivityContext{
- const empty:LabActivityContext={sourceIds:[],window:null,observations:[],status:'source-review',coverage:'unknown'};
- if(!pair.latest||!pair.previous||!pair.comparable||pair.state==='source-review')return empty;
- const from=labDateText(pair.previous.date,pair.previous.sourceReport,pair.previous.dateCorrection);
- const to=labDateText(pair.latest.date,pair.latest.sourceReport,pair.latest.dateCorrection);
- // Stored timestamps without original calendar context can be upload/log dates.
- if(![pair.previous,pair.latest].every(point=>!!(point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate))||from>=to)return empty;
- const result:LabActivityContext={...empty,status:'available',sourceIds:[pair.previous.id,pair.latest.id],window:{from,to,basis:'recorded-calendar-dates'}};
+ const result:LabActivityContext={...labCollectionWindow(pair),observations:[],coverage:'unknown'};
+ if(!result.window)return result;
+ const{from,to}=result.window;
  for(const record of records){
   if(record.kind!=='activity'||!Number.isFinite(Date.parse(record.createdAt))||Date.parse(record.createdAt)>now)continue;
   const parsed=activitySchema.safeParse(record.payload);if(!parsed.success)continue;
@@ -73,4 +70,47 @@ export function labActivityContext(pair:LabPanelAssessment,records:readonly Expe
  }
  result.observations.sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));
  return result;
+}
+
+/** One common collection-date guard for recorded context; strict intervening
+ * calendar dates never establish within-day timing or a biological window. */
+function labCollectionWindow(pair:LabPanelAssessment):Pick<LabActivityContext,'sourceIds'|'window'|'status'>{
+ const empty={sourceIds:[],window:null,status:'source-review' as const};
+ if(!pair.latest||!pair.previous||!pair.comparable||pair.state==='source-review')return empty;
+ const from=labDateText(pair.previous.date,pair.previous.sourceReport,pair.previous.dateCorrection),to=labDateText(pair.latest.date,pair.latest.sourceReport,pair.latest.dateCorrection);
+ if(![pair.previous,pair.latest].every(point=>!!(point.dateCorrection?.enteredDate||point.sourceReport?.enteredDate))||from>=to)return empty;
+ return{status:'available',sourceIds:[pair.previous.id,pair.latest.id],window:{from,to,basis:'recorded-calendar-dates'}};
+}
+
+export type LabWeightObservation={id:string;measuredAt:string;date:string;weight:{value:string|number;unit:'kg'|'lb';basis:'original-entry'|'stored-canonical'}};
+/** Original saved measurements only, with no derived change, BMI, weight-status
+ * classification or inferred scale/method equivalence. Missing stays unknown. */
+export function labWeightContext(pair:LabPanelAssessment,records:PrecisionReport['checkins'],now=Date.now()){
+ const base=labCollectionWindow(pair),observations:LabWeightObservation[]=[];
+ const empty={...base,observations,coverage:'unknown' as const,attribution:'not-established' as const};
+ if(!base.window)return empty;
+ const seen=new Set<string>();
+ for(const record of records){
+  const{id,...payload}=record,parsed=checkinSchema.safeParse(payload);
+  if(!id||seen.has(id)||!parsed.success)return{...empty,status:'source-review' as const,observations:[]};
+  seen.add(id);const value=parsed.data,date=value.measuredAt.slice(0,10);
+  if(value.weightKg===null||Date.parse(value.measuredAt)>now||date<=base.window.from||date>=base.window.to)continue;
+  const original=value.entrySource?.fields.weight;
+  observations.push({id,measuredAt:value.measuredAt,date,weight:original?{value:original.value,unit:original.unit,basis:'original-entry'}:{value:value.weightKg,unit:'kg',basis:'stored-canonical'}});
+ }
+ observations.sort((a,b)=>a.date.localeCompare(b.date)||a.id.localeCompare(b.id));
+ return empty;
+}
+
+/** Canonical patient-test sources retrieved2026-11-18 support general lipid
+ * weight context only; do not borrow that claim for another analyte. */
+export function labWeightDiscussion(pair:LabPanelAssessment,context:ReturnType<typeof labWeightContext>){
+ if(context.status!=='available'||!context.window||context.sourceIds.length!==2||!pair.previous||!pair.latest||context.sourceIds[0]!==pair.previous.id||context.sourceIds[1]!==pair.latest.id)return null;
+ const current=labCollectionWindow(pair);if(!current.window||current.window.from!==context.window.from||current.window.to!==context.window.to)return null;
+ if(pair.id!=='triglycerides'&&pair.id!=='ldl')return null;
+ const profile=labEditorialFor(pair.id);if(!profile)return null;
+ const path=pair.id==='ldl'?'cholesterol-levels':'triglycerides-test',evidence=labEditorialSources(profile).find(source=>source.url===`https://medlineplus.gov/lab-tests/${path}/`);if(!evidence)return null;
+ return{version:'weight-discussion-2026-11-18-v1',evidence,sourceIds:context.sourceIds,observationIds:context.observations.map(row=>row.id),attribution:'not-established' as const,
+  generalContext:'Weight-related health context is one of several considerations in lipid guidance. Recorded weights alone do not establish weight status, a consistent change or an effect on your result.',
+  nextStep:context.observations.length?'Review the measurement dates, scale and conditions before comparing these observations. Your individual causes remain unknown.':'Unrecorded weight history remains unknown. You can review observations you have already saved; no past weight or change is assumed.'};
 }

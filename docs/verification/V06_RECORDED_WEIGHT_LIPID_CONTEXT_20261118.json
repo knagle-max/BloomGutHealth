@@ -1,0 +1,31 @@
+{
+  "task": "V06-C2-RECORDED-WEIGHT-CONTEXT",
+  "status": "IMPLEMENTED_AND_TESTED",
+  "baseCommit": "49b4e704b72de628ef8e1361b9c5537a34ef5acc",
+  "authority": "docs/architecture/RESPONSE_INTELLIGENCE_V06_ARCHITECT_RECONCILIATION_20261114.md",
+  "sourceReview": {
+    "retrievedOn": "2026-11-18",
+    "sources": [
+      "https://medlineplus.gov/lab-tests/triglycerides-test/",
+      "https://medlineplus.gov/lab-tests/cholesterol-levels/"
+    ],
+    "scope": "General lipid weight-related context from existing canonical citations, not personal weight status, loss, clinical dose or causal attribution."
+  },
+  "change": [
+    "Connect existing current owned report.checkins to confirmed comparable TG/LDL collection-date windows; share the existing collection-date guard with activity chronology. No extra query/store, evidence graph or exposure model.",
+    "Retain original weight token/unit where recorded, otherwise label the stored kg value and unavailable original unit. No derived difference, BMI, scale equivalence or weight-status assessment. Missing weights remain unknown.",
+    "Provide existing dated-observation source links with keyboard focus at destination. Source edits/deletion, ambiguous identities, invalid dates, collection-date withdrawal and account changes retract dependent context. Other analytes do not borrow the lipid claim."
+  ],
+  "verification": {
+    "focused": "23/23 recorded weight/activity/panel tests PASS: original150.000lb versus legacy75kg, no input mutation, strict intervening dates, missingness, invalid native conversion, duplicate IDs, exact source/provenance, unsupported analytes and stale sources.",
+    "browser": "Actual App PASS: original values and native-source drilldown/focus/Entered values & units; typed fixture removal2→1→0→2; collection-date withdrawal and second-owner removal. Existing LDL/TG/ALT activity, deletion/outage/retry tests retained.20mode/theme/width states with200%zoom, no writes. Refresh intentionally remounts source panels; harness reopens before checking current rows.",
+    "typesBuild": "TypeScript and production build/original media PASS.",
+    "audits": "8/8 refreshed API/capability/Biology audits PASS.",
+    "fullRegression": "878/878 integrated unit/embedded-SQL tests PASS,0failed/cancelled/skipped; /workspace/bloom-m2-c2-integrated-tests.log. Includes local iron/B12 source and recorded-weight/activity changes; final following documentation/audit refresh separately verified."
+  },
+  "publication": "Local changes held while published90641664 finishes exact CI44335001853, whose hosted guard has now passed. No guard relaxed or manual deployment.",
+  "limits": [
+    "Full C2/M2/Core/RC remains unfinished.",
+    "Synthetic source fixtures only; no actual-owner data, clinical approval, physical VoiceOver or independent human acceptance claimed."
+  ]
+}
