@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {dietaryReferencesFor,dietaryReferenceSubset,dietaryReferenceRowSchema} from './dietary-references';
+import {dietaryReferencesFor,dietaryReferenceSubset,dietaryReferenceRowSchema,dietaryReferenceLifeStageSchema,type DietaryReferenceLifeStage} from './dietary-references';
 import {ageInYear} from './profile-demographics';
 import {intakeCalendarDate} from './recorded-intake-sources';
 import {contextSchema} from './precision-nutrition';
@@ -9,8 +9,9 @@ import {contextSchema} from './precision-nutrition';
  * nonpregnant/nonlactating category, including for a male Profile. No smoking
  * status exists in the canonical context, so nonsmoking rows cannot be matched.
  * Source effective dates and historical life-stage facts are not established. */
-export function dietaryReferenceEligibility(input:{actor:string;profile:{id:string;sex?:unknown};birthYear:unknown;healthContext:unknown;nutrientKey:string;date:string;timeZone:string;asOf:string}){
+export function dietaryReferenceEligibility(input:{actor:string;profile:{id:string;sex?:unknown};birthYear:unknown;healthContext:unknown;nutrientKey:string;lifeStage?:DietaryReferenceLifeStage;date:string;timeZone:string;asOf:string}){
  const {actor,profile,nutrientKey,date,timeZone,asOf}=input;
+ const lifeStage=dietaryReferenceLifeStageSchema.parse(input.lifeStage??'nonpregnant-nonlactating-adult');
  if(!actor||profile.id!==actor)throw Error('REFERENCE_SCOPE_UNAVAILABLE');
  if(!z.iso.date().safeParse(date).success||!z.iso.datetime({offset:true}).safeParse(asOf).success||!intakeCalendarDate(asOf,timeZone))throw Error('REFERENCE_WINDOW_INVALID');
  const yearAge=ageInYear(input.birthYear,Number(date.slice(0,4))),ageRange=yearAge===null?null:{min:Math.max(0,yearAge-1),max:yearAge};
@@ -22,11 +23,12 @@ export function dietaryReferenceEligibility(input:{actor:string;profile:{id:stri
  if(date!==intakeCalendarDate(asOf,timeZone))common.push('historical-life-stage-and-reference-era-not-established');
  if(!ageRange)common.push('birth-year-not-recorded');
  if(ageRange&&ageRange.max<19)common.push('adult-19plus-category-not-applicable');
- if(!context||context.pregnancy!=='no')common.push('nonpregnant-nonlactating-context-not-confirmed');
+ if(lifeStage!=='nonpregnant-nonlactating-adult')common.push('specific-life-stage-not-established');
+ else if(!context||context.pregnancy!=='no')common.push('nonpregnant-nonlactating-context-not-confirmed');
  if(!context?.safetyReviewed)common.push('health-context-not-reviewed');
  if(context&&(context.conditions.length||context.medications.length))common.push('clinical-context-not-assessed');
  if(context?.ageGroup==='under18'&&ageRange&&ageRange.min>=18)common.push('age-sources-conflict');
- const rows=dietaryReferencesFor(nutrientKey).map(row=>{
+ const rows=dietaryReferencesFor(nutrientKey,lifeStage).map(row=>{
   const reasons=[...common];
   if(ageRange){
    if(ageRange.max<row.ageMinYears||(row.ageMaxYears!==null&&ageRange.min>row.ageMaxYears))reasons.push('different-age-category');

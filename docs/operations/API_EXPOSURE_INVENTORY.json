@@ -15,7 +15,7 @@
     "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
     "server/capability-access.ts": "a4af301a2d14d380a6906b1da60304d45560e46cb8e4d99daff48e30373e98a4",
     "server/demo-routes.ts": "30730f441d06add918f08df3a6bedb974720cf9795eeb1d78f1a5cd7e77f34e8",
-    "server/dietary-reference-context.ts": "09ccb7db1b63f432894ef6e6926277fe658c8d5bf0dea927be4c3c2e3dbc0c75",
+    "server/dietary-reference-context.ts": "06380b0730f473f3846476e2d615bbca84d5934352ddc101302ae4d65b245397",
     "server/experience-routes.ts": "15c4a14bf4ba2c8883f252b1f1a91c35e68b10fc7001bf116c75911bab177c48",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
@@ -192,7 +192,7 @@
     },
     {
       "file": "server/dietary-reference-context.ts",
-      "line": 29,
+      "line": 30,
       "method": "GET",
       "path": "/api/experience/dietary-reference-context",
       "declaredMiddleware": [],

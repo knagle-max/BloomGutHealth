@@ -5,6 +5,7 @@ import {z} from 'zod';
 import {users,precisionProfiles} from '../shared/schema';
 import {dateKey} from '../shared/experience';
 import {recognizedMealTimeZone} from '../shared/meal-time';
+import {dietaryReferenceLifeStageSchema} from '../shared/dietary-references';
 import {dietaryReferenceEligibility} from '../shared/dietary-reference-eligibility';
 import {decryptPrecision} from './precision-crypto';
 import {readProfileMeasurementSource} from './profile-measurement-source';
@@ -25,7 +26,7 @@ export function readDietaryReferenceInputs(database:Pick<typeof db,'transaction'
 }
 export type DietaryReferenceInputs=Awaited<ReturnType<typeof readDietaryReferenceInputs>>;
 export function registerDietaryReferenceContextRoutes(app:Express,store:IStorage,now:()=>Date=()=>new Date()){
- const query=z.object({date:dateKey,timeZone:z.string().refine(recognizedMealTimeZone),nutrientKey:z.string().min(1).max(80).regex(/^[a-z][a-z0-9_]*$/)}).strict();
+ const query=z.object({date:dateKey,timeZone:z.string().refine(recognizedMealTimeZone),lifeStage:dietaryReferenceLifeStageSchema.optional(),nutrientKey:z.string().min(1).max(80).regex(/^[a-z][a-z0-9_]*$/)}).strict();
  app.get('/api/experience/dietary-reference-context',async(req,res)=>{
   const parsed=query.safeParse(req.query);if(!parsed.success)return res.status(400).json({error:'Choose a valid reference date, time zone and nutrient.'});
   const actor=req.session.userId;if(!actor)return res.status(401).json({error:'Sign in to view your reference context.'});

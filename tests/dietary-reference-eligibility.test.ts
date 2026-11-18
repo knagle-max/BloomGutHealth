@@ -64,3 +64,8 @@ test('sodium and vitamin K match published demographic context while unknown act
  assert.deepEqual(eligible({...base,nutrientKey:'sodium_mg'}),[['AI',1500],['CDRR',2300]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_k_ug'}),[['AI',120]]);assert.deepEqual(eligible({...base,nutrientKey:'vitamin_k_ug',profile:{id:'a',sex:'female'}}),[['AI',90]]);
  for(const key of ['iron_mg','zinc_mg']){const view=dietaryReferenceEligibility({...base,nutrientKey:key});assert.deepEqual(view.rows.filter(row=>row.eligible).map(row=>row.reference.kind),['UL']);assert.ok(view.rows.filter(row=>row.reference.kind!=='UL').every(row=>row.reasons.includes('dietary-pattern-not-established')));assert.ok(view.rows.length>1);assert.equal(view.adequacyAssessment,false);}
 });
+
+test('exploring pregnancy/lactation facts never turns the combined pregnancy/breastfeeding/planning answer into a confirmed personal stage',()=>{
+ for(const lifeStage of ['pregnancy-adult','lactation-adult']as const)for(const pregnancy of ['yes','no','unknown']as const){const view=dietaryReferenceEligibility({...base,nutrientKey:'folate_ug',lifeStage,healthContext:{...base.healthContext,pregnancy}});assert.equal(view.rows.length,3);assert.ok(view.rows.every(row=>row.reference.lifeStage===lifeStage&&!row.eligible&&row.reasons.includes('specific-life-stage-not-established')));assert.equal(view.adequacyAssessment,false);assert.equal(view.usualIntakeAssessment,false);}
+ const view=dietaryReferenceEligibility({...base,nutrientKey:'magnesium_mg',lifeStage:'pregnancy-adult',date:'2025-11-18'});assert.equal(view.rows.length,5);assert.ok(view.rows.every(row=>row.reasons.includes('historical-life-stage-and-reference-era-not-established')));
+});
