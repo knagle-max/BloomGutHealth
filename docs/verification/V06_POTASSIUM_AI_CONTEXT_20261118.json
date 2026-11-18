@@ -1,0 +1,24 @@
+{
+  "task": "V06-M2-POTASSIUM-AI-NO-UL",
+  "status": "ENGINEERING_TESTED_RENDERED_PENDING_EXACT_CI",
+  "baseCommit": "064df517351dafd9307510269b5951e2358d31fe",
+  "source": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
+  "location": "Table 3 adult potassium rows; footnotes ***, 24, 25",
+  "retrievedOn": "2026-11-18",
+  "facts": [
+    "2019 adult nonpregnant/nonlactating male AI3400mg/day and female AI2600mg/day. Identical adjacent adult categories coalesced.",
+    "No established potassium EAR/RDA/UL/CDRR in this source. No fake endpoints, unlimited-safety assertion or below-AI deficiency inference.",
+    "Reuse existing profile birth-year/sex/current-context matcher and general public disclosure; no intake comparison, stored target, new record or historical life-stage inference. Original24 source rows unchanged."
+  ],
+  "verification": {
+    "unit": "10/10 source/schema/eligibility tests PASS; schema rejects fabricated potassium EAR/RDA/UL/CDRR.",
+    "referenceBrowser": "Actual App/HTTP/encrypted context male3400\u2192female2600 AI; absent UL/EAR/RDA and below-AI explanation; existing calcium/current/historical/outage/account/deep-link and32responsive mode/theme/zoom states PASS.",
+    "sourceBrowser": "Full existing source/meal/zero/unknown/save/reload/delete/owner120-state browser PASS.",
+    "typesBuild": "TypeScript and production build including original scientific/editorial media PASS.",
+    "audits": "8/8 refreshed API/capability/Biology tests PASS."
+  },
+  "limits": [
+    "Exact commit CI and review Render pending.",
+    "Full M2/M3 and v0.6 RC remain unfinished. No production data access or manual deployment."
+  ]
+}

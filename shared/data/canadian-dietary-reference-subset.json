@@ -1,5 +1,5 @@
 {
-  "version": "hc-dietary-reference-subset-2026-11-18-v2",
+  "version": "hc-dietary-reference-subset-2026-11-18-v3",
   "authority": "Health Canada",
   "retrievedOn": "2026-11-18",
   "sourcePublishedOn": null,
@@ -18,7 +18,7 @@
       "id": "hc-elements",
       "title": "Health Canada: Dietary reference values for elements",
       "url": "https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-elements.html",
-      "location": "Table 1 Calcium adult rows and footnote ** (2011 revision); Table 2 Magnesium adult rows and footnote 19",
+      "location": "Table 1 Calcium adult rows and footnote ** (2011 revision); Table 2 Magnesium adult rows and footnote 19; Table 3 Potassium adult rows and footnotes ***, 24 and 25",
       "note": "Magnesium UL covers pharmacological agents and excludes food and water. Calcium uses the 2011 reference values; equal adjacent adult age bands are coalesced only within the same sex/reference kind/value/scope.",
       "retrievedOn": "2026-11-18"
     }
@@ -383,11 +383,42 @@
       "sourceId": "hc-elements",
       "intakeScope": "total-intake",
       "smokingApplicability": "not-specific"
+    },
+    {
+      "id": "hc-potassium_mg-M-19-ai",
+      "nutrientKey": "potassium_mg",
+      "sexReferenceCategory": "M",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "AI",
+      "amount": 3400,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
+    },
+    {
+      "id": "hc-potassium_mg-F-19-ai",
+      "nutrientKey": "potassium_mg",
+      "sexReferenceCategory": "F",
+      "ageMinYears": 19,
+      "ageMaxYears": null,
+      "kind": "AI",
+      "amount": 2600,
+      "unit": "mg/day",
+      "sourceId": "hc-elements",
+      "intakeScope": "total-intake",
+      "smokingApplicability": "not-specific",
+      "lifeStage": "nonpregnant-nonlactating-adult",
+      "referencePeriod": "usual-daily-intake"
     }
   ],
   "nutrientNotes": {
     "vitamin_c_mg": "Smoking adds 35 mg/day to the Vitamin C requirement in the source; no smoking adjustment is calculated here. This does not raise the UL.",
     "magnesium_mg": "The magnesium UL covers pharmacological agents only and excludes food and water.",
-    "calcium_mg": "Health Canada uses the 2011 calcium reference values, which supersede 1997 values. Equal adjacent age bands are coalesced only when sex, reference type, amount and intake scope all agree."
+    "calcium_mg": "Health Canada uses the 2011 calcium reference values, which supersede 1997 values. Equal adjacent age bands are coalesced only when sex, reference type, amount and intake scope all agree.",
+    "potassium_mg": "Health Canada uses the 2019 potassium values. These are Adequate Intakes (AI), not EARs or RDAs. Intake below an AI does not establish inadequacy. No potassium UL or CDRR is established in this source; that does not mean unlimited intake is safe. These general references are not a treatment target."
   }
 }

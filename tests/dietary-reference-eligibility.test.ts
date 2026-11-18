@@ -34,3 +34,7 @@ test('calcium handles different female/male requirement ages, shared upper limit
  assert.deepEqual(run('female',51),[],'Both the requirement and UL vary across50–51');assert.deepEqual(run('male',71),[['UL',2000]],'A possible70–71 age cannot pick an RDA');
  assert.deepEqual(run('unknown',36),[['UL',2500]]);
 });
+
+test('potassium matches only the published adult sex-specific AI and keeps clinical or unknown context unmatched',()=>{
+ const run=(patch={})=>eligible({...base,nutrientKey:'potassium_mg',...patch});assert.deepEqual(run(),[['AI',3400]]);assert.deepEqual(run({profile:{id:'a',sex:'female'}}),[['AI',2600]]);assert.deepEqual(run({profile:{id:'a',sex:'unknown'}}),[]);assert.deepEqual(run({birthYear:1995}),[['AI',3400]]);assert.deepEqual(run({healthContext:{...base.healthContext,medications:['Medicine']}}),[]);
+});
