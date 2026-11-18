@@ -62,8 +62,15 @@ def load(data_path: Path, manifest_path: Path, *, training: bool):
         or not manifest.get("rightsEvidence")
         or not manifest.get("rightsReviewer")
         or manifest.get("measurementClass") != "direct_experimental_measurement"
+        or manifest.get("dataOrigin") != "verified_experimental"
+        or not manifest.get("originalExperimentSource")
+        or manifest.get("upstreamRightsStatus") != "approved"
     ):
-        raise PermissionError("Dataset not approved for commercial scientific model training")
+        raise PermissionError("Measured experimental provenance and upstream commercial training rights must be verified")
+    # Synthetic samples are legitimate ONLY for source-loader software tests. This
+    # exception cannot be enabled through the public CLI or model promotion path.
+    if training and manifest.get("sourceId", "").startswith("SYNTHETIC-"):
+        raise PermissionError("Synthetic software fixtures cannot train research models")
     frame = pd.read_csv(data_path, sep="\t" if data_path.suffix.lower() == ".tsv" else ",", dtype={k: str for k in REQUIRED}, keep_default_na=False)
     missing = set(REQUIRED) - set(frame.columns)
     if missing:
@@ -79,6 +86,10 @@ def load(data_path: Path, manifest_path: Path, *, training: bool):
         raise PermissionError("Some upstream observation rows have no commercial training clearance")
     if "measurement_class" in frame and (frame["measurement_class"] != "direct_experimental_measurement").any():
         raise ValueError("Unverified inferred/synthetic rows cannot be experimental ground truth")
+    if training and "original_experiment_id" not in frame.columns:
+        raise ValueError("Experiment identifiers must link rows to their original measured study")
+    if training and (frame["original_experiment_id"].astype(str).str.strip() == "").any():
+        raise ValueError("Missing original experiment identity")
     unresolved = frame.loc[~frame["phenotype"].isin(TARGETS), "phenotype"].value_counts().to_dict()
     valid = frame.loc[frame["phenotype"].isin(TARGETS)].copy()
     valid["target"] = valid["phenotype"].map(TARGETS).astype(int)
@@ -205,6 +216,8 @@ def run_benchmark(df, report, split):
         raise ValueError("Training set contains only one class")
     numeric_cols = report["featureColumns"]
     results = []
+    if not numeric_cols:
+        raise ValueError("No approved measured/annotated feature columns; cannot fit a functional learned model")
     y_train, y_test = train["target"], test["target"]
     _, majority = evaluate_model("majority-class", DummyClassifier(strategy="most_frequent"), np.zeros((len(train),1)), y_train, np.zeros((len(test),1)), y_test)
     results.append(majority)
