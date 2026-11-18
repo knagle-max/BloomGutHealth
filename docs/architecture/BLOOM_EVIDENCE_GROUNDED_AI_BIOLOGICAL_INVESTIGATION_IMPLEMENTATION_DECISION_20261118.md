@@ -1,0 +1,193 @@
+# Bloom — Evidence-Grounded AI Biological Investigation: Implementation-Ready Direction
+
+**Authority:** Product Owner strategic clarification and direct instruction, November 18, 2026  
+**Status:** **APPROVED FIRST BOUNDED ADVANCED INVESTIGATION PROTOTYPE; NOT IMPLEMENTED OR CLINICALLY RELEASED**  
+**Chief Architect decision:** Shift development priority from anticipating every possible medical/nutritional pattern in prewritten rules to demonstrating **generalizable, evidence-grounded, cross-domain AI investigation of genuinely unfamiliar cases**. Preserve the narrowly essential deterministic computation, original-source and safety infrastructure.  
+**Sole engineer:** Codex; **one task queue** under `AGENTS.md` and current `NEXT_ACTIONS.md`. The active queue on inspected head is **V06-M2/M4 source and nutrient work, then Response #15**, not earlier M3 by default. Do not create an extra parallel build queue or interrupt the current Core RC and source-integrity requirements.
+
+**Supersedes contrary *method* guidance in** [Genuine Biological Intelligence](BLOOM_GENUINE_BIOLOGICAL_INTELLIGENCE_CONSUMER_VALUE_DIRECTIVE_20261118.md), [Persistent Scientific Learning & LLM](BLOOM_PERSISTENT_SCIENTIFIC_LEARNING_LLM_INTEGRATION_ARCHITECT_DECISION_20261118.md) and [dynamic Bloodwork meaning](BLOOM_BLOODWORK_MARKER_MEANING_AND_REPORT_LAB_CONTEXT_CORRECTION_20261117.md): **AI is not merely a stylistic rewriter of pre-approved case conclusions.** It must be allowed to investigate, propose and compare biological hypotheses *not pre-enumerated in Bloom*. Deterministic source/evidence/policy verification **still** controls permission to display and act on these conclusions. Pre-reviewed claim rules are NOT prerequisites for internally generating hypotheses; appropriately checked, clearly qualified nonconsequential explanations may be considered for release under explicit applicable policy. Clinical diagnoses, consequential predictions, causal conclusions, treatment advice and high-risk recommendations retain the existing reviewed evidence/authorization threshold. Older negative safety tests remain binding. No changes to source of truth, user-consent requirements or independent review authority.
+
+## 1. Success definition and feasibility boundary
+
+**Engineering target:** From available authorized historical labs, actual consumed nutrients/supplements, goal/medication/activity/phenotype context and relevant independent evidence, identify meaningful relationships and plausible alternatives not hardcoded as case-specific decision rules. Evaluate them, challenge a leading explanation, distinguish observed data from cited population-level evidence, explain why an outcome may matter, and provide one safe next consideration when supported. Do not assume every case has a useful recommendation; return bounded evidence and abstain when necessary.
+
+**Technically feasible NOW as an experimental, retrieval-augmented clinical-science investigation assistant.** Existing LLMs can combine structured facts, retrieve literature and generate competing plausible hypotheses. They **cannot guarantee correctness, derive unknown personal causality, reliably identify all rare diseases, prove biochemical flux or predict clinical outcomes**. Verification of everything material, calibrated uncertainty, independent human scientific evaluation and staged permitted release are required. The first milestone is not a certified autonomous medical diagnostician, not an arbitrary nutrient-optimum generator and not a trained proprietary BioLM.
+
+**Falsifiable go/no-go:** A schema-valid fluent answer, good citations and an API response are insufficient. On independent unknown-in-advance cases, the dynamic investigator must show **material additional biological insight over the existing deterministic implementation** while meeting an explicit safety gate; otherwise keep it research-only, inspect errors, improve retrieval/verification or stop. No endless rules created to pass each test case. Cases may have no unique ground-truth diagnosis; scoring is against evidence-justified interpretations, appropriate competing hypotheses and abstentions, not an artificially predetermined one correct story.
+
+## 2. Verified reuse and implementation gap at November 18 GitHub branch inspection
+
+- `server/metered-ai.ts` already implements an **optional** OpenAI provider executor with per-account consent, `SpendLedger`, token/byte/request caps, provider circuit, `store:false`, no streaming/background, retry-reservation protection and feature `science-ranking`; **the existence of this executor does not prove it is installed or a medical-investigation permission is enabled**. `AIFeature` currently includes `ingredient-parsing | recipe-ranking | recipe-generation | science-ranking`, not a scientifically released `biological-investigation`. Build a separately authorized **purpose** under this same executor; a narrow additive feature key/policy is acceptable. Do not repurpose recipe access/consent to authorize health-context transmission. Existing executor accepts bounded system/user text payload and checked model; structured output may require parse/validation outside the executor or a separately reviewed exact provider request contract. Reuse the ledger, tariff, circuit and privacy boundaries; no second AI billing client.
+- `shared/lab-panel-review.ts` has dated per-marker/panel source selections and a source-qualified, limited `recordedLabPanelReview`; useful input/benchmark **baseline**, not a comprehensive reasoning engine. It currently has predefined panel family questions and interpretation context. Do not build hundreds more hardcoded panel-specific explanations.
+- `shared/scientific-contracts.ts` has `ConsumerValueCandidate`, measured vs experimental vs inferred distinctions, source/evidence/claim relationships and research-only reaction caveats. **Its output-admission semantics remain; use an investigation-to-candidate adapter rather than a parallel recommendation platform.**
+- Canonical source/correction/report ledger, `shared/lab-history.ts`, `shared/lab-comparability.ts`, `shared/lab-report-metadata.ts`, `shared/biology-labs.ts`, `shared/nutrient-source-snapshot.ts`, recorded food and **confirmed taken** supplement flows, `shared/wellness-context.ts` / `server/wellness-context.ts`, `shared/goal-guidance.ts`, existing Response/Today gates, `shared/biological-model.ts` and `shared/evidence-network.ts` are existing integration points. **Codex must confirm actual HEAD interfaces and applicable account-purpose authorization before implementation.** Original Bloodwork report and source-reference claims retain method/applicability constraints.
+- Reviewed evidence and release architecture in [Persistent Scientific Learning](BLOOM_PERSISTENT_SCIENTIFIC_LEARNING_LLM_INTEGRATION_ARCHITECT_DECISION_20261118.md) is designed but not proven with live two-reset tests. First investigator may use **currently eligible, verified sources**, with a small specifically reviewed test corpus and retrieval, but **cannot treat all graph edges as approved human clinical truth or assume a durable release exists**.
+- `NEXT_ACTIONS.md` at audit head says Core M4/M2, near-term NI-03/04 and subsequent Response; do not change it to create an outside implementation queue. Owner permits a focused Advanced proof at the next relevant Response integration slice, or a short isolated test adapter that doesn't compromise current bundle.
+
+**Current implementation status:** `SPECIFIED` only. A live multi-hypothesis investigation workspace, source-verifier, independent case benchmark and clinical-grade results **have not been verified**.
+
+## 3. Avoid redundant rule investment: precise division of labor
+
+### Hard-code only what must be deterministic, inspectable or formally governed
+- Exact source values/dates/units, original vs normalized unit conversion, assay comparability, missingness, calendar/timing, known-source nutrient totals and source-coverage; actual medication/supplement **taken** vs planned, correct identity/elemental form; laboratory-reference applicability.
+- Account and purpose permissions, consent, source-revision/epoch invalidation, licensing, retrieval/filter permissions, protected goals, contraindications/independent approved action eligibility, legal/clinical safety rules, user control and provider cost limits.
+- Evidence identity/version/DOI/PMID/retraction, scope/study type/population/endpoint, deterministic citation/exact-number checking; independently authorized clinical thresholds and escalation red flags.
+- Model output schema constraints, generation budgets, source-authentication, prohibited disclosures, release states and useful fallback.
+- A **small reusable set of scientific reference definitions** (e.g. HbA1c/fasting glucose distinction, statically reviewed marker biology) is appropriate, but not a decision tree of every marker combination.
+
+### Put open-ended analysis in bounded AI investigation
+- Identify surprising cross-marker trajectories, contradictions and source-context discrepancies; choose meaningful questions not already answered by known context.
+- Generate **multiple** biological explanatory hypotheses with explicit uncertainty and predicted distinguishing evidence, even if no previous case commentary exists.
+- Search and weigh relevant human trials/reviews/clinical guidance and relevant mechanistic sources within their actual study populations; identify contrary/null findings, bias and limitations.
+- Compare hypothesis compatibility with the **specific user's measured data**, dates, doses, goals and missingness; revise/abandon a hypothesis when contradicted.
+- Prioritize likely value to the user, and propose a low-burden follow-up or a reviewed existing action ID when justified. Do not make actual clinical diagnoses, assign probabilities absent calibration, or choose medication dosage.
+- Create an appropriately qualified natural-language synthesis (or choose no prominent insight). The AI is doing investigative work, not paraphrasing a selected hardcoded conclusion.
+
+**Rule-growth budget:** For each new proposed medical/nutrient rule ask: Is this a universal numeric/source invariant or a validated consequential safety rule? If **no**, prefer adding verified knowledge/evidence, a better retrieval/query or generalizable hypothesis-testing behavior. Do **not** write case-specific canned answer text or marker-combination lookup branches just to satisfy a demo or benchmark. Exempt the necessary trusted deterministic fallback and important reviewed red-flag patterns.
+
+## 4. Single investigation workspace and source contracts (illustrative shapes)
+
+This is **a bounded internal operation under existing Response Intelligence**, not a second graph, DB, user-facing AI chat assistant, general-purpose agent platform or new service.
+
+### 4.1 Evidence-qualified case snapshot
+- `investigationId`, account/purpose/consent/age-as-of-date, `sourceEpoch`, source record IDs+revisions+dates, applicable laboratory/reference methods and units, goal IDs, relevant known meds/timing, consented phenotype/symptoms, genuine food/supplement intake *with coverage*, time windows and missingness.
+- Numeric facts in structured typed machine-readable form, with raw vs normalized value, unit, exact original source and calculation expression; prevalidate before sending to a model.
+- Include only required minimum personal context, **not entire raw DNA, genomic reports, clinical attachments or private long histories by default**. Private data NEVER used for model training or global releases without separate explicit authorization.
+- Snapshot is immutable for a run; refreshed/re-authorized before any display or side effect. If consent/source changes, discard outstanding job and caches. No cross-account references.
+
+### 4.2 A real investigation objective (not a conclusion)
+Example instruction **for development fixtures only**:
+> “Investigate whether this user's lipid and glycemic trajectories reveal a clinically meaningful pattern. Identify at least two materially distinct plausible mechanisms where warranted, what each would predict, how well the supplied dated results and eligible research fit each, which contrary or missing evidence matters, and what safe follow-up could improve understanding. Do not assume the cause or invent unobserved values. A concise conclusion may be ‘no meaningful evidence of a change’.”
+
+Investigate **question/hypothesis space**, not write “User has X, rewrite it warmly.” No hardcoded preferred diagnosis, statement, action or answer in the prompt. Questions may be dynamically derived from sources, user goal and important changes; deterministic safety guards only constrain, not supply the answer.
+
+### 4.3 Structured model answer
+A bounded JSON-like candidate, validated with Zod/equivalent, containing:
+- `caseDigest`, `question`, `observedFacts[{assertion, exactSourceIds, exactNumericInputs, units}]`, `hypotheses[{text, mechanismType, expectedObservations, supportingEvidenceIds, contradictingEvidenceIds, population/assay applicability, discriminatingEvidence, confidenceLevel, uncertaintyReasons}]`.
+- `retrievalRequests[{searchTopic, specificEvidenceNeed, privacySafe}]` and optionally one bounded follow-up request; never an arbitrary URL fetch or executable tool args produced by the model.
+- `synthesis{nontrivialFinding, significance, whyItMatters, uncertainty, alternativeExplanations, userGoals, conclusionScope, nextStepCandidateIds, evidenceRefs, citations}`.
+- `candidateClaimType`: `observed_data | established_evidence | qualified_hypothesis | unsupported | safety_review_required`.
+- `abstentionReason`, `costTraceId`, `retrievalVersion`, `promptVersion`, `modelVersion`; all untrusted until server verified.
+
+**AI-generated scores or confidence words are NOT validated medical probabilities.** If no calibrated predictive model/evidence exists, prefer qualitative “more/less consistent” only if reasons are evidence-supportable and no differential diagnosis is falsely excluded. Model-generated hypotheses are not new medical diagnoses or shared reviewed knowledge.
+
+### 4.4 Read-only evidence retrieval tools
+Implement **minimal, allowlisted tool contracts** that can read existing scientific evidence:
+- `get_case_facts` only by server-supplied purpose-bound snapshot, no model-generated arbitrary account ID.
+- `lookup_reviewed_evidence(query, evidenceNeed, scope)` resolves existing canonical reviewed rights-eligible sources, returns stable `sourceId`, DOI/PMID, version, study type, population, comparator/endpoints/results, limitations, negative findings, and whether original full text is available.
+- `lookup_external_research` **optional only after source rights/network/tooling policy**: server-side restricted domains/providers, metadata only unless licensed, no personal health payload in public search, cited original source locators and source verification before conclusions. No arbitrary URL, shell, code execution, web scraping, patient queries or third-party service beyond approved cost/privacy boundaries.
+- `inspect_source_link` checks a model-cited claim against the actual retrieved excerpt/outcome (and current retraction/rights/review), not DOI existence alone. If original text not accessible, conclusion must reflect that.
+- `lookup_existing_action_eligibility` returns candidate existing safe action IDs and gating status, **never auto-executes anything**.
+
+Retrieve against the query's actual scientific question, not dump 500 graph edges into the model. Document retrieval recall, contradictory-study coverage, stale citations and unsupported evidence. A relevant citation alone is not evidence that the paper supports that exact medical claim.
+
+### 4.5 First bounded loop — flexible reasoning, fixed budget
+1. Server authorizes and materializes case; computes all deterministic facts.
+2. **Pass 1** model proposes 2–4 distinct hypotheses when appropriate, discriminating observations, and 1–3 specific evidence questions; it may conclude only one/no meaningful hypothesis if warranted.
+3. Retrieve eligible specific evidence, contradictory/null findings and cross-domain context via allowlisted bounded read-only calls; cap result count/bytes/recency and record version/source.
+4. **Pass 2** model evaluates what evidence supports/refutes each, revises its favored explanation, identifies what is unmeasured, suggests best bounded conclusion and optional safe next step.
+5. Server validates claims, numbers, references, context applicability, policy, action IDs and source/consent/epoch freshness; retry **at most one** targeted correction for formatting/grounding if cost permits; otherwise safe fallback.
+6. Consumer candidate admission via existing `ConsumerValueCandidate`/Response selector; show one concise useful conclusion, and optionally one action, plus secondary “Why?”/“Evidence and limits”. No wall of competing explanations by default. Hypotheses in a research view **never become personal diagnoses**.
+7. If prior reasoning pass adds no verified information, stop early. Experiment could compare **single-pass vs two-pass**, and retain simpler version if no benefit. **Not an unbounded autonomous agent**.
+
+Budget guardrails: per-account purpose specific opt-in, capped requests per investigation, max retrieved docs/bytes, max total tokens/microUSD, deadline, bounded parallelism and idempotent request IDs. Reuse `MeteredAIExecutor` reservation/spend/circuit, no new paid vendor, no provider retry outside ledger accounting. Estimate costs from actual tested tariff and metered usage, not guessed dollars. Under outage/consent absent, useful deterministic baseline and original records remain functional; do not imply AI examined missing context.
+
+## 5. Verifier and graduated scientific publication policy
+
+**Do not eliminate scientific verification to make reasoning flexible.** The research loop may freely propose hypotheses within budgets, but final displays are checked individually:
+1. **Fact gate:** Every number, unit, date, treatment exposure and trend claim resolved to a current source revision and deterministic computation. Unknown source is unknown, not zero; different assays must be compatible.
+2. **Evidence gate:** For each nontrivial mechanistic or human-health claim, verify cited source actually addresses that finding (design, population, intervention/outcome, direction, null/harm) and has acceptable rights/status. A DOI-shaped string is insufficient. Claim existence alone isn't claim relevance.
+3. **Applicability gate:** Separate human RCT, observational cohort, animal/cell experiment, model prediction and source candidate. An in vitro mechanistic pathway is not personal clinical causation.
+4. **Competing-hypothesis gate:** Substantive contradictory evidence, alternative causes, confounding and the limits of missing facts must be appropriately reflected; no fabricated certainty, calculated personal causal probabilities or cherry-picked source.
+5. **Safety/action gate:** No independent medication changes, tests as medical orders, clinical diagnostic labels, urgent triage, protected-goal conflicts or dietary supplement dose advice unless reviewed rules and human clinical release requirements specifically authorize them. Material abnormal data and vetted red flags cannot be suppressed by output brevity.
+6. **Freshness/privacy gate:** User account still authorized; source revisions/consent/rights/retractions still current. Out-of-date calls cannot overwrite insights.
+7. **Release tier:** 
+   - `internal_research_hypothesis`: broad exploration permitted, no ordinary-user health claim.
+   - `qualified_explanatory_candidate`: potentially meaningful cautious *nonconsequential* hypothesis with verified cited applicability and explicit limits, may appear only under separately approved limited-use release and evaluation; not necessarily a prewritten scenario rule.
+   - `reviewed_personal_interpretation`: source-linked scientifically accepted for its exact purpose/context; cautious clinical guidance if independently authorized.
+   - `withheld_or_detail_only`: low-value, unsupported, misleading, or consequential interpretation fails policy.
+   - `critical_safety_source_notice`: separately-reviewed clinically relevant abnormality communication; may be required even if AI abstains.
+8. **Fallback:** If investigation cannot be verified, present existing safe deterministic finding and source-backed appropriate context, **never** a fabricated hypothesis or empty misleading answer. User can access details and see that AI investigation was unavailable.
+
+**Hard distinction:** The LLM may discover a *candidate* explanation absent from a rules catalogue; Bloom's **validated ability to display it** depends on measured case/evidence/safety approval, not on hardcoding that complete explanation in advance. Don't force all nonconsequential hypotheses into a whitelist of prescriptive full paragraphs—that would defeat generalization.
+
+## 6. Benchmark: an unfamiliar-case evaluation, not a prompt demo
+
+**Must be independent and frozen prior to final development/tuning.** Commission a medically/scientifically qualified reviewer for consequential interpretation and separate independent ML evaluator for the test setup. Where unavailable, retain research-only status and explicitly `INDEPENDENT_REVIEW_PENDING`. AI-only agreement is insufficient. No private production health data in fixtures without source authority, consent and ethical approvals.
+
+### 6.1 Arms compared on exactly the same source facts
+- **A: Existing deterministic baseline** (current `recordedLabPanelReview`, eligible source, Response and nutrient handling).
+- **B: One-shot evidence-grounded LLM** on same authorized snapshot and retrieval context.
+- **C: Bounded two-pass hypothesis investigator**, with targeted evidence retrieval/contradiction and verification. Keep C only if it materially improves A/B.
+- Optional ablations: (C minus retrieval), (C minus opposing evidence), (C with a misleading study), (C with missing profile), (C without sensitive context), to isolate why improvement occurs.
+- No case-specific rule, template or prompt adjustment targeted at hidden case answers. Fixed model, prompt version, settings/retriever and budget before held-out case execution.
+
+### 6.2 Independently authored cases (minimum 12; more if needed for claim confidence)
+1. LDL/ApoB up while triglycerides down, with genuine source/reference context and plausible intervention/medication alternatives.
+2. HbA1c increases while fasting glucose appears stable; actual timing/assay and red-cell/iron context matter.
+3. A single marker within interval but *relevant persistent downward pattern* over months, with optional medicines/infections.
+4. B12 status marker, actual confirmed supplement form/dose and related lab context have plausible alternative explanations.
+5. Two actually taken supplements with duplicate B6 plus partial food logging; distinguish subtotal vs total and threshold eligibility.
+6. Supplement only planned, not actually taken, despite product/label matches; zero fabricated exposure.
+7. Discordant ferritin/hemoglobin/iron observations with uncertainty and independent plausible explanations.
+8. Liver enzymes improve but lipids/body weight follow a different pattern; no causal NAFLD resolution claim.
+9. One medically relevant abnormality with necessary carefully reviewed safety message even if no complete investigation.
+10. Contradictory measured points: unit mismatch, changed assay/lab or a late correction; explain inability to compare and source repair.
+11. Relevant published research provides both a positive exploratory endpoint and null primary outcome; investigator must not cherry-pick.
+12. An attractive but **false mechanistic explanation** backed only by preclinical or mismatched population data, with a superior alternative supported by human evidence.
+13. Known allergy/goal/protein restrictions conflict with a superficially plausible recommendation; avoid it.
+14. Missing diet/symptom context and no AI consent; source facts remain useful with deterministic fallback.
+15. Same person data corrected/removed; previously generated hypothesis must disappear or revise after source epoch/revocation.
+16. A novel cross-domain case devised **after implementation freezes** by independent reviewer, with no bespoke rules or prompt edits.
+
+Cases should include **positive, negative, null and uncertain outcomes**, competing explanations with different predicted observations, and independent source locators; do not write only cases designed to reward AI. Add source perturbations (swap one crucial lab value, remove a key medication, replace a cited RCT with an unrelated study) and verify the explanation changes appropriately. The correct answer may be “no compelling personal conclusion” or multiple unresolved hypotheses.
+
+### 6.3 Evaluator scoring and evidence
+Independent blind assessment on:
+- Observation and arithmetic accuracy; wrong-person or invented source rate, numeric/unit and chronology errors.
+- Study-specific support precision; fabricated DOI/irrelevant source rate, scientific evidence level, omission of relevant contrary/null studies.
+- Mechanism/hypothesis plausibility, competing hypothesis discrimination and explicit source-specific refutation.
+- Personal-context relevance and meaningful **incremental user value** over A; “helpful next consideration” when warranted.
+- Appropriateness of abstention, overconfidence and clinical harm/overreach; **zero tolerance for unapproved material harmful advice in release candidate**, not proof that absolute zero model error will occur in the future.
+- Consistency under source changes, consent revocation and new unfamiliar cases; testing for prompt injection in source text.
+- Token usage, latency, per-investigation actual cost, failure rate and fallback usefulness.
+- Performance distribution (not just averages): worst-case safety, rare/complex cases, paired case-level A/B/C comparisons, confidence/uncertainty; no invented evaluation score.
+- Human rater agreement where practical and evidence trace for reviewer dispositions, not only LLM judging LLM output.
+
+**Predeclared gate:** Pick a real set of non-negotiable safety/fact/citation violations to block release, then require documented improved **useful verified interpretation coverage** over A at acceptable latency/cost. Do not invent a universal 90%-accuracy target; pre-register measurable threshold using reviewer judgment before unsealing independent test cases. If neither B nor C beats A with acceptable safety, no public promotion; retain the deterministic path and do targeted error analysis.
+
+### 6.4 Receipts
+Record case corpus and rights hashes, frozen unseen case IDs, baseline version, model ID/provider/token tariff, prompt/retrieval version, fact/evidence snapshots, source/consent test regime, model outputs with sensitive data minimized, verified/withheld claims, reviewer evidence/reason codes, actual cost/latency and independent decision. Avoid storing raw private data in nonpersonal science releases or sending simulated patient details to external provider where not authorized. Reproducibility may require locked source snapshots and versioned prompting; LLM outputs may not be bit-for-bit deterministic. No mandatory screenshots.
+
+## 7. Engineering slices for Codex, smallest viable productive proof
+
+**Do not start a second implementation queue.** During existing Response #15 and M2/M4 integration, apply this newer strategy instead of adding case-specific rules; prototype as a bounded Advanced feature when source/policy/benchmark access is feasible.
+
+- **INV-00 Audit/receipt:** Verify HEAD for existing Response candidate pipeline, `MeteredAIExecutor` installation and feature policy, source/minimal facts, source retriever and reviewed evidence corpus, current consent; list actual input gaps, rights/clinical release and spend limitations. No architecture rewrite.
+- **INV-01 Server-owned cross-domain snapshot:** Build read-only bounded, auth/purpose/source-epoch-consistent case collector using current source API; machine-checkable observed facts and time/assay/coverage; no private full-report dumping.
+- **INV-02 Scientific evidence retrieval:** Existing canonical rights-eligible evidence query by claim/hypothesis/outcome, with source identifiers/abstract/locator/retraction; tiny curated study corpus sufficient for pilot, but include null/contradictory studies. Assess actual recall and what source text is truly accessible.
+- **INV-03 Typed investigation contract:** Zod/equivalent schemas for hypothesis list, predicted discriminating observations, supporting/contradicting sources, synthesis and abstention. Prompt/task definitions **do not list desired case answers**. Use a controlled single-pass baseline first.
+- **INV-04 Two-pass optional loop:** One targeted retrieval/critique pass using same metered AI/existing service, bounded costs and no arbitrary tool execution. Preserve prior hypothesis revisions and actual reason for discarding.
+- **INV-05 Verifier and release:** Independently check numeric facts, exact references and source contents, endpoint/population/assay applicability, causal and action limits, privacy/epoch/current withdrawal, and existing `ConsumerValueCandidate` selector. Refuse or downgrade unsupported claims; useful deterministic fallback.
+- **INV-06 Real end-to-end Response path:** Research-only/off by default, limited UI integration with no new nav item; show one valuable conclusion and optional safe next step, with evidence/limits secondary. No default hypothesis list/chat, and no extra questionnaires. Preserve the current user workflows, approvals and source detail path.
+- **INV-07 Held-out evaluator:** Independent cases frozen before model tuning, A/B/C, source perturbations, false citation and contradictory studies, harm/utility/calibration/cost comparison. Report actual scores, claim-by-claim approvals and blind review status, **not a passing demo**.
+- **INV-08 Promotion go/no-go:** Internal research → optionally narrow nonconsequential explanatory release only if independently reviewed, actual provider/legal/consent and evidence rights approved; existing reviewed medical action scope separate. Null result or no current provider permission → **STOP or REVISE**, not “shipped” or fabricated superiority.
+- **INV-09 Scientific memory:** Approved nonpersonal discoveries **may** become candidate research records linked to original evidence; only independent source verification, rights, review and persistent release admit them. No private user observation, generated prompt, provider response or cross-user training by default. No background research agent/watch unless explicitly authorized.
+
+**Exit from first milestone:** Evidence-grounded investigator produces demonstrably new, appropriately qualified useful analysis on held-out unfamiliar cases where the deterministic rule set has **no case-specific explanatory branch**, and evaluation proves it adds value *without unacceptable harm, false facts or unjustified cost*. If it fails, this approach remains technically investigable, but Bloom must **not** claim the milestone or release medical interpretations until improved.
+
+## 8. Explicit feasibility, limits, project spending and autonomy
+
+- **Realistic:** high-value investigational **research** prototype using current supported LLM and curated scientific sources, with bounded case collection and citation checks; **not** guaranteed general medical reasoning or continuous personalized physiologic causality. Retrieval coverage, source licensing and claim-grounding verification are real implementation bottlenecks.
+- **Potential blocker:** Current `server/metered-ai.ts` provides optional costed execution but an actual configured/approved science-model integration may be absent; Codex must report whether the capability, permission, model tariff and provider contract are real. If absent, build typed interfaces, mocked evaluation and deterministic baseline only; don't claim an actual LLM benchmark until executed with an authorized model.
+- **Reviewer:** Human subject-matter expert or qualified independent reviewers are needed before consequential claims; a second LLM can challenge but cannot alone authorize a risky medical interpretation. Owner should only be asked for **material spending, new private-data provider consent, major strategic scope, rights or actual clinical deployment**, not routine hyperparameters/prompts or code architecture.
+- **Privacy:** account scoped; default no external transfer of private labs/genomes/medication if consent missing; minimize and redact fields, don't log raw sensitive payloads; `store:false` provider semantics and observed logs/retention verified, no shared training.
+- **Cost control:** first task one question, cap facts/hypotheses/retrieval rounds/token spend; disable if actual metered executor/provider policy absent. Report observed tokens/cost, no fabricated quotations.
+- **User effort:** reuse existing context so it “just works” when permitted. Ask only a missing fact whose answer can change which of two plausible explanations/actions is supported. No auto-populated invented medications, food or pregnancy.
+- **Science caution is not the product:** The investigator should do the analysis and present the strongest safe conclusion; unsupported explanations are withheld or qualified, not replaced with a list of repetitive disclaimers.
+
+**Acceptance IDs:** `INV-ACC-01`–`INV-ACC-16` correspond to the 16 scenario/perturbation cases above; `INV-SAFE-01`–`INV-SAFE-07` correspond to the seven verifier/release gates; `INV-EVAL-A/B/C` compares all three benchmark arms; `INV-NO-RULE-01` ensures no explanation hardcoded specifically for held-out case; `INV-PRIV-01` verifies revocation and cross-account isolation; `INV-COST-01` verifies actual spend and hard ceilings; `INV-MEM-01` prevents unreviewed shared knowledge promotion. The original `BIO-VALUE-01–16`, `BLOOD-DYN-01–08`, `PSL-T01–12` remain valid as independent preexisting safeguards.
+
+**Owner-ready progress receipt must separate:** `ARCHITECTURE_PUBLISHED`, `SNAPSHOT_CODE_PRESENT`, `PROVIDER_AVAILABLE_WITH_CONSENT`, `INVESTIGATOR_EXECUTED`, `EVIDENCE_CHECKED`, `INDEPENDENT_HOLDOUT_BENCHMARKED`, `VERIFIED_INCREMENTAL_VALUE`, `CLINICAL_SAFETY_ACCEPTED`, `RESEARCH_ONLY`, `PRODUCTION_RELEASE_APPROVED`. None may be inferred from the others.
+
+**End state sought:** Bloom can *investigate biology it was not specifically programmed to explain*, with source truth, scientific citations and safety constraints, and **users receive insight rather than a technical dump**. Its success is empirically demonstrated, not declared by architectural aspiration.
