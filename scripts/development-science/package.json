@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test client.test.mjs private-export.test.mjs" },
+  "scripts": { "test": "node --test client.test.mjs private-export.test.mjs integration.test.mjs staging-environment.test.mjs" },
   "dependencies": {
     "https-proxy-agent": "7.0.6",
     "node-fetch": "3.3.2"

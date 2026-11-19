@@ -10,7 +10,7 @@ replace the existing v0.5/v0.6 backlog or declare the full RC ready.
 | Reuse existing FastAPI/research architecture | IMPLEMENTED_AND_TESTED | Optional factory uses existing service/auth/lifespan; normal entry point unchanged |
 | Production independent of Mac, address and VPN | IMPLEMENTED_AND_TESTED | Actual Node server/worker build dependency graphs exclude optional Mac tools; fresh Python production import succeeds with optional science/Mac modules blocked; actual production identity rejects injected development config |
 | Compatible pinned scientific environment | IMPLEMENTED_AND_TESTED | Isolated Linux Python 3.12 environment, pip check; compatible versions recorded |
-| Actual Apple Silicon installation/run | BLOCKED_USER_INPUT | Owner's reported COBRA success is not an independent Mac run of this implementation; needs owner-run offline tests or authorized access |
+| Actual pinned Apple Silicon scientific suite | ALREADY_VERIFIED | Owner reports pinned .venv-validation completed OK; new operational/RSS/serving additions still need Mac checks |
 | COBRA reference optimization | IMPLEMENTED_AND_TESTED | Known reference objective and actual solver tests |
 | MICOM reproducible reference control | IMPLEMENTED_AND_TESTED | Two-copy E. coli engineering control, both member file digests verified before parsing, repeated solve, bounds/residual and infeasible closed-medium tests; not a validated multispecies gut model |
 | Exact reference identity and model-specific terms | ALREADY_VERIFIED | Pinned SBML and official BiGG source inspected; commercial model-data use/redistribution not cleared; see reference-model-provenance.md |
@@ -23,7 +23,8 @@ replace the existing v0.5/v0.6 backlog or declare the full RC ready.
 | Independent held-out predictive evaluation | BLOCKED_TECHNICAL | Needs qualified actual measurements/models, source-compatible observable/units, leakage-safe split and independent review |
 | Strict versioned compute API, no code/shell/paths | IMPLEMENTED_AND_TESTED | Fixed nonpersonal requests; dual credentials, size/JSON/field validation; no LLM execution tools |
 | Async status/cancel, CPU/wall/rate/output limits | IMPLEMENTED_AND_TESTED | Spawned reference worker tests, timeout without polling, cancellation/crash/recovery and bounded records |
-| Mac memory and actual Ollama cancellation | BLOCKED_TECHNICAL | Portable resident-memory enforcement and upstream GPU cancellation not established; no service activation |
+| Sampled worker RSS/shutdown | IMPLEMENTED_AND_TESTED | Owned-child native RSS watchdog, memory/telemetry failure stop, no late result, joined cleanup; sampled control, not kernel sandbox; new Mac check pending |
+| Actual Ollama cancellation | BLOCKED_TECHNICAL | Upstream GPU cancellation unqualified; no service activation |
 | Fixed localhost Ollama smoke gateway | IMPLEMENTED_AND_TESTED | Fixed prompt/model allowlist, caps, no inherited proxy/redirect/fallback, raw output withheld; mock transport only |
 | Live Ollama and backend cloud-disable setting | BLOCKED_USER_INPUT | Requires actual Mac inspection/restart verification; setting gateway env alone is not backend proof |
 | Independent auth, replay, wrong-credential checks | IMPLEMENTED_AND_TESTED | In-process dual bearer plus one-use identity/method/path/body challenge, expiry/rotation/restart negatives |
@@ -44,6 +45,8 @@ pilot contract tests, plus16 isolated Node caller/export tests. Seven privacy-to
 engineering results, not Mac/network, scientific predictive, clinical or full RC
 acceptance. No personal processing, knowledge promotion or production release is
 authorized by a green engineering test.
+
+New bounded operational additions: private expiring/rotatable/revocable config, guarded localhost launcher, resource watchdog and strict caller result projection. See DEVELOPMENT_CONNECTION_RUNBOOK.md. Complete current policy has been reviewed and a generic replacement is proposed but unapplied; the owner confirms the existing Render service is staging-only, with an isolated auxiliary caller prepared but its runtime/bootstrap and transport not yet qualified; no real connection or identity-denial test claimed. New source records no owner/workspace/device identifiers.
 
 Remaining external actions do not justify speculative general AI/platform work.
 Use the GitHub development branch and existing setup guide for offline Mac qualification;

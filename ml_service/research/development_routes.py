@@ -25,6 +25,7 @@ def install_development_routes(app, environment=None, supervisor=None, *, infere
     if getattr(app.state, "development_science_installed", False):
         raise DevelopmentScienceUnavailable("Development science is already installed.")
     jobs = supervisor if supervisor is not None else DevelopmentJobSupervisor()
+    app.state.development_job_supervisor = jobs
     admission = DevelopmentAdmission()
     inference = inference_gateway if inference_gateway is not None else OllamaDevelopmentGateway(env)
     router = APIRouter(prefix=PREFIX)

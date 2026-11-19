@@ -71,9 +71,10 @@ Actual Mac confirmation of this correction remains pending.
 
 ## SpawnProcess-7
 
-For the exact published guide command, diagnostic instrumentation maps child7
-to the deliberately oversized-output test fixture, not the actual reference
-worker. A parent rejecting a pipe message can close while that fixture is still
+For the guide command at publication commits ffa51c94/7945ef27, diagnostic
+instrumentation mapped child7 to the deliberately oversized-output fixture.
+Later operational tests add workers and change these ordinals; current failures
+must be identified by test name and full traceback, not the process number. A parent rejecting a pipe message can close while that fixture is still
 writing; BrokenPipeError/ConnectionResetError are expected in that specific
 fixture. It now handles only those expected closures and always closes its pipe.
 The parent test still requires failed state, no result and terminated worker.

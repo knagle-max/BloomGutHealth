@@ -212,3 +212,12 @@ ephemeral and cannot restore active work after restart.
 
 See [private export, backup and recovery](../../scripts/development-science/PRIVATE_RESULTS_AND_RECOVERY.md).
 No launchd/autostart is intended or installed during this validation phase.
+
+
+## Next bounded operational step
+
+The owner confirms the pinned Mac validation environment passed. Reuse
+`~/bloom-science/.venv-validation`; do not change `.venv312`. Operational code,
+exact no-listener checks, conditional startup, full-policy/Render gaps and
+decommission steps are in [the connection runbook](DEVELOPMENT_CONNECTION_RUNBOOK.md).
+No networking or deployment is authorized by test success or that document.

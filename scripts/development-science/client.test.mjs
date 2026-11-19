@@ -134,6 +134,30 @@ test("fresh challenges protect status, cancellation and repeated operations", as
   assert.notEqual(mocked.calls[1].options.headers["X-Bloom-Science-Nonce"], mocked.calls[3].options.headers["X-Bloom-Science-Nonce"]);
 });
 
+test("completed calculation requires pinned provenance and valid tradeoff; unexpected prose is withheld", async () => {
+  const reference = {version:"micom-reference-control-v1",scenario:"baseline",scope:"nonpersonal-engineering-control",
+    status:"optimal",growthRate:0.5,linearGrowthMaximum:1,tradeoffGrowthTarget:0.5,tradeoffGrowthError:0,
+    maxBoundViolation:0,maxSteadyStateResidual:0,observedBiology:false,clinicalValidation:false,predictiveValidation:false,
+    model:{sha256:"36300ad00320f1ffde76f2ffca06be6403759d92ac320535d961a0ab2d0c94f1"},
+    solver:"hybrid",solverProfile:"hybrid-reference-precision-v2",
+    versions:{micom:"0.37.1",cobra:"0.30.0",optlang:"1.8.3",osqp:"0.6.7.post3",highspy:"1.16.0","python-libsbml":"5.21.2"},
+    qpConvergence:[{status:"solved",iterations:100,primalResidual:0,dualResidual:0}],unexpectedProse:"synthetic-untrusted-field"};
+  const call = async result => {
+    const mocked=mockTransport({id:ID,state:"completed",result});
+    return createDevelopmentScienceClient({environment:{...ENV},transport:mocked.transport}).referenceStatus(ID);
+  };
+  const result=await call(reference);
+  assert.equal(result.result.personalUsePermitted,false);
+  assert.ok(!JSON.stringify(result).includes("synthetic-untrusted-field"));
+  for(const change of [{growthRate:0.49},{model:{sha256:"a".repeat(64)}},{solverProfile:"unknown"},
+    {qpConvergence:[{status:"maximum iterations reached",primalResidual:0,dualResidual:0}]},
+    {qpConvergence:[{status:"solved",iterations:100,primalResidual:0,dualResidual:-1}]},
+    {maxBoundViolation:1},{linearGrowthMaximum:null}])
+    await assert.rejects(call({...reference,...change}),DevelopmentTransportUnavailable);
+  const failed=await call({...reference,status:"infeasible",growthRate:null});
+  assert.equal(failed.result.growthRate,null);assert.equal(failed.result.tradeoffGrowthTarget,null);
+});
+
 test("outage errors are generic, never retried or sent through a direct fallback", async () => {
   let calls = 0;
   const client = createDevelopmentScienceClient({ environment: { ...ENV }, transport: async () => {

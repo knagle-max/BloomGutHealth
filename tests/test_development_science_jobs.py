@@ -51,6 +51,58 @@ def wait_for_terminal(supervisor, job_id, timeout=6):
 
 
 class DevelopmentJobTests(unittest.TestCase):
+    def test_failed_termination_withholds_result_and_blocks_new_work(self):
+        from ml_service.research.development_jobs import _stop
+        for failure in ({"return_value": False}, {"side_effect": PermissionError("Synthetic termination denial")}):
+            supervisor = DevelopmentJobSupervisor(timeout_seconds=0.05)
+            job_id = None
+            try:
+                with patch("ml_service.research.development_jobs._run_child", _hang), \
+                     patch("ml_service.research.development_jobs._stop", **failure):
+                    job_id = supervisor.submit(COMMAND, DEV)
+                    terminal = wait_for_terminal(supervisor, job_id)
+                self.assertEqual(terminal["state"], "termination-failed")
+                self.assertIsNone(terminal["result"])
+                with self.assertRaisesRegex(RuntimeError, "busy"):
+                    supervisor.submit(COMMAND, DEV)
+                with self.assertRaisesRegex(RuntimeError, "termination incomplete"):
+                    supervisor.close()
+            finally:
+                if job_id is not None:
+                    _stop(supervisor._jobs[job_id]["process"])
+
+    def test_delayed_resource_probe_cannot_admit_result_past_deadline(self):
+        supervisor = DevelopmentJobSupervisor(timeout_seconds=0.05)
+        def slow_probe(process):
+            time.sleep(0.2)
+            return 1
+        with patch("ml_service.research.development_jobs._run_child", _success), \
+             patch("ml_service.research.development_jobs._rss_bytes", slow_probe):
+            job_id = supervisor.submit(COMMAND, DEV)
+            terminal = wait_for_terminal(supervisor, job_id)
+        self.assertEqual(terminal["state"], "timed-out")
+        self.assertIsNone(terminal["result"])
+        supervisor.close()
+
+    def test_memory_budget_and_missing_telemetry_stop_worker_and_allow_recovery(self):
+        for unavailable in (False, True):
+            supervisor = DevelopmentJobSupervisor(memory_mib=128)
+            sampler = {"side_effect": RuntimeError("Synthetic telemetry outage")} if unavailable else {"return_value": 129 * 1024 * 1024}
+            with patch("ml_service.research.development_jobs._run_child", _hang), \
+                 patch("ml_service.research.development_jobs._rss_bytes", **sampler):
+                job_id = supervisor.submit(COMMAND, DEV)
+                terminal = wait_for_terminal(supervisor, job_id)
+            self.assertEqual(terminal["state"], "resource-unavailable" if unavailable else "memory-exceeded")
+            self.assertIsNone(terminal["result"])
+            self.assertFalse(supervisor._jobs[job_id]["process"].is_alive())
+            with patch("ml_service.research.development_jobs._run_child", _success):
+                recovered = supervisor.submit(COMMAND, DEV)
+            self.assertEqual(wait_for_terminal(supervisor, recovered)["state"], "completed")
+            supervisor.close()
+        for invalid in (0, 127, 4097, True, "1024"):
+            with self.assertRaises(ValueError):
+                DevelopmentJobSupervisor(memory_mib=invalid)
+
     def test_oversized_fixture_closes_quietly_after_expected_parent_pipe_rejection(self):
         class RejectedPipe:
             closed = False
@@ -152,3 +204,5 @@ class DevelopmentJobTests(unittest.TestCase):
         self.assertEqual(terminal["state"], "completed")
         self.assertEqual(terminal["result"]["status"], "optimal")
         self.assertFalse(terminal["result"]["observedBiology"])
+        self.assertGreater(terminal["resources"]["maxObservedRssBytes"], 0)
+        self.assertLessEqual(terminal["resources"]["maxObservedRssBytes"], terminal["resources"]["memoryLimitBytes"])

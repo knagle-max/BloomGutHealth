@@ -9,6 +9,46 @@ import { HttpsProxyAgent } from "https-proxy-agent";
 const PREFIX = "/api/ml/research/development/v1";
 const JOB = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
 const LIMIT = 65536;
+const REFERENCE_HASH = "36300ad00320f1ffde76f2ffca06be6403759d92ac320535d961a0ab2d0c94f1";
+function referenceProjection(value) {
+  const versions = { micom: "0.37.1", cobra: "0.30.0", optlang: "1.8.3", osqp: "0.6.7.post3", highspy: "1.16.0", "python-libsbml": "5.21.2" };
+  if (value?.version !== "micom-reference-control-v1" || !["baseline", "closed-medium"].includes(value.scenario)
+      || value.scope !== "nonpersonal-engineering-control" || value.observedBiology !== false
+      || value.clinicalValidation !== false || value.predictiveValidation !== false
+      || value.model?.sha256 !== REFERENCE_HASH || value.solver !== "hybrid"
+      || value.solverProfile !== "hybrid-reference-precision-v2"
+      || Object.entries(versions).some(([key, expected]) => value.versions?.[key] !== expected)) return null;
+  const optimal = value.status === "optimal";
+  if (!optimal && (!["infeasible", "optimization-failed"].includes(value.status) || value.growthRate !== null)) return null;
+  if (optimal && (![value.growthRate, value.linearGrowthMaximum, value.tradeoffGrowthTarget, value.tradeoffGrowthError,
+    value.maxBoundViolation, value.maxSteadyStateResidual].every(Number.isFinite)
+    || value.linearGrowthMaximum <= 0 || value.growthRate < 0
+    || Math.abs(value.tradeoffGrowthTarget - 0.5 * value.linearGrowthMaximum) > 1e-5
+    || Math.abs(value.growthRate - value.tradeoffGrowthTarget) > 1e-5
+    || Math.abs(value.tradeoffGrowthError - Math.abs(value.growthRate - value.tradeoffGrowthTarget)) > 1e-12
+    || value.tradeoffGrowthError < 0 || value.tradeoffGrowthError > 1e-5
+    || value.maxBoundViolation < 0 || value.maxBoundViolation > 1e-5
+    || value.maxSteadyStateResidual < 0 || value.maxSteadyStateResidual > 1e-5
+    || !Array.isArray(value.qpConvergence) || value.qpConvergence.length !== 1
+    || value.qpConvergence.some(row => row.status !== "solved"
+      || !Number.isFinite(row.primalResidual) || Math.abs(row.primalResidual) > 1e-5
+      || row.primalResidual < 0
+      || !Number.isFinite(row.dualResidual) || row.dualResidual < 0 || Math.abs(row.dualResidual) > 1e-5))) return null;
+  if (optimal && value.qpConvergence.some(row => !Number.isInteger(row.iterations) || row.iterations < 1 || row.iterations > 20000)) return null;
+  // Return a known, bounded projection, never arbitrary server prose or fields.
+  return { version: value.version, scenario: value.scenario, scope: value.scope,
+    status: value.status, growthRate: value.growthRate,
+    model: { sha256: REFERENCE_HASH }, versions, solver: value.solver, solverProfile: value.solverProfile,
+    linearGrowthMaximum: optimal ? value.linearGrowthMaximum : null,
+    tradeoffGrowthTarget: optimal ? value.tradeoffGrowthTarget : null,
+    tradeoffGrowthError: optimal ? value.tradeoffGrowthError : null,
+    maxBoundViolation: optimal ? value.maxBoundViolation : null,
+    maxSteadyStateResidual: optimal ? value.maxSteadyStateResidual : null,
+    qpConvergence: optimal ? value.qpConvergence.map(row => ({status:row.status,
+      iterations:row.iterations,primalResidual:row.primalResidual,dualResidual:row.dualResidual})) : [],
+    observedBiology: false, clinicalValidation: false, predictiveValidation: false,
+    provenanceClass: "server-reported-reference-control", personalUsePermitted: false };
+}
 
 export class DevelopmentTransportUnavailable extends Error {
   constructor() { super("Development science transport is disabled or unavailable."); }
@@ -95,12 +135,21 @@ export function createDevelopmentScienceClient({ environment = process.env, tran
     async referenceStatus(id) {
       if (typeof id !== "string" || !JOB.test(id)) refuse();
       const result = await operation("GET", PREFIX + "/jobs/" + id);
-      if (result.id !== id || !["running", "cancelling", "completed", "cancelled", "failed", "timed-out"].includes(result.state)) refuse();
+      if (result.id !== id || !["running", "cancelling", "completed", "cancelled", "failed", "timed-out", "memory-exceeded", "resource-unavailable", "termination-failed"].includes(result.state)) refuse();
       if (result.state === "completed" && (result.result?.scope !== "nonpersonal-engineering-control"
           || result.result.observedBiology !== false || result.result.clinicalValidation !== false
           || result.result.predictiveValidation !== false)) refuse();
       if (result.state !== "completed" && result.result !== null) refuse();
-      return result;
+      const projected = result.state === "completed" ? referenceProjection(result.result) : null;
+      if (result.state === "completed" && !projected) refuse();
+      let resources;
+      if (result.resources !== undefined) {
+        const r = result.resources;
+        if (!r || !Number.isSafeInteger(r.memoryLimitBytes) || r.memoryLimitBytes <= 0
+            || (r.maxObservedRssBytes !== null && (!Number.isSafeInteger(r.maxObservedRssBytes) || r.maxObservedRssBytes < 0))) refuse();
+        resources = {memoryLimitBytes:r.memoryLimitBytes,maxObservedRssBytes:r.maxObservedRssBytes};
+      }
+      return { id: result.id, state: result.state, result: projected, ...(resources ? {resources} : {}) };
     },
     async cancelReference(id) {
       if (typeof id !== "string" || !JOB.test(id)) refuse();

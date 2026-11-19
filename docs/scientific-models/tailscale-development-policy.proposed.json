@@ -1,0 +1,50 @@
+{
+  "tagOwners": {
+    "tag:bloom-science-dev-caller": ["autogroup:admin"],
+    "tag:bloom-science-dev-node": ["autogroup:admin"],
+    "tag:bloom-science-policy-denied": ["autogroup:admin"]
+  },
+  "grants": [
+    {
+      "src": ["tag:bloom-science-dev-caller"],
+      "dst": ["tag:bloom-science-dev-node"],
+      "ip": ["tcp:443"]
+    },
+    {
+      "src": ["autogroup:member"],
+      "dst": ["autogroup:self"],
+      "ip": ["tcp:22"]
+    }
+  ],
+  "ssh": [
+    {
+      "action": "check",
+      "src": ["autogroup:member"],
+      "dst": ["autogroup:self"],
+      "users": ["autogroup:nonroot", "root"]
+    }
+  ],
+  "tests": [
+    {
+      "src": "tag:bloom-science-dev-caller",
+      "proto": "tcp",
+      "accept": ["tag:bloom-science-dev-node:443"],
+      "deny": ["tag:bloom-science-dev-node:22", "tag:bloom-science-dev-node:8765", "tag:bloom-science-dev-node:11434"]
+    },
+    {
+      "src": "tag:bloom-science-dev-caller",
+      "proto": "udp",
+      "deny": ["tag:bloom-science-dev-node:443"]
+    },
+    {
+      "src": "tag:bloom-science-policy-denied",
+      "proto": "tcp",
+      "deny": ["tag:bloom-science-dev-node:443", "tag:bloom-science-dev-node:22", "tag:bloom-science-dev-node:8765", "tag:bloom-science-dev-node:11434"]
+    },
+    {
+      "src": "tag:bloom-science-dev-node",
+      "proto": "tcp",
+      "deny": ["tag:bloom-science-dev-caller:443"]
+    }
+  ]
+}
