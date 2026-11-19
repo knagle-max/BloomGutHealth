@@ -20,7 +20,9 @@ export type ScientificRetrievalReview=z.infer<typeof scientificRetrievalReviewSc
 const digest=(value:unknown)=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export const scientificExcerptDigest=(excerpt:string)=>digest(excerpt);
 export function scientificRegistryBinding(registry:BiologicalRegistry,relationship:KnowledgeRelationship,sourceId:string){
-  return digest([registry.version,relationship,registry.sources.find(source=>source.id===sourceId)??null]);
+  const canonical=biologicalRegistrySchema.parse(registry);
+  const matched=canonical.relationships.find(row=>row.id===relationship.id);
+  return digest([canonical.version,matched??null,canonical.sources.find(source=>source.id===sourceId)??null]);
 }
 const querySchema=z.object({entityIds:z.array(id).min(1).max(4)}).strict();
 export type ScientificWithdrawals={relationshipIds:ReadonlySet<string>;sourceIds:ReadonlySet<string>;reviewIds:ReadonlySet<string>;rightsIds:ReadonlySet<string>};
@@ -55,7 +57,7 @@ export function retrieveReviewedScientificEvidence(input:{
       cards.push({relationship,source,review});
     }
   }
-  cards.sort((a,b)=>a.relationship.id.localeCompare(b.relationship.id)||a.source.id.localeCompare(b.source.id));
+  cards.sort((a,b)=>(a.relationship.id<b.relationship.id?-1:a.relationship.id>b.relationship.id?1:0)||(a.source.id<b.source.id?-1:a.source.id>b.source.id?1:0));
   // Refuse over-budget retrieval rather than silently dropping contrary/null
   // findings to keep only convenient supporting papers.
   if(cards.length>12||Buffer.byteLength(JSON.stringify(cards),'utf8')>40_000)throw Error('EVIDENCE_RETRIEVAL_LIMIT');

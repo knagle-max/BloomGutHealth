@@ -27,7 +27,7 @@
     "reviewed": 14,
     "limited": 197,
     "unresolvedIdentity": 313,
-    "sourceFilesScanned": 831,
+    "sourceFilesScanned": 834,
     "relevantSourceFiles": 74,
     "researchPathways": 7
   },
@@ -25505,7 +25505,7 @@
     "shared/lab-source-review.ts": "1f94b4e1fc4cd5c5cfef89f1ba1b99e41b3aeb014239ca4f0704b60658ef5704",
     "shared/precision-nutrition.ts": "3fd8f3ded08f4e36af0fda787aec1e5c2a0efecbe2004af52293fd291cbc424b",
     "shared/reported-taxa.ts": "c5b88f64766609a14631ef97461c332702c147caad780bdb78c2ae0b4ca2bf55",
-    "shared/schema.ts": "f0944dca7bf5bf23fb1e98e72738d725b87dc5e3ce3c83ff38c7be479573048b",
+    "shared/schema.ts": "8a800721021f4dfa46b2a66166d0f57c609ea4b64381f0352b35822017b990a8",
     "shared/supplement-intake.ts": "e69fd41e09f47c66bcfd2d71e6936fc15c6ffc2e6ae54cac2de59a5975126442",
     "tests/account-erasure.test.ts": "88df1a3dc99e9c20d917981d0fafa453eb8383a54dca81a7f6d2ec912ad438e0",
     "tests/account-export.test.ts": "540d55a5a53d824ffd590035b5a9f155bfb0dfd6d7c3136e35ac30b69585f7a8",

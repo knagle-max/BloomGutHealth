@@ -456,3 +456,12 @@ export const featureControlStepUpReceipts=pgTable("feature_control_step_up_recei
  ...[table.proofKey,table.sessionKey,table.actorKey,table.intentKey,table.grantKey].map(column=>check(`feature_control_step_up_${column.name}_check`,sql`${column} ~ '^[a-f0-9]{64}$'`)),
  check("feature_control_step_up_service_check",sql`${table.serviceId} ~ '^srv-[a-z0-9]+$'`),check("feature_control_step_up_environment_check",sql`${table.environment} IN ('development-review','isolated-synthetic')`),check("feature_control_step_up_lifetime_check",sql`${table.expiresAt} > ${table.createdAt} AND ${table.expiresAt} <= ${table.createdAt} + interval '120 seconds'`),check("feature_control_step_up_consumed_check",sql`${table.consumedAt} IS NULL OR ${table.consumedAt} >= ${table.createdAt}`),
 ]);
+
+/** Proposed source-reviewed nonpersonal knowledge persistence; excluded from
+ * application db:push by the existing biology_* migration boundary. */
+export const biologyScientificReleases=pgTable('biology_scientific_releases',{
+ id:text('id').primaryKey(),digest:text('digest').notNull().unique(),manifest:jsonb('manifest').notNull(),createdAt:timestamp('created_at').defaultNow().notNull(),
+});
+export const biologyScientificWithdrawals=pgTable('biology_scientific_withdrawals',{
+ kind:text('kind').notNull(),targetId:text('target_id').notNull(),createdAt:timestamp('created_at').defaultNow().notNull(),
+},table=>[primaryKey({columns:[table.kind,table.targetId]}),check('biology_scientific_withdrawals_kind',sql`${table.kind} IN ('relationship','source','review','rights')`)]);

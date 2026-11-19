@@ -48,36 +48,36 @@ export class BiologyStorage {
   constructor(
     private readonly db: Pick<typeof applicationDatabase, "select">,
   ) {}
-  async getBiologicalRegistry() {
-    if (this.cached && this.cached.until > Date.now()) return this.cached.value;
+  async getBiologicalRegistry(version = BIOLOGY_VERSION) {
+    if (this.cached && this.cached.value.version === version && this.cached.until > Date.now()) return this.cached.value;
     const [versions, entities, relationships, sources, links] =
       await Promise.all([
         this.db
           .select()
           .from(biologyVersions)
-          .where(eq(biologyVersions.version, BIOLOGY_VERSION)),
+          .where(eq(biologyVersions.version, version)),
         this.db
           .select()
           .from(biologyEntities)
-          .where(eq(biologyEntities.version, BIOLOGY_VERSION)),
+          .where(eq(biologyEntities.version, version)),
         this.db
           .select()
           .from(biologyRelationships)
-          .where(eq(biologyRelationships.version, BIOLOGY_VERSION)),
+          .where(eq(biologyRelationships.version, version)),
         this.db
           .select()
           .from(biologySources)
-          .where(eq(biologySources.version, BIOLOGY_VERSION)),
+          .where(eq(biologySources.version, version)),
         this.db
           .select()
           .from(biologyRelationshipSources)
-          .where(eq(biologyRelationshipSources.version, BIOLOGY_VERSION)),
+          .where(eq(biologyRelationshipSources.version, version)),
       ]);
     if (!versions[0])
       throw Error("Biological registry version is not installed");
     const value = validateRegistry(
       biologicalRegistrySchema.parse({
-        version: BIOLOGY_VERSION,
+        version,
         summary: versions[0].summary,
         entities: entities.map(({ version, ...row }) => row),
         sources: sources.map(({ version, ...row }) => row),
