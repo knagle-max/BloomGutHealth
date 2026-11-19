@@ -31,7 +31,7 @@ export default function RecordedIntakeSources({showCorrectionLinks=false,active=
   const owner=user!.id,assertCurrent=accountContextGuard(owner),query=new URLSearchParams({date,timeZone,nutrientKey});assertCurrent();
   const result=recordedIntakeViewSchema.parse(await(await apiRequest('GET',recordedIntakeSourcePath+'?'+query,undefined,undefined,signal)).json());
   if(result.userId!==owner||result.date!==date||result.timeZone!==timeZone||result.events.some(event=>event.rows.some(row=>row.nutrientKey!==nutrientKey)))throw Error('These sources could not be verified for this account and date.');
-  assertCurrent();return {...result,coverage:knownNutrientCoverage(result,owner,nutrientKey)};
+  assertCurrent();return {...result,sourceView:result,coverage:knownNutrientCoverage(result,owner,nutrientKey)};
  }});
  useEffect(()=>setVisible(25),[user?.id,date,timeZone,nutrientKey]);
  const data=!view.isError&&!view.isFetching&&!view.isStale?view.data:undefined,selected=definitions.find(def=>def.key===nutrientKey)!;
@@ -52,7 +52,7 @@ export default function RecordedIntakeSources({showCorrectionLinks=false,active=
    {data.coverage.overlap&&<section aria-label="Recorded B6 label overlap" className="space-y-2">
     <h4>B6 repeats across taken entries</h4><p>{data.coverage.overlap.finding}</p>
     <p>Known supplemental B6 from these entries: <strong>{formatNutrientAmount(data.coverage.overlap.knownSupplementalMg)} mg</strong>.</p>
-    <p>{data.coverage.overlap.biologicalMeaning}</p><B6OverlapReferenceReview sources={data}/>
+    <p>{data.coverage.overlap.biologicalMeaning}</p><B6OverlapReferenceReview sources={data.sourceView}/>
     <p className="panel-note">Known supplement contributions only; food and unrecorded intake are not included. Personal reference applicability and clinical significance are not established.</p>
     <details><summary className="min-h-11 cursor-pointer">Review contributing taken entries</summary><ul className="space-y-2">{data.coverage.overlap.members.map(member=><li key={member.eventKey}><strong>{member.name}: {formatNutrientAmount(member.amountMg)} mg</strong><p className="panel-note">{member.occurredAt} · saved label {member.labelId} · version {member.labelVersion??'Not supplied'}</p></li>)}</ul>{data.coverage.overlap.unknownSupplementEntries>0&&<p>{data.coverage.overlap.unknownSupplementEntries} other recorded supplement {data.coverage.overlap.unknownSupplementEntries===1?'entry has':'entries have'} no compatible known B6 amount.</p>}<p className="panel-note">Review the declarations together when reviewing these supplement entries. This source finding does not change prescribed use or establish toxicity.</p></details>
    </section>}

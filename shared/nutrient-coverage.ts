@@ -5,7 +5,7 @@ import {intakeCalendarDate} from './recorded-intake-sources';
 import {vitaminB6ReferenceContext} from './supplement-reference-context';
 import type {ConsumerValueCandidate} from './scientific-contracts';
 
-export const NUTRIENT_COVERAGE_VERSION='recorded-source-coverage-2026-11-18-v2';
+export const NUTRIENT_COVERAGE_VERSION='recorded-source-coverage-2026-11-18-v3';
 export interface RecordedB6Overlap extends ConsumerValueCandidate {
  evidenceClass:'source-arithmetic';referenceApplicability:'not-established';
  knownSupplementalMg:number;distinctLabels:number;
@@ -55,8 +55,9 @@ export function knownNutrientCoverage(view:SourceView,actor:string,nutrientKey:s
    group.knownSubtotal=subtotal;group.knownRows++;if(row.sourceReportedZero===true)group.zeroRows++;
   }
  }
+ const sourceEpoch=JSON.stringify([view.userId,view.date,view.timeZone,view.asOf,NUTRIENT_COVERAGE_VERSION,nutrientKey,view.events.map(event=>[event.key,event.revision,event.occurredAt,event.sourceStatus,event.rows.filter(row=>row.nutrientKey===nutrientKey)])]);
  const overlap=nutrientKey==='vitamin_b6_mg'?recordedB6Overlap(view):null;
- return{nutrientKey,groups:Array.from(groups.values()),unavailableEvents,excludedRecords:view.undatedEvents+view.futureEvents+view.unsupportedEvents+view.conflictingEvents,overlap,
+ return{nutrientKey,sourceEpoch,groups:Array.from(groups.values()),unavailableEvents,excludedRecords:view.undatedEvents+view.futureEvents+view.unsupportedEvents+view.conflictingEvents,overlap,
   valueKind:'recorded_source_subtotals' as const,adequacyAssessment:false as const,usualIntakeAssessment:false as const};
 }
 

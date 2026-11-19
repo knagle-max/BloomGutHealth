@@ -1,17 +1,14 @@
 import type {z} from 'zod';
-import {dietaryReferenceContextSchema} from './dietary-reference-eligibility';
-import {dietaryReferencesFor,dietaryReferenceSubset} from './dietary-references';
+import {ownedDietaryReferenceContext} from './dietary-reference-eligibility';
+import {dietaryReferenceSubset} from './dietary-references';
 import {knownNutrientCoverage} from './nutrient-coverage';
 import {intakeCalendarDate,type recordedIntakeViewSchema} from './recorded-intake-sources';
 /** Lower-bound comparison only: a partial known subtotal can reach a total-intake
  * limit, but being below it cannot establish clearance. No usual exposure,
  * toxicity, treatment or complete-day intake is established. */
 export function recordedB6ReferenceReview(view:z.infer<typeof recordedIntakeViewSchema>,actor:string,input:unknown){
- const overlap=knownNutrientCoverage(view,actor,'vitamin_b6_mg').overlap,parsed=dietaryReferenceContextSchema.safeParse(input);if(!overlap||!parsed.success)return null;
- const context=parsed.data;if(context.userId!==actor)throw Error('REFERENCE_SCOPE_UNAVAILABLE');
- if(context.date!==view.date||context.timeZone!==view.timeZone||context.referenceVersion!==dietaryReferenceSubset.version||intakeCalendarDate(context.asOf,context.timeZone)!==context.date)return null;
- const canonical=dietaryReferencesFor('vitamin_b6_mg');
- if(context.rows.some(row=>JSON.stringify(row.reference)!==JSON.stringify(canonical.find(value=>value.id===row.reference.id))))return null;
+ const overlap=knownNutrientCoverage(view,actor,'vitamin_b6_mg').overlap,context=ownedDietaryReferenceContext(input,actor,{date:view.date,timeZone:view.timeZone,nutrientKey:'vitamin_b6_mg'});
+ if(!overlap||!context||intakeCalendarDate(context.asOf,context.timeZone)!==context.date)return null;
  const limits=context.rows.filter(row=>row.eligible&&row.reference.kind==='UL'&&row.reference.intakeScope==='total-intake'&&row.reference.unit==='mg/day');
  if(limits.length!==1||overlap.knownSupplementalMg<limits[0].reference.amount)return null;
  const reference=limits[0].reference,source=dietaryReferenceSubset.sources.find(row=>row.id===reference.sourceId)!;

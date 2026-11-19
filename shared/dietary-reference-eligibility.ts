@@ -50,3 +50,14 @@ export const dietaryReferenceContextSchema=z.object({
  rows:z.array(z.object({reference:dietaryReferenceRowSchema.extend({referenceVersion:z.string().min(1)}),eligible:z.boolean(),reasons:z.array(z.string().min(1)).max(15)}).strict().refine(row=>row.eligible===(row.reasons.length===0))).max(30),
  valueKind:z.literal('published-reference-context'),adequacyAssessment:z.literal(false),usualIntakeAssessment:z.literal(false),
 }).strict();
+
+/** Validate an owned response against the exact installed source table. This is
+ * source/ownership matching, not an independent clinical review or diagnosis. */
+export function ownedDietaryReferenceContext(input:unknown,actor:string,selection:{date:string;timeZone:string;nutrientKey:string;lifeStage?:DietaryReferenceLifeStage}){
+ if(!actor)throw Error('REFERENCE_SCOPE_UNAVAILABLE');
+ const parsed=dietaryReferenceContextSchema.safeParse(input);if(!parsed.success)return null;
+ const context=parsed.data;if(context.userId!==actor)throw Error('REFERENCE_SCOPE_UNAVAILABLE');
+ const canonical=dietaryReferencesFor(selection.nutrientKey,selection.lifeStage);
+ if(context.date!==selection.date||context.timeZone!==selection.timeZone||context.referenceVersion!==dietaryReferenceSubset.version||!canonical.length||context.rows.length!==canonical.length||new Set(context.rows.map(row=>row.reference.id)).size!==canonical.length||context.rows.some(row=>JSON.stringify(row.reference)!==JSON.stringify(canonical.find(value=>value.id===row.reference.id))))return null;
+ return context;
+}
