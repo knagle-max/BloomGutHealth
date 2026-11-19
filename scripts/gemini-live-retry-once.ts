@@ -4,10 +4,10 @@ import { SpendLedger, postgresSpendTransaction } from "../server/spend-ledger";
 import { sessionSecret } from "../server/security";
 import { investigatePublishedScienceWithGemini } from "../server/gemini-science-research";
 
-const tag="[BLOOM_GEMINI_RETRY]";
+const tag="[BLOOM_GEMINI_RETRY_B]";
 const emit=(stage:string, details:Record<string,unknown>={})=>console.log(tag+" "+JSON.stringify({stage,...details}));
-const previousId="bloom-gemini-bile-20261118-onecall";
-const requestId="bloom-gemini-bile-20261118-retry-v35";
+const previousId="bloom-gemini-bile-20261118-retry-v35";
+const requestId="bloom-gemini-bile-20261118-retry-v35-b";
 const question="What nonpersonal published evidence distinguishes microbial bile acid deconjugation from dehydroxylation and from host or dietary changes in the bile acid pool? Compare mechanistic and observational human hypotheses, identify limitations and contradictory interpretations, and distinguish associations from proven causation.";
 const sources=[
  {sourceId:"doi:10.1038/s41579-022-00805-x",title:"Bile acids and the gut microbiota: metabolic interactions and impacts on disease",doi:"10.1038/s41579-022-00805-x",excerpt:"Independently authored source synopsis: This review discusses microbiota-mediated bile-acid transformations, including deconjugation and dehydroxylation, alongside host synthesis, enterohepatic recycling, diet and antibiotic exposure. Mechanisms do not by themselves demonstrate causal clinical effects in individual humans.",evidenceClass:"review" as const,status:"source-reviewed-for-research" as const,rights:"approved-for-provider-research" as const},
@@ -36,6 +36,14 @@ async function main(){
      const classification:Record<number,string>={400:"invalid_request",401:"authentication",403:"permission_or_quota",404:"model_or_endpoint_not_found",429:"rate_limited",500:"provider_error",503:"service_unavailable"};
      providerErrorCode=classification[response.status]??"unexpected_http_error";
    }
+   if(response.ok){
+     try {
+       const v=await response.clone().json() as {candidates?:Array<{content?:{parts?:Array<{text?:string}>}}> ,usageMetadata?:unknown};
+       const txt=(v.candidates?.[0]?.content?.parts??[]).map(x=>x.text??"").join("");
+       const candidate=JSON.parse(txt) as Record<string,unknown>;
+       emit("provider_structured_diagnostic",{candidateKeys:Object.keys(candidate),questionExact:candidate.question===question,hypotheses:Array.isArray(candidate.hypotheses)?candidate.hypotheses.length:"missing",contradictions:Array.isArray(candidate.contradictingFindings)?candidate.contradictingFindings.length:"missing",usage:v.usageMetadata??null,publicScientificCandidate:candidate});
+     } catch {emit("provider_structured_diagnostic",{parse:"not_valid_json_or_no_content"});}
+   }
    return response;
   };
   try{
@@ -48,7 +56,7 @@ async function main(){
    emit("result",{status:"PASS",actualProviderCalls:attempts,httpStatus:providerHttpStatus,model:result.model,usage:result.usage,estimatedSettledUsd:0.01,sourceDigest:result.sourceSetSha256,candidateStatus:result.status,noKnowledgePromotion:result.noKnowledgePromotion,claims:result.claims});
   }catch(e){
    const error=e instanceof Error?e.message:"unavailable";
-   emit("result",{status:"FAIL",actualProviderCalls:attempts,httpStatus:providerHttpStatus,providerErrorCode,reason:typeof error==="string"&&error.startsWith("Gemini")?error:"validation_or_spend_guard_failure"});
+   emit("result",{status:"FAIL",actualProviderCalls:attempts,httpStatus:providerHttpStatus,providerErrorCode,reason:["Gemini research is not configured or approved.","Research spend limit or duplicate request.","Candidate schema or research question mismatch.","Candidate cited an unknown scientific source.","Candidate was not valid structured JSON.","Could not settle Gemini spend reservation.","Unexpected Gemini response schema.","Gemini provider request unsuccessful.","Gemini transport unavailable."].includes(error)?error:"other_validation_or_spend_guard_failure"});
   }
  }catch{emit("blocked",{reason:"database_or_ledger_failure"});}
  finally{await pool.end().catch(()=>{});}
