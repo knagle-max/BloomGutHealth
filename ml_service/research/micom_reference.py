@@ -12,9 +12,69 @@ from pathlib import Path
 from .development_policy import require_development_science
 
 VERSION = "micom-reference-control-v1"
+SOLVER_PROFILE = "hybrid-reference-precision-v2"
+SOLVER_TOLERANCE = 1e-9
+NUMERICAL_TOLERANCE = 1e-5
+TRADEOFF_FRACTION = 0.5
 # Identity of the bundled engineering fixture in the tested MICOM0.37.1 wheel.
 # This digest is not biological review or permission to redistribute the model.
 REFERENCE_SHA256 = "36300ad00320f1ffde76f2ffca06be6403759d92ac320535d961a0ab2d0c94f1"
+
+
+def _validate_reference_growth(growth, maximum):
+    # For this two-copy equal-abundance control, minimizing the sum of squared
+    # member growth rates puts community growth at fraction * LP maximum.
+    # MICOM removes the temporary QP growth bound on return, so checking only
+    # original reaction bounds cannot detect a violation of that constraint.
+    if (not math.isfinite(growth) or not math.isfinite(maximum) or maximum <= 0
+            or abs(growth - TRADEOFF_FRACTION * maximum) > NUMERICAL_TOLERANCE):
+        raise ArithmeticError("Reference solution violates the tradeoff growth objective.")
+
+
+def _configure_reference_solver(community, versions):
+    # This per-instance adapter uses the two pinned optlang backend hooks below;
+    # never patch installed packages or a process-global solver implementation.
+    expected = {"micom": "0.37.1", "cobra": "0.30.0", "optlang": "1.8.3",
+                "osqp": "0.6.7.post3", "highspy": "1.16.0"}
+    if any(versions.get(name) != version for name, version in expected.items()):
+        raise ValueError("Unsupported reference backend; use the pinned development requirements.")
+    config, backend = community.solver.configuration, community.solver.problem
+    config.timeout = 20
+    config.tolerances.feasibility = SOLVER_TOLERANCE
+    config.tolerances.optimality = SOLVER_TOLERANCE
+    config.lp_method = "simplex"
+    config.presolve = False
+    backend.settings["threads"] = 1
+    original_settings, original_solve = backend.osqp_settings, backend.solve_osqp
+    diagnostics = []
+
+    def settings():
+        # OSQP's automatic rho-update interval depends on measured setup time.
+        # Fix the interval, retain residual-based adaptation, and start cold.
+        return {**original_settings(), "adaptive_rho_interval": 50, "warm_start": False}
+
+    def solve_checked():
+        original_solve()
+        info = backend.info
+        # MICOM can crossover an iteration-limited QP into an 'optimal' LP.
+        # Refuse before that fallback can conceal QP nonconvergence.
+        if info.status != "solved":
+            raise ArithmeticError("Reference QP did not converge.")
+        primal, dual = float(info.pri_res), float(info.dua_res)
+        if (not math.isfinite(primal) or not math.isfinite(dual)
+                or max(abs(primal), abs(dual)) > NUMERICAL_TOLERANCE):
+            raise ArithmeticError("Reference QP residuals exceed numerical tolerance.")
+        diagnostics.append({"status": info.status, "iterations": int(info.iter),
+                            "primalResidual": primal, "dualResidual": dual,
+                            "polishStatus": int(info.status_polish), "rhoUpdates": int(info.rho_updates)})
+
+    backend.osqp_settings, backend.solve_osqp = settings, solve_checked
+    return {"feasibility": config.tolerances.feasibility,
+            "optimality": config.tolerances.optimality,
+            "lpMethod": config.lp_method, "presolve": config.presolve,
+            "threads": backend.settings["threads"], "osqp": settings(),
+            "initialization": "fresh-community-and-solver-per-request",
+            "bitwiseDeterminismEstablished": False}, diagnostics
 
 
 def validate_reference_command(command: dict) -> None:
@@ -71,8 +131,9 @@ def run_reference(command: dict, environment=None) -> dict:
         "versions": {name: importlib.metadata.version(name) for name in
                      ("micom", "cobra", "optlang", "osqp", "highspy", "python-libsbml")},
         "python": platform.python_version(), "platform": platform.system(),
-        "machine": platform.machine(), "solver": "hybrid", "tradeoffFraction": 0.5,
-        "modelAudit": model_audit, "numericalTolerance": 1e-5,
+        "machine": platform.machine(), "solver": "hybrid", "tradeoffFraction": TRADEOFF_FRACTION,
+        "solverProfile": SOLVER_PROFILE,
+        "modelAudit": model_audit, "numericalTolerance": NUMERICAL_TOLERANCE,
         "unitInterpretation": "Model objective/flux units; human concentration interpretation unsupported.",
         # Uncommitted development code has no invented release commit/version.
         # Fixed code-file digests identify the actual local implementation.
@@ -83,13 +144,22 @@ def run_reference(command: dict, environment=None) -> dict:
     }
     # Explicit hybrid backend avoids selecting an installed commercial solver.
     community = micom.Community(taxonomy, solver="hybrid", progress=False)
-    community.solver.configuration.timeout = 20
+    # Override MICOM's large-model defaults AFTER construction. OSQP's residual
+    # stopping rule includes a relative term: 1e-6 is not an absolute 1e-6
+    # guarantee on every constraint when other fluxes are of order 1000.
+    configuration, qp_diagnostics = _configure_reference_solver(community, provenance["versions"])
+    provenance["solverConfiguration"] = configuration
     if command["scenario"] == "closed-medium":
         community.medium = {reaction_id: 0.0 for reaction_id in community.medium}
     provenance["mediumUptakeBounds"] = dict(sorted(community.medium.items()))
     provenance["solverTimeoutSeconds"] = 20
     try:
-        solution = community.cooperative_tradeoff(fraction=0.5, fluxes=True)
+        maximum = community.optimize(fluxes=False, raise_error=True)
+        if maximum is None or maximum.status != "optimal":
+            return {**provenance, "status": str(community.solver.status or "optimization-failed"), "growthRate": None,
+                    "limitations": ["No optimal linear growth reference; no flux inferred."]}
+        maximum_growth = float(maximum.growth_rate)
+        solution = community.cooperative_tradeoff(fraction=TRADEOFF_FRACTION, fluxes=True)
     except cobra.exceptions.OptimizationError:
         # A closed medium can be infeasible because maintenance remains required.
         # Never fabricate a zero flux or zero growth rate for a failed solve.
@@ -104,18 +174,23 @@ def run_reference(command: dict, environment=None) -> dict:
     if (not math.isfinite(float(solution.growth_rate))
             or not all(math.isfinite(v) for v in flux.values())):
         raise ArithmeticError("Nonfinite reference solution.")
+    _validate_reference_growth(float(solution.growth_rate), maximum_growth)
     residual = max(abs(sum(float(coefficient) * flux[r.id]
                            for r in metabolite.reactions
                            for coefficient in [r.metabolites[metabolite]]))
                    for metabolite in community.metabolites)
     bound_error = max(max(r.lower_bound - flux[r.id], flux[r.id] - r.upper_bound, 0.0)
                       for r in community.reactions)
-    if residual > 1e-5 or bound_error > 1e-5:
+    if residual > NUMERICAL_TOLERANCE or bound_error > NUMERICAL_TOLERANCE:
         raise ArithmeticError("Reference solution violates numerical tolerances.")
     return {
         **provenance, "status": solution.status,
         "growthRate": float(solution.growth_rate), "maxSteadyStateResidual": residual,
         "maxBoundViolation": bound_error,
+        "linearGrowthMaximum": maximum_growth,
+        "tradeoffGrowthTarget": TRADEOFF_FRACTION * maximum_growth,
+        "tradeoffGrowthError": abs(float(solution.growth_rate) - TRADEOFF_FRACTION * maximum_growth),
+        "qpConvergence": qp_diagnostics,
         "limitations": [
             "Two copies of one E. coli reference model, not distinct microbial species or a gut community.",
             "Equal abundances are imposed test parameters, not measured metabolic activity.",

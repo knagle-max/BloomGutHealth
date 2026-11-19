@@ -26,8 +26,14 @@ def _success(connection, command):
 
 
 def _oversized(connection, command):
-    connection.send_bytes(b"x" * (OUTPUT_LIMIT + 1))
-    connection.close()
+    try:
+        connection.send_bytes(b"x" * (OUTPUT_LIMIT + 1))
+    except (BrokenPipeError, ConnectionResetError):
+        # Expected only in this oversized-output fixture: recv_bytes(maxlength)
+        # rejects the header and the parent may close before sending finishes.
+        pass
+    finally:
+        connection.close()
 
 
 def _crash(connection, command):
@@ -45,6 +51,19 @@ def wait_for_terminal(supervisor, job_id, timeout=6):
 
 
 class DevelopmentJobTests(unittest.TestCase):
+    def test_oversized_fixture_closes_quietly_after_expected_parent_pipe_rejection(self):
+        class RejectedPipe:
+            closed = False
+            def send_bytes(self, payload):
+                if len(payload) != OUTPUT_LIMIT + 1:
+                    raise AssertionError("Oversized fixture lost its negative control")
+                raise BrokenPipeError("Synthetic parent size rejection")
+            def close(self):
+                self.closed = True
+        connection = RejectedPipe()
+        _oversized(connection, COMMAND)
+        self.assertTrue(connection.closed)
+
     def test_disabled_or_unsafe_commands_never_start_worker(self):
         supervisor = DevelopmentJobSupervisor()
         with patch.object(supervisor._context, "Process", side_effect=AssertionError("must not spawn")):
