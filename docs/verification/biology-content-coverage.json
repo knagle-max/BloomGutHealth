@@ -12,23 +12,23 @@
     "independentlyApproved": 0
   },
   "counts": {
-    "totalIdentityRecords": 523,
+    "totalIdentityRecords": 524,
     "supportedMarkers": 49,
     "registryTaxa": 126,
     "researchContextProfiles": 56,
     "identityContextProfiles": 70,
-    "fixtureIdentityRecords": 348,
+    "fixtureIdentityRecords": 349,
     "fixtureCohorts": {
       "explicit-rank-mismatch-fixture": 3,
       "named-or-negative-identity-fixture": 68,
       "synthetic-or-unknown-fixture": 271,
-      "unsupported-assay-fixture": 6
+      "unsupported-assay-fixture": 7
     },
     "reviewed": 14,
     "limited": 197,
-    "unresolvedIdentity": 312,
-    "sourceFilesScanned": 829,
-    "relevantSourceFiles": 73,
+    "unresolvedIdentity": 313,
+    "sourceFilesScanned": 830,
+    "relevantSourceFiles": 74,
     "researchPathways": 7
   },
   "entries": [
@@ -7198,6 +7198,14 @@
           "kind": "source-only-analyte",
           "spelling": "LDL",
           "rank": null,
+          "file": "tests/biological-investigation-snapshot.test.ts",
+          "line": 59,
+          "method": "static source literal"
+        },
+        {
+          "kind": "source-only-analyte",
+          "spelling": "LDL",
+          "rank": null,
           "file": "tests/lab-paste-workflow.test.ts",
           "line": 20,
           "method": "existing parser over explicit literal fixture"
@@ -8929,6 +8937,38 @@
           "file": "tests/source-only-lab.test.ts",
           "line": 0,
           "method": "bounded 92-label synthetic scale fixture"
+        }
+      ]
+    },
+    {
+      "cohort": "unsupported-assay-fixture",
+      "uniqueId": "fixture:b2f199824157367bdb15",
+      "kind": "source-only-analyte",
+      "sourceSpellings": [
+        "Unidentified analyte"
+      ],
+      "taxonomicLevel": null,
+      "aliases": [],
+      "displayedSurfaces": [
+        "source-only laboratory observation"
+      ],
+      "profileRegistryId": null,
+      "evidenceLevel": "Unresolved source identity; no biological function inferred",
+      "coverageStatus": "unresolved identity",
+      "rawCoverageStatus": null,
+      "reviewStatus": "identity_not_established",
+      "reviewedOn": null,
+      "lastRevised": "biology-content-r4m1-2026-11-08.3+bloodwork-catalog-2026-11-09-v2",
+      "citations": [],
+      "unresolvedReason": "Uninterpreted source-only label; no assay, supported identity or clinical range inferred.",
+      "sources": [
+        {
+          "kind": "source-only-analyte",
+          "spelling": "Unidentified analyte",
+          "rank": null,
+          "file": "tests/biological-investigation-snapshot.test.ts",
+          "line": 59,
+          "method": "static source literal"
         }
       ]
     },
@@ -24593,6 +24633,14 @@
       "reviewerNeed": "No literature writeup required for an intentional synthetic/negative fixture; preserve its unknown state."
     },
     {
+      "uniqueId": "fixture:b2f199824157367bdb15",
+      "sourceSpellings": [
+        "Unidentified analyte"
+      ],
+      "reason": "Uninterpreted source-only label; no assay, supported identity or clinical range inferred.",
+      "reviewerNeed": "Assay/source identity verification"
+    },
+    {
       "uniqueId": "fixture:b41d3bbcbaea1eaf6a76",
       "sourceSpellings": [
         "Syntheticus bacterium FIX-12"
@@ -25461,6 +25509,7 @@
     "shared/supplement-intake.ts": "e69fd41e09f47c66bcfd2d71e6936fc15c6ffc2e6ae54cac2de59a5975126442",
     "tests/account-erasure.test.ts": "88df1a3dc99e9c20d917981d0fafa453eb8383a54dca81a7f6d2ec912ad438e0",
     "tests/account-export.test.ts": "540d55a5a53d824ffd590035b5a9f155bfb0dfd6d7c3136e35ac30b69585f7a8",
+    "tests/biological-investigation-snapshot.test.ts": "32de11ca16561d7af9aee4fbe48ae961b0369b9004425c6b9cf2bfe08acae75c",
     "tests/biological-report-management.test.ts": "42707f79920630022da35f21fcb431c0ce1c1319e769d932d99275eca25bbf8b",
     "tests/biology-content-registry.test.ts": "20e7e895240ba9892b6bdce7b3be85f68e087380ac3f43ccfe28ebff9a497d88",
     "tests/biology-source-inventory.test.ts": "1e70668b1771a4b26739f46ed663a247031c5a58d47ef4b2f50d51e41114f7c0",
