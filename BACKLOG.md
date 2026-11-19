@@ -1606,3 +1606,16 @@ PSL-01–09 | SPECIFIED_ADVANCED_AFTER_CORE | Incoming590fee84 integrated durabl
 NI-01/02 | SOURCE_FACTS_ENGINEERING_TESTED_SCOPED | Existing confirmed source/coverage/M2form/ref/B6 ancestry retained. NI-03/04/05 | SPECIFIED_NEXT_CORE | Newe79e2814 decision: typed private NutrientPersonalAssessment using existingConsumerValue/source/action pipeline; start B6 and protein/fiber protected-goal cases with M4choices. NI-06–10 | SPECIFIED_ADVANCED/FUTURE | Biomarker/modifier/compartment/personal calibration/collective learning later; no exact optimum, absorbed amount, private shared releases or new optimizer claimed. OriginalNI-T01–26 and NUT-INT01–10 retained.
 
 V06-NI03-private-B6-assessment | ENGINEERING_TESTED_PARTIAL | ExistingB6 facts→typed account-private projection: source-known groups, usual/absorption/status/requirement/benefit unknown, scope/time/reference/epoch guards; no new store/API/model/action authority.26focused +actual encrypted B6/common reference flows40+40states/types/build PASS. NI04/protein-fiber/M4options next. dbe CI old direction detail locator repaired48states with all numeric/source/privacy checks retained. Receipt V06_NI03_PRIVATE_B6_ASSESSMENT_20261119.json.
+
+## Binding science-first reconciliation — 2026-11-19
+
+Latest AGENTS/NEXT_ACTIONS ordering supersedes historical Core-first next labels above. Unfinished exhaustive M2/M4, NI04/protein/fiber, Food12, predetermined Response catalog and broad historical RC are **DEFERRED / NOT ACCEPTED (P4)**; existing source/safety functionality remains protected.
+
+| Requirement | Status | Acceptance / evidence / dependency |
+|---|---|---|
+| P0 B6 separation and stale CI browser repair | IMPLEMENTED_AND_TESTED locally | 26 source tests; B6/common browser regressions; repaired 48-state lipid journey; receipt V06_NI03_PRIVATE_B6_ASSESSMENT_20261119.json; hosted qualification pending |
+| INV-00 provider/source audit | IMPLEMENTED_AND_TESTED scoped audit | Existing OpenAI executor optional, no live installation provisioned; Gemini transport exists but public flag disabled; graph membership is not source/clinical approval |
+| INV-PRIV-01 outbound question boundary | IMPLEMENTED_AND_TESTED partial | Five boundary tests + seven Gemini transport tests; exact reviewed public question/excerpts only, fresh digest/expiry/withdrawal, no joint private payload; no production catalog/provider enabled |
+| P1 INV01–08 dynamic investigation and benchmark | OPEN | Next: typed private snapshot/hypotheses, current rights-reviewed retrieval, claim verification and independent evaluation; no rule catalog or clinical release inferred |
+| P2 durable nonpersonal science | OPEN | Candidate-only → independent original evidence review → immutable digest → two clean isolated restores → retrieval/retraction surviving rollback |
+| P3 science integration | OPEN | Focused privacy, source revisions, ledger/outage, contradictory evidence, fallback and consumer journey; not full historical RC acceptance |
