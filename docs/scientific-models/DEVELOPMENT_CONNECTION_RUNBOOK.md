@@ -123,6 +123,38 @@ A tailnet administrator or compromised personal device is not isolated by this
 policy. This design restricts the new service identity without claiming to
 harden all existing personal devices.
 
+### Latest supplied inventory and remaining identity check
+
+Owner reports the Mac is connected, three devices are visible (macOS, Linux and
+iOS), no Serve/Funnel mapping exists and TCP443 has no reported listener. This
+removes the reported mapping/listener conflict; recheck immediately before use.
+Actual hostnames and addresses are intentionally absent from this repository.
+
+The operating system or device display name does not establish Tailscale
+ownership, tags, shared status or routing. In Machines, inspect the Linux node's
+owner/tags and each node's advertised/approved subnets and exit-node role without
+changing anything. A provider-managed Linux node must not be retagged, enrolled
+as the Render caller or given extra access merely because it is visible.
+
+- If all three are ordinary user-owned member devices and no subnet/exit/shared
+  paths are used, the template's member-to-member grant covers their current
+  direct connectivity without extra rules.
+- If Linux is tagged, preserve only its existing required directional flows with
+  explicit reviewed private grants to/from that existing tag or exact host. Do
+  not place the restricted Render caller tag in a broad preservation rule. Its
+  displayed name alone is not an access selector.
+- If any device routes subnets, route approval and access permission are separate.
+  Preserve the actual required subnet destinations/ports for personal members;
+  granting access only to the router's own Tailscale address is insufficient.
+  Do not advertise/approve new routes or grant routed access to the Render caller.
+- If an exit node is used, review its Internet destination permission separately
+  against the current policy and preserve the relied-upon personal flow. Do not
+  add blanket Internet destinations to the science caller.
+
+Until those ownership/route facts are confirmed, the policy is a finalized base
+proposal, not a verified complete replacement. No administrative network tool is
+connected here; the reported three-device list cannot establish absent routes.
+
 ### Offline/private inventory before an activation proposal
 
 On the Mac, these read-only commands do not activate Serve or change identity:
@@ -182,6 +214,67 @@ Mac/VPN outage and recovery, cancellation and credential rotation. Record only
 nonpersonal pass/fail summaries in Git. Real personal processing remains disabled
 and is not authorized by a successful synthetic connection. No Ollama dependency
 is required for the MICOM reference control.
+
+### Minimal execution sequence after the corresponding explicit approvals
+
+**Approval A — Mac localhost listener only.** In the existing checkout and pinned
+environment, keep this foreground terminal open:
+
+```bash
+export BLOOM_RUNTIME_ENV=development
+export BLOOM_LOCAL_SCIENCE_ENABLED=true
+BLOOM_PY="$HOME/bloom-science/.venv-validation/bin/python"
+BLOOM_DEV_PRIVATE="$HOME/bloom-science/private-development"
+"$BLOOM_PY" -m ml_service.development_service check --config "$BLOOM_DEV_PRIVATE/credentials.json"
+"$BLOOM_PY" -m ml_service.development_service serve --config "$BLOOM_DEV_PRIVATE/credentials.json" --approved-local-listener
+```
+
+Do not reinitialize an existing credential file. If it expired, stop for approved
+rotation/private credential synchronization rather than bypassing expiry. In a
+second terminal inspect `lsof -nP -iTCP:8765 -sTCP:LISTEN`; continue only if the
+service is bound to127.0.0.1, never wildcard/LAN. This approval does not include
+Serve, policy edits or Render settings.
+
+**Approval B — exact privately reviewed policy and private HTTPS Serve.** First
+resolve the Linux/tag/route questions above, complete the host alias privately,
+validate the whole policy and personal-flow tests, then save only the approved
+candidate. Keep the existing Mac identity unchanged. Confirm acceptable
+certificate hostname/DNS privacy and no new port/mapping conflict. In another
+foreground terminal:
+
+```bash
+tailscale serve status
+tailscale funnel status
+lsof -nP -iTCP:443 -sTCP:LISTEN
+tailscale serve --https=443 http://127.0.0.1:8765
+```
+
+Review any HTTPS enablement prompt before accepting: it can change tailnet HTTPS
+settings and issue a public-CT-visible hostname certificate. If those settings
+were not part of the explicit approval, stop. Keep returned private HTTPS URL
+outside Git and do not run Funnel, `tailscale up`, logout or retag commands on
+this Mac. In this foreground phase Ctrl+C stops the newly started process; do not
+use a broad Serve reset or alter unrelated mappings.
+
+**Approval C — exact restricted staging runtime and configuration.** Enroll only
+the new dedicated caller identity with the caller tag; never reuse the existing
+Linux device or Mac identity. Runtime binary qualification/bootstrap and private
+secret handling must be specified and reviewed on this Render service before
+executing the daemon command below. Source preparation is not proof that a native
+Render service can already run an additional supervised daemon. After approval,
+verified daemon readiness and private settings installation, run the fixed probe
+from the existing checkout as an auxiliary process:
+
+```bash
+node scripts/development-science/render-caller.mjs
+node scripts/development-science/render-caller.mjs --approved-synthetic-network-check
+```
+
+The first command checks configuration only. The second uses the private
+connection and requires explicit synthetic-network-test approval. Keep the
+normal app start command unchanged. If starting the auxiliary runtime requires a
+new build/restart/deployment, pause for that specific approval; do not silently
+provision infrastructure or turn this command into the web service start command.
 
 ## Existing Render staging target; activation still requires approval
 
