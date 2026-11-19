@@ -74,7 +74,7 @@ const RESEARCH_LIMITS: SpendLimits = {
   featureDaily: 50_000, providerMonthly: 250_000,
   platformMonthly: 500_000, accountConcurrency: 1, platformConcurrency: 1,
 };
-const allowedModels = new Set(["gemini-2.5-flash", "gemini-2.5-flash-lite"]);
+const allowedModels = new Set(["gemini-3.5-flash-lite", "gemini-3.8-flash"]);
 const endpointRoot = "https://generativelanguage.googleapis.com/v1beta/models/";
 
 export async function investigatePublishedScienceWithGemini(
@@ -88,7 +88,7 @@ export async function investigatePublishedScienceWithGemini(
   // Explicit independent spend guard is mandatory. Key+flag alone cannot spend.
   if (!options.ledger || !options.requestId || !/^[a-zA-Z0-9_-]{12,90}$/.test(options.requestId))
     throw new GeminiResearchUnavailable("Server-side spend ledger and idempotency ID are required.");
-  const model = env.BLOOM_GEMINI_RESEARCH_MODEL ?? "gemini-2.5-flash";
+  const model = env.BLOOM_GEMINI_RESEARCH_MODEL ?? "gemini-3.5-flash-lite";
   if (!allowedModels.has(model)) throw new GeminiResearchUnavailable("Model is not on the reviewed allowlist.");
   const parsed = geminiScienceResearchRequestSchema.safeParse(untrusted);
   if (!parsed.success) throw new GeminiResearchUnavailable("Nonpersonal, rights-reviewed source payload is required.");
