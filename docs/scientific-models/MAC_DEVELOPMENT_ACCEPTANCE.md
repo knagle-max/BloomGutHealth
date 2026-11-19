@@ -31,7 +31,7 @@ replace the existing v0.5/v0.6 backlog or declare the full RC ready.
 | Independent auth, replay, wrong-credential checks | IMPLEMENTED_AND_TESTED | In-process dual bearer plus one-use identity/method/path/body challenge, expiry/rotation/restart negatives |
 | Render-side userspace proxy caller code | IMPLEMENTED_AND_TESTED | Isolated package, explicit localhost CONNECT proxy, HTTPS/SNI handoff, no direct fallback/global proxy |
 | Mac Serve/Funnel/443 preflight | ALREADY_VERIFIED | Owner reports no Serve/Funnel mapping and no TCP443 listener; recheck before activation |
-| Existing Linux ownership and subnet/exit paths | BLOCKED_USER_INPUT | Device OS/name alone cannot prove member ownership or absent routes; private Machines/admin inspection required before policy application |
+| Existing Linux ownership and subnet/exit paths | ALREADY_VERIFIED | Owner confirms Linux user-owned/untagged and no approved subnet routes or exit nodes; no extra grant needed for reported direct personal-device connectivity |
 | Actual private transport/restricted tailnet identity | BLOCKED_USER_INPUT | No credentials/admin access, policy edits, listener or network/deployment approval; real unauthorized-identity/TLS/outage/recovery tests not performed |
 | Synthetic inputs, no external health transfer | IMPLEMENTED_AND_TESTED | No personal-input schema or external AI fallback; no real provider/health requests made |
 | Reproducible private exported records | IMPLEMENTED_AND_TESTED | Model/code/version/medium provenance; operator export outside Git, permissions/digest/no overwrite tests |

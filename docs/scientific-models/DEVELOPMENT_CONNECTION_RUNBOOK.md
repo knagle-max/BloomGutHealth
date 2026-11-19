@@ -123,7 +123,23 @@ A tailnet administrator or compromised personal device is not isolated by this
 policy. This design restricts the new service identity without claiming to
 harden all existing personal devices.
 
-### Latest supplied inventory and remaining identity check
+### Final review disposition — ownership and routes confirmed
+
+Owner confirms the Linux node is user-owned and untagged; no approved subnet
+routes or exit nodes are listed. Together with the existing user-owned Mac/iOS
+inventory, the member-to-member grant preserves the reported direct personal
+connectivity without extra Linux, subnet or Internet grants. This closes the
+ownership/routing inventory dependency. The existing Mac and Linux identities
+remain untouched; only a future dedicated Render identity receives the caller tag.
+
+The generic template is final for source review. A completed private copy may
+contain the reported Mac address, but must remain outside Git. Before saving,
+the Tailscale editor must validate the complete candidate and tests; actual
+network acceptance remains pending. Personal devices retain network access to
+443, while application credentials are independently required. This is not a
+claim of live policy validation or an authorization to apply it.
+
+### Inventory checks and conditional future changes
 
 Owner reports the Mac is connected, three devices are visible (macOS, Linux and
 iOS), no Serve/Funnel mapping exists and TCP443 has no reported listener. This
@@ -151,9 +167,10 @@ as the Render caller or given extra access merely because it is visible.
   against the current policy and preserve the relied-upon personal flow. Do not
   add blanket Internet destinations to the science caller.
 
-Until those ownership/route facts are confirmed, the policy is a finalized base
-proposal, not a verified complete replacement. No administrative network tool is
-connected here; the reported three-device list cannot establish absent routes.
+Those ownership and route facts have now been confirmed by the owner. No extra
+permissions are needed for the reported inventory. If tags, sharing or routes
+change later, repeat the relevant impact review before changing the policy. No
+administrative network tool is connected here; control-plane validation is pending.
 
 ### Offline/private inventory before an activation proposal
 
