@@ -2,13 +2,16 @@ import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { biologicalRegistrySchema, type BiologicalRegistry, type KnowledgeRelationship } from '../shared/biological-model';
 
+export const SCIENTIFIC_RETRIEVAL_VERSION='reviewed-science-retrieval-v2' as const;
 const id=z.string().min(1).max(128),sha=z.string().regex(/^[a-f0-9]{64}$/);
 /** Additive review overlay on the existing registry. Metadata/DOI presence and
  * model agreement do not create this record. Source acquisition and independent
  * review must supply original accessible content, exact finding and rights. */
 export const scientificRetrievalReviewSchema=z.object({
   id,relationshipId:id,sourceId:id,registryBinding:sha,
-  sourceVersion:id,contentDigest:sha,locator:z.string().min(1).max(500),
+  sourceVersion:id,
+  publication:z.object({doi:z.string().regex(/^10\.\d{4,9}\/[^\s]+$/i).max(255),studyFamilyId:id}).strict().optional(),
+  contentDigest:sha,locator:z.string().min(1).max(500),
   excerpt:z.string().min(12).max(3200),excerptDigest:sha,
   findingDirection:z.enum(['supporting','contrary','null','harm','uncertain']),
   studyDesign:z.string().min(3).max(400),population:z.string().min(3).max(600),
@@ -61,8 +64,26 @@ export function retrieveReviewedScientificEvidence(input:{
   // Refuse over-budget retrieval rather than silently dropping contrary/null
   // findings to keep only convenient supporting papers.
   if(cards.length>12||Buffer.byteLength(JSON.stringify(cards),'utf8')>40_000)throw Error('EVIDENCE_RETRIEVAL_LIMIT');
-  return {version:'reviewed-science-retrieval-v1' as const,registryVersion:registry.version,cards:structuredClone(cards),withheld,
+  // Keep every outcome/analysis card, including contrary/null findings, while
+  // grouping citations from the same publication or independently reviewed
+  // shared cohort. Unknown identity never becomes another independent study.
+  const publications=new Map<string,{doi:string;studyFamilyId:string;reviewIds:string[]}>();
+  let unidentified=0;
+  for(const card of cards){
+    const identity=card.review.publication;
+    if(!identity){unidentified++;continue;}
+    const doi=identity.doi.toLowerCase(),existing=publications.get(doi);
+    if(existing&&existing.studyFamilyId!==identity.studyFamilyId)throw Error('SCIENTIFIC_STUDY_IDENTITY_CONFLICT');
+    const publication=existing??{doi,studyFamilyId:identity.studyFamilyId,reviewIds:[]};
+    publication.reviewIds.push(card.review.id);publications.set(doi,publication);
+  }
+  const publicationGroups=Array.from(publications.values()).sort((a,b)=>a.doi<b.doi?-1:a.doi>b.doi?1:0);
+  const studyFamilyIds=Array.from(new Set(publicationGroups.map(row=>row.studyFamilyId))).sort();
+  return {version:SCIENTIFIC_RETRIEVAL_VERSION,registryVersion:registry.version,cards:structuredClone(cards),withheld,
+    publicationGroups,studyFamilyIds,unidentifiedPublications:unidentified,
+    studyFamilyCount:!cards.length||unidentified||withheld?null:studyFamilyIds.length,
+    independence:'not-established-by-publication-count' as const,
     opposingEvidenceStatus:cards.some(card=>['contrary','null','harm'].includes(card.review.findingDirection))?'included' as const:'not-established' as const,
     clinicalReleasePermitted:false as const,modelTrainingPermitted:false as const,
-    evidenceVersion:digest([registry.version,cards,Array.from(input.withdrawals.relationshipIds).sort(),Array.from(input.withdrawals.sourceIds).sort(),Array.from(input.withdrawals.reviewIds).sort(),Array.from(input.withdrawals.rightsIds).sort()])};
+    evidenceVersion:digest([SCIENTIFIC_RETRIEVAL_VERSION,registry.version,cards,Array.from(input.withdrawals.relationshipIds).sort(),Array.from(input.withdrawals.sourceIds).sort(),Array.from(input.withdrawals.reviewIds).sort(),Array.from(input.withdrawals.rightsIds).sort()])};
 }

@@ -18,7 +18,7 @@ test('retrieval preserves supportive AND null findings; never grants clinical or
  result.cards[0].relationship.claim='changed';assert.notEqual(f.registry.relationships[1].claim,'changed');
 });
 test('metadata and graph membership alone never constitute source review or eligible research',()=>{
- const f=fixture(),result=f.read({reviews:[]});assert.equal(result.cards.length,0);assert.equal(result.withheld,2);assert.equal(result.opposingEvidenceStatus,'not-established');
+ const f=fixture(),result=f.read({reviews:[]});assert.equal(result.cards.length,0);assert.equal(result.withheld,2);assert.equal(result.opposingEvidenceStatus,'not-established');assert.equal(result.studyFamilyCount,null);
  const invalid=structuredClone(f.reviews);(invalid[0].review as any).disposition='model-agreement';assert.equal(f.read({reviews:invalid}).cards.length,1);
 });
 test('registry claim edit or excerpt corruption invalidates its bound review',()=>{
@@ -38,4 +38,19 @@ test('expired rights, revoked review and ambiguous records abstain without arbit
 test('unknown/private query fields and ambiguous source identity are rejected',()=>{
  const f=fixture();assert.throws(()=>f.read({query:{entityIds:['a'],privateLabs:'sensitive'}}));assert.throws(()=>f.read({query:{entityIds:['unknown']}}));
  f.registry.sources.push({...f.registry.sources[0]});assert.throws(()=>f.read(),/AMBIGUOUS/);
+});
+test('duplicate DOI/case variants remain one publication while positive and null outcomes are both retained',()=>{
+ const f=fixture();for(const review of f.reviews)review.publication={doi:'10.5555/SYNTHETIC',studyFamilyId:'synthetic-cohort'};
+ const result=f.read();assert.equal(result.cards.length,2);assert.equal(result.publicationGroups.length,1);assert.equal(result.studyFamilyCount,1);assert.equal(result.opposingEvidenceStatus,'included');assert.equal(result.independence,'not-established-by-publication-count');assert.equal(result.publicationGroups[0].reviewIds.length,2);
+ f.reviews[1].publication!.doi='10.5555/synthetic';assert.equal(f.read().studyFamilyCount,1);
+});
+test('different papers from the same reviewed cohort are not counted as independent studies; unknown identity stays unknown',()=>{
+ const f=fixture();assert.equal(f.read().studyFamilyCount,null);assert.equal(f.read().unidentifiedPublications,2);
+ f.reviews.forEach((review,i)=>{review.publication={doi:'10.5555/paper-'+i,studyFamilyId:'same-synthetic-cohort'};});
+ const shared=f.read();assert.equal(shared.publicationGroups.length,2);assert.equal(shared.studyFamilyCount,1);
+ f.reviews[1].publication!.studyFamilyId='different-cohort';assert.equal(f.read().studyFamilyCount,2);
+});
+test('conflicting study-family assignments to one DOI are refused, not resolved by order or majority',()=>{
+ const f=fixture();f.reviews.forEach((review,i)=>{review.publication={doi:'10.5555/same-paper',studyFamilyId:'cohort-'+i};});
+ assert.throws(()=>f.read(),/STUDY_IDENTITY_CONFLICT/);
 });
