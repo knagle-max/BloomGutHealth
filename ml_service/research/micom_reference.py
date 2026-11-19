@@ -1,0 +1,127 @@
+"""Offline MICOM engineering control, not a gut reconstruction or predictor.
+
+Uses only MICOM's bundled two-copy E. coli core test taxonomy. No user data,
+arbitrary file paths, model downloads, generated code, or network operations.
+No application startup imports this optional module.
+"""
+import hashlib
+import importlib.metadata
+import math
+import platform
+from pathlib import Path
+from .development_policy import require_development_science
+
+VERSION = "micom-reference-control-v1"
+# Identity of the bundled engineering fixture in the tested MICOM0.37.1 wheel.
+# This digest is not biological review or permission to redistribute the model.
+REFERENCE_SHA256 = "36300ad00320f1ffde76f2ffca06be6403759d92ac320535d961a0ab2d0c94f1"
+
+
+def validate_reference_command(command: dict) -> None:
+    if (type(command) is not dict or set(command) != {"version", "scenario"}
+            or command["version"] != VERSION
+            or command["scenario"] not in ("baseline", "closed-medium")):
+        raise ValueError("Only the fixed nonpersonal reference control is supported.")
+
+
+def run_reference(command: dict, environment=None) -> dict:
+    require_development_science(environment)
+    validate_reference_command(command)
+
+    # Optional dependencies belong only to a separate development environment.
+    import cobra
+    import micom
+    from micom.data import test_taxonomy
+
+    taxonomy = test_taxonomy(2)
+    if (len(taxonomy) != 2 or taxonomy["id"].isna().any()
+            or taxonomy["id"].astype(str).duplicated().any()):
+        raise ValueError("Reference community identity is unverified.")
+    taxonomy["abundance"] = [0.5, 0.5]
+    members = []
+    # Both members must be the pinned control. Checking only the first file
+    # would allow an unverified second reconstruction into the same receipt.
+    for _, member in taxonomy.iterrows():
+        member_hash = hashlib.sha256(Path(member["file"]).read_bytes()).hexdigest()
+        if member_hash != REFERENCE_SHA256:
+            raise ValueError("Reference model identity is unverified.")
+        members.append({"id": str(member["id"]), "sha256": member_hash,
+                        "imposedAbundance": float(member["abundance"])})
+    model_path = Path(taxonomy.iloc[0]["file"])
+    model_hash = REFERENCE_SHA256
+    from .reference_model_audit import audit_model
+    model_audit = audit_model(cobra.io.read_sbml_model(str(model_path)))
+    if model_audit["invalidBounds"]:
+        raise ArithmeticError("Reference model has invalid bounds.")
+    provenance = {
+        "version": VERSION, "scenario": command["scenario"],
+        "scope": "nonpersonal-engineering-control", "observedBiology": False,
+        "clinicalValidation": False, "predictiveValidation": False,
+        "model": {"id": "micom-bundled-e-coli-core-two-copy-control",
+                  "sha256": model_hash, "members": members, "source": "micom.data.test_taxonomy",
+                  "declaredSourceModelId": "e_coli_core",
+                  "declaredOrganism": "Escherichia coli str. K-12 substr. MG1655",
+                  "declaredTaxon": "https://identifiers.org/taxonomy/511145",
+                  "declaredSourceSnapshot": "BiGG Nov 21, 2016, as recorded in bundled SBML notes",
+                  "declaredSourcePublication": "https://doi.org/10.1128/ecosalplus.10.2.1",
+                  "sourceModelPage": "https://bigg.ucsd.edu/models/e_coli_core",
+                  "sourceTerms": "https://biggdata.ucsd.edu/license",
+                  "commercialModelRights": "commercial-use-and-redistribution-not-cleared",
+                  "rightsDisposition": "research-terms-observed-not-a-commercial-or-production-approval"},
+        "versions": {name: importlib.metadata.version(name) for name in
+                     ("micom", "cobra", "optlang", "osqp", "highspy", "python-libsbml")},
+        "python": platform.python_version(), "platform": platform.system(),
+        "machine": platform.machine(), "solver": "hybrid", "tradeoffFraction": 0.5,
+        "modelAudit": model_audit, "numericalTolerance": 1e-5,
+        "unitInterpretation": "Model objective/flux units; human concentration interpretation unsupported.",
+        # Uncommitted development code has no invented release commit/version.
+        # Fixed code-file digests identify the actual local implementation.
+        "implementationArtifacts": {
+            filename: hashlib.sha256(Path(__file__).with_name(filename).read_bytes()).hexdigest()
+            for filename in ("micom_reference.py", "reference_model_audit.py", "development_policy.py")
+        },
+    }
+    # Explicit hybrid backend avoids selecting an installed commercial solver.
+    community = micom.Community(taxonomy, solver="hybrid", progress=False)
+    community.solver.configuration.timeout = 20
+    if command["scenario"] == "closed-medium":
+        community.medium = {reaction_id: 0.0 for reaction_id in community.medium}
+    provenance["mediumUptakeBounds"] = dict(sorted(community.medium.items()))
+    provenance["solverTimeoutSeconds"] = 20
+    try:
+        solution = community.cooperative_tradeoff(fraction=0.5, fluxes=True)
+    except cobra.exceptions.OptimizationError:
+        # A closed medium can be infeasible because maintenance remains required.
+        # Never fabricate a zero flux or zero growth rate for a failed solve.
+        return {**provenance, "status": str(community.solver.status), "growthRate": None,
+                "limitations": ["Optimization failed under the imposed constraints; no flux inferred."]}
+    if solution is None or solution.status != "optimal":
+        return {**provenance, "status": "optimization-failed", "growthRate": None,
+                "limitations": ["No optimal solution; no flux inferred."]}
+
+    flux = {r.id: float(solution.fluxes.loc[r.community_id, r.global_id])
+            for r in community.reactions}
+    if (not math.isfinite(float(solution.growth_rate))
+            or not all(math.isfinite(v) for v in flux.values())):
+        raise ArithmeticError("Nonfinite reference solution.")
+    residual = max(abs(sum(float(coefficient) * flux[r.id]
+                           for r in metabolite.reactions
+                           for coefficient in [r.metabolites[metabolite]]))
+                   for metabolite in community.metabolites)
+    bound_error = max(max(r.lower_bound - flux[r.id], flux[r.id] - r.upper_bound, 0.0)
+                      for r in community.reactions)
+    if residual > 1e-5 or bound_error > 1e-5:
+        raise ArithmeticError("Reference solution violates numerical tolerances.")
+    return {
+        **provenance, "status": solution.status,
+        "growthRate": float(solution.growth_rate), "maxSteadyStateResidual": residual,
+        "maxBoundViolation": bound_error,
+        "limitations": [
+            "Two copies of one E. coli reference model, not distinct microbial species or a gut community.",
+            "Equal abundances are imposed test parameters, not measured metabolic activity.",
+            "Steady-state numerical balance is not a chemical mass/charge audit or biological validation.",
+            "Default reference medium is not a dietary substrate mapping or human exposure.",
+            "Fluxes and growth are conditional simulations, not measured concentrations or clinical outcomes.",
+            "Model redistribution, predictive validation and production promotion remain unapproved.",
+        ],
+    }

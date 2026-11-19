@@ -82,7 +82,7 @@
     {
       "id": "MICROBE-COMMUNITY-V1",
       "title": "Community growth and exchange",
-      "status": "future",
+      "status": "development_reference_control_present_real_community_not_validated",
       "inputs": "co-culture composition, medium, conditions, community reconstructions",
       "target": "measured co-culture growth/exchange where available",
       "split": "community/experiment/study held out",
@@ -99,7 +99,67 @@
         "unresolved"
       ],
       "deployment": "research_only_unless_separate_review",
-      "releasePermission": "not_approved"
+      "releasePermission": "not_approved",
+      "experimentalAdapter": {
+        "scope": "development_nonpersonal_reference_control_only",
+        "code": "ml_service/research/micom_reference.py",
+        "mechanicalAudit": "ml_service/research/reference_model_audit.py",
+        "jobInterface": "ml_service/research/development_jobs.py",
+        "tests": [
+          "tests/test_micom_reference.py",
+          "tests/test_reference_model_audit.py",
+          "tests/test_development_science_jobs.py",
+          "tests/test_development_science_api.py"
+        ],
+        "dependencyPins": "ml_service/research/requirements-development-science.txt",
+        "referenceModel": "MICOM bundled E. coli core, two imposed copies; not a multispecies gut reconstruction",
+        "sourceModelRights": "commercial_use_and_redistribution_not_cleared",
+        "personalInputsAccepted": false,
+        "productionDependency": false,
+        "validation": {
+          "technical": {
+            "status": "linux_reference_control_tested",
+            "macOSAppleSilicon": "not_tested",
+            "checks": [
+              "COBRA reference optimization",
+              "MICOM QP baseline repeatability",
+              "closed-medium infeasibility",
+              "steady-state residual",
+              "reaction bounds",
+              "fixed model bytes identity",
+              "library and solver versions",
+              "implementation code digests"
+            ]
+          },
+          "biological": {
+            "status": "mechanical_audit_only_not_validated",
+            "chemistry": "known elemental formula and finite charge required; unknown is unassessable",
+            "boundaryAndBiomass": "separate review required",
+            "taxonomicMapping": "not_validated",
+            "exchangeMapping": "not_validated",
+            "dietarySubstrates": "not_validated",
+            "thermodynamicsAndEnergyCycles": "not_validated",
+            "abundanceIsActivity": false
+          },
+          "predictive": {
+            "status": "not_evaluated",
+            "qualifiedExperimentalDataset": false,
+            "heldOutEvaluation": false,
+            "compositionOnlyIsFluxGroundTruth": false,
+            "simulatedFluxIsHumanConcentration": false,
+            "candidateAssessment": "docs/scientific-models/micom-predictive-validation-candidates.md"
+          },
+          "release": {
+            "developmentSynthetic": "code_present_disabled_by_default",
+            "personalProcessing": "not_authorized",
+            "production": "not_approved",
+            "independentScientificReview": "pending",
+            "clinicalUse": "not_approved"
+          }
+        },
+        "referenceProvenance": "docs/scientific-models/reference-model-provenance.md",
+        "referenceRightsCatalogueId": "DATA-BIGG-ECOLICORE-REFERENCE"
+      }
     },
     {
       "id": "HOST-MICROBE-V1",

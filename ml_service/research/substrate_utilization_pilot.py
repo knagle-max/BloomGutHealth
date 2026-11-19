@@ -71,7 +71,10 @@ def load(data_path: Path, manifest_path: Path, *, training: bool):
     # exception cannot be enabled through the public CLI or model promotion path.
     if training and manifest.get("sourceId", "").startswith("SYNTHETIC-"):
         raise PermissionError("Synthetic software fixtures cannot train research models")
-    frame = pd.read_csv(data_path, sep="\t" if data_path.suffix.lower() == ".tsv" else ",", dtype={k: str for k in REQUIRED}, keep_default_na=False)
+    # Source identifiers are opaque: preserve leading zeros and never infer
+    # numeric original-experiment/genome IDs before grouping held-out records.
+    identity_types = {k: str for k in (*REQUIRED, "original_experiment_id", "genome_accession")}
+    frame = pd.read_csv(data_path, sep="\t" if data_path.suffix.lower() == ".tsv" else ",", dtype=identity_types, keep_default_na=False)
     missing = set(REQUIRED) - set(frame.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
@@ -120,7 +123,7 @@ def load(data_path: Path, manifest_path: Path, *, training: bool):
     return valid, manifest, report
 
 def connected_groups(df: pd.DataFrame):
-    """Close transitive study/experiment/strain/genome overlap before splitting.
+    """Close transitive study/original-experiment/strain/genome overlap.
 
     A strain appearing in two studies links both studies into one component;
     therefore neither study/strain can leak into a different partition.
@@ -137,6 +140,8 @@ def connected_groups(df: pd.DataFrame):
     for _, r in df.iterrows():
         keys = ["study:" + r["study_id"], "strain:" + r["strain_id"],
                 "experiment:" + r["experiment_id"]]
+        if "original_experiment_id" in df and r.get("original_experiment_id"):
+            keys.append("original-experiment:" + r["original_experiment_id"])
         if "genome_accession" in df and r.get("genome_accession"):
             keys.append("genome:" + r["genome_accession"])
         for k in keys[1:]:
@@ -163,7 +168,7 @@ def freeze(df, report, *, seed=271828):
             assignments[row] = label
     if df.iloc[train_idx]["target"].nunique() != 2:
         raise ValueError("Training partition has only one measured outcome class")
-    for column in ("strain_id", "study_id", "experiment_id", "genome_accession"):
+    for column in ("strain_id", "study_id", "experiment_id", "original_experiment_id", "genome_accession"):
         if column not in df:
             continue
         for a, b in (("train", "test"), ("train", "validation"), ("validation", "test")):
@@ -176,7 +181,7 @@ def freeze(df, report, *, seed=271828):
         "sourceSha256": report["sourceSha256"], "seed": seed,
         "assignments": assignments,
         "counts": dict(Counter(assignments.values())),
-        "grouping": "transitive-study-experiment-strain-genome-components",
+        "grouping": "transitive-study-original-experiment-strain-genome-components",
         "createdForIndependentEvaluation": True,
     }
 
@@ -204,7 +209,7 @@ def run_benchmark(df, report, split):
     assignments = split["assignments"]
     if set(assignments.values()) != {"train", "validation", "test"}:
         raise ValueError("Missing an evaluation partition")
-    for col in ("study_id", "experiment_id", "strain_id", "genome_accession"):
+    for col in ("study_id", "experiment_id", "original_experiment_id", "strain_id", "genome_accession"):
         if col not in df:
             continue
         sets = [set(df.loc[df["source_row_id"].map(assignments) == p, col]) for p in ("train", "validation", "test")]

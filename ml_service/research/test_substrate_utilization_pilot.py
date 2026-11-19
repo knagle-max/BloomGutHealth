@@ -110,6 +110,41 @@ class SubstrateUtilizationSoftwareTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             run_benchmark(df, report, broken)
 
+    def test_original_experiment_aliases_form_one_connected_group(self):
+        df, _, report = load(self.data, self.meta, training=False)
+        df["original_experiment_id"] = df["experiment_id"]
+        # Different aggregator/local study, strain and experiment identities
+        # still refer to the same original measured experiment.
+        df.loc[df["study_id"].isin(["synthetic-study-0", "synthetic-study-1"]),
+               "original_experiment_id"] = "synthetic-shared-original-experiment"
+        groups = connected_groups(df)
+        linked = df["study_id"].isin(["synthetic-study-0", "synthetic-study-1"])
+        self.assertEqual(len(set(groups[linked])), 1)
+        split = freeze(df, report)
+        self.assertEqual(len({split["assignments"][row] for row in df.loc[linked, "source_row_id"]}), 1)
+
+    def test_optional_upstream_identities_preserve_leading_zeros(self):
+        frame = pd.read_csv(self.data, sep="\t")
+        frame["original_experiment_id"] = "0000123"
+        frame["genome_accession"] = "0000456"
+        frame.to_csv(self.data, sep="\t", index=False)
+        self.manifest["sourceSha256"] = hashlib.sha256(self.data.read_bytes()).hexdigest()
+        self.meta.write_text(json.dumps(self.manifest))
+        loaded, _, _ = load(self.data, self.meta, training=False)
+        self.assertEqual(set(loaded["original_experiment_id"]), {"0000123"})
+        self.assertEqual(set(loaded["genome_accession"]), {"0000456"})
+
+    def test_replayed_split_cannot_hide_original_experiment_overlap(self):
+        df, _, report = load(self.data, self.meta, training=False)
+        split = freeze(df, report)
+        df["original_experiment_id"] = df["experiment_id"]
+        # Mimic replay of a prior split that never grouped upstream identities.
+        for label in ("train", "test"):
+            row = next(row for row, assigned in split["assignments"].items() if assigned == label)
+            df.loc[df["source_row_id"] == row, "original_experiment_id"] = "synthetic-shared-original"
+        with self.assertRaisesRegex(ValueError, "original_experiment_id"):
+            run_benchmark(df, report, split)
+
     def test_synthetic_fixture_scores_are_never_real_science(self):
         df, _, report = load(self.data, self.meta, training=False)
         split = freeze(df, report)

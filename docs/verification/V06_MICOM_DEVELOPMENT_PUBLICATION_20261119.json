@@ -1,0 +1,210 @@
+{
+  "date": "2026-11-19",
+  "scope": "Owner-authorized MICOM development publication only",
+  "baseRemoteCommit": "d07c514f06f8137b06ea2d5a14aaf2d0593dc0cb",
+  "targetBranch": "enhance/bloom-experience",
+  "checks": {
+    "exactSetupPythonCommand": {
+      "passed": 44,
+      "failed": 0
+    },
+    "existingPilotContracts": {
+      "passed": 10,
+      "failed": 0
+    },
+    "privacyToolContracts": {
+      "passed": 7,
+      "failed": 0
+    },
+    "productionBuildDependencyIsolation": {
+      "passed": 1,
+      "failed": 0
+    },
+    "isolatedNodeCallerExport": {
+      "passed": 16,
+      "failed": 0
+    },
+    "pipCheck": "PASS"
+  },
+  "artifacts": [
+    {
+      "path": ".gitignore",
+      "sha256": "da48fdc5db2383b15d19486ba0242f3f26ddb332f05a77b6b23beddbdc6025df"
+    },
+    {
+      "path": "docs/scientific-models/MAC_DEVELOPMENT_ACCEPTANCE.md",
+      "sha256": "ea6b66fadd682be2056a72c130f9c69370c639eccdcbcff7422d0324b5a76c34"
+    },
+    {
+      "path": "docs/scientific-models/MAC_DEVELOPMENT_SCIENCE_ASSESSMENT.md",
+      "sha256": "9bcffbb01e65ece2219d7af386778e3493580b2e536a5636b72fa5022c169cbd"
+    },
+    {
+      "path": "docs/scientific-models/MAC_DEVELOPMENT_SETUP.md",
+      "sha256": "cdfd12c3cd8ffb2a1a6695497b36cc59fdae9623745c513da47882544c05cc41"
+    },
+    {
+      "path": "docs/scientific-models/dataset-source-rights-catalogue.csv",
+      "sha256": "d5422862caf617ff0c48a0f071bf007ca725c9b5e57f76403555f300c06e67fb"
+    },
+    {
+      "path": "docs/scientific-models/micom-predictive-validation-candidates.md",
+      "sha256": "13a7097f69d21e740ba3b96bef465ca6c055ab1e7efe581ad3d58a6802d7e5c7"
+    },
+    {
+      "path": "docs/scientific-models/prediction-task-registry.json",
+      "sha256": "49f208515eef948e2d0e793f9919df74f5589c71cb58e3b19214a8d67e2b0d79"
+    },
+    {
+      "path": "docs/scientific-models/reference-model-provenance.md",
+      "sha256": "44517b6ff4d3de53a989df3a5dbd2fa3f8cbdc53d4ec654890804d01b491d3e1"
+    },
+    {
+      "path": "ml_service/development.py",
+      "sha256": "4ee0c342244adc3351038d5d4002326229f8dbe2b736aa5ff8c25de1cb593956"
+    },
+    {
+      "path": "ml_service/research/development_admission.py",
+      "sha256": "5e850b4981add3ac4e163b539bb272ce177fe67b72136feea5124c0014e1a2a3"
+    },
+    {
+      "path": "ml_service/research/development_jobs.py",
+      "sha256": "71b526523dd15d3105cac7399ac56a620ffcde05856e36563dc718a5b2915d56"
+    },
+    {
+      "path": "ml_service/research/development_policy.py",
+      "sha256": "28d2dc3e142e4a38f036bc48e5b05b5006d01baf88af6234a2a5d8a7ddd552b9"
+    },
+    {
+      "path": "ml_service/research/development_routes.py",
+      "sha256": "eef4692172d238ee6105ffae2f0836eac153a253998d0532577ce38d5f3d7b5a"
+    },
+    {
+      "path": "ml_service/research/json_contract.py",
+      "sha256": "4e80c93cbbb0c1f8e7a3c389fe03863b9c0dbf7773c12ba5df6e03ab74e01dcd"
+    },
+    {
+      "path": "ml_service/research/micom_reference.py",
+      "sha256": "3fa763f29b2f193bfa162046d0603aa6da82f8c68ad56e45ff14b029ab30fdd5"
+    },
+    {
+      "path": "ml_service/research/ollama_development.py",
+      "sha256": "8ed7cd9df86dac31e1ec61f778bff24fede59bd2b4fc169b5f1f337a8326e4c2"
+    },
+    {
+      "path": "ml_service/research/reference_model_audit.py",
+      "sha256": "dbda17d7a4408f134ab1b6463017e0402e0cb3d99d68fc36fad25d90dab4de88"
+    },
+    {
+      "path": "ml_service/research/requirements-development-api.txt",
+      "sha256": "9d13fe77d2f3fb6ad0c00158766b5dc04ec9f98d8b934840f1892f96be541c4b"
+    },
+    {
+      "path": "ml_service/research/requirements-development-science.txt",
+      "sha256": "2b68490adc8fc7264f9b1f4f554635500dd2b3714eb00a963d1347f87c0a1d0d"
+    },
+    {
+      "path": "ml_service/research/substrate_utilization_pilot.py",
+      "sha256": "bb05194b8aafc0c56ab3257541227ec383d0ac980e0f1d2b40f47f2415f1b299"
+    },
+    {
+      "path": "ml_service/research/test_substrate_utilization_pilot.py",
+      "sha256": "92257d7710970e8b24d5cc0e5a76e4912e8c818b2ba33e072edf2635512a435a"
+    },
+    {
+      "path": "scripts/development-science/PRIVATE_RESULTS_AND_RECOVERY.md",
+      "sha256": "70772d6c6151c54641830ecc7a79291088363400ab0b74f88cad9319a226f5c3"
+    },
+    {
+      "path": "scripts/development-science/README.md",
+      "sha256": "1dbb46b3c3d2460df20001966ecca8017dcf893eb5186382ba3fe4b8d30f52b6"
+    },
+    {
+      "path": "scripts/development-science/client.mjs",
+      "sha256": "c715dfc296e5ced19218b95c8a1219efa273dd01637c6b1e662a91c5e2f3d67e"
+    },
+    {
+      "path": "scripts/development-science/client.test.mjs",
+      "sha256": "b77c77b03a673a04d0b30291eea543d972f8ed911f32648ef19b71935e768cfa"
+    },
+    {
+      "path": "scripts/development-science/package-lock.json",
+      "sha256": "93e884ce11494e38fb54822826fac9336af5b0545bd4caf1fe7c09dc2400535e"
+    },
+    {
+      "path": "scripts/development-science/package.json",
+      "sha256": "db31d21b4c2dc0a27dfbed45df200301476510f9ac382d8fed4ee789bd820b41"
+    },
+    {
+      "path": "scripts/development-science/private-export.mjs",
+      "sha256": "2bdebc62b3a69158184cd94ba785ad17c02ec256a3fb88bf6f2304e72695ffd3"
+    },
+    {
+      "path": "scripts/development-science/private-export.test.mjs",
+      "sha256": "bc0ab9be262de88a02dad5bffe377f93f18b6875f3710c91bd4bd26bb1ac882e"
+    },
+    {
+      "path": "scripts/security/README.md",
+      "sha256": "0bac717d6b0da679e0a4005cfc52f3d70482f6be201dbd60a948cbc05f48e407"
+    },
+    {
+      "path": "scripts/security/privacy_preflight.py",
+      "sha256": "b02daa1ece354a7b690e36bfeb2be6bc9791d859a0112c7d5e7edeb1ca97da38"
+    },
+    {
+      "path": "scripts/security/requirements-privacy-tools.txt",
+      "sha256": "7088c5348bbea75c3851694712e706c161ca67a0a8943a1bb1472644424c9e44"
+    },
+    {
+      "path": "tests/production-science-isolation.test.ts",
+      "sha256": "104eac4cbdbb3fa4737e9130decdef5a53441198fa5c37b8b546d19703577125"
+    },
+    {
+      "path": "tests/test_development_science_api.py",
+      "sha256": "4537003937426831db4b92cd40d574582f5ea4636360cdaa515f486df7da21ec"
+    },
+    {
+      "path": "tests/test_development_science_jobs.py",
+      "sha256": "18f0a90af1f86b6f8dbf1d95569504ae81dd4acafef0f543f6aa95b683481e2d"
+    },
+    {
+      "path": "tests/test_development_science_policy.py",
+      "sha256": "945c2fd4eaf28a84130e9fbe4f4ca933c5536e1aa94a0d04819a450f2b760745"
+    },
+    {
+      "path": "tests/test_micom_reference.py",
+      "sha256": "9d7d209f8f8b2cd41147af52ce8eb8a8f738b11746f1a4bdf01d3882dc9c8dd8"
+    },
+    {
+      "path": "tests/test_ollama_development.py",
+      "sha256": "ffd0805c96a4db733e627deffc42a29bf52431fb73e30042d486d1514ae031f1"
+    },
+    {
+      "path": "tests/test_privacy_preflight.py",
+      "sha256": "1a1039d70631a730f8bf4ba60025bb8c481111d137bd96a793eaf1bcf2ef2c91"
+    },
+    {
+      "path": "tests/test_reference_model_audit.py",
+      "sha256": "aee7ecac9f0d081a894a65a1287f8c4d004d8c804dae31ece98832577ab15c2f"
+    }
+  ],
+  "notIncluded": [
+    "Private datasets, health records, simulation outputs or credentials",
+    "Local virtual environments, caches and dependencies",
+    "Unrelated local private-investigation and P2 application changes",
+    "Production configuration or database migrations"
+  ],
+  "notPerformed": [
+    "Merge to main",
+    "Deployment",
+    "Opening any port or starting a service",
+    "Actual Apple Silicon validation",
+    "Personal data processing"
+  ],
+  "deploymentSuppression": "Commit uses [skip render] and [skip ci]; no service settings changed",
+  "scientificLimitations": [
+    "Two copies of a pinned E. coli core control, not a validated gut model",
+    "Numerical solution is not measured human biology or predictive/clinical validation",
+    "Real model/data rights and independent validation remain separately required"
+  ]
+}
