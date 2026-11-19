@@ -1,0 +1,41 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {biologicalRegistrySchema,type BiologicalRegistry} from '../shared/biological-model';
+import {retrieveReviewedScientificEvidence,scientificRegistryBinding,scientificExcerptDigest,type ScientificRetrievalReview,type ScientificWithdrawals} from '../server/scientific-evidence-retrieval';
+// Synthetic review records test mechanics only, never authorize real science.
+function fixture(){
+ const registry=biologicalRegistrySchema.parse({version:'synthetic-v1',summary:'Synthetic retrieval fixture',entities:[{id:'a',label:'A',kind:'molecule',summary:'Test',metadata:{}},{id:'b',label:'B',kind:'endpoint',summary:'Test',metadata:{}}],relationships:['positive','negative'].map((id,index)=>({id,from:'a',to:'b',claim:'Synthetic study-specific finding '+index,evidence:'human-intervention',confidence:'limited-human',humanRelevance:'Synthetic population',direction:'source-reported',context:'Synthetic assay',limitation:'Not clinical evidence',contradictionStatus:'limitations-recorded',contradictions:[],rule:'context-only',sourceIds:['paper-'+index]})),sources:[0,1].map(i=>({id:'paper-'+i,title:'Synthetic paper '+i,url:'https://example.org/paper-'+i,design:'Synthetic trial',population:'Synthetic adults',limitation:'Not a real source'}))});
+ const reviews:ScientificRetrievalReview[]=registry.relationships.map((relationship,i)=>{
+ const excerpt='Synthetic source excerpt '+i+' is a test fixture, not a published finding.';
+ return{id:'review-'+i,relationshipId:relationship.id,sourceId:'paper-'+i,registryBinding:scientificRegistryBinding(registry,relationship,'paper-'+i),sourceVersion:'test-v1',contentDigest:'a'.repeat(64),locator:'Synthetic table 1',excerpt,excerptDigest:scientificExcerptDigest(excerpt),findingDirection:i?'null':'supporting',studyDesign:'Synthetic trial',population:'Synthetic adults',measurementContext:'Synthetic assay',applicabilityLimits:['Not a real published source'],review:{id:'decision-'+i,reviewerId:'fixture-reviewer',disposition:'independently-source-verified',scope:'nonpersonal-scientific-retrieval',validUntil:'2027-01-01T00:00:00Z'},rights:{id:'rights-'+i,revision:'v1',license:'Synthetic fixture only',sourceUrl:'https://example.org/paper-'+i,retrievalEligible:true,modelTrainingEligible:false,validUntil:'2027-01-01T00:00:00Z'}};
+ });
+ const withdrawals:ScientificWithdrawals={relationshipIds:new Set(),sourceIds:new Set(),reviewIds:new Set(),rightsIds:new Set()};
+ const read=(changes:Partial<Parameters<typeof retrieveReviewedScientificEvidence>[0]>={})=>retrieveReviewedScientificEvidence({registry,reviews,withdrawals,query:{entityIds:['a']},now:Date.parse('2026-11-19T12:00:00Z'),...changes});
+ return{registry,reviews,withdrawals,read};
+}
+test('retrieval preserves supportive AND null findings; never grants clinical or training authority',()=>{
+ const f=fixture(),result=f.read();assert.equal(result.cards.length,2);assert.equal(result.opposingEvidenceStatus,'included');assert.equal(result.withheld,0);assert.equal(result.clinicalReleasePermitted,false);assert.equal(result.modelTrainingPermitted,false);
+ result.cards[0].relationship.claim='changed';assert.notEqual(f.registry.relationships[1].claim,'changed');
+});
+test('metadata and graph membership alone never constitute source review or eligible research',()=>{
+ const f=fixture(),result=f.read({reviews:[]});assert.equal(result.cards.length,0);assert.equal(result.withheld,2);assert.equal(result.opposingEvidenceStatus,'not-established');
+ const invalid=structuredClone(f.reviews);(invalid[0].review as any).disposition='model-agreement';assert.equal(f.read({reviews:invalid}).cards.length,1);
+});
+test('registry claim edit or excerpt corruption invalidates its bound review',()=>{
+ const f=fixture();f.registry.relationships[0].claim='An unsupported new conclusion';assert.equal(f.read().cards.length,1);
+ const g=fixture();g.reviews[1].excerpt='An injected replacement excerpt';assert.equal(g.read().cards.length,1);
+});
+test('current withdrawal survives old registry/review rollback and leaves unrelated evidence',()=>{
+ const f=fixture(),before=f.read(),saved=structuredClone({registry:f.registry,reviews:f.reviews});
+ (f.withdrawals.sourceIds as Set<string>).add('paper-0');
+ const withdrawn=f.read({...saved});assert.equal(withdrawn.cards.length,1);assert.equal(withdrawn.cards[0].source.id,'paper-1');assert.notEqual(before.evidenceVersion,withdrawn.evidenceVersion);
+});
+test('expired rights, revoked review and ambiguous records abstain without arbitrary version selection',()=>{
+ const f=fixture();f.reviews[0].rights.validUntil='2026-11-18T00:00:00Z';assert.equal(f.read().cards.length,1);
+ const g=fixture();(g.withdrawals.reviewIds as Set<string>).add('review-1');assert.equal(g.read().cards.length,1);
+ const h=fixture();h.reviews.push(structuredClone(h.reviews[0]));assert.equal(h.read().cards.length,1);
+});
+test('unknown/private query fields and ambiguous source identity are rejected',()=>{
+ const f=fixture();assert.throws(()=>f.read({query:{entityIds:['a'],privateLabs:'sensitive'}}));assert.throws(()=>f.read({query:{entityIds:['unknown']}}));
+ f.registry.sources.push({...f.registry.sources[0]});assert.throws(()=>f.read(),/AMBIGUOUS/);
+});
