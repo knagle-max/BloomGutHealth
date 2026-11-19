@@ -1,0 +1,28 @@
+{
+  "scope": "INV05\u201306 deterministic independent-review admission into existing ConsumerValueCandidate; synthetic only",
+  "states": {
+    "reviewAdmissionAdapter": "IMPLEMENTED_AND_TESTED",
+    "automatedSemanticScienceVerifier": "NOT_IMPLEMENTED",
+    "actualIndependentScientificReview": "NOT_TESTED",
+    "limitedConsumerReleaseAuthority": "NOT_INSTALLED",
+    "clinicalActions": "NOT_AUTHORIZED"
+  },
+  "tests": {
+    "admission": "5 PASS",
+    "admissionHypothesisRunner": "19 PASS",
+    "typecheck": "PASS"
+  },
+  "proof": [
+    "Account/purpose/current source and evidence epoch match; full output digest binds exact review",
+    "Trusted current authority must independently approve exact review+candidate digest; model-supplied flags alone rejected",
+    "Independent original-source/applicability review explicitly covers contrary/null evidence, facts/numbers, harms and limitations",
+    "Expired/withdrawn reviews, altered sentences, missing evidence/source revisions, malformed source dates and abstention cannot become an eligible consumer finding",
+    "Existing ConsumerValueCandidate contract retains original source references, uncertainty and prohibited claims; no practical action invented"
+  ],
+  "limits": [
+    "This verifies review admission, not the truth/relevance of scientific prose",
+    "Synthetic review fixture is not genuine scientific/clinical approval",
+    "No route, UI, authority, private write, model call or research/provider access installed",
+    "Actual original-paper/rights review, unfamiliar held-out model reasoning and useful incremental consumer value remain open"
+  ]
+}

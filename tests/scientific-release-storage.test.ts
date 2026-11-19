@@ -24,7 +24,10 @@ test('two fully clean isolated databases restore the same immutable release into
    const approvals={approvedReleaseDigests:new Set([JSON.parse(fixture.bytes()).digest])};const store=new ScientificReleaseStorage(db as any,async()=>({...fixture.current,...approvals,revision:'authority-v1'}));
    const first=await store.restore(release),replay=await store.restore(release);assert.deepEqual(replay,first);
    const retrieved=await store.retrieve('synthetic-release',['a']);assert.equal(retrieved.cards.length,1);assert.equal(retrieved.cards[0].review.findingDirection,'null');
-   const registry=await new BiologyStorage(db as any).getBiologicalRegistry('synthetic-v1');
+   const reader=new BiologyStorage(db as any);
+   const registry=await reader.getBiologicalRegistry('synthetic-v1');
+   await assert.rejects(reader.getBiologicalRegistry('uninstalled-other-version'),/not installed/);
+   assert.equal((await reader.getBiologicalRegistry('synthetic-v1')).version,'synthetic-v1');
    assert.equal(registryFingerprint(registry),registryFingerprint(fixture.payload.registry));
    const manifests=await db.select().from(biologyScientificReleases);assert.equal(manifests.length,1);
    snapshots.push({digest:first.digest,registry:registryFingerprint(registry),manifest:manifests[0].manifest});
