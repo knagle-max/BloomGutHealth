@@ -7,7 +7,7 @@ import {
 const env = {
   BLOOM_GEMINI_PUBLIC_SCIENCE_ENABLED:"true",
   GEMINI_API_KEY:"fixture-do-not-use",
-  BLOOM_GEMINI_RESEARCH_MODEL:"gemini-2.5-flash",
+  BLOOM_GEMINI_RESEARCH_MODEL:"gemini-3.5-flash-lite",
 };
 function testLedger() {
   let reserved=0,settled=0;
