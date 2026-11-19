@@ -1619,3 +1619,5 @@ Latest AGENTS/NEXT_ACTIONS ordering supersedes historical Core-first next labels
 | P1 INV01–08 dynamic investigation and benchmark | OPEN | Next: typed private snapshot/hypotheses, current rights-reviewed retrieval, claim verification and independent evaluation; no rule catalog or clinical release inferred |
 | P2 durable nonpersonal science | OPEN | Candidate-only → independent original evidence review → immutable digest → two clean isolated restores → retrieval/retraction surviving rollback |
 | P3 science integration | OPEN | Focused privacy, source revisions, ledger/outage, contradictory evidence, fallback and consumer journey; not full historical RC acceptance |
+
+INV-03 reference contract | IMPLEMENTED_AND_TESTED_PARTIAL | Typed bounded hypotheses/contrary evidence/discriminators/uncertainty; wrong-account/revoked/stale/withdrawn/fabricated references rejected. Six tests. Output remains research-only-unverified; no scientific truth, numeric prose, applicability, clinical safety or consumer release validation claimed. INV01 collector, real private reasoning and independent benchmark still OPEN.
