@@ -1,94 +1,82 @@
-# Bloom — Current execution queue
+# Bloom — current execution queue
 
-`AGENTS.md` governs execution. Authorized branch: `enhance/bloom-experience`; no main merge/manual production deployment/private health queries. v0.5 remains accepted; v0.6 RC is unfinished. Exact earlier queue text is preserved in [snapshot](docs/operations/history/NEXT_ACTIONS_SNAPSHOT_20261116T1440.md); historical “publish next” instructions do not reopen published work.
+Updated 2026-11-19. Read AGENTS.md, then this file. On every owner resume,
+continue the highest-value unblocked approved task toward final v0.6. Do not
+stop after a feature, handoff or commit; record feature-scoped blockers and
+continue independent work. Preserve functioning v0.5 and v0.6 modules.
 
-## Architect disposition — Private Data R2 and MyFoodData handoffs (2026-11-18)
+## Binding scope and safety
 
-**Codex implementation directive, integrated into this ONE queue:** Read [the exact-scope Architect implementation decision](docs/architecture/BLOOM_PRIVATE_DATA_AND_MYFOODDATA_ARCHITECT_IMPLEMENTATION_DECISION_20261118.md) and all three preserved originals linked there. These **are accepted deliverables**, not unreviewed specialist wishes. Implement the **small approved scopes** rather than deferring both until all v0.6 history is complete. They retain the latest science-first P0 → P1 → P2 → P3 → P4 roadmap; do **not** use the MyFoodData specialist's internally labeled P0/P1/P2 to reorder app-wide priorities. R2 security approves a **synthetic optional architecture/threat-model and client/gateway prototype only**; no public E2EE, user BYODB enrollment, production/native iOS or paid cloud resource until independent security/legal/cost gates.
+- Follow the approved science-first P0 → P1 → P2 → P3 → P4 sequence in
+  [the investigation decision](docs/architecture/BLOOM_EVIDENCE_GROUNDED_AI_BIOLOGICAL_INVESTIGATION_IMPLEMENTATION_DECISION_20261118.md).
+  Do not build a second platform or case-by-case medical explanation rules.
+- Render-to-Mac integration is PAUSED by owner. Make no Tailscale, policy,
+  Serve, Render configuration, networking or deployment changes. Do not
+  infer the actual machine state after the failed Serve attempt.
+- Keep MICOM/COBRApy and Ollama optional local development tools. Use
+  [the local scientific workflow](docs/scientific-models/LOCAL_SCIENTIFIC_WORKFLOW.md).
+  Production and ordinary development must not depend on the Mac or tailnet.
+- Commit/push reviewed nonpersonal source to enhance/bloom-experience after
+  staged/history privacy and secret checks. Use [skip render] [skip ci]
+  while deployment is forbidden. No main merge, live database migration,
+  private account queries, external health-data transfer or secrets/results in Git.
+- Synthetic software tests are not independent biological, predictive,
+  clinical, physical-device or real-user acceptance. Never self-promote
+  generated claims or label partial engineering as full v0.6 completion.
 
-**NEXT small tasks alongside current P0 source-integrity closure (sequential):**
-- **SEC-0 read-only threat/architecture audit and safe source-data inventory:** record S0 cloud, S1 device, S2 user gateway and future S3 client E2EE promises/risks, existing encrypted vs plaintext fields, who holds keys, AI/network/backup flows and needed independent review. Inventory current FNDDS/FDC/CNF/GTIN labels, v1 21-value snapshot, source provenance, confirmed meal+supplement aggregation, fast logs and ownership. Ground each in current file:line/test and label `VERIFIED / PARTIAL / MISSING / RIGHTS_PENDING`.
-- **FOOD-0 minimum correctness:** patch only genuinely failed, user-relevant exact barcode/source identity, immutable consumed receipt, known-zero/unknown, confirmed **taken** supplement actual totals, partial day coverage and search/manual fallback; preserve already good Food and supplements. Write targeted regressions; don't launch broad dataset acquisition or a new food engine.
-- Then **P1 dynamic biological investigator and P2 reviewed persistent science remain the next large execution milestones**. They must use compatible source/consent contracts from the two audits.
-- **First bounded post-science implementation:** `PRIV-S1..S4` synthetic storage/execution interface, local encrypted export/restore and isolated authenticated customer gateway with least-privilege role plus signed nonpersonal science verifier (no health customers); and `FOOD-F2/F3` exact Canadian food/GTIN fixtures and compatible source-native nutrient v2 as justified. Run negative tests; no public enablement.
-- **Only after measured utility/independent approvals:** broader MyFoodData parity amino/fatty/cooked recipe/estimator expansion and physical iOS S1/S2/S3 security. S3 E2EE requires separate independent crypto+mobile+server review, no misleading zero-knowledge claims.
+## Current task
 
-**Acceptance references:** `SEC-01..SEC-13`, `FOOD-01..FOOD-14` and specific trust/security/rights gates in the Architect decision. Codex's first response should include exact HEAD inventory and the first focused implementation delta, **not another handoff creation loop**. Previous verified v0.5/v0.6 work is never reimplemented without a failing regression. An untested security assertion or marketing count cannot close a task.
+Close the reconciled private source-context slice: canonical owned microbiome
+facts, explicitly selected genetics, source revocation/deletion and monotonic
+investigation deadline. Reuse existing readers, encrypted storage and current
+selection; preserve unknowns, source dates and source-only facts without
+inferring metabolic activity, genotype effects or confirmed behavior.
 
-## Binding owner re-scope — scientific intelligence first (2026-11-18, latest)
+Candidate-provenance/withdrawal source is published at4ed8a45b. Its44 focused
+and24 integration tests, TypeScript and production/media build passed; proposed
+migration0019 remains unapplied. No provider or consumer feature was enabled.
 
-**This supersedes the earlier "first post-Core science milestone" ordering and any older instruction that full Food #12, exhaustive M2/M4 nutrient coverage, all predetermined full-panel Response #15 explanations, elective T1 UI/art polish or the whole historical v0.6 RC checklist must be finished BEFORE biological investigation and durable learning.** Codex has **one execution queue**, below; no parallel teams, repeated approval cycle or speculative restart. v0.5 accepted features and existing useful Food, bloodwork, microbiome, genetics, Progress and nutrition flows **must be preserved**. A reduced science-focused milestone is not an assertion that the historical v0.6 RC is complete. Explicitly track deferred historical acceptance as deferred rather than silently passing or deleting it.
+Private-source reconciliation:29 focused tests, one actual encrypted SQL/source
+integration test, TypeScript and production/media build passed. Initial full
+run1001/999/2 exposed stale inventories; both repaired and5 focused checks passed.
+Fresh full rerun:1002/1002 PASS, zero failures/skips. The actual Progress browser
+journey passed16 responsive/mode/zoom states after navigation readiness repair.
+Production dependency audit:zero vulnerabilities. Source publication is closing;
+next verify the existing chart-first bloodwork reference/source journey.
 
-**North star:** Bloom privately investigates unfamiliar relationships across authorized lab, microbiome, genetics, dietary, activity and goal data; independently retrieves supportive, contradictory and null published evidence; produces competing novel hypotheses, source-verified conclusions or calibrated abstentions; and **learns durable, reviewed, rights-cleared nonpersonal science** that is reusable, restored and retractable. Do NOT build case-by-case fixed explanation scripts or dozens of predetermined per-condition rules. Essential deterministic source, unit, assay, lab range applicability, numeric calculation, data rights, consent, privacy, citations, clinical safety and output admission remain mandatory.
+## Next eligible work and dependencies
 
-**Current status:** The existing `server/gemini-science-research.ts` produced a **real** Google HTTP 200 with a schema-valid nonpersonal research candidate using `gemini-3.5-flash-lite` (486 input and 377 output tokens; $0.01 **estimated** reservation settlement; 2 supplied sources; 2 hypotheses; 0 contradictions). This proves provider transport only, **not** source truth, opposing-evidence discovery, personalized inference, knowledge promotion, durable release or consumer enablement. The temporary test entry point has been removed; the public Gemini flag remains disabled. Preserve the current bounded provider/ledger architecture.
+1. Close the private-source publication/remote verification checkpoint, then
+   run the existing chart-first bloodwork reference/source browser journey on
+   synthetic local fixtures. Fix meaningful regressions without weakening
+   source or permission assertions; no hosted or Mac changes.
+2. Continue P1/P2 from the existing investigator/retrieval/release contracts.
+   Install no consumer/private reasoning runtime without its actual privacy,
+   model, source and performance qualification. Independently reviewed useful
+   cases and exact source rights/findings remain needed for scientific claims.
+3. P3: verify integrated consumer usefulness and safe abstention, current-source
+   invalidation, owner isolation, provider outage/spend and source/rights withdrawal.
+   No deployment or independent acceptance is inferred from a local green build.
+4. Preserve approved deferred P4/Core/Advanced requirements and their existing
+   evidence. Do not mark them complete or invent missing original criteria.
+   Continue an independent approved slice when higher-priority work is genuinely
+   blocked; do not restart paused remote integration to fill the gap.
 
-### New single Codex sequence (effective now)
+## Records and working-copy preservation
 
-**P0 companion contracts:** First close scoped SEC-0/Food-0 audits and necessary safety/source/actual-intake regressions under the Architect Private Data/MyFoodData decision, without displacing P1/P2.\n\n**P0 — Stabilize only indispensable existing foundations; minimize time on expansion.** Finish any **already nearly-complete** active M2/M4 source/CI/Render bundle cleanly if safe to publish, but stop before expanding exhaustive micronutrient support, noncritical nutrient-reference forms, additional generic questionnaire/UI, optional barcode-source coverage or speculative meal-planner cases. Preserve testable, known-vs-unknown **actual** food intake, confirmed taken vs planned supplements, accurate source ownership, report correction/deletion/version, dates, units, analyte/method comparability, permissions, encryption and essential regression/a11y. Where a source is unavailable, show unknown and use existing safe fallback; do not block P1 on completeness. Fix meaningful existing functional/safety regressions as they arise.
+Maintain BACKLOG.md, DEVELOPMENT_LOG.md and BLOCKED_USER_INPUT.md at meaningful
+checkpoints. The full approved scope remains in
+[V06_HANDOFF.md](docs/architecture/V06_HANDOFF.md),
+[dependency backlog](docs/operations/V06_DEPENDENCY_BACKLOG.md) and linked
+Architect decisions. Older task-selection text is historical; it is preserved
+in Git (for example4ed8a45b:NEXT_ACTIONS.md), not an instruction to reopen old
+approvals, repeat delivered images/ranges or overwrite current work.
 
-**P1 — First user-value demonstration: bounded dynamic biological investigator, refocused Response #15.** Integrate existing `shared/lab-panel-review.ts`, `shared/scientific-contracts.ts`, canonical multi-domain source context, current reviewed graph/retrieval, `server/metered-ai.ts` authorization and external **nonpersonal** Gemini research adapter. On authorized synthetic or independently permitted account fixture: identify a non-obvious multi-domain puzzle; compare genuinely **competing** hypotheses, including contrary and null evidence; verify exact record facts, units, date, source, applicable studies, potential harms and uncertainty; produce **one concise meaningful insight or explicit abstention**, with evidence available on demand. Private case reasoning and history stay purpose-scoped inside Bloom, not sent to free/public Gemini; don't call the general question a personal diagnosis. Demonstrate usefulness versus existing deterministic baseline and no invented citations/clinical actions. For a private real-user test, enforce consent and account-scoped read paths, never raw owner SQL permissions. **This replaces a full catalogue of handcrafted lipid/glycemic/liver/iron-CBC conclusions as the P1 gate**; retain already working panel display, corrections and safe non-AI explanations.
+Cloud continuation: inspect `/workspace/artifacts/CURRENT_EXECUTION_CHECKPOINT.json`
+when present for the exact active worktree and pending test sessions. This is a
+cloud-local checkpoint, not a prerequisite for the owner Mac.
 
-**P2 — Immediately connect Gemini candidates to durable verified scientific learning.** Reuse the existing source/evidence/claim system. Independently verify source identity, DOI/PMID, exact study finding, population/assay/outcome and positive/contradictory/null/harm context, rights, scope and review disposition. Deduplicate the same study, reject false citation/unsupported mechanism, keep generated output candidate-only until promoted by a documented authorized review. Produce small immutable, versioned **nonpersonal reviewed** manifest with canonical digest; restore into **two fully clean isolated databases** and retrieve reviewed claim in a future investigation. Withdraw a claim and demonstrate it cannot resurface after rollback; invalidate dependent uses while leaving unrelated claims. Enforce account/shared separation and rights revocation. Deliver exact-SHA technical proof and failure negative tests; do not falsely claim clinical review/consumer authorization or model-weight training. Read [persistent learning handoff](docs/architecture/BLOOM_PERSISTENT_SCIENTIFIC_LEARNING_LLM_INTEGRATION_ARCHITECT_DECISION_20261118.md) and [AI investigation handoff](docs/architecture/BLOOM_EVIDENCE_GROUNDED_AI_BIOLOGICAL_INVESTIGATION_IMPLEMENTATION_DECISION_20261118.md) as implementation contracts.
-
-**P3 — Reduced-scope integrated verification and useful presentation.** Test privacy, source changes, mixed and missing data, model 404/429/outage, ledger idempotency, evidence contradiction/retraction, correct fallback, relevant user journey, phone/tablet/desktop accessibility and original critical bloodwork/food flows. Produce an honest **science-focused integration milestone** (not a falsely complete v0.6 RC), with existing T1 high-impact legibility/function repairs only. One worthwhile conclusion first, deeper data/evidence progressively disclosed; no new dashboard of redundant cards or extra Consumer Experience Architect.
-
-**P4 — Deferred expansion backlog, not a prerequisite:** finish comprehensive Food #12 dinner optimization and all special-case servings/exclusions/protected-goal permutations, exhaustive M2 nutrient/DRI/Canadian reference expansion, broad predetermined full-panel Response #15 explanation set, additional Today/Progress/Athlete and ML/digital twin capabilities, optional nutrition source integrations, broad art/chart/theme polish and all nonessential historical v0.6 RC features. Preserve existing implementation, source tests and prior review inputs; revive only if user impact, safety, scientific validation or a separate owner decision justifies it. Native Swift/SwiftUI remains deferred. Maintain traceable "DEFERRED / NOT ACCEPTED" status for unfinished historical items.
-
-**Boundaries:** No open public Gemini access, no personal-case data to free-tier providers, no independent new billing stack, no automatic scientific claim promotion, no retraining on consumer private information, no high-stakes clinical action without eligible review/authority, no second queue. Never weaken privacy or scientifically meaningful regression tests to make the reduced scope pass. Codex autonomously chooses small implementations and should not ask owner to repeat the approved strategic choice.
-
-## Active — P1 investigation; P2 technical release proof is ready for qualification
-
-**Published foundations:** `17a54ea1` includes B6 separation/CI browser repair and reviewed public question selection; `017a11a6` adds research-only hypothesis/reference freshness; `daa0dbb0` canonical owned lab/intake/wellness snapshot; `bbafa8f7` source/claim/rights-reviewed local retrieval. 34 combined source/privacy/provider fixtures and subsequent six retrieval fixtures PASS. No actual provider call, private account query or consumer interpretation enabled. P0 broad Food/nutrient expansion is deferred, not next.
-
-**Current P1 slice:** `server/private-investigation-runner.ts` composes the canonical private collector, reviewed evidence and a bounded one-pass private-runtime callback. Eight runner/35combined fixtures/typecheck PASS. Wrong owner/public adapter, missing config, corrected/revoked sources/evidence, bad output, deadline/late results preserve existing source fallback. Returns only research-only-unverified candidates, no consumer interpretation. No actual private engine installed; scientific claim verifier and independent usefulness benchmark remain open. Receipt `V06_PRIVATE_INVESTIGATION_RUNNER_20261119.json`.
-
-**INV05/06 checkpoint:** Existing candidate adapter accepts only a current independently authorized exact-output review, matching account/source/evidence and explicit nonconsequential scope; preserves original source references/limits and no action.5admission/19combined fixtures/types PASS. No real reviewer, automated semantic verifier, consumer authority/route or private store installed. Receipt `V06_INVESTIGATION_REVIEW_ADMISSION_20261119.json`.
-
-**Published P2 slice (`3c759761`):** Deterministic strictly nonpersonal source/publication-bound manifest → existing graph + proposed additive knowledge tables → two fully clean isolated PGlite restores → future retrieval → durable withdrawal despite old release replay. SQL history guards/collisions/corruption/authority revocation tested.25focused tests/types/build PASS. Proposed migration is not installed by application startup. Receipt `V06_PSL_DURABLE_RELEASE_ENGINEERING_20261119.json`. This is synthetic technical proof, not genuine scientific review, actual Neon reset or consumer/clinical acceptance.
-
-**Qualification:** Exact frozen `299ff30004735d52306182750d9af3ad5cd941f8` full suite **959/959 PASS**, fail0skip0. Follow-up retrievalv2 adds DOI/shared-study-family grouping, explicit unknown identity/independence, conflict refusal and evidence epoch invalidation;29combined +final9retrieval PASS. Primary-source extraction candidate `docs/scientific-seeds/source-candidates/metabo12090846_20261119.json` preserves methods/rights/limits and a rendered-table discrepancy, with independent scientific review PENDING and no runtime promotion. Receipt `V06_SCIENCE_FOUNDATIONS_MILESTONE_20261119.json`. CI/Render exact follow-up qualification next; no manual deployment/main merge.
-
-**NEXT:** Publish verified publication identity/source-candidate delta; qualify exact CI/Render. Preserve the successful959-test milestone and avoid rerunning unchanged checks. Then actual permitted original-source/candidate review, scientific verification and independent evaluation; build only the remaining bounded interfaces needed for those proofs, not more case-specific rules or speculative AI infrastructure. Bound private engine installation to existing processing/privacy/budget authority; use no fabricated model execution or source approval. Private reasoning must stay inside Bloom unless separately authorized private provider path exists. Public Gemini only unchanged broadly public reviewed task/excerpts; transport success is not source or personal-case verification. Reauthorize/recollect current facts and withdrawals before replay. Missing genetics/microbiome/activity remain explicit, not invented. P2 real source review/release still open; P3 integration follows. All elective NI04/M2/M4/Food12/old RC expansion remains P4 DEFERRED / NOT ACCEPTED.
-
-**Scoped dependencies:** Real private inference installation/independent scientific benchmark and original-source/rights review are unproven; see BLOCKED_USER_INPUT.md. One source access failure must not block independent code or other permitted research. Last fully qualified milestone remains fd70aa87 (895/895); never infer full v0.6 RC from these slices.
-
-## P1 BLOODWORK CHART — PAIRWISE SOLID/DASHED/DISCONNECTED TREND LINES (2026-11-16)
-
-**Owner-observed chart usability defect, SAME existing v0.6 Bloodwork chart workstream:** [Chart-first Bloodwork architecture — appended pairwise visualization requirements](docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md). Current `LabTrend.tsx` line renderer uses `t.comparable && <polyline>` globally, so one unknown method/lab suppresses all visual links. Codex must add a **pure, small per-adjacent-pair display-only classifier**, using existing `assessLabComparability` reason codes without changing the scientific comparer: **solid** where pair confirmed comparable; **dashed** when same confirmed analyte/assay + verified common plot units + distinct valid chronological dates but method/lab/fasting context missing/differs; **disconnected** for incompatible assay/subtype, nonconvertible units, invalid date/value or duplicate timestamps. Render separately on true irregular-time x coordinates, preserve all point/source actions, show relevant accessible solid/dashed/disconnected legends and concise reason details; no smoothing/interpolated readings or fake clinical inference. **Never promote dashed display to calculated comparable change or a common reference interval.** Preserve qualified range editor/Canadian comparisons, source deletion/corrections, A/B permissions, reference point selections and chart styling; test 1/2/4/12 observations, mixed segments, invalid/duplicate chronology, confirmed vs free PSA, responsive/light-dark/Athlete/200%/keyboard; verify exact CI and Render before calling delivered. Prior `341ada7a` chart-range correction was already qualified, **do not redo it**. Queue this as a bounded chart display regression repair after active source/privacy/CI slice, without creating a separate design, scientific or governance project. Codex builds autonomously; owner reviews integrated RC only.
-
----
-
-## Recent exact evidence — do not redo
-
-- **Owner bacteria image correction — owner confirmed “Organism images work.” (2026-11-16):** `3c5093cb96d61b4711c6e2e3751d6e3b4872ba6f`, Render **LIVE14:29:51UTC**, `dep-dbtgsprji66s73ajs58g`. Native Viome importer plural Bacteria/Viruses/Eukaryotes now matches explicit singular crosswalk group aliases.14 tests, actual94 native-import list/profile +94 structured +94 legacy browser,22 public hashes and16 responsive states PASS. Receipt `V06_VIOME_MORPHOLOGY_PROVIDER_GROUP_20261116.json`. Actual authenticated hosted screenshots unverified (proxy403); no private query. Earlier bf13 alone missed native provider plurals. Images themselves were already imported; do not regenerate.
-- Initial private recalled-context reader `0a21a7ad` is included in current live source. New lifecycle variant/isolated writer in current tree still needs compatibility deployment before activation.
-- All-marker source-bound overview `0cfc34d1`, Render live13:49:08UTC.34-row browser, Atlas/reference integration, types/build pass. Broad757 tests756PASS + one stale fingerprint repaired/focused rerun. No full Response/clinical-priority claim.
-- Other label, CBC distinct art/full thumbnail fit/shorter fade/transparent text, unified Atlas/charts, PSA family without total coercion, original22 morphology files and exact fractional dinner/practical/Athlete links are published in current ancestry. Receipts in `docs/verification`; do not recreate.
-- Named Git stash `codex pending recalled-context lifecycle service before owner image regression` was **applied successfully**; it remains only as backup. Do not apply again. Earlier local history preserved at `codex/preserved-local-v06-history`.
-
-## P1 OWNER-OBSERVED BLOODWORK REFERENCE-RANGE UX — CHART FIRST (2026-11-16)
-
-**2026-11-16 owner extension — intelligent selection + user correction is part of THIS SAME P1, not a separate ticket:** [Consolidated chart-first architecture](docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md) now specifies source-specific auditable **Use my laboratory's range** correction beside the chart; automatic original report reference first; deterministic, value-independent ranking of legitimately applicable Canadian published comparisons where genuine source/context/licensing allows; exact provenance, explicit saved None, multi-report/one-sided/decision-limit, no false normal status. **Implement Slice 1 now after/alongside the active focused CI/Atlas fix:** automatic original interval + compact show/source controls + correction API/source-revision persistence + tests. **Slice 2 incremental:** match existing supported published provider/CSCC ranges with absence/ambiguity labels; **Slice 3** grow rights-cleared Canadian dataset without blocking ordinary UI. Never fabricate published ALT limits, assume bulk-redistribution rights, duplicate the overlay engine or mark all selection complete after the first slice. Report per-slice status and actual CI/Render SHA; owner review only integrated RC.
-
-
-
-**Approved bounded existing v0.6 UX correction, no intermediate approval gate:** [Source-reviewed implementation handoff](docs/architecture/BLOODWORK_REFERENCE_RANGE_CHART_FIRST_UX_20261116.md). In `LabTrend.tsx`, original source ranges/one-sided limits already render, but a marker with multiple source observations can lack a `selectedPoint` and hence visible band; report activation and source controls are buried in advanced `LabReportOverlayPanel`. Codex must make an applicable original interval visible by default for a clearly identified selected observation, display exact bounds/units/source/date and a compact **Show reference range** toggle plus **Original report / Published comparison (when supported) / None** source control immediately at each chart. Preserve explicit saved None and current per-report preferences, source/version/assay/units/one-sided/clinical decision limit safeguards, avoid a misleading band across differing reports, and keep advanced report-level management optional. Reuse existing `LabTrend`, `LabRangeSelector`, overlay and source services; no duplicate engine. Tests: original and absent ranges, selected observation, source separation and saved None, provisional comparisons, source correction/deletion, role/account, 320/390/768/1440, light/dark/Athlete, accessibility; exact CI and Render proof before claiming delivered. **Priority:** execute after/alongside current focused CI/Atlas repair, without disrupting active source/privacy work; Codex implements autonomously and owner reviews only integrated RC.
-
----
-
-## Next eligible work — authoritative ordering
-
-Follow **P0 → P1 → P2 → P3 → P4** under the binding latest owner re-scope at the top. This section replaces the former sequential T1 → Food #12 → Response #15 → comprehensive RC → science ordering; earlier work is preserved in Git history and linked specialist documents, not treated as deleted or accepted.
-
-1. **P0 essential source/privacy integrity:** Close the smallest safe active M2/M4 integration, and keep existing reporting, food logging, consent, comparison, corrections and safe fallback functioning.
-2. **P1 refocused Response #15:** Real novel-hypothesis biological investigation with verified personal facts, independently sourced contradictory evidence, a worthwhile result or abstention, and restricted private-data handling.
-3. **P2 scientific learning:** Gemini candidate → independent original-evidence review → approved nonpersonal release → 2 clean restores → reuse → withdrawal surviving rollback.
-4. **P3 science-focused integrated safety/consumer gate:** targeted end-to-end functionality and negative testing; no false full v0.6 release acceptance.
-5. **P4 deferred:** expanded Food #12 dinner optimizer, exhaustive nutrient/Canadian DRI coverage, scripted full-panel explanation enumeration, optional T1 artwork, broad adaptive activity/Progress/Athlete, other future ML and historic RC remainder. Maintain explicit deferred status; no feature deletion or accidental reactivation.
-
-## True scoped blockers
-
-- Prior private Tester1 aggregate query was rejected by automatic approval review; no data returned. Owner subsequently confirmed organism images work, so the query need was withdrawn. No private-query approval or image blocker remains. Standing synthetic-preview access is already implemented without expiry.
-- Hosted public browser access/current external Render docs unavailable through workspace proxy403; Render connector deployment status works. Previous older clone stalled33min, then cleared; **image correction now live**, no remaining queue hold for that commit. Do not manually trigger duplicate deploys or repeat unchanged proxy failures.
-- Optional external paid/provider, real-user consequential medical/research, native signing/device and independent final acceptance restrictions stay feature scoped. Continue all independent approved work.
+The cloud root checkout retains unrelated edits and divergent unpublished
+history. Never blindly push/reset/rebase it. Continue from the isolated current
+publication worktree identified in the local checkpoint; scope and verify each
+source patch against the development branch. Preserve private artifacts outside Git.

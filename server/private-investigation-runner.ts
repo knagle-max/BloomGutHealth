@@ -28,18 +28,23 @@ export async function runPrivateInvestigation(input:{
  const engine=input.engine,controller=new AbortController();
  if(input.timeoutMs!==undefined&&!Number.isFinite(input.timeoutMs))return fallback('invalid-budget');
  const timeout=Math.max(10,Math.min(input.timeoutMs??10_000,20_000));
+ const deadlineAt=performance.now()+timeout;
+ const expired=()=>controller.signal.aborted||performance.now()>=deadlineAt;
  let timer:ReturnType<typeof setTimeout>|undefined;
  try{
   const expiry=new Promise<never>((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('INVESTIGATION_TIMEOUT'));},timeout);});
   const run=async()=>{
-  if(!await input.authorize()||controller.signal.aborted)return fallback('permission');
+  if(!await input.authorize()||expired())return fallback('permission');
   const [snapshot,evidence]=await Promise.all([input.readSnapshot(),input.retrieveEvidence()]);
-  if(controller.signal.aborted)return fallback('deadline');
+  if(expired())return fallback('deadline');
   if(snapshot.accountScope!==input.actor||snapshot.purpose!=='personal-wellness'||snapshot.externalTransferPermitted!==false)return fallback('permission');
   if(!snapshot.facts.length||!evidence.cards.length)return fallback('insufficient-reviewed-context');
   const untrusted=await engine.investigate({snapshot:structuredClone(snapshot),evidence:structuredClone(evidence),signal:controller.signal});
+  // Timers cannot preempt a blocked event loop. Monotonic elapsed time still
+  // refuses late output; actual private engines must separately bound compute.
+  if(expired())return fallback('deadline');
   const [current,currentEvidence,permitted]=await Promise.all([input.readSnapshot(),input.retrieveEvidence(),input.authorize()]);
-  if(controller.signal.aborted)return fallback('deadline');
+  if(expired())return fallback('deadline');
   if(!permitted||current.accountScope!==input.actor)return fallback('permission');
   if(current.sourceEpoch!==snapshot.sourceEpoch||current.snapshotId!==snapshot.snapshotId||currentEvidence.evidenceVersion!==evidence.evidenceVersion)return fallback('sources-changed');
   const result=groundInvestigationCandidate(untrusted,input.actor,{

@@ -1,3 +1,4 @@
+import {geneticSourceRevision} from './genetic-source-version';
 import {referenceHash,referenceStreamId,referenceSourceRevision,referenceCorrectionView} from './lab-reference-corrections';
 import {labReferenceCorrectionCommandSchema,labReferenceCorrectionSchema,type LabReferenceCorrectionCommand} from '../shared/lab-reference-correction';
 import {copiedReferenceIntervalForPlot} from '../shared/lab-reference-interval';
@@ -502,7 +503,7 @@ export class PrecisionStorage {
     const ids=plans.flatMap((row:any)=>{const payload=decryptPrecision(row.encryptedPayload,userId);return knownPlanUsesSources(payload,sourceIds)?[row.id]:[];});
     if(ids.length)await tx.delete(precisionRecords).where(and(eq(precisionRecords.userId,userId),eq(precisionRecords.kind,"plan"),inArray(precisionRecords.id,ids)));
   }
-  private geneticSourceVersion(userId:string,row:PrecisionRecord){return createHash("sha256").update(JSON.stringify(["genetic-source-v1",userId,row.id,row.kind,row.createdAt,row.payload])).digest("hex");}
+  private geneticSourceVersion(userId:string,row:PrecisionRecord){return geneticSourceRevision(userId,row);}
   private geneticSnapshot(userId:string,records:PrecisionRecord[],context:PrecisionContext):GeneticSourceSnapshot{
     const selected=selectedGeneticSource(records,context.geneticsSelection);
     const sources=records.filter(r=>r.kind==="genetics").map(row=>{

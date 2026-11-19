@@ -55,3 +55,8 @@ test('slow engine gets abort and cannot replace a completed deadline fallback',a
  const result=await runPrivateInvestigation({...f.input,timeoutMs:10});assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);
  await new Promise(resolve=>setTimeout(resolve,60));assert.equal(completed,true);assert.equal(aborted,true);assert.equal(result.status,'abstain');
 });
+test('a CPU-blocked event loop cannot admit a valid engine result after its deadline',async()=>{
+ const f=setup(),original=f.engine.investigate;
+ f.engine.investigate=async request=>{const candidate=await original(request);const until=performance.now()+75;while(performance.now()<until){}return candidate;};
+ const result=await runPrivateInvestigation({...f.input,timeoutMs:25});assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);
+});

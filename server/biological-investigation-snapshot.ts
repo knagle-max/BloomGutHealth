@@ -1,3 +1,5 @@
+import {privateGeneticSourceFacts} from './private-genetic-source-facts';
+import {privateMicrobiomeSourceFacts} from './private-microbiome-source-facts';
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { activeLabRows, labSchema, sourceOnlyLabSchema, type Lab, type SourceOnlyLab } from '../shared/precision-nutrition';
@@ -11,7 +13,7 @@ import type { IStorage } from './storage';
 
 const digest=(value:unknown)=>createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const windowSchema=z.object({date:dateKey,timeZone:z.string().refine(recognizedMealTimeZone)}).strict();
-type SnapshotStore=Pick<IStorage,'getUser'|'getPrecisionContext'|'getPrecisionRecords'|'getMeals'|'getExperienceRecords'>;
+type SnapshotStore=Pick<IStorage,'getUser'|'getPrecisionContext'|'getPrecisionRecords'|'getMeals'|'getExperienceRecords'>&Partial<Pick<IStorage,'getUserSamples'|'getGeneticSources'>>;
 export class InvestigationSnapshotUnavailable extends Error {
   constructor(){super('Authorized investigation sources are unavailable.');}
 }
@@ -19,7 +21,7 @@ export class InvestigationSnapshotUnavailable extends Error {
  * consent store or external prompt. Recollect after model work before admitting
  * any output: an epoch match against an old snapshot alone is insufficient. */
 export async function collectPrivateInvestigationSnapshot(input:{
-  actor:string; purpose:'personal-wellness'; window:unknown;
+  actor:string; purpose:'personal-wellness'; window:unknown;includeMicrobiome?:boolean;includeGenetics?:boolean;
   store:SnapshotStore;
   authorize:(actor:string,purpose:'personal-wellness')=>Promise<boolean>;
   now?:()=>Date;
@@ -27,13 +29,17 @@ export async function collectPrivateInvestigationSnapshot(input:{
   const {actor,store,authorize}=input;
   const window=windowSchema.safeParse(input.window),now=(input.now??(()=>new Date()))();
   if(!actor||input.purpose!=='personal-wellness'||!window.success||!Number.isFinite(+now)||!await authorize(actor,'personal-wellness')) throw new InvestigationSnapshotUnavailable();
+  if(input.includeMicrobiome&&!store.getUserSamples)throw new InvestigationSnapshotUnavailable();
+  if(input.includeGenetics&&!store.getGeneticSources)throw new InvestigationSnapshotUnavailable();
   const load=()=>Promise.all([
-    store.getUser(actor),store.getPrecisionContext(actor),store.getPrecisionRecords(actor),store.getMeals(actor),store.getExperienceRecords(actor,'supplement-intake'),
+    store.getUser(actor),store.getPrecisionContext(actor),store.getPrecisionRecords(actor),store.getMeals(actor),store.getExperienceRecords(actor,'supplement-intake'),input.includeMicrobiome?store.getUserSamples!(actor):undefined,input.includeGenetics?store.getGeneticSources!(actor):undefined,
   ]);
   const sources=await load();
-  const [user,context,records,meals,supplements]=sources;
+  const [user,context,records,meals,supplements,samples,geneticSelection]=sources;
   const originalSourceDigest=digest(sources);
   if(!user||user.id!==actor||records.length>1000||meals.length>2000||supplements.length>=2000||!await authorize(actor,'personal-wellness')) throw new InvestigationSnapshotUnavailable();
+  const microbiome=samples?privateMicrobiomeSourceFacts(actor,samples,now):null;
+  const genetics=geneticSelection?privateGeneticSourceFacts(actor,records,geneticSelection,now):null;
   const wellness=buildWellnessContext(actor,context,user,now);
   const intake=recordedIntakeSources({actor,...window.data,asOf:now.toISOString(),foods:meals.map(meal=>({id:meal.id,userId:meal.userId,name:meal.mealText.slice(0,160),loggedAt:meal.loggedAt,revision:mealRecordRevision(meal),analysis:meal.intelligence&&typeof meal.intelligence==='object'?meal.intelligence as any:null})),supplements:supplements.map(record=>({...record,userId:'userId'in record?record.userId:actor}))});
   const labRecords=records.filter(record=>record.kind==='lab');
@@ -65,11 +71,11 @@ export async function collectPrivateInvestigationSnapshot(input:{
   })));
   // Canonical source projection only; no private notes, genotype dumps, recipes,
   // causal windows, guessed doses or inferred unlogged intake are constructed.
-  const basis={version:'private-investigation-snapshot-v1',accountScope:actor,purpose:'personal-wellness' as const,window:window.data,
-    facts:[...facts,...sourceFacts],intakeEvents:intake.events.map(event=>({sourceId:event.recordId,revision:event.revision,kind:event.kind,occurredAt:event.occurredAt,dateBasis:event.kind==='food'?'food-record-time':'confirmed-taken-time',sourceStatus:event.sourceStatus,rowCount:event.rows.length})),wellness,
+  const basis={version:'private-investigation-snapshot-v2',accountScope:actor,purpose:'personal-wellness' as const,window:window.data,
+    facts:[...facts,...sourceFacts,...(microbiome?.facts??[]),...(genetics?.facts??[])],geneticSource:genetics?{state:genetics.state,selectionRevision:genetics.selectionRevision,source:genetics.source}:null,microbiomeReports:microbiome?.reports.map(({facts,...report})=>report)??[],intakeEvents:intake.events.map(event=>({sourceId:event.recordId,revision:event.revision,kind:event.kind,occurredAt:event.occurredAt,dateBasis:event.kind==='food'?'food-record-time':'confirmed-taken-time',sourceStatus:event.sourceStatus,rowCount:event.rows.length})),wellness,
     missing:{unsupportedLabs,sourceOnlyLabs:allActive.length-active.length,futureLabs:active.length-facts.length,
       intakeCoverage:'partial-or-unknown' as const,intakeExcluded:{undated:intake.undatedEvents,future:intake.futureEvents,unsupported:intake.unsupportedEvents,conflicting:intake.conflictingEvents},
-      microbiome:'not-collected' as const,genetics:'not-collected' as const,activity:'not-collected' as const},
+      microbiome:microbiome?(microbiome.reports.length?'source-reports-included' as const:'no-readable-source-reports' as const):'not-collected' as const,microbiomeUnavailable:microbiome?.unavailable??null,microbiomeFuture:microbiome?.future??null,genetics:genetics?genetics.state:'not-collected' as const,activity:'not-collected' as const},
   };
   if(!intakeCalendarDate(now.toISOString(),window.data.timeZone)||Buffer.byteLength(JSON.stringify(basis),'utf8')>500_000)throw new InvestigationSnapshotUnavailable();
   // View timestamp is separate from source epoch so an unchanged recollection
