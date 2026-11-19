@@ -109,10 +109,16 @@ def run_reference(command: dict, environment=None) -> dict:
                         "imposedAbundance": float(member["abundance"])})
     model_path = Path(taxonomy.iloc[0]["file"])
     model_hash = REFERENCE_SHA256
-    from .reference_model_audit import audit_model
-    model_audit = audit_model(cobra.io.read_sbml_model(str(model_path)))
+    from .reference_model_audit import audit_model, probe_closed_atp
+    source_model = cobra.io.read_sbml_model(str(model_path))
+    model_audit = audit_model(source_model)
     if model_audit["invalidBounds"]:
         raise ArithmeticError("Reference model has invalid bounds.")
+    energy_probe = probe_closed_atp(source_model)
+    model_audit["energyGeneratingCycleCheck"] = energy_probe["status"]
+    model_audit["energyGeneratingCycleProbe"] = energy_probe
+    if energy_probe["status"] != "not-detected-at-tested-tolerance":
+        raise ArithmeticError("Reference closed-energy control did not qualify.")
     provenance = {
         "version": VERSION, "scenario": command["scenario"],
         "scope": "nonpersonal-engineering-control", "observedBiology": False,

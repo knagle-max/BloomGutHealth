@@ -121,6 +121,10 @@ print(json.dumps({key:result[key] for key in ("growthRate","tradeoffGrowthTarget
 
     def test_reproducible_reference_and_negative_control(self):
         first = run_reference({"version": VERSION, "scenario": "baseline"}, DEV)
+        self.assertEqual(first["modelAudit"]["energyGeneratingCycleCheck"], "not-detected-at-tested-tolerance")
+        self.assertFalse(first["modelAudit"]["thermodynamicallyValidated"])
+        self.assertFalse(first["modelAudit"]["biologicallyValidated"])
+        self.assertEqual(first["modelAudit"]["energyGeneratingCycleProbe"]["solverBindingVersion"], "5.0.13")
         second = run_reference({"version": VERSION, "scenario": "baseline"}, DEV)
         closed = run_reference({"version": VERSION, "scenario": "closed-medium"}, DEV)
         self.assertEqual(first["status"], "optimal")
@@ -155,3 +159,14 @@ print(json.dumps({key:result[key] for key in ("growthRate","tradeoffGrowthTarget
         self.assertFalse(first["solverConfiguration"]["osqp"]["warm_start"])
         self.assertEqual(first["qpConvergence"][0]["status"], "solved")
         self.assertLessEqual(first["tradeoffGrowthError"], 1e-5)
+
+
+@unittest.skipUnless(importlib.util.find_spec("micom"), "Isolated science environment required")
+class ClosedEnergyAdmissionTests(unittest.TestCase):
+    def test_failed_or_detected_energy_control_refuses_community_execution(self):
+        for status in ("unavailable", "energy-generation-detected"):
+            with patch("ml_service.research.reference_model_audit.probe_closed_atp", return_value={"status": status}), \
+                 patch("micom.Community") as community:
+                with self.assertRaisesRegex(ArithmeticError, "closed-energy control"):
+                    run_reference({"version": VERSION, "scenario": "baseline"}, DEV)
+                community.assert_not_called()

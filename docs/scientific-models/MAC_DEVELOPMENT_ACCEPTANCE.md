@@ -17,6 +17,7 @@ replace the existing v0.5/v0.6 backlog or declare the full RC ready.
 | COBRA reference optimization | IMPLEMENTED_AND_TESTED | Known reference objective and actual solver tests |
 | MICOM reproducible reference control | IMPLEMENTED_AND_TESTED | Two-copy E. coli engineering control, both member file digests verified before parsing, repeated solve, bounds/residual and infeasible closed-medium tests; not a validated multispecies gut model |
 | Exact reference identity and model-specific terms | ALREADY_VERIFIED | Pinned SBML and official BiGG source inspected; commercial model-data use/redistribution not cleared; see reference-model-provenance.md |
+| Fixed reference closed-boundary ATP energy control | IMPLEMENTED_AND_TESTED | Exact ATPM mapping, independent copy, closed boundaries, GLPK status/residual admission and synthetic positive/negative controls;74 Python/20 Node tests PASS; new actual Mac check NOT_RUN; not full thermodynamic validation |
 | Scientific biological/clinical validity | BLOCKED_TECHNICAL | Mechanical audit only; independent model/chemistry/thermodynamics/energy-cycle review absent |
 | Real strain/taxon/dietary substrate mappings | BLOCKED_TECHNICAL | No source-qualified gut reconstruction/medium/diet crosswalk installed; unsupported requests rejected |
 | General flux exploration/intervention capabilities | BLOCKED_TECHNICAL | Current allowlist is fixed controls only; broader operations require qualified reconstruction/conditions and validation, not arbitrary tool arguments |
