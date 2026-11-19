@@ -19,7 +19,7 @@ Production has no import/startup dependency on this optional connection.
 | New startup operation | Offline check, fixed localhost8765, one worker, no access log/proxy headers, no auto-start; listener requires a separate explicit CLI flag and actual owner approval |
 | Existing Node development caller | Explicit localhost HTTP CONNECT proxy, private HTTPS/SNI, no redirects/direct fallback/global proxy; now verifies reference provenance/diagnostics and returns only a known research-only projection |
 | Actual Render inspection | A single native Node web service using `npm start` was visible. In this repository that command sets NODE_ENV=production, which the development caller refuses. Owner confirms this existing service is development/staging only. A separately scoped caller is prepared below; actual private transport has not been tested |
-| Actual Tailscale policy | Complete current policy privately supplied/reviewed: one allow-all grant and own-device SSH check. Exact generic replacement prepared, not applied or control-plane validated |
+| Actual Tailscale policy | Complete current policy privately supplied/reviewed: one allow-all grant and own-device SSH check. Earlier disruptive replacement withdrawn; personal-access template prepared, subject to private device/flow inventory and control-plane validation |
 
 Do not point `METABOLITE_RESEARCH_URL` at this control: that existing contract
 carries personal report/plan scenarios, whereas this development API accepts
@@ -96,45 +96,92 @@ running instance until explicit restart with the new pair. Revocation/expiry
 stops new work and withholds in-flight responses; rollback does not reactivate
 the old instance. This is not Tailscale-node revocation.
 
-## Exact Tailscale administrator work, pending approval
+## Preserve personal access: review first, activate only after approval
 
-1. Review [the complete proposed replacement](tailscale-development-policy.proposed.json),
-   based on the complete policy supplied privately. Do not save/apply it yet.
-   It replaces the allow-all grant with caller-tag → node-tag TCP443. It keeps
-   the existing own-device SSH check through a narrow TCP22 self grant only
-   for user-owned, untagged devices. No SSH is granted to the tagged scientific
-   node. Other previously unrestricted tailnet traffic will stop; any additional
-   needed flows must be specified before approval. No groups, postures or
-   nodeAttrs were active in the supplied policy; commented examples are omitted.
-2. Generic tag ownership is restricted to administrators. The denied-role tag
-   exists only for policy tests; do not enroll production services or assign
-   the development caller tag to another role. Tag permissions are additive.
-3. After explicit policy-change approval, paste the replacement in Access Controls.
-   Its built-in tests must pass before saving: caller TCP443 allowed; caller
-   TCP22/8765/11434 and UDP443 denied; denied-role TCP443 denied; reverse access
-   denied. These are prepared tests, not an assertion that real identities have
-   passed network testing. Keep the previous policy privately for reviewed recovery;
-   do not restore the unrestricted rule as a routine network-outage workaround.
-4. Before tagging the dedicated scientific-service node, acknowledge that tagging
-   replaces user ownership: its former autogroup:self SSH access no longer
-   applies. Other untagged own-device SSH remains scoped to its owner/check mode.
-   If the Mac is also needed as a user-owned tailnet device, stop for an explicit
-   identity plan instead of silently changing its ownership.
-5. After separate enrollment approval, create a non-reusable, short-lived,
-   restricted caller enrollment key with only the caller tag. Enable and verify
-   node-key expiry on both dedicated nodes: tagged nodes disable key expiry by
-   default, and reauthentication can disable it again. Keys/state stay private;
-   use file-based enrollment, never token values in CLI arguments.
-6. Before certificate/Serve approval, choose a generic non-personal node hostname
-   and inspect the tailnet DNS name privately. Public HTTPS certificates publish
-   their full hostname in append-only certificate-transparency logs; do not use
-   a personal computer name or identifying tailnet name. Use a randomized
-   non-identifying tailnet DNS name if needed, subject to separate approval.
-   No certificate is issued during preparation. Inspect existing Serve/Funnel configuration privately;
-   do not overwrite another mapping. Then the approved command shape is
-   `tailscale serve --https=443 http://127.0.0.1:8765`. No Funnel, file/directory
-   sharing, LAN binding, exit node, subnet advertisement or router forwarding.
+Offline Mac preparation is COMPLETE (owner-reported): pinned environment,
+Uvicorn0.54.0, Click8.5.1, clean pip check, private credentials, service check and
+all6 operational tests. No listener or Tailscale networking was activated.
+Live serving/RSS behavior and private transport remain separate acceptance items.
 
+The earlier tagged-science-node replacement is withdrawn and removed from this
+checkout. It would remove most existing personal connectivity and tagging the
+Mac would replace its user ownership. Do not apply it from an earlier commit.
+
+Use [the personal-access template](tailscale-personal-access-policy.template.json)
+only as a privately completed proposal. It is NOT a policy ready to paste: the
+host placeholder is deliberately invalid until replaced outside Git with the
+existing Mac's Tailscale IPv4. Keep the Mac user-owned and untagged. Do not log
+out, re-enroll, retag or run `tailscale up` on the existing Mac identity.
+
+The member-to-member all-port grant preserves the current broad connectivity
+between user-owned personal devices; it is deliberately broader than the science
+caller grant. Tagged nodes are not members. The Render caller gets only TCP443
+to the specific existing Mac host, not a wildcard destination. Existing own-device
+SSH check remains unchanged. Personal members can still reach the science HTTPS
+endpoint by policy; dual application authentication remains mandatory for them.
+A tailnet administrator or compromised personal device is not isolated by this
+policy. This design restricts the new service identity without claiming to
+harden all existing personal devices.
+
+### Offline/private inventory before an activation proposal
+
+On the Mac, these read-only commands do not activate Serve or change identity:
+
+```bash
+tailscale version
+tailscale status --json
+tailscale ip -4
+tailscale serve status
+tailscale funnel status
+lsof -nP -iTCP:443 -sTCP:LISTEN
+```
+
+Keep outputs private, outside Git; they can identify users/devices/IPs. If a
+command is unsupported, stop that check and record the installed client variant;
+do not install a second daemon or change the existing login to make it pass.
+In the admin console, privately inventory all existing tagged nodes, shared nodes,
+subnet/exit-node routes and personal services/ports relied upon. The supplied
+policy alone does not reveal this inventory. The member grant does NOT preserve
+traffic to/from tagged devices, shared-node paths or routed subnets. Add only
+reviewed necessary flows to the private proposal before approval. Do not apply
+if any current personal flow would be lost or remains uncertain.
+
+Complete the host placeholder privately. Add actual personal-device policy tests
+for each relied-upon flow, as well as the template's caller TCP443 allow and
+TCP22/8765/11434, UDP443 and unrelated-role denials. Test the complete candidate
+with the Tailscale policy validator/editor before saving; structural offline
+checks are not control-plane or live network verification. Keep the existing
+policy privately for deliberate recovery. Adding a narrow grant while retaining
+the global src*/dst*/ip* grant does not restrict the Render caller.
+
+### Minimum approvals, in order
+
+1. **Mac localhost listener:** start the existing foreground service command above;
+   no login/autostart changes. Inspect listener binding is only127.0.0.1:8765.
+2. **Reviewed policy plus HTTPS/Serve:** approve the privately completed full policy
+   only after personal-flow tests and inventory pass. Keep the existing Mac
+   ownership. Inspect existing Serve mappings and port443; if occupied, stop for
+   a route/port plan rather than replacing a mapping. HTTPS requires a certificate
+   whose hostname appears in public certificate-transparency logs. Review the
+   existing machine/tailnet name privately; any rename/DNS change needs separate
+   explicit approval because it may affect existing access. If names are acceptable
+   and no mapping conflict exists, the approved command shape is
+   `tailscale serve --https=443 http://127.0.0.1:8765`. No Funnel or public ports.
+3. **Restricted staging caller:** approve dedicated short-lived, non-reusable
+   caller-tag enrollment, enabling/verifying node-key expiry, userspace daemon,
+   private credentials and the exact staging configuration changes below. No
+   production changes or paid service. Do not replace the normal app start command.
+   Actual supported execution/bootstrap on this Render service must be verified;
+   if unavailable, report the limitation rather than silently deploying or buying
+   another service. Any deployment/restart required to change execution needs its
+   own explicit approval; this runbook does not authorize it.
+
+After these approvals, run only fixed synthetic controls: baseline, wrong token,
+expired token, nonce replay, unauthorized tagged-role denial (personal member identities retain network access but require application credentials), TLS rejection,
+Mac/VPN outage and recovery, cancellation and credential rotation. Record only
+nonpersonal pass/fail summaries in Git. Real personal processing remains disabled
+and is not authorized by a successful synthetic connection. No Ollama dependency
+is required for the MICOM reference control.
 
 ## Existing Render staging target; activation still requires approval
 
@@ -197,7 +244,8 @@ failure, resource exhaustion, solver failure, Mac restart/disconnect, VPN outage
 and recovery, verifying ordinary Bloom paths continue independently.
 
 To decommission after approval: disable only the development caller, revoke its
-application credentials and both dedicated tailnet node/enrollment identities;
+application credentials and only the dedicated Render caller tailnet identity;
+keep the existing user-owned Mac identity and personal Tailscale access intact;
 turn off only the Serve mapping created here, stop the foreground Mac process,
 remove dedicated private URL/secrets/state and remove unused development grants.
 Do not reset unrelated Serve settings or delete personal datasets/environments.

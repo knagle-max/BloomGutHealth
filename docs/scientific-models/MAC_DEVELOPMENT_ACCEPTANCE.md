@@ -10,7 +10,8 @@ replace the existing v0.5/v0.6 backlog or declare the full RC ready.
 | Reuse existing FastAPI/research architecture | IMPLEMENTED_AND_TESTED | Optional factory uses existing service/auth/lifespan; normal entry point unchanged |
 | Production independent of Mac, address and VPN | IMPLEMENTED_AND_TESTED | Actual Node server/worker build dependency graphs exclude optional Mac tools; fresh Python production import succeeds with optional science/Mac modules blocked; actual production identity rejects injected development config |
 | Compatible pinned scientific environment | IMPLEMENTED_AND_TESTED | Isolated Linux Python 3.12 environment, pip check; compatible versions recorded |
-| Actual pinned Apple Silicon scientific suite | ALREADY_VERIFIED | Owner reports pinned .venv-validation completed OK; new operational/RSS/serving additions still need Mac checks |
+| Actual pinned Apple Silicon scientific suite | ALREADY_VERIFIED | Owner reports pinned .venv-validation completed OK |
+| Offline Mac operational preparation | ALREADY_VERIFIED | Owner reports Uvicorn0.54.0/Click8.5.1 installed, pip check clean, private credentials initialized, development service check passed and all6 operational tests passed; no listeners/networking activated |
 | COBRA reference optimization | IMPLEMENTED_AND_TESTED | Known reference objective and actual solver tests |
 | MICOM reproducible reference control | IMPLEMENTED_AND_TESTED | Two-copy E. coli engineering control, both member file digests verified before parsing, repeated solve, bounds/residual and infeasible closed-medium tests; not a validated multispecies gut model |
 | Exact reference identity and model-specific terms | ALREADY_VERIFIED | Pinned SBML and official BiGG source inspected; commercial model-data use/redistribution not cleared; see reference-model-provenance.md |
@@ -46,7 +47,7 @@ engineering results, not Mac/network, scientific predictive, clinical or full RC
 acceptance. No personal processing, knowledge promotion or production release is
 authorized by a green engineering test.
 
-New bounded operational additions: private expiring/rotatable/revocable config, guarded localhost launcher, resource watchdog and strict caller result projection. See DEVELOPMENT_CONNECTION_RUNBOOK.md. Complete current policy has been reviewed and a generic replacement is proposed but unapplied; the owner confirms the existing Render service is staging-only, with an isolated auxiliary caller prepared but its runtime/bootstrap and transport not yet qualified; no real connection or identity-denial test claimed. New source records no owner/workspace/device identifiers.
+New bounded operational additions: private expiring/rotatable/revocable config, guarded localhost launcher, resource watchdog and strict caller result projection. See DEVELOPMENT_CONNECTION_RUNBOOK.md. Complete supplied policy has been reviewed. The earlier tagged-node replacement was withdrawn because it would disrupt personal access; the new user-owned-Mac template requires private inventory and control-plane review before application; the owner confirms the existing Render service is staging-only, with an isolated auxiliary caller prepared but its runtime/bootstrap and transport not yet qualified; no real connection or identity-denial test claimed. New source records no owner/workspace/device identifiers.
 
 Remaining external actions do not justify speculative general AI/platform work.
 Use the GitHub development branch and existing setup guide for offline Mac qualification;

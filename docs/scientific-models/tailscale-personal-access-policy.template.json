@@ -1,0 +1,80 @@
+{
+  "tagOwners": {
+    "tag:bloom-science-dev-caller": [
+      "autogroup:admin"
+    ],
+    "tag:bloom-science-policy-denied": [
+      "autogroup:admin"
+    ]
+  },
+  "hosts": {
+    "bloom-science-personal-mac": "<PRIVATE_EXISTING_MAC_TAILSCALE_IPV4>"
+  },
+  "grants": [
+    {
+      "src": [
+        "autogroup:member"
+      ],
+      "dst": [
+        "autogroup:member"
+      ],
+      "ip": [
+        "*"
+      ]
+    },
+    {
+      "src": [
+        "tag:bloom-science-dev-caller"
+      ],
+      "dst": [
+        "bloom-science-personal-mac"
+      ],
+      "ip": [
+        "tcp:443"
+      ]
+    }
+  ],
+  "ssh": [
+    {
+      "action": "check",
+      "src": [
+        "autogroup:member"
+      ],
+      "dst": [
+        "autogroup:self"
+      ],
+      "users": [
+        "autogroup:nonroot",
+        "root"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "src": "tag:bloom-science-dev-caller",
+      "proto": "tcp",
+      "accept": [
+        "bloom-science-personal-mac:443"
+      ],
+      "deny": [
+        "bloom-science-personal-mac:22",
+        "bloom-science-personal-mac:8765",
+        "bloom-science-personal-mac:11434"
+      ]
+    },
+    {
+      "src": "tag:bloom-science-dev-caller",
+      "proto": "udp",
+      "deny": [
+        "bloom-science-personal-mac:443"
+      ]
+    },
+    {
+      "src": "tag:bloom-science-policy-denied",
+      "proto": "tcp",
+      "deny": [
+        "bloom-science-personal-mac:443"
+      ]
+    }
+  ]
+}
