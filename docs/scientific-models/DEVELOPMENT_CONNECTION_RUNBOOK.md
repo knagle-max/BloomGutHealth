@@ -1,3 +1,5 @@
+> **PAUSED BY OWNER — local science first.** Do not execute activation steps below or change Tailscale, policy, Render or deployment configuration. Use [local scientific workflow](LOCAL_SCIENTIFIC_WORKFLOW.md). Historical activation steps are retained for a future separately authorized integration.
+
 # Development scientific connection: next executable steps
 
 No listeners, Serve, live credential changes, infrastructure or deployments were

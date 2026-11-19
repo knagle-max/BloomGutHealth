@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-19",
+  "status": "LOCAL_ONLY_WORKFLOW_IMPLEMENTED_AND_TESTED",
+  "remoteIntegration": "PAUSED_BY_OWNER",
+  "tests": {
+    "focusedLocalReferenceModelAudit": 18,
+    "failures": 0,
+    "realBoundedCLIBaselineNegativeControl": "PASS"
+  },
+  "reused": [
+    "Existing versioned fixed reference contract",
+    "DevelopmentJobSupervisor resource limits and spawn workers",
+    "Existing private path validation",
+    "Pinned MICOM solver and model provenance"
+  ],
+  "privacy": {
+    "resultStorage": "Owner-only outside Git, no overwrite",
+    "personalInputs": "Unsupported",
+    "individualSimulationResultsCommitted": false,
+    "credentialsRequired": false
+  },
+  "network": {
+    "listenersStarted": false,
+    "tailscaleChanges": false,
+    "renderChanges": false,
+    "deployed": false
+  },
+  "scientificMeaning": "Nonpersonal two-copy reference engineering controls only; not biological, predictive or clinical validation",
+  "existingServicePreserved": true,
+  "remaining": [
+    "Qualify a real small microbial community and source/model licences",
+    "Taxonomy, exchange and medium mapping audit",
+    "Independent experimental predictive validation",
+    "Actual new CLI workflow qualification on owner Mac"
+  ]
+}

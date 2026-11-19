@@ -1,3 +1,5 @@
+> **Current scope:** Remote integration paused by owner. Local MICOM/COBRApy development continues without networking. Preserve existing service/interfaces; no Tailscale/Render/policy/deployment changes. See [local workflow](LOCAL_SCIENTIFIC_WORKFLOW.md).
+
 # Mac development science acceptance — partial local proof
 
 2026-11-19. Publication base: remote enhance/bloom-experience at
