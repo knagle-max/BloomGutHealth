@@ -104,3 +104,44 @@ test("successful candidate reserves and settles existing spend ledger",async()=>
   assert.equal(ledger.settled,1);
   assert.equal(output.status,"candidate_unreviewed");
 });
+
+test("oversized chunked provider body is cancelled before remaining chunks are read",async()=>{
+ let cancelled=false,pulls=0;
+ const stream=new ReadableStream<Uint8Array>({
+  pull(controller){pulls++;controller.enqueue(new Uint8Array(20_001));if(pulls===3)controller.close();},
+  cancel(){cancelled=true;},
+ },{highWaterMark:0});
+ const ledger=testLedger();
+ await assert.rejects(investigatePublishedScienceWithGemini(request,{
+  env,ledger,requestId:token,fetcher:(async()=>new Response(stream)) as typeof fetch,
+ }),GeminiResearchUnavailable);
+ assert.equal(cancelled,true);
+ assert.equal(pulls,2);
+ assert.equal(ledger.settled,0); // Execution began: uncertain billing stays reserved.
+});
+
+test("oversized declared response is cancelled without reading its body",async()=>{
+ let cancelled=false,pulls=0;
+ const stream=new ReadableStream<Uint8Array>({pull(){pulls++;},cancel(){cancelled=true;}},{highWaterMark:0});
+ await assert.rejects(investigatePublishedScienceWithGemini(request,{
+  env,ledger:testLedger(),requestId:token,
+  fetcher:(async()=>new Response(stream,{headers:{'content-length':'40001'}})) as typeof fetch,
+ }),GeminiResearchUnavailable);
+ assert.equal(cancelled,true);assert.equal(pulls,0);
+});
+
+test("bounded streaming preserves UTF-8 characters split across provider chunks",async()=>{
+ const unicode={...candidate,unansweredQuestions:['Does café culture generalize?']};
+ const bytes=Buffer.from(JSON.stringify({candidates:[{content:{parts:[{text:JSON.stringify(unicode)}]}}]}));
+ const boundary=bytes.indexOf(Buffer.from('é'))+1;
+ let index=0;
+ const pieces=[bytes.subarray(0,boundary),bytes.subarray(boundary)];
+ const stream=new ReadableStream<Uint8Array>({pull(controller){
+  if(index===pieces.length){controller.close();return;}controller.enqueue(pieces[index++]);
+ }});
+ const output=await investigatePublishedScienceWithGemini(request,{
+  env,ledger:testLedger(),requestId:token,fetcher:(async()=>new Response(stream)) as typeof fetch,
+ });
+ assert.deepEqual(output.claims.unansweredQuestions,unicode.unansweredQuestions);
+ assert.deepEqual(output.usage,{inputTokens:null,outputTokens:null});
+});

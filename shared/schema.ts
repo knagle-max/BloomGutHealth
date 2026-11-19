@@ -465,3 +465,9 @@ export const biologyScientificReleases=pgTable('biology_scientific_releases',{
 export const biologyScientificWithdrawals=pgTable('biology_scientific_withdrawals',{
  kind:text('kind').notNull(),targetId:text('target_id').notNull(),createdAt:timestamp('created_at').defaultNow().notNull(),
 },table=>[primaryKey({columns:[table.kind,table.targetId]}),check('biology_scientific_withdrawals_kind',sql`${table.kind} IN ('relationship','source','review','rights')`)]);
+/** Proposed provenance-only receipts. No raw generated claims, prompts or user
+ * records. Not exported by application-schema.ts or installed at startup. */
+export const biologyScientificCandidateReceipts=pgTable('biology_scientific_candidate_receipts',{
+ id:text('id').primaryKey(),candidateDigest:text('candidate_digest').notNull(),receipt:jsonb('receipt').notNull(),
+ createdAt:timestamp('created_at').defaultNow().notNull(),
+});

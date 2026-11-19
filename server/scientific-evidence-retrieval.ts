@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { biologicalRegistrySchema, type BiologicalRegistry, type KnowledgeRelationship } from '../shared/biological-model';
 
-export const SCIENTIFIC_RETRIEVAL_VERSION='reviewed-science-retrieval-v2' as const;
+export const SCIENTIFIC_RETRIEVAL_VERSION='reviewed-science-retrieval-v3' as const;
 const id=z.string().min(1).max(128),sha=z.string().regex(/^[a-f0-9]{64}$/);
 /** Additive review overlay on the existing registry. Metadata/DOI presence and
  * model agreement do not create this record. Source acquisition and independent
@@ -28,6 +28,17 @@ export function scientificRegistryBinding(registry:BiologicalRegistry,relationsh
   return digest([canonical.version,matched??null,canonical.sources.find(source=>source.id===sourceId)??null]);
 }
 const querySchema=z.object({entityIds:z.array(id).min(1).max(4)}).strict();
+/** Only an explicit resolver URL asserts a DOI here. Publisher page URLs are
+ * not guessed or fetched; matching identity alone never verifies a finding. */
+function sourcePublicationMatches(sourceUrl:string,publication:ScientificRetrievalReview['publication']){
+ if(!publication)return true; // Unknown identity remains unknown below.
+ const url=new URL(sourceUrl),host=url.hostname.toLowerCase().replace(/\.$/,'');
+ if(host!=='doi.org'&&host!=='dx.doi.org')return true;
+ try{
+  const sourceDoi=decodeURIComponent(url.pathname.slice(1));
+  return /^10\.\d{4,9}\/[^\s]+$/i.test(sourceDoi)&&sourceDoi.toLowerCase()===publication.doi.toLowerCase();
+ }catch{return false;}
+}
 export type ScientificWithdrawals={relationshipIds:ReadonlySet<string>;sourceIds:ReadonlySet<string>;reviewIds:ReadonlySet<string>;rightsIds:ReadonlySet<string>};
 /** Local, bounded, provider-independent retrieval. No HTTP call or clinical
  * release. A current withdrawal overlay is mandatory, including during rollback.
@@ -56,7 +67,8 @@ export function retrieveReviewedScientificEvidence(input:{
       const review=matches[0],withdrawn=input.withdrawals;
       if(reviewCounts.get(review.id)!==1||withdrawn.relationshipIds.has(relationship.id)||withdrawn.sourceIds.has(sourceId)||withdrawn.reviewIds.has(review.id)||withdrawn.rightsIds.has(review.rights.id)||
         Date.parse(review.review.validUntil)<=now||Date.parse(review.rights.validUntil)<=now||
-        review.registryBinding!==scientificRegistryBinding(registry,relationship,sourceId)||review.excerptDigest!==scientificExcerptDigest(review.excerpt)||review.rights.sourceUrl!==source.url){withheld++;continue;}
+        review.registryBinding!==scientificRegistryBinding(registry,relationship,sourceId)||review.excerptDigest!==scientificExcerptDigest(review.excerpt)||review.rights.sourceUrl!==source.url||
+        !sourcePublicationMatches(source.url,review.publication)){withheld++;continue;}
       cards.push({relationship,source,review});
     }
   }

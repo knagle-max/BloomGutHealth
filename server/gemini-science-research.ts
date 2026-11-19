@@ -74,7 +74,11 @@ const RESEARCH_LIMITS: SpendLimits = {
   featureDaily: 50_000, providerMonthly: 250_000,
   platformMonthly: 500_000, accountConcurrency: 1, platformConcurrency: 1,
 };
-const allowedModels = new Set(["gemini-3.5-flash-lite", "gemini-3.8-flash"]);
+export const geminiScienceModelSchema = z.enum(["gemini-3.5-flash-lite", "gemini-3.8-flash"]);
+const allowedModels = new Set<string>(geminiScienceModelSchema.options);
+export function geminiScienceSourceSetDigest(sources: readonly z.infer<typeof geminiScienceSourceSchema>[]): string {
+  return createHash("sha256").update(JSON.stringify(sources)).digest("hex");
+}
 const endpointRoot = "https://generativelanguage.googleapis.com/v1beta/models/";
 
 export async function investigatePublishedScienceWithGemini(
@@ -99,7 +103,7 @@ export async function investigatePublishedScienceWithGemini(
   const sourceIds = new Set(request.sources.map(x => x.sourceId));
   if (sourceIds.size !== request.sources.length) throw new GeminiResearchUnavailable("Duplicate scientific source IDs.");
 
-  const sourceDigest = createHash("sha256").update(JSON.stringify(request.sources)).digest("hex");
+  const sourceDigest = geminiScienceSourceSetDigest(request.sources);
   const systemInstruction = [
     "You are an experimental scientific source-analysis assistant, not a clinical advisor.",
     "Analyze ONLY the provided published nonpersonal source excerpts.",
@@ -147,9 +151,27 @@ export async function investigatePublishedScienceWithGemini(
     );
     if (!response.ok) throw new GeminiResearchUnavailable("Gemini provider request unsuccessful.");
     const length = Number(response.headers.get("content-length") ?? 0);
-    if (length > 40_000) throw new GeminiResearchUnavailable("Gemini response exceeds size cap.");
-    const rawBody = await response.text();
-    if (Buffer.byteLength(rawBody,"utf8") > 40_000) throw new GeminiResearchUnavailable("Gemini response exceeds size cap.");
+    if (length > 40_000) {
+      await response.body?.cancel().catch(()=>{});
+      throw new GeminiResearchUnavailable("Gemini response exceeds size cap.");
+    }
+    const reader=response.body?.getReader();
+    if (!reader) throw new GeminiResearchUnavailable("Gemini response was empty.");
+    const chunks:Uint8Array[]=[];
+    let bytes=0;
+    try {
+      for (;;) {
+        const {done,value}=await reader.read();
+        if (done) break;
+        bytes+=value.byteLength;
+        if (bytes>40_000) {
+          await reader.cancel().catch(()=>{});
+          throw new GeminiResearchUnavailable("Gemini response exceeds size cap.");
+        }
+        if(value.byteLength)chunks.push(value);
+      }
+    } finally {reader.releaseLock();}
+    const rawBody=Buffer.concat(chunks).toString("utf8");
     let decoded: unknown;
     try { decoded = JSON.parse(rawBody); } catch { throw new GeminiResearchUnavailable("Provider response was not valid JSON."); }
     const responseSchema = z.object({

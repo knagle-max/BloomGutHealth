@@ -102,3 +102,25 @@ test('source/rights revocation observed during retrieval persists even without r
   }finally{await pg.close();}
  }
 });
+
+test('source withdrawal observed during a failed release operation survives transaction and authority rollback',async()=>{
+ for(const operation of ['restore','retrieve'] as const){
+  const {pg,db}=await clean(),f=scientificReleaseFixture(),release=JSON.parse(f.bytes());
+  try{
+   const authority={...f.current,revision:'initial',approvedReleaseDigests:new Set([release.digest])};
+   const initial=new ScientificReleaseStorage(db as any,async()=>authority);
+   await initial.restore(release);
+   let calls=0;
+   const changing=new ScientificReleaseStorage(db as any,async()=>{
+    if(++calls===2){authority.revision='source-withdrawn';(authority.withdrawals.sourceIds as Set<string>).add('source');}
+    return authority;
+   });
+   await assert.rejects(operation==='restore'?changing.restore(release):changing.retrieve('synthetic-release',['a']),/AUTHORITY_CHANGED/);
+   const rows=await db.select().from(biologyScientificWithdrawals);
+   assert.ok(rows.some(row=>row.kind==='source'&&row.targetId==='source'));
+   (authority.withdrawals.sourceIds as Set<string>).clear();authority.revision='old-root-replayed';
+   await initial.restore(release);
+   assert.equal((await initial.retrieve('synthetic-release',['a'])).cards.length,0);
+  }finally{await pg.close();}
+ }
+});

@@ -54,3 +54,26 @@ test('conflicting study-family assignments to one DOI are refused, not resolved 
  const f=fixture();f.reviews.forEach((review,i)=>{review.publication={doi:'10.5555/same-paper',studyFamilyId:'cohort-'+i};});
  assert.throws(()=>f.read(),/STUDY_IDENTITY_CONFLICT/);
 });
+
+test('review DOI conflicting with the exact source DOI resolver URL is withheld',()=>{
+ const f=fixture(),review=f.reviews[0],source=f.registry.sources[0],claim=f.registry.relationships[0];
+ source.url='https://doi.org/10.5555/synthetic-original';
+ review.rights.sourceUrl=source.url;
+ review.registryBinding=scientificRegistryBinding(f.registry,claim,source.id);
+ review.publication={doi:'10.5555/different-paper',studyFamilyId:'synthetic-cohort'};
+ const result=f.read();
+ assert.equal(result.cards.length,1);assert.equal(result.withheld,1);
+ assert.equal(result.cards[0].source.id,'paper-1');assert.equal(result.studyFamilyCount,null);
+});
+
+test('matching DOI resolver spelling preserves evidence without inventing unknown publication identity',()=>{
+ for(const url of ['https://doi.org/10.5555/SYNTHETIC','https://dx.doi.org/10.5555%2Fsynthetic']){
+  const f=fixture(),review=f.reviews[0],source=f.registry.sources[0];
+  source.url=url;review.rights.sourceUrl=url;
+  review.registryBinding=scientificRegistryBinding(f.registry,f.registry.relationships[0],source.id);
+  review.publication={doi:'10.5555/synthetic',studyFamilyId:'synthetic-cohort'};
+  assert.equal(f.read().cards.length,2);
+  delete review.publication;
+  const unknown=f.read();assert.equal(unknown.cards.length,2);assert.equal(unknown.studyFamilyCount,null);
+ }
+});
