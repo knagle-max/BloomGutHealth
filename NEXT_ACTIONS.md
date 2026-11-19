@@ -24,32 +24,28 @@ continue independent work. Preserve functioning v0.5 and v0.6 modules.
   clinical, physical-device or real-user acceptance. Never self-promote
   generated claims or label partial engineering as full v0.6 completion.
 
-## Current task
+## Current checkpoint
 
-Close the reconciled private source-context slice: canonical owned microbiome
-facts, explicitly selected genetics, source revocation/deletion and monotonic
-investigation deadline. Reuse existing readers, encrypted storage and current
-selection; preserve unknowns, source dates and source-only facts without
-inferring metabolic activity, genotype effects or confirmed behavior.
+Private-source and monotonic-deadline closure is published atcbc90d13 after a
+fresh1002/1002 test pass, TypeScript, production/media build and zero production
+advisories. P2 candidate-provenance/withdrawal source is published at4ed8a45b;
+its proposed0019 migration remains unapplied. No provider or consumer engine
+was enabled. Both source slices remain nonclinical engineering proofs.
 
-Candidate-provenance/withdrawal source is published at4ed8a45b. Its44 focused
-and24 integration tests, TypeScript and production/media build passed; proposed
-migration0019 remains unapplied. No provider or consumer feature was enabled.
-
-Private-source reconciliation:29 focused tests, one actual encrypted SQL/source
-integration test, TypeScript and production/media build passed. Initial full
-run1001/999/2 exposed stale inventories; both repaired and5 focused checks passed.
-Fresh full rerun:1002/1002 PASS, zero failures/skips. The actual Progress browser
-journey passed16 responsive/mode/zoom states after navigation readiness repair.
-Production dependency audit:zero vulnerabilities. Source publication is closing;
-next verify the existing chart-first bloodwork reference/source journey.
+Progress source-navigation and chart-first bloodwork reference browser journeys
+pass32 combined responsive/theme/mode/zoom states on actual local App/HTTP and
+synthetic SQL fixtures. No hosted or physical-device acceptance is inferred.
+SEC-0/FOOD-0 read-only matrices now document current trust/data flows and source
+coverage;23 focused security/source tests and existing public-coverage verifier
+pass. Exact FNDDS count is5431 foods,22188 portions,21 native fields;
+33 compact planning/logging rows match their source adapters. New private/scratch
+ignore patterns pass7 positive and2 public-document negative path checks.
 
 ## Next eligible work and dependencies
 
-1. Close the private-source publication/remote verification checkpoint, then
-   run the existing chart-first bloodwork reference/source browser journey on
-   synthetic local fixtures. Fix meaningful regressions without weakening
-   source or permission assertions; no hosted or Mac changes.
+1. Publish/verify the completed SEC-0/FOOD-0 and P3 receipts, then select the
+   highest-value unblocked approved slice from those matrices. Preserve source
+   integrity and one queue; do not repeat already green checks without cause.
 2. Continue P1/P2 from the existing investigator/retrieval/release contracts.
    Install no consumer/private reasoning runtime without its actual privacy,
    model, source and performance qualification. Independently reviewed useful

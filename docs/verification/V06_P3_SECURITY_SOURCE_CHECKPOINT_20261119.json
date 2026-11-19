@@ -1,0 +1,50 @@
+{
+  "date": "2026-11-19",
+  "sourceBaseCommit": "cbc90d130f543943a759b58f0bd91d1ddad09272",
+  "status": "SCOPED_ENGINEERING_VERIFIED_NOT_FULL_RC",
+  "checks": {
+    "fullUnitSQLAtSourceBase": {
+      "passed": 1002,
+      "failed": 0,
+      "skipped": 0
+    },
+    "progressBrowser": "PASS_ACTUAL_APP_HTTP_SYNTHETIC_ENCRYPTED_SQL_16_STATES",
+    "chartFirstBloodworkBrowser": "PASS_ORIGINAL_ONE_SIDED_NONE_PRIORITY_KEYBOARD_WITHDRAWAL_16_STATES",
+    "focusedSecurityAndSourceTests": 23,
+    "productionDependencyVulnerabilities": 0,
+    "publicSourceCoverageVerifier": "PASS",
+    "privateScratchIgnorePositiveChecks": 7,
+    "publicDocumentNegativeChecks": 2
+  },
+  "publicSourceCounts": {
+    "compactAdapterRows": 33,
+    "compactExactSourceMatches": 33,
+    "fnddsUniqueFoods": 5431,
+    "fnddsPortionRows": 22188,
+    "nativeNutrientFields": 21,
+    "originalSourceArchiveReverified": false
+  },
+  "artifacts": [
+    {
+      "path": ".gitignore",
+      "sha256": "7662756ffe42e480fb94a0e1cfcbdebab3aff9284d2759470597af15f2a732ce"
+    },
+    {
+      "path": "NEXT_ACTIONS.md",
+      "sha256": "ecae191a4921e5f439e24b15cb2ab9a94bb9c7868f269320737d75a33ac620ee"
+    },
+    {
+      "path": "docs/verification/SECURITY_AND_FOOD_SOURCE_INVENTORY_20261119.md",
+      "sha256": "3fed923de581556ed4ff4386967b2904d1af1a427a0f5858f96723a99edc6e68"
+    }
+  ],
+  "assurance": {
+    "independentSecurityReview": "NOT_DONE",
+    "physicalDeviceOrHumanAcceptance": "NOT_RUN",
+    "hostedDeployment": "NOT_RUN",
+    "clinicalOrPredictiveValidation": false,
+    "privateModeEnabled": false,
+    "personalRecordsInspected": false
+  },
+  "remoteIntegration": "PAUSED_NO_NETWORK_RENDER_POLICY_OR_DEPLOYMENT_CHANGES"
+}

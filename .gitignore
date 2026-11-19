@@ -35,3 +35,12 @@ private-models/
 *.log
 *.pem
 *.key
+
+# Private local experiment and operator scratch directories (not shared assets).
+/private-experiments/
+/private-credentials/
+/local-secrets/
+/local-logs/
+/tmp/
+*.tmp
+*.temp
