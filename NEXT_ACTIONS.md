@@ -40,7 +40,7 @@ browser states,23 security/source tests, zero production advisories, verified
 5431 FNDDS foods/22188 portions/21 native fields and33 exact compact adapters.
 No original archive re-verification, E2EE or independent science claim is inferred.
 
-V06-EXP-01 now has a bounded explicit-metadata workspace using the existing
+V06-EXP-01 is published ateb08d11b with a bounded explicit-metadata workspace using the existing
 preference and separate preview permission. Actual App/HTTP/isolated-SQL browser
 passes17 layout states, fresh-action revocation, account/OFF cleanup and failed-OFF
 retry. No full Legal catalogue, generic execution, new grants or network activation.
@@ -50,10 +50,11 @@ separate focused proof.
 
 ## Next eligible work and dependencies
 
-1. Publish completed workspace and P3 source-binding/integration receipts with only
-   reviewed source and dated receipts, preserving unrelated changes. Add the
-   encrypted-source → investigation → independent-review admission integration
-   regression and canonical-reference binding fix (14 focused checks passed).
+1. Publish the completed P3 canonical source-reference binding correction and
+   encrypted-SQL investigation/review integration proof (14 focused checks,
+   TypeScript and production/media build pass). Then trace the next genuinely
+   unimplemented approved requirement against current source and receipts;
+   do not repeat this completed integrated1014-test checkpoint without cause.
 2. Continue highest-value P1/P2 code gaps from existing contracts. Actual private
    reasoning installation/usefulness, independently reviewed unfamiliar cases
    and original-source rights remain feature-scoped qualification dependencies.

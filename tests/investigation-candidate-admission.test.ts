@@ -5,7 +5,7 @@ function fixture(){
  const candidate={snapshotId:'snapshot',sourceEpoch:'epoch',evidenceVersion:'evidence-v1',hypotheses:[{id:'alternative',explanation:'Synthetic qualified explanation for a source-grounding fixture.',observationIds:['fact'],supportingEvidenceIds:['support'],contradictingEvidenceIds:['null'],distinguishingObservations:['An appropriate discriminating observation is not measured.'],materialUnknowns:['Individual causality remains unestablished.'],confidence:'tentative'}],synthesis:{finding:'A source-reviewed explanatory possibility remains conditional in this synthetic fixture.',hypothesisIds:['alternative'],abstention:false,limits:['No clinical action or causal conclusion is established.']}};
  const digest=investigationCandidateDigest(candidate);
  const review={id:'review',accountScope:'a',purpose:'personal-wellness',snapshotId:'snapshot',sourceEpoch:'epoch',evidenceVersion:'evidence-v1',candidateDigest:digest,reviewerId:'synthetic-only',method:'independent-original-source-and-applicability-review',tier:'qualified-nonconsequential-explanation',disposition:'accepted-with-explicit-limits',coveredHypothesisIds:['alternative'],verifiedEvidenceIds:['support','null'],contraryAndNullFindingsReviewed:true,exactFactsAndNumbersReviewed:true,harmsAndApplicabilityReviewed:true,validUntil:'2027-01-01T00:00:00Z'};
- const current={accountScope:'a',purpose:'personal-wellness' as const,permitted:true,snapshotId:'snapshot',sourceEpoch:'epoch',evidenceVersion:'evidence-v1',observationIds:['fact'],eligibleEvidenceIds:['support','null']};
+ const current={accountScope:'a',purpose:'personal-wellness' as const,permitted:true,snapshotId:'snapshot',sourceEpoch:'epoch',evidenceVersion:'evidence-v1',observationIds:['fact'],observationRefs:[{id:'fact',sourceId:'canonical-source',revision:'source-revision',date:'2026-11-18'}],eligibleEvidenceIds:['support','null']};
  const authority={accountScope:'a',purpose:'personal-wellness' as const,limitedExplanatoryRelease:true,approvedReviews:new Map([['review',digest]]),withdrawnReviews:new Set<string>(),now:Date.parse('2026-11-19T12:00:00Z')};
  return {actor:'a',candidate,review,current,authority,observations:[{id:'fact',sourceId:'canonical-source',revision:'source-revision',date:'2026-11-18'}]};
 }
@@ -32,4 +32,22 @@ test('missing source revisions, unknown or duplicate observations and explicit a
  const date=fixture();date.observations[0].date='2026-02-30';assert.equal(admitReviewedInvestigation(date),null);
  const g=fixture();g.observations.push({...g.observations[0]});assert.equal(admitReviewedInvestigation(g),null);
  const h=fixture();h.candidate.synthesis.abstention=true;assert.equal(admitReviewedInvestigation(h),null);
+});
+
+test('admission cannot relabel a canonical observation with fabricated source, revision or date',()=>{
+ for(const key of ['sourceId','revision','date'] as const){
+  const f=fixture();f.observations[0][key]=key==='date'?'2026-11-17':'invented-source-reference';
+  assert.equal(admitReviewedInvestigation(f),null,`${key} must match current canonical source binding`);
+ }
+});
+
+test('missing, duplicated or mismatched canonical bindings cannot inherit a reviewed candidate',()=>{
+ for(const change of ['absent','duplicate','unknown','partial','invalid-date']){
+  const f=fixture();if(change==='absent')delete (f.current as any).observationRefs;
+  else if(change==='duplicate')f.current.observationRefs.push({...f.current.observationRefs[0]});
+  else if(change==='unknown')f.current.observationRefs[0].id='unrelated';
+  else if(change==='partial')f.current.observationIds.push('extra');
+  else f.current.observationRefs[0].date='2026-02-30';
+  assert.equal(admitReviewedInvestigation(f),null,change);
+ }
 });

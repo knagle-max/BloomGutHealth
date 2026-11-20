@@ -27,7 +27,8 @@ export function investigationCandidateDigest(untrusted:unknown){
  * current account-scoped authority must approve the exact decision AND digest.
  * No production authority, clinical advice, action, UI or store is installed. */
 export function admitReviewedInvestigation(input:{
- actor:string;candidate:unknown;review:unknown;current:InvestigationGroundingContext;
+ actor:string;candidate:unknown;review:unknown;
+ current:InvestigationGroundingContext&{observationRefs:readonly {id:string;sourceId:string;revision:string;date?:string}[]};
  observations:readonly {id:string;sourceId:string;revision:string;date?:string}[];
  authority:{accountScope:string;purpose:'personal-wellness';limitedExplanatoryRelease:boolean;approvedReviews:ReadonlyMap<string,string>;withdrawnReviews:ReadonlySet<string>;now:number};
 }):ConsumerValueCandidate|null{
@@ -44,12 +45,19 @@ export function admitReviewedInvestigation(input:{
  const selected=candidate.hypotheses.filter(row=>covered.has(row.id));
  const usedEvidence=new Set(selected.flatMap(row=>[...row.supportingEvidenceIds,...row.contradictingEvidenceIds]));
  if(!usedEvidence.size||Array.from(usedEvidence).some(id=>!verified.has(id)))return null;
- const sourceRows=z.array(z.object({id,sourceId:id,revision:z.string().min(1).max(4096),date:z.union([z.iso.date(),z.iso.datetime({offset:true})]).optional()}).strict()).max(2000).safeParse(input.observations);
- if(!sourceRows.success||selected.some(row=>!row.supportingEvidenceIds.length&&!row.contradictingEvidenceIds.length))return null;
- const byId=new Map(sourceRows.data.map(row=>[row.id,row]));
- if(byId.size!==input.observations.length)return null;
+ const sourceSchema=z.array(z.object({id,sourceId:id,revision:z.string().min(1).max(4096),date:z.union([z.iso.date(),z.iso.datetime({offset:true})]).optional()}).strict()).max(2000);
+ const sourceRows=sourceSchema.safeParse(input.observations),canonicalRows=sourceSchema.safeParse(current.observationRefs);
+ if(!sourceRows.success||!canonicalRows.success||selected.some(row=>!row.supportingEvidenceIds.length&&!row.contradictingEvidenceIds.length))return null;
+ // Caller-supplied presentation references cannot relabel a known observation.
+ // The current canonical map is supplied by the trusted source recollection,
+ // separately from candidate/review/presentation input; no client authority.
+ const byId=new Map(canonicalRows.data.map(row=>[row.id,row]));
+ const currentIds=new Set(current.observationIds);
+ if(byId.size!==canonicalRows.data.length||currentIds.size!==current.observationIds.length||byId.size!==currentIds.size||Array.from(byId.keys()).some(id=>!currentIds.has(id))||new Set(sourceRows.data.map(row=>row.id)).size!==sourceRows.data.length)return null;
+ if(sourceRows.data.some(row=>{const canonical=byId.get(row.id);return !canonical||row.sourceId!==canonical.sourceId||row.revision!==canonical.revision||row.date!==canonical.date;}))return null;
+ const providedIds=new Set(sourceRows.data.map(row=>row.id));
  const observationIds=Array.from(new Set(selected.flatMap(row=>row.observationIds)));
- if(!observationIds.length||observationIds.some(id=>!byId.has(id)))return null;
+ if(!observationIds.length||observationIds.some(id=>!byId.has(id)||!providedIds.has(id)))return null;
  const materialUnknowns=Array.from(new Set([...candidate.synthesis.limits,...selected.flatMap(row=>row.materialUnknowns)]));
  return {candidateId:`investigation:${review.id}:${digest}`,findingType:'cross-domain-qualified',
   observationRefs:observationIds.map(id=>{const row=byId.get(id)!;return{sourceId:row.sourceId,revision:row.revision,...(row.date?{date:row.date}:{})};}),
