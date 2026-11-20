@@ -49,14 +49,36 @@ test('wrong account or public provider adapter cannot receive a private snapshot
  const f=setup();assert.equal((await runPrivateInvestigation({...f.input,actor:'b'})).status,'abstain');assert.equal(f.calls,0);
  assert.equal((await runPrivateInvestigation({...f.input,engine:{...f.engine,kind:'google-gemini'} as any})).status,'abstain');assert.equal(f.calls,0);
 });
-test('slow engine gets abort and cannot replace a completed deadline fallback',async()=>{
- const f=setup();let aborted=false,completed=false;
- f.engine.investigate=async({signal})=>{await new Promise(resolve=>setTimeout(resolve,40));aborted=signal.aborted;completed=true;return{finding:'late'};};
- const result=await runPrivateInvestigation({...f.input,timeoutMs:10});assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);
- await new Promise(resolve=>setTimeout(resolve,60));assert.equal(completed,true);assert.equal(aborted,true);assert.equal(result.status,'abstain');
+test('slow engine gets abort and cannot replace a completed deadline fallback',async(t)=>{
+ const f=setup();let aborted=false,completed=false,observedSignal:AbortSignal|undefined;
+ // Control the timer branch independently of host scheduling. The separate
+ // CPU-blocked test below still exercises the real monotonic elapsed deadline.
+ t.mock.method(performance,'now',()=>0);
+ t.mock.timers.enable({apis:['setTimeout']});
+ let entered!:()=>void,finish!:()=>void;
+ const engineEntered=new Promise<void>(resolve=>{entered=resolve;});
+ const finishEngine=new Promise<void>(resolve=>{finish=resolve;});
+ f.engine.investigate=async({signal})=>{observedSignal=signal;entered();await finishEngine;aborted=signal.aborted;completed=true;return{finding:'late'};};
+ const pending=runPrivateInvestigation({...f.input,timeoutMs:10});
+ await engineEntered;assert.equal(observedSignal?.aborted,false);
+ t.mock.timers.tick(10);
+ const result=await pending;assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);assert.equal(observedSignal?.aborted,true);
+ finish();await new Promise<void>(resolve=>setImmediate(resolve));
+ assert.equal(completed,true);assert.equal(aborted,true);assert.equal(result.status,'abstain');
 });
-test('a CPU-blocked event loop cannot admit a valid engine result after its deadline',async()=>{
- const f=setup(),original=f.engine.investigate;
- f.engine.investigate=async request=>{const candidate=await original(request);const until=performance.now()+75;while(performance.now()<until){}return candidate;};
- const result=await runPrivateInvestigation({...f.input,timeoutMs:25});assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);
+test('a CPU-blocked event loop cannot admit a valid engine result after its deadline',async(t)=>{
+ const f=setup(),original=f.engine.investigate,actualNow=performance.now.bind(performance);
+ let engineStartedAt:number|undefined;
+ // Exclude fixture preparation from this specific engine-overrun scenario.
+ // Once the engine starts, use actual native monotonic elapsed milliseconds.
+ t.mock.method(performance,'now',()=>engineStartedAt===undefined?0:actualNow()-engineStartedAt);
+ f.engine.investigate=async request=>{
+  const candidate=await original(request);engineStartedAt=actualNow();
+  while(actualNow()-engineStartedAt<75){}
+  assert.equal(request.signal.aborted,false,'blocked event loop has not delivered the timer callback');
+  return candidate;
+ };
+ const result=await runPrivateInvestigation({...f.input,timeoutMs:25});
+ assert.equal(f.calls,1);assert.ok(engineStartedAt!==undefined&&actualNow()-engineStartedAt>=75);
+ assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);
 });
