@@ -49,6 +49,7 @@ export async function runPrivateInvestigation(input:{
   if(current.sourceEpoch!==snapshot.sourceEpoch||current.snapshotId!==snapshot.snapshotId||currentEvidence.evidenceVersion!==evidence.evidenceVersion)return fallback('sources-changed');
   const result=groundInvestigationCandidate(untrusted,input.actor,{
    accountScope:current.accountScope,purpose:current.purpose,permitted,snapshotId:current.snapshotId,sourceEpoch:current.sourceEpoch,evidenceVersion:currentEvidence.evidenceVersion,
+   numericFacts:current.facts.filter(fact=>fact.domain==='lab'),
    observationIds:current.facts.filter(fact=>!('computationEligible'in fact)||fact.computationEligible).map(fact=>fact.id),eligibleEvidenceIds:currentEvidence.cards.map(card=>card.review.id),
   });
   if(result.state==='abstain')return fallback(result.reason);

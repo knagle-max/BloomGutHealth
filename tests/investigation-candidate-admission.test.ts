@@ -51,3 +51,22 @@ test('missing, duplicated or mismatched canonical bindings cannot inherit a revi
   assert.equal(admitReviewedInvestigation(f),null,change);
  }
 });
+
+test('an approved review cannot bypass changed or unavailable structured numeric source facts',()=>{
+ const f=fixture();(f.candidate as any).numericClaims=[{id:'numeric',operation:'source-value',observationIds:['fact'],value:3,unit:'mmol/L'}];
+ const numericFacts=[{id:'fact',domain:'lab',sourceId:'canonical-source',revision:'source-revision',marker:'ldl',amount:3,unit:'mmol/L',occurredAt:'2026-11-18T00:00:00Z',laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'unknown',computationEligible:true}];
+ (f.current as any).numericFacts=numericFacts;f.review.candidateDigest=investigationCandidateDigest(f.candidate);f.authority.approvedReviews.set(f.review.id,f.review.candidateDigest);
+ assert.ok(admitReviewedInvestigation(f));
+ for(const field of ['sourceId','revision'] as const){const original=numericFacts[0][field];numericFacts[0][field]='unrelated-source';assert.equal(admitReviewedInvestigation(f),null);numericFacts[0][field]=original;}
+ numericFacts[0].amount=4;assert.equal(admitReviewedInvestigation(f),null);
+ delete (f.current as any).numericFacts;assert.equal(admitReviewedInvestigation(f),null);
+});
+
+test('every structured numeric source remains in admitted provenance even outside selected hypothesis references',()=>{
+ const f=fixture(),source={id:'second',sourceId:'second-source',revision:'second-revision',date:'2026-11-17'};
+ f.current.observationIds.push(source.id);f.current.observationRefs.push({...source});f.observations.push({...source});
+ (f.candidate as any).numericClaims=[{id:'extra-number',operation:'source-value',observationIds:[source.id],value:3,unit:'mmol/L'}];
+ (f.current as any).numericFacts=[{...source,domain:'lab',marker:'ldl',amount:3,unit:'mmol/L',occurredAt:'2026-11-17T00:00:00Z',laboratory:'Synthetic lab',method:'Synthetic assay',fasting:'unknown',computationEligible:true}];
+ f.review.candidateDigest=investigationCandidateDigest(f.candidate);f.authority.approvedReviews.set(f.review.id,f.review.candidateDigest);
+ const admitted=admitReviewedInvestigation(f);assert.ok(admitted);assert.equal(admitted.observationRefs.length,2);assert.ok(admitted.observationRefs.some(row=>row.sourceId===source.sourceId&&row.revision===source.revision));
+});

@@ -48,13 +48,21 @@ Integrated1014/1014 tests pass with zero skips. See the20261120 experimental
 workspace receipt for exact source/check status; later P3 source binding has
 separate focused proof.
 
+P1/P3 canonical source-reference binding is published at5b70433d: RED regression
+reproduced caller relabelling before the fix;14 focused tests, encrypted-SQL
+composition, TypeScript and production/media build pass. All source/revision/date
+references now come from the current canonical map. No consumer authority enabled.
+INV-05 numeric claims now have a bounded source-value/difference validator in the
+same pipeline;43 focused checks pass. See its20261120 receipt for final checks.
+This checks structured arithmetic, not unstructured prose or scientific meaning.
+
 ## Next eligible work and dependencies
 
-1. Publish the completed P3 canonical source-reference binding correction and
-   encrypted-SQL investigation/review integration proof (14 focused checks,
-   TypeScript and production/media build pass). Then trace the next genuinely
-   unimplemented approved requirement against current source and receipts;
-   do not repeat this completed integrated1014-test checkpoint without cause.
+1. Finish/publish INV-05 structured numeric fact subset and its exact receipt:
+   source values/differences only,43 focused tests passed, no scientific truth
+   or clinical/release claim. Then inspect INV-04 bounded two-pass requirements
+   against current one-pass private runner; implement only the missing bounded
+   synthetic contract using existing reviewed retrieval and safety limits.
 2. Continue highest-value P1/P2 code gaps from existing contracts. Actual private
    reasoning installation/usefulness, independently reviewed unfamiliar cases
    and original-source rights remain feature-scoped qualification dependencies.

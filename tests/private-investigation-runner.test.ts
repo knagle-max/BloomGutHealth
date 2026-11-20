@@ -82,3 +82,16 @@ test('a CPU-blocked event loop cannot admit a valid engine result after its dead
  assert.equal(f.calls,1);assert.ok(engineStartedAt!==undefined&&actualNow()-engineStartedAt>=75);
  assert.equal(result.status,'abstain');assert.equal(result.consumerInterpretation,null);
 });
+
+test('structured numeric claims are checked against current canonical facts before research output returns',async()=>{
+ for(const wrong of [false,true]){
+  const f=setup(),original=f.engine.investigate;
+  f.engine.investigate=async request=>{
+   const candidate=await original(request) as any,lab=request.snapshot.facts.find(fact=>fact.domain==='lab')!;
+   return {...candidate,numericClaims:[{id:'synthetic-source-number',operation:'source-value',observationIds:[lab.id],value:lab.amount+(wrong?1:0),unit:lab.unit}]};
+  };
+  const result=await runPrivateInvestigation(f.input);assert.equal(result.status,wrong?'abstain':'research-only-unverified');
+  if(wrong)assert.ok('reason' in result&&result.reason==='unverified-numeric-fact');
+  assert.equal(result.consumerInterpretation,null);
+ }
+});

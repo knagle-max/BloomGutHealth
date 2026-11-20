@@ -55,8 +55,9 @@ export function admitReviewedInvestigation(input:{
  const currentIds=new Set(current.observationIds);
  if(byId.size!==canonicalRows.data.length||currentIds.size!==current.observationIds.length||byId.size!==currentIds.size||Array.from(byId.keys()).some(id=>!currentIds.has(id))||new Set(sourceRows.data.map(row=>row.id)).size!==sourceRows.data.length)return null;
  if(sourceRows.data.some(row=>{const canonical=byId.get(row.id);return !canonical||row.sourceId!==canonical.sourceId||row.revision!==canonical.revision||row.date!==canonical.date;}))return null;
+ if((candidate.numericClaims??[]).some(claim=>claim.observationIds.some(id=>{const numeric=current.numericFacts?.find(row=>row.id===id),canonical=byId.get(id);return !numeric||!canonical||numeric.sourceId!==canonical.sourceId||numeric.revision!==canonical.revision;})))return null;
  const providedIds=new Set(sourceRows.data.map(row=>row.id));
- const observationIds=Array.from(new Set(selected.flatMap(row=>row.observationIds)));
+ const observationIds=Array.from(new Set([...selected.flatMap(row=>row.observationIds),...(candidate.numericClaims??[]).flatMap(row=>row.observationIds)]));
  if(!observationIds.length||observationIds.some(id=>!byId.has(id)||!providedIds.has(id)))return null;
  const materialUnknowns=Array.from(new Set([...candidate.synthesis.limits,...selected.flatMap(row=>row.materialUnknowns)]));
  return {candidateId:`investigation:${review.id}:${digest}`,findingType:'cross-domain-qualified',
