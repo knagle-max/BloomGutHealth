@@ -1,6 +1,6 @@
 # Bloom — current execution queue
 
-Updated 2026-11-19. Read AGENTS.md, then this file. On every owner resume,
+Updated 2026-11-20. Read AGENTS.md, then this file. On every owner resume,
 continue the highest-value unblocked approved task toward final v0.6. Do not
 stop after a feature, handoff or commit; record feature-scoped blockers and
 continue independent work. Preserve functioning v0.5 and v0.6 modules.
@@ -26,37 +26,45 @@ continue independent work. Preserve functioning v0.5 and v0.6 modules.
 
 ## Current checkpoint
 
-Private-source and monotonic-deadline closure is published atcbc90d13 after a
-fresh1002/1002 test pass, TypeScript, production/media build and zero production
-advisories. P2 candidate-provenance/withdrawal source is published at4ed8a45b;
-its proposed0019 migration remains unapplied. No provider or consumer engine
-was enabled. Both source slices remain nonclinical engineering proofs.
+Private-source/P2 provenance closure is published at4ed8a45b andcbc90d13;
+1002 tests passed at that earlier integrated checkpoint. Reviewed candidate
+migration0019 remains unapplied. Later isolated private read protocolc3533b36
+and MICOM closed-energy control46673361 are engineering-tested; neither enables
+private mode or qualifies biological predictions. Mac follow-up remains local.
+The deadline-test scheduling repair is published at4aaf2b1b with unchanged runtime
+budgets (17 focused and25 loaded tests passed). The previous1009-test run had
+one scheduling-assumption failure; do not label that run green.
 
-Progress source-navigation and chart-first bloodwork reference browser journeys
-pass32 combined responsive/theme/mode/zoom states on actual local App/HTTP and
-synthetic SQL fixtures. No hosted or physical-device acceptance is inferred.
-SEC-0/FOOD-0 read-only matrices now document current trust/data flows and source
-coverage;23 focused security/source tests and existing public-coverage verifier
-pass. Exact FNDDS count is5431 foods,22188 portions,21 native fields;
-33 compact planning/logging rows match their source adapters. New private/scratch
-ignore patterns pass7 positive and2 public-document negative path checks.
+SEC-0/FOOD-0 and P3 source/chart receipts are published at3bf012f0:32 combined
+browser states,23 security/source tests, zero production advisories, verified
+5431 FNDDS foods/22188 portions/21 native fields and33 exact compact adapters.
+No original archive re-verification, E2EE or independent science claim is inferred.
+
+V06-EXP-01 now has a bounded explicit-metadata workspace using the existing
+preference and separate preview permission. Actual App/HTTP/isolated-SQL browser
+passes17 layout states, fresh-action revocation, account/OFF cleanup and failed-OFF
+retry. No full Legal catalogue, generic execution, new grants or network activation.
+Integrated1014/1014 tests pass with zero skips. See the20261120 experimental
+workspace receipt for exact source/check status; later P3 source binding has
+separate focused proof.
 
 ## Next eligible work and dependencies
 
-1. Publish/verify the completed SEC-0/FOOD-0 and P3 receipts, then select the
-   highest-value unblocked approved slice from those matrices. Preserve source
-   integrity and one queue; do not repeat already green checks without cause.
-2. Continue P1/P2 from the existing investigator/retrieval/release contracts.
-   Install no consumer/private reasoning runtime without its actual privacy,
-   model, source and performance qualification. Independently reviewed useful
-   cases and exact source rights/findings remain needed for scientific claims.
-3. P3: verify integrated consumer usefulness and safe abstention, current-source
-   invalidation, owner isolation, provider outage/spend and source/rights withdrawal.
-   No deployment or independent acceptance is inferred from a local green build.
-4. Preserve approved deferred P4/Core/Advanced requirements and their existing
-   evidence. Do not mark them complete or invent missing original criteria.
-   Continue an independent approved slice when higher-priority work is genuinely
-   blocked; do not restart paused remote integration to fill the gap.
+1. Publish completed workspace and P3 source-binding/integration receipts with only
+   reviewed source and dated receipts, preserving unrelated changes. Add the
+   encrypted-source → investigation → independent-review admission integration
+   regression and canonical-reference binding fix (14 focused checks passed).
+2. Continue highest-value P1/P2 code gaps from existing contracts. Actual private
+   reasoning installation/usefulness, independently reviewed unfamiliar cases
+   and original-source rights remain feature-scoped qualification dependencies.
+   Do not install a consumer runtime or self-approve scientific claims to fill them.
+3. P3: verify current-source invalidation, account isolation, provider failure/spend
+   and review/rights withdrawal across integrated paths. Existing local green
+   browser tests are not hosted, physical-device or final-release acceptance.
+4. Trace remaining approved v0.6 requirements against current implementations and
+   receipts; choose an independent actionable gap when higher-priority science
+   qualification is blocked. Preserve deferred P4/Core/Advanced scope honestly.
+   Do not restart paused remote integration or repeat completed image/range work.
 
 ## Records and working-copy preservation
 

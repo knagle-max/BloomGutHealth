@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-20",
+  "requirement": "V06-EXP-01",
+  "baseCommit": "4aaf2b1bef07f322bba5275d9542c3ff7facaa0b",
+  "implementation": "LOCAL_ENGINEERING_TESTED_HOSTED_PENDING",
+  "checks": {
+    "capabilityRegression": {
+      "passed": 20,
+      "failed": 0
+    },
+    "strictContractFollowup": {
+      "passed": 5,
+      "failed": 0
+    },
+    "workspaceBrowser": {
+      "states": 17,
+      "backend": "Actual App/HTTP and isolated SQL preference store",
+      "result": "PASS",
+      "modelCalls": 0
+    },
+    "failedOffBrowser": "PASS_AFTER_STALE_CHOOSER_FIX",
+    "typescript": "PASS",
+    "productionBuildAndMediaAudits": "PASS_FINAL_SOURCE",
+    "sourceCrosswalk": "PASS_52_IDS_280_SOURCE_FILES_NO_APPROVAL_PROMOTION",
+    "integratedFullSuite": {
+      "tests": 1014,
+      "passed": 1014,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 551450.05607,
+      "scope": "Integrated workspace and deadline repair; later source-reference admission changes have separate focused proof"
+    },
+    "finalStrictContractCrosswalkAndSQLPipelineFollowup": {
+      "passed": 8,
+      "failed": 0
+    }
+  },
+  "boundaries": {
+    "newExecutionEndpoints": 0,
+    "newPermissionStores": 0,
+    "actualAccountGrantsChanged": false,
+    "externalAI": false,
+    "personalData": false,
+    "deployed": false,
+    "renderOrTailscaleChanged": false,
+    "voiceOver": "NOT_RUN",
+    "physicalDevice": "NOT_RUN",
+    "independentScientificApproval": false,
+    "finalRC": false
+  },
+  "artifacts": [
+    {
+      "path": "shared/development-features.ts",
+      "sha256": "fc5ea04416059fa0e9a4fc2ed29ce1845126d19f96b97282b4620c40c67b0577"
+    },
+    {
+      "path": "server/capability-access.ts",
+      "sha256": "29ecf5993c26940938758f064de97f4a481430434c4972ab5bfdfddec3822c0d"
+    },
+    {
+      "path": "server/experimental-workspace.ts",
+      "sha256": "3403e076c8054209ea0a70df5b97f523a1b0031e9be23b3d2ac45a19f21baba2"
+    },
+    {
+      "path": "client/src/lib/capabilities.ts",
+      "sha256": "b9c012bb2ccf4fb52fd2798d18e55afd0ff532c9303640876f534c8cab01b92c"
+    },
+    {
+      "path": "client/src/components/ExperimentalSettings.tsx",
+      "sha256": "b96f62113ca0cbec60f199c989bdd8476df90c754cc33b22a59e3637af799d51"
+    },
+    {
+      "path": "client/src/pages/Profile.tsx",
+      "sha256": "f66822bc361be5b60281010fe1931d3f9e8b3d0d90b72adc509904b7cea9f360"
+    },
+    {
+      "path": "tests/experimental-workspace.test.ts",
+      "sha256": "e424f2cbf3456442bd3e4d3e27170a5fe0089cf34e8005c41209444ff41c050b"
+    },
+    {
+      "path": "scripts/qa/development-photo-journey.mjs",
+      "sha256": "85a1d798900cb9ad29d01046a7411a157297ee507b4de0dc659a9d7af7db7567"
+    },
+    {
+      "path": "scripts/qa/reviewer-off-failure-journey.mjs",
+      "sha256": "e7b28524b64d9addb67937fe96574719aadbca8ccbc05775e93d95bef36eb706"
+    }
+  ]
+}

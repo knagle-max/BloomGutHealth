@@ -265,6 +265,7 @@ export default function Profile({
         {signOut.error && <p role="alert" className="panel-note">Sign-out could not be confirmed. Try again.</p>}
       </div>
 
+      <ExperimentalSettings/>
       </div></details>
       <details className="profile-section workspace-disclosure" id="profile-display-units"><summary><strong role="heading" aria-level={2}>Units & preferences</strong><span>Display units and food preferences</span></summary><div className="pt-4">            <fieldset className="space-y-3" id="measurement-units">
               <legend className="font-medium">Measurement units</legend>
@@ -300,7 +301,7 @@ export default function Profile({
         <Link href="/biology/reports" className="text-link inline-flex min-h-11 items-center">Manage biological reports</Link>
         <AccountDataExport/><AccountErasure/><p className="panel-note">Backup, operational-log and vendor retention/removal remain separate from active account deletion and require operator/provider handling.</p>
       </div></details>
-      <details id="advanced-settings" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Advanced</strong><span>Optional setup, training and authorized tools</span></summary><div className="space-y-4 pt-4"><ExperimentalSettings/>
+      <details id="advanced-settings" className="profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Advanced</strong><span>Optional setup, training and authorized tools</span></summary><div className="space-y-4 pt-4">
       <details className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Food browsing & setup</strong><span>Region and optional Everyday setup</span></summary><div className="space-y-4 pt-4"><FoodRegionSettings/><section className="space-y-3"><h2>Your data & choices</h2><p>Review the privacy and export controls below, or revisit optional Everyday setup.</p><Button variant="outline" onClick={()=>patch({onboarding:{status:"not-started"},mode:"everyday"})}>Revisit Everyday setup</Button><img src="/brand/bloom-icon-monochrome.svg" width={32} height={32} alt="" /></section>
       </div></details>
       <details className="bloom-panel profile-section workspace-disclosure"><summary><strong role="heading" aria-level={2}>Training data controls</strong><span>Export or remove experience records</span></summary><div className="pt-4"><ExperienceDataControls/></div></details>

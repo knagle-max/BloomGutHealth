@@ -1,3 +1,5 @@
+import {experimentalMetadataScope,experimentalWorkspaceVersion} from '../shared/development-features';
+import {experimentalWorkspace} from './experimental-workspace';
 import {readSupplementalGrant} from "./supplemental-grant";
 import {developmentStatusLabel} from "../shared/capability-state";
 import {featureAdminReadGrant} from './feature-administration';
@@ -13,7 +15,7 @@ import type {db as appDatabase} from "./db";
 // Keep the legacy field order: existing temporary preference fingerprints must
 // remain unchanged. Standing access is an explicit server-provisioned type,
 // never an absent expiry on an otherwise malformed temporary grant.
-const temporaryGrantSchema=z.object({serviceId:z.string().regex(/^srv-[a-z0-9]+$/),userId:z.string().min(1).max(100),grantId:z.string().min(1).max(100),expiresAt:z.string().datetime({offset:true}),territories:z.array(z.string().regex(/^[A-Z]{2}$/)).min(1).max(10),reviewReference:z.string().trim().min(1).max(200),allowedCapabilities:z.array(z.string().min(1).max(100)).max(52),uiPreview:z.object({purpose:z.literal("synthetic-ui-review"),dataset:z.literal("synthetic-only"),features:z.array(z.literal("bloom.food.photo_ai")).min(1).max(1)}).strict().optional(),grantType:z.literal('temporary').optional()}).strict();
+const temporaryGrantSchema=z.object({serviceId:z.string().regex(/^srv-[a-z0-9]+$/),userId:z.string().min(1).max(100),grantId:z.string().min(1).max(100),expiresAt:z.string().datetime({offset:true}),territories:z.array(z.string().regex(/^[A-Z]{2}$/)).min(1).max(10),reviewReference:z.string().trim().min(1).max(200),allowedCapabilities:z.array(z.string().min(1).max(100)).max(52),uiPreview:z.object({purpose:z.literal("synthetic-ui-review"),dataset:z.literal("synthetic-only"),features:z.array(z.literal("bloom.food.photo_ai")).min(1).max(1)}).strict().optional(),grantType:z.literal('temporary').optional(),metadataPreview:experimentalMetadataScope.optional()}).strict();
 const standingGrantSchema=temporaryGrantSchema.omit({expiresAt:true,grantType:true}).extend({grantType:z.literal('standing-internal'),expiresAt:z.null().optional()}).strict();
 const grantSchema=z.union([temporaryGrantSchema,standingGrantSchema]);
 export function internalPreviewGrant(userId:string,environment:Record<string,string|undefined>=process.env,now=Date.now()) {
@@ -22,7 +24,7 @@ export function internalPreviewGrant(userId:string,environment:Record<string,str
  const additional=readSupplementalGrant(environment.BLOOM_ADDITIONAL_INTERNAL_TESTER_GRANT,userId,grantSchema);if(additional.deniesAccount)return null;
  const grants=[...parsed,...additional.grants].filter(g=>g.userId===userId);if(grants.length!==1)return null;const grant=grants[0];
   if(grant.serviceId!==environment.RENDER_SERVICE_ID||(grant.grantType!=='standing-internal'&&+new Date(grant.expiresAt)<=now)||!grant.territories.includes(environment.BLOOM_PREVIEW_TERRITORY||"")||!grant.allowedCapabilities.includes("bloom.dev.preview"))return null;
-  return {fingerprint:createHash("sha256").update(JSON.stringify(grant)).digest("hex"),...(grant.uiPreview?{uiFeatures:grant.uiPreview.features.filter(id=>grant.allowedCapabilities.includes(id))}:{})};
+  return {fingerprint:createHash("sha256").update(JSON.stringify(grant)).digest("hex"),...(grant.uiPreview?{uiFeatures:grant.uiPreview.features.filter(id=>grant.allowedCapabilities.includes(id))}:{}),...(grant.metadataPreview?{metadataFeatures:grant.metadataPreview.features}:{})};
  }catch{return null;}
 }
 /** Explicit reviewer display scope is distinct from permission to execute a model. */
@@ -46,7 +48,8 @@ export function registerCapabilityAccess(app:Express,auth:RequestHandler,store:C
    const current=initial?grantFor(id):null;
    const grant=current?.fingerprint===initial?.fingerprint?current:null;
    const enabled=!!grant&&!!pref?.enabled&&pref.grantFingerprint===grant.fingerprint;
-   res.json({version:capabilityPolicyVersion,foodEntry:foodEntryImplementationReady,eligible:!!grant,experimentalEnabled:enabled,developmentFeatures:enabled?developmentFeatures(grant?.uiFeatures):[],capabilities:[],featureAdministration:{canRead:adminFor(id),canChange:false},note:'Internal synthetic preview only. This setting does not grant clinical, research, provider, territory or licensing approval. Restricted services remain unavailable until individually cleared.'});
+   const features=enabled?developmentFeatures(grant?.uiFeatures):[];
+   res.json({experimentalWorkspaceVersion,experimentalEntries:enabled?experimentalWorkspace(grant?.metadataFeatures,features):[],version:capabilityPolicyVersion,foodEntry:foodEntryImplementationReady,eligible:!!grant,experimentalEnabled:enabled,developmentFeatures:features,capabilities:[],featureAdministration:{canRead:adminFor(id),canChange:false},note:'Internal synthetic preview only. This setting does not grant clinical, research, provider, territory or licensing approval. Restricted services remain unavailable until individually cleared.'});
   }catch{res.status(503).json({error:'Experimental eligibility could not be checked.'});}
  });
  app.patch('/api/capabilities/experimental',async(req,res)=>{

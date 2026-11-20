@@ -500,7 +500,8 @@
           "server/supplemental-grant.ts",
           "server/review-runtime-audit.ts",
           "server/index.ts",
-          "server/settings-source.ts"
+          "server/settings-source.ts",
+          "server/experimental-workspace.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -776,7 +777,9 @@
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
           "server/settings-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "server/experimental-workspace.ts",
+          "shared/development-features.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1223,7 +1226,9 @@
           "server/synthetic-molecular.ts",
           "shared/synthetic-molecular.ts",
           "server/ml-service.ts",
-          "ml_service/main.py"
+          "ml_service/main.py",
+          "server/experimental-workspace.ts",
+          "shared/development-features.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1367,7 +1372,9 @@
           "server/analysis-boundary.ts",
           "shared/precision-nutrition.ts",
           "server/planning-context.ts",
-          "shared/genetic-selection.ts"
+          "shared/genetic-selection.ts",
+          "server/experimental-workspace.ts",
+          "shared/development-features.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1538,7 +1545,9 @@
         ],
         "logicOrJobs": [
           "shared/health-ingestion.ts",
-          "server/health-source-storage.ts"
+          "server/health-source-storage.ts",
+          "server/experimental-workspace.ts",
+          "shared/development-features.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1730,7 +1739,9 @@
           "shared/athlete-eligibility.ts",
           "shared/athlete-review.ts",
           "server/settings-source.ts",
-          "shared/measurement-entry.ts"
+          "shared/measurement-entry.ts",
+          "server/experimental-workspace.ts",
+          "shared/development-features.ts"
         ],
         "storedOrExported": [
           "server/account-export.ts",
@@ -1790,7 +1801,10 @@
       "surfaces": {
         "ui": [],
         "api": [],
-        "logicOrJobs": [],
+        "logicOrJobs": [
+          "server/experimental-workspace.ts",
+          "shared/development-features.ts"
+        ],
         "storedOrExported": [],
         "cache": []
       },
@@ -1907,7 +1921,7 @@
     "client/src/components/EverydayStart.tsx": "36427e2ab2fe8446e5f8f1722af1fb6243cdd706aada0546c460c68d1be6ac9a",
     "client/src/components/ExperimentObservations.tsx": "c84e9ee2c39fcfb407757dcc451a85b01f228859e6b3cf40558f9ba5a6f62101",
     "client/src/components/ExperimentSourceHistory.tsx": "e52207e86affab0d8d68cfcac0b7296c1e35a36bfe7012ef58ec5122580246c1",
-    "client/src/components/ExperimentalSettings.tsx": "2620fae717601532413b620e6f22d50377c4ab5c3bec9aa30ac62f21690d7e5c",
+    "client/src/components/ExperimentalSettings.tsx": "b96f62113ca0cbec60f199c989bdd8476df90c754cc33b22a59e3637af799d51",
     "client/src/components/FileUploadZone.tsx": "c44f0da75adeaccf2fa21d3a466e1b1f8db6ded316b359b9ab22bb8552825f2d",
     "client/src/components/FoodCompositionExplorer.tsx": "8c36d11a61e445e6bb82cecd214b8a9e4db78b2493995b955ec6390d8ea5f768",
     "client/src/components/FoodEntryChooser.tsx": "0f92032695d7a7d4e3a3a763b9299245e110e330e647375ccd680d77c24f7bf1",
@@ -1963,7 +1977,7 @@
     "client/src/content/bloomCopy.ts": "7b75614c0cc61e67cda4a6e6b7664564c664fb41d91c05f97c28a262ff3cb0cb",
     "client/src/content/editorial-media.ts": "d6081eb3d042a44751b18ae8a43901cdf9399b02faae4e6724b16b82c9eb765b",
     "client/src/lib/auth.tsx": "7015c91ff83740689423556b04e03be81fbe87f8f1a9b445698dca71db54837e",
-    "client/src/lib/capabilities.ts": "e121efaa67b125236f1a42e37c0e470800f1648233054ed2b3aa95e2262ed3b7",
+    "client/src/lib/capabilities.ts": "b9c012bb2ccf4fb52fd2798d18e55afd0ff532c9303640876f534c8cab01b92c",
     "client/src/lib/dashboard-data.ts": "7619a3ed7f5503499913e7f350b8969d945c3dc1e66b9eac7d44e45091bb4b8e",
     "client/src/lib/description-intelligence.ts": "9c09317633941005ca3b2d7d60bbebdca4ec26738904c631df4ebec69c62fec7",
     "client/src/lib/description-validation-worker.ts": "b0e1f8c6ded2c447d59a7332bb15d216be94e3d819e632a01380cde4856ed36e",
@@ -1992,7 +2006,7 @@
     "client/src/pages/NutritionHistory.tsx": "a48f0683b9e0a633e10941d8a84ce870775d2ca9618cfede3f528ee233c206f2",
     "client/src/pages/PlanDay.tsx": "8fdb764170a8b00c3af9cdadc6ec64d35cf94f4fab291f234f76f8d461daa474",
     "client/src/pages/PrecisionNutrition.tsx": "eb3eb5ab90e978e2b7f88d90edac567d449bb498cd7abddebb07ad59d492d79f",
-    "client/src/pages/Profile.tsx": "ba14414d130341418df66fac049a2edd7ea3c1fb16da2b82e9cc8fd001180c08",
+    "client/src/pages/Profile.tsx": "f66822bc361be5b60281010fe1931d3f9e8b3d0d90b72adc509904b7cea9f360",
     "client/src/pages/Progress.tsx": "41ca8552d40f1eb7550f95f741a863e67a3d6f7acde7215e7b83723da83e40f5",
     "client/src/pages/ReportManagement.tsx": "4bc41c20cf7bed768b591b9ce059ec3c4ce96f75e10be297b97ed35b0a88031c",
     "client/src/pages/ScienceCoach.tsx": "c6f66d1284cc9ff9e028a64d40e84787cbb4fca588d1db04b0a3bddb31cdd140",
@@ -2011,11 +2025,12 @@
     "server/auth-routes.ts": "15c09d108d1d3fa10b90189c5179d8ce53c53157d0b27c86b4e142620efa2999",
     "server/biological-report-management.ts": "214ff00ed798324a7867f1bae62a1108a9dec8e3e31888fb72ceecacb5c70074",
     "server/biology-routes.ts": "95c03e0d42b98bd5572c3d394c7a82c2335cfb78dab0cc4f613bb801479e3998",
-    "server/capability-access.ts": "a4af301a2d14d380a6906b1da60304d45560e46cb8e4d99daff48e30373e98a4",
+    "server/capability-access.ts": "29ecf5993c26940938758f064de97f4a481430434c4972ab5bfdfddec3822c0d",
     "server/capability-policy.ts": "6442fb4a45d0a2e02b44ddc63ab7f9678d9cbf1ead6f6fff5bd24d2de10cfee6",
     "server/effective-capability.ts": "c9e7ec14ab53db53cecd30517fa8018e00d2e66a3c0c28ea887d50cdc3e7706a",
     "server/experience-routes.ts": "15c4a14bf4ba2c8883f252b1f1a91c35e68b10fc7001bf116c75911bab177c48",
     "server/experience-storage.ts": "49eada03d2b576f212d8480ff2a0248ab9f3f44d103452d45b7a4dd86c5dd90b",
+    "server/experimental-workspace.ts": "3403e076c8054209ea0a70df5b97f523a1b0031e9be23b3d2ac45a19f21baba2",
     "server/feature-administration.ts": "d6d576812df397c335eec3239810450e1817e0c2352c93f16837036e7b6f49c0",
     "server/feature-control-http.ts": "6ac3fc9dc513a1742f2c1c30b52b1aed1e8ae7b841792cfc116bcf980a0b02bf",
     "server/feature-control-service.ts": "f94c88b54fe2d411162d568ae22930e2e6c9dbe440e4b9ca0f1be9ffb150dc38",
@@ -2099,7 +2114,7 @@
     "shared/checkin-entry-source.ts": "540ba0ee7e0c9a27e7ee6b14ad934a71c0b65cf99254771c471d5a054e884d48",
     "shared/data/genetics-candidate-bibliography.ts": "6f173fc6952934d2b51e20078ed02eaa7406b3569a0116c1399bfaeb8b2985a1",
     "shared/description-intelligence.ts": "d76fd822733c8bad2f5cbc786a9d9958d93a97f3b8ee1e514bf7a7b3acbd6baf",
-    "shared/development-features.ts": "87853228b39df0a1100d3d8abcc1eed2e4173c55f6e0c9f9287de2183ca8540b",
+    "shared/development-features.ts": "fc5ea04416059fa0e9a4fc2ed29ce1845126d19f96b97282b4620c40c67b0577",
     "shared/display-units.ts": "59ed2ac5111d2dfc7a8e0bab9b986ddf4c11eeeab441e68c070a3b3cc47305f4",
     "shared/experience.ts": "fe4a27ad05ca7807d5a7cb23fe4d56fd2a0651504b097447544bd307ebd8a590",
     "shared/experiment-review.ts": "fb4b1bc9ee0839a4a9bb448e1f55cd2cda0fa49283585660b1244eda4203a76f",
