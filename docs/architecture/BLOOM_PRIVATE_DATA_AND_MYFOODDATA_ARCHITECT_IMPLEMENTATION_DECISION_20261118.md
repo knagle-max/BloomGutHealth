@@ -29,6 +29,16 @@
 
 **Before writing code:** inspect current branch HEAD and relevant routes/components/tests, document source/line/test evidence for `FOUND / PARTIAL / MISSING / UNVERIFIED / RIGHTS_PENDING`. Blob IDs above are audit starting points, **not fixed current HEAD**. Run focused check/test; do not claim independent mobile/security audit from mock code.
 
+## 2026-11-21 privacy/minimization and recovery clarification — existing S0–S3 only
+
+**Referenced current audit:** [SECURITY_OPERATIONS.md — SEC-01..08 and runtime-minimization/E2EE refinements](../../SECURITY_OPERATIONS.md). **Important label collision:** the `SEC-01..08` **audit control IDs** there are *not* this handoff's existing `SEC-01..05` private-data **negative fixture IDs**; keep both in their own scopes. **Do not create a third SEC series or a new development lane.**
+
+- **S0 current cloud:** authorized server process can decrypt existing AES-GCM health records with server-held keys; application encryption at rest does not mean zero knowledge. Inspect existing logger, errors, telemetry, caches, jobs, outbound provider requests, account erasure/backup lifecycle and actual operator permissions; enforce narrowly scoped no-raw-PHI/personal-data handling only when an existing current task and source-safe evidence justify it. Scoped cache keys are not authorization; recheck account/consent/source epochs before delivery and after asynchronous work. External nonpersonal research must not contain a reconstructible personal history even if names are removed.
+- **S1 local / S2 gateway:** stay synthetic and default OFF pending separate approved deployment and security gates. A gateway host may decrypt unless actual E2EE is layered on top. Recovery and sync trust are explicit, not assumed.
+- **S3 future client-held E2EE:** consider *distinct authentication and decryption authority*, user-controlled recovery key/phrase, trusted enrolled-device continuity, hardware/Keychain and optional explicitly disclosed assisted/escrow recovery. Genuine no-server-recovery may make records permanently unrecoverable on total key loss; assisted recovery may weaken a strict zero-knowledge claim. Assess password resets, device revoke/replace, rewrapping/rotation, offline backup/export, account closure, metadata, malicious server-served web code and endpoint compromise before any privacy claim. OS/passkey/cloud-sync providers have their own trust assumptions. No client-key architecture or recovery mode is approved for consumer release by this clarification.
+- **SEC-08 clean science:** reviewed rights-qualified nonpersonal knowledge is recoverable by independent release, and its current withdrawals survive restores, without private account state, test fixtures or unreviewed hypotheses. Never equate an account wipe with deleting approved independent science.
+- **Execution:** Reference existing current `AGENTS.md` and `NEXT_ACTIONS.md`. The bounded audit is strictly read-only and is **not yet executed**. No unapproved production/config/source changes; no duplicate security stack or separate review queue.
+
 ## 1. SECURITY — exact threat and trust contracts
 
 ### PRIV-S0 — adversarial data-flow / trust-tier specification, immediate
