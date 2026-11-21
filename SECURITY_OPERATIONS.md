@@ -63,3 +63,62 @@ Database-provider encryption and TLS are infrastructure controls; they do not re
 | Shared budgets/origin/upload/key envelopes | specialist-security.test.ts | Independent load/false-positive and penetration tests |
 
 Application tests cover portions of ASVS authentication, session, access-control, validation, cryptography, communications and logging concerns. A numbered ASVS 5.0 mapping, independent penetration test, incident exercise, complete backup restore and signed risk register are outstanding; this document is not ASVS compliance.
+
+## 2026-11-21 — SEC-01–SEC-08 bounded read-only audit and Chief Architect five-gate triage (CURRENT AUDIT SPEC)
+
+**Status: AUDIT SPECIFIED, NOT EXECUTED.** Existing implementation inventory above contains historical status rows and a later 2026-11-05 reconciliation. Neither is current release authorization. This **one-time, risk-scoped read-only audit** is a verification technique inside the current `AGENTS.md` / `NEXT_ACTIONS.md` queue; it does not authorize new infrastructure, a second task board or a clinical/security certification.
+
+### Purpose and safe execution
+
+On the authorized `enhance/bloom-experience` worktree, examine existing authenticated health-data routes, private source/history stores, outputs, background/caches, and *proposed* `VOI-I..M` optional Yes→canonical-detail interaction. Separate (a) actual implemented mechanisms, (b) verified unit/CI/hosted evidence, (c) unavailable target-environment configuration and (d) pre-activation controls for **unimplemented** features. Use exact file/line or function/route/symbol, test/receipt and commit SHA. When coverage is incomplete, mark it unverified rather than imply app-wide assurance.
+
+**STRICT READ-ONLY:** no file edits or commits during the audit; no branch creation, resets, deployments, migrations, DB wipes/restores, private-user queries/exports, secret/key display, runtime configuration/network/Render/Mac/Tailscale/Serve changes, external AI/provider calls or tests that mutate persistent state. Inspect code and already-existing receipts. No production/config access beyond authorization. If another engineer's worktree might contain unpublished changes, identify it and its SHA read-only; do not alter. Do not infer that a dev test proves target production TLS/key/backups/logging/provider posture. No request to independently defeat privacy protections or expose sensitive material.
+
+### Control matrix — eight independent controls, no duplicate security stack
+
+| ID | Inspect current code/available evidence and narrowly identify what remains | Primary source leads, to verify rather than assume |
+| --- | --- | --- |
+| **SEC-01 — Auth, tenant isolation and sessions** | Authenticated actor-derived identity; ownership/IDOR denial on lab, specimen, context, meal, activity, check-in, account exports and jobs; session rotation/revocation and no nondev bypass | `server/account-routes.ts`, `server/account-erasure.ts`, auth middleware/routes, source-specific storage and `security.test.ts` |
+| **SEC-02 — Assertion integrity and privilege** | Explicitly separate confirmed facts, proposed/unknown context, source revisions, user “Yes/No/Not sure/Skip” vs actual event and reviewed science; stale/fraudulent claims cannot self-promote; pre-activation only for unbuilt VOI | `shared/scientific-contracts.ts`, `server/investigation-candidate-admission.ts`, `server/biological-investigation-snapshot.ts`, canonical `INPUT-01` domains |
+| **SEC-03 — Encryption and key hygiene** | Existing AES-GCM/encryption boundaries, secrets and key rotation; deployed TLS/at-rest/backups only if actual target verified; no secrets embedded in client or sample configs | `server/precision-crypto.ts`, this document's key-rotation and inventory sections, deployment evidence if *already* available |
+| **SEC-04 — Logs, telemetry, client visibility** | Health/genetic values, medication/hormone history, assertion choices, errors/URLs/analytics/client caches and related display settings; “Gentle mode” is presentation, **not** confidentiality | Existing logging/error/tracing handlers, browser fetch/cache, `server/account-export.ts`, `VOI` design and privacy source contracts |
+| **SEC-05 — Deletion, corrections and non-resurrection** | Owned primary/derived removal; revision invalidation, stale async jobs, queues, caches, uploads, account export, backups, scheduled expiry and vendor-held retention; restoration must not resurrect withdrawn private sources | `server/account-erasure.ts`, `server/account-routes.ts`, `server/account-export.ts`, health-source/precision/experience storage and source history. Existing deletion response intentionally only claims **active application records**: external logs/backups/providers not proven deleted |
+| **SEC-06 — Outbound processing and investigator isolation** | Minimal provider requests, nonpersonal public research vs private observations, allowlist/consent/purpose, source epoch, rejection/timeout and provider retention; mock success ≠ permitted live personal-data transfer | `server/private-investigation-runner.ts`, `server/scientific-evidence-retrieval.ts`, provider adapters and existing P1 privacy/routing receipt |
+| **SEC-07 — Actual target-environment readiness** | Which exact environment/capabilities were inspected? TLS, secrets, live access, network egress, logs, backup policy and key lifecycle. Current operational pause means unavailable evidence is **UNVERIFIED (PAUSE)**, not passed or failed | Existing `SECURITY_OPERATIONS.md`, safe prior environment receipts/config (no runtime access or secret reads) |
+| **SEC-08 — Durable nonpersonal science and test isolation** | Classify public sources, independently reviewed shared releases, provisional hypotheses, personal source facts and synthetic fixtures. Can an independently versioned, rights-reviewed scientific release survive user DB reset without preserving private sources? Do test runs/LLMs ever promote fixture-specific or account-derived claims to shared science? Do withdrawals/tombstones survive restoring older science? | `docs/architecture/BLOOM_PERSISTENT_SCIENTIFIC_LEARNING_LLM_INTEGRATION_ARCHITECT_DECISION_20261118.md`, `shared/evidence-network.ts`, `shared/biological-model.ts`, `server/scientific-evidence-retrieval.ts`, `server/biological-investigation-snapshot.ts`, account erasure, review/promote/version/restore code and existing synthetic receipts |
+
+**SEC-08 distinction:** Individual account erasure, a disposable **development DB reset**, and a privacy-driven expiry/deletion/backup restore have different semantics. Scientific knowledge need not reside in a separate physical database; an **independent immutable reviewed nonpersonal release + tested clean restore and account-free promotion/withdrawal controls** can meet the boundary. “Deidentified” does **not** automatically mean nonpersonal and approved for redistribution, and a synthetic test's successful prediction is **not** permission to promote its result. Shared knowledge must survive an ordinary test-account wipe **if and only if** it is properly independent, reviewed, rights-eligible, reproducibly backed up/restorable and not withdrawn. **Do not implement a shared knowledge system solely to pass the audit**; report current gaps. No test-specific data, source samples, private prompts or derived user conclusions in shared releases; a restored older release cannot undo newer scientific withdrawals.
+
+### Scoring and evidence — per path rather than exaggerated whole-app status
+
+Report for **each SEC-01..08** a row (or path-level subrows where risk differs) with:
+1. `Status`: `VERIFIED` (supported for explicitly named code paths and tests), `PARTIAL` (some relevant paths controlled but others incomplete), `MISSING` (control truly absent on an inspected **implemented** path), `NOT TESTED` (present/claimed but required evidence lacking), or `NOT APPLICABLE` (planned feature not implemented; preserve pre-activation requirements).
+2. `Evidence scope`: `CODE_INSPECTED`, `LOCAL_TEST`, `CI`, `HOSTED_CONFIG`, `INDEPENDENT_REVIEW`, or `NONE`; allow more than one, **do not merge code and hosted into a broad VERIFIED**.
+3. Exact `path:line` and route/symbol, test/receipt name and actual source/commit SHA, affected accounts/data flows, gap/risk/consequence, and **minimum reuse-based remediation**, if demonstrated.
+4. Explicit `NOT_VERIFIED (PAUSE)` where production/provider/TLS/backup evidence is inaccessible under the deployment pause. Absence of access is not a demonstrated vulnerability.
+5. No claim of comprehensive coverage from one successful route; no claim of success based on one prior test at a different SHA. Note which stores/paths/jobs/caches and which requested environment were *not* inspected.
+
+### Capability- and environment-specific readiness gates (existing release policy, not a new review bureaucracy)
+
+| Gate | What evidence establishes | Distinguish separately |
+| --- | --- | --- |
+| **G1 — Functional** | Current canonical feature behaviour and exact applicable source/correction/retry fixtures | Implemented application versus **future VOI-I..M** |
+| **G2 — Security integration** | Authentication/owner IDOR, invalidation/erasure, no unintended exposure, fail-closed error tests on actual touched paths | Dev/CI synthetic versus target-environment execution |
+| **G3 — Infrastructure** | Verified TLS, key controls, deployed access/log/backup/outbound and actual provider settings for **specified target environment** | `UNVERIFIED (PAUSE)` where protected access unavailable |
+| **G4 — Independent review** | Risk-proportionate independent security/privacy review and disposition of material findings | Do not invent required blanket third-party certification for routine safe coding |
+| **G5 — Authorized real-data use** | Explicit permitted actor/purpose/environment/capability plus satisfied applicable prior gates | No blanket approval for public launch, clinical advice, Coach sharing or external AI |
+
+For each gate give `PASS / PARTIAL / BLOCKED / NOT TESTED` in **two columns**: presently implemented application **for declared capability/environment** and planned `VOI-I..M` **as future feature** (clearly mark not applicable/not implemented instead of calling missing VOI endpoints existing vulnerabilities). If real-data use is unapproved, do not infer that all synthetic engineering must stop; feature-specific protection and current queue continue.
+
+### Chief Architect triage and one-time exit
+
+Organize actual results into **five buckets**:
+1. **Demonstrated critical vulnerability/missing safeguard** → existing **P0 only when reproduced**, smallest existing-control repair, exact affected path and proof; serious credible suspected risk escalates for targeted verification without falsely claiming exploitation.
+2. **Existing control requiring verification** → exact test/config/evidence missing, no duplicate implementation.
+3. **Pre-activation controls for unimplemented `VOI-I..M`** → attach to existing P3 feature acceptance only when scientifically/product-eligible; `NOT APPLICABLE — NOT IMPLEMENTED` until then.
+4. **Protected target-environment question** → `UNVERIFIED (PAUSE)`; no forbidden runtime inspection.
+5. **Optional hardening** → `DEFER` unless supported risk requires changing priority.
+
+**Final review template:** record audited branch+SHA, current operational pause respected, exact environment and capability scope; SEC-01..08 control matrix; G1..G5 two-column readiness; bucketed findings with path:line, source/test/SHA, narrow remediation, owner and disposition; state whether current P1/P2 work can continue safely and which **specific** operation or real-data use must remain blocked. “Real data authorized” is **NO unless independently established for this actual capability/environment**; don't revoke unrelated existing permission by hypothetical test failure. One report, one Chief Architect review, evidence-driven source of truth—**not** an evergreen security bureaucracy, mandatory audit before every edit, or second backlog.
+
+**Execution order:** This report is a **bounded read-only subtask only when selected by `NEXT_ACTIONS.md` or needed to resolve a specific P0/P1 privacy dependency**. It does not preempt the current unblocked INV-04 investigation or trigger infrastructure access; Codex may run the read-only inspection as its next eligible P3 security verification slice when appropriate. **Audit status remains NOT EXECUTED** until actual exact-SHA findings exist.
