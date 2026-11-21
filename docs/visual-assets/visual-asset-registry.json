@@ -2598,17 +2598,17 @@
         "existingArtifactByteVerified": false
       },
       "lifecycle": "Briefed",
-      "productionStatus": "Visual requirement reinstated; earlier image rejected for poor quality; fresh production candidate not yet approved",
+      "productionStatus": "Owner-approved replacement candidate 3, packaged and delivered; NOT_INTEGRATED / NOT_VERIFIED",
       "filePaths": [],
       "integration": {
-        "state": "new replacement asset absent; reserved placeholder required",
+        "state": "owner-approved replacement package delivered; NOT_INTEGRATED",
         "verified": false,
         "componentAssetIdReferenced": false
       },
       "review": {
-        "design": "previous image rejected; NEW candidate not reviewed",
+        "design": "owner approved candidate 3 kitchen artwork on 2026-11-21; earlier candidates remain rejected",
         "scientific": "pending when anatomical or instructional; otherwise not-applicable only upon review",
-        "rights": "pending for new artwork",
+        "rights": "provider commercial-use rights pending review for approved artwork",
         "rendered": "not integrated / not verified"
       },
       "statusEvidence": {
@@ -2618,12 +2618,27 @@
         "requirementReinstated": true
       },
       "ownerApproval": {
-        "approved": false,
+        "approved": true,
         "scope": "Replacement image for this reinstated asset requirement needs explicit owner approval before publication or distribution",
-        "date": null,
+        "date": "2026-11-21",
         "legacyHistoricalEvidence": true,
-        "requiredForNewRenditions": false,
-        "notes": "Prior candidate unapproved/rejected; this is historical, NOT a blocked production status. Codex can produce a new candidate without individual owner approval and present integrated results at RC."
+        "requiredForNewRenditions": true,
+        "notes": "Owner explicitly approved candidate 3 only on 2026-11-21. Earlier rejected artwork remains rejected; artwork approval is not integration, runtime QA, or scientific/rights approval."
+      },
+      "approvedArtworkDelivery": {
+        "stage": "ARTWORK_APPROVED_NOT_INTEGRATED",
+        "approvedCandidate": "candidate-3",
+        "ownerApprovalDate": "2026-11-21",
+        "sharedLibraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0025_Onboarding_Kitchen_Approved_2026-11-21.zip",
+        "handoff": "docs/visual-assets/BVA_0025_ONBOARDING_KITCHEN_APPROVED_REPLACEMENT_DELIVERY_20261121.md",
+        "originalGeneratedSourceSha256": "7c6d8272c5fc861d08d90ead26c9cf9df4117a70c006115ca1bf68e1e67dbc1c",
+        "packagedOriginalSha256": "d905f57f3f17831d586f9157ffa1c909a54978f1ec3f8d4dd8cba6996fe04cf2",
+        "originalDimensions": {"width": 1672, "height": 941},
+        "manifest": "manifest.json inside delivery ZIP",
+        "formatsDelivered": ["png", "webp"],
+        "avif": "not yet exported",
+        "responsiveAndThemeVerification": "pending",
+        "integrationVerified": false
       },
       "productionBriefV2": {
         "briefVersion": "2026-11-14-detailed-02",
