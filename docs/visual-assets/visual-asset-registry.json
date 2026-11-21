@@ -152,10 +152,11 @@
         "existingPath": "/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
         "existingArtifactByteVerified": true
       },
-      "lifecycle": "Identified",
-      "productionStatus": "existing mapping found; visual/art file and current-render quality unverified",
+      "lifecycle": "Approved",
+      "productionStatus": "Owner approved BVA-0002 Food still-life replacement, delivered original PNG + responsive desktop/mobile WebP in shared Library. Runtime mapping NOT changed and not visually verified.",
       "filePaths": [
-        "/images/editorial/heroes/bloom-food-oatmeal-linen.webp"
+        "/images/editorial/heroes/bloom-food-oatmeal-linen.webp",
+        "/Bloom gut health/Agent Handoffs/Bloom_BVA_0002_Food_Approved_2026-11-21(1).zip"
       ],
       "integration": {
         "state": "Existing original editorial delivery bound to permanent ID; loaded/fallback/recovery tested locally. Target redesign, scientific/design/rights review and exact publication verification are separate.",
@@ -163,7 +164,7 @@
         "componentAssetIdReferenced": true
       },
       "review": {
-        "design": "pending",
+        "design": "Owner approved image 2026-11-21; app placement QA pending",
         "scientific": "pending where relevant",
         "rights": "pending",
         "rendered": "pending"
@@ -180,6 +181,14 @@
             }
           ],
           "evidence": "Original media manifest/source fingerprint checks; actual18 failure/recovery placements across9 synthetic routes. Lifecycle not promoted."
+        },
+        "replacementDelivery": {
+          "date": "2026-11-21",
+          "libraryPath": "/Bloom gut health/Agent Handoffs/Bloom_BVA_0002_Food_Approved_2026-11-21(1).zip",
+          "dimensions": "1672x941 PNG; 1672,1200 desktop WebP; 768x1024 and 576x1024 mobile crops",
+          "checksums": "manifest.json within ZIP",
+          "integration": "NOT_INTEGRATED",
+          "notes": "Keep older food editorialMedia slot and image in place until app QA; portrait crops are provisional and may require separate text-safe overlay."
         }
       },
       "productionBriefV2": {
