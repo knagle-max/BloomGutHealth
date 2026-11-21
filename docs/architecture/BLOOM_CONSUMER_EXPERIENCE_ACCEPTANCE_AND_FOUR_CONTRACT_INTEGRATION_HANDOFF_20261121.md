@@ -11,6 +11,53 @@ Bloom must feel like a useful, low-effort health companion: clear first-session 
 
 **Status provenance:** The current branch has `shared/experience.ts` activity, activity-routine, checkin, supplement-intake, meal-template and experiment schemas; `client/src/pages/PrecisionNutrition.tsx` uses `TodayPlanner` and check-in components; `client/src/pages/Progress.tsx` handles labs/activity/progress and legacy lab links; `client/src/pages/Insights.tsx` has a separate recommendations query; `server/biological-investigation-snapshot.ts` currently retains lab, food and confirmed supplement facts and marks activity `not-collected`. `shared/scientific-contracts.ts`, `server/investigation-candidate-admission.ts` and `shared/recorded-intake-sources.ts` are foundations, **not proof** of unified recommendation, full TIME-01, RCV or released UX. Check current HEAD and existing tests before design-to-code decisions; do not infer a `Today.tsx` page exists.
 
+## 0A. Scope audit amendment — mandatory anti-overbuild interpretation (2026-11-21)
+
+**This section controls how Codex interprets all later examples, UX states, H0–H4 labels and test journeys.** They are behavioural acceptance examples **when the underlying approved feature is implemented or touched**, not ten new feature epics, four new modules, new API products or permission to implement every hypothetical field. If an existing screen already safely meets a scenario, document **REUSE / NO CHANGE** and move on. If a feature lacks independently reviewed scientific/safety admission or a source store, document **DEFER / BLOCKED** rather than fabricate a component to make the UX fixture green.
+
+### 0A.1 Verified reuse and non-duplication baseline (recheck at current HEAD)
+
+| Existing code | What it already covers | Do NOT build merely for this handoff |
+| --- | --- | --- |
+| `client/src/components/TodayPlanner.tsx` | Daily meal planner, saved preferences/targets, loading/error with explicit retry, planned ≠ consumed messaging | Another day planner, duplicate meal-choice engine, generic Today recommendation runtime, or a second fetch/retry state machine |
+| `client/src/pages/Progress.tsx`, `client/src/pages/PrecisionNutrition.tsx` | Dated check-ins, source-qualified lab histories/trends, missing/pending/source-only distinction, lab detail and legacy deep links | Parallel laboratory dashboard, new history database, second chart framework, duplicate source review/edit controls |
+| `client/src/pages/Insights.tsx` | Legacy experimental analysis, separate `/api/health/recommendations/:userId` path, and **three-meal prerequisite for that particular analysis** | Treat legacy food suggestions/health scores as scientifically admitted recommendations; silently wire these to ACTION-01; remove the analysis prerequisite or fake results for zero-data users |
+| `shared/experience.ts`, `shared/recorded-intake-sources.ts` | Activity/routines, check-ins, confirmed supplement data, meal templates, source-conscious intake | Universal event store, six new capture subsystems, new medication/symptom databases before a concrete approved use case, or implicit adherence |
+| `shared/scientific-contracts.ts`, `server/investigation-candidate-admission.ts`, `server/biological-investigation-snapshot.ts` | Existing candidate contract, source/evidence admission and account-scoped private read-only snapshot/epoch controls; activity currently `not-collected` **in this snapshot** | Separate candidate engine, duplicate evidence graph, new safety authorization system, second chronological database or global health-score engine |
+
+**Critical distinctions:** The existing **meal-planning alternatives** are not four competing proactive clinical/wellness recommendations; multiple recipe choices may remain available inside their meal-planning task. Legacy Insights experimental estimates are **not** authorized to be relabelled as validated personal biological scores or merged into an admitted action stream. The single-primary principle applies only to **admitted unsolicited non-safety wellness attention**, not to historical data, normal navigation, user-requested planning options, meal lists, existing source review or multiple independently reviewed safety notices. It is acceptable for Bloom to have no shared ACTION-01 display until the scientific admission and current-source lineage genuinely qualify.
+
+### 0A.2 Build / reuse / defer decision gate
+
+Before each proposed change Codex must answer **in its working receipt, not a separate approval ceremony**:
+
+1. **Existing path?** Point to exact current file, route, endpoint, source and tests. If equivalent safe behaviour exists, **REUSE / NO CHANGE**.
+2. **Active dependency?** State the presently unblocked P0/P1/P2/P3 queue item that actually needs it. If merely desirable from a design diagram, **DEFER** to current P3/P4 without implementation.
+3. **Observable defect or measured friction?** Demonstrate a failing test, actual incompatible source state, or concrete consumer task breakdown. If none, do not expand code to satisfy theoretical completeness.
+4. **Smallest reversible change?** Prefer a copy/state fix, existing selector/adapter, routing/link repair or narrow test over a new model, store, abstraction or page.
+5. **Safety and science eligible?** If no approved evidence, clinical boundary or authorized source exists, show honest unavailable/educational content or **ABSTAIN**, not newly generated personal advice.
+6. **Stop condition?** Once the bounded scenario passes and existing workflows remain intact, stop that slice and return to the highest-value eligible `NEXT_ACTIONS.md` task. Do not automatically begin the next H stage.
+
+### 0A.3 Explicit non-requirements
+
+The handoff does **not** require: implementing RCV across all biomarkers; creating a generic ACTION-01 orchestration service before there are multiple admitted consumer producers; building a new safety notification center; expanding subjective check-ins to a universal tracking API; shipping symptom or medication logging just because they appear in a six-row table; building new sleep/wearable integrations; making all four screens use an identical card; adding proactive push/digests; inventing clinical targets; creating multiple alternative layouts or mandatory screenshot receipts; writing one end-to-end browser suite per UX example; or reorganizing the UI/site navigation without a measured user-task problem.
+
+**RCV handling:** If independently reviewed CV_A/CV_I and method eligibility are missing, RCV UI is **deferred**; existing measured trends, comparability caveats and source-review controls remain useful. The synthetic 205→210 example is a safety negative fixture, not an implementation order for a marker-specific feature.
+
+**Sparse-data handling:** The legacy `Insights.tsx` three-meal analysis may correctly require those inputs. The product-wide first-run experience must remain welcoming and offer accessible general information or optional action **outside** that specific gated analysis. Avoid faking the experiment or rewriting the whole Insights page to make the prerequisite disappear.
+
+**Feedback handling:** Do not add five new persistently stored feedback states just because five labels are listed in §2.2. Reuse existing response semantics or defer controls that need an independently reviewed feedback/revision contract. “Already doing this” is not consumption evidence.
+
+**Safety handling:** Support multiple safety items **if and when reviewed eligible safety producers exist**; do not create emergency triage software or a safety-alert backend solely from this mock contract.
+
+**Test handling:** UX-A..J are ten representative **cases**, not ten separately developed feature programmes. For each touched feature, run only applicable focused existing tests plus new negatives that prove the changed invariant; record `NOT_APPLICABLE / DEFERRED` for unreleased scientific features. Do not rerun every costly evaluation on each cosmetic change. Independent A/B/C remains the existing P1 gate, not a new UX test obligation.
+
+### 0A.4 Product-quality review focused on existing UX
+
+Specifically inspect `Insights.tsx` for experimentally derived “healthScores”, bacterial gaps, food claims and adherence/benefit wording. These are **candidate risks to audit**, not validated health scores or proof that advice is correct. Determine provenance, feature eligibility, existing disclaimers and whether they should be reworded, clearly labelled as experimental, gated or removed; do **not** replace them with a new scoring model. Similarly, `TodayPlanner` already fails closed when its current-context request fails; preserve that behaviour instead of duplicating it.
+
+This anti-overbuild amendment narrows implementation interpretation. No previously committed source-integrity, privacy, independent-science, accessibility or reviewed safety requirement is waived.
+
 ## 1. Product interaction principles and priorities
 
 1. **Value with sparse data:** No lab, connected device, microbiome upload or three-meal minimum should make the *whole product* feel broken. Existing features requiring specific input must honestly explain their own prerequisites; offer useful, explicitly general education and a clear optional first action elsewhere, not made-up personalized inferences.
