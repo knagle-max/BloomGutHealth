@@ -58,6 +58,66 @@ Specifically inspect `Insights.tsx` for experimentally derived “healthScores�
 
 This anti-overbuild amendment narrows implementation interpretation. No previously committed source-integrity, privacy, independent-science, accessibility or reviewed safety requirement is waived.
 
+## 0B. Physiological, life-stage and pre-analytical context — bounded four-contract amendment (2026-11-21)
+
+**Acceptance refinement; NOT new infrastructure, scores, questionnaires or an independent workstream.** Incorporate this into INPUT-01, TIME-01, RCV-01, ACTION-01 and current consumer presentation **only when relevant to a verified P0/P1/P3 dependency**. Read current canonical schemas before a change. Existing `shared/precision-nutrition.ts` has `contextSchema.pregnancy`, conditions, medications, currentSupplements and lab-specific fasting/source entered date/time; `shared/experience.ts` already has activity, routines, dated check-ins and presentation units. The private investigation snapshot currently includes source-bound labs, food and confirmed supplements, optional genetics/microbiome and activity `not-collected`. **Do not clone these stores or assume any optional context is independently verified.**
+
+### 0B.1 Four distinct lifecycles, not a universal tag array
+
+| Category | Examples | Source/location | Scientific meaning |
+| --- | --- | --- | --- |
+| **Extended physiological state** | Pregnancy/postpartum, optional menstrual/life-stage context, menopause/perimenopause, HRT/TRT/contraception, intentional weight loss, shift-work schedule | Account-scoped self-report with source revision and actual or uncertain effective bounds; extend existing Health Context only where needed | A potentially relevant historical condition, **not** a clinically established diagnosis and never retroactively applied to older observations without valid bounds |
+| **Time-bounded event/exposure** | Acute illness, infection symptom, injury/recovery, unusual intense exertion, start/stop/change of a medication or antibiotics, recent travel | Existing activity, medication or check-in source where compatible; store actual event bounds/unknowns | Candidate temporal explanation, **not** causation or proven actual medication ingestion |
+| **Specimen-specific collection context** | Fasting, reported collection clock time, illness at collection, recent exercise, sample/preparation caveats | Exact laboratory record/report/specimen association with original-source accuracy and correction history | A **particular sample's** interpretation context; don't copy from today's profile or every report row |
+| **Presentation preference** | Less prominent calorie/weight/macro targets, hide routine quantity totals | Existing versioned account display preferences | Presentation only; preserves canonical numbers, clinical limits, access to raw data and safety notifications |
+
+Preserve `unknown`, `unreported`, `explicitly none`, `skipped` as distinguishable only where the source actually supports that choice. A user-asserted phrase does not establish disease, medication adherence or validated assay behavior. Menstrual/reproductive tracking is voluntary and **never triggered solely by age or recorded sex**. Use the approved condition-selector integration; no new reproductive dashboard or medication database.
+
+### 0B.2 TIME-01 / RCV-01 distinction
+
+TIME-01 preserves actual source precision, half-open intervals and uncertainty, checks what could precede a specimen and recognizes incomplete source coverage. Recorded timestamps alone never establish standardized overnight fasting, stable sleep, medication adherence, or actual circadian phase (especially for shift work/travel). Source corrections, consent withdrawal and policy revisions invalidate dependent private interpretations.
+
+RCV-01 must keep **three independent assessments**: (A) method/statistical eligibility, assay comparability and reviewed applicable CV_A/CV_I, (B) applicability to current physiological/pre-analytical context, and (C) independently reviewed clinical/reference limits and longitudinal trend. **Do not globally fail RCV** because fasting, illness, exercise, pregnancy or medication has changed. Analyte- and method-appropriate reviewed evidence determines whether a factor makes the RCV model ineligible, qualifies interpretation, supplies a competing hypothesis, is immaterial, or remains unknown. RCV `does_not_exceed_rcv` does not reassure about an absolute abnormal value, and `exceeds_rcv` never proves a cause, diagnosis or stable change. Never add speculative adjustment multipliers or a medication × marker matrix.
+
+### 0B.3 Mandatory Value-of-Information gate for proactive contextual questions (ACTION-01)
+
+**Scientific eligibility is evaluated BEFORE questioning or consumer ranking.** If missing specimen/physiological context makes an asserted clinical/scientific conclusion unsupported, withhold that conclusion or express only the independently supportable qualified observation **immediately**; don't gamble on a user answering a prompt. Conversely, if the present observations already support a useful qualified takeaway, **show it without delaying for optional refinement**. A question is an attention candidate, not a clearance procedure or an override of scientific admission.
+
+A non-safety question qualifies for ACTION-01's **one primary unsolicited attention slot** only when **all four gates pass**:
+
+1. **Active decision impact:** A current authorized investigation or observation exists and plausible Yes/No/Not sure answers could materially affect hypothesis discrimination, applicability, abstention or practical next step. Never ask to complete a profile.
+2. **Reviewed domain relevance:** Independently admitted, current evidence supports relevance to the *actual* analyte, assay, circumstance or scientific relationship. LLM-generated relevance alone is not permission to ask. Do **not** hardcode an exhaustive analyte-by-confounder table.
+3. **Genuine missingness and answerability:** Reuse currently authorized lab metadata, existing actual activity, medication/supplement/context dates and prior question answers first. Missing log is not a negative. Consider ability to recall old events; unreliable historical recall favors qualified uncertainty.
+4. **Attention, repetition and cadence:** Competes with other eligible non-safety actions/questions for the same primary slot; one short plain-language question with **Yes / No / Not sure / Skip** where appropriate. Don't loop on previously answered/skipped/dismissed specimen/window questions. Material new evidence/source/policy change allows **reconsideration**, not automatic resurfacing. On-demand context entry always remains accessible.
+
+Classify admitted question utility qualitatively: `decision-changing` (may change conclusion/action/abstention), `interpretation-improving` (materially separates plausible hypotheses without necessarily changing action), or `informational-only` (background). Only the first two can be proactive, and even those may be withheld if user burden exceeds expected utility. This is an **auditable explanation, not a numeric VOI score or new ranking service**. Treat `not-sure` / `skip` as legitimate answers with unchanged source uncertainties. An answer is user-asserted, scoped to specimen/event/investigation, with source revision, confirmation time **separate** from event time, and account/purpose guards; never transform “yes” into a clinically verified diagnosis.
+
+**Safety boundary:** Existing independently reviewed safety findings are not suppressed by the one-question limit or dismissal. If context is eligibility-required, scientific admission abstains or qualifies now; ACTION-01 controls whether a useful optional question reaches the user, **not** whether unsupported advice is allowed.
+
+### 0B.4 Consumer low-number preference (P3, optional)
+
+When requested, reduce **default prominence** of calorie/macro target/body-weight numbers in Today/Nutrition/Progress using existing display settings, while preserving actual stored values, source review, medically relevant warnings and intentional reveal/accessibility. Do not use this as evidence of a diagnosis, suppress appropriately required safety information, create a second dietary model or force a new tracking mode. Apply consistently across touched surfaces, not necessarily by rewriting untouched modules.
+
+### 0B.5 Focused negative test cases — CTX/VOI
+
+- `CTX-A/VOI-A`: recorded illness or a scientifically relevant missing fasting context around a lab → qualify observed change and, **only when the four gates pass**, ask one question; no diet/supplement causation.
+- `CTX-B/VOI-C`: verified actual exercise or medication exposure already supplies the relevant timing → no redundant question; medication list alone does not prove taken dosing or historical start.
+- `CTX-C`: pregnancy/postpartum, menopause or HRT/TRT with uncertain onset → preserve effective-date uncertainty, never infer sex/age diagnosis or invent altered clinical cutoffs.
+- `CTX-D/VOI-B`: fasting context differs for an analyte where it is not material → do not globally invalidate all lab comparisons or ask irrelevant questions.
+- `CTX-E`: exertion precedes blood draw → evaluate reviewed analyte relevance, not causal certainty; after-draw exercise cannot explain the earlier draw.
+- `CTX-F/VOI-F`: correct/withdraw illness, medication or sample condition → dependent source epochs/investigation/presentation stale, current authorization rechecked, unrelated sources intact.
+- `CTX-G/VOI-D/VOI-H`: historical recall poor, sparse coverage, unanswered important question → accept Not sure/Skip, preserve unknown, offer qualified conclusion when eligible or specific abstention when not.
+- `CTX-H`: low-number display mode hides routine prominence across touched surfaces without erasing numbers or withholding safety/raw original data.
+- `VOI-E`: three eligible questions plus eligible regular action → at most one unsolicited non-safety primary (or none), with others available on demand.
+- `VOI-G`: previously skipped question and no material revision → no recurrence; a new source/evidence revision only re-evaluates utility, not automatic nagging.
+- **Required negative:** Eligibility-required missing context cannot be fixed by an LLM question or provisional Yes/No; no unreviewed personal medical conclusion before separate source/science eligibility.
+
+Only run fixture subsets applicable to the **specific touched integration**; synthetic cases do not establish scientific/clinical validation or justify implementing unused context fields. Reuse `UX-A..J`, `INT-01..12`, existing admission and source-revision tests and P1 blind A/B/C rather than establishing another testing platform.
+
+### 0B.6 Scope and stop
+
+Codex first inspects current HEAD `contextSchema`, actual source history, activity/read-only investigation, specimen fasting/time, account display preferences and scientific admission; classify **REUSE / NARROW CHANGE / DEFER**. First candidate should be **one genuine decision-changing context case** using existing sources, not a six-field onboarding expansion. No new universal physiological record, condition-specific engine, questionnaire, pregnancy/cycle tracker, medication-effect table, clinical reference catalogue, push system, cross-surface preference rewrite or new release claim from this document. Continue `NEXT_ACTIONS.md` P0 → P1 → P2 → P3 → P4 with scientific/private data and deployment restrictions. **STATUS: SPECIFIED ONLY; implementation/tests/independent review not claimed.**
+
 ## 1. Product interaction principles and priorities
 
 1. **Value with sparse data:** No lab, connected device, microbiome upload or three-meal minimum should make the *whole product* feel broken. Existing features requiring specific input must honestly explain their own prerequisites; offer useful, explicitly general education and a clear optional first action elsewhere, not made-up personalized inferences.
