@@ -7,6 +7,12 @@
 **Status:** PROPOSED SPECIALIST GUIDANCE — assets/specification only; no product implementation or visual QA claimed
 **Decision authority:** Chief Architect & Integration Lead approves / reconciles; Developer owns implementation, regression testing and final branch integration; Biology validates scientific expression; Security validates sensitive-data flows; existing Marketing & Design owner resolves brand conflicts.
 
+## November 21 editorial hero production addendum — mandatory for successor designers
+
+**Shared reproducible design process:** [Bloom Editorial Hero Design Playbook — November 21](./EDITORIAL_HERO_DESIGN_PLAYBOOK_20261121.md). This is the up-to-date owner-approved record of visual themes, approved BVA-0001–0005 scenes, palette, physical-material/lighting/photographic style, prompt template and anti-CGI guardrails, image-by-image review, desktop/mobile export dimensions, SHA/manifest/ZIP packaging, Shared Library publication, canonical registry updates, and science/rights/runtime acceptance gates. **All incoming Visual Designer agents must read this before generating, replacing, approving or integrating an editorial hero.** Chief Architect and Codex should use the exact package paths and source-code handoffs linked therein. Next requested art is `BVA-0051` Microbiome, with a strict new 2:1 conceptual ecology brief and no existing-image reuse.
+
+**Authority:** This is a visual asset production supplement, not a change to the Visual Lane Amendment's UX/IA ownership; old 2026-11-07 illustrative route compositions below are subordinate to the current Architect-approved shared page-header standard and owner's 2026-11-21 actual artwork choices. Design approval is never equivalent to production integration or science/rights verification.
+
 ## Sources and boundaries
 - Reviewed attached `bloom_brand_delivery_v1(1).zip`, including tokens, handoff, screen blueprints, logos and brand concept reference.
 - Reviewed attached Nutrition & Biology handoff, dated 2026-10-18, which explicitly disallows unsupported user-specific microbiome concentration, health scores and genotype=activity claims.
