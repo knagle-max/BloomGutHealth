@@ -27,11 +27,7 @@
 
 ## 3. Next eligible work — choose smallest unblocked slice
 
-1. Finish/publish INV-05 structured numeric fact subset and its exact receipt:
-   source values/differences only,43 focused tests passed, no scientific truth
-   or clinical/release claim. Then inspect INV-04 bounded two-pass requirements
-   against current one-pass private runner; implement only the missing bounded
-   synthetic contract using existing reviewed retrieval and safety limits.
+1. **INV-05 structured numeric source-value/recorded-difference subset is already present and LOCAL_ENGINEERING_TESTED at the inspected branch** (43 focused tests PASS, type/build PASS at its prior 2026-11-20 checkpoint; see `docs/verification/V06_INVESTIGATION_NUMERIC_FACTS_20261120.json` and the delivery ledger). **Do not redo or republish this completed subset.** Recheck the actual active worktree/HEAD for newer unpublished changes and the exact receipt before any further code. Next investigate the genuinely missing **INV-04 bounded two-pass / contradiction and private interpretation loop**, comparing current one-pass `server/private-investigation-runner.ts` against the accepted contract. Implement only a demonstrably absent, authorized source-safe portion using existing collectors, reviewed retrieval and admission. Broader INV-05 free-prose scientific meaning, independent review, blind A/B/C and consumer authorization remain **open**, separate from numeric subset completion.
 2. Continue highest-value P1/P2 code gaps from existing contracts. Actual private
    reasoning installation/usefulness, independently reviewed unfamiliar cases
    and original-source rights remain feature-scoped qualification dependencies.
