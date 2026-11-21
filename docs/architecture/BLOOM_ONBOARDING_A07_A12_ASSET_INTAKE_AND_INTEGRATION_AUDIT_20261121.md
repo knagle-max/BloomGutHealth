@@ -1,6 +1,14 @@
 # Bloom — ONB-A07–A12 Original Asset Intake and Onboarding Integration Audit
 **Chief Architect · 2026-11-21 · reviewed design sources, NOT production approval**
 
+## 2026-11-21 latest owner-approved goal photo source supersession — exact bytes now verified
+
+**Newer approved photos take precedence over A07/A12-embedded earlier photos only**. Refer to [approved revised assets/transfer index](../visual-assets/BLOOM_APPROVED_ASSET_REVISIONS_INTAKE_20261121.md). The owner-approved `Bloom_ONB_Six_Goals_Approved_2026-11-21.zip` (SHA-256 `ca5c37ecb429f93c845d3ca23faf95c03ab392538ddf631d4b82b4c6a38f1ea3`) contains six distinct **1536×1024 original PNGs plus 384/768/1536 WebPs**, all 24 listed assets passing source manifest hashes. **ONB-A06 is the revised green/athlete-blue runner, not an earlier exposed-muscle image**. This source is nested byte-identically in `Bloom_ONB_Approved_Design_Handoff_2026-11-21.zip` (SHA-256 `ce5baaca64b11d13318a14af05d2926540dc0a325050d4ffe440b1ee4e9d4708`), whose original six included ZIP packages pass its index byte counts/hashes. One consolidated **conversation attachment** `Bloom_Approved_Asset_Transfer_2026-11-21.zip` has SHA-256 `a5cdc6b19d2730dfdc949059ea34fecf3f421acaac1896e74b8f1413a91ffcbe`, but **is not yet physically installed in the GitHub checkout**. Owner/Codex must transfer exact source bytes or mark BLOCKED_BINARY_TRANSFER; do not invent/recreate originals.
+
+Preserve **A07** goal card interaction, **A08** three-step navigation/back/skip/save/resume and failure, **A09** four approved SVG context icons, **A10** none/unknown/skip/expandable forms, and **A12** responsive assembled layout as distinct requirements. Do not mistakenly treat A12's included *older* goal imagery as overriding the new approved six photographs. The separately requested six SVG goal glyph icons are **still not proved delivered** by these photographs; ONB-A11 remains conditional, not a fourth mandatory step. Source approval is artwork-only; actual canonical account/profile/consent integration, accessible responsive testing and deployment remain unverified.
+
+**This paragraph supersedes ONLY the earlier statement that A12's six embedded WebPs were the final approved goal image bytes.** The earlier handoff's SHA list remains correct as *historic original prototype bytes*, not the final active photograph release. Preserve exact historic hashes for audit, don't overwrite them with new SHA labels.
+
 ## 0. Authority, scope and approval
 
 Read `AGENTS.md` → `NEXT_ACTIONS.md`. This handoff is a **bounded existing P3 consumer onboarding acceptance task**, not a new priority, implementation order, separate wizard framework or authorization to interrupt P1/P2 scientific work. Earlier P0 work is permitted only for evidenced consent, security, data-loss or source-integrity defects. Current owner Render/Mac pause, cloud health-data restrictions and no-routine-screenshot directive remain binding.
